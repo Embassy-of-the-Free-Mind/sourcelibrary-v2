@@ -1,0 +1,13 @@
+I could read most of the strokes, but many glyphs are uncertain. Treat this transcription as low confidence and check it against the leaf.
+
+ROW 1 | കഷിക്ഷണണൽപ്പൂാദാൽ ‖ ജ്ഞെന്ത്രാം.വ്യക്താവ്യത്ര്യവ്യക്തം.പുരുഷൈവാമ്മ ‖ ന്ത്ര്യഃക്കേകപി[illegible]ൽക്ഷണഞ്ച
+ROW 2 | ാൽജ്ഞാര്യാവിദ്യാക്തം.വ്യ ‖ വ്യാവ്യവ്യക്തം.പുരുഷൈഷാവിദ്യാഷീഭാദാ ‖ ഗുരുത്വാമുക്ത്യവ്യക്തൈ
+ROW 3 | ഖൽവ്യക്തൈക്കന ‖ സന്ദേഹാന്നപ്ര്യ്ാനനഭിസ ‖ ഷ്ടമാതൈദേവാരിതിശൃ
+ROW 4 | വ്യക്കതൈസക്ഷിയ ‖ ം.വ്യക്തം.തദിന്ദ്രിയമവ്യക്തം.തിസ ‖ ംസാമിത്വാൽപുരുഷൈ
+ROW 5 | ാമിഞ്ജ്ഞിയതേ ‖ ർത്ഥാൽപ്രാവാൽതിരേതി.വ്യ ‖ ക്കം.കാരണമവ്യക്തം.ശ്ശേ[illegible]
+ROW 6 | ങ്ങളൊന്നെ ‖ തക്കാലെഹുത്താൽതസ്യതത്വ ‖ ശ്ലേഷ്മൂപാദധിത്വ
+ROW 7 | ക്ലിയാകൈര ‖ ന്ത്രൈവസാന്നുമ്ലാത്രൈ ‖ ന്ദ്രകൊണ്ടകൾ[illegible]കം.
+ROW 8 | വ്യക്തംഭീനാശ്രിത ‖ മവ്യക്തം.വ്യക്തമേജ്ഞൈചാപ്യാദ്യിര്യക്തേക ‖ കംഭിന്നജ്ഞകാൽമിംഗ
+ROW 9 | പ്യക്തം.ലിംഗ ‖ മവ്യക്തം.വ്യക്തമാാവ്യമിം.ലിംഗമാക്ക ‖ ലിംഗമനന്നമിംഗലെന്ന
+
+NOTE | The leaf has 9 rows. Rows 1–2 and 8–9 run the full width; rows 3–7 sit in three columns, with the middle column split across p02 and p03. All rows are joined at the two holes. The script is roughly legible, but I could only read about half the glyphs with any confidence. The ligatures and vowel signs in rows 1, 5 and 7 are especially uncertain.

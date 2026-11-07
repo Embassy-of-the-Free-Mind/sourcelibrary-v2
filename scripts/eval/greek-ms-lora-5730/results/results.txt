@@ -1,0 +1,28 @@
+overall: FAIL
+arms: F G S L; pages scored 280, dropped 108 (an arm had no read)
+
+== T2 (n = 199)  median page CER %, view N [95% CI]  | view A | catastrophic
+  F: 100.0 [100.0, 344.3] | 100.0 | 189
+  G: 100.0 [100.0, 364.8] | 230.9 | 199
+  S: 28.6 [26.9, 30.1] | 34.4 | 5
+  L: 35.7 [34.5, 37.8] | 44.0 | 9
+  F-S: Δ 77.2 pt [68.2, 306.0]  W/L 0/199
+  F-L: Δ 70.3 pt [61.7, 300.0]  W/L 1/198
+  F-G: Δ -18.3 pt [-36.9, 0.0]  W/L 108/63
+  G-S: Δ 80.0 pt [76.1, 333.2]  W/L 0/199
+  G-L: Δ 71.4 pt [67.1, 322.4]  W/L 1/198
+  · Ars sacra (Laurenziana) (n 199): F 100.0  G 100.0  S 28.6  L 35.7
+  verdict: false {"F beats S (CI < 0, |Δ| ≥ 0.5 pt)":false,"F beats L (CI < 0, |Δ| ≥ 0.5 pt)":false,"F catastrophic ≤ S + 1":false,"F median < G median":false}
+
+== T1 (n = 81)  median page CER %, view N [95% CI]  | view A | catastrophic
+  F: 100.0 [100.0, 100.0] | 100.0 | 81
+  G: 100.0 [100.0, 100.0] | 100.0 | 81
+  S: 32.7 [31.7, 34.5] | 38.0 | 4
+  L: 205.2 [193.8, 229.5] | 214.2 | 74
+  F-S: Δ 67.0 pt [64.5, 68.1]  W/L 0/81
+  F-L: Δ -108.7 pt [-129.5, -96.3]  W/L 62/17
+  F-G: Δ 0.0 pt [0.0, 0.0]  W/L 14/14
+  G-S: Δ 67.0 pt [64.1, 68.3]  W/L 0/81
+  G-L: Δ -104.8 pt [-126.1, -93.2]  W/L 62/17
+  · Grec 1841 (n 81): F 100.0  G 100.0  S 32.7  L 205.2
+  verdict: false {"F beats S (CI < 0, |Δ| ≥ 0.5 pt)":false,"F beats L (CI < 0, |Δ| ≥ 0.5 pt)":true,"F catastrophic ≤ S + 1":false,"F median < G median":false}

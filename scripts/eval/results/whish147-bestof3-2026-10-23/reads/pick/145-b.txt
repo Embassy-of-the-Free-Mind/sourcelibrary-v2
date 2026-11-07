@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C, though it has the most [illegible] marks, gives the most coherent Malayalam–Sanskrit Sāṅkhya commentary, with readings like "mahat-tattvam", "gandhādiṃ", "indriyaṃ", "grāhaka", "caitanyaṃ", "pāyādi-saṃjña" and "dehattukk-", while A has only a few real-looking words such as "śaktinā" and "indriya" among mostly garbled strings, and B is the most broken.

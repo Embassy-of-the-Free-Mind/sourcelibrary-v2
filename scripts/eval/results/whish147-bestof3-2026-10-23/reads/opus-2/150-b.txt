@@ -1,0 +1,13 @@
+I couldn't read much of this leaf reliably. The scribe's hand is small and looped, and the cord covers the text next to the left hole in rows 1–4. The readings below go glyph by glyph and many are probably wrong. The leaf has 10 rows. Rows 5–7 are the short rows at the hole level. p02 and p03 together make the middle column, so they are joined without ‖.
+
+ROW 1 | സ്ഥൂന്മൈത്രിങ്ങൈനഷ്പ്ര[illegible] ‖ [illegible]ിചാൎയ്യൈസ്ത്വിഃഗാൽപരൈരാവ്യക്തിഃപ്രത്യൈ[illegible] ‖ ച്ചൈഃപ്രത്യജ്ഞാദൈഹിതു
+ROW 2 | ദാഹ്യഞൊരൂപഹിങ്ങ്ണിഗ[illegible] ‖ [illegible]ാന്തിവക്കാവഷ്യാഃപവൃത്ത്യാപവൎമ്മാതൃത്ത്വ[illegible] ‖ ത്വവൃക്തിജ്ഞ
+ROW 3 | പ്രൂമവബാലിത്ത്വമപ്രാത്രഃ[illegible] ‖ [illegible]ാലൈരാപൂമവാൻസൊൎമെനിമാനൃപാമ ‖ മഃാനസഹീശ്യൂടരഹാരണം
+ROW 4 | ജ്ഞശാചായദിതൂപ[illegible] ‖ [illegible]യഃരന്ധ്രാന്തുമൈചതിന്ദ്രിയമനംസാഞ്ഞ ‖ ഞ്ജാനമിത്തിപനാൎത്ഥംസമി
+ROW 5 | ഞാലിംഗവര ‖ ാമൾക്കപ്രകാനമണോതന്ത്രാല്ലിം ‖ ഗപനാമുകൾദസമ
+ROW 6 | ദനംലിംഗത്തിവി ‖ പംഞബ്ദയവ്യാപ്യാതിലെങ്കിലൈകവ ‖ ലാബകിലെകവലപ്യ
+ROW 7 | ഭവെഭിലെചത്തി, ‖ ബ്ദ്വേളെഷാവ്യാപിലെലെകണ ‖ ചവ്യാപ്തിമദേവയപ്പ്യ
+ROW 8 | ഭവിക്കിങ്ങനൊഷാവലെ[illegible] ‖ ലെഗ്വാലഷ്ട്രേലൃയൂമവാഖ്യംയത്രയൂമ.ന ‖ മ.സ്ക്കൃതാദപ്പൂപാമഹാന
+ROW 9 | സംഗതാബാധപ്യാഭിഃ[illegible] ‖ [illegible]ിലിംഗത്തുചക്ഷൻാങ്കക്രുയൂതെമാവി ‖ വിനാസ്ത്വിയൃമഹാസ്ത്ര
+ROW 10 | ഗൃദ്ദജ്ജിത്തിപ്രപത്തിനെ[illegible] ‖ നെകാപ്യാദിതഃഭവവ്യമദ്ദിപ്യ ‖ പ്യാഷ്ടികംകൈവല്യ
+NOTE | The row layout is solid (10 rows; text stops after row 2 on the right, where there is a ruled line). I'm only moderately sure of the right column (p04) and rows 5–7, and not sure of much of the left column or the conjuncts and vowel signs anywhere, so please check it against the images.

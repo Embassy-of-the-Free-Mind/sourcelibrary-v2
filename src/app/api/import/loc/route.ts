@@ -10,6 +10,8 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
+import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -141,9 +143,8 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch LOC item JSON
     const locUrl = `https://www.loc.gov/item/${lccn}/?fo=json`;
-    const locRes = await fetch(locUrl, {
+    const locRes = await outboundFetch(locUrl, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
         'Accept': 'application/json',
       },
     });
@@ -330,6 +331,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
       method: 'GET',
+      headers: selfCallHeaders(baseUrl),
     }).catch(() => {
       console.log(`[LOC Import] Split check queued for ${bookIdStr}`);
     });
@@ -337,7 +339,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Kick off image archiving (non-blocking)
     fetch(`${baseUrl}/api/books/${bookIdStr}/archive-images`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...selfCallHeaders(baseUrl) },
       body: JSON.stringify({ limit: 50 }),
     }).catch(() => {
       console.log(`[LOC Import] Archive kick-off queued for ${bookIdStr}`);

@@ -42,7 +42,7 @@ const LABEL = process.argv[2] || 'run';
 const ONLY = (process.argv.find((a) => a.startsWith('--only=')) || '--only=all').split('=')[1];
 const OUT = process.env.PROBE_OUT || `scripts/output/withheld-surfaces-${LABEL}-${ONLY}.json`;
 const BASE = process.env.PROBE_BASE || 'https://sourcelibrary.org';
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36';
+const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36 sourcelibrary-audit';
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const BOOK = ARG('--book', '69e78a8a4a6785cfd60d3a96');
 const SLUG = ARG('--slug', 'rdo-rje-gling-pa-i-bka-bum-collection');

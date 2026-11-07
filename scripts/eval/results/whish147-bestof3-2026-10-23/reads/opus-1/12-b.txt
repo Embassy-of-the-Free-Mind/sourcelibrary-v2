@@ -1,0 +1,10 @@
+ROW 1 | ഝോഷിം.ഘത്രകചജ്ഞ ‖ ഞാനാന്യ്യഇത്രഇക്കുമനസ്സിപക്കമത ‖ ട്ടെഷ്ടിസായഷഭഷരഷ്ഠാമെ
+ROW 2 | ചദ്വിത്യസ്യാദ്മെദ്ദത്ത ‖ ദ്ദിദ്ദഷ്ണീഷ്ടദപലാരകെക്കീരമെഹിതു ‖ ണസ്യാൽയാപദാഭ്യാത്മിക
+ROW 3 | ശാരീ.രക്ഷൈസ്യാപ ‖ ന്ഃയമനമിക്കെമിരസാശമസ്താമിഭമ ‖ കിമെവാപരമൈഎഷ്ണിമ
+ROW 4 | ഗമെസ്സാദിസംഘ്യ ‖ ദനഷെല്പംമമൃാഷഗജ്ജൂദമ ‖ യാമികയാഃആധിഭി
+ROW 5 | ടൂക്കിക്കാദിമെട ‖ മിക്കമെയ്യാരശൃപലാതമെഹിതു ‖ മാനസ്സിയമാമെന്നെ
+ROW 6 | ലാക്കമെവട്ടഹ്യ ‖ കകതമെയാസ്സൽഉക്കമെഷയ ‖ ത്വൽതക്രാധിമെ
+ROW 7 | ഷികസ്യ.പാ.മടാ ‖ ഇമെട്ടട്ടമെണധാപാരയ്യചട്രത ‖ ദന.ഭൂദഃആധിമെഭൂ
+ROW 8 | മിക്കാസ്യാമിത്രപാതക്ര ‖ പാതസാല്ലൃതമ്പമെദശാഗൃയണ്യാ ‖ ദയഃതെഷാശൂദ്ദെക്കമെഹ
+ROW 9 | മെമപ്സൃത്ജജ്ജാസ ‖ ായജ്ജിന്മിക്കമുഷിമെനക്ഷമെണതൃാ ‖ രശം.ത്ര്യാവിഃമെനികാര
+NOTE | I could only partly read this leaf, so treat these lines as rough stroke-by-stroke guesses, not a reliable text. The leaf has 9 rows. All of them run the same width, so I found no separate full-width rows at the top or bottom. The holes fall between p01 and p02, and between p03 and p04, so the middle column is p02 and p03 joined at their overlap. Many vowel signs and conjuncts are uncertain, and I didn't mark them [illegible] one by one. The parts I'm most sure of are the ending -ആധ്യാത്മിക in row 2 and the ആധി- forms in rows 4, 6 and 7. There is a single mark like ര in the left margin beside row 6, possibly a leaf number, and I left it out of the rows.

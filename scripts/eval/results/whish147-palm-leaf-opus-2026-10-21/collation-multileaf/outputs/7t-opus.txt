@@ -1,0 +1,37 @@
+# Collation of leaf.jpg against SK 29–34
+
+This half-leaf has 9 lines, and every line runs on into the missing right half. A string hole interrupts lines 3–7. I could read verse text with reasonable confidence only on lines 1–3 and 8–9. The edition marks a typo in SK_29 (*kaṛaṇa*, *s^ aipā*) and an odd *a-tathā* in SK_30. I only list one of these as a difference where the leaf itself shows that part.
+
+## Verse lines
+
+**Line 1 – SK_29 (beginning)**
+The line opens with a few aksharas I can't read, ending in a daṇḍa. They are probably the end of SK_28 or of a commentary passage, and I have not used them.
+Leaf: *svālakṣaṇyaṃ vṛttis trayasya sai*[…] (the rest is on the missing half).
+No differences in what is visible. The leaf breaks off at *sai-*, so I can't check the edition's *s^ aipā* (presumably meant as *saiṣā*).
+
+**Line 2 – SK_29 (end) and SK_30 (beginning)**
+Leaf: […]*ṇa-vṛttiḥ prāṇādyā vāyavaḥ pañca* | *yugapac ca*[…]
+No differences. The *ka-* of *karaṇa* was on the missing half, so the edition's *kaṛaṇa* can't be checked against the leaf.
+
+**Line 3 – SK_30**
+Leaf (left of the hole): […]*ṣṭā dṛṣṭe tathāpy*
+Leaf (right of the hole): *adṛṣṭe trayasya ta*[…]
+- *-ṣṭā* is the end of *nirdiṣṭā*. *catuṣṭayasya tu vṛttiḥ kramaśaś ca tasya nir-* was on the missing half.
+- Difference: the edition has *dṛṣṭe a-tathā 'py*, but the leaf has *dṛṣṭe tathāpy*. I see no *a-* before *tathā*. The leaf's reading is the normal text of SK_30, so the edition's *a-* looks like an error.
+
+**Lines 4–7 (both sides of the hole)**
+These are short groups of aksharas that I can't confidently read or match to SK_31 or SK_32. They may be commentary. I am not offering a reading of them, so SK_31 and SK_32 are not collated.
+One exception: line 7 seems to end, right of the hole, in *…ntaḥ*. That could be the start of *antaḥkaraṇaṃ* opening SK_33, which the edition leaves out. The edition's *tri-vidhaṃ daśadhā bāhyaṃ trayasya viṣayākhyam* is also one foot short metrically. Still, I can only see *-ntaḥ*, so this is uncertain.
+
+**Line 8 – SK_33**
+Leaf: *trayasya viṣayākhyaṃ* | *sāmprata-kāla*[ṃ?] *bā*[…]
+No certain differences. I can't tell whether *kāla* has an anusvāra.
+
+**Line 9 – SK_34**
+Leaf: […]*ndriyāṇi teṣāṃ pañca viśeṣāviśeṣa*[…]
+- The first akshara is unclear; I read it as *-ndri-*, from *buddhīndriyāṇi*.
+- No differences in what is visible.
+
+## DIFFERENCES:
+SK_30 | a-tathā | tathā (no a- before tathā) | certain
+SK_33 | (no antaḥkaraṇaṃ in the edition) | …ntaḥ at the end of line 7, probably antaḥ[karaṇaṃ] before trividhaṃ | uncertain

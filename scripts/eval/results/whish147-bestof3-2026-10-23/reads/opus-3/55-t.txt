@@ -1,0 +1,11 @@
+ROW 1 | ഒരകസ്യാദ്ധ്യയഃനമൈഹേതുകാൻദ്ധ്യയമനനഹിതൽപരിജ്ഞാനാൽപ്രമാതൃത്വിയാകാരകിത
+ROW 2 | ത്യച്യതെദുഃഖാഭിഘാതകാസ്രൂയഇതിചൊയാഭ്രാഭിചകനായിദൈനക്കിക്കെനായിരെ
+ROW 3 | ദഷികൈകനവാഭാവിതനക്കദൃഷ്ടാതാൽജ്ഞാനംപരമ്പ്രൂഷ്ടകിഉഹൈനവൈശ്യനാദ്യ
+ROW 4 | യമനനഫാകസ്യ ‖ തഷിഭ്രാതവെഹേതുകാപ്രമൈദാദ ‖ പ്രകൃതൈമൈവാദനാവ്യ
+ROW 5 | ഹ്ലിത്ത്യംഉപായ ‖ സ്യുത്തിതോദിതിമൃഷ്ടായാങ്ക ‖ സ്ത്രീമയഃക്കാനദ്ദഃ
+ROW 6 | ബൈഹേതുകോജ്ഞ ‖ തിചൊവാലഭ്യാഃസസൽപ്ര ‖ ാക്ഷിതിശയായി
+ROW 7 | ധാതതുഭഃശ്ലൃ ‖ ഹൃദഃപ്രമാപ്രദ്യഞ്ജാനമയിഗള്ള ‖ തിന്യസ്യവത്പ്ര
+ROW 8 | ാക്ഷേശ്രീഷ്ഠികാമിത്ര ‖ ഷിദ്ധ്യഹാൽജ്ഞാനംപ്രകാശയ ‖ യൽഇത്ഥംസക്തമിരത്രക
+ROW 9 | മിത്രച്ചൂതെദാനയെചെസിദ്ധിഹേതുഃദാനാദ്ധ്യാതായിതൊജ്ഞാഭിജ്ഞാനം
+ROW 10 | ഭിഖ്യച്ഛിതെരയമന്ദ്ധമിസാദാസ്ത്രദെതമിത്വച്ചയതെദിവതിതാഃഅസിദ്ധ്യഃ
+NOTE | I treated rows 1–3 and 9–10 as full-width (text runs under the string) and put ‖ only in rows 4–8, which have a gap at each hole. I could make out roughly 60–70% of the glyphs with any confidence. Many conjuncts and vowel signs, especially where the pieces overlap and at the right ends of rows, are uncertain guesses, so treat the whole transcription as tentative and check it against the leaf.

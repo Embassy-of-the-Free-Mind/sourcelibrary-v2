@@ -1,0 +1,10 @@
+ROW 1 | ഷ്ടമെന്നുമ്പസംയൊഗ‖ഃ ൽക്കിമിത്തിപ്പെന്നുക്തേമൊഷൎത്ഥിൻഭവക്കി‖ത്യാഹദൃഷ്ട്രമയെത്യാദിത
+ROW 2 | യൊൎദ്ധയൊൎവെകഃപു‖[illegible]ഷഃഉകപക്ഷകാഃസപ്ലഷാഭൂതാൽവെധാ‖[illegible]പ്യവക്ഷവക്കൊനവിദ്ധപെക്ഷ
+ROW 3 | ണെതിഷ്ണൊഭിലാചര‖[illegible]ൻദ്ജ്ഞാധമിതൃപരതാനന്തിക്കപര‖[illegible]ലക്ഷിത്രുപതാവിദ്ദൃത്ത
+ROW 4 | ഒസവാസൎദ്ദേശാൽ‖ധമനെനദ്ദെത്തിത്തത്തക്ഷസം‖യൊഗവിതയൊഃ
+ROW 5 | പ്രയൊജനാല്ലി‖സങ്ഗ്രൃവിവരെയാപദെശതാ‖ൽസ്സങ്ഗഃതന്മിന്നെവ
+ROW 6 | ചരിതാൎത്ഥാൽന‖ചനഷ്ടമാച്ചട്ടനെനഹിന്ദി‖നാംഗപ്രതിമാകാ
+ROW 7 | ൻരാജാസ്വീതംച‖നന്ദമാനദ്ദെശംഭൂതാമെ‖ജ്ഞാനാൽകൈവല്യ
+ROW 8 | പ്രാപ്തിൎക്കുടനന്നനൈവശരീരം[illegible]ദ്ദനാമെപ്ൎത്ഥതെഉ‖ത്ര്യാഹസമ്യൿജ്ഞാനാദി
+ROW 9 | ഗമ്യാഭിന്നാഭിസമ്യൿജ്ഞാനമാത്മ‖ജ്ഞാനസൃഷ്ട്യാധിഗമാൽ‖ന്ത്രജ്ഞാനപ്രാപ്തൗ
+NOTE | Low confidence: I found the page order and the 9 rows (rows 1–3 and 8–9 full width, rows 4–7 short and in columns), but many of the characters are tentative. Where 8–9 cross a hole, the ‖ placement is approximate, and I can't confirm the leaf is Sāṅkhyakārikā commentary. A folio number (ഗൊ/൩൭?) in the left margin is left out.

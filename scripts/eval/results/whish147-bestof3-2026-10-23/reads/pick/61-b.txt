@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A has more [illegible] gaps, but what it does read is real Sanskrit fitting the commentary on Sāṅkhyakārikā 64 (*jñānamulppādayati*, *mitivakṣyamāṇo*, *viparyyād…saṃśayāj jñānamulppadyate*, *viśuddhaṃ…saṃsāramalāṃ*, *kevalam*); C keeps some good phrases (*puruṣadharmmāḥ*, *paramaṅkaivalya*) but garbles whole rows, and B is mostly strings of syllables that aren't words.

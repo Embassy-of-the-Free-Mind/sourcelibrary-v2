@@ -1,0 +1,66 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#7517 (PR #7520), scripts/eval/route-judge-6740/results/fresh-7517-2026-10-27/score.json (verdicts, delivered reads) + fresh-gate.json (k / n with filter-cut reads counted not accepted, the experiment's rule); the lite and lite>agy-flash-low rows on the same pages are the router tests' (already in rules.json) and are not repeated here",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key (the route-judge prompt)",
+ "cells": {
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "routes": {
+    "agy-flash-low-read": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "16/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "18/30",
+     "filter_cut": "12/30",
+     "wrong_text_classes": {
+      "I4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "8/30",
+      "O8": "5/30",
+      "E2": "5/30",
+      "O11": "2/30",
+      "O16": "2/30",
+      "O12": "1/30",
+      "I4": "1/30",
+      "O13": "1/30",
+      "filter_cut": "12/30"
+     }
+    }
+   }
+  },
+  "fr-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "routes": {
+    "agy-flash-low-read": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "23/30",
+     "wrong_text_pages": "2/30",
+     "delivered": "25/30",
+     "filter_cut": "5/30",
+     "wrong_text_classes": {
+      "O18": "1/30",
+      "E2": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "11/30",
+      "O8": "6/30",
+      "O16": "4/30",
+      "T6": "2/30",
+      "O12": "1/30",
+      "D1": "1/30",
+      "O18": "1/30",
+      "I3": "1/30",
+      "filter_cut": "5/30"
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,13 @@
+ROW 1 | [illegible]ഃ[illegible] ‖ [illegible]ക്ഷേത്ര[illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible]ം[illegible] ‖ [illegible]ം[illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible]ം[illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible]ം[illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible]ം[illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible]ം[illegible] ‖ [illegible]ം[illegible] ‖ [illegible]ഃ[illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | I could see the layout but read almost none of the text: the leaf has 12 rows, rows 1–4 and 10–12 run the full width, and rows 5–9 are short blocks on each side of the two holes. At this image resolution I can't tell most of the akṣaras apart reliably. I've only marked the few anusvāra/visarga marks I could see clearly and the one word I'm fairly confident of (ക്ഷേത്ര, row 1, middle column), and left everything else as [illegible] rather than guess or fill it from the known text. Higher-resolution scans, roughly 2–3× per piece, would be needed for a real transcription.

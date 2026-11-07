@@ -1,0 +1,684 @@
+{
+ "built_at": "2026-10-22T23:24:19.363Z",
+ "drawn": 60,
+ "manuscripts_excluded": 6,
+ "books": 54,
+ "pages": 24144,
+ "counted": [
+  "long_s",
+  "bleed",
+  "loop"
+ ],
+ "route": {
+  "long_s": "fix",
+  "bleed": "fix",
+  "loop": "reread"
+ },
+ "raw_flags": {
+  "long_s": 2152,
+  "bleed": 490,
+  "loop": 24,
+  "interleave": 10,
+  "truncation": 154,
+  "empty": 46
+ },
+ "precision": {
+  "long_s": {
+   "flagged_checked": 10,
+   "confirmed": 10,
+   "precision": 1,
+   "ci95": [
+    0.72,
+    1
+   ]
+  },
+  "bleed": {
+   "flagged_checked": 14,
+   "confirmed": 8,
+   "precision": 0.57,
+   "ci95": [
+    0.33,
+    0.79
+   ]
+  },
+  "loop": {
+   "flagged_checked": 4,
+   "confirmed": 3,
+   "precision": 0.75,
+   "ci95": [
+    0.3,
+    0.95
+   ]
+  },
+  "interleave": {
+   "flagged_checked": 4,
+   "confirmed": 0,
+   "precision": 0,
+   "ci95": [
+    0,
+    0.49
+   ]
+  },
+  "truncation": {
+   "flagged_checked": 4,
+   "confirmed": 0,
+   "precision": 0,
+   "ci95": [
+    0,
+    0.49
+   ]
+  },
+  "empty": {
+   "flagged_checked": 4,
+   "confirmed": 1,
+   "precision": 0.25,
+   "ci95": [
+    0.05,
+    0.7
+   ]
+  }
+ },
+ "eye_unflagged": {
+  "unflagged_checked": 24,
+  "unflagged_needs_reread": 2,
+  "unflagged_by_eye_class": {
+   "long_s": 4,
+   "bleed": 0,
+   "loop": 1,
+   "interleave": 0,
+   "truncation": 1,
+   "empty": 1
+  }
+ },
+ "eye_random_unflagged": {
+  "checked": 10,
+  "needs_reread": 0,
+  "by_class": {
+   "long_s": 2,
+   "bleed": 2,
+   "loop": 0,
+   "interleave": 0,
+   "truncation": 0,
+   "empty": 0
+  },
+  "other_noted": 2
+ },
+ "eye_all": {
+  "checked": 46,
+  "needs_reread": 8,
+  "needs_reread_not_flagged_by_any_counted": 2,
+  "needs_reread_flagged_loop": 2
+ },
+ "prevalence": {
+  "all": {
+   "books": 54,
+   "pages": 24144,
+   "long_s": 8.91,
+   "bleed": 2.03,
+   "loop": 0.1,
+   "fixable": 10.59,
+   "reread": 0.1,
+   "any": 10.67,
+   "text_repair_share_of_defective": 99.07,
+   "book_mean_any": 8.61,
+   "book_mean_long_s": 6.49,
+   "book_mean_bleed": 2.39
+  },
+  "engine": {
+   "flash": {
+    "books": 26,
+    "pages": 12619,
+    "long_s": 4.14,
+    "bleed": 1.1,
+    "loop": 0.04,
+    "fixable": 5.14,
+    "reread": 0.04,
+    "any": 5.18,
+    "text_repair_share_of_defective": 99.24,
+    "book_mean_any": 4.92,
+    "book_mean_long_s": 3.91,
+    "book_mean_bleed": 1.06
+   },
+   "lite": {
+    "books": 28,
+    "pages": 11525,
+    "long_s": 14.13,
+    "bleed": 3.05,
+    "loop": 0.16,
+    "fixable": 16.55,
+    "reread": 0.16,
+    "any": 16.69,
+    "text_repair_share_of_defective": 99.01,
+    "book_mean_any": 12.04,
+    "book_mean_long_s": 8.88,
+    "book_mean_bleed": 3.63
+   }
+  },
+  "century": {
+   "1450-99": {
+    "books": 12,
+    "pages": 3871,
+    "long_s": 7.41,
+    "bleed": 1.42,
+    "loop": 0.28,
+    "fixable": 8.78,
+    "reread": 0.28,
+    "any": 9.04,
+    "text_repair_share_of_defective": 96.86,
+    "book_mean_any": 8.75,
+    "book_mean_long_s": 6.3,
+    "book_mean_bleed": 2.3
+   },
+   "1500s": {
+    "books": 17,
+    "pages": 8583,
+    "long_s": 12.96,
+    "bleed": 0.75,
+    "loop": 0.02,
+    "fixable": 13.46,
+    "reread": 0.02,
+    "any": 13.46,
+    "text_repair_share_of_defective": 99.83,
+    "book_mean_any": 7.72,
+    "book_mean_long_s": 7.18,
+    "book_mean_bleed": 0.65
+   },
+   "1600s": {
+    "books": 16,
+    "pages": 7395,
+    "long_s": 5.73,
+    "bleed": 4.96,
+    "loop": 0.11,
+    "fixable": 9.86,
+    "reread": 0.11,
+    "any": 9.97,
+    "text_repair_share_of_defective": 98.91,
+    "book_mean_any": 10.17,
+    "book_mean_long_s": 5.53,
+    "book_mean_bleed": 5.58
+   },
+   "1700s": {
+    "books": 9,
+    "pages": 4295,
+    "long_s": 7.66,
+    "bleed": 0.09,
+    "loop": 0.07,
+    "fixable": 7.73,
+    "reread": 0.07,
+    "any": 7.8,
+    "text_repair_share_of_defective": 99.1,
+    "book_mean_any": 7.33,
+    "book_mean_long_s": 7.13,
+    "book_mean_bleed": 0.14
+   }
+  },
+  "typeface": {
+   "gothic": {
+    "books": 10,
+    "pages": 3312,
+    "long_s": 7.16,
+    "bleed": 0.48,
+    "loop": 0.33,
+    "fixable": 7.64,
+    "reread": 0.33,
+    "any": 7.94,
+    "text_repair_share_of_defective": 95.82,
+    "book_mean_any": 5.68,
+    "book_mean_long_s": 5.09,
+    "book_mean_bleed": 0.27
+   },
+   "italic": {
+    "books": 8,
+    "pages": 3945,
+    "long_s": 2.81,
+    "bleed": 0.53,
+    "loop": 0,
+    "fixable": 3.35,
+    "reread": 0,
+    "any": 3.35,
+    "text_repair_share_of_defective": 100,
+    "book_mean_any": 2.98,
+    "book_mean_long_s": 2.34,
+    "book_mean_bleed": 0.64
+   },
+   "roman": {
+    "books": 36,
+    "pages": 16887,
+    "long_s": 10.68,
+    "bleed": 2.68,
+    "loop": 0.08,
+    "fixable": 12.86,
+    "reread": 0.08,
+    "any": 12.92,
+    "text_repair_share_of_defective": 99.4,
+    "book_mean_any": 10.68,
+    "book_mean_long_s": 7.8,
+    "book_mean_bleed": 3.37
+   }
+  },
+  "columns": {
+   "1": {
+    "books": 46,
+    "pages": 17924,
+    "long_s": 4.92,
+    "bleed": 2.47,
+    "loop": 0.07,
+    "fixable": 7.04,
+    "reread": 0.07,
+    "any": 7.1,
+    "text_repair_share_of_defective": 99.06,
+    "book_mean_any": 7.1,
+    "book_mean_long_s": 4.74,
+    "book_mean_bleed": 2.67
+   },
+   "2": {
+    "books": 8,
+    "pages": 6220,
+    "long_s": 20.42,
+    "bleed": 0.76,
+    "loop": 0.19,
+    "fixable": 20.82,
+    "reread": 0.19,
+    "any": 20.96,
+    "text_repair_share_of_defective": 99.08,
+    "book_mean_any": 17.28,
+    "book_mean_long_s": 16.54,
+    "book_mean_bleed": 0.77
+   }
+  },
+  "side_notes": {
+   "false": {
+    "books": 45,
+    "pages": 17121,
+    "long_s": 6.23,
+    "bleed": 2.35,
+    "loop": 0.12,
+    "fixable": 8.22,
+    "reread": 0.12,
+    "any": 8.33,
+    "text_repair_share_of_defective": 98.53,
+    "book_mean_any": 8.12,
+    "book_mean_long_s": 5.77,
+    "book_mean_bleed": 2.63
+   },
+   "true": {
+    "books": 9,
+    "pages": 7023,
+    "long_s": 15.46,
+    "bleed": 1.24,
+    "loop": 0.04,
+    "fixable": 16.36,
+    "reread": 0.04,
+    "any": 16.37,
+    "text_repair_share_of_defective": 99.74,
+    "book_mean_any": 11.07,
+    "book_mean_long_s": 10.09,
+    "book_mean_bleed": 1.21
+   }
+  },
+  "greek": {
+   "false": {
+    "books": 44,
+    "pages": 20963,
+    "long_s": 9.42,
+    "bleed": 1.59,
+    "loop": 0.11,
+    "fixable": 10.72,
+    "reread": 0.11,
+    "any": 10.82,
+    "text_repair_share_of_defective": 98.94,
+    "book_mean_any": 8.07,
+    "book_mean_long_s": 6.75,
+    "book_mean_bleed": 1.45
+   },
+   "true": {
+    "books": 10,
+    "pages": 3181,
+    "long_s": 5.6,
+    "bleed": 4.9,
+    "loop": 0,
+    "fixable": 9.68,
+    "reread": 0,
+    "any": 9.68,
+    "text_repair_share_of_defective": 100,
+    "book_mean_any": 10.98,
+    "book_mean_long_s": 5.36,
+    "book_mean_bleed": 6.54
+   }
+  },
+  "long_s_printed": {
+   "false": {
+    "books": 1,
+    "pages": 146,
+    "long_s": 0.68,
+    "bleed": 1.37,
+    "loop": 0,
+    "fixable": 2.05,
+    "reread": 0,
+    "any": 2.05,
+    "text_repair_share_of_defective": 100,
+    "book_mean_any": 2.05,
+    "book_mean_long_s": 0.68,
+    "book_mean_bleed": 1.37
+   },
+   "true": {
+    "books": 53,
+    "pages": 23998,
+    "long_s": 8.96,
+    "bleed": 2.03,
+    "loop": 0.1,
+    "fixable": 10.64,
+    "reread": 0.1,
+    "any": 10.73,
+    "text_repair_share_of_defective": 99.07,
+    "book_mean_any": 8.73,
+    "book_mean_long_s": 6.6,
+    "book_mean_bleed": 2.41
+   }
+  },
+  "spread": {
+   "false": {
+    "books": 31,
+    "pages": 14515,
+    "long_s": 10.47,
+    "bleed": 1.43,
+    "loop": 0.03,
+    "fixable": 11.55,
+    "reread": 0.03,
+    "any": 11.57,
+    "text_repair_share_of_defective": 99.7,
+    "book_mean_any": 8.21,
+    "book_mean_long_s": 6.92,
+    "book_mean_bleed": 1.64
+   },
+   "true": {
+    "books": 23,
+    "pages": 9629,
+    "long_s": 6.57,
+    "bleed": 2.94,
+    "loop": 0.2,
+    "fixable": 9.14,
+    "reread": 0.2,
+    "any": 9.33,
+    "text_repair_share_of_defective": 97.88,
+    "book_mean_any": 9.15,
+    "book_mean_long_s": 5.92,
+    "book_mean_bleed": 3.41
+   }
+  },
+  "engine_x_long_s_printed": {
+   "flash|\u017f printed=false": {
+    "books": 1,
+    "pages": 146,
+    "long_s": 0.68,
+    "bleed": 1.37,
+    "loop": 0,
+    "fixable": 2.05,
+    "reread": 0,
+    "any": 2.05,
+    "text_repair_share_of_defective": 100,
+    "book_mean_any": 2.05,
+    "book_mean_long_s": 0.68,
+    "book_mean_bleed": 1.37
+   },
+   "flash|\u017f printed=true": {
+    "books": 25,
+    "pages": 12473,
+    "long_s": 4.19,
+    "bleed": 1.1,
+    "loop": 0.04,
+    "fixable": 5.18,
+    "reread": 0.04,
+    "any": 5.22,
+    "text_repair_share_of_defective": 99.23,
+    "book_mean_any": 5.03,
+    "book_mean_long_s": 4.04,
+    "book_mean_bleed": 1.05
+   },
+   "lite|\u017f printed=true": {
+    "books": 28,
+    "pages": 11525,
+    "long_s": 14.13,
+    "bleed": 3.05,
+    "loop": 0.16,
+    "fixable": 16.55,
+    "reread": 0.16,
+    "any": 16.69,
+    "text_repair_share_of_defective": 99.01,
+    "book_mean_any": 12.04,
+    "book_mean_long_s": 8.88,
+    "book_mean_bleed": 3.63
+   }
+  }
+ },
+ "q25": {
+  "books": 54,
+  "spearman": {
+   "long_s": {
+    "first25": 0.3,
+    "spread25": 0.76,
+    "random25_mean": 0.72,
+    "whole_book_median_pct": 4.2,
+    "books_with_any": 49
+   },
+   "bleed": {
+    "first25": 0.64,
+    "spread25": 0.67,
+    "random25_mean": 0.63,
+    "whole_book_median_pct": 0.2,
+    "books_with_any": 28
+   },
+   "fixable": {
+    "first25": 0.29,
+    "spread25": 0.82,
+    "random25_mean": 0.74,
+    "whole_book_median_pct": 4.9,
+    "books_with_any": 52
+   },
+   "reread": {
+    "first25": 0.6,
+    "spread25": 0.33,
+    "random25_mean": 0.29,
+    "whole_book_median_pct": 0,
+    "books_with_any": 11
+   },
+   "any": {
+    "first25": 0.25,
+    "spread25": 0.81,
+    "random25_mean": 0.73,
+    "whole_book_median_pct": 4.9,
+    "books_with_any": 53
+   }
+  },
+  "rules": [
+   {
+    "rule": "long-s repair: \u2265 20% of pages long-s",
+    "whole_book_yes": 2,
+    "first25": {
+     "agree": 50,
+     "miss": 1,
+     "false_alarm": 3
+    },
+    "spread25": {
+     "agree": 52,
+     "miss": 0,
+     "false_alarm": 2
+    },
+    "random25_mean_agree": 52.4
+   },
+   {
+    "rule": "long-s repair: \u2265 5% of pages long-s",
+    "whole_book_yes": 23,
+    "first25": {
+     "agree": 32,
+     "miss": 14,
+     "false_alarm": 8
+    },
+    "spread25": {
+     "agree": 44,
+     "miss": 7,
+     "false_alarm": 3
+    },
+    "random25_mean_agree": 42.5
+   },
+   {
+    "rule": "bleed clean-up: \u2265 2% of pages bleed",
+    "whole_book_yes": 7,
+    "first25": {
+     "agree": 46,
+     "miss": 2,
+     "false_alarm": 6
+    },
+    "spread25": {
+     "agree": 51,
+     "miss": 0,
+     "false_alarm": 3
+    },
+    "random25_mean_agree": 48.8
+   },
+   {
+    "rule": "re-read whole book: \u2265 10% of pages need re-read",
+    "whole_book_yes": 0,
+    "first25": {
+     "agree": 54,
+     "miss": 0,
+     "false_alarm": 0
+    },
+    "spread25": {
+     "agree": 54,
+     "miss": 0,
+     "false_alarm": 0
+    },
+    "random25_mean_agree": 54
+   },
+   {
+    "rule": "re-read whole book: \u2265 1% of pages need re-read",
+    "whole_book_yes": 1,
+    "first25": {
+     "agree": 51,
+     "miss": 0,
+     "false_alarm": 3
+    },
+    "spread25": {
+     "agree": 54,
+     "miss": 0,
+     "false_alarm": 0
+    },
+    "random25_mean_agree": 52.5
+   },
+   {
+    "rule": "any action: \u2265 10% of pages defective",
+    "whole_book_yes": 12,
+    "first25": {
+     "agree": 41,
+     "miss": 7,
+     "false_alarm": 6
+    },
+    "spread25": {
+     "agree": 48,
+     "miss": 3,
+     "false_alarm": 3
+    },
+    "random25_mean_agree": 46.9
+   }
+  ],
+  "mean_abs_error_pts": {
+   "long_s": {
+    "first25": 6.71,
+    "spread25": 2.76,
+    "first25_bias": -0.79
+   },
+   "bleed": {
+    "first25": 2.05,
+    "spread25": 0.77,
+    "first25_bias": -0.39
+   },
+   "fixable": {
+    "first25": 7.72,
+    "spread25": 3.05,
+    "first25_bias": -1.04
+   },
+   "reread": {
+    "first25": 0.28,
+    "spread25": 0.11,
+    "first25_bias": 0.2
+   },
+   "any": {
+    "first25": 7.73,
+    "spread25": 3.13,
+    "first25_bias": -0.83
+   }
+  },
+  "first25_page_types": {
+   "text": 471,
+   "none": 277,
+   "blank": 142,
+   "preface": 105,
+   "index": 85,
+   "archived-spread": 75,
+   "dedication": 71,
+   "title-page": 45
+  },
+  "first25_text_share": 55.41,
+  "whole_text_share": 90.37
+ },
+ "formats": {
+  "typeface": {
+   "roman": 36,
+   "italic": 8,
+   "gothic": 10
+  },
+  "columns": {
+   "1": 46,
+   "2": 8
+  },
+  "side_notes": {
+   "false": 45,
+   "true": 9
+  },
+  "greek": {
+   "false": 44,
+   "true": 10
+  },
+  "long_s_printed": {
+   "true": 53,
+   "false": 1
+  },
+  "spread": {
+   "false": 31,
+   "true": 23
+  }
+ },
+ "gate": {
+  "long_s": {
+   "pos_min": 0.97,
+   "neg_max": 0.017,
+   "pass": true
+  },
+  "bleed": {
+   "pos_min": 0.871,
+   "neg_max": 0.033,
+   "pass": true
+  },
+  "loop": {
+   "pos_min": 0.896,
+   "neg_max": 0,
+   "pass": true
+  },
+  "truncation": {
+   "pos_min": 0.939,
+   "neg_max": 0.009,
+   "pass": true
+  },
+  "empty": {
+   "pos_min": 0.991,
+   "neg_max": 0,
+   "pass": true
+  },
+  "interleave": {
+   "pos_min": 0.911,
+   "neg_max": 0.01,
+   "pass": true
+  }
+ }
+}

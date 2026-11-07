@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three has any readable text, so none can be judged as Sanskrit or Malayalam; A and C are identical and consistently show two string holes per row, while B's hole count changes from row to row, so A's place over C is an arbitrary tie-break.

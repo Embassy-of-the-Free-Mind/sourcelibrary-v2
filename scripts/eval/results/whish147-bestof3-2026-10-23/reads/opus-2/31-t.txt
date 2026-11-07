@@ -1,0 +1,11 @@
+ROW 1 | ദ്രവ്യലക്ഷണ[illegible]ഹാദാദിക്ഷ ‖ കാൎയ്യമിത്യനൊലെനൊവ ‖ വസിദ്ധ്യത്വാദന്യൊന്യഥാവ്യാഖ്യാനെ[illegible]യദ്ധം
+ROW 2 | കാരാകിൽകാരണാം[illegible] ‖ ബുദ്ധിവക്കിയ തെ ‖ തൽകാൎയ്യതയൊപ്യിട്ടാഗാൽ ഉപകാരെ ന
+ROW 3 | കട്ടാവാദിത്ര്യഷ്ടഃകൃകാ ‖ കാൎയ്യാ വ്യാപ്തിവിശ ‖ ശരീരസ്യാന്വഥാനസ സായന വ ഭെദമെൎ
+ROW 4 | കാരണാനാധ്യവകിശ്ച ‖ [illegible]കാരണാത്മ ‖ ചവൃദ്ധിക്കികസാഹ ലഹാരപഡിഷാലകൈ
+ROW 5 | ഷന്നാമ്പകാണ്ഡം ‖ ബാഹ്യാന്തക്കാ ‖ [illegible]ന്തപ്പ്രവിധാ ഗൃഹിസംഗ്രഹവക്കിഷൃ
+ROW 6 | ഹനാവകാശ ‖ ദ്വാമെണഃവൊന്തു ‖ നമ്യപങ്കവൃക്കിഃ കപാലൈലവമാൎ
+ROW 7 | ഷെക്ഷമഘൃൎയ്യ ‖ ബാഹ്യവന്ദ്ദഹ ‖ ത്താപകാരിഷിത ത്രകൈലൈവംശ്വാഥാകാ
+ROW 8 | ലംശിമെതാക്ഷ്ണപാകവ ‖ മഃമാന്ദമെമെ ‖ തൎത്തൃഷ്ണാന്മാജ്യുവമെനാതിമാനശിഷ്യ്യായാ
+ROW 9 | ഗന്ധതിലിമൈദ്രവംത[illegible] ‖ പാക്ഷിതൈട്ടെ ‖ കമെൎയ്യമെതൃ[illegible]ഗൃഹതൃപകാരൈരൂരിഷാ
+ROW 10 | ദ്യാൎത്തികിരണാനാംബൊധ്യ ‖ യാനാലെബൊധവകാമെൎ ‖ ഷവകാമെൎകിടാലെ[illegible]വായെതിരുതളവമൃന്യതെതദ
+NOTE | Very low confidence. The leaf has 10 rows. I could make out the hole and column layout and roughly where each row's characters sit. But most of the readings are my best guesses at individual characters, not a reliable reading, and many words will be wrong. I didn't fill in anything from the Sāṅkhyakārikā or a commentary. Rows 1–4 pass above the holes, so their ‖ marks only show where one piece ends and the next begins, and the right-hole ‖ is left out in rows 3–10 because I couldn't place that cut with confidence. Please check this against the images or with a reader who knows Malayalam palm-leaf hands.

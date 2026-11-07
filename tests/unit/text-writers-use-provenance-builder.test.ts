@@ -26,6 +26,7 @@ const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFil
 
 /** Writers whose text is not a Gemini reading — reason required. */
 const ALLOWED: Record<string, string> = {
+  'scripts/lib/longs-orthography.mjs': "f → ſ in the page's own stored transcription (assertOrthographicOnly), no model call; keeps the engine block, recomputes content_hash, page_revisions row first (#5924)",
   'scripts/maintenance/withhold-paddle-table-pages-6388.mjs': "--undo moves the page's own earlier transcription back from its page_revisions snapshot; the engine block it was written with never left the page (#6388); nothing is read from a model",
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text, not a Gemini reading — its own text_source / text_edition / alignment block + content_hash (#5560, #5571)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard; writes only page_revisions',
@@ -35,8 +36,10 @@ const ALLOWED: Record<string, string> = {
   'scripts/lib/syriac-kraken-lane.mjs': 'Kraken (specialist, not Gemini) — its own engine block, checked by missingProvenance',
   'scripts/workers/syriac-kraken-lane.mjs': 'Kraken lane worker; the $set is built in scripts/lib/syriac-kraken-lane.mjs',
   'scripts/lib/ndl-koten-lane.mjs': 'NDL古典籍OCR (specialist, not Gemini) — its own engine block + content_hash per the #4613 specialist standard (#4925)',
+  'scripts/lib/gpu-print-lane.mjs': 'LightOnOCR-3-1B on gex45 (specialist, not Gemini) — its own engine block + content_hash, `lightonocr` checked by missingProvenance (#6871)',
   'scripts/lib/paddle-zh-lane.mjs': 'PaddleOCR-VL (specialist, not Gemini) — its own engine block + content_hash, `paddle` checked by missingProvenance (#5600)',
   'scripts/maintenance/apply-reocr-verdicts.mjs': 'BDRC Tibetan models (specialist, not Gemini) — the template engine block',
+  'scripts/maintenance/apply-tib-gutter-vllm-6871.mjs': 'BDRC Yigdzin page reads on gex45 (specialist, not Gemini) — the apply-reocr-verdicts engine block, written through writePageText (#6871)',
   'scripts/import/ia-ocr-ingest.mjs': "the Internet Archive's own OCR, recorded in the `ia` block, not a Gemini read",
   'scripts/import/cdli-atf-source.mjs': "CDLI's published ATF transliteration",
   'scripts/import/import-oraec.mjs': 'ORAEC corpus dump, a published edition',
@@ -170,7 +173,7 @@ describe('every Gemini writer of page text goes through the provenance builder (
  * writePageText fails here.
  */
 const GRANDFATHER_FILE = path.join(REPO, 'tests/unit/fixtures/page-text-writers-grandfathered.json');
-const GRANDFATHER_CEILING = 90; // measured 2026-10-21; lower it as writers migrate, never raise it
+const GRANDFATHER_CEILING = 88; // measured 2026-10-21 (90), 89 after #7384, 88 after paddle-zh-guarded-lane migrated (#6871); lower it as writers migrate, never raise it
 
 const CLEAR_FIELD = /['"]?\b(ocr|translation)(\.data)?['"]?\s*:/;
 const SET_EMPTY = /['"](ocr|translation)\.data['"]\s*:\s*(null|''|""|undefined)\b/;

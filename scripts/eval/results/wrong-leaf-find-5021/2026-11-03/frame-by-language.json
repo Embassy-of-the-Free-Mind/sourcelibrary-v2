@@ -1,0 +1,154 @@
+{
+ "by_language": [
+  {
+   "fam": "Latin",
+   "collector": 31711,
+   "multi": 1453591,
+   "single": 472358,
+   "total": 1957660,
+   "multi_share": 0.743
+  },
+  {
+   "fam": "English",
+   "collector": 6530,
+   "multi": 469459,
+   "single": 251248,
+   "total": 727237,
+   "multi_share": 0.646
+  },
+  {
+   "fam": "German",
+   "collector": 12077,
+   "multi": 462736,
+   "single": 201894,
+   "total": 676707,
+   "multi_share": 0.684
+  },
+  {
+   "fam": "Greek",
+   "collector": 4082,
+   "multi": 320227,
+   "single": 130038,
+   "total": 454347,
+   "multi_share": 0.705
+  },
+  {
+   "fam": "Chinese",
+   "collector": 0,
+   "multi": 262268,
+   "single": 87672,
+   "total": 349940,
+   "multi_share": 0.749
+  },
+  {
+   "fam": "French",
+   "collector": 2806,
+   "multi": 217636,
+   "single": 100064,
+   "total": 320506,
+   "multi_share": 0.679
+  },
+  {
+   "fam": "Tibetan",
+   "collector": 0,
+   "multi": 256406,
+   "single": 61873,
+   "total": 318279,
+   "multi_share": 0.806
+  },
+  {
+   "fam": "other",
+   "collector": 4888,
+   "multi": 157866,
+   "single": 32528,
+   "total": 195282,
+   "multi_share": 0.808
+  },
+  {
+   "fam": "Italian",
+   "collector": 2009,
+   "multi": 120846,
+   "single": 32920,
+   "total": 155775,
+   "multi_share": 0.776
+  },
+  {
+   "fam": "Dutch",
+   "collector": 1993,
+   "multi": 96052,
+   "single": 51405,
+   "total": 149450,
+   "multi_share": 0.643
+  },
+  {
+   "fam": "Russian",
+   "collector": 59,
+   "multi": 92853,
+   "single": 6028,
+   "total": 98940,
+   "multi_share": 0.938
+  },
+  {
+   "fam": "Sanskrit",
+   "collector": 11774,
+   "multi": 56435,
+   "single": 29770,
+   "total": 97979,
+   "multi_share": 0.576
+  },
+  {
+   "fam": "Hebrew",
+   "collector": 2052,
+   "multi": 53880,
+   "single": 18671,
+   "total": 74603,
+   "multi_share": 0.722
+  },
+  {
+   "fam": "Arabic",
+   "collector": 389,
+   "multi": 44108,
+   "single": 13620,
+   "total": 58117,
+   "multi_share": 0.759
+  },
+  {
+   "fam": "Korean",
+   "collector": 0,
+   "multi": 51101,
+   "single": 1194,
+   "total": 52295,
+   "multi_share": 0.977
+  },
+  {
+   "fam": "Spanish",
+   "collector": 86,
+   "multi": 22839,
+   "single": 3538,
+   "total": 26463,
+   "multi_share": 0.863
+  },
+  {
+   "fam": "Japanese",
+   "collector": 44,
+   "multi": 17014,
+   "single": 1770,
+   "total": 18828,
+   "multi_share": 0.904
+  },
+  {
+   "fam": "Persian",
+   "collector": 59,
+   "multi": 10171,
+   "single": 1123,
+   "total": 11353,
+   "multi_share": 0.896
+  }
+ ],
+ "all": {
+  "collector": 80559,
+  "multi": 4165488,
+  "single": 1497714,
+  "total": 5743761
+ }
+}

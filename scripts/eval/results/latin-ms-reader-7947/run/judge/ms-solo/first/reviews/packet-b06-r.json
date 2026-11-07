@@ -1,0 +1,56 @@
+[
+  {
+    "book_id": "b06-r", "slot": 1, "title": "Actus et consecratio crismatis in cena domini", "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A liturgical manuscript (Missal leaves: Maundy Thursday chrism rubric, Gloria, Canon 'Te igitur', Pater noster with square notation; Houghton shelfmark label 'fMS Typ 309' visible on the slides). No tradition or collection is given, and Mass liturgy sits outside the library's core esoteric/early-science shelves; the title is only the rubric of the first leaf, not the name of the manuscript.",
+    "rights_flag": null,
+    "structure_note": "The three images are not consecutive leaves: image 1 is fol. 2r (pencil '2' bottom right) and ends mid-Gloria at 'Quo[niam]'; image 2 starts at the Canon 'Te igitur' (Credo, Preface and Sanctus missing between them); image 3 is fol. 12v (pencil '12v' in the margin), the Pater noster after the Canon. The images look like a set of 35mm slides of selected openings, so the 'book' is a selection of leaves, not a continuous text; a reader paging through will meet unannounced jumps. None of the three pages has a translation (translation is null on all three).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Iesu Christi", "image": "ihu cristi", "problem": "nomen sacrum expanded and spelling normalised to 'Christi' (scribe writes 'cristi'); same for 'Iesu Christe' for 'ihu xpe'", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The <image-desc> says the initial 'N' contains 'a bird (likely a pelican) feeding its young'. The image shows no pelican: the uprights of the N are two columns that end in siren/merfolk figures with human faces, and the diagonal is a fish- or dragon-like creature. The decoration description is invented.", "severity": "moderate", "class": "O15" },
+          { "note": "No translation: translation is null for this page.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "haec dona haec munera haec sancta sacrificia", "image": "Hec do-na ✠ Hec mu-nera ✠ Hec san✠cta", "problem": "medieval 'hec' normalised to classical 'haec'; similarly 'que' → 'quae'. Meaning unchanged", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The initial 'T' is described as 'a stylized cross or liturgical instrument'. It is a column/crucifix-like figure with a winged head at top and two serpents or dragons at the base. Vague but not clearly false.", "severity": "minor" },
+          { "note": "No translation: translation is null for this page.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "<vocab> tag lists '1540', which is not on the page (it comes from the catalogue date).", "severity": "minor", "class": "O15" },
+          { "note": "No translation: translation is null for this page.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is very good on all three leaves, with abbreviations expanded and spelling lightly normalised. But the page-1 image description invents a pelican in the initial, nothing is translated, and the 'book' is a non-consecutive set of slides of a Houghton missal manuscript whose fit to the shelves is doubtful."
+  }
+]

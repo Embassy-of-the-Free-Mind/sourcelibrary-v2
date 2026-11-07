@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B is the only one that gives real Sāṅkhyakārikā 50 commentary text in most rows: "prakṛtyupādāna", "catasras tuṣṭayaḥ … ādhyātmikāḥ", "bāhyā viṣayoparamāt", "śabdādibhyo vyāvṛttiḥ", "doṣaṅṅaḷ" (Malayalam for "faults"), while A has only scattered phrases among garbled syllables and C is mostly nonsense.

@@ -1,0 +1,11 @@
+ROW 1 | ശക്കന്തുൎഷ്ണസഹ്ഗൃച്ച്യരെക[illegible] ‖ തിസംജ്ഞാനൊഭിവതിരാജ്ഞിസാംഖ്യാഗദ്ര[illegible] ‖ [illegible]ഃതൈവപഞ്ചാഗ്രവിപൎയ്യങ്ങ
+ROW 2 | ാശുദ്ധിവിജ്ഞയാദ്ധ്രബാംഗ ‖ ഗാരാജ്ഞസൊരാഗഃത്രസ്യശുദ്ധാശുദ്ധകാദ്ധ ‖ ദ്ധഃക്ഷിപകൎബാൻതസ്മാദ്ദ
+ROW 3 | ദ്ദപാ[illegible]ക്ഷ്യജ്ഞാനാദ്ദ്യ ‖ ദ്ദിദ്ദാചൈവനസംസാരത്തിനൈജ്ജീഷബൂദ്ധാദ്ധി ‖ ദ്ധിപ്രാതണ്ട[illegible]ചൈനാശ
+ROW 4 | ശ്ലോതദ്ധിപൎയ്യാസദ്ദ ‖ ദ്ദിഞ്ഞവിപ്ലാതന്ത്രവിപൎയ്യാമേംന്ന ‖ വിപ്ലൗതഃപ്രാക്കിതാന
+ROW 5 | ാമപ്രാപ്തിതൃബ്ബുഃ ‖ മുക്തിസൂത്രൈവാവരാത്ഥാൎമിയമെത ‖ ന്നുവപ്രാഷ്ഠമഷ്ടനന്നം
+ROW 6 | ജ്ഞമിന്ദ്രവാണൈംഗ്രഹ ‖ കമൎമാക്കിഃസജ്ഞഭിക്ഷ്മന്ധഃസം ‖ സാലഖിതഖ്ഡടമന്ദ്ര
+ROW 7 | മിതമൈനെമിതിക്കബ്ബ ‖ ഷൈഡശമുക്കൾക്കുംക്ൽസംക്കു ‖ വൈണ[illegible]ചതുൎദ്ദ
+ROW 8 | ഡമാദിഃഹ്വിക്ഷൌത്രാ ‖ ത്രപ്രതൂലചശചകൈന്ദ്രനബ്ദിദ്ധ ‖ ച്ചുരൈതന്ത്രസബൈഷ്ട്രായഃ
+ROW 9 | ഷൈഡാകഡശവിധഉൽക്കെ ‖ ഏകാവിപൎയ്യയാദശശക്തിതുഷ്ടിസിദ്ധ്യാവ ‖ ഷ്ടിവിപൎയ്യാൽനാമാമാവ്വ
+ROW 10 | ാക്ഷ്യാപ്ത്യായസദ്ധ്യാസ ‖ സര്രക്ഷാക്ഷഃതന്ത്രവിപൎയ്യയംന്നജ്ഞാ ‖ ാനംത്തശക്തിജ്ഞാനാദി
+NOTE | My confidence in this reading is low. The 10 rows are clear and I placed them reliably, but many letter readings are uncertain guesses at the strokes and are not checked against any known text. The rows 1–3 and 9–10 run full width, and there the ‖ only marks where the string covers the line; the string probably hides a letter or two in rows 1–3. Two places are only partly readable: the overlap between pieces p02 and p03, and the right end of row 1. There is also a margin mark (something like "ബു" with a curl) by row 7 on the left, which I left out of the rows.

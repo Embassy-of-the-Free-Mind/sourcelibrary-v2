@@ -1,0 +1,10 @@
+ROW 1 | രാപ്തവചനന്തു‖൫സാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം‖പ്രസിദ്ധിരനുമാനാ
+ROW 2 | ൽതസ്മാദപിചാസി‖ദ്ധംപരൊക്ഷമാപ്താഗമാൽസിദ്ധം‖൬അതിദൂരാൽസാ
+ROW 3 | മീപ്യാദിന്ദ്രിയഘാ‖താന്മനൊനവസ്ഥാനാൽ‖സൌക്ഷ്മ്യാദ്വ്യവധാ
+ROW 4 | നാദഭിഭവാൽ‖സമാനാ{ല}ഭിഹാരാച്ച൭സൌ‖ക്ഷ്മ്യാത്തദനുപല
+ROW 5 | ബ്ധിൎന്നാഭാ‖വാൽകാൎയ്യതസ്തദുപലബ്ധെ‖ഃമഹദാദിതച്ച
+ROW 6 | കാൎയ്യംപ്രകൃതി‖വിരൂപംസരൂപഞ്ച൮അ‖സദകരണാദുപാ
+ROW 7 | ദാനഗ്രഹണാ‖ൽസൎവ്വസംഭവാഭാവാച്ഛ‖ക്തസ്യശക്യകരണാ
+ROW 8 | ൽകാരണഭാവാ‖ച്ചസൽകാൎയ്യം൯ഹെതുമദനി‖ത്യമവ്യാപിസക്രിയമ
+ROW 9 | നകമാശ്രിതംലി‖ഗംസാവയവംപരതന്ത്രംവ്യക്തം‖വിപരീതമവ്യക്തം൧൦
+NOTE | Nine rows, all legible but in a very cursive hand, so roughly a quarter of the akṣaras (especially conjuncts, the e-signs in rows 3, 5, 8, and the figures I read as the numerals ൫ ൬ ൭ ൮ ൯ ൧൦) are uncertain; in row 4 the scribe has circled one ല after സമാനാ, apparently cancelling it, shown here as {ല}; the anusvāra of ലിഗം in row 9 may be hidden under the string.

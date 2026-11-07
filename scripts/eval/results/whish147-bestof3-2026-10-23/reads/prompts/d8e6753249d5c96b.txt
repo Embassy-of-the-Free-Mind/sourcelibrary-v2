@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. baddhavādasaṃbandhanālghaṭādibhāvaḥbhūtalattilghaṭābhāvavānghaṭatvāvacchinnapratiyogikasāmānya
+2. ghaṭāca [illegible] tikkaḥcevaṃghaṭeghaṭābhāvopikaṭatvāvacchinna [illegible] kaṭānāsti [illegible] yikaraṇṇa
+3. [illegible] kṣiṇennānāṃśśibhaya [illegible] ghaṭapaṭayanāsti [illegible] tvanyāl [illegible] tvanabhekkapolāna [illegible]
+4. svāmitrakkārya ‖ nādāvaṣivāḥsamavāyime [illegible] ‖ kkiyamanaḥghaṭādrūpa
+5. itthighaṭādekṣa ‖ nityekkaṭāva [illegible] nyānyatragama ‖ nāṭavekṣamindra
+6. bhaitendraṭāca ‖ sandenasti [illegible] pratitedde ‖ bhailaghaṭasaṃyoga
+7. [illegible] gaṭāvagho ‖ sakhairantanāṭova [illegible] ‖ bhindhyumakkayaṃṅṅaḻu
+8. ontrakkaṭāditvālvasaṃyogaprāgabhūḥ [illegible] drāvṛṣṭhaṃnisso [illegible] rasantāddantrādūpa
+9. nyavṛttitveḥu [illegible] āpasaraṇṇācasaṃyogaprāgabhāvadhvaṃsasatvāl [illegible] kti
+10. ovitraṃokkavalaṭa [illegible] vikkeddāderavandanākṣitteprṛvacavā [illegible] cipacavattoveṭāre
+
+TRANSCRIPTION B
+1. samavāyasaṃbandhanāghaṭā ‖ bhāvaḥbhūtalattilghaṭābhāvālghaṭabhāvaviśi ‖ ṣṭinapratyakṣekasāmagrya
+2. [illegible] ṭāpa [illegible] tvirikkeḥevama ‖ [illegible] bhāvohikaṭabhāva [illegible] napra ‖ [illegible] ṭānākṣi [illegible] karaṇa [illegible]
+3. vakṣi [illegible] nāṃśikṣaya [illegible] ‖ ghaṭapaṭa [illegible] nākṣi [illegible] tvanṛāl [illegible] ‖ [illegible] palabhādhi
+4. svābhāvikkakārya ‖ nābhāva [illegible] samayaviśeṣaṇatva ‖ kkiyamanaḥghaṭābhāva
+5. itighaṭābhāva ‖ [illegible] nṛāhrātragama ‖ nābhāva [illegible] viśepra
+6. [illegible] ghaṭopa ‖ saṃ [illegible] tti [illegible] ‖ [illegible] laghaṭasaṃyoga
+7. [illegible] gaṭāva [illegible] ‖ sa [illegible] nnanābhāvaprati ‖ [illegible] makṣayaṃ [illegible]
+8. [illegible] kṣaṭāvattilva ‖ saṃyogaprāgabhāvo [illegible] saṃyo ‖ ga [illegible] saṃtrāda [illegible] bhāpa
+9. [illegible] ttil [illegible] ṭa ‖ [illegible] ṇṇāvasaṃsaṃyogaprāgabhā ‖ [illegible] saṃsaṃtrālukti
+10. [illegible] laṭa [illegible] vi ‖ [illegible] śākṣitriprāpahā ‖ [illegible] copacārattoghaṭāme
+
+TRANSCRIPTION C
+1. [illegible] saṃbandhanālpaṭā ‖ dbhāvaḥ [illegible] ttal ndhaṭā ‖ [illegible] ābhāvāl ghaṭādyāvacchi ‖ nnapravṛttyaikasāmagrya
+2. ghaṭāpa [illegible] tirikkeḥ evama ‖ hetūnāṃ bhāvābhā [illegible] ‖ ṣikaṭatvāvacchinnaprā ‖ [illegible] ṭānāññirivyadhikaraṇā
+3. vacchinnaināṃ [illegible] yate ‖ [illegible] ghaṭapaṭatva [illegible] cchi ‖ [illegible] tvairyāl [illegible] bheda ‖ [illegible] bhedatva [illegible] nāsti
+4. sāmagryaikyātra ‖ nāṭādiṣvasa ‖ samavāyitvenaikya ‖ kriyamanaḥ ghaṭādbhāva
+5. itiprā [illegible] ‖ [illegible] tvaghaṭādbhava ‖ [illegible] trātregama ‖ nāṭārave [illegible] rvva
+6. [illegible] tanyāṭaitāpa ‖ [illegible] satainasti ‖ [illegible] tvapratinaitrya ‖ [illegible] labhaṭasaṃyoga
+7. [illegible] gaṭāvaṭā ‖ sa [illegible] āra [illegible] ‖ [illegible] nāṭāva [illegible] ‖ [illegible] mādyāṃśca
+8. [illegible] kṣaṭāvattinna rva ‖ [illegible] saṃyogā [illegible] gadbhūḥ ‖ [illegible] ddāva [illegible] saṃyogā ‖ [illegible] satvādyantadbhāva
+9. dyapravṛttitaiḥ [illegible] ‖ [illegible] prasabhyo [illegible] saṃ ‖ [illegible] saṃyogaprāgabhā ‖ [illegible] saṃsthāl iti
+10. [illegible] ritinaitatvāva [illegible] ‖ [illegible] bhava [illegible] devana [illegible] ‖ [illegible] kṣitivyapa [illegible] ‖ [illegible] prāvattvā [illegible] bheṭāma
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

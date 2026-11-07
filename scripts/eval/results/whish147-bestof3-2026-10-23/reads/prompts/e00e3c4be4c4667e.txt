@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. bhūtādyahaṅkārālttanmā ‖ davaprakośāddupandhaśabdepṛthviṃvaigādya ‖ ccasmṛtijñatāyakketasacatai
+2. ndraṇākupaṟukkaiyaśyā ‖ tvavāgendriyāḥkaṇṇa [illegible] ndhaḥtryāntiprṛ [illegible] ‖ siddhāntavaṣṭakādaśakkā
+3. mindriyamaḻṣyandaḥubha ‖ ātmakamatramanaityādibhanābhotrāntitendri [illegible] ‖ vakamanaubhayātmakamubhaya
+4. ndhābhāvaṃbuddhīndriya ‖ āṇaṃkarmmendriyayāṇāñcasaṃsāritva ‖ yatrahāṇekālelabuddhi
+5. ndriyakārmmendriyāṇā ‖ yāḥubhayatrāpravṛttippāl ‖ itilakṣaṇābhityāda
+6. sākakalpakamiti ‖ ḥkalpakamidannamitikramindriya ‖ mityādaḥindriyāvasā
+7. yatvādityādi ‖ digddheyaniścayādityarthaḥkotra ‖ dindriyaṃgandhādamane
+8. ākṣityartthaḥkaite ‖ ṇāntādahaṃkārālppannānāṃ ‖ guṇapravibhedaḥyaḥ
+9. traiguṇyādbuddhīndriyakal ‖ prakṛtiviśeṣayatenākāraviśeṣayamavi ‖ yabhāgādikarmmendriyakal
+10. prakṛtiyatakarmmendriyaka ‖ hakarmmāmimarekkābhūyātmakamanekātmakami ‖ kamityādiguṇapariṇāmaviśe
+11. śabdānānyādimitiṣaśa ‖ gaśaṃkāraṇamāyaigrahaṇāsyādyabhiśe ‖ ṣāmannānābhibhavādyā
+
+TRANSCRIPTION B
+1. bhinneṣvarkkādilnanyūḥ ‖ devaprakāśādrūpasthaśabdepṛṣṭiṃvaigādya ‖ [illegible] smṛtijñatāya [illegible] sahatai
+2. ndraṇegha [illegible] kkaiyaśvā [illegible] ‖ tvavāgindriyāḥkarmma [illegible] ndriyaṃ [illegible] ndripri ‖ [illegible] ndrāṇivākkādeśaṅkā
+3. mindriyamaḻggandhādahāubhaya ‖ ātmakamatramanaubhayā [illegible] ndriya [illegible] ‖ [illegible] varamanaubhayātmakamubhaya
+4. ndhādrāvaṃbuddhīndriya ‖ āṇoḥkarmmendriyāṇā [illegible] spaspātiśca ‖ yatrahāṇikkālecciti
+5. ndriyakārmmendriyaṅṅaḻ ‖ tyartthaḥ ubhayatrāprāpra [illegible] pāratal ‖ ubhalakṣaṇamityātha
+6. sākṣaḥḻaḻḻayatisa ‖ ḥkaṇṭhakamimdandamikkamindriya ‖ mityāhaubhayaṃkṣā
+7. yatrābhityādiu ‖ ddiyendriyamāpyādityartthaḥkairātra ‖ ndriyaṃgandhamāmane
+8. āṣitvartthaḥmakkaitya ‖ kṣandrādrahaṃkārarādduḻḻatānāṃkṣa ‖ śāstrapadebhaḥyaṣa
+9. ññābhyābhuddhīndriyaṅkal ‖ prakṛtiścatamiṣṭhyayantratamiṣvayamavi ‖ viyabhāgādikammendriyaṅkal
+10. prakṛtiyetakketmanomarakkā ‖ kakṣāmimatārakṣādeyāvātmakamainakātmikami ‖ kamityādiguṇapariṇāmaviśe
+11. śaṣāterātāvaṣamikkava ‖ vaśāṃkārasvarādyeguṇāṣṇādadeyaṣṇaṣā ‖ ṣāmendrādibhavātvayā
+
+TRANSCRIPTION C
+1. bhanavvarkkāralnnanyā ‖ davaprakāśāddūpaghaśabdepṛṣṭiṃgodra ‖ stitajñatāyairasacate
+2. [illegible] ṇṇopacārattakaikkāyaścā ‖ tvavāgindriyāḥkaṇṇannaghaṃanyārtthinnaprabhi ‖ dyānendravakṣikādeśaṅkā
+3. mindriyamaḻsyānṛhāubha ‖ yātmakamatramanautrādibhihitatraitryantri [illegible] ‖ varemanaubhayātmakamubhaya
+4. ghabhāvaṃbuddhindriya ‖ āṇāṃkarmmendriyāṇāṃkessādhittha ‖ yatrahāṇekārelabdheti
+5. ndriyakarmmendriyaṅṅaḻe ‖ tyartthaḥubhayatrāprāpyaprāpyakāral ‖ itilakṣaṇaṃkodityāgha
+6. svākkukaḻumakkisa ‖ kaḻḻakamidamennamikkukaphamindriya ‖ mityāhaundriyakṣesā
+7. yattrāditryādiu ‖ ddaiyastulyakādityartthaḥkaundra ‖ ndriyaṃgandharāmane
+8. ākṣitrvajjḥśakaitra ‖ ṣaṇṇādahaṃkārāddrūtvānāṃkṣa ‖ [illegible] ṃsalakṣyapaṭṭaṭayaśa
+9. śrotrādibuddhindriyaṅṅaḻ ‖ prakṛtyotaviṣayattotrataviṣayamavi ‖ yaṣāgādikamendriyaṅṅaḻ
+10. prakṛtiyatakarttotaravakka ‖ rttāmimaśarābhūyātmakanokātmikami ‖ tyāhiguṇavariṇāmavidhe
+11. śabdādyādyakṣamitibhava ‖ śāṃkārasthārūpaguṇāntyabhādakamikkṛ ‖ ṣṇāmanennārabhavāddyā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

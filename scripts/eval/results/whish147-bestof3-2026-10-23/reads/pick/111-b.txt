@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the cleanest version of the tanmātra-to-element sequence in rows 1–2, a plausible Kārikā 10–11 discussion ("kāryyatvādinā vyaktam avi…", "vyaktam iṣyate") and a readable Malayalam colophon ("kkālkoṇṭuvannu … el̤utiya granthaṃ"); B is close behind with the strong "hetumadanityam" but has more broken rows, while A drifts into out-of-place wording ("laghuprakāśakaṃ") and garbled Malayalam.

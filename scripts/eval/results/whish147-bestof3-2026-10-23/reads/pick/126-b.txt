@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B has the most connected readings that fit a Malayalam commentary on the Tarkasaṃgraha-Dīpikā, such as "samavāyakṛdāhāstiśabde", "viśeṣaṇaviśeṣyūṭa", "udāharaṇatti", "abhāvāl nāsti iti … pratiyogisatvaṃ", "bhaviṣya" and "adhikaraṇa", while C has fewer such pieces with many gaps and A is mostly syllable strings that don't form words.

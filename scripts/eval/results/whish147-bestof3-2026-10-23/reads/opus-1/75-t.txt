@@ -1,0 +1,11 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | Ten rows: 1–4 and 8–10 run past both holes, 5–7 stop short of them; I couldn't reliably identify any whole akṣara (letters with joined vowel signs), so every row is marked [illegible] rather than guessed or filled in from the Sāṅkhyakārikā.

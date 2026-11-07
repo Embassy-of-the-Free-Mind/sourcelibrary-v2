@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions are entirely [illegible] in every row, so none has any readable text to judge, and A is picked only to fill the required slot.

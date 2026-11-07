@@ -1,0 +1,127 @@
+{
+ "all": {
+  "n": 91,
+  "prefers": 75,
+  "worse": 0,
+  "rate": 0.824
+ },
+ "missingVerdict": 0,
+ "bySample": {
+  "opus-sample-replay": {
+   "n": 42,
+   "prefers": 31,
+   "worse": 0,
+   "rate": 0.738
+  },
+  "opus-sample-replay-2": {
+   "n": 49,
+   "prefers": 44,
+   "worse": 0,
+   "rate": 0.898
+  }
+ },
+ "byTranslator": {
+  "gemini-translated join": {
+   "n": 75,
+   "prefers": 68,
+   "worse": 0,
+   "rate": 0.907
+  },
+  "opus-translated join": {
+   "n": 16,
+   "prefers": 7,
+   "worse": 0,
+   "rate": 0.438
+  }
+ },
+ "byModelA": {
+  "gemini-3.1-flash-lite": {
+   "n": 65,
+   "prefers": 59,
+   "worse": 0,
+   "rate": 0.908
+  },
+  "claude-opus-5-5": {
+   "n": 16,
+   "prefers": 7,
+   "worse": 0,
+   "rate": 0.438
+  },
+  "gemini-4-argon-low": {
+   "n": 5,
+   "prefers": 5,
+   "worse": 0,
+   "rate": 1
+  },
+  "gemini-3.8-flash-low": {
+   "n": 4,
+   "prefers": 3,
+   "worse": 0,
+   "rate": 0.75
+  },
+  "gemini-3-flash-preview": {
+   "n": 1,
+   "prefers": 1,
+   "worse": 0,
+   "rate": 1
+  }
+ },
+ "bySeverity": {
+  "minor": {
+   "n": 75,
+   "prefers": 61,
+   "worse": 0,
+   "rate": 0.813
+  },
+  "major": {
+   "n": 16,
+   "prefers": 14,
+   "worse": 0,
+   "rate": 0.875
+  }
+ },
+ "byLabel": {
+  "catchword": {
+   "n": 17,
+   "prefers": 16,
+   "worse": 0,
+   "rate": 0.941
+  },
+  "drift": {
+   "n": 4,
+   "prefers": 3,
+   "worse": 0,
+   "rate": 0.75
+  },
+  "other": {
+   "n": 9,
+   "prefers": 5,
+   "worse": 0,
+   "rate": 0.556
+  },
+  "omission": {
+   "n": 22,
+   "prefers": 15,
+   "worse": 0,
+   "rate": 0.682
+  },
+  "duplication": {
+   "n": 13,
+   "prefers": 12,
+   "worse": 0,
+   "rate": 0.923
+  },
+  "broken_syntax": {
+   "n": 26,
+   "prefers": 24,
+   "worse": 0,
+   "rate": 0.923
+  }
+ },
+ "excludingOpusJoins": {
+  "n": 75,
+  "prefers": 68,
+  "worse": 0,
+  "rate": 0.907
+ }
+}

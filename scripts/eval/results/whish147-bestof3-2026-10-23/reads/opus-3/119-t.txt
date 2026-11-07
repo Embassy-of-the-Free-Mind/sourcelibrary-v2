@@ -1,0 +1,9 @@
+ROW 1 | ഗുണകൎത്തിനഷാകാശമവിജ്ഞാനപ്പൂൎവ്വബുദ്ധ്യാദിവനാനാവൈചിത്ര്യകന്നൂഹത്തൈഷുക[illegible]ഭിടെദൈവ
+ROW 2 | ഊമാണ്ഡാദാപാദിത്യാൎക്കെഎകതാടെബാസഷ്ട്വക്കാലൊപലഞ്ജ ‖ ഷ്യഭ്രുകമംഭീകാൎല്യമിത്ര
+ROW 3 | ാഹാവിഭൂതിസൃ ‖ ഷ്ടൎദ്രുസംശൈയ്യാൎത്ഥംപിഭൂതം ‖ തൃൽചാഷിത്തിനാ
+ROW 4 | പരിമാണവത്വം ‖ ത്രിയാവത്വംവാവിഭുത്വാദേവ ‖ ാമപരിണമിത്രാ
+ROW 5 | ഹ,ഇത്യൈക്യ ‖ ക്കാലംലക്ഷഞ്ഞത്തിണിതെത്ത ‖ സൎവ്വായാൎക്കാലഃ
+ROW 6 | സങ്കാൎയ്യത്വമി ‖ ത്ക്കാരണഞ്ചബദ്ധശാലക്ഷണ ‖ മാഹ്രാഷിത്വിദ്ധ
+ROW 7 | ചികാൎയ്യമാഗ്രെ ‖ ത്രമിൎക്കാരണംന്ത്രുജ്ഞാരാലക്ഷ ‖ ക്ഷാമവിജ്ഞാനനൈത്ത്വ
+ROW 8 | ജ്ഞാനംവിദ്ദക്ഷെ ‖ സചിവിപത്തിചഭമാത്തൈനാലക്ഷ ‖ ക്ഷാമാവികത്രിതിഞ്ഞ
+NOTE | I could make out the shape of every row, but my reading of the text has low confidence: many conjuncts, chillus and reph marks are doubtful, and some readings are best guesses, so this needs checking against the leaf. The ‖ marks are also unreliable. I placed them by where the text breaks, without checking that each row has exactly one ‖ per hole: rows 1, 7 and 8 run under the holes, and row 1 has no ‖ at all.

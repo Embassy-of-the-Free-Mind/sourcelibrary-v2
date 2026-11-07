@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most like coherent Sāṅkhya commentary across most rows, with "traiduḥkha", "jñānaṃ karmma", "vimokṣasādhana" and "vyaktāvyakta" fitting the context; A is partly word-like but often breaks into strings like "ṭaṭālevaṣṭarvva", and B has many impossible clusters like "kṣaൗrā" and "ṣimakṣra".

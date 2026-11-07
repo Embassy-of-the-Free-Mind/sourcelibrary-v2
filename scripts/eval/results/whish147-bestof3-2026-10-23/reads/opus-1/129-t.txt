@@ -1,0 +1,8 @@
+ROW 1 | വ്യാപ്തിപ്രതിപാദകമുദാഹരണം.പക്ഷധൎമ്മതാജ്ഞാനാൎത്ഥമുപനയഃ[illegible]ദിതയാദികങ്ങളെ
+ROW 2 | ഗമനപ്രയോജനംന്നനുമിതികരണമാഹ[illegible]ൎത്തിനനവ്യാപ്തി[illegible]പക്ഷധൎമ്മതാ
+ROW 3 | ജ്ഞാനാദ്രാമെ ‖ പാനമിതിസാദവെ[illegible]ശിഷ്ട ‖ പരാമൎശിക്കേണം
+ROW 4 | ദികൎത്തവ്യാമിതി ‖ ചെഞ്ഞ.വഭിന്ദ്രാവ്യാപാനയ ‖ മിത്തി[illegible]വരാമ
+ROW 5 | ൾ[illegible]ലപരാ ‖ മൾസ്യാവശ്യ[illegible]കതയാലാക്ല ‖ വൈസ[illegible]പലമ
+ROW 6 | ൾചൈത്യാവത്ര ‖ വണ്ടനാൽഹിം.ഗമകരണമതിതാ ‖ രെദൗവൃദ്ധിചാരാൽ
+ROW 7 | വ്യാപാരവൎക്കാര[illegible]ണ.കിരണമിതിമ[illegible]പാരാമൾദഃരാവ്യാപ്തിജ്ഞാനം.കാ
+NOTE | All 7 rows are present, but only about 40–50% of the leaf reads with confidence. Rows 1, 2 and 7 run the full width, so I wrote them without ‖. The best readings are the full-width rows and the ends of rows 3 and 6. Rows 4 and 5, and the middle of row 2, are guesses that need checking against a zoomed image.

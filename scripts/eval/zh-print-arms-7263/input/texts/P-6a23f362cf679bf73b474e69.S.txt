@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>zh</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>Red punctuation marks added by a later reader/scholar.</meta>
+
+陳泥丸云真陰真陽是真道只在眼前何遠討
+薛道光云分明只在眼睛前自是時人不見天
+劉海蟾云下降上升循轂軸左旋右覆合樞機
+王子真云昨宵姹女啓靈扉窺見神仙會紫微
+北斗南辰前後布兩輪日月往來飛
+蕭紫虛云如龍養珠常自顧如雞伏卵常自抱
+金液還丹在眼前迷者多而悟者少
+陳翠虛云不是燈光日月星藥靈自有異常明
+垂簾久視光明處一顆堂堂現本真
+翠虛篇云莫謂金丹事等閑切須勤苦力鑽研
+慇懃好與師資論不在他途在目前
+
+<vocab>陳泥丸, 薛道光, 劉海蟾, 王子真, 蕭紫虛, 陳翠虛, 金丹, 真陰真陽</vocab>

@@ -1,0 +1,14 @@
+2026-10-23T06:45:01Z start
+2026-10-23T06:46:16Z q2-qwen3-14b-awq eval: {"reqs": 57, "ok": 56, "errors": 1, "hit_cap": 3, "wall_secs": 340.0, "out_tok": 61199, "in_tok": 154656, "out_tok_per_s": 180.0, "pages_per_hour": 593, "concurrency": 16}
+2026-10-23T06:51:56Z q2-qwen3-14b-awq thru: {"reqs": 120, "ok": 120, "errors": 0, "hit_cap": 7, "wall_secs": 537.9, "out_tok": 131710, "in_tok": 327309, "out_tok_per_s": 244.8, "pages_per_hour": 803, "concurrency": 16}
+2026-10-23T07:01:19Z q1-qwen3-32b-awq: serve failed with default KV; retry fp8 KV
+2026-10-23T07:01:44Z q1-qwen3-32b-awq: SERVE FAILED
+2026-10-23T07:02:09Z q3-qwen3.6-27b-awq: serve failed with default KV; retry fp8 KV
+2026-10-23T07:03:29Z q3-qwen3.6-27b-awq: SERVE FAILED
+2026-10-23T07:03:44Z end
+2026-10-23T07:15:01Z start
+2026-10-23T07:16:01Z q1-qwen3-32b-awq: serve failed with default KV; retry fp8 KV
+2026-10-23T07:17:11Z q1-qwen3-32b-awq: SERVE FAILED
+2026-10-23T07:19:41Z q3-qwen3.6-27b-awq eval: {"reqs": 57, "ok": 56, "errors": 1, "hit_cap": 1, "wall_secs": 988.6, "out_tok": 57580, "in_tok": 155724, "out_tok_per_s": 58.2, "pages_per_hour": 204, "concurrency": 16}
+2026-10-23T07:36:10Z q3-qwen3.6-27b-awq thru: {"reqs": 120, "ok": 120, "errors": 0, "hit_cap": 0, "wall_secs": 1473.1, "out_tok": 110099, "in_tok": 329505, "out_tok_per_s": 74.7, "pages_per_hour": 293, "concurrency": 16}
+2026-10-23T08:00:58Z end

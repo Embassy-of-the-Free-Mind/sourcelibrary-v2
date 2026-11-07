@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three reads as continuous Sanskrit or Malayalam; B is picked mainly because it agrees most often with the other two on shared readings (e.g. "traivājñā", "vikijñā", "mayānāṭṭ", "khaśama") and has a few real word forms ("daivādibhi", "bhavantaḥ"), while A departs most from the shared readings despite isolated word-like strings such as "ghaṭamasti".

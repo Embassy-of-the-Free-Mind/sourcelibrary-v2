@@ -1,0 +1,202 @@
+{
+ "fresh|4-b": {
+  "arm": "fresh",
+  "leaf": "4-b",
+  "rows": 10,
+  "chars": 484,
+  "cer": 0.165,
+  "floor": 0.767,
+  "_d": 80,
+  "_fd": 371
+ },
+ "fresh|5-t": {
+  "arm": "fresh",
+  "leaf": "5-t",
+  "rows": 9,
+  "chars": 417,
+  "cer": 0.484,
+  "floor": 0.736,
+  "_d": 202,
+  "_fd": 307
+ },
+ "fresh|5-b": {
+  "arm": "fresh",
+  "leaf": "5-b",
+  "rows": 10,
+  "chars": 573,
+  "cer": 0.047,
+  "floor": 0.747,
+  "_d": 27,
+  "_fd": 428
+ },
+ "fresh|6-t": {
+  "arm": "fresh",
+  "leaf": "6-t",
+  "rows": 10,
+  "chars": 537,
+  "cer": 0.093,
+  "floor": 0.75,
+  "_d": 50,
+  "_fd": 403
+ },
+ "fresh|6-b": {
+  "arm": "fresh",
+  "leaf": "6-b",
+  "rows": 9,
+  "chars": 548,
+  "cer": 0.591,
+  "floor": 0.737,
+  "_d": 324,
+  "_fd": 404
+ },
+ "fresh|7-t": {
+  "arm": "fresh",
+  "leaf": "7-t",
+  "rows": 9,
+  "chars": 409,
+  "cer": 0.626,
+  "floor": 0.738,
+  "_d": 256,
+  "_fd": 302
+ },
+ "fresh|8-t": {
+  "arm": "fresh",
+  "leaf": "8-t",
+  "rows": 9,
+  "chars": 518,
+  "cer": 0.037,
+  "floor": 0.755,
+  "_d": 19,
+  "_fd": 391
+ },
+ "fresh|8-b": {
+  "arm": "fresh",
+  "leaf": "8-b",
+  "rows": 10,
+  "chars": 658,
+  "cer": 0.616,
+  "floor": 0.763,
+  "_d": 405,
+  "_fd": 502
+ },
+ "fresh|9-t": {
+  "arm": "fresh",
+  "leaf": "9-t",
+  "rows": 10,
+  "chars": 652,
+  "cer": 0.613,
+  "floor": 0.761,
+  "_d": 400,
+  "_fd": 496
+ },
+ "fresh-r2|5-b": {
+  "arm": "fresh-r2",
+  "leaf": "5-b",
+  "rows": 10,
+  "chars": 571,
+  "cer": 0.044,
+  "floor": 0.741,
+  "_d": 25,
+  "_fd": 423
+ },
+ "fresh-r2|6-t": {
+  "arm": "fresh-r2",
+  "leaf": "6-t",
+  "rows": 9,
+  "chars": 300,
+  "cer": 0.397,
+  "floor": 0.703,
+  "_d": 119,
+  "_fd": 211
+ },
+ "anchored|4-b": {
+  "arm": "anchored",
+  "leaf": "4-b",
+  "rows": 18,
+  "chars": 455,
+  "cer": 0.044,
+  "floor": 0.71,
+  "_d": 20,
+  "_fd": 323
+ },
+ "anchored|5-t": {
+  "arm": "anchored",
+  "leaf": "5-t",
+  "rows": 9,
+  "chars": 477,
+  "cer": 0.052,
+  "floor": 0.748,
+  "_d": 25,
+  "_fd": 357
+ },
+ "anchored|5-b": {
+  "arm": "anchored",
+  "leaf": "5-b",
+  "rows": 10,
+  "chars": 581,
+  "cer": 0.038,
+  "floor": 0.75,
+  "_d": 22,
+  "_fd": 436
+ },
+ "anchored|6-t": {
+  "arm": "anchored",
+  "leaf": "6-t",
+  "rows": 10,
+  "chars": 583,
+  "cer": 0.043,
+  "floor": 0.738,
+  "_d": 25,
+  "_fd": 430
+ },
+ "anchored|6-b": {
+  "arm": "anchored",
+  "leaf": "6-b",
+  "rows": 9,
+  "chars": 510,
+  "cer": 0.041,
+  "floor": 0.761,
+  "_d": 21,
+  "_fd": 388
+ },
+ "anchored|7-t": {
+  "arm": "anchored",
+  "leaf": "7-t",
+  "rows": 18,
+  "chars": 573,
+  "cer": 0.185,
+  "floor": 0.693,
+  "_d": 106,
+  "_fd": 397
+ },
+ "anchored|8-t": {
+  "arm": "anchored",
+  "leaf": "8-t",
+  "rows": 9,
+  "chars": 516,
+  "cer": 0.043,
+  "floor": 0.766,
+  "_d": 22,
+  "_fd": 395
+ },
+ "anchored|8-b": {
+  "arm": "anchored",
+  "leaf": "8-b",
+  "rows": 11,
+  "chars": 638,
+  "cer": 0.063,
+  "floor": 0.752,
+  "_d": 40,
+  "_fd": 480
+ },
+ "anchored|9-t": {
+  "arm": "anchored",
+  "leaf": "9-t",
+  "rows": 10,
+  "chars": 651,
+  "cer": 0.037,
+  "floor": 0.767,
+  "_d": 24,
+  "_fd": 499
+ }
+}

@@ -59,7 +59,7 @@ for (const collName of ['feedback', 'volunteers']) {
   const cursor = coll.find(
     { ip: { $exists: true, $type: 'string' } },
     { projection: { ip: 1 } }
-  );
+  ).batchSize(1000);
   let seen = 0, changed = 0;
   for await (const doc of cursor) {
     seen++;
@@ -80,7 +80,7 @@ for (const collName of ['feedback', 'volunteers']) {
   const cursor = coll.find(
     { ip_address: { $exists: true, $type: 'string' } },
     { projection: { ip_address: 1 } }
-  );
+  ).batchSize(1000);
   let seen = 0, changed = 0, skipped = 0;
   for await (const doc of cursor) {
     seen++;

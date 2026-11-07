@@ -20,6 +20,7 @@
 //       node scripts/analytics/snapshot-library-dashboard.mjs
 // Cron (Hetzner, daily 05:55 UTC): scripts/workers/crontab.production.
 import { withMongo } from '../lib/mongo.mjs';
+import { NOT_ACQUIRED_HOLD_REASONS, isNotAcquiredReason } from '../lib/hold-reasons.mjs';
 
 const DOC_ID = 'library_dashboard';
 const LIVE = { visible: true, pages_count: { $gt: 0 } };
@@ -32,6 +33,8 @@ function nextStep(b) {
   const pa = b.pipeline_auto || {}; const ts = b.translation_state || {};
   const rung = ts.rung;
   if (b.content_type === 'artwork' || rung === 'no_pages') return 'done';
+  // A catalogue record with no fetched pages is not a decision anyone is holding (#7860 group 1).
+  if (isNotAcquiredReason(pa.hold?.reason)) return 'blocked:not_acquired';
   if (pa.hold || pa.status === 'held') return 'blocked:held';
   if (!rung) return 'blocked:unstamped';
   const archived = (b.pages_archived || 0) >= 0.9 * b.pages_count;
@@ -87,7 +90,9 @@ await withMongo(async (db) => {
   const ladderLive = await ladderOf(LIVE), ladderAll = await ladderOf(WITH_PAGES);
   const readable = (l) => ['readable', 'complete'].reduce((a, r) => a + (l.other[r] || 0), 0) + ['transcribed', 'translating', 'readable', 'complete'].reduce((a, r) => a + (l.en[r] || 0), 0);
   const statusLive = (await agg(LIVE, { _id: '$pipeline_auto.status', n: { $sum: 1 } }, [{ $sort: { n: -1 } }])).map(r => ({ status: r._id || '(none)', n: r.n }));
-  const held = await books.countDocuments({ 'pipeline_auto.hold': { $exists: true } });
+  // Held = decisions with an issue. The not-acquired catalogue records (409K manifest-only on 2026-10-31) are counted apart (#7860).
+  const held = await books.countDocuments({ 'pipeline_auto.hold': { $exists: true }, 'pipeline_auto.hold.reason': { $nin: NOT_ACQUIRED_HOLD_REASONS } });
+  const notAcquired = await books.countDocuments({ 'pipeline_auto.hold.reason': { $in: NOT_ACQUIRED_HOLD_REASONS } });
   lap('ladder, status');
 
   const libRows = await agg(LIVE, { _id: '$contributing_library', books: { $sum: 1 } }, [{ $sort: { books: -1 } }, { $limit: 11 }]);
@@ -190,7 +195,7 @@ await withMongo(async (db) => {
 
   const doc = {
     _id: DOC_ID, generatedAt: new Date(), schemaVersion: 1, elapsedSec: Math.round((Date.now() - t0) / 10) / 100,
-    totals: { live: liveTotals, all: allTotals, readableLive: readable(ladderLive), readableAll: readable(ladderAll), held, feedbackOpen, visibleCollections },
+    totals: { live: liveTotals, all: allTotals, readableLive: readable(ladderLive), readableAll: readable(ladderAll), held, notAcquired, feedbackOpen, visibleCollections },
     byLanguage, noLanguage, byCentury, yearMissing, ladder: { rungs: RUNGS, live: ladderLive, all: ladderAll }, statusLive, libraries, noLibrary, addedByMonth, collections,
     nextStep: { steps, ocrBacklog },
     completion, languagesAll, finish: fin, works,

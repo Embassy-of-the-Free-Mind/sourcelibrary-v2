@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B and C are close, but B has more stretches of real Sanskrit, such as "pṛthivyādayaśca viśeṣāḥ śrotraṃ", "pratipadyate pṛthivyādayaśca", "pañcatanmātrā" and "tatra śrotraṃ sthūla", while C is often near-correct but garbled and A is mostly syllable strings that only look like words.

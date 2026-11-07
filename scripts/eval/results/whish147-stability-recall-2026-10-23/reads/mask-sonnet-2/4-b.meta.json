@@ -1,0 +1,44 @@
+{
+ "stage": "mask-sonnet-2",
+ "id": "4-b",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-sonnet-5-5",
+ "model_requested": "sonnet",
+ "cli": "claude",
+ "started_at": "2026-10-23T06:29:04.228Z",
+ "finished_at": "2026-10-23T06:29:21.359Z",
+ "secs": 17,
+ "prompt_hash": "c59b1553a5585649",
+ "prompt_file": "reads/prompts/c59b1553a5585649.txt",
+ "images": [
+  {
+   "crop": "4-b-1.jpg",
+   "bytes": 297123,
+   "sha256": "53ade783d065c2624e99700873e00377cfa3d0e3c44fcaf1a563f08cf5c38d8b"
+  },
+  {
+   "crop": "4-b-2.jpg",
+   "bytes": 220461,
+   "sha256": "8429484f70b11b26d89c8f2e1f99838df372e751d0792778e039d38911ea7c87"
+  },
+  {
+   "crop": "4-b-3.jpg",
+   "bytes": 220019,
+   "sha256": "6adcde429af3e0985297a43c2c80aa7797ad8bd6f1239c3983f4cbea7e03189b"
+  },
+  {
+   "crop": "4-b-4.jpg",
+   "bytes": 281693,
+   "sha256": "d889054ec45ceb9ce2a13a651b11e2d795c2bf1e5f4563d0100108dc64c6a443"
+  }
+ ],
+ "usage": {
+  "input": 4,
+  "output": 1545,
+  "cache_read": 7195,
+  "cache_creation": 9691,
+  "turns": 5,
+  "list_cost_usd": 0.054941500000000004
+ }
+}

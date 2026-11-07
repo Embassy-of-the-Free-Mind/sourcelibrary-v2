@@ -1,0 +1,50 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. nāmṛtisiddhimukhyamipa [illegible] ‖ [illegible] catikkumicenduyasmindeśamiyodṛṣṭyāḥ [illegible] ‖ [illegible] sthasyaniddhirupādeya
+2. teprasiddhamepatannirārttha [illegible] ‖ [illegible] ṇarehatumuktimipakṣāpa [illegible] āśaktimukhyareyārehayāḥ ‖ [illegible] trādisiddheṣigapratyakṣāṃkka
+3. śaktimiyaḥpṛthvyutimipa [illegible] ‖ [illegible] yāśaktimakṣyaḥparamṛśamimitāḥsiddhikaritināma ‖ [illegible] ronātiṣākyādatatsiddhima
+4. kkipasthyādaṃkṣegamuve [illegible] ‖ [illegible] mipal̤yāśaktimukhyayoāyoāniyāmubhyartthaḥsvāne ‖ [illegible] talpuruṣārtthaṃpratyakṣāsiddhi
+5. syacapuruṣasyārtthaḥpratyakṣa ‖ phlādādetāmosarvvadādisiṣṭa ‖ timatamūḍhayasāmyendra
+6. tvatattvahinandināṭṭāme ‖ veṭṭuṃgānamikṣūṭṭāmiṃgainaṭṭāmikki ‖ pratiḥmiṃgārepyāṭṭā
+7. khālṛḥtaṇmālttimi ‖ pāḥpravarttatesarkkaḥmiṃgimitesāra ‖ sarkkamuvalakṣyamiṭṭāme
+8. vatitipratyayasarkka ‖ mateṭṭukṣaṃṭṭavimatāmārasarggasyāpuruṣa ‖ ārtthasādhanatvaṃsvarūpa
+9. ṣenapratyayasarggālninā ‖ ṭṭavattikkāṃpratyayasarggasyāpuruṣārtthasādhanatvaṃ ‖ svarūpañcatanmātrāddata
+10. itraṭṭayasarkkaḥpravṛttiḥṭṭe ‖ ṭṭāgaḥpuruṣārtthānaṭṭeṭṭāgrābhogaścāgninṭṭāga ‖ āgāyatanañcaśarīramatareṇā
+11. ṭṭavatitvapapanālmātrā ‖ trāsarggaḥaivaṃsarvvaṭṭābhagṭṭāgasāyunāmi ‖ mindriyāṇiññāḥkaraṇānivā
+12. ñāraṇanaṭṭavatinacayar ‖ yatryādilṭṭāpālninānacāvāpapakkehatumpe ‖ micepakalpyātiruṭṭayasarkkaṃvine
+
+TRANSCRIPTION B
+1. nāmitisiddhimukhyamipaśe [illegible] ‖ āpatikkoṅmicaddayassarddadaramiyorṣṭhyūḥṇatre ‖ [illegible] tyūsaślesiddhirūpādedaye
+2. bhiprasiddhimepatannirāt [illegible] ‖ nānennaupattimipaścopāśaktiuṣṭayoheṣāḥ ‖ [illegible] trāhisiddheviḥṣṛteṣṭāṃkka
+3. śaktimiyaḥpṛṣṭyatipipa [illegible] ‖ yāśaktituṣṭiḥparasparamibhiyāḥsiddhikamiktināma ‖ [illegible] bhedānipākkayādattenmiddhica
+4. mipasyayādaṃkkaśauve [illegible] ‖ miparyyāśaktiukkayoyāneyāutbhūjñaḥsyāde ‖ [illegible] talpuruṣārtthamukhyāssiddhi
+5. sscapuruṣārtthaḥpratyayasa ‖ ggādādamobhasarggādānibhṛ ‖ ttimatamūṭayasāśleṅṅaḻ
+6. trartthvahiḥnamimāṭṭāda ‖ veṭṭaṃśananamikṣṭātiṃśenaṭṭāmimil ‖ pṛttiḥmiṃśādepyāṭṭā
+7. khāḻyaḥtarkkālmimi ‖ cāḥpravarttatesarggaḥmiṃgamiteṅhātra ‖ sarggamupalakṣayiṭṭāme
+8. patimietuyasargge ‖ mateṭṭakkaṃṭṭamitamātrasārkkasyāpuruṣā ‖ ārtthasādhanatvaṃsvarūpa
+9. bhainapratyayasarggālminā ‖ devikkicaṃpratyayasarggasyapuruṣārtthasādhanatvaṃ ‖ svarūpañcenatanmātrādata
+10. itūṭayasarggaḥpravṛttiḥṭṭo ‖ ṭṭāśaḥpuruṣārtthoṭṭāgṛyorartthoddilṭṭāśa ‖ āgāyatanakhaśarīramaṇerañā
+11. ṭṭamitṛpapanantāmātrā ‖ sarggaḥaikhaṃsaaipaṭṭābhaśaṭaṭṭāśasāyunāmita ‖ [illegible] kriyāṇiṇṇaḥkaraṇānivā
+12. ñerañānaṭṭaminacaya ‖ trādilṭṭācānminānacādvāvārkkaneuṣme ‖ mepakappyātiruṭayasāṣṭimine
+
+TRANSCRIPTION C
+1. nāmitisiddhituṣṭiviparyya [illegible] ‖ āśaktikhyācaturyasya [illegible] dara ‖ miyo [illegible] vyaḥ [illegible] bhe [illegible] tvasya [illegible] siddhirūpādeśayai
+2. bhiprasiddhimepatannirāl [illegible] ‖ ṇānena [illegible] vantiviparyyayā ‖ śaktituṣṭayonekāḥ [illegible] ddhyāhisiddhe [illegible] ṣṭa [illegible]
+3. śaktikhyāyaḥpūrvvatuṣṭivipa [illegible] ‖ yāśaktituṣṭiḥparasparama ‖ bhitāḥsiddhikarikkināma [illegible] bherābhipākayādatassiddhya
+4. vipasthyādiṃkadaśauve [illegible] ‖ viparyyayāśaktituṣṭayo ‖ yāneyātattvaḥsyāde [illegible] talpuruṣārtthaṃpravṛttāssiddhi
+5. ssacapuruṣārtthaḥpratyayasa ‖ rggādānamāha ‖ sarggādāniṣu [illegible] trimatamūḍhayasāvijñāḥ
+6. tritattvahiḥnamitibhedā ‖ cavañcāśantanamityā ‖ diṃgenaṭṭāmāmi [illegible] vṛttiḥmiṃśāthaprāṭṭā
+7. ṣāṣṭaḥtalkālbhi [illegible] ‖ paḥpravarkkatesarggaḥ ‖ bhiṃgimitamāra [illegible] sarggavalakṣayapiṭṭāmai
+8. varimipratyayasargga ‖ mataduṣṭaṃbhavitame ‖ mātṛsarggasyāpuruṣā [illegible] rtthasādhanatvaṃsvarūpa
+9. ṣeṇapratyayasarggālbhinnā ‖ nābhavatikkiṃpratyayasargga ‖ sarggasyāpuruṣārtthasādhanatvaṃsvarūpayonatanmātrādata
+10. ityudayasyaḥpravṛttiḥde ‖ dedāgaḥpuruṣārtthonde ‖ dedāgrobhayatārttherāldega [illegible] gāyatanabhogasiddharūpareṇa
+11. ddevatityapapanantātrā ‖ trāssaḥdevaḥsadevādeṭṭā ‖ dehādegatāyatanādi [illegible] litriyāṇitattvaḥkaraṇānivā
+12. bhairaṇānaṭavatinacaya ‖ yatrādilṭṭāvālbhinnāna ‖ ānacāvāvarkkebhūte [illegible] laipakalpyātirūṭayasarggaḥbhinne
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

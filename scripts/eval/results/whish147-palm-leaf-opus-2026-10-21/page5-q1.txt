@@ -1,0 +1,21 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script incised on a palm leaf. This crop is the left quarter of the leaf, so every line is cut off at the right edge. The incisions are faint and the leaf surface is fibrous, so many readings are uncertain. The language could be Sanskrit or Malayalam, and the short fragments do not settle which.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>൨</page-num>
+<meta>The single sign in the left margin, about halfway down, looks like the Malayalam numeral ൨ (2). It is probably a leaf number. Each line is cut off at the right edge of the crop.</meta>
+
+<unclear>ശ്രീഗണേശവിഘ്ന</unclear>
+<unclear>ാനന്ദ</unclear> <unclear>ഭിച്ചിക</unclear>
+<unclear>പ്രവൃത്തിനിഘ്യമാ</unclear>
+<unclear>ഗുണാഃ</unclear> <unclear>ന്മഃ</unclear> <unclear>സഖം</unclear>
+<unclear>ഗുരു</unclear> <unclear>വനങ്കാര</unclear>
+<unclear>കവിതാ</unclear> <unclear>[illegible — 1-2 words]</unclear>
+<unclear>ഷണ്ഗുണാത്മക</unclear>
+<unclear>സാം</unclear> <unclear>ചന്ദ്രമാണോ</unclear>
+<unclear>നാദപി</unclear> <unclear>[illegible — 1-2 words]</unclear>
+<unclear>[illegible — 2-3 words]</unclear>
+
+<vocab>ശ്രീ, ഗണേശ, palm-leaf manuscript, Malayalam script, invocation</vocab>

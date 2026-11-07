@@ -1,0 +1,9 @@
+ROW 1 | രണംരജ്ഞഉരെശര‖ജ്ഞഉജ്ഞരരകൊവ്യാപാരഃശ്രനമനമുപ‖സംഹരതിതന്മാദിതിമിം
+ROW 2 | ഗംവിഭജതെലിംഗമി‖തിഅന്വയവ്യതിരെകിണംലക്ഷയതിഅന്വ‖യെനെതിഹെതുസാദ്ധ്യ
+ROW 3 | യൊൎവ്യാപ്തിര‖ന്വയവ്യാപ്തിഃദടഭാവതയൊവ്യാ‖പ്തിൎവ്യതിരെകവ്യാപ്തിഃ
+ROW 4 | കെവലാന്വയിനാ‖ലക്ഷണമാഹഃഅന്വയമാത്രെ‖തികെവലാന്വയിസാ
+ROW 5 | പ്തികംകെവലാ‖ന്വയിഅത്യന്താഭാവാപ്രതിയൊ‖ഗിത്വംകെവലാന്വ
+ROW 6 | യിത്വമിത്യാരെപ്രദായി‖തിതയത്വംസവ്യാപദാഭിധെയത്വയൊൎവ്യന‖സത്വകാന്തികിവ്യതിരെ
+ROW 7 | കാഭാവവ്യതിരെകി‖ണഉദാഹരതിപൃഥിവിതിനനഇതരെ‖തരഭെദഃപ്രതിയൊഗിവാഞ്ച
+ROW 8 | ഉയത്രപ്രനിദൃഷ്ടാന്ത‖ത്രെവിഉസെഖബതിത്ഥമനസൈത്വന്താ‖സാധാരണഖംഠിതിന്റെ
+NOTE | All eight rows read across all four pieces; the leaf is a Nyāya passage on anvaya/vyatireka, not Sāṅkhya. Image resolution leaves roughly a fifth of the glyphs uncertain, most of all in rows 1, 6 and 8 (the middle of row 8 and the end of row 1 are the least secure); the dense conjuncts read as ജ്ഞ/ക്ഷ and the ഉ-shaped letter in rows 1, 7 and 8 could not be settled with confidence.

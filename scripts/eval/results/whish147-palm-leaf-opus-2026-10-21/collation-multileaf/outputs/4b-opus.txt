@@ -1,0 +1,46 @@
+# Collation of leaf.jpg against SK 1–5
+
+The leaf holds parts of SK 1 to SK 5. SK 6 and SK 7 are not on it.
+
+On this leaf the verse text runs straight across both halves of each line. Each line continues off the right edge of this half-leaf, so most of each verse is missing here. I can only report the parts that are actually on this half.
+
+Line 1 is an invocation, not a verse. It reads roughly *hariḥ śrī gaṇapataye namaḥ avighnam astu*.
+
+The bottom-right corner carries a mark, possibly a leaf number. It is not verse text.
+
+Everything below was read from the image at the size it was shown to me. I could not zoom in or crop it.
+
+## SK_1 (leaf lines 2–3)
+**Leaf:** *duḥkhatrayābhighātāj jijñāsā ta…* [continues off-leaf] … *…bhāvāt* ॥ (line 3, left of the string hole)
+- *tad-apaghātake hetau dṛṣṭe sāpārthā cen naikāntātyantato 'bhā-* falls on the missing half.
+- The ligatures in *duḥkhatrayā-* are cramped but consistent with the edition.
+- The last glyph of line 2 after *jijñāsā* may be *ta* or *tad*, but I can't read it clearly.
+- **No differences** in the part I can see.
+
+## SK_2 (leaf lines 3–4)
+**Leaf:** *dṛ* | [hole gap] | *ṣṭa?ad ānuśravi…* [off-leaf] … (line 4) *ktaḥ tadviparī | ta[ḥ?] śreyān vya…* [off-leaf]
+- **dṛpṭavad**: the edition's *pṭ* is clearly a misprint. The leaf has *ṣṭa*. The following akṣara looks more like *pa* than *va*, but I can't be sure.
+- **tad-viparītam**: the leaf has *tadviparī-ta* followed by a small mark before *śreyān*. It looks more like visarga (*viparītaḥ*) than anusvāra. I'm uncertain.
+- *…kaḥ sa hy aviśuddhikṣayātiśayayu-* and *-ktājñavijñānāt* fall on the missing half. I have only *-ktaḥ* from *yuktaḥ*.
+
+## SK_3 (leaf lines 5–6)
+**Leaf:** *prakṛtir avikṛ- | tir mahadādyā[ḥ]…* [off-leaf] … (line 6) *-ḍaśakas tu vi- | kāro na prakṛ…* [off-leaf]
+- *mūla-* is on the missing half, at the end of line 4.
+- **vikāro**: the leaf clearly has *ṣoḍaśakas tu vikāro na prakṛ(tir)*. The edition leaves out *vikāro*, so its line is a word short. This is the standard reading of SK 3.
+
+## SK_4 (leaf lines 7–8)
+**Leaf:** *-m anumānam ā- | ptavacanañ ca sa…* [off-leaf] … (line 8) *-vidhaṃ pramāṇam iṣṭaṃ | prameyasiddhiḥ pra…*
+- The leaf writes *āptavacanañ ca* with a nasal before *ca*. The edition has *vacanaṃ ca*. These are the same text spelled two ways (sandhi). I'm noting it but not counting it as a different reading.
+- **No real differences** in the part I can see.
+
+## SK_5 (leaf line 9)
+**Leaf:** *-ṣṭaṃ trividham a- | -numānam ākhyātaṃ ta[l]…* [off-leaf]
+- *prativiṣayādhyavasāyo dṛ-* falls on the missing half, at the end of line 8.
+- **a-saktaṃ**: the leaf clearly has *ākhyātaṃ*. This is the standard reading of SK 5.
+- *liṅgaliṅgipūrvakam āptaśrutir āptavacanaṃ tu* is on the missing half.
+
+## DIFFERENCES:
+- SK_2 | dṛpṭavad | ṣṭa(p/v)ad: *ṣṭ* for *pṭ* | certain (*ṣṭ*); uncertain (whether *pa* or *va* follows)
+- SK_2 | tad-viparītam | tadviparītaḥ | uncertain
+- SK_3 | (omitted between *tu* and *na*) | vikāro | certain
+- SK_5 | a-saktaṃ | ākhyātaṃ | certain

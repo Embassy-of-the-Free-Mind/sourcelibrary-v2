@@ -1,0 +1,9 @@
+ROW 1 | ാന്ത്യഭാവഃകാ.൨൩॰ബുദ്ധ്യാദേരഗ്രഹാൽജ്ഞാനവിധിരേവമംഗളം॰കൃതം॰അതോനവ്യഭിചാരഃ।
+ROW 2 | നനുമൈഗൃഹ്യകാൎത്സ്ന്യത്വഭിമാനമിതിചെന്നശിഷ്ടാചാരാനുമിതശ്രുതേരേവ
+ROW 3 | പ്രമാണത്വാൽതഥാഹിമംഗളം॰വേദബോധിതകൎത്തവ്യതാകം।അലൌകികാവിഗീ
+ROW 4 | ങ്ങശിഷ്ടാചാരവി‖ഷയത്വാൽദൎശാദിവൽദോജ്ഞ‖നാദേദുപ്രഭിമാ
+ROW 5 | ഉപാരണായാ‖ഉൽകൃഷ്ട.വിഗീതേതത്വിശിഷ്ടേഷ്ടപദാ‖ഇഷ്ടാൎത്ഥജനകത്വ
+ROW 6 | ാദൃഷ്ടഫലംകൈളെ‖ഭിജ്ഞലതാധനാദേരപിദൃ‖ഷ്ടത്വാദിഭിഃക
+ROW 7 | ജ്ഞ്യൊന്നപ്രത്യവായായെനകഇത്യൎത്ഥാഃദ്രവ്യാദിപദാനേനജ്ഞാനാസംഗ്രഹസ്ഥം
+ROW 8 | ദൈക്ഷതവണസന്ദ്ര[illegible]ാകഹാ॰ഭിഷ്യതളുത്വാൎത്ഥഃകൈകൈൽശ്രുതാജ്ഞനാദൈത്ര
+NOTE | I could see all 8 rows, but only rows 1–3 are fairly reliable; rows 4–8, especially their start and end clusters and the text by the rope in row 8, are low-confidence guesses at individual letters. I put ‖ only in rows 4–6, where the text is broken around the holes; rows 1–3 and 7–8 appear to run continuously past them.

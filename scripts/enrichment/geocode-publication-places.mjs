@@ -210,7 +210,7 @@ async function geocodeViaWikidata(cityName) {
   try {
     const res = await fetch(
       `https://query.wikidata.org/sparql?query=${encodeURIComponent(sparql)}&format=json`,
-      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } }
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }
     );
     if (!res.ok) return null;
     const data = await res.json();
@@ -586,7 +586,7 @@ async function laneIa(db, resolver, placed) {
     let docs = null;
     for (let attempt = 0; attempt < 3 && !docs; attempt++) {
       try {
-        const r = await fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } });
+        const r = await fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
         if (r.ok) docs = (await r.json()).response?.docs || [];
         else await new Promise((res) => setTimeout(res, 5000));
       } catch { await new Promise((res) => setTimeout(res, 5000)); }
@@ -606,7 +606,7 @@ async function laneIa(db, resolver, placed) {
   const fetchMeta = async (id) => {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const r = await fetch(`https://archive.org/metadata/${encodeURIComponent(id)}/metadata`, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } });
+        const r = await fetch(`https://archive.org/metadata/${encodeURIComponent(id)}/metadata`, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
         if (r.ok) {
           const m = (await r.json()).result || {};
           iaCache[id] = { imprint: [m.imprint].flat()[0] || null, publisher: [m.publisher].flat()[0] || null, via: 'metadata' };

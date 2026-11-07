@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A gives the most coherent Tarkasaṃgraha-Dīpikā text: the yathārthānubhava definition, the avacchedaka/saṃbandha reply to the ativyāpti objection ("saṃyogāvacchedaka-saṃyogasaṃbandhasya sattvān nātivyāptiḥ"), and "pramākaraṇaṃ pramāṇam iti pramāṇasāmānyalakṣaṇam"; B breaks into nonsense in the middle rows, and C is garbled almost everywhere.

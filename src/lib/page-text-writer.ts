@@ -11,6 +11,7 @@
 import { randomBytes } from 'crypto';
 import type { Db, Document, Filter, UpdateFilter } from 'mongodb';
 import { contentHash } from './write-provenance';
+import { translationLayers, writePageAnnotations } from './translation-text';
 
 export type PageTextField = 'ocr' | 'translation';
 export const PAGE_TEXT_FIELDS: readonly PageTextField[] = Object.freeze(['ocr', 'translation'] as PageTextField[]);
@@ -31,6 +32,17 @@ export interface WritePageTextOpts {
   overrideHumanEdit?: boolean;
   /** Write `next` exactly as given — no content_hash / updated_at stamping. For restoring a revision. */
   verbatim?: boolean;
+  /**
+   * The row's `source`: a sweep label (e.g. 'longs-pass-5924') instead of the superseded text's own
+   * source, which stays in `meta.source`. For bulk maintenance, so `page_revisions` segments by
+   * mechanism (data-provenance.md) and a pass is never read as a second OCR.
+   */
+  revision_source?: string;
+  /**
+   * textHash of the text `next` was computed FROM. A sweep that reads, transforms and writes later passes it, so a page
+   * rewritten in between is refused ('prior_changed') instead of overwritten with a transform of the old text.
+   */
+  expect_prior_hash?: string | null;
   now?: Date;
   id?: string;
 }
@@ -40,7 +52,8 @@ export type WritePageTextResult =
   | { status: 'unchanged'; book_id: string }
   | { status: 'refused_human_edit'; book_id: string }
   | { status: 'not_found' }
-  | { status: 'conflict'; revision_id: string; book_id: string };
+  | { status: 'conflict'; revision_id: string; book_id: string }
+  | { status: 'prior_changed'; book_id: string };
 
 export function isHumanEditedField(sub: unknown): boolean {
   if (!sub || typeof sub !== 'object') return false;
@@ -69,11 +82,22 @@ export function validateWrite(field: unknown, next: unknown, opts: Partial<Write
   if (opts.run_id != null && (typeof opts.run_id !== 'string' || opts.run_id === '')) throw new Error('writePageText: opts.run_id must be a non-empty string when given');
 }
 
-export function nextFieldValue(next: NextField, now: Date, verbatim = false): Record<string, unknown> | null {
+/**
+ * #5942: a translation written through this door carries the book's words beside `data`
+ * (`text` + `text_from`, src/lib/translation-text.ts). Twin of translationTextFields in the .mjs.
+ */
+function translationTextFields(field: PageTextField | null, next: NextField): Record<string, unknown> {
+  if (field !== 'translation' || typeof next?.data !== 'string' || !next.data) return {};
+  const l = translationLayers(next.data, { promptVersion: (next.prompt_version as string | undefined) ?? null });
+  return { text: l.text, text_from: l.text_from };
+}
+
+export function nextFieldValue(next: NextField, now: Date, verbatim = false, field: PageTextField | null = null): Record<string, unknown> | null {
   if (!next) return null;
   if (verbatim) return { ...next };
   return {
     ...next,
+    ...translationTextFields(field, next),
     ...(next.content_hash || !next.data ? {} : { content_hash: contentHash(next.data) }),
     ...(next.updated_at ? {} : { updated_at: now }),
   };
@@ -93,7 +117,7 @@ export function buildTextRevision({ page, field, next, opts, now, id }: {
     book_id: page.book_id,
     field,
     data: fieldText(prior),
-    source: present ? (obj.source || 'unknown') : 'empty',
+    source: opts.revision_source || (present ? (obj.source || 'unknown') : 'empty'),
     ...(obj.model ? { model: obj.model } : {}),
     ...(language ? { language } : {}),
     ...(obj.edited_by ? { edited_by: obj.edited_by } : {}),
@@ -149,17 +173,21 @@ export async function writePageText(db: Db, pageId: string, field: PageTextField
   const prior = page[field];
   if ((prior === undefined || prior === null) && next === null) return { status: 'unchanged', book_id: bookId };
   if (isHumanEditedField(prior) && !opts.overrideHumanEdit) return { status: 'refused_human_edit', book_id: bookId };
+  if (opts.expect_prior_hash !== undefined && textHash(prior) !== opts.expect_prior_hash) return { status: 'prior_changed', book_id: bookId };
 
   const rev = buildTextRevision({ page, field, next, opts, now, id: opts.id || randomBytes(6).toString('hex') });
   await db.collection('page_revisions').insertOne(rev as Document);
 
   const res = await pages.updateOne(
     casFilter(pageId, field, prior, opts) as Filter<Document>,
-    fieldUpdate(field, nextFieldValue(next, now, opts.verbatim), now) as UpdateFilter<Document>,
+    fieldUpdate(field, nextFieldValue(next, now, opts.verbatim, field), now) as UpdateFilter<Document>,
   );
   if (res.matchedCount === 0) {
     await db.collection('page_revisions').updateOne({ id: rev.id }, { $set: { aborted: 'conflict', aborted_at: now } });
     return { status: 'conflict', revision_id: rev.id as string, book_id: bookId };
+  }
+  if (!opts.verbatim && field === 'translation' && typeof next?.data === 'string' && next.data) {
+    await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, run_id: opts.run_id ?? null, layers: translationLayers(next.data, { promptVersion: (next.prompt_version as string | undefined) ?? null }) }]);
   }
   return { status: 'written', revision_id: rev.id as string, book_id: bookId, prior_hash: rev.prior_hash as string | null, next_hash: rev.next_hash as string | null };
 }

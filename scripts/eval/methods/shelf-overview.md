@@ -1,20 +1,20 @@
 ---
 id: shelf-overview
-version: 1
+version: 2
 stage: [ocr, translation, structure]
 measure: judged
 reader: model
 image_opened: true
 verdict_scale: [show, caveat, fix]
-issue: [6056, 6079, 6090, 6174]
+issue: [6056, 6079, 6090, 6174, 8053]
 status: active
 ---
 <!-- PRIOR ART: .claude/skills/shelf-overview/SKILL.md (how to run it) and scripts/eval/spot-check/OVERVIEW-ADDENDUM.md
 (the brief). This file is the instrument's description for book_checks rows; it changes neither. -->
-## shelf-overview v1 — what is this shelf like to read, and which books can a scholar be shown?
+## shelf-overview v2 — what is this shelf like to read, and which books can a scholar be shown?
 
 **Sampling.** `scripts/eval/spot-check/overview-draw.mjs`. One stratum per tradition a partner cares about; the frame of
-each stratum is listed in `draw-log.json` with its size, so results can be weighted. 4 books per stratum, drawn
+each stratum is listed in `draw-log.json` with its size, so results can be weighted. 4 books per stratum in v1 (`--books` from v2), drawn
 uniformly per book with the run's seed; 4 pages per book, one random translated page in each quarter of the book
 (start, two middles, end). Only `page_number > 0` since the 2026-10-07 runs (6 soft-hidden records were drawn before the
 filter; `overview-score.mjs` drops them).
@@ -54,4 +54,10 @@ Consistency is not accuracy: all three runs are the same model with the same bri
 **Rows written by** the backfill (`scripts/maintenance/backfill-book-checks.mjs`) and, from #6174 step 4,
 `overview-score.mjs` at the end of a run, with `run-cost.py`'s cost as `subscription_usd_eq`.
 
-**Versions.** v1 — 2026-10-07: REVIEWER.md v1 (frozen) + OVERVIEW-ADDENDUM.md as of PR #6079.
+**Versions.**
+- v1 — 2026-10-07: REVIEWER.md v1 (frozen) + OVERVIEW-ADDENDUM.md as of PR #6079. 4 books a stratum, translated pages only.
+- v2 — 2026-11-04 (#8053): same brief and reader; the sampling changes. Books per stratum is a run parameter (`--books`;
+  the #8053 run drew 8), and a stratum may set `"pages": "ocr"` in `strata.json` to draw pages with OCR instead of
+  translated pages, for held books with little or no English. On such a stratum the English score is empty and the
+  serious rate is an OCR-and-structure rate, so it is not comparable with a translated stratum. A reviewer may split
+  its packet across forks of itself (same model); the #8053 Hanshu packet did. Rates from v1 and v2 are not pooled.

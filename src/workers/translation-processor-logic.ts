@@ -126,6 +126,24 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     return;
   }
 
+  // A message names its job's book, and everything below reads that book: the previous page
+  // (`book_id: bookId, page_number - 1`), the source language and the title/author context. A page
+  // from ANOTHER book translated under it gets that book's page as its continuity context (#7085:
+  // a job filed under the Argonauticon carried Llull Ars brevis pages; 63 of them came back with
+  // notes about Estienne's Argonautica and p.23 with Argonautica lines). Refuse, do not re-route:
+  // the language and prompt were chosen for the job's book too.
+  if (page.book_id !== bookId) {
+    console.error(`[TRANS] Page ${pageId} belongs to book ${page.book_id}, not the job's book ${bookId} — refusing (#7085)`);
+    await sendWriteResult({
+      type: 'translation',
+      bookId, pageId, jobId, targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: true,
+      error: { message: `Page belongs to book ${page.book_id}, not ${bookId}`, category: 'wrong_book' },
+    });
+    return;
+  }
+
   // Check if page has OCR
   if (!page.ocr?.data) {
     console.error(`[TRANS] Page ${pageId} has no OCR data`);

@@ -83,7 +83,7 @@ async function phaseCandidates() {
       id: 1, title: 1, language: 1, languages: 1, language_multi: 1, original_language: 1, text_role: 1, visible: 1, created_at: 1,
       pages_count: 1, pages_ocr: 1, 'image_source.provider': 1, 'book_class.class': 1, 'book_class.script_family': 1,
       'book_class.evidence.family_source': 1, 'book_class.evidence.secondary_family': 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1,
-    } });
+    } }).batchSize(1000);
     const out = fs.createWriteStream(inDir('candidates.jsonl'));
     const T = {}; let n = 0, total = 0;
     for await (const b of cur) {
@@ -285,7 +285,11 @@ export function decide(row, tags) {
   // Gate 2 (2026-10-04, eye-check-gate2.json): both Greek → Latin misses were Greek–Latin editions, and
   // on both the reader had listed the label's script among `other_scripts`. Any trace of it stops the flip.
   const labelScripts = new Set(row.label.map(scriptFamilyOfCode));
-  const trace = row.reads.find((r) => [r.script, ...(r.other_scripts || [])].some((x) => labelScripts.has(readerScriptFamily(x))));
+  // Same-script flip (Latin → German, #7270): the label's script IS the target's, so a trace of it says
+  // nothing about bilingualism; the language checks above (read 2–4 in the label's language, a read naming
+  // two languages) are what stop a bilingual edition there.
+  const sameScript = labelScripts.has(scriptFamilyOfCode(to));
+  const trace = sameScript ? null : row.reads.find((r) => [r.script, ...(r.other_scripts || [])].some((x) => labelScripts.has(readerScriptFamily(x))));
   if (trace) return { decision: 'report', why: `the label's script is on a sampled page (read ${trace.read}): possibly bilingual`, to };
   // The write needs four agreeing reads, not two.
   return { decision: agreeing >= MIN_READS_TO_WRITE ? 'flip' : 'flip-2-reads', to, agreeing, instruments };

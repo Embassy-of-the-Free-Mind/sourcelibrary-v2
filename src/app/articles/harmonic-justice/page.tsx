@@ -44,6 +44,7 @@ const BOOK = {
   divina: '/book/de-divina-proportione-illust',
   wolowski: '/book/traictie-de-la-premiere-invention-des-monnoies-de-nicole-ed',
   kepler: '/book/the-harmony-of-the-world-kepler',
+  bodin: '/book/les-six-livres-de-la-republique-de-j-bodin-angevin-plus-lapologie-de-r',
   fama: '/book/fama-fraternitatis-oder-entdeckung-der-brudersch-des-ordens-fraternitatis',
   splendor: '/book/splendor-solis-the-splendour-of-the-sun-trismosin',
   canker: '/book/the-canker-of-england-s-common-wealth-malynes',
@@ -69,6 +70,13 @@ const PAGE = {
   oeconomicus436: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947e`,
   oeconomicus437: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947f`,
   cyropaedia285: `${BOOK.cyropaedia}/page/69b2218b08069e96e8430469`,
+  bodin1014: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ebd`,
+  bodin1016: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ebf`,
+  bodin1018: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ec1`,
+  bodin1020: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ec3`,
+  malestroit47v: `${BOOK.bodin}/page/6ac4fce54ba7223afef75f77`,
+  malestroit48: `${BOOK.bodin}/page/6ac4fce54ba7223afef75f78`,
+  malestroit50: `${BOOK.bodin}/page/6ac4fce54ba7223afef75f7c`,
   fourierUnite140: `${BOOK.fourierUnite}/page/6a8ee22f90f5a0e4155eab94`,
   fourierUnite274: `${BOOK.fourierUnite}/page/6a8ee22f90f5a0e4155eac1a`,
   fourierQuatre160: `${BOOK.fourierQuatre}/page/6a8ee2e990f5a0e4155ebabb`,
@@ -499,16 +507,108 @@ export default function HarmonicJusticePage() {
           subjects: the astronomer who moved the earth wanted the measure of value to stay still.
         </p>
 
+        <h2 className={h2}>Bodin on the price of everything</h2>
+
+        <p className={p}>
+          By the 1560s prices in France had been rising for a generation, and assemblies were held all over Paris to find
+          out why. In 1566 Jean de Malestroit, employed in the matter by the king&apos;s command, answered with a pamphlet of{' '}
+          <em>Paradoxes</em>: nothing had really grown dearer in three hundred years. The same weight of gold and silver
+          bought what it always had, and only the coins had been cried up and made lighter. That is Copernicus&apos;s
+          diagnosis, a measure that had been moved. Jean Bodin replied in 1568. The library&apos;s copy of his{' '}
+          <Link href={BOOK.bodin}>
+            <em>République</em>
+          </Link>{' '}
+          (Lyon, 1593) binds in the reply, with Malestroit&apos;s <em>Paradoxes</em> printed after it. Bodin first lists
+          the prices fixed in the regional customs for a sheep, a cartload of hay, a setier of wheat and a day&apos;s
+          labour, and concludes that in sixty years everything had grown at least ten times dearer, in whatever money
+          Malestroit chose. Then he gives the cause:
+        </p>
+
+        <Quote href={PAGE.malestroit47v} cite="Jean Bodin, reply to the Paradoxes of Malestroit (1568), in the République (Lyon, 1593), fol. 47v">
+          I find that the dearness we see arises from about four or five causes. The principal and almost the only one,
+          which no one until now has touched upon, is the abundance of gold and silver, which is greater in this kingdom
+          today than it has been for four hundred years.
+        </Quote>
+
+        <p className={p}>
+          His proof is from Rome. When Aemilius Paullus brought the gold and silver of Macedon home, the price of land
+          around Rome rose by two-thirds &ldquo;in a moment.&rdquo; The land was the same land:
+        </p>
+
+        <Quote href={PAGE.malestroit48} cite="Bodin, reply to Malestroit, fol. 48r">
+          It was therefore not a scarcity of land, which can neither grow nor diminish, nor monopoly, which cannot occur in
+          such a case: it was the abundance of gold and silver, which makes it held cheap, and makes the things priced in it
+          dear.
+        </Quote>
+
+        <p className={p}>
+          He then traces where the metal came from: the Levant trade, the bank at Lyon, the Spaniards, English and
+          Flemings who paid in gold and silver for French wheat, cloth, wine and salt, and behind the Spaniards the New
+          World. Since the conquest of Peru in 1533,
+          he writes, &ldquo;more than a hundred million in gold has come from there, and twice as much in
+          silver&rdquo;{' '}
+          <Link href={PAGE.malestroit50}>(fol. 50r)</Link>. Copernicus treated money as a measure that had to be held
+          fixed. Bodin treated gold and silver as goods like any other, cheap when they are plentiful, and the prices of
+          everything else move with them.
+        </p>
+
         <h2 className={h2}>Bodin and Kepler: harmonic justice, checked against the ear</h2>
 
         <p className={p}>
-          Jean Bodin ended his <em>Six Books of the Commonwealth</em> (1576) with a theory of harmonic justice.
-          Arithmetic justice gives everyone equal shares. Geometric justice gives shares in proportion to merit. A
-          well-ordered state, Bodin argued, blends the two, the way a harmonic proportion blends an arithmetic and a
-          geometric one.
+          Bodin ended the <em>République</em> (first printed in 1576) with a chapter on justice, Book VI, chapter 6. He
+          claims priority here as well:
         </p>
 
+        <Quote href={PAGE.bodin1014} cite="Bodin, Les six livres de la République VI.6 (Lyon, 1593), p. 1014">
+          I call justice the right apportioning of rewards and punishments, and of what belongs to each person in terms of
+          law. &hellip; Now this apportioning cannot be accomplished except by a proportion of equality and of likeness
+          together. That is the true harmonic proportion, and no one has touched on it until now.
+        </Quote>
+
+        <p className={p}>
+          Arithmetic justice belongs to the popular state: equal shares, and the same fine for the rich and the poor.
+          Geometric justice belongs to the aristocracy: shares in proportion to rank and merit. Bodin takes his
+          definitions from the mathematicians:
+        </p>
+
+        <Quote href={PAGE.bodin1016} cite="Bodin, République VI.6, p. 1016">
+          Geometric proportion is the one whose ratios are similar; Arithmetic proportion is the one whose ratios are
+          always the same; Harmonic proportion is composed of the two, and yet differs from each. The first is similar; the
+          second is equal; the third is partly equal and partly similar.
+        </Quote>
+
         <MeansDiagram />
+
+        <p className={p}>
+          His examples come from ordinary life. A law that marries nobles only to nobles is geometric; marriages drawn by
+          lot would be arithmetic. The harmonic order mixes unlike people, and one of his cases is a business:
+        </p>
+
+        <Quote href={PAGE.bodin1018} cite="Bodin, République VI.6, p. 1018">
+          &hellip;among merchants there is no partnership more secure than that of a lazy rich man with a diligent poor one,
+          because there is both equality and similarity between them: equality, in that each has something good;
+          similarity, in that both have some defect.
+        </Quote>
+
+        <p className={p}>
+          A good host does the same at table. He seats a jester between two wise men and a peaceable man between two
+          quarrelsome ones, and from that order comes &ldquo;a sweet and pleasing harmony of each with the others and of
+          all together&rdquo;{' '}
+          <Link href={PAGE.bodin1018}>(p. 1018)</Link>. For the state Bodin sets four terms in the numbers 4, 6, 8 and 12: law, equity, the
+          execution of the law, and the duty of the magistrate.
+        </p>
+
+        <Quote href={PAGE.bodin1020} cite="Bodin, République VI.6, p. 1020">
+          For in these four numbers, 4, 6, 8, 12, the same ratio found from 4 to 6 is also found from 8 to 12, and there is
+          the same ratio from 4 to 8 as from 6 to 12. &hellip; From this results a melodious harmony composed of the fourth,
+          the fifth, and the octaves.
+        </Quote>
+
+        <p className={p}>
+          Law without equity is the rule of Polyclitus, too stiff to bend. Equity without law is the Lesbian
+          builders&apos; rule of lead, which bends to fit any stone. The harmonic rule bends when it has to and springs
+          straight again.
+        </p>
 
         <p className={p}>
           Forty years later Kepler read this and stopped the third book of his{' '}
@@ -985,14 +1085,21 @@ export default function HarmonicJusticePage() {
           ask which ratios are fair in the same breath as which ones are stable.
         </p>
 
+        <p className={p}>
+          A second part,{' '}
+          <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link>, follows the older sense of the
+          word, the fitting together of unlike things, through a Chinese minister&apos;s soup, Miskawayh, Hume and
+          Smith on sympathy, Spinoza&apos;s refusal of the music of the spheres, and Wallace&apos;s governor.
+        </p>
+
         <p className="text-sm text-muted leading-relaxed">
           Quotations are the library&apos;s English translations, or for English books (Malynes, Misselden, Davis,
           Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
           (Marchant&apos;s Xenophon, Geijsbeek&apos;s Pacioli, Wolowski&apos;s Copernicus), the wording is the
           translator&apos;s. The word in square brackets in the Bastiat creed is his <em>harmonieusement</em>, restored
           from the French; in the Fourier passage on distribution it is his <em>accords</em>, which the translation
-          gives as &ldquo;harmonies.&rdquo; Bodin&apos;s <em>République</em> is not yet in the library,
-          so his theory is given here in Kepler&apos;s account of it. Gresham&apos;s will and Petty&apos;s professorship
+          gives as &ldquo;harmonies.&rdquo; Bodin&apos;s reply to Malestroit is bound into the library&apos;s 1593{' '}
+          <em>République</em> and is cited by its own folio numbers. Gresham&apos;s will and Petty&apos;s professorship
           are cited from outside the library.
         </p>
       </article>

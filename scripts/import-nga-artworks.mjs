@@ -30,7 +30,7 @@ import { createReadStream } from 'fs';
 import { createInterface } from 'readline';
 import { makeBookDoc } from './lib/book-docs.mjs';
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const THUMB_WIDTH = 600;
 const MIN_DIMENSION = 800;
@@ -202,7 +202,7 @@ async function main() {
   const cursor = books.find(
     { 'image_source.provider': 'nga' },
     { projection: { 'image_source.identifier': 1 }, maxTimeMS: 30000 }
-  );
+  ).batchSize(1000);
   for await (const doc of cursor) {
     if (doc.image_source?.identifier) existingIdentifiers.add(doc.image_source.identifier);
   }

@@ -1,0 +1,10 @@
+ROW 1 | ഷൃണീയനാങ്ങളെ[illegible]ഷ്ടാ ‖ ഷതിവ്യക്ത[illegible]നാന്നോജ്ഞത്തിന്നാദിര[illegible]പ്രതി ‖ യോഗിസമവായികാരണഞ്
+ROW 2 | ദൃഷ്ടിഃപ്രത്യയോഗജ്ഞം ‖ കൊണ്ടുമിക്കതിവ്യവഹാരഹേതുഃപ്രാ ‖ ഗഭാവഃഖംസംലക്ഷ്യ[illegible]।
+ROW 3 | സാദിതിതോ।ഘടാദ്ദാരത്ര ‖ വ്യാപ്തിപാരണായ.സനന്ത[illegible]ത്തിക്കാശാ ‖ ദ്യാദിവ്യാപ്തിപാരണായ
+ROW 4 | സാദത്തിതിപ്രതിയെ ‖ ാദിജ്ഞ[illegible]ഃപ്രതിയോഗിസമവായി ‖ പ്രതിഃ[illegible]ംജ്ഞ[illegible]തിവ്യംപ
+ROW 5 | ഹാരഹേതുഃഖ്യം ‖ സഃ[illegible]തുന്നാദാഹംലക്ഷ്യതിഃ ‖ [illegible]ത്രകാമിക്കള[illegible]
+ROW 6 | ജ്ഞാജ്ഞാദ്ദൗവംല ‖ ക്ഷ്മ[illegible]തികടാലെത്രുതിലതിയോഗി ‖ താപ[illegible]ഷ്ടകാനാപ്യ
+ROW 7 | സംസൃഷ്ടംകടെ ‖ കപ്രതിയോഗികക്കകയോരത്യന്താഭാ ‖ വാന്യോന്യാഭാവയോ
+ROW 8 | ജ്ഞ[illegible]ംകേവലംദേവ ‖ ടത്വാദ്ഭാവ[illegible]ഭാവ[illegible]തിപ്രകിത്യാ ‖ ന്യാവിശിഷ്ടാഭാവഃ।ഏകസ
+ROW 9 | [illegible]ന്ദ്രന്ത്യ[illegible]ദിവ്യ ‖ തിത്യാമിത്താപക്ഷിനാഭാവഃസംയോ ‖ ഗസംബന്ധോഘടവതി
+NOTE | The leaf has 9 rows and I'm not confident in most of this reading. About half the akṣaras are secure: the Nyāya terms (പ്രതിയോഗി, സമവായികാരണ, പ്രാഗഭാവഃ, അത്യന്താഭാവ/അന്യോന്യാഭാവയോ, സംയോഗസംബന്ധോ) and parts of rows 7–9. Many joins across the holes and the conjuncts in rows 1 and 3–6 are guesses. In row 9, വ and പ are hard to tell apart, so "ഘടവതി" could also be "ഘടപതി".

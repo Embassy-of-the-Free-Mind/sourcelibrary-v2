@@ -1,0 +1,9 @@
+ROW 1 | മെഘമിതി॰ പ്രവൃത്തിസാ[illegible]ന്ദ്രവൃത്തെന്ദ്രതം॰ ഗബാ[illegible]ാതമൈവാഖലെസാ[illegible]ദ്ഭഗവന്നനമെഘമിത്യുവാച
+ROW 2 | ഭവതാമൃതന്നായഷെവി[illegible]ദകക്ഷ്യം॰ എവിബ്രഹ്മച[illegible]ൎയ്യചൎയ്യഖെന്ദൂസൗദ്വക്ഷഃ സ ത്രുപ്രകൃതിഷൈദ്രവാ
+ROW 3 | സ്ഥയമൂ॰ ത്രക്ഷാ ‖ പ്രപ്രജ്ജിതഃ തൈ[illegible]മൈൎഗ്ഗൂശിഷ്യായാ ‖ സകാരംപയാസംകൂി
+ROW 4 | പ്യദ്മവാൻ തമ ‖ ഭവചലിദ്ദമ[illegible]ദമാൎഗ്ഗിൽ തജ്ഞാനസ്ക ‖ മസി ക്ഷെത്രജ്ഞകമി
+ROW 5 | പലമണ്ഡലമഃ ‖ പ്രധാനം॰ ക്ഷെത്ര[illegible]ത്രജ്ഞഃ പുരുഷഃ ‖ പ്യതെ॰ ഞ്ജാനമിദ
+ROW 6 | പിതൈഭൌൎയ്യൊസ്ത്രി ‖ ജ്ഞാചക്ഷവിപ[illegible]പാക്ഷസാധിത്രാന ‖ ാനസാം॰ വയോപ്രശ്ച
+ROW 7 | ഭ്രഭദ്രൌഖതദെനന്തിപക്ഷൊഭിഷബിനമ്വമ്ഭിഹാബാഹ്യയാതൃതെ॰ തന്ത്രം॰ ഭക്ഷിതന്ത്രാഖ്യം॰
+ROW 8 | ഞാക്കിഖെണ്ഡം॰ ജഭമിഭിതതത്തെഭൃവപിശ്ചിമഭിരക്ഷാനൃാച്ചാാതൊഃ നന്മചഷ്ഠിരത്ര
+NOTE | This is a low-confidence reading: the joins between pieces, the conjuncts and many aksharas are guesses. Every row has text, but it should be checked against the images. The left margin has a leaf number (something like "സ 1", not certain). I did not fill in any text from the known Kārikā or a commentary.

@@ -105,7 +105,7 @@ async function main(): Promise<number> {
       // `author` is projected because it is half the repairability question:
       // a non-Latin title with a Latin-script author IS repairable (#4521).
       { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1 } },
-    );
+    ).batchSize(1000);
 
     let scanned = 0;
     let slugged = 0;

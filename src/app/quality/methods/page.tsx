@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import methods from '@/data/quality-methods.json';
 
@@ -71,7 +72,7 @@ const MAP: { path: string; name: string; what: string; kind: string }[] = [
   { path: '/quality/methods', name: 'How we measure', what: 'This page: the rules, the instruments and the gaps.', kind: 'Register' },
   { path: '/research/quality/open', name: 'Open quality work', what: 'Known defects and the work under way, each linked to its issue.', kind: 'Register' },
   { path: `${REPO}blob/main/scripts/eval/EXPERIMENTS.md`, name: 'Experiment log', what: 'Every measurement we have run and what it concluded, newest first.', kind: 'Register' },
-  { path: `${REPO}blob/main/scripts/eval/DECISIONS.md`, name: 'Decision ledger', what: 'What we currently do for each kind of text, and the evidence for it.', kind: 'Register' },
+  { path: `${REPO}blob/main/.claude/docs/routing.md`, name: 'Routing table', what: 'Which route reads and translates each kind of text, from the router table and its judged pages.', kind: 'Register' },
   { path: '/research/quality', name: 'How page quality is measured', what: 'The working paper behind the measurements.', kind: 'Report' },
   { path: '/research/canon-quality', name: 'How we check each canon', what: 'The canon-by-canon evidence, prepared for the Eternity working session.', kind: 'Report' },
   { path: '/research/page-errors', name: 'What goes wrong on a page', what: 'The defect classes, from pages read by eye.', kind: 'Report' },
@@ -91,7 +92,7 @@ export default function QualityMethodsPage() {
     >
       <div className="max-w-4xl mx-auto font-body text-stone-700 text-lg leading-relaxed">
         <p className="text-sm text-stone-500 mt-8">
-          As of {methods.as_of}. Part of the <a href="/quality" className="text-amber-800 underline underline-offset-2">Quality Center</a>.
+          As of {methods.as_of}. Part of the <Link href="/quality" className="text-amber-800 underline underline-offset-2">Quality Center</Link>.
           This page is generated from{' '}
           <A to="src/data/quality-methods.json">one register file</A>; each figure links to the write-up it comes from.
         </p>
@@ -118,6 +119,13 @@ export default function QualityMethodsPage() {
         <p>
           Each instrument answers one question and is blind to something. We say which, because a number is only as good as
           what produced it.
+        </p>
+        <p className="mt-3">
+          That is why their figures differ. The served-quality draw reads the transcription against the page image and
+          counts books; the monthly audit judges only the English, against our own transcription, and counts pages; the
+          spot check covers the canon shelves only. The figure to quote for the library as a whole is the first one, and
+          the <Link href="/quality#stands" className="text-amber-800 underline underline-offset-2">Quality Center</Link> explains
+          how the others relate to it.
         </p>
         <p className="text-base mt-3">
           {(Object.keys(KIND) as Kind[]).map((k) => (

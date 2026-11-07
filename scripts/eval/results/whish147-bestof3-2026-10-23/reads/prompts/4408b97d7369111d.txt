@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. orakasyāddhyayaḥnamaihetukānddhyayamananahitalparijñānālpramātṛtviyākārakita
+2. tyacyateduḥkhābhighātakāsrūyaiticoyābhrābhicakanāyidainakkikkenāyire
+3. daṣikaikanavābhāvitanakkadṛṣṭātāljñānaṃparamprūṣṭakiuhainavaiśyanādya
+4. yamananaphākasya ‖ taṣibhrātavehetukāpramaidāda ‖ prakṛtaimaivādanāvya
+5. hlittyaṃupāya ‖ syuttitoditimṛṣṭāyāṅka ‖ strīmayaḥkkānaddaḥ
+6. baihetukojña ‖ ticovālabhyāḥsasalpra ‖ ākṣitiśayāyi
+7. dhātatubhaḥślṛ ‖ hṛdaḥpramāpradyañjānamayigaḻḻa ‖ tinyasyavatpra
+8. ākṣeśrīṣṭhikāmitra ‖ ṣiddhyahāljñānaṃprakāśaya ‖ yalitthaṃsaktamiratraka
+9. mitraccūtedānayecesiddhihetuḥdānāddhyātāyitojñābhijñānaṃ
+10. bhikhyacchiterayamanddhamisādāstradetamitvaccayatedivatitāḥasiddhyaḥ
+
+TRANSCRIPTION B
+1. tekṣyādryayanmehātrakāraṇdryamananaphitalparijñānālemātraśīghrātārakamit
+2. śṛcyateṭṭaḥbodhiṣyātrakāsyūṣaitiaiyātryātbhikekandāyideddaratikendāyiśe
+3. davivekenavāddhāvitantdiṣyātāntmajñānaṃparamuṣṣukiundohanaścajñānādya
+4. yaonnanvākaṇḍya ‖ tebhiṣyātavehetukāpratimāda ‖ prakṛtimaiādanāvya
+5. ukhitasyaupāya ‖ syattvāditidvaivyākhyā ‖ striddhayaḥtonaddaḥ
+6. behetukātū ‖ bhiṣovāstrantraḥsasalpra ‖ āṣṭitikeyān
+7. gātaratthaḥjñasya ‖ hdāḥprāvṛtujñānamayigḷ ‖ jñatantrasasalpra
+8. āṅkṣirkkāāmitra ‖ ṣibaishāljñānaṃprakāśaya ‖ iṣaṃsaskiratka
+9. mitṛcyatedānamaisiddhimehātraḥdānenaṣyānāyiotājñāādijñānaṃ
+10. bhiyaṣṭriūyamaññudisadāggvadratamiścṛcyatetektivatitāḥśasiddhayaḥ
+
+TRANSCRIPTION C
+1. kaikaśyāddhyayaḥnakaihātukāṟanddhyayamananahitalparijñānālhimātṛṣṭiyākāramitu
+2. tracryakaiṭṭaḥbādhiṣātakāsrūyaitiaiyādryāttikaikanāyidaiṭṭanitakaiḍāyite
+3. daṣikaikanavābhāvitantradiṣṭātālḥjñānaṃparamṛṣṭakiudahonaṅṅaḻñjanāddhya
+4. yainanaṣākaṇṭya ‖ taṣiṣṭātavahatukāpramaiṣāda ‖ prakṛtaimaiṣadanāvya
+5. chaṣṭhitraupāya ‖ ndrattvāditivṛṣṭāyālkka ‖ saṃsiddhāyaḥkonaddaḥ
+6. baihatukkāḻa ‖ taibāddhānyādaḥsasarpra ‖ ākhitikaiyāyi
+7. hatatabaḥtrūnya ‖ ṣṭabhramyūtyajñānamayigaḻa ‖ bhityasyasarpra
+8. ākṣadṛṣṭikāyamitra ‖ ṣiaiṭahāljñānaṃprakāśaya ‖ yadaiṣṭaṃsajñamitṛka
+9. mitracyraṣṭadānaka ‖ cesiddhihetuḥdānainasahyānāyi ‖ dakājñābhijñānaṃ
+10. bhiyaṣṭitaidyama ‖ ccumisādāldvidratamitrucyratata ‖ tādhipatitāḥśasiddhāyaḥ
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

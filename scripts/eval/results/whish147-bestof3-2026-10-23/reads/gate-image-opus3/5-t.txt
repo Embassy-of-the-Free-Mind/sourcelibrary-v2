@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf begins ആപ്തവചനന്തു: and a ‘+’ ornament, then ‖ (ദ)സാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം ‖ പ്രസിദ്ധിരനുമാനാ. A matches this letter for letter. B gets the middle and right columns right but marks the start [illegible] and misreads it as ക്കവചനതു. C misreads the start as ഞ്ചൂക്കവചനതു and garbles the middle column (സാമഗ്ര്യകന്തൂ…, അനമാനാ).
+
+CHECK | row 3: The leaf begins മീപ്യാദിന്ദ്രിയഘ ‖ ാതാന്മനോനവസ്ഥാനാൽ ‖ സൌക്ഷ്മ്യാദ്വ്യവധാ. A matches this. B is mostly [illegible] with wrong letters (ാദിന്ദ്രിയൈര…, നവച്ചാനാക്ക). C reads shapes into wrong letters all the way through (ഭ്യാദദിയന, ൗകാങ്കരൗന, സാക്ഷ്യാദ്രൂപ്യാ).
+
+CHECK | row 9: The leaf begins നകമാശ്രിതംലിം. ‖ ഗം.സാവയവം.പരതന്ത്രം.വ്യക്തം.വി ‖ പരീതമവ്യക്തം.॥൧൦॥. Only A matches. B has നക്കമാത്തിക്കംചി·ം·സാമാന്യം… and [illegible] for the rest. C has നകമാഭ്രിക്കം.ചി. ‖ ം.സ്വാലാദാബം… and calls the right column [not visible], even though it is clearly written.
+
+PICK | A
+
+RANK | A, B, C
+
+WHY | Only A's letters match the strokes on the leaf in all three rows checked (it is Sāṅkhyakārikā 5–10). B loses most rows to [illegible] and wrong letters, though its rows 1–2 are partly right. C is wrong letter-shape guesses throughout and drops a readable column.

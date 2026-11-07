@@ -70,7 +70,7 @@ async function getOnce(url, { fetchImpl, timeoutMs }) {
   try {
     const res = await fetchImpl(url, {
       method: 'GET', redirect: 'follow', signal: AbortSignal.timeout(timeoutMs),
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (archiving-watchdog confirm; https://sourcelibrary.org)' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) archiving-watchdog-confirm' },
     });
     // Liveness only — never download the image.
     try { await res.body?.cancel?.(); } catch { /* already consumed / not a stream */ }

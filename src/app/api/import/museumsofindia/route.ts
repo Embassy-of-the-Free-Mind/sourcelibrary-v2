@@ -11,6 +11,7 @@ import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { computeProcessingPriority } from '@/lib/processing-priority';
 import { initialPageCounters } from '@/lib/page-counts';
+import { selfCallHeaders } from '@/lib/self-call';
 
 export const maxDuration = 300;
 
@@ -221,7 +222,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : request.headers.get('origin') || 'http://localhost:3000';
-    fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, { method: 'GET' })
+    fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, { method: 'GET', headers: selfCallHeaders(baseUrl) })
       .catch(() => console.log(`[Import] Split check queued for ${bookIdStr}`));
 
     notifyBookImport(bookIdStr, slug).catch(console.error);

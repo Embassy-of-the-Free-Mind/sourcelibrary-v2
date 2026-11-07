@@ -2,16 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo convention (#4613)
+import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
+import { takeReaderTextLayers, applyReaderTextLayer, type ReaderTextLayer } from '@/lib/reader-text-layer'; // #7965: the notes layer; text/text_from stripped here
 
 export const preferredRegion = 'fra1';
 
@@ -63,7 +67,7 @@ export async function GET(
     const tenantFilter = tenant === 'default' ? { $in: [tenantId, null] } : tenantId;
 
     // Default: exclude detected_images (large array unused by the reader)
-    const projection = full ? undefined : { detected_images: 0 };
+    const projection = full ? undefined : PAGE_API_LAYER_PROJECTION;
     let page = await db.collection('pages').findOne(
       { id, tenantId: tenantFilter },
       projection ? { projection } : undefined
@@ -80,9 +84,19 @@ export async function GET(
       }
     }
 
+    // A partner's book can have untagged page rows: the embed's page turns need them too.
+    if (!page) {
+      [page = null] = await findUntaggedPagesOfTenantBooks(db, [id], tenantId, projection);
+    }
+
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+
+    // The notes layer (#7965): read while the page still carries translation.text, which goes no further.
+    // `?full=true` is untouched: the whole stored document, raw `data` included (what an editor loads).
+    let layers = new Map<string, ReaderTextLayer>();
+    if (!full) ({ pages: [page], layers } = await takeReaderTextLayers(db, [page]));
 
     // Metered reader (#4357): the 'default' tenant is the main library, so it
     // meters like the global twin; named tenants (bph/kloss/…) are partner
@@ -93,9 +107,13 @@ export async function GET(
       exempt: tenant !== 'default' || verifyCitationToken(id, searchParams.get('cite')),
     });
 
+    // English edition, English leaf: serve the transcription, never the stored
+    // English-to-English rewording (#7100).
+    [page] = await serveEnglishOriginalPages(db, [page]);
+
     // Reader-path provenance: translation carries the invisible imprimatur
     // (deterministic, no ref — cache-safe). Mirrors the global twin.
-    return NextResponse.json(markPageForReader(page), {
+    return NextResponse.json(markPageForReader(applyReaderTextLayer(page, layers)), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {

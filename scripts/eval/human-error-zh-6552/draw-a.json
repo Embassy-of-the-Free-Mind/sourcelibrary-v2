@@ -1,0 +1,1008 @@
+{
+ "seed": 6552,
+ "drawn_at": "2026-11-04T12:03:43.970Z",
+ "dice_min": 0.9,
+ "quota": {
+  "KR1": 9,
+  "KR2": 9,
+  "KR3": 9,
+  "KR4": 3
+ },
+ "frame_works": 1076,
+ "picked": [
+  {
+   "uid": "A-KR2a0007",
+   "kr": "KR2a0007",
+   "cls": "KR2",
+   "witness_sha": "68795df7a89a067b6833eff979773f98c0031456",
+   "book_id": "6aeb1587964e8fcfbdb4f926",
+   "title": "前漢書·卷三十六~卷三十七 (Hanshu, Siku Quanshu Huiyao copy, juan 36-37)",
+   "visible": false,
+   "page_id": "6aeb1587964e8fcfbdb4f9a1",
+   "pn": 120,
+   "image": "https://archive.org/download/06079788.cn/page/n119/full/full/0/default.jpg",
+   "pb": "KR2a0007_WYG_037-6a",
+   "dice": 0.958,
+   "runner_up": 0.097,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR2a0009",
+   "kr": "KR2a0009",
+   "cls": "KR2",
+   "witness_sha": "70b18eea416ce460b0fa7551b98c6c297df8710e",
+   "book_id": "6ae0c2ce4adf2ffb52f74a6e",
+   "title": "後漢書[范煜…等撰]·卷九~卷十下 (Hou Hanshu, Siku Quanshu, vol. 5 of 43)",
+   "visible": false,
+   "page_id": "6ae0c2ce4adf2ffb52f74aab",
+   "pn": 59,
+   "image": "https://images.sourcelibrary.org/archived/6ae0c2ce4adf2ffb52f74a6e/59.jpg",
+   "pb": "KR2a0009_WYG_010-10b",
+   "dice": 0.91,
+   "runner_up": 0.086,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1a0133",
+   "kr": "KR1a0133",
+   "cls": "KR1",
+   "witness_sha": "f0c39567d0d3ef7d88e53fa9e769532d2a5e8ada",
+   "book_id": "6a3cb5513dce6cfad748261a",
+   "title": "周易觀彖·卷五~卷六 (vol 3)",
+   "visible": true,
+   "page_id": "6a3cb5513dce6cfad748268c",
+   "pn": 114,
+   "image": "https://images.sourcelibrary.org/archived/6a3cb5513dce6cfad748261a/114.jpg",
+   "pb": "KR1a0133_WYG_006-22b",
+   "dice": 0.996,
+   "runner_up": 0.094,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3a0030",
+   "kr": "KR3a0030",
+   "cls": "KR3",
+   "witness_sha": "a5426816b211afec4ff760e5b43d509de853a6f8",
+   "book_id": "6a3ced524701a906f10df364",
+   "title": "二程遺書·卷十九~卷二十二下 (vol 5)",
+   "visible": true,
+   "page_id": "6a3ced524701a906f10df3f6",
+   "pn": 145,
+   "image": "https://images.sourcelibrary.org/archived/6a3ced524701a906f10df364/145.jpg",
+   "pb": "KR3a0030_WYG_022-26b",
+   "dice": 0.959,
+   "runner_up": 0.092,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3j0069",
+   "kr": "KR3j0069",
+   "cls": "KR3",
+   "witness_sha": "1a0227d3ef93591f4e309050f38d2827aac9f2f1",
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "title": "義府·卷上 (vol 1)",
+   "visible": true,
+   "page_id": "6a3c6c3839b4508b04e4777e",
+   "pn": 97,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6c3739b4508b04e4771c/97.jpg",
+   "pb": "KR3j0069_WYG_001-45a",
+   "dice": 0.95,
+   "runner_up": 0.035,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3e0036",
+   "kr": "KR3e0036",
+   "cls": "KR3",
+   "witness_sha": "79d63a8d550302a682f039265aa3dd0aef30cf9f",
+   "book_id": "6a3c71f201fe4f593c1da8f2",
+   "title": "醫說·卷四~卷五 (vol 3)",
+   "visible": true,
+   "page_id": "6a3c71f201fe4f593c1da915",
+   "pn": 35,
+   "image": "https://images.sourcelibrary.org/archived/6a3c71f201fe4f593c1da8f2/35.jpg",
+   "pb": "KR3e0036_WYG_004-17b",
+   "dice": 0.984,
+   "runner_up": 0.052,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3e0012",
+   "kr": "KR3e0012",
+   "cls": "KR3",
+   "witness_sha": "04b00b575e9a2f6da241d3572354f029f47163d7",
+   "book_id": "6a3c68c1af3c49b59c5dc249",
+   "title": "巢氏諸病源候總論·卷五~卷九 (vol 2)",
+   "visible": true,
+   "page_id": "6a3c68c1af3c49b59c5dc26c",
+   "pn": 35,
+   "image": "https://images.sourcelibrary.org/archived/6a3c68c1af3c49b59c5dc249/35.jpg",
+   "pb": "KR3e0012_WYG_006-8a",
+   "dice": 0.964,
+   "runner_up": 0.066,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1e0047",
+   "kr": "KR1e0047",
+   "cls": "KR1",
+   "witness_sha": "ce40367ce1e53c9ecd0a2f74513b1fc6909e3c69",
+   "book_id": "6a3c728701fe4f593c1e029d",
+   "title": "春秋集義·卷四~卷七 (vol 2)",
+   "visible": true,
+   "page_id": "6a3c728701fe4f593c1e0323",
+   "pn": 134,
+   "image": "https://images.sourcelibrary.org/archived/6a3c728701fe4f593c1e029d/134.jpg",
+   "pb": "KR1e0047_WYG_009-14b",
+   "dice": 0.987,
+   "runner_up": 0.201,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1h0028",
+   "kr": "KR1h0028",
+   "cls": "KR1",
+   "witness_sha": "5cc717f2b6de54962403f5e959777e7953eeea40",
+   "book_id": "6a3c6a49af3c49b59c5e57ab",
+   "title": "四書纂疏·大學纂疏 (vol 1)",
+   "visible": true,
+   "page_id": "6a3c6a4aaf3c49b59c5e5808",
+   "pn": 93,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6a49af3c49b59c5e57ab/93.jpg",
+   "pb": "KR1h0028_WYG_000-50a",
+   "dice": 0.926,
+   "runner_up": 0.107,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1a0095",
+   "kr": "KR1a0095",
+   "cls": "KR1",
+   "witness_sha": "0ccbbe96603f47f91f309ee2993a313db052c937",
+   "book_id": "6a3cc067ec254ff6cae0641b",
+   "title": "易經存疑·卷十 (vol 10)",
+   "visible": true,
+   "page_id": "6a3cc067ec254ff6cae06442",
+   "pn": 39,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc067ec254ff6cae0641b/39.jpg",
+   "pb": "KR1a0095_WYG_010-19a",
+   "dice": 0.962,
+   "runner_up": 0.234,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3a0107",
+   "kr": "KR3a0107",
+   "cls": "KR3",
+   "witness_sha": "4d1f5da45d7a7e043f0f96e61f2a7ed8d6327802",
+   "book_id": "6a3c755b01fe4f593c1f4ff5",
+   "title": "御纂性理精義·卷一 (vol 6)",
+   "visible": true,
+   "page_id": "6a3c755b01fe4f593c1f503c",
+   "pn": 71,
+   "image": "https://images.sourcelibrary.org/archived/6a3c755b01fe4f593c1f4ff5/71.jpg",
+   "pb": "KR3a0107_WYG_001-15a",
+   "dice": 0.985,
+   "runner_up": 0.081,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1a0085",
+   "kr": "KR1a0085",
+   "cls": "KR1",
+   "witness_sha": "74ec815b206d148f9600ff0f0fa90d247cf56de4",
+   "book_id": "6a3c6be401fe4f593c1ae8c3",
+   "title": "易學變通·卷四~卷六 (vol 2)",
+   "visible": true,
+   "page_id": "6a3c6be401fe4f593c1ae90b",
+   "pn": 72,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6be401fe4f593c1ae8c3/72.jpg",
+   "pb": "KR1a0085_WYG_006-1b",
+   "dice": 0.954,
+   "runner_up": 0.112,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1a0122",
+   "kr": "KR1a0122",
+   "cls": "KR1",
+   "witness_sha": "53925b150fe1c917c46d614eafc9eccf330a2d7e",
+   "book_id": "6a3cc13fec254ff6cae0aa41",
+   "title": "田間易學·卷五 (vol 7)",
+   "visible": true,
+   "page_id": "6a3cc13fec254ff6cae0aa5f",
+   "pn": 30,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc13fec254ff6cae0aa41/30.jpg",
+   "pb": "KR1a0122_WYG_007-14b",
+   "dice": 0.925,
+   "runner_up": 0.072,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3k0031",
+   "kr": "KR3k0031",
+   "cls": "KR3",
+   "witness_sha": "25c9cb1da15f3e373ac6a8f6616ea437d02b3263",
+   "book_id": "6a3c61ab879008ba7e15f979",
+   "title": "古今源流至論前集·卷一~卷二 (vol 1)",
+   "visible": true,
+   "page_id": "6a3c61ab879008ba7e15f9f1",
+   "pn": 120,
+   "image": "https://images.sourcelibrary.org/archived/6a3c61ab879008ba7e15f979/120.jpg",
+   "pb": "KR3k0031_WYG_002-26b",
+   "dice": 0.942,
+   "runner_up": 0.228,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1j0076",
+   "kr": "KR1j0076",
+   "cls": "KR1",
+   "witness_sha": "941bbd632d3dd1609b62cd606cca10080b5f19f8",
+   "book_id": "6a3cf0988642f0445b165c52",
+   "title": "欽定叶韻彙輯·卷一~卷二 (vol 1)",
+   "visible": true,
+   "page_id": "6a3cf0988642f0445b165d03",
+   "pn": 41,
+   "image": "https://images.sourcelibrary.org/archived/6a3cf0988642f0445b165c52/41.jpg",
+   "pb": "KR1j0076_WYG_000-7a",
+   "dice": 0.945,
+   "runner_up": 0.063,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3e0051",
+   "kr": "KR3e0051",
+   "cls": "KR3",
+   "witness_sha": "cdf25582a99832e9ea4f0d7185fd038727eed802",
+   "book_id": "6a3c77e101fe4f593c205556",
+   "title": "儒門事親·卷三~卷四 (vol 2)",
+   "visible": true,
+   "page_id": "6a3c77e101fe4f593c205585",
+   "pn": 47,
+   "image": "https://images.sourcelibrary.org/archived/6a3c77e101fe4f593c205556/47.jpg",
+   "pb": "KR3e0051_WYG_003-23a",
+   "dice": 0.976,
+   "runner_up": 0.102,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1a0136",
+   "kr": "KR1a0136",
+   "cls": "KR1",
+   "witness_sha": "5c2c6f0d643aaed7ce2ea51738fdc438e437ad9a",
+   "book_id": "6a3c786f01fe4f593c20822c",
+   "title": "大易通解·卷十 (vol 10)",
+   "visible": true,
+   "page_id": "6a3c786f01fe4f593c2082f1",
+   "pn": 34,
+   "image": "https://images.sourcelibrary.org/archived/6a3c786f01fe4f593c20822c/34.jpg",
+   "pb": "KR1a0136_WYG_010-16b",
+   "dice": 1,
+   "runner_up": 0.131,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR1b0054",
+   "kr": "KR1b0054",
+   "cls": "KR1",
+   "witness_sha": "9620804d85fbfbf5f96e9cd4663dac0da4bb6961",
+   "book_id": "6a3cc287af74b230c690731f",
+   "title": "洪範正論·卷五 (vol 3)",
+   "visible": true,
+   "page_id": "6a3cc287af74b230c690736c",
+   "pn": 77,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc287af74b230c690731f/77.jpg",
+   "pb": "KR1b0054_WYG_005-38a",
+   "dice": 1,
+   "runner_up": 0.134,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3j0179",
+   "kr": "KR3j0179",
+   "cls": "KR3",
+   "witness_sha": "d718f481ca31dc4c690db2c1d00d6825b360e21d",
+   "book_id": "6a3c78e501fe4f593c20bbc6",
+   "title": "紺珠集·卷三~卷四 (vol 2)",
+   "visible": true,
+   "page_id": "6a3c78e501fe4f593c20bd05",
+   "pn": 110,
+   "image": "https://images.sourcelibrary.org/archived/6a3c78e501fe4f593c20bbc6/110.jpg",
+   "pb": "KR3j0179_WYG_004-12a",
+   "dice": 1,
+   "runner_up": 0.066,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR3e0028",
+   "kr": "KR3e0028",
+   "cls": "KR3",
+   "witness_sha": "3d4cfacd99eee3bf942f903be12340d939bfbbd8",
+   "book_id": "6a3c71e439b4508b04e56236",
+   "title": "證類本草·卷十四 (vol 14)",
+   "visible": true,
+   "page_id": "6a3c71e439b4508b04e56331",
+   "pn": 158,
+   "image": "https://images.sourcelibrary.org/archived/6a3c71e439b4508b04e56236/158.jpg",
+   "pb": "KR3e0028_WYG_014-78b",
+   "dice": 0.929,
+   "runner_up": 0.113,
+   "ocr_source": "paddle"
+  },
+  {
+   "uid": "A-KR2a0012",
+   "kr": "KR2a0012",
+   "cls": "KR2",
+   "witness_sha": "3091efa84f2e555536999fad18203a7e474ffe48",
+   "book_id": "6ae0c6814adf2ffb52f764f4",
+   "title": "三國志·魏志·卷十二~卷十三 (Sanguozhi, Siku Quanshu, vol. 7 of 23)",
+   "visible": true,
+   "page_id": "6ae0c6824adf2ffb52f76512",
+   "pn": 28,
+   "image": "https://images.sourcelibrary.org/archived/6ae0c6814adf2ffb52f764f4/28.jpg",
+   "pb": "KR2a0012_WYG_012-13b",
+   "dice": 0.926,
+   "runner_up": 0.103,
+   "ocr_source": "paddle"
+  }
+ ],
+ "skipped": [
+  {
+   "kr": "KR3l0005",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR3j0153",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0052",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR3j0060",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0047",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0585",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR1d0018",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR3g0008",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0068",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR3l0012",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR3d0002",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0152",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0182",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0002",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0041",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0098",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0128",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2n0005",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0053",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0078",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0054",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0059",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0022",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0103",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2f0039",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4j0074",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0015",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0072",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0087",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0010",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0002",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0066",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0074",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0138",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0009",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0148",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0141",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4f0005",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0208",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0048",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0290",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0101",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0039",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2l0014",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0079",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2b0007",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0058",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0033",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0137",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0094",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0036",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0076",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2c0012",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0056",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0017",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2c0014",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2b0025",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0097",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0054",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0056",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0178",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0116",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0013",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0086",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0474",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0025",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0473",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0138",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0151",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0032",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0017",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0133",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0040",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4c0039",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0026",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0001",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0001",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0035",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0099",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0126",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0046",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0142",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0117",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0069",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0080",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2e0001",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0060",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0051",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0081",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0131",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0049",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0172",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0115",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0053",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0045",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0185",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0245",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0038",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2d0008",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0029",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0040",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4f0030",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0132",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0035",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0016",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4f0001",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0015",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0431",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0114",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0145",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2b0020",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2a0038",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0082",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4f0039",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0089",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0052",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0140",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0158",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2f0040",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0119",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2b0019",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0034",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0110",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0018",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2e0020",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4f0045",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2f0009",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0076",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0009",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0088",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0112",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0097",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4h0160",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2f0010",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0203",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0075",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0071",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2c0001",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4i0029",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0021",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2m0014",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0285",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0135",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0118",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0120",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0023",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0038",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0446",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0131",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4d0521",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0095",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2d0021",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4j0087",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0055",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0010",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0092",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2d0020",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0050",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0148",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR4e0115",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2d0006",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2f0007",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2n0011",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  },
+  {
+   "kr": "KR2k0070",
+   "why": "no paddle page with stored dice >= 0.9 in up to 8 volumes"
+  }
+ ]
+}

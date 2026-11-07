@@ -1,0 +1,31 @@
+**Layout.** The visible half has ten lines. Lines 1, 2, 9 and 10 run the full width; lines 3 to 8 are split into a left block and a right block around the string hole, and each line continues on the missing right half of the leaf. Line 2 does not match any verse text I can identify, so I treat it as commentary and do not transcribe it. Brackets mark letters I supply from context, question marks mark akṣaras I cannot read securely.
+
+**Verse lines read**
+
+- **SK_11, line 1:** `tṛguṇam aviveki viṣayas sāmānyam ace[tanaṃ ...]`. The leaf has *aviveki* with a clear i-sign on *ki*, against the edition's *a-viveka*. The first akṣara looks like *tṛ* (ta with the vocalic-r curl) rather than *tri*. The visarga before *sāmānyam* is written as doubled *ss*. The rest of the verse is on the missing half.
+
+- **SK_12, line 3 (left block then right block):** `pravṛttiniyamā | rthāḥ anyonyā[bhibhavāśraya ...]`. What is visible agrees with the edition. *prīty-aprīti-viṣādātmakāḥ prakāśa-* would stand at the end of line 2 on the missing half, so I cannot check it.
+
+- **SK_12 end / SK_13, line 4:** `guṇāḥ [mark] satvaṃ | laghu prakāśakam i[ṣṭam ...]`. After *guṇāḥ* there is a mark I cannot read, probably a verse-end sign or number. *satvaṃ* shows a single ta plus subscript va, not a doubled tta. The leaf reads *laghu*, clearly la-ghu, where the edition prints *guru*.
+
+- **SK_13, line 5:** `guruvaraṇakame | ?va tamaḥ pradī[pa ...]`. The akṣara at the join between the two blocks is unclear. It looks like an extra *ma*, which may be a dittography, but I cannot read it securely, so I do not list it.
+
+- **SK_14, line 6:** `?vivekyādi | siddhaṃ traiguṇyā[t ...]`. The initial akṣara is probably *a* but is not clear. I cannot find *hi* between *avivekyādi* and *siddhaṃ*. It may be the large round akṣara at the end of the left block, which I cannot identify, so I do not claim an omission.
+
+- **SK_14, line 7:** `raṇaguṇātmaka | tvāt kāryasyāvya[ktam ...]`. The right block is cramped; *tvāt* and *kārya* are plausible but partly uncertain. *kā-* belongs to the missing half of line 6.
+
+- **SK_15, line 8:** `(nā?)ṃ parimāṇā | t samanvayāc chakti[taḥ ...]`. The first akṣara is a single loop with ā and anusvāra; I expect *nā* but cannot confirm it. *bhedā-* would be on the missing half of line 7.
+
+- **SK_15 end / SK_16 start, line 9:** `gād avibhāgād vaiśvarūpyasya kāraṇama[sty ...]`. The akṣara after *rū* carries a subscript element and is not plain *pa*; I read *pya*. The edition prints *vaiśva-rūpasya*.
+
+- **SK_16, line 10:** `[sa]mudayāc ca pariṇāmata(s) salilavat prati[prati ...]`. The visarga before *salilavat* appears to be written as a doubled sibilant, but the akṣaras there are faint. The verse continues on the missing half.
+
+**Not checkable from this half:** the second half of SK_11, the first half of SK_12, *upaṣṭambhakaṃ calaṃ ca rajaḥ*, *cārthato vṛttiḥ*, *tadviparyayābhāvāt*, *api siddham*, *bhedānāṃ*, *pravṛtteś ca kāraṇakārya-*, *asty avyaktaṃ pravartate triguṇataḥ*, and *guṇāśraya-viśeṣāt*. SK_7 to SK_10 are not on this leaf.
+
+DIFFERENCES:
+SK_11 | a-viveka | aviveki | certain
+SK_11 | tri-guṇam | tṛguṇam | uncertain
+SK_11 | viṣayaḥ (sāmānyam) | viṣayas sāmānyam | certain
+SK_13 | sattvaṃ | satvaṃ | uncertain
+SK_13 | guru (prakāśakam) | laghu | certain
+SK_15 | vaiśva-rūpasya | vaiśvarūpyasya | uncertain

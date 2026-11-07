@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads almost word for word as the Tarkasaṃgraha-Dīpikā passage on the kinds of sannikarṣa (sense-contact): "cakṣuḥsaṃyukte ghaṭe rūpasya samavāyāt… tatra rūpatvasya samavāyāt… sannikarṣaḥ śrotrasamavete śabde"; B has the same text but with garbled spots ("ghaṭedrūpa", "tadrūpatva") and more gaps, and C is mostly meaningless syllables.

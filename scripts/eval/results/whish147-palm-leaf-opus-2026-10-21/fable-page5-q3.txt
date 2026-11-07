@@ -1,0 +1,30 @@
+===== PAGE p01 =====
+<warning>Crop of roughly one quarter of a palm leaf; every line is cut off at both the left and right edges, and a binding cord and string-hole interrupt lines 1–7 in the middle. Readings below are partial line fragments only.</warning>
+<warning>Handwritten old Malayalam (Ārya-eḻuttu) script, Sanskrit text, incised on palm leaf. Several akṣaras are tentative.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>മകൈകാരം</unclear> പ്രഖമ<unclear>ധി</unclear>വ്യക
+
+<unclear>ഷ്ഠ</unclear>ഥിത്യഥികവിപാ<unclear>ദാ</unclear>ശ്ച
+
+<unclear>ന്താ</unclear>ഭഭവാക്രഖജ<unclear>രന</unclear>മിശ്ര
+
+കകമി<unclear>ഋഋ</unclear>പത്രം ഭ <unclear>[gap at string-hole]</unclear> കജ
+
+<unclear>ഠ</unclear>വിദിപവഷ്ടാക <unclear>[gap at string-hole]</unclear> രൈതെ
+
+ഠഞാഅദിപ<unclear>ള്ള</unclear> <unclear>[gap at string-hole]</unclear> ധാ
+
+<unclear>വ്യാ</unclear>പ്രകകമവി <unclear>[gap at string-hole]</unclear> സിധ
+
+<unclear>ഴ</unclear>കിത്രപ്രത്രര<unclear>ഉ</unclear>കശകാരണ
+
+ാരണമന്ത<unclear>ത്ര</unclear>കാപ്രപ്രകരക
+
+ത്രകിപ്രകിഗണാശ്രഖഥിതൈക
+
+<meta>Palm-leaf folio crop; binding cord passes through a string-hole near the centre of the leaf. A small incised mark is visible in the upper margin near the top edge. Line fragments at the far left and right edges belong to text continuing beyond the crop and are not transcribed.</meta>
+<vocab>palm-leaf manuscript, Malayalam script, Ārya-eḻuttu, Sanskrit</vocab>

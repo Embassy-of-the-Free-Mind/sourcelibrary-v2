@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | All three are almost entirely illegible, but B gives the most real words that fit the Sāṅkhya context ("-ndriyaḥ", "prati", "prakṛta", "prakṛ-"), A has only "iti", and C has no text at all.

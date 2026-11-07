@@ -1,0 +1,564 @@
+[
+  {
+    "book_id": "6991eac32f801130a473e514",
+    "slot": 1,
+    "title": "Del moto e misura dell'acqua",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Leonardo da Vinci's hydraulics treatise, 1828 Bologna edition: early modern science, which fits the library. But its only collection is 'americana', which it has nothing to do with (probably an Internet Archive collection tag carried over).",
+    "rights_flag": null,
+    "structure_note": "The 'pages_translated' field (232) disagrees with the counted translated pages (304). The 19 printed-page backsteps are probably printed numerals misread on plate leaves (these pages cite fig./tav. plates) rather than a splice; the run 346-347-348 reads in order.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "dove tale onda è cres",
+            "image": "dove tale onda è crea[ta] (right edge clipped)",
+            "problem": "the clipped word is completed wrongly as 'cres', and the translation then reads it as 'has grown' instead of 'is created'",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "la maggiore è sospinta dalla minore, quando essa si trova di minor potenza",
+            "english": "the larger is pushed by the smaller when the latter possesses less power",
+            "problem": "'essa' refers to the larger body of water, which yields when IT has less power; 'the latter' points to the smaller and makes the sentence contradict itself",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "verso l'accrescimento della corrente",
+            "english": "toward the acceleration of the current",
+            "problem": "'accrescimento' means growth or swelling, not acceleration",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 90,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "An editorial note invents context: it says Leonardo refers to a proposition 'he established earlier in his notebook regarding the angle at which water enters a whirlpool'. That is a plausible gloss, but the page does not say it.",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 91,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "nello scontro <unclear>d</unclear>",
+            "image": "nello scontro c[on] (clipped at right edge)",
+            "problem": "The right edge of the scan is clipped on many lines. The OCR transcribes the truncated words faithfully ('del / nale', 'retros', 'oppre') and flags this in a <warning>, which is honest but leaves a broken text.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "l'acqua che ruina [da] tale bassezza",
+            "english": "The water that falls from such a depth",
+            "problem": "the translation silently supplies the clipped words. That is reasonable, but the reader is not told which words were supplied.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR's <warning> about truncated text ('Text on the right edge of the page appears to be truncated...') is copied into the translation pane, and an <unclear>of</unclear> tag appears inline in the English",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription and translation are good, and an expert would accept this text. The defects are a clipped right margin on the scan of p.348, a pipeline warning that leaks into the reader, and a collection tag ('americana') that does not fit the book."
+  },
+  {
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "slot": 2,
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu reprint of the Peiwen Yunfu, a Qing rhyme thesaurus (卷九十三之五, the 秩 entries). It sits in the general 'universallibrary' collection: a reference work, outside the core traditions but not wrong for the library.",
+    "rights_flag": null,
+    "structure_note": "Only 22 of 129 pages carry a printed number. The 8 backsteps and 10 repeats are most likely leaf numerals misread from the fold (on p.39 the OCR gives '六' for the printed 十八, and on p.40 it gives '一' as page number), not a splice. The block numerals in this run (十八, [十九 missing on p.40], 十九) are consistent.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "隆秩",
+            "image": "陞秩",
+            "problem": "headword misread, which turns 'promotion in rank' into 'high rank'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(repetition marks 丨丨 omitted throughout)",
+            "image": "以昭忠義之勸 ... 有差 ... 吾用汝嘉併超丨丨 ... 馬有丨丨",
+            "problem": "The 丨丨 marks stand for the headword inside each quotation; dropping them leaves every citation without its key word. The columns are also scrambled: '顏延 / 寔計功量罪 / 之赭白馬賦' interleaves text from two neighbouring columns.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "東 ... 謝病不待年 / 秩",
+            "image": "東秩 (headword) 謝朓詩 ... 謝病不待年",
+            "problem": "the headword is split and the second character is moved onto a separate line",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "今謂求老弱",
+            "image": "今請求老弱",
+            "problem": "請 misread as 謂",
+            "severity": "minor"
+          },
+          {
+            "ocr": "御定師文韻府 六",
+            "image": "御定佩文韻府 十八",
+            "problem": "the title (佩) and the leaf number are misread",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "<script>handwritten</script>",
+            "image": "woodblock print",
+            "problem": "wrong self-reported tag",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "粟秩 說苑晉舅犯曰民有饑色而馬有丨丨",
+            "english": "### Full Rank ... If the people have the appearance of hunger while the horses have the appearance of fullness, the ruler cannot maintain his position.",
+            "problem": "粟秩 is 'grain rations', not 'Full Rank'. The source says the horses have grain rations; the clause 'the ruler cannot maintain his position' is invented to complete the sentence.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "卑秩 論衡 ... 然成桓受尊命而周管稟丨丨也",
+            "english": "### Many Ranks / Discourses Weighed in the Balance ... while Zhou and Guan received the mandate of rank",
+            "problem": "The Lunheng quotation belongs under 卑秩 ('lowly rank'). It is placed under 'Many Ranks', and its point (Zhou and Guan received a LOWLY rank) is lost. From here on the headwords and their citations are shifted one place: Xie Lingyun's 辭滿豈多秩 is filed under 'Gracious Rank'.",
+            "severity": "serious",
+            "class": "T4"
+          },
+          {
+            "source": "江海慶正位章道樵第 昌業廣祉盛丨丨攸臻",
+            "english": "The path of the woodcutter follows the flourishing industry",
+            "problem": "a fluent rendering of a garbled line; 道樵 is read as 'woodcutter'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "御定佩文韻府 十八",
+            "english": "Imperial Sanctioned Peiwen Yunfu / Volume 664",
+            "problem": "the footer number is replaced with a volume number taken from the metadata",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "金 / 贝 / 四 / 屋 / 今",
+            "image": "欽定四庫全書 (cropped running head at left margin)",
+            "problem": "fragments of the cropped series title are transcribed as content, with a modern simplified 贝",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "(丨丨 omitted throughout)",
+            "image": "古無丨丨 ... 亦惟丨丨 ... 來膺丨丨 ...",
+            "problem": "every citation is cut at the point where the headword repeats",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "宗 / 既秩",
+            "image": "宜丨丨 (end of 徽秩 entry) / 既秩",
+            "problem": "the column order breaks down: a stray 宗 is inserted, and later 'True Rank' is duplicated",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "<page-num>一</page-num>",
+            "image": "no page number on this leaf; 卷九十三之五 header",
+            "problem": "page number invented",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "盧照隣詩筮仕無丨丨歸耕有外臣 / 西秩",
+            "english": "### Middle Rank ... returning to farm, there is the / Outer Rank / ... / Western Rank",
+            "problem": "'外臣' is the last words of Lu Zhaolin's verse; it is turned into a separate headword, 'Outer Rank', which does not exist",
+            "severity": "serious",
+            "class": "T16"
+          },
+          {
+            "source": "(丨丨 dropped by OCR)",
+            "english": "'...shield the world with a', '...it is fitting to add a', '...though he did not yet hold a'",
+            "problem": "about 20 citations end in dangling articles because the headword was dropped; this is incomprehensible to a reader",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "金 贝 四 屋 今",
+            "english": "Gold / Shell / Four / House / Now",
+            "problem": "garbage from a cropped running head is translated as words",
+            "severity": "moderate",
+            "class": "I4"
+          }
+        ],
+        "other": [
+          {
+            "note": "Raw <page-num>One</page-num> and <header>...</header> tags show in the translation text, and every citation source is wrapped in <margin> tags",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "寺 / 秩",
+            "image": "寺秩",
+            "problem": "the headword is split across lines",
+            "severity": "minor"
+          },
+          {
+            "ocr": "趙 / 秉",
+            "image": "趙秉 (column end, continuing on next leaf)",
+            "problem": "split, but otherwise faithful; the 丨丨 marks are kept on this page",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "居清 / 淨貧 (tail of the previous page's 散秩 / Bai Juyi quotation) / 重秩 薛廷珪授王堅 ... 五兵丨丨式耀賔階",
+            "english": "### Pure and Clean / ### Poor Rank / Xue Tinggui's ... The Five Weapons are in **Pure and Clean** order",
+            "problem": "A continuation line from the previous page is made into two invented headwords. The real headword 重秩 is dropped, and 'Pure and Clean' is substituted for it inside Xue Tinggui's decree.",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "名秩 韓愈詩丨丨後千品",
+            "english": "After attaining Official Rank, he was placed among the thousand grades",
+            "problem": "a loose reading of the verse",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A Chinese reader would flag this on sight. On two of the three pages PaddleOCR dropped the 丨丨 marks that stand for the headword, so the translation fills the gaps by inventing words, files citations under the wrong headwords, and creates headwords that do not exist ('Outer Rank', 'Pure and Clean'). Raw tags also show in the reader."
+  },
+  {
+    "book_id": "6a4e422f96ab5938408e6064",
+    "slot": 3,
+    "title": "Carmen gratulatorium in natalem domini et salvatoris nostri Jesu Christi, compositum a Paulo donrspergero styro.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Neo-Latin Christmas poem by Paul Dornsperger, 1573 (from MDZ). It has no collection or tradition assigned; it is in-period Latin verse but outside the core esoteric shelves. The title field's 'donrspergero' mirrors the source title (display title corrected).",
+    "rights_flag": null,
+    "structure_note": "Of 20 pages, 15 are translated, so 5 pages lack English. Nothing else stands out; the catchwords (Contigerat → Contigerat, Huc → Huc) confirm that the run is in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Iam nouies centum ter mille recursibus annos / Aureus explerat Phoebus, terque inde vicenos / Addiderat",
+            "english": "golden Phoebus had completed years by nine hundred times three thousand recursions, and had added twenty from there",
+            "problem": "The source gives 3,900 years plus three times twenty (60), a date of 3960 years from Creation for the Nativity. The English multiplies 900 by 3000 and drops 'ter', so the date is wrong.",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Deieci (Diuum sibi quod poscebat honorem / Maioremque illo) vobis fuit author edendi",
+            "english": "I cast down (because he demanded for himself the honor of the Gods, and greater than that of the Gods) was the author for you to pluck",
+            "problem": "The relative clause is lost: '[he whom] I cast down ... was the one who persuaded you to eat'. Because the line continues from the previous page, the English reads ungrammatically.",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "erecto spectantes lumine caelum",
+            "english": "looking at heaven with raised light",
+            "problem": "'lumen' here means eyes ('with upturned gaze'); the literal rendering is opaque",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The <sig>B 3</sig> tag and the catchword are carried in the OCR; the translation is clean",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<sig>Huic</sig>",
+            "image": "Huic (catchword)",
+            "problem": "the catchword is tagged as a signature",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Signa etiam doceo vos condita mente tenete",
+            "english": "I also teach you to hold the signs in a conceived mind",
+            "problem": "this should read 'I tell you the signs too: keep them stored in your mind'; the English is clumsy and literal",
+            "severity": "minor"
+          },
+          {
+            "source": "Quamuis innumeri",
+            "english": "although countless [in power]",
+            "problem": "the bracketed gloss is invented",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR is excellent and the translation is generally faithful, but it gets the poem's chronology wrong: it reads 3,900 + 60 years from Creation as 'nine hundred times three thousand ... added twenty'. Anyone who reads the Latin would catch it."
+  },
+  {
+    "book_id": "695942607d14807348773a98",
+    "slot": 4,
+    "title": "Sepher Yetzirah (Book of Formation) - Westcott",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "W. W. Westcott's English translation of the Sepher Yetzirah (2nd ed., 1893, University of Michigan copy). It is Golden Dawn-era Kabbalah, squarely in scope; the collections are 'opensource' and 'community'.",
+    "rights_flag": null,
+    "structure_note": "The record count disagrees with the stored fields: there are 97 page records, all with OCR and translation, but pages_count, pages_ocr and pages_translated all say 43. Either the book was re-imported without the counters updating, or two scans were merged. The single printed backstep is probably the start of the main text after the front matter. Page 4's image comes from enhanced/ while its neighbours come from archived/, which is harmless.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "and render this abstruse treatise more comprehensible than it has been hitherto found",
+            "english": "making this complex <note>original: \"abstruse\"</note> treatise more understandable than it has been found until now",
+            "problem": "An English source is 'translated' into paraphrased English. Westcott's own words are replaced ('forsaken' → 'abandoned', 'extended' → 'expanded'), so a reader quoting the English pane misquotes him.",
+            "severity": "moderate",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "The 'Digitized by UNIVERSITY OF MICHIGAN' watermark is carried into both panes as <meta>",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "# SEPHER YETZIRAH.",
+            "english": "# THE BOOK OF FORMATION.",
+            "problem": "the printed heading is changed",
+            "severity": "moderate",
+            "class": "T12"
+          },
+          {
+            "source": "an aspect at once archaic and essentially Hebrew ... instructive philosophical treatise",
+            "english": "a perspective that is both ancient and characteristically Hebrew ... educational philosophical treatise",
+            "problem": "the whole page is rewritten rather than reproduced",
+            "severity": "moderate",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "the doctrine of the Sephiroth",
+            "image": "the doctrine of the Sephiruth",
+            "problem": "Westcott's spelling is normalised",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Splendour ... treaties",
+            "english": "Splendor ... treatises",
+            "problem": "a same-language edit: the spelling is Americanised and Westcott's 'treaties' is silently corrected",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "The English text carries heavy glosses on every term (<note> for Sephiroth, Macroprosopus, Microcosm). That is harmless, but it is clutter added to an English original.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR of this English book is clean. But an English source has been run through 'translation', which rewrites Westcott's own words and even changes a heading. The page counters disagree with the record count (43 vs 97)."
+  },
+  {
+    "book_id": "69de13468a46d0c97eedcde1",
+    "slot": 5,
+    "title": "The Pillow-Book of Sei Shōnagon",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Arthur Waley's 1928 English translation of a Heian court diary, in the 'internetarchivebooks' collection only. It is a modern translation of a Japanese literary classic, outside the library's historical-sources focus, and it is not the original text.",
+    "rights_flag": true,
+    "structure_note": "Of 172 pages, 171 are 'translated', but the translation is an English echo of English. The page sequence is clean (0 backsteps).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 70,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The 'translation' is a verbatim echo of the English OCR, and raw <header> and <sig>E</sig> tags show in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 71,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Shikibu no Omoto [one of the Empress's ladies]",
+            "english": "Shikibu no Omoto <note>one of the Empress's ladies</note>",
+            "problem": "Waley's in-text bracket is turned into a pop-up note",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "A raw <header> tag shows in the translation pane, which echoes the English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 72,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>¹ Brother-in-law of Murasaki...</margin>",
+            "image": "footnote ¹ at foot of page",
+            "problem": "a footnote is tagged as a margin note",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Noritaka,¹ ... ¹ Brother-in-law of Murasaki",
+            "english": "Noritaka, <note>Brother-in-law of Murasaki...</note> ... <margin>¹ Brother-in-law of Murasaki...</margin>",
+            "problem": "the footnote appears twice, once inline and once as a margin block",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "other": [
+          {
+            "note": "Raw <header> and <margin> tags and a bare '67' page number show in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR of Waley's English translation is accurate. But the 'translation' pane is an echo with markup leaking into it. The book is a rights suspect (redacted, see ROUTINE.md step 7) and is off-mission for a primary-sources shelf."
+  }
+]

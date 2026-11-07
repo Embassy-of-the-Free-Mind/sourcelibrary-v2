@@ -1,0 +1,35 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. nyaḥprakṣaiḥsahitamevā ‖ maḻjñanyatvānyaviṣakṣitatvālsiddhamā ‖ yattima [illegible] virahavahātuka
+2. niddhabhāvaḥprakṣairuṃpi ‖ kṣyatriddhiśanmikṣiprai [illegible] thikkāḥsiddhina [illegible] ‖ aikṣesami [illegible] yāmittikkāya
+3. āmanamittidarnnā ‖ lsi [illegible] kkāyakṣi [illegible] kṣā [illegible] kkikkāda ‖ raṣaḥuttajñābhāva
+4. khikhijñamanyāṭṭāva ‖ nyadāhakāraṇabhavalnnikka ‖ āyakṣikṣāmirahasvā
+5. urabidyāṭṭāva ‖ nyādyarsamikṣikanaubaḥpandā ‖ maḻ0lakṣayattiprākṣi
+6. uprākṣamimiyakki0 ‖ yalvakkāyakṣrākājñādrāndasvapanāma ‖ āmaḻjñatthvapanāmalma
+7. unmiyaṭaḻkkiḻeḻa ‖ yākametittejñanyamitipakṣāmaḻjña ‖ nyamityatvprākṣejña
+
+TRANSCRIPTION B
+1. nnāḥpakṣeḥsvīkṛtavā ‖ [illegible] maljanyatvānyavipakṣitatvālsimā ‖ āyattikka [illegible] viravivahikraka
+2. nidhrabhāvaḥpakṣatvaṃha ‖ [illegible] ntiṣṭhilanmitikre [illegible] veṣikkāḥsiddhina [illegible] ‖ [illegible] branmi [illegible] yāmitiṣṭhāya
+3. ādamamityarnā ‖ lsiddhāyakki [illegible] nmākkejñikāda ‖ karaḥuttejñakābhāva
+4. ddhiṣṭhijñamanyadāva ‖ nyadāhakāla [illegible] bādhavalndrikka ‖ āyattikkāyirasyā
+5. iravidyādāva ‖ nyādyunmibhikkaraṇatvaṃpanda ‖ maḻṃlakṣayativyāpti
+6. ivyāptimimiyakkaṃ ‖ ṃyalvakṣaśakterājñānāṃsavanāma ‖ āmalityurtthaḥpanāmalma
+7. ussiyadarkkitera ‖ yāraṃcattitajñaṟamittipanāmaljñanya ‖ nnamitrātthaḥvyāṣṭejña
+
+TRANSCRIPTION C
+1. nyaḥpakṣateḥsvabhiktava ‖ āmaḻjanyatvānyavipakṣatvālsiddhā ‖ ādhikya [illegible] viravākhātṛka
+2. niddhyabhāvaḥpakṣatakaṃha ‖ ddhyal [illegible] lasiddhimipraiveḥḍhikkāḥsiddhra [illegible] ‖ tthenasiddhrayāmitiśchrāya
+3. āmanamitidarnnā ‖ lsiddhāyakkiśaiṣārakkajjikya ‖ karaḥuttajñakkābhāva
+4. dhidhijñamantrādāva ‖ ndrādāphakāraṇabavalnnikka ‖ āyabhimāvirabhisvabhā
+5. ukavidyādāva ‖ ndrādyāsamimikkaraṇabbaṃhipannā ‖ maśḥlakṣayatiprākki
+6. iprāptimiṇayakkaṃ ‖ yalvakṣaghaṭṭākājñārāṃsavapanāma ‖ āmaḻityattupannāmaḻma
+7. bhasthayadarkkitai [illegible] ‖ yamaṃpattitejjñannamitipañāmaḻjñanna ‖ nnamitratvaprārekkajña
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -7,9 +7,9 @@ canons: []
 n_books: null
 n_pages: 707
 verdict: "Interim, on 707 of 2,178 Opus-adjudicated stored reads: image gain (log p | image − log p | no image, Qwen2.5-VL-7B AWQ, teacher-forced) ranks the words Opus marked wrong at unit AUROC 0.60 (95% CI 0.57–0.64). The preregistered bar is 0.75, and no language clears it. It does not beat text-only perplexity (0.54; paired CI −0.01 to +0.14). It does see INVENTED text: 0.86 (0.79–0.90) on invented spans, where perplexity scores 0.25, because invented text is fluent. It is blind to one-letter misreads (0.52). The image-conditioned surprisal alone (0.70) beats both."
-status: rejected
+status: superseded
 decision: "No image-gain pre-screen before Opus review, in any language. The full run is queued as gex45 gpu-queue task 50-grounding-6871: the remaining 1,504 items including the 41 plants, and the noise floor. Its numbers land as a follow-up entry"
-superseded_by: null
+superseded_by: "2026-10-22-image-gain-full-run-6871.md"
 issue: [6871, 6420]
 ---
 PRIOR ART: arXiv 2605.27750 ("Reading or Guessing? Visual Grounding Failures of VLMs for OCR in Ancient Greek Editions", Karamolegkou, Angleraud, Sagot, Clérice).

@@ -1,0 +1,9 @@
+ROW 1 | ഞ്ഞംരജ്ജുഭ്രാബൊസ്ര ‖ രജ്ജുജ്ഞനക്കൊാല്യാപാദഃത്രസമനമ്പ ‖ പസംഹാരത്തിനന്ത്യാദിതിഹിം
+ROW 2 | ഗംവിഭജ്യതെഷിംഗമ ‖ ത്തിഞ്ഞബയപ്രത്യതെരത്തിഞ്ഞംലക്ഷ്മയത്തിന ‖ നബായനിത്തിഹേതുസ്വാഭ്യ
+ROW 3 | ഐയാന്ത്യാഖ്യര ‖ ഖ്യയഖ്യാങ്ങിഃദഭാവയൊാഷ്ട്യാ ‖ ക്ഷ്മല്യാതെകെകവ്യാഷ്ഠിഃ
+ROW 4 | കൈവലാത്ഥിമ ‖ ന്റാലക്ഷണമാഹാഃഅവയമെന ‖ ത്തികൈവലാന്വക്ഷിസാ
+ROW 5 | ഭ്യകംകൈവല്യാ ‖ ബത്ഥിഅന്തൃത്താഭാവാപ്രത്തിമ ‖ യാഗത്വംകൈവല്യാപ്
+ROW 6 | ത്തിബമിബാലുമ്ഭാവി ‖ മിമായബംസമ്പ്ല്വപദാഭിമധ്യബാബസ ‖ സമ്പൂർത്താക്ഷിത്തിദ്യക്ഷിതെല
+ROW 7 | കാഭാവിദ്ധ്യൂതിരെതി ‖ നഞ്ഞമ്ടദഹിരതിമ്പലൂമ്പിത്തിനന്ദ്രതരെ ‖ തരത്വേഭഃപ്രസിദ്ധൊനവാക്ക
+ROW 8 | ദൃഷ്ടബൊക്രലസിദ്ധാക്ക ‖ ക്കത്രവിതുൾബെബമിശ്ചമസരത്യാഞ ‖ ഞാനാഥാരണാബംദിത്തിരെ
+NOTE | I couldn't read this leaf reliably, so treat these rows as rough guesses at the letters, not a transcription: I placed all 8 rows and both holes (holes beside rows 3–5; rows 1–2 and 6–8 run full width), but many conjuncts and vowel signs are uncertain (I marked none [illegible]) and some words (കൈവല്യ in rows 4–5, ഉപസംഹ… in row 1) are only partly secure.

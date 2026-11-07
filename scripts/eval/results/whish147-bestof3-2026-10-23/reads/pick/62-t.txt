@@ -1,0 +1,4 @@
+PICK | C
+RANK | C, A, B
+
+WHY | C has real fragments that fit the context, such as Malayalam "jñānamuṇṭākuṃ" and Sāṅkhya terms like "vyakti", "prakṛte", "avastha", "pravarttitasarggā" and "saṃgra"; A is complete but mostly made-up syllable strings, and B is too broken by [illegible] marks to read.

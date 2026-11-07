@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads most often as real Sāṅkhyakārikā 12–13 commentary, with "duḥkhātmakaṃ… viṣādātmakaṃ / mohātmaka", "prakāśa", "pravṛtti", "calaka…niyama" and "guṇāḥ"; A has only scattered fragments like "prakāśavṛttino" among nonsense, and C puts stray digits in many rows, which shows it is noise.

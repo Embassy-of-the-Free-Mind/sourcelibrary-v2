@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions are identical and every row is marked [illegible], so there is no text to judge and this ranking is an arbitrary tie-break, not a real judgement.

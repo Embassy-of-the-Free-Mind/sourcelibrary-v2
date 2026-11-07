@@ -1,7 +1,9 @@
 import { getDb } from '@/lib/mongodb';
 import {
   applyGroundingEdits,
+  applyLinkRemovals,
   findCitedArtworkSlugs,
+  findCitedAuthorSlugs,
   findCitedBookLinks,
   findCitedCollectionSlugs,
   findEmbeddedImageUrls,
@@ -38,11 +40,14 @@ import { supabase } from '@/lib/supabase';
 import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { authorPageExists } from '@/lib/author-thesaurus';
+import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { authorSlug } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
 import collectionRedirects from '@/lib/collection-redirects.json';
+import { quotedFindings } from '@/lib/embassy/notebook-autosave';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -178,7 +183,7 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'grounding_edits';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'link_removals' | 'grounding_edits';
   text?: string;
   // Link repairs computed after citation verification — the route and the
   // streaming clients apply these to the already-emitted text (see
@@ -186,6 +191,8 @@ export interface LibrarianStep {
   fixes?: CitationFix[];
   // Fabricated `![](url)` embeds to strip from the already-emitted text.
   removeUrls?: string[];
+  // Dead author, artwork and collection paths to unlink, keeping the words.
+  removeLinks?: string[];
   // Grounding edits (#5904): exact spans of the already-emitted text and their
   // replacements, applied BEFORE fixes and removals (applyGroundingEdits).
   edits?: GroundingEdit[];
@@ -227,6 +234,12 @@ export interface TurnUsage {
   cachedTokens: number;
   /** Cite-by-ID accounting (#6946): pages given an ID, IDs rendered as links, unknown IDs dropped. */
   citeIds?: CiteIdStats & { pages: number };
+  /**
+   * Grounding counts for EVERY turn (#7190). embassy_errors keeps a `grounding`
+   * row only when an edit was made, so it has no denominator; this is the
+   * per-turn removal rate: blockquotesRemoved / quotesChecked over turns.
+   */
+  grounding?: Pick<GroundingReport, 'checkable' | 'quotesChecked' | 'quotesUnquoted' | 'blockquotesRemoved' | 'sentencesDropped'>;
 }
 
 interface ConversationMessage {
@@ -253,6 +266,42 @@ async function saveNotebookFinding(threadId: string, finding: NotebookFinding, t
     { upsert: true, returnDocument: 'after' },
   );
   return result?.findings?.length || 1;
+}
+
+/** Save this answer's grounded quotations as findings; returns one notebook_update step per save. */
+async function autosaveQuotes(threadId: string, text: string, pages: GroundingPage[]): Promise<LibrarianStep[]> {
+  const existing = await loadNotebook(threadId);
+  const found = quotedFindings(text, pages, (existing?.findings ?? []).map(f => f.quote));
+  if (found.length === 0) return [];
+  const db = await getDb();
+  const authors = new Map(
+    (await db.collection('books')
+      .find({ id: { $in: [...new Set(found.map(f => f.bookId))] } })
+      .project({ id: 1, author: 1 })
+      .maxTimeMS(2000)
+      .toArray()).map(b => [b.id as string, (b.author as string) || '']),
+  );
+  const steps: LibrarianStep[] = [];
+  for (const f of found) {
+    const finding: NotebookFinding = {
+      quote: f.quote,
+      note: '',
+      source: { bookId: f.bookId, bookTitle: f.bookTitle, bookAuthor: authors.get(f.bookId) ?? '', bookSlug: f.bookSlug, pageNumber: f.page },
+      addedAt: new Date(),
+    };
+    const count = await saveNotebookFinding(threadId, finding);
+    steps.push({
+      type: 'notebook_update', name: 'autosave', summary: `Saved finding #${count}`,
+      notebook: {
+        findingCount: count,
+        finding: {
+          quote: finding.quote, note: '', bookId: f.bookId, bookTitle: f.bookTitle,
+          bookAuthor: finding.source.bookAuthor, bookSlug: f.bookSlug, pageNumber: f.page,
+        },
+      },
+    });
+  }
+  return steps;
 }
 
 function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
@@ -1347,9 +1396,9 @@ async function executeTool(
     case 'search_site': {
       // The site's own writing (#1180), from `site_pages` (main site only, like
       // the Librarian). Every URL is final: absolute, and locale-prefixed only
-      // where the page has a twin (localePath) — LINK_PATTERNS in
-      // citation-fixes.ts verifies /book links only, so nothing repairs a bad
-      // /blog or /collections link after the fact (agent-tool-results.md).
+      // where the page has a twin (localePath). Nothing checks a /blog link after
+      // the fact, and a dead /collections link is only unlinked
+      // (agent-tool-results.md).
       const query = args.query as string;
       const hits = await semanticSiteSearch(query, 5).catch(() => null);
       const kind = (t: string) => (t === 'blog' ? 'Essay' : t === 'collection' ? 'Collection' : t === 'feature' ? 'Tool' : 'Page');
@@ -1723,7 +1772,7 @@ In your FIRST round, write your opening sentences (Step 1) and then issue every 
 
 ${languageSection(lang, citeIds)}## The collection
 
-Source Library has over 10,000 rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
+Source Library holds tens of thousands of rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
 
 ${collectionSection}## Formatting
 
@@ -2139,7 +2188,7 @@ export async function* streamAgenticResponse(
   // cannot be loaded in time, nothing is judged.
   const rawText = generatedChunks.join('');
   citationRouting?.finish(rawText);
-  const { edits, report: groundingReport, citations } = await groundTurn({
+  const { edits, report: groundingReport, citations, pages: supportPages } = await groundTurn({
     rawText, history, retrievedPageKeys, images: [...groundingImages.values()], lang,
     toolSupportText, userMessage, notebookSaved, routing: citationRouting,
   });
@@ -2153,6 +2202,16 @@ export async function* streamAgenticResponse(
   // re-flag (and re-disclaim) every broken link from earlier answers in the thread.
   const fullText = applyGroundingEdits(rawText, edits);
 
+  // Every quotation that survived grounding goes into the notebook (#7253):
+  // the model's own add_to_notebook calls left most notebooks empty.
+  if (threadId) {
+    try {
+      for (const step of await autosaveQuotes(threadId, fullText, supportPages)) yield step;
+    } catch (err) {
+      console.warn('[Librarian] notebook autosave failed:', err instanceof Error ? err.message : err);
+    }
+  }
+
   const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
 
   // Fabricated image embeds: the model was told to use only tool-returned URLs.
@@ -2163,6 +2222,14 @@ export async function* streamAgenticResponse(
   if (fabricatedImages.length > 0) {
     yield { type: 'image_removals', removeUrls: fabricatedImages };
   }
+
+  // Dead non-book links: unlink them and keep the name, which stays true. Only a
+  // bare URL, with no words to keep, still needs the note below.
+  if (brokenLinks.length > 0) {
+    yield { type: 'link_removals', removeLinks: brokenLinks };
+  }
+  const unlinkedText = applyLinkRemovals(fullText, brokenLinks);
+  const bareBrokenLinks = brokenLinks.filter(path => unlinkedText.includes(`sourcelibrary.org${path}`));
 
   // Repair before disclaiming: a broken slug is almost always a title-composed
   // near-miss of a book we hold under a different slug (and a hidden book often
@@ -2201,9 +2268,9 @@ export async function* streamAgenticResponse(
       `${unrepaired.length === 1 ? 'a book link that points' : `${unrepaired.length} book links that point`} to a record not currently available in the collection (${unrepaired.map(s => `\`sourcelibrary.org/book/${s}\``).join(', ')})`,
     );
   }
-  if (brokenLinks.length > 0) {
+  if (bareBrokenLinks.length > 0) {
     clauses.push(
-      `${brokenLinks.length === 1 ? 'a link' : `${brokenLinks.length} links`} to a page that doesn't exist (${brokenLinks.map(p => `\`${p}\``).join(', ')})`,
+      `${bareBrokenLinks.length === 1 ? 'a link' : `${bareBrokenLinks.length} links`} to a page that doesn't exist (${bareBrokenLinks.map(p => `\`${p}\``).join(', ')})`,
     );
   }
   if (fabricatedImages.length > 0) {
@@ -2277,6 +2344,8 @@ export async function* streamAgenticResponse(
   });
 
   if (cite && citeStream) usage.citeIds = { pages: cite.size, ...citeStream.stats };
+  const { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped } = grounding.report;
+  usage.grounding = { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped };
   yield { type: 'usage', usage };
 }
 
@@ -2307,6 +2376,8 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
   edits: GroundingEdit[];
   report: GroundingReport;
   citations: CitationPassReport;
+  /** The pages grounding read: what notebook autosave places quotes on. */
+  pages: GroundingPage[];
   /** The router's verdicts as they stood when the pass ran (null: routing off). */
   verdicts: RoutedClaims | null;
   timings: { supportMs: number; totalMs: number };
@@ -2360,6 +2431,7 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
     edits: citation.edits,
     report: grounding.report,
     citations: citation.report,
+    pages: support?.pages ?? [],
     verdicts,
     timings: { supportMs, totalMs: Date.now() - t0 },
   };
@@ -2502,9 +2574,9 @@ async function loadGroundingSupport(
  *  - unverifiedPages: a specific page the model never actually retrieved this
  *    turn AND that doesn't exist in the page store (or is out of range) — the
  *    signature of a fabricated or misremembered page number.
- *  - brokenLinks: /artwork/<slug> and /collections/<slug> links that resolve
- *    to nothing. These are reported, never repaired: there is no safe
- *    substitution for a picture or a curated set.
+ *  - brokenLinks: /author/<slug>, /artwork/<slug> and /collections/<slug> links
+ *    that resolve to nothing. These are unlinked, never repointed: there is no
+ *    safe substitution for a person, a picture or a curated set.
  *
  * brokenBooks/hiddenBooks are returned as bare slugs so the caller can try to
  * repair them (see resolveSlugToHeldBook).
@@ -2585,20 +2657,34 @@ export async function verifyCitations(
 }
 
 /**
- * Check the non-book library links the model likes to compose: /artwork/<slug>
- * and /collections/<slug>. Returns the dead ones as paths, for the disclaimer.
+ * Check the non-book library links the model likes to compose: /author/<slug>,
+ * /artwork/<slug> and /collections/<slug>. Returns the dead ones as paths, to
+ * unlink.
  *
- * `/collection/<slug>` (singular) is never a route — it hits the app's 404 —
- * so it is always dead, no lookup needed.
+ * `/collection/<slug>` (singular) 308s to the plural in the proxy, so it lives
+ * or dies with the plural slug.
  */
 async function verifyNonBookLinks(text: string): Promise<string[]> {
   const { plural, singular, spanish } = findCitedCollectionSlugs(text);
   const artworkSlugs = new Set(findCitedArtworkSlugs(text));
-  const collectionSlugs = new Set(plural);
-  const dead: string[] = singular.map(s => `/collection/${s}`);
+  const collectionSlugs = new Set([...plural, ...singular]);
+  const cited = findCitedAuthorSlugs(text);
+  const authorSlugs = [...new Set(cited.english)];
+  // `/author` has no /es twin, so these are dead whatever the slug.
+  const dead: string[] = [...new Set(cited.spanish)].map(s => `/es/author/${s}`);
 
-  if (artworkSlugs.size === 0 && collectionSlugs.size === 0 && spanish.length === 0) return dead;
+  if (artworkSlugs.size === 0 && collectionSlugs.size === 0 && spanish.length === 0 && authorSlugs.length === 0) return dead;
   const db = await getDb();
+
+  // A check that cannot answer in time counts as live: losing a working link
+  // costs the reader more than leaving one unchecked.
+  const canonicalAuthors = authorCanonicalRedirects as Record<string, string>;
+  const authorChecks = await Promise.all(authorSlugs.map(s =>
+    canonicalAuthors[s]
+      ? true
+      : withTimeout(authorPageExists(db, s).catch(() => true), REPAIR_QUERY_TIMEOUT_MS, true),
+  ));
+  authorSlugs.forEach((s, i) => { if (!authorChecks[i]) dead.push(`/author/${s}`); });
 
   if (artworkSlugs.size > 0) {
     // Mirrors /artwork/[slug]: exact slug or an `art-` prefixed variant, and
@@ -2621,7 +2707,13 @@ async function verifyNonBookLinks(text: string): Promise<string[]> {
       .toArray();
     const live = new Set(found.map(c => c.slug as string));
     const redirects = collectionRedirects as Record<string, string>;
-    for (const s of wanted) if (!live.has(s) && !redirects[s]) dead.push(`/collections/${s}`);
+    const singularCited = new Set(singular);
+    const pluralCited = new Set(plural);
+    for (const s of wanted) {
+      if (live.has(s) || redirects[s]) continue;
+      if (pluralCited.has(s)) dead.push(`/collections/${s}`);
+      if (singularCited.has(s)) dead.push(`/collection/${s}`);
+    }
   }
 
   // A slug live in English can still 404 under /es (esCollectionSlugs).

@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. bhaikṣavalanago [illegible] ṣaṇakrāvabhaidāśyavabhaṇāvaddhyaṃppannaṃpādanabhagaൗnavabhaiḥtruddhikrayaṇṇakkā
+2. [illegible] sañcanajñakṣamasyaṃkrubhamaṇajñākakyānnimiṃgārtthinyabhaicabhalabhakacanacchina [illegible] jñalakṣmyo
+3. āplaṇḍāviṅṅaprayārkkaebhabhasabhrebhabhayākrubharkkārttaudyāgapraddhivavavakṣālbhaiāpṛkkitatiḥ
+4. praddhaparatryavapraddhi ‖ vavalbhaitalavattyābhrisamṛddayaḥ ‖ praddhiḥyodadasamṛdada
+5. yātma vandya ‖ namilañjaṇānādapraślapa ‖ pravṛttiḥbhaimakṣita
+6. kāmpaṭādabhaiyābha ‖ davada prakāśaṅṅikyā ‖ utbhakāḥmāsyana
+7. jñakṣamasyaṃpyavṛkṣa ‖ ālbhairundāprṛpṛkkidyaññaṣāl ‖ gal palajñi
+8. bhayaktiḥnanasalakti ‖ guṇakkibhavakkikkiñjābhābha ‖ bhacandraṃprasavadha
+9. kṣaṃnakra [illegible] oṭṭibhodābhodālalabhajñabhaikrṛguññyaṃḻyabhabhaniddhaṃjñijñibhava
+10. dabhayādhakṣmīprasava [illegible] thanāḥkṣapaṃmpiddhyākkiddhyāgaṃbagnibhavakyādaddhu [illegible] udyāddiguṇimā
+
+TRANSCRIPTION B
+1. ṭaikṣacalanagoṣaṇakrāvaṭaidāśyava [illegible] ṇāvaddhaṃsvanaṃvādana ‖ gonava [illegible] draddika [illegible] kkā
+2. [illegible] svayandajñakṣamasvaṃtraimaṇajñākatyāndibiṃgāddinnaicai ‖ latalanajñana ñalakṣa [illegible]
+3. [illegible] ṇḍāviṅṅa [illegible] kkaka e [illegible] sadraiyakaryavarbhakkanta [illegible] ddhā [illegible] pradiva ‖ vaṣṭhāt [illegible] dṛbhinadi
+4. pradipattivapradi ‖ vabaltailavattvāthisaṅka [illegible] yāḥ ‖ pradipatrayada [illegible] saṅka [illegible]
+5. yātma vannu ‖ nabilakṣaṇānābhaśaṣipra [illegible] pa ‖ pravṛttiḥ [illegible] mandi [illegible]
+6. kāvyaṭāddaiyāda ‖ davada prakāśa [illegible] kalpā ‖ utta [illegible] māsabana
+7. jñakkamasthāṃpyaruṣa ‖ [illegible] lhaunāprapṛpṛtti [illegible] bhaddhaṣāl ‖ na [illegible] palaṅṅi
+8. battiḥnandalitti ‖ guṇamamitaivattima [illegible] jñāmānuma ‖ catanyaṃprasavadha
+9. [illegible] jñāṃnaru [illegible] ‖ [illegible] ddaidālāyalaijña [illegible] ndraguṇṇaṃtva ‖ [illegible] natiddhaṃttimiva
+10. dayādhalṭṭaḥprasava ‖ [illegible] nāḥkṣaṭaṃnvidduttidduāgabbandimavakkādadda ‖ [illegible] uddāddiguṇṇamā
+
+TRANSCRIPTION C
+1. ṭekṣavalana śoṣaṇekkā [illegible] āvaṭeṭabhāśvavaraṇṇā [illegible] āvaddha [illegible] prādanago [illegible] gaunavaraṃkrūddhirucabhyā [illegible]
+2. ñasaṃghanajñakkamassaṃkruṭeṭaṇājñākabrāṇa [illegible] ṇḍiṃśāntinenṟece [illegible] lekalabaśśana [illegible] ḻelukṣmi
+3. āppuṣṭhaṃviṣṇuruddhāḻkkaera [illegible] saṃpru [illegible] khyākṛtaba [illegible] lkariuruābhāpratipava [illegible] vaṣṭālrogādvṛttividhiḥ
+4. pratyapatyavapravṛtti ‖ vavarketalava [illegible] lavarttvāthyesaguddevaiḥ ‖ pratipaḥtvaddesammadda
+5. yānta [illegible] vannu ‖ natthilakṣaṇānā [illegible] nāddeṣṭipratipa ‖ pravṛttiḥbhedastithi
+6. kāntrūṭādayora ‖ ddavda [illegible] prakāśamikalyā ‖ uttamāddhāssvana
+7. jñakkamassaṃvṛttai ‖ ālkkeunnāpra [illegible] prapṛttiṣvettaman ‖ śasta [illegible] palaṃ
+8. baittiḥnanvacinta ‖ guṇamankevakti [illegible] gikaḻigjāmātrama ‖ cetanaṃprasavadha
+9. kkaṃnatra [illegible] ‖ bitthaṃdaivāvalake [illegible] lejñadaivrutuhunnuṃlla [illegible] ‖ cetanimidaṃtriguṇa
+10. ddhareyādṛṣṭaḥprasava [illegible] ‖ nnāḥjñaṃviḻuppaviḻu [illegible] tryādiguṇamavyaktādi [illegible] ‖ traiguṇyādiguṇamā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

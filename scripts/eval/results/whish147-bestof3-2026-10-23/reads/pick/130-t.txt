@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B has more [illegible] gaps, but what it does read forms real Sanskrit that fits a logic text (pratyakṣa, pṛthivyāṃ sādṛśyate, jñānam avinaśyāt iti, vyāpti, pariśiṣṭa-jñāna); C keeps a few such words (sādṛśya-viśiṣṭa, vyāpti, tri-pakṣa-lakṣaṇa) amid much garble, and A is mostly strings that only look like words.

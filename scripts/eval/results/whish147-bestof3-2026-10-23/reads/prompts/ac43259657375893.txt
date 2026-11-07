@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. āṣṭaḥpramitaupāravāranādṛḥpramitasyati [illegible] kṣayāmetāgālnātraprekṣāvatāṃpravṛ
+2. mitaṃvinātitaiṣayānaparatvamiticennaḥpadārtthaṃdravyādi [illegible] kṣātratvamaṃbivṛ
+3. āstramitidrāvakeṣṭadārtthatvārtthakamegevidraṣṭivṛṃdravyaṃvidrajñātatatrattitatra
+4. dravyādimameddhya ‖ dyāttinate [illegible] patranivaśāḥkāri ‖ nānityakāntuvāvṛ
+5. ṣiṣitvādinana ‖ tamesādṛ [illegible] medravyasyaṣitvama ‖ ānatvālkathanava
+6. dravyāṇitada ‖ gitilatamaśvālakṣītyābāāki ‖ ṣaprakṛtibolālti
+7. lakṣyapāyāntayāttiṣāyāntayācaddhyatvatāpariddhātatratamamesānākā
+8. śādipakṣatakakātekṣyāteḥtravitvāl [illegible] kṣavanāpāraveṣusadāgatimakhādāva
+9. āddhanāmitejña [illegible] ṭamparajñābhāvānujjñiṣṭhādbhāvāddhanāvijñaleśvi
+
+TRANSCRIPTION B
+1. āṣṭaḥśrumitopānavānāddyaḥśrumitya [illegible] ndiṣṭayāmonāgālnāntyaḥ [illegible] timogi [illegible]
+2. mitthaṃvinānimaiṣayānapananta [illegible] mecanaḥvaṭā [illegible] śruprādi [illegible] kkātyantamabdya
+3. ābhramittidvāpa [illegible] dātthavāltamegavi [illegible] dṛṣṭavyaṃ [illegible] vidṛjña [illegible] tramitra
+4. udyādimamaddhyūda ‖ dyrāṇina [illegible] patraൗniñāḥkāre ‖ nānityatvādyāvṛ
+5. maṣītyādinana ‖ tamesāda [illegible] madṛṣṭya [illegible] ddhama ‖ ānantyālkathanava
+6. udyānitamṛ ‖ hinilatamamma [illegible] lakṣityūbāgi ‖ grakṛtibalālni
+7. bhiṣṭvāpāyānatayā ‖ tiṣāyānantāyā [illegible] grūtvannāpañcaddha ‖ tatratamamaisānākā
+8. śedipañcagāka [illegible] ‖ ḥśravitvālntatvaparāpā [illegible] ‖ bhisadāgatimabhoṭāva
+9. āddanāpimaijña [illegible] ‖ ggaṭayava [illegible] bhayavānu [illegible] āda ‖ ābhdṛpāddanābhijñaleśi
+
+TRANSCRIPTION C
+1. āṣṭaḥpramitopānavā ‖ nādṛṣṭaḥpramitasyatirakṣayāmoyāgāl ‖ nāntyaprekṣito [illegible] gindra
+2. mittiṃvinātileṣyā ‖ naparattitilecannaḥpaṭāññiṃbhavya ‖ prābhi [illegible] kkātyatamaṃbhāvya
+3. āpramitidravyajñadāt ‖ tthyārtthamogavi [illegible] dyūppyaṃdravyaṃvida ‖ jñatatantritantra
+4. ubhyādimalebhyau ‖ bhyārthinalepatyaniṣṣaḥkāri ‖ nāntyatantravācya
+5. ṣiṣṭvādinana ‖ tamanasādaśatamadravyasyapittama ‖ ānatvālkathanava
+6. ubhyāritadā ‖ gatilatamaścalatvāntāvāki ‖ śrutibalālni
+7. [illegible] pāyānatayā ‖ bhiṣāyānatayācagurutvatāpaṅkiddha ‖ ddhātatratamasonānā
+8. śādipañcarakkāna [illegible] ‖ ābhāṣyavitvārtthaguṇānāpāde ‖ lūsadāgatimatvādāva
+9. āṣṭunāpitejñal ‖ ṭaൗśabdānābhavārujjmmarābhra ‖ ābhūvāṣṭunāvijñaleśa
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

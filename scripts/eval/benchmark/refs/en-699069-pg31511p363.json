@@ -3,7 +3,7 @@
   "source": "gutenberg",
   "source_url": "https://www.gutenberg.org/cache/epub/31511/pg31511-images.html",
   "source_revision": "fetched 2026-09-26",
-  "licence": "PD-US (Project Gutenberg)",
+  "licence": "PD-US",
   "proofread_level": null,
   "unit": {
     "kind": "page",
@@ -28,5 +28,9 @@
     "finish_reason": null
   },
   "reference_error_rate": null,
-  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
+  "work_title": "A History of Witchcraft in England from 1558 to 1718",
+  "ebook": 31511,
+  "pd_eu": false,
+  "pd_eu_basis": "Wallace Notestein d. 1969: in copyright in the EU until 2039"
 }

@@ -1,0 +1,18 @@
+LINE 1 | SK_45-SK_46 | viparyāsaḥ | viparyayā' | confident
+LINE 2 | SK_46-SK_47 | vimardāt | viparyaya | unsure
+LINE 3 | SK_47 | vaikalyāt | aṣṭāviṃśati-bhedās | confident
+LINE 4 | SK_47-SK_48 | siddhiḥ | mohasya | unsure
+LINE 5 | SK_48 | tāmisro | andha-tāmisraḥ | confident
+LINE 6 | SK_49 | vadhāḥ | uddiṣṭā | confident
+LINE 7 | SK_49-SK_50 | siddhīnām | ādhy-ātmikāś | unsure
+LINE 8 | SK_50 | kāla | viṣay'oparamāc | confident
+LINE 9 | SK_51 | ūhaḥ | trayaḥ | confident
+LINE 10 | SK_51 | dānaṃ | pūrvo | confident
+FIRST_VISIBLE_VERSE=45 LAST_VISIBLE_VERSE=51
+
+A few notes:
+- **The hole:** Lines 3–7 are split by a blank space around the string hole, and I read each line straight across it. On line 3 the part left of the hole reads "vaikalyāt" and the part right of it reads "aṣṭāviṃśati-bhedā...", for example.
+- **Line 2:** The opening letters are unclear, so "vimardāt" is a guess based on the wording that comes before and after. The "...bhedās tu pañcāśat" in the middle is clearer.
+- **Line 4:** It probably starts "(navadhā 'ṣṭa)dhā siddhiḥ bhedas tamaso 'ṣṭa", and the part right of the hole is "vidho mohasya", which I'm fairly sure of.
+- **Line 7:** The short part left of the hole is hard to read. It is probably "saptadaśa vadhā buddher viparyayāt", but I can only clearly read "siddhīnām ādhyā..." to the right of the hole.
+- **Margin:** The numeral in the left margin next to lines 6–7 (it looks like "൭") is probably a leaf number, not edition text.

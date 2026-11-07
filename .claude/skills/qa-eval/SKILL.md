@@ -206,7 +206,7 @@ scripts/eval/
 
 - Blog post: `docs/blog-tibetan-ocr-benchmark.md`
 - Prototype: `_tmp-ocr-consistency.mjs`
-- Embedding model: `gemini-embedding-2-preview` (768d, matches production search)
+- Embedding model: `gemini-embedding-2` (768d, matches production search)
 - Related papers: GlotOCR Bench, Wang & Wang 2025, Conformal Risk Control for OCR
 
 ### Published dataset export

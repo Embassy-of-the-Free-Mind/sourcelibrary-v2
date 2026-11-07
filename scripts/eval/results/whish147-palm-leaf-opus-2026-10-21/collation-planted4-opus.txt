@@ -1,0 +1,52 @@
+I've collated the left half of the leaf against SK_11–16. The leaf has 10 lines of writing; lines 3–8 are split around the string hole. Each line runs on to the missing right half, so every verse here is cut off partway. I give only what is on this half, with spelling variants written out in IAST.
+
+**Line 1: SK_11 (start)**
+Leaf: *triguṇam avivekiviṣayas sāmānyam ace[tanaṃ…]* (the rest is on the right half)
+- *a-viveka* → leaf has **aviveki** (clearly written വിവേകി). The leaf matches the standard reading here.
+- *viṣayaḥ* → *viṣayas* is just a sound change before *s*, not a variant.
+
+**Line 2:** I can't place this line in the edition. It may be commentary or the end of SK_11, but I can't read it reliably, so I haven't transcribed it.
+
+**Line 3: SK_12 (middle)**
+Leaf, left of the hole: *pravṛttiniyamā* | right of the hole: *[r]thāḥ ?…*
+- *viyamā* → leaf has **niyamā** (നിയമാ, clear).
+- The start of the right-hand piece looks like ഷാഃ / ത്ഥാഃ. It probably reads *-rthāḥ*, but I'm not sure. I can't read what follows it.
+
+**Line 4: end of SK_12, start of SK_13**
+Leaf: *guṇāḥ ‖ sa(t)tvaṃ* | *laghu prakāśakam i[ṣṭam…]*
+- *guru* (the first word of the verse) → leaf has **laghu** (ലഘു, clear). This is the standard reading; the edition's *guru* here is wrong.
+- *sattvaṃ*: the leaf seems to spell it *satvaṃ*, a common Malayalam-script spelling. This is uncertain, and there may be a punctuation or verse-number mark before it.
+
+**Line 5: SK_13 (continued)**
+Leaf: *guru varaṇakame* | *[e]va tamaḥ pradī[pa…]*
+- This matches the edition as far as I can see. The right-hand piece is partly unclear.
+
+**Line 6: SK_14 (start)**
+Leaf: *aviveky ādi* (smudged) | *siddhaṃ traiguṇyā[t…]*
+- *hi*: I can't see it between *ādi* and *siddhaṃ*, so it may be missing on the leaf. The left-hand piece is smudged, so this is uncertain. There is also a mark in the left margin of this line.
+
+**Line 7: SK_14 (end)**
+Leaf: *[kāra]ṇaguṇātmaka* | *tvāt kāryasyā[…]*
+- This matches the edition.
+
+**Line 8: SK_15 (start)**
+Leaf: *[bhedā]nāṃ parimāṇā* | *t samanvayāc chakti[taḥ…]*
+- This matches the edition.
+
+**Line 9: end of SK_15, start of SK_16**
+Leaf: *[vibhā]gād avibhāgād vaiśvarūpyasya ‖ kāraṇa[m…]*
+- *vaiśva-rūpasya* → leaf appears to have **vaiśvarūpyasya**, with an extra ്യ (the standard form). Probable but uncertain.
+
+**Line 10: SK_16 (middle)**
+Leaf: *[sa]mudayāc ca pariṇāmatas salilavat prati…*
+- *pariṇāmataḥ* → *pariṇāmatas* is again just a sound change before *s*. The first letter (*mu*) is uncertain. I can't read past *prati* on this half.
+
+I couldn't check the parts of SK_11–16 that fall on the missing right half.
+
+DIFFERENCES:
+- SK_11 | a-viveka | aviveki | certain
+- SK_12 | viyamā | niyamā | certain
+- SK_13 | guru (1st word) | laghu | certain
+- SK_13 | sattvaṃ | satvaṃ | uncertain
+- SK_14 | hi | (omitted) | uncertain
+- SK_15 | vaiśva-rūpasya | vaiśvarūpyasya | uncertain

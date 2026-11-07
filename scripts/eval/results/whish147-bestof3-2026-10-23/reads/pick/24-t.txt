@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A most consistently gives recognisable commentary on Sāṅkhyakārikā 10: "vyaktaṃ kāraṇaṃ", "ghaṭādi… kārya", "avyaktam", "prādeśikam ityarthaḥ", "sakriyam iti kriyā", "mahadādi… vyaktaṃ" and "vyaktam asaṃsāri"; C keeps some of these words but breaks down more often, and B has the fewest sensible strings.

@@ -1,0 +1,26 @@
+{
+ "question": "route",
+ "issue": 7263,
+ "stage": "ocr",
+ "languages": [
+  "Latin"
+ ],
+ "baseline": "3flash",
+ "arms": [
+  "3flash",
+  "3flash>agy-flash-low",
+  "agy-flash-low@4-read",
+  "pero>agy-flash-low@4"
+ ],
+ "batch": {
+  "pages_per_call": 4,
+  "tested": "not tested \u2014 block size is one of the settings under test; position in block reported per arm, and the judge reads one output per call"
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": "none \u2014 proposal only per brief",
+ "waive": {}
+}

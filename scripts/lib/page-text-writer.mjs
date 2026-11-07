@@ -38,6 +38,7 @@
 
 import { randomBytes } from 'crypto';
 import { contentHash } from './write-provenance.mjs';
+import { translationLayers, writePageAnnotations } from './translation-text.mjs';
 
 export const PAGE_TEXT_FIELDS = Object.freeze(['ocr', 'translation']);
 /** Stamped on every row this module writes, so a reader can tell full rows from legacy snapshots. */
@@ -73,12 +74,29 @@ export function validateWrite(field, next, opts) {
   if (opts.run_id != null && (typeof opts.run_id !== 'string' || opts.run_id === '')) throw new Error('writePageText: opts.run_id must be a non-empty string when given');
 }
 
+/**
+ * #5942: a translation written through this door carries the book's words beside `data`
+ * (`text` + `text_from`, scripts/lib/translation-text.mjs). Any `text` the caller copied from the
+ * prior object is replaced by the parse of the new `data`. A verbatim restore writes what it is
+ * given; a stale `text` it carries is never served, because the reader checks text_from.data_hash.
+ */
+function translationTextFields(field, next) {
+  if (field !== 'translation' || typeof next?.data !== 'string' || !next.data) return {};
+  const l = translationLayers(next.data, { promptVersion: next.prompt_version });
+  return { text: l.text, text_from: l.text_from };
+}
+async function storeTranslationAnnotations(db, pageId, bookId, field, next, verbatim, runId) {
+  if (verbatim || field !== 'translation' || typeof next?.data !== 'string' || !next.data) return;
+  await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, run_id: runId, layers: translationLayers(next.data, { promptVersion: next.prompt_version }) }]);
+}
+
 /** The field value written: the caller's object, with content_hash and updated_at stamped if absent. */
-export function nextFieldValue(next, now, verbatim = false) {
+export function nextFieldValue(next, now, verbatim = false, field = null) {
   if (!next) return null;
   if (verbatim) return { ...next };
   return {
     ...next,
+    ...translationTextFields(field, next),
     ...(next.content_hash || !next.data ? {} : { content_hash: contentHash(next.data) }),
     ...(next.updated_at ? {} : { updated_at: now }),
   };
@@ -100,7 +118,8 @@ export function buildTextRevision({ page, field, next, opts, now, id }) {
     book_id: page.book_id,
     field,
     data: fieldText(prior),
-    source: present ? (obj.source || 'unknown') : 'empty',
+    // revision_source: a sweep label for bulk maintenance (the prior's own source stays in meta.source)
+    source: opts.revision_source || (present ? (obj.source || 'unknown') : 'empty'),
     ...(obj.model ? { model: obj.model } : {}),
     ...(language ? { language } : {}),
     ...(obj.edited_by ? { edited_by: obj.edited_by } : {}),
@@ -160,9 +179,13 @@ export function fieldUpdate(field, value, now) {
  *   { status: 'refused_human_edit' }   — prior is a human edit and overrideHumanEdit is off
  *   { status: 'not_found' }
  *   { status: 'conflict', revision_id } — the page changed under us; nothing written, row aborted
+ *   { status: 'prior_changed' }        — expect_prior_hash given and the stored text is no longer it; nothing written
  *
- * opts: { by, reason, run_id?, overrideHumanEdit?, verbatim?, now?, id? }
+ * opts: { by, reason, run_id?, overrideHumanEdit?, verbatim?, revision_source?, expect_prior_hash?, now?, id? }
+ *   expect_prior_hash: textHash of the text the caller computed `next` FROM; for a sweep that reads, transforms and
+ *     writes later, so a page rewritten in between is refused instead of overwritten with a transform of old text.
  *   verbatim: write `next` exactly as given (no content_hash / updated_at stamping) — for restores.
+ *   revision_source: the row's `source` is this sweep label, not the superseded text's source.
  */
 export async function writePageText(db, pageId, field, next, opts) {
   validateWrite(field, next, opts);
@@ -173,15 +196,17 @@ export async function writePageText(db, pageId, field, next, opts) {
   const prior = page[field];
   if ((prior === undefined || prior === null) && next === null) return { status: 'unchanged', book_id: page.book_id };
   if (isHumanEditedField(prior) && !opts.overrideHumanEdit) return { status: 'refused_human_edit', book_id: page.book_id };
+  if (opts.expect_prior_hash !== undefined && textHash(prior) !== opts.expect_prior_hash) return { status: 'prior_changed', book_id: page.book_id };
 
   const rev = buildTextRevision({ page, field, next, opts, now, id: opts.id || randomBytes(6).toString('hex') });
   await db.collection('page_revisions').insertOne(rev);
 
-  const res = await pages.updateOne(casFilter(pageId, field, prior, opts), fieldUpdate(field, nextFieldValue(next, now, opts.verbatim), now));
+  const res = await pages.updateOne(casFilter(pageId, field, prior, opts), fieldUpdate(field, nextFieldValue(next, now, opts.verbatim, field), now));
   if (res.matchedCount === 0) {
     await db.collection('page_revisions').updateOne({ id: rev.id }, { $set: { aborted: 'conflict', aborted_at: now } });
     return { status: 'conflict', revision_id: rev.id, book_id: page.book_id };
   }
+  await storeTranslationAnnotations(db, pageId, page.book_id, field, next, opts.verbatim, opts.run_id);
   return { status: 'written', revision_id: rev.id, book_id: page.book_id, prior_hash: rev.prior_hash, next_hash: rev.next_hash };
 }
 
@@ -195,10 +220,11 @@ export async function writePageText(db, pageId, field, next, opts) {
  *
  * Returns { rows, targets, restorable, changed: [...], missing: [...], tally, book_ids }.
  */
-export async function revertRun(db, runId, { apply = false, by = 'scripts/maintenance/revert-run.mjs', now } = {}) {
+export async function revertRun(db, runId, { apply = false, by = 'scripts/maintenance/revert-run.mjs', now, pageIds = null } = {}) {
   if (typeof runId !== 'string' || runId === '') throw new Error('revertRun: runId is required');
+  // pageIds (optional): undo only these pages of the run (#7567: the pilot pages a later guard would have refused)
   const rows = await db.collection('page_revisions')
-    .find({ run_id: runId, writer: WRITER_ID, aborted: { $exists: false } })
+    .find({ run_id: runId, writer: WRITER_ID, aborted: { $exists: false }, ...(pageIds && { page_id: { $in: [...pageIds] } }) })
     .sort({ created_at: 1 }).toArray();
   const groups = new Map();
   for (const r of rows) {

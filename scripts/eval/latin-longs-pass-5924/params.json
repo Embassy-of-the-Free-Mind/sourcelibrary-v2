@@ -1,0 +1,9 @@
+{
+ "frozen_at": "2026-10-22, before any LP output was scored",
+ "alpha": 1,
+ "lam": 0.8,
+ "bias": -0.4462871026284195,
+ "minCount": 2,
+ "ambigMin": 3,
+ "why": "dev grid over held-out flash-preview books (lite habit simulated at 0.64): 36 settings within 1,816–2,1xx errors; lam 0.8 and bias ln(0.64) (the measured ſ→f channel rate) best; alpha flat"
+}

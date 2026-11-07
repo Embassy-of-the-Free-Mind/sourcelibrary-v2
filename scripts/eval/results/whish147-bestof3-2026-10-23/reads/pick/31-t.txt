@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A is sparse, but what it does read makes sense ("…dupalabdhermahadādibhyaḥ kāryyamityanenaiva siddhatvād… vyākhyā…", "talkāryya", "upakāra"), whereas B is plausible only in rows 1–2 and C is meaningless syllables throughout.

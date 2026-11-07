@@ -112,7 +112,7 @@ const MIN_TITLE_LENGTH = 5;
  * characters (營造法式 is a complete, specific title in four). Applying the
  * Latin five-character floor to these throws away real titles.
  */
-const DENSE_SCRIPT = /[　-鿿豈-﫿぀-ヿ가-힯]/;
+export const DENSE_SCRIPT = /[　-鿿豈-﫿぀-ヿ가-힯]/;
 
 /**
  * Title normalization for keying.

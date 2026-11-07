@@ -50,6 +50,10 @@ describe('isGlobalOnlyTenantPath', () => {
     expect(isGlobalOnlyTenantPath('/ngrams')).toBe(true);
     expect(isGlobalOnlyTenantPath('/libraries')).toBe(true);
     expect(isGlobalOnlyTenantPath('/libraries/internet-archive')).toBe(true);
+    // Personal reader-check links and their answer endpoint (#7573).
+    expect(isGlobalOnlyTenantPath('/check/abc')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/api/check/abc')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/checkout')).toBe(false);
   });
 
   it('blocks the unscoped APIs behind them — the pages render client-side', () => {
@@ -57,6 +61,16 @@ describe('isGlobalOnlyTenantPath', () => {
     expect(isGlobalOnlyTenantPath('/api/entities?limit=5')).toBe(false); // query string is not part of pathname
     expect(isGlobalOnlyTenantPath('/api/explore/map')).toBe(true);
     expect(isGlobalOnlyTenantPath('/api/ngrams')).toBe(true);
+  });
+
+  it('blocks the global /library and its whole-catalogue APIs, but not the partner /catalog', () => {
+    expect(isGlobalOnlyTenantPath('/library')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/api/catalog/results')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/api/catalog/stats')).toBe(true);
+    // On a partner host /catalog is rewritten to the partner's own catalogue.
+    expect(isGlobalOnlyTenantPath('/catalog')).toBe(false);
+    expect(isGlobalOnlyTenantPath('/catalogue')).toBe(false);
+    expect(isGlobalOnlyTenantPath('/libraryx')).toBe(false);
   });
 
   it('leaves correctly tenant-scoped routes alone', () => {
@@ -334,6 +348,8 @@ describe('wiring', () => {
       // The site-feature registry: matchKnownEntity drops refused features on
       // a tenant host (tests/unit/known-entities.test.ts).
       'src/lib/site-features.json',
+      // Page names in the cleanup triage table, printed as text.
+      'src/app/admin/page-cleanup/data.ts',
     ]);
     // Rendered only by HomeView, i.e. the apex home and its locale twins; the
     // proxy serves the partner's own home at `/` and 308s locale prefixes.
@@ -380,10 +396,21 @@ describe('wiring', () => {
 
   it('every blocked page path is a real route in the app tree', () => {
     // A typo here would silently block nothing. Each entry must correspond to a
-    // directory under src/app.
+    // directory under src/app holding a page, directly or in a child segment
+    // (/check has only /check/[token]).
+    const hasPage = (dir: string): boolean => {
+      let entries: Dirent[];
+      try {
+        entries = readdirSync(dir, { withFileTypes: true });
+      } catch {
+        return false;
+      }
+      if (entries.some(e => e.isFile() && e.name === 'page.tsx')) return true;
+      return entries.some(e => e.isDirectory() && hasPage(path.join(dir, e.name)));
+    };
     for (const p of GLOBAL_ONLY_TENANT_PAGE_PATHS) {
       const dir = path.join(repoRoot, 'src/app', p.replace(/^\//, ''));
-      expect(() => readFileSync(path.join(dir, 'page.tsx')), `${p} should exist`).not.toThrow();
+      expect(hasPage(dir), `${p} should exist`).toBe(true);
     }
   });
 

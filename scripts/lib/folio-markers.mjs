@@ -25,6 +25,7 @@
  */
 
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { sourceProse, translationProse } from './block-drift.mjs';
 
 /** One marker: `<pb n="35"/>`, tolerant of spacing and quote style. */
 export const FOLIO_MARKER_RE = /<pb\s+n\s*=\s*["']?(\d+)["']?\s*\/?>/g;
@@ -183,4 +184,41 @@ export function parseFolioMarkedText(responseText, pageNumbers) {
   const missing = nums.filter((n) => !byPage.has(n));
   const overrun = reading === 'partial' ? nums.filter((n, i) => byPage.has(n) && i + 1 < nums.length && !byPage.has(nums[i + 1])) : [];
   return { continuous, pages, reading, rejected, missing, overrun, duplicated, unexpected, outOfOrder, leading };
+}
+
+/**
+ * The CLI translation lane (#7118, scripts/batch/cli-translate.mjs): ON unless `TRANSLATE_FOLIO_MARKERS_CLI=0`.
+ * Measured there on 3.8 Flash (scripts/eval/experiments/2026-10-29-seam-prevent-markers-7118.md): two consecutive
+ * Latin-script pages in one marked call cut broken joins 35.5 → 16.4 per 100 and majors 10 → 3 (n = 110). The
+ * chained Batch lane keeps its own flag (translate-batch-seam folioMarkersEnabled), which stays off.
+ */
+export function cliFolioMarkersEnabled(env = process.env) {
+  return env.TRANSLATE_FOLIO_MARKERS_CLI !== '0';
+}
+
+/**
+ * How far a marked pair's two pages may differ in English-per-source length, as a ratio of ratios. Every one-page
+ * read in the #7118 A/B fell inside [0.6, 1.48]; the two marker-arm majors that were a misplaced marker (half a page
+ * moved across the turn) fell at 0.33 and 0.5. Outside the bound the pair is read one page per call instead.
+ */
+export const MARKED_PAIR_BALANCE = Object.freeze({ min: 0.6, max: 1.67 });
+
+/**
+ * A marked block reply split into one text per page for the CLI lane: each page's span, followed by the block's
+ * <summary> and <keywords> (one pair for the block, so both pages carry it). `ok: false` when the parse does not give
+ * every page its own span, a span runs on over a missing page, or (with `sources`, the pages' OCR) a two-page split
+ * is out of MARKED_PAIR_BALANCE: the caller then reads the pages one by one.
+ */
+export function splitMarkedReply(reply, pageNumbers, { sources = null } = {}) {
+  const pr = parseFolioMarkedText(reply, pageNumbers);
+  if (pr.reading === 'rejected' || pr.missing.length || pr.overrun.length || pr.pages.some((p) => !p.span)) {
+    return { ok: false, reading: pr.reading, why: pr.rejected || `missing ${pr.missing.join(',') || '-'}, overrun ${pr.overrun.join(',') || '-'}` };
+  }
+  if (sources && sources.length === 2 && pr.pages.length === 2) {
+    const per = pr.pages.map((p, k) => translationProse(p.span).length / Math.max(1, sourceProse(sources[k]).length));
+    const balance = per[0] / Math.max(1e-9, per[1]);
+    if (!(balance >= MARKED_PAIR_BALANCE.min && balance <= MARKED_PAIR_BALANCE.max)) return { ok: false, reading: pr.reading, why: `unbalanced split (${balance.toFixed(2)}): a marker is likely misplaced` };
+  }
+  const blocks = (String(reply || '').match(/<(summary|keywords)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi) || []).join('\n');
+  return { ok: true, reading: pr.reading, texts: pr.pages.map((p) => (blocks ? `${p.span}\n\n${blocks}` : p.span)) };
 }

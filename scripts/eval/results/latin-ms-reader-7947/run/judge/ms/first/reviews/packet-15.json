@@ -1,0 +1,797 @@
+[
+ {
+  "book_id": "b15-k",
+  "slot": 1,
+  "title": "Liber Experimentorum: Johannes Trithemius (PH206)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 37,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "remissio ad bino bibes, potenter ueritatem uirilem roborandi",
+      "image": "commisce cum vino bibas, potenter excitat vim coeundi",
+      "problem": "letter-shape transliteration of the cursive; the sense of the recipe is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "brega",
+      "image": "virgam / virga",
+      "problem": "'virga' read as the non-word 'brega' throughout the page",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Radice quoque sicca testionibus sumpta certe uapeant",
+      "image": "Radix quoque herbae testiculi canis sumpta lacte caprearum",
+      "problem": "ingredient (herb testiculus canis, goat's milk) garbled into nonsense",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et ℥ xx. diebus continuos",
+      "image": "et per 20. dies continuos",
+      "problem": "'per' read as an ounce sign: a dose symbol invented before a count of days",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Caryophylli ℥ i. … zinziberis ℥ i. … piperis albi ℥ viii.",
+      "image": "Cariophilli ʒ j … Zinziberis ʒ j … piperis albi ʒ/gr. 8",
+      "problem": "drachm sign rendered as ounce sign — dose wrong by a factor of eight",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "quantitate ℥ i.",
+      "image": "quantitatem ʒ j",
+      "problem": "drachm read as ounce",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Est herba quaedam guis graere, de quasi maleficiatus ante sit radicibus tribus et gustata",
+      "image": "Est herba quaedam Iris graece, de qua si maleficiatus acceperit radices tres et pistata",
+      "problem": "herb name 'Iris' lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Oleo balsamum et roreum Columbiana",
+      "image": "Oleum sesamini et cerebrum Columbi ana",
+      "problem": "sesame oil read as balsam; 'cerebrum' lost — ingredients wrong",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "virilia tua teras cum unguento rosae more ea",
+      "image": "circumlinias praeputium cum isto unguento, coxasque move cum ea",
+      "problem": "instruction rewritten into different, invented words",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "<margin>eiusdem ponderis … </margin> / <margin>eura domestica …</margin>",
+      "image": "main-column text",
+      "problem": "body paragraphs tagged as margin; red marginal 'Aliud' rubrics tagged as <note>",
+      "severity": "moderate",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<note>Aliud</note> wrappers and <margin> around main-text paragraphs would leak into the reader view",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 73,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>190</margin>",
+      "image": "no 190 on this page; the margin numbers are 191–194",
+      "problem": "recipe number invented",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "ut exeas de ista pulchra matre tua",
+      "image": "ut exeas de ista vulva matris tuae",
+      "problem": "'vulva' read as 'pulchra' — sense changed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "in illa virtute dextera qua Lazarum",
+      "image": "in illa virtute verborum qua Lazarum",
+      "problem": "'verborum' read as 'dextera'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "mox secundam deponat ab ipsa",
+      "image": "mox schedula deponat ab ipsa",
+      "problem": "the charm-slip (schedula) becomes the afterbirth (secundam) — sense changed",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "Aliud nando mulier est in labore et tunc di nostient au fatuo sit matuent",
+      "image": "Quando mulier est in labore parturiendi, nesciens an foetus sit maturus",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Recipe os folia teria pyrola bulgo windugrum",
+      "image": "Rx in os folia tria pyrolae vulgo Windugrun",
+      "problem": "minor garbles; 'Et si renum fluit' for 'Item si cruor fluit'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "bibat vitrea de folli-besi … magnum leporem masculi",
+      "image": "bibat citrina de felle verris … coagulum leporis masculi",
+      "problem": "ingredients (boar's gall, hare's rennet) garbled",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sanguine gallina, gumi arabici et samomari, distimga via simul, et fiat unguentum totum, et quo mulier",
+      "image": "Rx sanguinem gallinae, gummi arabici et hamoniaci, distempera omnia simul, et fiat unguentum tenue, cum quo mulier",
+      "problem": "ingredient 'hamoniaci' lost; several misreadings",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "semen- postinara absortio",
+      "image": "semen pastinacae silvestris",
+      "problem": "plant name garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 108,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "arbor illa non durat fenestra.",
+      "image": "arbor ille non producet fructum.",
+      "problem": "'will not bear fruit' becomes nonsense about a window",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Experimentum quod nascuntur omnia meisa deorsum",
+      "image": "Exp. mirab. p. quod arescunt omnia incisa deorsum",
+      "problem": "heading reversed: 'are born' for 'wither'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "qua bam[?] id est inventio mixarum non redit effectus",
+      "image": "quae vanissimis etiam inventis miraculorum concedit effectum",
+      "problem": "sense inverted ('non redit' for 'concedit')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et rura quodam et in iisdem salrasten salis, gladibus bolgondis aliud in fermentu[m] se[m]el homibilo",
+      "image": "et cum ea quodcumque incisorium sarcastrum, falx, gladius vel quodcumque aliud instrumentum sive volubile acuatur",
+      "problem": "the whetting of the blades is lost in invented words",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "Septi sumbus die dirimunt. Si pulveres de spulmeo S. Voldavici",
+      "image": "Ego t. … dicimus. Si pulveres de sepulchro S. Udalrici",
+      "problem": "saint's name (Udalric) and 'sepulchro' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "imploberis sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi tibi clanbrises",
+      "image": "impleveris cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus argenti vivi, clauserisque",
+      "problem": "the ingredients and proportions (sulphur, quicksilver, 1:1:3) dropped",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "pone 8. lot. pulveris pulverizati, et summus in se ascendendo",
+      "image": "pone 8. lot. sulphuris pulverizati, et fumus inde ascendens",
+      "problem": "the ingredient (sulphur) lost; smoke becomes 'summus'",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Not readable: the cursive is transliterated letter by letter into non-words ('brega' for 'virga'), with ingredients, doses (drachm rendered as ounce) and whole instructions invented or reversed on all three pages; main text is also mis-tagged as margin."
+ },
+ {
+  "book_id": "b15-m",
+  "slot": 2,
+  "title": "Liber Experimentorum: Johannes Trithemius (PH206)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 37,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "remissio ad bino bibes, potenter ueritatem uirilem roborandi",
+      "image": "commisce cum vino bibas, potenter excitat vim coeundi",
+      "problem": "letter-shape transliteration of the cursive; the sense of the recipe is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "brega",
+      "image": "virgam / virga",
+      "problem": "'virga' read as the non-word 'brega' throughout the page",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Radice quoque sicca testionibus sumpta certe uapeant",
+      "image": "Radix quoque herbae testiculi canis sumpta lacte caprearum",
+      "problem": "ingredient (herb testiculus canis, goat's milk) garbled into nonsense",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et ℥ xx. diebus continuos",
+      "image": "et per 20. dies continuos",
+      "problem": "'per' read as an ounce sign: a dose symbol invented before a count of days",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Caryophylli ℥ i. … zinziberis ℥ i. … piperis albi ℥ viii.",
+      "image": "Cariophilli ʒ j … Zinziberis ʒ j … piperis albi ʒ/gr. 8",
+      "problem": "drachm sign rendered as ounce sign — dose wrong by a factor of eight",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "quantitate ℥ i.",
+      "image": "quantitatem ʒ j",
+      "problem": "drachm read as ounce",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Est herba quaedam guis graere, de quasi maleficiatus ante sit radicibus tribus et gustata",
+      "image": "Est herba quaedam Iris graece, de qua si maleficiatus acceperit radices tres et pistata",
+      "problem": "herb name 'Iris' lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Oleo balsamum et roreum Columbiana",
+      "image": "Oleum sesamini et cerebrum Columbi ana",
+      "problem": "sesame oil read as balsam; 'cerebrum' lost — ingredients wrong",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "virilia tua teras cum unguento rosae more ea",
+      "image": "circumlinias praeputium cum isto unguento, coxasque move cum ea",
+      "problem": "instruction rewritten into different, invented words",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "<margin>eiusdem ponderis … </margin> / <margin>eura domestica …</margin>",
+      "image": "main-column text",
+      "problem": "body paragraphs tagged as margin; red marginal 'Aliud' rubrics tagged as <note>",
+      "severity": "moderate",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<note>Aliud</note> wrappers and <margin> around main-text paragraphs would leak into the reader view",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 73,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>190</margin>",
+      "image": "no 190 on this page; the margin numbers are 191–194",
+      "problem": "recipe number invented",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "ut exeas de ista pulchra matre tua",
+      "image": "ut exeas de ista vulva matris tuae",
+      "problem": "'vulva' read as 'pulchra' — sense changed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "in illa virtute dextera qua Lazarum",
+      "image": "in illa virtute verborum qua Lazarum",
+      "problem": "'verborum' read as 'dextera'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "mox secundam deponat ab ipsa",
+      "image": "mox schedula deponat ab ipsa",
+      "problem": "the charm-slip (schedula) becomes the afterbirth (secundam) — sense changed",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "Aliud nando mulier est in labore et tunc di nostient au fatuo sit matuent",
+      "image": "Quando mulier est in labore parturiendi, nesciens an foetus sit maturus",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Recipe os folia teria pyrola bulgo windugrum",
+      "image": "Rx in os folia tria pyrolae vulgo Windugrun",
+      "problem": "minor garbles; 'Et si renum fluit' for 'Item si cruor fluit'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "bibat vitrea de folli-besi … magnum leporem masculi",
+      "image": "bibat citrina de felle verris … coagulum leporis masculi",
+      "problem": "ingredients (boar's gall, hare's rennet) garbled",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sanguine gallina, gumi arabici et samomari, distimga via simul, et fiat unguentum totum, et quo mulier",
+      "image": "Rx sanguinem gallinae, gummi arabici et hamoniaci, distempera omnia simul, et fiat unguentum tenue, cum quo mulier",
+      "problem": "ingredient 'hamoniaci' lost; several misreadings",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "semen- postinara absortio",
+      "image": "semen pastinacae silvestris",
+      "problem": "plant name garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 108,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "arbor illa non durat fenestra.",
+      "image": "arbor ille non producet fructum.",
+      "problem": "'will not bear fruit' becomes nonsense about a window",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Experimentum quod nascuntur omnia meisa deorsum",
+      "image": "Exp. mirab. p. quod arescunt omnia incisa deorsum",
+      "problem": "heading reversed: 'are born' for 'wither'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "qua bam[?] id est inventio mixarum non redit effectus",
+      "image": "quae vanissimis etiam inventis miraculorum concedit effectum",
+      "problem": "sense inverted ('non redit' for 'concedit')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et rura quodam et in iisdem salrasten salis, gladibus bolgondis aliud in fermentu[m] se[m]el homibilo",
+      "image": "et cum ea quodcumque incisorium sarcastrum, falx, gladius vel quodcumque aliud instrumentum sive volubile acuatur",
+      "problem": "the whetting of the blades is lost in invented words",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "Septi sumbus die dirimunt. Si pulveres de spulmeo S. Voldavici",
+      "image": "Ego t. … dicimus. Si pulveres de sepulchro S. Udalrici",
+      "problem": "saint's name (Udalric) and 'sepulchro' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "imploberis sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi tibi clanbrises",
+      "image": "impleveris cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus argenti vivi, clauserisque",
+      "problem": "the ingredients and proportions (sulphur, quicksilver, 1:1:3) dropped",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "pone 8. lot. pulveris pulverizati, et summus in se ascendendo",
+      "image": "pone 8. lot. sulphuris pulverizati, et fumus inde ascendens",
+      "problem": "the ingredient (sulphur) lost; smoke becomes 'summus'",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Not readable: the cursive is transliterated letter by letter into non-words ('brega' for 'virga'), with ingredients, doses (drachm rendered as ounce) and whole instructions invented or reversed on all three pages; main text is also mis-tagged as margin."
+ },
+ {
+  "book_id": "b15-r",
+  "slot": 3,
+  "title": "Liber Experimentorum: Johannes Trithemius (PH206)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 37,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "℞ moschi gr. ij",
+      "image": "℞ moschi ℈ ij ℈/ʒ ij (two weight groups)",
+      "problem": "weight sign reading uncertain; a second measure may be dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Cariophillos pulverizatos\n7. Commisce",
+      "image": "pulverizatos ʒ. Commisce (weight sign at line start)",
+      "problem": "a weight sign read as the numeral 7",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Si quis hirca <unclear>masculi beri</unclear> fel",
+      "image": "Si quis hirci masculi … fel",
+      "problem": "uncertain words, honestly marked",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 73,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "bibat citrina de felle <unclear>verris</unclear>",
+      "image": "bibat citrina de felle verris",
+      "problem": "correct, unclear marking is conservative",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 108,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "## Ex Ph. mirab. <unclear>p.</unclear>",
+      "image": "Exp. mirab. p.",
+      "problem": "abbreviation in rubric read as 'Ex Ph.'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Ego <unclear>tamen unum</unclear> quidem dicimus",
+      "image": "Ego t. … dicimus (abbreviated, hard)",
+      "problem": "uncertain reading of an abbreviated clause, marked unclear",
+      "severity": "minor"
+     },
+     {
+      "ocr": "et clauseris per foramen",
+      "image": "clauserisque foramen",
+      "problem": "'-que' read as 'per'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A competent, readable transcription: abbreviations expanded correctly, ingredients and recipe numbers right, rubrics and margins placed properly, and doubtful words honestly marked unclear; only a few weight signs and abbreviated phrases are uncertain."
+ },
+ {
+  "book_id": "b15-t",
+  "slot": 4,
+  "title": "Liber Experimentorum: Johannes Trithemius (PH206)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 37,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "remissio ad bino bibes, potenter ueritatem uirilem roborandi",
+      "image": "commisce cum vino bibas, potenter excitat vim coeundi",
+      "problem": "letter-shape transliteration of the cursive; the sense of the recipe is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "brega",
+      "image": "virgam / virga",
+      "problem": "'virga' read as the non-word 'brega' throughout the page",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Radice quoque sicca testionibus sumpta certe uapeant",
+      "image": "Radix quoque herbae testiculi canis sumpta lacte caprearum",
+      "problem": "ingredient (herb testiculus canis, goat's milk) garbled into nonsense",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et ℥ xx. diebus continuos",
+      "image": "et per 20. dies continuos",
+      "problem": "'per' read as an ounce sign: a dose symbol invented before a count of days",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Caryophylli ℥ i. … zinziberis ℥ i. … piperis albi ℥ viii.",
+      "image": "Cariophilli ʒ j … Zinziberis ʒ j … piperis albi ʒ/gr. 8",
+      "problem": "drachm sign rendered as ounce sign — dose wrong by a factor of eight",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "quantitate ℥ i.",
+      "image": "quantitatem ʒ j",
+      "problem": "drachm read as ounce",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Est herba quaedam guis graere, de quasi maleficiatus ante sit radicibus tribus et gustata",
+      "image": "Est herba quaedam Iris graece, de qua si maleficiatus acceperit radices tres et pistata",
+      "problem": "herb name 'Iris' lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Oleo balsamum et roreum Columbiana",
+      "image": "Oleum sesamini et cerebrum Columbi ana",
+      "problem": "sesame oil read as balsam; 'cerebrum' lost — ingredients wrong",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "virilia tua teras cum unguento rosae more ea",
+      "image": "circumlinias praeputium cum isto unguento, coxasque move cum ea",
+      "problem": "instruction rewritten into different, invented words",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "<margin>eiusdem ponderis … </margin> / <margin>eura domestica …</margin>",
+      "image": "main-column text",
+      "problem": "body paragraphs tagged as margin; red marginal 'Aliud' rubrics tagged as <note>",
+      "severity": "moderate",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<note>Aliud</note> wrappers and <margin> around main-text paragraphs would leak into the reader view",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 73,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>190</margin>",
+      "image": "no 190 on this page; the margin numbers are 191–194",
+      "problem": "recipe number invented",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "ut exeas de ista pulchra matre tua",
+      "image": "ut exeas de ista vulva matris tuae",
+      "problem": "'vulva' read as 'pulchra' — sense changed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "in illa virtute dextera qua Lazarum",
+      "image": "in illa virtute verborum qua Lazarum",
+      "problem": "'verborum' read as 'dextera'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "mox secundam deponat ab ipsa",
+      "image": "mox schedula deponat ab ipsa",
+      "problem": "the charm-slip (schedula) becomes the afterbirth (secundam) — sense changed",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "Aliud nando mulier est in labore et tunc di nostient au fatuo sit matuent",
+      "image": "Quando mulier est in labore parturiendi, nesciens an foetus sit maturus",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Recipe os folia teria pyrola bulgo windugrum",
+      "image": "Rx in os folia tria pyrolae vulgo Windugrun",
+      "problem": "minor garbles; 'Et si renum fluit' for 'Item si cruor fluit'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "bibat vitrea de folli-besi … magnum leporem masculi",
+      "image": "bibat citrina de felle verris … coagulum leporis masculi",
+      "problem": "ingredients (boar's gall, hare's rennet) garbled",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sanguine gallina, gumi arabici et samomari, distimga via simul, et fiat unguentum totum, et quo mulier",
+      "image": "Rx sanguinem gallinae, gummi arabici et hamoniaci, distempera omnia simul, et fiat unguentum tenue, cum quo mulier",
+      "problem": "ingredient 'hamoniaci' lost; several misreadings",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "semen- postinara absortio",
+      "image": "semen pastinacae silvestris",
+      "problem": "plant name garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 108,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "arbor illa non durat fenestra.",
+      "image": "arbor ille non producet fructum.",
+      "problem": "'will not bear fruit' becomes nonsense about a window",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Experimentum quod nascuntur omnia meisa deorsum",
+      "image": "Exp. mirab. p. quod arescunt omnia incisa deorsum",
+      "problem": "heading reversed: 'are born' for 'wither'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "qua bam[?] id est inventio mixarum non redit effectus",
+      "image": "quae vanissimis etiam inventis miraculorum concedit effectum",
+      "problem": "sense inverted ('non redit' for 'concedit')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et rura quodam et in iisdem salrasten salis, gladibus bolgondis aliud in fermentu[m] se[m]el homibilo",
+      "image": "et cum ea quodcumque incisorium sarcastrum, falx, gladius vel quodcumque aliud instrumentum sive volubile acuatur",
+      "problem": "the whetting of the blades is lost in invented words",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "Septi sumbus die dirimunt. Si pulveres de spulmeo S. Voldavici",
+      "image": "Ego t. … dicimus. Si pulveres de sepulchro S. Udalrici",
+      "problem": "saint's name (Udalric) and 'sepulchro' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "imploberis sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi tibi clanbrises",
+      "image": "impleveris cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus argenti vivi, clauserisque",
+      "problem": "the ingredients and proportions (sulphur, quicksilver, 1:1:3) dropped",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "pone 8. lot. pulveris pulverizati, et summus in se ascendendo",
+      "image": "pone 8. lot. sulphuris pulverizati, et fumus inde ascendens",
+      "problem": "the ingredient (sulphur) lost; smoke becomes 'summus'",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Not readable: the cursive is transliterated letter by letter into non-words ('brega' for 'virga'), with ingredients, doses (drachm rendered as ounce) and whole instructions invented or reversed on all three pages; main text is also mis-tagged as margin."
+ }
+]

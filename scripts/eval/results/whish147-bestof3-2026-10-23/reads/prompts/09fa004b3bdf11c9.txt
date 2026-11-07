@@ -1,0 +1,85 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 6 machine transcriptions (A, B, C, D, E, F) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. ഷ്ഠാകപരാത്തകാൾഇള ‖ ഉണാമഇഷിപത്തധാനാദധക്കാനാൾപുരുഷ ‖ ഷൊമ്പിടൊആഭാവാൾഠ
+2. കൈവല്യാൎത്ഥപ്രവൃത്തകെ ‖ കത്തമ്പരുഈണാമണകനണാനാംപ്ര ‖ തിനിധമാദയ്ക്കുരശവൎല്ല
+3. ൎത്തതെക്കളു ‖ ഷബല്ലഖംന്മഉദൊക്തൊഉണ്ടവി ‖ പത്ത്യഖാകൈത്തവഃ
+4. ന്ധ്യാതന്താചവി ‖ പത്ത്യാസാൾസിദാഃസാണിഖമ ‖ ൃഷയരുഷൃരൈക
+5. വല്യാംമാധ്യഞ്ഞ ‖ ഉക്കംരദൃണത്രതകക്കാഭാവാ ‖ ഖശനാതന്ദാത്കൾ
+6. സംയൊഗാദം ‖ ചതനതകൊതനാപഇലവി ‖ ംഗംഉണകത്തത
+7. മിതമാകെക ‖ പടവത്ത്യദാസീന്ദഃദ്ധാല്ലരു ‖ ഷന്ദുദൾൊാല്ലംഒ
+8. കൈവല്യാൎത്ഥക ‖ മാപ്രധാനന്താപാഗഖഡ്വപട്ട ‖ [illegible]
+9. ഇൽക്രതസ്സെഷ്ടഃആ ‖ ക്രകതത്തഹാഠന്ദതതാഗാകാനന്മ ‖ ൾഗണധാഷൊധ
+10. ശകഃതെന്താദവിമാ ‖ ധൾകാൾപകൊദാചെങ്ങൊഭ്രകാന ‖ ഡ്ഡഃൽല്യാലസാകൊാ
+
+TRANSCRIPTION B
+1. ഘാതപരാൎത്ഥത്വാൽത്രിഗുണാദിവിപൎയ്യയാദധിഷ്ഠാനാൽപുരുഷൊസ്തിഭൊക്തൃഭാവാൽകൈ
+2. വല്യാൎത്ഥംപ്രവൃത്തെശ്ച[illegible]ജനനമരണകരണാനാംപ്രതിനിയമാദയുഗപൽപ്ര
+3. വൃത്തെശ്ചപു ‖ രുഷബഹുത്വംസിദ്ധം ‖ ത്രൈഗുണ്യവിപൎയ്യയാച്ചൈവ॥
+4. [illegible]൧൮[illegible]ച്ചവി ‖ പൎയ്യാസാൽസിദ്ധംസാക്ഷിത്വമ ‖ സ്യപുരുഷസ്യകൈ
+5. വല്യംമാദ്ധ്യസ്ഥ്യ ‖ ംദ്രഷ്ടൃത്വമകൎത്തൃഭാവ ‖ ശ്ച॥൧൯॥തസ്മാൽ
+6. ത്സംയൊഗാദ ‖ ചെതനംചെതനാവദിവലി ‖ ംഗംഗുണകൎത്തൃത്വെ
+7. ചതഥാകൎത്തെ ‖ വഭവത്യുദാസീനഃ॥൨൦॥പുരുഷ ‖ സ്യദൎശനാൎത്ഥം
+8. കൈവല്യാൎത്ഥം ‖ തഥാപ്രധാനസ്യപംഗ്വന്ധവദുഭ ‖ യൊരപിസംയൊഗ
+9. സ്തൽകൃതഃസൎഗ്ഗഃ॥൨൧॥പ്രകൃതെൎമ്മഹാംസ്തതൊഹങ്കാരസ്തസ്മാദ്ഗണശ്ചഷൊഡ
+10. ശകഃ[illegible]ാദപിഷൊഡശകാൽപഞ്ചഭ്യഃപഞ്ചഭൂതാനി॥൨൨॥അദ്ധ്യവസായൊ
+
+TRANSCRIPTION C
+1. സംഘാതപരാൎത്ഥത്വാൽത്രി‖ഗുണാദിവിപര്യയാദധിഷ്ഠാനാൽപുരുഷൊ‖സ്തിഭൊക്തൃഭാവാൽകൈ
+2. കൈവല്യാൎത്ഥംപ്രവൃത്തെശ്ച‖[illegible]ജന്മമരണകരണാനാംപ്രതി‖നിയമാദയുഗപൽപ്ര
+3. വൃത്തെശ്ചപുരു‖ഷബഹുത്വംസിദ്ധംത്രൈഗുണ്യവി‖പര്യയാച്ചൈവ[illegible]
+4. [illegible]।തസ്മാച്ചവി‖പര്യാസാൽസിദ്ധംസാക്ഷിത്വമ‖സ്യപുരുഷസ്യ[illegible]കൈ
+5. വല്യംമാധ്യസ്ഥ്യ‖ംദ്രഷ്ടൃത്വമകൎത്തൃഭാവ‖ശ്ച[illegible]।തസ്മാത്തൽ
+6. സംയൊഗാദചെ‖തനംചെതനാവദിവലി‖ംഗംഗുണകൎത്തൃത്വെ
+7. ചതഥാകൎത്തെവ‖ഭവത്യുദാസീനഃ।[illegible]।പുരു‖ഷസ്യദൎശനാൎത്ഥംക
+8. കൈവല്യാൎത്ഥംത‖ഥാപ്രധാനസ്യ।പങ്ഗ്വന്ധവദുഭ‖യൊരപിസംയൊഗ
+9. സ്തൽകൃതഃസൎഗ്ഗഃ।[illegible]‖പ്രകൃതെൎമ്മഹാംസ്തതൊഹംകാരസ്ത‖സ്മാൽഗണശ്ചഷൊഡ
+10. ശകഃതസ്മാദപിഷൊ‖ഡശകാൽപഞ്ചഭ്യഃപഞ്ചഭൂതാനി‖[illegible]ധ്യവസായൊബുദ്ധി
+
+TRANSCRIPTION D
+1. ഝാകപരാത്മഖാൽ ‖ ആഉണാരുവിപഷ്ടയാദധക്കാതാൽപ്രരുക ‖ ഷൊാന്തിൈദാത്തുഭാവാൽക
+2. കൈവല്യാൎത്ഥപ്രവൃത്തെക ‖ കൈഖസ്യ ഈണനമനബകനണാതാംപ്രത ‖ പ്രതിനിഖമാദയ്യതശവൽപ്ര
+3. ആത്തെകകുളു ‖ ഷഖഹ്യഭാംനിദതത്രെഉഞ്ഞവി ‖ പത്തുയാഖൈഷ്ണപഃ
+4. ന്യ।തന്താചവി ‖ പത്ഥാസാൽനിദാംസാഞ്ഞിഖമ ‖ ന്യപരുഷന്യകൈക
+5. വല്യംമാത്രത്യ ‖ ദ്ധഞ്ചാഭുളതമകത്തുഭാവാ ‖ ഖശന്ന।തന്നുാത്തൽ
+6. സംയോഗാദം ‖ ചതമകഖൊതനാപദെവവി ‖ ംഗംഗണകത്തുത്ത
+7. വിതമാൾതൽ ‖ പടവത്തുദാനിസിന്നുഃദ്ധ।ലരു ‖ ഷന്യദൽമാഖംക
+8. കൈവല്യാൎത്ഥ ‖ ഗാപ്രധാനന്യപംഗസ്വപട്ടദ ‖ ഭഖയാരവിസംയൊഗ
+9. ഈൽക്രത്സ്നഷ്ടഃ।ഝ ‖ ഗ്രകതത്തഹാംന്നൊതാഹാകാതന്ന ‖ ഖത്തടൽഗണത്തഖൊാധ
+10. ശകഃതന്താദവിത ‖ ദാഖൽകാൽപഖൊദാഖേണ്ണൊഭ്രകാത ‖ തച്ചുഃൽല്യഖസാഖൊ
+
+TRANSCRIPTION E
+1. ഘാതപരാൎത്ഥാൽത്രിഗുണാദിവിപര്യയാദധിഷ്ഠാനാൽപുരുഷൊസ്തിഭൊക്തൃഭാവാൽകൈ
+2. വല്യാൎത്ഥംപ്രവൃത്തെശ്ച[illegible]ജനനമരണകരണാനാംപ്രതിനിയമാദയുഗപൽപ്ര
+3. വൃത്തെശ്ച‖[illegible]ബഹുത്വംസിദ്ധംത്രൈഗുണ്യവി‖പര്യയാച്ചൈവ॥
+4. [illegible]തസ്മാച്ചവി‖പര്യാസാൽസിദ്ധംസാക്ഷിത്വമ‖സ്യപുരുഷസ്യകൈ
+5. വല്യംമാദ്ധ്യസ്ഥ്യ‖[illegible]ദ്രഷ്ടൃത്വമകൎത്തൃഭാവ‖ശ്ച[illegible]തസ്മാൽ
+6. ത്സംയൊഗാദ‖ചെതനംചെതനാവദിവലി‖ംഗംഗുണകൎത്തൃത്വെ
+7. ചതഥാകൎത്ത‖[illegible]ഭവതീത്യുദാസീനഃ[illegible]പുരുഷ‖സ്യദൎശനാൎത്ഥം
+8. കൈവല്യാൎത്ഥ‖[illegible]ഥാപ്രധാനസ്യപംഗ്വന്ധവദുഭ‖യൊരപിസംയൊഗ
+9. സ്തൽകൃതസ്സൎഗ്ഗഃ।[illegible]തെൎമ്മഹാംസ്ത[illegible]ഹംകാരസ്തസ്മാൽഗണശ്ചഷൊഡ
+10. ശകഃ।തസ്മാദപിഷൊഡശകാൽപഞ്ചഭ്യഃപഞ്ചഭൂതാനി[illegible]ധ്യവസായൊ
+
+TRANSCRIPTION F
+1. [illegible]ൎത്ഥത്വാൽത്രി‖ഗുണാദിവിപൎയ്യയാദധിഷ്ഠാനാൽപുരുഷ‖ഷൊസ്തിഭൊക്തൃഭാവാൽ[illegible]
+2. കൈവല്യാൎത്ഥപ്രവൃത്തേ[illegible]‖[illegible]ജ്ജനനമ[illegible]നഭേകണനൊനാംപ്ര‖[illegible]ത്തിബമാദൃശ്യക്ഷഗവൽപ്ര
+3. [illegible]ത്തരകാൎയ്യ‖[illegible]വിദ്ധാരെത്രൈഗുണ്യാവി‖പക്ഷ[illegible]വം
+4. [illegible]।[illegible]വി‖പക്ഷാബാൽനിഷ്ഠാസാക്ഷികമ‖[illegible]പൃഥക്ത്വാദെക
+5. [illegible]ംമാത്ര[illegible]‖[illegible]ക[illegible]‖[illegible]।[illegible]ൽ
+6. സംയൊഗാദ്ദ‖ചക[illegible]നാപരിപകി‖ംഗംഗുണെ[illegible]
+7. [illegible]‖പട[illegible]നി[illegible]‖[illegible]ംഒ
+8. കൈവല്യാൎത്ഥ‖മാപ്രയാനസ്യാ[illegible]‖[illegible]
+9. [illegible]ൾഉക്ത[illegible]।[illegible]‖[illegible]‖[illegible]ലൊയാനവിസംയൊഗ
+10. [illegible]‖[illegible]ൽപ[illegible]‖[illegible]
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

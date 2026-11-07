@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three contains any readable Sanskrit or Malayalam, so this is close to a tie; A ranks first only because it keeps a few possible syllables ("bhiṃ", "maḥ"), B has only scattered visargas, and C has a single "triṃ".

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most consistently as real Malayalam-Sanskrit commentary on inference ("vipakṣitatvāl", "pakṣatvaṃ", "siddhāyakki", "bādha", "lakṣayati vyāpti"); C keeps some real terms but drifts into nonsense more often, and A keeps garbling "pakṣa" into "prakṣa" and breaks down in most rows.

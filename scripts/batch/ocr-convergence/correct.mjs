@@ -24,6 +24,24 @@
  * then each page alone. A corrected text that fails the chatter guard is no answer too. meta.outcome is one of
  * corrected | unchanged | contain | no-answer; only `corrected` has exit 0 (so `cli-ocr.mjs apply` can only ever
  * write a correction). A usage-limit reply stops the run (exit 3); re-running skips pages already answered.
+ *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every `corrected` text is copied to R2 candidate-reads/
+ * (with the exact prompt its call sent) when it is made. Before the calls, each page asks for a kept correction by
+ * the same --model on the same live prompt and instruction, of the same image bytes and the same stored draft, and
+ * uses it instead of calling (meta `reused_from`). UNCHANGED and CONTAIN answers carry no text and are not kept.
+ * `--fresh` always calls: a repeat-noise eval needs fresh reads.
+ *
+ * EVAL ONLY (#7263, cheaper correctors on the same prompt): `--draft-dir=DIR` corrects DIR/<page_id>.txt instead of the
+ * stored OCR. `--cli=agy` sends the same prompt through `agy -p` in a gated workspace (AGY_HOME picks the pool) and
+ * reads what was opened from the gate's log. `--max-calls=N` stops the run after N calls. --draft-dir needs
+ * CANDIDATE_READS=off: the reuse key names the stored draft, so a kept read would not match the draft sent.
+ * Such a read carries `draft.source: 'file'`, which `cli-ocr.mjs apply` refuses.
+ *
+ * A DEFECT INSTRUCTION (#5274, the 丨 ditto marks of 佩文韻府-type dictionaries): `--instruction-file=FILE` appends FILE's
+ * text after the correction block, as scripts/eval/zh-ditto-restore-5274/run-arms.mjs did (its DITTO block). It is part
+ * of the prompt sent (hashed, kept in prompts/) and of the reuse key's variant, so a kept plain correction is never
+ * reused for it. `--language=Chinese` fills the live prompt's language slot as claude-ocr.mjs languageInstruction()
+ * does (the eval's prompt); without it the slot stays auto-detect, as before.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,19 +51,27 @@ import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { contentHash } from '../../lib/write-provenance.mjs';
 import { ocrReadProblem } from '../../lib/cli-chatter.mjs';
+import { checkWrittenText } from '../../lib/write-text-guard.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../../lib/live-ocr-prompt.mjs';
-import { splitPages } from '../claude-ocr.mjs';
+import { splitPages, languageInstruction } from '../claude-ocr.mjs';
+import { agyCall, agyUsage, installToolGate, gateReads, CLI_SAFE_ARGS } from '../../lib/agy-cli.mjs';
+import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/ocr-convergence/correct.mjs';
-const CLI = 'claude';
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
+const CLI = arg('cli', 'claude');
+const DRAFT_DIR = arg('draft-dir') && path.resolve(arg('draft-dir'));
+const MAX_CALLS = Number(arg('max-calls', Infinity));
 const SETDIR = arg('set-dir') && path.resolve(arg('set-dir'));
 const OUT = SETDIR && path.join(SETDIR, 'reads');
 const MODEL = arg('model', 'opus');
 const PER_CALL = Math.max(1, Math.min(10, Number(arg('per-call', 10))));
 const CONCURRENCY = Math.max(1, Math.min(8, Number(arg('concurrency', 4))));
 const JOB = arg('job', 'opus-correct-6694');
+const INSTRUCTION_FILE = arg('instruction-file') && path.resolve(arg('instruction-file'));
+const EXTRA = INSTRUCTION_FILE ? fs.readFileSync(INSTRUCTION_FILE, 'utf8') : '';
+const LANGUAGE = arg('language');
 const pageName = (i) => `p${String(i + 1).padStart(2, '0')}`;
 const draftName = (i) => `d${String(i + 1).padStart(2, '0')}`;
 
@@ -65,7 +91,7 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 
 /** One sealed call with a stream-json transcript, so the files the model opened can be checked. */
-function claudeCall(prompt, cwd, transcript) {
+export function claudeCall(prompt, cwd, transcript) {
   return new Promise((resolve) => {
     const t0 = Date.now();
     const fd = fs.openSync(transcript, 'w');
@@ -89,6 +115,14 @@ function claudeCall(prompt, cwd, transcript) {
   });
 }
 
+/** claudeCall's result from one gated `agy -p` call (eval only, see the header). */
+async function agyCorrectCall(prompt, cwd, transcript) {
+  const log = installToolGate(cwd, { task: 'ocr' });
+  const r = await agyCall(['-p', prompt, '--model', MODEL, ...CLI_SAFE_ARGS], cwd);
+  fs.writeFileSync(transcript, JSON.stringify({ text: r.text, usage: r.usage, cls: r.cls, tools: gateReads(log) }) + '\n');
+  return { text: r.text, opened: new Set(gateReads(log).map((f) => path.basename(f))), model: MODEL, usage: agyUsage(r.usage), code: r.code, cls: r.cls === 'quota' ? 'usage_limit' : r.cls || null, err: r.err, secs: r.secs };
+}
+
 /**
  * The reply split into its n answers (splitPages: markers exactly p01..pNN, or null). A short lead-in before the first
  * marker ("Corrections follow") is dropped and returned as `preamble`; anything longer, or with a tag in it, is left in
@@ -110,11 +144,16 @@ export function parseAnswer(ans) {
   if (!a) return { outcome: 'no-answer', reason: 'empty answer' };
   const problem = ocrReadProblem(a);
   if (problem) return { outcome: 'no-answer', reason: `chatter guard: ${problem}` };
+  // #5055: a correction cut off (a tag left open at its tail, a text ending inside a tag) is no answer: tried again.
+  const cut = checkWrittenText(a, { kind: 'ocr' });
+  if (cut.verdict === 'truncated') return { outcome: 'no-answer', reason: `write guard: ${cut.reasons[0]}` };
   return { outcome: 'corrected', text: a };
 }
 
 async function main() {
   if (!SETDIR) { console.error('--set-dir=DIR is required (see the header)'); process.exit(2); }
+  if (DRAFT_DIR && process.env.CANDIDATE_READS !== 'off') { console.error('--draft-dir needs CANDIDATE_READS=off (see the header)'); process.exit(2); }
+  const draftOf = (p) => (DRAFT_DIR ? fs.readFileSync(path.join(DRAFT_DIR, `${p.id}.txt`), 'utf8') : p.ocr?.data || '');
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not on PATH`); process.exit(1); }
   const manifest = fs.readFileSync(path.join(SETDIR, 'manifest.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
@@ -122,7 +161,7 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const pages = await db.collection('pages').find({ id: { $in: manifest.map((m) => m.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1, 'ocr.updated_at': 1, 'ocr.model': 1 } }).sort({ book_id: 1, page_number: 1 }).toArray();
-  const { base, ref } = await liveOcrPrompt(db);
+  const { base, ref } = await (LANGUAGE ? liveOcrPrompt(db, languageInstruction(LANGUAGE)) : liveOcrPrompt(db));
   await client.close();
   fs.mkdirSync(path.join(OUT, 'prompts'), { recursive: true });
   fs.mkdirSync(path.join(SETDIR, 'stored'), { recursive: true });
@@ -131,7 +170,7 @@ async function main() {
   const todo = pages.filter((p) => !done(p));
   const calls = [];
   for (const p of todo) { const last = calls[calls.length - 1]; if (last && last[0].book_id === p.book_id && last.length < PER_CALL) last.push(p); else calls.push([p]); }
-  console.log(`${pages.length} pages; ${todo.length} to correct in ${calls.length} calls; ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time; prompt ${ref.name} v${ref.version}`);
+  console.log(`${pages.length} pages; ${todo.length} to correct in ${calls.length} calls; ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time; prompt ${ref.name} v${ref.version}${EXTRA ? ` + ${path.basename(INSTRUCTION_FILE)}` : ''}${LANGUAGE ? `, language ${LANGUAGE}` : ''}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'ocr-correct-sealed', path.basename(SETDIR));
   const callLog = path.join(SETDIR, 'calls.jsonl');
@@ -150,9 +189,12 @@ async function main() {
     imgs.set(p.id, v);
     return v;
   };
+  // The reuse key (#7075): the live prompt, the instruction's template, the image bytes and the draft corrected.
+  const FRESH = wantsFresh();
+  const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(base), input: JSON.stringify([imageSha, contentHash(p.ocr?.data || '')]), variant: contentHash(correctInstruction(1) + EXTRA) });
   const writePage = (p, ans, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), ans.outcome === 'corrected' ? ans.text : '');
-    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(p.ocr?.data || '') }, null, 1));
+    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(DRAFT_DIR && { draft: { source: 'file', dir: DRAFT_DIR } }), ...(EXTRA && { instruction_file: path.basename(INSTRUCTION_FILE), instruction_hash: contentHash(EXTRA) }), ...(LANGUAGE && { language_slot: LANGUAGE }), ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(draftOf(p)) }, null, 1));
   };
 
   /** One call over a group. Returns the pages left unanswered. */
@@ -164,15 +206,17 @@ async function main() {
     fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
     group.forEach((p, i) => {
       fs.writeFileSync(path.join(dir, `${pageName(i)}.jpg`), im[i].buf);
-      fs.writeFileSync(path.join(dir, `${draftName(i)}.txt`), p.ocr?.data || '');
-      fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), p.ocr?.data || '');
+      fs.writeFileSync(path.join(dir, `${draftName(i)}.txt`), draftOf(p));
+      fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), draftOf(p));
     });
-    const sent = base + correctInstruction(group.length);
+    const sent = base + correctInstruction(group.length) + EXTRA;
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);
     const t0 = new Date();
-    const r = await claudeCall(sent, dir, path.join(SETDIR, 'transcripts', `${callId}.jsonl`)); nCalls++;
+    if (nCalls >= MAX_CALLS) { stop = `--max-calls=${MAX_CALLS}`; return group; }
+    nCalls++;
+    const r = await (CLI === 'agy' ? agyCorrectCall : claudeCall)(sent, dir, path.join(SETDIR, 'transcripts', `${callId}.jsonl`));
     fs.rmSync(dir, { recursive: true, force: true });
     const { answers, preamble } = r.cls ? { answers: null, preamble: null } : splitAnswers(r.text, group.length);
     fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: group[0].book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (answers ? null : 'page_count_mismatch'), preamble, opened: [...r.opened].sort(), usage: r.usage }) + '\n');
@@ -180,20 +224,41 @@ async function main() {
     if (!answers) { console.log(`  ${group[0].book_id} p.${group[0].page_number}+${group.length}: ${r.cls || 'markers do not match'} (${Math.round(r.secs)}s)`); return group; }
     const left = [];
     const common = { model: r.model || MODEL, model_requested: MODEL, call_id: callId, call_pages: group.length, started_at: t0.toISOString(), finished_at: new Date().toISOString(), prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage };
-    const tally = {};
+    const tally = {}, keep = [];
     group.forEach((p, i) => {
       // An answer the model gave without opening this page's image and draft is no answer.
       if (!r.opened.has(`${pageName(i)}.jpg`) || !r.opened.has(`${draftName(i)}.txt`)) { left.push(p); tally['not-opened'] = (tally['not-opened'] || 0) + 1; return; }
       const ans = parseAnswer(answers[i]);
       if (ans.outcome === 'no-answer') { left.push(p); tally[ans.reason] = (tally[ans.reason] || 0) + 1; return; }
       writePage(p, ans, { ...common, call_position: i + 1, image_url: im[i].src, image_bytes: im[i].buf.length, image_sha256: im[i].sha });
+      if (ans.outcome === 'corrected') keep.push([p, ans.text, im[i].sha]);
       tally[ans.outcome] = (tally[ans.outcome] || 0) + 1;
     });
+    // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
+    for (const [p, text, sha] of keep) {
+      const meta = JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8'));
+      await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKeyOf(p, sha), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
+    }
     console.log(`  ${group[0].book_id} p.${group[0].page_number}+${group.length}: ${JSON.stringify(tally)} (${Math.round(r.secs)}s)`);
     return left;
   };
 
-  const queue = [...calls];
+  // A kept correction of the same page, model, prompt, image and draft is used instead of a call (#7075).
+  let reused = 0;
+  const reusedIds = new Set();
+  if (FRESH) console.log('--fresh: kept reads are not looked up');
+  else {
+    const keptBooks = new Set();
+    for (const b of new Set(todo.map((p) => p.book_id))) if (await hasKeptReads(b)) keptBooks.add(b);
+    for (const p of todo.filter((q) => keptBooks.has(q.book_id))) {
+      const v = await fetchImage(p);
+      if (v.error) continue;
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKeyOf(p, v.sha) });
+      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; reusedIds.add(p.id); fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), p.ocr?.data || ''); console.log(`  ${p.book_id} p.${p.page_number}: reused a kept correction (${hit.body.job ?? '?'}): no call`); }
+      imgs.delete(p.id);   // fetched again when its call comes: a whole set's images are not held for the lookup
+    }
+  }
+  const queue = calls.map((g) => g.filter((p) => !reusedIds.has(p.id))).filter((g) => g.length);
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
     while (queue.length && !stop) {
       const group = queue.shift();
@@ -205,7 +270,7 @@ async function main() {
   }));
   const metas = pages.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
   const t = {}; for (const m of metas) t[m.outcome] = (t[m.outcome] || 0) + 1;
-  console.log(`\n${JSON.stringify(t)}; ${pages.length - metas.length} not reached; ${nCalls} calls this run`);
+  console.log(`\n${JSON.stringify(t)}; ${pages.length - metas.length} not reached; ${nCalls} calls this run; reused ${reused} kept correction(s) instead of calling`);
   if (stop) { console.error(`STOPPED: ${stop}`); process.exit(3); }
 }
 

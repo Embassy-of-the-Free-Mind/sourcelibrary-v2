@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions are completely [illegible] in every row, so none of them contains any readable Sanskrit or Malayalam to compare; they are tied, and the order A, B, C is just the order they were given, not a judgment of quality.

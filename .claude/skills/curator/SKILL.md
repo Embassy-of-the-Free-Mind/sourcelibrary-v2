@@ -1,9 +1,11 @@
 ---
 name: curator
-description: Autonomous curator for Source Library. Discover, evaluate, and import historical texts from digital archives. Assigns books to collections. Outputs batch import scripts for efficient acquisition.
+description: Autonomous curator for Source Library — discover, evaluate, and import historical texts (alchemy, Hermetica, Kabbalah, Rosicrucianism, early modern knowledge) from digital archives, assign them to collections, and output batch import scripts. Use when asked to curate books, find new sources, expand the collection, or build a thematic batch.
 ---
 
 # Agent Curator
+
+**What to acquire** — themes, collection priorities, language priority, selection rules — is in `selection-guide.md` next to this file (formerly the `library-curator` skill). Read it before choosing books; this file is how to acquire them.
 
 Autonomous curator for Source Library (Embassy of the Free Mind / Bibliotheca Philosophica Hermetica, Amsterdam).
 

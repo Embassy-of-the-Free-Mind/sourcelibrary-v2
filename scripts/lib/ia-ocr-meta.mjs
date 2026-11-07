@@ -56,16 +56,71 @@ export async function iaOcrMeta(id) {
     contributor: m.contributor || null,
     detected_lang: m.ocr_detected_lang || null,
     imagecount: m.imagecount ? +m.imagecount : null,
+    // What the item itself says about rights. Most 1880–1930 items say nothing (null).
+    rights: m.rights ? String(m.rights).slice(0, 500) : null,
+    licenseurl: m.licenseurl || null,
+    copyright_status: m['possible-copyright-status'] || null,
+    access_restricted: String(m['access-restricted-item'] || '').toLowerCase() === 'true',
     has_djvu_xml: !!xmlFile,
     djvu_xml_files: xmlFiles.map((f) => f.name),
   };
 }
 
+/**
+ * The rights record for the Archive's OCR text of one item (`ocr.ia.licence`). A machine
+ * transcription adds no authorship of its own, so the text carries the WORK's status: US public
+ * domain when the edition was published more than 95 years before this year (1930 and earlier in
+ * 2026). Any other case is recorded as not_recorded with the reason, never guessed. The item's own
+ * rights fields are kept beside the verdict so a later reader can see what the Archive said.
+ */
+const PD_MARK = 'https://creativecommons.org/publicdomain/mark/1.0/';
+export function iaTextLicence(meta, year, now = new Date()) {
+  const lastPdYear = now.getUTCFullYear() - 96;
+  const fromItem = { ia_rights: meta.rights || null, ia_licenseurl: meta.licenseurl || null, ia_copyright_status: meta.copyright_status || null, ia_access_restricted: !!meta.access_restricted };
+  const base = { rule: 'ia-text-licence/1', jurisdiction: 'US', publication_year: year ?? null, ...fromItem };
+  if (year && year <= lastPdYear) {
+    return { ...base, status: 'publicdomain', licence_url: PD_MARK, basis: `published ${year}, before ${lastPdYear + 1}: US public domain (95-year term); a machine transcription adds no copyright` };
+  }
+  return { ...base, status: 'not_recorded', licence_url: null, basis: year ? `published ${year}: not yet US public domain by date alone; rights not assessed by this writer` : 'publication year unknown; rights not assessed by this writer' };
+}
+
 /** The `ocr.ia` block written on every ia_djvu page (see src/lib/types/page.ts OcrData.ia). */
-export function iaProvenance(iaId, meta) {
+export function iaProvenance(iaId, meta, { year } = {}) {
   return {
     item: iaId, engine: meta.engine || null, module_version: meta.version || null, converter: meta.converter || null,
     ocr_date: meta.ocr_date || null, scandate: meta.scandate || null, contributor: meta.contributor || null,
     detected_lang: meta.detected_lang || null, item_url: `https://archive.org/details/${iaId}`,
+    licence: iaTextLicence(meta, year),
+  };
+}
+
+/**
+ * The `ocr.engine` block for a page that carries the Archive's own text (#6740), in the specialist-lane shape the
+ * Syriac lane set (scripts/lib/syriac-kraken-lane.mjs ocrSetFields; src/lib/types/page.ts SpecialistEngine): which
+ * engine read the leaf, which run copied it, and from which file. The Archive's OCR takes no prompt, so `prompt` says
+ * so explicitly (a prompt slot that is absent reads as "the writer forgot"; this one is `n/a`). Pages written before
+ * this block existed carry only `ocr.ia`; nothing here backfills them.
+ * @param {object} meta     iaOcrMeta(...) for the item
+ * @param {object} a
+ * @param {string} a.run    the ingest run id (`ia-ocr-ingest/<ISO>/<host>@<sha>`)
+ * @param {string} a.sourceUrl  the `_djvu.xml` URL with its `#leaf=` anchor
+ * @param {number} a.leaf   the leaf index the text came from
+ */
+export function iaEngine(meta, { run, sourceUrl, leaf } = {}) {
+  if (!run) throw new Error('iaEngine: run is required (the ingest run that copied the text)');
+  if (!sourceUrl) throw new Error('iaEngine: sourceUrl is required (the file the text came from)');
+  return {
+    name: meta.engine || 'not_recorded',
+    version: meta.version || 'not_recorded',
+    model: 'ia-ocr',
+    model_label: `Internet Archive OCR${meta.engine ? ` (${meta.engine}${meta.version ? ` ${meta.version}` : ''})` : ''}`,
+    licence: 'see ocr.ia.licence (the text\'s rights, per item)',
+    converter: meta.converter || 'not_recorded',
+    route: 'print',
+    read_mode: 'page',
+    prompt: { status: 'n/a', reason: 'the Archive\'s OCR engine takes no prompt' },
+    input: { source_url: sourceUrl, leaf: Number.isInteger(leaf) ? leaf : 'not_recorded', read_by: 'archive.org' },
+    run,
+    issue: 6740,
   };
 }

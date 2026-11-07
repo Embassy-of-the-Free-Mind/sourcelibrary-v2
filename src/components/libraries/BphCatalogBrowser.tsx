@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
+import { bphSeeAlsoQueries } from '@/lib/bph-catalog-see-also';
+import { authorSearchTerms } from '@/lib/bph-catalog-author-headings';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal, Download } from 'lucide-react';
 import { useEmbed } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
@@ -132,6 +134,11 @@ const PER_PAGE = 60;
     descending. Shelfmark only supports ascending (codes don't read meaningfully
     in reverse). Used by the clickable column headers in the list view. */
 type SortColumn = 'author' | 'title' | 'year' | 'shelfmark';
+
+/** Best match while searching, Author A–Z while browsing. */
+function defaultSortFor(q: string): string {
+  return q.trim().length >= 2 ? 'relevance' : 'author';
+}
 
 function nextSort(column: SortColumn, current: string): string {
   if (column === 'shelfmark') return 'shelfmark';
@@ -318,7 +325,9 @@ export default function BphCatalogBrowser({
   const embed = useEmbed();
 
   const initialQ = searchParams.get('cq') || '';
-  const initialSort = searchParams.get('csort') || 'author';
+  const initialSort = searchParams.get('csort') || defaultSortFor(initialQ);
+  // A sort in the URL was picked by a reader; otherwise the default follows the search.
+  const sortChosenRef = useRef(!!searchParams.get('csort'));
   const initialKeyword = searchParams.get('ckeyword') || '';
   const initialOffset = parseInt(searchParams.get('coffset') || '0') || 0;
   const initialAdv: AdvancedFilters = {
@@ -352,6 +361,9 @@ export default function BphCatalogBrowser({
   const [works, setWorks] = useState<BphWork[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [didYouMean, setDidYouMean] = useState<string | null>(null);
+  const [seeAlso, setSeeAlso] = useState<Array<{ query: string; total: number }>>([]);
+  const [authorHeadings, setAuthorHeadings] = useState<Array<{ author: string; total: number }>>([]);
   const [searchQuery, setSearchQuery] = useState(initialQ);
   const [sort, setSort] = useState(initialSort);
   const [keyword, setKeyword] = useState(initialKeyword);
@@ -442,6 +454,12 @@ export default function BphCatalogBrowser({
     );
 
     setLoading(true);
+    setDidYouMean(null);
+    // Paging through one search keeps its see-also line.
+    if (off === 0) {
+      setSeeAlso([]);
+      setAuthorHeadings([]);
+    }
     try {
       const params = buildParams(q, s, kw, off, a);
       const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
@@ -457,6 +475,33 @@ export default function BphCatalogBrowser({
       setWorks(data.works || []);
       setTotal(data.total || 0);
       onTotalChange?.(data.total || 0, isFiltered);
+      // Nothing found: ask for a correction, without holding up the empty state.
+      // A failure here only costs the hint, so it stays silent.
+      if (!data.total && q.trim().length >= 3) {
+        fetch(`/api/catalog/bph/suggest?${params}`, { signal: controller.signal })
+          .then((r) => r.json())
+          .then((s: { suggestion?: string | null }) => {
+            if (abortRef.current === controller) setDidYouMean(s.suggestion ?? null);
+          })
+          .catch(() => {});
+      }
+      // Only a search holding a listed word asks, so most searches cost nothing.
+      if (off === 0 && bphSeeAlsoQueries(q).length > 0) {
+        fetch(`/api/catalog/bph/see-also?${params}`, { signal: controller.signal })
+          .then((r) => r.json())
+          .then((s: { seeAlso?: Array<{ query: string; total: number }> }) => {
+            if (abortRef.current === controller) setSeeAlso(s.seeAlso ?? []);
+          })
+          .catch(() => {});
+      }
+      if (off === 0 && !a.author && authorSearchTerms(q).length > 0) {
+        fetch(`/api/catalog/bph/author-headings?${params}`, { signal: controller.signal })
+          .then((r) => r.json())
+          .then((s: { headings?: Array<{ author: string; total: number }> }) => {
+            if (abortRef.current === controller) setAuthorHeadings(s.headings ?? []);
+          })
+          .catch(() => {});
+      }
     } catch (err) {
       if ((err as Error).name === 'AbortError') return; // superseded by a newer query
       if (abortRef.current !== controller) return;
@@ -484,7 +529,8 @@ export default function BphCatalogBrowser({
       else params.delete(key);
     };
     setOrDel('cq', q);
-    setOrDel('csort', s !== 'author' ? s : '');
+    // Only a sort the reader picked goes in the URL; the default follows the search.
+    setOrDel('csort', sortChosenRef.current ? s : '');
     setOrDel('ckeyword', kw);
     setOrDel('coffset', off ? String(off) : '');
     setOrDel('cauthor', a.author);
@@ -508,10 +554,16 @@ export default function BphCatalogBrowser({
     fetchWorks(initialQ, initialSort, initialKeyword, initialOffset, initialAdv);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Until the reader picks a sort, a search is in Best match and browsing is in
+  // Author A–Z. Once they pick one, it stays, search or not.
+  const sortFor = (q: string) => (sortChosenRef.current ? sort : defaultSortFor(q));
+
   const debouncedSearch = useDebouncedCallback((value: string) => {
+    const s = sortFor(value);
+    setSort(s);
     setOffset(0);
-    fetchWorks(value, sort, keyword, 0, adv);
-    updateUrl(value, sort, keyword, 0, adv);
+    fetchWorks(value, s, keyword, 0, adv);
+    updateUrl(value, s, keyword, 0, adv);
   }, 300);
 
   const handleSearchChange = (value: string) => {
@@ -519,7 +571,50 @@ export default function BphCatalogBrowser({
     debouncedSearch(value);
   };
 
+  const searchFor = (value: string) => {
+    debouncedSearch.cancel();
+    const s = sortFor(value);
+    setSort(s);
+    setSearchQuery(value);
+    setOffset(0);
+    fetchWorks(value, s, keyword, 0, adv);
+    updateUrl(value, s, keyword, 0, adv);
+  };
+
+  // The search becomes the author filter, and the panel opens so the reader can
+  // see what is now applied and take it off.
+  const showAuthor = (author: string) => {
+    debouncedSearch.cancel();
+    const next = { ...adv, author };
+    setAdv(next);
+    setShowAdvanced(true);
+    setSearchQuery('');
+    setOffset(0);
+    fetchWorks('', sort, keyword, 0, next);
+    updateUrl('', sort, keyword, 0, next);
+  };
+
+  const noWorksFound = (
+    <>
+      <p>No works found matching your search.</p>
+      {didYouMean && (
+        <p className="mt-2 text-secondary">
+          Did you mean{' '}
+          <button
+            type="button"
+            onClick={() => searchFor(didYouMean)}
+            className="font-semibold text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
+          >
+            {didYouMean}
+          </button>
+          ?
+        </p>
+      )}
+    </>
+  );
+
   const handleSortChange = (newSort: string) => {
+    sortChosenRef.current = true;
     setSort(newSort);
     setOffset(0);
     fetchWorks(searchQuery, newSort, keyword, 0, adv);
@@ -569,8 +664,10 @@ export default function BphCatalogBrowser({
     setKeyword('');
     setAdv(cleared);
     setOffset(0);
-    fetchWorks('', sort, '', 0, cleared);
-    updateUrl('', sort, '', 0, cleared);
+    const s = sortFor('');
+    setSort(s);
+    fetchWorks('', s, '', 0, cleared);
+    updateUrl('', s, '', 0, cleared);
   };
 
   // When the digitised filter is locked by the parent (Show digitised list view),
@@ -629,7 +726,10 @@ export default function BphCatalogBrowser({
   const detailUrl = (w: { ubn?: string | null; uuid?: string | null } | null | undefined): string | null => {
     const key = w?.ubn || w?.uuid;
     if (!key) return null;
-    return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(key)}`;
+    // /libraries/{slug} has no catalog/[ubn] route: link straight to the
+    // embed record (next.config.ts redirects the old form for indexed links).
+    const base = basePath.startsWith('/libraries/') ? '/embed/bph' : basePath.replace(/\/$/, '');
+    return `${base}/catalog/${encodeURIComponent(key)}`;
   };
 
   // When the parent supplies a results-header slot (the unified shell does
@@ -738,6 +838,7 @@ export default function BphCatalogBrowser({
               aria-label="Sort catalogue"
               className="h-9 text-sm border border-border-light rounded-md pl-2.5 pr-7 bg-white text-secondary hover:bg-warm transition-colors cursor-pointer"
             >
+              {searchQuery.trim().length >= 2 && <option value="relevance">Best match</option>}
               <option value="author">Author A–Z</option>
               <option value="author_desc">Author Z–A</option>
               <option value="title">Title A–Z</option>
@@ -748,6 +849,44 @@ export default function BphCatalogBrowser({
             {resultsHeaderSlot}
           </div>
         </div>
+      )}
+
+      {authorHeadings.length > 0 && (
+        <p className="mb-2 text-sm text-muted">
+          Author:{' '}
+          {authorHeadings.map((item, i) => (
+            <span key={item.author}>
+              {i > 0 && ' · '}
+              <button
+                type="button"
+                onClick={() => showAuthor(item.author)}
+                className="text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
+              >
+                {item.author}
+              </button>{' '}
+              ({item.total.toLocaleString('en-US')})
+            </span>
+          ))}
+        </p>
+      )}
+
+      {seeAlso.length > 0 && (
+        <p className="mb-4 text-sm text-muted">
+          See also:{' '}
+          {seeAlso.map((item, i) => (
+            <span key={item.query}>
+              {i > 0 && ' · '}
+              <button
+                type="button"
+                onClick={() => searchFor(item.query)}
+                className="text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
+              >
+                {item.query}
+              </button>{' '}
+              ({item.total.toLocaleString('en-US')})
+            </span>
+          ))}
+        </p>
       )}
 
       {/* Advanced search panel */}
@@ -1053,7 +1192,7 @@ export default function BphCatalogBrowser({
                 {!loading && works.length === 0 && (
                   <tr>
                     <td colSpan={7} className="px-3 py-12 text-center text-muted">
-                      No works found matching your search.
+                      {noWorksFound}
                     </td>
                   </tr>
                 )}
@@ -1151,7 +1290,7 @@ export default function BphCatalogBrowser({
           ) : (
             !loading && (
               <div className="text-center py-16 text-muted">
-                No works found matching your search.
+                {noWorksFound}
               </div>
             )
           )}

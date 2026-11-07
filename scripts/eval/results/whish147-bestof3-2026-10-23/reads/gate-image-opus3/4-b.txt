@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf reads ഹരിഃശ്രീഗണപത‖യെനമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത, and "ദുഃഖത്ര" is clearly written before യാഭി. B and C both read it. C puts the first ‖ after നമഃ, but the hole actually falls after ഗണപത. A marks the readable "ദുഃഖത്ര" as [illegible].
+
+CHECK | row 5: The leaf reads പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്ത. A and C both match letter for letter. B is wrong: it has "വിളു", "പാദാദ" and many [illegible] gaps.
+
+CHECK | row 9: The leaf reads ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിം‖ഗിപൂൎവ്വകമാപ്തശ്രുതി, and the row ends with a clearly legible "മാപ്തശ്രുതി". Row 10 below it reads ‖പ്രമാണാദ്ധി।. C matches both rows. A cuts row 9 off at പൂൎവ്വക[illegible] and has only [illegible]മാണാദി in row 10. B leaves most of row 9 unread.
+
+PICK | C
+
+RANK | C, A, B
+
+WHY | C matches the strokes in every checked row and reads all the text: A marks readable text [illegible] in rows 1, 9 and 10, and B is mostly gaps with wrong letters; C's only faults are leaving out the verse numbers (൧ etc.) and one misplaced hole marker.

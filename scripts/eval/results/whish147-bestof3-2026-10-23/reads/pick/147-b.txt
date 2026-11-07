@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | Transcription C has recognizable Sāṅkhya wording that fits the context: "prakṛtivividhaḥ sāṃsiddhikaḥ naimittikai…" echoes the threefold division of dispositions in Sāṅkhyakārikā 43, and "pravṛttiḥ", "pañcātmaka" and "saṃskāramātra" also fit. B only partly gets there ("pañjātmaka", "bhāvahetu"), and A is mostly syllables that look like words but don't make sense.

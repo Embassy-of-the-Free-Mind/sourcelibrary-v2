@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A has the most real Sanskrit/Malayalam words fitting the Sāṅkhyakārikā passage on the eightfold, tenfold and eighteenfold bhāvas (e.g. mānuṣyatvam upalabdhyādi, daśavidha, śakti, indriya, tāmisra, ajñāna, khyāti), while C has recurring "nana"-type filler throughout and B is mostly broken syllables with many [illegible] gaps.

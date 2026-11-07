@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. yamātrapadeśavākaṅṅaḻi [illegible] ‖ pākaṅṅaḻiṣṭaṃyogaḥtenanadṛṣṭrupa ‖ nā [illegible] trirupāṇanamuḻvabhṛṅṅa
+2. ityārtthenatravaramā [illegible] ‖ [illegible] ṇattvapāpādaḥnabhyañcekādeśapāṭha ‖ [illegible] kṣiṅṅaḻuṭeparamāṇuttvaṃ
+3. pāntakarālpavattei [illegible] ‖ traedaluṭannā [illegible] nandāñcekkabhibhukramama ‖ ṇenakkaḻoṭolvaṇṇaḥ
+4. terapanamāṇeva ‖ [illegible] ṣmapābhikānaṇṇaṃttadeḻḻū ‖ orabhinnaṅṅaḻanaṇṇaṃbhya
+5. ṇokābhikramapakki ‖ ālañjrupasamakṣipābhikkāna ‖ ṇamittiṣiḻṛpākkayā
+6. bhinaḥṣṛhmalaṭasya ‖ bhinnāśaṃbhiteonavvāpayabhitra ‖ vayavevasthṛparamāṇi
+7. pal̤jainaṅṅaḻukśavalkrū ‖ pāntakarālpakkaḻibhinapākapā ‖ dronākainantyābhikāḥ
+8. ṇataśipapātthipaparama ‖ omāñjrupādikamatitvamitvārtthaḥñantra ‖ jñalādābhitvārtthaḥ [illegible]
+
+TRANSCRIPTION B
+1. yamātrapadanacākṣuṣi ‖ pākṣaññaṣṇaṃdeyāgaḥtena [illegible] ryrupa ‖ nā [illegible] tirūpāṇana [illegible] vadrakṣa
+2. itryarttheṇatravalamāde ‖ śāntyāpāpādakkaḥna [illegible] ścekādedapāda ‖ [illegible] kṣijñaleṭepanamā [illegible]
+3. pāntarebhālpalatteitra ‖ tryaedaleṭanādaśacasanadrāñcekābhiruvamama ‖ ṇanattalleṭolpattoḥ
+4. tetrapanamāṇeva ‖ ṣṇamapābhikāraṇaṃanubhjja ‖ bhindintaiṣyaraṇaṃ [illegible]
+5. ñcekādaśattamapakki ‖ ālañcatrapasamakkipāṣikāra ‖ ṇamittiṣindyapākṣayā
+6. dinaḥ [illegible] iṭasya ‖ ṣindrūgaṃṣidainavavāvayavindra ‖ vayavaivandriyanamāṇi
+7. pākṣaitiñña [illegible] gavaltrapa ‖ trapāntarebhālpattibhitiṣidegavākapābhra ‖ onākkeniścyāṣikāḥ
+8. ñanakṣipāpātthivapaṇama ‖ ṇamāñcetrapādikamakamatindramindrārtthaḥntra ‖ ntrajjalāddāṣintrārtthaḥnti
+
+TRANSCRIPTION C
+1. yamātrapadaśavākṣmira ‖ vākṣekṣṣṭaṃdaiyāgaḥtenadṛṣṭrupa ‖ nāśritrūpāṇanmuḻvantrakṣa
+2. itryārtthenatravavamā [illegible] ‖ ṭhontapāpākṣaḥnaddhyaśekāredanapārakka ‖ kkiṅkiścaphlaiṭeparamāntru
+3. pāntareralparaṅṅaitra ‖ edalaiṭanāāeścanandrāśektābhikramama ‖ śeraṅṅabhaiṭolpaṅṅaḻ
+4. tekrapanamāṇeva ‖ ṅkamapāābhikkāraṇaṃaddeśśu ‖ ṭhannimittābhāvaṇaṃbya
+5. baikkādikramapakṣi ‖ ākaṇṭṛkrapasamakṣipābhikkāra ‖ ṇamittiṣiścapākkayā
+6. dvitīḥbhṛṣṭappuṭasya ‖ bhinnāśaṃbhitainavāpayavinta ‖ vayavepaddhyaparamāṇa
+7. padmentakhyaśavalkrū ‖ pāntareralpaṅṅikkitribhirupākapā ‖ ddhainārainayyābhikāḥ
+8. ñekkipāpātthipapana ‖ māṇṭrapādrukamatrimitrārtthaṃ ‖ nantrajñalādābhitūrtthetri
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

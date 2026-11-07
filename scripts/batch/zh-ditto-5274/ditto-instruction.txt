@@ -1,0 +1,3 @@
+
+
+**Ditto marks (this work).** This dictionary quotes each entry's headword inside its citations as a thin vertical stroke, one stroke per character of the headword. Restore each ditto mark 丨 (U+4E28) where the leaf has one, one per headword character, at its place in the column. Do not expand a mark into the headword, do not leave a gap where one stands, and do not add one where the leaf has none. A column ruling line is not a mark.

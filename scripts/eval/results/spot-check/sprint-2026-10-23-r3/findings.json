@@ -1,0 +1,1298 @@
+[
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6991eac32f801130a473e514",
+    "title": "Del moto e misura dell'acqua",
+    "page": 89,
+    "url": "https://sourcelibrary.org/book/6991eac32f801130a473e514?page=89",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'essa' refers to the larger body of water, which yields when IT has less power; 'the latter' points to the smaller and makes the sentence contradict itself",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6991eac32f801130a473e514",
+    "title": "Del moto e misura dell'acqua",
+    "page": 91,
+    "url": "https://sourcelibrary.org/book/6991eac32f801130a473e514?page=91",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "The OCR's <warning> about truncated text ('Text on the right edge of the page appears to be truncated...') is copied into the translation pane, and an <unclear>of</unclear> tag appears inline in the English",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=39",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "headword misread, which turns 'promotion in rank' into 'high rank'",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=39",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "The 丨丨 marks stand for the headword inside each quotation; dropping them leaves every citation without its key word. The columns are also scrambled: '顏延 / 寔計功量罪 / 之赭白馬賦' interleaves text from two neighbouring columns.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=39",
+    "list": "ocr",
+    "class": "O17",
+    "severity": "moderate",
+    "note": "the headword is split and the second character is moved onto a separate line",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=39",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "粟秩 is 'grain rations', not 'Full Rank'. The source says the horses have grain rations; the clause 'the ruler cannot maintain his position' is invented to complete the sentence.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=39",
+    "list": "tr",
+    "class": "T4",
+    "severity": "serious",
+    "note": "The Lunheng quotation belongs under 卑秩 ('lowly rank'). It is placed under 'Many Ranks', and its point (Zhou and Guan received a LOWLY rank) is lost. From here on the headwords and their citations are shifted one place: Xie Lingyun's 辭滿豈多秩 is filed under 'Gracious Rank'.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=39",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "a fluent rendering of a garbled line; 道樵 is read as 'woodcutter'",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "ocr",
+    "class": "I4",
+    "severity": "moderate",
+    "note": "fragments of the cropped series title are transcribed as content, with a modern simplified 贝",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "every citation is cut at the point where the headword repeats",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "ocr",
+    "class": "O17",
+    "severity": "moderate",
+    "note": "the column order breaks down: a stray 宗 is inserted, and later 'True Rank' is duplicated",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "tr",
+    "class": "T16",
+    "severity": "serious",
+    "note": "'外臣' is the last words of Lu Zhaolin's verse; it is turned into a separate headword, 'Outer Rank', which does not exist",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "about 20 citations end in dangling articles because the headword was dropped; this is incomprehensible to a reader",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "tr",
+    "class": "I4",
+    "severity": "moderate",
+    "note": "garbage from a cropped running head is translated as words",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=40",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "Raw <page-num>One</page-num> and <header>...</header> tags show in the translation text, and every citation source is wrapped in <margin> tags",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c64e339b4508b04e2ae39",
+    "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+    "page": 41,
+    "url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39?page=41",
+    "list": "tr",
+    "class": "T5",
+    "severity": "serious",
+    "note": "A continuation line from the previous page is made into two invented headwords. The real headword 重秩 is dropped, and 'Pure and Clean' is substituted for it inside Xue Tinggui's decree.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a4e422f96ab5938408e6064",
+    "title": "Carmen gratulatorium in natalem domini et salvatoris nostri Jesu Christi, compositum a Paulo donrspergero styro.",
+    "page": 14,
+    "url": "https://sourcelibrary.org/book/6a4e422f96ab5938408e6064?page=14",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "The source gives 3,900 years plus three times twenty (60), a date of 3960 years from Creation for the Nativity. The English multiplies 900 by 3000 and drops 'ter', so the date is wrong.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "695942607d14807348773a98",
+    "title": "Sepher Yetzirah (Book of Formation) - Westcott",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/695942607d14807348773a98?page=4",
+    "list": "tr",
+    "class": "T12",
+    "severity": "moderate",
+    "note": "An English source is 'translated' into paraphrased English. Westcott's own words are replaced ('forsaken' → 'abandoned', 'extended' → 'expanded'), so a reader quoting the English pane misquotes him.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "695942607d14807348773a98",
+    "title": "Sepher Yetzirah (Book of Formation) - Westcott",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/695942607d14807348773a98?page=5",
+    "list": "tr",
+    "class": "T12",
+    "severity": "moderate",
+    "note": "the printed heading is changed",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "695942607d14807348773a98",
+    "title": "Sepher Yetzirah (Book of Formation) - Westcott",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/695942607d14807348773a98?page=5",
+    "list": "tr",
+    "class": "T12",
+    "severity": "moderate",
+    "note": "the whole page is rewritten rather than reproduced",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69de13468a46d0c97eedcde1",
+    "title": "The Pillow-Book of Sei Shōnagon",
+    "page": 70,
+    "url": "https://sourcelibrary.org/book/69de13468a46d0c97eedcde1?page=70",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "The 'translation' is a verbatim echo of the English OCR, and raw <header> and <sig>E</sig> tags show in the translation text",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69de13468a46d0c97eedcde1",
+    "title": "The Pillow-Book of Sei Shōnagon",
+    "page": 72,
+    "url": "https://sourcelibrary.org/book/69de13468a46d0c97eedcde1?page=72",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "Raw <header> and <margin> tags and a bare '67' page number show in the translation text",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "the opening line is replaced with plausible legal Latin that is not on the leaf",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "the first writ on the page is a 'Scias quod convenit' (a concord) writ. The OCR substitutes a generic summons writ, invented in Bracton's register",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "rubric misread: 'extensione' becomes 'arrestatione'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "red rubric misread into a different heading",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "ocr",
+    "class": "O12",
+    "severity": "moderate",
+    "note": "the boxed marginal note is rendered as different text",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "a garbled OCR line ('Bre(ve) n. ad sum(monitionem)') is translated into fluent nonsense with no sign of doubt",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 203,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=203",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "fluent English laid over garbled source; the passage does not say this",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 204,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=204",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "the first column has no initial, and its opening is replaced by a different sentence",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 204,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=204",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the case citation is expanded and partly invented; 'ass. m. a.' (assisa mortis antecessoris) is lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 204,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=204",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the writ openings 'Rex vic' salutem' are read as 'Per vicecomitem' each time; the writ formula is lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 204,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=204",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "an OCR garble is translated literally and then given an invented explanatory note",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 204,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=204",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the writ address ('The King to the sheriff, greeting. Take ...') is lost, following the OCR",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 205,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=205",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "serious",
+    "note": "the date is invented. 'ass. m. a.' (assisa mortis antecessoris) becomes 'ad medium quadragesimae', and the regnal year becomes 'nineteenth'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 205,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=205",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the eyre is misidentified",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69f32e7e876dd827cbc440b5",
+    "title": "De legibus Angliae, ca. 1300",
+    "page": 205,
+    "url": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=205",
+    "list": "tr",
+    "class": "O7",
+    "severity": "serious",
+    "note": "carries an invented date into fluent English",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=58",
+    "list": "ocr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "the block-edge title is misread as an invented marginal string",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=58",
+    "list": "ocr",
+    "class": "O15",
+    "severity": "moderate",
+    "note": "wrong identification of the work",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=58",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "an invented string is translated and then given an invented gloss",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=58",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "Broken markup in the translation: '<margin></margin>' followed by a stray closing '</margin>'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=58",
+    "list": "other",
+    "class": "I7",
+    "severity": "serious",
+    "note": "Book-level identity: the plate is from 題紅記, under a record titled as Ricci's world map",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=59",
+    "list": "ocr",
+    "class": "O12",
+    "severity": "moderate",
+    "note": "main dialogue is tagged as a margin note. 今夜抱着 is dropped, and the name 許夫人 is misread as 查夫人",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=59",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the closing verse is misread and tagged as a margin note",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=59",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the speech is scrambled and partly misread (旅寓 becomes 祿; the order of events is changed)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=59",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "a reading note ('X is pronounced 特') is turned into a person's name",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=59",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "a phonetic gloss is translated character by character into nonsense",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=59",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "mistranslation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 60,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=60",
+    "list": "ocr",
+    "class": "O4",
+    "severity": "serious",
+    "note": "column lines are duplicated and the reading order of the left leaf is scrambled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 60,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=60",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "the visitor's name 鄭文隆 and the exchange around it are dropped",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 60,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=60",
+    "list": "ocr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "lyric tagged as a markdown heading",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 60,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=60",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "the dialogue is rendered as incoherent English that follows the scrambled OCR",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 60,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=60",
+    "list": "other",
+    "class": "T17",
+    "severity": "moderate",
+    "note": "Model commentary inside the reader translation: '<note>The text repeats significantly here due to OCR artifacts.</note>' and '<note>Repeated text: ...</note>'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69af12510092756351e44992",
+    "title": "坤輿萬國全圖 (Complete Map of All Lands)",
+    "page": 60,
+    "url": "https://sourcelibrary.org/book/69af12510092756351e44992?page=60",
+    "list": "other",
+    "class": "O4",
+    "severity": "moderate",
+    "note": "Lines duplicated in the translation ('...disturbing your noble father. Small Male: At that time, was the top scholar just...? Clown: It is exactly.' twice)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69b65c6a18b87551bfd147c0",
+    "title": "De iureiurando theses XL",
+    "page": 2,
+    "url": "https://sourcelibrary.org/book/69b65c6a18b87551bfd147c0?page=2",
+    "list": "ocr",
+    "class": "I4",
+    "severity": "moderate",
+    "note": "show-through misread as a heading",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69b65c6a18b87551bfd147c0",
+    "title": "De iureiurando theses XL",
+    "page": 2,
+    "url": "https://sourcelibrary.org/book/69b65c6a18b87551bfd147c0?page=2",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "an invented motto is translated on a blank page",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69b65c6a18b87551bfd147c0",
+    "title": "De iureiurando theses XL",
+    "page": 2,
+    "url": "https://sourcelibrary.org/book/69b65c6a18b87551bfd147c0?page=2",
+    "list": "other",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "A blank page with bleed-through is presented as a titled page with a 'printer's mark' summary",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69b65c6a18b87551bfd147c0",
+    "title": "De iureiurando theses XL",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/69b65c6a18b87551bfd147c0?page=4",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'patronus' here is the patron of a freedman (paired with parents), not an advocate",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 24,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=24",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'passing pleasures' becomes 'absent pleasures'; the meaning changes and is carried into the translation",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 24,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=24",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Cicero's Paradoxa misread",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 24,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=24",
+    "list": "tr",
+    "class": "T9",
+    "severity": "moderate",
+    "note": "the opening line of the page is dropped",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 24,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=24",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "the invented note gives the wrong work (it is the Paradoxa Stoicorum)",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the abbreviation for 'Unde' is read as 'Dn̄i' about ten times",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'duo' is misread as 'dno'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'Cato' becomes 'La to'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'Unde' (hence) is rendered as 'Master' throughout",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "this should read 'the author rebukes two vices'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "tr",
+    "class": "T3",
+    "severity": "moderate",
+    "note": "the page's own opening sentence is hidden inside a meta wrapper with a false 'continues from previous page' label, and 'Second duty' is dropped",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=25",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "an invented note hides that the quotation is from Cato's Distichs",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 26,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=26",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'Eer' (before) is misread as 'Ler' (teach); the meaning changes",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "69dbcbe11040d1d5e20bb1e5",
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German verse translation]. Preceded by: Vita Senecae",
+    "page": 26,
+    "url": "https://sourcelibrary.org/book/69dbcbe11040d1d5e20bb1e5?page=26",
+    "list": "tr",
+    "class": "T5",
+    "severity": "moderate",
+    "note": "the translation runs past the page's last word and supplies text that is not on this leaf",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r3",
+    "frame": "public",
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "page": 12,
+    "url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee?page=12",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "昃 (slanting sun) is misread as 是",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  }
+]

@@ -1,0 +1,15 @@
+I could not reliably read any of this leaf. I opened all four images and can see the layout clearly: there are 12 written rows. Rows 1–4 and 9–12 run the full width. Rows 5–8 are shorter and are interrupted at the two string holes. There is also a single mark in the right margin beside row 6, possibly a leaf number. But at this resolution I can't identify the individual letters, ligatures or reph-dots with any confidence. I recognise some letter shapes, but anything I wrote down would be a guess, and in places it would really be memory of the text. You asked me not to do that, so every row is marked illegible rather than filled in.
+
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | Layout established (12 rows, 1–4 and 9–12 full width, 5–8 broken at both holes) but no text could be read with confidence at this resolution; closer, higher-resolution crops of each column (around 2–3× the current scale) would make a real character-by-character transcription possible.

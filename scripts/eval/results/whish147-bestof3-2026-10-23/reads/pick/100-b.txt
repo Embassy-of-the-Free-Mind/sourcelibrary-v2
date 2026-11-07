@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions mark every segment of all 12 rows as [illegible], so there is no text to compare, and this ranking is just the listed order, not a judgment of quality.

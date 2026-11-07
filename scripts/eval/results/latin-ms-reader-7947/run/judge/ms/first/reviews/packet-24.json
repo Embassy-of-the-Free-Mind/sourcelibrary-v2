@@ -1,0 +1,190 @@
+[
+ {
+  "book_id": "b24-k", "slot": 1, "title": "Liber Piccatriciae", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 117, "right_page": "yes", "ocr_score": 3,
+    "ocr_errors": [
+     {"ocr": "et quomodo opera fiani per las.", "image": "et quomodo opera fiant per eas.", "problem": "two words of the heading misread", "severity": "moderate"},
+     {"ocr": "Radix Scientia\nmagica", "image": "Radix Scientiæ magicæ", "problem": "case endings lost", "severity": "minor"},
+     {"ocr": "habento ... quam habet in Res,\nCum istud opus", "image": "habente ... quam haberit in Res, Tum istud opus", "problem": "several misreads; 'Cum' for 'Tum' changes the clause structure", "severity": "moderate"},
+     {"ocr": "eveniet verius et\nmagis cogitatus", "image": "eveniet veracius et magis cognitum (MS 'cognitum'-like)", "problem": "'cogitatus' (thought) for 'cognitum' (known)", "severity": "moderate"},
+     {"ocr": "qua virtute ... quo quasi quid operantur ... similitudine natura", "image": "quæ virtute ... quæ quasi quid operantur ... similitudine naturæ", "problem": "relative pronouns and case endings misread", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [
+     {"note": "A <margin> block of 24 lines ('naturalis / quemadmodum / finibus, qui / annulis, ...') is the line-ends of the FACING page visible at the left edge of the photograph, transcribed as if it were this page's marginalia", "severity": "serious", "class": "I4"}
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 233, "right_page": "yes", "ocr_score": 3,
+    "ocr_errors": [
+     {"ocr": "breviter compleatur, 223.\n\nDico tibi", "image": "breviter compleatur, [223. as page number] / Et dico tibi", "problem": "folio number moved into the text line; opening 'Et' dropped", "severity": "minor"},
+     {"ocr": "diligenter inspiciens", "image": "diligenter suspiciens", "problem": "misread", "severity": "minor"},
+     {"ocr": "effectu comprobator", "image": "effectu comprobatos", "problem": "ending misread", "severity": "minor"},
+     {"ocr": "quod 224 praecesserunt", "image": "quod 224 prædecesserunt", "problem": "word misread", "severity": "minor"},
+     {"ocr": "tamquam flos ex librum eorumdem", "image": "tanquam flos et Librum Eorumdem", "problem": "'et' read as 'ex', changes the construction", "severity": "moderate"},
+     {"ocr": "secundum opinionem veterum et ut subjungatur", "image": "secundum opinionem veterum est ut subjungatur", "problem": "'est' read as 'et', breaks the sentence", "severity": "moderate"},
+     {"ocr": "ipsi planetae proprie appropriatas", "image": "ipsi planetæ, et proprie appropriatas", "problem": "'et' dropped", "severity": "minor"},
+     {"ocr": "illius planetae appropriato", "image": "illius planetæ appropriatæ", "problem": "ending misread", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [
+     {"note": "margin note 'N3.' (or 'NB.') beside 'scribendo in tantum' dropped", "severity": "minor"}
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 347, "right_page": "yes", "ocr_score": 3,
+    "ocr_errors": [
+     {"ocr": "duum aliorum hominum", "image": "Trium aliorum hominum (first letters read as 'Tr')", "problem": "number of men whose blood is used probably misread (three → two)", "severity": "moderate", "class": "O7"},
+     {"ocr": "Recipe sudorem tuum et pilum bene mundum", "image": "℞ Sudorem tuum et pelvim bene mundam", "problem": "'pelvim' (basin) read as 'pilum' (hair)", "severity": "moderate"},
+     {"ocr": "ibidem ponas seraphis\nquos sunt sub suis pedibus", "image": "ibidem ponas de rasuris quæ sunt sub tuis pedibus", "problem": "'de rasuris' (scrapings) read as 'seraphis' (seraphim); 'tuis' as 'suis' — the ingredient becomes angels", "severity": "moderate", "class": "O6"},
+     {"ocr": "cui ad bibendum dederis diligenter.", "image": "cui ad bibendum dederis diliget te", "problem": "'diliget te' (will love you) — the point of the charm — read as the adverb 'diligenter'", "severity": "serious", "class": "O6"},
+     {"ocr": "quando D est\ncum O ... cum Q ... quando D est O O", "image": "quando ☽ est cum ☉ ... cum ♀ ... quando ☽ est ☍/☌ ☉", "problem": "astrological symbols (Moon, Sun, Venus, aspect) garbled into Latin letters D, O, Q; the timing of the operation is unreadable", "severity": "serious", "class": "O10"},
+     {"ocr": "et dependentur", "image": "et deperdentur", "problem": "misread", "severity": "minor"},
+     {"ocr": "ego multo id probantes vidi ... vulvo mulieris ... ita ut teneas", "image": "ego multos id probantes vidi ... vulvæ mulieris ... ita ut teneat", "problem": "endings misread", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Main text is broadly followed but with frequent misreadings; p.117 imports two dozen line-ends of the facing page as 'margin', and p.347 garbles the astrological symbols and turns 'diliget te' into 'diligenter', losing what the recipe is for."
+ },
+ {
+  "book_id": "b24-m", "slot": 2, "title": "Liber Piccatriciae", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 117, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "Et cujus maneriei possint haberi", "image": "Et cujus maneri possint haberi", "problem": "normalised spelling", "severity": "minor", "class": "O8"},
+     {"ocr": "ex eo effectu aliter", "image": "ex eo effecta aliter", "problem": "ending misread", "severity": "minor"},
+     {"ocr": "illa operatio erit manifestior", "image": "illa operatio est manifestior", "problem": "verb misread", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [
+     {"note": "chapter heading rendered as markdown '#' / '###' headings", "severity": "minor"}
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 233, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "223 dico tibi charissime Lector", "image": "Et dico tibi charissime Lector", "problem": "the 'Et' ligature is read as the page number 223, which enters the running text", "severity": "moderate", "class": "O11"},
+     {"ocr": "Primum opus est ut naturam planetarum cognoscas", "image": "naturam planetæ cognoscas", "problem": "singular planet made plural", "severity": "minor"},
+     {"ocr": "ipsi planetae proprie appropriatas", "image": "ipsi planetæ, et proprie appropriatas", "problem": "'et' dropped", "severity": "minor"},
+     {"ocr": "illius planetae appropriatus ... scilicet ut utetur ex cibis", "image": "illius planetæ appropriatæ ... scilicet ut abetur ex cibis", "problem": "endings misread; 'abetur' normalised to 'utetur'", "severity": "minor", "class": "O8"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 347, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "eamque calefacie et ad\nignem", "image": "eamque calefacies ad ignem", "problem": "misread", "severity": "minor"},
+     {"ocr": "ibidem ponas seraperis\nquos sumes sub tuis pedibus", "image": "ibidem ponas de rasuris quæ sunt sub tuis pedibus", "problem": "'de rasuris' (scrapings) misread as a non-word; 'quæ sunt' as 'quos sumes'", "severity": "moderate", "class": "O6"},
+     {"ocr": "aquam cumqua lavant", "image": "aquam cum qua lavant", "problem": "word division", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A close, reliable reading of all three pages, astrological symbols included; slips are mostly endings, except the 'Et' read as '223' on p.233 and the garbled 'de rasuris' on p.347."
+ },
+ {
+  "book_id": "b24-r", "slot": 3, "title": "Liber Piccatriciae", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 117, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "Et cujus manerie possint haberi", "image": "Et cujus maneri possint haberi", "problem": "normalised", "severity": "minor"},
+     {"ocr": "ex eo effectu aliter", "image": "ex eo effecta aliter", "problem": "ending misread", "severity": "minor"},
+     {"ocr": "qua virtute specifica ... quo quasi quid operantur", "image": "quæ virtute specifica ... quæ quasi quid operantur", "problem": "relative pronoun misread", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 233, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "breviter complectatur", "image": "breviter compleatur", "problem": "different verb", "severity": "minor"},
+     {"ocr": "hic liber pervenerit", "image": "hic Liber perveniet", "problem": "normalised tense", "severity": "minor", "class": "O8"},
+     {"ocr": "componi sapientiam antiquorum Libros", "image": "componi Sapientum antiquorum Libros", "problem": "'Sapientum' (of the sages) read as 'sapientiam' (wisdom), breaking the phrase 'books of the ancient sages'", "severity": "moderate", "class": "O6"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [
+     {"note": "margin note 'N3.' (or 'NB.') beside 'scribendo in tantum' dropped", "severity": "minor"}
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 347, "right_page": "yes", "ocr_score": 3,
+    "ocr_errors": [
+     {"ocr": "duum aliorum hominum", "image": "Trium aliorum hominum (first letters read as 'Tr')", "problem": "number probably misread (three → two)", "severity": "moderate", "class": "O7"},
+     {"ocr": "Recipe sudorem tuum et pilum bene mundum", "image": "℞ Sudorem tuum et pelvim bene mundam", "problem": "'pelvim' (basin) read as 'pilum' (hair)", "severity": "moderate"},
+     {"ocr": "ibidem ponas seraphis\nquos sunt sub suis pedibus", "image": "ibidem ponas de rasuris quæ sunt sub tuis pedibus", "problem": "'de rasuris' (scrapings) read as 'seraphis'; 'tuis' as 'suis'", "severity": "moderate", "class": "O6"},
+     {"ocr": "cui ad bibendum dederis diligenter.", "image": "cui ad bibendum dederis diliget te", "problem": "'diliget te' (will love you) read as 'diligenter'; the charm's purpose is lost", "severity": "serious", "class": "O6"},
+     {"ocr": "quando D est\ncum O ... cum Q ... quando D est O O", "image": "quando ☽ est cum ☉ ... cum ♀ ... quando ☽ est ☍/☌ ☉", "problem": "astrological symbols garbled into Latin letters", "severity": "serious", "class": "O10"},
+     {"ocr": "et dependentur", "image": "et deperdentur", "problem": "misread", "severity": "minor"},
+     {"ocr": "ego multo id ... vulvo mulieris ... ita ut teneas", "image": "ego multos id ... vulvæ mulieris ... ita ut teneat", "problem": "endings misread", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Good on pp.117 and 233, but p.347 garbles the Moon/Sun/Venus symbols into letters and turns 'diliget te' into 'diligenter', so the recipe's timing and purpose are lost."
+ },
+ {
+  "book_id": "b24-t", "slot": 4, "title": "Liber Piccatriciae", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 117, "right_page": "yes", "ocr_score": 5,
+    "ocr_errors": [
+     {"ocr": "quibus assimilatur cholera", "image": "quibus adsimilatur cholera", "problem": "spelling normalised", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [
+     {"note": "<term> tags inline around 'scamonea' and 'choleram'", "severity": "minor"}
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 233, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "magno studio magnoque Labore composui Sapientum", "image": "magno studio magnaque Labore componi Sapientum", "problem": "'componi' normalised to 'composui' (anticipating the later 'hunc composui')", "severity": "moderate", "class": "O8"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 347, "right_page": "yes", "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "sanguine <unclear>duorum</unclear> aliorum hominum <unclear>sanguine</unclear> calefacies", "image": "sanguine Trium aliorum hominum eamque calefacies", "problem": "number probably misread (marked unclear); 'eamque' replaced by a repeated 'sanguine'", "severity": "moderate", "class": "O7"},
+     {"ocr": "Etiam caro et ossa combusta", "image": "Etiam caro de ossa combusta", "problem": "normalised", "severity": "minor"},
+     {"ocr": "teneat <unclear>q.</unclear>", "image": "teneat g.", "problem": "abbreviation uncertain", "severity": "minor"}
+    ],
+    "tr_score": null, "tr_errors": [],
+    "other": [
+     {"note": "<meta> block describing pencil marks and facing-page text sits in the transcription; a reader would see it if the tag is not hidden", "severity": "minor", "class": "O15"}
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "The best of the four readings: the text is right nearly throughout, including 'de rasuris', 'diliget te' and the symbols. The slips are 'composui' for 'componi' and the doubtful 'duorum … sanguine' on p.347."
+ }
+]

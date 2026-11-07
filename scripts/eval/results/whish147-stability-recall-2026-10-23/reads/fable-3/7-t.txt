@@ -1,0 +1,10 @@
+ROW 1 | ശെഷാണാംവ്യപി।ന്ധാ ‖ ലക്ഷണം പൃത്തൃഖന്യതൈഖാടപരു ‖ നാമാഭാഷാമാഭകമ
+ROW 2 | ശാബ്ദൎഭഃപ്രാണാദ്യാവ ‖ ായവിലെഷ।ഡ്ലൃഗാവഛതുത്തൃയന്യതൃതൃ ‖ വൃത്തിഃക്രമശശകന്യതൃത്തൃ
+ROW 3 | ഷ്ടാടഠത്തെതഡാദ്ര ‖ ടെഠദ്രൃക്രഖന്യഠക്ക[illegible]കൃഭ്രണികാ ‖ വൃത്തി।ഹന്ധാംന്ധാൃ
+ROW 4 | മൃപളുമന്തപര ‖ ജഠാക്രകംഠൈഹഭ്രകംദൃക്കം ‖ പൃത്തഷാത്തൃഖപര
+ROW 5 | ഹഗന്യൈകൈഠഡി ‖ ക്കഠാന്തഠഠൈകക്കഠണ[illegible]।ന്നഃക ‖ നഖംക്രത്തൊടശവി
+ROW 6 | ധഃഠടാഹരണ ‖ കരണക്രകാശകരംകാൃ ‖ ഖതന്യൊഠശധാഹാ
+ROW 7 | [illegible]ംധാ[illegible]ംപ്രക ‖ ൃഗുഖാന്തഃഠകന്തഃകരണൈഠ ‖ വിധംടശാബാഹാ
+ROW 8 | ത്തൃകയന്ദാവിക്കയാൃം ‖ സസാംക്രത്തകാലി[illegible]കാഹംക്കഠാ ‖ ൃഉന്തരംകരണുഷ്ണൃ
+ROW 9 | ടിൃയാഠികതെഖാം ‖ ഒഖവിതൈഖാവിശൈകവിഷഠാണാ ‖ ൃകാടകത്തശൃവിഷല
+NOTE | Nine rows; rows 1–2 and 8–9 run full width, rows 3–7 sit between the holes (row 3 also crosses the second hole). Roughly half the glyphs are confidently read; the inner rows 3–7 and several ligatures (ന്ധ/ന്ത, ക്ക/ത്ത, ഠ/ദ, loop-shaped ു/ൃ signs) are uncertain at this image resolution.

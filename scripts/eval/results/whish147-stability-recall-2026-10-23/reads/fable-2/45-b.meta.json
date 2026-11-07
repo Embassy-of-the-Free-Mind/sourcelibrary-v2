@@ -1,0 +1,44 @@
+{
+ "stage": "fable-2",
+ "id": "45-b",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-fable-5-1",
+ "model_requested": "fable",
+ "cli": "claude",
+ "started_at": "2026-10-23T07:02:07.643Z",
+ "finished_at": "2026-10-23T07:13:59.483Z",
+ "secs": 712,
+ "prompt_hash": "ef836994a6f1e9ca",
+ "prompt_file": "reads/prompts/ef836994a6f1e9ca.txt",
+ "images": [
+  {
+   "crop": "45-b-1.jpg",
+   "bytes": 384124,
+   "sha256": "d8e2c842d98674309f7b2f61d6d19ebce885e8df7412c02b2b62fd18541060a7"
+  },
+  {
+   "crop": "45-b-2.jpg",
+   "bytes": 265708,
+   "sha256": "10d67cd1fa65726714557f2abce142667f00281a39a6e5d9d2c0f9c09028be99"
+  },
+  {
+   "crop": "45-b-3.jpg",
+   "bytes": 272177,
+   "sha256": "ba49a11b42e63951c28f4459a18eae7c90f14a8c5ce5d6fc8f12828cf5e881a2"
+  },
+  {
+   "crop": "45-b-4.jpg",
+   "bytes": 341207,
+   "sha256": "be649f173eb8d59e8124fcba992371a091684d6819a402053a1d1d3d74e64097"
+  }
+ ],
+ "usage": {
+  "input": 34,
+  "output": 57836,
+  "cache_read": 10717,
+  "cache_creation": 9543,
+  "turns": 5,
+  "list_cost_usd": 3.08567925
+ }
+}

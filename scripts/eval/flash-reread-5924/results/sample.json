@@ -1,0 +1,1887 @@
+{
+ "seed": 51023,
+ "frame_n": 2656,
+ "checked": 39,
+ "rejected": {
+  "not_lite": 24,
+  "text_french": 1
+ },
+ "candidates": [
+  "69dc557bcb6f7429748b8d13",
+  "69b51e67768235dc65992a5f",
+  "69b51e18efd8df28f2db058d",
+  "69b51eba47b06ecd581960d3",
+  "69c81aed6c6f3cc53c849851",
+  "69bd9d726120d54bd0376d18",
+  "69b51e7f9a81ef7feb3d64c8",
+  "69af0a0a4c57359b8d2d0f49",
+  "69b638be1c1c21a373839d77",
+  "69bd9d056120d54bd0372a3a",
+  "69b51e71768235dc65993773",
+  "69b51ecfcf111105c42a44a2",
+  "69b655e318b87551bfcd9c00",
+  "6a205564bf38605d952c547c"
+ ],
+ "books": [
+  {
+   "book_id": "69dc557bcb6f7429748b8d13",
+   "title": "Problemata (Text beginning: Omnes homines). Add: De vita et morte Aristotelis",
+   "author": "Aristoteles",
+   "year": 1500,
+   "pages_count": 108,
+   "lite_share": 1,
+   "eligible": 88,
+   "pages": [
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p11",
+     "page_id": "69dc557bcb6f7429748b8d1e",
+     "page_number": 11,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:13:54.998Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p15",
+     "page_id": "69dc557bcb6f7429748b8d22",
+     "page_number": 15,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:13:59.271Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p18",
+     "page_id": "69dc557bcb6f7429748b8d25",
+     "page_number": 18,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:14:04.064Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p22",
+     "page_id": "69dc557bcb6f7429748b8d29",
+     "page_number": 22,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:14:11.979Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p25",
+     "page_id": "69dc557bcb6f7429748b8d2c",
+     "page_number": 25,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:14:11.362Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p29",
+     "page_id": "69dc557bcb6f7429748b8d30",
+     "page_number": 29,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:18.359Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p32",
+     "page_id": "69dc557bcb6f7429748b8d33",
+     "page_number": 32,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:25.083Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p36",
+     "page_id": "69dc557bcb6f7429748b8d37",
+     "page_number": 36,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:30.586Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p39",
+     "page_id": "69dc557bcb6f7429748b8d3a",
+     "page_number": 39,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:31.326Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p43",
+     "page_id": "69dc557bcb6f7429748b8d3e",
+     "page_number": 43,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:38.782Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p46",
+     "page_id": "69dc557bcb6f7429748b8d41",
+     "page_number": 46,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:45.161Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p50",
+     "page_id": "69dc557bcb6f7429748b8d45",
+     "page_number": 50,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-17T13:16:47.810Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p54",
+     "page_id": "69dc557bcb6f7429748b8d49",
+     "page_number": 54,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p57",
+     "page_id": "69dc557bcb6f7429748b8d4c",
+     "page_number": 57,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p61",
+     "page_id": "69dc557bcb6f7429748b8d50",
+     "page_number": 61,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p64",
+     "page_id": "69dc557bcb6f7429748b8d53",
+     "page_number": 64,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p68",
+     "page_id": "69dc557bcb6f7429748b8d57",
+     "page_number": 68,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p71",
+     "page_id": "69dc557bcb6f7429748b8d5a",
+     "page_number": 71,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p75",
+     "page_id": "69dc557bcb6f7429748b8d5e",
+     "page_number": 75,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p78",
+     "page_id": "69dc557bcb6f7429748b8d61",
+     "page_number": 78,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p82",
+     "page_id": "69dc557bcb6f7429748b8d65",
+     "page_number": 82,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p85",
+     "page_id": "69dc557bcb6f7429748b8d68",
+     "page_number": 85,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p89",
+     "page_id": "69dc557bcb6f7429748b8d6c",
+     "page_number": 89,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p92",
+     "page_id": "69dc557bcb6f7429748b8d6f",
+     "page_number": 92,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    },
+    {
+     "slug": "69dc557bcb6f7429748b8d13-p96",
+     "page_id": "69dc557bcb6f7429748b8d73",
+     "page_number": 96,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T18:56:17.754Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e67768235dc65992a5f",
+   "title": "Confessio catholica. 1",
+   "author": "Gerhard, Johann",
+   "year": 1661,
+   "pages_count": 774,
+   "lite_share": 0.966,
+   "eligible": 744,
+   "pages": [
+    {
+     "slug": "69b51e67768235dc65992a5f-p40",
+     "page_id": "69b51e67768235dc65992a87",
+     "page_number": 40,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-14T03:35:52.028Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p70",
+     "page_id": "69b51e67768235dc65992aa5",
+     "page_number": 70,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-19T16:24:11.631Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p100",
+     "page_id": "69b51e67768235dc65992ac3",
+     "page_number": 100,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p131",
+     "page_id": "69b51e67768235dc65992ae2",
+     "page_number": 131,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p160",
+     "page_id": "69b51e67768235dc65992aff",
+     "page_number": 160,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p190",
+     "page_id": "69b51e67768235dc65992b1d",
+     "page_number": 190,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p220",
+     "page_id": "69b51e67768235dc65992b3b",
+     "page_number": 220,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p250",
+     "page_id": "69b51e67768235dc65992b59",
+     "page_number": 250,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p279",
+     "page_id": "69b51e67768235dc65992b76",
+     "page_number": 279,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p309",
+     "page_id": "69b51e67768235dc65992b94",
+     "page_number": 309,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p339",
+     "page_id": "69b51e67768235dc65992bb2",
+     "page_number": 339,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p369",
+     "page_id": "69b51e67768235dc65992bd0",
+     "page_number": 369,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p399",
+     "page_id": "69b51e67768235dc65992bee",
+     "page_number": 399,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p428",
+     "page_id": "69b51e67768235dc65992c0b",
+     "page_number": 428,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p460",
+     "page_id": "69b51e67768235dc65992c2b",
+     "page_number": 460,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p490",
+     "page_id": "69b51e67768235dc65992c49",
+     "page_number": 490,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p520",
+     "page_id": "69b51e67768235dc65992c67",
+     "page_number": 520,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p549",
+     "page_id": "69b51e67768235dc65992c84",
+     "page_number": 549,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p579",
+     "page_id": "69b51e67768235dc65992ca2",
+     "page_number": 579,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p609",
+     "page_id": "69b51e67768235dc65992cc0",
+     "page_number": 609,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p639",
+     "page_id": "69b51e67768235dc65992cde",
+     "page_number": 639,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p668",
+     "page_id": "69b51e67768235dc65992cfb",
+     "page_number": 668,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p698",
+     "page_id": "69b51e67768235dc65992d19",
+     "page_number": 698,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p728",
+     "page_id": "69b51e67768235dc65992d37",
+     "page_number": 728,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    },
+    {
+     "slug": "69b51e67768235dc65992a5f-p760",
+     "page_id": "69b51e67768235dc65992d57",
+     "page_number": 760,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T04:00:17.626Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e18efd8df28f2db058d",
+   "title": "Pymander Mercvrii Trismegisti : Cum Commento Fratris Hannibalis Rosseli Calabri, Ordinis Minorvm Regvlaris obseruanti\u00e6, Theologi\u00e6 & Philosop",
+   "author": "Hermes, Trismegistus, ca. 2./4. Jh.",
+   "year": 1586,
+   "pages_count": 472,
+   "lite_share": 0.947,
+   "eligible": 443,
+   "pages": [
+    {
+     "slug": "69b51e18efd8df28f2db058d-p34",
+     "page_id": "69b51e18efd8df28f2db05af",
+     "page_number": 34,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:24:34.582Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p52",
+     "page_id": "69b51e18efd8df28f2db05c1",
+     "page_number": 52,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:26:20.510Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p70",
+     "page_id": "69b51e18efd8df28f2db05d3",
+     "page_number": 70,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:26:47.813Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p88",
+     "page_id": "69b51e18efd8df28f2db05e5",
+     "page_number": 88,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:30:43.057Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p105",
+     "page_id": "69b51e18efd8df28f2db05f6",
+     "page_number": 105,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:32:21.341Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p123",
+     "page_id": "69b51e18efd8df28f2db0608",
+     "page_number": 123,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:32:51.846Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p141",
+     "page_id": "69b51e18efd8df28f2db061a",
+     "page_number": 141,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:36:42.227Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p158",
+     "page_id": "69b51e18efd8df28f2db062b",
+     "page_number": 158,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:40:27.806Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p176",
+     "page_id": "69b51e18efd8df28f2db063d",
+     "page_number": 176,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:44:20.084Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p194",
+     "page_id": "69b51e18efd8df28f2db064f",
+     "page_number": 194,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:44:45.696Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p212",
+     "page_id": "69b51e18efd8df28f2db0661",
+     "page_number": 212,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:48:40.299Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p229",
+     "page_id": "69b51e18efd8df28f2db0672",
+     "page_number": 229,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:52:23.749Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p247",
+     "page_id": "69b51e18efd8df28f2db0684",
+     "page_number": 247,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:52:53.693Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p265",
+     "page_id": "69b51e18efd8df28f2db0696",
+     "page_number": 265,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T16:56:33.352Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p282",
+     "page_id": "69b51e18efd8df28f2db06a7",
+     "page_number": 282,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:00:33.932Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p300",
+     "page_id": "69b51e18efd8df28f2db06b9",
+     "page_number": 300,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:00:57.570Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p318",
+     "page_id": "69b51e18efd8df28f2db06cb",
+     "page_number": 318,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:04:43.596Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p336",
+     "page_id": "69b51e18efd8df28f2db06dd",
+     "page_number": 336,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:08:36.393Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p353",
+     "page_id": "69b51e18efd8df28f2db06ee",
+     "page_number": 353,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:12:17.754Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p371",
+     "page_id": "69b51e18efd8df28f2db0700",
+     "page_number": 371,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:12:48.378Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p389",
+     "page_id": "69b51e18efd8df28f2db0712",
+     "page_number": 389,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:16:34.100Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p406",
+     "page_id": "69b51e18efd8df28f2db0723",
+     "page_number": 406,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:20:25.557Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p424",
+     "page_id": "69b51e18efd8df28f2db0735",
+     "page_number": 424,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:20:47.284Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p442",
+     "page_id": "69b51e18efd8df28f2db0747",
+     "page_number": 442,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:22:43.976Z"
+    },
+    {
+     "slug": "69b51e18efd8df28f2db058d-p460",
+     "page_id": "69b51e18efd8df28f2db0759",
+     "page_number": 460,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-22T17:26:26.305Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51eba47b06ecd581960d3",
+   "title": "Sebastiani Foxij Morzilli Hispalensis, in Platonis Timaeum Commentarij : Acce\u00dfit locuples rerum & uerborum in ijsdem memorabilium Index",
+   "author": "Morcillo, Sebasti\u00e1n Fox",
+   "year": 1554,
+   "pages_count": 272,
+   "lite_share": 0.904,
+   "eligible": 231,
+   "pages": [
+    {
+     "slug": "69b51eba47b06ecd581960d3-p30",
+     "page_id": "69b51eba47b06ecd581960f1",
+     "page_number": 30,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p39",
+     "page_id": "69b51eba47b06ecd581960fa",
+     "page_number": 39,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p49",
+     "page_id": "69b51eba47b06ecd58196104",
+     "page_number": 49,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p58",
+     "page_id": "69b51eba47b06ecd5819610d",
+     "page_number": 58,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p67",
+     "page_id": "69b51eba47b06ecd58196116",
+     "page_number": 67,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p76",
+     "page_id": "69b51eba47b06ecd5819611f",
+     "page_number": 76,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p86",
+     "page_id": "69b51eba47b06ecd58196129",
+     "page_number": 86,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p95",
+     "page_id": "69b51eba47b06ecd58196132",
+     "page_number": 95,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p104",
+     "page_id": "69b51eba47b06ecd5819613b",
+     "page_number": 104,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p113",
+     "page_id": "69b51eba47b06ecd58196144",
+     "page_number": 113,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p123",
+     "page_id": "69b51eba47b06ecd5819614e",
+     "page_number": 123,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p132",
+     "page_id": "69b51eba47b06ecd58196157",
+     "page_number": 132,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p141",
+     "page_id": "69b51eba47b06ecd58196160",
+     "page_number": 141,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p151",
+     "page_id": "69b51eba47b06ecd5819616a",
+     "page_number": 151,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p160",
+     "page_id": "69b51eba47b06ecd58196173",
+     "page_number": 160,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p170",
+     "page_id": "69b51eba47b06ecd5819617d",
+     "page_number": 170,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p179",
+     "page_id": "69b51eba47b06ecd58196186",
+     "page_number": 179,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p188",
+     "page_id": "69b51eba47b06ecd5819618f",
+     "page_number": 188,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p197",
+     "page_id": "69b51eba47b06ecd58196198",
+     "page_number": 197,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p207",
+     "page_id": "69b51eba47b06ecd581961a2",
+     "page_number": 207,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p216",
+     "page_id": "69b51eba47b06ecd581961ab",
+     "page_number": 216,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p225",
+     "page_id": "69b51eba47b06ecd581961b4",
+     "page_number": 225,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p234",
+     "page_id": "69b51eba47b06ecd581961bd",
+     "page_number": 234,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p244",
+     "page_id": "69b51eba47b06ecd581961c7",
+     "page_number": 244,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    },
+    {
+     "slug": "69b51eba47b06ecd581960d3-p253",
+     "page_id": "69b51eba47b06ecd581961d0",
+     "page_number": 253,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-02T02:27:24.741Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69c81aed6c6f3cc53c849851",
+   "title": "Fides et ratio collatae",
+   "author": "Poiret, Pierre",
+   "year": 1708,
+   "pages_count": 664,
+   "lite_share": 0.962,
+   "eligible": 469,
+   "pages": [
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p44",
+     "page_id": "69c837c0f609d035727f6bb2",
+     "page_number": 44,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.895Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p93",
+     "page_id": "69c81b0f6c6f3cc53c8498a1",
+     "page_number": 93,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.895Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p111",
+     "page_id": "69c81b5a6c6f3cc53c849956",
+     "page_number": 111,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:02:18.773Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p130",
+     "page_id": "69c837d8f609d035727f6bdd",
+     "page_number": 130,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:02:18.773Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p149",
+     "page_id": "69c81b266c6f3cc53c8498d7",
+     "page_number": 149,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:02:18.773Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p168",
+     "page_id": "69c837e3f609d035727f6bf0",
+     "page_number": 168,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:02:18.773Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p186",
+     "page_id": "69c837e8f609d035727f6bf9",
+     "page_number": 186,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:40:28.632Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p205",
+     "page_id": "69c81b3f6c6f3cc53c84990d",
+     "page_number": 205,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:40:28.632Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p224",
+     "page_id": "69c837f4f609d035727f6c0c",
+     "page_number": 224,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:40:28.632Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p243",
+     "page_id": "69c81b566c6f3cc53c849947",
+     "page_number": 243,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:40:28.632Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p261",
+     "page_id": "69c81b656c6f3cc53c849970",
+     "page_number": 261,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.984Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p280",
+     "page_id": "69c83805f609d035727f6c28",
+     "page_number": 280,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.984Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p303",
+     "page_id": "69c81b786c6f3cc53c8499a1",
+     "page_number": 303,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.984Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p322",
+     "page_id": "69c83811f609d035727f6c3d",
+     "page_number": 322,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.984Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p344",
+     "page_id": "69c83818f609d035727f6c48",
+     "page_number": 344,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.847Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p362",
+     "page_id": "69c8381df609d035727f6c51",
+     "page_number": 362,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.847Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p381",
+     "page_id": "69c81b946c6f3cc53c8499e4",
+     "page_number": 381,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:36.847Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p413",
+     "page_id": "69c81ba26c6f3cc53c849a04",
+     "page_number": 413,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.235Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p432",
+     "page_id": "69c83831f609d035727f6c74",
+     "page_number": 432,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.235Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p450",
+     "page_id": "69c83836f609d035727f6c7d",
+     "page_number": 450,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.235Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p469",
+     "page_id": "69c81bb46c6f3cc53c849a31",
+     "page_number": 469,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.235Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p488",
+     "page_id": "69c83841f609d035727f6c90",
+     "page_number": 488,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.174Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p507",
+     "page_id": "69c81bc76c6f3cc53c849a61",
+     "page_number": 507,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.174Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p525",
+     "page_id": "69c81bd06c6f3cc53c849a77",
+     "page_number": 525,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-06T22:23:50.174Z"
+    },
+    {
+     "slug": "69c81aed6c6f3cc53c849851-p544",
+     "page_id": "69c83851f609d035727f6cac",
+     "page_number": 544,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-09T14:11:21.438Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69bd9d726120d54bd0376d18",
+   "title": "Alberti Magni, de secretis mulierum libellus, scholiis auctus, &amp; a mendis repurgatus : eiusdem de virtutibus herbarum, lapidum, et anima",
+   "author": "Albertus",
+   "year": 1598,
+   "pages_count": 398,
+   "lite_share": 1,
+   "eligible": 378,
+   "pages": [
+    {
+     "slug": "69bd9d726120d54bd0376d18-p14",
+     "page_id": "69bd9d726120d54bd0376d26",
+     "page_number": 14,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-19T04:28:32.795Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p29",
+     "page_id": "69bd9d726120d54bd0376d35",
+     "page_number": 29,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-19T12:54:08.422Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p44",
+     "page_id": "69bd9d726120d54bd0376d44",
+     "page_number": 44,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-19T12:54:20.636Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p59",
+     "page_id": "69bd9d726120d54bd0376d53",
+     "page_number": 59,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p75",
+     "page_id": "69bd9d726120d54bd0376d63",
+     "page_number": 75,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p90",
+     "page_id": "69bd9d726120d54bd0376d72",
+     "page_number": 90,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p105",
+     "page_id": "69bd9d726120d54bd0376d81",
+     "page_number": 105,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p120",
+     "page_id": "69bd9d726120d54bd0376d90",
+     "page_number": 120,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p135",
+     "page_id": "69bd9d726120d54bd0376d9f",
+     "page_number": 135,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p150",
+     "page_id": "69bd9d726120d54bd0376dae",
+     "page_number": 150,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p165",
+     "page_id": "69bd9d726120d54bd0376dbd",
+     "page_number": 165,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p180",
+     "page_id": "69bd9d726120d54bd0376dcc",
+     "page_number": 180,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p196",
+     "page_id": "69bd9d726120d54bd0376ddc",
+     "page_number": 196,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p211",
+     "page_id": "69bd9d726120d54bd0376deb",
+     "page_number": 211,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p226",
+     "page_id": "69bd9d726120d54bd0376dfa",
+     "page_number": 226,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p241",
+     "page_id": "69bd9d726120d54bd0376e09",
+     "page_number": 241,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p256",
+     "page_id": "69bd9d726120d54bd0376e18",
+     "page_number": 256,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p271",
+     "page_id": "69bd9d726120d54bd0376e27",
+     "page_number": 271,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p286",
+     "page_id": "69bd9d726120d54bd0376e36",
+     "page_number": 286,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p301",
+     "page_id": "69bd9d726120d54bd0376e45",
+     "page_number": 301,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p316",
+     "page_id": "69bd9d726120d54bd0376e54",
+     "page_number": 316,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p332",
+     "page_id": "69bd9d726120d54bd0376e64",
+     "page_number": 332,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p347",
+     "page_id": "69bd9d726120d54bd0376e73",
+     "page_number": 347,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p362",
+     "page_id": "69bd9d726120d54bd0376e82",
+     "page_number": 362,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    },
+    {
+     "slug": "69bd9d726120d54bd0376d18-p377",
+     "page_id": "69bd9d726120d54bd0376e91",
+     "page_number": 377,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T15:12:16.724Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e7f9a81ef7feb3d64c8",
+   "title": "Trithemius sui ipsius vindex : sine Steganographiae admodum rever. ... ; Ex ipso fere Trithemio collecta & publici juris facta ; Autore ... ",
+   "author": "Sigismundus, Abbot of Seon",
+   "year": 1616,
+   "pages_count": 278,
+   "lite_share": 0.91,
+   "eligible": 237,
+   "pages": [
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p30",
+     "page_id": "69b51e7f9a81ef7feb3d64e6",
+     "page_number": 30,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p40",
+     "page_id": "69b51e7f9a81ef7feb3d64f0",
+     "page_number": 40,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p49",
+     "page_id": "69b51e7f9a81ef7feb3d64f9",
+     "page_number": 49,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p59",
+     "page_id": "69b51e7f9a81ef7feb3d6503",
+     "page_number": 59,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p68",
+     "page_id": "69b51e7f9a81ef7feb3d650c",
+     "page_number": 68,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p78",
+     "page_id": "69b51e7f9a81ef7feb3d6516",
+     "page_number": 78,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p88",
+     "page_id": "69b51e7f9a81ef7feb3d6520",
+     "page_number": 88,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p98",
+     "page_id": "69b51e7f9a81ef7feb3d652a",
+     "page_number": 98,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p107",
+     "page_id": "69b51e7f9a81ef7feb3d6533",
+     "page_number": 107,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p117",
+     "page_id": "69b51e7f9a81ef7feb3d653d",
+     "page_number": 117,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p126",
+     "page_id": "69b51e7f9a81ef7feb3d6546",
+     "page_number": 126,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p137",
+     "page_id": "69b51e7f9a81ef7feb3d6551",
+     "page_number": 137,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p148",
+     "page_id": "69b51e7f9a81ef7feb3d655c",
+     "page_number": 148,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p162",
+     "page_id": "69b51e7f9a81ef7feb3d656a",
+     "page_number": 162,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p172",
+     "page_id": "69b51e7f9a81ef7feb3d6574",
+     "page_number": 172,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p181",
+     "page_id": "69b51e7f9a81ef7feb3d657d",
+     "page_number": 181,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p191",
+     "page_id": "69b51e7f9a81ef7feb3d6587",
+     "page_number": 191,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p200",
+     "page_id": "69b51e7f9a81ef7feb3d6590",
+     "page_number": 200,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p210",
+     "page_id": "69b51e7f9a81ef7feb3d659a",
+     "page_number": 210,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p219",
+     "page_id": "69b51e7f9a81ef7feb3d65a3",
+     "page_number": 219,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p229",
+     "page_id": "69b51e7f9a81ef7feb3d65ad",
+     "page_number": 229,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p238",
+     "page_id": "69b51e7f9a81ef7feb3d65b6",
+     "page_number": 238,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p248",
+     "page_id": "69b51e7f9a81ef7feb3d65c0",
+     "page_number": 248,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p257",
+     "page_id": "69b51e7f9a81ef7feb3d65c9",
+     "page_number": 257,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    },
+    {
+     "slug": "69b51e7f9a81ef7feb3d64c8-p267",
+     "page_id": "69b51e7f9a81ef7feb3d65d3",
+     "page_number": 267,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-04T23:39:37.084Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69af0a0a4c57359b8d2d0f49",
+   "title": "Arithmologia sive De abditis numerorum mysteriis",
+   "author": "Athanasius Kircher",
+   "year": 1665,
+   "pages_count": 349,
+   "lite_share": 1,
+   "eligible": 306,
+   "pages": [
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p22",
+     "page_id": "69af0a0a4c57359b8d2d0f5f",
+     "page_number": 22,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-13T19:44:11.630Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p35",
+     "page_id": "69af0a0a4c57359b8d2d0f6c",
+     "page_number": 35,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p47",
+     "page_id": "69af0a0a4c57359b8d2d0f78",
+     "page_number": 47,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p60",
+     "page_id": "69af0a0a4c57359b8d2d0f85",
+     "page_number": 60,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p73",
+     "page_id": "69af0a0a4c57359b8d2d0f92",
+     "page_number": 73,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p85",
+     "page_id": "69af0a0a4c57359b8d2d0f9e",
+     "page_number": 85,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p99",
+     "page_id": "69af0a0a4c57359b8d2d0fac",
+     "page_number": 99,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p116",
+     "page_id": "69af0a0a4c57359b8d2d0fbd",
+     "page_number": 116,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p129",
+     "page_id": "69af0a0a4c57359b8d2d0fca",
+     "page_number": 129,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p141",
+     "page_id": "69af0a0a4c57359b8d2d0fd6",
+     "page_number": 141,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p153",
+     "page_id": "69af0a0a4c57359b8d2d0fe2",
+     "page_number": 153,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p167",
+     "page_id": "69af0a0a4c57359b8d2d0ff0",
+     "page_number": 167,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p180",
+     "page_id": "69af0a0a4c57359b8d2d0ffd",
+     "page_number": 180,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p192",
+     "page_id": "69af0a0a4c57359b8d2d1009",
+     "page_number": 192,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p205",
+     "page_id": "69af0a0a4c57359b8d2d1016",
+     "page_number": 205,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p217",
+     "page_id": "69af0a0a4c57359b8d2d1022",
+     "page_number": 217,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p229",
+     "page_id": "69af0a0a4c57359b8d2d102e",
+     "page_number": 229,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p242",
+     "page_id": "69af0a0a4c57359b8d2d103b",
+     "page_number": 242,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p254",
+     "page_id": "69af0a0a4c57359b8d2d1047",
+     "page_number": 254,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p266",
+     "page_id": "69af0a0a4c57359b8d2d1053",
+     "page_number": 266,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p279",
+     "page_id": "69af0a0a4c57359b8d2d1060",
+     "page_number": 279,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p292",
+     "page_id": "69af0a0a4c57359b8d2d106d",
+     "page_number": 292,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p304",
+     "page_id": "69af0a0a4c57359b8d2d1079",
+     "page_number": 304,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p316",
+     "page_id": "69af0a0a4c57359b8d2d1085",
+     "page_number": 316,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    },
+    {
+     "slug": "69af0a0a4c57359b8d2d0f49-p330",
+     "page_id": "69af0a0a4c57359b8d2d1093",
+     "page_number": 330,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-24T23:28:13.685Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69b638be1c1c21a373839d77",
+   "title": "Opera nuper in lucem prodeuntia : Liber gratie spiritualis visionum & revelationum beate Methildis virginis devotissime ad fidelium instruct",
+   "author": "Mechthild",
+   "year": 1522,
+   "pages_count": 341,
+   "lite_share": 1,
+   "eligible": 333,
+   "pages": [
+    {
+     "slug": "69b638be1c1c21a373839d77-p14",
+     "page_id": "69b638be1c1c21a373839d85",
+     "page_number": 14,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-10T10:43:05.232Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p27",
+     "page_id": "69b638be1c1c21a373839d92",
+     "page_number": 27,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:02:09.185Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p41",
+     "page_id": "69b638be1c1c21a373839da0",
+     "page_number": 41,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:02:26.574Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p54",
+     "page_id": "69b638be1c1c21a373839dad",
+     "page_number": 54,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p67",
+     "page_id": "69b638be1c1c21a373839dba",
+     "page_number": 67,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p81",
+     "page_id": "69b638be1c1c21a373839dc8",
+     "page_number": 81,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p94",
+     "page_id": "69b638be1c1c21a373839dd5",
+     "page_number": 94,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p107",
+     "page_id": "69b638be1c1c21a373839de2",
+     "page_number": 107,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p121",
+     "page_id": "69b638be1c1c21a373839df0",
+     "page_number": 121,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p134",
+     "page_id": "69b638be1c1c21a373839dfd",
+     "page_number": 134,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p147",
+     "page_id": "69b638be1c1c21a373839e0a",
+     "page_number": 147,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p161",
+     "page_id": "69b638be1c1c21a373839e18",
+     "page_number": 161,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p174",
+     "page_id": "69b638be1c1c21a373839e25",
+     "page_number": 174,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p187",
+     "page_id": "69b638be1c1c21a373839e32",
+     "page_number": 187,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p201",
+     "page_id": "69b638be1c1c21a373839e40",
+     "page_number": 201,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p214",
+     "page_id": "69b638be1c1c21a373839e4d",
+     "page_number": 214,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p227",
+     "page_id": "69b638be1c1c21a373839e5a",
+     "page_number": 227,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p241",
+     "page_id": "69b638be1c1c21a373839e68",
+     "page_number": 241,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p254",
+     "page_id": "69b638be1c1c21a373839e75",
+     "page_number": 254,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p267",
+     "page_id": "69b638be1c1c21a373839e82",
+     "page_number": 267,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p281",
+     "page_id": "69b638be1c1c21a373839e90",
+     "page_number": 281,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p294",
+     "page_id": "69b638be1c1c21a373839e9d",
+     "page_number": 294,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.418Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p307",
+     "page_id": "69b638be1c1c21a373839eaa",
+     "page_number": 307,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.374Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p321",
+     "page_id": "69b638be1c1c21a373839eb8",
+     "page_number": 321,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.374Z"
+    },
+    {
+     "slug": "69b638be1c1c21a373839d77-p334",
+     "page_id": "69b638be1c1c21a373839ec5",
+     "page_number": 334,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T10:36:10.374Z"
+    }
+   ]
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "title": "Verae alchemiae artisque metallicae, citra aenigmata, doctrina certusque modus, scriptis tum novis tum veteribus nunc primum &amp; fideliter",
+   "author": "Grataroli, Guglielmo",
+   "year": 1561,
+   "pages_count": 579,
+   "lite_share": 1,
+   "eligible": 563,
+   "pages": [
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p25",
+     "page_id": "69bd9d056120d54bd0372a53",
+     "page_number": 25,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-20T06:04:18.067Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p47",
+     "page_id": "69bd9d056120d54bd0372a69",
+     "page_number": 47,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-20T06:05:15.031Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p70",
+     "page_id": "69bd9d056120d54bd0372a80",
+     "page_number": 70,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p92",
+     "page_id": "69bd9d056120d54bd0372a96",
+     "page_number": 92,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p115",
+     "page_id": "69bd9d056120d54bd0372aad",
+     "page_number": 115,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p137",
+     "page_id": "69bd9d056120d54bd0372ac3",
+     "page_number": 137,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p160",
+     "page_id": "69bd9d056120d54bd0372ada",
+     "page_number": 160,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p182",
+     "page_id": "69bd9d056120d54bd0372af0",
+     "page_number": 182,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p205",
+     "page_id": "69bd9d056120d54bd0372b07",
+     "page_number": 205,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p227",
+     "page_id": "69bd9d056120d54bd0372b1d",
+     "page_number": 227,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p250",
+     "page_id": "69bd9d056120d54bd0372b34",
+     "page_number": 250,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p272",
+     "page_id": "69bd9d056120d54bd0372b4a",
+     "page_number": 272,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p295",
+     "page_id": "69bd9d056120d54bd0372b61",
+     "page_number": 295,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p318",
+     "page_id": "69bd9d056120d54bd0372b78",
+     "page_number": 318,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p340",
+     "page_id": "69bd9d056120d54bd0372b8e",
+     "page_number": 340,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p363",
+     "page_id": "69bd9d056120d54bd0372ba5",
+     "page_number": 363,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p385",
+     "page_id": "69bd9d056120d54bd0372bbb",
+     "page_number": 385,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p408",
+     "page_id": "69bd9d056120d54bd0372bd2",
+     "page_number": 408,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p430",
+     "page_id": "69bd9d056120d54bd0372be8",
+     "page_number": 430,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p453",
+     "page_id": "69bd9d056120d54bd0372bff",
+     "page_number": 453,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p475",
+     "page_id": "69bd9d056120d54bd0372c15",
+     "page_number": 475,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p498",
+     "page_id": "69bd9d056120d54bd0372c2c",
+     "page_number": 498,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p520",
+     "page_id": "69bd9d056120d54bd0372c42",
+     "page_number": 520,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p543",
+     "page_id": "69bd9d056120d54bd0372c59",
+     "page_number": 543,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    },
+    {
+     "slug": "69bd9d056120d54bd0372a3a-p565",
+     "page_id": "69bd9d056120d54bd0372c6f",
+     "page_number": 565,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-01T04:12:07.528Z"
+    }
+   ]
+  }
+ ]
+}

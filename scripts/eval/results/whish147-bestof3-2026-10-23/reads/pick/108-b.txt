@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C is the only one that keeps the real Sāṅkhyakārikā 46–47 vocabulary intact (viparyaya-aśakti-tuṣṭi-siddhi, "pratyayasargādānam āha", "pañcāśad bhedāḥ", "parasparam abhibhūtāḥ"), whereas A drops much of that terminology into near-words and B is mostly garbled syllables.

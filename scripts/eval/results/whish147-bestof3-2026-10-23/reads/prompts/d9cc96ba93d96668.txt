@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. tri [illegible] kaimoviṣāma ‖ māpratyakṣabhogyacālgrāhyatvaṃviṣayaḥ [illegible] ‖ [illegible] pradhānamakhi [illegible] sāmānyaṃ [illegible]
+2. kkara [illegible] puruṣa [illegible] kāyaṭe ‖ bhogyārkkamahadādi [illegible] tvālkāryapradhānamavi ‖ vi [illegible] cana [illegible] kkaṃsukhadu
+3. [illegible] kirahita [illegible] ‖ cakitvālkā [illegible] kāpradhānamavi ‖ prasavadharmmiprasa
+4. vāya [illegible] ntra [illegible] ‖ prasavadharmmi [illegible] kkatāpradhāna ‖ mavila [illegible] viśrasa
+5. vayarmmi [illegible] ṃkutāca ‖ prayānādayavivā [illegible] lmahade [illegible] ‖ kāriva [illegible] di [illegible]
+6. [illegible] driyādya ‖ ya [illegible] āvara [illegible] ādyākkādyakka ‖ [illegible] ve [illegible] tvaṃ [illegible]
+7. [illegible] ketudādi ‖ ṃpuruṣasyavā [illegible] kṣitvāhatadi ‖ caritaṅṅaḻ [illegible]
+8. ḻṛkkā [illegible] ṃkaika ‖ ttilyamekṣi [illegible] lakṣaṇame [illegible] ‖ [illegible]
+9. [illegible] kairu ‖ tu [illegible] kkaṃ [illegible] vātuma [illegible] lyākkaṃpuruṣa [illegible] ‖ [illegible] māl [illegible]
+
+TRANSCRIPTION B
+1. tri [illegible] vidyāma ‖ āpratyakṣabhogyatvālvyaktaṃviṣayaḥ [illegible] ‖ pradhānamapisāmānyaṃpra
+2. [illegible] ṭe ‖ bhogyatvā [illegible] tathāpradhānamapi ‖ [illegible] cetanaṃvyaktaṃsukhadu [illegible]
+3. [illegible] ‖ [illegible] tvāl [illegible] pradhānamapi ‖ prasavadharmmi [illegible] prasa
+4. vā [illegible] ‖ prasavadharmmi [illegible] kaḻepradhāna ‖ mavi [illegible]
+5. va [illegible] tvaṃ [illegible] ‖ pradhāna [illegible] ‖ kāraṇatvā [illegible]
+6. [illegible] ‖ [illegible] tvāl [illegible] ‖ [illegible] vairūpyaṃ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ ttil [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+
+TRANSCRIPTION C
+1. tri [illegible] veṭṭomovidyāma ‖ āpratyakṣabhogyakhyācālkhyrakṣaṃvikkayoḥke ‖ āḥpradhānamavisahamānāṃpra [illegible]
+2. kkarasthvapra [illegible] kṣoyaṭe ‖ ogyakhyārmmaḻeddāntiṃ [illegible] viṣalkamāpradhānamavi ‖ macatānvyaktaṃsūṣaddu
+3. camiraharaṇaceda ‖ ṣakitralḥkā [illegible] kāmāpradhānamavi ‖ prasavadharmmiprasava
+4. vāyamermmāsyāntri [illegible] ‖ prasavadharmmiprā [illegible] nkkamakāpradhāna ‖ mavilābhonavitrusa
+5. vayarmmitvaṃkramāca ‖ prayānādvahā [illegible] lmaṭha [illegible] ñāṃ ‖ kāraṇatrādibhoḥḍa
+6. bhraṣarmmājñāddāna ‖ dharmmatvālvai [illegible] śrāvyaktāvyakta ‖ yoādaivśruṣyāṃḥsā
+7. śruṣlakeṣamāmi ‖ ṃpratyakṣasyavā [illegible] cākṣitroṣāḥtampi ‖ catikṣkkamācaprakrā
+8. jñakātryāṃtaika ‖ ttilyamermma [illegible] rmmiṣakkaṇodṛdṛścaḥ ‖ [illegible] ṭetraddaiṣṇvaeteṣuābhāle
+9. ñceteḻkkatitairu ‖ dyrarkkaṃṣaḍvatuma [illegible] madaplākkaṃprakraṣanā ‖ āvyāvitumāltraṣāl
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -113,7 +113,7 @@ async function main() {
   // they finish fast; the loop is also restartable via --after.
   async function processBook(bookId) {
     const cursor = db.collection('pages')
-      .find({ book_id: bookId }, { projection: { _id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } });
+      .find({ book_id: bookId }, { projection: { _id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } }).batchSize(1000);
     let batch = [];
     for await (const page of cursor) {
       if (LIMIT && scanned >= LIMIT) break;

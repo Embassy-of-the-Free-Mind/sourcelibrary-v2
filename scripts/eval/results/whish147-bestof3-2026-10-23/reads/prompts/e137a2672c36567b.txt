@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ginaṃdṛṣṭacāśrāvevyaṇāviviruketenanānyaṭadityairmitvikavaiṣārmmyāgamakatvaṃśa
+2. osaṃkheñcasābesvāñcasakṣaḥtentra [illegible] ṣvāṣvāmisaṃkheyāyālaghānājñyarakṣaṇe
+3. deṅṅādāmilndrattu ‖ kekṣaṇṇanājñānājñāvāppa ‖ ttyaḥevaṃprakṛti
+4. vikārasaṃkhe ‖ svāryadrāle [illegible] lavasakkeṭṭaḥyā ‖ ṣyāsthānesaṃkhe
+5. svāmyamāyeṇa ‖ caṇḍeyyāḥlāruvaratrikasa ‖ ṃkhesyāyamāha
+6. ppūrtivijña ‖ jñenanyādasāmpicchāsaṃkhe ‖ nyāsyāprācarimp
+7. dakeyāḥpra ‖ bhicandasaṃjujenāyamāriḍi ‖ otāntīññāyeṟe
+8. tekkasyadāvevallādadavaḥprakṛtiyeketānnimittaṃkel̤ikkālaṃbonyāyalakha
+9. ṃreṭṭāññeṭṭāḻalitejūṟiṭiṣiddhāṃbārairanyāmprīviyamalamānaṃprama
+
+TRANSCRIPTION B
+1. ṃginaṃdraṣṭāśrutārevyṛṇāmiviruddhamena ‖ nānyaṭamitvamikṣikakhādṛṣṭāgamakalpanāḥkha ‖ [illegible]
+2. rasaṃkheñasābandhyātthāsakṣaḥtendra ‖ [illegible] ṣṭāmisaṃbandhāyāgyabhānājñyatameba ‖ [illegible]
+3. āṭañādāmilvṛtta ‖ lakṣaṇanājñānājñāpavāpya ‖ ṛdṛṣṭaḥevaṃprakri
+4. vikārasaṃkhe ‖ nyākhyātāvalavasakkuāḥthā ‖ ścāraṇasaṃkhe
+5. jhākhyātāyena ‖ caṇṭeyoḥvākyavṛttikasa ‖ ṃkhyeyāyābhi
+6. pṛṣṭhamivijña ‖ jñatabhāḥsānniddhyasaṃkha ‖ enyākhyātācṛv
+7. ekayoḥu ‖ ścampisaṃñcanyāyabhāgri ‖ tokṣeyāda
+8. trikkasyābhāvegu ‖ āṭāvaḥprakṛtiyakatanimittakaiba ‖ glikkasaṃbandhādiṣa
+9. ṃreṭṭātraiṭṭādu ‖ laimendriyeaubhrasthaṃbaindya ‖ sthiyamaṇḍamānaṃpramā
+
+TRANSCRIPTION C
+1. ṃginaṃdṛṣṭvā [illegible] belvṛ ‖ ṇāvidhiruktenānyadṛṣṭamiti ‖ krikaraṇā [illegible] gamakkāṃḍa
+2. bhasāṃkhye [illegible] sābesu ‖ ndhāñcāsaṅkḥ [illegible] ṣyāmisaṃbendhā ‖ yā [illegible] nājñya [illegible] kṣe
+3. [illegible] jñādomilnyuta ‖ lakṣaṇanājñānājñāvāvya ‖ [illegible] ḥevaṃpravṛtti
+4. vikaraṇasāṃkhye ‖ [illegible] vavasakkāḥ [illegible] ‖ [illegible] raṇesāṃkhye
+5. [illegible] yena ‖ cakrave [illegible] ḥvātravaddikka [illegible] ‖ ṃkhyesākhya [illegible]
+6. [illegible] vijña ‖ jñe [illegible] ḥsādiccaścsāṃkhye ‖ [illegible] pattiv
+7. [illegible] kayoḥpra ‖ trya [illegible] saṃ [illegible] yābhyāmiti ‖ [illegible]
+8. [illegible] dāntevadra ‖ [illegible] pratyakṣetenanimittanai [illegible] ‖ [illegible] kkara [illegible]
+9. [illegible] ddātrai [illegible] ‖ [illegible] diti [illegible] ‖ [illegible] viyamaṇmamānaṃpramā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -4,6 +4,7 @@ import { READABLE_IN_ENGLISH_OR } from '@/lib/books-catalog';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getReadDb } from '@/lib/mongodb';
 import { translationPercent } from '@/lib/translation-completeness';
+import { publicUrl } from '@/lib/public-origin';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
 
   // Text search still needs Atlas Search — redirect to the MongoDB endpoint
   if (search.trim() || workFrom || workTo) {
-    const url = new URL('/api/books/library', request.url);
+    const url = publicUrl('/api/books/library', request);
     url.search = searchParams.toString();
     return NextResponse.redirect(url, 307);
   }
@@ -46,7 +47,7 @@ export async function GET(request: NextRequest) {
   // Tenant-scoped requests: Supabase has no tenant_id column — proxy to MongoDB
   const { slug: tenantSlug } = getTenantContextFromRequest(request);
   if (tenantSlug) {
-    const url = new URL('/api/books/library', request.url);
+    const url = publicUrl('/api/books/library', request);
     url.search = searchParams.toString();
     url.searchParams.set('tenant_slug', tenantSlug);
     return NextResponse.redirect(url, 307);
@@ -54,8 +55,11 @@ export async function GET(request: NextRequest) {
 
   try {
     // Build query
+    // The first-translation list reads one edition per work (view books_catalog_ft_works, migration
+    // 20261029120000): 385 works showed 2+ editions. Not with a language filter — a work's lead edition
+    // may be in another language, and the view would then hide it from that language's list.
     let query = supabase
-      .from('books_catalog')
+      .from(firstTranslation && !language ? 'books_catalog_ft_works' : 'books_catalog')
       .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, is_first_translation, last_translation_at, quality_score', { count: 'exact' })
       .eq('visible', true)
       .gt('pages_count', 0);

@@ -49,6 +49,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
+import { assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { rereadVerdict, storedLoops, decide } from '../lib/reread-verdict.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -137,7 +138,7 @@ async function plan() {
   const skipped = { notFound: ids.length - books.length, humanEdited: 0, alreadyUnreadable: 0, noImage: 0 };
   for (const b of books) {
     const cur = db.collection('pages').find({ book_id: b.id },
-      { projection: { id: 1, page_number: 1, photo: 1, display_photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, crop: 1, 'ocr.data': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.unreadable': 1 } });
+      { projection: { id: 1, page_number: 1, photo: 1, display_photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, crop: 1, 'ocr.data': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.unreadable': 1 } }).batchSize(1000);
     for await (const p of cur) {
       const why = storedLoops(p.ocr?.data);
       if (!why) continue;
@@ -159,6 +160,8 @@ async function submit() {
   const pass = Number(arg('pass'));
   const approved = Number(arg('approved-usd'));
   if (!PASSES[pass]) throw new Error('--pass=1|2');
+  // #7075: pass 2 is Flash, which no longer runs on the paid API; its pages go to the agy CLI lane.
+  assertApiOcrModel(PASSES[pass].model, CALL_SITE);
   if (!(approved > 0)) throw new Error('submit needs --approved-usd (the ceiling this run may spend)');
   const s = load();
   // Resumable: a page already in one of this pass's jobs is not sent again.

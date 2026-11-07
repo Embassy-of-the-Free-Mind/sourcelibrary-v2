@@ -1,0 +1,11 @@
+ROW 1 | ത്രിഗുണമവിവെകി‖വിഷയസ്സാമാന്യമചെതനംപ്രസവ‖ധൎമ്മിവ്യക്തന്തഥാപ്രധ
+ROW 2 | ാനന്തദ്വിപരീതസ്ത‖ഥാചപുമാൻ൧൧പ്രീത്യപ്രീതിവി‖ഷാദാത്മകാഃപ്രകാശ
+ROW 3 | പ്രവൃത്തിനിയമാ‖ൎത്ഥാഃഅന്യൊന്യാഭിഭവാശ്രയ‖ജനനമിഥുനവൃത്തയശ്ച
+ROW 4 | ഗുണാഃ൧൨സത്വം‖ലഘുപ്രകാശകമിഷ്ടമുപഷ്ടംഭ‖കഞ്ചലഞ്ചരജഃ
+ROW 5 | ഗുരുവരണകമെ‖വതമഃപ്രദീപവച്ചാൎത്ഥ‖തൊവൃത്തിഃ൧൩[illegible]
+ROW 6 | അവിവെക്യാദെഃ‖സിദ്ധിസ്ത്രൈഗുണ്യാത്തദ്വിപൎയ്യ‖യാഭാവാൽകാ
+ROW 7 | രണഗുണാത്മക‖ത്വാൽകാൎയ്യസ്യാവ്യക്തമപി‖സിദ്ധം൧൪ഭെദാ
+ROW 8 | നാംപരിമാണാ‖ത്സമന്വയാച്ഛക്തിതഃപ്രവൃത്തെ‖ശ്ചകാരണകാൎയ്യവിഭാ
+ROW 9 | ഗാദവിഭാഗാദ്വൈ‖ശ്വരൂപ്യസ്യ൧൫കാരണമസ്ത്യവ്യക്തംപ്ര‖വൎത്തതെത്രിഗുണതസ്സ
+ROW 10 | മുദയാച്ചപരിണാ‖മതസ്സലിലവൽപ്രതിപ്രതിഗുണാശ്രയ‖വിശെഷാൽ൧൬സംഘാ
+NOTE | All ten rows read nearly in full; the leaf carries only verse text with Malayalam verse-numerals (൧൧–൧൬) whose exact digit shapes are cursive and partly uncertain, the ഷ at the start of row 2 right column sits under the string, and one trailing glyph at the end of row 5 is unreadable.

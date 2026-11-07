@@ -1,0 +1,3002 @@
+{
+ "issue": 6101,
+ "prereg": "scripts/eval/PREREGISTRATION-paddle-split-6101.md",
+ "scored": "2026-10-23",
+ "scoring": "benchmark-score.mjs, Han only, CBETA fitted to the page; every arm through the #6101 nolabel filter; empty read = CER 1.0",
+ "all": {
+  "n": 198,
+  "n_books": 54,
+  "arms": {
+   "P0": {
+    "engine": "paddleocr-vl-1.6",
+    "median_cer": 0.067,
+    "median_cer_ci95": [
+     0.062,
+     0.078
+    ],
+    "catastrophic": 28,
+    "catastrophic_rate": 0.141,
+    "catastrophic_ci95": [
+     0.1,
+     0.197
+    ],
+    "invention_ref_median": 0.151,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": 0.006,
+     "ci95": [
+      -0.002,
+      0.013
+     ],
+     "wlt": [
+      86,
+      107,
+      5
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.016,
+     "ci95": [
+      0.013,
+      0.021
+     ],
+     "wlt": [
+      48,
+      143,
+      7
+     ]
+    }
+   },
+   "L": {
+    "engine": "gemini-3.1-flash-lite",
+    "median_cer": 0.067,
+    "median_cer_ci95": [
+     0.06,
+     0.085
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.015,
+    "catastrophic_ci95": [
+     0.005,
+     0.044
+    ],
+    "invention_ref_median": 0.152,
+    "loops": 2,
+    "delta_vs_F": {
+     "median": 0.017,
+     "ci95": [
+      0.013,
+      0.024
+     ],
+     "wlt": [
+      31,
+      160,
+      7
+     ]
+    }
+   },
+   "F": {
+    "engine": "gemini-3-flash-preview",
+    "median_cer": 0.052,
+    "median_cer_ci95": [
+     0.045,
+     0.06
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.019
+    ],
+    "invention_ref_median": 0.12,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": -0.017,
+     "ci95": [
+      -0.024,
+      -0.013
+     ],
+     "wlt": [
+      160,
+      31,
+      7
+     ]
+    }
+   },
+   "P1": {
+    "engine": "paddle-split-p1",
+    "median_cer": 0.061,
+    "median_cer_ci95": [
+     0.054,
+     0.068
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.015,
+    "catastrophic_ci95": [
+     0.005,
+     0.044
+    ],
+    "invention_ref_median": 0.149,
+    "loops": 2,
+    "delta_vs_L": {
+     "median": -0.014,
+     "ci95": [
+      -0.02,
+      -0.003
+     ],
+     "wlt": [
+      121,
+      73,
+      4
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.006,
+     "ci95": [
+      0.002,
+      0.01
+     ],
+     "wlt": [
+      71,
+      117,
+      10
+     ]
+    }
+   },
+   "P2": {
+    "engine": "paddle-split-p2",
+    "median_cer": 0.076,
+    "median_cer_ci95": [
+     0.068,
+     0.088
+    ],
+    "catastrophic": 4,
+    "catastrophic_rate": 0.02,
+    "catastrophic_ci95": [
+     0.008,
+     0.051
+    ],
+    "invention_ref_median": 0.157,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": 0.005,
+     "ci95": [
+      -0.009,
+      0.017
+     ],
+     "wlt": [
+      89,
+      106,
+      3
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.021,
+     "ci95": [
+      0.01,
+      0.03
+     ],
+     "wlt": [
+      50,
+      143,
+      5
+     ]
+    }
+   },
+   "P1d": {
+    "engine": "paddle-split-p1-dedup",
+    "median_cer": 0.059,
+    "median_cer_ci95": [
+     0.054,
+     0.066
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.015,
+    "catastrophic_ci95": [
+     0.005,
+     0.044
+    ],
+    "invention_ref_median": 0.149,
+    "loops": 2,
+    "delta_vs_L": {
+     "median": -0.014,
+     "ci95": [
+      -0.02,
+      -0.003
+     ],
+     "wlt": [
+      121,
+      73,
+      4
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.005,
+     "ci95": [
+      0.001,
+      0.01
+     ],
+     "wlt": [
+      72,
+      115,
+      11
+     ]
+    }
+   },
+   "P1s": {
+    "engine": "paddle-split-p1-server",
+    "median_cer": 0.06,
+    "median_cer_ci95": [
+     0.054,
+     0.066
+    ],
+    "catastrophic": 4,
+    "catastrophic_rate": 0.02,
+    "catastrophic_ci95": [
+     0.008,
+     0.051
+    ],
+    "invention_ref_median": 0.15,
+    "loops": 3,
+    "delta_vs_L": {
+     "median": -0.01,
+     "ci95": [
+      -0.019,
+      -0.003
+     ],
+     "wlt": [
+      120,
+      71,
+      7
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.007,
+     "ci95": [
+      0.003,
+      0.011
+     ],
+     "wlt": [
+      67,
+      121,
+      10
+     ]
+    }
+   }
+  }
+ },
+ "woodblock": {
+  "n": 172,
+  "n_books": 47,
+  "arms": {
+   "P0": {
+    "engine": "paddleocr-vl-1.6",
+    "median_cer": 0.066,
+    "median_cer_ci95": [
+     0.059,
+     0.073
+    ],
+    "catastrophic": 28,
+    "catastrophic_rate": 0.163,
+    "catastrophic_ci95": [
+     0.115,
+     0.225
+    ],
+    "invention_ref_median": 0.143,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": 0.005,
+     "ci95": [
+      -0.004,
+      0.012
+     ],
+     "wlt": [
+      77,
+      91,
+      4
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.016,
+     "ci95": [
+      0.012,
+      0.022
+     ],
+     "wlt": [
+      42,
+      124,
+      6
+     ]
+    }
+   },
+   "L": {
+    "engine": "gemini-3.1-flash-lite",
+    "median_cer": 0.067,
+    "median_cer_ci95": [
+     0.059,
+     0.086
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.017,
+    "catastrophic_ci95": [
+     0.006,
+     0.05
+    ],
+    "invention_ref_median": 0.148,
+    "loops": 2,
+    "delta_vs_F": {
+     "median": 0.018,
+     "ci95": [
+      0.013,
+      0.026
+     ],
+     "wlt": [
+      22,
+      144,
+      6
+     ]
+    }
+   },
+   "F": {
+    "engine": "gemini-3-flash-preview",
+    "median_cer": 0.05,
+    "median_cer_ci95": [
+     0.042,
+     0.059
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.022
+    ],
+    "invention_ref_median": 0.115,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": -0.018,
+     "ci95": [
+      -0.026,
+      -0.013
+     ],
+     "wlt": [
+      144,
+      22,
+      6
+     ]
+    }
+   },
+   "P1": {
+    "engine": "paddle-split-p1",
+    "median_cer": 0.06,
+    "median_cer_ci95": [
+     0.053,
+     0.069
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.017,
+    "catastrophic_ci95": [
+     0.006,
+     0.05
+    ],
+    "invention_ref_median": 0.146,
+    "loops": 2,
+    "delta_vs_L": {
+     "median": -0.015,
+     "ci95": [
+      -0.024,
+      -0.003
+     ],
+     "wlt": [
+      107,
+      62,
+      3
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.005,
+     "ci95": [
+      0.001,
+      0.01
+     ],
+     "wlt": [
+      61,
+      102,
+      9
+     ]
+    }
+   },
+   "P2": {
+    "engine": "paddle-split-p2",
+    "median_cer": 0.073,
+    "median_cer_ci95": [
+     0.065,
+     0.084
+    ],
+    "catastrophic": 4,
+    "catastrophic_rate": 0.023,
+    "catastrophic_ci95": [
+     0.009,
+     0.058
+    ],
+    "invention_ref_median": 0.153,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": 0.002,
+     "ci95": [
+      -0.017,
+      0.013
+     ],
+     "wlt": [
+      83,
+      87,
+      2
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.018,
+     "ci95": [
+      0.007,
+      0.029
+     ],
+     "wlt": [
+      48,
+      120,
+      4
+     ]
+    }
+   },
+   "P1d": {
+    "engine": "paddle-split-p1-dedup",
+    "median_cer": 0.058,
+    "median_cer_ci95": [
+     0.052,
+     0.068
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.017,
+    "catastrophic_ci95": [
+     0.006,
+     0.05
+    ],
+    "invention_ref_median": 0.146,
+    "loops": 2,
+    "delta_vs_L": {
+     "median": -0.015,
+     "ci95": [
+      -0.024,
+      -0.003
+     ],
+     "wlt": [
+      107,
+      62,
+      3
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.005,
+     "ci95": [
+      0,
+      0.009
+     ],
+     "wlt": [
+      62,
+      100,
+      10
+     ]
+    }
+   },
+   "P1s": {
+    "engine": "paddle-split-p1-server",
+    "median_cer": 0.059,
+    "median_cer_ci95": [
+     0.053,
+     0.067
+    ],
+    "catastrophic": 3,
+    "catastrophic_rate": 0.017,
+    "catastrophic_ci95": [
+     0.006,
+     0.05
+    ],
+    "invention_ref_median": 0.147,
+    "loops": 2,
+    "delta_vs_L": {
+     "median": -0.013,
+     "ci95": [
+      -0.022,
+      -0.003
+     ],
+     "wlt": [
+      106,
+      61,
+      5
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.007,
+     "ci95": [
+      0.003,
+      0.01
+     ],
+     "wlt": [
+      57,
+      105,
+      10
+     ]
+    }
+   }
+  }
+ },
+ "typeset": {
+  "n": 26,
+  "n_books": 7,
+  "arms": {
+   "P0": {
+    "engine": "paddleocr-vl-1.6",
+    "median_cer": 0.091,
+    "median_cer_ci95": [
+     0.067,
+     0.115
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.129
+    ],
+    "invention_ref_median": 0.192,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": 0.018,
+     "ci95": [
+      0,
+      0.051
+     ],
+     "wlt": [
+      9,
+      16,
+      1
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.02,
+     "ci95": [
+      0.01,
+      0.033
+     ],
+     "wlt": [
+      6,
+      19,
+      1
+     ]
+    }
+   },
+   "L": {
+    "engine": "gemini-3.1-flash-lite",
+    "median_cer": 0.069,
+    "median_cer_ci95": [
+     0.061,
+     0.092
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.129
+    ],
+    "invention_ref_median": 0.164,
+    "loops": 0,
+    "delta_vs_F": {
+     "median": 0.008,
+     "ci95": [
+      -0.006,
+      0.02
+     ],
+     "wlt": [
+      9,
+      16,
+      1
+     ]
+    }
+   },
+   "F": {
+    "engine": "gemini-3-flash-preview",
+    "median_cer": 0.057,
+    "median_cer_ci95": [
+     0.051,
+     0.088
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.129
+    ],
+    "invention_ref_median": 0.151,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": -0.007,
+     "ci95": [
+      -0.02,
+      0.006
+     ],
+     "wlt": [
+      16,
+      9,
+      1
+     ]
+    }
+   },
+   "P1": {
+    "engine": "paddle-split-p1",
+    "median_cer": 0.062,
+    "median_cer_ci95": [
+     0.054,
+     0.067
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.129
+    ],
+    "invention_ref_median": 0.174,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": -0.006,
+     "ci95": [
+      -0.016,
+      0
+     ],
+     "wlt": [
+      14,
+      11,
+      1
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.011,
+     "ci95": [
+      -0.015,
+      0.013
+     ],
+     "wlt": [
+      10,
+      15,
+      1
+     ]
+    }
+   },
+   "P2": {
+    "engine": "paddle-split-p2",
+    "median_cer": 0.102,
+    "median_cer_ci95": [
+     0.076,
+     0.155
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.129
+    ],
+    "invention_ref_median": 0.196,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": 0.031,
+     "ci95": [
+      0.005,
+      0.072
+     ],
+     "wlt": [
+      6,
+      19,
+      1
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.033,
+     "ci95": [
+      0.022,
+      0.066
+     ],
+     "wlt": [
+      2,
+      23,
+      1
+     ]
+    }
+   },
+   "P1d": {
+    "engine": "paddle-split-p1-dedup",
+    "median_cer": 0.062,
+    "median_cer_ci95": [
+     0.054,
+     0.067
+    ],
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.129
+    ],
+    "invention_ref_median": 0.174,
+    "loops": 0,
+    "delta_vs_L": {
+     "median": -0.006,
+     "ci95": [
+      -0.016,
+      0
+     ],
+     "wlt": [
+      14,
+      11,
+      1
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.011,
+     "ci95": [
+      -0.015,
+      0.013
+     ],
+     "wlt": [
+      10,
+      15,
+      1
+     ]
+    }
+   },
+   "P1s": {
+    "engine": "paddle-split-p1-server",
+    "median_cer": 0.063,
+    "median_cer_ci95": [
+     0.053,
+     0.075
+    ],
+    "catastrophic": 1,
+    "catastrophic_rate": 0.038,
+    "catastrophic_ci95": [
+     0.007,
+     0.189
+    ],
+    "invention_ref_median": 0.179,
+    "loops": 1,
+    "delta_vs_L": {
+     "median": -0.006,
+     "ci95": [
+      -0.012,
+      0
+     ],
+     "wlt": [
+      14,
+      10,
+      2
+     ]
+    },
+    "delta_vs_F": {
+     "median": 0.01,
+     "ci95": [
+      -0.015,
+      0.013
+     ],
+     "wlt": [
+      10,
+      16,
+      0
+     ]
+    }
+   }
+  }
+ },
+ "verdict": {
+  "all": {
+   "P1": {
+    "catastrophic_ok": true,
+    "delta_vs_L_ok": true,
+    "adopt_grade": true,
+    "better_than_flash": false
+   },
+   "P2": {
+    "catastrophic_ok": true,
+    "delta_vs_L_ok": false,
+    "adopt_grade": false,
+    "better_than_flash": false
+   }
+  },
+  "woodblock": {
+   "P1": {
+    "catastrophic_ok": true,
+    "delta_vs_L_ok": true,
+    "adopt_grade": true,
+    "better_than_flash": false
+   },
+   "P2": {
+    "catastrophic_ok": true,
+    "delta_vs_L_ok": false,
+    "adopt_grade": false,
+    "better_than_flash": false
+   }
+  }
+ },
+ "pages": [
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p10",
+   "cls": "woodblock",
+   "P0": 0.016,
+   "L": 0.085,
+   "F": 0.04,
+   "P1": 0.011,
+   "P2": 0.477,
+   "P1d": 0.011,
+   "P1s": 0.013
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p55",
+   "cls": "woodblock",
+   "P0": 0.033,
+   "L": 0.06,
+   "F": 0.013,
+   "P1": 0.033,
+   "P2": 0.528,
+   "P1d": 0.033,
+   "P1s": 0.033
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p6",
+   "cls": "woodblock",
+   "P0": 0.955,
+   "L": 0.023,
+   "F": 0.026,
+   "P1": 0.02,
+   "P2": 0.028,
+   "P1d": 0.02,
+   "P1s": 0.02
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p64",
+   "cls": "woodblock",
+   "P0": 0.047,
+   "L": 0.077,
+   "F": 0.04,
+   "P1": 0.052,
+   "P2": 0.521,
+   "P1d": 0.052,
+   "P1s": 0.055
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p15",
+   "cls": "woodblock",
+   "P0": 0.024,
+   "L": 0.053,
+   "F": 0.024,
+   "P1": 0.027,
+   "P2": 0.019,
+   "P1d": 0.027,
+   "P1s": 0.027
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p27",
+   "cls": "woodblock",
+   "P0": 0.993,
+   "L": 0.045,
+   "F": 0.035,
+   "P1": 0.028,
+   "P2": 0.033,
+   "P1d": 0.028,
+   "P1s": 0.033
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p45",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.065,
+   "F": 0.063,
+   "P1": 0.048,
+   "P2": 0.045,
+   "P1d": 0.048,
+   "P1s": 0.045
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p57",
+   "cls": "woodblock",
+   "P0": 0.082,
+   "L": 0.087,
+   "F": 0.069,
+   "P1": 0.065,
+   "P2": 0.065,
+   "P1d": 0.065,
+   "P1s": 0.065
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p24",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.116,
+   "F": 0.057,
+   "P1": 0.03,
+   "P2": 0.043,
+   "P1d": 0.03,
+   "P1s": 0.03
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p37",
+   "cls": "woodblock",
+   "P0": 0.027,
+   "L": 0.068,
+   "F": 0.06,
+   "P1": 0.035,
+   "P2": 0.033,
+   "P1d": 0.035,
+   "P1s": 0.033
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p45",
+   "cls": "woodblock",
+   "P0": 0.994,
+   "L": 0.057,
+   "F": 0.044,
+   "P1": 0.627,
+   "P2": 0.051,
+   "P1d": 0.627,
+   "P1s": 0.595
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p51",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.128,
+   "F": 0.065,
+   "P1": 0.045,
+   "P2": 0.035,
+   "P1d": 0.045,
+   "P1s": 0.045
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p22",
+   "cls": "woodblock",
+   "P0": 0.034,
+   "L": 0.076,
+   "F": 0.058,
+   "P1": 0.039,
+   "P2": 0.031,
+   "P1d": 0.039,
+   "P1s": 0.042
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p3",
+   "cls": "woodblock",
+   "P0": 0.148,
+   "L": 0.042,
+   "F": 0.028,
+   "P1": 28.317,
+   "P2": 0.056,
+   "P1d": 28.317,
+   "P1s": 28.31
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p4",
+   "cls": "woodblock",
+   "P0": 0.052,
+   "L": 0.066,
+   "F": 0.052,
+   "P1": 0.049,
+   "P2": 0.049,
+   "P1d": 0.049,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p3",
+   "cls": "woodblock",
+   "P0": 0.111,
+   "L": 0.059,
+   "F": 0.073,
+   "P1": 0.076,
+   "P2": 0.076,
+   "P1d": 0.076,
+   "P1s": 0.08
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p30",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.026,
+   "F": 0.044,
+   "P1": 0.056,
+   "P2": 0.062,
+   "P1d": 0.056,
+   "P1s": 0.062
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p40",
+   "cls": "woodblock",
+   "P0": 0.088,
+   "L": 0.068,
+   "F": 0.09,
+   "P1": 0.093,
+   "P2": 0.093,
+   "P1d": 0.093,
+   "P1s": 0.095
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p13",
+   "cls": "woodblock",
+   "P0": 0.05,
+   "L": 0.074,
+   "F": 0.055,
+   "P1": 0.048,
+   "P2": 0.067,
+   "P1d": 0.048,
+   "P1s": 0.045
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p2",
+   "cls": "woodblock",
+   "P0": 0.041,
+   "L": 0.035,
+   "F": 0.012,
+   "P1": 23.407,
+   "P2": 0.041,
+   "P1d": 23.407,
+   "P1s": 24.733
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p4",
+   "cls": "woodblock",
+   "P0": 0.049,
+   "L": 0.055,
+   "F": 0.021,
+   "P1": 0.049,
+   "P2": 0.047,
+   "P1d": 0.049,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p44",
+   "cls": "woodblock",
+   "P0": 0.595,
+   "L": 0.055,
+   "F": 0.028,
+   "P1": 0.063,
+   "P2": 0.08,
+   "P1d": 0.063,
+   "P1s": 0.063
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p33",
+   "cls": "woodblock",
+   "P0": 0.064,
+   "L": 0.064,
+   "F": 0.049,
+   "P1": 0.049,
+   "P2": 0.074,
+   "P1d": 0.049,
+   "P1s": 0.053
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p46",
+   "cls": "woodblock",
+   "P0": 0.038,
+   "L": 0.028,
+   "F": 0.022,
+   "P1": 0.041,
+   "P2": 0.038,
+   "P1d": 0.041,
+   "P1s": 0.041
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p63",
+   "cls": "woodblock",
+   "P0": 0.037,
+   "L": 0.046,
+   "F": 0.031,
+   "P1": 0.019,
+   "P2": 0.037,
+   "P1d": 0.019,
+   "P1s": 0.019
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p84",
+   "cls": "woodblock",
+   "P0": 0.111,
+   "L": 0.044,
+   "F": 0.04,
+   "P1": 0.049,
+   "P2": 0.071,
+   "P1d": 0.049,
+   "P1s": 0.049
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p46",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.04,
+   "F": 0.072,
+   "P1": 0.093,
+   "P2": 0.133,
+   "P1d": 0.093,
+   "P1s": 0.093
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p50",
+   "cls": "woodblock",
+   "P0": 0.055,
+   "L": 0.024,
+   "F": 0.013,
+   "P1": 0.142,
+   "P2": 0.174,
+   "P1d": 0.142,
+   "P1s": 0.137
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p66",
+   "cls": "woodblock",
+   "P0": 0.056,
+   "L": 0.04,
+   "F": 0.038,
+   "P1": 0.129,
+   "P2": 0.131,
+   "P1d": 0.129,
+   "P1s": 0.102
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p49",
+   "cls": "woodblock",
+   "P0": 0.078,
+   "L": 0.072,
+   "F": 0.064,
+   "P1": 0.172,
+   "P2": 0.18,
+   "P1d": 0.172,
+   "P1s": 0.166
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p63",
+   "cls": "woodblock",
+   "P0": 0.056,
+   "L": 0.039,
+   "F": 0.02,
+   "P1": 0.096,
+   "P2": 0.135,
+   "P1d": 0.096,
+   "P1s": 0.096
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p65",
+   "cls": "woodblock",
+   "P0": 0.038,
+   "L": 0.029,
+   "F": 0.078,
+   "P1": 0.129,
+   "P2": 0.153,
+   "P1d": 0.129,
+   "P1s": 0.129
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p69",
+   "cls": "woodblock",
+   "P0": 0.056,
+   "L": 0.058,
+   "F": 0.038,
+   "P1": 0.126,
+   "P2": 0.157,
+   "P1d": 0.126,
+   "P1s": 0.124
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p36",
+   "cls": "woodblock",
+   "P0": 0.055,
+   "L": 0.089,
+   "F": 0.021,
+   "P1": 0.113,
+   "P2": 0.084,
+   "P1d": 0.113,
+   "P1s": 0.113
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p70",
+   "cls": "woodblock",
+   "P0": 0.096,
+   "L": 0.068,
+   "F": 0.04,
+   "P1": 0.158,
+   "P2": 0.175,
+   "P1d": 0.158,
+   "P1s": 0.164
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p79",
+   "cls": "woodblock",
+   "P0": 0.086,
+   "L": 0.083,
+   "F": 0.083,
+   "P1": 0.156,
+   "P2": 0.172,
+   "P1d": 0.156,
+   "P1s": 0.158
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p87",
+   "cls": "woodblock",
+   "P0": 0.076,
+   "L": 0.037,
+   "F": 0.024,
+   "P1": 0.137,
+   "P2": 0.198,
+   "P1d": 0.137,
+   "P1s": 0.159
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p25",
+   "cls": "woodblock",
+   "P0": 0.067,
+   "L": 0.074,
+   "F": 0.037,
+   "P1": 0.115,
+   "P2": 0.093,
+   "P1d": 0.085,
+   "P1s": 0.107
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p3",
+   "cls": "woodblock",
+   "P0": 0.128,
+   "L": 0.128,
+   "F": 0.068,
+   "P1": 0.203,
+   "P2": 0.256,
+   "P1d": 0.203,
+   "P1s": 0.18
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p67",
+   "cls": "woodblock",
+   "P0": 0.058,
+   "L": 0.09,
+   "F": 0.071,
+   "P1": 0.068,
+   "P2": 0.129,
+   "P1d": 0.068,
+   "P1s": 0.048
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p72",
+   "cls": "woodblock",
+   "P0": 0.067,
+   "L": 0.024,
+   "F": 0.034,
+   "P1": 0.024,
+   "P2": 0.125,
+   "P1d": 0.024,
+   "P1s": 0.024
+  },
+  {
+   "slug": "chinese-print-cbeta-29057c-p44",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.033,
+   "F": 0.072,
+   "P1": 0.102,
+   "P2": 0.141,
+   "P1d": 0.102,
+   "P1s": 0.115
+  },
+  {
+   "slug": "chinese-print-cbeta-29057c-p47",
+   "cls": "woodblock",
+   "P0": 0.07,
+   "L": 0.056,
+   "F": 0.047,
+   "P1": 0.033,
+   "P2": 0.084,
+   "P1d": 0.014,
+   "P1s": 0.033
+  },
+  {
+   "slug": "chinese-print-cbeta-29057c-p77",
+   "cls": "woodblock",
+   "P0": 0.046,
+   "L": 0.031,
+   "F": 0.046,
+   "P1": 0.08,
+   "P2": 0.111,
+   "P1d": 0.08,
+   "P1s": 0.074
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p29",
+   "cls": "woodblock",
+   "P0": 0.039,
+   "L": 0.128,
+   "F": 0.033,
+   "P1": 0.049,
+   "P2": 0.039,
+   "P1d": 0.049,
+   "P1s": 0.044
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p31",
+   "cls": "woodblock",
+   "P0": 0.067,
+   "L": 0.097,
+   "F": 0.045,
+   "P1": 0.073,
+   "P2": 0.058,
+   "P1d": 0.073,
+   "P1s": 0.07
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p38",
+   "cls": "woodblock",
+   "P0": 0.057,
+   "L": 0.051,
+   "F": 0.044,
+   "P1": 0.054,
+   "P2": 0.057,
+   "P1d": 0.054,
+   "P1s": 0.056
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p47",
+   "cls": "woodblock",
+   "P0": 0.061,
+   "L": 0.272,
+   "F": 0.119,
+   "P1": 0.079,
+   "P2": 0.076,
+   "P1d": 0.079,
+   "P1s": 0.084
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p10",
+   "cls": "woodblock",
+   "P0": 0.045,
+   "L": 0.101,
+   "F": 0.059,
+   "P1": 0.048,
+   "P2": 0.053,
+   "P1d": 0.048,
+   "P1s": 0.046
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p36",
+   "cls": "woodblock",
+   "P0": 0.316,
+   "L": 0.043,
+   "F": 0.005,
+   "P1": 0.028,
+   "P2": 0.026,
+   "P1d": 0.028,
+   "P1s": 0.028
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p50",
+   "cls": "woodblock",
+   "P0": 0.363,
+   "L": 0.62,
+   "F": 0.111,
+   "P1": 0.129,
+   "P2": 0.269,
+   "P1d": 0.129,
+   "P1s": 0.135
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p8",
+   "cls": "woodblock",
+   "P0": 0.08,
+   "L": 7.693,
+   "F": 0.417,
+   "P1": 0.107,
+   "P2": 0.087,
+   "P1d": 0.107,
+   "P1s": 0.107
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p21",
+   "cls": "woodblock",
+   "P0": 0.065,
+   "L": 0.143,
+   "F": 0.08,
+   "P1": 0.077,
+   "P2": 0.076,
+   "P1d": 0.077,
+   "P1s": 0.074
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p26",
+   "cls": "woodblock",
+   "P0": 0.067,
+   "L": 0.122,
+   "F": 0.087,
+   "P1": 0.092,
+   "P2": 0.063,
+   "P1d": 0.092,
+   "P1s": 0.103
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p5",
+   "cls": "woodblock",
+   "P0": 0.049,
+   "L": 0.197,
+   "F": 0.13,
+   "P1": 0.057,
+   "P2": 0.054,
+   "P1d": 0.057,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p12",
+   "cls": "woodblock",
+   "P0": 0.064,
+   "L": 0.357,
+   "F": 0.153,
+   "P1": 0.071,
+   "P2": 0.067,
+   "P1d": 0.071,
+   "P1s": 0.071
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p13",
+   "cls": "woodblock",
+   "P0": 0.041,
+   "L": 0.122,
+   "F": 0.073,
+   "P1": 0.05,
+   "P2": 0.04,
+   "P1d": 0.05,
+   "P1s": 0.049
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p19",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.149,
+   "F": 0.073,
+   "P1": 0.073,
+   "P2": 0.056,
+   "P1d": 0.073,
+   "P1s": 0.073
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p52",
+   "cls": "woodblock",
+   "P0": 0.07,
+   "L": 0.222,
+   "F": 0.164,
+   "P1": 0.106,
+   "P2": 0.08,
+   "P1d": 0.106,
+   "P1s": 0.1
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p30",
+   "cls": "woodblock",
+   "P0": 0.078,
+   "L": 0.273,
+   "F": 0.128,
+   "P1": 0.093,
+   "P2": 0.078,
+   "P1d": 0.093,
+   "P1s": 0.097
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p42",
+   "cls": "woodblock",
+   "P0": 0.361,
+   "L": 0.418,
+   "F": 0.055,
+   "P1": 0.078,
+   "P2": 0.182,
+   "P1d": 0.078,
+   "P1s": 0.097
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p43",
+   "cls": "woodblock",
+   "P0": 0.061,
+   "L": 0.261,
+   "F": 0.1,
+   "P1": 0.073,
+   "P2": 0.074,
+   "P1d": 0.073,
+   "P1s": 0.075
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p49",
+   "cls": "woodblock",
+   "P0": 0.07,
+   "L": 0.178,
+   "F": 0.108,
+   "P1": 0.074,
+   "P2": 0.071,
+   "P1d": 0.074,
+   "P1s": 0.082
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p20",
+   "cls": "woodblock",
+   "P0": 0.066,
+   "L": 0.287,
+   "F": 0.116,
+   "P1": 0.075,
+   "P2": 0.072,
+   "P1d": 0.075,
+   "P1s": 0.078
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p23",
+   "cls": "woodblock",
+   "P0": 0.448,
+   "L": 0.288,
+   "F": 0.067,
+   "P1": 0.081,
+   "P2": 0.212,
+   "P1d": 0.081,
+   "P1s": 0.081
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p40",
+   "cls": "woodblock",
+   "P0": 0.096,
+   "L": 0.1,
+   "F": 0.074,
+   "P1": 0.069,
+   "P2": 0.106,
+   "P1d": 0.069,
+   "P1s": 0.067
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p60",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.167,
+   "F": 0.068,
+   "P1": 0.064,
+   "P2": 0.093,
+   "P1d": 0.064,
+   "P1s": 0.064
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p32",
+   "cls": "woodblock",
+   "P0": 0.088,
+   "L": 0.168,
+   "F": 0.107,
+   "P1": 0.098,
+   "P2": 0.093,
+   "P1d": 0.098,
+   "P1s": 0.1
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p41",
+   "cls": "woodblock",
+   "P0": 0.156,
+   "L": 0.117,
+   "F": 0.108,
+   "P1": 0.093,
+   "P2": 0.122,
+   "P1d": 0.093,
+   "P1s": 0.135
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p66",
+   "cls": "woodblock",
+   "P0": 0.089,
+   "L": 0.115,
+   "F": 0.104,
+   "P1": 0.097,
+   "P2": 0.151,
+   "P1d": 0.097,
+   "P1s": 0.097
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p15",
+   "cls": "woodblock",
+   "P0": 0.055,
+   "L": 0.112,
+   "F": 0.063,
+   "P1": 0.063,
+   "P2": 0.071,
+   "P1d": 0.063,
+   "P1s": 0.06
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p28",
+   "cls": "woodblock",
+   "P0": 0.041,
+   "L": 0.113,
+   "F": 0.04,
+   "P1": 0.038,
+   "P2": 0.04,
+   "P1d": 0.038,
+   "P1s": 0.047
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p29",
+   "cls": "woodblock",
+   "P0": 0.043,
+   "L": 0.061,
+   "F": 0.048,
+   "P1": 0.052,
+   "P2": 0.055,
+   "P1d": 0.052,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p69",
+   "cls": "woodblock",
+   "P0": 0.055,
+   "L": 0.138,
+   "F": 0.035,
+   "P1": 0.048,
+   "P2": 0.075,
+   "P1d": 0.048,
+   "P1s": 0.048
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p15",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.112,
+   "F": 0.042,
+   "P1": 0.052,
+   "P2": 0.064,
+   "P1d": 0.052,
+   "P1s": 0.054
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p34",
+   "cls": "woodblock",
+   "P0": 0.062,
+   "L": 0.171,
+   "F": 0.083,
+   "P1": 0.074,
+   "P2": 0.054,
+   "P1d": 0.074,
+   "P1s": 0.076
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p48",
+   "cls": "woodblock",
+   "P0": 0.073,
+   "L": 0.086,
+   "F": 0.06,
+   "P1": 0.075,
+   "P2": 0.113,
+   "P1d": 0.075,
+   "P1s": 0.077
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p52",
+   "cls": "woodblock",
+   "P0": 0.073,
+   "L": 10.591,
+   "F": 0.056,
+   "P1": 0.055,
+   "P2": 0.071,
+   "P1d": 0.055,
+   "P1s": 0.058
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p31",
+   "cls": "woodblock",
+   "P0": 0.072,
+   "L": 0.221,
+   "F": 0.122,
+   "P1": 0.078,
+   "P2": 0.11,
+   "P1d": 0.078,
+   "P1s": 0.077
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p64",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.363,
+   "F": 0.176,
+   "P1": 0.097,
+   "P2": 0.094,
+   "P1d": 0.097,
+   "P1s": 0.1
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p65",
+   "cls": "woodblock",
+   "P0": 0.234,
+   "L": 0.249,
+   "F": 0.227,
+   "P1": 0.239,
+   "P2": 0.236,
+   "P1d": 0.239,
+   "P1s": 0.236
+  },
+  {
+   "slug": "chinese-print-cbeta-62ec23-p13",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.032,
+   "F": 0.032,
+   "P1": 0.038,
+   "P2": 0.062,
+   "P1d": 0.038,
+   "P1s": 0.041
+  },
+  {
+   "slug": "chinese-print-cbeta-62ec23-p58",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.043,
+   "F": 0.024,
+   "P1": 0.099,
+   "P2": 0.11,
+   "P1d": 0.045,
+   "P1s": 0.099
+  },
+  {
+   "slug": "chinese-print-cbeta-62ec23-p73",
+   "cls": "woodblock",
+   "P0": 0.049,
+   "L": 0.041,
+   "F": 0.038,
+   "P1": 0.023,
+   "P2": 0.071,
+   "P1d": 0.023,
+   "P1s": 0.026
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p16",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.055,
+   "F": 0.034,
+   "P1": 0.05,
+   "P2": 0.523,
+   "P1d": 0.05,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p19",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.059,
+   "F": 0.034,
+   "P1": 0.039,
+   "P2": 1,
+   "P1d": 0.039,
+   "P1s": 0.041
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p30",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.066,
+   "F": 0.035,
+   "P1": 0.056,
+   "P2": 0.083,
+   "P1d": 0.056,
+   "P1s": 0.058
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p5",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.028,
+   "F": 0.025,
+   "P1": 0.048,
+   "P2": 0.046,
+   "P1d": 0.048,
+   "P1s": 0.051
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p19",
+   "cls": "woodblock",
+   "P0": 0.05,
+   "L": 0.042,
+   "F": 0.037,
+   "P1": 0.055,
+   "P2": 0.136,
+   "P1d": 0.055,
+   "P1s": 0.063
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p25",
+   "cls": "woodblock",
+   "P0": 0.063,
+   "L": 0.049,
+   "F": 0.042,
+   "P1": 0.06,
+   "P2": 0.109,
+   "P1d": 0.06,
+   "P1s": 0.055
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p31",
+   "cls": "woodblock",
+   "P0": 0.044,
+   "L": 0.059,
+   "F": 0.041,
+   "P1": 0.063,
+   "P2": 0.041,
+   "P1d": 0.063,
+   "P1s": 0.063
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p39",
+   "cls": "woodblock",
+   "P0": 0.068,
+   "L": 0.09,
+   "F": 0.065,
+   "P1": 0.068,
+   "P2": 0.083,
+   "P1d": 0.068,
+   "P1s": 0.065
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p32",
+   "cls": "woodblock",
+   "P0": 0.021,
+   "L": 0.086,
+   "F": 0.021,
+   "P1": 0.029,
+   "P2": 0.029,
+   "P1d": 0.029,
+   "P1s": 0.029
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p56",
+   "cls": "woodblock",
+   "P0": 0.048,
+   "L": 0.046,
+   "F": 0.034,
+   "P1": 0.053,
+   "P2": 0.093,
+   "P1d": 0.053,
+   "P1s": 0.057
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p58",
+   "cls": "woodblock",
+   "P0": 0.072,
+   "L": 0.069,
+   "F": 0.066,
+   "P1": 0.066,
+   "P2": 0.074,
+   "P1d": 0.066,
+   "P1s": 0.066
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p40",
+   "cls": "woodblock",
+   "P0": 0.057,
+   "L": 0.067,
+   "F": 0.053,
+   "P1": 0.053,
+   "P2": 0.105,
+   "P1d": 0.053,
+   "P1s": 0.053
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p52",
+   "cls": "woodblock",
+   "P0": 0.055,
+   "L": 0.047,
+   "F": 0.047,
+   "P1": 0.049,
+   "P2": 0.086,
+   "P1d": 0.049,
+   "P1s": 0.049
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p53",
+   "cls": "woodblock",
+   "P0": 0.054,
+   "L": 0.047,
+   "F": 0.035,
+   "P1": 0.052,
+   "P2": 0.058,
+   "P1d": 0.052,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p56",
+   "cls": "woodblock",
+   "P0": 0.062,
+   "L": 0.064,
+   "F": 0.055,
+   "P1": 0.066,
+   "P2": 0.117,
+   "P1d": 0.066,
+   "P1s": 0.066
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p15",
+   "cls": "woodblock",
+   "P0": 0.044,
+   "L": 0.046,
+   "F": 0.044,
+   "P1": 0.059,
+   "P2": 0.055,
+   "P1d": 0.059,
+   "P1s": 0.057
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p39",
+   "cls": "woodblock",
+   "P0": 0.095,
+   "L": 0.109,
+   "F": 0.095,
+   "P1": 0.095,
+   "P2": 0.102,
+   "P1d": 0.095,
+   "P1s": 0.105
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p54",
+   "cls": "woodblock",
+   "P0": 0.029,
+   "L": 0.029,
+   "F": 0.036,
+   "P1": 0.038,
+   "P2": 0.092,
+   "P1d": 0.038,
+   "P1s": 0.036
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p90",
+   "cls": "woodblock",
+   "P0": 0.082,
+   "L": 0.039,
+   "F": 0.027,
+   "P1": 0.068,
+   "P2": 0.073,
+   "P1d": 0.068,
+   "P1s": 0.068
+  },
+  {
+   "slug": "chinese-print-cbeta-98b3e6-p27",
+   "cls": "woodblock",
+   "P0": 0.04,
+   "L": 0.063,
+   "F": 0.05,
+   "P1": 0.038,
+   "P2": 0.098,
+   "P1d": 0.038,
+   "P1s": 0.038
+  },
+  {
+   "slug": "chinese-print-cbeta-98b3e6-p50",
+   "cls": "woodblock",
+   "P0": 0.159,
+   "L": 0.106,
+   "F": 0.108,
+   "P1": 0.143,
+   "P2": 0.143,
+   "P1d": 0.143,
+   "P1s": 0.143
+  },
+  {
+   "slug": "chinese-print-cbeta-98b3e6-p88",
+   "cls": "woodblock",
+   "P0": 0.12,
+   "L": 0.084,
+   "F": 0.072,
+   "P1": 0.081,
+   "P2": 0.111,
+   "P1d": 0.081,
+   "P1s": 0.081
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p11",
+   "cls": "woodblock",
+   "P0": 0.053,
+   "L": 0.065,
+   "F": 0.047,
+   "P1": 0.044,
+   "P2": 0.05,
+   "P1d": 0.044,
+   "P1s": 0.044
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p14",
+   "cls": "woodblock",
+   "P0": 0.084,
+   "L": 0.026,
+   "F": 0.016,
+   "P1": 0.037,
+   "P2": 0.037,
+   "P1d": 0.037,
+   "P1s": 0.045
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p15",
+   "cls": "woodblock",
+   "P0": 0.049,
+   "L": 0.042,
+   "F": 0.028,
+   "P1": 0.052,
+   "P2": 0.059,
+   "P1d": 0.052,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p18",
+   "cls": "woodblock",
+   "P0": 0.05,
+   "L": 0.053,
+   "F": 0.038,
+   "P1": 0.041,
+   "P2": 0.041,
+   "P1d": 0.041,
+   "P1s": 0.044
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p11",
+   "cls": "woodblock",
+   "P0": 0.036,
+   "L": 0.042,
+   "F": 0.028,
+   "P1": 0.039,
+   "P2": 0.044,
+   "P1d": 0.039,
+   "P1s": 0.039
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p18",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.049,
+   "F": 0.052,
+   "P1": 0.062,
+   "P2": 0.052,
+   "P1d": 0.062,
+   "P1s": 0.062
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p39",
+   "cls": "woodblock",
+   "P0": 0.047,
+   "L": 0.049,
+   "F": 0.026,
+   "P1": 0.044,
+   "P2": 0.084,
+   "P1d": 0.044,
+   "P1s": 0.047
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p53",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.02,
+   "F": 0.027,
+   "P1": 0.025,
+   "P2": 0.052,
+   "P1d": 0.025,
+   "P1s": 0.025
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p20",
+   "cls": "woodblock",
+   "P0": 0.106,
+   "L": 0.085,
+   "F": 0.08,
+   "P1": 0.098,
+   "P2": 0.106,
+   "P1d": 0.098,
+   "P1s": 0.098
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p4",
+   "cls": "woodblock",
+   "P0": 0.03,
+   "L": 0.045,
+   "F": 0.02,
+   "P1": 0.023,
+   "P2": 0.023,
+   "P1d": 0.023,
+   "P1s": 0.028
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p43",
+   "cls": "woodblock",
+   "P0": 0.997,
+   "L": 0.069,
+   "F": 0.047,
+   "P1": 0.069,
+   "P2": 0.063,
+   "P1d": 0.069,
+   "P1s": 0.072
+  },
+  {
+   "slug": "chinese-print-cbeta-9b80b5-p11",
+   "cls": "woodblock",
+   "P0": 0.091,
+   "L": 0.096,
+   "F": 0.072,
+   "P1": 0.081,
+   "P2": 0.1,
+   "P1d": 0.081,
+   "P1s": 0.077
+  },
+  {
+   "slug": "chinese-print-cbeta-9b80b5-p22",
+   "cls": "woodblock",
+   "P0": 0.041,
+   "L": 0.053,
+   "F": 0.05,
+   "P1": 0.028,
+   "P2": 0.047,
+   "P1d": 0.028,
+   "P1s": 0.031
+  },
+  {
+   "slug": "chinese-print-cbeta-9b80b5-p28",
+   "cls": "woodblock",
+   "P0": 0.099,
+   "L": 0.086,
+   "F": 0.086,
+   "P1": 0.079,
+   "P2": 0.089,
+   "P1d": 0.079,
+   "P1s": 0.079
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p18",
+   "cls": "woodblock",
+   "P0": 0.042,
+   "L": 0.112,
+   "F": 0.068,
+   "P1": 0.047,
+   "P2": 0.047,
+   "P1d": 0.047,
+   "P1s": 0.051
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p21",
+   "cls": "woodblock",
+   "P0": 0.042,
+   "L": 0.035,
+   "F": 0.028,
+   "P1": 0.037,
+   "P2": 0.035,
+   "P1d": 0.037,
+   "P1s": 0.04
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p30",
+   "cls": "woodblock",
+   "P0": 0.974,
+   "L": 0.089,
+   "F": 0.061,
+   "P1": 0.054,
+   "P2": 0.044,
+   "P1d": 0.054,
+   "P1s": 0.049
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p51",
+   "cls": "woodblock",
+   "P0": 0.97,
+   "L": 0.089,
+   "F": 0.015,
+   "P1": 0.063,
+   "P2": 0.065,
+   "P1d": 0.063,
+   "P1s": 0.056
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p26",
+   "cls": "woodblock",
+   "P0": 0.24,
+   "L": 0.105,
+   "F": 0.081,
+   "P1": 0.067,
+   "P2": 0.058,
+   "P1d": 0.067,
+   "P1s": 0.061
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p27",
+   "cls": "woodblock",
+   "P0": 0.067,
+   "L": 0.128,
+   "F": 0.101,
+   "P1": 0.074,
+   "P2": 0.065,
+   "P1d": 0.074,
+   "P1s": 0.079
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p39",
+   "cls": "woodblock",
+   "P0": 0.079,
+   "L": 0.149,
+   "F": 0.084,
+   "P1": 0.077,
+   "P2": 0.072,
+   "P1d": 0.077,
+   "P1s": 0.084
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p50",
+   "cls": "woodblock",
+   "P0": 0.537,
+   "L": 0.094,
+   "F": 0.059,
+   "P1": 0.055,
+   "P2": 0.048,
+   "P1d": 0.055,
+   "P1s": 0.059
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p27",
+   "cls": "woodblock",
+   "P0": 0.739,
+   "L": 0.148,
+   "F": 0.093,
+   "P1": 0.098,
+   "P2": 0.081,
+   "P1d": 0.098,
+   "P1s": 0.098
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p48",
+   "cls": "woodblock",
+   "P0": 0.564,
+   "L": 0.21,
+   "F": 0.075,
+   "P1": 0.075,
+   "P2": 0.064,
+   "P1d": 0.075,
+   "P1s": 0.082
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p49",
+   "cls": "woodblock",
+   "P0": 0.061,
+   "L": 0.167,
+   "F": 0.07,
+   "P1": 0.054,
+   "P2": 0.059,
+   "P1d": 0.054,
+   "P1s": 0.056
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p6",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.147,
+   "F": 0.068,
+   "P1": 0.079,
+   "P2": 0.068,
+   "P1d": 0.079,
+   "P1s": 0.094
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p27",
+   "cls": "woodblock",
+   "P0": 0.043,
+   "L": 0.123,
+   "F": 0.084,
+   "P1": 0.034,
+   "P2": 0.039,
+   "P1d": 0.034,
+   "P1s": 0.041
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p46",
+   "cls": "woodblock",
+   "P0": 0.985,
+   "L": 0.211,
+   "F": 0.114,
+   "P1": 0.097,
+   "P2": 0.086,
+   "P1d": 0.097,
+   "P1s": 0.108
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p50",
+   "cls": "woodblock",
+   "P0": 0.717,
+   "L": 0.139,
+   "F": 0.124,
+   "P1": 0.058,
+   "P2": 0.04,
+   "P1d": 0.058,
+   "P1s": 0.051
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p55",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.073,
+   "F": 0.044,
+   "P1": 0.034,
+   "P2": 0.029,
+   "P1d": 0.034,
+   "P1s": 0.039
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p23",
+   "cls": "woodblock",
+   "P0": 0.54,
+   "L": 0.214,
+   "F": 0.128,
+   "P1": 0.106,
+   "P2": 0.099,
+   "P1d": 0.106,
+   "P1s": 0.097
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p51",
+   "cls": "woodblock",
+   "P0": 0.498,
+   "L": 0.115,
+   "F": 0.053,
+   "P1": 0.058,
+   "P2": 0.046,
+   "P1d": 0.058,
+   "P1s": 0.063
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p52",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.156,
+   "F": 0.028,
+   "P1": 0.022,
+   "P2": 0.013,
+   "P1d": 0.022,
+   "P1s": 0.022
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p69",
+   "cls": "woodblock",
+   "P0": 0.993,
+   "L": 0.066,
+   "F": 0.051,
+   "P1": 0.051,
+   "P2": 0.044,
+   "P1d": 0.051,
+   "P1s": 0.051
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p15",
+   "cls": "typeset",
+   "P0": 0.066,
+   "L": 0.082,
+   "F": 0.054,
+   "P1": 0.074,
+   "P2": 0.087,
+   "P1d": 0.074,
+   "P1s": 0.077
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p17",
+   "cls": "typeset",
+   "P0": 0.059,
+   "L": 0.059,
+   "F": 0.052,
+   "P1": 0.062,
+   "P2": 0.07,
+   "P1d": 0.062,
+   "P1s": 0.065
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p24",
+   "cls": "typeset",
+   "P0": 0.067,
+   "L": 0.054,
+   "F": 0.046,
+   "P1": 0.059,
+   "P2": 0.062,
+   "P1d": 0.059,
+   "P1s": 0.059
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p7",
+   "cls": "typeset",
+   "P0": 0.05,
+   "L": 0.065,
+   "F": 0.029,
+   "P1": 0.042,
+   "P2": 0.052,
+   "P1d": 0.042,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p18",
+   "cls": "typeset",
+   "P0": 0.075,
+   "L": 0.052,
+   "F": 0.037,
+   "P1": 0.075,
+   "P2": 0.107,
+   "P1d": 0.075,
+   "P1s": 0.081
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p28",
+   "cls": "typeset",
+   "P0": 0.097,
+   "L": 0.1,
+   "F": 0.075,
+   "P1": 0.097,
+   "P2": 0.097,
+   "P1d": 0.097,
+   "P1s": 0.1
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p35",
+   "cls": "typeset",
+   "P0": 0.072,
+   "L": 0.049,
+   "F": 0.052,
+   "P1": 0.059,
+   "P2": 0.064,
+   "P1d": 0.059,
+   "P1s": 0.059
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p4",
+   "cls": "typeset",
+   "P0": 0.044,
+   "L": 0.073,
+   "F": 0.047,
+   "P1": 0.058,
+   "P2": 0.05,
+   "P1d": 0.058,
+   "P1s": 0.053
+  },
+  {
+   "slug": "chinese-print-cbeta-bae2a1-p17",
+   "cls": "typeset",
+   "P0": 0.081,
+   "L": 0.324,
+   "F": 0.081,
+   "P1": 0.063,
+   "P2": 0.076,
+   "P1d": 0.063,
+   "P1s": 0.076
+  },
+  {
+   "slug": "chinese-print-cbeta-bae2a1-p34",
+   "cls": "typeset",
+   "P0": 0.064,
+   "L": 0.105,
+   "F": 0.051,
+   "P1": 0.067,
+   "P2": 0.078,
+   "P1d": 0.067,
+   "P1s": 0.07
+  },
+  {
+   "slug": "chinese-print-cbeta-bae2a1-p4",
+   "cls": "typeset",
+   "P0": 0.049,
+   "L": 0.046,
+   "F": 0.041,
+   "P1": 0.054,
+   "P2": 0.051,
+   "P1d": 0.054,
+   "P1s": 0.054
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p42",
+   "cls": "woodblock",
+   "P0": 0.063,
+   "L": 0.063,
+   "F": 0.085,
+   "P1": 0.096,
+   "P2": 0.129,
+   "P1d": 0.085,
+   "P1s": 0.063
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p73",
+   "cls": "woodblock",
+   "P0": 0.035,
+   "L": 0.033,
+   "F": 0.038,
+   "P1": 0.087,
+   "P2": 0.141,
+   "P1d": 0.035,
+   "P1s": 0.084
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p88",
+   "cls": "woodblock",
+   "P0": 1,
+   "L": 0.033,
+   "F": 0.085,
+   "P1": 0.165,
+   "P2": 0.198,
+   "P1d": 0.165,
+   "P1s": 0.14
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p14",
+   "cls": "woodblock",
+   "P0": 0.095,
+   "L": 0.038,
+   "F": 0.035,
+   "P1": 0.065,
+   "P2": 0.108,
+   "P1d": 0.065,
+   "P1s": 0.055
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p5",
+   "cls": "woodblock",
+   "P0": 0.079,
+   "L": 0.038,
+   "F": 0.038,
+   "P1": 0.056,
+   "P2": 0.146,
+   "P1d": 0.056,
+   "P1s": 0.051
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p67",
+   "cls": "woodblock",
+   "P0": 0.058,
+   "L": 0.022,
+   "F": 0.019,
+   "P1": 0.116,
+   "P2": 0.08,
+   "P1d": 0.116,
+   "P1s": 0.116
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p7",
+   "cls": "woodblock",
+   "P0": 0.058,
+   "L": 0.042,
+   "F": 0.066,
+   "P1": 0.047,
+   "P2": 0.121,
+   "P1d": 0.047,
+   "P1s": 0.047
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p11",
+   "cls": "woodblock",
+   "P0": 0.059,
+   "L": 0.045,
+   "F": 0.061,
+   "P1": 0.029,
+   "P2": 0.09,
+   "P1d": 0.029,
+   "P1s": 0.029
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p25",
+   "cls": "woodblock",
+   "P0": 0.032,
+   "L": 0.019,
+   "F": 0.016,
+   "P1": 0.082,
+   "P2": 0.103,
+   "P1d": 0.029,
+   "P1s": 0.077
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p51",
+   "cls": "woodblock",
+   "P0": 0.056,
+   "L": 0.048,
+   "F": 0.04,
+   "P1": 0.125,
+   "P2": 0.183,
+   "P1d": 0.125,
+   "P1s": 0.125
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p11",
+   "cls": "typeset",
+   "P0": 0.045,
+   "L": 0.065,
+   "F": 0.049,
+   "P1": 0.049,
+   "P2": 0.049,
+   "P1d": 0.049,
+   "P1s": 0.053
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p14",
+   "cls": "typeset",
+   "P0": 0.085,
+   "L": 0.06,
+   "F": 0.03,
+   "P1": 0.068,
+   "P2": 0.089,
+   "P1d": 0.068,
+   "P1s": 0.064
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p77",
+   "cls": "typeset",
+   "P0": 0.129,
+   "L": 0.103,
+   "F": 0.096,
+   "P1": 0.085,
+   "P2": 0.158,
+   "P1d": 0.085,
+   "P1s": 0.081
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p78",
+   "cls": "typeset",
+   "P0": 0.114,
+   "L": 0.037,
+   "F": 0.081,
+   "P1": 0.048,
+   "P2": 0.114,
+   "P1d": 0.048,
+   "P1s": 0.048
+  },
+  {
+   "slug": "chinese-print-cbeta-d93308-p48",
+   "cls": "typeset",
+   "P0": 0.077,
+   "L": 0.083,
+   "F": 0.089,
+   "P1": 0.083,
+   "P2": 0.155,
+   "P1d": 0.083,
+   "P1s": 0.077
+  },
+  {
+   "slug": "chinese-print-cbeta-d93308-p51",
+   "cls": "typeset",
+   "P0": 0.161,
+   "L": 0.081,
+   "F": 0.102,
+   "P1": 0.065,
+   "P2": 0.22,
+   "P1d": 0.065,
+   "P1s": 0.075
+  },
+  {
+   "slug": "chinese-print-cbeta-d93308-p61",
+   "cls": "typeset",
+   "P0": 0.249,
+   "L": 0.072,
+   "F": 0.05,
+   "P1": 0.127,
+   "P2": 0.293,
+   "P1d": 0.127,
+   "P1s": 0.16
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p18",
+   "cls": "typeset",
+   "P0": 0.183,
+   "L": 0.046,
+   "F": 0.162,
+   "P1": 0.054,
+   "P2": 0.199,
+   "P1d": 0.054,
+   "P1s": 0.046
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p24",
+   "cls": "typeset",
+   "P0": 0.147,
+   "L": 0.122,
+   "F": 0.061,
+   "P1": 0.094,
+   "P2": 0.155,
+   "P1d": 0.094,
+   "P1s": 0.09
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p65",
+   "cls": "typeset",
+   "P0": 0.097,
+   "L": 0.046,
+   "F": 0.046,
+   "P1": 0.062,
+   "P2": 0.089,
+   "P1d": 0.062,
+   "P1s": 0.062
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p66",
+   "cls": "typeset",
+   "P0": 0.114,
+   "L": 0.061,
+   "F": 0.129,
+   "P1": 0.042,
+   "P2": 0.137,
+   "P1d": 0.042,
+   "P1s": 0.042
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p16",
+   "cls": "typeset",
+   "P0": 0.174,
+   "L": 0.092,
+   "F": 0.179,
+   "P1": 0.041,
+   "P2": 0.149,
+   "P1d": 0.041,
+   "P1s": 0.041
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p19",
+   "cls": "typeset",
+   "P0": 0.127,
+   "L": 0.056,
+   "F": 0.063,
+   "P1": 0.048,
+   "P2": 0.135,
+   "P1d": 0.048,
+   "P1s": 0.048
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p28",
+   "cls": "typeset",
+   "P0": 0.098,
+   "L": 0.152,
+   "F": 0.088,
+   "P1": 0.039,
+   "P2": 0.152,
+   "P1d": 0.039,
+   "P1s": 0.039
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p5",
+   "cls": "typeset",
+   "P0": 0.115,
+   "L": 0.106,
+   "F": 0.135,
+   "P1": 0.202,
+   "P2": 0.317,
+   "P1d": 0.202,
+   "P1s": 38.442
+  },
+  {
+   "slug": "chinese-print-cbeta-e24f00-p42",
+   "cls": "woodblock",
+   "P0": 0.079,
+   "L": 0.088,
+   "F": 0.069,
+   "P1": 0.085,
+   "P2": 0.079,
+   "P1d": 0.085,
+   "P1s": 0.085
+  },
+  {
+   "slug": "chinese-print-cbeta-e24f00-p49",
+   "cls": "woodblock",
+   "P0": 0.063,
+   "L": 0.091,
+   "F": 0.069,
+   "P1": 0.066,
+   "P2": 0.066,
+   "P1d": 0.066,
+   "P1s": 0.066
+  },
+  {
+   "slug": "chinese-print-cbeta-e24f00-p50",
+   "cls": "woodblock",
+   "P0": 0.087,
+   "L": 0.093,
+   "F": 0.096,
+   "P1": 0.099,
+   "P2": 0.09,
+   "P1d": 0.099,
+   "P1s": 0.099
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p13",
+   "cls": "woodblock",
+   "P0": 0.072,
+   "L": 0.075,
+   "F": 0.045,
+   "P1": 0.056,
+   "P2": 0.084,
+   "P1d": 0.056,
+   "P1s": 0.056
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p26",
+   "cls": "woodblock",
+   "P0": 0.027,
+   "L": 0.067,
+   "F": 0.016,
+   "P1": 0.051,
+   "P2": 0.032,
+   "P1d": 0.051,
+   "P1s": 0.045
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p30",
+   "cls": "woodblock",
+   "P0": 0.034,
+   "L": 0.027,
+   "F": 0.032,
+   "P1": 0.041,
+   "P2": 0.041,
+   "P1d": 0.041,
+   "P1s": 0.036
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p31",
+   "cls": "woodblock",
+   "P0": 0.077,
+   "L": 0.055,
+   "F": 0.055,
+   "P1": 0.055,
+   "P2": 0.063,
+   "P1d": 0.055,
+   "P1s": 0.055
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p115",
+   "cls": "woodblock",
+   "P0": 0.098,
+   "L": 0.027,
+   "F": 0.024,
+   "P1": 0.031,
+   "P2": 0.098,
+   "P1d": 0.031,
+   "P1s": 0.027
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p25",
+   "cls": "woodblock",
+   "P0": 0.062,
+   "L": 0.042,
+   "F": 0.033,
+   "P1": 0.023,
+   "P2": 0.062,
+   "P1d": 0.023,
+   "P1s": 0.029
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p44",
+   "cls": "woodblock",
+   "P0": 0.049,
+   "L": 0.088,
+   "F": 0.026,
+   "P1": 0.033,
+   "P2": 0.069,
+   "P1d": 0.033,
+   "P1s": 0.033
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p79",
+   "cls": "woodblock",
+   "P0": 0.068,
+   "L": 0.065,
+   "F": 0.052,
+   "P1": 0.026,
+   "P2": 0.042,
+   "P1d": 0.026,
+   "P1s": 0.026
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p24",
+   "cls": "woodblock",
+   "P0": 0.042,
+   "L": 0.054,
+   "F": 0.022,
+   "P1": 0.027,
+   "P2": 0.027,
+   "P1d": 0.027,
+   "P1s": 0.027
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p31",
+   "cls": "woodblock",
+   "P0": 0.035,
+   "L": 0.013,
+   "F": 0.01,
+   "P1": 0.025,
+   "P2": 0.048,
+   "P1d": 0.025,
+   "P1s": 0.03
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p56",
+   "cls": "woodblock",
+   "P0": 0.052,
+   "L": 0.042,
+   "F": 0.044,
+   "P1": 0.052,
+   "P2": 0.079,
+   "P1d": 0.052,
+   "P1s": 0.054
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p65",
+   "cls": "woodblock",
+   "P0": 0.047,
+   "L": 0.057,
+   "F": 0.045,
+   "P1": 0.047,
+   "P2": 0.069,
+   "P1d": 0.047,
+   "P1s": 0.052
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p11",
+   "cls": "woodblock",
+   "P0": 0.12,
+   "L": 0.042,
+   "F": 0.031,
+   "P1": 0.068,
+   "P2": 0.101,
+   "P1d": 0.068,
+   "P1s": 0.075
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p32",
+   "cls": "woodblock",
+   "P0": 0.028,
+   "L": 0.062,
+   "F": 0.024,
+   "P1": 0.033,
+   "P2": 0.045,
+   "P1d": 0.033,
+   "P1s": 0.036
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p39",
+   "cls": "woodblock",
+   "P0": 0.055,
+   "L": 0.06,
+   "F": 0.053,
+   "P1": 0.063,
+   "P2": 0.073,
+   "P1d": 0.063,
+   "P1s": 0.06
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p54",
+   "cls": "woodblock",
+   "P0": 0.043,
+   "L": 0.034,
+   "F": 0.038,
+   "P1": 0.046,
+   "P2": 0.063,
+   "P1d": 0.046,
+   "P1s": 0.043
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cf9-p24",
+   "cls": "woodblock",
+   "P0": 0.079,
+   "L": 0.049,
+   "F": 0.033,
+   "P1": 0.043,
+   "P2": 0.049,
+   "P1d": 0.043,
+   "P1s": 0.043
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cf9-p26",
+   "cls": "woodblock",
+   "P0": 0.094,
+   "L": 0.055,
+   "F": 0.039,
+   "P1": 0.045,
+   "P2": 0.058,
+   "P1d": 0.045,
+   "P1s": 0.049
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cf9-p60",
+   "cls": "woodblock",
+   "P0": 0.125,
+   "L": 0.154,
+   "F": 0.109,
+   "P1": 0.112,
+   "P2": 0.112,
+   "P1d": 0.112,
+   "P1s": 0.112
+  }
+ ]
+}

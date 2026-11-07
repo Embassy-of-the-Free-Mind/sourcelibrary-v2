@@ -11,6 +11,7 @@ import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { logBotRead } from '@/lib/bot-reads';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { isBookReadable } from '@/lib/book-access';
+import { findFacingPartner, facingTranslationNote, hasPublishedFacingTranslation } from '@/lib/facing-translation';
 
 interface RouteContext {
   params: Promise<{ tenant: string; id: string }>;
@@ -128,7 +129,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
-    const quotable = resolveQuoteText(page, book.id);
+    const quotable = resolveQuoteText(page, book.id, 'en', { book });
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
@@ -149,6 +150,18 @@ export async function GET(request: NextRequest, context: RouteContext) {
     const editions = (book.editions || []) as TranslationEdition[];
     const currentEdition = editions.find(e => e.status === 'published');
 
+    // A transcription carries no "trans. Source Library" credit (#7458), and on a
+    // facing-page edition (a Loeb, #8321) an English leaf is the translator's
+    // words: say so, whether or not an original leaf faces it.
+    const servesTranscription = quotable.source === 'ocr_original';
+    const facing = servesTranscription && hasPublishedFacingTranslation(book)
+      ? await findFacingPartner<Page>(db, book, { ...page, book_id: resolvedBookId })
+      : null;
+    const transcriptionNote = !servesTranscription ? undefined
+      : hasPublishedFacingTranslation(book)
+        ? facingTranslationNote(book, { paired: facing?.role === 'translation' })
+        : OCR_ORIGINAL_NOTE;
+
     // Build response
     const response: QuoteResponse = {
       quote: {
@@ -164,7 +177,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
           ? { translation: quotable.text }
           : {}),
         text_source: quotable.source,
-        ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
+        ...(transcriptionNote ? { transcription_note: transcriptionNote } : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
         // Served text AND the OCR original — the transcription is the
         // authority on whether the leaf carries a marginal note (#4362).
@@ -179,7 +192,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
         published: book.published,
         language: book.language,
       },
-      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
+      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, undefined, undefined, { transcription: servesTranscription }),
       license: CONTENT_LICENSE,
     };
 
@@ -214,7 +227,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       // sentence spanning the leaf break be quoted whole (#3939).
       const neighbour = (p: unknown) => {
         const pg = p as Page | null;
-        return pg ? resolveQuoteText(pg, resolvedBookId)?.text : undefined;
+        return pg ? resolveQuoteText(pg, resolvedBookId, 'en', { book })?.text : undefined;
       };
       response.context = {
         previous_page: neighbour(prevPage),

@@ -1,0 +1,11 @@
+ROW 1 | ഷാദൈവംവ്യപവിറന്തു‖കാൎയ്യപദാൎത്ഥിവ്യൽവത്തിൻന്നിൽ[illegible]‖ൎക്കുപാദത്തിൽചെന്നു।ഷാൎത്ത്വേ
+ROW 2 | ാത്രിഭുവനത്തിലെകൊണ്ടു[illegible]‖ഇന്ദ്രാദൈസിദ്ധിവ്യപഹാരാൽദിക്ക[illegible]‖ക്കിതവദ്ദേശ്യൎണ്ണത്രാദൈരു
+ROW 3 | ദ്രൂസിദ്ധാനാദിവ്യവഹാര[illegible]‖ൽസിദ്ധിവിമദ്ധ്യകാരെന്നവ്യക്തവത്തിദൾനാഴ്ക‖ചക്ഷണാകിശബ്ദവൃത്തിശേഷ
+ROW 4 | സംബന്ധാലക്ഷിണ‖ാംശംഗാഷ്ടാംശലാവഋത്ത്രഗംഗ‖മദവാച്യപ്രവാഹസര
+ROW 5 | ബന്ധാദേവിത്തിരൂ‖പക്ഷിതൈരാൻതിശക്തിർത്ത്യൂ‖തൈഃതൈസന്ധവാദൈരു
+ROW 6 | ലവണോഷ്ടക്ഷയാഃ‖പദസ്ഥസംബന്ധാദിവാൽനാന‖ശക്തികളെനംലക്ഷണ
+ROW 7 | ൗത്തിവിധാഃജഹള്‌‖ക്ഷതാൎഅജഹള്ളക്ഷണാജഹദജ‖ഹള്ളക്ഷണാചെന്തിഃഖ
+ROW 8 | ത്രവാച്യാൎത്ഥസ്യാസ്വയാ‖ദിവാവഷ്ക്രഷ്ടഗതിയഷ്ടാഭഞ്ജാഃക്രൃൎഗതന്‌‖ജീവിതയതൃപാച്യസ്യാവ്യസ്യ
+ROW 9 | ക്രൂജഹദജഹൽക്കിതിഃ‖യഷ്ടാഗാമഹിതിൽഗംഗഴ്ത്തിലക്ഷണംഗ്ഗ‖ാവക്ഷത്രരഷ്ടാഃഗ്ഗാസംബന്ധ
+ROW 10 | ദ്രുപാൎത്ഥദ്ദ്രാണുകമ്യ‖ത്ഥിദ്ദ്രൂജഷ്ടാകിമംജ്ഞഗ്ഗശക്തിലക്ഷണാ‖ന്ദ്രേത്വംത്വക്കിമുലാചാൎമമാ
+NOTE | I could read all 10 rows only roughly and my confidence is low. Many conjuncts and vowel signs are tentative, and so are the joins where the pieces overlap. Rows 4–7 are the short rows beside the string holes. For consistency I put ‖ at the same column breaks in the full-width rows (1–3 and 8–10) too. The text looks like a Malayalam commentary on lakṣaṇā: jahat/ajahat, Gaṅgā/pravāha.

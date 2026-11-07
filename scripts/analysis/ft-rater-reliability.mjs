@@ -68,7 +68,7 @@ await withMongo(async (db) => {
   const att = db.collection('first_translation_attempts');
   // Per book: family -> { found, urlFound, prior } (the strongest url-backed prior)
   const byBook = new Map();
-  const cur = att.find({}, { projection: { _id: 0, book_id: 1, method: 1, model: 1, independence_score: 1, result: 1, queries: 1, priors: 1 } });
+  const cur = att.find({}, { projection: { _id: 0, book_id: 1, method: 1, model: 1, independence_score: 1, result: 1, queries: 1, priors: 1 } }).batchSize(1000);
   for await (const a of cur) {
     const fam = family(a);
     if (!fam) continue;

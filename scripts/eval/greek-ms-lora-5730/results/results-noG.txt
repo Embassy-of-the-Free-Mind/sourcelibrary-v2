@@ -1,0 +1,23 @@
+overall: INCOMPLETE
+arms: F S L; pages scored 388, dropped 0 (an arm had no read)
+
+== T2 (n = 307)  median page CER %, view N [95% CI]  | view A | catastrophic
+  F: 312.3 [291.8, 340.1] | 325.5 | 296
+  S: 30.4 [29.0, 31.8] | 36.0 | 7
+  L: 36.5 [35.5, 37.8] | 44.6 | 24
+  F-S: Δ 276.1 pt [257.5, 306.0]  W/L 0/307
+  F-L: Δ 270.3 pt [223.7, 295.1]  W/L 8/299
+  · Marcianus gr. 299 (n 104): F 330.1  S 33.2  L 37.5
+  · Ars sacra (Laurenziana) (n 203): F 100.0  S 28.6  L 35.6
+  verdict: null "an arm is missing"
+
+== T1 (n = 81)  median page CER %, view N [95% CI]  | view A | catastrophic
+  F: 100.0 [100.0, 100.0] | 100.0 | 81
+  S: 32.7 [31.7, 34.5] | 38.0 | 4
+  L: 205.2 [193.8, 229.5] | 214.2 | 74
+  F-S: Δ 67.0 pt [64.5, 68.1]  W/L 0/81
+  F-L: Δ -108.7 pt [-129.5, -96.3]  W/L 62/17
+  · Grec 1841 (n 81): F 100.0  S 32.7  L 205.2
+  verdict: null "an arm is missing"
+
+[exited with code 0]

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three gives any readable text (every segment is [illegible]), so none can be judged as real Sanskrit or Malayalam and the choice is close to arbitrary; A wins only slightly because it marks string holes just in the middle rows (5–9), which fits how holes sit on a palm leaf, while B and C are identical and put holes in all 13 rows.

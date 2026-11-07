@@ -1,0 +1,10 @@
+2026-10-23T03:05:01Z label tokens
+train labels: 619, median 1548 tokens, max 2077, over 4096: 0
+2026-10-23T03:05:05Z train
+2026-10-23T04:54:34Z serve trained (F)
+2026-10-23T05:45:18Z F: {"mode":"glm","model":"m","pages_this_pass":388,"clients":16,"wall_secs":2998.8,"pages_per_hour":466,"errors":0,"hit_cap":260,"out_tok":1657530,"in_tok":1820834}
+2026-10-23T05:49:02Z Fval: {"mode":"glm","model":"m","pages_this_pass":33,"clients":16,"wall_secs":224.0,"pages_per_hour":530,"errors":0,"hit_cap":12,"out_tok":105868,"in_tok":178330}
+2026-10-23T05:49:04Z serve stock GLM-OCR (G)
+2026-10-23T06:39:29Z G: 
+2026-10-23T06:39:32Z GPU 2 MiB; scoring
+2026-10-23T06:40:41Z scored: overall: FAIL

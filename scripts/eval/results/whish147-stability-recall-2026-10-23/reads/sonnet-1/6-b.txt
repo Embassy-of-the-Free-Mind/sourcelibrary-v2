@@ -1,0 +1,10 @@
+ROW 1 | [illegible]യിയമൈഞ്ഞാനംവി[illegible] ‖ ൈാഹമൈക്ഷ്യംസാത്വി[illegible] ‖ [illegible]ത്വികമൈക്തൂപംതമ[illegible] ‖ [illegible]സമത്ധാദിപ്ല്യ്ക്ക[illegible]
+ROW 2 | [illegible]ലമാനാനവാംകാ[illegible] ‖ [illegible]ഞ്ഞാദിവിയഃപ്ര[illegible] ‖ [illegible]പ്രവൃത്തിഃകൈസത്വ്ഃ[illegible] ‖ [illegible]ാടശകക്ഷഗേഃ[illegible]മാ
+ROW 3 | [illegible] ‖ വയ്യസാവൈ[illegible] ‖ [illegible]ിരകൈകാദശകഃ ‖ പ്രൈങ്കതൈവെ
+ROW 4 | [illegible] ‖ ൧ത്ദ്ര[illegible]ൈഞ്ഞ[illegible] ‖ [illegible]ക്കമാത്രസക്കാദ ‖ തരൈങ്ങസാട്ട
+ROW 5 | [illegible] ‖ [illegible]യാമിചഞ്ഞ[illegible] ‖ [illegible]ലൈഞ്ജ്ഞാ൩ണി ‖ [illegible]സനാത്രഗാഖ്യാ
+ROW 6 | [illegible] ‖ [illegible]പാ൩ചാങ്ങ[illegible] ‖ [illegible]ലൂവസ്പൂ൧ൻകൈഖ ‖ ഇൊാണൂഉഹദ്വ്യ
+ROW 7 | [illegible] ‖ [illegible]ഗമനസ്ൻകല്ല[illegible] ‖ [illegible]കമിന്ദ്രയ്ഞൈസ൨ ‖ യക്ത്രാൽഗൈചന്നി
+ROW 8 | [illegible] ‖ [illegible]൧ൻ൧യകൈൊ൧ഹ[illegible] ‖ [illegible]ദൈ൩ൗ൧ക്ഷ ഃഡ്ഗൈ[illegible] ‖ [illegible]ക്ഞചാഭിഷപകൊ൧
+ROW 9 | [illegible] ‖ [illegible]ക്തമിഞ്ഞൈകൈവൃക്ക്[illegible] ‖ [illegible]വചന൩ശബവിഹാ[illegible] ‖ [illegible]ണൈ൩ഭസ്ളൊനടൊശ്
+NOTE | Low confidence: the script is hard to read and I could not read many letters. Each piece shows 9 rows, but the overlaps between pieces were not reliably matched, and the Malayalam above is only an approximate reading of the strokes.

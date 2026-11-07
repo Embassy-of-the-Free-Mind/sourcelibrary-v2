@@ -20,19 +20,6 @@ import type { Book, Page } from '@/lib/types';
 // editor-only gate on Restore (#3511 — restoring rewrites the page, so it
 // must not render as clickable for a non-editor).
 
-/** Friendly display names for the per-page AI model badge (kept in sync with
- * the old reader's RevisionHistory — Gemini ids fall through to a generic
- * strip, Claude ids get a clean short name). */
-const MODEL_LABELS: Record<string, string> = {
-  'claude-opus-4-8': 'Opus 4.8',
-  'claude-opus-4-8[1m]': 'Opus 4.8',
-  'claude-sonnet-5': 'Sonnet 5',
-  'claude-haiku-4-5': 'Haiku 4.5',
-};
-function formatModel(model: string) {
-  return MODEL_LABELS[model] ?? model.replace('gemini-', '').replace('-preview', '');
-}
-
 function formatDate(date: string | Date, lang: Locale, t: ReaderStrings['history']) {
   const d = new Date(date);
   const now = new Date();
@@ -144,11 +131,7 @@ function RevisionRow({ row, expanded, onToggle, onRestore, restoring }: {
         <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
           <FieldBadge field={row.__field} />
           <SourceBadge source={row.source} />
-          {row.model && (
-            <span className="font-sans text-[10.5px] truncate" style={{ color: 'var(--text-faint)' }}>
-              {formatModel(row.model)}
-            </span>
-          )}
+          {/* The badge says AI or by hand; the model is not named to readers (#7263). */}
           {row.edited_by && (
             <span className="font-sans text-[10.5px] truncate" style={{ color: 'var(--text-faint)' }}>
               {row.edited_by}

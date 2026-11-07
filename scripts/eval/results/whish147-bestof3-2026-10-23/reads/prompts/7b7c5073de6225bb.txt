@@ -1,0 +1,49 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 3 machine transcriptions (A, B, C) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. ത്രിഗുണമവിവെകി‖വിഷയസ്സാമാന്യമചെതനംപ്രസവ‖ധൎമ്മിവ്യക്തന്തഥാപ്രധ
+2. ാനന്തദ്വിപരീതസ്ത‖ഥാചപുമാൻ[illegible]പ്രീത്യപ്രീതിവിഷാ‖ദാത്മകാഃപ്രകാശ
+3. പ്രവൃത്തിനിയമാ‖ൎത്ഥാഃഅന്യൊന്യാഭിഭവാശ്രയജ‖നനമിഥുനവൃത്തയശ്ച
+4. ഗുണാഃ[illegible]സത്വം‖ലഘുപ്രകാശകമിഷ്ടമുപഷ്ടംഭ‖കഞ്ചലഞ്ചരജഃ
+5. ഗുരുവരണകമെ‖വതമഃപ്രദീപവച്ചാൎത്ഥ‖തൊവൃത്തിഃ[illegible]
+6. [illegible]വിവെക്യാദെ‖സിദ്ധിസ്ത്രൈഗുണ്യാത്തദ്വിപൎയ്യ‖യാഭാവാൽകാ
+7. രണഗുണാത്മക‖ത്വാൽകാൎയ്യസ്യാവ്യക്തമപി‖സിദ്ധം[illegible]ഭെദാ
+8. നാംപരിമാണാ‖ൽസമന്വയാച്ഛക്തിതഃപ്രവൃത്തെശ്ച‖കാരണകാൎയ്യവിഭാ
+9. ഗാദവിഭാഗാദ്വൈശ്വ‖രൂപ്യസ്യ[illegible]കാരണമസ്ത്യവ്യക്തംപ്ര‖വൎത്തതെത്രിഗുണതസ്സ
+10. മുദയാച്ചപരിണാ‖മതസ്സലിലവൽപ്രതിപ്രതിഗുണാശ്രയ‖വിശെഷാൽ[illegible]
+
+TRANSCRIPTION B
+1. ത്രിഗുണമവിവേകി‖വിഷയസ്സാമാന്യമചേതനംപ്രസവ‖ധൎമ്മിവ്യക്തന്തഥാപ്രധ
+2. ാനന്തദ്വിപരീതസ്ത‖ഥാചപുമാൻ[illegible]പ്രീത്യപ്രീതിവി‖ഷാദാത്മകാഃപ്രകാശ
+3. പ്രവൃത്തിനിയമാ‖ൎത്ഥാഃഅന്യൊന്യാഭിഭവാശ്രയജ‖നനമിഥുനവൃത്തയശ്ച
+4. ഗുണാഃ[illegible]സത്വം‖ലഘുപ്രകാശകമിഷ്ടമുപഷ്ടംഭ‖കഞ്ചലഞ്ചരജഃ
+5. ഗുരുവരണകമെ‖വതമഃപ്രദീപവച്ചാൎത്ഥ‖തൊവൃത്തിഃ[illegible]
+6. അവിവെക്യാദെ‖സ്സിദ്ധിസ്ത്രൈഗുണ്യാത്തദ്വിപൎയ്യ‖യാഭാവാൽകാ
+7. രണഗുണാത്മക‖ത്വാൽകാൎയ്യസ്യാവ്യക്തമപി‖സിദ്ധം[illegible]ഭെദാ
+8. നാംപരിമാണാ‖ൽസമന്വയാച്ഛക്തിതഃപ്രവൃത്തെശ്ച‖കാരണകാൎയ്യവിഭാ
+9. ഗാദവിഭാഗാദ്വൈശ്വ‖രൂപ്യസ്യ[illegible]കാരണമസ്ത്യവ്യക്തംപ്രവ‖ൎത്തതെത്രിഗുണതസ്സ
+10. മുദയാച്ചപരിണാ‖മതസ്സലിലവൽപ്രതിപ്രതിഗുണാശ്രയ‖വിശെഷാൽസം[illegible]
+
+TRANSCRIPTION C
+1. ത്രിഗുണമവിവെകി‖വിഷയസ്സാമാന്യമചെതനംപ്രസവധ‖ൎമ്മിവ്യക്തന്തഥാപ്രധ
+2. ാനന്തദ്വിപരീതസ്ത‖ഥാചപുമാൻ[illegible]പ്രീത്യപ്രീതിവി‖ഷാദാത്മകാഃപ്രകാശ
+3. പ്രവൃത്തിനിയമാ‖ൎത്ഥാഃ[illegible]ന്യൊന്യാഭിഭവാശ്രയ‖ജനനമിഥുനവൃത്തയശ്ച
+4. ഗുണാഃ[illegible]സത്വം‖ലഘുപ്രകാശകമിഷ്ടമുപഷ്ടംഭ‖കഞ്ചലഞ്ചരജഃ
+5. ഗുരുവരണക‖മെവതമഃപ്രദീപവച്ചാൎത്ഥ‖തൊവൃത്തിഃ[illegible]
+6. [illegible]വിവെക്യാദെ‖സിദ്ധംത്രൈഗുണ്യാത്തദ്വിപൎയ്യ‖യാഭാവാൽകാ
+7. രണഗുണാത്മക‖ത്വാൽകാൎയ്യസ്യാവ്യക്തമപി‖സിദ്ധം[illegible]ഭെദാ
+8. നാംപരിമാണാ‖ൽസമന്വയാച്ഛക്തിതഃപ്രവൃത്തെശ്ച‖കാരണകാൎയ്യവിഭാ
+9. ഗാദവിഭാഗാദ്വൈശ്വ‖രൂപ്യസ്യകാരണമസ്ത്യവ്യക്തംപ്രവ‖ൎത്തതെത്രിഗുണതസ്സ
+10. സമുദയാച്ചപരിണാ‖മതസ്സലിലവൽപ്രതിപ്രതിഗുണാശ്രയ‖വിശെഷാൽ[illegible]സംഘ
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

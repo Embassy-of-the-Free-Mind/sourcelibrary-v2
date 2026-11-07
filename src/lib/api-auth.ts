@@ -17,7 +17,9 @@ import { auth } from '@/lib/auth';
 import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
 import { API_LIMITS } from '@/lib/api-limits';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
 import { logApiUsage } from '@/lib/api-usage';
+import { verifiedAssistantFetcher, type AssistantOperator } from '@/lib/assistant-fetchers';
 import type { ApiKeyDoc } from '@/lib/dataset/types';
 
 export type ApiIdentityKind = 'session' | 'apikey' | 'bot' | 'anon';
@@ -28,6 +30,8 @@ export interface ApiIdentity {
   apiKeyId?: string;
   apiKeyTier?: string;
   bot?: string;
+  /** An assistant reading for a person, proven by name and published address (#8161). */
+  assistantFetcher?: AssistantOperator;
 }
 
 export interface ApiAuthDecision {
@@ -45,6 +49,7 @@ export interface ApiAuthDecision {
 // did 13 hits in 16h. Anyone hitting 1,000/hr is using a key anyway.
 const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || API_LIMITS.anon.requestsPerHour);
 const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || API_LIMITS.session.requestsPerHour);
+const ASSISTANT_LIMIT_PER_HOUR = Number(process.env.API_ASSISTANT_LIMIT_PER_HOUR || API_LIMITS.assistantFetcher.requestsPerHour);
 
 // User-Agent substrings that get the verified-bot bypass (kind:'bot' → unlimited
 // budget + rate-limit exempt). Once API_AUTH_ENFORCE is on, this is a real
@@ -56,52 +61,19 @@ const VERIFIED_BOT_UAS = [
   'duckduckbot', 'applebot', 'mojeekbot',
 ];
 
-// Expected reverse-DNS suffixes per bot signature. A request claiming one of
-// these UAs must reverse-resolve to a matching host AND that host must forward-
-// resolve back to the request IP. Signatures absent here (duckduckbot, mojeek)
-// can't be rDNS-verified; they keep UA-trust (low volume, accepted risk).
-const VERIFIED_BOT_DOMAINS: Record<string, string[]> = {
-  googlebot: ['.googlebot.com', '.google.com'],
-  bingbot: ['.search.msn.com'],
-  msnbot: ['.search.msn.com'],
-  applebot: ['.applebot.apple.com'],
-};
-
 function detectVerifiedBot(ua: string): string | null {
   const lower = ua.toLowerCase();
   for (const sig of VERIFIED_BOT_UAS) if (lower.includes(sig)) return sig;
   return null;
 }
 
-// Forward-confirmed reverse DNS, cached per IP+signature. Fail-safe: any error,
-// timeout, or mismatch returns false (caller demotes the request to anon — never
-// a hard block). Lazy-imports node:dns so this module stays edge-safe until a
-// verified-bot UA actually hits a Node route.
-const rdnsCache = new Map<string, { ok: boolean; exp: number }>();
-const RDNS_TTL_MS = 60 * 60 * 1000;
-
-async function verifyBotByRdns(sig: string, ip: string): Promise<boolean> {
-  const domains = VERIFIED_BOT_DOMAINS[sig];
-  if (!domains) return true; // not rDNS-verifiable — keep UA-trust
-  if (!ip) return false;
-  const cacheKey = `${ip}|${sig}`;
-  const hit = rdnsCache.get(cacheKey);
-  if (hit && hit.exp > Date.now()) return hit.ok;
-
-  let ok = false;
-  try {
-    const dns = await import('node:dns/promises');
-    const hosts = await dns.reverse(ip);
-    const host = hosts.find((h) => domains.some((d) => h.toLowerCase().endsWith(d)));
-    if (host) {
-      const forward = await dns.resolve(host).catch(() => [] as string[]);
-      ok = forward.includes(ip);
-    }
-  } catch {
-    ok = false;
-  }
-  rdnsCache.set(cacheKey, { ok, exp: Date.now() + RDNS_TTL_MS });
-  return ok;
+// A provable claim needs forward-confirmed reverse DNS (crawler-verify.ts). A
+// failed or inconclusive check demotes the request to anon, never a hard block.
+// Signatures that cannot be proven (duckduckbot, mojeek) keep UA-trust (low
+// volume, accepted risk).
+async function verifiedBot(sig: string, ip: string): Promise<boolean> {
+  if (!provableClaimIn(sig)) return true;
+  return (await verifyCrawlerClaim(sig, ip)) === 'verified';
 }
 
 function sameOrigin(request: NextRequest): boolean {
@@ -174,7 +146,7 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   // gets the same access as a logged-out human, which is what they get today.
   const ua = request.headers.get('user-agent') || '';
   const bot = detectVerifiedBot(ua);
-  if (bot && (await verifyBotByRdns(bot, getClientIp(request)))) {
+  if (bot && (await verifiedBot(bot, getClientIp(request)))) {
     return { allowed: true, status: 200, identity: { kind: 'bot', bot } };
   }
   // A verified-bot UA that fails rDNS confirmation (likely spoofed) falls
@@ -201,9 +173,26 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
     return { allowed: true, status: 200, identity: { kind: 'anon' } };
   }
 
+  const ip = getClientIp(request);
+
+  // 3b) An assistant reading for a person, proven by name and published address.
+  // Many people share each of these addresses, and none of them can sign in on
+  // the assistant's behalf, so the anonymous bucket is the wrong size (#8161).
+  const assistantFetcher = verifiedAssistantFetcher(ua, ip);
+  if (assistantFetcher) {
+    const rl = checkRateLimit(
+      { name: 'api:assistant', limit: ASSISTANT_LIMIT_PER_HOUR, windowSeconds: 3600 },
+      ip,
+    );
+    const identity: ApiIdentity = { kind: 'anon', assistantFetcher };
+    if (!rl.allowed) {
+      return { allowed: false, status: 429, retryAfter: rl.retryAfter, identity, reason: 'assistant_rate_limit' };
+    }
+    return { allowed: true, status: 200, identity };
+  }
+
   // 4) Anonymous — token bucket per IP. Past the limit, return 401 with a
   // signup CTA in the body so MCP/SDK clients surface the message verbatim.
-  const ip = getClientIp(request);
   const rl = checkRateLimit(
     { name: 'api:anon', limit: ANON_LIMIT_PER_HOUR, windowSeconds: 3600 },
     ip,
@@ -252,6 +241,15 @@ function buildSessionRateLimitBody(retryAfter?: number) {
   };
 }
 
+/** Body returned to an assistant's shared address. Signing in is not something it can do. */
+function buildAssistantRateLimitBody(retryAfter?: number) {
+  return {
+    error: `Source Library is getting a lot of requests from this assistant's address. Wait ${retryAfter ?? '?'}s and try again.`,
+    next_steps: {},
+    retry_after_seconds: retryAfter,
+  };
+}
+
 /** Body returned to a keyed caller who blew their tier's requests/minute. */
 function buildKeyRateLimitBody(retryAfter?: number) {
   return {
@@ -284,7 +282,8 @@ export interface WithApiAuthOptions {
 
 type RateLimitBody = ReturnType<typeof buildAnonRateLimitBody>
   | ReturnType<typeof buildSessionRateLimitBody>
-  | ReturnType<typeof buildKeyRateLimitBody>;
+  | ReturnType<typeof buildKeyRateLimitBody>
+  | ReturnType<typeof buildAssistantRateLimitBody>;
 
 /** JSON-RPC error envelope for MCP-style clients. */
 function buildJsonRpcError(httpStatus: number, body: RateLimitBody) {
@@ -317,6 +316,7 @@ export function withApiAuth<C = unknown>(
       const httpBody =
         decision.status === 401 ? buildAnonRateLimitBody(decision.retryAfter)
         : decision.reason === 'key_rate_limit' ? buildKeyRateLimitBody(decision.retryAfter)
+        : decision.reason === 'assistant_rate_limit' ? buildAssistantRateLimitBody(decision.retryAfter)
         : buildSessionRateLimitBody(decision.retryAfter);
 
       const headers: Record<string, string> = {};

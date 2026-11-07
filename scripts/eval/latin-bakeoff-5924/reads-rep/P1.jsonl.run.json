@@ -1,0 +1,13 @@
+{
+ "arm": "latrep5924-l1",
+ "backend": "server",
+ "workers": 8,
+ "max_side": 0,
+ "layout": 1,
+ "page_batch": 1,
+ "pages": 99,
+ "errors": 0,
+ "wall_secs": 144.9,
+ "load_secs_max": 11.1,
+ "wall_secs_after_load": 133.8
+}

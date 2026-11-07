@@ -1,0 +1,4 @@
+A | S, S, S, S, S, S, S, S, S, S | overall: S
+B | S, S, S, S, S, S, S, S, S, S | overall: S
+C | P, P, P, P, G, G, P, G, G, G | overall: G
+COMMENT | A and B both read as continuous, grammatical text of Sāṅkhyakārikā 11–16 and differ only in word breaks and verse numbers, while C has a few real words (triguṇam, ātmakāḥ, guṇāḥ, siddham, triguṇa) scattered among syllables that are not Sanskrit.

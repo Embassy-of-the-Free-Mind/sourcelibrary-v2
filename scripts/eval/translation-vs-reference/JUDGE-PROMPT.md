@@ -13,6 +13,12 @@ must not guess. Per item you have:
   - `reference_style: free` — paraphrases; judge only whether the same things are said.
   - `reference_style: early-modern` — 16th–19th c. English, loose, may expand or compress; never reward or
     penalise a candidate for matching or missing its wording, archaism or additions.
+- `reference_kind: source_witness` (some items): the `reference` is then NOT an English translation. It is an
+  independent Chinese transcription of the same edition (Kanripo's Wenyuange text) at the page that best matches the
+  OCR, and `reference_note` gives how well it matched. Use it only to settle what the SOURCE says where the OCR may
+  have misread a character or scrambled the column order; when the match is weak it may be a different passage, so
+  then judge against the source alone. Score fidelity to the page's meaning as usual; `reference_fit` rates how
+  the witness lines up with the source.
 - optional `source_prev_tail` / `source_next_head`: the end of the previous page and the start of the next one, so
   you can tell text carried over from a neighbouring page.
 - `translations`: candidates T1..Tn.

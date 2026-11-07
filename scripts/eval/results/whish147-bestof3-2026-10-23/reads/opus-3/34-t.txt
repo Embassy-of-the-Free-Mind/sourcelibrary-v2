@@ -1,0 +1,11 @@
+ROW 1 | ഭിലഞ്ഞബിത്തം. ഏകത്ര, ഉതസെച്ചുപനരാനെകാന്തോ [illegible] സ്താൎഗ്ഗകത്വാൽ ഭൈഷശബിര
+ROW 2 | പൃഥക് പ്രതിശരീരമനേകഃ പുരുഷഃ ഉഭയവരിണഭവ [illegible] ഞ്ചാനഃ പൃഥക്കോന്വാദ
+ROW 3 | ശരീവഷിണ്ണമി ‖ പ്രകൃതിന. പുരുഷാഃ ഇതദ്ദ്രോമാ ‖ ങ്കാള്ളതി. ഉ [illegible] ാമയെഭിന്നഃ
+ROW 4 | ന്ത്രാഘണ്ഡനാ ‖ മരണകരണാനാമിത്യാദികന ‖ [illegible] ണാം. ചക്ഷുരാദിഭി
+ROW 5 | യാംടേഭേദാ ‖ ഏതൈദസമിണ്ണാനസ്യാള്ളഷ്മ ‖ ദൎശ്ശനാദിവൈഭവ
+ROW 6 | തത്രൈദാൽ ‖ ചത്രിന്ദ്രിയമേവഭൗമി ‖ ബുസ്ഥാനൈശ്യാഭിവ
+ROW 7 | ഘടംപൃത്തി ‖ ത്രയെനസാബ്ദാദിഭോഗചാത്താണി ‖ ണ്ടാൽ ഭക്ത്യെ
+ROW 8 | ഉക്താഃ പൃത്തി ‖ സ്വാൽ രൈവാദകജ്ഞിൻ ജ്ഞാദയമാ ‖ ഭനിയമാദാവാസ
+ROW 9 | ഷ്ഷാംജ്ഞനനമരണേസ്യാകാരം ഭവൈഷകത്തിം വ്യവ്രഷ്ടാരെ ‖ ൈശ്രാദ്രവൎത്തിപാസരണ്ണഃ
+ROW 10 | ദൈവൎത്ഥതുവാൽമാല്ലിടഹജചേവാഞ്ഞനാഭവന്താം പ്രതിനിയ ‖ യുട്ടാൽകന്വാദനുധാതവ
+NOTE | This is a low-confidence draft: I could pick out the layout and the row breaks, but at this image resolution many letters (especially ൈ/െ/ഉ-type curls, ഭ/ബ/ശ, and conjuncts) are uncertain guesses, so treat it as a starting point to check against the leaf. I couldn't zoom in to confirm doubtful letters. The leaf has 10 rows; rows 1–2 and 9–10 run the full width, and rows 3–8 sit in three columns between the holes. The ‖ marks in rows 1, 2, 9 and 10 are approximate.

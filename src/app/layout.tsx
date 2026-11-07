@@ -15,6 +15,8 @@ import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
 import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
 import ScrollReveal from "@/components/layout/ScrollReveal";
+import PageStatusBar from "@/components/layout/PageStatusBar";
+import HuntConsoleNote from "@/components/providers/HuntConsoleNote";
 
 
 
@@ -140,8 +142,6 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: TRANSLATION_DOM_GUARD_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: VIEW_MODE_INIT_SCRIPT }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="search"
           type="application/opensearchdescription+xml"
@@ -169,6 +169,7 @@ export default async function RootLayout({
           <ScrollReveal />
           <ConditionalFooter />
           <SiteModeIndicator />
+          <PageStatusBar />
         </Providers>
         <ClientToaster />
         <CookieConsent />
@@ -177,6 +178,7 @@ export default async function RootLayout({
         <AnalyticsScripts />
         <PageTracker />
         <BrokenImageReporter />
+        <HuntConsoleNote />
       </body>
     </html>
   );

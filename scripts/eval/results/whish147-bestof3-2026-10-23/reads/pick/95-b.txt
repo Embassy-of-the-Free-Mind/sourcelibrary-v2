@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | A and C are entirely [illegible], so they offer no text, while B gives a few fragments, including the real Sanskrit word "yathā", which a scribe could plausibly have written (A and C are tied).

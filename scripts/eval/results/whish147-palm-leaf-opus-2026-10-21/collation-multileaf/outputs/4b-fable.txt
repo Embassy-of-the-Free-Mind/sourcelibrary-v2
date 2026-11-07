@@ -1,0 +1,20 @@
+Reading complete. The visible half of the leaf carries, in order, an invocation and then SK_1 through SK_5 with no gaps for commentary. Lines 3 to 7 are split around the string hole, so each shows only a few akṣaras on either side. No line on this half looked like prose commentary to me; the invocation on line 1 is the only non-verse text.
+
+**Line-by-line reading (left half only; "…" marks text that continues on the unseen right half)**
+
+- **Line 1, invocation, not in edition.** `hariḥ śrīgaṇapataye namaḥ avighnam astu`. Clear.
+- **Line 2, SK_1ab.** `duḥkhatrayābhighātāj jijñāsā tadapa…`. Clear through *jijñāsā*; *tadapa* is read at the hole and the rest is on the right half. No difference visible.
+- **Line 3, SK_2ab.** Left of hole: about six akṣaras that should be *dṛṣṭavad ānu-*, but I cannot read them with confidence. Right of hole: `…kṣayātiśaya yu…` at best, uncertain. I cannot confirm or deny the edition's *dṛpṭavad* from the leaf.
+- **Line 4, SK_2cd.** Left: `…(k)taḥ tadviparī…`. Right: `…taṃ śreyān vya…`. Reading of *tadviparī* and *śreyān vya* is fairly secure; the preceding *-ktaḥ* is uncertain. No difference visible.
+- **Line 5, SK_3ab.** Left: `prakṛtir avikṛ…`. Right: `…tir mahadādyā…`. *prakṛti* is clear; *mahadādyā* is probable. No difference visible.
+- **Line 6, SK_3cd.** Left: `ḍaśakas tu na…` probable. Right: possibly `…kṛtir na vikṛtiḥ pu…` but the glyphs here are the hardest on the leaf and this is uncertain. No difference I can affirm.
+- **Line 7, SK_4ab.** Left: `…m anumānam ā…` fairly secure. Right: `…ptavacanaṃ ca…` probable. The edition's footnoted *ca* appears to be present but I would not call it certain.
+- **Line 8, SK_4cd.** `…dhaṃ pramāṇam iṣṭaṃ prameyasiddhiḥ pramā…`. Clear. No difference.
+- **Line 9, SK_5ab.** `…ṣṭaṃ trividham anumānam ākhyāta(ṃ)…`. *trividham anumānam ā* is clear and the next akṣara is plainly *khyā* followed by *ta*. The final anusvāra is at the edge and I cannot see it. The rest of SK_5 is on the right half.
+
+**SK_6 and SK_7** are not on this half of the leaf.
+
+**Notes on the edition.** *dṛpṭavad* in SK_2 and *a-saktaṃ* in SK_5 look like edition errors. Only the second can be checked against the leaf, which reads *ākhyātaṃ*, the standard text. The leaf gives no evidence on *dṛpṭavad* because that passage is illegible to me.
+
+DIFFERENCES:
+SK_5 | a-saktaṃ | ākhyāta(ṃ) | certain (final anusvāra not visible)

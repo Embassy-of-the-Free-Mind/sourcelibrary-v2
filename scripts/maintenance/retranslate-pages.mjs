@@ -64,6 +64,7 @@ import {
   SAFETY_SETTINGS,
   loadTranslationPrompts,
   buildTranslationPrompt,
+  pageBreakVariant,
   writePageTranslation,
   syncBookTranslationCounters,
   assessTranslationHealth,
@@ -141,7 +142,7 @@ async function translateOnce(page, book, prevTranslation) {
     generationConfig: result.generationConfig,
     response: { modelVersion: result.raw?.modelVersion },
     run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
-    context: { previous_translation: !!prevTranslation },
+    context: { previous_translation: !!prevTranslation, page_break: pageBreakVariant(null) },
   };
   return { text: sanitizeTranslationTags(result.text), promptRef, call };
 }

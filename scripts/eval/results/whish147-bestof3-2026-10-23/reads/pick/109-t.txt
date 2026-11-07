@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A reads most consistently as a real commentary on Sāṅkhyakārikā 53–54, with phrases like "ityaṣṭavidhodaivaḥsarggaḥ", "ūrddhvādhomaddhyavibhāge traividdhyamāha ūrddhvaṃsatva" and "tamoviśālaśca mūlataḥ"; C has some correct readings ("pañcadhābhavati"), and B breaks down into nonsense syllables in several rows ("biṭaṅṅaḻ").

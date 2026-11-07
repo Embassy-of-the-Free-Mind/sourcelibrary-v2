@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three gives readable Sanskrit or Malayalam; B's few marks are plausible and match A in rows 5 and 12, while A's longer strings, such as "gaṭagarakṣma" and "ggaggamala", are not real words and have impossible clusters like word-initial "dd" and "gg", so A ranks below C, which offers no text at all.

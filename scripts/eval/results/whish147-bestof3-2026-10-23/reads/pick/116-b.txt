@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most like real Malayalam commentary on the Tarkasaṃgraha passage about earth (pṛthivī): it has phrases like "grahaṇattin indriyaṅṅaḷ", "śarīrendriyaṅṅaḷ oro viṣaya", "gandhavān viṣayaḥ", "gandhagrāhakam", "samānādhikaraṇa" and "śītaṃ śilā… jala", while A only holds together in a few rows and B is the most broken.

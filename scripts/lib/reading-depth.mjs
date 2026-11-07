@@ -4,7 +4,7 @@
  *
  * Shared by scripts/analytics/engagement-metrics.mjs (the human-readable
  * report) and scripts/analytics/snapshot-metrics.mjs (which feeds
- * /platform/admin/metrics AND the weekly digest email). They had near-identical
+ * the /admin dashboard AND the weekly digest email). They had near-identical
  * copies of this aggregation; a correction applied to one and not the other is
  * how a bad number survives a fix, so there is exactly one implementation now.
  *

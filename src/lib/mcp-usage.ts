@@ -19,7 +19,7 @@
  *
  * Fire-and-forget; logging failures never affect the tool response.
  */
-import { createHash } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import { after } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
@@ -89,6 +89,49 @@ function hashIp(ip: string): string {
   return createHash('sha256').update(ip).digest('hex').slice(0, 16);
 }
 
+// ── Session id: joins a handshake to the tool calls that followed it ──
+
+/**
+ * A random id handed to the client on `initialize` (`Mcp-Session-Id`); the MCP
+ * spec has the client echo it on every later request. The server stores no
+ * session and validates nothing, so it stays stateless on serverless.
+ *
+ * It exists for MEASUREMENT only: "of the chats that connected, how many used a
+ * tool, and how many calls did they make?" No tool call could answer that
+ * before, because a call carries no client identity and Claude traffic shares
+ * Anthropic's egress IPs.
+ *
+ * The client chooses what it echoes, so NEVER key a budget, a limit or an abuse
+ * decision on this value. A scraper can drop it or send a new one per call.
+ */
+const SESSION_ID_SHAPE = /^[A-Za-z0-9._:-]{8,128}$/;
+
+export function mintMcpSessionId(): string {
+  return randomUUID();
+}
+
+export function readMcpSessionId(headers: Pick<Headers, 'get'>): string | null {
+  const value = headers.get('mcp-session-id');
+  return value && SESSION_ID_SHAPE.test(value) ? value : null;
+}
+
+/**
+ * How many results a tool returned, or null when its shape does not say. The
+ * null matters: an empty search used to log as a plain success, and "unknown"
+ * must stay distinguishable from "measured zero".
+ */
+export function countToolResults(result: unknown): number | null {
+  if (!result || typeof result !== 'object') return null;
+  const r = result as Record<string, unknown>;
+  for (const key of ['total_matches', 'total', 'returned']) {
+    if (typeof r[key] === 'number') return r[key] as number;
+  }
+  for (const key of ['results', 'passages', 'books', 'images']) {
+    if (Array.isArray(r[key])) return (r[key] as unknown[]).length;
+  }
+  return null;
+}
+
 export interface LogMcpToolCallInput {
   tool: string;
   args: Record<string, unknown>;
@@ -96,6 +139,8 @@ export interface LogMcpToolCallInput {
   error?: string | null;
   ip: string;
   userAgent: string | null;
+  sessionId?: string | null;
+  resultCount?: number | null;
 }
 
 export function logMcpToolCall(input: LogMcpToolCallInput): void {
@@ -126,6 +171,8 @@ async function writeEntry(input: LogMcpToolCallInput) {
     error: input.error || null,
     ip_hash: hashIp(input.ip),
     user_agent: (input.userAgent || '').slice(0, 200),
+    session_id: input.sessionId ?? null,
+    result_count: input.resultCount ?? null,
   });
 }
 
@@ -169,6 +216,7 @@ export interface LogMcpInitializeInput {
   protocolVersion: string | null;
   ip: string;
   userAgent: string | null;
+  sessionId?: string | null;
 }
 
 export function logMcpInitialize(input: LogMcpInitializeInput): void {
@@ -189,5 +237,6 @@ async function writeClientEntry(input: LogMcpInitializeInput) {
     protocol_version: str(input.protocolVersion),
     ip_hash: hashIp(input.ip),
     user_agent: (input.userAgent || '').slice(0, 200),
+    session_id: input.sessionId ?? null,
   });
 }

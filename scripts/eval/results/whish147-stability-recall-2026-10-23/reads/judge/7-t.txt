@@ -1,0 +1,4 @@
+A | G,G,G,G,G,G,G,G,G | overall: G
+B | P,P,G,G,G,P,P,P,P | overall: P
+C | P,P,G,G,G,G,G,P,P | overall: P
+COMMENT | B is the most readable: it has real Sāṅkhya fragments (pañca-tanmātrāṇām, prāṇādyā vāyavaḥ, prakāśakaram, daśadhā, sāmpratakāla… antaraṃ karaṇam, viśeṣa-viṣayāṇām), though rows with Malayalam-like sequences (ḻḻ, ṇṇ, -uṇṭu) may come from a vernacular gloss rather than misreading; C has scattered matches (vṛttiḥ, traikāla, viśeṣāviśeṣa-viṣayāṇām) but is mostly noise, and A is almost empty fragments.

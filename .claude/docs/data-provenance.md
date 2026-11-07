@@ -9,6 +9,41 @@ translated — by hash), and a content hash of the output. Summaries, indexes an
 carry the older, thinner record (model, prompt version, source). This document explains the chain
 and where it is thinner than that.
 
+## Principles
+
+What the sections below implement, for any value the library shows: a line of text, a title, an
+author, a date, a badge. The test is that "where did this come from?" has a true, specific answer
+in one step, down to the page image or the catalogue record (#7673).
+
+1. **Every value can say five things:** what it was taken from, who or what produced it, how,
+   when, and what it replaced.
+2. **Name the kind of claim.** *Observed* (copied from a source: the title page, a library's
+   record), *generated* (a model: name the model, prompt, settings and run; "ai" is not a label),
+   *inferred* (reconstructed by a stated rule, with its basis), *asserted* (a named person).
+3. **Point at the evidence.** "From the title page" carries the page number and what is printed;
+   "from the catalogue" carries the record's URL. A reader can check it.
+4. **Never lose what was there.** An overwrite keeps the old value (`page_revisions`,
+   `book_revisions`, `field_provenance_history`); the chain only grows.
+5. **"Not recorded" is an answer; a guessed stamp is not.** A wrong stamp is worse than none: it
+   is believed, and it stops anyone looking. An inference is stored as an inference, never as an
+   observation (§8a).
+6. **Value and stamp are written together, through one function, and CI enforces it.** Page text:
+   `write-provenance`. Book fields: `setCatalogueFields()` (imprint, title, author), linted by
+   `field-write-lint`. A written rule alone has failed every time it was tried.
+7. **A machine never overwrites a person's edit.**
+8. **Proportionate depth.** Full records for what a reader cites (text, title, author, date,
+   imprint, language, first-translation claims); model, prompt and input for generated
+   descriptions (summary, index, chapters); a `sweep_log` row for internal flags.
+9. **Reconstruct by matching, not by assuming.** A value written before stamping existed is
+   stamped after the fact only when an independent record matches it (the holding library's
+   record, re-fetched and checked), marked `reconstructed: true` with the record's URL. What
+   matches nothing stays unstamped and is reported (§10, `reconstruct-title-provenance-7673.mjs`).
+
+The number to watch is the share of **writes in the last seven days** that carry a complete
+record; it should be 100% and stay there. Total coverage moves slowly, because old records are
+only improved when real work touches them, and it cannot tell you whether something is still
+writing unstamped values.
+
 > **Status, 2026-09-28 (#4613).** Before this date no Gemini writer recorded temperature, thinking
 > budget, max output tokens or media resolution; realtime OCR recorded neither prompt text, run nor
 > input image; translations did not say which OCR text they were made from; `ocr.source: 'ai'`
@@ -378,6 +413,8 @@ db.page_revisions.find({ page_id: pageId, field: 'ocr' }).sort({ created_at: -1 
 db.page_revisions.find({ page_id: pageId, field: 'translation' }).sort({ created_at: -1 })
 ```
 
+**Reads that were never written** (eval arms, failed gates, pilot reads) are not in `page_revisions`. They are in the private R2 bucket `sl-corpus-snapshots` under `candidate-reads/<book_id>/<page_id>/<ocr|translation>/<content_hash>.json` (text + the job's meta), kept the moment they are made by the read stages of `claude-ocr.mjs`, `cli-ocr.mjs`, `cli-translate.mjs`, `claude-translate.mjs` and `ocr-convergence/correct.mjs` (`scripts/lib/candidate-reads.mjs`), and swept from job folders by `scripts/maintenance/archive-candidate-reads.mjs` (also at every `claude-job.sh` DONE). Those readers reuse a kept read of the same page, model, prompt and input instead of calling, unless `--fresh`. List a page's reads with `archive-candidate-reads.mjs list --page=<id> [--text]` (#7075).
+
 ## 3. Book Revisions — What Was on This Book Before?
 
 `book_revisions` collection stores prior values of book-level AI-generated fields when they're regenerated. Without this, the `/api/books/[id]/index` route would silently destroy summary and index content on every regeneration.
@@ -482,6 +519,31 @@ This is non-negotiable. It applies to placeholder writes (blank-page markers, sa
 > fails a writer file that imports neither twin; `scripts/audit/provenance-coverage.mjs` fails a
 > page in production that lacks a required field.
 
+### Writer registry — what each lane stamps (checked 2026-09-30)
+
+"✓" = imports the provenance builder and passes the writer-guard test; "GAP" = listed in
+`data-provenance.md` §8. Re-check with `npx vitest run tests/unit/text-writers-use-provenance-builder.test.ts`
+and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over those.
+
+| Lane | Writer | `ocr.source` | Provenance |
+|---|---|---|---|
+| Gemini batch (orchestrator, `bulk-reocr-local.mjs`) | `scripts/workers/batch-collector.mjs`, `scripts/batch/collect-batch-results.mjs` | `batch_api` | ✓ `gemini-engine/1` |
+| Gemini realtime, hand-run | `scripts/batch/realtime-ocr.mjs` (`--realtime`, `--model=lite` only since #7075) | `ai` | ✓ |
+| Gemini CLI (agy, subscription): 3.8 Flash low in place of 3 Flash for the `FLASH_OCR_FROM` scripts and the ladder's flash tier | `scripts/batch/cli-ocr.mjs read` then `apply`; the held queue through `scripts/batch/cli-ocr-lane.mjs` | `ai` | ✓ `gemini-engine/1` (api `cli`, CLI name and version, prompt, image) |
+| Gemini realtime, Lambda / Vercel | `src/workers/ocr-processor-logic.ts`, `/api/books/[id]/batch-ocr-async` | `ai` / `batch_api` | ✓ (collect stamps `updated_at` as a string, #5228) |
+| Archive free text | `scripts/import/ia-ocr-ingest.mjs` | `ia_djvu` | ✓ `ia` block + `agreement_ref` (measured or `by_eye`) + ingest run |
+| Syriac Kraken | `scripts/lib/syriac-kraken-lane.mjs` | `kraken` | ✓ the reference shape |
+| Tibetan Yigdzin / BDRC | `scripts/maintenance/apply-reocr-verdicts.mjs` | per verdict | ✓ `engine` + `verdict` + revisions + sweep_log + book_events |
+| MinerU (ladder tier 3) | `scripts/workers/mineru-ocr-worker.mjs` | `mineru` | ✓ since PR #5280 — `specialist-engine/1` block (version, licence, run, image, `ladder` = the refusal stamps it follows), revisions, human-edit guard, sweep_log + book_events; `missingProvenance` checks it with the kraken/bdrc rule. Rows before 2026-09-30 (2,586) carry only a bare string. |
+| Opus two-read (German Kurrent MS, #6780) | `scripts/batch/claude-ocr-two-read.mjs apply` (`ocr.pipeline: claude-two-read-6780`) | `ai` | ✓ `anthropic` engine block (api `cli`); `input.two_read` = both reads' hashes, folded agreement, every dispute with its ruling; revisions, human-edit guard, sweep_log + book_events. The 40% overlap guard is lifted only for a stored flash-lite read on a book in `--replace-lite-books`. |
+| Opus one-read (Nahuatl / Maya, #6559) | `scripts/batch/claude-ocr.mjs` reads, `scripts/batch/cli-ocr.mjs apply` writes | `ai` | ✓ `anthropic` engine block (api `cli`) |
+| Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
+| Chinese guarded Paddle (held table + mixed residue, #6871 row 3) | `scripts/workers/paddle-zh-guarded-lane.mjs` (dry-run tested 2026-10-18; not applied) | `paddle`; `ai` on the Flash route | ✓ Paddle engine block (weights sha256, stack, serving, run, image sha256) or `gemini-engine/1` CLI block; `ocr.verdict` = the guard's verdict; first reads only, human-edit guard, revisions, sweep_log + book_events. Books stay held: their release is what queues paid translation |
+| Paddle split-leaf print (Chinese / Japanese, #6101) | `scripts/workers/paddle-print-lane.mjs apply` (`ocr.pipeline: paddle-print-2026-10`) | `paddle` | ✓ Paddle engine block (weights sha256, stack, serving, run) + `input.leaves` (crop box, ink, blank per leaf) + `replaced` (no_text / flash_lite / paddle_whole_spread); through `writePageText` (revision row with the whole prior field, `reason: reocr_paddle_print_6101`, `run_id`), human-edit guard, leaf blank/loop guards, sweep_log before and after, book_events. Books held `paddle-print-6101` before the first write |
+| GPU print, English 1800+ (#6871) | `scripts/workers/gpu-print-lane.mjs apply` (`ocr.pipeline: gpu-print-en-2026-10`) | `lightonocr` | ✓ engine block (model, HF snapshot, vLLM, host, GPU, decode, image URL + sha256); writes ONLY pages with no text in books under a GPU-lane hold (scans-only), kept; through `writePageText` (revision, CAS, run id); loop, blank, other-script, engine-commentary and transliteration guards; sweep_log + book_events. ocr-filler route `gpu-print-en` is OFF until reviewed |
+| Greek Kraken, Japanese NDL | eval only | — | — |
+| Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |
+
 ### Book-level (summary, reading_summary, index, chapters)
 
 > Any code path that overwrites `book.summary`, `book.reading_summary`, `book.index`, or `book.chapters` MUST call `createBookRevision(bookId, field)` first.
@@ -495,8 +557,12 @@ For multiple fields use `createBookRevisions(bookId, fields)` to fan out in para
 > value. Never write a value and its provenance in two operations: the second can fail, and a stamp
 > describing a value it did not produce is worse than no stamp.
 
-This rule is younger than the ones above and is **not yet enforced**: as of 2026-10-12 no writer on
-main calls the helper, and most of the layer was written by hand-rolled stamps. See §10.
+For imprint fields (#6327) and title, display_title, english_title and author (#7673) the rule is
+**enforced**: write them through `setCatalogueFields()` (`scripts/lib/catalogue-fields.mjs`), which
+reads `previous_value` itself, and the `field-write-lint` CI step fails a new write outside it.
+Writers that predate the gate are listed in `scripts/lib/imprint-write-baseline.json`, which may
+only shrink. Other bibliographic fields still rely on this sentence. Most of the existing layer was
+written by hand-rolled stamps; see §10.
 
 ### gemini_usage
 
@@ -733,11 +799,11 @@ distinguish a disputed stamp from a live one (open on #3471).
 ### Auditing
 
 ```bash
-npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history
+npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history / new writes (titles and authors, last 7 days; --days N)
 npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts --strict   # exit 1 on unmarked contradictions; 2 = could not measure
 ```
 
-Read-only, about 35 seconds. Run `--strict` after any sweep that touches a citation field, before
+Read-only, about 3 minutes. Run `--strict` after any sweep that touches a citation field, before
 calling the sweep done. It is a manual gate, not a PR check: a contradicted stamp is written by a
 sweep against production, so a red check would land on an unrelated PR whose author cannot act on
 it. The "contradicted" detector covers one field (`contributing_library`, using the same

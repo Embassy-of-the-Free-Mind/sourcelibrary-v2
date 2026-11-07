@@ -1,0 +1,283 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill_all.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#6553 (2026-10-25), scripts/eval/results/cells-6553-2026-10-25/scored.jsonl: one interior page per live book per language cell, read fresh; not counted (no image, no text on the leaf, or the judge could not read the script): {'Middle English': 2, 'Spanish': 3, 'Korean': 2, 'Portuguese': 1, 'Turkish': 1, 'Russian': 2, 'Old French': 1}.",
+ "judge": "claude-opus-5-5 sealed judge (JUDGE-CELLS.md v1), image open, reads blind as X / Y",
+ "mapping": "wrong_text = serious or invented; accept = status text and not serious; refusal / empty = not accepted, not wrong text",
+ "cells": {
+  "Italian": {
+   "task": "ocr",
+   "lang": "Italian",
+   "pages": 30,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 30,
+     "books": 30,
+     "accept": "21/30",
+     "wrong_text_pages": "9/30",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Spanish": {
+   "task": "ocr",
+   "lang": "Spanish",
+   "pages": 27,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 27,
+     "books": 27,
+     "accept": "23/27",
+     "wrong_text_pages": "4/27",
+     "classes_k_of_n": {
+      "empty": "1/27"
+     },
+     "wrong_text_classes": {
+      "empty": "1/27"
+     }
+    }
+   }
+  },
+  "Korean": {
+   "task": "ocr",
+   "lang": "Korean",
+   "pages": 28,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 28,
+     "books": 28,
+     "accept": "4/28",
+     "wrong_text_pages": "24/28",
+     "classes_k_of_n": {
+      "invented": "1/28"
+     },
+     "wrong_text_classes": {
+      "invented": "1/28"
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft",
+     "n": 28,
+     "books": 28,
+     "accept": "16/28",
+     "wrong_text_pages": "11/28",
+     "classes_k_of_n": {
+      "refusal": "1/28"
+     },
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Russian": {
+   "task": "ocr",
+   "lang": "Russian",
+   "pages": 28,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 28,
+     "books": 28,
+     "accept": "23/28",
+     "wrong_text_pages": "5/28",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft",
+     "n": 28,
+     "books": 28,
+     "accept": "26/28",
+     "wrong_text_pages": "2/28",
+     "classes_k_of_n": {
+      "refusal": "1/28"
+     },
+     "wrong_text_classes": {
+      "refusal": "1/28"
+     }
+    }
+   }
+  },
+  "Portuguese": {
+   "task": "ocr",
+   "lang": "Portuguese",
+   "pages": 18,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 18,
+     "books": 18,
+     "accept": "12/18",
+     "wrong_text_pages": "6/18",
+     "classes_k_of_n": {
+      "empty": "1/18"
+     },
+     "wrong_text_classes": {
+      "empty": "1/18"
+     }
+    }
+   }
+  },
+  "Danish": {
+   "task": "ocr",
+   "lang": "Danish",
+   "pages": 10,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 10,
+     "books": 10,
+     "accept": "9/10",
+     "wrong_text_pages": "1/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Hindi": {
+   "task": "ocr",
+   "lang": "Hindi",
+   "pages": 10,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 10,
+     "books": 10,
+     "accept": "10/10",
+     "wrong_text_pages": "0/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft",
+     "n": 10,
+     "books": 10,
+     "accept": "8/10",
+     "wrong_text_pages": "2/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Middle English": {
+   "task": "ocr",
+   "lang": "Middle English",
+   "pages": 8,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 8,
+     "books": 8,
+     "accept": "4/8",
+     "wrong_text_pages": "4/8",
+     "classes_k_of_n": {
+      "empty": "1/8"
+     },
+     "wrong_text_classes": {
+      "empty": "1/8"
+     }
+    }
+   }
+  },
+  "Middle High German": {
+   "task": "ocr",
+   "lang": "Middle High German",
+   "pages": 10,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 10,
+     "books": 10,
+     "accept": "1/10",
+     "wrong_text_pages": "9/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Old French": {
+   "task": "ocr",
+   "lang": "Old French",
+   "pages": 9,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 9,
+     "books": 9,
+     "accept": "6/9",
+     "wrong_text_pages": "3/9",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Ottoman Turkish": {
+   "task": "ocr",
+   "lang": "Ottoman Turkish",
+   "pages": 10,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 10,
+     "books": 10,
+     "accept": "3/10",
+     "wrong_text_pages": "7/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft",
+     "n": 10,
+     "books": 10,
+     "accept": "8/10",
+     "wrong_text_pages": "2/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Tamil": {
+   "task": "ocr",
+   "lang": "Tamil",
+   "pages": 10,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 10,
+     "books": 10,
+     "accept": "6/10",
+     "wrong_text_pages": "4/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft",
+     "n": 10,
+     "books": 10,
+     "accept": "9/10",
+     "wrong_text_pages": "1/10",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  },
+  "Turkish": {
+   "task": "ocr",
+   "lang": "Turkish",
+   "pages": 9,
+   "routes": {
+    "lite": {
+     "served": "a fresh gemini-3.1-flash-lite read, Standard OCR v19.1, temp 0.1 (the lane's draft route)",
+     "n": 9,
+     "books": 9,
+     "accept": "4/9",
+     "wrong_text_pages": "5/9",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {}
+    }
+   }
+  }
+ }
+}

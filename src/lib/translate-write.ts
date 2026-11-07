@@ -32,6 +32,7 @@ import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
 import { guardTranslationText } from './translation-write-guard';
+import { translationLayers, writePageAnnotations } from './translation-text'; // #5942: text + annotations beside data
 
 /**
  * `$unset` fragment every translation writer includes (#4927). `translation_stale`
@@ -201,6 +202,38 @@ export async function recordRefusedTranslation(
   }
 }
 
+/** The value recorded in `translation.fail_reason` when the model answered with nothing (#4685). */
+export const EMPTY_RESPONSE_REASON = 'empty_response';
+
+/** Is this model answer empty, or only whitespace? Twin of `isEmptyTranslation` in translate-core.mjs. */
+export function isEmptyTranslation(text: unknown): boolean {
+  return typeof text !== 'string' || !/\S/.test(text);
+}
+
+/**
+ * Record an empty model answer instead of storing it (#4685). TS twin of `recordEmptyTranslation`
+ * in `scripts/lib/translate-core.mjs`: not a refusal (`health_blocked` would take the page out of
+ * every selector, and an empty answer is usually one bad call) but a failure marker in the OCR
+ * side's shape — `translation.fail_reason`, `failed_at`, `fail_count`. `translation.data` is never
+ * touched, and a page that already holds a translation is left alone. Never throws.
+ */
+export async function recordEmptyTranslation(db: Db, page: { id: string }): Promise<void> {
+  try {
+    const now = new Date();
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id, 'translation.data': { $not: /\S/ } },
+      {
+        $set: { 'translation.fail_reason': EMPTY_RESPONSE_REASON, 'translation.failed_at': now, updated_at: now },
+        $inc: { 'translation.fail_count': 1 },
+      }
+    );
+  } catch (e) {
+    console.error(`[empty-response] Failed to stamp ${page.id}:`, e);
+  }
+}
+
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */
 export interface HumanEditableField {
   source?: string;
@@ -321,6 +354,8 @@ export interface WritePageTranslationResult {
   protected: boolean;
   /** Set when the text was refused (e.g. 'hidden-meta', #5376; 'stray-script', #5734): nothing was written, the reason is on the page. */
   refused?: string;
+  /** Set when the model's answer was empty (#4685): nothing was written, the page is marked `fail_reason: 'empty_response'`. */
+  emptyResponse?: boolean;
   /**
    * When protected, the EXISTING human translation (use it for previous-page
    * continuity); when written, the new text.
@@ -362,6 +397,13 @@ export async function writePageTranslation(
     return { written: false, protected: true, text: existing?.data ?? '' };
   }
 
+  // An empty model answer is never stored (#4685): it would blank a page that has English, or
+  // make one without it look done. Recorded as a failure; `text` is the existing translation.
+  if (GEMINI_SOURCES.has(source) && isEmptyTranslation(text)) {
+    await recordEmptyTranslation(db, { id: pageId });
+    return { written: false, protected: false, emptyResponse: true, text: existing?.data ?? '' };
+  }
+
   // Model output whose continuity <meta> holds the page is never stored (#5376) — the reader
   // would be shown an empty page. The refusal is recorded on the page and the text kept.
   if (GEMINI_SOURCES.has(source) && hidesPageInMeta(text)) {
@@ -384,12 +426,16 @@ export async function writePageTranslation(
 
   // Promise 3: provenance-stamped write.
   const now = new Date();
+  // #5942: the book's words and the notes, stored beside `data` (which is never rewritten for them).
+  const layers = translationLayers(finalText, { promptVersion: promptRef?.version ?? null });
   await db.collection('pages').updateOne(
     { id: pageId },
     {
       $set: {
         translation: {
           data: finalText,
+          text: layers.text,
+          text_from: layers.text_from,
           content_hash: contentHash(finalText),
           language,
           ...(model && { model }),
@@ -410,6 +456,7 @@ export async function writePageTranslation(
       $unset: CLEAR_STALE_UNSET,
     }
   );
+  await writePageAnnotations(db, [{ page_id: pageId, book_id: (current?.book_id as string | undefined) ?? null, run_id: jobId ?? null, layers }]);
   return { written: true, protected: false, text: finalText };
 }
 

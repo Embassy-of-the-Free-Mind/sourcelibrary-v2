@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | A and C are identical and entirely [illegible], so they contain no text at all; B at least gives one real Sanskrit word ("bhūtaḥ", plausible in a Sāṅkhya context), though it shows almost nothing else and leaves out the string holes in rows 1–4.

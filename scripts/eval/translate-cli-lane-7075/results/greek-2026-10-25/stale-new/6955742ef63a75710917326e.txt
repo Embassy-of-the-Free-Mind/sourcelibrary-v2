@@ -1,0 +1,37 @@
+<header>X, 8. Hymn</header>
+
+<note>Ancient Greek musical notation characters appear above each line of verse.</note>
+
+->Φ Μ  ΜΜ  Ρ C  Μ Ι Λ Ι<-
+13. holding the yoke in your hand.
+
+->ΕΕΕ  Ε Ζ Ζ  Ι Μ Ι Ρ<-
+14. Be gracious, blessed dispenser of justice,
+
+<margin>5</margin>
+->ΕΕΕ  Ζ Ζ Ι  Μ  Ι Ι  Ζ Μ<-
+15. winged <term>Nemesis</term> <gloss>goddess of retribution</gloss>, balance of life.
+
+->Ι Μ Μ  ΜΜ  Ι Μ C  Ρ Μ Μ<-
+16. We sing of <term>Nemesis</term> <gloss>goddess of retribution</gloss>, immortal goddess,
+
+->Ζ Μ  Ι Ζ Ε Ι Ι  Μ Ζ  Μ<-
+<margin>10</margin>
+17. victory with outstretched wings, mighty,
+
+->Μ Μ 𝄴 𝄴  𝄴  𝄴 Ζ Ε  𝄵 Μ<-
+18. unerring Justice, assessor beside the throne,
+
+->Ρ  Μ  ΜΜΜ  CΜ  Ρ  Μ<-
+19. who, resenting the excessive pride of mortals,
+
+<margin>15</margin>
+->Ζ<-
+20. cast them down into <term>Tartarus</term> <gloss>the underworld abyss</gloss>.
+
+---
+
+<note>Critical apparatus: On line 16, manuscript N reads "reverencing the immortal goddess," and manuscript V is similar. On line 18, in place of the penultimate note, the editor prefers to restore the symbol 𝄴 so that the pitch ascends by a tone to g (sol), rather than the alternative reading.</note>
+
+<summary>This page presents lines 13 through 20 of the ancient Greek Hymn to Nemesis, accompanied by vocal musical notation symbols and critical apparatus notes on textual variants.</summary>
+<keywords>Hymn to Nemesis, ancient Greek music notation, Karl von Jan, Mesomedes, Justice, Tartarus, critical apparatus</keywords>

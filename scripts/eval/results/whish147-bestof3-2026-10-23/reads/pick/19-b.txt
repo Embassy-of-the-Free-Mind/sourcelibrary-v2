@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B is sparse, but what it does read is real Sāṅkhyakārikā commentary on the means of knowledge: "āptavaca(na)", "pramāṇānāṃ", "śeṣavat sā(mānyatodṛṣṭaṃ)", "(tri)vidha prameyaṃ pratya(kṣa)"; C has some of these but garbles "āptavacana"; A is fluent-looking but mostly non-words ("pramāṇāmāāḥ", "āmātrātejñitra").

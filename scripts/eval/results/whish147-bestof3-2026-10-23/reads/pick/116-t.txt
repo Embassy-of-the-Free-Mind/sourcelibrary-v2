@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three is clean, but B has the most recognisable Sanskrit (e.g. a near-intact "anvaya-vyatirekābhyāṃ", "sādhāraṇa", "lakṣaṇavatvāt", "ghaṭādi", "prakārāntara", "viśeṣa"); C keeps some of these but garbles more, and A is mostly strings that only look like words.

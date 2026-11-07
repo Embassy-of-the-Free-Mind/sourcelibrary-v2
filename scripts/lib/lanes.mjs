@@ -7,9 +7,12 @@
 // lanes — the registry of every code path that does pipeline work on `books` / `pages` (#5480, step 4 of
 // #5469). One descriptor per lane; /admin/pipeline renders it beside the daily step counts, and
 // tests/unit/lanes-registry.test.ts fails when:
-//   - a script named in scripts/workers/crontab.production, the scheduler's WORKERS, or vercel.json's
-//     crons writes `books` or `pages` (directly or through a local import) and is neither a lane here nor
-//     listed in EXEMPT with a reason;
+//   - a script named in any box's crontab snapshot (CRONTAB_SNAPSHOTS: main, gex45, l7a), the scheduler's
+//     WORKERS, or vercel.json's crons writes `books` or `pages` (directly or through a local import) and is
+//     neither a lane here nor listed in EXEMPT with a reason;
+//   - a snapshot runs a program from OUTSIDE the repo that is neither a lane's `cron` line nor OFF_REPO_CRON;
+//   - a `quota-share` lane has no meter gate in its files, or can reach a paid model client;
+//   - a routing hold or cli engine the routers hand books to has no lane (#7301);
 //   - a lane declares a pause key or a marker hold check its files do not contain;
 //   - a lane declares `respectsHold: false`, `pause: null` or `budget: 'none'` without a `reason`.
 //
@@ -17,9 +20,14 @@
 // run main() on import (so a registry that imports them would start them), and Next.js refuses unknown
 // exports from a route.ts. The descriptor lives here; each lane names its files, and the test reads them.
 //
+// SUBSCRIPTION AND GPU LANES (#7301, R9 of #5469): the agy and `claude -p` lanes, Paddle, the GEX45 queue's
+// lanes, Kraken and NDL are registered with a budget, and their page writes are stamped `ocr.lane` /
+// `translation.lane` from `stamps` (laneForWrite, called by write-provenance.mjs). The quota gate is
+// lane-quota.mjs; each job's book list is lane-book-list.mjs until R6.
+//
 // OBSERVE ONLY. Nothing here changes which books any lane selects (#5480). A `reason` records why a lane
 // skips a check TODAY; `gap: true` marks a reason that is a known gap rather than a justification, so
-// the page shows it as one. Pure data, no imports: /admin/pipeline imports this file.
+// the page shows it as one. Pure data and pure functions, no imports: /admin/pipeline imports this file.
 
 /** Steps a lane can serve (pipeline-next-step.mjs STEPS, minus `done`/`blocked`), plus `any` for collectors. */
 export const LANE_STEPS = ['archive', 'ocr', 'translate', 'enrich', 'images', 'any'];
@@ -66,6 +74,19 @@ const API_ROUTES = [
 ];
 
 /**
+ * The budget unit of a subscription lane (#7301 item 2): a share of the account's WEEKLY quota, read from the
+ * meter the boxes already keep (climits for Claude, the agy meter for Gemini through the CLI), paced over the week
+ * the way spare-lane.py paces (#6395). Not dollars: the subscription fee is sunk, and an hour of quota left at the
+ * reset is lost. The gate is scripts/lib/lane-quota.mjs. A lane out of quota IDLES and its books wait; it never
+ * falls through to the paid API (Derek, 2026-10-08). Idle quota near a reset is priced $0 (Derek, 2026-10-26).
+ * The unit is Derek's decision D13 on #5469; this is its default, taken as the default by job lane-registry-7301.
+ */
+export const QUOTA_METERS = {
+  climits: { doc: '/root/.claude-limits/latest.json — this box\'s Claude account, weekly + 5-hour percent (model-limits.mjs claudeUsage)' },
+  agy: { doc: '/root/agy-quota/status.json — the agy meter: locked models and their reset; no weekly percent yet (#7263 "agy weekly cap from all boxes")' },
+};
+
+/**
  * respectsHold: 'marker' — the lane filters or refuses on `pipeline_auto.hold` (tested in source);
  *               'status' — the lane selects only statuses a held book cannot carry (a held book's status
  *                          is `held`; pipeline-hold.mjs "WHY A STATUS"), so it never sees one. A `reason`
@@ -73,15 +94,30 @@ const API_ROUTES = [
  *               false    — no hold check; `reason` required.
  * pause:        the ONE key that stops this lane (PAUSE_KEYS), or null with a `reason`.
  * budget:       'dial' (spend-guard daily dial), 'dial (scoped)', 'envelope', 'committed' (spend already
- *               made: a collector), 'gpu-lease', 'free-cpu', 'unmetered' (no model spend), or 'none'
- *               (spends with no meter in front of it — `reason` required).
+ *               made: a collector), 'gpu-lease', 'owned-gpu' (a GPU box we rent by the month: $0 a page),
+ *               'free-cpu', 'quota-share' (a subscription lane: `quota` below), 'unmetered' (no model
+ *               spend), or 'none' (spends with no meter in front of it — `reason` required).
+ * quota:        with budget 'quota-share': { meter: QUOTA_METERS key, share, paced? } — the share of the account's
+ *               week this lane may bring the account to (0.7 = it idles at 70%); in the last 48 h before the reset
+ *               the share is lifted to spare-lane.py's 90% (free quota). `paced: true` also holds it to an even
+ *               burn of the week (off for every lane today; lane-quota.mjs says why).
+ * stamps:       the page writes this lane makes, so the write helper can stamp `ocr.lane` / `translation.lane`
+ *               (#7301 item 3): { field: 'ocr'|'translation', call_site, engine? } — `call_site` is the
+ *               engine block's call_site (or, for a specialist writer, the file that builds the `$set`);
+ *               `engine` ('gemini'|'anthropic') splits one writer between two lanes. laneForWrite() reads it.
+ * routes:       which routing rows hand this lane its books: { hold } (the pipeline hold the router puts on a
+ *               book for this lane: CLI_FLASH_OCR_HOLD, CLI_TRANSLATE_HOLD) and/or { engines } (the routing
+ *               table engine ids it reads for). The registry test checks both against the routers.
+ * cron:         lines of a committed crontab snapshot that run this lane from OUTSIDE the repo (a substring
+ *               of the line). A lane that runs only from the box fails the coverage test without one.
+ * runsFrom:     where the scheduled copy runs, when it is not the repo checkout, and why.
  */
 export const LANES = [
   // ── archive ────────────────────────────────────────────────────────────────────────────────────
   { name: 'archive-bulk', serves: 'archive', files: ['scripts/workers/archive-bulk.mjs'],
     selects: 'IA books, not bulk_unsuitable, first translations first', trigger: 'scheduler, 10 min',
     budget: 'unmetered', respectsHold: false, pause: 'archive',
-    reason: 'Fetches page images to R2 and spends no model money. A hold keeps a book out of the paid lanes; a held book still needs its images preserved (preservation-policy.md). Adding NOT_HELD would change selection — not done in #5480.' },
+    reason: 'Fetches page images to R2 and spends no model money. A hold keeps a book out of the paid lanes; a held book still needs its images preserved (preservation-policy.md). Its selector admits a book blocked only BECAUSE it is held (ARCHIVE_NOT_BLOCKED, #5448).' },
   { name: 'archive-ocr', serves: 'archive', files: ['scripts/workers/archive-ocr.mjs'],
     selects: 'priority / IIIF / warehouse books', trigger: 'scheduler, 10 min',
     budget: 'unmetered', respectsHold: false, pause: 'archive',
@@ -113,15 +149,77 @@ export const LANES = [
     selects: 'named book lists', trigger: 'manual',
     budget: 'dial', respectsHold: false, pause: null,
     reason: 'Operator-run re-OCR of named lists. Holds are ignored by design: a hold is often the very thing the re-OCR is waiting on (realtime-ocr does filter NOT_HELD; bulk-reocr-local reports [HELD] and runs). Priced at submit, so the dial sees it; no pause because the operator is the switch.' },
-  { name: 'specialist-ocr', serves: 'ocr',
-    files: ['scripts/workers/syriac-kraken-lane.mjs', 'scripts/lib/syriac-kraken-lane.mjs', 'scripts/workers/syriac-kraken-relaunch.sh', 'scripts/workers/ndl-koten-lane.mjs', 'scripts/lib/ndl-koten-lane.mjs'],
-    selects: 'one script each (Syriac, kuzushiji)', trigger: 'manual / cron 30 min (relaunch)',
+  { name: 'kraken-syriac', serves: 'ocr',
+    files: ['scripts/workers/syriac-kraken-lane.mjs', 'scripts/lib/syriac-kraken-lane.mjs', 'scripts/workers/syriac-kraken-relaunch.sh'],
+    selects: 'Syriac books (routing row `syriac`)', trigger: 'cron on main, 30 min (relaunch while the lane has work)',
     budget: 'free-cpu', respectsHold: 'marker', pause: null,
-    reason: 'Each runs one approved script on free CPU or a leased GPU (gpu-lease-watchdog); the lane is stopped by its own lease or relaunch line, not the model pause.' },
+    stamps: [{ field: 'ocr', call_site: 'scripts/lib/syriac-kraken-lane.mjs' }],
+    reason: 'Kraken on free CPU on main; the lane is stopped by its relaunch line, not the model pause (it spends no model money).' },
+  { name: 'ndl-koten', serves: 'ocr',
+    files: ['scripts/workers/ndl-koten-lane.mjs', 'scripts/lib/ndl-koten-lane.mjs'],
+    selects: 'cursive Japanese before 1868 (routing row `japanese-cursive`)', trigger: 'manual, on a leased GPU (gpu-lease-watchdog)',
+    budget: 'gpu-lease', respectsHold: 'marker', pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/lib/ndl-koten-lane.mjs' }],
+    reason: 'Operator-run on a leased GPU; the lease (gpu-lease-watchdog --lease) is the switch, not the model pause.' },
   { name: 'mineru-ocr', serves: 'ocr', files: ['scripts/workers/mineru-ocr-worker.mjs'],
     selects: 'named books', trigger: 'manual',
     budget: 'gpu-lease', respectsHold: false, pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/workers/mineru-ocr-worker.mjs' }],
     reason: 'Operator-run on a leased GPU for named books; no hold or pause check.', gap: true },
+  { name: 'paddle-zh', serves: 'ocr',
+    files: ['scripts/lib/paddle-zh-lane.mjs', 'scripts/workers/paddle-zh-lane.mjs', 'scripts/gpu/paddle-zh-fleet.mjs', 'scripts/gpu/paddle-zh-gpu.sh', 'scripts/gpu/paddle-zh-runpod.sh'],
+    selects: 'books HELD for it (paddle-zh-5600-ocr-only, paddle-zh-6388-*): Siku Quanshu manuscript volumes (routing rows `chinese-siku-manuscript`, `chinese-tables`)',
+    trigger: 'cron on main, 10 min (fleet-cron.sh) + RunPod pod watchdog',
+    budget: 'gpu-lease', respectsHold: false, pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/lib/paddle-zh-lane.mjs' }],
+    cron: ['/root/paddle-zh-5600/fleet-cron.sh', '/root/paddle-zh-5600/code/scripts/maintenance/runpod-pod-watchdog.mjs'],
+    runsFrom: '/root/paddle-zh-5600/code on main: a FIXED copy of this repo, not the checkout, because the lane must not change under a running fleet (scripts/gpu/paddle-zh-fleet.mjs header). The code is the repo\'s; only the copy is pinned. Moving the cron to the checkout is a fleet restart, left to the next fleet run.',
+    reason: 'It selects books BY its own hold (the hold is its queue: a held book is out of every other lane), so a hold check would select nothing. RunPod/Scaleway spend is metered by the fleet (running € on every cycle line) and stopped by `touch /root/paddle-zh-5600/STOP`, not the model pause.' },
+  { name: 'paddle-zh-guarded', serves: 'ocr', files: ['scripts/workers/paddle-zh-guarded-lane.mjs'],
+    selects: 'the held Chinese table + mixed residue of gpu-backlog-5660 (#6871 row 3), from the GEX45 task\'s per-book reads',
+    trigger: 'GEX45 GPU queue (/root/bin/gpu-queue.sh on gex45, #6871) reads; apply by hand',
+    budget: 'owned-gpu', respectsHold: 'marker', pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/workers/paddle-zh-guarded-lane.mjs' }],
+    cron: ['/root/bin/gpu-queue.sh run'],
+    reason: 'The read runs on the GEX45 (rented by the month, $0 a page); the apply is by hand over a finished task. Its agy Flash half is gated by the agy meter (agyBlocked) in the task. gpu-queue.sh itself lives only on gex45 (/root/bin) and is not in this repo yet.', gap: true },
+  { name: 'paddle-print', serves: 'ocr',
+    files: ['scripts/lib/paddle-print-lane.mjs', 'scripts/workers/paddle-print-lane.mjs', 'scripts/gpu/paddle-print-gpu.sh'],
+    selects: 'Chinese and Japanese print outside the Siku cohort, split leaves (#6101), books HELD paddle-print-6101',
+    trigger: 'GEX45 GPU queue (/root/bin/gpu-queue.sh on gex45, #6871) reads; apply by hand',
+    budget: 'owned-gpu', respectsHold: false, pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/lib/paddle-print-lane.mjs' }],
+    cron: ['/root/bin/gpu-queue.sh run'],
+    reason: 'It holds every book itself (paddle-print-6101) before its first write, and selects them by that hold. The GEX45 is rented by the month ($0 a page); the queue runs one task at a time under /root/gpu.lock.' },
+
+  // ── subscription lanes (#7301): routed by the routing tables, budgeted in quota, never the paid API ──────────
+  { name: 'agy-flash-ocr', serves: 'ocr', files: ['scripts/batch/cli-ocr.mjs', 'scripts/batch/cli-ocr-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'books the OCR router holds for it (CLI_FLASH_OCR_HOLD: the flash families of ocr-routing-table.json); Flash-Lite drafts of visible German/French books for `cli-ocr-lane.mjs correct` (#7558); and page lists by hand',
+    trigger: 'cron on gex45, one line a pool: cli-ocr-lane.mjs latin-first (#7263: Latin re-read, then the German/French correction, then the rest of Latin). cron on main every 2 h: cli-ocr-lane.mjs run (:10, #7089) and cli-ocr-lane.mjs correct (:50, stops at the agy quota floor, #7558); one-off claude-job runs with their own page lists (book list recorded per job until R6)',
+    budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/batch/cli-ocr.mjs', engine: 'gemini' }],
+    routes: { hold: 'ocr-flash-cli-7075' },
+    reason: 'Runs named page lists, often of books held FOR it (the hold is the router\'s queue). A locked model is never called (agy-cli.mjs → model-limits.mjs agyBlocked): the run sleeps to the quoted reset, it never falls to the API. No pause check: a person or a job is the switch.', gap: true },
+  { name: 'agy-flash-translate', serves: 'translate', files: ['scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/batch/siku-translate-lane.mjs', 'scripts/batch/reader-request-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming gemini-3.8-flash+agy-cli), the held Siku Quanshu cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660, kept held, siku-translate-lane.mjs, #5600; a book with an open reader request goes first, #7690), books a reader asked for (open translation-request feedback rows passing translation-request-eligibility.mjs; reader-request-lane.mjs OCRs their missing pages first and emails the reader, #7599), and page lists by hand',
+    trigger: 'cron on gex45 hourly: cli-translate-lane.mjs stale (#7263: re-translation after the Latin re-read). cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); reader-request-lane.mjs every 2 h on the second agy pool (#7599); one-off claude-job runs (book list recorded per job until R6)',
+    budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
+    stamps: [{ field: 'translation', call_site: 'scripts/batch/cli-translate.mjs', engine: 'gemini' }],
+    routes: { hold: 'translate-cli-7075', engines: ['gemini-3.8-flash+agy-cli'] },
+    reason: 'It drains the books held FOR it (the hold is its queue). A locked model is not called; a quota reply stops the run and the book waits. No pause check yet: the lane runs by hand.', gap: true },
+  { name: 'claude-opus-translate', serves: 'translate', files: ['scripts/batch/claude-translate.mjs', 'scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/lib/lane-quota.mjs'],
+    selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming claude-opus-5-5), refused pages\' English, and page lists by hand',
+    trigger: 'one-off claude-job runs (book list recorded per job until R6); refused-pages.mjs on l7a every 3 h translates what it OCRs',
+    budget: 'quota-share', quota: { meter: 'climits', share: 0.7, endOfWeek: { weekly: 95, hours: 24 } }, respectsHold: false, pause: null,
+    stamps: [{ field: 'translation', call_site: 'scripts/batch/cli-translate.mjs', engine: 'anthropic' }],
+    routes: { hold: 'translate-cli-7075', engines: ['claude-opus-5-5'] },
+    reason: 'It drains the books held FOR it. claudeBlocked() refuses the call on a spent account; the runner\'s quota gate (lane-quota.mjs) idles it at its share, paced over the week. No pause check: the subscription spends no dial money.', gap: true },
+  { name: 'claude-opus-ocr', serves: 'ocr', files: ['scripts/batch/claude-ocr.mjs', 'scripts/batch/claude-ocr-two-read.mjs', 'scripts/batch/cli-ocr.mjs', 'scripts/batch/refused-pages.mjs', 'scripts/lib/lane-quota.mjs'],
+    selects: 'pages Gemini refused (routing row `refused-pages` fallback), manuscripts and Nahuatl/Mayan books (rows `manuscripts`, `nahuatl-mayan`), corrections of stored drafts, by list',
+    trigger: 'cron on l7a every 3 h (refused-pages.mjs, #7170) + one-off claude-job runs (book list recorded per job until R6)',
+    budget: 'quota-share', quota: { meter: 'climits', share: 0.7 }, respectsHold: false, pause: null,
+    stamps: [{ field: 'ocr', call_site: 'scripts/batch/cli-ocr.mjs', engine: 'anthropic' }, { field: 'ocr', call_site: 'scripts/batch/claude-ocr-two-read.mjs' }],
+    routes: { engines: ['claude-opus-5-5', 'claude-sonnet-5-5'] },
+    reason: 'refused-pages reads held books on purpose (a page Gemini refused in a held book still needs text) and skips containment holds. claudeBlocked() refuses a call on a spent account; the quota gate idles the cron at its share. It calls no paid API.', gap: true },
 
   // ── translate ──────────────────────────────────────────────────────────────────────────────────
   { name: 'translate-worker', serves: 'translate', files: ['scripts/workers/translate-worker.mjs'],
@@ -152,6 +250,11 @@ export const LANES = [
   { name: 'enrich-worker-batch', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs', 'scripts/workers/lib/enrich-batch-lane.mjs'],
     selects: 'live translated books past the realtime statuses with no summary / index / chapters (#2141), reads then translated pages', trigger: 'cron, 15 min collect + 6 h admit',
     budget: 'dial (scoped)', respectsHold: 'marker', pause: 'enrich' },
+  { name: 'agy-flash-enrich', serves: 'enrich', files: ['scripts/workers/lib/enrich-agy-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'the batch lane\'s gap (live translated books past the realtime statuses with no summary / index / chapters), reads then translated pages; each book claimed in enrich_batch_books before its call so the API batch lane skips it, and handed back to it on failure (#7628)',
+    trigger: 'cron on main every 2 h: enrich-worker.mjs --agy (#7628), Gemini 3.8 Flash low, one conversation per book; stops at its daily request cap (about a quarter of one agy pool\'s week, Derek 2026-10-28), at the pool\'s quota floor (cli-ocr-lane.mjs quotaFloor) and at the first quota reply',
+    budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: 'marker', pause: 'enrich',
+    reason: 'Its model calls are the subscription CLI only. The writes it shares with the API lanes (finishEnrichBook) still upsert the book and page embeddings through the embedding API, as every enrich lane does: that is the embedding step, not a fallback for the enrichment call.' },
 
   // ── images ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-images', serves: 'images', files: [ORCH],
@@ -185,6 +288,11 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/eval/quality-dashboard/build.mjs', reason: 'report: reads book and page counts, writes only its dashboard file and ops_reports' },
+  { file: 'scripts/eval/quality-dashboard/trends.mjs', reason: 'report: reads book and page counts, writes only its own daily trend rows; no book or page writes' },
+  { file: 'scripts/maintenance/rebuild-human-read-count-5048.mjs', reason: 'metadata: recomputes books.human_read_count from analytics_events, no step work (#5048); daily cron' },
+  { file: 'scripts/maintenance/router-board-push.mjs', reason: 'report: reads the router table and repo crontabs, writes only ops_reports router-board:latest for /admin/router (#7913); the write libs come in through the lane constants router-binding.mjs imports from cli-ocr-lane.mjs' },
+  { file: 'scripts/eval/lane-judge-sampler.mjs', reason: 'measurement: reads pages/books/page_revisions, writes only lane_judge_verdicts, lane_judge_runs and ops_reports (#7611); the write libs come in through the lane constants it imports from cli-ocr-lane.mjs' },
   { file: 'scripts/maintenance/backfill-printed-page-4291.mjs', reason: 'metadata: pages.printed_page fitted per book, no step work (#4291); daily cron --ocr-since=26h' },
   { file: 'scripts/workers/sync-worker.mjs', reason: 'the stamp writer: counters, translation_state and pipeline_next (#5477); does no step work' },
   { file: 'scripts/workers/scheduler.mjs', reason: 'launcher; its stalled-image-job drain clears job bookkeeping, not steps' },
@@ -198,6 +306,7 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/backfill-author-canonical-links.mjs', reason: 'metadata: author canonical links' },
   { file: 'scripts/maintenance/classify-text-role.mjs', reason: 'metadata: books.text_role' },
   { file: 'scripts/maintenance/fix-broken-image-thumb.mjs', reason: 'display: thumbnail URLs' },
+  { file: 'scripts/maintenance/rehost-walled-covers.mjs', reason: 'display: cover URLs moved from walled hosts to the R2 copy of the same page (#5448)' },
   { file: 'scripts/maintenance/seam-repair-6742/lean.mjs', reason: 'repair: minimal edge edits to served page translations at broken page joins, through writePageTranslation with a revision per page and an undo (#6742); no step work, skips held books; nightly cron, stops at the account\'s 60% weekly' },
   { file: 'scripts/maintenance/cover-frame-backfill.mjs', reason: 'display: books.thumbnail_frame (card crop), no step work (#6010); weekly cron' },
   { file: 'scripts/maintenance/mark-stale-translations.mjs', reason: 'marker: pages.translation_stale (#4927). Not a lane, but it is ACTUATION — the paid translate lanes read it' },
@@ -209,13 +318,71 @@ export const EXEMPT = [
   { file: 'scripts/workers/sync-books-catalog.mjs', reason: 'mirror: reads books, writes only the Supabase books_catalog mirror (#5288); imports catalogTranslationColumns() from page-counts.mjs, whose module also exports writers' },
   { file: 'scripts/maintenance/daily-digest.mjs', reason: 'read-only digest (#5441): reads usage stores, runs and logs, sends one message; imports RUNS_COLLECTION from translate-batch-seam.mjs, whose module also exports writers' },
   { file: 'scripts/audit/pipeline-next-step-audit.mjs', reason: 'read-only audit of books.pipeline_next (#5478); writes only its ops_reports row; imports nextStep() from pipeline-next-step.mjs, whose module also exports writers' },
-  { file: 'scripts/audit/routing-drift.mjs', reason: 'read-only audit of DECISIONS.md against the routers (#5871); opens no database; imports the translation router from translate-core.mjs, whose module also exports writers' },
+  { file: 'scripts/audit/english-served-divergence.mjs', reason: 'read-only audit of the English served on English-original leaves (#7100); writes nothing; imports isEnglishOriginal() from page-counts.mjs, whose module also exports writers' },
   { file: 'scripts/maintenance/prewarm-browse.mjs', reason: 'read-only; imports read helpers from page-counts.mjs' },
   { file: 'scripts/workers/enrichment-snapshot.mjs', reason: 'read-only snapshot; imports read helpers from page-counts.mjs' },
   { file: 'scripts/workers/stage-coverage-snapshot.mjs', reason: 'read-only snapshot; imports read helpers from page-counts.mjs' },
   { file: 'src/app/api/cron/dashboard-snapshot/route.ts', reason: 'read-only snapshot; imports read helpers from src/lib/page-counts.ts' },
   { file: 'src/app/api/cron/social-post/route.ts', reason: 'posts a quote; imports src/lib/word-alignment.ts, whose writer it does not call' },
+  { file: 'scripts/audit/librarian-citation-gauge.ts', reason: 'read-only gauge on l7a (#6946): judges Librarian page links, writes a JSONL line and a markdown row; imports page-text helpers whose modules also export writers' },
+  { file: 'scripts/workers/librarian-citation-fixer.ts', reason: 'l7a, DRY-RUN (#6946): writes only librarian_citation_fixes proposals; imports page-text helpers whose modules also export writers' },
 ];
+
+/**
+ * The committed snapshots of every box's live crontab (#7301 item 4). The coverage test reads all of them, so a lane
+ * that runs only from a box — a script outside the repo, or a repo script only one box schedules — fails CI.
+ * Re-snapshot with `crontab -l` on the box and PR it (sync-crontab.sh reports main's drift daily).
+ */
+export const CRONTAB_SNAPSHOTS = [
+  { box: 'main', file: 'scripts/workers/crontab.production' },
+  { box: 'gex45', file: 'infrastructure/gex45-crontab' },
+  { box: 'l7a', file: 'infrastructure/l7a-crontab' },
+];
+
+/**
+ * Programs OUTSIDE this repo that a crontab snapshot runs and that are not lanes, each with why. A path here is
+ * matched as a substring of the live line. Hand drivers of a lane go here until R6 (#5825) retires them; they
+ * name the lane they drive. A new off-repo line that is neither here nor in a lane's `cron` fails the test.
+ */
+export const OFF_REPO_CRON = [
+  { match: '/root/tengyur-cli-6361/watchdog.sh', reason: 'tends the #6361 Tengyur CLI driver; removes itself at DONE-STAGE2' },
+  { match: '/usr/local/bin/climits', reason: 'reads Claude subscription limits, no step work' },
+  { match: '/root/agy-quota/meter.py', reason: 'meter for the agy quota (#6331, #6375): passive, makes no model calls' },
+  { match: '/root/bin/box.sh', reason: 'job plumbing: pushes limits across the box mesh' },
+  { match: '/root/bin/sync-concepts.sh', reason: 'not book or page work: syncs the concept knowledge bases' },
+  { match: '/root/restic-transcripts.sh', reason: 'box backup of session transcripts, no step work' },
+  { match: '/root/moltbook-', reason: 'not Source Library (moltbook)' },
+  { match: '/root/restic-backup.sh', reason: 'box backup, no step work' },
+  { match: '/root/bin/claude-job.sh', reason: 'job plumbing: starts or resumes headless jobs (a copy of scripts/workers/claude-job.sh); the work each job does is the lane it runs' },
+  { match: '/root/bin/claude-rc.sh', reason: 'job plumbing: remote-control session at boot' },
+  { match: '/root/bin/agy-wal-checkpoint.py', reason: 'disk: a copy of scripts/workers/agy-wal-checkpoint.py (#6223)' },
+  { match: '/root/disk-alarm.sh', reason: 'disk: fallback copy of scripts/workers/disk-alarm.sh' },
+  { match: '/root/bin/atlas-egress-meter.sh', reason: 'cost alarm: hand-placed copy of scripts/workers/atlas-egress-meter.sh, the cron fallback until the checkout has it; counts bytes from Atlas, no step work (#5189)' },
+  { match: '/root/bin/disk-steward.sh', reason: 'disk: hand-placed copy of scripts/workers/disk-steward.sh, the cron fallback until the checkout has cold-r2.mjs (#6223)' },
+  { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
+  { match: '/root/leaf-break/fullrun-4523-watchdog.sh', reason: 'watchdog of the #4523 Tibetan re-OCR driver (Yigdzin, specialist); remove when DONE-4523 exists' },
+  { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
+];
+
+/**
+ * The lane a page write belongs to, from the registry (#7301 item 3): the name of the lane whose `stamps` names
+ * this field, this call_site and (when the stamp splits a writer) this engine family, else null. Called by
+ * ocrProvenance / translationProvenance (write-provenance.mjs) for every writer that goes through them, and by the
+ * specialist `$set` builders with their own call_site. null means the writer is not a registered stamped lane, and
+ * no `lane` field is written.
+ */
+export function laneForWrite(field, engine) {
+  if (!engine || typeof engine !== 'object' || !engine.call_site) return null;
+  for (const l of LANES) {
+    for (const s of l.stamps ?? []) {
+      if (s.field === field && s.call_site === engine.call_site && (!s.engine || s.engine === (engine.name ?? 'gemini'))) return l.name;
+    }
+  }
+  return null;
+}
+
+/** A lane by name, or undefined. */
+export const laneByName = (name) => LANES.find((l) => l.name === name);
 
 /** Every file a lane or an exemption names, for the coverage test. */
 export function registeredFiles() {

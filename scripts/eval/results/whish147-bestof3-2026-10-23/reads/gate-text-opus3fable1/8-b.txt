@@ -1,0 +1,4 @@
+PICK | B
+RANK | B, A, C, D
+
+WHY | B best matches Sāṅkhyakārikā 47–51 ("bhavanty aśaktiś ca karaṇavaikalyāt", "aṣṭāviṃśatibhedā… aṣṭadhā siddhiḥ", "tamaso 'ṣṭavidho mohasya ca daśavidho mahāmohaḥ", "tāmisro 'ṣṭādaśadhā tathā bhavaty andhatāmisraḥ", "kālabhāgyākhyāḥ bāhyā viṣayoparamāt pañca nava tuṣṭayo 'bhimatāḥ", "ūhaḥ śabdo 'dhyayanaṃ duḥkhavighātās trayaḥ suhṛtprāptiḥ dānaṃ ca"), while A and C keep only scattered pieces and D is mostly illegible.

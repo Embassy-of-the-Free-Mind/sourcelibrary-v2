@@ -1,0 +1,4 @@
+PICK | B
+RANK | B, A, C
+
+WHY | B is the only one that recovers real, connected Sāṅkhya text past row 4: the closing kārikās and the ṣaṣṭitantra verse listing the sixty topics (pārārthyaṃ ca tathānaikyaṃ viyogo yoga eva ca śeṣavṛtti… akartṛtvaṃ maulikārthāḥ smṛtāḥ… aṣṭāviṃśatidhā… iti ṣaṣṭiḥ padārthānām aṣṭabhiḥ saha siddhibhiḥ); A is slightly cleaner in rows 2–4 but falls into scattered fragments after that, and C is almost entirely illegible after row 4.

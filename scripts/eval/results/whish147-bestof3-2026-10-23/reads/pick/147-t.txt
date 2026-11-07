@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A reads most consistently as a Tarkasaṃgraha-style Malayalam-Sanskrit gloss on the guṇas: it has "pṛthakkāṃ saddravyavṛttiḥ saṃyukta…", "saṃyoga… guṇaḥ vibhāgaḥ", "dvividhā… dik… kāla… paraka", "pratyakṣo" and "samavāyikāraṇaṃ". C has only scattered real words among garbled strings, and B is broken up by so many [illegible] marks that little continuous text survives.

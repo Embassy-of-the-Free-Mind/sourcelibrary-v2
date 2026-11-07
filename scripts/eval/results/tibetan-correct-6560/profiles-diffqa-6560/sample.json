@@ -1,0 +1,522 @@
+{
+ "built_at": "2026-10-27T08:57:35.381Z",
+ "note": "DIAGNOSTIC set: pages earlier audits judged worse or severe, plus line-count changes; NOT a random sample of the lane",
+ "groups": {
+  "g7477": [
+   {
+    "page_id": "69e7aab880b52390feb19882",
+    "book_id": "69e7aab880b52390feb197a8",
+    "page_number": 218,
+    "draft_hash": "ad217283b3d3e7be",
+    "source": "#7477 audit40-gate pooled worse"
+   },
+   {
+    "page_id": "69e7aab880b52390feb199b3",
+    "book_id": "69e7aab880b52390feb197a8",
+    "page_number": 523,
+    "draft_hash": "9e268906a7ad0163",
+    "source": "#7477 audit40-gate pooled worse"
+   },
+   {
+    "page_id": "69e7aab880b52390feb19803",
+    "book_id": "69e7aab880b52390feb197a8",
+    "page_number": 91,
+    "draft_hash": "d4e20a63c2d7fc48",
+    "source": "#7477 audit40-gate pooled worse"
+   },
+   {
+    "page_id": "69e7aab880b52390feb19906",
+    "book_id": "69e7aab880b52390feb197a8",
+    "page_number": 350,
+    "draft_hash": "620c1c69257acf69",
+    "source": "#7477 audit40-gate pooled worse"
+   },
+   {
+    "page_id": "69e7aab880b52390feb19959",
+    "book_id": "69e7aab880b52390feb197a8",
+    "page_number": 433,
+    "draft_hash": "0fe9902ef1b5c6c2",
+    "source": "#7477 audit40-gate pooled worse"
+   },
+   {
+    "page_id": "69e7aab880b52390feb197be",
+    "book_id": "69e7aab880b52390feb197a8",
+    "page_number": 22,
+    "draft_hash": "c5aa5d0d329719c4",
+    "source": "#7477 audit40-gate pooled worse"
+   }
+  ],
+  "g7479": [
+   {
+    "page_id": "8e3601ae8ac418c2ec610b13",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 663,
+    "draft_hash": "4642fcd02a99350f",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "e9ce030fd23d44b76e138239",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 805,
+    "draft_hash": "de5ca1045d4f63d7",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "406822a55634ea6907dad9a3",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 632,
+    "draft_hash": "443af9c120f30bc9",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "88489486cf84693d3c71397e",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 792,
+    "draft_hash": "b755d2272f2b55d3",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "a931f8b72b8fcc90143e8ffc",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 751,
+    "draft_hash": "188ea1255c12c9d9",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "b380e4287fa41090f52a3067",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 345,
+    "draft_hash": "51e6f2bd9f8d22bd",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "870603412d64e6dc992a055d",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 510,
+    "draft_hash": "eb35cfcb5bb846ff",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "428f6ab085fff3d89aed6d56",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 991,
+    "draft_hash": "b21cb4c7be77e0b7",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "193c2c1964eaf073f8901721",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 709,
+    "draft_hash": "de4a00da5f1443c8",
+    "source": "#7479 Neyphug audit-score worse"
+   },
+   {
+    "page_id": "9341dccbcb3f956ff8c33c12",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 378,
+    "draft_hash": "d688e78a714f8045",
+    "source": "#7479 Neyphug audit-score worse"
+   }
+  ],
+  "g7483": [
+   {
+    "page_id": "69e7ab2c5f1a22ab19a942d9",
+    "book_id": "69e7ab2c5f1a22ab19a9418f",
+    "page_number": 330,
+    "draft_hash": "01c5c4eadfd45dce",
+    "source": "#7483 router30-gate severe introduced"
+   },
+   {
+    "page_id": "69e7abf15f1a22ab19aa0c64",
+    "book_id": "69e7abf15f1a22ab19aa0c01",
+    "page_number": 99,
+    "draft_hash": "6752c4c4fd7771cb",
+    "source": "#7483 router30-gate severe introduced"
+   },
+   {
+    "page_id": "69e7ab065f1a22ab19a91926",
+    "book_id": "69e7ab065f1a22ab19a91888",
+    "page_number": 158,
+    "draft_hash": "712a04c7a0d94354",
+    "source": "#7483 router30-gate severe introduced"
+   },
+   {
+    "page_id": "69e7abca5f1a22ab19a9e23d",
+    "book_id": "69e7abca5f1a22ab19a9e1ec",
+    "page_number": 81,
+    "draft_hash": "159ec8bee372c9f1",
+    "source": "#7483 router30-gate severe introduced"
+   }
+  ],
+  "lines": [
+   {
+    "page_id": "cdb2a4fec0b654f4dda14da1",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 128,
+    "draft_hash": "adac4b932751e013",
+    "source": "Neyphug p.128 (#6740 line removal)"
+   },
+   {
+    "page_id": "fe2b4ad2ba0414251c967779",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 131,
+    "draft_hash": "c9abdb3dc0de024a",
+    "source": "Neyphug p.131 (#6740 line removal)"
+   },
+   {
+    "page_id": "9a0dcc12378f76a64693e70d",
+    "book_id": "69e7abec5f1a22ab19aa0707",
+    "page_number": 303,
+    "draft_hash": "5e17f0aa758c6d3d",
+    "source": "Neyphug p.303 (#6740 line removal)"
+   }
+  ],
+  "brgyad": [
+   {
+    "page_id": "69e7ab685f1a22ab19a9843a",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 10,
+    "draft_hash": "34216e56833a5558",
+    "source": "brGyad Flash read 4426d5de6c2acae9: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9845a",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 42,
+    "draft_hash": "2ea1a75f7adc4d15",
+    "source": "brGyad Flash read 3e50f4a8c480b356: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98462",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 50,
+    "draft_hash": "a1e0dae8d14e744f",
+    "source": "brGyad Flash read 1a4cd750cc3c75db: 16 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98497",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 103,
+    "draft_hash": "6e1eff4fa9f6baa3",
+    "source": "brGyad Flash read 48fff024953d08af: 14 -> 13 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9849e",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 110,
+    "draft_hash": "c299c5de53b8264b",
+    "source": "brGyad Flash read b35aafffcc569add: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a984a4",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 116,
+    "draft_hash": "2518919fb433eaaf",
+    "source": "brGyad Flash read f277cad6e35ef438: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a984bd",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 141,
+    "draft_hash": "ba8a497c8fd545aa",
+    "source": "brGyad Flash read df2a0529f63d610e: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a984e0",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 176,
+    "draft_hash": "f0b4317ae1395d71",
+    "source": "brGyad Flash read bab178a8d5a828e1: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a984ea",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 186,
+    "draft_hash": "ca0c91b23ef6340c",
+    "source": "brGyad Flash read 7d7cce8a73d4598d: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98502",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 210,
+    "draft_hash": "b6305ef16cf6c363",
+    "source": "brGyad Flash read da2c9319d3fa4da7: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9850a",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 218,
+    "draft_hash": "55a68bb9cd601324",
+    "source": "brGyad Flash read 35c036d58f5a1eac: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9850d",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 221,
+    "draft_hash": "01a888e8c3135572",
+    "source": "brGyad Flash read b6c18cc83cce9785: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9850e",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 222,
+    "draft_hash": "f9c163104e4de141",
+    "source": "brGyad Flash read a7ff86b278164ced: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98519",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 233,
+    "draft_hash": "713c07c3fcf7ef39",
+    "source": "brGyad Flash read be28ffa5701d97d3: 14 -> 13 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9852a",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 250,
+    "draft_hash": "aedcb38fa2103ca9",
+    "source": "brGyad Flash read 0af2dfe1ddd0ad8d: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9852e",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 254,
+    "draft_hash": "8fa548a183cc757e",
+    "source": "brGyad Flash read a1cf574b2f474831: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98541",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 273,
+    "draft_hash": "af1dd8e563387ed7",
+    "source": "brGyad Flash read 476e863e3f59acaf: 15 -> 16 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98551",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 289,
+    "draft_hash": "a4b8a63509b54592",
+    "source": "brGyad Flash read 800d23cf5b7c97be: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98582",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 338,
+    "draft_hash": "f7da476828e64479",
+    "source": "brGyad Flash read e3cf7e4347d04092: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98585",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 341,
+    "draft_hash": "398baa39e4382ae8",
+    "source": "brGyad Flash read 24ce4f2c243a1b55: 13 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98587",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 343,
+    "draft_hash": "b9763197149ca415",
+    "source": "brGyad Flash read be0db27fa3918bee: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a9858d",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 349,
+    "draft_hash": "75834242c370c273",
+    "source": "brGyad Flash read b6c1fd7054f44f24: 14 -> 13 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985a4",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 372,
+    "draft_hash": "c57961c2f1d228dc",
+    "source": "brGyad Flash read df4959bcbf406c16: 14 -> 15 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985a9",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 377,
+    "draft_hash": "708a776e534636a1",
+    "source": "brGyad Flash read f40ac7b791a79d3b: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985aa",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 378,
+    "draft_hash": "3bf417872fc6869c",
+    "source": "brGyad Flash read 8f27a027029a1cb3: 13 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985c6",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 406,
+    "draft_hash": "b19b9cef056bbbaa",
+    "source": "brGyad Flash read 447a14a728b1edda: 14 -> 13 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985c8",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 408,
+    "draft_hash": "7c8cff8d77b86cc8",
+    "source": "brGyad Flash read a8b56973795b1efd: 15 -> 14 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985cf",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 415,
+    "draft_hash": "59fd16859774e5d0",
+    "source": "brGyad Flash read deafe910985e8020: 6 -> 7 lines"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a985d1",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 417,
+    "draft_hash": "9b6eac74c19eb379",
+    "source": "brGyad Flash read 8f190955b7631e5a: 15 -> 14 lines"
+   }
+  ],
+  "wave2": [
+   {
+    "page_id": "69e7aae15f1a22ab19a8edf7",
+    "book_id": "69e7aae15f1a22ab19a8edd5",
+    "page_number": 34,
+    "draft_hash": "527fae9ff73d4f0f",
+    "source": "#7479 wave-2 read, book 69e7aae15f1a22ab19a8edd5"
+   },
+   {
+    "page_id": "69e7ab175f1a22ab19a92c3a",
+    "book_id": "69e7ab175f1a22ab19a92bbc",
+    "page_number": 126,
+    "draft_hash": "4108896ed9530d06",
+    "source": "#7479 wave-2 read, book 69e7ab175f1a22ab19a92bbc"
+   },
+   {
+    "page_id": "69e7ab285f1a22ab19a93f74",
+    "book_id": "69e7ab285f1a22ab19a93de3",
+    "page_number": 401,
+    "draft_hash": "f7b869a62533e106",
+    "source": "#7479 wave-2 read, book 69e7ab285f1a22ab19a93de3"
+   },
+   {
+    "page_id": "69e7ab345f1a22ab19a94b26",
+    "book_id": "69e7ab345f1a22ab19a94976",
+    "page_number": 432,
+    "draft_hash": "979493a68e9401f0",
+    "source": "#7479 wave-2 read, book 69e7ab345f1a22ab19a94976"
+   },
+   {
+    "page_id": "69e7ab455f1a22ab19a95ba5",
+    "book_id": "69e7ab455f1a22ab19a95aa3",
+    "page_number": 258,
+    "draft_hash": "6bc3d6899bce7440",
+    "source": "#7479 wave-2 read, book 69e7ab455f1a22ab19a95aa3"
+   },
+   {
+    "page_id": "69e7ab535f1a22ab19a96b35",
+    "book_id": "69e7ab535f1a22ab19a96a78",
+    "page_number": 189,
+    "draft_hash": "1159dde500c32aab",
+    "source": "#7479 wave-2 read, book 69e7ab535f1a22ab19a96a78"
+   },
+   {
+    "page_id": "69e7ab685f1a22ab19a98573",
+    "book_id": "69e7ab685f1a22ab19a98430",
+    "page_number": 323,
+    "draft_hash": "4dc448ecd322de8c",
+    "source": "#7479 wave-2 read, book 69e7ab685f1a22ab19a98430"
+   },
+   {
+    "page_id": "69e7ab9b5f1a22ab19a9ae6f",
+    "book_id": "69e7ab9b5f1a22ab19a9ad39",
+    "page_number": 310,
+    "draft_hash": "831095a4f6365f57",
+    "source": "#7479 wave-2 read, book 69e7ab9b5f1a22ab19a9ad39"
+   },
+   {
+    "page_id": "69e7ab9f5f1a22ab19a9b277",
+    "book_id": "69e7ab9f5f1a22ab19a9b1db",
+    "page_number": 156,
+    "draft_hash": "44c3379c99604c1a",
+    "source": "#7479 wave-2 read, book 69e7ab9f5f1a22ab19a9b1db"
+   },
+   {
+    "page_id": "69e7aba15f1a22ab19a9b443",
+    "book_id": "69e7aba15f1a22ab19a9b381",
+    "page_number": 194,
+    "draft_hash": "7803fa3adfdf238b",
+    "source": "#7479 wave-2 read, book 69e7aba15f1a22ab19a9b381"
+   },
+   {
+    "page_id": "69e7abae5f1a22ab19a9c427",
+    "book_id": "69e7abad5f1a22ab19a9c315",
+    "page_number": 274,
+    "draft_hash": "bb23505058214936",
+    "source": "#7479 wave-2 read, book 69e7abad5f1a22ab19a9c315"
+   },
+   {
+    "page_id": "69e7abce5f1a22ab19a9e747",
+    "book_id": "69e7abce5f1a22ab19a9e719",
+    "page_number": 46,
+    "draft_hash": "5fe2573189e55da3",
+    "source": "#7479 wave-2 read, book 69e7abce5f1a22ab19a9e719"
+   },
+   {
+    "page_id": "69e7abd05f1a22ab19a9ea93",
+    "book_id": "69e7abd05f1a22ab19a9e929",
+    "page_number": 362,
+    "draft_hash": "a75444fea0c784d3",
+    "source": "#7479 wave-2 read, book 69e7abd05f1a22ab19a9e929"
+   },
+   {
+    "page_id": "69e7abda5f1a22ab19a9f8d3",
+    "book_id": "69e7abda5f1a22ab19a9f702",
+    "page_number": 465,
+    "draft_hash": "aa10fc7973dd0a8b",
+    "source": "#7479 wave-2 read, book 69e7abda5f1a22ab19a9f702"
+   },
+   {
+    "page_id": "69e7abfa5f1a22ab19aa1727",
+    "book_id": "69e7abfa5f1a22ab19aa16cf",
+    "page_number": 88,
+    "draft_hash": "a252330800c41969",
+    "source": "#7479 wave-2 read, book 69e7abfa5f1a22ab19aa16cf"
+   },
+   {
+    "page_id": "69e7ac1a5f1a22ab19aa3a7a",
+    "book_id": "69e7ac1a5f1a22ab19aa39bf",
+    "page_number": 187,
+    "draft_hash": "25a1359fb8f2a9d8",
+    "source": "#7479 wave-2 read, book 69e7ac1a5f1a22ab19aa39bf"
+   },
+   {
+    "page_id": "69e7ac1d5f1a22ab19aa3e27",
+    "book_id": "69e7ac1d5f1a22ab19aa3cbd",
+    "page_number": 362,
+    "draft_hash": "35596043ceec3831",
+    "source": "#7479 wave-2 read, book 69e7ac1d5f1a22ab19aa3cbd"
+   },
+   {
+    "page_id": "69e7ac275f1a22ab19aa47df",
+    "book_id": "69e7ac275f1a22ab19aa4797",
+    "page_number": 72,
+    "draft_hash": "ff5735f0e4f35fce",
+    "source": "#7479 wave-2 read, book 69e7ac275f1a22ab19aa4797"
+   },
+   {
+    "page_id": "69e7ac325f1a22ab19aa5434",
+    "book_id": "69e7ac325f1a22ab19aa53a1",
+    "page_number": 147,
+    "draft_hash": "2f7ed0dd2ab7ff31",
+    "source": "#7479 wave-2 read, book 69e7ac325f1a22ab19aa53a1"
+   },
+   {
+    "page_id": "69e7ac3a5f1a22ab19aa5c62",
+    "book_id": "69e7ac3a5f1a22ab19aa5bbf",
+    "page_number": 163,
+    "draft_hash": "45205279dcbb236d",
+    "source": "#7479 wave-2 read, book 69e7ac3a5f1a22ab19aa5bbf"
+   }
+  ]
+ }
+}

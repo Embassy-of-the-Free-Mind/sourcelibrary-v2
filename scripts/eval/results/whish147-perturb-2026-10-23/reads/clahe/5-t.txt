@@ -1,0 +1,10 @@
+ROW 1 | ഐക്കവചനന്തു· ൭ ‖ ദ്ര സാരമ്മെന്നുകന്നുദ്ദട്ട്വാദത്തിന്റെയാൎന്ന ‖ ൎന്നം പ്രസിദ്ധിമന്നമാനു
+ROW 2 | ൽകങ്ങാദവിഷനി ‖ ദ്ധ്വം·ച ഒന്നാമതാക്ഷാഗതാൽസിദ്ധം·ന ‖ ·ന സിദ്ധമെന്നാൽസാ
+ROW 3 | ഭിപ്രാദത്തിയെ ‖ ദ്യകാലുതെറെനവസ്തുതന്നാക്ക ‖ സാങ്ഖ്യാദ്ദുചയാ
+ROW 4 | നാദത്തദേയെൽ ‖ സമാന ദൃഷ്ട[illegible]ത്വെന്നാഭൂദെമെസ ‖ ദൃഷ്ടാകെദനെവ
+ROW 5 | ലബ്ധിന്റെദന ‖ വാൽകാന്റുകണ്ടുഃ ലഭിക്കു ‖ ഃമേവ ദാദികൾഷ
+ROW 6 | കാര്യം ലഭി ‖ ഷ്കൃച്ചം വിദ്രുവകോശങ്ങൾ ‖ സ്ദകനനൊദ്ദവ
+ROW 7 | ഉദാനന്ദവണാ ‖ ൽസദ്ദ്യസം ദേവാദ്രവ്യൽഗ ‖ കാ[illegible]ശ്രൂകല്ദോ
+ROW 8 | ഉൽകനനനോടഉവ ‖ ഷസൽകാര്യം·ന·ചൊതുമദനെ ‖ ദമപ്രവചിവസ്തിയമെ
+ROW 9 | നകമാത്തുകം ചി· ‖ ം· സാവയവം ചവതത്തും ലക്കം· ന ‖ വതിതെമ്പ്രക്കം·യ·।
+NOTE | This is a low-confidence, best-effort reading: I can see the letter shapes, but I could not securely identify many of the signs, so most rows probably contain misread letters. The leaf has 9 rows, and the text sits in a narrow block in each column; I found no full-width rows. Rows 1–2 run above the hole level, and the column boundaries I gave for them are approximate. The ends of rows 3–9 at the right edge of p02 and the start of p03 are partly cut off and only partly read.

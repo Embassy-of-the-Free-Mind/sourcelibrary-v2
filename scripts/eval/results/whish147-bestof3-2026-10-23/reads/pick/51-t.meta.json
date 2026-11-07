@@ -1,0 +1,23 @@
+{
+ "stage": "pick",
+ "id": "51-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T09:16:18.243Z",
+ "finished_at": "2026-10-23T09:16:26.572Z",
+ "secs": 8,
+ "prompt_hash": "bec549a2aff73948",
+ "prompt_file": "reads/prompts/bec549a2aff73948.txt",
+ "images": [],
+ "usage": {
+  "input": 2,
+  "output": 278,
+  "cache_read": 2371,
+  "cache_creation": 3107,
+  "turns": 1,
+  "list_cost_usd": 0.0308982
+ }
+}

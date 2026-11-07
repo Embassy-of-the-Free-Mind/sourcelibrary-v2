@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads most like coherent Sāṅkhya commentary on the kinds of pramāṇa throughout (e.g. "viśeṣāt prameya", "saṃsiddhy…", "trividhaṃ", "pratyakṣa", "grāhya-grāhaka-abheda", "dvividhaḥ saṃśaya-viparyaya", "ebhir mānair iṣṭa") and places its string holes consistently; A has some real phrases but more garbled stretches and erratic hole marks, and C is mostly illegible fragments.

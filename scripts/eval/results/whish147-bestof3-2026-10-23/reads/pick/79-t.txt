@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | All three are almost entirely illegible, but only C has any readable text: "ndraṣṭa" in row 1 looks like a plausible piece of draṣṭṛ ("seer"), a key Sāṅkhya term. A at least keeps the string holes the same in every row, while B drops them in eight rows, which is physically implausible for a single leaf.

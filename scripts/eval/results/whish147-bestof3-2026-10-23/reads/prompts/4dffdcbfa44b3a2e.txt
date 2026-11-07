@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. bhinnaṃkāraṇa [illegible] nimi ‖ kāraṇamityartthaḥkāraṇalakṣaṇamupasaṃ ‖ haratikāraṇamitipratya
+2. kṣalakṣaṇamāhatatri ‖ pramāṇādailadṛṣṭailadṛṣṭyaityartthaḥpratya ‖ kṣājñānalakṣaṇamāvi
+3. indriyaṅṅiindriyāṇāṃśrotrā ‖ dikaṃnai [illegible] ṭṭāghaṭādiḥkaiṇṇyārsa ‖ nnikarṣasaṃyogāddvāre
+4. jñanyaṃjñānami ‖ ityartthaḥtriṣṇikaḻukanyalakṣa ‖ ṇamāhaḥ [illegible] kāra
+5. kāṣṭhitiṣṭhibheṣa ‖ ṇāviśeṣyanasaṃbandhānava ‖ ggāṣājñānamityartthaḥ
+6. nandiṟṟrikaḻu ‖ kiṃpramāṇamitimecanāgai ‖ ṟabhakṣiśiṣṭajñānaṃ
+7. traikāṇṇājñānārjña ‖ iāṃvigiṣṭajñānaṃbrahmāldranditrajñā ‖ napaddhatrasamānasvāpra
+8. māṇatrattālhidagakṣa ‖ jñānavyāpisaviṣavikaḻḻekkettunandapu ‖ ndhāprasaṃhārattikaḻḻeka
+
+TRANSCRIPTION B
+1. bhinnaṃkāraṇatte [illegible] mi ‖ kāraṇamityartthaḥkāraṇalakṣaṇamupanyasa [illegible] ‖ ganattinṟebheditipratya [illegible]
+2. kṣalakṣaṇamāhata [illegible] ‖ pramāṇābhāve [illegible] lemaddhya [illegible] rtthaḥpra [illegible] ‖ [illegible] jñānalakṣaṇamāha [illegible]
+3. triguṇa [illegible] trigu [illegible] ‖ [illegible] dikaṃ [illegible] ṭādi [illegible] ‖ [illegible] saṃyogāddi [illegible]
+4. [illegible] nnaṃjñānami ‖ [illegible] rtthaḥ [illegible] kaḻḻa [illegible] lakṣa ‖ ṇamāhaḥ [illegible] kāra
+5. [illegible] ‖ [illegible] saṃbandhānava [illegible] ‖ [illegible] jñānamityartthaḥ
+6. na [illegible] kaḻḻa ‖ [illegible] pramāṇamitivacanāl [illegible] ‖ [illegible] jñānaṃ
+7. [illegible] jña ‖ [illegible] viśiṣṭa [illegible] nnatāl [illegible] jña ‖ jñāna [illegible] māna [illegible] pra
+8. māṇattāl [illegible] ‖ [illegible] jñānasyāvisavi [illegible] kaḻḻ [illegible] ‖ [illegible] prasaṃ [illegible] kaḻḻaka
+
+TRANSCRIPTION C
+1. bhinnaṃkāraṇenamitā ‖ raṇamityartthaḥkāraṇalakṣaṇarūpasaṃga ‖ tiraktame [illegible] tipratya
+2. kṣalakṣaṇamāhatatra ‖ pramāṇābhedatvelomadṛṣṭa [illegible] ityartthaḥpratya ‖ kṣajñānalakṣaṇamāvi
+3. indriyārtthaindriyāṇāṃ ‖ rtthānāṃ [illegible] kaikairssa ‖ nnikarṣasaṃyogādiḥ
+4. [illegible] nnujñānami ‖ tyartthaḥ [illegible] ddhikaḻkkulakṣa ‖ ṇamāhaḥ [illegible] kāra
+5. kā [illegible] ṣipaiśa ‖ ñāvivekasyasaṃbandhānava ‖ dhairyyajñānamityartthaṃ
+6. nantara [illegible] kaḻḻa ‖ kiṃpramāṇamitimeghanāde ‖ [illegible] baddhamiśiṣṭajñānaṃ
+7. [illegible] ṇajñānajña ‖ jñānaṃviśiṣṭajñānatvālduṣṭi [illegible] jñā ‖ jñānavadityanumānasyapra
+8. māṇatvālsiddhaṃkā ‖ kṣajñānasyāvisavikaḻkka [illegible] pasava ‖ ndhāgrasaṃga [illegible] kkaḻkka
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

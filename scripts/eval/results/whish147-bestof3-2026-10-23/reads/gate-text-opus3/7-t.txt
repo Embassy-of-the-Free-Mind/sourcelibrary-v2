@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B is the only one that reads as continuous Sanskrit commentary on Sāṅkhyakārikā 29–34 (e.g. "prāṇādyā vāyavaḥ pañca", "karaṇaṃ trayodaśavidhaṃ", "sāmpratakālaṃ bāhyaṃ trikālam ābhyantaraṃ karaṇam"), while A only sometimes matches pieces of it and C is mostly syllables that look like words but aren't.

@@ -1,0 +1,9 @@
+ROW 1 | ളാമെന്തിദ്രിൽന്മഃദുഥ ‖ വക്തിരാനുപലബ്ധിമാദാത്രണാസഖംഖ ‖ തകശ്ശദഃപ്രകാരെവന്ന
+ROW 2 | താമവിപദാഖ്യാ ‖ മനുപലബ്ധിൎഭവതിെദശമദാകദ്രദ്രി ‖ പെദാകാദ്രിഷിതമൈദാഷ
+ROW 3 | ുദ്രാത്മകരോദൗഷ ‖ ാഷ്ഠരാരെവൈഭെദൊന്നദൽത്മനാഹാ ‖ ഞതിമൃജൗത്താഉ
+ROW 4 | യഥാദൂരമല്ലകര ‖ സ്യപക്ഷിമണാനോപലബ്ധിംസ ‖ ാമഹ്യാദികിഖകി
+ROW 5 | ശക്താത്രാവിത ‖ ഖാഇന്ദ്രിയഃകതിനാമില്ലാദ ‖ തതദാചക്ഷുന്യന്യ
+ROW 6 | ഃജ്ഞനന്യഉടല ‖ ത്രാരൊദനമദാഥകതാന ‖ പലബ്ധിഃഇന്ദ്രിയഘാ
+ROW 7 | ദാദുരഇയമത്രാത്രാദൃ ‖ നാംജ്ജക്ഷിദ്രഖാദാഞാംകദാഖാകൈ ‖ ോഗ്രൈദശാവഷകാ
+ROW 8 | ന്ദാമവിശക്താഇരാഥ ‖ ാദനുപലബ്ധിഃമനദാരസിാനമന്മാന ‖ ാനമസമാഹിതതാദ്രി
+NOTE | Eight rows on one side; rows 1–2 and 7–8 run through the holes, rows 3–6 stop at them. The hand is loose and the images are not zoomable, so roughly a third of the aksharas (especially p01 and the ligatures in rows 2–3 and 7–8) are uncertain readings rather than secure ones; a marginal "സ" plus a hooked stroke stands in the left margin of p01 beside rows 6–7.

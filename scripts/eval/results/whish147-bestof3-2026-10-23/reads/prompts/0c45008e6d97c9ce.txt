@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. temiyāsrutialamal ‖ kaṅṅyātaivapruvadeśeruktiḥsā4 ‖ ālākhyāṣauccyate
+2. yātunnakālānnāppuca ‖ ādānnālpraka [illegible] teṣṭhikhekakhyātira ‖ tuṭāṣṭrādevaṅṅateeva
+3. maṭālasāvatṛggibālā ‖ nimātraruvaoṭaśamātrādevampivekakhyāti ‖ mankaṣmānnabeddabuḥtalṭā
+4. ggāmevahetulāgga ‖ ūpadeśeruktiḥsāṭṭāggākhyātrūktira [illegible] ‖ cyatekhāggāndalyatiba
+5. āhrāntṛkṣayomikṣa ‖ oyākharamālpañcabhūāḥkhalacandrātmanaḥ ‖ prakṛtimahadahaṃkārā
+6. ddinnāoṅṅatrāddimandramā ‖ nndreveparāggrasanticatuṣṭayāḥkā ‖ bhāggāndṛmukkāndā
+7. ṭāveṅṅṛṣmānnamakki ‖ kṣrraprṛvaoeṅṅaṅṅāññavaiveṅṅāggrasa ‖ bhitukṣyatimeveṅṅā
+8. ggahetuvakṣārālvaive ‖ ṅṅāggābhivabontrebhobhrāndakṣiyāḥvebhobhi ‖ ucaramṛteneneṅṅṛpa
+9. tamovaivarāggṛṃtiṣkka ‖ yāduparamaḥphiṣkkayāoṭoggṛḥdharmmodabhāḥṣa ‖ bhoucaramāṅṅabiḥtathābhiḥtrū
+10. jñanannakṣaṇakṣayaṭogabiṃ ‖ sāṭekṣādalnnaborujñānarupakṣamāḥpabhoṭa ‖ baṭavaṃṅṅathābibevāṭayo
+11. dhannājñanoṣāyāḥoe ‖ ccatbhavakāddilṭuḥbaṃkṛṣṇaddhyājñe ‖ nekṣumibhāratmāndritāṭebho
+
+TRANSCRIPTION B
+1. teṣiyāstritialamalkajñāteccavabhruvadeśeruktiḥsārlābhyāṣauccyate
+2. yātunnakkālānnāppūcādānnālprakṛte [illegible] vekicyātira [illegible] truṭāṣṭādeva [illegible] teṣa
+3. maṭālasāvatu [illegible] bālānimātruvadeśamātrādevanīcekalyāti [illegible] kṣaൗkānabaddhvaḥtalṭā
+4. grāmevahetulgrāhyarupadeśeruktiḥsādrāgrāhyātri [illegible] cyatebāhyāntaryatiba
+5. āhyāntakleyomiṣa ‖ yocaramālpañcatāḥkhalunātmanaḥ ‖ prakṛtimahadahaṃkārā
+6. ddinādamyātruṭṭimanmā ‖ nasrecevarāgrasandhicaturjñayāḥkā ‖ bāhyābhyantarāṇā
+7. ṭācekkuttānamiti ‖ jñṛpravṛttijjñāsacevogryasa ‖ batukṣyaticaivā
+8. grahetuvabāddhālcecabhāgrābhivabāteṣṭabāmpāukṣyāḥcebobhiucarastratenenoktupa
+9. ramocevarāgraḥbhikṣayāṭuparamaḥbhikṣāyāṭeṭāgrāḥpañcādamaḥmabāucaramāñitābhāstri
+10. jñanakkiṇakkiyaṭogabhiḥsādekkādaḻnaborujñānauparamāḥpaboṭaṣaṭāggābhāgibepādayo
+11. yanājñanoṣāyāḥcetryepakārindduḥpakṛṣṇaduṣṭājñaneṣṇaśirbāgranthatadebā
+
+TRANSCRIPTION C
+1. temiyāntrati [illegible] lamal ‖ kaṅṅ [illegible] tmevattvapadeśarukṣisāṃ ‖ [illegible] lā [illegible] ṣāucyate
+2. yātrakkālānnāppa ‖ pādānālpra [illegible] te [illegible] tekkyātira [illegible] ‖ [illegible] tuṭā [illegible] deva [illegible]
+3. maṭāla [illegible] vatru [illegible] bālāni ‖ mātruvadeśamātrādevamivekakhyāti ‖ [illegible] ce [illegible] talṭā
+4. ggāmeva [illegible] talnāntya ‖ ttvapadeśarukṣisāṭṭāgrākhyā [illegible] ‖ [illegible] cyate [illegible] grā [illegible] yati [illegible]
+5. āhrāntukṣayonikka ‖ [illegible] yāṣaramālpañca [illegible] tākhalacanātmana ‖ prakṛtimahadahaṃkārā
+6. [illegible] nāda [illegible] mūnnāmā ‖ [illegible] raivarāgrasannivṛttiyakā ‖ [illegible] grā [illegible] konā
+7. ṭāveṅṅumānamiti ‖ [illegible] pravṛtteṅṅāmaveṇāgrasa ‖ mitukkayoti [illegible] veṇā
+8. ggaituva [illegible] lveva ‖ bāgrādivabetelpbodhārukṣiyāvtebi ‖ ucara [illegible] tenenettuva
+9. ramovevarāgrānikṣa ‖ yāṭuparamanikṣayāṭegrāva [illegible] daraṣa ‖ bouparamāśani [illegible] tru
+10. jñantakṣākṣāyaṭogami ‖ sādekṣādaḻnabetujñānauparamāpabeṭa ‖ vanni [illegible] bevādayo
+11. yanājñanāṣāyābhe ‖ ccesavakātmilṭavaṃ [illegible] dvyājñe ‖ neddha [illegible] śvārappāsmitadebi
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

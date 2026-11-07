@@ -1,0 +1,42 @@
+{
+ "seed": 5924,
+ "built_at": "2026-10-22T22:48:23.852Z",
+ "frame_query": "books {language:/latin|^lat$|^la$/i, pages_ocr>=100}, year 1450-1800 from published, not duplicate_of, not manuscript",
+ "n_rows": 4826,
+ "excluded": {
+  "year": 736,
+  "duplicate": 167,
+  "manuscript": 0
+ },
+ "frame_n": 3923,
+ "by_century": {
+  "1700s": 458,
+  "1500s": 1560,
+  "1600s": 1130,
+  "1450-99": 775
+ },
+ "checked": 901,
+ "rejected": {
+  "lt100_ocr": 0
+ },
+ "accepted_mix_in_checked_order": {
+  "1700s|flash": 46,
+  "1500s|flash": 217,
+  "1600s|flash": 144,
+  "1450-99|lite": 143,
+  "1600s|lite": 129,
+  "1500s|lite": 134,
+  "1450-99|flash": 35,
+  "1700s|lite": 53
+ },
+ "cells": {
+  "1700s|flash": 5,
+  "1500s|flash": 13,
+  "1600s|flash": 7,
+  "1450-99|lite": 11,
+  "1600s|lite": 9,
+  "1500s|lite": 5,
+  "1450-99|flash": 5,
+  "1700s|lite": 5
+ }
+}

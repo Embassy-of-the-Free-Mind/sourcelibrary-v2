@@ -55,8 +55,14 @@ import {
 import { READABLE_IN_ENGLISH_OR } from '../../src/lib/books-catalog';
 
 describe('page-counts convention (#3293)', () => {
-  it('VISIBLE_PAGE_MATCH selects only page_number > 0', () => {
-    expect(VISIBLE_PAGE_MATCH).toEqual({ page_number: { $gt: 0 } });
+  it('VISIBLE_PAGE_MATCH selects only page_number > 0 and no repeat capture', () => {
+    expect(VISIBLE_PAGE_MATCH).toEqual({ page_number: { $gt: 0 }, repeat_of: null });
+  });
+
+  it('isVisiblePage treats a repeat capture as hidden, and a null repeat_of as restored (#5056)', () => {
+    expect(isVisiblePage({ page_number: 4, repeat_of: 'kept' })).toBe(false);
+    expect(isVisiblePage({ page_number: 4, repeat_of: null })).toBe(true);
+    expect(isVisiblePage({ page_number: 4 })).toBe(true);
   });
 
   it('isVisiblePage treats page_number <= 0 as hidden', () => {
@@ -80,7 +86,7 @@ describe('page-counts convention (#3293)', () => {
   it('buildVisiblePageCountPipeline scopes the $match to book + visible pages', () => {
     const pipeline = buildVisiblePageCountPipeline('book-123');
     expect(pipeline[0]).toEqual({
-      $match: { book_id: 'book-123', page_number: { $gt: 0 } },
+      $match: { book_id: 'book-123', page_number: { $gt: 0 }, repeat_of: null },
     });
     // and it aggregates the three counters
     const group = pipeline[1].$group;

@@ -1,0 +1,14 @@
+ROW 1 | സൊയമിദുശ്യസ്സുഗുണ[illegible]പശ്യൊയാന്ദ്യഗാടാവത്ത്വേക്ഷ്യതേക്ഷ്യ[illegible]ഖെനിദായെഷ്യ[illegible]വൽയാെ
+ROW 2 | ത്രകാഃപുരുഷസ്യാൽടൈദചായമദോഷ[illegible]വിവംപുരുഷബഹുത്വംപ്രസാദ്ധ്യമിവെകജ്ഞാനൊപയെ
+ROW 3 | ാസിത[illegible]പ്രയ[illegible]ാനാ[illegible]ംതന്ത്രാൽചമിപൎയ്യായാൽനിദ്ധംസാക്ഷിത്വമസ്യപുരുഷസ്യകൈവല്യമാദ്ധ്യസ്ഥ്യം
+ROW 4 | ഉദ്ദിഷ്ടമകൎത്തൃഭാവശ്ച.തത്ഥാെക്ഷചകാരഃ പുരുഷബഹുത്വ[illegible]സഹായൎത്ഥാരാദിസമുച്ചിനോതിവിപൎയ്യാസ
+ROW 5 | ാദിത്വൈകൈത്രൈഗുണ്യ ‖ വിപൎയ്യാസാദിത്യനേനതെ[illegible]സംവേദ്യ ‖ തേനതസ്യ[illegible]
+ROW 6 | ഷ്ഠാദിത്വ[illegible]ംതെ ‖ ന[illegible]ക്കംവിസ[illegible]യാനാ[illegible]മിതി ‖ [illegible]ഃവിപ്രകൃതേൎത്തൈ
+ROW 7 | ണ്ണിവിപ്രകൃത്യാഗുണ ‖ മമിചെവികൃത്യാദേസംബോദ്ധ്യ[illegible]ാൽ ‖ ത്രൈഗുണ്യാദേഃവിപൎയ്യ
+ROW 8 | സഃപുരുഷസ്യസാക്ഷി ‖ [illegible]ംവിപക്ഷി[illegible]ത്വംനിക്ഷയത്വം ‖ [illegible]സായാ[illegible]ത്വം
+ROW 9 | അസ്യപമിഥ്യാതത്ത്വെചെ ‖ തനത്വേനാ[illegible]താനെചസാക്ഷിത്വ[illegible] ‖ [illegible]ചേതനൈ[illegible]ാട്ടു
+ROW 10 | പതിനാരെചതനഃസാക്ഷിചി ‖ [illegible]ദൎശിതാവിക്ഷയാ[illegible]ഷിയാം[illegible]ദ്ദിഷ്ടാൽ[illegible] ‖ ഃസാക്ഷിണഃ[illegible]
+ROW 11 | പ്രത്യക്ഷ[illegible] ‖ [illegible]സാക്ഷി[illegible]തഃ[illegible]പ്രവൃത്തി[illegible]സാപി ‖ [illegible]ഭിക്ഷയാംപുരുഷായാൽ
+ROW 12 | ശയതിഇതിപുരുഷസ്സാക്ഷി ‖ [illegible]തഃഏവ[illegible]ടെവത്തിന[illegible] ‖ [illegible]കൈവല്യം[illegible]
+ROW 13 | [illegible]ത[illegible]കൈവല്യം[illegible]ാതിമാത[illegible]ത്രൈഗുണ്യാൽ[illegible]
+NOTE | This is a low-confidence reading. I could only partly read about 40–50% of the leaf. I counted 13 rows, not 14. The clearest stretches are in rows 2–4 (e.g. സാക്ഷിത്വമസ്യപുരുഷസ്യ, കൈവല്യമാദ്ധ്യസ്ഥ്യം, അകൎത്തൃഭാവശ്ച). Rows 5–13 are mostly guesses at the glyphs, and the rope hides text at both holes. Where I could tell the hole break (rows 5–8, possibly 9–12), I placed ‖ only at the left hole; the right-hole break is not marked.

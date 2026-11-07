@@ -36,7 +36,7 @@ export async function GET(
       return NextResponse.json({ error: 'type is required (image, page, or book)' }, { status: 400 });
     }
 
-    const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 5000);
+    const limit = Math.min(parseInt(searchParams.get('limit') || '1000', 10), 5000);
 
     const db = await getReadDb();
 

@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
 import { checkAndRecordDownload } from '@/lib/download-cap';
+import { ANON_EMBED_DAILY_BOOK_CAP } from '@/lib/partner-embed-download';
+import { anonymousDownloadCapKey, ANON_EMBED_LIMIT_MESSAGE, isPartnerEmbedDownload } from '@/lib/partner-embed-download-server';
+import { partnerTermsRefusal } from '@/lib/partner-terms';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
@@ -16,12 +22,18 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { runWithTraceRef, traceRefFor, tracedCopiesEnabled } from '@/lib/trace-ref';
 import { exportableTranslation } from '../../../../../../scripts/lib/model-only-translation.mjs';
 import { getTranslation } from '@/lib/page-translations';
 import { getBookIndex } from '@/lib/book-index';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
+import { buildFlowText, pageToText } from '@/lib/export-flow-text';
+import { buildFlowEpub, renderFlowEpub, FLOW_EPUB_CSS } from '@/lib/export-flow-epub';
+import { languageToBcp47 } from '@/lib/language-code';
+import type { Db } from 'mongodb';
+import { servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
 import {
   fetchAndCompressImage,
   pageExportImageUrl,
@@ -31,6 +43,7 @@ import {
   fetchFacsimilePdfImage,
   generateImagesZipStream,
 } from '@/lib/export-page-images';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -64,7 +77,7 @@ interface RouteParams {
   params: Promise<{ id: string }>;
 }
 
-function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 'ocr' | 'both'): string {
+async function generateTxtDownload(db: Db, book: Book, pages: Page[], format: 'translation' | 'ocr' | 'both'): Promise<string> {
   const lines: string[] = [];
   const now = new Date().toISOString().split('T')[0];
 
@@ -96,9 +109,10 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   // Source and license
   lines.push(`Source: ${BASE_URL}/book/${book.id}`);
   lines.push(`Downloaded: ${now}`);
-  lines.push(`License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)`);
+  lines.push(`License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)`);
+  lines.push(AI_TRAINING_NOTICE);
   lines.push('');
-  lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
+  lines.push('Source Library, created by Derek Lomas. Amsterdam, 2026.');
   lines.push('Please cite Source Library when using this material.');
   lines.push('');
   lines.push('This edition carries a Trithemian imprimatur, an invisible');
@@ -123,49 +137,44 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('');
   lines.push('─'.repeat(60));
 
-  // Page content
-  for (const page of pages) {
-    if(!page) continue;
-
-    const hasTranslation = page.translation?.data;
-    const hasOcr = page.ocr?.data;
-
-    // Skip pages with no content for the requested format
-    if (format === 'translation' && !hasTranslation) continue;
-    if (format === 'ocr' && !hasOcr) continue;
-    if (format === 'both' && !hasTranslation && !hasOcr) continue;
-
+  // The translation or the original alone: one continuous text, as the /read view and the Kindle edition read
+  // (#7118). The stored text carries markdown and the prompts' tags; this is the clean reading text.
+  if (format !== 'both') {
+    const flow = await buildFlowText(db, book as never, pages as never, { text: format, baseUrl: BASE_URL });
+    if (flow.imagesTotal > 0) {
+      lines.push('');
+      lines.push(`Illustrations: plain text cannot carry pictures, so each of the book's ${flow.imagesTotal} is marked [Illustration, p. N] where it stands, with what it shows and a link to its page.`);
+    }
     lines.push('');
-    lines.push(`[Page ${page.page_number}]`);
     lines.push('');
+    lines.push(flow.body);
+    lines.push('');
+  } else {
+    // Original and translation together stays page by page; each page's text is still cleaned.
+    const seq = { n: 0 };
+    for (const page of pages) {
+      if (!page) continue;
+      const translation = page.translation?.data;
+      const ocr = page.ocr?.data;
+      if (!translation && !ocr) continue;
 
-    if ((format === 'translation' || format === 'both') && hasTranslation) {
-      if (format === 'both') {
+      lines.push('');
+      lines.push(`[Page ${page.page_number}]`);
+      lines.push('');
+      if (translation) {
         lines.push('--- TRANSLATION ---');
         lines.push('');
-      }
-      
-      if(page.translation && page.translation.data) {
-        lines.push(markForExport(page.translation.data, book.id));
-      }
-
-      lines.push('');
-    }
-
-    if ((format === 'ocr' || format === 'both') && hasOcr) {
-      if (format === 'both') {
-        lines.push(`--- ORIGINAL (${book.language}) ---`);
+        lines.push(pageToText(markForExport(translation, book.id), seq));
         lines.push('');
       }
-
-      if(page.ocr && page.ocr.data) {
-        lines.push(page.ocr.data);
+      if (ocr) {
+        lines.push(`--- ORIGINAL (${book.language}) ---`);
+        lines.push('');
+        lines.push(pageToText(ocr, seq));
+        lines.push('');
       }
-
-      lines.push('');
+      lines.push('─'.repeat(60));
     }
-
-    lines.push('─'.repeat(60));
   }
 
   // Footer
@@ -337,10 +346,16 @@ p {
 async function generateEpubDownload(
   book: Book,
   pages: Page[],
-  format: 'epub-translation' | 'epub-ocr' | 'epub-both'
+  format: 'epub-translation' | 'epub-ocr' | 'epub-both',
+  flowOpts: { db: Db; includeImages: boolean },
 ): Promise<Buffer> {
   const now = new Date().toISOString().split('T')[0];
   const bookTitle = book.display_title || book.title;
+  // One text, not one chapter per page (#7118): pages run on where the sentence does, with the book's
+  // illustrations in place. "Both" stays page by page — two texts interleave per page, not per sentence.
+  const flow = format === 'epub-both' ? null : await buildFlowEpub(flowOpts.db, book as never, pages as never, {
+    text: format === 'epub-ocr' ? 'ocr' : 'translation', baseUrl: BASE_URL, includeImages: flowOpts.includeImages,
+  });
 
   // Build description
   let description = `A digitized and translated text from the Source Library collection.`;
@@ -366,19 +381,23 @@ async function generateEpubDownload(
     <p><strong>Original Language:</strong> ${book.language}</p>
     ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
     <p><strong>Content:</strong> ${contentLabel}</p>
+    ${flow ? '<p>The text runs on across pages; the small raised numbers mark where each printed page begins and link to it, with its scan.</p>' : ''}
+    ${flow?.translationCredit ? `<p><strong>Translation:</strong> ${flow.translationCredit}</p>` : ''}
+    ${flow?.imagesNote ? `<p>${flow.imagesNote}</p>` : ''}
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
-      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+      <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
+      <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
+  if (flow) chapters.push(...flow.chapters);
 
-  // Add page content
-  for (const page of pages) {
+  // Add page content (page by page: the "both" edition)
+  for (const page of flow ? [] : pages) {
     if(!page) continue;
-    
+
     const hasTranslation = page.translation?.data;
     const hasOcr = page.ocr?.data;
 
@@ -416,28 +435,40 @@ async function generateEpubDownload(
   // Add colophon chapter at the end
   const colophon = `
     <h1>About This Edition</h1>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
-    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-    <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
+    <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
+    ${flow?.translationCredit
+      // A Loeb (#8321): the English is the published translation, not ours, and carries no mark of ours.
+      ? `<p><em>${flow.translationCredit}</em></p>`
+      : `<p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
-    by Source Library. It does not identify you or track your usage.</em></p>
+    by Source Library. It does not identify you or track your usage.</em></p>`}
   `;
   chapters.push({ title: 'About This Edition', content: colophon });
 
   // Generate EPUB
-  const epubBuffer = await epub({
+  const epubOptions = {
     title: bookTitle,
     author: book.author,
     publisher: 'Source Library',
     description: description,
-    lang: format === 'epub-ocr' ? book.language : 'en',
+    // A language CODE: dc:language "Latin" is invalid metadata (EPUBCheck), and readers pick hyphenation by it.
+    lang: format === 'epub-ocr' ? (languageToBcp47(book.language) || 'und') : 'en',
     tocTitle: 'Contents',
-    css: EPUB_CSS,
+    css: EPUB_CSS + (flow ? FLOW_EPUB_CSS : ''),
     date: now,
-  }, chapters);
-
-  return epubBuffer;
+    cover: flow?.cover ?? undefined,
+    // An illustration that fails to embed must not cost the reader the book.
+    ignoreFailedDownloads: true,
+  };
+  try {
+    return flow
+      ? await renderFlowEpub(epubOptions, chapters, { hasImages: flow.imagesIncluded > 0, sourceUrl: `${BASE_URL}/book/${book.id}` })
+      : await epub(epubOptions, chapters);
+  } finally {
+    flow?.cleanup();
+  }
 }
 
 // Reflowable parallel-text EPUB (#3284): standard reflowable EPUB, one
@@ -476,8 +507,8 @@ async function generateParallelFlowEpubDownload(
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
-      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+      <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
+      <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
@@ -517,9 +548,9 @@ async function generateParallelFlowEpubDownload(
   const colophon = `
     <h1>About This Edition</h1>
     <p>This parallel text edition was prepared by the <strong>Source Library</strong>, presenting the original ${book.language} text and its English translation together, page by page.</p>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
-    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+    <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
     <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
     by Source Library. It does not identify you or track your usage.</em></p>
@@ -624,7 +655,7 @@ async function generateLoebEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>
-    <dc:rights>CC BY-SA 4.0</dc:rights>
+    <dc:rights>CC BY-NC-SA 4.0</dc:rights>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <!-- Fixed-layout metadata -->
     <meta property="rendition:layout">pre-paginated</meta>
@@ -805,8 +836,8 @@ p:first-of-type {
           <p style="text-indent:0;text-align:center;">Original ${escapeXml(book.language)} with English translation</p>
         </div>
         <div class="colophon">
-          <p style="text-indent:0;text-align:center;">Produced by SourceLibrary.org in Amsterdam, 2026</p>
-          <p style="text-indent:0;text-align:center;">CC BY-SA 4.0</p>
+          <p style="text-indent:0;text-align:center;">Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+          <p style="text-indent:0;text-align:center;">CC BY-NC-SA 4.0</p>
         </div>
       </div>
     `, 'Title Page', 'page-right');
@@ -848,7 +879,7 @@ p:first-of-type {
       <p>The Source Library digitizes and translates rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.</p>
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-        <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution)</p>
+        <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
         <p>Source Library is a project of the Embassy of the Free Mind.</p>
       </div>
     `, 'About This Edition', 'page-right');
@@ -971,7 +1002,7 @@ async function generateFacsimileEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>
-    <dc:rights>CC BY-SA 4.0</dc:rights>
+    <dc:rights>CC BY-NC-SA 4.0</dc:rights>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <meta property="rendition:layout">pre-paginated</meta>
     <meta property="rendition:orientation">auto</meta>
@@ -1146,7 +1177,7 @@ p:first-of-type { text-indent: 0; }
       <p>This facsimile edition presents original manuscript pages alongside translations.</p>
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-        <p><strong>License:</strong> CC BY-SA 4.0</p>
+        <p><strong>License:</strong> CC BY-NC-SA 4.0</p>
         <p>Source Library · Embassy of the Free Mind</p>
       </div>
     `, 'About This Edition', 'page-right');
@@ -1941,8 +1972,13 @@ async function generateScholarlyEpubDownload(
     manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
 
     // Build contributors list
-    const contributors = edition?.contributors || [
-      { name: 'Source Library', role: 'translator', type: 'ai' as const, model: 'Gemini AI' }
+    // AI contributors print by kind, one per role, never by vendor or model (#7263). The edition
+    // record (and its Zenodo deposit) keeps each model; only what the reader sees changes.
+    const recorded = edition?.contributors || [{ name: 'Source Library', role: 'translator' as const, type: 'ai' as const }];
+    const aiRoles = [...new Set(recorded.filter(c => c.type === 'ai').map(c => c.role))];
+    const contributors = [
+      ...recorded.filter(c => c.type !== 'ai'),
+      ...aiRoles.map(role => ({ name: 'Source Library, using AI', role })),
     ];
 
     // OPF
@@ -1956,7 +1992,7 @@ async function generateScholarlyEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>${bilingual ? `\n    <dc:language>${escapeXml(book.language.toLowerCase().slice(0, 3))}</dc:language>` : ''}
     <dc:date>${edition?.published_at ? new Date(edition.published_at).toISOString().split('T')[0] : now}</dc:date>
-    <dc:rights>${edition?.license || 'CC-BY-SA-4.0'}</dc:rights>
+    <dc:rights>${edition?.license || 'CC-BY-NC-SA-4.0'}</dc:rights>
     ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <meta name="cover" content="cover-image"/>
@@ -2086,14 +2122,14 @@ async function generateScholarlyEpubDownload(
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
     <p>English translation prepared by Source Library</p>
     <p>&#160;</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
     <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit and distribute under the same license.</p>
     ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&#160;</p>
     <p><strong>Contributors:</strong></p>
-    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
+    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})</p>`).join('\n    ')}
     <p>&#160;</p>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     <p>&#160;</p>
     <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
   </div>
@@ -2353,10 +2389,10 @@ async function generateScholarlyEpubDownload(
 <body>
   <div class="colophon">
     <h1>About This Edition</h1>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     ${edition?.doi ? `<p><strong>Permanent Citation:</strong> ${edition.doi_url || `https://doi.org/${edition.doi}`}</p>` : ''}
     <p><strong>Online Version:</strong> ${BASE_URL}/book/${book.id}</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'}</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'}</p>
     <p>&#160;</p>
     <p style="font-size:0.85em;color:#888;">Generated: ${now}</p>
   </div>
@@ -2368,7 +2404,7 @@ async function generateScholarlyEpubDownload(
   });
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+async function downloadGET(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -2384,15 +2420,32 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    // All downloads require sign-in.
+    // All downloads require sign-in — except a free-tier format of a partner's
+    // own book requested from inside that partner's embed, where signing in is
+    // impossible (#7702). That exception is capped per IP below.
     const session = await auth();
     const userId = session?.user?.id || null;
+    let anonCapKey: string | null = null;
     if (!userId) {
-      return NextResponse.json(
-        { error: 'Sign in required', requires_signin: true },
-        { status: 401 },
-      );
+      const ownerProbe = isPremiumFormat(format)
+        ? null
+        : await (await getDb()).collection('books').findOne({ id }, { projection: { tenantId: 1 } });
+      if (!ownerProbe || !(await isPartnerEmbedDownload(request, ownerProbe as { tenantId?: string }))) {
+        return NextResponse.json(
+          { error: 'Sign in required', requires_signin: true },
+          { status: 401 },
+        );
+      }
+      anonCapKey = anonymousDownloadCapKey(request.headers);
     }
+
+    // A protected partner's book: agree to its terms first. Ahead of the cap, so being asked costs nothing.
+    const termsRefusal = await partnerTermsRefusal(
+      request,
+      await (await getDb()).collection('books').findOne({ id }, { projection: { id: 1, tenantId: 1 } }) as { id?: string; tenantId?: string | null } | null,
+      { userId, format },
+    );
+    if (termsRefusal) return termsRefusal;
 
     // Get optional edition_id for scholarly format
     const editionId = searchParams.get('edition_id');
@@ -2433,7 +2486,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // Paid gate applies ONLY to premium formats (#3290) — free text formats
     // never hit this. NC-free image formats skip it too (charging would
     // cross the NC line).
-    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    if (isPremiumFormat(format) && downloadChargesEnabled() && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
@@ -2448,8 +2501,13 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // becoming a bulk-export path. Members, per-book purchasers, and
     // editor/admin sessions are exempt. Runs after the sign-in/402/403 gates
     // and before any expensive generation work below.
-    if (!isPremiumFormat(format)) {
-      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+    if (anonCapKey) {
+      const cap = await checkAndRecordDownload(anonCapKey, id, ANON_EMBED_DAILY_BOOK_CAP);
+      if (!cap.allowed) {
+        return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
+      }
+    } else if (userId && !isPremiumFormat(format)) {
+      const isMember = sessionHasMemberBenefits(session?.user);
       const isExemptEditor = await isInnerCircle();
       const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
       if (!isMember && !isExemptEditor && !isPurchased) {
@@ -2480,9 +2538,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get all pages sorted by page number
+    // Get all pages sorted by page number. A repeat capture (#5056) is the same
+    // leaf as a page already in the export, so it is left out.
     const pages = await db.collection('pages')
-      .find({ book_id: id })
+      .find({ book_id: id, ...NOT_REPEAT_CAPTURE })
       .sort({ page_number: 1 })
       .toArray();
 
@@ -2496,6 +2555,15 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // translation rather than dropping out: an export with holes in it is
     // worse than one that is mostly Spanish, and `lang_coverage` in the
     // response header says how many of each there are.
+    // English edition, English leaf (#7100): the stored English "translation"
+    // is a model's rewording, not the author's words, and leaves the export
+    // here, before any edition is substituted in — so a Spanish edition of an
+    // English leaf still exports. The transcription stays: the `ocr` formats
+    // carry the author's text.
+    for (const p of pages) {
+      if (servesTranscriptionInsteadOfTranslation(p, book)) delete p.translation;
+    }
+
     const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
     const exportLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
     let localizedPages = 0;
@@ -2673,16 +2741,21 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         filename = `${safeTitle}-${isBilingual ? 'bilingual' : 'scholarly'}.epub`;
       } else {
         // Generate standard EPUB
+        // The continuous edition carries the book's illustrations only when its scans may be redistributed.
+        const includeImages = format !== 'epub-both' && (await classifyImageAccess(id)) === 'open';
         epubBuffer = await generateEpubDownload(
           book as unknown as Book,
           pages as unknown as Page[],
-          format as 'epub-translation' | 'epub-ocr' | 'epub-both'
+          format as 'epub-translation' | 'epub-ocr' | 'epub-both',
+          { db, includeImages },
         );
         const formatSuffix = format.replace('epub-', '');
         filename = `${safeTitle}-${formatSuffix}.epub`;
       }
 
-      return new Response(new Uint8Array(epubBuffer), {
+      // Streamed, not buffered: Vercel refuses a buffered function response over 4.5 MB, and an
+      // illustrated edition is larger (#7118).
+      return new Response(Readable.toWeb(Readable.from([epubBuffer])) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/epub+zip',
           'Content-Disposition': `attachment; filename="${filename}"`,
@@ -2691,7 +2764,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       });
     } else {
       // Generate TXT
-      const content = generateTxtDownload(
+      const content = await generateTxtDownload(
+        db,
         book as unknown as Book,
         pages as unknown as Page[],
         format as 'translation' | 'ocr' | 'both'
@@ -2714,4 +2788,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Traced bulk copies (#8150 slice 8): a signed-in download carries an opaque
+ * account ref in every marked passage. DARK unless TRACED_COPIES=on, which
+ * waits on terms, sign-up disclosure and a GDPR check. Anonymous downloads are
+ * never traced. A traced response is never shared-cacheable.
+ */
+export async function GET(request: NextRequest, ctx: RouteParams) {
+  const ref = tracedCopiesEnabled() ? traceRefFor({ userId: (await auth())?.user?.id ?? null }) : undefined;
+  const res = await runWithTraceRef(ref, () => downloadGET(request, ctx));
+  if (ref) {
+    try { res.headers.set('Cache-Control', 'private, no-store'); } catch { /* immutable headers: route already no-cache */ }
+  }
+  return res;
 }

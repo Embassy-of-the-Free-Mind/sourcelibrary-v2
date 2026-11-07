@@ -1,0 +1,1953 @@
+{
+ "by": {
+  "zh-dice/paddle>agy-flash-low/manuscript": {
+   "n": 29,
+   "k": 19,
+   "w": 9
+  },
+  "latin-gpu/gpu>agy-flash-low/print": {
+   "n": 26,
+   "k": 22,
+   "w": 2
+  },
+  "hebrew-flash3/3flash/print": {
+   "n": 30,
+   "k": 7,
+   "w": 22
+  },
+  "hebrew-flash3/3flash>agy-flash-low/print": {
+   "n": 28,
+   "k": 7,
+   "w": 18
+  },
+  "arabic-flash3/3flash/print": {
+   "n": 30,
+   "k": 10,
+   "w": 17
+  },
+  "arabic-flash3/3flash>agy-flash-low/print": {
+   "n": 29,
+   "k": 13,
+   "w": 13
+  },
+  "chinese-flash3/3flash/print": {
+   "n": 30,
+   "k": 7,
+   "w": 21
+  },
+  "chinese-flash3/3flash>agy-flash-low/print": {
+   "n": 30,
+   "k": 6,
+   "w": 22
+  },
+  "zh-frame-6871/paddle/manuscript": {
+   "n": 9,
+   "k": 5,
+   "w": 2
+  },
+  "zh-frame-6871/paddle>agy-flash-low/manuscript": {
+   "n": 30,
+   "k": 19,
+   "w": 9
+  }
+ },
+ "rows": [
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c637993327f06e83507b7",
+   "script_type": "handwritten",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c721501fe4f593c1dc04d",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c655f39b4508b04e2e50f",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cec6a8642f0445b15c442",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c6fc539b4508b04e4d230",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cebd38642f0445b1578f1",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cb7d93dce6cfad7488ccf",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c663d39b4508b04e332d0",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cb9f93dce6cfad749874a",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cc2e8af74b230c690a885",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c6b6239b4508b04e43878",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c617a879008ba7e15e7d8",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cbe92f9474f825c163945",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c65e139b4508b04e2fb62",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c72f301fe4f593c1e45a7",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c6ba539b4508b04e44ca4",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c6d3001fe4f593c1b8939",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c723201fe4f593c1dd127",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c78ed01fe4f593c20c14d",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cc1bbec254ff6cae0eaa7",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c6451af3c49b59c5ca59d",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ce6610a0011cb4bc05c97",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c647039b4508b04e27127",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c754d01fe4f593c1f4835",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cbf3bf9474f825c166ab5",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cb8ec3d799518cd71c4f5",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cc0f8ec254ff6cae081c5",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ceff94701a906f10f37ee",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-dice",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c7a2e01fe4f593c215221",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e18efd8df28f2db0684",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b638be1c1c21a373839e9d",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51eba47b06ecd58196160",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69dc557bcb6f7429748b8d68",
+   "script_type": "mixed",
+   "accept": false
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e67768235dc65992bb2",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e7f9a81ef7feb3d659a",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69c81b3f6c6f3cc53c84990d",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69bd9d726120d54bd0376d63",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e18efd8df28f2db05f6",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b638be1c1c21a373839e18",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51eba47b06ecd58196173",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69dc557bcb6f7429748b8d30",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69af0a0a4c57359b8d2d0fbd",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e67768235dc65992aa5",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69c81ba26c6f3cc53c849a04",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69bd9d726120d54bd0376d72",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e18efd8df28f2db06ee",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b638be1c1c21a373839dba",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51eba47b06ecd58196157",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69af0a0a4c57359b8d2d1022",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e67768235dc65992b94",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69c837e3f609d035727f6bf0",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69bd9d726120d54bd0376e18",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51e18efd8df28f2db0723",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b638be1c1c21a373839ec5",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "latin-gpu",
+   "route": "gpu>agy-flash-low",
+   "page_id": "69b51eba47b06ecd581960f1",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b4cd4bd5b6c3815e1a5717",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69569bdf1ef2647b43def1d3",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5fe304c1c6b3950ab3d",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bba28522835be846058a",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b4cd46d5b6c3815e1a540a",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1be708522835be846c19e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "6992469abc722ec0ee80f1a4",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc788522835be84637c2",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb5a8522835be845f2d5",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc858522835be8463880",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb378522835be845d71e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc048522835be846118c",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "697a8771eba0998f91b1cb34",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bae58522835be845b597",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b525ac29577f283b57aa0f",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b4cd3dd5b6c3815e1a516e",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bae08522835be845b312",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bbc28522835be8460610",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bbfb8522835be846102b",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69e9617a2beefe2f6f72bad7",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc4a8522835be84622f0",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1ba808522835be84591d9",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5ba304c1c6b39509e13",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bab38522835be8459cee",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb308522835be845d5ef",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc188522835be846170b",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b525942379d2fed6c2917f",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb978522835be846053e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc5f8522835be84622f7",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "697747a80e89532917bcb432",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b4cd4bd5b6c3815e1a5717",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69569bdf1ef2647b43def1d3",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b3e5fe304c1c6b3950ab3d",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bba28522835be846058a",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b4cd46d5b6c3815e1a540a",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6992469abc722ec0ee80f1a4",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bc788522835be84637c2",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bc858522835be8463880",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bb378522835be845d71e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bc048522835be846118c",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "697a8771eba0998f91b1cb34",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bae58522835be845b597",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b525ac29577f283b57aa0f",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b4cd3dd5b6c3815e1a516e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bae08522835be845b312",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bbc28522835be8460610",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bbfb8522835be846102b",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69e9617a2beefe2f6f72bad7",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bc4a8522835be84622f0",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1ba808522835be84591d9",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b3e5ba304c1c6b39509e13",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bab38522835be8459cee",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bb308522835be845d5ef",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bc188522835be846170b",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b525942379d2fed6c2917f",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bb978522835be846053e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bc5f8522835be84622f7",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "697747a80e89532917bcb432",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1b7acfe4b8f25b9200ec8",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69e75eafcc48e59ad74eded0",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5db304c1c6b3950a6a2",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1b7affe4b8f25b92010c2",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1bd778522835be846a627",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69935b348e28d8f4c5d3cb9d",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6953dd3177f38f6761be706f",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6a3c5e4f40c88a541d8e0d1c",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6953dd3e77f38f6761be728b",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1b8c88522835be844b4a4",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6953dd4277f38f6761be73e2",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69908a7793003de39c965929",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6a2032bc18654bf8e190368c",
+   "script_type": "mixed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1b8908522835be844ad28",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "699209bdbed8f4b5ff5b2b53",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69d5ac2ed0bd3547a5655a74",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69e8b2ac2ff2a8dc09e78852",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69907c1e5f855ec553e71ed4",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6a2032a818654bf8e1903403",
+   "script_type": "mixed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5e0304c1c6b3950a6aa",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6a3c618f879008ba7e15f078",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69b636242831a80d67f3ae03",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6a2032a318654bf8e190333f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6953619d9c494f9f9f042766",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6953dd3677f38f6761be70e5",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69b63e852a1dde00d5a9e60f",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1b8928522835be844ad6e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69a5efb5bfd8cafd91e440c3",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69e7933d80b52390feb18422",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69a5e66085fa13e734e425b7",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1b7acfe4b8f25b9200ec8",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69e75eafcc48e59ad74eded0",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b3e5db304c1c6b3950a6a2",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1b7affe4b8f25b92010c2",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1bd778522835be846a627",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69935b348e28d8f4c5d3cb9d",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6953dd3177f38f6761be706f",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c5e4f40c88a541d8e0d1c",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6953dd3e77f38f6761be728b",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1b8c88522835be844b4a4",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6953dd4277f38f6761be73e2",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69908a7793003de39c965929",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a2032bc18654bf8e190368c",
+   "script_type": "mixed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1b8908522835be844ad28",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "699209bdbed8f4b5ff5b2b53",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69d5ac2ed0bd3547a5655a74",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69e8b2ac2ff2a8dc09e78852",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69907c1e5f855ec553e71ed4",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a2032a818654bf8e1903403",
+   "script_type": "mixed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b3e5e0304c1c6b3950a6aa",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c618f879008ba7e15f078",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69b636242831a80d67f3ae03",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a2032a318654bf8e190333f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6953619d9c494f9f9f042766",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6953dd3677f38f6761be70e5",
+   "script_type": "print(no tag)",
+   "accept": true
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69c1b8928522835be844ad6e",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69a5efb5bfd8cafd91e440c3",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69e7933d80b52390feb18422",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69a5e66085fa13e734e425b7",
+   "script_type": "print(no tag)",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c659a39b4508b04e2f102",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c731301fe4f593c1e5300",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c730e39b4508b04e56dc5",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cb6ea57c1f37219c4d9f5",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c655939b4508b04e2e0bd",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c62de40c88a541d8f6d3b",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a087ebab2a99026ccf70224",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cc0d0ec254ff6cae069c6",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cf0858642f0445b1653d4",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c615940c88a541d8f024f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c73cc01fe4f593c1eb7f1",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c62a540c88a541d8f54b9",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c631f879008ba7e1660dd",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c627a879008ba7e162e42",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cbcddec254ff6cadf3e39",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cb7d83dce6cfad7488b20",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c62d540c88a541d8f678f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c63ecaf3c49b59c5c98df",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cbbd6ec254ff6cadeb1d8",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c6035879008ba7e15b713",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c759639b4508b04e5ce65",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c6327879008ba7e166567",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "69f1347c365e3fcae574ed32",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c6090879008ba7e15d707",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "69aec898cd78930315cda10d",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cbc4cec254ff6cadef6d6",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cbd2fec254ff6cadf6d65",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cc0ceec254ff6cae06936",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c5e7d40c88a541d8e2886",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cbbc387ee3d48c89d0f3f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c659a39b4508b04e2f102",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c731301fe4f593c1e5300",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c730e39b4508b04e56dc5",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cb6ea57c1f37219c4d9f5",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c655939b4508b04e2e0bd",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c62de40c88a541d8f6d3b",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a087ebab2a99026ccf70224",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cc0d0ec254ff6cae069c6",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cf0858642f0445b1653d4",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c615940c88a541d8f024f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c73cc01fe4f593c1eb7f1",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c62a540c88a541d8f54b9",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c631f879008ba7e1660dd",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c627a879008ba7e162e42",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cbcddec254ff6cadf3e39",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cb7d83dce6cfad7488b20",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c62d540c88a541d8f678f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c63ecaf3c49b59c5c98df",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cbbd6ec254ff6cadeb1d8",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c6035879008ba7e15b713",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c759639b4508b04e5ce65",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c6327879008ba7e166567",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69f1347c365e3fcae574ed32",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c6090879008ba7e15d707",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "69aec898cd78930315cda10d",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cbc4cec254ff6cadef6d6",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cbd2fec254ff6cadf6d65",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cc0ceec254ff6cae06936",
+   "script_type": "printed",
+   "accept": true
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3c5e7d40c88a541d8e2886",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash>agy-flash-low",
+   "page_id": "6a3cbbc387ee3d48c89d0f3f",
+   "script_type": "printed",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3cb96c3d799518cd71df07",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3cf0858642f0445b165381",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3c771001fe4f593c1ff807",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3cf0198642f0445b1628cb",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3cec598642f0445b15bb6f",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3cf0418642f0445b163c48",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3ced904701a906f10e1734",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3cf0158642f0445b1625f6",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle",
+   "page_id": "6a3c74e301fe4f593c1f3564",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ceaf595fcd455630522f4",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf02b8642f0445b163171",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf02e8642f0445b163313",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cec5e8642f0445b15bdff",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c70bf01fe4f593c1d47c7",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ced944701a906f10e193f",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cb96c3d799518cd71df07",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0738642f0445b1651f4",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c6b1d39b4508b04e40c10",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ced914701a906f10e17ef",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ced994701a906f10e1c9e",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0858642f0445b165381",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ceaeec895e71c6023d435",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ceb0295fcd455630528f8",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c771001fe4f593c1ff807",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0198642f0445b1628cb",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cec598642f0445b15bb6f",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0368642f0445b1635fa",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf03b8642f0445b163995",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0198642f0445b1629ae",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0418642f0445b163c48",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3ced904701a906f10e1734",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cec5d8642f0445b15bd35",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0338642f0445b16354b",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cc14aec254ff6cae0b02d",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cbf26f9474f825c165fc2",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0158642f0445b1625f6",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3c74e301fe4f593c1f3564",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0448642f0445b163ed3",
+   "script_type": "handwritten(tag)",
+   "accept": false
+  },
+  {
+   "cell": "zh-frame-6871",
+   "route": "paddle>agy-flash-low",
+   "page_id": "6a3cf0668642f0445b164d4b",
+   "script_type": "handwritten(tag)",
+   "accept": true
+  }
+ ]
+}

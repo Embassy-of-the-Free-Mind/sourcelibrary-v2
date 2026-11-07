@@ -1,0 +1,10 @@
+ROW 1 | ഭിവ്യാദ്ധിഃഞ്ഞാൽസമ്പ്രദൃഷ്ടിത്വാവ്യാപ്യൈവ്യജം‧തതജ്ഞാലക്ഷണമാവഃഉഷ്ണസശ്ചബ്ദിക്കിഉഷ്ണ
+ROW 2 | ജ്ഞജ്ഞലമഭിപ്രകിതെവന്ദജ്ഞജ്ഞ‧ബെസ്വാനവിധാജ്ഞിത്വാന്നാത്വിവ്യാഷ്ടിഃ‧വിക്ഷയം‧വിഭജ്ജെ
+ROW 3 | തൈടനൈമമിന്നസ്വപജ്ഞ‧പാത്ഥിചഃമ്പിതൃജ്ഞൾത്വാൾഗൃത്ഭാദ്ധ‧ശരീരദ്രാദിവർദ്ധിതെ
+ROW 4 | ഛന്ദഃഞാത്രാന ‖ ലസംകയാഗസത്ഥിതൃതായെദ്ദ ‖ ദ്രവത്വനാമമൾനെ
+ROW 5 | നജ്ഞലമക്രൂജ്ഞസ്വ ‖ ഹൃതെനാമശാദ്ദർനെന്നാസത്ഥി ‖ പ്രത്ഥിബന്ധകെപ്പാ
+ROW 6 | ത്ഥിവദ്രദൃത്വനാ ‖ ഗാസ്ഥിസംകൊഗകയാഃകാച്ഛ ‖ കാരണദ്രവ്യവധാവ
+ROW 7 | ണാൽസ്വപക്ഷാസ്യ ‖ ാദ്ധ്രാന്നലസംകയാഗസത്ഥിവ ‖ ന്നസ്ഥിദ്ധമാനദ്രവ്യത്വാദി
+ROW 8 | ഛിരഞ്ജനകൊനവ ‖ ത്ഥിവത്വാന്നപപകെത്ഥഃകെജ്ഞാൽക്ഷിത്വവ്യ ‖ വ്യദ്രവ്യത്വനാമപ്രത്ഥിബെ
+ROW 9 | സ്ഥതകൊദ്രുദ്രാനാരസ്ഥികൊക്കികെനരിത്ഥിക്കദ്രവത്വാധികാരണേതയാജ്ഞലത്വാ
+NOTE | All 9 rows are written out, but I'm not confident in them. Rows 1–3 and 9 run the full width, so they have no ‖. In rows 1–3 especially, many readings of conjuncts (ഷ്ട/ദ്ധ/ജ്ഞ/ത്ഥ) and of the dot-reph are guesses from the shape of the strokes. Several syllables could have been marked [illegible] but have a tentative reading instead. Check this against the images before relying on it.

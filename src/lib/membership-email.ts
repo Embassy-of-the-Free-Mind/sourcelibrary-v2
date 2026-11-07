@@ -98,7 +98,7 @@ export async function sendSocietyWelcomeEmail(email: string, name?: string): Pro
           set your name and bio from your
           <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account</a>.<br>
           <strong><a href="https://sourcelibrary.org" style="color: #9e4a3a; text-decoration: none;">The library</a></strong>:
-          browse over 10,000 digitized texts, many newly translated.
+          browse tens of thousands of digitized texts, many newly translated.
         </div>
 
         <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">

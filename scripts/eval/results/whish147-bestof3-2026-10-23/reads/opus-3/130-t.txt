@@ -1,0 +1,9 @@
+ROW 1 | സാങ്ഖ്യജ്ഞാനംഭാവാൽ‖കൈ[illegible]ദ്ധിശിജ്ഞാനമിതിവിം[illegible]ശപ[illegible]ജ്ഞാ‖നാഭാവെപരിശിഷ്ടജ്ഞാ[illegible]
+ROW 2 | നാ[illegible]ൽപ്രത്യക്ഷ‖യാദിജ്ഞാനാഭാവാൽവൃത്തി[illegible]വ്യാക്തി‖ജ്ഞാനമവിനശ്യാദിതി
+ROW 3 | ഷന്നു।ഇഷ്ടാദിത്ര‖[illegible]ടശാദ[illegible]ജ്ഞാദ്യഭാവാനാംത്ര‖[illegible]ഭെ[illegible]ത്രൈകം൦പ്ര
+ROW 4 | സിദ്ധാനാമേക[illegible]‖പൃഥിവ്യാംസാദൃശ്യതെ[illegible]ത്രൈയാദ‖ശാവ[illegible]ന്നസാദൃശ്യ[illegible]
+ROW 5 | [illegible]ഘ്രാകാംഭികാരണ‖പൃഥി[illegible]ഭാവാൽനാനാ[illegible]താ‖സായാനന[illegible]പ്രതൃക്ഷാ
+ROW 6 | [illegible]തനക്ഷ[illegible]പ്രസി‖ദ്ധസാദ്ധ്യവിധിഷ്ടാനമിതിവ്യാപ്തി[illegible]‖[illegible]ക്ഷ്യാഗ്നി[illegible]രൂപണ[illegible]
+ROW 7 | ഭിപക്ഷലക്ഷണമാവ‖സംജ്ഞെ[illegible]ത്തിന[illegible]ന[illegible]വണാ[illegible]നനഭ‖വിമനനക്ഷിലണ[illegible]വ്യാക്കു
+ROW 8 | ക്ഷേത്രൈവദവാദെ‖[illegible]ഗ്രനാങ്കൈനാ[illegible]ഖിതെഖെ[illegible]സദെഢാ‖ടാവാൽജ്ഞി[illegible]പ്രത്യക്ഷാ
+NOTE | There are 8 rows: rows 1, 2, 7 and 8 run the full width, and rows 3–6 are short lines beside the holes. Most of the letters can be made out one by one, but how they join into words, the vowel signs and the conjuncts are often uncertain. Treat this as a low-confidence attempt (about half reliable) that needs checking against the leaf.

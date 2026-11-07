@@ -658,7 +658,7 @@ export default function IdentifyPage() {
                         href={c.read_url}
                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-accent-rust text-white text-sm font-medium hover:bg-accent-rust/85 transition-colors"
                       >
-                        {pageLocated ? 'Go to the source' : 'Open the book (page not located)'}
+                        {pageLocated ? 'Go to source' : 'Open the book (page not located)'}
                       </Link>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-1">

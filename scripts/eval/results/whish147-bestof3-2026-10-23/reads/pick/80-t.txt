@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | Every row in all three transcriptions is [illegible], so none contains any Sanskrit or Malayalam to judge and the ranking is essentially a tie; A and B are identical, and C ranks last only because its outer rows drop the string-hole markers, which fits a physical leaf less well.

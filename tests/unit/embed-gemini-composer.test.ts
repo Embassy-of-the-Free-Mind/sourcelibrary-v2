@@ -13,7 +13,7 @@ const src = fs.readFileSync(path.join(__dirname, '..', '..', 'scripts/workers/em
 describe('embed-gemini composes page text through the shared composer', () => {
   const body = src.slice(src.indexOf('function composeEmbedText('), src.indexOf('// Book metadata cache'));
   it('calls the shared workerEmbeddingInput (pageEmbeddingInput + the 20-char floor)', () => {
-    expect(body).toContain('workerEmbeddingInput(page)');
+    expect(body).toContain('workerEmbeddingInput(page, { book })');
   });
   it('never reads the AI summary or keywords', () => {
     expect(src).not.toMatch(/translation_summary\s*:\s*1|translation_keywords\s*:\s*1|page\.translation_summary|page\.translation_keywords/);

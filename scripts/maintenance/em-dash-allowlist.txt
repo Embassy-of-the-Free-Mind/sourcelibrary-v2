@@ -91,7 +91,7 @@ src/app/api/import/sbb/route.ts 1  # rewritten in a #6215 copy PR; --tighten aft
 src/app/api/learn/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/lexicon/lookup/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/locus/route.ts 4  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/api/mcp/route.ts 112  # MCP tool descriptions and tool-result text written for a model
+src/app/api/mcp/route.ts 113  # MCP tool descriptions and tool-result text written for a model; +1 #8321: the facing-translation citation template, the same "> — [Author]" render line as the three above it
 src/app/api/me/avatar/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/nde/dataset/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/openapi/route.ts 21  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -246,7 +246,7 @@ src/app/embed/[tenant]/catalog/[ubn]/history/page.tsx 6  # rewritten in a #6215 
 src/app/embed/[tenant]/catalog/[ubn]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/embed/[tenant]/catalogue/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/embed/[tenant]/catalog/workspace/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/embed/[tenant]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/(library)/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/[name]/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/[name]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -313,7 +313,7 @@ src/app/prototype/deep-zoom/DeepZoomViewer.tsx 1  # rewritten in a #6215 copy PR
 src/app/prototype/deep-zoom/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/prototype/prehistoric-art/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/quality/methods/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/quality/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/quality/record/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/read/gilgamesh/page.tsx 8  # Thompson 1930 translation text; rest rewritten in a #6215 copy PR
 src/app/research/atlas/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/research/canon-gap/diagrams.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -370,7 +370,6 @@ src/app/works/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it mer
 src/components/account/ProfilePhotoEditor.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/charts/MultiLineChart.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/tabs/BooksTab.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
-src/components/analytics/tabs/PipelineTab.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/TrafficDashboard.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/artwork/ArtworkHero.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/artwork/ArtworkInfo.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -504,3 +503,6 @@ src/components/work/LocusJumpBox.tsx 2  # rewritten in a #6215 copy PR; --tighte
 src/app/articles/one-sentence-of-hermes/page.tsx 2  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/articles/aliveness/page.tsx 2  # verbatim quotation: Helen Wilmans, A Search for Freedom (1898), p. 88, prints 'I was — in my own way — tremendously alive'
+src/app/articles/agrippa-against-himself/page.tsx 4  # em dashes inside SourceQuote quotations, kept as the library's translation prints them (Derek, 2026-10-28)
+src/app/articles/kircher-hieroglyphs/page.tsx 6  # verbatim quotations of the library's English in SourceQuote; they must match the linked page character for character (#7983)

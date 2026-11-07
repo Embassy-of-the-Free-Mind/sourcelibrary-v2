@@ -221,7 +221,8 @@ export default function PageMetadataPanel({
   // (Kraken, BDRC). The specialist block's `name` is a plain string, so narrow by hand.
   const ocrEngine = page.ocr?.engine;
   const gemini: GeminiEngine | null = ocrEngine && ocrEngine.name === 'gemini' ? (ocrEngine as GeminiEngine) : null;
-  const specialist: SpecialistEngine | null = ocrEngine && ocrEngine.name !== 'gemini' ? (ocrEngine as SpecialistEngine) : null;
+  // The Archive's text carries an engine block too (#6740); the IA rows below already cite it, so it is not repeated.
+  const specialist: SpecialistEngine | null = ocrEngine && ocrEngine.name !== 'gemini' && page.ocr?.source !== 'ia_djvu' ? (ocrEngine as SpecialistEngine) : null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

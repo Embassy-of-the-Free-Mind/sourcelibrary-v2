@@ -1,0 +1,13 @@
+ROW 1 | ചൎണ്ണാൾചൎണ്ണാംവെദനാ ‖ ംടാപയൻപ്രാജ്ഞഃതഃസെവാന്യപ്രസക്ത്യ ‖ തൈഃഏവമനൌപൃാക്കിടൊ
+ROW 2 | പാലാട്ടംഖാഉൽക്ഷിക്ഷയാ ‖ വരമെയാഉക്തിഃസൈകാപാരമൃത്യതെ ‖ ഗാക്കിതാംധനംബാരെക്ര
+ROW 3 | കാഗാമികാദ്ദഷലാഫാഭൈ ‖ ദ്യാമിനാംജ്യൂതിഭിതദ്രക്ഷ്മണൌമഹദ്ദൽദ്ഃഖ ‖ മിതിഭാവയതൌയാഉക്തി
+ROW 4 | ംസാദ്ദിതിയാസ്യപാരമൃത്യരെ ‖ ംരിഃതഫാമഫതായായാസൈസാജ്ജ്കഉജ്ജ്വാന ‖ ംകിയതെഉത്ഥൽക്ഷ
+ROW 5 | ഖാംട്ടാപയരൊതിക്ഷ ‖ യൊവരമെയാഉക്തിഃസാത്ത്കിയാപാ ‖ ഒൽപാരമൃത്യക
+ROW 6 | ജ്ഞിപാംപ്രജ്ഞാദ്ധൈട്ടാ ‖ ഗാട്ടാസ്ഥാൻപ്രപഞ്ചരെക്കാമാഃരൊ ‖ ഷമിഷയാപ്രാരെ
+ROW 7 | ദ്രകാമിനാംഷ്ടഖഭി ‖ ദ്ധൈട്ടാഗരദ്ദാക്കാംട്ടാവയരൊതിക്ഷ ‖ യാവരമെയാഉക്തിഃ
+ROW 8 | സാചഉക്തിംഞണ്ണാകമാ ‖ ഉഉമ്യരെതൈഷനാനവഫഉത്പത്തിഭാവിഭാവിക്ഷെ ‖ [illegible]ഹാപടൈഗാദ്ദവംഖിമിഭി
+ROW 9 | ംസാരത്ത്മാൽനാമിക്ഷൈ ‖ യാവരമെയാഉക്തിഃംപനാമൃതമാംഭൂഉച്ചൈ ‖ [illegible]തൈദവമാനുഷിക്ഷിയ
+ROW 10 | തത്ത്വിജ്ഞൈജ്ഞാനിപ്രാദ്ദിവ്യപ ‖ ഡ്വിനപഉക്ഷയൊംഭിഭെതാഃഹൈരാനാമൃത്രാദ്ധെ ‖ ഭൈദ്ദിനാനിസ്ഥിതാഃഉപക്ഷ
+ROW 11 | രജ്ഞാവൃയനാട്ടഖമി ‖ ഫഹാത്താന്ത്യയല്ലൽപ്രാക്തിഃദാനപെമിദ്ദായ ‖ [illegible]രജ്ഞാനിഹന്ത്രാനത്യാ
+
+NOTE | I found 11 rows: rows 1–3 and 8–11 run the full width, and rows 4–7 are short around the holes. I could trace the strokes in all four pieces, but my reading of individual letters is low-confidence throughout. Many conjuncts and the reph ൎ, chillu and vowel-sign readings are guesses, and some letters in the overlaps may be duplicated or dropped. Where full-width rows 1–4 pass above a hole, I placed ‖ by position. Treat this as a rough draft that needs checking against the leaf.

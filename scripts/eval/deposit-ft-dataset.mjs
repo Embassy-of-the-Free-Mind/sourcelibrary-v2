@@ -11,8 +11,14 @@
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/eval/deposit-ft-dataset.mjs --dir scripts/output/ft-dataset-2026-08-09
+ *   ... --dry-run            # print the metadata and the file keys that would be uploaded; no token needed
  *   ... --publish            # actually publish (mints the DOI) — requires human sign-off first
  *   ZENODO_SANDBOX=true ...  # rehearse against sandbox.zenodo.org
+ *   ... --metadata scripts/eval/dataset/refusal-census-v1.zenodo.json   # another dataset's title/description/subjects
+ *
+ * A --metadata file may also set `rights` (Zenodo licence ids, e.g. ["cc-by-sa-4.0"]; default cc-by-4.0), `version`
+ * and `publication_date`, and then the directory needs no manifest.json. Files in subdirectories are uploaded as
+ * `<dir>__<file>`: Zenodo file names cannot contain a folder (#7462).
  *
  * Refuses a directory without the benchmark canary (CANARY.txt, #5524) —
  * export-ft-dataset.mjs writes it; see scripts/lib/dataset-canary.mjs.
@@ -21,7 +27,7 @@
  * (create draft → init/upload/commit files → publish).
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { assertCanary } from '../lib/dataset-canary.mjs';
@@ -40,6 +46,7 @@ const args = process.argv.slice(2);
 const getArg = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : null; };
 const DIR = getArg('--dir');
 const PUBLISH = args.includes('--publish');
+const DRY = args.includes('--dry-run'); // print the metadata and the upload keys; no token, no network
 
 if (!DIR) {
   console.error('Usage: deposit-ft-dataset.mjs --dir <snapshot dir> [--publish]');
@@ -52,17 +59,26 @@ try {
   console.error(e.message);
   process.exit(1);
 }
-if (!process.env.ZENODO_ACCESS_TOKEN) {
+if (!process.env.ZENODO_ACCESS_TOKEN && !DRY) {
   console.error('ZENODO_ACCESS_TOKEN is not set.');
   process.exit(1);
 }
 
 const dir = resolve(DIR);
-const manifest = JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf8'));
+// --metadata FILE: another dataset's {title, description, subjects[, rights, version, publication_date]} replaces the FT corpus's.
+const META_FILE = getArg('--metadata');
+const override = META_FILE ? JSON.parse(readFileSync(resolve(META_FILE), 'utf8')) : null;
+const manifest = existsSync(join(dir, 'manifest.json')) || !override?.version
+  ? JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf8'))
+  : { dataset: override.title, version: override.version, git_sha: 'n/a' };
 console.log(`Depositing ${manifest.dataset} v${manifest.version} (git ${manifest.git_sha.slice(0, 8)}) → ${ZENODO_URL}`);
 
+// Zenodo's firewall answers Node's default User-Agent with 403 "unusual traffic" (measured 2026-10-26: same token,
+// 403 bare, 200 named). Same string as src/lib/zenodo.ts and scripts/batch/batch-mint-doi.mjs.
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
+
 function headers(extra = {}) {
-  return { Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, ...extra };
+  return { Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
 }
 
 async function fail(resp, context) {
@@ -70,7 +86,7 @@ async function fail(resp, context) {
   throw new Error(`Zenodo ${context}: HTTP ${resp.status} — ${text.slice(0, 400)}`);
 }
 
-const description = `
+const description = override ? override.description : `
 <p>The first-translation verification corpus of Source Library (sourcelibrary.org):
 documented <b>evidence of absence at scale</b>. ${manifest.counts.attempts.toLocaleString('en-US')} recorded
 verification attempts with per-attempt provenance (instrument, sources consulted, verbatim
@@ -125,6 +141,27 @@ const metadata = {
     },
   ],
 };
+if (override) {
+  metadata.title = override.title;
+  metadata.description = override.description;
+  metadata.subjects = override.subjects.map((subject) => ({ subject }));
+  if (override.rights) metadata.rights = override.rights.map((id) => ({ id }));
+  if (override.version) metadata.version = override.version;
+  if (override.related_identifiers) metadata.related_identifiers.push(...override.related_identifiers);
+  if (override.publication_date) metadata.publication_date = override.publication_date;
+  else if (!/^\d{4}-\d{2}-\d{2}$/.test(metadata.publication_date)) metadata.publication_date = new Date().toISOString().slice(0, 10);
+}
+
+const walk = (d) => readdirSync(join(dir, d)).sort().flatMap((f) => {
+  const p = d ? `${d}/${f}` : f;
+  return statSync(join(dir, p)).isDirectory() ? walk(p) : [p];
+});
+const files = walk('');
+const keyOf = (f) => `${f.replaceAll('/', '__')}${statSync(join(dir, f)).size > GZIP_THRESHOLD ? '.gz' : ''}`;
+if (DRY) {
+  console.log(JSON.stringify({ metadata: { ...metadata, description: `${metadata.description.slice(0, 300)}…` }, files: files.map((f) => ({ path: f, key: keyOf(f) })) }, null, 1));
+  process.exit(0);
+}
 
 // 1. Create the draft.
 const draftResp = await fetch(`${ZENODO_API}/records`, {
@@ -140,11 +177,12 @@ console.log(`Draft created: ${draft.id}`);
 // plain multi-MB uploads hit the client's header timeout, and .gz is kinder
 // to downloaders anyway. manifest.json checksums refer to the UNCOMPRESSED
 // files; `gunzip *.gz` restores byte-identical content.
-const files = readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()).sort();
+
 for (const f of files) {
   const raw = readFileSync(join(dir, f));
   const compress = raw.length > GZIP_THRESHOLD;
-  const key = compress ? `${f}.gz` : f;
+  const flat = f.replaceAll('/', '__');
+  const key = compress ? `${flat}.gz` : flat;
   const body = compress ? new Uint8Array(gzipSync(raw, { level: 9 })) : new Uint8Array(raw);
   const initResp = await fetch(`${ZENODO_API}/records/${draft.id}/draft/files`, {
     method: 'POST',

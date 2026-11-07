@@ -1,0 +1,249 @@
+{
+ "book_id": "69e72c75a409200ea79f4976",
+ "model": "claude-opus-5-5",
+ "words": 388,
+ "brief": "## 1. The work\nA woodblock edition of the *Zhuangzi* with interlinear side-annotations (旁注), volume 5. The base text is the Classical Chinese *Zhuangzi*. A later annotator adds small-character glosses in terse Classical Chinese, and critical marks on style and diction. Translate both layers. The base text is literary prose; the glosses are compressed and philological.\n\n## 2. Glossary\n道 — the Way\n天下 — the world\n天子 — Son of Heaven\n諸侯 — feudal lords\n帝王 — emperors and kings\n先王 — former kings\n聖人 — the sage\n尊生 — honouring life\n重生 — valuing life\n重傷 — double injury\n養 — nourish\n形 — bodily form\n身 — person\n神 — spirit\n志 — aims\n自勝 — self-mastery\n利 — profit\n名 — fame\n富貴 — wealth and rank\n貧 — poverty\n病 — distress\n廉 — scrupulousness\n貪 — greed\n仁義 — benevolence and righteousness\n道術 — arts of the Way\n百家 — the Hundred Schools\n墨者 — Mohists\n儒 — Ru (Confucian)\n字法 — [note: diction]\n句法 — [note: phrasing]\n疑衍 — [suspected interpolation]\n\n## 3. Layout\nLarge characters are the *Zhuangzi* text. Small characters set beside or between columns are the annotator's glosses. Render each gloss in square brackets directly after the word or phrase it explains. The ○字法○ and 句法 marks are editorial and go in brackets as given above. Omit the running heads and fold-margin text, such as the chapter title, folio numbers and the publisher's hall name. Some OCR is garbled; flag it as [illegible] and do not guess.\n\n## 4. Names\n舜 — Shun; 堯 — Yao; 禹 — Yu\n大王亶父 — Danfu, King Tai\n子華子 — Master Zihua; 昭僖侯 — Marquis Zhaoxi\n顏闔 — Yan He\n原憲 / 憲 — Yuan Xian\n子貢 — Zigong; 曾子 — Master Zeng; 子張 — Zizhang\n孔子 / 丘 — Confucius (丘 as \"I, Qiu\" in self-reference)\n顏回 / 回 — Yan Hui\n中山公子牟 / 魏牟 — Prince Mou of Zhongshan / Wei Mou\n瞻子 — Master Zhan\n柳下季 — Liuxia Ji; 跖 — Robber Zhi; 滿苟得 — Man Goude\n墨翟 / 墨子 — Mo Di / Mozi; 禽滑釐 — Qin Guli; 相里勤 — Xiangli Qin\n緩 — Huan\n魏 — Wei (state); 衛 — Wey (state); 韓 — Han; 魯 — Lu; 陳蔡 — Chen and Cai; 岐山 — Mount Qi",
+ "key": [
+  {
+   "source": "道",
+   "forms": [
+    "道"
+   ],
+   "english": "the Way"
+  },
+  {
+   "source": "天下",
+   "forms": [
+    "天下"
+   ],
+   "english": "the world"
+  },
+  {
+   "source": "天子",
+   "forms": [
+    "天子"
+   ],
+   "english": "Son of Heaven"
+  },
+  {
+   "source": "諸侯",
+   "forms": [
+    "諸侯"
+   ],
+   "english": "feudal lords"
+  },
+  {
+   "source": "帝王",
+   "forms": [
+    "帝王"
+   ],
+   "english": "emperors and kings"
+  },
+  {
+   "source": "先王",
+   "forms": [
+    "先王"
+   ],
+   "english": "former kings"
+  },
+  {
+   "source": "聖人",
+   "forms": [
+    "聖人"
+   ],
+   "english": "the sage"
+  },
+  {
+   "source": "尊生",
+   "forms": [
+    "尊生"
+   ],
+   "english": "honouring life"
+  },
+  {
+   "source": "重生",
+   "forms": [
+    "重生"
+   ],
+   "english": "valuing life"
+  },
+  {
+   "source": "重傷",
+   "forms": [
+    "重傷"
+   ],
+   "english": "double injury"
+  },
+  {
+   "source": "養",
+   "forms": [
+    "養"
+   ],
+   "english": "nourish"
+  },
+  {
+   "source": "形",
+   "forms": [
+    "形"
+   ],
+   "english": "bodily form"
+  },
+  {
+   "source": "身",
+   "forms": [
+    "身"
+   ],
+   "english": "person"
+  },
+  {
+   "source": "神",
+   "forms": [
+    "神"
+   ],
+   "english": "spirit"
+  },
+  {
+   "source": "志",
+   "forms": [
+    "志"
+   ],
+   "english": "aims"
+  },
+  {
+   "source": "自勝",
+   "forms": [
+    "自勝"
+   ],
+   "english": "self-mastery"
+  },
+  {
+   "source": "利",
+   "forms": [
+    "利"
+   ],
+   "english": "profit"
+  },
+  {
+   "source": "名",
+   "forms": [
+    "名"
+   ],
+   "english": "fame"
+  },
+  {
+   "source": "富貴",
+   "forms": [
+    "富貴",
+    "貴富"
+   ],
+   "english": "wealth and rank"
+  },
+  {
+   "source": "貧",
+   "forms": [
+    "貧"
+   ],
+   "english": "poverty"
+  },
+  {
+   "source": "病",
+   "forms": [
+    "病"
+   ],
+   "english": "distress"
+  },
+  {
+   "source": "廉",
+   "forms": [
+    "廉"
+   ],
+   "english": "scrupulousness"
+  },
+  {
+   "source": "貪",
+   "forms": [
+    "貪"
+   ],
+   "english": "greed"
+  },
+  {
+   "source": "仁義",
+   "forms": [
+    "仁義"
+   ],
+   "english": "benevolence and righteousness"
+  },
+  {
+   "source": "道術",
+   "forms": [
+    "道術"
+   ],
+   "english": "arts of the Way"
+  },
+  {
+   "source": "百家",
+   "forms": [
+    "百家"
+   ],
+   "english": "the Hundred Schools"
+  },
+  {
+   "source": "墨者",
+   "forms": [
+    "墨者"
+   ],
+   "english": "Mohists"
+  },
+  {
+   "source": "儒",
+   "forms": [
+    "儒"
+   ],
+   "english": "Ru (Confucian)"
+  },
+  {
+   "source": "字法",
+   "forms": [
+    "字法",
+    "○字法○"
+   ],
+   "english": "[note: diction]"
+  },
+  {
+   "source": "句法",
+   "forms": [
+    "句法"
+   ],
+   "english": "[note: phrasing]"
+  },
+  {
+   "source": "疑衍",
+   "forms": [
+    "疑衍"
+   ],
+   "english": "[suspected interpolation]"
+  }
+ ],
+ "input_pages": [
+  7,
+  9,
+  11,
+  13,
+  19,
+  20,
+  21,
+  22,
+  23,
+  48,
+  58,
+  60,
+  62,
+  92,
+  93,
+  109,
+  110,
+  112,
+  114,
+  115
+ ]
+}

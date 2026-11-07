@@ -1,0 +1,10 @@
+ROW 1 | പ്രവൃത്തിചിത്രായത്രാനാനെശുഷ്മമെമാനാമദ്ദുയിൎഃനഭഗഉഷ്ട്രാമെടുമെഷാമന്യഃമെമാവ്യാപ്തി
+ROW 2 | ജാദ്വാപാത്മദ്രമഃപ്രത്യാടാരവാദ്ധലഞ്ഞംഷലംടാഗഃജ്ഞവപൾാമൊക്ഷഃസഘഃസ്വസ
+ROW 3 | മാനാധികരണ്ണദ്ദഃഖപ്രാഗഭാവാസമദന്യൊഷിനാദ്ദഃഖദ്ധംസഃപ്രയൊജ്ജനംപൂവ്വംദ്ദഃ
+ROW 4 | ലഘാദ്ധിശഃദ്ദു ‖ ാരഭാഗ്മവാഹനസാദ്ധിപ്രാമാണ്യ ‖ കരബനാദ്രൂവഗരബാ
+ROW 5 | തൂജ്ജിദ്ധാന്ത്രേ ‖ ജ്ഞഭൗാഭ്രഷായഃപ്രമാണമല ‖ ാഃഭത്രഷെൎക്കബൊാഃ
+ROW 6 | ക്ഷേമാവാദിഃഉട ‖ യസ്രായനവക്തിവിജ്ഞാനിഷ്ണക്ഷ ‖ ജ്ഞിഃനവക്ഷസഥവഹ
+ROW 7 | സങ്കിനാരചിത്രണ്യാകചാനാമനാവത്തരകാഹ്യരെഷ്ടാനരവയാഭമവാദ്ദ്യസഭ്ദോംക്ത്ര
+ROW 8 | ഉഭയാനാലദ്ധണ്ടപ്രദ്ധരഭജ്യാജ്ജാനരംപ്രകൎഷ്ട്രംയഭംൿലംജ്ഞസരമാത്മജ്ഞാ
+ROW 9 | ത്ഥംസ്വായത്തൃമെമ്പാൎത്ത്രാക്ഷ്മൽാവക്ഷഷവജ്ജ്രാവജ്രദിക്ഷനാദ്വപ്രാദൃപ്ര
+NOTE | Low confidence throughout. The leaf has 9 rows: rows 1–3 and 7–9 run the full width, and only rows 4–6 are broken at the string holes. Many letters are uncertain: the dot-reph, conjuncts, and pairs that look alike (ര/െ, മ/ഭ, ജ/ജ്ഞ, ദ/ദ്ദ) are often doubtful. I marked nothing [illegible], but treat the letters as guesses rather than readings. Realistically under half of the letters are secure, and this needs checking against the images.

@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most real words that fit this text, such as "jijñāsāyāṃ", "gandha", "duḥkha…", "jñānanāpratyāsa…" and "rūpa/rasa/gandha"-type sequences, while A is mostly [illegible] gaps and B fills its rows with meaningless repeated "meme/māme" syllables.

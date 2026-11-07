@@ -1,0 +1,14 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I opened all four pieces, but I couldn't reliably read any of this cursive script at the resolution provided, so I've given no text rather than guess. The leaf has 12 rows. Rows 1–4 and 10–12 run the full width across both holes. Rows 5–9 are shorter blocks set in each column, with blank space around the holes. A few clusters in rows 5–8 looked like they might match the passage around Sāṅkhyakārikā 46, but I couldn't check them against the strokes, so I left them out. Higher-resolution crops of each row would make a real transcription possible.

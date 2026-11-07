@@ -1,0 +1,35 @@
+Here is my collation. The leaf is legible in lines 1–3 and 8–9; lines 4–7, split around the string hole, are only partly legible and I have not forced readings there.
+
+**Line 1** (after a short commentary phrase ending in a daṇḍa): SK_29 begins.
+Leaf: `svālakṣaṇyaṃ vṛttis trayasya sai` (line ends; `ṣā bhavaty…` is on the unseen right half).
+No differences. The edition's "s^ aipā" is evidently a misprint for saiṣā; the leaf shows only `sai` here.
+
+**Line 2**: end of SK_29, start of SK_30.
+Leaf: `[…]ṇavṛttiḥ prāṇādyā vāyavaḥ pañca | yugapacca` (line ends).
+The i-sign of `vṛttiḥ` is not clearly visible to me, so I cannot confirm vṛttiḥ versus vṛttaḥ. Otherwise no differences. "yugapacca" is simply the sandhi spelling of yugapac ca(tuṣṭayasya).
+
+**Line 3** (left of hole, then right of hole): SK_30 second half.
+Leaf: `ṣṭā dṛṣṭe tathāpya` | `dṛṣṭe trayasya ta` (rest unseen).
+This is the normal written form of dṛṣṭe 'tathāpy adṛṣṭe, so no real difference from the edition's analytic "a-tathā".
+
+**Line 4** (around hole): SK_31. Left segment I read tentatively as `pratipadyante para`; right segment tentatively `(spa)rākūtaṃ hetu`. The anusvāra after kūta is what I think I see, but the segment is small and I am not confident. The first two akṣaras of the left segment are unclear.
+
+**Line 5** (around hole): SK_31 end. Right segment reads `kāryate karaṇaṃ`, fairly clear. Left segment I cannot read securely; it may be `hetur na kiñci` or may be commentary. I do not transcribe it.
+
+**Line 6** (around hole): SK_32. Left segment `dhaṃ tadāharaṇa` (fairly clear). Right segment looks to me like `karaṇaṃ prakāśa` where the edition has dhāraṇa-prakāśa, but the first akṣara could be dhā and the following mark an ā-sign rather than anusvāra. Uncertain.
+
+**Line 7** (around hole): SK_32 second half. I can make out `…ryaṃ dhāryaṃ` and `prakā…` but cannot reconstruct the order of the two segments with confidence; left segment possibly `hāryaṃ dhāryaṃ prakā`, right segment possibly `…hāryaṃ dhāryaṃ`. One of them may be commentary quoting the verse. Not read securely.
+
+**Line 8**: SK_33.
+Leaf: `[tra]yasya viṣayākhyaṃ sāṃpratakālaṃ bā` (rest unseen).
+The first akṣara is a large flourished glyph, consistent with tra. "sāṃprata" with anusvāra is orthographic only. No differences.
+
+**Line 9**: SK_34 first half.
+Leaf: `ddhīndriyāṇi teṣāṃ pañca viśeṣāviśeṣa` (line ends; viṣayāṇi unseen).
+No differences.
+
+No certain differences were found in the legible verse lines. Everything that follows is tentative.
+
+DIFFERENCES:
+SK_31 | ākūta-hetukāṃ | ākūtaṃ hetu- | uncertain
+SK_32 | dhāraṇa | karaṇaṃ | uncertain

@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ākṣiprasaṃgapravṛttidṛṣṭā ‖ ntā [illegible] na [illegible] svābhayapraya [illegible] pekṣya ‖ ā [illegible] viśeṣeṇāvala
+2. jñi [illegible] valajñikā ‖ [illegible] mityā [illegible] kāryyasamājñāna [illegible] ya ‖ [illegible] nepajñāyabhavi [illegible]
+3. [illegible] hada [illegible] pramijñā ‖ āhādeḥprakṛtijñā [illegible] ānaṃ prakṛtijñāmi ‖ bhegāyaḥprakṛtijñāsa [illegible]
+4. [illegible] svābhedyanakanama ‖ tthākanaṃtrina [illegible] rkkamanijñāka ‖ ārkkaṃ [illegible] pārtthakka
+5. maprākkālaṃ ‖ [illegible] namadhikaṃpa [illegible] ruṣakkaṃ [illegible] ‖ [illegible] ṭṭākṣaṇā [illegible] āna
+6. mapratidṛൗviśe ‖ [illegible] cāmatrānala [illegible] latyunmeyājñā ‖ bhavati [illegible] nnamai
+7. ṣājñārddayogapravṛ ‖ ttiddhyābheṅkṣābhevityā [illegible] āddāsādhyā [illegible] grahā ‖ [illegible] tānātibhe [illegible] saṃga
+8. [illegible] sakaratalānala ‖ lasaṃbhayābhegastyavi [illegible] vipratibandhayakkasa ‖ stiddaḥvānatpabhektaḥ
+9. ga [illegible] ṃcaṭṭārebhānarma ‖ [illegible] ticcanapratibe [illegible] bandhakkāṭarāvandya ‖ kā [illegible] mādṛkārajñeka
+
+TRANSCRIPTION B
+1. ākṣiprasaṃgapratidraṣṭārājñanaṣṭisāśa ‖ śyaprayantauvedhyarā ‖ āladdhiviśeṣeṇṭhāvala
+2. ṣṭinnavalabhikāṟa ‖ aumitryāntryakādyasamājñātāṣyevā ‖ bhedenaivajīābhyavevitra [illegible]
+3. gakhaghaṭanaṃpratijñā ‖ āhābhiḥpratijñānāṇmanaṃpratijñāmivai ‖ dāyaḥpratijñāsantra
+4. svābhākhyatakanama ‖ tthārkkanaṃtriratraḻkkamamijñāka ‖ ārkāṃśavārkka
+5. maprākkālaṃ ‖ tthanamadhikaṃpaūrkkaṃñana ‖ naṭākṣaṇāṇjñāña
+6. mapratidāviṣekṣa ‖ balāmatānavalajñanoājñā ‖ vodhiṇo [illegible] nnare
+7. yājñāldayāgavni ‖ niddhārekkābhehitryāmādrāsādhyapragrahāntya ‖ [illegible] ānātibhedatosṃga
+8. mmadanasakaratalānalana ‖ lasaṃbhayāśaisatryaviāvipratibāndhayakkāsa ‖ satidaḥpānyatpalakkaḥ
+9. gakṣiḥpaṭaṭararānarama ‖ ṭamitaicannaḥpratibāndhakkāṭāvapanyakkā ‖ kāādṛmābhrakānjñabha [illegible]
+
+TRANSCRIPTION C
+1. ākṣiprasaṃgaprattiḍhyātā ‖ jñānajñattasādhyaprayanaauṣadhā ‖ ādibhirbheṣajyatravala
+2. jñinanavalaṅkikāraṇamitryāntryākāśya ‖ samājñātāśyayobha ‖ ākharanjāgyahatamma
+3. dukhasthānaṃpratijñāhāryaḥpratijñāna ‖ āsthanaṃpratijñāmikha ‖ khādhaḥpratijñāsanna
+4. esvābhāvyakarama ‖ ttādanaṃnirantra ‖ ntrakamagijñāka ‖ ārkkaṃcatavātmaka
+5. maprājñakālaṃ ‖ jñanamadhikaṃca ‖ capratyakṣaṃtana ‖ naṭākhaṇaññajñāna
+6. maprattadūāviṣṭa ‖ hapāmattānavaṃ ‖ vaśyannabojjā ‖ doṣiṇāṇajjannane
+7. ṣājjārddayāgavani ‖ ddhārkkārbhittyā ‖ ādṛṣṭasādhanagrahaṇa ‖ ṣṇānāntinaṣṭaṃsṃga
+8. daṃnantarattalānalanasaṃvedyāhasatra ‖ vipratibādhakakkasa ‖ sattaṭaḥhānallarakkaḥ
+9. śakkaṃvaṭadaśthānarattamitravacanaṃpratya ‖ babāhyakaraṭāpannākā ‖ kāntyamāśrakāraṇṇarabdhā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

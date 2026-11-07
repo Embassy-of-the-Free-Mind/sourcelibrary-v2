@@ -1,0 +1,9 @@
+ROW 1 | ദ്ധ്യമപരിമാണത്വാന്ത[illegible] ‖ ഷ്പ്രസംഗാദിത്വൎനാനമനൊമിദ്രുണ്ണ ‖ ൾനഖിതത്ത്വാൽഉല്പ്രഭാവാൽഭു
+ROW 2 | ക്കാരശവദിത്വെചന്നാമന ‖ സാമിദ്ധത്വചന്ത്രമനാസ്സംയൊഗന്ദ്ര ‖ ന്ദ്രാസമഖ്യാഭിക്കാരണന്ദ്രാദ്ദു
+ROW 3 | റവത്ത്ൽജ്ഞാനാൽ ‖ പഞ്ചിൽപ്രസംഗാൽനവിഭ്രദ്ധയന്ന ‖ ന്നസംയൊഗഗൊണ്ണിത്തിരവ്വ
+ROW 4 | ഷ്രാഃകൽസംയൊഗ ‖ ന്ദ്രിന്ദ്രാനാചന്ദ്രിക്കുട്ടാവബ്ര ‖ സംഗാൽഃപ്രതിതച്ഛ്രുതി
+ROW 5 | നിബദ്ധംപ്ലവടണാ ‖ ത്ഭമനസ്സാംഖ്യാഗന്ന്യസവ്യ്ദാ ‖ ജിദ്ദമാനത്വാൽത്ത്വ
+ROW 6 | തിത്രയദ്ദാമനദപ്പ്യ്ബി ‖ ത്തിപ്രമിശതിത്തദ്ദാന്യജ്ഞിൽ ‖ ഷ്ടിമാത്സന്നത്ത്വാൽ
+ROW 7 | ാജ്ഞാഭിനാൽത്തിരിതിന ‖ ന്നങ്ങബന്ധിജ്ഞ്ഃവൃഃരൂപംലക്ഷ്യതിച ‖ ചക്ഷുരിതിസംഖ്യാദവതി
+ROW 8 | ശ്യാൎഭിവാദനാദ്യമാ ‖ മാത്രപദംത്രുപത്വഞ്ഞതിവ്യാഖ്യാപാ ‖ പാരണാഭൃണപദാഃനന
+NOTE | This is a low-confidence reading: the 8 rows and where they join at the holes are reasonably sure, but many letters and conjuncts are tentative guesses, so check every row against the leaf before relying on it. The letter "ശ" in the left margin of row 5 looks like a leaf number and is left out.

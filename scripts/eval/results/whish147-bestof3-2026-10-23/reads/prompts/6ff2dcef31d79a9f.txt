@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. dṛścatuṣṭayasyatvakkitu ‖ [illegible] rejñrāmiśe [illegible] śvaḥbuddhirahaṃkāro ‖ manaḥcakṣurityetasyacatu
+2. ṣṭayasyaikakālīngra ‖ [illegible] vṛttiḥyathāndhakārevidyulsaṃpā ‖ tekṛṣṇasarppasandarśanādyu
+3. gadālocanāddhyavasā ‖ yābhimānāḥsaṃkalpanābhavantitatha ‖ [illegible] cakṣuṣālocitaṃbu
+4. ddhyāddhyavasitamahaṃ ‖ kāreṇābhimataṃmanasāsaṃka ‖ lpitamitikramaśaścate
+5. ndrikacatuṣṭayasya ‖ krameṇaikadācidvṛttirdṛṣṭāmanda ‖ prakāśesthāṇupuru
+6. ṣa [illegible] citā [illegible] ‖ tāṃdṛṣṭavataḥkiṃsthāṇuḥpuru ‖ ṣaitivikalpaḥtatrā
+7. [illegible] prasāraṇāl ‖ puruṣaityaddhyavasāyaḥ ‖ tatrātmīkaraṇādabhi
+8. mānaitima [illegible] ‖ thāvṛttissyākāṅkṣinviṣayaitya ‖ āhādṛṣṭeitisa [illegible]
+9. ṣṭa [illegible] ttāhāḥ ‖ tamā [illegible] ṣṭeitikamā [illegible] ‖ [illegible] vivṛtti [illegible] catuṣṭa
+10. yasya [illegible] hāḥ [illegible] ‖ [illegible] buddhyahaṃkāramanasāmityartthaḥ ‖ tatrāpitalpūrvvikā [illegible]
+
+TRANSCRIPTION B
+1. dṛṣṭecatuṣṭayasyabu [illegible] ‖ [illegible] āmiśeṣaṇe [illegible] caibuddhirahaṃkāroma ‖ naścakṣurityekasyacatu
+2. ṣṭayasyaika [illegible] kālin [illegible] ‖ [illegible] grahaṇavṛttiḥ [illegible] ādhikāre [illegible] lsaṃ ‖ pa [illegible] kūṭṭastha [illegible] ḻ [illegible]
+3. gadābhālocanādyavana [illegible] ‖ āyābhimānādisaṃkalpanā [illegible] diva [illegible] ‖ [illegible] lakṣmālocitaṃ [illegible]
+4. [illegible] ā [illegible] vasthitamahaṃ ‖ kāronai [illegible] ātmikrataṃ manasyāsaṃka ‖ [illegible] tamitikrama [illegible]
+5. syakricatuṣṭayasya ‖ krameṇaikadādidṛ [illegible] ṣṭāmanda ‖ prakāraśasthāṇupu [illegible]
+6. [illegible] ādirādṛṣṭa ‖ tāṃdṛṣṭavataḥkiṃ [illegible] ḥpuru ‖ ṣo [illegible] vikalpaḥtatrā
+7. [illegible] da [illegible] āde ‖ āl [illegible] itṛāddhyavasāyaḥte ‖ [illegible] īkalaṇādabhi
+8. mānaiti [illegible] ya ‖ āvṛttisyākāndini [illegible] yaitu ‖ āhādṛṣṭaiti [illegible]
+9. ṣṭa [illegible] ākṣitrāhaṃ [illegible] ‖ [illegible] kramā [illegible] dṛṣṭaitika [illegible] krame [illegible] ‖ [illegible] āvivṛtti [illegible] catuṣṭa
+10. yasya [illegible] āhaṃ [illegible] ya ‖ [illegible] prati [illegible] haṃ [illegible] kāramanasāmitrā ‖ ñcaḥtatrāmitalpūrvvikāvṛ
+
+TRANSCRIPTION C
+1. dvigracatuṣṭayasyattviritru ‖ ṭejñāviśeṣaṇā [illegible] buddhirahaṃkāro ‖ manacakṣurityetasyacatu
+2. ṣṭayasyaikasminrūpe ‖ yugapadvṛttiyathāndhakāretadvidyulsaṃpa ‖ ātekṛṣṇasarppasandarśanādya
+3. gadālocanāddhyavasa ‖ āyābhimānā [illegible] saṃkalpanābhidbhavantita ‖ evacakṣuṣālocitaṃbye
+4. buddhyāddhyavasitamahaṃ ‖ kāreṇātmīkṛtaṃmanasāsaṃka ‖ lpitamitikramaśaścatai
+5. nyakkicatuṣṭayasya ‖ krameṇaikadācidvṛttirddṛṣṭāmanda ‖ prakāśesthāṇupuru
+6. ṣocitāmṛṣṭu ‖ tāṃdṛṣṭvavatākiṃsthāṇupuru ‖ ṣaitivikalpatatrā
+7. [illegible] ṇe ‖ ālpuruṣaityaddhyavasāyata ‖ dātmīkaraṇādabhi
+8. māna [illegible] ya ‖ thāvṛttissākasminviṣayaityu ‖ āhādṛṣṭaitibuddhe
+9. ṣṭakasminnā [illegible] tṛāhā ‖ takamāprada [illegible] itika [illegible] ‖ kṣāvivṛttikki [illegible] nacatuṣṭa
+10. yasyakartṛāhatrayasya ‖ buddhyahaṃkāramanasāmityā ‖ rtthatatrāpitalpūrvvikā [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

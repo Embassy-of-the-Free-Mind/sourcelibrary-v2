@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ൗtmikākhakatraiābhi [illegible] ‖ aiyaൗcanamātrabāhyāḥpakṣaibhinavata ‖ ṣṭhakhaḥtaiṣvraviṣayāṇennu
+2. ccantrakṣamākhakai [illegible] ‖ nakkadvitikāsācaitṛkṣmairanāṃdir ‖ lpraṭṭamaikhāntripakṣeṇṇa
+3. sāṃjñātadṛḍhayamakkide ‖ ddhākhyaddetanmesahtibālkāntide ‖ dadājñānajñānalakṣma
+4. jñānijñakitvādā ‖ udāhṛṣṭeṣṭādṛśyanamitvā ‖ bhiḥsiddhijñānaprā
+5. ḻḻiḥtantrādiṭadā ‖ upāyamedadāludāhu ‖ ṅkijñamāntanasāntu
+6. tayileyāyantra ‖ vendhamākkakāntanaimal ‖ khyakkamātsṛpri
+7. yādanyaṃpṛkṣmārya ‖ tbhitakānāmyakkidvākkikkamyāsi ‖ mitrahābhaivatukiṅku
+8. śraddhātādamiṣṭaccānta ‖ tayantraśśīkṣṇāmaṇṭranalnaibikṣantasvākya ‖ kṣyābhidrūpāramantriyamā
+9. kajñakabijñānamuḻḻadrava ‖ ccatasāniddhiṣṭehitukāmikkiyaൗ ‖ sthānamitṛccataika
+10. ntrādhiṣṭhādacaruppasāvai ‖ bonmandhansaṃkhyāśāntuṃgandhataiāṣyata ‖ ṣatakṣādadhitvajñānamuṣṭā
+
+TRANSCRIPTION B
+1. 7tmikāṣṭhakamendrāṣṭi [illegible] ‖ [illegible] aiyaൗcanamātmaboddhyāḥparaivennavata [illegible] ‖ taṣṭayaḥtamaiṣṣivaṣāṇatya
+2. cyarentakembāṃbai [illegible] ‖ [illegible] ntaiṭṭuvatināsyaicaitradvaṣṭīnāṃmva [illegible] ‖ ḻpraṭṭataibbāṣṭipateṣṇe
+3. sāṅkhyātaṭṭadayamamide [illegible] ‖ ddhāvaśmaddetarumasaddhibālkākire ‖ ṭadājñānajñānalakṣa
+4. jñānijñārityāda ‖ uൗhāṣṭireṇṭūrāddhyayanamityā ‖ bhaisiddhijñānaprā
+5. bleḥtandrāreṭadā ‖ upāyareṭadāluൗhāḻa ‖ bijñaṣāntarasvāmya
+6. tayireyāyandra ‖ vendhamomākṣakāraṇemal ‖ prekṣamāṇesvū
+7. yāmāṃpṛthaivāru ‖ rajñakonāmmuḻudrakekaruṇṭi ‖ ddhirupāvehatukiṃ
+8. śrathamātāramityucyate [illegible] ‖ [illegible] teyantrakitṛtvāmakṣmandrabaiviṣṇutmasvā [illegible] ‖ [illegible] nvyāmpārupāramamandriyamā
+9. kaḻḻatabājñānamuḻḻadrā [illegible] ‖ [illegible] cyatesānimiṣṭiṇṭeṣṭatehātakādvidiyā ‖ yāsvatantramityucyatete
+10. nyābhityācāyyasdasā [illegible] ‖ [illegible] ṭaikamendhalsāṃkhyānāgraṃśabdatairāṣṭrata ‖ bataśācāvītyajñānamucyate
+
+TRANSCRIPTION C
+1. ātmikā [illegible] drā [illegible] ‖ [illegible] yaൗcanamātra [illegible] āṣyāḥ pakṣai [illegible] nava ‖ tva [illegible] ṣṭayaḥ ta [illegible] siddhivighātā [illegible]
+2. cca [illegible] tekṣa [illegible] ‖ [illegible] nañcaddhva [illegible] kāsā [illegible] āṣetra [illegible] nnāṃ ma [illegible] ‖ [illegible] pra [illegible] trai [illegible] pa [illegible]
+3. sāṃjñātadrūdayamami [illegible] ‖ [illegible] ddhyāpa [illegible] kanase [illegible] sakhi [illegible] bāl kā [illegible] da ‖ [illegible] dājñānajñānalakṣa
+4. ñānijñāsiddhyāda ‖ ūhākhyeṣṭa [illegible] ṣṭāddhyayanamityā ‖ dyaḥ siddhijñānaprā
+5. [illegible] ḥ tantrādiddā ‖ [illegible] cāyadda [illegible] ddāl ūhā [illegible] ‖ [illegible] jñaḥ māntarasa [illegible]
+6. tayiteyāyantyā ‖ vendhamākṣa [illegible] kṣakāraṇemal ‖ [illegible] kṣamāṇasya [illegible]
+7. yāvanāṃ pra [illegible] ṇāka ‖ [illegible] jñānā [illegible] jñādra [illegible] si ‖ ddhi [illegible] vituka [illegible]
+8. [illegible] phalāntaramityucyate ‖ [illegible] tayantra [illegible] ‖ [illegible] pārama [illegible] yamā
+9. kajña [illegible] jñānamuḻḻa [illegible] ‖ [illegible] tasāniddhamiṣṭe [illegible] ṣṭahetukā [illegible] ‖ [illegible] stāramityucyate [illegible]
+10. ntrādi [illegible] cāyyasā [illegible] ‖ [illegible] saṃkhyātā [illegible] āntraṃ gandhataiā [illegible] ‖ [illegible] śā [illegible] tra jñānamuṣṭa [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

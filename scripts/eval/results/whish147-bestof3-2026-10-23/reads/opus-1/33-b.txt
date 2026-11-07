@@ -1,0 +1,21 @@
+ROW 1 | ഷ്ടദ്ഭിക്ഷ്വാമാത്രൈകൊട്ടെ ‖ ംഭേദാദ്ദേവാദിഭി[illegible]ഭേദാക്കുബ്ബാദിത്വാൽ: ‖ [illegible]ഹാരപാകൈഭേദാന്നാംദൃഷ്ടാ
+
+ROW 2 | ഭേദാൽക്കാന്മിയൈകൊട്ട ‖ ക്കേഷാദാദ്ദൃഷ്ടവച്ഛന്നംഭേദാദ്യംതന്ത്ര ‖ ാ[illegible]ത്ര്യാമിടെദ്രാക്ഷ്യാദിമിതൃം
+
+ROW 3 | ഉത്മസ്വാമാത്രൈകൊട്ടെ ‖ നചാനേകത്വം[illegible]ഭേദാദ്ദൃഷ്ട്വാ[illegible] ‖ [illegible]ച്ചാൽഭേദാദ്ദൃഷ്ട[illegible]
+
+ROW 4 | ശ്രൈദ്രാക്കാസ്യക്കാവ ‖ പ്രത്യക്ഷാസാദ്ധ്യമകക്ഷ്ടിവസ്ഥിതംപ്രാ ‖ ജാതിമത്വാൽതന്ത്രി
+
+ROW 5 | ദൈഷാമെയായമാ ‖ ത്മാസമാഗജ്ജാഗ്ഗാന്തിയാഭെനകവ ‖ പ്പചന്തരസഹായഃപ്രവ
+
+ROW 6 | ന്യായൈക്യഞ്ജമാ ‖ മുജ്ജ്വലമാനകബാൽമരന്നാവ ‖ ൽകൈവല്യാൎത്ഥപ്രവൃത്തെ
+
+ROW 7 | ത്തെച്ചിത്തൈകത്വാ ‖ ല്യത്രൈകത്വാൽദത്ത്വാൽപ്രധാനമൈ ‖ ന്ത്രാഷ്ട്രപ്രവൃത്തിഃശരീര
+
+ROW 8 | ശ്രധാനംശൃത്രാന്ത ‖ ഹാചതിരെക്കിരെമ്പെട്ടുകകോഷ്ടാ ‖ വംശാനിരെക്ഷച്ചജ്ഞാ
+
+ROW 9 | നംകൈവല്യാത്ത്രയദ ‖ ദ്യുക്തൈക്കാദ്രാക്ഷ്ൽക്കദാകദ്ധ്യാപ്രവൃത്തി ‖ ത്തിർഭവേൽതന്ത്രാദത്വാ
+
+ROW 10 | ന്ധമപ്രാമൃക്ഷൈമ്യാം ‖ ാസ്ത്രന്ത്രനിദുപ്രംസിദ്ധിവാദാഃഏകഏ ‖ ഏവായം ഷഡ്വിദ്ധ്വ[illegible]
+
+NOTE | This is a low-confidence reading, and many akṣaras are guesses at what the strokes show. The strokes are clear enough to see that there are 10 rows, that rows 1–3 and 9–10 run the full width, and that rows 4–8 are indented around the holes. Near the left hole is a marginal mark "ന്ധ", probably a folio number, which I left out of the rows. Treat every row as needing checking against the image.

@@ -1,0 +1,2294 @@
+{
+ "69b6a44a080b19f98fd1e5a2": {
+  "screen_page": "69b6a44a080b19f98fd1e5ad",
+  "screen_no": 1,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b654e018b87551bfccea9d": {
+  "screen_page": "69b654e018b87551bfcceb2a",
+  "screen_no": 2,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac53039ed10b8de50a12e84": {
+  "screen_page": "6ac5303ced10b8de50a1300d",
+  "screen_no": 3,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "69b6e80af8a84d859cde56b1": {
+  "screen_page": "69b6e80af8a84d859cde572d",
+  "screen_no": 4,
+  "type": "italic",
+  "century": "1700s"
+ },
+ "69b638591c1c21a3738360d5": {
+  "screen_page": "69b638591c1c21a373836131",
+  "screen_no": 5,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6ac51eeeed10b8de509749b6": {
+  "screen_page": "6ac51ef0ed10b8de50974ab6",
+  "screen_no": 6,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6504818b87551bfc9ce41": {
+  "screen_page": "69b6504818b87551bfc9cfcd",
+  "screen_no": 7,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6a504a8e78825bd7fdd87b01": {
+  "screen_page": "6a504a8e78825bd7fdd87b19",
+  "screen_no": 8,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b66995b3f4fc0441571dbb": {
+  "screen_page": "69b66995b3f4fc0441571dc8",
+  "screen_no": 9,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b63b791c1c21a37384ce12": {
+  "screen_page": "69b63b791c1c21a37384cf75",
+  "screen_no": 10,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6ac518c50749a01cb81e031c": {
+  "screen_page": "6ac518c70749a01cb81e0348",
+  "screen_no": 11,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b69021080b19f98fcdcd39": {
+  "screen_page": "69b69021080b19f98fcdcd4f",
+  "screen_no": 12,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6a343080b19f98fd197e2": {
+  "screen_page": "69b6a343080b19f98fd197ee",
+  "screen_no": 13,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6481a18b87551bfc51e65": {
+  "screen_page": "69b6481a18b87551bfc51fd5",
+  "screen_no": 14,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6f9563c7947b468d71403": {
+  "screen_page": "69b6f9563c7947b468d7140e",
+  "screen_no": 15,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6339c1c1c21a37381aaab": {
+  "screen_page": "69b6339c1c1c21a37381ab8e",
+  "screen_no": 16,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac5021deefc6804b9d74574": {
+  "screen_page": "6ac5021eeefc6804b9d745d0",
+  "screen_no": 17,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6a4a5b0d9050f0b43430bc46": {
+  "screen_page": "6a4a5b0d9050f0b43430bc6b",
+  "screen_no": 18,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b65cabb3f4fc0441512098": {
+  "screen_page": "69b65cabb3f4fc044151212d",
+  "screen_no": 19,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b648e018b87551bfc590ef": {
+  "screen_page": "69b648e018b87551bfc59186",
+  "screen_no": 20,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6ed193c7947b468d3415e": {
+  "screen_page": "69b6ed193c7947b468d3418c",
+  "screen_no": 21,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b66a6fb3f4fc044157868a": {
+  "screen_page": "69b66a6fb3f4fc044157880d",
+  "screen_no": 22,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6af7696dc15d4a16c6f00": {
+  "screen_page": "69b6af7696dc15d4a16c6f0a",
+  "screen_no": 23,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b69166080b19f98fce31fd": {
+  "screen_page": "69b69166080b19f98fce3204",
+  "screen_no": 24,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b676fab3f4fc04415c4666": {
+  "screen_page": "69b676fab3f4fc04415c46a3",
+  "screen_no": 25,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b633dc1c1c21a37381c365": {
+  "screen_page": "69b633dc1c1c21a37381c40a",
+  "screen_no": 26,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6c6028566c8381466d86c": {
+  "screen_page": "69b6c6028566c8381466d8ad",
+  "screen_no": 27,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ac52607ed10b8de50996840": {
+  "screen_page": "6ac52609ed10b8de50996a60",
+  "screen_no": 28,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b67ab270c69d645a6fb99e": {
+  "screen_page": "69b67ab270c69d645a6fb9a1",
+  "screen_no": 29,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6b18d96dc15d4a16d0c71": {
+  "screen_page": "69b6b18d96dc15d4a16d0cd8",
+  "screen_no": 30,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6b6f218823df6d6995056": {
+  "screen_page": "69b6b6f218823df6d69950cd",
+  "screen_no": 31,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b633141c1c21a3738161eb": {
+  "screen_page": "69b633141c1c21a37381625e",
+  "screen_no": 32,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b66ddbb3f4fc044158da91": {
+  "screen_page": "69b66ddbb3f4fc044158db6a",
+  "screen_no": 33,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6b00996dc15d4a16ca6cc": {
+  "screen_page": "69b6b00996dc15d4a16ca6d7",
+  "screen_no": 34,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "6ac50413eefc6804b9d80ab0": {
+  "screen_page": "6ac50415eefc6804b9d80bd2",
+  "screen_no": 35,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b671edb3f4fc04415a5865": {
+  "screen_page": "69b671edb3f4fc04415a5876",
+  "screen_no": 36,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b68c692368e1fad3222a44": {
+  "screen_page": "69b68c692368e1fad3222a4b",
+  "screen_no": 37,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b69200080b19f98fce5748": {
+  "screen_page": "69b69200080b19f98fce575b",
+  "screen_no": 38,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b63fea1c1c21a3738764d3": {
+  "screen_page": "69b63fea1c1c21a373876505",
+  "screen_no": 39,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b647c418b87551bfc4ecde": {
+  "screen_page": "69b647c418b87551bfc4edbe",
+  "screen_no": 40,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6e82ff8a84d859cde5c9c": {
+  "screen_page": "69b6e82ff8a84d859cde5ceb",
+  "screen_no": 41,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6470318b87551bfc48b5f": {
+  "screen_page": "69b6470318b87551bfc48c0d",
+  "screen_no": 42,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b646fe18b87551bfc48975": {
+  "screen_page": "69b646fe18b87551bfc48a22",
+  "screen_no": 43,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6492518b87551bfc5ad9a": {
+  "screen_page": "69b6492518b87551bfc5aec0",
+  "screen_no": 44,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b6b54696dc15d4a16e500d": {
+  "screen_page": "69b6b54696dc15d4a16e5026",
+  "screen_no": 45,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51f29ed10b8de50977e41": {
+  "screen_page": "6ac51f2aed10b8de50977f58",
+  "screen_no": 46,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6afcb96dc15d4a16c8003": {
+  "screen_page": "69b6afcb96dc15d4a16c8015",
+  "screen_no": 47,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6a50895f78825bd7fde91dd7": {
+  "screen_page": "6a50896078825bd7fde91e27",
+  "screen_no": 48,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b6806070c69d645a71b339": {
+  "screen_page": "69b6806070c69d645a71b447",
+  "screen_no": 49,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6477218b87551bfc4c7b6": {
+  "screen_page": "69b6477218b87551bfc4c879",
+  "screen_no": 50,
+  "type": "music",
+  "century": "1400s"
+ },
+ "6ac524dbed10b8de5098f2f2": {
+  "screen_page": "6ac524dded10b8de5098f304",
+  "screen_no": 51,
+  "type": "blank",
+  "century": "1500s"
+ },
+ "6a4b91dfd6e7fecd9ccc37c5": {
+  "screen_page": "6a4b91ead6e7fecd9ccc386b",
+  "screen_no": 52,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6a50668378825bd7fdde6cad": {
+  "screen_page": "6a50668378825bd7fdde6cf3",
+  "screen_no": 53,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6e727f8a84d859cddfa5b": {
+  "screen_page": "69b6e727f8a84d859cddfa6b",
+  "screen_no": 54,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6b47396dc15d4a16de43a": {
+  "screen_page": "69b6b47396dc15d4a16de44e",
+  "screen_no": 55,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b68b6253f0f937bfd5a96b": {
+  "screen_page": "69b68b6253f0f937bfd5a979",
+  "screen_no": 56,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6aaa9080b19f98fd3f5f3": {
+  "screen_page": "69b6aaa9080b19f98fd3f60b",
+  "screen_no": 57,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b699e2080b19f98fcfbfe4": {
+  "screen_page": "69b699e2080b19f98fcfc01a",
+  "screen_no": 58,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b63c4c1c1c21a373851e1c": {
+  "screen_page": "69b63c4c1c1c21a373851e5f",
+  "screen_no": 59,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6351c1c1c21a373826255": {
+  "screen_page": "69b6351c1c1c21a373826274",
+  "screen_no": 60,
+  "type": "nontext",
+  "century": "1500s"
+ },
+ "69b6ee2fb1a3146c0525f582": {
+  "screen_page": "69b6ee2fb1a3146c0525f5ef",
+  "screen_no": 61,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b669feb3f4fc0441573bd5": {
+  "screen_page": "69b669feb3f4fc0441573c1d",
+  "screen_no": 62,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b633051c1c21a373815a9f": {
+  "screen_page": "69b633051c1c21a373815afb",
+  "screen_no": 63,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b66469b3f4fc044154fb88": {
+  "screen_page": "69b66469b3f4fc044154fb96",
+  "screen_no": 64,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b671e3b3f4fc04415a580d": {
+  "screen_page": "69b671e3b3f4fc04415a5813",
+  "screen_no": 65,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b643b318b87551bfc3216d": {
+  "screen_page": "69b643b318b87551bfc32194",
+  "screen_no": 66,
+  "type": "nontext",
+  "century": "1500s"
+ },
+ "6ac51ea8ed10b8de50971658": {
+  "screen_page": "6ac51eabed10b8de50971861",
+  "screen_no": 67,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b646db18b87551bfc479b1": {
+  "screen_page": "69b646db18b87551bfc47a11",
+  "screen_no": 68,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6468518b87551bfc44b92": {
+  "screen_page": "69b6468518b87551bfc44c9d",
+  "screen_no": 69,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b6b4ee96dc15d4a16e2488": {
+  "screen_page": "69b6b4ee96dc15d4a16e254b",
+  "screen_no": 70,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6440318b87551bfc34d51": {
+  "screen_page": "69b6440418b87551bfc34f70",
+  "screen_no": 71,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6eeeeb1a3146c05263d24": {
+  "screen_page": "69b6eeeeb1a3146c05263d2c",
+  "screen_no": 72,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6c98a31b7f0d07f50751e": {
+  "screen_page": "69b6c98a31b7f0d07f50767f",
+  "screen_no": 73,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ade4b65f91cf4c2bc7bde46": {
+  "screen_page": "6ade4b65f91cf4c2bc7bdf0c",
+  "screen_no": 74,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b64af118b87551bfc6a967": {
+  "screen_page": "69b64af118b87551bfc6a99b",
+  "screen_no": 75,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b63db91c1c21a37385eb45": {
+  "screen_page": "69b63db91c1c21a37385eb7b",
+  "screen_no": 76,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6a50768d78825bd7fde23cc4": {
+  "screen_page": "6a50768d78825bd7fde23db5",
+  "screen_no": 77,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac53314ed10b8de50a26e61": {
+  "screen_page": "6ac53316ed10b8de50a26ed6",
+  "screen_no": 78,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b633ff1c1c21a37381d454": {
+  "screen_page": "69b633ff1c1c21a37381d465",
+  "screen_no": 79,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6c3d98566c838146629b2": {
+  "screen_page": "69b6c3d98566c83814662a34",
+  "screen_no": 80,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ac52420ed10b8de5098915f": {
+  "screen_page": "6ac52422ed10b8de50989287",
+  "screen_no": 81,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b632801c1c21a3738115be": {
+  "screen_page": "69b632801c1c21a373811690",
+  "screen_no": 82,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac52b3fed10b8de509df513": {
+  "screen_page": "6ac52b40ed10b8de509df530",
+  "screen_no": 83,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b64d9018b87551bfc7f1cd": {
+  "screen_page": "69b64d9018b87551bfc7f2b7",
+  "screen_no": 84,
+  "type": "greek",
+  "century": "1500s"
+ },
+ "69b6571e18b87551bfce6eec": {
+  "screen_page": "69b6571e18b87551bfce6f5e",
+  "screen_no": 85,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "6ac502cbeefc6804b9d787cc": {
+  "screen_page": "6ac502cceefc6804b9d787d4",
+  "screen_no": 86,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51ef8ed10b8de50974ddd": {
+  "screen_page": "6ac51efaed10b8de50974e20",
+  "screen_no": 87,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b65d25b3f4fc04415164e9": {
+  "screen_page": "69b65d25b3f4fc0441516538",
+  "screen_no": 88,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b67e3a70c69d645a70caab": {
+  "screen_page": "69b67e3a70c69d645a70cacc",
+  "screen_no": 89,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b6805b70c69d645a71b26d": {
+  "screen_page": "69b6805b70c69d645a71b29d",
+  "screen_no": 90,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b63ac51c1c21a373847c5f": {
+  "screen_page": "69b63ac51c1c21a373847e3d",
+  "screen_no": 91,
+  "type": "greek",
+  "century": "1500s"
+ },
+ "69b6ae8edc00a90e322b20eb": {
+  "screen_page": "69b6ae8edc00a90e322b20f3",
+  "screen_no": 92,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6a4a59929050f0b4342fb1bf": {
+  "screen_page": "6a4a59929050f0b4342fb1e9",
+  "screen_no": 93,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6acc348a1ed1cb52b01ed3c3": {
+  "screen_page": "6acc348b1ed1cb52b01ed3df",
+  "screen_no": 94,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6c0438566c8381464d1f8": {
+  "screen_page": "69b6c0438566c8381464d201",
+  "screen_no": 95,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b67d7c70c69d645a704084": {
+  "screen_page": "69b67d7c70c69d645a704098",
+  "screen_no": 96,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6589118b87551bfcf4576": {
+  "screen_page": "69b6589118b87551bfcf45d4",
+  "screen_no": 97,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b69124080b19f98fce275f": {
+  "screen_page": "69b69124080b19f98fce2764",
+  "screen_no": 98,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6856f70c69d645a739c15": {
+  "screen_page": "69b6856f70c69d645a739c26",
+  "screen_no": 99,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51edaed10b8de50973acd": {
+  "screen_page": "6ac51edced10b8de50973ade",
+  "screen_no": 100,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac5153d0749a01cb81cdc2c": {
+  "screen_page": "6ac5153f0749a01cb81cdc40",
+  "screen_no": 101,
+  "type": "blank",
+  "century": "1500s"
+ },
+ "6ac52f85ed10b8de50a07e15": {
+  "screen_page": "6ac52f86ed10b8de50a07ed5",
+  "screen_no": 102,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "69b64e5818b87551bfc8719e": {
+  "screen_page": "69b64e5818b87551bfc871b5",
+  "screen_no": 103,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6a4eacf30ecb2b470ef33c7d": {
+  "screen_page": "6a4eacf30ecb2b470ef33d0b",
+  "screen_no": 104,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b632301c1c21a37380e75b": {
+  "screen_page": "69b632301c1c21a37380e77e",
+  "screen_no": 105,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b69851080b19f98fcf7045": {
+  "screen_page": "69b69851080b19f98fcf7063",
+  "screen_no": 106,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6fb603c7947b468d7b2d3": {
+  "screen_page": "69b6fb603c7947b468d7b2f0",
+  "screen_no": 107,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6e7bff8a84d859cde38fd": {
+  "screen_page": "69b6e7bff8a84d859cde39e2",
+  "screen_no": 108,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b639481c1c21a37383d847": {
+  "screen_page": "69b639481c1c21a37383d85a",
+  "screen_no": 109,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6eec9b1a3146c05263008": {
+  "screen_page": "69b6eec9b1a3146c05263084",
+  "screen_no": 110,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6a5081a578825bd7fde4c4ee": {
+  "screen_page": "6a5081a578825bd7fde4c50f",
+  "screen_no": 111,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac52b4eed10b8de509dfa01": {
+  "screen_page": "6ac52b4fed10b8de509dfa09",
+  "screen_no": 112,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b634881c1c21a373820ddc": {
+  "screen_page": "69b634881c1c21a373820e4a",
+  "screen_no": 113,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac53354ed10b8de50a2882b": {
+  "screen_page": "6ac53355ed10b8de50a2883c",
+  "screen_no": 114,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b634bb1c1c21a373823471": {
+  "screen_page": "69b634bb1c1c21a373823550",
+  "screen_no": 115,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b646ec18b87551bfc4821f": {
+  "screen_page": "69b646ec18b87551bfc482e0",
+  "screen_no": 116,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6917b080b19f98fce32f5": {
+  "screen_page": "69b6917b080b19f98fce3316",
+  "screen_no": 117,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6323d1c1c21a37380f1a5": {
+  "screen_page": "69b6323d1c1c21a37380f1f2",
+  "screen_no": 118,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b65b2a18b87551bfd0979c": {
+  "screen_page": "69b65b2a18b87551bfd09887",
+  "screen_no": 119,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b688c52368e1fad320ef00": {
+  "screen_page": "69b688c52368e1fad320efdd",
+  "screen_no": 120,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac528d6ed10b8de509bbe1d": {
+  "screen_page": "6ac528d8ed10b8de509bbe57",
+  "screen_no": 121,
+  "type": "blank",
+  "century": "1400s"
+ },
+ "69b638f51c1c21a37383b9c0": {
+  "screen_page": "69b638f51c1c21a37383b9c9",
+  "screen_no": 122,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6325d1c1c21a3738100a7": {
+  "screen_page": "69b6325d1c1c21a37381039f",
+  "screen_no": 123,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b64ed718b87551bfc8d8ea": {
+  "screen_page": "69b64ed718b87551bfc8d963",
+  "screen_no": 124,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6a50644378825bd7fddd9b5f": {
+  "screen_page": "6a50644378825bd7fddd9b74",
+  "screen_no": 125,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6477c18b87551bfc4cb92": {
+  "screen_page": "69b6477c18b87551bfc4cbc6",
+  "screen_no": 126,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b640751c1c21a37387b9d6": {
+  "screen_page": "69b640751c1c21a37387ba76",
+  "screen_no": 127,
+  "type": "mixed",
+  "century": "1500s"
+ },
+ "69b633161c1c21a37381627d": {
+  "screen_page": "69b633161c1c21a373816282",
+  "screen_no": 128,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b6a559080b19f98fd23843": {
+  "screen_page": "69b6a559080b19f98fd2384d",
+  "screen_no": 129,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b67fd870c69d645a716410": {
+  "screen_page": "69b67fd870c69d645a7164b3",
+  "screen_no": 130,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b6513c18b87551bfca68e0": {
+  "screen_page": "69b6513c18b87551bfca68fd",
+  "screen_no": 131,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b651c818b87551bfcaca04": {
+  "screen_page": "69b651c818b87551bfcaca41",
+  "screen_no": 132,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b667b6b3f4fc0441561ee3": {
+  "screen_page": "69b667b6b3f4fc0441561ee8",
+  "screen_no": 133,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac50125eefc6804b9d6fe26": {
+  "screen_page": "6ac50127eefc6804b9d6fe52",
+  "screen_no": 134,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6b9398566c8381462a981": {
+  "screen_page": "69b6b9398566c8381462a989",
+  "screen_no": 135,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "6ac51d25ed10b8de5096b2d7": {
+  "screen_page": "6ac51d28ed10b8de5096b2e0",
+  "screen_no": 136,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6ecb9b1a3146c0525d25e": {
+  "screen_page": "69b6ecb9b1a3146c0525d26a",
+  "screen_no": 137,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ac51f46ed10b8de50978f82": {
+  "screen_page": "6ac51f48ed10b8de5097903d",
+  "screen_no": 138,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b63ae11c1c21a373848776": {
+  "screen_page": "69b63ae11c1c21a373848787",
+  "screen_no": 139,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b633be1c1c21a37381ba9f": {
+  "screen_page": "69b633be1c1c21a37381bac9",
+  "screen_no": 140,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6516318b87551bfca9090": {
+  "screen_page": "69b6516318b87551bfca9097",
+  "screen_no": 141,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6c77d31b7f0d07f4ff63b": {
+  "screen_page": "69b6c77d31b7f0d07f4ff732",
+  "screen_no": 142,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b631e51c1c21a37380b84d": {
+  "screen_page": "69b631e51c1c21a37380b870",
+  "screen_no": 143,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b685c670c69d645a73ca56": {
+  "screen_page": "69b685c670c69d645a73cabc",
+  "screen_no": 144,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b6f0fab1a3146c05271f3f": {
+  "screen_page": "69b6f0fab1a3146c05271fbf",
+  "screen_no": 145,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6a504a8778825bd7fdd8772a": {
+  "screen_page": "6a504a8778825bd7fdd8774e",
+  "screen_no": 146,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b64c8318b87551bfc75cb2": {
+  "screen_page": "69b64c8318b87551bfc75cbe",
+  "screen_no": 147,
+  "type": "mixed",
+  "century": "1500s"
+ },
+ "6ac51fb8ed10b8de5097d823": {
+  "screen_page": "6ac51fbaed10b8de5097d8bc",
+  "screen_no": 148,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6a4a5de49050f0b43432bb36": {
+  "screen_page": "6a4a5de49050f0b43432bb6f",
+  "screen_no": 149,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "69b66a0cb3f4fc044157413f": {
+  "screen_page": "69b66a0cb3f4fc0441574142",
+  "screen_no": 150,
+  "type": "mixed",
+  "century": "1500s"
+ },
+ "69b69ff1080b19f98fd12529": {
+  "screen_page": "69b69ff1080b19f98fd12547",
+  "screen_no": 151,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b66eebb3f4fc0441592deb": {
+  "screen_page": "69b66eebb3f4fc0441592e27",
+  "screen_no": 152,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6ac515f40749a01cb81d27df": {
+  "screen_page": "6ac515f60749a01cb81d2801",
+  "screen_no": 153,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6fe13b1a3146c0527edf2": {
+  "screen_page": "69b6fe13b1a3146c0527ee10",
+  "screen_no": 154,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6a702080b19f98fd2c49f": {
+  "screen_page": "69b6a702080b19f98fd2c4a7",
+  "screen_no": 155,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b680e370c69d645a71ce73": {
+  "screen_page": "69b680e370c69d645a71ce81",
+  "screen_no": 156,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b633611c1c21a373818975": {
+  "screen_page": "69b633611c1c21a37381898a",
+  "screen_no": 157,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ade4439f91cf4c2bc73cdb3": {
+  "screen_page": "6ade4439f91cf4c2bc73ce28",
+  "screen_no": 158,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b66f5bb3f4fc0441597e0a": {
+  "screen_page": "69b66f5bb3f4fc0441597e11",
+  "screen_no": 159,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b635541c1c21a3738271d4": {
+  "screen_page": "69b635541c1c21a3738271e2",
+  "screen_no": 160,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "6a508ecb78825bd7fdedc3ae": {
+  "screen_page": "6a508ecb78825bd7fdedc3c3",
+  "screen_no": 161,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ade4354f91cf4c2bc71e3ac": {
+  "screen_page": "6ade4354f91cf4c2bc71e3e7",
+  "screen_no": 162,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6ef70b1a3146c05268292": {
+  "screen_page": "69b6ef70b1a3146c052682f3",
+  "screen_no": 163,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6aee7dc00a90e322b3810": {
+  "screen_page": "69b6aee7dc00a90e322b3a28",
+  "screen_no": 164,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac522dfed10b8de50987943": {
+  "screen_page": "6ac522e0ed10b8de5098794c",
+  "screen_no": 165,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b6a90e080b19f98fd35ad9": {
+  "screen_page": "69b6a90e080b19f98fd35bc7",
+  "screen_no": 166,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6392b1c1c21a37383cb72": {
+  "screen_page": "69b6392b1c1c21a37383ce1c",
+  "screen_no": 167,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6c9b431b7f0d07f508a48": {
+  "screen_page": "69b6c9b431b7f0d07f508a8c",
+  "screen_no": 168,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b681e370c69d645a7242ed": {
+  "screen_page": "69b681e370c69d645a7242ff",
+  "screen_no": 169,
+  "type": "blank",
+  "century": "1600s"
+ },
+ "69b63c321c1c21a37385140d": {
+  "screen_page": "69b63c321c1c21a373851461",
+  "screen_no": 170,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6c9ee31b7f0d07f509e2a": {
+  "screen_page": "69b6c9ee31b7f0d07f509e4b",
+  "screen_no": 171,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b671dcb3f4fc04415a57db": {
+  "screen_page": "69b671dcb3f4fc04415a57dd",
+  "screen_no": 172,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "6acc34a81ed1cb52b01ed708": {
+  "screen_page": "6acc34a91ed1cb52b01ed719",
+  "screen_no": 173,
+  "type": "manuscript",
+  "century": "1500s"
+ },
+ "69b657a318b87551bfceabb7": {
+  "screen_page": "69b657a318b87551bfceabdb",
+  "screen_no": 174,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6c4ef8566c8381466679f": {
+  "screen_page": "69b6c4ef8566c838146667a7",
+  "screen_no": 175,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b69a92080b19f98fcff04c": {
+  "screen_page": "69b69a92080b19f98fcff051",
+  "screen_no": 176,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b634771c1c21a3738207aa": {
+  "screen_page": "69b634771c1c21a373820985",
+  "screen_no": 177,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6bad78566c83814632755": {
+  "screen_page": "69b6bad78566c8381463275e",
+  "screen_no": 178,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b6836c70c69d645a72f1d4": {
+  "screen_page": "69b6836c70c69d645a72f1db",
+  "screen_no": 179,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b633401c1c21a3738172df": {
+  "screen_page": "69b633401c1c21a373817357",
+  "screen_no": 180,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6d5bba8d7b8d17a670eb9": {
+  "screen_page": "69b6d5bba8d7b8d17a670ec8",
+  "screen_no": 181,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6a5055e078825bd7fddacde8": {
+  "screen_page": "6a5055e078825bd7fddace5b",
+  "screen_no": 182,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6c0d98566c8381464eccc": {
+  "screen_page": "69b6c0d98566c8381464ecd0",
+  "screen_no": 183,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac5191c0749a01cb81e42b6": {
+  "screen_page": "6ac5191e0749a01cb81e42bc",
+  "screen_no": 184,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b634ea1c1c21a3738249f1": {
+  "screen_page": "69b634ea1c1c21a373824a6e",
+  "screen_no": 185,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b646bf18b87551bfc468dc": {
+  "screen_page": "69b646bf18b87551bfc469c5",
+  "screen_no": 186,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6370c1c1c21a373830cd8": {
+  "screen_page": "69b6370c1c1c21a373830e28",
+  "screen_no": 187,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b6bf458566c83814648bd7": {
+  "screen_page": "69b6bf458566c83814648bde",
+  "screen_no": 188,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6f78b3c7947b468d62ed8": {
+  "screen_page": "69b6f78b3c7947b468d62ee2",
+  "screen_no": 189,
+  "type": "nonlatin",
+  "century": "1700s"
+ },
+ "69b633491c1c21a3738176e5": {
+  "screen_page": "69b633491c1c21a37381770c",
+  "screen_no": 190,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b66410b3f4fc044154dd79": {
+  "screen_page": "69b66410b3f4fc044154dd87",
+  "screen_no": 191,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac51dabed10b8de5096ca6d": {
+  "screen_page": "6ac51daded10b8de5096ccf2",
+  "screen_no": 192,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6f9953c7947b468d742a2": {
+  "screen_page": "69b6f9953c7947b468d742bd",
+  "screen_no": 193,
+  "type": "nontext",
+  "century": "1700s"
+ },
+ "69b67aad70c69d645a6fb97a": {
+  "screen_page": "69b67aad70c69d645a6fb987",
+  "screen_no": 194,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51ed8ed10b8de50973a08": {
+  "screen_page": "6ac51edaed10b8de50973a88",
+  "screen_no": 195,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b646e218b87551bfc47f47": {
+  "screen_page": "69b646e218b87551bfc47f4e",
+  "screen_no": 196,
+  "type": "mixed",
+  "century": "1400s"
+ },
+ "69b6333d1c1c21a373817219": {
+  "screen_page": "69b6333d1c1c21a373817271",
+  "screen_no": 197,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6470f18b87551bfc48e64": {
+  "screen_page": "69b6470f18b87551bfc48e75",
+  "screen_no": 198,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b63b941c1c21a37384d780": {
+  "screen_page": "69b63b941c1c21a37384db00",
+  "screen_no": 199,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6542b18b87551bfcc62b3": {
+  "screen_page": "69b6542b18b87551bfcc64c8",
+  "screen_no": 200,
+  "type": "greek",
+  "century": "1500s"
+ },
+ "69b68d1c2368e1fad3225a4e": {
+  "screen_page": "69b68d1c2368e1fad3225a52",
+  "screen_no": 201,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b63c991c1c21a373854786": {
+  "screen_page": "69b63c991c1c21a37385486e",
+  "screen_no": 202,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "6ade433ff91cf4c2bc718af3": {
+  "screen_page": "6ade433ff91cf4c2bc718b23",
+  "screen_no": 203,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b648a018b87551bfc56845": {
+  "screen_page": "69b648a018b87551bfc568b1",
+  "screen_no": 204,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ade48dbf91cf4c2bc79ce34": {
+  "screen_page": "6ade48dbf91cf4c2bc79d12e",
+  "screen_no": 205,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b66507b3f4fc044155250c": {
+  "screen_page": "69b66507b3f4fc0441552593",
+  "screen_no": 206,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "6ac529cced10b8de509cb9c4": {
+  "screen_page": "6ac529ceed10b8de509cbb28",
+  "screen_no": 207,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "69b6a0e8080b19f98fd15e3d": {
+  "screen_page": "69b6a0e8080b19f98fd15e46",
+  "screen_no": 208,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b66bacb3f4fc0441581e5f": {
+  "screen_page": "69b66bacb3f4fc0441581e6c",
+  "screen_no": 209,
+  "type": "mixed",
+  "century": "1500s"
+ },
+ "69b65ebeb3f4fc04415243b7": {
+  "screen_page": "69b65ebeb3f4fc04415245af",
+  "screen_no": 210,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6b82f8566c83814625fbe": {
+  "screen_page": "69b6b82f8566c83814625fdb",
+  "screen_no": 211,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b654e318b87551bfcced17": {
+  "screen_page": "69b654e318b87551bfccef2e",
+  "screen_no": 212,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6a4a588e9050f0b4342ec1c8": {
+  "screen_page": "6a4a588e9050f0b4342ec1ed",
+  "screen_no": 213,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac4fc54eefc6804b9d57f0d": {
+  "screen_page": "6ac4fc58eefc6804b9d57f72",
+  "screen_no": 214,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6bd8b8566c8381464138b": {
+  "screen_page": "69b6bd8b8566c83814641393",
+  "screen_no": 215,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6426c1c1c21a37388c98c": {
+  "screen_page": "69b6426c1c1c21a37388c9f9",
+  "screen_no": 216,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6ac52817ed10b8de509b0259": {
+  "screen_page": "6ac52819ed10b8de509b0415",
+  "screen_no": 217,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "6ac50191eefc6804b9d71fa8": {
+  "screen_page": "6ac50192eefc6804b9d71fad",
+  "screen_no": 218,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b68e89080b19f98fcd3de7": {
+  "screen_page": "69b68e89080b19f98fcd3e82",
+  "screen_no": 219,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b6e9f4b1a3146c05246332": {
+  "screen_page": "69b6e9f4b1a3146c05246359",
+  "screen_no": 220,
+  "type": "mixed",
+  "century": "1700s"
+ },
+ "69b66646b3f4fc044155a2e6": {
+  "screen_page": "69b66646b3f4fc044155a358",
+  "screen_no": 221,
+  "type": "mixed",
+  "century": "1500s"
+ },
+ "6a5047a178825bd7fdd818cf": {
+  "screen_page": "6a5047a178825bd7fdd81914",
+  "screen_no": 222,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "69b64a3d18b87551bfc63d19": {
+  "screen_page": "69b64a3d18b87551bfc63da0",
+  "screen_no": 223,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b640da1c1c21a37387f71a": {
+  "screen_page": "69b640da1c1c21a37387f80e",
+  "screen_no": 224,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b632b11c1c21a373812bfb": {
+  "screen_page": "69b632b11c1c21a373812c49",
+  "screen_no": 225,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b64ce418b87551bfc7922f": {
+  "screen_page": "69b64ce418b87551bfc79311",
+  "screen_no": 226,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b633521c1c21a3738180ae": {
+  "screen_page": "69b633521c1c21a3738180e9",
+  "screen_no": 227,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6536718b87551bfcbd0a0": {
+  "screen_page": "69b6536718b87551bfcbd0f3",
+  "screen_no": 228,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6ee10b1a3146c0525e401": {
+  "screen_page": "69b6ee10b1a3146c0525e413",
+  "screen_no": 229,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b64c6518b87551bfc73a28": {
+  "screen_page": "69b64c6518b87551bfc73a62",
+  "screen_no": 230,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6324b1c1c21a37380f489": {
+  "screen_page": "69b6324b1c1c21a37380f4e6",
+  "screen_no": 231,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6f5ee3c7947b468d5325f": {
+  "screen_page": "69b6f5ee3c7947b468d532de",
+  "screen_no": 232,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ac5134f4ba7223afe0647fb": {
+  "screen_page": "6ac513504ba7223afe064814",
+  "screen_no": 233,
+  "type": "nontext",
+  "century": "1500s"
+ },
+ "69b6be598566c83814643e85": {
+  "screen_page": "69b6be598566c83814643ea2",
+  "screen_no": 234,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51f21ed10b8de5097782c": {
+  "screen_page": "6ac51f23ed10b8de50977956",
+  "screen_no": 235,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6556f18b87551bfcd515e": {
+  "screen_page": "69b6556f18b87551bfcd51a4",
+  "screen_no": 236,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6a508a5978825bd7fde9d1f5": {
+  "screen_page": "6a508a5978825bd7fde9d255",
+  "screen_no": 237,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6499718b87551bfc5e129": {
+  "screen_page": "69b6499718b87551bfc5e1df",
+  "screen_no": 238,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b642d71c1c21a373891384": {
+  "screen_page": "69b642d71c1c21a3738913b7",
+  "screen_no": 239,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6e8d1f8a84d859cdea648": {
+  "screen_page": "69b6e8d1f8a84d859cdea838",
+  "screen_no": 240,
+  "type": "italic",
+  "century": "1700s"
+ },
+ "69b6e5a9a8d7b8d17a67de43": {
+  "screen_page": "69b6e5a9a8d7b8d17a67de51",
+  "screen_no": 241,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6f4603c7947b468d44b83": {
+  "screen_page": "69b6f4603c7947b468d44bf6",
+  "screen_no": 242,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6e6e4f8a84d859cddd20f": {
+  "screen_page": "69b6e6e4f8a84d859cddd223",
+  "screen_no": 243,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6a8c2080b19f98fd34b17": {
+  "screen_page": "69b6a8c3080b19f98fd34b25",
+  "screen_no": 244,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51f1ced10b8de50977472": {
+  "screen_page": "6ac51f1eed10b8de5097758e",
+  "screen_no": 245,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6390e1c1c21a37383c083": {
+  "screen_page": "69b6390e1c1c21a37383c0cf",
+  "screen_no": 246,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b646af18b87551bfc45f14": {
+  "screen_page": "69b646af18b87551bfc45f75",
+  "screen_no": 247,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6a50545a78825bd7fdda2b8d": {
+  "screen_page": "6a50545a78825bd7fdda2bcd",
+  "screen_no": 248,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ac52a71ed10b8de509d72d3": {
+  "screen_page": "6ac52a72ed10b8de509d74a4",
+  "screen_no": 249,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "69b67736b3f4fc04415c74be": {
+  "screen_page": "69b67736b3f4fc04415c74c6",
+  "screen_no": 250,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b67d7f70c69d645a7040c0": {
+  "screen_page": "69b67d7f70c69d645a7040c7",
+  "screen_no": 251,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b66385b3f4fc044154ab83": {
+  "screen_page": "69b66385b3f4fc044154acdb",
+  "screen_no": 252,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6a737080b19f98fd2cd18": {
+  "screen_page": "69b6a737080b19f98fd2ce54",
+  "screen_no": 253,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b6c5908566c8381466a344": {
+  "screen_page": "69b6c5908566c8381466a3cb",
+  "screen_no": 254,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b66ee6b3f4fc0441592c3f": {
+  "screen_page": "69b66ee6b3f4fc0441592d3f",
+  "screen_no": 255,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac52eafed10b8de509fadee": {
+  "screen_page": "6ac52eb1ed10b8de509faf12",
+  "screen_no": 256,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "69b6fd493c7947b468d8c1c2": {
+  "screen_page": "69b6fd493c7947b468d8c1c7",
+  "screen_no": 257,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6c1958566c83814653fa9": {
+  "screen_page": "69b6c1958566c83814653fb5",
+  "screen_no": 258,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6343b1c1c21a37381e4d0": {
+  "screen_page": "69b6343b1c1c21a37381e760",
+  "screen_no": 259,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6b0ea96dc15d4a16ced64": {
+  "screen_page": "69b6b0ea96dc15d4a16ced6c",
+  "screen_no": 260,
+  "type": "greek",
+  "century": "1600s"
+ },
+ "69b6c68031b7f0d07f4f9b85": {
+  "screen_page": "69b6c68031b7f0d07f4f9c01",
+  "screen_no": 261,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b63e6d1c1c21a373864577": {
+  "screen_page": "69b63e6d1c1c21a373864594",
+  "screen_no": 262,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6ade43c6f91cf4c2bc730721": {
+  "screen_page": "6ade43c6f91cf4c2bc730759",
+  "screen_no": 263,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6efbeb1a3146c05269802": {
+  "screen_page": "69b6efbeb1a3146c05269807",
+  "screen_no": 264,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6ac5247bed10b8de5098c5ce": {
+  "screen_page": "6ac5247ced10b8de5098c63a",
+  "screen_no": 265,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6416f1c1c21a373883b00": {
+  "screen_page": "69b6416f1c1c21a373883b58",
+  "screen_no": 266,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6b9198566c83814628faf": {
+  "screen_page": "69b6b9198566c83814628fbf",
+  "screen_no": 267,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b695c3080b19f98fcf056d": {
+  "screen_page": "69b695c3080b19f98fcf05c9",
+  "screen_no": 268,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6578518b87551bfce9daf": {
+  "screen_page": "69b6578518b87551bfce9dc6",
+  "screen_no": 269,
+  "type": "table",
+  "century": "1500s"
+ },
+ "69b68f10080b19f98fcd6cfb": {
+  "screen_page": "69b68f10080b19f98fcd6d3a",
+  "screen_no": 270,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "6ac515e40749a01cb81d18aa": {
+  "screen_page": "6ac515e60749a01cb81d18cb",
+  "screen_no": 271,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b645b418b87551bfc3e170": {
+  "screen_page": "69b645b418b87551bfc3e224",
+  "screen_no": 272,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b66320b3f4fc0441548635": {
+  "screen_page": "69b66320b3f4fc04415486c7",
+  "screen_no": 273,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b648c918b87551bfc57d6a": {
+  "screen_page": "69b648c918b87551bfc57f5d",
+  "screen_no": 274,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b63c7c1c1c21a373853534": {
+  "screen_page": "69b63c7c1c1c21a373853602",
+  "screen_no": 275,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6589918b87551bfcf4adb": {
+  "screen_page": "69b6589918b87551bfcf4b14",
+  "screen_no": 276,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b63e4a1c1c21a3738635b3": {
+  "screen_page": "69b63e4a1c1c21a373863627",
+  "screen_no": 277,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b642ae1c1c21a37388fd78": {
+  "screen_page": "69b642ae1c1c21a37388fed7",
+  "screen_no": 278,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac51cbfed10b8de509697d1": {
+  "screen_page": "6ac51cc1ed10b8de509697f2",
+  "screen_no": 279,
+  "type": "manuscript",
+  "century": "1700s"
+ },
+ "69b6445918b87551bfc380e5": {
+  "screen_page": "69b6445918b87551bfc381f6",
+  "screen_no": 280,
+  "type": "greek",
+  "century": "1500s"
+ },
+ "69b6aab8080b19f98fd3f6d6": {
+  "screen_page": "69b6aab8080b19f98fd3f6db",
+  "screen_no": 281,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b68ea6080b19f98fcd4493": {
+  "screen_page": "69b68ea6080b19f98fcd44f7",
+  "screen_no": 282,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6462e18b87551bfc4151e": {
+  "screen_page": "69b6462e18b87551bfc4152c",
+  "screen_no": 283,
+  "type": "blank",
+  "century": "1400s"
+ },
+ "69b642bd1c1c21a37389035e": {
+  "screen_page": "69b642bd1c1c21a373890535",
+  "screen_no": 284,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b646cc18b87551bfc472ae": {
+  "screen_page": "69b646cc18b87551bfc47525",
+  "screen_no": 285,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6c8086bf2c798f8401854": {
+  "screen_page": "69b6c8086bf2c798f8401858",
+  "screen_no": 286,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6f062b1a3146c0526d14f": {
+  "screen_page": "69b6f062b1a3146c0526d1e8",
+  "screen_no": 287,
+  "type": "mixed",
+  "century": "1700s"
+ },
+ "69b6482a18b87551bfc52795": {
+  "screen_page": "69b6482a18b87551bfc52805",
+  "screen_no": 288,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b633ad1c1c21a37381b2f2": {
+  "screen_page": "69b633ad1c1c21a37381b448",
+  "screen_no": 289,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac5343bed10b8de50a2dfce": {
+  "screen_page": "6ac5343ced10b8de50a2dfde",
+  "screen_no": 290,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b6ecd13c7947b468d3134a": {
+  "screen_page": "69b6ecd13c7947b468d31406",
+  "screen_no": 291,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b636031c1c21a37382ab5a": {
+  "screen_page": "69b636031c1c21a37382ac1a",
+  "screen_no": 292,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b64eb718b87551bfc8ba7e": {
+  "screen_page": "69b64eb718b87551bfc8bb76",
+  "screen_no": 293,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b67255b3f4fc04415a5b91": {
+  "screen_page": "69b67255b3f4fc04415a5ba5",
+  "screen_no": 294,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b6495e18b87551bfc5cd10": {
+  "screen_page": "69b6495e18b87551bfc5cd9d",
+  "screen_no": 295,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "6a5057c978825bd7fddbb6b6": {
+  "screen_page": "6a5057c978825bd7fddbb6c3",
+  "screen_no": 296,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b63a4b1c1c21a373844375": {
+  "screen_page": "69b63a4b1c1c21a37384438b",
+  "screen_no": 297,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6b2c3ddbd97d443a9f1b3": {
+  "screen_page": "69b6b2c3ddbd97d443a9f1ca",
+  "screen_no": 298,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6bc388566c8381463ac7b": {
+  "screen_page": "69b6bc398566c8381463aca7",
+  "screen_no": 299,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b642e01c1c21a373892271": {
+  "screen_page": "69b642e01c1c21a373892321",
+  "screen_no": 300,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6bd9e8566c838146416fa": {
+  "screen_page": "69b6bd9e8566c83814641718",
+  "screen_no": 301,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6a508ca178825bd7fdeb90ed": {
+  "screen_page": "6a508ca178825bd7fdeb9280",
+  "screen_no": 302,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b63fed1c1c21a3738765c9": {
+  "screen_page": "69b63fed1c1c21a3738766cb",
+  "screen_no": 303,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b64ca018b87551bfc7729c": {
+  "screen_page": "69b64ca018b87551bfc772d5",
+  "screen_no": 304,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6a4a5ac19050f0b434308c33": {
+  "screen_page": "6a4a5ac19050f0b434308c89",
+  "screen_no": 305,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6c70931b7f0d07f4fc195": {
+  "screen_page": "69b6c70931b7f0d07f4fc31e",
+  "screen_no": 306,
+  "type": "mixed",
+  "century": "1700s"
+ },
+ "69b6468c18b87551bfc45102": {
+  "screen_page": "69b6468c18b87551bfc45106",
+  "screen_no": 307,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ade4347f91cf4c2bc71a957": {
+  "screen_page": "6ade4348f91cf4c2bc71a970",
+  "screen_no": 308,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6a994080b19f98fd397fe": {
+  "screen_page": "69b6a994080b19f98fd39800",
+  "screen_no": 309,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac527b4ed10b8de509a8d5a": {
+  "screen_page": "6ac527b5ed10b8de509a8df7",
+  "screen_no": 310,
+  "type": "manuscript",
+  "century": "1400s"
+ },
+ "69b64d4a18b87551bfc7c6ac": {
+  "screen_page": "69b64d4a18b87551bfc7c78a",
+  "screen_no": 311,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6a4a5ad49050f0b434309557": {
+  "screen_page": "6a4a5ad49050f0b434309591",
+  "screen_no": 312,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6461c18b87551bfc41173": {
+  "screen_page": "69b6461c18b87551bfc41177",
+  "screen_no": 313,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac532b5ed10b8de50a23a9a": {
+  "screen_page": "6ac532b6ed10b8de50a23ab5",
+  "screen_no": 314,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b653cd18b87551bfcc1b40": {
+  "screen_page": "69b653cd18b87551bfcc1bb1",
+  "screen_no": 315,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "6ac51f1eed10b8de50977674": {
+  "screen_page": "6ac51f20ed10b8de5097769d",
+  "screen_no": 316,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "6a243cf10f0e4f405e62f79d": {
+  "screen_page": "6a243cf10f0e4f405e62f80d",
+  "screen_no": 317,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6a332080b19f98fd1974a": {
+  "screen_page": "69b6a332080b19f98fd1974d",
+  "screen_no": 318,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b64e9e18b87551bfc8ac6c": {
+  "screen_page": "69b64e9e18b87551bfc8ad91",
+  "screen_no": 319,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6469e18b87551bfc45714": {
+  "screen_page": "69b6469e18b87551bfc459ca",
+  "screen_no": 320,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6b4cc96dc15d4a16e1cf9": {
+  "screen_page": "69b6b4cc96dc15d4a16e1d07",
+  "screen_no": 321,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "6ac5158a0749a01cb81cf170": {
+  "screen_page": "6ac5158b0749a01cb81cf293",
+  "screen_no": 322,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac533c8ed10b8de50a2ab95": {
+  "screen_page": "6ac533c9ed10b8de50a2abf7",
+  "screen_no": 323,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6ad6edc00a90e322aa10e": {
+  "screen_page": "69b6ad6edc00a90e322aa128",
+  "screen_no": 324,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b63bdb1c1c21a37384fe42": {
+  "screen_page": "69b63bdb1c1c21a37384fe5b",
+  "screen_no": 325,
+  "type": "table",
+  "century": "1500s"
+ },
+ "69b6f7673c7947b468d619d3": {
+  "screen_page": "69b6f7673c7947b468d61aa7",
+  "screen_no": 326,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6538018b87551bfcbdd82": {
+  "screen_page": "69b6538018b87551bfcbde6f",
+  "screen_no": 327,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6a752080b19f98fd2d9b9": {
+  "screen_page": "69b6a752080b19f98fd2d9c7",
+  "screen_no": 328,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "6ac530e1ed10b8de50a1893b": {
+  "screen_page": "6ac530e2ed10b8de50a18a3b",
+  "screen_no": 329,
+  "type": "music",
+  "century": "1500s"
+ },
+ "6ac5156b0749a01cb81ce617": {
+  "screen_page": "6ac5156d0749a01cb81ce61f",
+  "screen_no": 330,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "69b6a556080b19f98fd23831": {
+  "screen_page": "69b6a556080b19f98fd2383d",
+  "screen_no": 331,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6689db3f4fc044156a291": {
+  "screen_page": "69b6689db3f4fc044156a29e",
+  "screen_no": 332,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b647c718b87551bfc4eee6": {
+  "screen_page": "69b647c718b87551bfc4efa7",
+  "screen_no": 333,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b693d6080b19f98fcebdd7": {
+  "screen_page": "69b693d6080b19f98fcebe48",
+  "screen_no": 334,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b63d411c1c21a37385a599": {
+  "screen_page": "69b63d411c1c21a37385a619",
+  "screen_no": 335,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "6ac5154d0749a01cb81cde54": {
+  "screen_page": "6ac5154f0749a01cb81cde5a",
+  "screen_no": 336,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "6ac51ee0ed10b8de5097406b": {
+  "screen_page": "6ac51ee2ed10b8de50974075",
+  "screen_no": 337,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6b2fb96dc15d4a16d72ba": {
+  "screen_page": "69b6b2fb96dc15d4a16d7354",
+  "screen_no": 338,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6b97b8566c8381462b9a6": {
+  "screen_page": "69b6b97b8566c8381462b9b3",
+  "screen_no": 339,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac513450749a01cb81bb1c7": {
+  "screen_page": "6ac513470749a01cb81bb1db",
+  "screen_no": 340,
+  "type": "blank",
+  "century": "1600s"
+ },
+ "6ac50407eefc6804b9d8041a": {
+  "screen_page": "6ac5040aeefc6804b9d8051b",
+  "screen_no": 341,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6b17096dc15d4a16d059b": {
+  "screen_page": "69b6b17096dc15d4a16d05b1",
+  "screen_no": 342,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6469b18b87551bfc45412": {
+  "screen_page": "69b6469b18b87551bfc45531",
+  "screen_no": 343,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b648a518b87551bfc56a61": {
+  "screen_page": "69b648a518b87551bfc56b5d",
+  "screen_no": 344,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b634671c1c21a3738202c8": {
+  "screen_page": "69b634671c1c21a3738202d0",
+  "screen_no": 345,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6576c18b87551bfce9653": {
+  "screen_page": "69b6576c18b87551bfce966f",
+  "screen_no": 346,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6a14d080b19f98fd17942": {
+  "screen_page": "69b6a14d080b19f98fd1794f",
+  "screen_no": 347,
+  "type": "italic",
+  "century": "1600s"
+ },
+ "69b688c02368e1fad320ecb4": {
+  "screen_page": "69b688c02368e1fad320ee0c",
+  "screen_no": 348,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6489918b87551bfc56598": {
+  "screen_page": "69b6489918b87551bfc56661",
+  "screen_no": 349,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6472c18b87551bfc4980b": {
+  "screen_page": "69b6472c18b87551bfc49867",
+  "screen_no": 350,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b68e3f080b19f98fcd30ef": {
+  "screen_page": "69b68e3f080b19f98fcd30f7",
+  "screen_no": 351,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b64e0d18b87551bfc84a28": {
+  "screen_page": "69b64e0d18b87551bfc84ab3",
+  "screen_no": 352,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b63aa61c1c21a37384739a": {
+  "screen_page": "69b63aa61c1c21a3738473a0",
+  "screen_no": 353,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b68ec1080b19f98fcd4d45": {
+  "screen_page": "69b68ec1080b19f98fcd4d8a",
+  "screen_no": 354,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b64cfd18b87551bfc7a003": {
+  "screen_page": "69b64cfd18b87551bfc7a14b",
+  "screen_no": 355,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6c62d31b7f0d07f4f86f7": {
+  "screen_page": "69b6c62d31b7f0d07f4f8823",
+  "screen_no": 356,
+  "type": "nonlatin",
+  "century": "1700s"
+ },
+ "6ac519960749a01cb81e77c2": {
+  "screen_page": "6ac519980749a01cb81e7808",
+  "screen_no": 357,
+  "type": "mixed",
+  "century": "1700s"
+ },
+ "6ac51f78ed10b8de5097b07b": {
+  "screen_page": "6ac51f79ed10b8de5097b0c3",
+  "screen_no": 358,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "6ac516980749a01cb81d524b": {
+  "screen_page": "6ac516990749a01cb81d5269",
+  "screen_no": 359,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "69b6517518b87551bfca99b2": {
+  "screen_page": "69b6517518b87551bfca9b03",
+  "screen_no": 360,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6a504a8b78825bd7fdd87910": {
+  "screen_page": "6a504a8b78825bd7fdd87953",
+  "screen_no": 361,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b63fc11c1c21a3738740a7": {
+  "screen_page": "69b63fc11c1c21a373874114",
+  "screen_no": 362,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6476f18b87551bfc4c668": {
+  "screen_page": "69b6476f18b87551bfc4c733",
+  "screen_no": 363,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6a4a3f829edae40468f8fd1d": {
+  "screen_page": "6a4a3f829edae40468f8fd73",
+  "screen_no": 364,
+  "type": "nonlatin",
+  "century": "1500s"
+ },
+ "69b6462118b87551bfc411a7": {
+  "screen_page": "69b6462218b87551bfc4121c",
+  "screen_no": 365,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b6474e18b87551bfc4af11": {
+  "screen_page": "69b6474e18b87551bfc4af14",
+  "screen_no": 366,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "6ac525c4ed10b8de509951c7": {
+  "screen_page": "6ac525c5ed10b8de509951cd",
+  "screen_no": 367,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6a508efe78825bd7fdedf795": {
+  "screen_page": "6a508efe78825bd7fdedf79d",
+  "screen_no": 368,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b6f8f23c7947b468d6e574": {
+  "screen_page": "69b6f8f23c7947b468d6e59c",
+  "screen_no": 369,
+  "type": "roman",
+  "century": "1700s"
+ },
+ "6a50892778825bd7fde8ef32": {
+  "screen_page": "6a50892778825bd7fde8ef4a",
+  "screen_no": 370,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b647c918b87551bfc4f0d2": {
+  "screen_page": "69b647c918b87551bfc4f0fd",
+  "screen_no": 371,
+  "type": "roman",
+  "century": "1400s"
+ },
+ "69b646aa18b87551bfc45cfa": {
+  "screen_page": "69b646aa18b87551bfc45d7c",
+  "screen_no": 372,
+  "type": "gothic",
+  "century": "1400s"
+ },
+ "69b6658eb3f4fc0441555f18": {
+  "screen_page": "69b6658eb3f4fc0441555f1d",
+  "screen_no": 373,
+  "type": "roman",
+  "century": "1500s"
+ },
+ "69b6bde58566c8381464219c": {
+  "screen_page": "69b6bde58566c8381464219f",
+  "screen_no": 374,
+  "type": "roman",
+  "century": "1600s"
+ },
+ "6ac51e2fed10b8de5096ea7b": {
+  "screen_page": "6ac51e32ed10b8de5096ea99",
+  "screen_no": 375,
+  "type": "gothic",
+  "century": "1500s"
+ },
+ "69b64c1e18b87551bfc71552": {
+  "screen_page": "69b64c1e18b87551bfc715af",
+  "screen_no": 376,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b641f11c1c21a373888ebc": {
+  "screen_page": "69b641f11c1c21a373888ef5",
+  "screen_no": 377,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "69b69c56080b19f98fd05fea": {
+  "screen_page": "69b69c56080b19f98fd06065",
+  "screen_no": 378,
+  "type": "mixed",
+  "century": "1600s"
+ },
+ "69b66f08b3f4fc0441593c64": {
+  "screen_page": "69b66f08b3f4fc0441593c76",
+  "screen_no": 379,
+  "type": "italic",
+  "century": "1500s"
+ },
+ "6ac4fc34eefc6804b9d56b59": {
+  "screen_page": "6ac4fc37eefc6804b9d56bc5",
+  "screen_no": 380,
+  "type": "nontext",
+  "century": "1500s"
+ },
+ "69b66d8db3f4fc044158a952": {
+  "screen_page": "69b66d8db3f4fc044158ab34",
+  "screen_no": 381,
+  "type": "manuscript",
+  "century": "1500s"
+ },
+ "69b6fc403c7947b468d839b0": {
+  "screen_page": "69b6fc403c7947b468d83a00",
+  "screen_no": 382,
+  "type": "nontext",
+  "century": "1700s"
+ }
+}

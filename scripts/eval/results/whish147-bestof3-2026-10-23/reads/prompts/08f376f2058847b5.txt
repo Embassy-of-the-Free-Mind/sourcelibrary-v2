@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. uddhāreṇayuḥpariṇāmaśi ‖ leśaṣaḥtata [illegible] vaivapa [illegible] ānātvataṣṭa [illegible] ‖ aivabhiguṇāḥpariṇāmaśili
+2. ṣṭāindriyavṛpatedaśaṭṭā ‖ ārajñānānādhiṣṭha [illegible] dhyāṭapakṣeṣeruśa ‖ śa [illegible] metādṛś [illegible] yamaśakya
+3. śrutiityuḥsarvvagaśarīrasthi ‖ sthitabāhyāntarakara [illegible] vṛtticakṣu [illegible] tra ‖ trāṇāra [illegible] nānariśirasthive
+4. hiḥsyaekallakagapa ‖ sthitāhiboddhya [illegible] āhyāvṛttirvāga ‖ ādṛṣṭitāvāñcā
+5. datvaśabavigaradhasta ‖ ālsyaekalsya [illegible] gavasthitāveta ‖ ḥ [illegible] mpiścāitra
+6. hābāhyareṅkaṭṭadā ‖ aiśaktilekhā [illegible] ogyakimayareṭa ‖ dādeśagralamadṛkke
+7. iyamādyāṃre ‖ viguṇāvariṇāmaviśeṣāreda ‖ panādrātthavāyara
+8. nonatarambiḥśe ‖ ṣādindriyāṇāṃsva [illegible] kāvṛtti ‖ vitṛāha [illegible] śaktoddi [illegible]
+9. ṣiddhyādibhiḥśraiśaṃga ‖ ṇṭanāddarśrūpanasi [illegible] sagatavātesmpṛṣṭaprāymi ‖ triḥpakānāṃretrātrāndi
+10. noṃṣṭaviddhyāneṃ ‖ mrālocanamātraṃvṛ [illegible] diṣyanamasa ‖ saṃjñācareddhyaḥśraൗta
+
+TRANSCRIPTION B
+1. u [illegible] ādebhyaḥpariṇāmaviśeṣaḥ [illegible] le [illegible] triguṇāḥpariṇāmaviśi [illegible]
+2. [illegible] ṣṭāindriyavyapadeśadvārajñānānāmi [illegible] ścetemāvṛttiniyamaśce
+3. ka [illegible] ndriyaḥsarvvaśarīrasthitabāhya [illegible] kara [illegible] vṛtticakṣu [illegible] trā [illegible] ṇā [illegible] śira [illegible] be
+4. [illegible] ḥ [illegible] kṣa [illegible] gapa ‖ sthitānmevāvṛ [illegible] hyāṣṭi [illegible] vāga ‖ āśreṣṭhitāvajñā
+5. dṛśyabaddhi [illegible] ‖ ālpṛthakpṛthaggavasthitābebhi ‖ ḥkau [illegible] vijñā [illegible] trā
+6. hābāhyaśeddadā ‖ śeṣiki [illegible] ṣāṇḍikṣa [illegible] dda ‖ dādeśa [illegible] mantre
+7. [illegible] yamādrāṃo ‖ viguṇapariṇāmaviśeṣāda ‖ pana [illegible] jalāya
+8. ñānana [illegible] ḥta ‖ ṣāmi [illegible] yāṇāṃ [illegible] vṛtti ‖ [illegible] hā [illegible]
+9. [illegible] drāditauśeṣāṃ [illegible] indriya [illegible] grahātmā [illegible] tmāḥ [illegible] nāṃ [illegible]
+10. nāṃ [illegible] buddhi [illegible] locanamātraṃ [illegible] vṛtti [illegible] saṃ [illegible] paye [illegible] ḥ [illegible]
+
+TRANSCRIPTION C
+1. uddhāreṇayaḥpariṇāmaviśeṣaḥtatra [illegible] aivaivapaṣānnāntanta [illegible] aivaviguṇāḥpariṇāmaviśi
+2. ṣṭāindriyāvyapadeśaṭṭārejñānānātmikku [illegible] yādapañcamahābhe [illegible] śarīremāpṛtthviyamaśvaka
+3. śrutindriyāḥsaptaśarīrasthitabāhyāntrakara [illegible] ṇaprakṣacakṣuretrātra [illegible] ghrāṇarasanānitvagitibu
+4. ddhiḥṣṭṛekalppakaśapa ‖ sthitātmibāhya [illegible] āhyāhyaratthiravāga ‖ aidraṣṣitāvājñā
+5. dyabhūṣabagiradhassu ‖ ālpṛthakpṛtha [illegible] thagavasthitābekṣi ‖ ḥkaḻśvisthaṇāitra
+6. habātryeṣaṭadā ‖ aiśaktiailakhā [illegible] lājñāśvikkāraiṭa ‖ dāaideśatrikhamanma
+7. triyamāṭrāṃte ‖ viguṇapariṇe [illegible] ṇāmaviśeṣāde ‖ panādrāntavāyaka
+8. ṇānantarajjiḥte ‖ ṣādamindriyāṇe [illegible] ṇāṃkṣāsyakāvyakṣi ‖ ṣitāsāḥśabdyādigu
+9. jñityādiṣṭheviśaṃ [illegible] ṇṇājjvaḻgdrapasavi [illegible] savivādeṇṇaṣṭugucitra [illegible] ṇaṃpajñānāṃvṛtratrādi
+10. ṇāṃjñamindriyāṇāṃma [illegible] mālocanamātra [illegible] traṃvṛttirvvyāktimasa [illegible] saṃjñācaṣṭeṣuḥtraita
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

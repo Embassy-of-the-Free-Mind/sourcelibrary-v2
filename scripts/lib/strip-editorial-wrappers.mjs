@@ -68,9 +68,9 @@ function stripMarkdownMarkers(text) {
     .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
 }
 
-const PREAMBLE_OPENER =
+export const PREAMBLE_OPENER =
   /^(?:\*\*)?(?:note[:,]|sure[,!:]|certainly|okay|of course|here (?:is|are)\b|here's\b|i(?:'ve| have)\b|i(?:'m| am)\b|i(?:'ll| will)\b|i apologize|i can(?:no|')t\b|please\b|if you\b|the text (?:in|on|of) th(?:e|is) (?:image|page|scan)\b)/i;
-const PREAMBLE_META_VOCAB =
+export const PREAMBLE_META_VOCAB =
   /\b(?:transcri(?:be|bed|bing|ption)|ocr|the image|this image|image provided|you (?:provided|requested)|as requested|as it appears|i apologize|i(?:'m| am) sorry|cannot assist|unable to assist)\b/i;
 
 function stripLeadingAiPreamble(text) {
@@ -117,12 +117,29 @@ export function cleanOcrArtifacts(text) {
  *   WHOLE text for reuse (exports, bulk content API, corpus snapshot). Parity
  *   with the TS twin (src/lib/strip-editorial-wrappers.ts) — change both together.
  */
+/** Layout HTML out of plain page text, the words kept (#7118). Parity with the TS twin's stripLayoutHtml. */
+const LAYOUT_BLOCK_TAGS = 'p|div';
+const LAYOUT_INLINE_TAGS = 'center|foreign|italic|bold|i|b|em|strong|s|u|sup|sub|small|big|span|font';
+const KEPT_TAGS = /^(?:note|term|margin|gloss|unclear|insert|lacuna|image-desc|header|catchword|sig|page-num|folio|column-break|leaf-break)$/i;
+
+export function stripLayoutHtml(text) {
+  if (!text) return text;
+  const out = text
+    .split('\n')
+    .map((line) => line.replace(/<br\s*\/?>/gi, /^[ \t]*\|.*\|[ \t]*$/.test(line) ? ' ' : '\n'))
+    .join('\n')
+    .replace(new RegExp(`<\\/?(?:${LAYOUT_BLOCK_TAGS})(?:\\s[^>]*)?\\/?>`, 'gi'), '\n')
+    .replace(new RegExp(`<\\/?(?:${LAYOUT_INLINE_TAGS})(?:\\s[^>]*)?\\/?>`, 'gi'), '');
+  const opened = new Set([...out.matchAll(/<([a-z][\w-]{0,30})(?:\s[^>]*)?>/gi)].map((m) => m[1].toLowerCase()));
+  return out.replace(/<\/([a-z][\w-]{0,30})>/gi, (m, name) => (opened.has(name.toLowerCase()) || KEPT_TAGS.test(name) ? m : ''));
+}
+
 export function stripEditorialWrappers(text, opts) {
   if (!text) return text;
   const flattenTables = opts?.keepTables ? (s) => s : flattenMarkdownTables;
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
-      flattenTables(
+      flattenTables(stripLayoutHtml(
         // Leaked markup first (#5700) — see the TS twin.
         repairLeakedMarkup(text, { plain: true })
           // `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag — the OCR prompt emits
@@ -135,7 +152,7 @@ export function stripEditorialWrappers(text, opts) {
           // `<leaf-break/>` (#5260): the seam between two leaves on one page is a paragraph
           // break in plain text. Parity with the TS twin — change both together.
           .replace(/<leaf-break\s*\/?>/gi, '\n\n'),
-      ),
+      )),
     ),
   );
 }

@@ -1,0 +1,1253 @@
+[
+  {
+    "book_id": "6a4f450d0de5c369a2509b83",
+    "slot": 1,
+    "title": "Armamentarium Turcico-Diabolicum (Olaus Fielkius Crone)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A Danish author's Latin occasional poem against the Turks, dedicated to the Duke of Württemberg. It has no tradition and no collection. Its only esoteric touch is the 'conjunctio ... septem Planetarum' omen on p.4. It is in period, but no shelf claims it.",
+    "rights_flag": null,
+    "structure_note": "18 records, 18 with OCR, 16 translated. No printed page numbers; signatures A2 and A3 on pp.3 and 5 run in order. Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Exierant nuper, Iovam, Mandata, rogandi",
+            "english": "They had gone forth recently, to ask Jove, for Commands",
+            "problem": "In a Christian poem 'Jova' is Jehovah. 'Jove' makes the Christian God a pagan one.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "pia lumina, cuncti / Intendêre Polo",
+            "english": "pious eyes, toward the Pole",
+            "problem": "'Polus' here means heaven or the sky, not the pole",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The centring markup '->J.J.J.<-' leaks into both the transcription and the translation as literal arrows",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "A <meta> description of the decorative initial is embedded mid-line in the translation, glued to 'OF THE TURKS'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Arboribusque fatisque venit",
+            "image": "Arboribusque satisque venit",
+            "problem": "Long-s 'satis' (crops) read as 'fatis' (fates). The error carries into the translation.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Arboribusque fatisque venit",
+            "english": "comes to both trees and fates",
+            "problem": "Should read 'to trees and crops'. The translation follows the misread.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Arma Stygi praebet Constans DISCORDIA Terrae",
+            "english": "Constant DISCORD offers weapons to the Stygian Earth",
+            "problem": "The construction is wrong. It should read 'the constant DISCORD of the Earth supplies arms to Styx'. Who arms whom is changed.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "tamen infensissima Regnum / Regno tela acuit",
+            "english": "yet most hostile to the kingdom, kingdom sharpens weapons",
+            "problem": "Garbled English; the sense is 'kingdom whets weapons against kingdom, most hostile'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "rabiem Sevo",
+            "image": "rabiem Servo (probably long-s 'ferro')",
+            "problem": "Word misread. The translation silently corrects it to 'iron'.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "tot volvere ca- / ... (sus, / Impellat",
+            "english": "that so many should be rolled (fates, / Should He drive",
+            "problem": "The printer's turnover '(sus' (= casus) is carried into the English as '(fates,'. The lines read awkwardly but the sense survives.",
+            "severity": "minor",
+            "class": "T6"
+          },
+          {
+            "source": "quam Phoebus & omnis / Turba Camoenarum per longos deperit annos",
+            "english": "whom Phoebus & the whole throng of Muses pining away for long years",
+            "problem": "The verb is mangled; it should read 'have loved to distraction for long years'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR of a clean Latin print is very good. The translation is serviceable, with a few construction errors: 'fates' for 'crops', the Discord line, and 'Jove' for Jehovah. The centring arrows (->J.J.J.<-) show in the reader text."
+  },
+  {
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "slot": 2,
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "The Peiwenyunfu rhyme dictionary, filed in the generic 'universallibrary' collection. It is a reference work, not a primary source of any tradition the library curates.",
+    "rights_flag": null,
+    "structure_note": "Only 12 of 123 records carry a printed number, with 5 backsteps and 5 repeats. These are most likely misread folio numerals in the fore-edge (p.95 '四十六', p.97 '四十七' run correctly), not a real disorder. 122 of 123 pages have OCR and 120 are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "御定傳文韻府",
+            "image": "御定佩文韻府",
+            "problem": "The title of the work is misread in the fore-edge, and the English footer carries it ('Peiwen' is correct there only by chance).",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<script>handwritten</script>",
+            "image": "woodblock print",
+            "problem": "Script self-tag wrong",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "何必昏于作勞邪贏優而足恃",
+            "english": "Market Ying profits are superior and sufficient to rely upon",
+            "problem": "The headword 邪贏 ('crooked gain') becomes 'market profits', and the cited headword loses its sense.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Inline <term>/<gloss>/<note> markup and trailing <summary>/<keywords> blocks are stored in the reader text. If the renderer does not strip them, they show.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 96,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "屈宜曰曰人",
+            "image": "屈宜臼曰人",
+            "problem": "The name Qu Yijiu (屈宜臼) is misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "莊子夫飺人特為食羹之貨",
+            "image": "莊子夫漿(?)人特為食羹之貨",
+            "problem": "The first character of 漿人 ('soup-seller') is misread as 飺. The translation then invents 'a person with a skin disease'.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "管子量其重贏其贏民得其十君得其三",
+            "english": "If the ruler takes seven parts while the people keep only three",
+            "problem": "Numbers invented and the split reversed. The source says the people get ten and the ruler three; nothing mentions seven.",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "（…為）據不應周公取息重于莽時",
+            "english": "According to the Law, it is improper for the Duke of Zhou…",
+            "problem": "The 據 that ends the sentence carried over from p.95 ('as his authority') becomes an invented 'According to the Law'",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "莊子夫漿人特為食羹之貨多餘之贏",
+            "english": "For a person with a skin disease, the only special thing for them is the soup they eat. … Where goods are many, there is excess of them.",
+            "problem": "Zhuangzi line mistranslated: 'the soup-sellers deal only in food and broth, with a surplus of little'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 97,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "羸 (throughout: 分羸, 常羸, 操羸 …)",
+            "image": "贏",
+            "problem": "Every headword on this page is read as 羸 ('lean'), while pp.95–96 read the same headword as 贏. The convention flips between adjacent pages, and the translation then calls the character 'Lei, meaning lean, thin'.",
+            "severity": "moderate",
+            "class": "O9"
+          },
+          {
+            "ocr": "乃出私錢作氷磑丨其丨以濟饑 / 年羸 / 唐書崔從傳…揚州凡 / 瘵構舍數十百楹居之全活甚衆 / 交易貲産…",
+            "image": "Column 1 ends the Wang Fangyi entry ('…以濟饑瘵，構舍數十百楹居之，全活甚衆' continues in column 2), and the headword 年贏 opens the Cui Cong entry",
+            "problem": "Reading order scrambled across columns. Wang Fangyi's famine-relief sentence is spliced into the Cui Cong entry, and the headword 年贏 is lost.",
+            "severity": "serious",
+            "class": "other:column-reading-order"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "…以濟饑瘵構舍數十百楹居之全活甚衆 (Wang Fangyi) / 揚州凡交易貲産奴婢有貫率錢…從皆蠲除之 (Cui Cong)",
+            "english": "When Cui Cong served … Yangzhou had <unclear>20 characters</unclear> and constructed hundreds of buildings to house people, saving many lives. … Cui Cong later abolished all these previous burdensome taxes [placed under Su Ting]",
+            "problem": "Wang Fangyi's deeds are given to Cui Cong, an invented '<unclear>20 characters</unclear>' gap appears, and Cui Cong's abolition of the Yangzhou taxes is moved into the Su Ting entry. A reader is misled about who did what.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "道德經",
+            "english": "Classic of the Way and Virtue <note>The Daodejing, likely referencing a specific commentary or apocryphal version</note>",
+            "problem": "A speculative scholarly note added by the model",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "(page)",
+            "english": "<meta>…the character \"Lei\" (meaning lean, thin, surplus, or entangled…)</meta>",
+            "problem": "An invented page description at the head of the translation, built on the 羸 misread",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>, <margin>, <unclear> and <summary> markup in the stored translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR of a dense, low-resolution woodblock page is mostly right, character by character. The translation, however, invents a seven/three split in the Guanzi citation, and on p.97 the column order is scrambled, so deeds are given to the wrong officials. An expert reader would flag it."
+  },
+  {
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "slot": 3,
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Southcott's millenarian prophecy, from the BPH. It sits well among the library's prophetic and esoteric material.",
+    "rights_flag": null,
+    "structure_note": "From p.40 the images are two-page openings (printed 48|49 and 50|51), while p.39 is a single page (47). The scan alternates single pages and spreads, and the OCR treats each spread as two columns. The single printed backstep or repeat probably comes from these spread records. 107 of 107 pages have OCR and are translated: an English source run through a 'translation' that mostly echoes it and adds notes.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Produce thy License; why thy Banns will call?",
+            "image": "Produce thy License; who thy Banns will call?",
+            "problem": "'who' read as 'why'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "*in the end you all might live in* ME",
+            "image": "only 'end' and 'live in' italic",
+            "problem": "Italics spread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "When I fulfil the promise given to SHE.",
+            "english": "SHE <note>the Woman, representing the female principle or the Bride</note>",
+            "problem": "An interpretive gloss added to an English text",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The English-to-English 'translation' adds a <meta> summary and <note>/<gloss> asides to the author's text",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "So 'tis not that Marriage can proclaim;",
+            "image": "So 'tis not Sin that Marriage can proclaim;",
+            "problem": "'Sin' dropped, which reverses the point",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "That as a Priest that ever join'd thy hand:",
+            "image": "That as a Husband thou didst once appear? / Bring ME the priest that ever join'd thy hand:",
+            "problem": "Two lines are merged into one invented line",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "(missing)",
+            "image": "And all these Crosses shall on him appear;",
+            "problem": "Line dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "And the like on all who ever my word he'll hear. / So now those pieces I do tear the fool,",
+            "image": "And like the fourteenth page my words he'll hear. / So if in pieces I do tear the fool,",
+            "problem": "The lines are rewritten",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "For from Iron to Iron my word he'll bear.",
+            "image": "And made of Iron that he doth not fear / For to contend so boldly with his God:",
+            "problem": "Two lines are replaced by one invented line",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "(missing)",
+            "image": "As in the fifteenth page it doth appear; … For he shall know that I have seal'd his doom; … For there I tell him, his proud waves are stay'd.",
+            "problem": "Three lines are dropped from the left page",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "(missing)",
+            "image": "And then their power they'll begin to see, … As in the seventeenth page it doth appear, … But to attempt it now, I say they dare—",
+            "problem": "Three lines are dropped from the right page",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "I tell him now, it so shall fall on one.",
+            "image": "I tell him now, it so shall fall on he;",
+            "problem": "Word changed",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "(the OCR's invented and dropped lines)",
+            "english": "(echoed verbatim)",
+            "problem": "The English-to-English pass copies the OCR, so every invented line and gap reaches the reader. Fidelity to the image is poor.",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "The page is a two-page spread rendered as one record",
+            "severity": "minor",
+            "class": "I3"
+          },
+          {
+            "note": "The translation adds an invented note on the signature 'D' ('likely refers to the fourth section')",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "To meet thy awful JUDGE now in the world.",
+            "image": "To meet thy awful JUDGE now in the air.",
+            "problem": "Word substituted; it breaks the rhyme with 'appear'",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "And now Eight Hundred added to the Sixth;",
+            "english": "<note>…1813 was seen as near the end of the 5,800th year.</note>",
+            "problem": "A chronological gloss invented by the model",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The footnote block is wrapped in centring arrows '->…<-' in both panes",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "The page is a two-page spread (pp.50–51) as one record",
+            "severity": "minor",
+            "class": "I3"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean 1813 English type, yet on p.40 the OCR invents or drops about ten lines of verse, and the echo 'translation' passes them to readers unchanged. Its other pages are near-accurate. The scan mixes single pages and spreads."
+  },
+  {
+    "book_id": "69938a8ee07f979c72ac6590",
+    "slot": 4,
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 15th-century Greek manuscript of Aristophanes with scholia and interlinear glosses (Bodleian stamp). It is a valuable classical manuscript but belongs to no esoteric tradition, and no tradition or collection is set.",
+    "rights_flag": null,
+    "structure_note": "Foliation (11 on p.29, 12 on p.31) runs correctly; the many backsteps and repeats (24 and 21 of 146) probably come from versos and recto foliation being read as page numbers, not from disorder. pages_translated is 308 in the count but 268 in the field: a counter drift.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "ΧΡ Τί δαὶ; τί αὖ σὺ δῆτ’ ἐφ’ ἡμῶν ἐνθάδε;",
+            "image": "ΧΡΕ τίς δῆτ’ ἰατρός ἐστι νῦν ἐν τῇ πόλει; (Plut. 406)",
+            "problem": "The first line of the page is replaced by an invented line",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "βλε οὐ γὰρ ὁ μαθὸς δουλεύει τῇ τέχνῃ.",
+            "image": "οὔτε γὰρ ὁ μισθὸς οὐδέν ἐστ’ οὔθ’ ἡ τέχνη",
+            "problem": "The line is rewritten into something not on the page, and a speaker is added",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "βλέπω δὲ μὲν οὖν μὴ τοῖς θεοῖσι μηνίον λάτρειβε.",
+            "image": "ΒΛΕ πολὺ μὲν οὖν, ὦ πρὸς θεῶν· μή νυν διάτριβε",
+            "problem": "Garbled",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "οὐ μένητον χρ ἢ δὲ",
+            "image": "οὐ μενεῖτον; ΧΡΕ Ἡράκλεις",
+            "problem": "Chremylus's exclamation lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(top scholion) πολλὰς ἂν εὕροις: Διοσκουρίδην … <unclear>…",
+            "image": "a dense cursive scholion",
+            "problem": "Largely guessed; the transcription is low-confidence throughout",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Τί δαὶ; τί αὖ σὺ δῆτ’ ἐφ’ ἡμῶν ἐνθάδε;",
+            "english": "What then? Why are you here with us again?",
+            "problem": "A translation of an invented line; the page reads 'Then what doctor is there now in the city?'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "source": "οὐ γὰρ ὁ μαθὸς δουλεύει τῇ τέχνῃ",
+            "english": "For the reward does not serve the art. <note>A cynical observation … Blepsidemus is still preoccupied with the profit…</note>",
+            "problem": "An invented line followed by an invented interpretive note",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "κατακλινῇς αὐτόν γε ἀσκληπιοῦ κράτης ἔτι",
+            "english": "Lay him down in the temple of Asclepius while there is still time.",
+            "problem": "κράτιστόν ἐστι ('it is best') becomes 'while there is still time'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "οὐ μένητον χρ ἢ δὲ",
+            "english": "Why do you not stay, Chremylus and [Blepsidemus]?",
+            "problem": "The names are invented in the vocative; the page has the speaker mark ΧΡΕ and 'Herakles!'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>, <margin>, <gloss>, <unclear>, <note> and <summary> markup in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "σὺ δ’ εἴ τις ἐς χρῶμα μόνον ἐμοὶ δοκεῖς.",
+            "image": "σὺ δ’ εἶ τίς; ὠχρὰ μὲν γὰρ εἶναί μοι δοκεῖς.",
+            "problem": "Garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ΠΕ οἴεσθε δ’ εἶναι ὑμᾶς.",
+            "image": "ΠΕ οἴεσθε δ’ εἶναί με (τίνα gloss above)",
+            "problem": "με ('me') read as ὑμᾶς ('you'), which reverses the question",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Γίνεται … πρὸς τὸ βλέπειν ἐχρῆν αὐτίκα",
+            "image": "ἀλλ’ ἥτις εἶ λέγειν σ’ ἐχρῆν αὐτίκα μάλα",
+            "problem": "Line garbled",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "ΒΛΕ ἀρτόπωλις ἢ καπηλὶς",
+            "image": "ΒΛΕ ἆρ’ ἐστὶν ἡ καπηλὶς",
+            "problem": "'ἆρ’ ἐστὶν' is misread as 'ἀρτόπωλις' (bread-seller), and the error carries into the translation",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "οἴεσθε δ’ εἶναι ὑμᾶς",
+            "english": "Who do you think you are?",
+            "problem": "Penia asks 'Who do you think I am?'. The sense is reversed and the exchange that follows no longer makes sense.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "σὺ δ’ εἴ τις ἐς χρῶμα μόνον ἐμοὶ δοκεῖς",
+            "english": "it seems to me you are someone based on your color alone",
+            "problem": "Should read 'And who are you? You look pale to me.'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "οἱ βαπτισταὶ ἐριννὺν φασὶν",
+            "english": "the Baptists <note>…refers to the cult of Cotytto…</note>",
+            "problem": "The model invents a scholarly identification",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "### + περὶ παραγραφῆς ὅτι ο βλεψίδημ(ος) εφάνη ακουσας ὅτι πενιχ(ός) ἐστι",
+            "image": "+ παρεπιγραφὴ ὅτι Βλεψίδημος ἔφυγεν ἀκούσας ὅτι πενία ἐστί",
+            "problem": "The stage direction is misread: 'fled' becomes 'appeared', and Poverty becomes 'poor'. It is also tagged as a heading.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Η πενία μὲν οὖν ἡ σφοδρῶς ξυνοικοῦσα πολλα ἔτη",
+            "image": "ΠΕ πενία μὲν οὖν, ἣ σφῷν ξυνοικῶ πολλ’ ἔτη",
+            "problem": "The speaker ΠΕ is lost, and σφῷν is read as σφοδρῶς",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "οὐκ ἐνεχυρον ἥδ’ ἡ μιαρωτάτη",
+            "image": "οὐκ ἐνέχυρον τίθησιν ἡ μιαρωτάτη",
+            "problem": "Verb dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "πενία μὲν οὖν ἡ σφοδρῶς ξυνοικοῦσα πολλα ἔτη",
+            "english": "<margin>Poverty, then, is she who has lived together [with us] intensely for many years.</margin>",
+            "problem": "Penia's line of verse is demoted to a margin note with no speaker, so the reader loses her self-identification",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "source": "ψολ (gloss marks)",
+            "english": "Scholion",
+            "problem": "Gloss scribbles are expanded into an invented 'Scholion' label",
+            "severity": "minor"
+          },
+          {
+            "source": "(right-margin scholion)",
+            "english": "[This note refers to] a certain monk... the Lord deserted... Amen. +",
+            "problem": "A speculative reading of a scholion that is largely illegible",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The main text of a cursive 15th-century manuscript is partly confabulated: on p.29 the opening lines are not on the page, and on p.30 Penia's question is reversed. The fluent translation adds invented commentary. A classicist would flag it on sight."
+  },
+  {
+    "book_id": "6a3cefef4701a906f10f3395",
+    "slot": 5,
+    "title": "西陽雜俎·卷十六~卷二十 (vol 6)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Duan Chengshi's Youyang zazu (Siku quanshu manuscript copy), filed in the generic 'universallibrary'. The dream-divination entries touch on mantic lore, but no shelf is set.",
+    "rights_flag": null,
+    "structure_note": "The title claims 卷十六~卷二十, but p.84 holds dream-divination entries (卷八 content), p.85 is the closing title '酉陽雜俎卷八', and p.86 is the Siku collators' roster ending a juan. Either the volume holds juan 8 or the catalogue range is wrong (class I7). The title also has 西 for 酉. Worth checking.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 84,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "卒巳數月",
+            "image": "卒已數月",
+            "problem": "巳/已 variant",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "臼中炊固無釜也",
+            "english": "<note>A punning interpretation: a mortar (jiu) is a homophone for long (jiu)…</note>",
+            "problem": "The note gets the pun partly wrong: the point is 無釜 'no cauldron' = 無婦 'no wife'. The jiu/long part is invented.",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "補闕楊子孫堇",
+            "english": "Remonstrator Yang's grandson, Jin",
+            "problem": "Questionable reading of the name; it may be Remonstrator Yang Zisun Jin",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page</meta>' at the start of the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 85,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The seal (乾隆御覽之寶 type) is described but not read; the description is shown as a <note> in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "總校官庶吉士臣侍朝",
+            "english": "your humble servant Shi Zhao",
+            "problem": "The name 侍朝 is usually romanised Shi Chao",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good OCR and translation on a clean Siku manuscript. The defect is the catalogue: the pages show the end of juan 8, while the title claims juan 16–20 (and misspells 酉 as 西)."
+  },
+  {
+    "book_id": "6a0853e515c643eb1af51643",
+    "slot": 6,
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "D'Anania's 1581 demonology is a Latin early-modern treatise and sits well in a European libraries collection and in this library's occult/theological scope.",
+    "rights_flag": null,
+    "structure_note": "279 pages, all with OCR, 272 translated. 8 backsteps and 32 repeats over 232 printed numbers. The three pages here run 22, 23, 24 in sequence, so the backsteps are more likely misread numerals or front-matter and index numbering than a broken scan. The scan is Google Books ('Digitized by Google').",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 54,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "paulo postquam esset producta, manciparetur ... Verumtamen Daemones ... in hac secunda mora processere, ut ... in tertia damnarentur mora ... Hinc factum, ut hac tandem sua postrema et fune-",
+            "english": "ral fall, they were cast down. For since they did not desire the light of grace, they remained in their own darkness ... having rejected the order of divine love and replaced it with an insatiable hunger for their own exaltation.",
+            "problem": "The English is not a translation of this page. The whole Latin page (the demons' second and third 'mora', the plurality of their crimes, their progression from lesser to greater sins) is replaced by about 150 words of invented paraphrase on the fall of the angels. None of its sentences matches the transcription, which is correct.",
+            "severity": "serious",
+            "class": "other:invented-translation"
+          }
+        ],
+        "other": [
+          {
+            "note": "The reader text opens with '<meta>continues from previous page: ...fatal</meta>' and 'ral <note>original: \"fune-\"</note>': a broken catchword seam and leaked markup.",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "The <summary> describes the invented English rather than the page.",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 55,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "hac tandem sua postrema et funesta mora, ipsi daemones e Caelo ... eiecti",
+            "english": "fatal fall, they were cast down",
+            "problem": "'funesta mora' (this final, fatal delay: the third 'mora' of the argument) is rendered 'fatal fall', which loses the author's three-stage 'mora' scheme.",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "iustissima Dei trutina rem examinantes",
+            "english": "having examined the matter with the most just scales of God",
+            "problem": "The participle is attached loosely; the meaning survives.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page: fatal</meta>' and a '<sig>B 4</sig>' tag appear in the reader text.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "qui tertium duntaxat Angelorum agmen, damnatum asserunt",
+            "english": "who assert that only the third rank of Angels was damned",
+            "problem": "In context (a tenth, a ninth, a third; Rev. 12:4) this means a third of the angelic host, not the third rank or order. 'Rank' muddles the quantity argument with the orders question the author raises next.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "cum nec etiam [in]",
+            "english": "since they never even stood in conditions",
+            "problem": "The clause runs over onto the next page; 'stood in conditions' is a guessed completion.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The whole OCR body is wrapped in asterisks (*lapsu ... etiam*), markdown italics leaking into the transcription pane.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is excellent. On p.54, however, the English pane holds an invented passage that does not translate the page at all, and every page leaks <meta>/<note> markup, so an expert would flag the book on sight."
+  },
+  {
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "slot": 7,
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Zhang Jiushao's 理學類編 (Siku quanshu manuscript copy) is a Neo-Confucian compendium. It fits a general universal-library Chinese collection; its link to the library's core traditions is only loose.",
+    "rights_flag": null,
+    "structure_note": "142 pages, 141 translated. Only 4 printed numbers are captured, because the folio numbers sit in the centre fold. Nothing structural stands out. OCR tags 'handwritten', which is correct for a Siku manuscript copy.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 96,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "玉學類編",
+            "image": "理學類編",
+            "problem": "Running title in the small margin text misread (理 to 玉)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "其所得以為性者皆天地之志為氣之帥者也",
+            "english": "(absent)",
+            "problem": "A whole sentence is dropped: 'what they obtain as their nature is the will of Heaven and Earth, the commander of qi'. This is the half of Zhu Xi's gloss that explains 帥 in the Western Inscription.",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "然體有偏正之殊故其於性也不無明暗之異",
+            "english": "Because what they obtain is different, their natures do not lack differences in clarity and darkness.",
+            "problem": "The cause is wrong. The source says bodies differ as one-sided or correct, and therefore natures differ in clarity. The translation replaces this with a vague 'what they obtain is different'.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "故曰同胞則其視之也皆如己之兄弟矣",
+            "english": "Thus it is said: 'If they are my siblings,' then when one looks at them...",
+            "problem": "The quotation is mangled: '同胞' ('[all people are my] siblings') is turned into a conditional.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "而父母乎萬物者故指而言之人物並生於天地間",
+            "english": "...and are the parents of the ten thousand things. Therefore, when pointing them out, people and things are born together",
+            "problem": "The clause boundary is misread: '故指而言之' (therefore [Zhang] points to them [as father and mother]) is joined to the next sentence.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented markdown heading '# 六' and '## Imperial Approved Complete Library of the Four Treasuries, Compendium of Neo-Confucian Studies, Volume 6', built from page furniture and shown as a title.",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "note": "The whole page translation is wrapped in quotation marks with leading and trailing ellipses.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 97,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page</meta>' is glued to the first word of the reader text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR of this Siku manuscript is near perfect. The translations of pp.95 and 97 are good, but the p.96 translation drops the key sentence on 帥 and garbles two others under an invented heading."
+  },
+  {
+    "book_id": "69a5ead1d507939f0352ced7",
+    "slot": 8,
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The Venice 1883 edition of P'awstos Buzand belongs in the Robert Bedrosian Armenian library.",
+    "rights_flag": null,
+    "structure_note": "320 records, 319 with OCR. The structure counts give 314 translated against a pages_translated field of 306, a small drift in the field. The printed pages here run 276–278 in sequence. The backsteps (7) are plausibly numeral misreads.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 299,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Ասէ Յոհան. Փուշ և տատասկ բուսցի, փոխանակ զի տարապարտուց անիծանես զմեզ:",
+            "image": "Ասէ Յոհան. Փուշ և տատասկ բուսցի: Ասէ այրն. Ի մարմինդ քո բուսցի փուշ և տատասկ, փոխանակ զի տարապարտուց անիծանես զմեզ:",
+            "problem": "A clause is silently dropped (eye-skip on the repeated 'բուսցի'). The vineyard man's counter-curse ('May thorns and thistles grow in YOUR body, since you curse us without cause') is lost, and his words are merged into Yohan's speech. This is the cause of the bishop's thorn-affliction on the next page.",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Ասէ Յոհան. Փուշ և տատասկ բուսցի, փոխանակ զի տարապարտուց անիծանես զմեզ",
+            "english": "Yohan said, \"May thorns and thistles grow, because you curse us with your indebtedness.\"",
+            "problem": "It inherits the OCR omission, so the counter-curse is attributed to the bishop. 'տարապարտուց' (unjustly, in vain) is also mistranslated as 'with your indebtedness'. The story's logic (the man's curse comes true) is lost.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Ո՞չ դու երախայ էիր, և չէիր մկրտեալ",
+            "english": "Were you not a child, and were you not baptized?",
+            "problem": "The meaning is 'Weren't you an unbaptized catechumen, not yet baptized?'. The negative question in English reads as if he WAS baptized, which blurs the joke.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 300,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "միհանէսք<note>1 Ի Պատկանեան օրինակի միահանէք։</note>",
+            "image": "միհանէսք¹ ... footnote at foot of page",
+            "problem": "The footnote is pulled inline into the body text.",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "որպէս խաղալովն զանձն իւր կրթէր յագահութեան ... սակայն միհանէսք այն էին նորա",
+            "english": "By playing, he trained himself in the greed for which he thirsted and fasted with desire, yet these were his only means.",
+            "problem": "The sense is obscured: the passage says he made a jest of himself out of greed, and the rare word միհանէսք is glossed away as 'his only means'.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Եւ զայս ասացեալ՝ անդէն բժշկեցաւ եպիսկոպոսն",
+            "english": "Having said this, the bishop was immediately healed",
+            "problem": "A dangling participle makes the bishop the speaker.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 301,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>ԲՈՎԱՆԴԱԿՈՒԹԻՒՆ</header>",
+            "image": "ԲՈՒԶԱՆԴԱՐԱՆ",
+            "problem": "The running head is misread as 'Contents' and translated as 'CONTENTS'.",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "'ի թագաւորէն Հայոց",
+            "image": "'ի թագաւորացն Հայոց",
+            "problem": "singular for plural ('from the kings of Armenia')",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<header>ԲՈՎԱՆԴԱԿՈՒԹԻՒՆ</header>",
+            "english": "CONTENTS",
+            "problem": "The invented 'CONTENTS' header sits on a narrative page.",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR is mostly solid on a hard Armenian script. On p.276, however, it drops the vineyard man's counter-curse, so both panes give the curse to the bishop and the miracle story no longer makes sense."
+  },
+  {
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "slot": 9,
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Aldine 1549 letter collection fits early-european-books and europeanlibraries.",
+    "rights_flag": true,
+    "structure_note": "498 records, 291 with a printed number, 58 backsteps and 162 repeats. The scan photographs openings and is foliated (one number per leaf, recto only), so versos carry no number and the OCR invents one. Here p.389 is tagged page-num 71 and p.390 page-num 70, which manufactures a backstep. The structure counts are therefore mostly an artefact of foliation plus invented numbers, not a broken scan.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 389,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>71</page-num>",
+            "image": "(no number on this verso)",
+            "problem": "A page number is invented for an unnumbered verso.",
+            "severity": "moderate",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "che mi uuole il mè del mondo",
+            "english": "who wants me as the world",
+            "problem": "'il mè del mondo' = 'more than anything in the world' (mè = meglio); the English is nonsense.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "non haueste ogni di ad essermi adosso con lettere, & prometterui di me uolumi & bibbie",
+            "english": "...and promising me volumes and Bibles of myself",
+            "problem": "'prometterui' means 'expect for yourself [volumes from me]'; it is mistranslated as 'promising me'.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR pane carries model reasoning: '<meta>The page number 71 is visible on the facing page in the original binding, but this scan focuses on the verso side ... this is a continuation of a letter.</meta>'",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 390,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ditegli, che cosi gli è ubidiente figliuolo, come è à uoi amoreuole fratello",
+            "english": "tell him that he has as obedient a son as he has a loving brother in you",
+            "problem": "The meaning is 'tell him that [I] am as obedient a son to him as [I] am a loving brother to you'. The English garbles who is son and who is brother.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Centering arrows '->Marc'Antonio Bendidio.<-' are shown in the reader text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 391,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Giuliano Goselino",
+            "image": "Giuliano Gosellino",
+            "problem": "The signatory's name is misspelled; this is Giuliano Gosellino.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "potrò ... haverei ... vi ... et ... voglia",
+            "image": "potrò ... hauerei ... ui ... & ... uaglia",
+            "problem": "The spelling is silently modernised (u to v, & to et, uaglia to voglia) on this page only. Adjacent pages keep the source's u/&, so the convention flips between pages.",
+            "severity": "minor",
+            "class": "O9"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The OCR pane has '<meta>The text is printed in an italic typeface characteristic of the Aldine press.</meta>', and centering arrows '->D. V. S.<-' appear in the reader text.",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR and translation are good, with a few meaning slips. An expert would notice a rights-suspect mark on every image (redacted, ROUTINE.md step 7), model reasoning in the OCR of p.389, and an invented page number on the unnumbered versos."
+  },
+  {
+    "book_id": "69de98d21b234a773e439622",
+    "slot": 10,
+    "title": "De Prospectiva Pingendi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "This is Winterberg's 1899 Strassburg edition of Piero della Francesca's treatise on perspective, which includes German commentary on the frescoes. It fits Getty art-history holdings.",
+    "rights_flag": null,
+    "structure_note": "The record says language 'Latin', but these pages are Winterberg's German commentary (on the Arezzo frescoes, the Resurrection and the Baptism), not Piero's Latin text. The volume is mixed-language, and the language field misdescribes much of it (I7). The 9 backsteps out of 101 printed numbers are plausibly from plates and front matter.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The diagram description is shown as a <note> in the translation pane rather than as an image caption.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "| A = Augenpunct. | sprung des vorn liegenden Wächters rechts. |",
+            "image": "two-column legend; 'sprung des vorn liegenden Wächters rechts' continues item 6 'linker Kniescheibenvor-'",
+            "problem": "The legend's two columns are mis-paired in the markdown table, which splits item 6 across rows (the translation repairs it).",
+            "severity": "minor",
+            "class": "O17"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The translation opens with a <meta> block that repeats the last paragraph of p.39's English in full; a reader sees it twice.",
+            "severity": "moderate",
+            "class": "T5"
+          },
+          {
+            "note": "Footnote 1 appears twice in the English, once inline after 'Dreieck' and again at the end.",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "die dritte durch die letzte noch sichtbare Flusswindung",
+            "image": "die vierte durch die letzte noch sichtbare Flusswindung",
+            "problem": "The numeral word is misread (the translation silently corrects it to 'fourth').",
+            "severity": "minor",
+            "class": "O7"
+          },
+          {
+            "ocr": "gezählt bis zur Stamme des Taubenkopfes",
+            "image": "gezählt bis zur Mitte des Taubenkopfes",
+            "problem": "Measurement point misread, carried into English as 'stem of the dove's head'.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "die zweite durch den des Entkleidenden",
+            "image": "die zweite durch den des sich Entkleidenden",
+            "problem": "word dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "gezählt bis zur Stamme des Taubenkopfes (1) etwa gleich 2/3 der Gesammt-",
+            "english": "measured to the stem of the dove's head (1), is about equal to 2/3 of the total height.",
+            "problem": "It inherits the OCR misreading of 'Mitte' (the middle of the dove's head), and it completes the hyphenated word at the page break as 'height' without marking the guess.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "These are clean, careful pages of Winterberg's German commentary, with only small OCR slips and a duplicated continuation block. The main oddity is that the record calls the book Latin while these pages are German."
+  }
+]

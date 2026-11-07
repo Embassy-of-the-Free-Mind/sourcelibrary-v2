@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+共設華筵會四景常歡聚
+尾聲
+[顯皇] 獻盛治共覲孝男并孝女願玉燭調和聖主垂衣
+下場詩
+[生] 自居墓室已三年
+[外] 今日丹書下九天
+[旦] 莫道名高并爵貴
+[眾] 須知子孝與妻賢
+
+<image-desc size="small" type="symbol" significance="low">A red square seal in the bottom left corner containing Chinese characters.</image-desc>
+
+<vocab>琵琶記, Pipa Ji, 孝, 聖主, 丹書</vocab>

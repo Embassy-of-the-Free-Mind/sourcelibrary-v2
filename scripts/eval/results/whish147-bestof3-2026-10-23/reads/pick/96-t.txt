@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three transcriptions has any readable text (every row is [illegible]), so there's no Sanskrit or Malayalam to judge and they are essentially tied; I ranked A slightly higher only because its string holes appear just in the middle rows (6–9), which fits a leaf's layout better than holes in all 13 rows, and B and C are identical.

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three gives readable text, so this is close to a tie: A ranks first only because its opening "śrīḥ" is a plausible invocation at the start of a leaf, and B and C are identical (wholly illegible), so their order is arbitrary.

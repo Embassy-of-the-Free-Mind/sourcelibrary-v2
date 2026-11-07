@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three gives readable text, but B has one real word, "triguṇa" ("having three qualities"), which fits a Sāṅkhyakārikā context; A has nothing but illegible marks, and C adds stray lone "ḥ" marks that look like transcription noise rather than anything a scribe wrote.

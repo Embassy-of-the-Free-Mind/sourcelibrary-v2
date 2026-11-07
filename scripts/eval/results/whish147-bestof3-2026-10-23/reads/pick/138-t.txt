@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A keeps the most recognisable Tarkasaṃgraha-Dīpikā wording on karma, sāmānya, samavāya and prāgabhāva (e.g. "utkṣepaṇādīnāṃ", "prasāraṇamityatra", "ativyāptivāraṇāya", "samavāyikāraṇam", "prāgabhāvaṃ lakṣaṇam"). C keeps some of these phrases but has many gaps, and B drifts more often into syllable strings that are not real words.

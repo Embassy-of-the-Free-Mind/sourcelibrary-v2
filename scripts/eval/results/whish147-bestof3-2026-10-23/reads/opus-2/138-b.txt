@@ -1,0 +1,10 @@
+ROW 1 | ഷൗണ്ണായനാങ്ങളെക്ഷട്ടാ ‖ ഷത്രിവൃത്ത്യാണാനൊ[illegible]ൽനാദിഭിഭ[illegible]പ്ര[illegible] ‖ െയാഗിസമവായികാരണ്ണ്
+ROW 2 | പ്രീതിഃപ്രീതിയൊഗജ്ജം ‖ ംകൊഭ[illegible]ത്രിഃ[illegible]വ്യതിവൃഷഹാവഹാൽപ്ര ‖ ഗട്ടാവഃഖഃസംലക്ഷ്യതേ।
+ROW 3 | സാഭിതിശി।ഖടാട്ടാര ‖ (ത)ന്ദ്രാക്ഷിപാരണാദ്യ[illegible]ൽനന്തഉത്ഭി[illegible]കാഗ ‖ ട്ടാവതിവ്യാപ്തിപാരണായ
+ROW 4 | സാദിതിതിപ്രതിയെ ‖ ാഭിജ്ഞത്രഃപ്രതിെ[illegible]ഭെയാഗിസമവായി ‖ പ്രതിഃഖംജ്ഞഉതിവ്യംപ
+ROW 5 | ഗാനവാതുഃഡ്യം ‖ സഃഒതുനാടാ[illegible]ടാഫംലക്ഷ്യതിെ ‖ െതുകാമികഉതിണെ
+ROW 6 | ത്രാത്രാട്ടംവംല ‖ ക്ഷഖത്രകടാൈത്ര[illegible]തുഭിലഭിൈയാഗി ‖ താവൈഷ്ടദകാനാവ്യ
+ROW 7 | സംസർഗ്ഗൈരഭെ ‖ ക്രപ്രത്തിദയാഗിക[illegible]ഭിക്കകയനുടാദ ‖ ാപാരെത്ര്യാറ്റാടാവയൊ
+ROW 8 | ജ്ഞ്യഹ്യാംവക്കബലംദെവ ‖ ദവട്ടത്താട്ടാവശ്രകിട്ടുടട്ടാവത്തിപ്രകിത്താ ‖ ത്യാവിശിഷ്ടംടാവഃഏകസ
+ROW 9 | ൈതൈഭൈരുനാഞ്ഞുതിപ്രതി ‖ വ്യതിത്യാമിഞ്ഞാപക്തിനന്നാടാവഃസംവെഖാ ‖ ാശസംഖെഖാക്ഷടപതി
+NOTE | Nine rows are visible, plus a marginal numeral at the left of row 6. Treat this as a low-confidence attempt: I was unsure of a large share of the akṣaras, the rope hides text at both holes, and I couldn't firmly place the second hole or the overlaps in several rows, so some joins and possible repeats are guesses. Check it against the original before using it.

@@ -1,0 +1,2319 @@
+{
+ "issue": 6101,
+ "note": "DESCRIPTIVE (not preregistered as a test). One engine on these pages: a P1 fail can also be a reference misfit.",
+ "n": 285,
+ "fixed": 283,
+ "fixed_ci95": [
+  0.975,
+  0.998
+ ],
+ "kinds": {
+  "label-only/empty": {
+   "n": 64,
+   "fixed": 63,
+   "loops": 0
+  },
+  "spread order": {
+   "n": 135,
+   "fixed": 135,
+   "loops": 0
+  },
+  "timeout": {
+   "n": 52,
+   "fixed": 51,
+   "loops": 1
+  },
+  "one leaf dropped": {
+   "n": 29,
+   "fixed": 29,
+   "loops": 0
+  },
+  "other": {
+   "n": 5,
+   "fixed": 5,
+   "loops": 0
+  }
+ },
+ "pages": [
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p3",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.016,
+   "p1_chars": 190,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p37",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.023,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p40",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.018,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p41",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.03,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p49",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.028,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p6",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.02,
+   "p1_chars": 352,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p61",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.03,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p70",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.033,
+   "p1_chars": 399,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p72",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.038,
+   "p1_chars": 399,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p75",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.008,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p77",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.025,
+   "p1_chars": 397,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p79",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.03,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p80",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.034,
+   "p1_chars": 384,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p81",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.022,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p82",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.038,
+   "p1_chars": 401,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p83",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.063,
+   "p1_chars": 396,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p86",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.036,
+   "p1_chars": 392,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p87",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.05,
+   "p1_chars": 399,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p88",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.05,
+   "p1_chars": 403,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p10",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.028,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p22",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.029,
+   "p1_chars": 375,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p27",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.028,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p28",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.019,
+   "p1_chars": 368,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p30",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.018,
+   "p1_chars": 385,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p31",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.018,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p33",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.059,
+   "p1_chars": 338,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p34",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.028,
+   "p1_chars": 398,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p45",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.048,
+   "p1_chars": 337,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p65",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.029,
+   "p1_chars": 379,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p66",
+   "cls": "woodblock",
+   "kind": "other",
+   "p1_cer": 0.04,
+   "p1_chars": 327,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p7",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.031,
+   "p1_chars": 386,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p9",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.03,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p2",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 1,
+   "p1_chars": 4155,
+   "p1_loop": true
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p24",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.03,
+   "p1_chars": 370,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p26",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.039,
+   "p1_chars": 386,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p32",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.025,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p33",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.033,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p34",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.02,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p44",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.034,
+   "p1_chars": 297,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p45",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 1,
+   "p1_chars": 252,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p50",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.05,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p51",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.045,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p52",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.05,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p54",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.042,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p56",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.028,
+   "p1_chars": 362,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p59",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.048,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p47",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.03,
+   "p1_chars": 399,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p48",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.043,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p67",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.09,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p69",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.04,
+   "p1_chars": 401,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p70",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.05,
+   "p1_chars": 399,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p76",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.055,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p79",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.04,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p81",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.05,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p85",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.013,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p91",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.044,
+   "p1_chars": 387,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p21",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.061,
+   "p1_chars": 262,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p22",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.079,
+   "p1_chars": 195,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p24",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.08,
+   "p1_chars": 437,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p32",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.106,
+   "p1_chars": 177,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p35",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.057,
+   "p1_chars": 419,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p17",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.039,
+   "p1_chars": 439,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p28",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.059,
+   "p1_chars": 268,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p36",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 416,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p44",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.063,
+   "p1_chars": 400,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p3",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.046,
+   "p1_chars": 154,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p46",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.093,
+   "p1_chars": 407,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p24",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.064,
+   "p1_chars": 647,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p42",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.067,
+   "p1_chars": 598,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p43",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.089,
+   "p1_chars": 635,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p2",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.08,
+   "p1_chars": 168,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p23",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.04,
+   "p1_chars": 645,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p28",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.053,
+   "p1_chars": 622,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p33",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.043,
+   "p1_chars": 597,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p44",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.053,
+   "p1_chars": 616,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p15",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.071,
+   "p1_chars": 423,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p18",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.081,
+   "p1_chars": 723,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p30",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.06,
+   "p1_chars": 614,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p31",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 446,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p34",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.088,
+   "p1_chars": 634,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p39",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.083,
+   "p1_chars": 745,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p47",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.085,
+   "p1_chars": 636,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p48",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.043,
+   "p1_chars": 645,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p49",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.028,
+   "p1_chars": 641,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p50",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.034,
+   "p1_chars": 638,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p52",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.041,
+   "p1_chars": 627,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p24",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.106,
+   "p1_chars": 731,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p25",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.069,
+   "p1_chars": 656,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p28",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.088,
+   "p1_chars": 691,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p30",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.072,
+   "p1_chars": 659,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p45",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 631,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p63",
+   "cls": "woodblock",
+   "kind": "other",
+   "p1_cer": 0.084,
+   "p1_chars": 127,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p8",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.048,
+   "p1_chars": 615,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p18",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.116,
+   "p1_chars": 729,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p19",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.049,
+   "p1_chars": 649,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p22",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.155,
+   "p1_chars": 337,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p32",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.075,
+   "p1_chars": 598,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p41",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.102,
+   "p1_chars": 192,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p46",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.048,
+   "p1_chars": 658,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p47",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.053,
+   "p1_chars": 654,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p50",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.09,
+   "p1_chars": 694,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p52",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.081,
+   "p1_chars": 656,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p17",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.089,
+   "p1_chars": 675,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p22",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.067,
+   "p1_chars": 376,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p25",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.058,
+   "p1_chars": 634,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p47",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.059,
+   "p1_chars": 611,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p48",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.056,
+   "p1_chars": 606,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p60",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.064,
+   "p1_chars": 661,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p66",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.052,
+   "p1_chars": 587,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p13",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.054,
+   "p1_chars": 607,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p26",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.067,
+   "p1_chars": 565,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p43",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.081,
+   "p1_chars": 492,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p45",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.056,
+   "p1_chars": 395,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p49",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.06,
+   "p1_chars": 626,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p57",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.068,
+   "p1_chars": 583,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p7",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.078,
+   "p1_chars": 700,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p22",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.036,
+   "p1_chars": 410,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p25",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.051,
+   "p1_chars": 409,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p50",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.045,
+   "p1_chars": 625,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p54",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.09,
+   "p1_chars": 633,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p7",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 603,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p16",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.067,
+   "p1_chars": 588,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p19",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.059,
+   "p1_chars": 609,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p21",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.068,
+   "p1_chars": 616,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p23",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.063,
+   "p1_chars": 598,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p44",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.097,
+   "p1_chars": 616,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p61",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.074,
+   "p1_chars": 651,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p63",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.038,
+   "p1_chars": 629,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p65",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.094,
+   "p1_chars": 712,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p67",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.04,
+   "p1_chars": 592,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p9",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.077,
+   "p1_chars": 609,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p13",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.032,
+   "p1_chars": 661,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p16",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.052,
+   "p1_chars": 642,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p18",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.075,
+   "p1_chars": 632,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p21",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.07,
+   "p1_chars": 641,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p24",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.056,
+   "p1_chars": 644,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p39",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.05,
+   "p1_chars": 568,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p46",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.074,
+   "p1_chars": 315,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p57",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.066,
+   "p1_chars": 634,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p64",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.097,
+   "p1_chars": 622,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p9",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.062,
+   "p1_chars": 636,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p10",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.037,
+   "p1_chars": 433,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p13",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.034,
+   "p1_chars": 438,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p14",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.057,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p15",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.041,
+   "p1_chars": 441,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p16",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.05,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p17",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.039,
+   "p1_chars": 437,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p18",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.036,
+   "p1_chars": 441,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p19",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.039,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p20",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.039,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p22",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.044,
+   "p1_chars": 432,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p23",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.033,
+   "p1_chars": 430,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p24",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.059,
+   "p1_chars": 442,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p25",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 413,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p29",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.052,
+   "p1_chars": 362,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p30",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.056,
+   "p1_chars": 396,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p31",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.073,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p34",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.085,
+   "p1_chars": 424,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p37",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.088,
+   "p1_chars": 396,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p8",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.028,
+   "p1_chars": 433,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p41",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.06,
+   "p1_chars": 168,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p49",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.15,
+   "p1_chars": 109,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p91",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.113,
+   "p1_chars": 130,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p47",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.078,
+   "p1_chars": 530,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p58",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.081,
+   "p1_chars": 405,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p36",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.048,
+   "p1_chars": 376,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p43",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.033,
+   "p1_chars": 398,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p53",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.025,
+   "p1_chars": 404,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p43",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.069,
+   "p1_chars": 323,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p13",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p16",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.048,
+   "p1_chars": 420,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p17",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.068,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p19",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.032,
+   "p1_chars": 461,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p24",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.05,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p25",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.091,
+   "p1_chars": 463,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p27",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.047,
+   "p1_chars": 449,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p29",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.049,
+   "p1_chars": 453,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p30",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.054,
+   "p1_chars": 429,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p31",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.047,
+   "p1_chars": 445,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p32",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.08,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p34",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.063,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p35",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.063,
+   "p1_chars": 445,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p37",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.066,
+   "p1_chars": 442,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p43",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.039,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p51",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.063,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p52",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.06,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p54",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.039,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p57",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.052,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p65",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.052,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p67",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.058,
+   "p1_chars": 460,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p70",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.038,
+   "p1_chars": 452,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p77",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.041,
+   "p1_chars": 463,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p78",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.028,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p9",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.084,
+   "p1_chars": 359,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p11",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.058,
+   "p1_chars": 463,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p20",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.071,
+   "p1_chars": 447,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p21",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.052,
+   "p1_chars": 461,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p32",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.061,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p34",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.067,
+   "p1_chars": 446,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p37",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.03,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p38",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.067,
+   "p1_chars": 454,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p49",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.05,
+   "p1_chars": 442,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p50",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.055,
+   "p1_chars": 457,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p51",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.071,
+   "p1_chars": 432,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p54",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.094,
+   "p1_chars": 435,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p7",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.078,
+   "p1_chars": 463,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p12",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.06,
+   "p1_chars": 448,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p13",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.062,
+   "p1_chars": 449,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p14",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.031,
+   "p1_chars": 452,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p15",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.066,
+   "p1_chars": 441,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p16",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.059,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p18",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.043,
+   "p1_chars": 445,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p19",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.106,
+   "p1_chars": 435,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p20",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.091,
+   "p1_chars": 460,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p26",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.063,
+   "p1_chars": 447,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p27",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.098,
+   "p1_chars": 414,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p34",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.061,
+   "p1_chars": 457,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p36",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.051,
+   "p1_chars": 449,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p44",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.056,
+   "p1_chars": 461,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p47",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.063,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p48",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.075,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p50",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.078,
+   "p1_chars": 435,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p56",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.064,
+   "p1_chars": 452,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p6",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.079,
+   "p1_chars": 188,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p15",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.063,
+   "p1_chars": 460,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p19",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.047,
+   "p1_chars": 447,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p21",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.045,
+   "p1_chars": 444,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p22",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.048,
+   "p1_chars": 433,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p23",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.072,
+   "p1_chars": 457,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p33",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.044,
+   "p1_chars": 453,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p34",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.052,
+   "p1_chars": 442,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p41",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.043,
+   "p1_chars": 442,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p44",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.07,
+   "p1_chars": 460,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p46",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.097,
+   "p1_chars": 457,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p48",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.051,
+   "p1_chars": 447,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p50",
+   "cls": "woodblock",
+   "kind": "other",
+   "p1_cer": 0.058,
+   "p1_chars": 451,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p52",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.041,
+   "p1_chars": 436,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p55",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.034,
+   "p1_chars": 204,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p6",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.066,
+   "p1_chars": 214,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p15",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.067,
+   "p1_chars": 454,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p18",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.059,
+   "p1_chars": 461,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p21",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.053,
+   "p1_chars": 454,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p23",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.106,
+   "p1_chars": 455,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p33",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.059,
+   "p1_chars": 442,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p34",
+   "cls": "woodblock",
+   "kind": "other",
+   "p1_cer": 0.05,
+   "p1_chars": 444,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p39",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.064,
+   "p1_chars": 438,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p45",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.026,
+   "p1_chars": 455,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p46",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.058,
+   "p1_chars": 447,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p49",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.052,
+   "p1_chars": 440,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p52",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.022,
+   "p1_chars": 462,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p53",
+   "cls": "woodblock",
+   "kind": "one leaf dropped",
+   "p1_cer": 0.047,
+   "p1_chars": 430,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p54",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.06,
+   "p1_chars": 434,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p56",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.055,
+   "p1_chars": 475,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p60",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.054,
+   "p1_chars": 463,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p62",
+   "cls": "woodblock",
+   "kind": "other",
+   "p1_cer": 0.099,
+   "p1_chars": 439,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p64",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.114,
+   "p1_chars": 458,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p65",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.097,
+   "p1_chars": 368,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p69",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.051,
+   "p1_chars": 137,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p71",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.069,
+   "p1_chars": 359,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p72",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.081,
+   "p1_chars": 360,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p73",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.044,
+   "p1_chars": 136,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p2",
+   "cls": "typeset",
+   "kind": "label-only/empty",
+   "p1_cer": 0.415,
+   "p1_chars": 128,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p39",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.149,
+   "p1_chars": 403,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p74",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.15,
+   "p1_chars": 426,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p88",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.165,
+   "p1_chars": 452,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p52",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.098,
+   "p1_chars": 408,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p12",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.021,
+   "p1_chars": 383,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p121",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.15,
+   "p1_chars": 428,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p13",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.023,
+   "p1_chars": 354,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p16",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.022,
+   "p1_chars": 360,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p27",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.023,
+   "p1_chars": 382,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p40",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.119,
+   "p1_chars": 421,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p48",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.13,
+   "p1_chars": 418,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p86",
+   "cls": "typeset",
+   "kind": "timeout",
+   "p1_cer": 0.107,
+   "p1_chars": 272,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p70",
+   "cls": "typeset",
+   "kind": "timeout",
+   "p1_cer": 0.038,
+   "p1_chars": 260,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p11",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.034,
+   "p1_chars": 381,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p22",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.05,
+   "p1_chars": 323,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p24",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.068,
+   "p1_chars": 439,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p39",
+   "cls": "woodblock",
+   "kind": "spread order",
+   "p1_cer": 0.063,
+   "p1_chars": 427,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p42",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.05,
+   "p1_chars": 423,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p134",
+   "cls": "woodblock",
+   "kind": "label-only/empty",
+   "p1_cer": 0.029,
+   "p1_chars": 143,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p35",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.059,
+   "p1_chars": 305,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p7",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.032,
+   "p1_chars": 156,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p11",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.048,
+   "p1_chars": 439,
+   "p1_loop": false
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p19",
+   "cls": "woodblock",
+   "kind": "timeout",
+   "p1_cer": 0.074,
+   "p1_chars": 420,
+   "p1_loop": false
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ggindriyāṇicakṣuḥśro [illegible] ‖ ācāmukṣmatvaṃkṣiṣā [illegible] ākhyājñākhyāṃmanasau [illegible] ‖ ādaḥpā [illegible] pādapāyūpasthānā [illegible]
+2. kannaryeṣāṃhastairaiṇṇābra [illegible] ‖ ñcendriyasyaṅkṣḥpādaiḥgatudāva [illegible] ‖ ൿitibodhabuddhyama [illegible] śvānāre
+3. tvacarkṣūṣikanājihvāsinā [illegible] ‖ napādauḥhupadaikanno [illegible] nnābhijñānikkuka [illegible] ‖ ādāvatൿpāḥgateitikrā
+4. airindriyavāyujaiṣa ‖ kkirupabhukto [illegible] āsvādyokhārai [illegible] ‖ sahābuddhivacanaiyati
+5. kṣājaiṇṭiravivayā ‖ ṇāggakṛtupa [illegible] dikṣṭappṭāāntikki ‖ yatoitrāgasavva
+6. durayāyucakṣuḥṣo ‖ jñīpaddhyāndu [illegible] ṣṭhajñisthiddhināmikki ‖ truktāśobhavaḥsila
+7. ṣaśyāmaiṣṣitapakṣāmā ‖ jñāḥṭasāṃjai [illegible] śabdipaddhyarścāaiskasa ‖ ൿdaśavidhāccaireña
+8. jññayāḥṣavamaśakkiraṣe ‖ jjāmiṃśabdeḍadāyalayāmūsvaśaikamāṭava ‖ tinasvapratyakṣanu
+9. trukṣaṃnodakiḻiyavadhaḥ ‖ pratyayasṛṣṭaḥkiñcidahāṣāduññsthauti ‖ ñcisatrujañcahāṃkārassva
+
+TRANSCRIPTION B
+1. gillyāndhakkāryātmakadini ‖ ācāmṛkkutaṃjñiṣāākṣājñākhyāṃmanasaubhayā ‖ [illegible] duṃpātriyābhaiāvasadātā
+2. kanujjyavaṃhṛtbhaikṣṇyā [illegible] ‖ tthindriyasyaṅṅaḻkkṣṭaḥpādaikṛndradāvaṅk ‖ utsādimṛmadendriyāāda
+3. ārabhyakarmmākatājñāvatā [illegible] ‖ pādaumādekanandrāṅṅajñānendriyakarmma [illegible] ‖ ādivatpagantūkkame
+4. oruṇṭiyyavayaൗṇṇava ‖ kṣīravapatthīṛ [illegible] gnyābhyācākenta ‖ sahātthbdivamayari
+5. ṅṅāṣkebhāndhivayaൗ ‖ ṇaśaktirūpa [illegible] padgjñātattdra ‖ yahauttarāgasakka
+6. deśayaൗcasyarddikka ‖ sthipatthyāsya [illegible] tkkisiddhināmikka ‖ ākrūkkonabbaṃsthya
+7. ṣaṇṭyārartthapakṣyāmā ‖ ṇṇāṃbhasāṃotta [illegible] jjavipakṣyāskksa ‖ kṣadaśavidhāṣekeṭe
+8. ṣṭjñayākkāvamagakṣitakṣra ‖ kṣāmiḥgatiddedālayāmrandhagaśaktebha ‖ bhavatinasvapratyakṣaṅṅaḻu
+9. tryakṣṭaṃāyamidriyavayaḥ ‖ pratyayasarggaḥkkidahākkāṟakṣṭaḻu ‖ ttisatraṃnāhaṃkārasya
+
+TRANSCRIPTION C
+1. gi [illegible] āsakṣaryyākṛtaini [illegible] ‖ āḍhāmṛkṣutsāṃjighā [illegible] āḍhyājñābrūṃmanasau [illegible] ‖ ādaḥpātriyādaivasvabhānāda
+2. kannyāvāhṛ [illegible] aikṣmya [illegible] ‖ [illegible] ndriyasyāṅkṣiḥpādaiśvaryyatāva [illegible] ‖ ku [illegible] madanyyāśrā
+3. tvaraṇṭakṣakanyājñavantā ‖ pāraiḥbhādakanantrā [illegible] jñāniṣṭharikṣma [illegible] ‖ ādāvatvapāgatādṛkṣi
+4. otadriyavadhairaśa ‖ ktirupabhiṣṭā [illegible] āssābhṛśācārakaiṣṭa ‖ sahabuddhivadhairanti
+5. jñācai [illegible] ndriyavadhā ‖ nnāśaktirupa [illegible] baddhikṣa [illegible] ṣṭāotrabhini ‖ yataūtrāhasapta
+6. daśavadhācaba [illegible] ddheḥ ‖ rviparyyayāntu [illegible] ṣṭisiddhīnāmiti ‖ [illegible] ṣṭibhedānavaḥsiddha
+7. ṛṣyādyairupakṣyāntā ‖ ñāṃṭasāṃdvai [illegible] ttivaiśyāgdrastha ‖ kdaśavidhāyācaitabai
+8. rjñayāevamaśaktiraṣṭā ‖ viṃśatibhedā [illegible] layāmlaṃśavaikalyādiva ‖ ddivattinasaprakṛtālassu [illegible]
+9. traikṣmaṃtāvatmiddhiyavaḥ ‖ pratyayasarggaḥkṣemi [illegible] daheṣādyassarggauktaṃ ‖ [illegible] masattuścahaṃkāraṇḍu
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

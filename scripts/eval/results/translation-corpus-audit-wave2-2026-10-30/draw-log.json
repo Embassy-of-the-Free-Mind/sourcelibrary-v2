@@ -1,0 +1,782 @@
+{
+  "seed": 20261030,
+  "at": "2026-10-30T21:29:36.624Z",
+  "census": "/data/scratch/sl/jobs/tca-wave2-5274-mv/census.jsonl",
+  "target": 300,
+  "quota": {
+    "Latin": 58,
+    "English": 35,
+    "German": 35,
+    "Greek": 35,
+    "French": 23,
+    "Italian": 17,
+    "Dutch": 17,
+    "Chinese": 17,
+    "Sanskrit": 12,
+    "Hebrew": 12,
+    "Arabic": 12,
+    "Tibetan": 12,
+    "Korean": 6,
+    "Spanish": 6,
+    "Japanese": 6
+  },
+  "floor": 6,
+  "weights": {
+    "Hebrew": {
+      "books": 228,
+      "translated_pages": 57313
+    },
+    "Greek": {
+      "books": 1057,
+      "translated_pages": 430815
+    },
+    "Arabic": {
+      "books": 251,
+      "translated_pages": 55239
+    },
+    "Latin": {
+      "books": 9202,
+      "translated_pages": 1914885
+    },
+    "Tibetan": {
+      "books": 1569,
+      "translated_pages": 315544
+    },
+    "German": {
+      "books": 2664,
+      "translated_pages": 663841
+    },
+    "English": {
+      "books": 2302,
+      "translated_pages": 696852
+    },
+    "French": {
+      "books": 892,
+      "translated_pages": 311866
+    },
+    "Chinese": {
+      "books": 2813,
+      "translated_pages": 346668
+    },
+    "Spanish": {
+      "books": 98,
+      "translated_pages": 25409
+    },
+    "Dutch": {
+      "books": 497,
+      "translated_pages": 143897
+    },
+    "Sanskrit": {
+      "books": 329,
+      "translated_pages": 97541
+    },
+    "Italian": {
+      "books": 565,
+      "translated_pages": 150736
+    },
+    "Korean": {
+      "books": 256,
+      "translated_pages": 52315
+    },
+    "Japanese": {
+      "books": 142,
+      "translated_pages": 18795
+    }
+  },
+  "arm_pages": {
+    "Hebrew": {
+      "flash": 16953,
+      "lite": 39975,
+      "agy-flash": 377,
+      "claude-other": 3,
+      "opus": 2,
+      "gemini-legacy": 3
+    },
+    "Greek": {
+      "flash": 129767,
+      "lite": 298564,
+      "agy-flash": 290,
+      "claude-other": 6,
+      "opus": 1006,
+      "argon": 353,
+      "gemini-legacy": 829
+    },
+    "Arabic": {
+      "flash": 24358,
+      "lite": 28678,
+      "agy-flash": 801,
+      "opus": 1401,
+      "claude-other": 1
+    },
+    "Latin": {
+      "lite": 1395895,
+      "flash": 508989,
+      "agy-flash": 3157,
+      "opus": 142,
+      "gemini-legacy": 6682,
+      "claude-other": 20
+    },
+    "Tibetan": {
+      "flash": 286160,
+      "opus": 5472,
+      "lite": 287,
+      "agy-flash": 23625
+    },
+    "German": {
+      "lite": 239980,
+      "flash": 418445,
+      "agy-flash": 1702,
+      "opus": 3711,
+      "gemini-legacy": 2,
+      "claude-other": 1
+    },
+    "English": {
+      "lite": 420797,
+      "flash": 275547,
+      "claude-other": 5,
+      "gemini-legacy": 503
+    },
+    "French": {
+      "lite": 136083,
+      "flash": 170086,
+      "opus": 2493,
+      "agy-flash": 3204
+    },
+    "Chinese": {
+      "flash": 175614,
+      "lite": 45713,
+      "agy-flash": 103371,
+      "opus": 21970
+    },
+    "Spanish": {
+      "lite": 19335,
+      "flash": 3529,
+      "opus": 2330,
+      "argon": 215
+    },
+    "Dutch": {
+      "lite": 58455,
+      "flash": 85442
+    },
+    "Sanskrit": {
+      "lite": 43280,
+      "flash": 53764,
+      "agy-flash": 30,
+      "opus": 467
+    },
+    "Italian": {
+      "lite": 116073,
+      "flash": 34662,
+      "opus": 1
+    },
+    "Korean": {
+      "flash": 50308,
+      "lite": 2007
+    },
+    "Japanese": {
+      "flash": 3371,
+      "lite": 15423,
+      "agy-flash": 1
+    }
+  },
+  "cells": {
+    "Latin|lite": {
+      "live_books": 7998,
+      "page_share": 0.729,
+      "proportional": 42,
+      "target": 29,
+      "floor_applies": true,
+      "books_tried": 30,
+      "drawn": 29
+    },
+    "Latin|flash": {
+      "live_books": 1846,
+      "page_share": 0.2658,
+      "proportional": 15,
+      "target": 11,
+      "floor_applies": true,
+      "books_tried": 12,
+      "drawn": 11
+    },
+    "Latin|agy-flash": {
+      "live_books": 31,
+      "page_share": 0.0016,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 8,
+      "drawn": 6
+    },
+    "Latin|opus": {
+      "live_books": 15,
+      "page_share": 0.0001,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Latin|gemini-legacy": {
+      "live_books": 11,
+      "page_share": 0.0035,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Latin|claude-other": {
+      "live_books": 5,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "English|lite": {
+      "live_books": 1629,
+      "page_share": 0.6039,
+      "proportional": 21,
+      "target": 21,
+      "floor_applies": true,
+      "books_tried": 21,
+      "drawn": 21
+    },
+    "English|flash": {
+      "live_books": 1063,
+      "page_share": 0.3954,
+      "proportional": 14,
+      "target": 14,
+      "floor_applies": true,
+      "books_tried": 15,
+      "drawn": 14
+    },
+    "English|claude-other": {
+      "live_books": 3,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "English|gemini-legacy": {
+      "live_books": 1,
+      "page_share": 0.0007,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "German|lite": {
+      "live_books": 1432,
+      "page_share": 0.3615,
+      "proportional": 13,
+      "target": 8,
+      "floor_applies": true,
+      "books_tried": 10,
+      "drawn": 8
+    },
+    "German|flash": {
+      "live_books": 1423,
+      "page_share": 0.6303,
+      "proportional": 22,
+      "target": 15,
+      "floor_applies": true,
+      "books_tried": 15,
+      "drawn": 15
+    },
+    "German|agy-flash": {
+      "live_books": 13,
+      "page_share": 0.0026,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 8,
+      "drawn": 6
+    },
+    "German|opus": {
+      "live_books": 20,
+      "page_share": 0.0056,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "German|gemini-legacy": {
+      "live_books": 1,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "German|claude-other": {
+      "live_books": 1,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Greek|flash": {
+      "live_books": 650,
+      "page_share": 0.3012,
+      "proportional": 11,
+      "target": 7,
+      "floor_applies": true,
+      "books_tried": 12,
+      "drawn": 7
+    },
+    "Greek|lite": {
+      "live_books": 832,
+      "page_share": 0.693,
+      "proportional": 24,
+      "target": 16,
+      "floor_applies": true,
+      "books_tried": 16,
+      "drawn": 16
+    },
+    "Greek|agy-flash": {
+      "live_books": 7,
+      "page_share": 0.0007,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Greek|claude-other": {
+      "live_books": 4,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Greek|opus": {
+      "live_books": 11,
+      "page_share": 0.0023,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Greek|argon": {
+      "live_books": 1,
+      "page_share": 0.0008,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Greek|gemini-legacy": {
+      "live_books": 2,
+      "page_share": 0.0019,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "French|lite": {
+      "live_books": 519,
+      "page_share": 0.4364,
+      "proportional": 10,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "French|flash": {
+      "live_books": 470,
+      "page_share": 0.5454,
+      "proportional": 13,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "French|opus": {
+      "live_books": 9,
+      "page_share": 0.008,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "French|agy-flash": {
+      "live_books": 13,
+      "page_share": 0.0103,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Italian|lite": {
+      "live_books": 470,
+      "page_share": 0.77,
+      "proportional": 13,
+      "target": 11,
+      "floor_applies": true,
+      "books_tried": 13,
+      "drawn": 11
+    },
+    "Italian|flash": {
+      "live_books": 127,
+      "page_share": 0.23,
+      "proportional": 4,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Italian|opus": {
+      "live_books": 1,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Dutch|lite": {
+      "live_books": 341,
+      "page_share": 0.4062,
+      "proportional": 7,
+      "target": 7,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 7
+    },
+    "Dutch|flash": {
+      "live_books": 162,
+      "page_share": 0.5938,
+      "proportional": 10,
+      "target": 10,
+      "floor_applies": true,
+      "books_tried": 10,
+      "drawn": 10
+    },
+    "Chinese|flash": {
+      "live_books": 1629,
+      "page_share": 0.5066,
+      "proportional": 9,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Chinese|lite": {
+      "live_books": 476,
+      "page_share": 0.1319,
+      "proportional": 2,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Chinese|agy-flash": {
+      "live_books": 1567,
+      "page_share": 0.2982,
+      "proportional": 5,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Chinese|opus": {
+      "live_books": 185,
+      "page_share": 0.0634,
+      "proportional": 1,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Sanskrit|lite": {
+      "live_books": 133,
+      "page_share": 0.4437,
+      "proportional": 5,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Sanskrit|flash": {
+      "live_books": 250,
+      "page_share": 0.5512,
+      "proportional": 7,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Sanskrit|agy-flash": {
+      "live_books": 3,
+      "page_share": 0.0003,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Sanskrit|opus": {
+      "live_books": 9,
+      "page_share": 0.0048,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Hebrew|flash": {
+      "live_books": 92,
+      "page_share": 0.2958,
+      "proportional": 4,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Hebrew|lite": {
+      "live_books": 157,
+      "page_share": 0.6975,
+      "proportional": 8,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Hebrew|agy-flash": {
+      "live_books": 2,
+      "page_share": 0.0066,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Hebrew|claude-other": {
+      "live_books": 2,
+      "page_share": 0.0001,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Hebrew|opus": {
+      "live_books": 1,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Hebrew|gemini-legacy": {
+      "live_books": 2,
+      "page_share": 0.0001,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Arabic|flash": {
+      "live_books": 132,
+      "page_share": 0.441,
+      "proportional": 5,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 8,
+      "drawn": 6
+    },
+    "Arabic|lite": {
+      "live_books": 139,
+      "page_share": 0.5192,
+      "proportional": 6,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Arabic|agy-flash": {
+      "live_books": 7,
+      "page_share": 0.0145,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Arabic|opus": {
+      "live_books": 12,
+      "page_share": 0.0254,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Arabic|claude-other": {
+      "live_books": 1,
+      "page_share": 0,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Tibetan|flash": {
+      "live_books": 1536,
+      "page_share": 0.9069,
+      "proportional": 11,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Tibetan|opus": {
+      "live_books": 30,
+      "page_share": 0.0173,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Tibetan|lite": {
+      "live_books": 8,
+      "page_share": 0.0009,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Tibetan|agy-flash": {
+      "live_books": 37,
+      "page_share": 0.0749,
+      "proportional": 1,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Korean|flash": {
+      "live_books": 249,
+      "page_share": 0.9616,
+      "proportional": 6,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Korean|lite": {
+      "live_books": 8,
+      "page_share": 0.0384,
+      "proportional": 0,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Spanish|lite": {
+      "live_books": 75,
+      "page_share": 0.761,
+      "proportional": 5,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 8,
+      "drawn": 6
+    },
+    "Spanish|flash": {
+      "live_books": 14,
+      "page_share": 0.1389,
+      "proportional": 1,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 7,
+      "drawn": 6
+    },
+    "Spanish|opus": {
+      "live_books": 10,
+      "page_share": 0.0917,
+      "proportional": 1,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 6,
+      "drawn": 6
+    },
+    "Spanish|argon": {
+      "live_books": 2,
+      "page_share": 0.0085,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    },
+    "Japanese|flash": {
+      "live_books": 41,
+      "page_share": 0.1794,
+      "proportional": 1,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 10,
+      "drawn": 6
+    },
+    "Japanese|lite": {
+      "live_books": 108,
+      "page_share": 0.8206,
+      "proportional": 5,
+      "target": 6,
+      "floor_applies": true,
+      "books_tried": 9,
+      "drawn": 6
+    },
+    "Japanese|agy-flash": {
+      "live_books": 1,
+      "page_share": 0.0001,
+      "proportional": 0,
+      "target": 0,
+      "floor_applies": false,
+      "drawn": 0
+    }
+  },
+  "exclusions": {
+    "page_type": 4198,
+    "short_translation": 24,
+    "no_candidate_page": 35,
+    "short_ocr": 770,
+    "source_same-language": 23
+  },
+  "prompt": {
+    "by_version": {
+      "agy-flash/13": 42,
+      "lite/13": 40,
+      "lite/11": 27,
+      "lite/v10": 65,
+      "opus/13": 42,
+      "opus/1": 11,
+      "gemini-legacy/(none)": 6,
+      "flash/v10": 23,
+      "flash/v2": 40,
+      "flash/v5.2026-02": 10,
+      "opus/v1": 1,
+      "flash/11": 13,
+      "flash/12": 3,
+      "flash/13": 16,
+      "flash/v5.1.2026-03b": 9,
+      "flash/(none)": 1,
+      "flash/v1": 2,
+      "lite/v1": 9,
+      "lite/2": 2,
+      "lite/1": 2,
+      "lite/12": 1
+    },
+    "neither_version_nor_hash": 7,
+    "old_share": 0.597
+  },
+  "controls": {
+    "swap": 15,
+    "drop": 15,
+    "repeat": 15
+  }
+}

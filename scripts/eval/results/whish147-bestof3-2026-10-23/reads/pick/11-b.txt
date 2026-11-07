@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B is sparse, but what it does read is real language that fits the context: "grahārtthaṃ", "duḥkhatrayābhigha…", "ddhyātmikamāyiṭṭu", "daivikame" and "ddhyātmaṃ" match a Malayalam commentary on the three kinds of suffering (ādhyātmika, ādhibhautika, ādhidaivika) in the Sāṅkhyakārikā; C has only a few such fragments, and A is mostly strings of syllables that look like words but aren't.

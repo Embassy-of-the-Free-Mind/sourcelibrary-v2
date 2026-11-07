@@ -1,0 +1,602 @@
+[
+ {
+  "book_id": "69af10ef06b10527be566275",
+  "year": 1715,
+  "century": "1700s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 406,
+  "cell": "1700s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69aeabe767e6731bc1367193",
+  "year": 1518,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 188,
+  "cell": "1500s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "6952d05477f38f6761bc511e",
+  "year": 1609,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 855,
+  "cell": "1600s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b30230c22956d8a0de5c55",
+  "year": 1629,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 387,
+  "cell": "1600s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69dbcc270f8c5edf20f46b67",
+  "year": 1472,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 131,
+  "cell": "1450-99|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69c82e676c6f3cc53c84d61e",
+  "year": 1670,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 227,
+  "cell": "1600s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69af106e266659b71a32212f",
+  "year": 1701,
+  "century": "1700s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 251,
+  "cell": "1700s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+  "year": 1555,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 898,
+  "cell": "1500s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "6955da018407b7c9ae21361a",
+  "year": 1566,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 688,
+  "cell": "1500s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "6a08551d15c643eb1af54d46",
+  "year": 1581,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 719,
+  "cell": "1500s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "698255eec7e5d26b8a0eb612",
+  "year": 1566,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 354,
+  "cell": "1500s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69dbc83c1040d1d5e2097f86",
+  "year": 1488,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 143,
+  "cell": "1450-99|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69b51e4647b06ecd5818cd3a",
+  "year": 1606,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 561,
+  "cell": "1600s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69b51ebdff09e4fe943b3e60",
+  "year": 1607,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 184,
+  "cell": "1600s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69d665cabf5afe33937f883e",
+  "year": 1452,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 208,
+  "cell": "1450-99|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69b51dbd768235dc659874a8",
+  "year": 1624,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 276,
+  "cell": "1600s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69b51e8147b06ecd581913fb",
+  "year": 1665,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 343,
+  "cell": "1600s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69de992d1b234a773e43a4a4",
+  "year": 1501,
+  "century": "1500s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 174,
+  "cell": "1500s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69dbc8cc1040d1d5e209c88e",
+  "year": 1491,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 205,
+  "cell": "1450-99|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69c846296c6f3cc53c8516d9",
+  "year": 1522,
+  "century": "1500s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 258,
+  "cell": "1500s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69e747a485f786e884a492c6",
+  "year": 1486,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 200,
+  "cell": "1450-99|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "6a10092ff7172929509680b9",
+  "year": 1744,
+  "century": "1700s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 526,
+  "cell": "1700s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b62fcf1c1c21a3737faf5a",
+  "year": 1577,
+  "century": "1500s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 315,
+  "cell": "1500s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69f334ae876dd827cbc4d35c",
+  "year": 1450,
+  "century": "1450-99",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 539,
+  "cell": "1450-99|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69a9570865ddd05bbcd3daee",
+  "year": 1600,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 746,
+  "cell": "1600s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69f335b4876dd827cbc4ee76",
+  "year": 1461,
+  "century": "1450-99",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 314,
+  "cell": "1450-99|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b21c3c429e087c6f86448e",
+  "year": 1624,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 602,
+  "cell": "1600s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69bd9dc46120d54bd0379640",
+  "year": 1607,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 146,
+  "cell": "1600s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "year": 1750,
+  "century": "1700s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 479,
+  "cell": "1700s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69f33618876dd827cbc4fc2c",
+  "year": 1470,
+  "century": "1450-99",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 664,
+  "cell": "1450-99|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b62f861c1c21a3737f6a83",
+  "year": 1593,
+  "century": "1500s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 1436,
+  "cell": "1500s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69dbc9b11040d1d5e20a557b",
+  "year": 1505,
+  "century": "1500s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 124,
+  "cell": "1500s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69b51ed9cf111105c42a4f1e",
+  "year": 1731,
+  "century": "1700s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 278,
+  "cell": "1700s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "6990616cef12272ffdc8d980",
+  "year": 1767,
+  "century": "1700s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 452,
+  "cell": "1700s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69c82de66c6f3cc53c84d4bf",
+  "year": 1728,
+  "century": "1700s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 401,
+  "cell": "1700s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "year": 1719,
+  "century": "1700s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 150,
+  "cell": "1700s|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b51e5147b06ecd5818de97",
+  "year": 1708,
+  "century": "1700s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 422,
+  "cell": "1700s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "2950c384-e5de-44c2-bbb5-a486556d6a93",
+  "year": 1489,
+  "century": "1450-99",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 198,
+  "cell": "1450-99|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69b6c95731b7f0d07f5057d3",
+  "year": 1719,
+  "century": "1700s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 1409,
+  "cell": "1700s|lite",
+  "pass": 1
+ },
+ {
+  "book_id": "69540d5d790862145d7de805",
+  "year": 1497,
+  "century": "1450-99",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 374,
+  "cell": "1450-99|flash",
+  "pass": 1
+ },
+ {
+  "book_id": "69906327ef12272ffdc8f9ac",
+  "year": 1585,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 848,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69af0f77a940055c46680e8b",
+  "year": 1589,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 478,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69c835706c6f3cc53c84e8f6",
+  "year": 1697,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 289,
+  "cell": "1600s|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "6a06d3b79a48d5139996380e",
+  "year": 1534,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 464,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "6988a5a159f3a9c9513f9f17",
+  "year": 1531,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 136,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69dbc9f31040d1d5e20a7fda",
+  "year": 1496,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 323,
+  "cell": "1450-99|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69dbca0d1040d1d5e20a8e56",
+  "year": 1474,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 157,
+  "cell": "1450-99|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69dbcb861040d1d5e20b7839",
+  "year": 1490,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 314,
+  "cell": "1450-99|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69b6ae73dc00a90e322b11c7",
+  "year": 1670,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 463,
+  "cell": "1600s|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69b631ba1c1c21a373809ff8",
+  "year": 1481,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 1136,
+  "cell": "1450-99|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69b2ff6a5545150b61b48140",
+  "year": 1529,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 829,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69b4cd08d5b6c3815e1a3880",
+  "year": 1578,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 230,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69bd9e676120d54bd037cc19",
+  "year": 1622,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 788,
+  "cell": "1600s|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69dbc9401040d1d5e20a179d",
+  "year": 1471,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 253,
+  "cell": "1450-99|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "69593413b282844d7b277aaf",
+  "year": 1617,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 214,
+  "cell": "1600s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69b52c0f3dd6d9423027d7ec",
+  "year": 1501,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 173,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69b51e679a81ef7feb3d4811",
+  "year": 1670,
+  "century": "1600s",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite",
+  "pages_with_text": 278,
+  "cell": "1600s|lite",
+  "pass": 2
+ },
+ {
+  "book_id": "6952dac677f38f6761bc683a",
+  "year": 1617,
+  "century": "1600s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 1036,
+  "cell": "1600s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "6a08525b49638a50931ba0cb",
+  "year": 1560,
+  "century": "1500s",
+  "engine": "flash",
+  "major_model": "gemini-3-flash-preview",
+  "pages_with_text": 444,
+  "cell": "1500s|flash",
+  "pass": 2
+ },
+ {
+  "book_id": "69dbc8271040d1d5e2097634",
+  "year": 1487,
+  "century": "1450-99",
+  "engine": "lite",
+  "major_model": "gemini-3.1-flash-lite-preview",
+  "pages_with_text": 437,
+  "cell": "1450-99|lite",
+  "pass": 2
+ }
+]

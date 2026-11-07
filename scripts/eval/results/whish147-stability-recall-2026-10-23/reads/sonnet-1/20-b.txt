@@ -1,0 +1,9 @@
+ROW 1 | [illegible] ‖ [illegible]ൎണ്ണപലബ്ധി[illegible] ‖ [illegible]ണ[illegible]സ[illegible] ‖ [illegible]കപത്രബ്ധിഃ[illegible]കാരമെന്ന[illegible]
+ROW 2 | [illegible] ‖ [illegible]ണവലബ്ധി[illegible]വ[illegible] ‖ [illegible]ദ[illegible]ദാകൻഭ[illegible] ‖ [illegible]പദൊകാദ്[illegible]യൊദ്രമ്മ
+ROW 3 | [illegible] ‖ [illegible]ക്ഷ[illegible]കാ[illegible]ണപ[illegible] ‖ [illegible]ഭെദെന[illegible]ൾന്ന[illegible]ഹ[illegible] ‖ [illegible]ദ്ര[illegible]ദ്രാദ്രം
+ROW 4 | [illegible] ‖ [illegible]പ[illegible]ണ[illegible] ‖ [illegible]ണപലബ്ധിഃസ[illegible] ‖ [illegible]ഭ[illegible]ത്രമ്മ[illegible]
+ROW 5 | [illegible] ‖ [illegible]യാ[illegible]യഃ[illegible] ‖ [illegible]ണ[illegible]സാമി[illegible]പ്രാദ്ര ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible]ക്രാ[illegible]ടെ[illegible] ‖ [illegible]ണ[illegible]ടെദ്ര[illegible]കൃത്രാൻ ‖ പലബ്ധിഃ[illegible]യല്രാ
+ROW 7 | [illegible] ‖ [illegible]ണാം[illegible]ജ[illegible]യ[illegible] ‖ [illegible]യാ[illegible]ാം[illegible]ദാ[illegible] ‖ [illegible]ദ്രാഹ്ര[illegible]ദ്ര[illegible]വ[illegible]കാ
+ROW 8 | [illegible] ‖ [illegible]ണവലബ്ധിഃ[illegible] ‖ [illegible]സ[illegible]സ[illegible] ‖ [illegible]സമാ[illegible]ഹ[illegible]കാ[illegible]ത്തി
+NOTE | The script is a very hard hand and I could read only fragments. Most of every row is guesswork or marked illegible, and I could not line up the overlaps or the hole positions reliably. Treat the row breaks as reliable and the Malayalam letters as low confidence.

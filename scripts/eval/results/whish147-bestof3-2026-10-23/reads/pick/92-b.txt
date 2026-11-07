@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three gives readable Sanskrit or Malayalam; A and C are entirely [illegible] and tie, and B ranks first only because its few scraps (*śaraddṛ-*, *-ṃtri-*, *-kta*) are believable Malayalam-script syllables, though they never form a grammatical phrase, so the edge is weak.

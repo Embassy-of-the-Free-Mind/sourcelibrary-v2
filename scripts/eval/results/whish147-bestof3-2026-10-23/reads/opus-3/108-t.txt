@@ -1,0 +1,12 @@
+ROW 1 | യഉ്ത്തത്രിവിഷ്ടവശുഭ്ഃ സാചസ‖വാസനസംഗിയതിവയ്യുവതിണാദ്യാ‖ന്ദിവെകശാഭ്യാൽകാര
+ROW 2 | ശ്രുസംഷ്കപ്രവാദെവസ്ഥാന‖ംസാചതന്നിതാദ്ദരൈനെരന്തൎയ്യദ്ദിഗ്കാല‖ഭെസന്നിതാദ്ദ്യാസവരിവാ
+ROW 3 | ഖാൽടെവത്തിത്തദാനൈണത്രി‖വെകവ്യാത്രാകാരെഷ്ടണബെസാന്ദിസംഗ്രന്ഥിത‖ംബെയാംചക്രമിന്ദ്രിയുക്ത
+ROW 4 | ാമൃഭിതഉച്ചാരതിത്തിഭ്രഭാമൃച്യ‖ാഷ്ടിധയഃപ്രതൊദ്ദപ്രമൃഭിരതൊദ്ദതാ‖ഉത്രക്ഷെറന്തിദ്ധ്യയഃഞ്ഞ
+ROW 5 | റ്റെവ്യാചക്ഷതെതി‖നാവരദ്ദശാദിനാപ്രാക്ഭൃതിയാദ്ദ്രൂസ‖വശാൽതത്വസ്യസ്വയ
+ROW 6 | ഭൂഹതംയൽസാന്തിദ്ധ‖ഉപാഃയപ്ര്യസാംവ്യശാസ്ത്രപാഠമന്ദ്രദ്ധി‖യാമാകണ്ഠ്രതചെങ്കൊാ
+ROW 7 | ണമൃൽപദൃതെസാ‖ന്തിദ്ധിഷ്ഠമൃ്റ്റപഞ്ജപാഠനക്രരെട്ടാഷാൽ‖യന്ത്രദിഷ്ഠ്യാചാൎയ്യസംചെ
+ROW 8 | ഭെഥനസാംഖ്യശാസ്ത്രഗന്ധാ‖ഭൈതൊാരത്തത്താധിത്രജ്ഞാനമൃൽപദൃതെസാദ്രൂ‖താനഭെഉത്താന്ദിമിരദ്ധ്യയനം
+ROW 9 | സുവൽപ്രാങ്ങിരിതിയസ്യാഹിഹ‖നതതാംസ്വഗ്ദ്ദംപ്രാപ്യജ്ഞാനമൃൽപദ്ദതെസാജ്ഞ‖ാനലക്ഷണാന്തിലിതികസ്യസ്വ
+ROW 10 | ൽപ്രാങ്ഷ്ഠംദാനഭെന്തിദ്ധിതെ‖ഉക്താദിദാനെനദതാക്ഷെതാജ്ഞാനിജ്ഞാന‖പ്രതൽതിതിണ്ണസ്യചയുക്താദ്യ
+ROW 11 | ങ്ങരെതസ്യൂതിമിദ്ധരെരപാചഗ‖നവൃത്തിമിതാവനരദ്ദാചെക്ഷാൽദാവരണനാന്തിദ്ധ‖നമാത്രൂപാവനപ്രവൃത്താ
+NOTE | I could only partly read this leaf, and my confidence is low. The images are too low-resolution to tell many conjuncts, vowel signs and dot-rephs apart, so many of the akṣaras above are guesses from the shapes rather than secure readings. I didn't use [illegible] anywhere, though many uncertain stretches deserved it, so treat this as a rough draft to check against a higher-resolution image. The holes only cut through about rows 4–8, so rows 1–3 and 8–11 run the full width; in those rows ‖ marks where the pieces join (p01|p02 and p03|p04), not an actual hole. Overlapping text has been merged.

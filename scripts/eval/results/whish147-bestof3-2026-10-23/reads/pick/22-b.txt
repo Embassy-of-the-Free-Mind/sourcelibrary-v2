@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C is the only one with recognizable Sāṅkhyakārikā 9 commentary (satkāryavāda) in several rows: "ghaṭādirūpyaṃ... mṛtpiṇḍā", "upādānagrahaṇāt", "upādānaṃ kāryāṇāṃ yathā tailasya tilāḥ... kṣīraṃ", "sarvasya sarvatra sarvadā", "sambhavasyābhāvāt", "śaktasya śakyakaraṇāt"; A has some of the same phrases in more broken form, and B is mostly nonsense.

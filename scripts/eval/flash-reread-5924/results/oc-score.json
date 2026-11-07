@@ -1,0 +1,475 @@
+{
+ "pages": 250,
+ "books": 10,
+ "outcomes": {
+  "corrected": 209,
+  "unchanged": 16,
+  "contain": 25
+ },
+ "contains": [
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p25",
+   "reason": "The draft gives the text of the next leaf (p. 5, IOAN. BRACESCHI, sig. a 3, beginning \"RAIMVNDVS. Hac vti debebant\"), not this page, which is p. 4 (LIGNVM VITAE), beginning \"rit. DIS. Tu ergo, in quo scientiæ omnes sunt infusæ\" and ending with the catchword \"RAI.\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p47",
+   "reason": "The draft gives the text of p. 27 (IOAN. BRACESCHI, beginning \"dam, quam Phœbus\"), not this page, which is p. 26 (LIGNVM VITAE), beginning \"dicens, Corpora quæ administratione rei subleuantis indigent\" and ending with the catchword \"dam\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p70",
+   "reason": "The draft gives the text of p. 50 (TAVLADANI, beginning \"pretationem sic auspicatus es\"), not this page, which is p. 49, the opening of \"In Ioannem Braceschum Gebri interpretem animaduersio, authore Roberto Tauladano Aquitano\", with a woodcut initial C.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p92",
+   "reason": "The draft gives the text of p. 72 (beginning \"manda essent perfectioni minus uicina\"), not this page, which is p. 71 (ANIMADVERSIO), beginning \"Saturnus, Saturnus uerò quàm Venus\" and containing the GEBER and TAVLADANVS sections.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p115",
+   "reason": "The draft gives the text of a later page (p. 99, beginning \"Iam dictis metallis\", including CAPVT V), not this page, which is p. 94 (TAVLADANI), beginning \"His adde Seniorē, & dicet tibi, Qui colligit coloquintidam\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p137",
+   "reason": "The draft gives the text of p. 116 (beginning \"stiblis & grossa\", De preparatione Iouis Cap. VI), not this page, which is p. 114 (DE INVESTIGATIONE), beginning \"Mundatio aluminum. Primò de alumine glaciali\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p160",
+   "reason": "The draft gives the text of p. 136 (De Marte, siue Ferro, Cap. XXXVII onward), not this page, which is p. 135 (PERFECTIONIS GEBERI), with Cap. XXXIIII De Saturno, Cap. XXXV De Ioue and Cap. XXXVI De Venere.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p182",
+   "reason": "The draft gives the text of p. 156 (Cap. LX De natura Marchasitae and Cap. LXI), not this page, which is p. 155 (PERFECTIONIS GEBERI), beginning \"ingressione, quæ per fusionem bonam perficitur\" and containing Cap. LIX De natura Mercurij.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p205",
+   "reason": "The draft gives the text of p. 176 (Cap. LXXXV and LXXXVI), not this page, which is p. 175 (PERFECTIONIS GEBERI, sig. P 4), beginning \"hoc in Solificum & Lunificum verum\" and containing Cap. LXXXIII and LXXXIIII.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p227",
+   "reason": "The draft gives the text of p. 198 (LIBER FORNACVM, Cap. XXIII onward), not this page, which is p. 197 (sig. r 3), the opening of the \"Tertia pars de corporibus perficiendis, & medicinis alteratiuis\", with Cap. XIX, XX and XXI.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p250",
+   "reason": "The draft is the text of p. 221 (header \"RICHARDI ANGLICI\", beginning \"De uia uniuersali… Cap. XVIII\"), not this leaf, which is p. 220 under the header \"CORRECTORIVM\" and begins \"bedinem non ratione digestionis habet\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p272",
+   "reason": "The draft is the text of p. 243 (header \"PRACTICA\", beginning \"postea pone partem illius materiae rubeae\"), not this leaf, which is p. 242 under the header \"LIBER SECRETORVM ALCHEMIAE\" and contains Cap. XVI and the start of \"Loci aliquot practicae ex Gebero declarati\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p295",
+   "reason": "The draft is the text of p. 22 (header \"DE ALCHEMIA\", Cap. XXXVII–XXXVIII), not this leaf, which is p. 21 under the header \"INCERTI AVTORIS\" and contains the end of the preceding chapter, Cap. XXXV and the start of Cap. XXXVI.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p318",
+   "reason": "The draft is the text of p. 44 (\"ROSARIVS PHILOSOPHORVM\", Cap. II–III), not this leaf, which is p. 43 under the header \"ARNOLDI\" and carries the two-column \"Capita libri secundi\" and the start of Cap. I, \"De inuestigatione perfecta lapidis physici\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p340",
+   "reason": "The draft is the text of p. 66 (continuing the Epistola from \"miditas dum exit de compositione\"), not this leaf, which is p. 65 under the header \"ARNALDI\" and contains the close of the previous letter and the start of \"Epistola Magistri Arnaldi de Villa Noua super Alchymiam ad Regem Neapolitanum\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p363",
+   "reason": "The draft is the text of p. 88 (cinnabar, azurium, cerussa and minium), not this leaf, which is p. 87 under the header \"ALBERTI MAGNI\" and covers flos atramenti, alum, tartar, verdigris (viride aeris) and the start of \"Quomodo fiat Cinabrium\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p385",
+   "reason": "The draft is the text of p. 109 (header \"RAYMVNDI LVLLII\", beginning \"pit opus\"), not this leaf, which is p. 108 under the header \"APERTORIVM\", beginning \"miditatis quae habuit eum mortificare\" with the marginal notes Tritio, Rectificatio, Multiplicatio, Purgatio and Paulatim nutriatur.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p408",
+   "reason": "The draft is the text of p. 132 (beginning \"xare, hoc facies per exuberationem corporalem\"), not this leaf, which is p. 131 under the header \"RAYMVNDI LVLLII\" and contains the \"O mensura\" verses, \"De sublimatione sulfuris, reductione completa\" and the start of \"Fixatio aquae et aeris\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p430",
+   "reason": "The draft is the text of p. 154 (De multiplicatione; De furnis et vasis), not this leaf, which is p. 153 under the header \"RAYMVNDI LVLLII\" and contains \"De aqua Mercuriali huius capituli\" and the start of \"De nonnullis abbreuiationibus Artis\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p453",
+   "reason": "The draft is the text of p. 177 (\"Alio modo subtilius\" and the Additio on aes), not this leaf, which is p. 176 under the header \"DE MERCVRIO SOLO\" and covers the preparation of Luna, then \"Cementum Solis\", with the marginal note \"Vasa sunt\".",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p475",
+   "reason": "The draft is the text of page 199 (header \"DE PERFECTO MAGISTERIO\", beginning \"tiam, & in mane extrahe…\" with \"Sulfuris solutio\"), but the image shows page 198 (header \"ARISTOTELES\", beginning \"deinde cola & congela in cinere…\" with \"Regimen salis Atincar\", \"Talci separatio\", \"Argenti separatio\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p498",
+   "reason": "The draft is the text of page 222 (header \"ARISTOTELES\", beginning \"est, & quod remansit in fundo…\"), but the image shows page 221 (header \"DE PERFECTO MAGISTERIO\", beginning \"desuper & exicca vt prius ad Solem…\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p520",
+   "reason": "The draft is the text of page 243 (header \"PHILOSOPHIAE\", beginning \"id est spiritus: deinde in coniunctione…\"), but the image shows page 242 (header \"DE THESAVRO\", beginning \"coniunctione apparentes. Et sic nō errabis…\", with the margin note \"Signū perfectæ solutionis\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p543",
+   "reason": "The draft is the text of page 266 (header \"NOMENCLATURAE\", beginning \"dus, cambar, aqua vitæ…\"), but the image shows page 265 (title \"LAPIDIS PHILOSOPHICI NOMENCLATURÆ, à Gulielmo Gratarolo collectæ\", beginning \"AVrum, Sol, æs Philosophorum…\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p565",
+   "reason": "The draft is the text of page 288 (header \"IO. AVR. AVGVRELLI\", beginning \"Et extet animi ac corporis…\"), but the image shows page 287 (header \"GERONTICON LIB. I.\", with the poem \"AD LEONEM X. PONT. MAX. Ascensus primus ad Deum\").",
+   "true_contain": true
+  }
+ ],
+ "no_answers": [],
+ "c2": {
+  "shown": 209,
+  "misleading_L": [
+   111,
+   [
+    38.4,
+    50.6
+   ]
+  ],
+  "misleading_O": [
+   31,
+   [
+    8.9,
+    17.1
+   ]
+  ],
+  "prefer": {
+   "O": 201,
+   "L": 2,
+   "tie": 47
+  },
+  "material_loss_L": 92,
+  "material_loss_O": 1,
+  "L_misleading_O_not": 81,
+  "O_misleading_L_not": 1,
+  "L_verdict_agreement_with_original_C_on_shown": {
+   "both_misleading": 70,
+   "c2_only": 15,
+   "orig_only": 6
+  },
+  "strip": {
+   "visible": 50,
+   "in_L": 8,
+   "in_O": 0
+  }
+ },
+ "bar_a_halves": true,
+ "worse_pages": 1,
+ "bar_b_no_page_worse": false,
+ "worse_list": [
+  {
+   "slug": "69b51e67768235dc65992a5f-p131",
+   "reasons": [
+    "O misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X gives the Petrus Matthaeus citation as 'lib. 1.' where the print has 'lib. 2.'; Y's faults (long-s as f, chronogram caps normalised, 'reformaturae') keep the sense"
+  }
+ ],
+ "c3": {
+  "misleading_O": [
+   30,
+   [
+    8.5,
+    16.6
+   ]
+  ],
+  "misleading_F": [
+   32,
+   [
+    9.2,
+    17.5
+   ]
+  ],
+  "prefer": {
+   "O": 131,
+   "F": 43,
+   "tie": 76
+  },
+  "material_loss_F": 37,
+  "material_loss_O": 30,
+  "F_verdict_agreement_with_original_C": {
+   "both_misleading": 16,
+   "c3_only": 16,
+   "orig_only": 4
+  },
+  "strip": {
+   "visible": 71,
+   "in_O": 0,
+   "in_F": 0
+  }
+ },
+ "bar_c_beats_F": true,
+ "correction_recommended_over_F": false,
+ "excluding_wrong_leaf_book": {
+  "pages": 225,
+  "L": 86,
+  "O": 6,
+  "worse": 1,
+  "O3": 5,
+  "F3": 28
+ },
+ "second_family_judge": "not run (no agy meter readable from l7a; see the prereg) — single-family",
+ "claude_tokens": {
+  "calls": 30,
+  "input": 374,
+  "output": 453058,
+  "cache_read": 4122582,
+  "list_cost_usd": 20.28
+ },
+ "by_book": [
+  {
+   "book_id": "69dc557bcb6f7429748b8d13",
+   "year": 1500,
+   "n": 25,
+   "L": 19,
+   "O": 0,
+   "F3": 11,
+   "O3": 0,
+   "worse": 0,
+   "c2_pref": {
+    "O": 25,
+    "L": 0,
+    "tie": 0
+   },
+   "c3_pref": {
+    "O": 24,
+    "F": 0,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51e67768235dc65992a5f",
+   "year": 1661,
+   "n": 25,
+   "L": 6,
+   "O": 3,
+   "F3": 1,
+   "O3": 2,
+   "worse": 1,
+   "c2_pref": {
+    "O": 19,
+    "L": 1,
+    "tie": 5
+   },
+   "c3_pref": {
+    "O": 10,
+    "F": 5,
+    "tie": 10
+   },
+   "outcomes": {
+    "corrected": 20,
+    "unchanged": 5
+   }
+  },
+  {
+   "book_id": "69b51e18efd8df28f2db058d",
+   "year": 1586,
+   "n": 25,
+   "L": 10,
+   "O": 0,
+   "F3": 1,
+   "O3": 0,
+   "worse": 0,
+   "c2_pref": {
+    "O": 25,
+    "L": 0,
+    "tie": 0
+   },
+   "c3_pref": {
+    "O": 19,
+    "F": 0,
+    "tie": 6
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51eba47b06ecd581960d3",
+   "year": 1554,
+   "n": 25,
+   "L": 17,
+   "O": 1,
+   "F3": 4,
+   "O3": 1,
+   "worse": 0,
+   "c2_pref": {
+    "O": 25,
+    "L": 0,
+    "tie": 0
+   },
+   "c3_pref": {
+    "O": 21,
+    "F": 0,
+    "tie": 4
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69c81aed6c6f3cc53c849851",
+   "year": 1708,
+   "n": 25,
+   "L": 12,
+   "O": 0,
+   "F3": 0,
+   "O3": 0,
+   "worse": 0,
+   "c2_pref": {
+    "O": 23,
+    "L": 0,
+    "tie": 2
+   },
+   "c3_pref": {
+    "O": 9,
+    "F": 4,
+    "tie": 12
+   },
+   "outcomes": {
+    "corrected": 24,
+    "unchanged": 1
+   }
+  },
+  {
+   "book_id": "69bd9d726120d54bd0376d18",
+   "year": 1598,
+   "n": 25,
+   "L": 6,
+   "O": 0,
+   "F3": 3,
+   "O3": 0,
+   "worse": 0,
+   "c2_pref": {
+    "O": 18,
+    "L": 0,
+    "tie": 7
+   },
+   "c3_pref": {
+    "O": 12,
+    "F": 0,
+    "tie": 13
+   },
+   "outcomes": {
+    "unchanged": 3,
+    "corrected": 22
+   }
+  },
+  {
+   "book_id": "69b51e7f9a81ef7feb3d64c8",
+   "year": 1616,
+   "n": 25,
+   "L": 3,
+   "O": 1,
+   "F3": 2,
+   "O3": 1,
+   "worse": 0,
+   "c2_pref": {
+    "O": 22,
+    "L": 0,
+    "tie": 3
+   },
+   "c3_pref": {
+    "O": 11,
+    "F": 3,
+    "tie": 11
+   },
+   "outcomes": {
+    "corrected": 22,
+    "unchanged": 3
+   }
+  },
+  {
+   "book_id": "69af0a0a4c57359b8d2d0f49",
+   "year": 1665,
+   "n": 25,
+   "L": 9,
+   "O": 1,
+   "F3": 2,
+   "O3": 0,
+   "worse": 0,
+   "c2_pref": {
+    "O": 22,
+    "L": 0,
+    "tie": 3
+   },
+   "c3_pref": {
+    "O": 16,
+    "F": 1,
+    "tie": 8
+   },
+   "outcomes": {
+    "corrected": 23,
+    "unchanged": 2
+   }
+  },
+  {
+   "book_id": "69b638be1c1c21a373839d77",
+   "year": 1522,
+   "n": 25,
+   "L": 4,
+   "O": 0,
+   "F3": 4,
+   "O3": 1,
+   "worse": 0,
+   "c2_pref": {
+    "O": 22,
+    "L": 1,
+    "tie": 2
+   },
+   "c3_pref": {
+    "O": 9,
+    "F": 5,
+    "tie": 11
+   },
+   "outcomes": {
+    "corrected": 23,
+    "unchanged": 2
+   }
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "year": 1561,
+   "n": 25,
+   "L": 25,
+   "O": 25,
+   "F3": 4,
+   "O3": 25,
+   "worse": 0,
+   "c2_pref": {
+    "O": 0,
+    "L": 0,
+    "tie": 25
+   },
+   "c3_pref": {
+    "O": 0,
+    "F": 25,
+    "tie": 0
+   },
+   "outcomes": {
+    "contain": 25
+   }
+  }
+ ]
+}

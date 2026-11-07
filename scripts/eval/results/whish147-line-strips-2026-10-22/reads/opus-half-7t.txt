@@ -1,0 +1,28 @@
+===== PAGE p01 =====
+<warning>Palm-leaf manuscript written in Malayalam script. The text is cut off at the right edge of the image, and the string hole interrupts lines 3–7, splitting each into a left and a right block. The incised letters are small and their ink is uneven, so only a few short sequences could be read even tentatively. The rest is marked as unclear rather than reconstructed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Malayalam script on palm leaf (Sanskrit text)</warning>
+<meta>Single palm leaf photographed against a dark background. The binding string passes through the central hole. The leaf runs past the right edge of the image, so the ends of all lines are missing.</meta>
+
+<unclear>line 1, about 12–15 aksharas in Malayalam script, not reliably transcribed</unclear> । <unclear>remaining aksharas of line 1, cut off at right edge</unclear>
+
+<unclear>line 2, beginning, about 4 aksharas</unclear> <unclear>പ്രാണേന്ദ്രിയ</unclear> <unclear>about 6 aksharas</unclear> । <unclear>remaining aksharas, cut off at right edge</unclear>
+
+<unclear>line 3, left block, about 8 aksharas</unclear> <unclear>line 3, right block, about 6 aksharas, cut off at right edge</unclear>
+
+<unclear>line 4, left block, about 7 aksharas</unclear> <unclear>line 4, right block, about 8 aksharas, cut off at right edge</unclear>
+
+<unclear>line 5, left block, about 7 aksharas</unclear> <unclear>line 5, right block, about 8 aksharas, cut off at right edge</unclear>
+
+<unclear>line 6, left block, about 7 aksharas</unclear> <unclear>line 6, right block, about 8 aksharas, cut off at right edge</unclear>
+
+<unclear>line 7, left block, about 6 aksharas</unclear> <unclear>line 7, right block, about 7 aksharas, cut off at right edge</unclear>
+
+<unclear>line 8, about 20 aksharas running past the string hole, cut off at right edge</unclear>
+
+<unclear>line 9, about 20 aksharas running past the string hole, cut off at right edge</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, prāṇa, indriya</vocab>

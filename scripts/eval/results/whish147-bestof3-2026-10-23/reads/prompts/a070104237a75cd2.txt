@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. kārttikaṃsaptamitavayā ‖ jñaṃyogaprayogajñanādivānapra ‖ siddhityātyantikamiti
+2. saṅkhyāṃviśuddhiddhaya ‖ nnāhicetadaṣṭātmakajñānamityādivyata ‖ ṣātvaṃjñānabodhikkippa
+3. [illegible] tvaṃjñānaṃyadida ‖ pakṣeviṃśatitabaikaṣṭaṃtalpradhā ‖ naṃprakṛṣārkkamāraṇaṃ
+4. tenaprāpyatei ‖ ttukayāguhyamiṭamaprakāśyaṃsa ‖ cchajanāyendumaisṭa
+5. nadaiyametaditya ‖ ddhaḥparamaṣiṇāsamākhyātami ‖ tikapilamunināpra
+6. kāśitaṃṣityar ‖ ttipraḻayāśityākerayantradbhūta ‖ nāmitiyattujñāne
+7. nadbhutānāṃbrahmādikkaṃbepakṣyatānāṃṣityādayovya ‖ [illegible] ‖ pasarggyakeratrāṇṇa
+8. nānāṃprabodhanānāvastānaṃsthiti ‖ ḥsacaturddaśadhāne ‖ nasyaidavamānuṣaika
+9. [illegible] yākkamumikṣisrūpī [illegible] pā ‖ [illegible] āddhāvatramā ‖ bhetraddhyekomavādbhutaṃ
+
+TRANSCRIPTION B
+1. kārttikaṃsatvādhikatayayā [illegible] ‖ [illegible] sṃyogaprayogajñānādibhāvanapu [illegible] ‖ [illegible] ssilityātvikamiti
+2. sajñāṃviśuddhirddhvaya [illegible] ‖ [illegible] nāhiccetraṣātvajñānamityādivyatraṣa [illegible] ‖ [illegible] ṣṭhātvaṃjñānabo [illegible]
+3. kṣetrajñaṃjñānaṃyadida [illegible] ‖ [illegible] pakṣeviṃśaktirūpaba [illegible] kāññaṃñalprayā ‖ āṃprakṛṣālte [illegible]
+4. ñentaprāpyateḻi ‖ trakayāguhyamiṭamaprakāśyaṃsa ‖ ādhṛjñānāditaista
+5. nāṭeyametaditya ‖ tthaḥparamaṣiṇāsamākhyātami ‖ tikapilamunināpra
+6. kāśitaṃṣityal ‖ tviprayoktintyantayatrabheta ‖ ānāmitiyatrajñāne
+7. ndritānāṃbrahmādikkaṃ ‖ braparyyantānāṃṣityādayovya ‖ pasthāpyatekatetrājña
+8. nānāṃprabandhanāna ‖ āvasthānaṃsthitiṃsacatrijñasthānena ‖ nasthaivamānanmaite
+9. kkiggyānandyauḻi ‖ kkisslipya [illegible] āṟādivānandā ‖ tetraddravaikomaviśuddhatā
+
+TRANSCRIPTION C
+1. kārttikaṃsattvaṣitavyā ‖ [illegible] sṃyogaprayogjñaṃnāṭāvānanda ‖ [illegible] nsiḻutrātrikamiti
+2. sajjatrāṃviśuddhirddaśaya ‖ nnāhicrattaṣātmajñānāmityādivṛttaṣ ‖ ṣārtthaṃjñānabaurkkiṣṭa
+3. kṣetrajñaṃjñānaṃyadida ‖ vakṣoviṃśatitattvabajñakāryyaṃñalpradhā ‖ ānaṃvyakṣārkkairttāṅṅaḻ
+4. ñainaprāptateḻi ‖ trikūkṣāguhmiṭamaprakāśyaṃsa ‖ āyṣṭajinādanṟenna
+5. namaiyametaditya ‖ rtthaḥparamaṣiṇāsamākhyātami ‖ tikapilamunināpra
+6. kāśitaṃṣityeṣ ‖ ttipraḻayāśivityakairayatbhadrata ‖ ānāmitiyatbhjñāne
+7. ndrutānāṃbrahmādīṣkkaṃvaipaśyatānāṃṣitvādayovya ‖ vyapasmādyaikaratetrāḻḻa
+8. nnānāṃprabodhanānāvasthānaṃsthitisacattirsthānena ‖ nasthaidevamānasaṃkaika
+9. ḻgranthamanassuuḻatittissūtraṣakapādyāvatanmāta ‖ tritradevakāmavārddakā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

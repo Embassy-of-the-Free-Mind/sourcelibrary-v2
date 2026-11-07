@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most real commentary words across its rows ("mahākāraṇam asti", "bhedakāraṇam eva", "pravartante", "samantāt"); A's short fragments are sparse but plausible, while B reads continuously yet is mostly made-up syllable strings, especially in rows 3–10.

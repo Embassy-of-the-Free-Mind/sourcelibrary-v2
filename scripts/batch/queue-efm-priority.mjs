@@ -19,7 +19,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { getTranslateModelForBook } from '../lib/translate-core.mjs';
-import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, apiOcrModelForBook } from '../lib/ocr-routing.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 
 const OCR_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
@@ -132,6 +132,9 @@ async function main() {
       continue;
     }
 
+    // #7075: only flash-lite runs on the paid API (this job is read by the Lambda, which calls it).
+    const apiModel = apiOcrModelForBook(book);
+    if (!apiModel) { console.log(`  ${book.id}: routes to ${getOcrModelForBook(book)}, which reads through the agy CLI lane (scripts/batch/cli-ocr.mjs), not the API (#7075) — skipped`); continue; }
     const jobId = nanoid(12);
     await db.collection('jobs').insertOne({
       id: jobId,
@@ -140,7 +143,7 @@ async function main() {
       book_title: book.title,
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
-      config: { page_ids: pageIds, model: getOcrModelForBook(book), language: book.language || 'auto-detect' },
+      config: { page_ids: pageIds, model: apiModel, language: book.language || 'auto-detect' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),

@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
+import { serveEnglishOriginalPage, servesTranscriptionInsteadOfTranslation, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { expandPersonNames } from '@/lib/search/name-variants';
@@ -137,7 +139,7 @@ export async function GET(
     // doc is found we preserve prior behavior (just search pages) rather than 404.
     const gateBook = await db.collection('books').findOne(
       { $or: [{ id: bookId }, { slug: bookId }] },
-      { projection: { id: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1 } }
+      { projection: { id: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION } }
     );
     if (gateBook && !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -245,7 +247,8 @@ export async function GET(
           }
           if (!usedAtlas) pages = await db.collection('pages').aggregate([
             buildPageSearchStage(trimmedQuery, bookId, { nameVariants }),
-            { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
+            // Not a repeat capture (#5056): its leaf is already a hit.
+            { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES }, ...NOT_REPEAT_CAPTURE } },
             // NO { $sort: { page_number: 1 } }, { $limit: 50 }. Atlas returns in
             // score order; re-sorting by page number threw that away and then
             // cut at 50, so on a long book the cap was spent inside the front
@@ -275,6 +278,7 @@ export async function GET(
           const regexFilter: Record<string, unknown> = {
             book_id: bookId,
             page_type: { $nin: NON_CONTENT_PAGE_TYPES },
+            ...NOT_REPEAT_CAPTURE,
             $or: [
               { 'ocr.data': { $regex: regex } },
               { 'translation.data': { $regex: regex } }
@@ -304,7 +308,11 @@ export async function GET(
         }
 
         const results: SearchResult[] = [];
-        for (const page of pages) {
+        for (const rawPage of pages) {
+          // English edition, English leaf: a hit that lives only in the stored
+          // English-to-English rewording is not on the page and is not served
+          // as a snippet (#7100).
+          const page = serveEnglishOriginalPage(rawPage, gateBook, { modernized: false });
           const matches: SearchMatch[] = [];
 
           if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
@@ -402,16 +410,22 @@ export async function GET(
             scoreText.set(p.page_id, cleanText(ocrById.get(p.page_id) || p.snippet));
             rawSemanticScore.set(p.page_id, p.score ?? 0);
           }
-          return kept.map(p => ({
-            pageId: p.page_id,
-            pageNumber: p.page_number,
-            matches: [{
-              field: 'translation' as const,
-              snippet: p.snippet,
-              position: 0,
-            }],
-            ...frontMatterVerdict(ocrById.get(p.page_id)),
-          }));
+          return kept.map(p => {
+            // The lane's snippet is `page_translations.translation`; on an
+            // English edition's English leaf that is the stored rewording, so
+            // the snippet comes from the transcription instead (#7100).
+            const ocr = ocrById.get(p.page_id);
+            const fromOcr = servesTranscriptionInsteadOfTranslation({ ocr: { data: ocr }, translation: { data: p.snippet } }, gateBook);
+            const match: SearchMatch = fromOcr
+              ? { field: 'ocr', snippet: cleanText(ocr || '').slice(0, p.snippet.length), position: 0 }
+              : { field: 'translation', snippet: p.snippet, position: 0 };
+            return {
+              pageId: p.page_id,
+              pageNumber: p.page_number,
+              matches: [match],
+              ...frontMatterVerdict(ocr),
+            };
+          });
         } catch {
           return [];
         }
@@ -502,7 +516,10 @@ export async function GET(
     ];
     const RESULT_CAP = 50;
     const totalMatched = ranked.length;
-    const capped = ranked.slice(0, RESULT_CAP);
+    // `offset` pages through the ranked set (#7624). Without it a book with 382
+    // matching pages showed its first 50 and no way to reach the rest.
+    const offset = Math.max(0, Math.floor(Number(searchParams.get('offset')) || 0));
+    const capped = ranked.slice(offset, offset + RESULT_CAP);
     results.length = 0;
     results.push(...capped);
 
@@ -547,6 +564,7 @@ export async function GET(
       // 50 and assumes that is everything will stop looking too early.
       total: totalMatched,
       returned: results.length,
+      offset,
       ocrPages,
       translationPages,
       front_matter_results: results.filter((r) => r.is_front_matter).length,

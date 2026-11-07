@@ -1,0 +1,11 @@
+ROW 1 | ണൈവബാധിതെന്നു ‖ ഭമവപഞ്ചവിംശതത്വംചനദ്ദ്രാവ്യാഖ്യാതംസ [illegible] ‖ നാനാരോപദേശം[illegible]ദ്ദ്രന്താളി
+ROW 2 | [illegible]ൈഭടദാഃകാര്യ്യവിശേഷാ ‖ ഷാനന്തിക്കാംഏകാജ്ഞംസഖിദ്ദ്രൂണഃകു [illegible] ‖ ക്ലൂലാംഭ്രചക്രലാങ്ങൾക്രസ്ഥവപ്പ
+ROW 3 | ങ്ക [illegible] ഘൂകണ്യല്ലകഞ്ഞാദദാ ‖ ദാംഭൂദാംഭദ്വദ്ദാനാംപ്രമാഃ [illegible] തമിഞാദ്ദ്രാ ‖ ദ്ദ്രാഭ്രാമിനാശദ്ദാഃഖസിമിത
+ROW 4 | ഖാദ്യൂതാശ്ലഷ്ടാദ്രൃക്ഷം ‖ ചെപാദ്യതദഏക്കദ്ദ്രഭഗഃഞത്യാൽമ്മി ‖ മ്മാഷ്യാഃമഹാഭൂഹാംക്കാ
+ROW 5 | നരുശ്വാഭൈശ്രീലദ്ദേ ‖ ലൊദ്ദാരുഭയൊയാദിംശലേഠേഗ്ഗ ‖ ദടെടെശ്രീദടെമടെകെ
+ROW 6 | ന [illegible] സ്ഥിതേ ‖ ാടക്രിരുപ്യംഷാഭൈശ്രഷാദസംസഃ ‖ ഥ്ഃതദപ്രക്രതിംഭൈദാന
+ROW 7 | ഞ്ചമക്ഷിശിസദമദ്രു ‖ ഭരാദ്ദനമാഹംസമബ ‖ ജാൽഭൂതാനാമിടി
+ROW 8 | വർക്കചെതന്നിമബാകൈ ‖ ാനഗമഃഏകജ്ഞാഈനഗ [illegible] ാ ‖ ഹ്രൃൽഃഖലൈകജ്ഞഹ്രൃന്ദ
+ROW 9 | രുദ്രെഭൂദാദഒക്ഷേഷാശൈമ ‖ മശൈമവരൂചാദ്രൂരുംകാദനഭൈന്ദ്രമ്യംബൈഹ ‖ ഹക്ഷടകശൈക്ലിഭൂസാദ്ദിനാം
+ROW 10 | സ്വഖ്ലൂഷിബാഃശൈമാ ‖ ാശരാബാദ്ധിനാക്ഷ്രൽഷിബാഃശൈബടൈ ‖ ടൈശമക്കാരബിബിഷാഹ്യക്ഷേഷി
+NOTE | All four pieces were opened and lined up as 10 rows (left = p01 | middle = p02+p03 | right = p04), but these readings are low-confidence glyph-by-glyph guesses, not a reliable transcription; the images are too small to tell many of the looped conjuncts apart, and only a few words (e.g. പഞ്ചവിംശ…, വ്യാഖ്യാതം, കാര്യ്യ) are fairly secure. The ‖ positions are also approximate.

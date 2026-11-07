@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. vā [illegible] rāṇyavikaiḥ [illegible] tryā [illegible] bhiḥ du [illegible] lyā [illegible] ṣṭavalkṛtyāvitodākāda
+2. lnel [illegible] ṭagāsūyāvi [illegible] yā [illegible] ḻśe [illegible] kadṛ [illegible] yaṣṭū [illegible] ṭānmrūki [illegible] kābhehu
+3. tami [illegible] bhe ‖ [illegible] bheddrā [illegible] ai [illegible] kaiḥ [illegible] ‖ [illegible] vitrādeda
+4. pa [illegible] āca [illegible] ‖ l [illegible] vā [illegible] devi [illegible] lla ‖ [illegible] kaiḥ [illegible] lbha
+5. [illegible] libhi ‖ [illegible] ya [illegible] kai [illegible] ālā [illegible] ‖ bhi [illegible] svā [illegible] llibhi
+6. [illegible] yā ‖ ophabhra [illegible] saga [illegible] bhe [illegible] vṛ [illegible] ‖ devāda [illegible] ki
+7. [illegible] na [illegible] ma ‖ vālddaḥ [illegible] ṭa [illegible] tra [illegible] ga ‖ ya [illegible] kaiḥ [illegible]
+8. la [illegible] tra [illegible] la ‖ [illegible] mavā [illegible] da [illegible] ya ‖ [illegible] pābhrāṃ [illegible] ka
+9. [illegible] bhibhe [illegible] l ‖ [illegible] āsa [illegible] vibhe [illegible] palpa ‖ [illegible] trā [illegible] kai [illegible] bhe
+
+TRANSCRIPTION B
+1. vā [illegible] ndranāna [illegible] vika ‖ kāḥ [illegible] strā [illegible] diḥ du [illegible] jña [illegible] lpyā [illegible] jña ‖ jñaval [illegible] viṭerāka
+2. lna [illegible] gāsahyā ‖ vi [illegible] kṣayā [illegible] l [illegible] ṅka [illegible] yaṣṭa ‖ [illegible] ji [illegible] ko [illegible]
+3. nami [illegible] dre ‖ [illegible] dre [illegible] te [illegible] ḥ ta [illegible] ‖ [illegible] vi [illegible] trā [illegible]
+4. pri [illegible] pādana ‖ tte [illegible] vā [illegible] ra [illegible] vi [illegible] lla ‖ [illegible] ḥ [illegible] r [illegible]
+5. [illegible] ddhya [illegible] ‖ [illegible] ḥ [illegible] lyā [illegible] yu [illegible] ‖ [illegible] sva [illegible] lya [illegible]
+6. [illegible] dva [illegible] ppu ‖ [illegible] bisa [illegible] bhi [illegible] de [illegible] vi [illegible] ‖ dva [illegible] ka [illegible] re [illegible]
+7. tti [illegible] pa [illegible] ma ‖ vāl [illegible] ḥva [illegible] ṭa [illegible] ba [illegible] ga ‖ [illegible] ḥ [illegible]
+8. [illegible] ttha [illegible] bhū ‖ [illegible] kra [illegible] mavā [illegible] de [illegible] śya [illegible] ‖ [illegible] pā [illegible] ṃśrī [illegible] ka
+9. [illegible] li [illegible] kka ‖ [illegible] si [illegible] li [illegible] da [illegible] val [illegible] ‖ [illegible] rkka [illegible] li [illegible]
+
+TRANSCRIPTION C
+1. vākyānāmuśravikaḥlokyāddhādiṭṭaḥduṣṭeṇānuṣṭelyādaṣṭavalkāntyāvimeṭākāṭa
+2. lnālyādilāsyāviśuddhakṣayātiśayalloṣṇakarmaśyaṣṭudādānaśrutikekāloha
+3. tamityatrāmadu ‖ [illegible] duleṭṭālelephāṣṇakkaḥyatrā ‖ gulalavāddhrāleṭe
+4. catusvacādaṭā ‖ llasāmavānadalavitrakkiddhu ‖ kkaḥnokkitannalndha
+5. plakṣmaṛṣitami ‖ kkiyajjukkaḥ [illegible] bhālāuhā ‖ hitrusāguhyaṇi
+6. kāmiśyālayai ‖ ladhannamisabhilalanalaccudhila ‖ dalacādakiṭraki
+7. michanandaśviāma ‖ cālṭṭaḥvaragupraturakraprāmiga ‖ yajñakkaḥrucāmi
+8. laṃkuṣṇalelelesyā [illegible] levā [illegible] lāpābhrāṃtrileddhāka
+9. nyāṃchmileṣṭa [illegible] dānatravilekka [illegible] kkāmiṣṭavalpa [illegible] drāddhrkakṣatile
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,0 +1,11 @@
+ROW 1 | ശക്യഗ്രണത്വം·കാൎയ്യതൈലക്ഷണമാഹ ‖ ചലനെനത്വെഉൽകൎഷണാദിനാം· ‖ ണാൎക്ഷെട്ടദ്ദൃഷ്ടഉദാഹ[illegible]
+ROW 2 | ശ[illegible]പ്രകൃതൌസം·പാദമാക[illegible]നം· ‖ ജ്ഞാത്രാസ്‌·ചാദ്ദിക·പ്രസാര ‖ ണമിത്യൎത്ഥസാമാത്രം·ലെ
+ROW 3 | ക്ഷകാര[illegible]ത്രിത്രചരമാണ്യപരിമാണാദൈദ ‖ നശക്തിവ്യാക്കിപാരണ ‖ ണായഃശക്തെന[illegible]·ശക്ത
+ROW 4 | ശക്തത്വം·സൎവ്വചരി ‖ ത്വം·ഭക്ഷണാദ്രാപ[illegible]ചാദ്ദ്രപത്രിവ്യാക്കിഃ ‖ സിദ്ധ്യാലക്ഷണയുക്തി
+ROW 5 | നിത്യത്വസമ്പാ ‖ ഷം·ലക്ഷണയുക്തിത്രിത്വഇതിസ്‌·ലൊ ‖ നഗതിവ്യാപ്തിപാര
+ROW 6 | ണാഖ്യനത്രഇതി ‖ ത്രകാശാദ്രാപതിവ്യാക്കിപാര ‖ ണായസാംഖ്യവെഷ
+ROW 7 | ഇണത്വത്തിവില ‖ ജ്ഞിണമാഹഷൈാദ്ദൃഷ്ടഇതി ‖ ലൊദ്ദൂടഇതിപ്രതി
+ROW 8 | ദൃഢതാഖ്യൈഗൃഹീണാ[illegible] ‖ ഗൃഹീസ്‌·വെസ്വവിഷയാദിധിഷ്ഠപ്രതി ‖ തിയൊഗാൽടണമിതി·പ്രതി
+ROW 9 | ഷപാപരിതൈഷമൂപായു[illegible] ‖ ടൎഷണാവജ്ഞവാവാവാഹി[illegible]ദ്രവ്യാവതി ‖ ദ്രവ്യസമചാരികാരണമിവ
+ROW 10 | ഭവജ്ജാഇത്രദൃപ്യമവ്വൎ ‖ ദ്രാഗദ്ദ്രാവം·ലക്ഷിതിശബ്ദകരണ ‖ ത്രകാശാദ്രവ്യത്വാക്കി
+NOTE | I could read only a small part of this leaf with confidence. All four pieces are legible as images, but many letters are ambiguous (ത്ര/ത്ത, ദ്ര/ഗ, ണ/ന, ക്ക/ക്ഷ), so most readings are low-confidence stroke guesses. The ‖ joins and how the overlaps were removed are approximate, and these readings should be checked against the images before anyone relies on them.

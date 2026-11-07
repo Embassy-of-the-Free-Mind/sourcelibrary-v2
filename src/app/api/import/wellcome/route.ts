@@ -10,6 +10,8 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
+import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -89,7 +91,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     // Fetch work details from Wellcome Catalogue API
-    const workRes = await fetch(
+    const workRes = await outboundFetch(
       // `languages`, `subjects` and `production` must be requested explicitly —
       // the Wellcome API omits them otherwise, so the language/categories/date
       // fallbacks below silently resolved to 'Unknown' on every import (#4311).
@@ -121,9 +123,8 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch IIIF manifest
     const fetchManifest = async (url: string): Promise<IIIFManifest | NextResponse> => {
-      const res = await fetch(url, {
+      const res = await outboundFetch(url, {
         headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
           'Accept': 'application/json, application/ld+json',
         }
       });
@@ -344,6 +345,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
       method: 'GET',
+      headers: selfCallHeaders(baseUrl),
     }).catch(() => {
       console.log(`[Import] Split check queued for ${bookIdStr}`);
     });

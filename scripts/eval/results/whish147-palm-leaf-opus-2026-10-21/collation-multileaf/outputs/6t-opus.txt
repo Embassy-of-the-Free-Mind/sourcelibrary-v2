@@ -1,0 +1,61 @@
+# Collation of leaf.jpg against SK 17–21
+
+I can read only parts of this leaf with confidence. The image is the left half, so every line breaks off at the right edge. The string hole also splits rows 3–8 into a left block and a right block. Each row reads left block, then right block. Wherever I write "illegible" or "uncertain" below, I could not read the leaf and have not filled the gap from the edition.
+
+## Line by line (rows numbered from the top)
+
+**Row 1 – SK_17a**
+Leaf: *[cut/illegible]-ghātaparārthatvāt triguṇādiviparyayād adhi-[cut]*
+- I read *-tparārthatvāt triguṇādiviparyayād adhi-* fairly clearly.
+- The opening syllables (edition *saṃghāta-*) are faint. I can't confirm *saṃ-*.
+- No differences seen.
+
+**Row 2 – SK_17b → SK_18a**
+Leaf: *kaivalyārthaṃ pravṛtteś ca | janana-maraṇa-[cut]*
+- **Difference:** the leaf has *pravṛtteś* (double ത്ത). The edition prints *pravṛtneś*, which looks like a misprint.
+- *janana-maraṇa* is uncertain: the glyphs after the daṇḍa are partly hidden by a long stroke.
+
+**Row 3 – SK_18b**
+Leaf: *[left block: unclear, possibly …pravṛtteś ca pu-] / [right block] -ruṣabahutvaṃ siddhaṃ [cut]*
+- *puruṣabahutvaṃ siddhaṃ* is clear in the right block.
+- I can't securely read the left block.
+- No differences seen.
+
+**Row 4 – SK_18 end / SK_19a**
+Leaf: *[illegible]ṃ | tasmāc ca vi- / -paryāsāt siddhaṃ sā-[cut]*
+- I read *viparyāsāt* (not *viparyayāt*), which agrees with the edition.
+- *tasmāc ca* is somewhat uncertain.
+- No differences seen.
+
+**Row 5 – SK_19b**
+Leaf: *[kaiva]lyaṃ mādhyasthyaṃ / draṣṭṛtvam akartṛ-[cut]*
+- *mādhyasthyaṃ* is clear.
+- *draṣṭṛtvam* is uncertain because the first akṣaras are blotched.
+- The edition's *kaivalyam* has m, while the leaf seems to have anusvāra (*kaivalyaṃ*). That's only an orthographic variant, and uncertain.
+
+**Row 6 – SK_20a**
+Leaf: *[cut] saṃyogād a- / cetanaṃ cetanā-[cut]*
+- The *cetanaṃ ce-* glyphs are not fully clear.
+- No differences seen.
+
+**Row 7 – SK_20b**
+Leaf: *[left block illegible to me] / -[kart]eva bhavaty udāsīnaḥ*
+- *bhavaty udāsīna(ḥ)* is clear.
+- I can't read the left block, so I can't check *guṇakartṛtve ca tathā*.
+
+**Row 8 – SK_21a**
+Leaf: *[cut] kaivalyārthaṃ / pradhānasya*
+- No differences seen.
+
+**Row 9 – SK_21b (partly)**
+Leaf: something like *…[paṅgvandhava]d ubhayor …* followed by text I can't read.
+- Apart from *ubhayor*, I can't read this row reliably enough to collate it.
+- The edition's "a-ubhayor" is only a hyphenation artifact. The leaf has ordinary sandhi (*-vad ubhayor*), so it isn't a real variant.
+
+**Row 10:** I take this to be commentary, so I haven't transcribed it.
+
+SK_15, 16, 22, 23 and 24 don't appear on the visible part of this leaf.
+
+DIFFERENCES:
+SK_17 | pravṛtneś | pravṛtteś | certain (the edition word is probably a misprint)
+SK_19 | kaivalyam | kaivalyaṃ | uncertain (orthographic only)

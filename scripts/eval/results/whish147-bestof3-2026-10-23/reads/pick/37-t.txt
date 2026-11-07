@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B gives the most coherent Sanskrit, with "ṣoḍaśakāt", "ekaikottaravṛddhyā…utpadyante" and "pratisaṃhitāt", which match the standard Sāṅkhya commentary wording; A is close but garbled in rows 1–2, and C is mostly nonsense syllables.

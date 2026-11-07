@@ -1,0 +1,10 @@
+ROW 1 | വ്യക്തമൊന്തുമഭിത്രത്വഃ[illegible]ന്ത്രാന്ത്രികഃഇതെശിദ്ദ്വസൽപ്പാദാൎന്ദ്യാപ്രധാനാൽ[illegible]ദവ
+ROW 2 | മഹിമകക്ഷ്മൂള്ളത്യകണിമതും.വ്യക്തം.കാരണംബൌദ്ധമിഷ്ടനയാൽഖടാദിയൽകാര്യ
+ROW 3 | ണാഭിചലഉഗ്ഗക‖ാമതുപവിചബി[illegible]ചരിതമവ്യക്തമിത്ര‖[illegible]മിത്യുക്തഃഉതൊണ്ടിടന
+ROW 4 | ജ്ഞനയാൽതവൃ‖മിവ്യക്തം.പ്രാകൊടേശികമിത്യൎത്ഥഃ‖ഒരെടെയം.മാനക്കം.ഒര
+ROW 5 | തദ്വൈഗുണ്യാനകൈ‖ടൈദാനിമതുക്കൃത്രാവൎത്തമാനങ്ങൾ‖ത്രാൽസവ്വ്ഗതനാ.വി
+ROW 6 | പരിതമവ്യക്തം.‖വ്യാമിത്യൎത്ഥാദുടെപാദിമെന്നു‖ത്ര്യജ്ഞലൊകത്തിസ
+ROW 7 | ഷ്ണ്ണദാപക്ഷരോന‖ഷ്ടൽസക്രിയമിതിക്രിയാസബ്ജ‖നാത്രസം.ബദ്ധോമര
+ROW 8 | ഭൂപ്രകൃതം.നിക്കിയൈ‖മഹാത്മഷ്ട്രഖാദാദിമനുഷ്ടചക്ഷ്ടം.വ്യക്ത‖ക്തം.ഒദ്രവാദിസംസെനക്കി
+ROW 9 | ത്രാക്ഷ്ഃമിപകിതെ[illegible]‖വ്യക്തമസംസാരിമിതിക്കുലെലാകൈക്കുന്ത‖ന്ത്രുഖ്യനസംസരതിപ്പ
+NOTE | I read the leaf as 9 rows, and only about half the characters are confident. The ligatures and conjuncts are mostly uncertain, row 1 and rows 3 and 5–7 especially. I joined the overlaps by matching the repeated characters at the cuts. The ‖ marks are only approximate in rows 1–2 and 8–9, which run past the holes, so their exact position at the holes is a guess.

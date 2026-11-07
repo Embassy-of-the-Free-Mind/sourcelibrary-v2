@@ -1,0 +1,11 @@
+I can't read this leaf reliably. The rows below are a best guess, and much of the text is probably wrong.
+
+ROW 1 | ഞ്യാദ്യാവ്യക്തമിലാദ്യഃ ‖ സ്മൃദാരാഖ്യഃഎവചിത്രഭ്രൂപമിതിരെവുനന്ദ്രൂപെ ‖ ദ്രൂപെ)ഷ്യാദ്യൂപ്ലക്ഷണവിത്രഃ
+ROW 2 | മാൽനനമിത്രുപടൈകവ ‖ വഖബന്ദ്രുപന്യാപ്രതീതിമിതിചെനന്ദ്രുവ ‖ ദയനഭിത്ഥിചനപടന്യാപ്രവൃത്തു
+ROW 3 | ക്ഷത്വപ്രസംഗാൽനച്ചന്ദ്രു ‖ ഖവൽസമവെതത്വാപ്രത്യക്ഷത്വപ്ര ‖ യൊഗ്ഗിക്കാം[illegible]വാൽ
+ROW 4 | ത്വൃൎത്ഥപടന്യാവ്യ ‖ ഞ്ഞൊനവപത്രാചിത്രരുചന്ദി ‖ ദ്ധിഃ।തസംലക്ഷയതിതഃ
+ROW 5 | ഒതിഃനസ്യത്വ ‖ ഞ്ഞിവ്യാക്തിവാനന്നാദ്യഗുണ ‖ പാദാനസ്യാദ്ദൃയമാ
+ROW 6 | ഫാവൃമിത്തിബ്ബിഃഞ്ഞു ‖ ത്രയംവിഭജ്ഞാദൗശ്ചബിഃപൃമിദ്യ ‖ മിത്യാഗന്ധലക്ഷ്യ
+ROW 7 | ഇത്രാഭാമിഗന്ധാ ‖ ബാന്തിവ്യാക്തിവാരണൈക്യഗുണചദം ‖ ദംജ്ഞശ്.।ലക്ഷണമാഗതിഃ
+ROW 8 | ജ്ഞൎഭൗതൃണമിവ്യാക്തി ‖ ത്ഥിവാരണൈക്യഗുണൈവദംസംഭാഗാ ‖ ഗാവതിഭ്യാക്തിവാരണൈ
+NOTE | All 8 rows are visible and the pieces line up (hole 1 between p01 and p02, hole 2 between p03 and p04), but my confidence in individual letters is low (maybe 40–60%). Rows 4–6 stop short of the holes, and row 4 has a struck-through stretch I couldn't read under the line. Please treat this as a rough draft and check it against the images.

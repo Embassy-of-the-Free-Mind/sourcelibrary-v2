@@ -18,6 +18,11 @@
 # that slice over its MemoryHigh and the kernel throttled this service with them, so every shadow call
 # timed out (#6821). Startup reads the index into RAM (`load`, not `view`) and takes a minute or two;
 # /health answers once it is ready.
+#
+# OOMScoreAdjust: MemoryMin protects this service from reclaim, not from the kernel's global OOM killer,
+# which picks the largest process on the box, and at ~9 GB that is this one. From 23:47 to 04:07 on
+# 2026-10-27, with the archive lanes and jobs filling l7a's 30 GB, it was killed 41 times. -500 makes the
+# kernel kill a job first; jobs resume from their checkpoints, a reload of this index takes minutes.
 [Unit]
 Description=Source Library page-vector service (in-RAM HNSW over page_translations, #6821)
 After=network-online.target
@@ -32,6 +37,7 @@ Environment=VECTOR_SEARCH_ROOT=/data/vector-search
 Environment=VECTOR_SEARCH_HOST=127.0.0.1
 ExecStart=/usr/bin/node --no-warnings --max-old-space-size=3072 /data/vector-search/app/server.mjs
 Restart=always
+OOMScoreAdjust=-500
 RestartSec=30
 StandardOutput=append:/data/vector-search/logs/server.log
 StandardError=append:/data/vector-search/logs/server.log

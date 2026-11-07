@@ -1,0 +1,31 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script incised on a palm leaf; the language appears to be Sanskrit. A binding cord and string hole cut through the middle of every line. Lines 3–7 are split into two blocks around the hole, and the right edge of the leaf is cut off in the image. Many aksharas are uncertain, so the readings below are tentative.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio with a string hole and binding cord at centre-left. Text continues past the right edge of the image. A leaf number or letter in the left margin and a folio mark at lower right.</meta>
+
+<margin><unclear>൧</unclear></margin>
+
+ഹരിഃ ശ്രീ ഗണപ<unclear>ത</unclear>യേ നമഃ അവിഘ്നമസ്തു
+
+<unclear>ഓ ഭ്രി ക്യൂ ത ക ക്ക</unclear> <unclear>[2-3 aksharas]</unclear> <unclear>രു ഉ ളി ക്ഷേ സാ മ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ദേവവൽ</unclear> <unclear>ന ട്ടു</unclear> … <unclear>ഷ്ണു പദാ</unclear> <unclear>ന്ദ്ര വി</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ക്കഃ തള്ളിയപ്പി</unclear> … <unclear>ത ശ്രുയ</unclear> <unclear>ഹ് ല്പ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>പ്ര ളൂ കിത വി ളു</unclear> … <unclear>ദ്ധ്വ പാദ ദ ദ്രു</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ഢ ന ക്കിയ ക്കവി</unclear> … <unclear>ക ഉ കൊ ന് പ്ര ളൂ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>മ ന മാ ന മ്യ</unclear> … <unclear>ക്ക വ ഷ ണ ക്കേ സ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>പ</unclear> പ്രമാണമിഷ്ട <unclear>പ്ര ക</unclear> <unclear>മയസിദ്ധിഃ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ഷ്ടി ത്രി വിധമ</unclear> <unclear>നമസ്ത മാഖ്യാതം</unclear> <unclear>[cut off]</unclear>
+
+<margin><unclear>൫ ക</unclear></margin>
+
+<vocab>ഹരിഃ ശ്രീ ഗണപതയേ നമഃ, അവിഘ്നമസ്തു, invocation to Gaṇeśa, pramāṇa, siddhi, palm-leaf manuscript, Malayalam script</vocab>

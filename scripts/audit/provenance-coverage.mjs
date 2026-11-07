@@ -67,7 +67,7 @@ async function checkField(db, field) {
     { $limit: SCAN },
     { $project: { id: 1, book_id: 1, [field]: 1 } },
     { $set: { [`${field}.data`]: { $cond: [{ $and: [{ $eq: [{ $type: data }, 'string'] }, { $gt: [{ $strLenBytes: data }, 0] }] }, 'x', data] } } },
-  ]);
+  ]).batchSize(1000);
   const byWriter = new Map();
   let scanned = 0;
   for await (const p of cursor) {

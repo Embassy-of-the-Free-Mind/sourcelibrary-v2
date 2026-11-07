@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C's rows 1–5 read as real Sanskrit from the Kapila–Āsuri story ("punarvarṣasahasre ṛṣistaṃ gatvā tathaivovāca sopi bhagavan rame ityuvāca", "gṛhasthadharmaṃ tyaktvā pravrajitaḥ śiṣyo", "pradattavān", "pradhānaṃ kṣetrajñaḥ puruṣa"), and its rows 6–8 are honestly marked illegible; B fills every row but is mostly meaningless syllables, and A is fragmentary and garbled throughout.

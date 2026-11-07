@@ -1,6 +1,6 @@
 ---
 name: progress
-description: Check pipeline processing progress — all phases including OCR, translation, image extraction, enrichment, and more. Shows real page-level verification, not just job counters. Use when asked "how's it going?", "progress?", "status?", "now?", or any progress check.
+description: Pipeline phase-by-phase progress with page-level verification (OCR, translation, image extraction, enrichment) — is each lane moving, stalled, or failing. Use when asked "progress?", "is the pipeline moving?", "why is X stalled?", or after a pipeline alarm. For a quick mission-level overview, use /status instead.
 ---
 
 # Pipeline Progress Check

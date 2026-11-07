@@ -1,0 +1,22 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on palm leaf (Sanskrit text); this image is a crop of roughly the left quarter of the leaf, so every line is cut off at the right edge and readings are partial</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio, left portion only; a small handwritten mark (possibly a folio number or symbol) stands in the left margin beside line 6; dark smudge/stain at upper left edge of the leaf</meta>
+
+<margin><unclear>൨</unclear></margin>
+
+ശ്രീഗണ<unclear>മവിരബെ</unclear>
+<unclear>ാ</unclear>നന്തടിച<unclear>യിക</unclear>
+പ്രകൃത്തിനവമാ
+ഗുണാസ്സ്<unclear>ഥ</unclear>സമ്യം
+<unclear>ഗുരുവ</unclear>വർണക<unclear>ഠ</unclear>
+<unclear>കവിക</unclear>രാത്രാദ്ര
+<unclear>ലണ</unclear>ഗണാത്മക
+<unclear>വ്യാം</unclear>പരിമാണാ
+ഗാദവിടാശാ<unclear>ന</unclear>
+<unclear>ദ</unclear>ദാഷ്ടവ<unclear>ി</unclear>
+
+<vocab>ശ്രീ, ഗണ, പ്രകൃതി, ഗുണ, സാമ്യം, ഗണാത്മക, പരിമാണ, palm-leaf manuscript, Malayalam script, Sanskrit</vocab>

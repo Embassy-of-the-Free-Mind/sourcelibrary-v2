@@ -1,0 +1,264 @@
+[
+ {
+  "id": "k799c966229",
+  "judged_as": "j08460c1d30",
+  "cell": "de-fraktur-open",
+  "route": "aw",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "k24e7234344",
+  "judged_as": "jebe11dd4dd",
+  "cell": "de-fraktur-open",
+  "route": "aw",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "k43844b4a91",
+  "judged_as": "j716307f8ac",
+  "cell": "de-fraktur-open",
+  "route": "aw",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k8ec1909d9f",
+  "judged_as": "j5f19bfbc48",
+  "cell": "de-fraktur-open",
+  "route": "aw",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k5ec08a5b80",
+  "judged_as": "j807deb8cc2",
+  "cell": "de-fraktur-open",
+  "route": "aw",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k12a8c8eb60",
+  "judged_as": "j328808e6d7",
+  "cell": "de-fraktur-open",
+  "route": "aw",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "kc65c3c045c",
+  "judged_as": "j84f741f90d",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "kf6d48c59db",
+  "judged_as": "j7a8b9cd598",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "kebd3fc4bb6",
+  "judged_as": "j59d888254b",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k0a12c0cf8c",
+  "judged_as": "j3ed0e8799e",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k441bef6b7b",
+  "judged_as": "j3158b79c63",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "kef9c4f7df2",
+  "judged_as": "j5f14c7f616",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "kb3d0c5a001",
+  "judged_as": "jefb1b08d1b",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "k1700427e76",
+  "judged_as": "j5f76d497c5",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "k152f0f8bb8",
+  "judged_as": "j1d78b95e31",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k608234d7fd",
+  "judged_as": "jdfa9d0b520",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k56e53fff61",
+  "judged_as": "jb59f7addac",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k031753919f",
+  "judged_as": "j34433ce4f7",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "kba28fc7c60",
+  "judged_as": "jb57c12fbeb",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+  "other": "6a26d1b1f5273a8d907a00b3"
+ },
+ {
+  "id": "k7e89b9550b",
+  "judged_as": "j986b82728e",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5",
+  "other": "6a4940bbf36483abc5bbc93d"
+ },
+ {
+  "id": "kba28fc7c60",
+  "judged_as": "jb57c12fbeb",
+  "cell": "de-fraktur-open",
+  "route": "b2w",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+  "other": "6a26d1b1f5273a8d907a00b3"
+ },
+ {
+  "id": "k8f9b03ad66",
+  "judged_as": "j03fde2cb93",
+  "cell": "de-fraktur-open",
+  "route": "a2w",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f",
+  "other": "6a26cbab5ac5aecc53cec6f0"
+ },
+ {
+  "id": "kbb000578e0",
+  "judged_as": "j90ceea3e8b",
+  "cell": "de-fraktur-open",
+  "route": "agy-flash-low@4",
+  "kind": "planted",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+  "plant": {
+   "kind": "B",
+   "mode": "line",
+   "line": 21,
+   "offset": 39,
+   "before": "vier",
+   "after": "sechs",
+   "context": "nd aus der Truckene. Dann die vier Haubt-Winde nebenst"
+  }
+ },
+ {
+  "id": "k36e79cc860",
+  "judged_as": "j7918838085",
+  "cell": "de-fraktur-open",
+  "route": "agy-flash-low@4",
+  "kind": "planted",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487",
+  "plant": {
+   "kind": "C",
+   "mode": "line",
+   "line": 27,
+   "offset": 0,
+   "before": "Fürsichtigkeit",
+   "after": "Gerechtigkeit",
+   "context": "Fürsichtigkeit gebrauchen / gut auffmer-"
+  }
+ }
+]

@@ -1,0 +1,44 @@
+{
+ "stage": "sauvola",
+ "id": "8-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T07:48:56.701Z",
+ "finished_at": "2026-10-23T07:49:21.980Z",
+ "secs": 25,
+ "prompt_hash": "ef836994a6f1e9ca",
+ "prompt_file": "reads/prompts/ef836994a6f1e9ca.txt",
+ "images": [
+  {
+   "crop": "8-t-1.jpg",
+   "bytes": 1247047,
+   "sha256": "f62ddb297dbf3f38b95a346dc964f70234f398e2f5480c26df4e3c3c6508a2ec"
+  },
+  {
+   "crop": "8-t-2.jpg",
+   "bytes": 786449,
+   "sha256": "7352ddfa60621e3de3dea78224c56f455cd1948eb23934737b29c5f8da2a06e6"
+  },
+  {
+   "crop": "8-t-3.jpg",
+   "bytes": 804413,
+   "sha256": "ae98d836d12fc31f1c45711f3c8ca15d6bebc7becb8da57916e74d43fd494f4f"
+  },
+  {
+   "crop": "8-t-4.jpg",
+   "bytes": 1077667,
+   "sha256": "4096a14ece8956c557457f95679de02c76a0b3fc6ae6493f585e35094debf965"
+  }
+ ],
+ "usage": {
+  "input": 4,
+  "output": 2048,
+  "cache_read": 6407,
+  "cache_creation": 9130,
+  "turns": 5,
+  "list_cost_usd": 0.11529740000000001
+ }
+}

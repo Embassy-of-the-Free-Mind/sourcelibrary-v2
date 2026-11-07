@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | Where C is legible it gives correct commentary on Sāṅkhyakārikā 14 ("avivekino… cetanāḥ prasavadharmiṇaś ca", "traiguṇyābhāve", "kāraṇaguṇātmakatvāt kāryasyāvyaktam api siddham", "yo guṇaḥ svātmabhūtabhāvo yasya"); A is fluent only in its first rows and turns to nonsense later, and B is garbled throughout.

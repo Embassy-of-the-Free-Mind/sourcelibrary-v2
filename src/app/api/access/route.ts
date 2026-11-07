@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, PurchaseType } from '@/lib/purchases';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 
 /**
  * Check if the current user can download a specific item.
@@ -26,7 +28,7 @@ export async function GET(request: NextRequest) {
   }
 
   const userId = session?.user?.id || null;
-  const isMember = (session?.user as any)?.membership != null;
+  const isMember = sessionHasMemberBenefits(session?.user);
 
   const imageAccess = type === 'book' ? await classifyImageAccess(itemId) : 'open';
 
@@ -35,8 +37,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ allowed: false, reason: 'signin', imageAccess });
   }
 
-  // Stripe disabled → signed-in is sufficient
-  if (!process.env.STRIPE_SECRET_KEY) {
+  // Download charges off → signed-in is sufficient
+  if (!downloadChargesEnabled()) {
     return NextResponse.json({ allowed: true, reason: 'free', imageAccess });
   }
 

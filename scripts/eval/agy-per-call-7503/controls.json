@@ -1,0 +1,40 @@
+{
+ "seed": 75031,
+ "controls": [
+  {
+   "page_id": "6a3cb7ca3dce6cfad74884ad",
+   "book_id": "6a3cb7ca3dce6cfad748848f",
+   "page_number": 30,
+   "kind": "drop",
+   "neighbour_id": "6a3cb7ca3dce6cfad74884ae"
+  },
+  {
+   "page_id": "6a3cb54257c1f37219c48251",
+   "book_id": "6a3cb54257c1f37219c48237",
+   "page_number": 26,
+   "kind": "drop",
+   "neighbour_id": "6a3cb54257c1f37219c48252"
+  },
+  {
+   "page_id": "6a3c618c879008ba7e15ef34",
+   "book_id": "6a3c618c879008ba7e15ef04",
+   "page_number": 48,
+   "kind": "drop",
+   "neighbour_id": "6a3c618c879008ba7e15ef35"
+  },
+  {
+   "page_id": "6a3c6ba039b4508b04e44a8d",
+   "book_id": "6a3c6ba039b4508b04e44a57",
+   "page_number": 54,
+   "kind": "bleed",
+   "neighbour_id": "6a3c6ba039b4508b04e44a8e"
+  },
+  {
+   "page_id": "6a3cf0b18642f0445b166a50",
+   "book_id": "6a3cf0b18642f0445b1669d7",
+   "page_number": 121,
+   "kind": "bleed",
+   "neighbour_id": "6a3cf0b18642f0445b166a51"
+  }
+ ]
+}

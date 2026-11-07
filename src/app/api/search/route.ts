@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { getReadDb } from '@/lib/mongodb';
 import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
@@ -23,12 +25,19 @@ import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { asksForOneVolume, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { fetchTranslatedEditions, namesOneVolume, readabilityTier, TIER_READABLE, type ReadabilitySource } from '@/lib/search/readable-edition';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence, ROLLUP_BUCKETS, type BookPageCount } from '@/lib/search/page-rollup';
 import { keywordSearchMode, callKeywordLane, serveKeywordPages, indexOfWord, buildKeywordShadow, liveBookSet, type KeywordLaneParams, type KeywordLaneResult, type KeywordShadow } from '@/lib/keyword-search';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
 import { phraseMatch } from '@/lib/passage-score';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
+import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
+import { NATIVE_EDITION_LANGUAGE } from '@/lib/localized';
+import { foldSimplifiedHan } from '@/lib/search/han-fold';
+import { locateQuery } from '@/lib/search/original-snippet';
+import { wordStartHits } from '@/lib/search/match-quality';
 
 export const preferredRegion = 'fra1';
 
@@ -125,6 +134,21 @@ function snippetAt(cleaned: string, start: number, end: number, contextChars = 1
   return (from > 0 ? '...' : '') + cleaned.slice(from, to) + (to < cleaned.length ? '...' : '');
 }
 
+/**
+ * The excerpt for a row on an original-text request (#7175): the page's own
+ * text, cut around the query. Latin pages are matched with u/v, i/j, ſ and
+ * ae/æ folded, so `universum` finds `vniuersum`; the excerpt keeps the page's
+ * spelling. No OCR → no excerpt, never the English in its place.
+ */
+function originalSnippet(ocr: unknown, query: string, bookLanguage: unknown, hit?: string): string {
+  const cleaned = cleanText(typeof ocr === 'string' ? ocr : '');
+  if (!cleaned) return '';
+  const latin = typeof bookLanguage === 'string' && NATIVE_EDITION_LANGUAGE.la.test(bookLanguage);
+  const span = locateQuery(cleaned, query, { latin, hit });
+  if (span) return snippetAt(cleaned, span[0], span[1]);
+  return cleaned.slice(0, 300) + (cleaned.length > 300 ? '...' : '');
+}
+
 interface PassagePhrase { match: number; start: number; end: number; field: 'translation' | 'ocr'; text: string }
 
 /**
@@ -155,8 +179,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
   const _searchStart = Date.now();
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('q') || '';
-    const language = searchParams.get('language');
+    const typedQuery = searchParams.get('q') || '';
+    // Every lane below matches the corpus's traditional characters. The log keeps what was typed.
+    const query = foldSimplifiedHan(typedQuery);
+    let language = searchParams.get('language');
     const languagesParam = searchParams.get('languages');
     const excludeLanguagesParam = searchParams.get('exclude_languages');
     const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
@@ -173,7 +199,34 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // straight back to English (i18n.md, "an /es URL is a promise"). A result
     // the reader cannot open in their language is worse than no result.
     const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
-    const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    // An ORIGINAL-text locale (`/la`, `/zh`, `/nl`; #7175) has no translated
+    // edition to search: nothing is translated into Latin or Chinese, so
+    // `pages_translated_la` is 0 on every book and this request used to come
+    // back empty, silently. Such a reader wants books WRITTEN in the language,
+    // quoted in it. So `lang=la` means `language=Latin&text=original` here, and
+    // a `language` that contradicts it is refused rather than answered empty.
+    const originalLocale = readsOriginal(langParam as Locale) ? NATIVE_SHELF_LANGUAGE[langParam as 'la' | 'nl' | 'zh'] : undefined;
+    if (originalLocale) {
+      if (language && language !== originalLocale) {
+        return NextResponse.json({
+          error: `lang=${langParam} searches books written in ${originalLocale}; it cannot be combined with language=${language}`,
+          results: [], total: 0,
+        }, { status: 400 });
+      }
+      language = originalLocale;
+    }
+    // `text=original` (#7175): quote each page in its own language (the OCR),
+    // never the English translation. A flag, not a new meaning for `lang`,
+    // because `lang` names an edition and the original is not one.
+    const textParam = searchParams.get('text');
+    if (textParam !== null && textParam !== 'original' && textParam !== 'translation') {
+      return NextResponse.json({
+        error: `text must be "original" or "translation", not "${textParam}"`,
+        results: [], total: 0,
+      }, { status: 400 });
+    }
+    const originalText = !!originalLocale || textParam === 'original';
+    const textLang = originalLocale ? 'en' : /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
     const isLocalizedSearch = textLang !== 'en';
     const editionCounter = `pages_translated_${textLang}`;
     const category = searchParams.get('category'); // Category filter
@@ -338,6 +391,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       return filters;
     }
 
+    const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 };
+
     // Helper: convert book document to search result
     function bookToResult(typedBook: Book): SearchResult {
       const summaryText = (typedBook as any).reading_summary?.overview
@@ -359,8 +414,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         is_first_translation: !!(typedBook as any).is_first_translation,
         doi: typedBook.doi,
         categories: typedBook.categories,
-        summary: summaryText ? extractSnippet(summaryText, matchQuery) : undefined,
-        snippet_type: summaryText ? 'summary' : undefined,
+        // The summary is English prose; an original-text request gets none (#7175).
+        summary: summaryText && !originalText ? extractSnippet(summaryText, matchQuery) : undefined,
+        snippet_type: summaryText && !originalText ? 'summary' : undefined,
         thumbnail: (typedBook as any).thumbnail,
         thumbnail_blob: (typedBook as any).thumbnail_blob,
         quality_score: (typedBook as any).quality_score,
@@ -475,7 +531,6 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -642,7 +697,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
           const pagePipeline = (stage: ReturnType<typeof buildPageSearchStage>, max: number) => [
             stage,
-            { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
+            { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES }, ...NOT_REPEAT_CAPTURE } },
             { $limit: max },
             {
               $project: {
@@ -904,7 +959,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // filters admit, whatever the search stage was handed (#5921).
             // A `book_id` search names its one book and keeps the old lookup.
             { id: { $in: pageBookIds }, ...(bookId ? (tenantId ? { tenantId } : {}) : buildBookFilters()) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -912,9 +967,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         }
       }
 
-      for (const page of pageDocs) {
-        const book = bookMap.get(page.book_id as string);
+      for (const rawPage of pageDocs) {
+        const book = bookMap.get(rawPage.book_id as string);
         if (!book) continue;
+        // English edition, English leaf: the stored English "translation" is a
+        // rewording, never a snippet of the page (#7100).
+        const page = serveEnglishOriginalPage(rawPage, book, { modernized: false });
+        const withheld = page !== rawPage;
         if ((book as any).hidden === true) continue;
         if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
@@ -922,7 +981,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // Prefer Atlas Search highlights (faster, more precise) over full-text extraction
         let snippet = '';
         let snippetType: 'translation' | 'ocr' = 'ocr';
-        const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
+        const highlights = (page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined)
+          ?.filter(h => !(withheld && h.path === 'translation.data'));
         if (highlights && highlights.length > 0) {
           // Prefer translation highlights over OCR
           const translationHL = highlights.find(h => h.path === 'translation.data');
@@ -952,9 +1012,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // together, which is the place the page was ranked on. Same cleaned
         // text as extractSnippet reads, so no editorial wrapper can come back.
         const phrase = (page as { _phrase?: PassagePhrase })._phrase;
-        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN) {
+        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN && !(withheld && phrase.field === 'translation')) {
           snippet = snippetAt(phrase.text, phrase.start, phrase.end);
           snippetType = phrase.field;
+        }
+
+        // Original-text request (#7175): the page's own text, whichever field
+        // Atlas highlighted. Its OCR hit, when it has one, is where to cut.
+        if (originalText) {
+          const ocrHit = highlights?.find(h => h.path === 'ocr.data')?.texts.find(t => t.type === 'hit')?.value;
+          snippet = originalSnippet(page.ocr?.data, matchQuery, book.language, ocrHit);
+          snippetType = 'ocr';
         }
 
         const pageResult: SearchResult = {
@@ -1023,7 +1091,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // language / languages / exclude_languages, and since #5921
             // category, has_doi, has_translation, first_translation, library.
             { id: { $in: semanticBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -1055,8 +1123,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             has_doi: !!(book as any).doi,
             doi: (book as any).doi,
             categories: book.categories as string[],
-            summary: summaryText ? extractSnippet(summaryText, matchQuery) : undefined,
-            snippet_type: summaryText ? 'summary' : undefined,
+            summary: summaryText && !originalText ? extractSnippet(summaryText, matchQuery) : undefined,
+            snippet_type: summaryText && !originalText ? 'summary' : undefined,
             thumbnail: book.thumbnail as string | undefined,
             thumbnail_blob: book.thumbnail_blob as string | undefined,
             quality_score: (book as any).quality_score,
@@ -1086,13 +1154,28 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       )];
 
       const pageBookMap = new Map<string, any>();
+      // Original-text request (#7175): the semantic lane's snippet is the
+      // English translation for any page that has one, so read the OCR.
+      const ocrByPage = new Map<string, string>();
+      if (originalText && pageBookIds.length > 0) {
+        const pageIds = semanticPageDocs.map(s => s.page_id).filter(Boolean);
+        try {
+          const docs = await db.collection('pages')
+            .find({ id: { $in: pageIds } }, { projection: { _id: 0, id: 1, 'ocr.data': 1 } })
+            .maxTimeMS(3000)
+            .toArray();
+          for (const d of docs) ocrByPage.set(d.id as string, ((d.ocr as { data?: string } | undefined)?.data) || '');
+        } catch {
+          degradedLanes.push('semantic_page_text');
+        }
+      }
       if (pageBookIds.length > 0) {
         const semPageBooks = await db.collection('books')
           .find(
             // Same object as every other lane (#5921): a vector lane has no
             // metadata predicate, so what is not re-applied here leaks.
             { id: { $in: pageBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -1134,9 +1217,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           doi: book.doi,
           categories: book.categories,
           page_number: sp.page_number,
-          snippet: sp.snippet,
+          snippet: originalText ? originalSnippet(ocrByPage.get(sp.page_id), matchQuery, book.language) : sp.snippet,
           // An original-text row's snippet is the page's own language (#5729).
-          snippet_type: sp.snippet_type === 'ocr' ? 'ocr' as const : 'translation' as const,
+          snippet_type: originalText || sp.snippet_type === 'ocr' ? 'ocr' as const : 'translation' as const,
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
@@ -1179,6 +1262,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       const ENGLISH = 'English';
       const queryLower = matchQuery.toLowerCase();
       const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
+      const namedAsWords = (r: SearchResult) =>
+        wordStartHits(matchQuery, `${r.display_title || ''} ${r.title} ${r.author || ''}`);
 
       // The legacy heuristic ladder. Used directly for ranking=ladder, and as
       // the tiebreaker when ranking=rrf (so equal fused scores still get a
@@ -1247,6 +1332,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aAuthorHits = authorHits(a);
         const bAuthorHits = authorHits(b);
         if (aAuthorHits !== bAuthorHits) return bAuthorHits - aAuthorHits;
+
+        // 2c'. A row that carries the query as a word before one that holds it
+        // inside a longer word (#8309). Rung 2 counts substrings, so "Getica"
+        // tied *Romana et Getica* with every *exegetica* and *apologetica*, and
+        // the tie fell to "older first": rank 71 of 100.
+        const aNamed = namedAsWords(a);
+        const bNamed = namedAsWords(b);
+        if (aNamed !== bNamed) return bNamed - aNamed;
 
         // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
@@ -1362,6 +1455,49 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const collapsed = collapseByWork(results, { getIdentity: identityOf, betterRepresentative });
     let dedupedResults: SearchResult[] = collapsed.results;
 
+    // A work in many volumes opens at its first (#8035). The row shows whichever volume the
+    // lanes ranked highest, which for 佩文韻府 can be volume 412 of 728. Only for a work the
+    // 四部 catalogue names, only when the reader did not ask for a volume, and only through the
+    // same filters as every other row, so a volume this search may not show is never swapped in.
+    // English search keeps a volume that has more English than the first (#5975).
+    if (!pagesOnly && sortBy === 'relevance' && !asksForOneVolume(query)) {
+      const groupsByPrimary = new Map([...collapsed.byKey.values()].map(g => [g.primary, g]));
+      const leadBySlot = new Map<number, { group: (typeof collapsed.groups)[number] | undefined; first: string; workId: string }>();
+      dedupedResults.slice(offset, offset + limit).forEach((r, i) => {
+        if (r.type !== 'book') return;
+        const workId = (r as any)._work_id as string | undefined;
+        const first = sibuRowForWork(workId)?.first;
+        if (workId && first && first !== r.slug && first !== r.id) {
+          leadBySlot.set(offset + i, { group: groupsByPrimary.get(r), first, workId });
+        }
+      });
+      if (leadBySlot.size > 0) {
+        const firsts = [...leadBySlot.values()].map(s => s.first);
+        const docs = await db.collection('books')
+          .find({ $and: [buildBookFilters(), { $or: [{ slug: { $in: firsts } }, { id: { $in: firsts } }] }] })
+          .project(bookProjection)
+          .maxTimeMS(2000)
+          .toArray()
+          .catch(() => []);
+        const docByKey = new Map<string, Book>();
+        for (const d of docs as unknown as Book[]) {
+          docByKey.set(d.id, d);
+          const slug = (d as any).slug as string | undefined;
+          if (slug) docByKey.set(slug, d);
+        }
+        dedupedResults = [...dedupedResults];
+        for (const [slot, { group, first, workId }] of leadBySlot) {
+          const doc = docByKey.get(first);
+          const current = dedupedResults[slot];
+          if (!doc || doc.work_id !== workId) continue;
+          if (!isLocalizedSearch && (doc.pages_translated ?? 0) < (current.translated_count ?? 0)) continue;
+          const lead = bookToResult(doc);
+          dedupedResults[slot] = lead;
+          if (group) group.primary = lead;
+        }
+      }
+    }
+
     // Asked-for diversity on a passage list (MCP search_translations, #3895):
     // re-order, never drop. No score is passed: the list is fused from lanes
     // whose scores do not compare, so the caps are absolute.
@@ -1403,7 +1539,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // fan-out above, for the same reasons, plus localized requests: the link
     // promises an English translation.
     const pageSlice = dedupedResults.slice(offset, offset + limit);
-    const unreadableRows = pagesOnly || isLocalizedSearch ? [] : pageSlice
+    const unreadableRows = pagesOnly || isLocalizedSearch || originalText ? [] : pageSlice
       .filter(r => r.type === 'book' && ((r as any)._readability ?? TIER_READABLE) > TIER_READABLE)
       .map(r => ({ bookId: r.book_id, workId: (r as any)._work_id as string | undefined }));
     const translatedEditions = unreadableRows.length > 0
@@ -1469,11 +1605,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       tenantId,
       // `lang` is recorded so Spanish demand is measurable — without it a
       // localized search is indistinguishable from an English one in the log.
-      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: textLang },
+      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: originalLocale ? langParam : textLang },
     });
 
     logSearchQuery({
-      request, identity, route: 'search', query,
+      request, identity, route: 'search', query: typedQuery,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
       vector_shadow: vectorShadow.result,
@@ -1507,6 +1643,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       license: CONTENT_LICENSE,
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),
+      ...(originalText ? { text: 'original' } : {}),
       filters: {
         language,
         category,

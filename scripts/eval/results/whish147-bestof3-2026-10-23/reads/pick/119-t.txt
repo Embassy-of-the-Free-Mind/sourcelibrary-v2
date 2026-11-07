@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads most consistently as a Tarkasaṃgraha-style passage on ākāśa, kāla and dik, mixing Sanskrit and Malayalam: "parimāṇavatvaṃ triyāvatvaṃ vā vibhutvādeva", "nimittakāraṇaṃ", "nāluṃ lakṣaṇaññaḷ", "jñānaṃ viṭukkunnu". B has some good stretches ("kālopalabdhyai", "nimittakāraṇaṃ") but is more garbled, and C breaks down most often, especially in rows 6–8.

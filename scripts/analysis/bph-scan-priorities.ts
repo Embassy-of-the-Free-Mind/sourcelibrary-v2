@@ -114,7 +114,7 @@ async function main() {
     const cursor = db.collection(cn).find(
       { content_type: { $ne: 'artwork' } },
       { projection: { _id: 0, title: 1, author: 1, year: 1, published: 1, 'image_source.provider': 1 } },
-    );
+    ).batchSize(1000);
     for await (const b of cursor) {
       const k = keys(b.title, b.author, editionYear(b));
       const src = `${cn}:${b.image_source?.provider || 'unknown'}`;
@@ -130,7 +130,7 @@ async function main() {
     // run of this script projected the wrong fields, got zero edition keys out
     // of 3.5M candidates, and the positive control below is what caught it.
     { projection: { _id: 0, title: 1, author: 1, date_earliest: 1, date_text: 1, source: 1 } },
-  );
+  ).batchSize(1000);
   for await (const cRow of candCursor) {
     const raw = (cRow as { date_earliest?: unknown }).date_earliest;
     const yearNum = raw == null || raw === '' || Number.isNaN(Number(raw)) ? null : Number(raw);

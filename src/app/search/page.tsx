@@ -11,13 +11,16 @@ import {
 } from 'lucide-react';
 import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import { useLocale, useLocalePath } from '@/lib/i18n';
-import type { Locale } from '@/lib/locale-path';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
+import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { SEARCH_STRINGS, EXAMPLE_QUERIES, type SearchStrings } from '@/lib/search-i18n';
 import { artworkTypeLabel } from '@/lib/artwork-record';
-import { localizedCollection } from '@/lib/localized';
+import { displayPublished } from '@/lib/publication-date';
+import { hasLocalizedCollectionName, localizedCollection, localizedTitle } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { useEmbed } from '@/lib/EmbedContext';
+import { useEmbed, useRoomResultHref } from '@/lib/EmbedContext';
 import { useIsEmbedded, useIsTenantHost } from '@/hooks/useEmbedContext';
+import { catalogueHref } from '@/lib/tenant-global-paths';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -106,6 +109,13 @@ interface BphCatalogMatch {
 
 type ViewMode = 'unified' | 'books' | 'index' | 'images';
 
+/** Locale prefix, then the room's: a result link must not leave /embed/<tenant> (#8047). */
+function useResultHref(): (href: string) => string {
+  const lp = useLocalePath();
+  const room = useRoomResultHref();
+  return (href: string) => room(lp(href));
+}
+
 export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang: langProp }: { defaultLibrary?: string; forceEmbedded?: boolean; lang?: Locale } = {}) {
   const router = useRouter();
   const { tenant } = useParams<{ tenant: string }>();
@@ -128,7 +138,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const urlLocale = useLocale();
   const lang: Locale = langProp ?? urlLocale;
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  // Sign-in has no /embed route: it stays off the room until EFM settles auth (#7702).
+  const signInPath = useLocalePath();
+  const lp = useResultHref();
   const nf = (n: number) => n.toLocaleString(t.numberLocale);
 
   // A localized surface gets only the lanes that can answer in its language.
@@ -140,7 +152,12 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // and LABELLED, because the images are the content.
   const localized = lang !== 'en';
   const defaultMode: ViewMode = localized ? 'books' : 'unified';
-  const langParam = localized ? lang : undefined;
+  // An original-text locale (`/la`, `/zh`, #7175) has no translated edition to
+  // ask for: it searches books WRITTEN in its language and quotes their own
+  // text. So it sends `language=<native>&text=original` and never `lang=`,
+  // and every card opens at `/la/book/…`, which serves exactly those books.
+  const nativeLanguage = readsOriginal(lang) ? NATIVE_SHELF_LANGUAGE[lang as keyof typeof NATIVE_SHELF_LANGUAGE] : undefined;
+  const langParam = localized && !nativeLanguage ? lang : undefined;
 
   // `?mode=` is user-supplied, so the clamp lives here rather than only in the
   // tab list: a hand-typed /es/search?mode=unified must not render the English
@@ -216,7 +233,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   );
 
   // Filters
-  const hasInitialFilters = !!(searchParams.get('language') || searchParams.get('category') || searchParams.get('collection') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('work_from') || searchParams.get('work_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
+  const hasInitialFilters = !!((!nativeLanguage && searchParams.get('language')) || searchParams.get('category') || searchParams.get('collection') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('work_from') || searchParams.get('work_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
   const [showFilters, setShowFilters] = useState(hasInitialFilters);
   const [language, setLanguage] = useState(searchParams.get('language') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
@@ -335,10 +352,14 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
     collectionsApi.list().then((colData) => {
       if (colData.collections) {
-        setCollectionsList(colData.collections);
+        // An original-text site lists a shelf once it has a name in that language
+        // (#8035), so a reader of /zh never gets a pill in English.
+        setCollectionsList(readsOriginal(lang)
+          ? colData.collections.filter((c: Collection) => hasLocalizedCollectionName(c, lang))
+          : colData.collections);
       }
     }).catch(() => { });
-  }, [t]);
+  }, [t, lang]);
 
   // Track current narration/terms in refs so startAiStream doesn't need them as deps
   const aiNarrationRef = useRef(aiNarration);
@@ -672,7 +693,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         if (language) semanticParams.set('language', language);
         if (dateFrom) semanticParams.set('year_min', dateFrom);
         if (dateTo) semanticParams.set('year_max', dateTo);
-        fetch(`/api/search/semantic?${semanticParams.toString()}`)
+        // A raw fetch, so it gets neither the client's tenant header nor its cache
+        // key: without these the room's search showed the whole library's books.
+        if (tenant) semanticParams.set('tenant', tenant);
+        fetch(`/api/search/semantic?${semanticParams.toString()}`, tenant ? { headers: { 'X-Tenant-Slug': tenant } } : undefined)
           .then(r => {
             // A non-200 (timeout, 5xx) must NOT be parsed as an empty result set —
             // r.json() on an error body yields {} → [], silently hiding held editions.
@@ -756,7 +780,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // request to books that HAVE that edition, so every card links to a
           // page the reader can actually open (#4095).
           lang: langParam,
-          language: language || undefined,
+          language: nativeLanguage ?? (language || undefined),
+          text: nativeLanguage ? 'original' : undefined,
           category: category || undefined,
           date_from: dateFrom || undefined,
           date_to: dateTo || undefined,
@@ -810,7 +835,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, resultsPerPage, langParam, t]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, resultsPerPage, langParam, nativeLanguage, t]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
     const params = new URLSearchParams();
@@ -901,11 +926,12 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // it. A control the current lane ignores is not shown: it would change the
   // URL and light the active-filter dot while the results stayed put (#3401).
   const lane = searchLane(isBrowseMode, viewMode);
-  const can = (filter: SearchFilterKey) => laneHonours(lane, filter);
+  // The language is fixed on an original-text locale (#7175): no control for it.
+  const can = (filter: SearchFilterKey) => !(nativeLanguage && filter === 'language') && laneHonours(lane, filter);
   const prefetchUsed = useRef(false);
   const performBrowse = useCallback(async () => {
     // Check for prefetched data from homepage (instant load for common views)
-    if (!prefetchUsed.current && typeof window !== 'undefined' && offset === 0 && !language && !category && !collection && !library && !workPeriod && browseSortBy === 'recent-translation') {
+    if (!prefetchUsed.current && typeof window !== 'undefined' && offset === 0 && !nativeLanguage && !language && !category && !collection && !library && !workPeriod && browseSortBy === 'recent-translation') {
       const prefetch = (window as any).__BROWSE_PREFETCH;
       const prefetchTs = (window as any).__BROWSE_PREFETCH_TS;
       const key = firstTranslation ? 'first_translation' : hasTranslation ? 'has_translation' : null;
@@ -921,7 +947,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
     setBrowseError(false);
     try {
       const data = await searchApi.browse({
-        language: language || undefined,
+        // Browse cards open at `/la/book/…` too, so the same native shelf (#7175).
+        language: nativeLanguage ?? (language || undefined),
         category: category || undefined,
         collection: collection || undefined,
         library: library || undefined,
@@ -946,7 +973,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
     } finally {
       setBrowseLoading(false);
     }
-  }, [language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, resultsPerPage, workPeriod, workRange]);
+  }, [language, nativeLanguage, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, resultsPerPage, workPeriod, workRange]);
 
   useEffect(() => {
     if (isBrowseMode && viewMode !== 'images') {
@@ -1420,7 +1447,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
             <h2 className="text-2xl font-serif font-medium text-primary mb-2">{t.signInHeading}</h2>
             <p className="text-secondary mb-6">{t.signInBody}</p>
-            <Link href={`${lp('/auth/signin')}?callbackUrl=${lp('/search')}&reason=limit`}
+            <Link href={`${signInPath('/auth/signin')}?callbackUrl=${signInPath('/search')}&reason=limit`}
               className="inline-block px-6 py-3 rounded-xl bg-accent-rust text-white font-medium hover:bg-accent-rust/90 transition-colors">
               {t.signInCta}
             </Link>
@@ -1561,9 +1588,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                     </select>
                     <span>{t.perPage}</span>
                   </div>
-                  {/* /catalog has no localized twin; localePath returns it
+                  {/* The catalogue has no localized twin; localePath returns it
                       untouched, which is the honest outcome (i18n.md rule 5). */}
-                  <Link href={lp('/catalog')} className="text-sm text-accent-rust hover:underline">
+                  <Link href={lp(catalogueHref(isTenantSurface))} className="text-sm text-accent-rust hover:underline">
                     {t.browseFullCatalog}
                   </Link>
                 </div>
@@ -1819,7 +1846,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </>
           );
 
-          const bookSection = (
+          const conceptualSection = (
             <>
               {semanticDegraded && !semanticLoading && (
                 <p className="text-xs text-muted italic mt-2">{t.semanticDegraded}</p>
@@ -1833,6 +1860,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               {uniqueSemantic.map((sem: any) => (
                 <SemanticResultCard key={sem.book_id} result={sem} query={query} />
               ))}
+            </>
+          );
+
+          const textMatchSection = (
+            <>
               {hasBoth && (
                 <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
@@ -1961,7 +1993,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                   ))}
                   {catalogTotal > 5 && (
                     <Link
-                      href={`${lp('/catalog')}?cq=${encodeURIComponent(query)}`}
+                      href={`${lp(catalogueHref(isTenantSurface))}?${isTenantSurface ? 'cq' : 'q'}=${encodeURIComponent(query)}`}
                       className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1"
                     >
                       {t.openAllCatalogueMatches(nf(catalogTotal))} <ChevronRight className="w-3.5 h-3.5" />
@@ -1992,33 +2024,29 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </div>
           );
 
+          // The query names what a keyword result IS (every word in its title or
+          // author, or an author page by that name): the reader came for that book,
+          // so it leads, ahead of essays about the subject and books like it.
+          const namesAKeywordResult = bookResults.length > 0 && (
+            namedLinks.some(r => r.page_type === 'author')
+            || assessMatchQuality(query, bookResults.map(b => [b.title, b.display_title, b.author].filter(Boolean).join(' '))) === 'strong'
+          );
+          const leadWithTextMatches = namesAKeywordResult && displayHint !== 'images_first';
+
           return (
             <div className="space-y-3">
               {weakMatchBanner}
               {namedSection}
+              {leadWithTextMatches && textMatchSection}
               {passageSection}
               {collectionCards}
               {siteSection}
               {narrationBlock}
-              {displayHint === 'images_first' ? (
-                <>
-                  {imageStrip}
-                  {bookSection}
-                  {catalogSection}
-                </>
-              ) : displayHint === 'not_in_collection' ? (
-                <>
-                  {bookSection}
-                  {catalogSection}
-                  {imageStrip}
-                </>
-              ) : (
-                <>
-                  {bookSection}
-                  {catalogSection}
-                  {imageStrip}
-                </>
-              )}
+              {displayHint === 'images_first' && imageStrip}
+              {conceptualSection}
+              {!leadWithTextMatches && textMatchSection}
+              {catalogSection}
+              {displayHint !== 'images_first' && imageStrip}
             </div>
           );
         })()}
@@ -2185,7 +2213,7 @@ function cleanSnippet(text: string): string {
  */
 function WorkEditionsLink({ group }: { group: NonNullable<SearchResult['work_group']> }) {
   const t = SEARCH_STRINGS[useLocale()];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   return (
     <div className="px-4 pb-3 -mt-1">
       <Link
@@ -2208,7 +2236,7 @@ function WorkEditionsLink({ group }: { group: NonNullable<SearchResult['work_gro
  */
 function TranslatedEditionLink({ edition }: { edition: NonNullable<SearchResult['translated_edition']> }) {
   const t = SEARCH_STRINGS[useLocale()];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const title = edition.title.length > 80 ? `${edition.title.slice(0, 79).trimEnd()}…` : edition.title;
   return (
     <div className="px-4 pb-3 -mt-1">
@@ -2224,12 +2252,21 @@ function TranslatedEditionLink({ edition }: { edition: NonNullable<SearchResult[
   );
 }
 
+/**
+ * The title on a result card. An original-text site shows the book's own title,
+ * as its book pages do; everywhere else keeps the English gloss.
+ */
+function searchCardTitle(result: Pick<SearchResult, 'title' | 'display_title'>, lang: Locale): string {
+  return readsOriginal(lang) ? localizedTitle(result, lang) : (result.display_title || result.title);
+}
+
 function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: { result: SearchResult; query: string; tenant?: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
   const lang = useLocale();
+  const original = readsOriginal(lang);
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = cleanSnippet(result.snippet || result.summary || '');
   const [imgError, setImgError] = useState(false);
@@ -2247,13 +2284,18 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
       // In-book search reads the language-keyed page store, same as the
       // result lane above it — otherwise the card quotes English passages
       // under a Spanish snippet.
-      const res = await fetch(`/api/books/${result.book_id}/search?q=${encodeURIComponent(query)}&lang=${lang}`);
+      // An original-text locale reads the page's own text (#7175): there is
+      // no Latin or Chinese edition in that store, so it asks the default
+      // lane and quotes the OCR match.
+      const res = await fetch(`/api/books/${result.book_id}/search?q=${encodeURIComponent(query)}&lang=${original ? 'en' : lang}`);
       if (!res.ok) throw new Error('Search failed');
       const data = await res.json();
       const matches: PassageMatch[] = (data.results || [])
         .slice(0, 5)
         .map((r: any) => {
-          const best = r.matches?.find((m: any) => m.field === 'translation') || r.matches?.[0];
+          const best = original
+            ? r.matches?.find((m: any) => m.field === 'ocr')
+            : r.matches?.find((m: any) => m.field === 'translation') || r.matches?.[0];
           return {
             pageNumber: r.pageNumber,
             snippet: cleanSnippet(best?.snippet || ''),
@@ -2267,7 +2309,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
     } finally {
       setPassagesLoading(false);
     }
-  }, [result.book_id, query, passages, lang]);
+  }, [result.book_id, query, passages, lang, original]);
 
   // Auto-fetch passages for first translated book (desktop only — too tall on mobile)
   const isMobileView = typeof window !== 'undefined' && window.innerWidth < 640;
@@ -2316,7 +2358,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <h3 className="text-lg font-medium text-primary line-clamp-2 font-serif leading-snug">
-                  <HighlightedText text={result.display_title || result.title} query={query} />
+                  <HighlightedText text={searchCardTitle(result, lang)} query={query} />
                   {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">{t.pageAbbrev(result.page_number as number)}</span>}
                 </h3>
                 <p className="text-sm text-secondary mt-0.5">
@@ -2326,7 +2368,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
                       return <>{t.editedByAbbrev} <HighlightedText text={byline.editor} query={query} /></>;
                     }
                     return <HighlightedText text={result.author} query={query} />;
-                  })()} · {result.published}
+                  })()}{displayPublished(result.published) ? ` · ${displayPublished(result.published)}` : ''}
                 </p>
               </div>
               {result.has_doi && result.doi && (
@@ -2351,7 +2393,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
               {result.type === 'book' && result.page_count && (
                 <span>{t.pagesCount(result.page_count)}{result.translated_count ? ` · ${t.translatedCount(result.translated_count)}` : ''}</span>
               )}
-              {result.type === 'book' && result.translated_count && result.translated_count > 0 && (
+              {result.type === 'book' && (original || (result.translated_count ?? 0) > 0) && (
                 <button
                   onClick={findPassages}
                   className="text-accent-rust hover:text-accent-rust-dark font-medium transition-colors"
@@ -2402,7 +2444,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
 function SearchCollectionCard({ col }: { col: { slug: string; name: string; book_count: number; hero_image?: string; card_framing?: CardFraming } }) {
   const lang = useLocale();
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const [imgError, setImgError] = useState(false);
   // A cover saved from the editor on this page replaces the API's, in place.
   const [live, setLive] = useState<CoverEventDetail | null>(null);
@@ -2458,7 +2500,7 @@ function SearchCollectionCard({ col }: { col: { slug: string; name: string; book
 function SemanticResultCard({ result, query }: { result: any; query: string }) {
   const lang = useLocale();
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: result.thumbnail_blob });
   const [imgError, setImgError] = useState(false);
   return (
@@ -2473,7 +2515,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <h3 className="font-serif text-primary font-medium leading-snug">{result.title}</h3>
+            <h3 className="font-serif text-primary font-medium leading-snug">{readsOriginal(lang) ? localizedTitle(result, lang) : result.title}</h3>
             <p className="text-sm text-muted mt-0.5">
               {(() => {
                 const byline = getEffectiveByline({ author: result.author, editor: (result as { editor?: string }).editor });
@@ -2500,7 +2542,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
 function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: string }) {
   const lang = useLocale();
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
@@ -2518,14 +2560,14 @@ function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: 
       )}
       <div className="min-w-0 flex-1">
         <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
-          {result.display_title || result.title}
+          {searchCardTitle(result, lang)}
         </h3>
         <p className="text-xs text-muted mt-0.5">
           {(() => {
             const byline = getEffectiveByline(result);
             if (byline.role === 'editor') return `${t.editedByAbbrev} ${byline.editor}`;
             return result.author || '';
-          })()}{result.published ? `, ${result.published}` : ''}
+          })()}{displayPublished(result.published) ? `, ${displayPublished(result.published)}` : ''}
           {result.type === 'page' && result.page_number && <span> &middot; {t.pageAbbrev(result.page_number)}</span>}
         </p>
         {text && (
@@ -2539,7 +2581,7 @@ function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: 
 function IndexResultCard({ result, query, tenant }: { result: IndexSearchResult; query: string; tenant?: string }) {
   const lang = useLocale();
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const typeLabel = indexTypeLabel(result.type, t);
   const isQuote = result.type === 'quote';
 
@@ -2620,9 +2662,13 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
   const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
-  const imageHref = tenant
-    ? `/${tenant}/gallery/image/${item.pageId}-${item.detectionIndex}`
-    : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
+  // A partner's /embed route has a reader but no gallery: open the page the image is on.
+  const room = useRoomResultHref();
+  const imageHref = room('/gallery') !== '/gallery'
+    ? room(`/book/${item.bookId}/page/${item.pageId}`)
+    : tenant
+      ? `/${tenant}/gallery/image/${item.pageId}-${item.detectionIndex}`
+      : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
 
   // /api/gallery hands back the canonical URL for a standalone artwork in `link`;
   // prefer it. Without this the Images tab built `/gallery/image/artwork-<id>`
@@ -2691,7 +2737,7 @@ function BphCatalogResultCard({ work, query, tenant, digitizedAlsoInBooks }: {
 }) {
   const lang = useLocale();
   const t = SEARCH_STRINGS[lang];
-  const lp = useLocalePath();
+  const lp = useResultHref();
   const title = work.title || work.full_title || work.parallel_title || work.uniform_title || t.untitled;
   const author = work.author || work.variant_author;
   const meta = [

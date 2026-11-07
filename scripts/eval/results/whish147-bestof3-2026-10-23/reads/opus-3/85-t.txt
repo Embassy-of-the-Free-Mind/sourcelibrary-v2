@@ -1,0 +1,17 @@
+I couldn't produce a trustworthy transcription of this leaf. The writing is small, old-style Malayalam script, and at the resolution of these images I can't tell many of the letters apart. Several look alike in these hands: ര, ഠ, ഗ, ദ, ത, ന, ഞ, the ്ര loop, and the chillu letters versus vowel signs. Anything I wrote for those would be a guess, and since I'm not allowed to fill gaps from the known text, I've marked every row segment as illegible.
+
+The layout, though, is clear. The leaf has 12 written rows. Rows 1–4 and 10–12 run the full width, across both holes. Rows 5–9 are shorter blocks in the left, middle and right columns, and the band around each hole is left blank. One piece of p04 runs on into the next: the end of p01 row 12 goes through the hole into p02 row 12.
+
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | I could map the 12-row layout and how the pieces join, but I couldn't read any row reliably. There's one glyph in the right margin of p04 (probably a leaf number). A higher-resolution scan of each piece (about 2–3× this size) should make a real letter-by-letter reading possible.

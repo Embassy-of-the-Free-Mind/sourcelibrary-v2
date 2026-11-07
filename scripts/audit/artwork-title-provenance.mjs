@@ -188,7 +188,7 @@ async function main() {
         console.log('then re-run with --yes to apply. This is a WRITE to production.');
       } else {
         let applied = 0;
-        const cursor = books.find(BUCKETS.derived).project({ _id: 1, id: 1, title: 1, display_title: 1 });
+        const cursor = books.find(BUCKETS.derived).batchSize(1000).project({ _id: 1, id: 1, title: 1, display_title: 1 });
         for await (const b of cursor) {
           await books.updateOne({ _id: b._id }, {
             $set: {

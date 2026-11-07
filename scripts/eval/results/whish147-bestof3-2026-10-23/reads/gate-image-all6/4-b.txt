@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf begins with a dash, then "ഹരിഃശ്രീഗണപത‖യെനമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത". C and F match. E is missing the dash. A marks "ദുഃഖത്ര" [illegible] even though it is readable. D has a garbled "ന‖[illegible]ഃഅയനമഃ". B is right in this row.
+
+CHECK | row 5: The row begins "പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്തഷൊ", and row 6 begins "ഡശകസ്തുവി". C matches, and F matches apart from small slips (it writes ൎമ and ഃസ). A and E end row 5 at "സപ്ത", which is wrong. D begins row 5 with "മൂല", which is wrong. B is mostly marked [illegible].
+
+CHECK | row 9: The row reads "ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി‖പൂൎവ്വകമാപ്തശ്രുതി", and the last row reads "പ്രമാണാദ്ധി।". C and E match both. D matches row 9 but writes "ദി" instead of "ദ്ധി" in the last row. F matches except that it marks the final "തി" [illegible]. A stops at "പൂൎവ്വക[illegible]". B is almost all [illegible].
+
+PICK | C
+
+RANK | C, F, D, E, A, B
+
+WHY | C is the only transcription that matches the leaf in all three rows checked: it keeps the leaf's verse numbers (൧, ൨, ൩, ൪), breaks the lines in the same places as the leaf (row 5 ending "ഷൊ", row 6 starting "ഡശ"), and reads the last row correctly as "പ്രമാണാദ്ധി".

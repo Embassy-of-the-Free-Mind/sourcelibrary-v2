@@ -154,7 +154,7 @@ async function sruSearch({ title, author, maximumRecords = 5 }) {
 
   const res = await fetch(url, {
     signal: AbortSignal.timeout(45_000),
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set build)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) reference-set-build' },
   });
   if (!res.ok) throw new Error(`SRU ${res.status} ${res.statusText}`);
   return { xml: await res.text(), query };

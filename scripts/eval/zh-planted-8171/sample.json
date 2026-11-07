@@ -1,0 +1,5134 @@
+{
+ "issue": 8171,
+ "seed": 8171,
+ "made_at": "2026-11-04T18:42:12.381Z",
+ "licence_note": "CBETA (CC BY-NC-SA 4.0) and Kanripo (CC BY-SA, version unstated) text is never committed: ids, offsets, edit types and hashes only. Group C is our own OCR.",
+ "counts": {
+  "A": 20,
+  "B": 40,
+  "C": 40,
+  "edits": 296,
+  "baseline": 20,
+  "subset": 30
+ },
+ "c_selection": [
+  {
+   "slug": "C-438912-p249",
+   "work": "崑曲粹存初集",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-3ff228-p51",
+   "work": "釋氏源流應化事蹟",
+   "used": false,
+   "why": [
+    "excluded title"
+   ],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-321401-p3",
+   "work": "御製數理精蘊",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-cf98d9-p30",
+   "work": "養生月覽",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-fee88b-p15",
+   "work": "五行大義",
+   "used": false,
+   "why": [
+    "1 confirmed sites"
+   ],
+   "confirmed": 1
+  },
+  {
+   "slug": "C-e4483e-p19",
+   "work": "陳眉公先生批評繡襦記",
+   "used": true,
+   "why": [],
+   "confirmed": 2
+  },
+  {
+   "slug": "C-044b97-p51",
+   "work": "考工記析疑",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-4c86c0-p72",
+   "work": "植物名實圖考",
+   "used": true,
+   "why": [],
+   "confirmed": 2
+  },
+  {
+   "slug": "C-cf9870-p9",
+   "work": "養生類纂",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-09803e-p35",
+   "work": "陳道翁就正篇",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-dcdf89-p128",
+   "work": "蘇東坡詩集注",
+   "used": true,
+   "why": [],
+   "confirmed": 2
+  },
+  {
+   "slug": "C-097e63-p359",
+   "work": "瓊琯白先生集",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-4afd81-p5",
+   "work": "天文書",
+   "used": true,
+   "why": [],
+   "confirmed": 3
+  },
+  {
+   "slug": "C-fedab5-p5",
+   "work": "五百石洞天揮塵",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-32134f-p28",
+   "work": "蠶桑輯要",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-e44955-p18",
+   "work": "寰有詮",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-2a748d-p402",
+   "work": "本草求真",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-084e63-p33",
+   "work": "欽定新曆測驗紀略",
+   "used": false,
+   "why": [
+    "0 confirmed sites"
+   ],
+   "confirmed": 0
+  },
+  {
+   "slug": "C-4afddd-p20",
+   "work": "景祐太乙福應經",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-f46e29-p33",
+   "work": "考工記考辨",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-feee9a-p51",
+   "work": "玉靈照膽經",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-026784-p33",
+   "work": "繪事發微",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-95b363-p54",
+   "work": "校註婦人良方大全",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-2a7402-p113",
+   "work": "湖北安襄鄖道水利紀案",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-ea28a5-p133",
+   "work": "列子鬳齋口義",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-321168-p25",
+   "work": "銅人腧穴鍼灸圖經",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-c79099-p96",
+   "work": "新鐫神峰張先生通考闢謬命理正宗大全",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-d0a63d-p21",
+   "work": "三才圖會",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-8284fd-p61",
+   "work": "新編纂圖增類羣書類要事林廣記",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-fef09e-p106",
+   "work": "灸法秘傳",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-e6dbe2-p76",
+   "work": "華陽金仙證論",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-43855c-p56",
+   "work": "盛明雜劇",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-54ca17-p66",
+   "work": "新編直指算法統宗",
+   "used": true,
+   "why": [],
+   "confirmed": 5
+  },
+  {
+   "slug": "C-149210-p6",
+   "work": "西洋新法曆書",
+   "used": false,
+   "why": [
+    "0 confirmed sites"
+   ],
+   "confirmed": 0
+  },
+  {
+   "slug": "C-2a7919-p5",
+   "work": "河工書",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-09bbd5-p22",
+   "work": "天文初學考",
+   "used": true,
+   "why": [],
+   "confirmed": 3
+  },
+  {
+   "slug": "C-e44874-p85",
+   "work": "新鐫節義鴛鴦塚嬌紅記",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-c7922c-p187",
+   "work": "天文圖註祥異賦",
+   "used": true,
+   "why": [],
+   "confirmed": 3
+  },
+  {
+   "slug": "C-4c9ede-p32",
+   "work": "程氏墨苑",
+   "used": true,
+   "why": [],
+   "confirmed": 2
+  },
+  {
+   "slug": "C-0978c6-p791",
+   "work": "道宗六書",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  },
+  {
+   "slug": "C-2a777d-p227",
+   "work": "增訂本草備要",
+   "used": true,
+   "why": [],
+   "confirmed": 4
+  },
+  {
+   "slug": "C-e44760-p20",
+   "work": "新刻出相音註勸善目連救母行孝戲文",
+   "used": true,
+   "why": [],
+   "confirmed": 3
+  },
+  {
+   "slug": "C-2a739b-p17",
+   "work": "重刊天文秘略",
+   "used": true,
+   "why": [],
+   "confirmed": 3
+  },
+  {
+   "slug": "C-9df8f9-p49",
+   "work": "洞天奧旨",
+   "used": true,
+   "why": [],
+   "confirmed": 6
+  }
+ ],
+ "passages": [
+  {
+   "slug": "A-KR1h0004-3545",
+   "group": "A",
+   "sub": null,
+   "work": "論語",
+   "source": "kanripo",
+   "kr": "KR1h0004",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 3545,
+   "han": 240,
+   "sha256_original": "05ff9e11cca863c46d8041266bcbd7b67cb671e38f13fa2d1dc2665884847a03",
+   "sha256_edited": "477144f140954733e26e5600e455c5d0576e0481ee127fc0d9646bb356cf6dda",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 54,
+     "pos": 54,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 132,
+     "pos": 131,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 196,
+     "pos": 194,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1h0001-33962",
+   "group": "A",
+   "sub": null,
+   "work": "孟子",
+   "source": "kanripo",
+   "kr": "KR1h0001",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 33962,
+   "han": 240,
+   "sha256_original": "f870c8ad6673de5d63f2154b4c3a0ff94ae35081149631c75387cd3b3c621b60",
+   "sha256_edited": "f4484c11be809e48515296b9f6ecabd5f3350daa24a988f06f957ac5036caa5d",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "person2",
+     "at": 116,
+     "pos": 116,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 132,
+     "pos": 132,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 179,
+     "pos": 180,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR5c0057-2568",
+   "group": "A",
+   "sub": null,
+   "work": "老子",
+   "source": "kanripo",
+   "kr": "KR5c0057",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 2568,
+   "han": 240,
+   "sha256_original": "b623a34a7cd4fc45c4abff306876070298b1ecbb380de791d02e77df5fdeb0dc",
+   "sha256_edited": "f3bb96a986e8186f447bbaff60e4bc937ec16d77a7171d3450b51750c2057a8c",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 10,
+     "pos": 10,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 80,
+     "pos": 79,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 219,
+     "pos": 218,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "A-KR5c0126-0",
+   "group": "A",
+   "sub": null,
+   "work": "莊子·逍遙遊",
+   "source": "kanripo",
+   "kr": "KR5c0126",
+   "pb": null,
+   "anchor": "北冥有魚",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 200,
+   "sha256_original": "9e67bf7f64997388b965509393d7fce685b11a04a371368abb869430332868f7",
+   "sha256_edited": "4ef874b2ec4f11683541d2e52458482e9c19ed81c24e8d3fa33d0ddffdf2437f",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 11,
+     "pos": 11,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 89,
+     "pos": 88,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 193,
+     "pos": 192,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1c0001-34841",
+   "group": "A",
+   "sub": null,
+   "work": "詩經",
+   "source": "kanripo",
+   "kr": "KR1c0001",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 34841,
+   "han": 240,
+   "sha256_original": "9dee2b1f71a78cf53bb1124e661b801f3c7cec3ad5b6c1ea8dfa94eb51e8fc46",
+   "sha256_edited": "894a9fa520aec3f01f2dabc2a595ddddfc7089ca8082f14bb3be5f33a545a265",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 75,
+     "pos": 75,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 156,
+     "pos": 156,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 215,
+     "pos": 214,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1d0052-91086",
+   "group": "A",
+   "sub": null,
+   "work": "大學",
+   "source": "kanripo",
+   "kr": "KR1d0052",
+   "pb": null,
+   "anchor": "大學之道在明明德",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 91086,
+   "han": 200,
+   "sha256_original": "2d1998263012cd3e8e75db29e88980b89ce65e98ebdc79e5756a905298e7c027",
+   "sha256_edited": "270fccc361368ac36e5b94fecc990677b32f69204dce903cb7615202061f1c42",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 35,
+     "pos": 35,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 60,
+     "pos": 61,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 108,
+     "pos": 110,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1d0052-78279",
+   "group": "A",
+   "sub": null,
+   "work": "中庸",
+   "source": "kanripo",
+   "kr": "KR1d0052",
+   "pb": null,
+   "anchor": "天命之謂性",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 78279,
+   "han": 200,
+   "sha256_original": "13432f9ea3868b8e010f1ba108e976b1cc33c3181fc2dfee5becf7edcbb4a866",
+   "sha256_edited": "211bd0e17d378756dbf480948587169bee9c948bfb4c52b6e8ed4a8083e577cb",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 24,
+     "pos": 24,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 38,
+     "pos": 39,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 175,
+     "pos": 175,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1f0001-136",
+   "group": "A",
+   "sub": null,
+   "work": "孝經",
+   "source": "kanripo",
+   "kr": "KR1f0001",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 136,
+   "han": 240,
+   "sha256_original": "a1ffe1ef56802ac4ea139140e257bd2231b9414176520a322f9ac02121eb3de5",
+   "sha256_edited": "0a992cf589db6936e0ef0ddec6603e9e3a68abf5fe7c917a8797a7c5e00937bf",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 55,
+     "pos": 55,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 142,
+     "pos": 141,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 170,
+     "pos": 168,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1a0001-20436",
+   "group": "A",
+   "sub": null,
+   "work": "周易",
+   "source": "kanripo",
+   "kr": "KR1a0001",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 20436,
+   "han": 240,
+   "sha256_original": "5210275903bd74ab279ca64061ea523f2d48aa41140827d450a7a7ad4546a032",
+   "sha256_edited": "bae35f054c1806a40c6279e2f5367f86cb9f988c4acc5ff5981d6c3ca2aff6f4",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 52,
+     "pos": 52,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 135,
+     "pos": 134,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 145,
+     "pos": 144,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1b0001-3347",
+   "group": "A",
+   "sub": null,
+   "work": "尚書",
+   "source": "kanripo",
+   "kr": "KR1b0001",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 3347,
+   "han": 240,
+   "sha256_original": "885e15767c27cecabc61af6ce89afaaac467a1e647816722149a31fbd4769f5b",
+   "sha256_edited": "9d256133b068c74afbfe9189c9ab2b2873fffec0cc897f01ba03a8372be25d04",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 8,
+     "pos": 8,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 83,
+     "pos": 83,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 229,
+     "pos": 229,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR3b0003-6802",
+   "group": "A",
+   "sub": null,
+   "work": "孫子",
+   "source": "kanripo",
+   "kr": "KR3b0003",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 6802,
+   "han": 240,
+   "sha256_original": "b20dc38499c8a429b197b96787ee4d67520901152fb18c71874322b28925f3eb",
+   "sha256_edited": "6ae24fe414ba60aefe948bbae7d9dfeee4534491e9c9f98b6fd5d4914ac25813",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 24,
+     "pos": 24,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 104,
+     "pos": 103,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 117,
+     "pos": 116,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR6c0128-807",
+   "group": "A",
+   "sub": null,
+   "work": "般若心經",
+   "source": "kanripo",
+   "kr": "KR6c0128",
+   "pb": null,
+   "anchor": "觀自在菩薩",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 807,
+   "han": 200,
+   "sha256_original": "2ae6fe2dd71c256ab055026d3adfa890802a19fc1e06aaf4cf3965759d266f00",
+   "sha256_edited": "b88bc4bd1521cdb2ff5665e53c50c9f8127a2a0c9cda3515532ade0759967dbe",
+   "baseline": true,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 29,
+     "pos": 29,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 116,
+     "pos": 115,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 192,
+     "pos": 191,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR6c0023-1885",
+   "group": "A",
+   "sub": null,
+   "work": "金剛經",
+   "source": "kanripo",
+   "kr": "KR6c0023",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 1885,
+   "han": 240,
+   "sha256_original": "12bf84e2135b3d143c68bdf9390f8d633cfbf9966dfb2df61e1cf3abd5ea60cd",
+   "sha256_edited": "f8d6dd920b4248dc65f117607b56a58a2c7458027cd62bcaf6d9149bb3bec829",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 26,
+     "pos": 26,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "bud3",
+     "at": 40,
+     "pos": 40,
+     "len_orig": 3,
+     "len_edited": 3
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 149,
+     "pos": 149,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "A-KR6d0001-64231",
+   "group": "A",
+   "sub": null,
+   "work": "法華經·普門品",
+   "source": "kanripo",
+   "kr": "KR6d0001",
+   "pb": null,
+   "anchor": "爾時無盡意菩薩",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 64231,
+   "han": 200,
+   "sha256_original": "351e7372b18aae97d30bf79d987d9a0cc63c14f9c97c6e2d253539d796faa2ee",
+   "sha256_edited": "1e574321087afafdd2efdc6b4821565a984b50ffafe4aa886cb64b54a61d8095",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 104,
+     "pos": 104,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 130,
+     "pos": 129,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 177,
+     "pos": 176,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR6f0082-200",
+   "group": "A",
+   "sub": null,
+   "work": "阿彌陀經",
+   "source": "kanripo",
+   "kr": "KR6f0082",
+   "pb": null,
+   "anchor": null,
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 200,
+   "han": 240,
+   "sha256_original": "dd2c3d2fecdcafec4c20f6810fcf06fdee91aa5bc03d7010beba366ac95b01ab",
+   "sha256_edited": "cd046b3c69b5a33ece1751c541fc34a9ce76bd91a617a4492fec31388fe805f3",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "bud3",
+     "at": 47,
+     "pos": 47,
+     "len_orig": 3,
+     "len_edited": 3
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 58,
+     "pos": 58,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 123,
+     "pos": 123,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR6q0083-3205",
+   "group": "A",
+   "sub": null,
+   "work": "六祖壇經",
+   "source": "kanripo",
+   "kr": "KR6q0083",
+   "pb": null,
+   "anchor": "菩提自性",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 3205,
+   "han": 200,
+   "sha256_original": "3c248346e245517da9ae08884b2ab80e91d8719ded244fd2030ce89dec4a0a6d",
+   "sha256_edited": "4aa40954937c4cd9cf5b09e1827f306e256eb0b260b2de243dce3085d1277c9f",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 30,
+     "pos": 30,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 50,
+     "pos": 51,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 192,
+     "pos": 192,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR4a0001-0",
+   "group": "A",
+   "sub": null,
+   "work": "離騷",
+   "source": "kanripo",
+   "kr": "KR4a0001",
+   "pb": null,
+   "anchor": "帝高陽之苗裔",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 200,
+   "sha256_original": "a05ce53bc869f689a020380d5b97b23b9c1d40a08e69e99a9f10d57aa8f58cda",
+   "sha256_edited": "e099bf23574e64498d0c03bc0c72f84ac08213532a03e3fb77bceecf95220d16",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 108,
+     "pos": 108,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 130,
+     "pos": 129,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 156,
+     "pos": 154,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1d0052-31288",
+   "group": "A",
+   "sub": null,
+   "work": "禮運·大同",
+   "source": "kanripo",
+   "kr": "KR1d0052",
+   "pb": null,
+   "anchor": "大道之行也",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 31288,
+   "han": 200,
+   "sha256_original": "e8df03590e322dd48a4b418df8fc62483973671a448f922bcc631454f0467dd4",
+   "sha256_edited": "73afa883404b97fa85999863ecd3dfe9e54d6ada012707efd3e3abb21cf8e8a3",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 73,
+     "pos": 73,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 98,
+     "pos": 98,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 120,
+     "pos": 119,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "A-KR4b0008-20639",
+   "group": "A",
+   "sub": null,
+   "work": "桃花源記",
+   "source": "kanripo",
+   "kr": "KR4b0008",
+   "pb": null,
+   "anchor": "晉太元中",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 20639,
+   "han": 200,
+   "sha256_original": "a79bc60c516570379162f92b998afd530585697d7b4cac0518ae6c57a68fbf4b",
+   "sha256_edited": "c089fe8f67185176099a5c347f65219ed308cb0758116f62040be3c349e614e5",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 30,
+     "pos": 30,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 165,
+     "pos": 165,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 177,
+     "pos": 177,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "A-KR1e0001-200",
+   "group": "A",
+   "sub": null,
+   "work": "左傳·鄭伯克段于鄢",
+   "source": "kanripo",
+   "kr": "KR1e0001",
+   "pb": null,
+   "anchor": "初鄭武公娶于申",
+   "book_id": null,
+   "page_id": null,
+   "page_number": null,
+   "ocr_model": null,
+   "offset": 200,
+   "han": 200,
+   "sha256_original": "0140935a053abaa3d2bde73036f05d44f0208b3184f6e5de08a34ab15fbeac9a",
+   "sha256_edited": "11c860e31450c60f93b81437d504f6aabc679723f35df034c13becff98f33a33",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 106,
+     "pos": 106,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 128,
+     "pos": 128,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 171,
+     "pos": 172,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-e0ec64-p149",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "五燈會元",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6a3cc1bfec254ff6cae0ec64",
+   "page_id": "6a3cc1c0ec254ff6cae0ecf9",
+   "page_number": 149,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 150,
+   "sha256_original": "8265db190e9c3fd2a34496488c9d3acfb427ee1de46b5a882f1fd323c39038d7",
+   "sha256_edited": "72608a82b493040edb31e193d762664442c729387ce26e4530fe4c7120bcd1ab",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 77,
+     "pos": 77,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 93,
+     "pos": 93,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 123,
+     "pos": 123,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-9e6d5b-p9",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "佛果圜悟禪師碧巖錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf387ca0bb7fcd9e6d5b",
+   "page_id": "6abedf397ca0bb7fcd9e6d66",
+   "page_number": 9,
+   "ocr_model": null,
+   "offset": 103,
+   "han": 240,
+   "sha256_original": "362ec34bf2a7d22b8e67fe1618084c6f88172c0679da3fdd22d5726e4b49c08c",
+   "sha256_edited": "a0f8733f283d9474352a7ab14881b3b967aa3f17c226e47de711f6a057ebf413",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 13,
+     "pos": 13,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "chan2",
+     "at": 85,
+     "pos": 85,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 202,
+     "pos": 202,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-be00f4-p78",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "圓悟佛果禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abee1bb3bb95eea9ebe00f4",
+   "page_id": "6abee1bd3bb95eea9ebe0144",
+   "page_number": 78,
+   "ocr_model": null,
+   "offset": 81,
+   "han": 240,
+   "sha256_original": "df94f0e6bf2fe8982014671afaacf49ae27dd9f5e979e07a67edfbbcabceccb1",
+   "sha256_edited": "29a0ed84d2d2ba887a4f2d45231f01fe399455d6507235427c60f7ed9d751bbf",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 46,
+     "pos": 46,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 178,
+     "pos": 177,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "chan2",
+     "at": 233,
+     "pos": 232,
+     "len_orig": 2,
+     "len_edited": 2
+    }
+   ]
+  },
+  {
+   "slug": "B-f94cf9-p11",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "大慧普覺禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf2bfb1708126df94cf9",
+   "page_id": "6abedf2cfb1708126df94d06",
+   "page_number": 11,
+   "ocr_model": null,
+   "offset": 125,
+   "han": 240,
+   "sha256_original": "5c10ed0455c056b77f81652cb0386728402f48684cf0a973765bc1ffc6005d04",
+   "sha256_edited": "774412e7173731a2f61ec3d87686122867445838fb29b07e9ab3e2e351e9d908",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 48,
+     "pos": 48,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 153,
+     "pos": 152,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 230,
+     "pos": 228,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-1de632-p52",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "天如惟則禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abef33e4c777f224e1de632",
+   "page_id": "6abef33f4c777f224e1de668",
+   "page_number": 52,
+   "ocr_model": null,
+   "offset": 51,
+   "han": 240,
+   "sha256_original": "e3bad8a950c2d46e40fba1a5a904177c291eb483c9f14ca23a76e05c884d9572",
+   "sha256_edited": "1d720e75ad6cc60a71cf1d972350dbcf0159dd77251ce7080ebeee0ff689445a",
+   "baseline": true,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 37,
+     "pos": 37,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 60,
+     "pos": 59,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 122,
+     "pos": 121,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-25f375-p7",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "密菴和尚語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf2d0f33d7676e25f375",
+   "page_id": "6abedf2f0f33d7676e25f37e",
+   "page_number": 7,
+   "ocr_model": null,
+   "offset": 100,
+   "han": 240,
+   "sha256_original": "021ae8bbed424887bca768ba5eadba6f4e3f839935643b7a7251af5cdf7e2d6f",
+   "sha256_edited": "0de5c765cb7037ee5ae722319dc8f66c862e12c2b9b64f984e724210650b51e0",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 104,
+     "pos": 104,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 160,
+     "pos": 160,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 202,
+     "pos": 202,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-eb15a5-p23",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "應菴曇華禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf47ee13871d17eb15a5",
+   "page_id": "6abedf48ee13871d17eb15be",
+   "page_number": 23,
+   "ocr_model": null,
+   "offset": 55,
+   "han": 240,
+   "sha256_original": "76fdc0dd6ed15aee669a5b41923d5e78b64785fca8b80b620727d0e9a1a8089d",
+   "sha256_edited": "8663f3d66aa60a6d359ef88d3d6fb707be911ac3303fa8b57b6bfade80e66d23",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 27,
+     "pos": 27,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 142,
+     "pos": 142,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 184,
+     "pos": 183,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-559564-p9",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "景德傳燈錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abec5219a6d02ff1a559564",
+   "page_id": "6abec5239a6d02ff1a55956f",
+   "page_number": 9,
+   "ocr_model": null,
+   "offset": 91,
+   "han": 240,
+   "sha256_original": "3c23c13758232a443fff8e5fbb96061367dcba2e12b75d0fda4807dcd3eba40e",
+   "sha256_edited": "125e425249ce971dfd78a211b3ddfe414548d67e344e636502677a6b53c4a7e0",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 120,
+     "pos": 120,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 149,
+     "pos": 148,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 208,
+     "pos": 207,
+     "len_orig": 2,
+     "len_edited": 2
+    }
+   ]
+  },
+  {
+   "slug": "B-f80792-p11",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "松源崇嶽禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf4b7ca26f5b50f80792",
+   "page_id": "6abedf4c7ca26f5b50f8079f",
+   "page_number": 11,
+   "ocr_model": null,
+   "offset": 74,
+   "han": 240,
+   "sha256_original": "a4f0e16cbd11811b40309cdaba8cc69ed9cb8362cc875819c94324d881c8ec4e",
+   "sha256_edited": "faa797785a57ae0c892d3f9dcca1c985a28b9ecc2e439b73df8fe718e8105d25",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 10,
+     "pos": 10,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 57,
+     "pos": 56,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 228,
+     "pos": 227,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-290417-p49",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "楚石梵琦禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abef35bd8d3fdd636290417",
+   "page_id": "6abef35cd8d3fdd63629044a",
+   "page_number": 49,
+   "ocr_model": null,
+   "offset": 154,
+   "han": 240,
+   "sha256_original": "aa92e8fa8168116f53f0301bddb16181c70b6824cfc29c54713c28922c419bf6",
+   "sha256_edited": "8aaed557e15573163e390dff26a6ac01c48c2d74b9c6b9e15577e827083afe46",
+   "baseline": true,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 73,
+     "pos": 73,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 84,
+     "pos": 84,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 110,
+     "pos": 111,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-62ec23-p45",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "法演禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abef30b38586aecb162ec23",
+   "page_id": "6abef31338586aecb162ec52",
+   "page_number": 45,
+   "ocr_model": null,
+   "offset": 111,
+   "han": 240,
+   "sha256_original": "d120afdafae1a363d45b26230223918511108deb196c3f935a8090cbc6e1ad02",
+   "sha256_edited": "ed4a381b5aeb6d1265d72348c31824fe08b048d515d91c74d579d30dc0c1284f",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 56,
+     "pos": 56,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 190,
+     "pos": 189,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "chan2",
+     "at": 216,
+     "pos": 215,
+     "len_orig": 2,
+     "len_edited": 2
+    }
+   ]
+  },
+  {
+   "slug": "B-9b8041-p28",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "無準師範禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abef31cea0ee3a64e9b8041",
+   "page_id": "6abef31dea0ee3a64e9b805f",
+   "page_number": 28,
+   "ocr_model": null,
+   "offset": 52,
+   "han": 240,
+   "sha256_original": "d83906510ce674b90c183d064bace3401aa461312f622d8f8ba01da04eb2693b",
+   "sha256_edited": "a1d9b41d85d7731754ae80a498ac3361d768153022be62cc269b26cdce333c87",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 137,
+     "pos": 137,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 210,
+     "pos": 210,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 223,
+     "pos": 222,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-7c04ee-p16",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "破菴祖先禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf4d446ab1dad37c04ee",
+   "page_id": "6abedf4e446ab1dad37c0500",
+   "page_number": 16,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 169,
+   "sha256_original": "1b3477bc31fdbc8e5cd5399295958089bb8988de6769e3977681d77dc513d1c5",
+   "sha256_edited": "077e57a443dae0e3f59e416984b10cfbaca62bf2888e284e85a987a962e47e15",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 109,
+     "pos": 109,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 122,
+     "pos": 123,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 148,
+     "pos": 150,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-e24f00-p76",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "笑隱大訢禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf4914590c1068e24f00",
+   "page_id": "6abedf4a14590c1068e24f4e",
+   "page_number": 76,
+   "ocr_model": null,
+   "offset": 30,
+   "han": 240,
+   "sha256_original": "46a253f3994a745a9a576d4f9a31e2deec997368e5ee749aa9b5dd816aace2e1",
+   "sha256_edited": "a0c2defb0eb0365545f02ba82280248391f5d233263d3c27ca2e8f80b6622005",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 23,
+     "pos": 23,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 68,
+     "pos": 68,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 81,
+     "pos": 81,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-98b382-p66",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "續古尊宿語要",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf431b2cd9635f98b382",
+   "page_id": "6abedf441b2cd9635f98b3c6",
+   "page_number": 66,
+   "ocr_model": null,
+   "offset": 64,
+   "han": 240,
+   "sha256_original": "2988392e1f547a1b8bc6ffdc49d7c7021b5700ba70bd383265e7c2dc1a1baeab",
+   "sha256_edited": "737d98bf10e758096d1398c5094010fdc5f2ce0cffb9acb14b7180916d62ade1",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 26,
+     "pos": 26,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 107,
+     "pos": 107,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "chan2",
+     "at": 231,
+     "pos": 231,
+     "len_orig": 2,
+     "len_edited": 2
+    }
+   ]
+  },
+  {
+   "slug": "B-d93308-p51",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "虛堂和尚語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abee93180b99e80d7d93308",
+   "page_id": "6abee93380b99e80d7d9333d",
+   "page_number": 51,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 186,
+   "sha256_original": "55e8ca42fe9e06cde9a97ad9891094a8249a50fe4b166ed95b21ef03a599d353",
+   "sha256_edited": "44d586257096810d2156b6db1e7d8b61b8bf55603896219712e18df026366c42",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 33,
+     "pos": 33,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 86,
+     "pos": 86,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 150,
+     "pos": 150,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-76797f-p32",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "鎮州臨濟慧照禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf199f894b562076797f",
+   "page_id": "6abedf1f9f894b56207679a1",
+   "page_number": 32,
+   "ocr_model": null,
+   "offset": 43,
+   "han": 240,
+   "sha256_original": "a24a385f3bff946c1a3ad188b4c05e9d43b44a373999906db7b382455fb29120",
+   "sha256_edited": "af3be8fe7887a51103b1e4df8a67b100882eaa57c5f52f1338b3412e21edaec5",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "chan2",
+     "at": 53,
+     "pos": 53,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 117,
+     "pos": 117,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 185,
+     "pos": 185,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-bae241-p33",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "雲門匡真禪師廣錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abedf20e54ec11ac8bae241",
+   "page_id": "6abedf23e54ec11ac8bae264",
+   "page_number": 33,
+   "ocr_model": null,
+   "offset": 28,
+   "han": 240,
+   "sha256_original": "48c323a24594ac97783535f41bb30be9f6cc96b933ed3bb4ca911fe8b66413f0",
+   "sha256_edited": "a838feb91c7580242d34d3fc8841ea35f9ea595f3b867d2294b2791e04e5b666",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 22,
+     "pos": 22,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 99,
+     "pos": 99,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 226,
+     "pos": 226,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-2690a0-p35",
+   "group": "B",
+   "sub": "cbeta",
+   "work": "高峰原妙禪師語錄",
+   "source": "cbeta",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6abef3343eeeaaa3202690a0",
+   "page_id": "6abef3363eeeaaa3202690c5",
+   "page_number": 35,
+   "ocr_model": null,
+   "offset": 4,
+   "han": 240,
+   "sha256_original": "7a25e464d6243c794fe38d4d84f83bf96154394f180fa7d96ed7eecb33e76883",
+   "sha256_edited": "acee58b989da4687042d2e76a0efb0c1855c60041e3a7cf6b1b50945ac329724",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 19,
+     "pos": 19,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 65,
+     "pos": 65,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 190,
+     "pos": 190,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-zero-s10-04e2521e-p44",
+   "group": "B",
+   "sub": "kanripo-8134",
+   "work": "佩文韻府",
+   "source": "kanripo",
+   "kr": "KR3k0059",
+   "pb": "KR3k0059_WYG_388-20b",
+   "anchor": null,
+   "book_id": "6a3c643539b4508b04e2521e",
+   "page_id": "6a3c643539b4508b04e252c1",
+   "page_number": 44,
+   "ocr_model": null,
+   "offset": 63,
+   "han": 240,
+   "sha256_original": "b341b83183120328101746d34d540b5e713333626ca9a628b063c5ab2f5ba4f7",
+   "sha256_edited": "e799440357eb7a96e66930044e499f3ee5e7f4514ad068563b299599c3e4fa4a",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 58,
+     "pos": 58,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 210,
+     "pos": 210,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 228,
+     "pos": 228,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-4826b1-p36",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "周易觀彖",
+   "source": "kanripo",
+   "kr": "KR1a0133",
+   "pb": "KR1a0133_WYG_007-17b",
+   "anchor": null,
+   "book_id": "6a3cb5543dce6cfad74826b1",
+   "page_id": "6a3cb5543dce6cfad74826d5",
+   "page_number": 36,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 130,
+   "sha256_original": "a3069e07830bbb7a195d9bc2c3682e117d093202e539dc5782e4d2ebae3f240a",
+   "sha256_edited": "5ceca17e1dbdc8c16f348955ddbca8ed5790d554597019dd217ff5d6680eb38d",
+   "baseline": true,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 36,
+     "pos": 36,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 70,
+     "pos": 69,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 111,
+     "pos": 110,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-1c612d-p83",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "孝經集傳",
+   "source": "kanripo",
+   "kr": "KR1f0010",
+   "pb": "KR1f0010_WYG_003-41a",
+   "anchor": null,
+   "book_id": "6a3c6ecc01fe4f593c1c612d",
+   "page_id": "6a3c6ecd01fe4f593c1c6180",
+   "page_number": 83,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 240,
+   "sha256_original": "bbcfbf8d36ea50a2b0869891629fe01b4f47b5ac91dda4cb2b10e56475765f61",
+   "sha256_edited": "be893ccbb06418495b35af60f0aded5b5f1639c2c03e6362d4fa8b0a8e038cde",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "person2",
+     "at": 87,
+     "pos": 87,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 151,
+     "pos": 151,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 185,
+     "pos": 185,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-20617a-p41",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "玉照新志",
+   "source": "kanripo",
+   "kr": "KR3l0063",
+   "pb": "KR3l0063_WYG_001-18a",
+   "anchor": null,
+   "book_id": "6a3c77fb01fe4f593c20617a",
+   "page_id": "6a3c77fb01fe4f593c20624e",
+   "page_number": 41,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 168,
+   "sha256_original": "596f53b33bc5d4663a77439b9a36b6eac7def05886c266678465d0d962d7d2a1",
+   "sha256_edited": "ace691fb3e9b32bcfbc0e6353a59a4ae59c068f862ad9e2237fd47a80007e6dc",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 19,
+     "pos": 19,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 33,
+     "pos": 33,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 54,
+     "pos": 54,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-8f0e76-p15",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "古今合璧事類備要前集",
+   "source": "kanripo",
+   "kr": "KR3k0030",
+   "pb": "KR3k0030_WYG_007-7b",
+   "anchor": null,
+   "book_id": "6a3c61e940c88a541d8f0e76",
+   "page_id": "6a3c61e940c88a541d8f0e85",
+   "page_number": 15,
+   "ocr_model": null,
+   "offset": 18,
+   "han": 240,
+   "sha256_original": "2808517c62c309c72673afee236ff9d73779a2cf466c53fced38d9453d961ff9",
+   "sha256_edited": "1b4477889760db73c4850798b44a311b527c722a7155eda8bdb2f489488007d3",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 85,
+     "pos": 85,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 133,
+     "pos": 132,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 208,
+     "pos": 207,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-1e45f6-p19",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "春秋四傳質",
+   "source": "kanripo",
+   "kr": "KR1e0091",
+   "pb": "KR1e0091_WYG_002-9a",
+   "anchor": null,
+   "book_id": "6a3c72f401fe4f593c1e45f6",
+   "page_id": "6a3c72f501fe4f593c1e4697",
+   "page_number": 19,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 151,
+   "sha256_original": "2bd91c3838cab53cd8c7ffc69b62f47d42e3095a020d29e5132853bb8580cd38",
+   "sha256_edited": "5629d7d398c565a61fcf4ca7de7ecd408da471a9323c2abded66ccf4699d8d0f",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 64,
+     "pos": 64,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 89,
+     "pos": 88,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "sage",
+     "at": 106,
+     "pos": 105,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-484865-p32",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "大易擇言",
+   "source": "kanripo",
+   "kr": "KR1a0159",
+   "pb": "KR1a0159_WYG_017-15b",
+   "anchor": null,
+   "book_id": "6a3cb6043dce6cfad7484865",
+   "page_id": "6a3cb6043dce6cfad7484885",
+   "page_number": 32,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 122,
+   "sha256_original": "53f6676898ceb4cdaad054fd33f83ef6e6d52c1655be1c23b143763b62f48638",
+   "sha256_edited": "29e033063781f0018cf09e7ee9335b6cec8a06877361fb7f506ef3e5a476803c",
+   "baseline": true,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 16,
+     "pos": 16,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 63,
+     "pos": 62,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 79,
+     "pos": 78,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-17396a-p35",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "周易總義",
+   "source": "kanripo",
+   "kr": "KR1a0048",
+   "pb": "KR1a0048_WYG_019-17b",
+   "anchor": null,
+   "book_id": "6a3cc1e6f9474f825c17396a",
+   "page_id": "6a3cc1e6f9474f825c17398d",
+   "page_number": 35,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 152,
+   "sha256_original": "1d1345e76de5daef103aed7cdaa20187bc6751861b4cd1010876938e1600a547",
+   "sha256_edited": "6f9a9d17b98af5804ed089569fb155325731dc6df564fe9bba8d80b9ac46060c",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 72,
+     "pos": 72,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 96,
+     "pos": 95,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 127,
+     "pos": 126,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-e0e7c1-p174",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "少室山房筆叢",
+   "source": "kanripo",
+   "kr": "KR3j0190",
+   "pb": "KR3j0190_WYG_032-1a",
+   "anchor": null,
+   "book_id": "6a3cc1b5ec254ff6cae0e7c1",
+   "page_id": "6a3cc1b5ec254ff6cae0e86f",
+   "page_number": 174,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 107,
+   "sha256_original": "57b46bce4d06dfa9a061929ca09c8c4fbef7167067390275910b6a1a63e6f597",
+   "sha256_edited": "aa7d4296501fb4da64892528303efaab0e10d446d2709d81f683560b027aedce",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 15,
+     "pos": 15,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 31,
+     "pos": 31,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 77,
+     "pos": 77,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-1faa6e-p38",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "樂書",
+   "source": "kanripo",
+   "kr": "KR1i0002",
+   "pb": "KR1i0002_WYG_015-8a",
+   "anchor": null,
+   "book_id": "6a3c765f01fe4f593c1faa6e",
+   "page_id": "6a3c765f01fe4f593c1faa94",
+   "page_number": 38,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 142,
+   "sha256_original": "10be031c36080141a1123b13c75df9c3c6c2cefa49dbf75bc750c92b5f193cd9",
+   "sha256_edited": "9bae66abe2b3d4ac448b78a96161392994648f82a31f29e4395fd33275cbb4d1",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "sage",
+     "at": 48,
+     "pos": 48,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 64,
+     "pos": 64,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 100,
+     "pos": 100,
+     "len_orig": 0,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-735aac-p113",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "日講春秋解義",
+   "source": "kanripo",
+   "kr": "KR1e0093",
+   "pb": "KR1e0093_WYG_064-33a",
+   "anchor": null,
+   "book_id": "6a3cea65db5eb2b676735aac",
+   "page_id": "6a3cea66db5eb2b676735b1d",
+   "page_number": 113,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 196,
+   "sha256_original": "4e7663a2872ac73e6e558a26dfbf2ccaf8d7dacc7e753e33e29e675f9efcfbb9",
+   "sha256_edited": "dc4238543db8360a4b5d83294dac2ff84b5af1142a036c940be9f782ed01f450",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 9,
+     "pos": 9,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 37,
+     "pos": 37,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 163,
+     "pos": 162,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-1d6b4b-p120",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "語林",
+   "source": "kanripo",
+   "kr": "KR3l0089",
+   "pb": "KR3l0089_WYG_002-24a",
+   "anchor": null,
+   "book_id": "6a3c70f801fe4f593c1d6b4b",
+   "page_id": "6a3c70f801fe4f593c1d6bc3",
+   "page_number": 120,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 233,
+   "sha256_original": "fd7684148ee5604d4e2bba544f51b6238fc324776676a5cba244135090cb0605",
+   "sha256_edited": "2e033f3e2f0bb6b633a2acfb4273c6b0b57ab6679a20a4e03181d0a5f3460ae9",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 77,
+     "pos": 77,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 93,
+     "pos": 92,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 139,
+     "pos": 137,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-203d01-p139",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "古周易訂詁",
+   "source": "kanripo",
+   "kr": "KR1a0113",
+   "pb": "KR1a0113_WYG_004-69a",
+   "anchor": null,
+   "book_id": "6a3c77ab01fe4f593c203d01",
+   "page_id": "6a3c77ab01fe4f593c203d8c",
+   "page_number": 139,
+   "ocr_model": null,
+   "offset": 3,
+   "han": 240,
+   "sha256_original": "cdd274f6f11eb12ab57776a220edea0cb266f0d6b3914dbfa144e641d61f4ed9",
+   "sha256_edited": "380810f3b27c84fc988e08301bcc66a0668b07b7647049480efd04b6a6e391dd",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 160,
+     "pos": 160,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 179,
+     "pos": 179,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 214,
+     "pos": 214,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-5cf936-p10",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "木鍾集",
+   "source": "kanripo",
+   "kr": "KR3a0056",
+   "pb": "KR3a0056_WYG_001-1b",
+   "anchor": null,
+   "book_id": "6a3c6707af3c49b59c5cf936",
+   "page_id": "6a3c6707af3c49b59c5cf940",
+   "page_number": 10,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 138,
+   "sha256_original": "3ac560de4041b7d8c096d7f2273caace1b0f4bfd0144b8fd3bfea247d6641a1a",
+   "sha256_edited": "d76600a2b11e8a2d4aa78552b792f2738fce976e258937bf53dec004e80dd71c",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 26,
+     "pos": 26,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 65,
+     "pos": 66,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "person2",
+     "at": 83,
+     "pos": 84,
+     "len_orig": 2,
+     "len_edited": 2
+    }
+   ]
+  },
+  {
+   "slug": "B-5e9d92-p121",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "孟子雜記",
+   "source": "kanripo",
+   "kr": "KR1h0048",
+   "pb": "KR1h0048_WYG_004-33a",
+   "anchor": null,
+   "book_id": "6a3c6ac2af3c49b59c5e9d92",
+   "page_id": "6a3c6ac3af3c49b59c5e9e0b",
+   "page_number": 121,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 154,
+   "sha256_original": "4a9a73e81a53c0144c5a5a9b2e3d4d09c5176ca3da4490f099f34075b16ce468",
+   "sha256_edited": "540fc29ff7f777f9ffed7d7e6e48c14f4b85d1819c5fe1eb5c8503b412f70723",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 39,
+     "pos": 39,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "person2",
+     "at": 99,
+     "pos": 99,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 118,
+     "pos": 118,
+     "len_orig": 1,
+     "len_edited": 0
+    }
+   ]
+  },
+  {
+   "slug": "B-5e9879-p109",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "問辨錄",
+   "source": "kanripo",
+   "kr": "KR1h0046",
+   "pb": "KR1h0046_WYG_003-12b",
+   "anchor": null,
+   "book_id": "6a3c6ab8af3c49b59c5e9879",
+   "page_id": "6a3c6ab8af3c49b59c5e98e6",
+   "page_number": 109,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 152,
+   "sha256_original": "bf60354b079739871ab7246c4d8010ec326fc409da6d702f0201fe22f857c92a",
+   "sha256_edited": "681696847d6b79b7bbf0640f546ec2c3435b275b85d67354801f4e68e8417b28",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 20,
+     "pos": 20,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 40,
+     "pos": 40,
+     "len_orig": 1,
+     "len_edited": 0
+    },
+    {
+     "type": "name",
+     "name_list": "person2",
+     "at": 132,
+     "pos": 131,
+     "len_orig": 2,
+     "len_edited": 2
+    }
+   ]
+  },
+  {
+   "slug": "B-c4ee08-p5",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "尚書要義",
+   "source": "kanripo",
+   "kr": "KR1b0022",
+   "pb": "KR1b0022_WYG_002-2a",
+   "anchor": null,
+   "book_id": "6a3cb71457c1f37219c4ee08",
+   "page_id": "6a3cb71457c1f37219c4ee79",
+   "page_number": 5,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 153,
+   "sha256_original": "b565f99ac1e7f606e2353b692b405554aeff6062f6a1750db5195411a9f9c753",
+   "sha256_edited": "77182a25fabd58be462eb9aa0d0c614a735f5617247c547705850c34e96eb286",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 46,
+     "pos": 46,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "sage",
+     "at": 58,
+     "pos": 58,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 105,
+     "pos": 105,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-e4771c-p15",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "義府",
+   "source": "kanripo",
+   "kr": "KR3j0069",
+   "pb": "KR3j0069_WYG_001-4a",
+   "anchor": null,
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "page_id": "6a3c6c3839b4508b04e4772c",
+   "page_number": 15,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 113,
+   "sha256_original": "8a20b2ef7c4bf12ded75ad640bd6c9297bd13fe7531e89532911bdb12619732d",
+   "sha256_edited": "116652949737e3db205c957901504d8f43f6ddbca8f8186774e79635942247d5",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 21,
+     "pos": 21,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 83,
+     "pos": 83,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 104,
+     "pos": 104,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-5cfe31-p124",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "大學衍義",
+   "source": "kanripo",
+   "kr": "KR3a0058",
+   "pb": "KR3a0058_WYG_019-6a",
+   "anchor": null,
+   "book_id": "6a3c670eaf3c49b59c5cfe31",
+   "page_id": "6a3c670eaf3c49b59c5cfead",
+   "page_number": 124,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 152,
+   "sha256_original": "f7ef980f17f9d38a84344ce7611351f86aea45388487bdfaf984551fdde54d17",
+   "sha256_edited": "adab0eb1be60e7df092cb3afa33c0c4b7ef0408065c752b04d3240848e7e4867",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 35,
+     "pos": 35,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 46,
+     "pos": 47,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 120,
+     "pos": 121,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-1be32c-p85",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "田間詩學",
+   "source": "kanripo",
+   "kr": "KR1c0046",
+   "pb": "KR1c0046_WYG_001-14a",
+   "anchor": null,
+   "book_id": "6a3c6df401fe4f593c1be32c",
+   "page_id": "6a3c6df401fe4f593c1be431",
+   "page_number": 85,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 225,
+   "sha256_original": "fdf503a5f13d38d7c84ebe165c6deb76ceb0046ff4bcc6dac5d135556701bac3",
+   "sha256_edited": "0f8554d45abeb22e0636dd596e057ba7c3268ed7a795d5afbfdc813e4d4ed03a",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "person2",
+     "at": 42,
+     "pos": 42,
+     "len_orig": 2,
+     "len_edited": 2
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 92,
+     "pos": 92,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 144,
+     "pos": 144,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "B-159a8c-p59",
+   "group": "B",
+   "sub": "kanripo-screen",
+   "work": "文房四譜",
+   "source": "kanripo",
+   "kr": "KR3i0002",
+   "pb": "KR3i0002_WYG_001-26a",
+   "anchor": null,
+   "book_id": "6a3cec1e8642f0445b159a8c",
+   "page_id": "6a3cec1e8642f0445b159ac7",
+   "page_number": 59,
+   "ocr_model": null,
+   "offset": 0,
+   "han": 131,
+   "sha256_original": "31fc53dd1dccd5d8748bd204dc2699132fe3f7f957796383abf27a9d1807ac63",
+   "sha256_edited": "fa49ceb8880915c3b893460bb10789532fa495d45b3a9bd9cfa86791cc50c35c",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 9,
+     "pos": 9,
+     "len_orig": 0,
+     "len_edited": 1
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 93,
+     "pos": 94,
+     "len_orig": 1,
+     "len_edited": 1
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 110,
+     "pos": 111,
+     "len_orig": 1,
+     "len_edited": 1
+    }
+   ]
+  },
+  {
+   "slug": "C-438912-p249",
+   "group": "C",
+   "sub": null,
+   "work": "崑曲粹存初集",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69de98851b234a773e438912",
+   "page_id": "69de98851b234a773e438a0b",
+   "page_number": 249,
+   "ocr_model": "gemini-3.1-flash-lite",
+   "offset": 0,
+   "han": 211,
+   "sha256_original": "d2d3d94b530fd6c9f93d78c3ccdb696282bc9f86781481074d40b379acb2c7ae",
+   "sha256_edited": "ed6d6c6d825809bf93d22ecd0761749685d0ee2df0fe0ce8b311f747fb58b45d",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "name",
+     "name_list": "place2",
+     "at": 121,
+     "pos": 121,
+     "len_orig": 2,
+     "len_edited": 2,
+     "before": "江西",
+     "after": "雍州"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 155,
+     "pos": 155,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "四",
+     "after": "五"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 178,
+     "pos": 178,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "七"
+    }
+   ]
+  },
+  {
+   "slug": "C-321401-p3",
+   "group": "C",
+   "sub": null,
+   "work": "御製數理精蘊",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cea3673ee1e40e321401",
+   "page_id": "6992cea3673ee1e40e321404",
+   "page_number": 3,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 0,
+   "han": 138,
+   "sha256_original": "d38168beaa1d5800e2b58854562bc774129ea754ef9b56c89539b18de4f5cc20",
+   "sha256_edited": "e0cd062fa16939025edf8611d16d5fbaab97100560f2a7e7d5ca0a9077cef222",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 26,
+     "pos": 26,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "五",
+     "after": "八"
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 87,
+     "pos": 87,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 125,
+     "pos": 126,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "三"
+    }
+   ]
+  },
+  {
+   "slug": "C-cf98d9-p30",
+   "group": "C",
+   "sub": null,
+   "work": "養生月覽",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6a1d6131d274b9630ccf98d9",
+   "page_id": "6a1d6131d274b9630ccf98f7",
+   "page_number": 30,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 203,
+   "sha256_original": "fa92ee1a92322a52ae38ff870106ae1bb4f3cedc279708d7acbfc94d12a54b64",
+   "sha256_edited": "986a6f4d20359083291f701f545da8ea4515828769b91edec6cea646ec87bebf",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 54,
+     "pos": 54,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "五",
+     "after": "三"
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 78,
+     "pos": 78,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "楚",
+     "after": "秦"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 110,
+     "pos": 110,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-e4483e-p19",
+   "group": "C",
+   "sub": null,
+   "work": "陳眉公先生批評繡襦記",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af123a0092756351e4483e",
+   "page_id": "69af123a0092756351e44851",
+   "page_number": 19,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 128,
+   "han": 240,
+   "sha256_original": "08361ba93c48a8b68c7bbab36936de44e6ddedcf0cca22f84276a6f921a666e8",
+   "sha256_edited": "5ed9f716a20e24584f9e02322e728c75ef92ececa90146a18a4d85d16dccb8c6",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 33,
+     "pos": 33,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "三",
+     "after": "六"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 117,
+     "pos": 117,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-044b97-p51",
+   "group": "C",
+   "sub": null,
+   "work": "考工記析疑",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cf02f7519cdd65044b97",
+   "page_id": "6992cf02f7519cdd65044bca",
+   "page_number": 51,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 150,
+   "sha256_original": "2d645aba9057883a2d1c1e9d97451afff2a00a829084657df1e4535f98576650",
+   "sha256_edited": "524b5581cb5163299049153d86c20c9e705b4a8d1ec30da763ab26668c4f0abb",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 50,
+     "pos": 50,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 81,
+     "pos": 81,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "六",
+     "after": "七"
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 120,
+     "pos": 120,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "趙",
+     "after": "韓"
+    }
+   ]
+  },
+  {
+   "slug": "C-4c86c0-p72",
+   "group": "C",
+   "sub": null,
+   "work": "植物名實圖考",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cf45f5b4f75c1a4c86c0",
+   "page_id": "6992cf45f5b4f75c1a4c8708",
+   "page_number": 72,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 162,
+   "sha256_original": "7f36bcf9e928d8bfeeb02b6478bcc302715b946f0a2b134e4f6467f1ba2345cd",
+   "sha256_edited": "92d47f4513bb9dfcaad2522c0b2e9004b28789518d665cef52d8e31b3f333ea1",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 21,
+     "pos": 21,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 139,
+     "pos": 138,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-cf9870-p9",
+   "group": "C",
+   "sub": null,
+   "work": "養生類纂",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6a1d612bd274b9630ccf9870",
+   "page_id": "6a1d612bd274b9630ccf9879",
+   "page_number": 9,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 260,
+   "sha256_original": "6ab7aeef82845c674b3c7bf7fc131c7f31bd45981a8f86d6caf7fe69699a22c3",
+   "sha256_edited": "093da3895704fe5c5203535be602683fe57e88eac17ba6d9c5316706195fdb74",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 91,
+     "pos": 91,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 185,
+     "pos": 185,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 227,
+     "pos": 226,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "四"
+    }
+   ]
+  },
+  {
+   "slug": "C-09803e-p35",
+   "group": "C",
+   "sub": null,
+   "work": "陳道翁就正篇",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69bd0ac6b01b17638a09803e",
+   "page_id": "69bd0ac7b01b17638a098061",
+   "page_number": 35,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 72,
+   "han": 240,
+   "sha256_original": "07ae3ce840ed3699632caf153d2dfe928571f9d418f438184e5795a9447ec969",
+   "sha256_edited": "72173fbdf9fef8f5524a4eaa74eb8e142451b3aa2aabecfe5848924560ad7ae8",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 15,
+     "pos": 15,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 92,
+     "pos": 91,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 195,
+     "pos": 194,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-dcdf89-p128",
+   "group": "C",
+   "sub": null,
+   "work": "蘇東坡詩集注",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69e7519010ee9075bcdcdf89",
+   "page_id": "69e7519010ee9075bcdce009",
+   "page_number": 128,
+   "ocr_model": "gemini-3.1-flash-lite",
+   "offset": 0,
+   "han": 223,
+   "sha256_original": "361bb77b9c0fc071af19ed967e1ef289016ceb91fcf2bc402d94474563c885d2",
+   "sha256_edited": "d1f37524eff3dd8aa5cfd499b4c2950e2fca06be9da9351c66396c420d11d65f",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 7,
+     "pos": 7,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "三"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 18,
+     "pos": 18,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    }
+   ]
+  },
+  {
+   "slug": "C-097e63-p359",
+   "group": "C",
+   "sub": null,
+   "work": "瓊琯白先生集",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69bd0aaab01b17638a097e63",
+   "page_id": "69bd0aabb01b17638a097fca",
+   "page_number": 359,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 25,
+   "han": 240,
+   "sha256_original": "0b8dcdecd45a8559eb31d656a52034ccdc7e25e7f37bc27fb50fd38df7a237f3",
+   "sha256_edited": "b0b70cc88c1d1c42d5b38f117fe7b5332d9e38fda7181f8ae2294c29d66f0b54",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 17,
+     "pos": 17,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "三",
+     "after": "二"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 78,
+     "pos": 78,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 142,
+     "pos": 141,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-4afd81-p5",
+   "group": "C",
+   "sub": null,
+   "work": "天文書",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992c9b554b3f8b16b4afd81",
+   "page_id": "6992c9b554b3f8b16b4afd86",
+   "page_number": 5,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 123,
+   "sha256_original": "3a50cb6d23272c6f3fe817c4ee0427b1aacebb0aeaec31f0aeac6ac6fdfbc29f",
+   "sha256_edited": "a61b7d50145e7374be843a1bb8a592393a8c8ac3229b114fbd08edc0403bb4d5",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 21,
+     "pos": 21,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 40,
+     "pos": 40,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "name",
+     "name_list": "sage",
+     "at": 56,
+     "pos": 56,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "堯",
+     "after": "桀"
+    }
+   ]
+  },
+  {
+   "slug": "C-fedab5-p5",
+   "group": "C",
+   "sub": null,
+   "work": "五百石洞天揮塵",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992ca3dd4d545ae73fedab5",
+   "page_id": "6992ca3dd4d545ae73fedaba",
+   "page_number": 5,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 259,
+   "sha256_original": "5515832b918c3c297e0b5633a4825f256601e400fea8079d533967e8809746b2",
+   "sha256_edited": "aa9a15cb9be3faafc0792f0400e1db557adea6902fb5bc9143be0cdc2f911cf5",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 59,
+     "pos": 59,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 127,
+     "pos": 126,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "七",
+     "after": "九"
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 146,
+     "pos": 145,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    }
+   ]
+  },
+  {
+   "slug": "C-32134f-p28",
+   "group": "C",
+   "sub": null,
+   "work": "蠶桑輯要",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cea0673ee1e40e32134f",
+   "page_id": "6992cea1673ee1e40e32136b",
+   "page_number": 28,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 225,
+   "sha256_original": "100f6f1e505c7b47f32ab169683ab25b53f01464efd202cb315a409308a851c3",
+   "sha256_edited": "93550aa7ffe78dfc03a95beb286aea2960fbf12923e6a2d95f1ac8d0b37bb81f",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 25,
+     "pos": 25,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "六",
+     "after": "七"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 160,
+     "pos": 160,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 199,
+     "pos": 198,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-e44955-p18",
+   "group": "C",
+   "sub": null,
+   "work": "寰有詮",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af124b0092756351e44955",
+   "page_id": "69bcdb7b22df78dd6cf0af6b",
+   "page_number": 18,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 0,
+   "han": 156,
+   "sha256_original": "b97004df886b0a13c4bf1865fd26d23a8ece0ceb6b10dac552ece7b33a5a38b0",
+   "sha256_edited": "260acac747e154a7efa2eb46a34743739822fa1592efdca8b605a311f6fd74b0",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 19,
+     "pos": 19,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 48,
+     "pos": 49,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 146,
+     "pos": 148,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-2a748d-p402",
+   "group": "C",
+   "sub": null,
+   "work": "本草求真",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af0de1008f8570d42a748d",
+   "page_id": "69af0de1008f8570d42a761f",
+   "page_number": 402,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 106,
+   "han": 240,
+   "sha256_original": "377a110162ff0140c18fdfd102b6301505c648c29484bfce4dfe7f54f9422d4c",
+   "sha256_edited": "6d6cb0e45cc6e38c5c376856cc323dad661622d4d16ca9b7a69ee7429b3a0eae",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 52,
+     "pos": 52,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 202,
+     "pos": 202,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "三",
+     "after": "五"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 228,
+     "pos": 228,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-4afddd-p20",
+   "group": "C",
+   "sub": null,
+   "work": "景祐太乙福應經",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992c9bc54b3f8b16b4afddd",
+   "page_id": "6992c9bc54b3f8b16b4afdf1",
+   "page_number": 20,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 7,
+   "han": 240,
+   "sha256_original": "8584904f84c0de659683c4da6b29542e65af7e905f174f260bc730a7bcce6942",
+   "sha256_edited": "d141304520d54255abb8cbc4ecc40ad67f53408fe5d5983e71070c9eccad60c2",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 21,
+     "pos": 21,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "七",
+     "after": "二"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 53,
+     "pos": 53,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 193,
+     "pos": 192,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "六"
+    }
+   ]
+  },
+  {
+   "slug": "C-f46e29-p33",
+   "group": "C",
+   "sub": null,
+   "work": "考工記考辨",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cf09284cdd19fef46e29",
+   "page_id": "6992cf09284cdd19fef46e4a",
+   "page_number": 33,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 201,
+   "sha256_original": "43c45216170b47cc3f947d27eddea97946752ea5fbee904ffa68dc5ecb2fa5fb",
+   "sha256_edited": "6041419e62f696325a8e0db79cb62159a63846b850d1d4d0d8fb6d91f6bea05a",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 33,
+     "pos": 33,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 145,
+     "pos": 146,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "四",
+     "after": "六"
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 155,
+     "pos": 156,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "鄭",
+     "after": "吳"
+    }
+   ]
+  },
+  {
+   "slug": "C-feee9a-p51",
+   "group": "C",
+   "sub": null,
+   "work": "玉靈照膽經",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cb51d4d545ae73feee9a",
+   "page_id": "6992cb51d4d545ae73feeecd",
+   "page_number": 51,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 18,
+   "han": 240,
+   "sha256_original": "8f724394ecabcc5f56e1110a2de40a247cc65f3c7d44a8ab2c832778b3550842",
+   "sha256_edited": "0faa565fec8874dffd48ab1f6d53bf82d28e195b3c5755ebb05be06e4fb3215a",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 25,
+     "pos": 25,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 41,
+     "pos": 41,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 128,
+     "pos": 128,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-026784-p33",
+   "group": "C",
+   "sub": null,
+   "work": "繪事發微",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992d04e219cb601da026784",
+   "page_id": "6992d04e219cb601da0267a5",
+   "page_number": 33,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 166,
+   "sha256_original": "06ecedbcfb6d1d9a63b518f3cdd52fa0c8c59c50ba508b12722c45e0e54a7233",
+   "sha256_edited": "5851e9a1aa7f736193ab290c5b7e61611029c059de7ca6871e3de7e67ad0cdbd",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 23,
+     "pos": 23,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 50,
+     "pos": 49,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "五",
+     "after": "七"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 72,
+     "pos": 71,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "七"
+    }
+   ]
+  },
+  {
+   "slug": "C-95b363-p54",
+   "group": "C",
+   "sub": null,
+   "work": "校註婦人良方大全",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6a06ce469a48d5139995b363",
+   "page_id": "6a06ce469a48d5139995b399",
+   "page_number": 54,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 156,
+   "sha256_original": "ed9303077035cb04a66dabf3950dcb4f6683bb33cc3b2dfe508aa5cac2234504",
+   "sha256_edited": "bf14b81b2cf7cee1bd9737971293d06ace8f85600498051587d43674453b9436",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 55,
+     "pos": 55,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "七",
+     "after": "九"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 93,
+     "pos": 93,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "四"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 137,
+     "pos": 137,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "八"
+    }
+   ]
+  },
+  {
+   "slug": "C-2a7402-p113",
+   "group": "C",
+   "sub": null,
+   "work": "湖北安襄鄖道水利紀案",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af0dd9008f8570d42a7402",
+   "page_id": "69af0dd9008f8570d42a7473",
+   "page_number": 113,
+   "ocr_model": "gemini-3.1-flash-lite",
+   "offset": 0,
+   "han": 231,
+   "sha256_original": "b780bb8e8df489b833e03531a4eba9855cfb9303bc0f011eba508758f9c66351",
+   "sha256_edited": "63b29d7672ea86220165282449dfd8203789ba424b06325ffe74826b1cc5d1fc",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 39,
+     "pos": 39,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "三"
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 121,
+     "pos": 121,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "楚",
+     "after": "魏"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 170,
+     "pos": 170,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    }
+   ]
+  },
+  {
+   "slug": "C-ea28a5-p133",
+   "group": "C",
+   "sub": null,
+   "work": "列子鬳齋口義",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69aec2de5593ec6bf8ea28a5",
+   "page_id": "69aec2de5593ec6bf8ea292a",
+   "page_number": 133,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 35,
+   "han": 240,
+   "sha256_original": "d1af38609c5ba1f998d588f14aecd7f9df4df839ef86e9c9a02d0239dba294be",
+   "sha256_edited": "558a4ad8031b1fee2a240a7517f899972eab1b3e5aa50aa289cd5177b1739994",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 29,
+     "pos": 29,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 40,
+     "pos": 41,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 214,
+     "pos": 215,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-321168-p25",
+   "group": "C",
+   "sub": null,
+   "work": "銅人腧穴鍼灸圖經",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992ce98673ee1e40e321168",
+   "page_id": "6992ce98673ee1e40e3211d6",
+   "page_number": 25,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 174,
+   "sha256_original": "523c44403737dab371eab493ce3bd2cd221266556ab1baec7380d44bce2a77ea",
+   "sha256_edited": "0b48dc99f9a0a3e70d840db0601f2e5a1934b4dd6d172867ead74d357122340e",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 26,
+     "pos": 26,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 114,
+     "pos": 115,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 165,
+     "pos": 165,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    }
+   ]
+  },
+  {
+   "slug": "C-c79099-p96",
+   "group": "C",
+   "sub": null,
+   "work": "新鐫神峰張先生通考闢謬命理正宗大全",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "699df07e3430a1d77dc79099",
+   "page_id": "699df07e3430a1d77dc790f9",
+   "page_number": 96,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 7,
+   "han": 240,
+   "sha256_original": "fa29c95a2799ab4a61ed1c30e16b85b839a1ffb16ca1309b60d9bfeb0848835b",
+   "sha256_edited": "946259e7494b4047a7481d1055ed8db392a598ebdb6897b0699a62fe580bd83e",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 22,
+     "pos": 22,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 152,
+     "pos": 152,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 180,
+     "pos": 180,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "四",
+     "after": "八"
+    }
+   ]
+  },
+  {
+   "slug": "C-d0a63d-p21",
+   "group": "C",
+   "sub": null,
+   "work": "三才圖會",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69bd03b92cb74de7c0d0a63d",
+   "page_id": "69bd03bf2cb74de7c0d0a648",
+   "page_number": 21,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 0,
+   "han": 139,
+   "sha256_original": "462afca9681dcc6d59ccff4b0540cc262a3d8fbbefd37cd1a873bfc4ba306b7b",
+   "sha256_edited": "8a98e1e12343a0cc148fe4d135e1b1b216492f6bb0d5a294adb125e1fb9f97b0",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 9,
+     "pos": 9,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "七",
+     "after": "九"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 64,
+     "pos": 64,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 123,
+     "pos": 122,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    }
+   ]
+  },
+  {
+   "slug": "C-8284fd-p61",
+   "group": "C",
+   "sub": null,
+   "work": "新編纂圖增類羣書類要事林廣記",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992ce273ea667fbac8284fd",
+   "page_id": "6992ce273ea667fbac82853a",
+   "page_number": 61,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 43,
+   "han": 240,
+   "sha256_original": "d1461b4cf18d7196fc58ddb06c7dde71d917575c1eaca604f32454bb3be97d31",
+   "sha256_edited": "f559433d8ee8b2ffad1c09f283ed797cb329b8c8a02aa0062138646e6ab1dfc1",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 7,
+     "pos": 7,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "五",
+     "after": "三"
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 26,
+     "pos": 26,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "秦",
+     "after": "魯"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 222,
+     "pos": 222,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    }
+   ]
+  },
+  {
+   "slug": "C-fef09e-p106",
+   "group": "C",
+   "sub": null,
+   "work": "灸法秘傳",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cb55d4d545ae73fef09e",
+   "page_id": "6992cb55d4d545ae73fef108",
+   "page_number": 106,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 140,
+   "sha256_original": "b54f161d16c0f08d17c6408cc23f919b21b539c59a84f65345c900564e0a3c17",
+   "sha256_edited": "b9fc35b29cf899462e45ac09b4ec5d90ab537ec76f387a44211f605f72ab44b4",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 55,
+     "pos": 55,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 79,
+     "pos": 80,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "六"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 114,
+     "pos": 115,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "六",
+     "after": "三"
+    }
+   ]
+  },
+  {
+   "slug": "C-e6dbe2-p76",
+   "group": "C",
+   "sub": null,
+   "work": "華陽金仙證論",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6a1d81ba5afc14a085e6dbe2",
+   "page_id": "6a1d81ba5afc14a085e6dc2e",
+   "page_number": 76,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 0,
+   "han": 254,
+   "sha256_original": "284682c6c35ea74075979a916a7f91aa50f8ecee5c40bdd526b5a7e7da7e8d83",
+   "sha256_edited": "dede21abee1c793ab36b36b828a5bd1860676d70a5e4019db6fcef39c535dcca",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 90,
+     "pos": 90,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 120,
+     "pos": 119,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 194,
+     "pos": 192,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "四",
+     "after": "五"
+    }
+   ]
+  },
+  {
+   "slug": "C-43855c-p56",
+   "group": "C",
+   "sub": null,
+   "work": "盛明雜劇",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69de98651b234a773e43855c",
+   "page_id": "69de98651b234a773e438594",
+   "page_number": 56,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 41,
+   "han": 240,
+   "sha256_original": "eaea6fd3b06091e67c4c3d80d66e5eca94fa28e11e786ec0086441c8252e788e",
+   "sha256_edited": "6501ae3af2042f6667682ee03abb7143af5ad3d4464a84a46e4fe6920827b796",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 96,
+     "pos": 96,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 131,
+     "pos": 130,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 153,
+     "pos": 153,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-54ca17-p66",
+   "group": "C",
+   "sub": null,
+   "work": "新編直指算法統宗",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cbfe018b80967354ca17",
+   "page_id": "6992cbfe018b80967354ca59",
+   "page_number": 66,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 260,
+   "sha256_original": "9bd114e93dbe9a8a6b3b5ee87870ad18a10d88c8c7b7d635b366444cb9c0b888",
+   "sha256_edited": "f7dd896849be553b9aead67ab9538bdada0d823f4ff814989d8a7d79a786fbb4",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 23,
+     "pos": 23,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "四"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 132,
+     "pos": 132,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "八"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 238,
+     "pos": 238,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "六"
+    }
+   ]
+  },
+  {
+   "slug": "C-2a7919-p5",
+   "group": "C",
+   "sub": null,
+   "work": "河工書",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af0e06008f8570d42a7919",
+   "page_id": "69af0e06008f8570d42a791e",
+   "page_number": 5,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 38,
+   "han": 240,
+   "sha256_original": "9c8c2ed97bee0cb65d586085b5ad135ea026041881093e5494d0bb53eaf818ae",
+   "sha256_edited": "67b1079d563717e0a4cb7dd1538d222c0b478b6aac3e40726fe6b96620708f58",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 86,
+     "pos": 86,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "name",
+     "name_list": "state",
+     "at": 155,
+     "pos": 155,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "魏",
+     "after": "鄭"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 204,
+     "pos": 204,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "六"
+    }
+   ]
+  },
+  {
+   "slug": "C-09bbd5-p22",
+   "group": "C",
+   "sub": null,
+   "work": "天文初學考",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af0dc5d2d9291eaf09bbd5",
+   "page_id": "69af0dc5d2d9291eaf09bbeb",
+   "page_number": 22,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 36,
+   "han": 240,
+   "sha256_original": "a0822384d2934b6dc016321f4d3fcef6964935acc8439bd5641cab18115f68ea",
+   "sha256_edited": "492a10fd8ac6b1fcbd161e05a018ae07764af2096af2a125171d86b3e4676ab0",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 8,
+     "pos": 8,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "五",
+     "after": "八"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 117,
+     "pos": 117,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 227,
+     "pos": 227,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    }
+   ]
+  },
+  {
+   "slug": "C-e44874-p85",
+   "group": "C",
+   "sub": null,
+   "work": "新鐫節義鴛鴦塚嬌紅記",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af123e0092756351e44874",
+   "page_id": "69af123e0092756351e448c9",
+   "page_number": 85,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 27,
+   "han": 240,
+   "sha256_original": "5384402f2dd0ebf22505e4769b73fcc595acb61dab858e9dbd41643dd2c6fe0f",
+   "sha256_edited": "35a4320d64c1c5545e641b04754d71e09a560b280cdf5dce6646be36bf226ee4",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 191,
+     "pos": 191,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "四"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 216,
+     "pos": 216,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 229,
+     "pos": 228,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    }
+   ]
+  },
+  {
+   "slug": "C-c7922c-p187",
+   "group": "C",
+   "sub": null,
+   "work": "天文圖註祥異賦",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "699df0863430a1d77dc7922c",
+   "page_id": "699df0873430a1d77dc792e7",
+   "page_number": 187,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 0,
+   "han": 158,
+   "sha256_original": "0e77c2fd48812e719777a659c5f88200d8baaf3defea2ee10e4c0fa0dafdc934",
+   "sha256_edited": "aecce35fecc421b6ae1c83dcc23892878113c43269aea588e14b218abcd2b96a",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 8,
+     "pos": 8,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "四",
+     "after": "三"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 46,
+     "pos": 46,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 152,
+     "pos": 152,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-4c9ede-p32",
+   "group": "C",
+   "sub": null,
+   "work": "程氏墨苑",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992cffef5b4f75c1a4c9ede",
+   "page_id": "6992cffff5b4f75c1a4c9efe",
+   "page_number": 32,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 171,
+   "sha256_original": "3a7e64110aae4123058596d0fa7b240aa0f05797aa6790fee7c7c3c55af4e143",
+   "sha256_edited": "115758cab2edc663a20e9c94ba60f3fa82b86565980a1db53b3aedc626cf26b1",
+   "baseline": false,
+   "subset": false,
+   "edits": [
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 14,
+     "pos": 14,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 77,
+     "pos": 76,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    }
+   ]
+  },
+  {
+   "slug": "C-0978c6-p791",
+   "group": "C",
+   "sub": null,
+   "work": "道宗六書",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69bd0a11b01b17638a0978c6",
+   "page_id": "69bd0a12b01b17638a097bdd",
+   "page_number": 791,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 12,
+   "han": 240,
+   "sha256_original": "ceffd5bade55ab35c946c6324bc4aca9d9ad9d4b8cbb26dc18faa43a2bf04ef3",
+   "sha256_edited": "839b83f730e92c9ac659e17fe51140c8a0d731bc145e575b23cfdde18ef14c4e",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 30,
+     "pos": 30,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    },
+    {
+     "type": "neg_del",
+     "name_list": null,
+     "at": 121,
+     "pos": 121,
+     "len_orig": 1,
+     "len_edited": 0,
+     "before": "不",
+     "after": ""
+    },
+    {
+     "type": "neg_add",
+     "name_list": null,
+     "at": 198,
+     "pos": 197,
+     "len_orig": 0,
+     "len_edited": 1,
+     "before": "",
+     "after": "不"
+    }
+   ]
+  },
+  {
+   "slug": "C-2a777d-p227",
+   "group": "C",
+   "sub": null,
+   "work": "增訂本草備要",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af0deb008f8570d42a777d",
+   "page_id": "69af0deb008f8570d42a7860",
+   "page_number": 227,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 87,
+   "han": 240,
+   "sha256_original": "865a73badc03de6701fecd9624fb12f4199add651c16ae9266c4618546f52841",
+   "sha256_edited": "0b5b7d094df69ab5ec4c2262c22c4fdacb02d6159c6fffe9e683eea888955b7a",
+   "baseline": true,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 168,
+     "pos": 168,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "五"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 181,
+     "pos": 181,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "九",
+     "after": "八"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 206,
+     "pos": 206,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    }
+   ]
+  },
+  {
+   "slug": "C-e44760-p20",
+   "group": "C",
+   "sub": null,
+   "work": "新刻出相音註勸善目連救母行孝戲文",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af12350092756351e44760",
+   "page_id": "69af12350092756351e44774",
+   "page_number": 20,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 10,
+   "han": 240,
+   "sha256_original": "9f1f9c033746ae899907a8ed99c48964215163278e44459ccf8073152411aab9",
+   "sha256_edited": "fa3d8761b57dee9a41ee6780476e4fdbd0cc4954ca6854bba8f3936a2ce76307",
+   "baseline": false,
+   "subset": true,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 6,
+     "pos": 6,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "三",
+     "after": "八"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 24,
+     "pos": 24,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "三",
+     "after": "九"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 150,
+     "pos": 150,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "無",
+     "after": "有"
+    }
+   ]
+  },
+  {
+   "slug": "C-2a739b-p17",
+   "group": "C",
+   "sub": null,
+   "work": "重刊天文秘略",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "69af0dce008f8570d42a739b",
+   "page_id": "69af0dce008f8570d42a73ac",
+   "page_number": 17,
+   "ocr_model": "gemini-3-flash-preview",
+   "offset": 70,
+   "han": 240,
+   "sha256_original": "a055cfd2b704a4d21323b18770c28d52e2d102ed10c1b989c440cd965e95f7d3",
+   "sha256_edited": "286b5ce9452973f3f859bbf9c1ada29497a175c27a01577e9e02c93d5f7a030d",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 119,
+     "pos": 119,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "四",
+     "after": "三"
+    },
+    {
+     "type": "neg_swap",
+     "name_list": null,
+     "at": 159,
+     "pos": 159,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "有",
+     "after": "無"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 196,
+     "pos": 196,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "九"
+    }
+   ]
+  },
+  {
+   "slug": "C-9df8f9-p49",
+   "group": "C",
+   "sub": null,
+   "work": "洞天奧旨",
+   "source": "ours",
+   "kr": null,
+   "pb": null,
+   "anchor": null,
+   "book_id": "6992c9f58cc847bfb99df8f9",
+   "page_id": "6992c9f68cc847bfb99df92a",
+   "page_number": 49,
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "offset": 0,
+   "han": 161,
+   "sha256_original": "6d61dd28d719a4474fb0d358d5bf88ae1e727de33ec5fc4c5d3bb78a994aac1f",
+   "sha256_edited": "5911ded52ba050de2ec88625fe56f9bbbfb64bb6b654ceeabc338b3f5fe2831c",
+   "baseline": true,
+   "subset": false,
+   "edits": [
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 14,
+     "pos": 14,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "六"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 131,
+     "pos": 131,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "二",
+     "after": "六"
+    },
+    {
+     "type": "num",
+     "name_list": null,
+     "at": 149,
+     "pos": 149,
+     "len_orig": 1,
+     "len_edited": 1,
+     "before": "三",
+     "after": "六"
+    }
+   ]
+  }
+ ]
+}

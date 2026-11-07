@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three are reading the commentary on Sāṅkhyakārikā 19 ("tasmāc ca viparyāsāt siddhaṃ sākṣitvam asya puruṣasya kaivalyaṃ mādhyasthyaṃ draṣṭṛtvam akartṛbhāvaś ca"); A keeps the most real Sanskrit across the leaf (e.g. "traiguṇyādeḥ viparyyāsaḥ puruṣasya sākṣi…", "…śayati iti puruṣas sākṣī"), B is accurate but almost entirely illegible after row 4, and C is fluent in rows 3–4 but turns into syllable strings that only look like words from row 5 onward.

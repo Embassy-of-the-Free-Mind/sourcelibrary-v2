@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three gives readable text, but A's one word, "yathā", is real Sanskrit and the rest is honestly marked illegible; C is entirely illegible, and B is filled with repeated filler syllables like "nana", "ta" and "ya" that look like invented noise rather than real language.

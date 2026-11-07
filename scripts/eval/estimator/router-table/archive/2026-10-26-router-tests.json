@@ -1,0 +1,1784 @@
+{
+ "as_of": "2026-10-26",
+ "rules": {
+  "pilot": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+  "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
+  "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
+  "capacity": "scripts/eval/estimator/chain/capacity.json"
+ },
+ "rows": [
+  {
+   "id": "latin-lite",
+   "title": "Latin print, Flash-Lite text (#5924)",
+   "pages_waiting": 861506,
+   "current": "lite>opus",
+   "decision": "keep",
+   "route": "lite>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 53.413372,
+   "v2_weeks": 78,
+   "test_score": 0.26336556118050913,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      0.14,
+      3.86
+     ],
+     "k": 17,
+     "n": 30,
+     "wrong": 12,
+     "top": [
+      [
+       "O6",
+       "21/30"
+      ],
+      [
+       "O5",
+       "12/30"
+      ],
+      [
+       "E2",
+       "11/30"
+      ]
+     ],
+     "mean": 0.4029079678041933,
+     "ci90": [
+      0.19656405376654068,
+      0.6278773825976862
+     ],
+     "var": 0.01718613693998309,
+     "p80": 0.00085,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img",
+     "tested": true,
+     "prior": [
+      3.22,
+      0.78
+     ],
+     "k": 30,
+     "n": 30,
+     "wrong": 0,
+     "top": [
+      [
+       "E2",
+       "7/30"
+      ],
+      [
+       "O8",
+       "5/30"
+      ],
+      [
+       "O12",
+       "4/30"
+      ]
+     ],
+     "mean": 0.9391715844186524,
+     "ci90": [
+      0.8086723514558499,
+      0.9983275433597054
+     ],
+     "var": 0.00404960606090279,
+     "p80": 0.956375,
+     "share": 6.2e-05,
+     "cost": [
+      0.012420773204623665,
+      0.012916811769261152,
+      0.015333775141039908
+     ],
+     "api": 0.08752394276375156
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      3.11,
+      0.89
+     ],
+     "k": 24,
+     "n": 30,
+     "wrong": 4,
+     "top": [
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ],
+      [
+       "O8",
+       "9/30"
+      ]
+     ],
+     "mean": 0.7922760165076447,
+     "ci90": [
+      0.5884804700458979,
+      0.9425474558056062
+     ],
+     "var": 0.011706053563142855,
+     "p80": 0.526325,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.0821736282001784,
+      1.2632337145116714,
+      1.7332775715062325
+     ],
+     "api": null
+    }
+   ],
+   "before": "keep"
+  },
+  {
+   "id": "latin-flash3",
+   "title": "Latin print, 3 Flash text (most-read books)",
+   "pages_waiting": 1317806,
+   "current": "3flash>opus",
+   "decision": "HOLD",
+   "route": "3flash>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 34.41451482410774,
+   "v2_weeks": 78,
+   "test_score": 0.7020315061817547,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      2.94,
+      1.06
+     ],
+     "k": 21,
+     "n": 30,
+     "wrong": 4,
+     "top": [
+      [
+       "O8",
+       "16/30"
+      ],
+      [
+       "O6",
+       "14/30"
+      ],
+      [
+       "E2",
+       "8/30"
+      ]
+     ],
+     "mean": 0.7046458126924425,
+     "ci90": [
+      0.5708816583657468,
+      0.8243582336122307
+     ],
+     "var": 0.00595108413247652,
+     "p80": 0.1025,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img",
+     "tested": false,
+     "prior": [
+      3.82,
+      0.18
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.9556768862028461,
+     "ci90": [
+      0.7611524875908806,
+      0.9999999889479216
+     ],
+     "var": 0.008592379158527992,
+     "p80": 0.934725,
+     "share": 6.2e-05,
+     "cost": [
+      0.012400000137045774,
+      0.012450749793942683,
+      0.016291085166452217
+     ],
+     "api": 0.08601233448953868
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      1.87,
+      0.13
+     ],
+     "k": 23,
+     "n": 30,
+     "wrong": 3,
+     "top": [
+      [
+       "O6",
+       "11/30"
+      ],
+      [
+       "O8",
+       "10/30"
+      ],
+      [
+       "E2",
+       "6/30"
+      ]
+     ],
+     "mean": 0.7767352065766808,
+     "ci90": [
+      0.6473321395670582,
+      0.8850806142826743
+     ],
+     "var": 0.005246153520133031,
+     "p80": 0.4051,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.1524373978371145,
+      1.3033611406399086,
+      1.5756980654199955
+     ],
+     "api": null
+    }
+   ],
+   "test_next": 1,
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "german-lite",
+   "title": "German OCR, Flash-Lite",
+   "pages_waiting": 418603,
+   "current": "lite>opus",
+   "decision": "keep",
+   "route": "lite>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 25.953386000000002,
+   "v2_weeks": 104,
+   "test_score": 0.050909241189989296,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 21,
+     "n": 30,
+     "wrong": 5,
+     "top": [
+      [
+       "O8",
+       "18/30"
+      ],
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ]
+     ],
+     "mean": 0.6876016963142262,
+     "ci90": [
+      0.547641199040544,
+      0.8135825470519982
+     ],
+     "var": 0.006510416666666667,
+     "p80": 0.075875,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img",
+     "tested": true,
+     "prior": [
+      1.77,
+      0.23
+     ],
+     "k": 28,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "O8",
+       "5/30"
+      ],
+      [
+       "O12",
+       "3/30"
+      ],
+      [
+       "E2",
+       "3/30"
+      ]
+     ],
+     "mean": 0.9305288370941156,
+     "ci90": [
+      0.8460372826618147,
+      0.9855108001894425
+     ],
+     "var": 0.0019615645214843755,
+     "p80": 0.987325,
+     "share": 6.2e-05,
+     "cost": [
+      0.012582307568436974,
+      0.013198186006356458,
+      0.014656564496764187
+     ],
+     "api": 0.0883368647195252
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      1.76,
+      0.24
+     ],
+     "k": 28,
+     "n": 30,
+     "wrong": 2,
+     "top": [
+      [
+       "O8",
+       "14/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ],
+      [
+       "O6",
+       "7/30"
+      ]
+     ],
+     "mean": 0.9300511395764736,
+     "ci90": [
+      0.8445422721912176,
+      0.9854545208560399
+     ],
+     "var": 0.0019740302272727274,
+     "p80": 0.986025,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.0350553763901265,
+      1.0863765854934055,
+      1.2077548200796941
+     ],
+     "api": null
+    }
+   ],
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "german-flash3",
+   "title": "German OCR, 3 Flash",
+   "pages_waiting": 353186,
+   "current": "3flash>opus",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 21.897532,
+   "v2_weeks": 78,
+   "test_score": 0.03245268001960485,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 29,
+     "n": 30,
+     "wrong": 0,
+     "top": [
+      [
+       "O8",
+       "22/30"
+      ],
+      [
+       "O6",
+       "12/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ]
+     ],
+     "mean": 0.9377369322553876,
+     "ci90": [
+      0.8569024973811509,
+      0.988421589397167
+     ],
+     "var": 0.0017755681818181818,
+     "p80": 0.9916,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img",
+     "tested": true,
+     "prior": [
+      1.75,
+      0.25
+     ],
+     "k": 29,
+     "n": 29,
+     "wrong": 0,
+     "top": [
+      [
+       "O8",
+       "11/29"
+      ],
+      [
+       "O16",
+       "4/29"
+      ],
+      [
+       "E2",
+       "3/29"
+      ]
+     ],
+     "mean": 0.9920421385007736,
+     "ci90": [
+      0.9612256731090486,
+      0.9999998686848053
+     ],
+     "var": 0.00025008292111082205,
+     "p80": 0.9999,
+     "share": 6.2e-05,
+     "cost": [
+      0.012400001628308628,
+      0.01241727579133626,
+      0.012900196433468803
+     ],
+     "api": 0.08285938349778667
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      1.71,
+      0.29
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "O8",
+       "18/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ],
+      [
+       "O6",
+       "8/30"
+      ]
+     ],
+     "mean": 0.8659165699529211,
+     "ci90": [
+      0.7576460393305515,
+      0.9489326031664546
+     ],
+     "var": 0.0035184948268821028,
+     "p80": 0.8626,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.0748919328900741,
+      1.1678773888595293,
+      1.3462751034787457
+     ],
+     "api": null
+    }
+   ],
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "german-tr-flash3",
+   "title": "German translation, 3 Flash English (#7263)",
+   "pages_waiting": 306784,
+   "current": "flash3",
+   "decision": "HOLD",
+   "route": "opus-cli",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 1.4158081599999999,
+   "v2_weeks": null,
+   "test_score": 0.0035077750359248793,
+   "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
+   "routes": [
+    {
+     "id": "flash3",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 41,
+     "n": 60,
+     "wrong": 11,
+     "top": [
+      [
+       "T10",
+       "29/60"
+      ],
+      [
+       "E2",
+       "27/60"
+      ],
+      [
+       "O6",
+       "22/60"
+      ]
+     ],
+     "mean": 0.6774624373680698,
+     "ci90": [
+      0.5776598896853241,
+      0.7708862143558919
+     ],
+     "var": 0.00346860908775581,
+     "p80": 0.012775,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 49,
+     "n": 60,
+     "wrong": 7,
+     "top": [
+      [
+       "T10",
+       "31/60"
+      ],
+      [
+       "E2",
+       "23/60"
+      ],
+      [
+       "T15",
+       "22/60"
+      ]
+     ],
+     "mean": 0.8067849055651419,
+     "ci90": [
+      0.7196240787700336,
+      0.8829195867369938
+     ],
+     "var": 0.0024775779198255785,
+     "p80": 0.579525,
+     "share": 4.615e-06,
+     "cost": [
+      0.0010453953155701659,
+      0.0011392319284911762,
+      0.0012826141137155557
+     ],
+     "api": 0.07399741813238432
+    }
+   ],
+   "before": "HOLD → opus-cli"
+  },
+  {
+   "id": "german-tr-lite",
+   "title": "German translation, Flash-Lite English (#7263)",
+   "pages_waiting": 151361,
+   "current": "flash-lite",
+   "decision": "HOLD",
+   "route": "opus-cli",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 0.698531015,
+   "v2_weeks": null,
+   "test_score": 0.00173066501907735,
+   "caveat": "Each German route was judged on its own 30 pages, not paired.",
+   "routes": [
+    {
+     "id": "flash-lite",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 26,
+     "n": 60,
+     "wrong": 19,
+     "top": [
+      [
+       "E2",
+       "31/60"
+      ],
+      [
+       "O6",
+       "20/60"
+      ],
+      [
+       "T8",
+       "16/60"
+      ]
+     ],
+     "mean": 0.4355057687162528,
+     "ci90": [
+      0.334081598345657,
+      0.5398884520965034
+     ],
+     "var": 0.003902185223725286,
+     "p80": 0.0,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 49,
+     "n": 60,
+     "wrong": 7,
+     "top": [
+      [
+       "T10",
+       "31/60"
+      ],
+      [
+       "E2",
+       "23/60"
+      ],
+      [
+       "T15",
+       "22/60"
+      ]
+     ],
+     "mean": 0.8066337637878646,
+     "ci90": [
+      0.720301065634039,
+      0.8820961539522965
+     ],
+     "var": 0.0024775779198255785,
+     "p80": 0.57735,
+     "share": 4.615e-06,
+     "cost": [
+      0.0010463711873863533,
+      0.0011395302434198517,
+      0.0012814086276375797
+     ],
+     "api": 0.07401128328630244
+    }
+   ],
+   "before": "HOLD → opus-cli"
+  },
+  {
+   "id": "french-lite",
+   "title": "French OCR, Flash-Lite",
+   "pages_waiting": 151443,
+   "current": "lite>opus",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "other_wrong_text_bar": "keep lite>opus",
+   "weeks_to_clear": 3.954935224537867,
+   "v2_weeks": 104,
+   "test_score": 0.32046360131592005,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 22,
+     "n": 30,
+     "wrong": 6,
+     "top": [
+      [
+       "O8",
+       "9/30"
+      ],
+      [
+       "O6",
+       "8/30"
+      ],
+      [
+       "E2",
+       "8/30"
+      ]
+     ],
+     "mean": 0.7190298619110234,
+     "ci90": [
+      0.5829423940945773,
+      0.8393153500518562
+     ],
+     "var": 0.006125710227272727,
+     "p80": 0.152225,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img",
+     "tested": false,
+     "prior": [
+      1.77,
+      0.23
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.882987843165127,
+     "ci90": [
+      0.4475233545789471,
+      0.9999986990357925
+     ],
+     "var": 0.03413012000000001,
+     "p80": 0.793925,
+     "share": 6.2e-05,
+     "cost": [
+      0.01240001613197716,
+      0.012705427140246193,
+      0.027708051151132784
+     ],
+     "api": 0.09309301440136342
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      1.72,
+      0.28
+     ],
+     "k": 27,
+     "n": 29,
+     "wrong": 2,
+     "top": [
+      [
+       "E2",
+       "11/29"
+      ],
+      [
+       "O8",
+       "10/29"
+      ],
+      [
+       "O6",
+       "3/29"
+      ]
+     ],
+     "mean": 0.9265059999645402,
+     "ci90": [
+      0.8389325570132341,
+      0.9839757431609797
+     ],
+     "var": 0.0021253027416103017,
+     "p80": 0.9836,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.0366109196180935,
+      1.090304818986867,
+      1.2158307500085608
+     ],
+     "api": null
+    }
+   ],
+   "test_next": 3,
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "greek-flash3",
+   "title": "Greek OCR, 3 Flash",
+   "pages_waiting": 419150,
+   "current": "3flash",
+   "decision": "held",
+   "route": "3flash",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "Derek 2026-10-14 (#6694): Greek stays on lane A",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.49974053945404223,
+     "ci90": [
+      0.04914678338921639,
+      0.9491316751910429
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.1986,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "before": "held"
+  },
+  {
+   "id": "tibetan-yigdzin",
+   "title": "Tibetan, Yigdzin (#6560)",
+   "pages_waiting": 280623,
+   "current": "yigdzin>opus",
+   "decision": "HOLD",
+   "route": "yigdzin>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 7.32847201597624,
+   "v2_weeks": 104,
+   "test_score": 0.07560697976290508,
+   "caveat": "Judged on the Kangyur stratum only (30 folios, one per book); Derge agrees with the judge's order on 25/27 pairs, planted syllables caught 8/10.",
+   "routes": [
+    {
+     "id": "yigdzin",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 17,
+     "n": 30,
+     "wrong": 12,
+     "top": [
+      [
+       "O6",
+       "27/30"
+      ],
+      [
+       "E2",
+       "27/30"
+      ],
+      [
+       "O5",
+       "8/30"
+      ]
+     ],
+     "mean": 0.5616900029260872,
+     "ci90": [
+      0.4170585528673482,
+      0.7018571515944331
+     ],
+     "var": 0.007457386363636364,
+     "p80": 0.00125,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "yigdzin>agy-flash-low",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      1.57,
+      0.43
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 3,
+     "top": [
+      [
+       "O12",
+       "14/30"
+      ],
+      [
+       "O6",
+       "11/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ]
+     ],
+     "mean": 0.8617057322645223,
+     "ci90": [
+      0.75150982246293,
+      0.9461847064177247
+     ],
+     "var": 0.003617469307528409,
+     "p80": 0.846125,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.0780136194144816,
+      1.1732528154847883,
+      1.3572676890065718
+     ],
+     "api": null
+    },
+    {
+     "id": "yigdzin>opus",
+     "stage": "opus-img",
+     "tested": true,
+     "prior": [
+      1.45,
+      0.55
+     ],
+     "k": 25,
+     "n": 30,
+     "wrong": 3,
+     "top": [
+      [
+       "E2",
+       "21/30"
+      ],
+      [
+       "O6",
+       "15/30"
+      ],
+      [
+       "O12",
+       "11/30"
+      ]
+     ],
+     "mean": 0.8265225751136148,
+     "ci90": [
+      0.7072430602201937,
+      0.9218052205840934
+     ],
+     "var": 0.004345571872336648,
+     "p80": 0.68255,
+     "share": 6.2e-05,
+     "cost": [
+      0.013451865668696097,
+      0.014877206737309231,
+      0.017532869104631966
+     ],
+     "api": 0.09945281892475917
+    }
+   ],
+   "before": "HOLD → yigdzin>agy-flash-low"
+  },
+  {
+   "id": "zh-paddle-dice-lt090",
+   "title": "Chinese Paddle, Kanripo dice < 0.90",
+   "pages_waiting": 453715,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 28.13033,
+   "v2_weeks": 130,
+   "test_score": 0.10734972635280758,
+   "caveat": "Router tests 2026-10-26: k is what survived the NAME CHECK (accepted, Kanripo leaf given to the judge, every personal and place name the image prints present in the candidate, glyph variants folded); a page with no usable Kanripo leaf does not count. As judged: Paddle 15/30, agy Flash high 19/30, Opus 29/30; strict character by character: 13, 13, 17. Frame: own Kanripo screen 0.6 <= dice < 0.90 (the v2 cell also holds dice < 0.6 pages).",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 14,
+     "n": 30,
+     "wrong": 12,
+     "top": [
+      [
+       "O6",
+       "18/30"
+      ],
+      [
+       "O11",
+       "14/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ]
+     ],
+     "mean": 0.4684039158200534,
+     "ci90": [
+      0.32686038334545436,
+      0.6118668616513655
+     ],
+     "var": 0.007546164772727273,
+     "p80": 5e-05,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img",
+     "tested": true,
+     "prior": [
+      1.27,
+      0.73
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "O6",
+       "9/30"
+      ],
+      [
+       "E2",
+       "7/30"
+      ],
+      [
+       "O8",
+       "7/30"
+      ]
+     ],
+     "mean": 0.8525335110586406,
+     "ci90": [
+      0.7407865557142269,
+      0.9394777475765576
+     ],
+     "var": 0.003816155955255682,
+     "p80": 0.81115,
+     "share": 6.2e-05,
+     "cost": [
+      0.01319882246491371,
+      0.014418643344569574,
+      0.01673896469144824
+     ],
+     "api": 0.09641849725992291
+    },
+    {
+     "id": "paddle>agy-flash-high",
+     "stage": "agy",
+     "tested": true,
+     "prior": [
+      1.27,
+      0.73
+     ],
+     "k": 17,
+     "n": 30,
+     "wrong": 8,
+     "top": [
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "O5",
+       "10/30"
+      ],
+      [
+       "O11",
+       "9/30"
+      ]
+     ],
+     "mean": 0.5716345164359729,
+     "ci90": [
+      0.42660005005076995,
+      0.7111326197910796
+     ],
+     "var": 0.007422852047526042,
+     "p80": 0.00185,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.4343316163722897,
+      1.77796983424681,
+      2.390998313006783
+     ],
+     "api": null
+    }
+   ],
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "zh-6561-served",
+   "title": "Chinese Paddle, served Opus correction (#6561)",
+   "pages_waiting": 0,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0.0,
+   "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 3,
+     "n": 30,
+     "wrong": 24,
+     "top": [
+      [
+       "O6",
+       "22/30"
+      ],
+      [
+       "O5",
+       "16/30"
+      ],
+      [
+       "O11",
+       "16/30"
+      ]
+     ],
+     "mean": 0.12470653358115612,
+     "ci90": [
+      0.04506907522215315,
+      0.22947199404323504
+     ],
+     "var": 0.0033143939393939395,
+     "p80": 0.0,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img",
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 24,
+     "n": 30,
+     "wrong": 3,
+     "top": [
+      [
+       "O6",
+       "9/30"
+      ],
+      [
+       "E2",
+       "4/30"
+      ],
+      [
+       "O16",
+       "4/30"
+      ]
+     ],
+     "mean": 0.7816087855236812,
+     "ci90": [
+      0.6556288208705765,
+      0.8888480592513931
+     ],
+     "var": 0.00517874053030303,
+     "p80": 0.4285,
+     "share": 6.2e-05,
+     "cost": [
+      0.013950640799557514,
+      0.015753942678357943,
+      0.018913140492412557
+     ],
+     "api": 0.10516770220913733
+    }
+   ],
+   "before": "HOLD → paddle>opus"
+  },
+  {
+   "id": "chinese-flash3",
+   "title": "Chinese OCR, 3 Flash",
+   "pages_waiting": 103878,
+   "current": "3flash>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "3flash>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 6.440436,
+   "v2_weeks": 104,
+   "test_score": 0.39573460265625005,
+   "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.5015504383194436,
+     "ci90": [
+      0.05054008584363742,
+      0.9506318092422218
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.201475,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img",
+     "tested": false,
+     "prior": [
+      1.51,
+      0.49
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.7555180195129116,
+     "ci90": [
+      0.2349841973300691,
+      0.9986126557069945
+     ],
+     "var": 0.06144531250000001,
+     "p80": 0.564025,
+     "share": 6.2e-05,
+     "cost": [
+      0.012417226968970354,
+      0.014659324601474105,
+      0.052769505953553196
+     ],
+     "api": 0.1087995228134929
+    }
+   ],
+   "test_next": 2,
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "zh-frame-6871",
+   "title": "Chinese tables + mixed, guarded Paddle (#6871)",
+   "pages_waiting": 22220,
+   "current": "paddle>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "paddle>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 1.37764,
+   "v2_weeks": 104,
+   "test_score": 0.06385103781320002,
+   "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.5013035337789266,
+     "ci90": [
+      0.05234001033628478,
+      0.9502900554916454
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.20205,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img",
+     "tested": false,
+     "prior": [
+      1.67,
+      0.33
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.8333599867365344,
+     "ci90": [
+      0.3415498204305671,
+      0.9999316160583317
+     ],
+     "var": 0.046348130000000015,
+     "p80": 0.7019,
+     "share": 6.2e-05,
+     "cost": [
+      0.01240084801886756,
+      0.013293715578386956,
+      0.036305098870695406
+     ],
+     "api": 0.09863684519087357
+    },
+    {
+     "id": "paddle>agy-flash-high",
+     "stage": "agy",
+     "tested": false,
+     "prior": [
+      1.46,
+      0.54
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.7283859592051496,
+     "ci90": [
+      0.20116717771550238,
+      0.9977419400535122
+     ],
+     "var": 0.0659977325,
+     "p80": 0.511325,
+     "share": 2.6115008448973322e-05,
+     "cost": [
+      1.022308433727156,
+      1.2604187690987505,
+      5.0704096542156565
+     ],
+     "api": null
+    }
+   ],
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "hebrew-flash3",
+   "title": "Hebrew OCR, 3 Flash",
+   "pages_waiting": 51360,
+   "current": "3flash>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "3flash>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 3.18432,
+   "v2_weeks": 104,
+   "test_score": 0.13155434022640003,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.49972148815727124,
+     "ci90": [
+      0.049424318766042016,
+      0.9495056037359653
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.19785,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img",
+     "tested": false,
+     "prior": [
+      1.71,
+      0.29
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.8577224067527807,
+     "ci90": [
+      0.4003728649720469,
+      0.9999851848990842
+     ],
+     "var": 0.04131316583333334,
+     "p80": 0.744675,
+     "share": 6.2e-05,
+     "cost": [
+      0.012400183709973037,
+      0.013001336067148983,
+      0.03097112987631102
+     ],
+     "api": 0.0958352018704955
+    }
+   ],
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "arabic-flash3",
+   "title": "Arabic OCR, 3 Flash",
+   "pages_waiting": 30244,
+   "current": "3flash>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "3flash>opus",
+   "other_wrong_text_bar": null,
+   "weeks_to_clear": 1.8751280000000001,
+   "v2_weeks": 104,
+   "test_score": 0.06289328569938647,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "tested": false,
+     "prior": [
+      2.35,
+      1.65
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.5868361541201106,
+     "ci90": [
+      0.20164980414201925,
+      0.9187306322221324
+     ],
+     "var": 0.0484512,
+     "p80": 0.198275,
+     "share": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img",
+     "tested": false,
+     "prior": [
+      1.77,
+      0.23
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.8864434318378972,
+     "ci90": [
+      0.4569310755150193,
+      0.9999992248423509
+     ],
+     "var": 0.033540795988,
+     "p80": 0.797925,
+     "share": 6.2e-05,
+     "cost": [
+      0.012400009611962299,
+      0.012679261995630103,
+      0.027137572085732243
+     ],
+     "api": 0.09273011344849336
+    }
+   ],
+   "before": "keep (UNTESTED)"
+  }
+ ],
+ "tests": [
+  {
+   "rank": 1,
+   "cell": "latin-flash3",
+   "routes": [
+    "3flash>opus"
+   ],
+   "pages": 30,
+   "claude_points": 0.744,
+   "agy_calls": 0,
+   "account_week_share": 0.0037199999999999998,
+   "agy_week_share": 0.0
+  },
+  {
+   "rank": 2,
+   "cell": "chinese-flash3",
+   "routes": [
+    "3flash",
+    "3flash>opus"
+   ],
+   "pages": 30,
+   "claude_points": 1.1159999999999999,
+   "agy_calls": 0,
+   "account_week_share": 0.005579999999999999,
+   "agy_week_share": 0.0
+  },
+  {
+   "rank": 3,
+   "cell": "french-lite",
+   "routes": [
+    "lite>opus"
+   ],
+   "pages": 30,
+   "claude_points": 0.744,
+   "agy_calls": 0,
+   "account_week_share": 0.0037199999999999998,
+   "agy_week_share": 0.0
+  }
+ ],
+ "prior_vs_pilot": [
+  [
+   "latin-lite",
+   "lite",
+   [
+    0.14,
+    3.86
+   ],
+   "17/30"
+  ],
+  [
+   "latin-lite",
+   "lite>opus",
+   [
+    3.22,
+    0.78
+   ],
+   "30/30"
+  ],
+  [
+   "latin-lite",
+   "lite>agy-flash-low",
+   [
+    3.11,
+    0.89
+   ],
+   "24/30"
+  ],
+  [
+   "latin-flash3",
+   "3flash",
+   [
+    2.94,
+    1.06
+   ],
+   "21/30"
+  ],
+  [
+   "latin-flash3",
+   "3flash>agy-flash-low",
+   [
+    1.87,
+    0.13
+   ],
+   "23/30"
+  ],
+  [
+   "german-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "21/30"
+  ],
+  [
+   "german-lite",
+   "lite>opus",
+   [
+    1.77,
+    0.23
+   ],
+   "28/30"
+  ],
+  [
+   "german-lite",
+   "lite>agy-flash-low",
+   [
+    1.76,
+    0.24
+   ],
+   "28/30"
+  ],
+  [
+   "german-flash3",
+   "3flash",
+   [
+    1,
+    1
+   ],
+   "29/30"
+  ],
+  [
+   "german-flash3",
+   "3flash>opus",
+   [
+    1.75,
+    0.25
+   ],
+   "29/29"
+  ],
+  [
+   "german-flash3",
+   "3flash>agy-flash-low",
+   [
+    1.71,
+    0.29
+   ],
+   "26/30"
+  ],
+  [
+   "german-tr-flash3",
+   "flash3",
+   [
+    1,
+    1
+   ],
+   "41/60"
+  ],
+  [
+   "german-tr-flash3",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "49/60"
+  ],
+  [
+   "german-tr-lite",
+   "flash-lite",
+   [
+    1,
+    1
+   ],
+   "26/60"
+  ],
+  [
+   "german-tr-lite",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "49/60"
+  ],
+  [
+   "french-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "22/30"
+  ],
+  [
+   "french-lite",
+   "lite>agy-flash-low",
+   [
+    1.72,
+    0.28
+   ],
+   "27/29"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin",
+   [
+    1,
+    1
+   ],
+   "17/30"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin>agy-flash-low",
+   [
+    1.57,
+    0.43
+   ],
+   "26/30"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin>opus",
+   [
+    1.45,
+    0.55
+   ],
+   "25/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle",
+   [
+    1,
+    1
+   ],
+   "14/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>opus",
+   [
+    1.27,
+    0.73
+   ],
+   "26/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>agy-flash-high",
+   [
+    1.27,
+    0.73
+   ],
+   "17/30"
+  ],
+  [
+   "zh-6561-served",
+   "paddle",
+   [
+    1,
+    1
+   ],
+   "3/30"
+  ],
+  [
+   "zh-6561-served",
+   "paddle>opus",
+   [
+    1,
+    1
+   ],
+   "24/30"
+  ]
+ ]
+}

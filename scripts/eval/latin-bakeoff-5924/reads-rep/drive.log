@@ -1,0 +1,15 @@
+2026-10-23T08:10:01Z [queue] start run 2; GPU 459 MiB
+2026-10-23T08:10:01Z [paddle] under the gpu-queue lock; GPU 459 MiB
+2026-10-23T08:13:30Z [paddle] P0: {"arm":"latrep5924-l0","backend":"server","workers":8,"max_side":0,"layout":0,"page_batch":1,"pages":99,"errors":0,"wall_secs":148.8,"load_secs_max":6.5,"wall_secs_after_load":142.3} peak 9903 MiB
+2026-10-23T08:15:55Z [paddle] P1: {"arm":"latrep5924-l1","backend":"server","workers":8,"max_side":0,"layout":1,"page_batch":1,"pages":99,"errors":0,"wall_secs":144.9,"load_secs_max":11.1,"wall_secs_after_load":133.8} peak 17347 MiB
+2026-10-23T08:16:03Z [glm] under the gpu-queue lock; GPU 461 MiB
+2026-10-23T08:17:03Z [glm] up after 60 s
+2026-10-23T08:20:26Z [glm] G: {"mode":"glm","model":"m","pages_this_pass":99,"clients":16,"wall_secs":202.8,"pages_per_hour":1757,"errors":0,"hit_cap":6,"out_tok":103369,"in_tok":328496} peak 17068 MiB
+2026-10-23T08:20:34Z [mineru] under the gpu-queue lock; GPU 461 MiB
+2026-10-23T08:21:29Z [mineru] up after 55 s
+2026-10-23T08:23:16Z [mineru] M: {"mode":"mineru","model":"m","pages_this_pass":99,"clients":16,"wall_secs":106.9,"pages_per_hour":3335,"errors":0,"hit_cap":0,"out_tok":0,"in_tok":0} peak 14612 MiB
+2026-10-23T08:23:25Z [olmocr] under the gpu-queue lock; GPU 461 MiB
+2026-10-23T08:24:40Z [olmocr] up after 75 s
+2026-10-23T08:29:08Z [olmocr] O: {"mode":"olmocr","model":"m","pages_this_pass":99,"clients":16,"wall_secs":267.7,"pages_per_hour":1331,"errors":0,"hit_cap":1,"out_tok":75503,"in_tok":156648} peak 19878 MiB
+DRIVE-END 2026-10-23T08:29:16Z
+2026-10-23T08:29:16Z [queue] done: G.jsonl M.jsonl O.jsonl P0.jsonl P1.jsonl 

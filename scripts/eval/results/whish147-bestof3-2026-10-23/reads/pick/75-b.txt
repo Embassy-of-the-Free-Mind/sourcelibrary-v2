@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three reads as continuous text, but A's few fragments ("yateṣāṃ", "teṣu", "-ṣṭhaṃ") are real Sanskrit forms, while B's long strings ("ṣṭeṣṭānapraprelathakṣayantrūṣṭatanathada") are not real Sanskrit or Malayalam and look made up, so B ranks below C, which honestly marks everything illegible.

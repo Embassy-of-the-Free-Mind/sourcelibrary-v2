@@ -89,7 +89,7 @@ const cursor = pages.aggregate([
     },
   },
   { $set: { 'translation.data': shrinkText('translation.data', 1024) } },
-]);
+]).batchSize(1000);
 const leakedBooks = new Set();
 for await (const p of cursor) {
   const reason = staleTranslationReason(p);
@@ -113,7 +113,7 @@ const withheldCursor = pages.aggregate([
     },
   },
   { $set: { 'translation.data': shrinkText('translation.data', 0), 'translation_withheld.data': shrinkText('translation_withheld.data', 0) } },
-]);
+]).batchSize(1000);
 const withheldIds = [];
 for await (const p of withheldCursor) {
   out.withheld++;

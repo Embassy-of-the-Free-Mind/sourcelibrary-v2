@@ -42,7 +42,7 @@ export const RATES = { ocr: [0.00106, 0.00138], tr: [0.00058, 0.00174] } as cons
 export interface LibraryDashboard {
   generatedAt: Date | string;
   elapsedSec: number;
-  totals: { live: Totals; all: Totals; readableLive: number; readableAll: number; held: number; feedbackOpen: number; visibleCollections: number };
+  totals: { live: Totals; all: Totals; readableLive: number; readableAll: number; held: number; /** Held as not acquired (manifest-only catalogue records, #7860); absent before 2026-10-31, when `held` included them. */ notAcquired?: number; feedbackOpen: number; visibleCollections: number };
   byLanguage: LanguageRow[];
   noLanguage: number;
   byCentury: CenturyRow[];
@@ -75,13 +75,21 @@ export interface MetricsSnapshot {
   users: { total: number; verified: number; everLoggedIn: number; new30: number; new7: number };
   engagement: { mau: number; avgDau: number; dwellMedianSec: number };
   deltas: { signups7: { now: number; prev: number }; pageviews7: { now: number; prev: number } };
-  conversion: { uniqVisitors: number; returningVisitors: number };
-  traffic: { humanPvs: number; dailyPageviews: { date: string; hits: number }[] };
+  conversion: { uniqVisitors: number; returningVisitors: number; newSignups?: number };
+  traffic: {
+    humanPvs: number; dailyPageviews: { date: string; hits: number }[];
+    topBooks?: { key: string; hits: number; title: string; author: string }[];
+    topCollections?: { slug: string; hits: number }[];
+  };
   series: { signupsByDay: { date: string; n: number }[] };
   search: { human: number; zeroResult: number; topQueries: { query: string; count: number }[]; zeroQueries: { query: string; count: number }[] };
   missionActions: { download: number; cite: number; share: number };
-  social: { feedbackUnread: number };
-  readingMembers?: { users: number; sessions: number; books: number; median: number; p90: number; deep: number; veryDeep: number; multiDayUsers: number; multiBookUsers: number; top10PctPageShare: number };
+  social: { feedbackUnread: number; likes?: number; likeVisitors?: number };
+  /** Model-backed reader features (librarian, search expansion, voice, MCP), last 30 days. */
+  ai?: { feature: string; calls: number; cost: number; avgMs: number }[] | null;
+  readingMembers?: { users: number; sessions: number; books: number; median: number; p90: number; deep: number; veryDeep: number; multiDayUsers: number; multiBookUsers: number; top10PctPageShare: number;
+    /** Sessions faster than machinePacePpm pages/minute: signed-in bulk fetching, not reading. */
+    fastSessions?: number; pacedSessions?: number; fastPages?: number; totalPages?: number; machinePacePpm?: number };
 }
 
 export interface HomepageStats { totalBooks: number; translatedToEnglish: number; languageCount: number; authorCount: number; artworkCount: number; illustrationCount: number; firstTranslationCount: number; firstTranslatedWorksProvisional?: number; updatedAt?: Date | string }

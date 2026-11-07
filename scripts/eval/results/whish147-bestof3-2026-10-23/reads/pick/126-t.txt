@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most consistently as the Tarkasaṃgraha passage on perception (savikalpa lakṣaṇa, indriyārtha-sannikarṣa, saṃyukta-samaveta-samavāya, samavāya with Malayalam "udāharaṇam" glosses). A is fluent in a few phrases but garbled elsewhere, and B is mostly illegible apart from scattered correct fragments.

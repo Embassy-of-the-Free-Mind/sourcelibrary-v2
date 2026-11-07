@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B comes closest to the Sāṅkhyakārikā 46–49 passage on the pratyayasarga, with readings like "viparyaya…guṇavaiṣamyādvimar[da]", "āmiśrāṣṭādaśa…tāmisraḥ" and "ekādaśendriyava[dhāḥ]", while C only partly matches B and A is the most garbled.

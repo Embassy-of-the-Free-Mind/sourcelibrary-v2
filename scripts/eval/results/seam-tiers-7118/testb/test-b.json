@@ -1,0 +1,217 @@
+{
+ "items": 300,
+ "gate": "Gemini good enough: verified yield within 10 points of Opus, and preferred-worse <= 2% (of placed)",
+ "arms": {
+  "sonnet": {
+   "n": 300,
+   "defective": 96,
+   "placed": 83,
+   "verified": 82,
+   "worse": 0,
+   "split": 1,
+   "yield": 0.273,
+   "worseOfPlaced": 0,
+   "winOfPlaced": 0.988,
+   "strata": {
+    "random": {
+     "n": 120,
+     "defective": 19,
+     "placed": 16,
+     "verified": 16,
+     "worse": 0,
+     "split": 0
+    },
+    "flagged": {
+     "n": 120,
+     "defective": 47,
+     "placed": 39,
+     "verified": 38,
+     "worse": 0,
+     "split": 1
+    },
+    "good": {
+     "n": 30,
+     "defective": 1,
+     "placed": 1,
+     "verified": 1,
+     "worse": 0,
+     "split": 0
+    },
+    "plant": {
+     "n": 30,
+     "defective": 29,
+     "placed": 27,
+     "verified": 27,
+     "worse": 0,
+     "split": 0
+    }
+   },
+   "refusals": {
+    "labelled-ok": 203,
+    "edit-too-large": 3,
+    "reply-not-parsed": 1,
+    "head-old-not-at-edge": 5,
+    "touches-more-than-3-sentences": 2,
+    "tail-old-not-at-edge": 2,
+    "no-repair": 1
+   },
+   "aa": [
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie"
+   ],
+   "calls": {
+    "repair": 10,
+    "verify": 20
+   }
+  },
+  "opus": {
+   "n": 300,
+   "defective": 131,
+   "placed": 114,
+   "verified": 109,
+   "worse": 0,
+   "split": 5,
+   "yield": 0.363,
+   "worseOfPlaced": 0,
+   "winOfPlaced": 0.956,
+   "strata": {
+    "random": {
+     "n": 120,
+     "defective": 35,
+     "placed": 29,
+     "verified": 27,
+     "worse": 0,
+     "split": 2
+    },
+    "flagged": {
+     "n": 120,
+     "defective": 64,
+     "placed": 54,
+     "verified": 52,
+     "worse": 0,
+     "split": 2
+    },
+    "good": {
+     "n": 30,
+     "defective": 2,
+     "placed": 2,
+     "verified": 2,
+     "worse": 0,
+     "split": 0
+    },
+    "plant": {
+     "n": 30,
+     "defective": 30,
+     "placed": 29,
+     "verified": 28,
+     "worse": 0,
+     "split": 1
+    }
+   },
+   "refusals": {
+    "labelled-ok": 169,
+    "head-old-not-at-edge": 6,
+    "touches-more-than-3-sentences": 5,
+    "tail-old-not-at-edge": 3,
+    "no-repair": 1,
+    "edit-too-large": 2
+   },
+   "aa": [
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "/tie",
+    "tie/tie",
+    "tie/tie"
+   ],
+   "calls": {
+    "verify": 26
+   }
+  },
+  "gemini": {
+   "n": 300,
+   "defective": 136,
+   "placed": 118,
+   "verified": 110,
+   "worse": 1,
+   "split": 7,
+   "yield": 0.367,
+   "worseOfPlaced": 0.008,
+   "winOfPlaced": 0.932,
+   "strata": {
+    "random": {
+     "n": 120,
+     "defective": 38,
+     "placed": 30,
+     "verified": 26,
+     "worse": 1,
+     "split": 3
+    },
+    "flagged": {
+     "n": 120,
+     "defective": 66,
+     "placed": 57,
+     "verified": 55,
+     "worse": 0,
+     "split": 2
+    },
+    "good": {
+     "n": 30,
+     "defective": 2,
+     "placed": 2,
+     "verified": 1,
+     "worse": 0,
+     "split": 1
+    },
+    "plant": {
+     "n": 30,
+     "defective": 30,
+     "placed": 29,
+     "verified": 28,
+     "worse": 0,
+     "split": 1
+    }
+   },
+   "refusals": {
+    "labelled-ok": 164,
+    "tail-old-not-at-edge": 5,
+    "no-repair": 7,
+    "touches-more-than-3-sentences": 4,
+    "edit-too-large": 2
+   },
+   "aa": [
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie"
+   ],
+   "calls": {
+    "repair": 300,
+    "verify": 26
+   }
+  }
+ },
+ "verdict": {
+  "yieldGapPoints": -0.4,
+  "geminiWorseOfPlaced": 0.008,
+  "geminiGoodEnough": true
+ }
+}

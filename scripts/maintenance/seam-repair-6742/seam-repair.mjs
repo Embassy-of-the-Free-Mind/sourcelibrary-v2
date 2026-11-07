@@ -156,8 +156,11 @@ async function repair(out, model, limit, pack, conc) {
 
 // ── placement: an excerpt repair, checked and mapped onto the stored page ──
 const words = (t) => String(t).trim().split(/\s+/).filter(Boolean);
-/** Why a repair may not be written, or null. Checks the edge-sentence bound on the excerpt. */
-export function edgeRefusal(it, rep) {
+/** The edge-sentence bound: at most 3 sentences and 120 words replaced per side, the new text at most 60 words longer. */
+export const EDGE_BOUND = { maxSentences: 3, maxOldWords: 120, maxGrowWords: 60, maxGrowSentences: Infinity };
+/** Why a repair may not be written, or null. Checks the edge-sentence bound on the excerpt (`b`, default EDGE_BOUND;
+ *  lean.mjs --majors-wide passes a wider one for majors only). */
+export function edgeRefusal(it, rep, b = EDGE_BOUND) {
   if (!rep) return 'no-repair';
   const vc = validRepair(it, rep);
   if (!vc.ok) return vc.tailOk ? 'head-old-not-at-edge' : 'tail-old-not-at-edge';
@@ -165,8 +168,9 @@ export function edgeRefusal(it, rep) {
   if (!tOld && !hOld) return 'empty-repair';
   for (const [o, nw] of [[tOld, rep.tail_new || ''], [hOld, rep.head_new || '']]) {
     if (!o) { if (String(nw).trim()) return 'new-text-without-old-span'; continue; }
-    if (sentences(o).length > 3) return 'touches-more-than-3-sentences';
-    if (words(o).length > 120 || words(nw).length > words(o).length + 60) return 'edit-too-large';
+    if (sentences(o).length > b.maxSentences) return `touches-more-than-${b.maxSentences}-sentences`;
+    if (words(o).length > b.maxOldWords || words(nw).length > words(o).length + b.maxGrowWords) return 'edit-too-large';
+    if (sentences(nw).length - sentences(o).length > b.maxGrowSentences) return `restores-more-than-${b.maxGrowSentences}-sentences`;
   }
   return applyRepair(it, rep) ? null : 'repair-changes-nothing';
 }

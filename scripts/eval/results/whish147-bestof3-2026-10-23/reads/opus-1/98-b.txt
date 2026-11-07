@@ -1,0 +1,13 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]ഃ
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]ഃ
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible]ഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ ഃ[illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible]ഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible]ഃ[illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]ഃ[illegible]
+ROW 11 | [illegible] ‖ [illegible]ഃ[illegible] ‖ [illegible]
+ROW 12 | [illegible]ഃ[illegible] ‖ [illegible] ‖ [illegible]ഃ[illegible]
+NOTE | I couldn't read any of the text: what I can make out is the layout (12 rows; rows 1–3 and 9–12 run the full width, and rows 4–8 are short blocks set between the holes) and roughly where some visarga marks fall. At this image resolution I can't identify the individual akṣaras reliably, so I've given no Malayalam text rather than guess or fill it in from the known text. Higher-resolution crops of each column (about 2–3× zoom) would let me attempt a real character-level reading.

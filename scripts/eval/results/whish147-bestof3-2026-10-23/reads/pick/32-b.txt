@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most coherent commentary on Sāṅkhyakārikā 16 across most rows ("pariṇāmikriyā", "pratiguṇāḥ prakṛti", "triguṇātmakatvād", "nānātvaṃ", "sattvaguṇasya viśeṣāt"), though its "saṃkhyāta" in rows 9–11 is likely a misreading of "saṃghāta", which A gets right; C matches B in parts of rows 6–8 but is garbled elsewhere, and A is broken through most of the middle rows.

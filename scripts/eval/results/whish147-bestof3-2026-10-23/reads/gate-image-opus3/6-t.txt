@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf starts with ഘാതപരാൎത്ഥത്വാൽത്രി… and you can see ത്വാൽ after ൎത്ഥ. C matches this. B leaves out ത്വ and writes ഘാതപരാൎത്ഥാൽ. A has the start as [illegible].
+
+CHECK | row 5: The leaf starts with വല്യംമാദ്ധ്യസ്ഥ്യ, and after the first hole it reads ംദ്രഷ്ടൃത്വമകൎത്തൃഭാവ. C matches this, including the anusvara after the hole. B matches the opening but has [illegible] after the hole. A has [illegible] for nearly the whole row.
+
+CHECK | row 10: The leaf starts with ശകഃ।തസ്മാദപിഷൊഡശകാൽ… and ends with …ഭൂതാനി॥൨൨॥അദ്ധ്യവസായൊ. B matches the start, and C has [illegible] for തസ്മ. C has the ending in full, while B marks the verse number and അ as [illegible]. A does not match this row at all.
+
+PICK | C
+
+RANK | C, B, A
+
+WHY | C has the right letters in all three checked rows (it keeps ത്വാൽ in row 1, the ം in row 5, and the verse numbers ൧൯ to ൨൨), while B drops letters and marks readable parts [illegible], and A's letters mostly don't match the leaf.

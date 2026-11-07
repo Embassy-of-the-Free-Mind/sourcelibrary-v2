@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | None of the three has any readable text, so none can be judged as real Sanskrit or Malayalam; C wins only on layout, because a string hole interrupts just the middle rows of a leaf (C's rows 5–8), and A and B are identical, so their order is arbitrary.

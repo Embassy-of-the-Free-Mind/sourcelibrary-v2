@@ -28,6 +28,7 @@ import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { addEmbedUsage } from './embedding-usage.mjs';
 import { assertStoreVector, GEMINI_TEXT_MODEL } from './vector-truth.mjs';
+import { servesTranscriptionInsteadOfTranslation } from './english-original-text.mjs';
 
 export const EMBED_MODEL = GEMINI_TEXT_MODEL;
 export const EMBED_DIMS = 768;
@@ -72,11 +73,25 @@ export function cleanPageText(text, { maxChars = MAX_CHARS } = {}) {
 /**
  * Which text represents this page, and is it a translation?
  *
+ * `opts.book` (language + `translation_state.english_original`) lets an
+ * English edition's English leaf embed its transcription rather than a stored
+ * rewording (#7100).
+ *
  * Falls back to OCR when there is no translation, so an untranslated original
  * still gets a work-specific vector — with an EMPTY translation column, so the
  * original-language text never leaks into a surface that promises English.
  */
-export function pageEmbeddingInput(page) {
+export function pageEmbeddingInput(page, { book } = {}) {
+  // An English edition's English leaf (#7100): the stored `translation` is a
+  // model's rewording of the author's words, and the row's `translation`
+  // column is the snippet search serves as a quote. Embed the OCR, with an
+  // empty translation column, exactly as for an English page never translated.
+  // Without `book` the page cannot be judged and is composed as before — every
+  // writer passes it.
+  if (book && servesTranscriptionInsteadOfTranslation(page, book)) {
+    const ocr = cleanPageText(page?.ocr?.data);
+    return ocr ? { text: ocr, hasTranslation: false } : null;
+  }
   const translation = cleanPageText(page?.translation?.data);
   if (translation) return { text: translation, hasTranslation: true };
   const ocr = cleanPageText(page?.ocr?.data);
@@ -93,8 +108,8 @@ export function pageEmbeddingInput(page) {
  * 9.4K rows were listed for a re-embed the worker then declined (#6221, 2026-10-11).
  */
 export const MIN_EMBED_CHARS = 20;
-export function workerEmbeddingInput(page) {
-  const input = pageEmbeddingInput(page);
+export function workerEmbeddingInput(page, opts = {}) {
+  const input = pageEmbeddingInput(page, opts);
   if (input && input.text.length >= MIN_EMBED_CHARS) return input;
   const ocr = cleanPageText(page?.ocr?.data);
   return ocr.length >= MIN_EMBED_CHARS ? { text: ocr, hasTranslation: false } : null;

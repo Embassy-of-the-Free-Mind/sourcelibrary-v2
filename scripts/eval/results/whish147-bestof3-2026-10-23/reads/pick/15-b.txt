@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads as real Sāṅkhya commentary in most rows ("aṣṭaivoktāḥ prakṛtayaś ca vikṛtayaś ca", "mahadādahaṃkāra", "ṣoḍaśakaḥ vikṛta", "pṛthivyādy"); A is fluent mainly in rows 8–9 and broken elsewhere, and C is largely nonsense syllables from row 6 onward.

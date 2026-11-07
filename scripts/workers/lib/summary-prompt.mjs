@@ -36,13 +36,16 @@ export const SUMMARY_GEN_CONFIG = { temperature: 0.2, thinkingConfig: { thinking
  * @param {string} o.sectionSummariesText  Pre-joined "Pages a-b: ..." lines
  * @param {string} o.quotesText            Pre-joined "- "quote" (p. N)" lines
  * @param {boolean} o.hasChapters
+ * @param {string} [o.material]  replaces the extracted-material blocks (themes … quotes) when the model reads the
+ *                               whole text itself: the one-call CLI lane (#7628, enrich-agy-lane.mjs). Unset, the
+ *                               prompt is unchanged.
  * @returns {string}
  */
 export function buildSummaryPrompt(o) {
   const {
     bookTitle: rawTitle, englishTitle: rawEnglishTitle = '', bookAuthor, languageContext = '', researchSection = '',
     chapterSection = '', themes = [], people = [], places = [], concepts = [],
-    sectionSummariesText = '', quotesText = '', hasChapters = false,
+    sectionSummariesText = '', quotesText = '', hasChapters = false, material = null,
   } = o;
 
   // "Exactly as given" beat the no-em-dash rule whenever a catalogue title
@@ -58,11 +61,7 @@ export function buildSummaryPrompt(o) {
     ? `- Refer to the work by its original title exactly as given: "${bookTitle}". Lead the BRIEF with that original title, then add the English gloss in parentheses once: ("${englishTitle}"). Do not translate the title yourself or use only the English form.`
     : `- Refer to the work by its original title exactly as given: "${bookTitle}". Do not translate the title. You may add a short English gloss in parentheses once, after the first mention.`;
 
-  return `Write a clear, factual reference description of "${bookTitle}" by ${bookAuthor}.${languageContext} Think of a good library catalog note or a museum wall label: it tells the reader plainly what the text is, what it argues, how it is structured, and who would want to read it. It does not sell.
-
-${researchSection}
-${chapterSection}
-## Extracted from the text:
+  const extracted = material != null ? material : `## Extracted from the text:
 
 **Themes:** ${themes.join(', ')}
 
@@ -76,7 +75,16 @@ ${chapterSection}
 ${sectionSummariesText}
 
 ## Notable quotes extracted:
-${quotesText}
+${quotesText}`;
+  const quotesRule = material != null
+    ? 'IMPORTANT: Copy every quote word for word from the book text. Don\'t invent new ones.'
+    : 'IMPORTANT: Use the actual quotes provided above. Don\'t invent new ones.';
+
+  return `Write a clear, factual reference description of "${bookTitle}" by ${bookAuthor}.${languageContext} Think of a good library catalog note or a museum wall label: it tells the reader plainly what the text is, what it argues, how it is structured, and who would want to read it. It does not sell.
+
+${researchSection}
+${chapterSection}
+${extracted}
 
 ## Your Task
 Synthesize the material above into a plain, encyclopedic description. Ground every claim in the extracted content or in well-established fact. State significance concretely and factually, never as vague praise.
@@ -112,7 +120,7 @@ Example of the RIGHT register (identifies the author, states concrete significan
    - How the text is organized and how the argument or material unfolds. Concrete content: the actual ideas, people, and claims in the text.
 
 4. **SECTIONS**: ${hasChapters ? 'Use the detected chapter structure.' : 'Group into 5-8 thematic sections.'} For each:
-   - Title and page range
+   - Title in English and page range. The reader reads this guide in English: when the book's own heading is in another language, translate it (e.g. "Vorwort" → "Preface") and put the heading as printed in "titleOriginal"; when the book is in English, omit "titleOriginal".
    - What it covers (2-3 sentences)
    - 2-4 notable quotes with page numbers and significance
    - Key concepts
@@ -124,7 +132,8 @@ Output as JSON:
   "detailed": "...",
   "sections": [
     {
-      "title": "Section Title",
+      "title": "Section Title (in English)",
+      "titleOriginal": "Heading as printed, if not English",
       "startPage": 1,
       "endPage": 10,
       "summary": "What this section covers...",
@@ -136,5 +145,5 @@ Output as JSON:
   ]
 }
 
-IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
+${quotesRule}`;
 }

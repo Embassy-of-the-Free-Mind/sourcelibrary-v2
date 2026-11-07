@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B has real words in the right context, such as "lakṣaṇaṃ", "vicāryya lakṣaṇaḥ", "udāharaṇaṃ sūtra" and "triguṇa"-like forms, which fit a Tarkasaṃgraha or Sāṅkhya commentary; A strings syllables together that look like words but mostly make no sense, and C is almost all [illegible].

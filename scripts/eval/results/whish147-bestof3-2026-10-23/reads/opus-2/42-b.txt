@@ -1,0 +1,12 @@
+ROW 1 | രാമൊദക.ാറഹംഭക്ഷയി[illegible] ‖ ച്ചരാമിതിമറ്റെതദ്ദ[illegible]ാദൃഷ്ടംജ്ഞാത്വാമനഃപ്ര ‖ [illegible]രംദൃഷ്ടപ്രാപക്ഷിച്ചാമിതി
+ROW 2 | ക്ഷിംചെജ്ഞാകമിതിസ്ഃകല്ല[illegible] ‖ യതിക്ഷിഎവംബാഹ്യാള[illegible]ാദ്യപിതാനുതൊന്ധാം ‖ [illegible]ന്ധാംവൃത്തിംപരസ്പരാക്രുക
+ROW 3 | ഹെതുക്കിംപ്രകൃതിപദ്ദ്ര[illegible] ‖ ഇതിഎതാനികിമാ[illegible]ാത്മാൽന്ധാംന്ധാം ‖ [illegible]ത്രിംപ്രകൃതിപത്രെതിമറ്റ
+ROW 4 | ാക്ഷമിത്വാൽപൃഥക്ക ‖ ാൽഎവംകെഎതു[illegible]ത്രുമിതിപൃതശ്ശന്യാ ‖ ദഷ്ടാതിത്ഥയൊപദ
+ROW 5 | ഭാഗകൈക്കവല്യ ‖ ഖെസവൃത്തിരെവാദ്യ[illegible]ാതുനോഷിശ്വരഃക ‖ ൽതാജ്ഞഗതസ്സഎവവ്യ
+ROW 6 | ത്രാദികലാപാന്റ ‖ ജ്ഞരെന്നാപൃൽക്ഷാ[illegible]ദക്ഷപ്രാൽസംവേദ്യ ‖ ശെതക്ഷെവചാത്ഥം
+ROW 7 | മെശ്വരപ്രഭിതൊ ‖ ഗമഞ്ഞൽനയഗ്ലിംവ[illegible]ദ്ദംവദ്ദശുദ്ധമെവവാ ‖ ഇതിമക്രാന്താനാകാ
+ROW 8 | നമിൽകാഴ്ചെതക്ക ‖ നണക്കുപ്രയാവ[illegible]ാനപ്രാക്കിമതകൊണ്ട ‖ നകശിൽച്ചന്ദ്രൂാദ്യ
+ROW 9 | കാരണംന്ധാംന്ധാംപ്രകൃതിം[illegible] ‖ തിംകാരണതിത്ത്വെയ[illegible]യഭിക്രാത്ത്രാൽകിമിതി[illegible] ‖ മിതിപ്രകൃതിമപെക്ഷതെനാ
+ROW 10 | മിചെലശ്വരവാദിനാംപ്രക[illegible] ‖ തിരന്ദ്രപഗവെദവത്രി[illegible]ത്രിചെബന്ധാൽപ്രവൃ ‖ ത്തരെസ്സചെതനൊയിസ്സാ
+ROW 11 | കാക്കൽത്താപരൊഗവെട്ട[illegible] ‖ ച്ചുരിള്ളിചെൽപ്പദ[illegible]ദക്ഷൊഎവാധിഷ്ടാതാര ‖ ാരചെതനാപ്രകൃതിഃമ്രെ
+NOTE | 11 rows. Rows 1–3 and 9–11 run the full width; rows 4–8 are split into columns at the holes. The left margin has a leaf mark, perhaps ന്ധ്യ. Most of my readings are low-confidence and are guesses at individual glyphs. I couldn't safely join the text across the cuts between pieces 1–2 and 2–3, so I marked those joins [illegible]. Treat this as a rough draft (under half reliably read), not an accurate transcription.

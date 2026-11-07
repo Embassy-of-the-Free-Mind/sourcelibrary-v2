@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A keeps the most recognisable commentary words for the three kinds of suffering (ādhyātmika, śārīra, mānasa, ādhibhautika/ādhidaivika) across most rows, though it is still garbled; B is partly readable but broken in more places, and C is filled with meaningless "rara"-type syllable strings.

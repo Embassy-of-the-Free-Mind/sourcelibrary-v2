@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives readable, context-fitting Sāṅkhyakārikā 38 commentary in most rows ("tatra kecid viśeṣāḥ", "tanmātrāṇītyādi", "ābhūtāni pañca pañca", "bhūtādiśabda", "iti viśeṣāḥ", "śabdasparśā…") despite some garbling, while C is accurate but mostly fragments, fluent mainly in row 10 ("śāntāḥ sukhapradāḥ ghorā duḥkhapradāḥ mūḍhā mohapradā iti"), and A is the most broken.

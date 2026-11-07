@@ -18,7 +18,9 @@
  * carries is the free reference; ingest only where the book clears the bar.
  *
  * PROVENANCE. Written with `ocr.source: 'ia_djvu'` and `ocr.model:
- * 'ia-ocr/<ocr_module_version>'` — a distinctive label per data-provenance.md,
+ * 'ia-ocr/<ocr_module_version>'` — a distinctive label per data-provenance.md — plus
+ * `ocr.ia` (the item's own metadata) and, since #6740, `ocr.engine` (iaEngine: the
+ * specialist-lane block, so estimator rows read this lane like every other),
  * never `batch_api`/`ai`. Pages that already have `ocr.data` are never touched;
  * `saveRevisionsBeforeOverwrite` is still called (no-op on first write, doctrine).
  * The #4149 ink guard is not run: it exists for a model that writes prose on blank
@@ -123,7 +125,7 @@ import { contentHash, codeVersion, host } from '../lib/write-provenance.mjs';
 // which run of ours copied it, so two ingests of the same item are distinguishable.
 const INGEST_RUN = `ia-ocr-ingest/${new Date().toISOString().slice(0, 19)}/${host()}@${await codeVersion()}`;
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
+import { iaFetch, iaOcrMeta, iaProvenance, iaEngine } from '../lib/ia-ocr-meta.mjs';
 import { dehyphenateLineBreaks, stripDigitizerWatermark, bookVocabulary, rejoinHyphenlessSplits, countHyphenlessSplits, junkTokenCount } from '../lib/dehyphenate.mjs';
 import { referenceTrigramSet, isImplausible, DEFAULT_MIN_PLAUSIBILITY } from '../lib/ocr-plausibility.mjs';
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
@@ -506,9 +508,12 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
     // Pipeline update: `ocr` is literally null on many never-OCR'd pages, and a dotted
     // $set cannot create fields inside null (MongoServerError 28 — crashed the first
     // English apply run, 2026-09-12). $mergeObjects over $ifNull handles null, missing and {}.
+    const sourceUrl = `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`;
     const ocrFields = {
       data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
-      source_url: `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`, updated_at: now, has_warning: false,
+      source_url: sourceUrl, updated_at: now, has_warning: false,
+      // which engine read the leaf and which run copied it, in the specialist-lane shape (#6740)
+      engine: iaEngine(meta, { run: INGEST_RUN, sourceUrl, leaf: k }),
       // The page-level cohort decision (#5124) rides with the book-level admission, per page.
       agreement_ref: gate ? { ...agreementRef, page_gate: gate } : agreementRef,
       // A recitation-fallback page now HAS text, so the "no text obtainable, skip it" block no longer
@@ -517,7 +522,7 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
       // The book failed the digits gate (#5186) and this leaf prints a number: its numbers are not to
       // be quoted from this text. Absent (never false) otherwise, so the field means one thing.
       ...(agreementRef.numeric?.unreliable && carriesNumbers(leaves[k]) ? { digits_unreliable: true } : {}),
-      ia: { ...iaProvenance(iaId, meta), ingest_run: INGEST_RUN },
+      ia: { ...iaProvenance(iaId, meta, { year: publicationYear(b) }), ingest_run: INGEST_RUN },
       content_hash: contentHash(leaves[k]),
     };
     const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
@@ -536,5 +541,11 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
 }
 
 function bookId(b) { return b.id || String(b._id); }
-/** The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit). */
-const carriesNumbers = (text) => pageNumberCounts(text).size > 0;
+/**
+ * The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit).
+ * A function DECLARATION, not a `const`: it is defined below the top-level `await withMongo(...)`
+ * that calls it, and a `const` there is still in its temporal dead zone — every run that reached an
+ * accepted book with unreliable digits died with "Cannot access 'carriesNumbers' before
+ * initialization" (2026-10-13 → 2026-10-23).
+ */
+function carriesNumbers(text) { return pageNumberCounts(text).size > 0; }

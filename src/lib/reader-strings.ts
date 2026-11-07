@@ -75,6 +75,12 @@ export interface ReaderStrings {
     next: string;
     close: string;
     jumpToPage: string;
+    /** The number printed on the leaf, beside the frame position, where a run was confirmed on the images (#8041). */
+    printedPage: (printed: string) => string;
+    /** The frame position, named where it has to be told from a printed number. */
+    scanPage: (n: number) => string;
+    /** Heading of the choice when the page box matches more than one page. */
+    whichPage: string;
     backToTheBook: string;
     backToTheBookPage: string;
     backToTheReader: string;
@@ -243,6 +249,14 @@ export interface ReaderStrings {
     ungroundedLabel: string;
     /** The same page with the Notes toggle off. */
     ungroundedHidden: string;
+    /** Amber notice over a page the OCR marked handwritten or mixed (#7098):
+     *  the bold label, then the caution that follows its colon. */
+    handwrittenManuscript: string;
+    mixedManuscript: string;
+    uncertainReadings: string;
+    /** Page-number and folio chips in the Page Info bar, from the OCR's own numbering. */
+    pageNumberLabel: (n: string) => string;
+    folioLabel: (f: string) => string;
     traceRateLimited: string;
     traceClickHint: string;
 
@@ -270,6 +284,28 @@ export interface ReaderStrings {
     markOurNote: string;
     markOurNoteDesc: string;
     marksHiddenByNotes: string;
+  };
+
+  /**
+   * A facing-page edition (a Loeb, #8321): the published English printed
+   * opposite the original, shown in the translation pane in place of ours.
+   */
+  facing: {
+    /** The pane label, before " · <translator>, <year>". */
+    loebTranslation: string;
+    /** Our AI translation, one click away. */
+    sourceLibraryTranslation: string;
+    showSourceLibraryTranslation: string;
+    showLoebTranslation: string;
+    /** Under our translation, so nobody mistakes it for the Loeb's. */
+    sourceLibraryTranslationNote: string;
+    /** On the English leaf itself: it is the translation of the page opposite. */
+    englishLeafNote: (printedPage: string) => string;
+    goToOriginal: string;
+    /** The page counter on an opening: the two printed pages it shows. */
+    openingPages: (left: string, right: string) => string;
+    /** The original leaf's column label, before " · p. N". */
+    originalLeaf: string;
   };
 
   /** Contents panel. */
@@ -334,32 +370,40 @@ export interface ReaderStrings {
     fieldTranscript: string;
     /** "Photographed from the printed edition, p. N" */
     scannedFrom: (pageNumber?: number) => string;
-    /** "Read from the scan by {model}" */
-    transcribedBy: (model: string) => string;
-    /** "Translated from the transcript by {model}" */
-    translatedBy: (model: string) => string;
+    /**
+     * What kind of text it is, never which model made it (#7263, Derek 2026-11-04: a vendor's
+     * model name tells a reader nothing and invites a judgement about the tool). The stored
+     * `ocr.model` / `translation.model` stay in the record and the API.
+     */
+    machineTranscript: string;
+    machineTranslation: string;
+    /** A machine translation a person has since edited (`translation.edited_by` / `edited_at`). */
+    machineTranslationEdited: string;
+    /** The drawer's quiet notice (Derek, 2026-11-04): every text carries errors, the scan is the source. The
+     *  machine-made kind is said by machineTranscript / machineTranslation, so this need not repeat it. */
     machineNotice: string;
     /** Corpus editions (#4350): no scan exists, and the text (for ETCSL, the
      *  translation too) is the corpus editors' scholarly work, not AI's. */
     corpusNoScan: (witnessCount: number) => string;
     corpusTranscript: (name: string, org?: string) => string;
     /** Syriac pages read by a specialist Kraken model (#4883), by route: Sophro Mhiro for
-     *  manuscripts, omnisyr for print. Replaces transcribedBy + machineNotice on those pages. */
+     *  manuscripts, omnisyr for print. Replaces machineTranscript + machineNotice on those pages. */
     krakenTranscript: (route: 'manuscript' | 'print') => string;
     krakenNotice: (route: 'manuscript' | 'print') => string;
     /** Label for the link under krakenNotice to the by-eye check it cites (KRAKEN_EVIDENCE_URL). */
     krakenEvidenceLink: string;
     /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
-    iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
-    /** Written or corrected by a person; `model` is the display name of what they started from, if known. */
-    manualTranscript: (model: string | null) => string;
+    iaTranscript: (year: string | null, agreement: number | null) => string;
+    /** Written or corrected by a person; `fromMachine` when they started from a machine transcription. */
+    manualTranscript: (fromMachine: boolean) => string;
     /**
      * Short forms for the transcription pane-header chip (#5186). Derived by
      * `transcriptProvenanceLabel()` from the SAME provenance as the drawer
-     * sentences above, so header and drawer can never disagree. The model
-     * case has no string here: the chip is the model's display name itself.
+     * sentences above, so header and drawer can never disagree.
      */
-    transcriptChipIa: (engine: string | null) => string;
+    transcriptChipIa: string;
+    /** Chip for a machine transcription, Kraken's Syriac included (its drawer sentence names the model). */
+    transcriptChipMachine: string;
     /** Tooltip on the Archive chip: the known failure mode, plus the sample agreement when measured. */
     transcriptChipIaTitle: (agreement: number | null) => string;
     transcriptChipManual: string;
@@ -370,6 +414,12 @@ export interface ReaderStrings {
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
+    /** machineDraftNotice with the month the translation was produced, when the record has one (#7263). */
+    machineDraftNoticeDated: (month: string) => string;
+    /** A month as a reader reads it. Spelled out per locale, not Intl: Latin has no ICU data, and server and browser must print the same words. */
+    producedMonth: (date: Date) => string;
+    /** A provenance label with that month: "Machine transcription of the scan, March 2026". */
+    producedLabel: (label: string, month: string) => string;
     /**
      * Printed pages absent between two scans, shown on the scans either side of the gap (#6675). `last` is null
      * when one page is missing. Derek's wording (2026-10-15): "Pages 41–44 are missing from this scan."
@@ -386,7 +436,11 @@ export interface ReaderStrings {
     qualityPageDetector: (date: string) => string;
     /** `serious` is null when the check kept no per-page record. */
     qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
+    /** Follows qualityBook: the kinds of serious error that check found most often, commonest first (at most two). */
+    /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means. */
     qualitySeeReview: string;
+    /** The book line when the newest review found no serious error on the pages it read (#7896). */
+    qualityChecked: (o: { ai: boolean; image: boolean; read: number; date: string }) => string;
     qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
@@ -445,6 +499,11 @@ export interface ReaderStrings {
     /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
     notModernized: string;
     notModernizedBody: string;
+    /** #7100: a stored light spelling edit of an English page, offered off by default — never a translation, never cited. */
+    modernizedSpelling: string;
+    modernizedSpellingNote: string;
+    showModernizedSpelling: string;
+    hideModernizedSpelling: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -513,6 +572,17 @@ export interface ReaderStrings {
     attachFailed: string;
     removeImage: string;
   };
+
+  /** One line beside the page-report control on a machine transcription: says
+   *  a machine made it and how accurate the engine we use measured, linking to
+   *  the chart on /quality (#6278 item 5). The numbers come from
+   *  `ocrMeasure()` (src/lib/ocr-measure.ts), never from this file. Null where
+   *  the line is not shown. */
+  ocrMeasure: {
+    /** `percent`, `low`, `high` are whole percentages; `date` is ISO (YYYY-MM-DD). */
+    line: (m: { percent: number; low: number; high: number; pages: number; date: string }) => string;
+    link: string;
+  } | null;
 
   /** One quiet line above a translation whose source page was hard to read
    *  (`pageReadCaution`, src/lib/transcription-reliability.ts). */
@@ -717,6 +787,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Next',
       close: 'Close',
       jumpToPage: 'Jump to page',
+      printedPage: (x) => `printed ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Which page?',
       backToTheBook: 'Back to the book',
       backToTheBookPage: 'Back to the book page',
       backToTheReader: 'Back to the reader',
@@ -846,6 +919,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `${pageTypeLabel} page. Turn Notes on to read the description.`,
       ungroundedLabel: 'Little or no text was transcribed on this page · written by the model',
       ungroundedHidden: 'Little or no text was transcribed on this page. Turn Notes on to read what the model wrote.',
+      handwrittenManuscript: 'Handwritten manuscript',
+      mixedManuscript: 'Mixed manuscript',
+      uncertainReadings: 'transcription may contain uncertain readings',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
@@ -870,6 +948,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: 'Our note',
       markOurNoteDesc: 'Added here by an editor, not on the original.',
       marksHiddenByNotes: 'Notes hides all of them.',
+    },
+    facing: {
+      loebTranslation: 'Loeb translation',
+      sourceLibraryTranslation: 'Source Library translation',
+      showSourceLibraryTranslation: 'Show the Source Library translation',
+      showLoebTranslation: 'Show the Loeb translation',
+      sourceLibraryTranslationNote: 'Our AI translation of the original on this page, not the published one.',
+      englishLeafNote: (p: string) => `This page is the published English translation of p. ${p}, printed facing it.`,
+      goToOriginal: 'Go to the original',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Original',
     },
     contents: {
       noContentsTranscribed: 'This edition’s table of contents has not been transcribed yet. Use the reading guide or the page strip to move around.',
@@ -922,9 +1011,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Scan',
       fieldTranscript: 'Transcript',
       scannedFrom: (pageNumber) => `Photographed from the printed edition${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Read from the scan by ${model}`,
-      translatedBy: (model) => `Translated from the transcript by ${model}`,
-      machineNotice: 'Machine transcription and translation carry errors. The scan is the source, so read it alongside the text wherever a reading matters.',
+      machineTranscript: 'Machine transcription of the scan',
+      machineTranslation: 'AI translation of the transcript',
+      machineTranslationEdited: 'AI translation of the transcript, corrected by hand',
+      machineNotice: 'All transcription and translation carry errors. The scan is the source.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `None. This is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None. This is a digital text edition; no page images exist.',
@@ -936,14 +1026,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Machine transcription, not checked by a person. ' +
         (route === 'print'
           ? 'We read five printed pages against their scans (September 2026): the words were right on all five, and on two of them lines from separate columns ran together.'
-          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.') +
-        ' Check the scan wherever a reading matters.',
+          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.'),
       krakenEvidenceLink: 'How we checked',
-      iaTranscript: (engine, year, agreement) =>
-        `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Read from the scan by the Internet Archive's OCR${year ? ` (${year})` : ''}` +
         (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
-      manualTranscript: (model) => model ? `Read from the scan by ${model}, corrected by hand` : 'Transcribed by hand',
-      transcriptChipIa: (engine) => `Internet Archive OCR${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Machine transcription, corrected by hand' : 'Transcribed by hand',
+      transcriptChipIa: 'Internet Archive OCR',
+      transcriptChipMachine: 'Machine transcription',
       transcriptChipIaTitle: (agreement) =>
         'Archive OCR — numbers may be misread (see #5186)' +
         (agreement != null ? ` · agrees with our sample reading on ${Math.round(agreement * 100)}% of words` : ''),
@@ -952,6 +1042,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      machineDraftNoticeDated: (month) => `AI translation, ${month}, not yet reviewed by a scholar.`,
+      producedMonth: (date) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Pages ${first}–${last} are missing from this scan.` : `Page ${first} is missing from this scan.`),
       qualityKinds: {
         wrong_page: 'the scan and the text are from different pages',
@@ -965,6 +1058,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'part of the page is missing from the transcription',
         missing_english: 'part of the page is missing from the English',
         number_misread: 'a number, date or quantity is misread',
+        word_misread: 'a word in the transcription is misread',
+        transcription_unsettled: 'two machine readings of the page disagree and the scan did not settle which is right',
         repeated_text: 'a passage is repeated that appears once on the page',
         serious_transcription: 'the transcription has a serious error',
         serious_english: 'the English has a serious error',
@@ -977,9 +1072,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `A check by ${ai ? 'an AI reviewer' : 'a reviewer'} read ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date}`;
         if (serious === null) return `${start} and found serious errors.`;
-        return `${start} and found serious errors on ${read === 1 ? 'it' : `${serious} of them`}.`;
+        if (read === 1) return `${start} and found serious errors on it.`;
+        return `${start} and found serious errors on ${serious} of them${read > serious ? (read - serious === 1 ? '; the other page had none' : `; the other ${read - serious} had none`) : ''}.`;
       },
       qualitySeeReview: 'See the review',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'An AI reviewer' : 'A reviewer'} checked ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date} and found no serious errors.`,
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
@@ -1012,6 +1109,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
       notModernized: 'Not yet modernized',
       notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
+      modernizedSpelling: 'Modernized spelling',
+      modernizedSpellingNote: 'Machine-edited for modern spelling and punctuation. Not the author\'s text: quote and cite the transcription.',
+      showModernizedSpelling: 'Show modernized spelling',
+      hideModernizedSpelling: 'Hide modernized spelling',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
@@ -1066,6 +1167,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'That image could not be uploaded. Try a smaller one.',
       removeImage: 'Remove image',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `This page was hard to read: about ${Math.round(share * 100)}% of the transcription is marked uncertain, and the English there is a best guess.`,
       damage: 'This page is damaged or faded in places, and parts of the English may rest on uncertain readings.',
@@ -1190,6 +1292,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Siguiente',
       close: 'Cerrar',
       jumpToPage: 'Ir a una página',
+      printedPage: (x) => `impresa ${x}`,
+      scanPage: (n) => `imagen ${n}`,
+      whichPage: '¿Qué página?',
       backToTheBook: 'Volver al libro',
       backToTheBookPage: 'Volver a la página del libro',
       backToTheReader: 'Volver al lector',
@@ -1326,6 +1431,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. Activa las notas para leer la descripción.`,
       ungroundedLabel: 'Se transcribió poco o ningún texto en esta página · escrito por el modelo',
       ungroundedHidden: 'Se transcribió poco o ningún texto en esta página. Activa las notas para leer lo que escribió el modelo.',
+      handwrittenManuscript: 'Manuscrito',
+      mixedManuscript: 'Manuscrito mixto',
+      uncertainReadings: 'la transcripción puede contener lecturas inciertas',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
@@ -1350,6 +1460,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: 'Nota nuestra',
       markOurNoteDesc: 'Añadida aquí por un editor; no está en el original.',
       marksHiddenByNotes: 'El botón «Notas» las oculta todas.',
+    },
+    facing: {
+      loebTranslation: 'Traducción Loeb',
+      sourceLibraryTranslation: 'Traducción de Source Library',
+      showSourceLibraryTranslation: 'Ver la traducción de Source Library',
+      showLoebTranslation: 'Ver la traducción Loeb',
+      sourceLibraryTranslationNote: 'Nuestra traducción automática del original de esta página, no la publicada.',
+      englishLeafNote: (p: string) => `Esta página es la traducción inglesa publicada de la p. ${p}, impresa enfrente.`,
+      goToOriginal: 'Ir al original',
+      openingPages: (a: string, b: string) => `págs. ${a}–${b}`,
+      originalLeaf: 'Original',
     },
     contents: {
       noContentsTranscribed: 'El índice de esta edición aún no se ha transcrito. Usa la guía de lectura o la tira de páginas para moverte.',
@@ -1402,9 +1523,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Escaneo',
       fieldTranscript: 'Transcripción',
       scannedFrom: (pageNumber) => `Fotografiada a partir de la edición impresa${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Leída del escaneo por ${model}`,
-      translatedBy: (model) => `Traducida de la transcripción por ${model}`,
-      machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente, así que léelo junto al texto siempre que una lectura sea importante.',
+      machineTranscript: 'Transcripción automática del escaneo',
+      machineTranslation: 'Traducción por IA de la transcripción',
+      machineTranslationEdited: 'Traducción por IA de la transcripción, corregida a mano',
+      machineNotice: 'Toda transcripción y toda traducción contienen errores. El escaneo es la fuente.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Ninguno. Es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno. Es una edición digital de texto; no existen imágenes de página.',
@@ -1416,14 +1538,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Transcripción automática, no revisada por una persona. ' +
         (route === 'print'
           ? 'Leímos cinco páginas impresas junto a sus escaneos (septiembre de 2026): las palabras eran correctas en las cinco, y en dos se mezclaron líneas de columnas distintas.'
-          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.') +
-        ' Consulta el escaneo siempre que una lectura sea importante.',
+          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.'),
       krakenEvidenceLink: 'Cómo lo comprobamos',
-      iaTranscript: (engine, year, agreement) =>
-        `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Leída del escaneo por el OCR del Internet Archive${year ? ` (${year})` : ''}` +
         (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
-      manualTranscript: (model) => model ? `Leída del escaneo por ${model}, corregida a mano` : 'Transcrita a mano',
-      transcriptChipIa: (engine) => `OCR del Internet Archive${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Transcripción automática, corregida a mano' : 'Transcrita a mano',
+      transcriptChipIa: 'OCR del Internet Archive',
+      transcriptChipMachine: 'Transcripción automática',
       transcriptChipIaTitle: (agreement) =>
         'OCR del Archive: los números pueden estar mal leídos (véase #5186)' +
         (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
@@ -1432,6 +1554,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
       machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      machineDraftNoticeDated: (month) => `Traducción por IA, ${month}, aún no revisada por un especialista.`,
+      producedMonth: (date) => `${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][date.getUTCMonth()]} de ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Faltan en este escaneo las páginas ${first}–${last}.` : `Falta en este escaneo la página ${first}.`),
       qualityKinds: {
         wrong_page: 'la imagen y el texto son de páginas distintas',
@@ -1445,6 +1570,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'falta parte de la página en la transcripción',
         missing_english: 'falta parte de la página en la traducción',
         number_misread: 'un número, una fecha o una cantidad están mal leídos',
+        word_misread: 'una palabra de la transcripción está mal leída',
+        transcription_unsettled: 'dos lecturas automáticas de la página discrepan y la imagen no permitió decidir cuál es la correcta',
         repeated_text: 'se repite un pasaje que aparece una sola vez en la página',
         serious_transcription: 'la transcripción tiene un error grave',
         serious_english: 'la traducción tiene un error grave',
@@ -1457,9 +1584,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `Una revisión hecha por ${ai ? 'un revisor de IA' : 'un revisor'} leyó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date}`;
         if (serious === null) return `${start} y encontró errores graves.`;
-        return `${start} y encontró errores graves en ${read === 1 ? 'ella' : `${serious} de ellas`}.`;
+        if (read === 1) return `${start} y encontró errores graves en ella.`;
+        return `${start} y encontró errores graves en ${serious} de ellas${read > serious ? (read - serious === 1 ? '; la otra no tenía ninguno' : `; las otras ${read - serious} no tenían ninguno`) : ''}.`;
       },
       qualitySeeReview: 'Ver la revisión',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Un revisor de IA' : 'Un revisor'} revisó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date} y no encontró errores graves.`,
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
@@ -1492,6 +1621,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
       notModernized: 'Aún sin modernizar',
       notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
+      modernizedSpelling: 'Ortografía modernizada',
+      modernizedSpellingNote: 'Editada automáticamente con ortografía y puntuación modernas. No es el texto del autor: cite la transcripción.',
+      showModernizedSpelling: 'Mostrar ortografía modernizada',
+      hideModernizedSpelling: 'Ocultar ortografía modernizada',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
@@ -1546,6 +1679,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'No se pudo subir esa imagen. Prueba con una más pequeña.',
       removeImage: 'Quitar imagen',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `Esta página era difícil de leer: alrededor del ${Math.round(share * 100)} % de la transcripción está marcado como dudoso, y la traducción de esas partes es una conjetura.`,
       damage: 'Esta página está dañada o desvaída en algunas partes, y parte de la traducción puede basarse en lecturas dudosas.',
@@ -1700,6 +1834,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Sequens',
       close: 'Claude',
       jumpToPage: 'Paginam pete',
+      printedPage: (x) => `impressa ${x}`,
+      scanPage: (n) => `imago ${n}`,
+      whichPage: 'Quam paginam?',
       backToTheBook: 'Ad librum redi',
       backToTheBookPage: 'Ad paginam libri redi',
       backToTheReader: 'Ad lectionem redi',
@@ -1831,6 +1968,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Notas ostende, ut descriptionem legas.`,
       ungroundedLabel: 'Paulum aut nihil textus ex hac pagina transcriptum · a machina scriptum',
       ungroundedHidden: 'Paulum aut nihil textus ex hac pagina transcriptum. Notas ostende, ut quae machina scripsit legas.',
+      handwrittenManuscript: 'Codex manu scriptus',
+      mixedManuscript: 'Codex mixtus',
+      uncertainReadings: 'transcriptio lectiones incertas continere potest',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Finis vestigationum attactus est. Intra (gratis), ut pergas.',
       traceClickHint: 'Locutionem quamlibet preme, ut eam in altera tabula videas.',
 
@@ -1855,6 +1997,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: 'Nota nostra',
       markOurNoteDesc: 'Hic ab editore addita; in exemplari non est.',
       marksHiddenByNotes: 'Notis celatis omnia celantur.',
+    },
+    facing: {
+      loebTranslation: 'Versio Loebiana',
+      sourceLibraryTranslation: 'Versio Source Library',
+      showSourceLibraryTranslation: 'Versionem Source Library ostende',
+      showLoebTranslation: 'Versionem Loebianam ostende',
+      sourceLibraryTranslationNote: 'Versio nostra machinalis huius paginae, non edita.',
+      englishLeafNote: (p: string) => `Haec pagina est versio Anglica edita paginae ${p}, ex adverso impressa.`,
+      goToOriginal: 'Ad textum primigenium',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Textus primigenius',
     },
     contents: {
       noContentsTranscribed: 'Index capitum huius editionis nondum transcriptus est. Duce legendi vel serie paginarum utere, ut per librum eas.',
@@ -1907,9 +2060,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Imago',
       fieldTranscript: 'Transcriptio',
       scannedFrom: (pageNumber) => `Ex editione impressa photographice descripta${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Ex imagine lecta a ${model}`,
-      translatedBy: (model) => `Ex transcriptione conversa a ${model}`,
-      machineNotice: 'Transcriptio et conversio machina factae menda habent. Imago fons est: eam iuxta textum lege, ubicumque lectio alicuius momenti est.',
+      machineTranscript: 'Transcriptio ex imagine machina facta',
+      machineTranslation: 'Conversio ex transcriptione ab intellegentia artificiali facta',
+      machineTranslationEdited: 'Conversio ex transcriptione ab intellegentia artificiali facta, manu emendata',
+      machineNotice: 'Omnis transcriptio omnisque conversio menda habent. Imago fons est.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Nulla: haec est editio textus digitalis. Opus in ${witnessCount} ${witnessCount === 1 ? 'tabula fictili' : 'tabulis fictilibus'} apud CDLI relatis servatur.`
         : 'Nulla: haec est editio textus digitalis; imagines paginarum nullae exstant.',
@@ -1921,14 +2075,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Transcriptio machina facta, ab homine non recognita. ' +
         (route === 'print'
           ? 'Quinque paginas typis impressas cum imaginibus contulimus (mense Septembri 2026): verba in omnibus quinque recte lecta sunt, in duabus autem versus e columnis diversis confusi sunt.'
-          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.') +
-        ' Imaginem inspice, ubicumque lectio alicuius momenti est.',
+          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.'),
       krakenEvidenceLink: 'Quomodo exploraverimus',
-      iaTranscript: (engine, year, agreement) =>
-        `Ex imagine lecta ab OCR Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Ex imagine lecta ab OCR Internet Archive${year ? ` (${year})` : ''}` +
         (agreement != null ? `, recepta quia cum nostra lectione paginarum huius libri delectarum consentit (${Math.round(agreement * 100)}% verborum)` : ''),
-      manualTranscript: (model) => model ? `Ex imagine lecta a ${model}, manu emendata` : 'Manu transcripta',
-      transcriptChipIa: (engine) => `OCR Internet Archive${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Transcriptio machina facta, manu emendata' : 'Manu transcripta',
+      transcriptChipIa: 'OCR Internet Archive',
+      transcriptChipMachine: 'Transcriptio machinalis',
       transcriptChipIaTitle: (agreement) =>
         'OCR Internet Archive: numeri perperam legi possunt (vide #5186)' +
         (agreement != null ? ` · cum lectione nostra in ${Math.round(agreement * 100)}% verborum consentit` : ''),
@@ -1937,6 +2091,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Textus: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Textus: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'Conversio intellegentiae artificialis, a docto nondum recensita.',
+      machineDraftNoticeDated: (month) => `Conversio intellegentiae artificialis, ${month}, a docto nondum recensita.`,
+      producedMonth: (date) => `mense ${['Ianuario','Februario','Martio','Aprili','Maio','Iunio','Iulio','Augusto','Septembri','Octobri','Novembri','Decembri'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Paginae ${first}–${last} in hac imagine desunt.` : `Pagina ${first} in hac imagine deest.`),
       // Latin has no neat "found that X, and that Y": each kind is a full
       // clause and the sentence frames them after a colon.
@@ -1952,6 +2109,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'pars paginae in transcriptione deest',
         missing_english: 'pars paginae in textu Anglico deest',
         number_misread: 'numerus, dies vel quantitas perperam lecta est',
+        word_misread: 'verbum in transcriptione perperam lectum est',
+        transcription_unsettled: 'duae lectiones machinales paginae discrepant, nec imago utra recta sit diiudicavit',
         repeated_text: 'locus iteratur qui in pagina semel legitur',
         serious_transcription: 'transcriptio mendum grave habet',
         serious_english: 'textus Anglicus mendum grave habet',
@@ -1964,9 +2123,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date})`;
         if (serious === null) return `${start} et menda gravia invenit.`;
-        return `${start} et menda gravia ${read === 1 ? 'in ea' : `in ${serious} earum`} invenit.`;
+        if (read === 1) return `${start} et menda gravia in ea invenit.`;
+        return `${start} et menda gravia in ${serious} earum invenit${read > serious ? (read - serious === 1 ? '; reliqua nullum habet' : `; reliquae ${read - serious} nulla habent`) : ''}.`;
       },
       qualitySeeReview: 'Recensionem vide',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date}) nec menda gravia invenit.`,
       qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
       sourceLink: 'fons',
@@ -1999,6 +2160,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Hic liber Anglice scriptus est: transcriptio ipsa legenda est. Nihil est quod convertatur.',
       notModernized: 'Nondum sermone hodierno reddita',
       notModernizedBody: 'Hic liber Anglice prisco scriptus est. Sermone hodierno nondum redditus est; transcriptio ipsa legenda est.',
+      modernizedSpelling: 'Orthographia hodierna',
+      modernizedSpellingNote: 'Machina ad orthographiam hodiernam redactum. Non sunt verba auctoris: transcriptionem cita.',
+      showModernizedSpelling: 'Orthographiam hodiernam ostende',
+      hideModernizedSpelling: 'Orthographiam hodiernam cela',
       signInToRequest: 'Intra, ut conversionem petas',
       requestTranslation: 'Conversionem pete',
       requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
@@ -2052,6 +2217,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachLimit: 'Ad summum quattuor imagines',
       attachFailed: 'Ea imago mitti non potuit. Minorem tempta.',
       removeImage: 'Imaginem remove',
+    },
+    ocrMeasure: {
+      line: ({ percent, low, high, pages, date }) => {
+        const [y, m, d] = date.split('-').map(Number);
+        const months = ['Ianuarii', 'Februarii', 'Martii', 'Aprilis', 'Maii', 'Iunii', 'Iulii', 'Augusti', 'Septembris', 'Octobris', 'Novembris', 'Decembris'];
+        return `Hunc textum machina transcripsit. Machina qua nunc utimur, cum ${pages} paginis typis impressis a Vicifonte emendatis collata (die ${d} ${months[m - 1]} ${y}), ${percent} litteras e centum recte legit (inter ${low} et ${high}).`;
+      },
+      link: 'Mensuras vide',
     },
     readCaution: {
       unclear: (share) => `Haec pagina aegre lecta est: circiter ${Math.round(share * 100)}% transcriptionis incerta notantur, et conversio Anglica ibi coniectura est.`,
@@ -2181,6 +2354,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Volgende',
       close: 'Sluiten',
       jumpToPage: 'Naar pagina',
+      printedPage: (x) => `gedrukt ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Welke pagina?',
       backToTheBook: 'Terug naar het boek',
       backToTheBookPage: 'Terug naar de boekpagina',
       backToTheReader: 'Terug naar de lezer',
@@ -2312,6 +2488,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Zet Noten aan om de beschrijving te lezen.`,
       ungroundedLabel: 'Weinig of geen tekst getranscribeerd op deze pagina · geschreven door het model',
       ungroundedHidden: 'Weinig of geen tekst getranscribeerd op deze pagina. Zet Noten aan om te lezen wat het model schreef.',
+      handwrittenManuscript: 'Handgeschreven manuscript',
+      mixedManuscript: 'Gemengd manuscript',
+      uncertainReadings: 'de transcriptie kan onzekere lezingen bevatten',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Je hebt de limiet voor traceren bereikt. Log in (gratis) om verder te gaan.',
       traceClickHint: 'Klik op een zinsdeel om het in het andere paneel te zien.',
 
@@ -2336,6 +2517,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: 'Onze noot',
       markOurNoteDesc: 'Hier toegevoegd door een redacteur, niet in het origineel.',
       marksHiddenByNotes: 'Met Noten uit zijn ze allemaal verborgen.',
+    },
+    facing: {
+      loebTranslation: 'Loeb-vertaling',
+      sourceLibraryTranslation: 'Vertaling van Source Library',
+      showSourceLibraryTranslation: 'Toon de vertaling van Source Library',
+      showLoebTranslation: 'Toon de Loeb-vertaling',
+      sourceLibraryTranslationNote: 'Onze AI-vertaling van het origineel op deze pagina, niet de gepubliceerde.',
+      englishLeafNote: (p: string) => `Deze pagina is de gepubliceerde Engelse vertaling van p. ${p}, er tegenover gedrukt.`,
+      goToOriginal: 'Naar het origineel',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Origineel',
     },
     contents: {
       noContentsTranscribed: 'De inhoudsopgave van deze editie is nog niet getranscribeerd. Gebruik de leeswijzer of de paginastrook om door het boek te gaan.',
@@ -2388,9 +2580,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Scan',
       fieldTranscript: 'Transcriptie',
       scannedFrom: (pageNumber) => `Gefotografeerd uit de gedrukte editie${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Van de scan gelezen door ${model}`,
-      translatedBy: (model) => `Uit de transcriptie vertaald door ${model}`,
-      machineNotice: 'Machinale transcriptie en vertaling bevatten fouten. De scan is de bron: lees die naast de tekst waar het op een lezing aankomt.',
+      machineTranscript: 'Machinale transcriptie van de scan',
+      machineTranslation: 'AI-vertaling van de transcriptie',
+      machineTranslationEdited: 'AI-vertaling van de transcriptie, met de hand gecorrigeerd',
+      machineNotice: 'Elke transcriptie en elke vertaling bevat fouten. De scan is de bron.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Geen. Dit is een digitale tekstuitgave. De tekst is bewaard gebleven op ${witnessCount} ${witnessCount === 1 ? 'kleitablet' : 'kleitabletten'}, gecatalogiseerd bij CDLI.`
         : 'Geen. Dit is een digitale tekstuitgave; er bestaan geen pagina-afbeeldingen.',
@@ -2402,14 +2595,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Machinale transcriptie, niet door een mens gecontroleerd. ' +
         (route === 'print'
           ? 'We hebben vijf gedrukte pagina’s naast hun scans gelezen (september 2026): op alle vijf klopten de woorden, en op twee ervan liepen regels uit verschillende kolommen door elkaar.'
-          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.') +
-        ' Bekijk de scan waar het op een lezing aankomt.',
+          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.'),
       krakenEvidenceLink: 'Hoe we het hebben gecontroleerd',
-      iaTranscript: (engine, year, agreement) =>
-        `Van de scan gelezen door de OCR van het Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Van de scan gelezen door de OCR van het Internet Archive${year ? ` (${year})` : ''}` +
         (agreement != null ? `, overgenomen omdat die overeenkomt met onze eigen lezing van de proefpagina’s van dit boek (${Math.round(agreement * 100)}% van de woorden)` : ''),
-      manualTranscript: (model) => model ? `Van de scan gelezen door ${model}, met de hand gecorrigeerd` : 'Met de hand getranscribeerd',
-      transcriptChipIa: (engine) => `OCR van het Internet Archive${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Machinale transcriptie, met de hand gecorrigeerd' : 'Met de hand getranscribeerd',
+      transcriptChipIa: 'OCR van het Internet Archive',
+      transcriptChipMachine: 'Machinale transcriptie',
       transcriptChipIaTitle: (agreement) =>
         'OCR van het Internet Archive: getallen kunnen verkeerd gelezen zijn (zie #5186)' +
         (agreement != null ? ` · komt voor ${Math.round(agreement * 100)}% van de woorden overeen met onze proeflezing` : ''),
@@ -2418,6 +2611,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Tekst: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Tekst: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI-vertaling, nog niet door een wetenschapper nagekeken.',
+      machineDraftNoticeDated: (month) => `AI-vertaling, ${month}, nog niet door een wetenschapper nagekeken.`,
+      producedMonth: (date) => `${['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Pagina's ${first}–${last} ontbreken in deze scan.` : `Pagina ${first} ontbreekt in deze scan.`),
       // Each kind is a subordinate clause (verb last): it follows "vond dat".
       qualityKinds: {
@@ -2432,6 +2628,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'een deel van de pagina in de transcriptie ontbreekt',
         missing_english: 'een deel van de pagina in het Engels ontbreekt',
         number_misread: 'een getal, datum of hoeveelheid verkeerd is gelezen',
+        word_misread: 'een woord in de transcriptie verkeerd is gelezen',
+        transcription_unsettled: 'twee machinale lezingen van de pagina verschillen en de scan niet uitwees welke juist is',
         repeated_text: 'een passage herhaald wordt die maar één keer op de pagina staat',
         serious_transcription: 'de transcriptie een ernstige fout bevat',
         serious_english: 'het Engels een ernstige fout bevat',
@@ -2444,9 +2642,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''}`;
         if (serious === null) return `${start} en vond ernstige fouten.`;
-        return `${start} en vond ernstige fouten ${read === 1 ? 'op die pagina' : `op ${serious} daarvan`}.`;
+        if (read === 1) return `${start} en vond ernstige fouten op die pagina.`;
+        return `${start} en vond ernstige fouten op ${serious} daarvan${read > serious ? (read - serious === 1 ? '; de andere had er geen' : `; de andere ${read - serious} hadden er geen`) : ''}.`;
       },
       qualitySeeReview: 'Bekijk de beoordeling',
+      qualityChecked: ({ ai, image, read, date }) => `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''} en vond geen ernstige fouten.`,
       qualityDetectorLink: 'Waar de controle op let',
       licenceLink: 'licentie',
       sourceLink: 'bron',
@@ -2479,6 +2679,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Dit boek is in het Engels: de transcriptie is de leestekst. Er is niets te vertalen.',
       notModernized: 'Nog niet gemoderniseerd',
       notModernizedBody: 'Dit boek is in vroegmodern Engels. Er is nog geen gemoderniseerde versie; de transcriptie is de leestekst.',
+      modernizedSpelling: 'Gemoderniseerde spelling',
+      modernizedSpellingNote: 'Automatisch bewerkt naar moderne spelling en interpunctie. Niet de tekst van de auteur: citeer de transcriptie.',
+      showModernizedSpelling: 'Toon gemoderniseerde spelling',
+      hideModernizedSpelling: 'Verberg gemoderniseerde spelling',
       signInToRequest: 'Log in om een vertaling aan te vragen',
       requestTranslation: 'Vertaling aanvragen',
       requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
@@ -2533,6 +2737,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'Die afbeelding kon niet worden geüpload. Probeer een kleinere.',
       removeImage: 'Afbeelding verwijderen',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `Deze pagina was moeilijk te lezen: ongeveer ${Math.round(share * 100)}% van de transcriptie is als onzeker gemarkeerd, en het Engels is daar een beste gok.`,
       damage: 'Deze pagina is hier en daar beschadigd of vervaagd, en delen van het Engels kunnen op onzekere lezingen berusten.',
@@ -2663,6 +2868,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: '下一个',
       close: '关闭',
       jumpToPage: '跳转到页',
+      printedPage: (x) => `印本第 ${x} 页`,
+      scanPage: (n) => `扫描第 ${n} 张`,
+      whichPage: '哪一页？',
       backToTheBook: '返回本书',
       backToTheBookPage: '返回本书页面',
       backToTheReader: '返回阅读器',
@@ -2735,18 +2943,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: '扫描图',
       // The transcription IS the reading text on `/zh`, so the pane is named for
-      // what it holds rather than for how it was made.
-      viewOcr: '中文',
-      ocrPaneHeader: () => '中文原文',
+      // what it holds rather than for how it was made. 原文, never 中文: /zh also
+      // opens Latin and French books (中学西传), and the pane holds their own language.
+      viewOcr: '原文',
+      ocrPaneHeader: () => '原文',
       viewRoman: '罗马字',
       viewEnglish: '英文',
       visiblePanesAria: '当前显示的窗格',
       showPane: (label) => `显示${label}`,
       lastPaneShowing: '这是最后一个显示的窗格',
       pickPaneAria: '扫描图、原文或译文',
-      translatedFrom: () => '译自中文',
+      translatedFrom: () => '译自原文',
       viewTheScan: '查看扫描图',
-      viewTheText: () => '查看中文原文',
+      viewTheText: () => '查看原文',
 
       originalFallback: '原文',
       romanisedHeader: '罗马字转写',
@@ -2767,7 +2976,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
 
       originalScan: '原书扫描图',
       originalScanHint: '页面拍摄时的原貌',
-      transcriptionOf: () => '中文原文',
+      transcriptionOf: () => '原文',
       transcriptionHint: '印刷文字，由机器识读',
       englishTranslation: '英文译文',
       englishTranslationHint: '借助 AI 翻译',
@@ -2787,13 +2996,18 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       trace: '对照',
       turnTracingOff: '关闭对照',
       traceFallbackLanguage: '原文',
-      traceHint: () => '对照：点击任意短语，查看它在中文原文中的位置',
+      traceHint: () => '对照：点击任意短语，查看它在原文中的位置',
       traceAligning: '正在将本页与译文对齐…',
       traceUnavailable: '本页无法使用对照功能。',
       traceEnglishOnly: '对照功能比较原文与英文译文。请切换回英文后使用。',
       descriptionHidden: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。打开“注释”即可阅读说明。`,
       ungroundedLabel: '本页几乎未转录出文字 · 由模型撰写',
       ungroundedHidden: '本页几乎未转录出文字。打开“注释”即可阅读模型撰写的内容。',
+      handwrittenManuscript: '手写稿',
+      mixedManuscript: '手写与印刷混合稿',
+      uncertainReadings: '转录可能含有不确定的释读',
+      pageNumberLabel: (n) => `第 ${n} 页`,
+      folioLabel: (f) => `第 ${f} 叶`,
       traceRateLimited: '已达到对照次数上限。登录（免费）后可继续使用。',
       traceClickHint: '点击任意短语，查看它在另一窗格中的对应内容。',
 
@@ -2818,6 +3032,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: '我们的注释',
       markOurNoteDesc: '由编者在此添加，原书上没有。',
       marksHiddenByNotes: '关闭“注释”会隐藏全部标记。',
+    },
+    facing: {
+      loebTranslation: '洛布译文',
+      sourceLibraryTranslation: 'Source Library 译文',
+      showSourceLibraryTranslation: '显示 Source Library 译文',
+      showLoebTranslation: '显示洛布译文',
+      sourceLibraryTranslationNote: '这是我们对本页原文的 AI 译文，并非出版译本。',
+      englishLeafNote: (p: string) => `本页是第 ${p} 页的出版英译，印在其对页。`,
+      goToOriginal: '前往原文',
+      openingPages: (a: string, b: string) => `第 ${a}–${b} 页`,
+      originalLeaf: '原文',
     },
     contents: {
       noContentsTranscribed: '本版本的目录尚未转录。可以通过阅读指南或页面缩略条在书中跳转。',
@@ -2870,9 +3095,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: '扫描图',
       fieldTranscript: '转录',
       scannedFrom: (pageNumber) => `拍摄自印本${pageNumber != null ? `，第 ${pageNumber} 页` : ''}`,
-      transcribedBy: (model) => `由 ${model} 从扫描图识读`,
-      translatedBy: (model) => `由 ${model} 根据转录文本翻译`,
-      machineNotice: '机器转录和翻译都会有错误。扫描图才是依据，凡是关键的读法，请对照扫描图阅读。',
+      machineTranscript: '扫描图的机器转录',
+      machineTranslation: '根据转录文本的 AI 译文',
+      machineTranslationEdited: '根据转录文本的 AI 译文，经人工校正',
+      machineNotice: '任何转录和翻译都会有错误。扫描图才是依据。',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `无。这是数字文本版。该作品保存在 CDLI 著录的 ${witnessCount} 块泥板上。`
         : '无。这是数字文本版，没有页面图像。',
@@ -2884,14 +3110,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         '机器转录，未经人工核对。' +
         (route === 'print'
           ? '我们对照扫描图审读了五页印本（2026 年 9 月）：五页的字词全部正确，其中两页把不同栏的行混在了一起。'
-          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。') +
-        '凡是关键的读法，请核对扫描图。',
+          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。'),
       krakenEvidenceLink: '我们如何核对',
-      iaTranscript: (engine, year, agreement) =>
-        `由 Internet Archive 的 OCR 从扫描图识读${engine ? `（${engine}${year ? `，${year}` : ''}）` : year ? `（${year}）` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `由 Internet Archive 的 OCR 从扫描图识读${year ? `（${year}）` : ''}` +
         (agreement != null ? `；之所以采用，是因为它与我们对本书样本页的识读一致（${Math.round(agreement * 100)}% 的字词）` : ''),
-      manualTranscript: (model) => model ? `由 ${model} 从扫描图识读，经人工校正` : '人工转录',
-      transcriptChipIa: (engine) => `Internet Archive OCR${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? '机器转录，经人工校正' : '人工转录',
+      transcriptChipIa: 'Internet Archive OCR',
+      transcriptChipMachine: '机器转录',
       transcriptChipIaTitle: (agreement) =>
         'Archive OCR：数字可能识读有误（见 #5186）' +
         (agreement != null ? ` · 与我们的样本识读在 ${Math.round(agreement * 100)}% 的字词上一致` : ''),
@@ -2900,6 +3126,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `文本：${shortName}，${license}`,
       textSourceTranscript: (name, license, version) => `文本：${name}${version ? `（${version}）` : ''}，${license}`,
       machineDraftNotice: 'AI 译文，尚未经学者审校。',
+      machineDraftNoticeDated: (month) => `AI 译文（${month}），尚未经学者审校。`,
+      producedMonth: (date) => `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月`,
+      producedLabel: (label, month) => `${label}（${month}）`,
       missingPages: (first, last) => (last ? `本扫描件缺第 ${first}–${last} 页。` : `本扫描件缺第 ${first} 页。`),
       qualityKinds: {
         wrong_page: '扫描图和文本来自不同的页面',
@@ -2913,6 +3142,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: '转录中缺了页面的一部分',
         missing_english: '英文中缺了页面的一部分',
         number_misread: '数字、日期或数量识读有误',
+        word_misread: '转录中有字词识读有误',
+        transcription_unsettled: '两次机器识读结果不一致，对照扫描图也无法确定哪个正确',
         repeated_text: '页面上只出现一次的段落被重复了',
         serious_transcription: '转录有严重错误',
         serious_english: '英文有严重错误',
@@ -2925,9 +3156,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页`;
         if (serious === null) return `${start}，发现了严重错误。`;
-        return `${start}，发现${read === 1 ? '该页' : `其中 ${serious} 页`}有严重错误。`;
+        if (read === 1) return `${start}，发现该页有严重错误。`;
+        return `${start}，发现其中 ${serious} 页有严重错误${read > serious ? `，其余 ${read - serious} 页没有` : ''}。`;
       },
       qualitySeeReview: '查看审校记录',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页，未发现严重错误。`,
       qualityDetectorLink: '这项检查查什么',
       licenceLink: '许可',
       sourceLink: '来源',
@@ -2960,6 +3193,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: '本书以英文写成，转录文本就是阅读文本，无需翻译。',
       notModernized: '尚未现代化',
       notModernizedBody: '本书以早期现代英语写成，尚未制作现代英语读本；转录文本就是阅读文本。',
+      modernizedSpelling: '现代拼写',
+      modernizedSpellingNote: '机器按现代拼写和标点编辑，并非作者原文：引用时请使用转录文本。',
+      showModernizedSpelling: '显示现代拼写',
+      hideModernizedSpelling: '隐藏现代拼写',
       signInToRequest: '登录后申请翻译',
       requestTranslation: '申请翻译',
       requestFailed: '申请未能提交，请稍后再试。',
@@ -3014,6 +3251,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: '这张图片无法上传，请换一张小一点的。',
       removeImage: '移除图片',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `本页较难识读：约 ${Math.round(share * 100)}% 的转录被标为不确定，这些地方的英文是尽力推测的结果。`,
       damage: '本页有些地方受损或褪色，英文的部分内容可能基于不确定的读法。',

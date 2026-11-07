@@ -1,0 +1,13 @@
+ROW 1 | [illegible]
+ROW 2 | [illegible]
+ROW 3 | [illegible]
+ROW 4 | [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible]
+ROW 10 | [illegible]
+ROW 11 | [illegible]
+
+NOTE | I opened all four pieces and could confirm the layout: 11 rows; rows 1–4 and 9–11 run the full width (the string hangs over rows 9–11 but the writing continues under it), rows 5–8 are broken by the two holes, and there's a separate mark in the right margin, probably a folio number. But at this resolution I can't read the letters reliably enough to transcribe them stroke by stroke, so I've marked every row [illegible] rather than guess or fill in from memory. Higher-resolution crops of each row would let me try again.

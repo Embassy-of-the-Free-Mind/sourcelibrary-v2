@@ -1,0 +1,11 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam-script (old-style, Grantha-influenced) Sanskrit on a palm leaf; the image is a detail of one leaf with a central string hole. The hand is archaic and the incised letters are thin and partly worn, so the text cannot be reliably read.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio photographed against a black background; a binding cord passes through the hole in the leaf. Lines 3 to 7 are written in two blocks on either side of the string hole; lines 1, 2, 8 and 9 run the full width. Text continues past the right edge of the crop. No folio number visible.</meta>
+
+<unclear>9 lines of Sanskrit in old Malayalam script incised on palm leaf, not transcribed</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, Kerala</vocab>

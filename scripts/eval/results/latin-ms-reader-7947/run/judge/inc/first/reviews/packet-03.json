@@ -1,0 +1,391 @@
+[
+ {
+  "book_id": "b03-k",
+  "slot": 1,
+  "title": "Contra Celsum (1481 editio princeps)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 135,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "mente uerfare",
+      "image": "mente uerſare",
+      "problem": "long s read as f",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Ieſus ut Celſus exiſtimat",
+      "image": "Ieſus uti Celſus exiſtimat",
+      "problem": "'uti' read as 'ut'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "q̃ eius poſt obi",
+      "image": "q eius poſt obi",
+      "problem": "stray tilde added (q̃ = quam) where the print has plain q",
+      "severity": "minor"
+     },
+     {
+      "ocr": "imaginariā uulnerib: quibus",
+      "image": "imaginariã uulneꝝ:qbus",
+      "problem": "'uulnerum' (genitive plural, -ꝝ) misread as 'uulneribus'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut aut euãgelium docet",
+      "image": "ut aũt euãgelium docet",
+      "problem": "'autem' read as 'aut' ('or') — tilde dropped, conjunction changed",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "& p eoz uolūtate",
+      "image": "& ꝓ eoꝝ uolũtate",
+      "problem": "pro-abbreviation ꝓ rendered as plain p (per/prae)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "p Thomā ita pſe rebant:",
+      "image": "p Thomã ita ꝓſe rebanť",
+      "problem": "abbreviation marks on ꝓferebantur dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 270,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ſe rationem: & haud",
+      "image": "ſe rationemˀ & haud",
+      "problem": "interrogation mark rendered as colon (also after 'annotaſſet')",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Et arbitror equidem q̃ quemadmodum",
+      "image": "equidem ꝙ quemadmodum",
+      "problem": "quod-abbreviation ꝙ rendered as q̃ (quam)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 404,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "quādoq̄ d̄e parētes ... d̄eor",
+      "image": "quãdoqdé parẽtes ... deoꝝ",
+      "problem": "abbreviation marks misplaced/added (d̄eor has no mark in the image)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "coarguēda.deīde ... p̄ positum",
+      "image": "long s throughout the print",
+      "problem": "long s silently printed as round s on this page while pp. 135/270 keep ſ — convention flip",
+      "severity": "minor",
+      "class": "O9"
+     },
+     {
+      "ocr": "q̄ nos deniq uelit:ut",
+      "image": "q nos deniq uelit::ut",
+      "problem": "doubled colon reduced to one",
+      "severity": "minor"
+     },
+     {
+      "ocr": "qui preter ceteros",
+      "image": "qui præter ceteros",
+      "problem": "æ ligature normalised to e",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A close diplomatic transcription of all three leaves; page 135 has two meaning-bearing misreadings (aut for autem, uulneribus for uulnerum) and a few dropped marks, nothing a reader would be misled by seriously."
+ },
+ {
+  "book_id": "b03-m",
+  "slot": 2,
+  "title": "Contra Celsum (1481 editio princeps)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 135,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "& p eoz uolūtate",
+      "image": "& ꝓ eoꝝ uolũtate",
+      "problem": "pro-abbreviation ꝓ rendered as plain p",
+      "severity": "minor"
+     },
+     {
+      "ocr": "p Thomā ita pſe rebant:",
+      "image": "p Thomã ita ꝓſe rebanť",
+      "problem": "abbreviation marks on ꝓferebantur dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 270,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ſe rationem: & haud",
+      "image": "ſe rationemˀ & haud",
+      "problem": "interrogation mark rendered as colon (also after 'annotaſſet')",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Et arbitror equidem q̃ quemadmodum",
+      "image": "equidem ꝙ quemadmodum",
+      "problem": "quod-abbreviation ꝙ rendered as q̃ (quam)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 404,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "quādoq̄ d̄e parētes ... d̄eor",
+      "image": "quãdoqdé parẽtes ... deoꝝ",
+      "problem": "abbreviation marks misplaced/added (d̄eor has no mark in the image)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "coarguēda.deīde ... p̄ positum",
+      "image": "long s throughout the print",
+      "problem": "long s silently printed as round s on this page while pp. 135/270 keep ſ — convention flip",
+      "severity": "minor",
+      "class": "O9"
+     },
+     {
+      "ocr": "q̄ nos deniq uelit:ut",
+      "image": "q nos deniq uelit::ut",
+      "problem": "doubled colon reduced to one",
+      "severity": "minor"
+     },
+     {
+      "ocr": "qui preter ceteros",
+      "image": "qui præter ceteros",
+      "problem": "æ ligature normalised to e",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The most accurate of the reads: diplomatic, line-for-line, with only dropped or misplaced abbreviation marks and punctuation slips; page 404 drops long s where the others keep it."
+ },
+ {
+  "book_id": "b03-r",
+  "slot": 3,
+  "title": "Contra Celsum (1481 editio princeps)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 135,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "imaginaria uulnera: quibus",
+      "image": "imaginariã uulneꝝ:qbus",
+      "problem": "'uulnerum' expanded as 'uulnera' — case changed toward an expected reading",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "ut aut euangelium docet",
+      "image": "ut aũt euãgelium docet",
+      "problem": "'autem' read as 'aut' ('or')",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "et per eorum uoluntate",
+      "image": "& ꝓ eoꝝ uolũtate",
+      "problem": "ꝓ (pro) expanded as 'per'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ita preferebantur",
+      "image": "ita ꝓſe rebanť",
+      "problem": "ꝓ expanded as 'pre' (proferebantur)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quod perori fuisset",
+      "image": "qd ꝑori fuiſſet",
+      "problem": "abbreviated word expanded to a non-word 'perori'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "permolefte ... differit ... frenefi",
+      "image": "pmoleſte ... diſſerit ... freneſi",
+      "problem": "long s read as f in several words",
+      "severity": "minor"
+     },
+     {
+      "ocr": "uisiones soniare",
+      "image": "uiſiões sõniare",
+      "problem": "nasal tilde dropped: 'somniare' given as 'soniare'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quepiam minus credente: et existimante ... queda",
+      "image": "quẽpiã ... credẽtẽ ... exiſtimãtẽ ... quedã",
+      "problem": "final -m tildes dropped in expansion, giving wrong case endings",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(whole page one paragraph)",
+      "image": "33 printed lines",
+      "problem": "line breaks of the print removed",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 270,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "in his inolescat",
+      "image": "in his inſoleſcat",
+      "problem": "'insolescat' misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "his inculare",
+      "image": "his incuſare",
+      "problem": "long s read as l ('incusare')",
+      "severity": "minor"
+     },
+     {
+      "ocr": "insimulet ... prouidentia omnia",
+      "image": "inſimulẽt ... prouidentiã omnia",
+      "problem": "final nasal tildes dropped (insimulent, prouidentiam)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "copie ... cetera ... ceteri",
+      "image": "copiæ ... cætera ... cæteri",
+      "problem": "æ silently normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ut licuit:diximus ... se rationem?",
+      "image": "spacing after colons",
+      "problem": "spacing after punctuation lost in places",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 404,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "quandoque parentes ipsi",
+      "image": "quãdoqdé parẽtes ipſi",
+      "problem": "the abbreviated word after 'quandoque' (qdé, prob. 'deinde') silently dropped",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "aliquod habere",
+      "image": "aliqd habere",
+      "problem": "'aliquid' expanded as 'aliquod'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "elegantiu uerbo-",
+      "image": "elegãtiũ uerbo",
+      "problem": "expansion dropped the final -m (elegantium)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pro-/ marchio-/ re-/ ...",
+      "image": "no hyphens at line ends in the print",
+      "problem": "hyphens invented at every broken word",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quae nos denique uelit::",
+      "image": "q nos deniq uelit::",
+      "problem": "q expanded as 'quae' (prob. 'qui')",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "An expanded, normalised reading text, readable but less exact: several wrong expansions (aut, per for pro, uulnera, aliquod), long-s-as-f slips, one silently dropped word on 404, invented line-end hyphens, and p.135 collapsed into one paragraph; no serious error."
+ }
+]

@@ -61,26 +61,56 @@ const ROUTES: Record<string, () => Promise<Handler>> = {
 };
 
 /**
- * `/books/<id>/search` (search_within_book, #2049): the route takes its book id
- * from the dynamic segment, so it is matched by pattern rather than listed
- * above. Not edge-cached (no `s-maxage`), so the LRU never keeps it either.
+ * Book-scoped routes take their id from the dynamic segment, so they are
+ * matched by pattern rather than listed above.
+ *
+ *  - `/books/<id>/search` (search_within_book, #2049).
+ *  - `/books/<id>/quote` and `/books/<id>/text` (get_quote, get_quotes,
+ *    get_book_text). Over HTTP these spent the route's own page budget as the
+ *    proxy, one anonymous pool shared by every MCP user, so a keyed caller was
+ *    refused once strangers had used it up (#4307). The MCP route already
+ *    enforces and logs the page budget per caller, so `.handler` (the body
+ *    without the logging gate) is called and pages are not counted twice.
+ *
+ * None of them is edge-cached with `s-maxage`, so the LRU never keeps them:
+ * /text marks its text per key and sends `private, no-store` for a keyed caller.
  */
-const BOOK_SEARCH = /^\/books\/([^/?#]+)\/search$/;
+const BOOK_ROUTES: Array<[RegExp, () => Promise<(request: NextRequest, ctx: { params: Promise<{ id: string }> }, identity: ApiIdentity) => Promise<Response> | Response>]> = [
+  [/^\/books\/([^/?#]+)\/search$/, async () => (await import('@/app/api/books/[id]/search/route')).GET],
+  [/^\/books\/([^/?#]+)\/quote$/, async () => (await import('@/app/api/books/[id]/quote/route')).GET.handler],
+  [/^\/books\/([^/?#]+)\/text$/, async () => (await import('@/app/api/books/[id]/text/route')).GET.handler],
+];
+
+// One import per route module, shared: get_quotes fans out up to 25 pages at
+// once, and each would otherwise start its own first import of the route.
+const loaded = new Map<RegExp, ReturnType<(typeof BOOK_ROUTES)[number][1]>>();
 
 function routeFor(path: string): (() => Promise<Handler>) | undefined {
   if (path in ROUTES) return ROUTES[path];
-  const m = BOOK_SEARCH.exec(path);
-  if (!m) return undefined;
-  let id: string;
-  try {
-    id = decodeURIComponent(m[1]);
-  } catch {
-    return undefined; // a malformed %-escape: over HTTP, which answers it as before
+  for (const [pattern, importRoute] of BOOK_ROUTES) {
+    const load = () => {
+      let p = loaded.get(pattern);
+      if (!p) {
+        p = importRoute();
+        p.catch(() => loaded.delete(pattern));
+        loaded.set(pattern, p);
+      }
+      return p;
+    };
+    const m = pattern.exec(path);
+    if (!m) continue;
+    let id: string;
+    try {
+      id = decodeURIComponent(m[1]);
+    } catch {
+      return undefined; // a malformed %-escape: over HTTP, which answers it as before
+    }
+    return async () => {
+      const handler = await load();
+      return (request, _ctx, identity) => handler(request, { params: Promise.resolve({ id }) }, identity);
+    };
   }
-  return async () => {
-    const { GET } = await import('@/app/api/books/[id]/search/route');
-    return (request) => GET(request, { params: Promise.resolve({ id }) });
-  };
+  return undefined;
 }
 
 export function inProcessEnabled(path: string): boolean {
@@ -154,11 +184,16 @@ async function overHttp(url: string): Promise<string> {
  * here, over HTTP otherwise (or when MCP_INPROCESS=0).
  */
 export async function mcpApiGet(path: string, params: URLSearchParams | undefined, caller: McpCaller | undefined): Promise<unknown> {
+  return JSON.parse(await mcpApiGetText(path, params, caller));
+}
+
+/** The same call, returning the body as text (get_book_text's `format=plain`). */
+export async function mcpApiGetText(path: string, params: URLSearchParams | undefined, caller: McpCaller | undefined): Promise<string> {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
-  if (!caller || !inProcessEnabled(path)) return JSON.parse(await overHttp(url));
+  if (!caller || !inProcessEnabled(path)) return overHttp(url);
 
   const cached = cacheGet(url);
-  if (cached !== null) return JSON.parse(cached);
+  if (cached !== null) return cached;
 
   // Concurrent identical calls share one run, as they would one edge fill.
   let pending = inFlight.get(url);
@@ -168,5 +203,5 @@ export async function mcpApiGet(path: string, params: URLSearchParams | undefine
   }
   const { body, cacheable } = await pending;
   if (cacheable) cacheSet(url, body);
-  return JSON.parse(body);
+  return body;
 }

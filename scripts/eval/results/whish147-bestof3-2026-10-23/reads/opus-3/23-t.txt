@@ -1,0 +1,11 @@
+ROW 1 | ത്ര[illegible]ങ്ങ്ം കാലക്കനാഗക‖ക്കമിതെത്രൂവമഷ്യവഗൻമഹ്രൂമൊവഹ‖വഹാകരക്കെക്ക[illegible]ജ്ഞാദംക്കമ
+ROW 2 | നാക്ഷ്യത്രിഭിസ്ംഗഃനക്കുഃ‖ഖൈക്കാടനിത്രുക്ഷ്വൎത്തയജ്ഞതെമാൻ.ന‖നത്ര[illegible]ശക്കിമകഃശക്രന്ത്രക
+ROW 3 | ജതേൽഗക്ഷിയ‖ന്യൂകാള്യെന്ദ്രാച്ഛാദനാമിത്ര‖ത്ഥ്ഃഏവ[illegible]ക്ഷ
+ROW 4 | കനിയംയഭികാ‖ടകാശക്കൃതൈവശാവഷ്ഠിതം.‖ന്ത്രാൽകഷ്ണൽനൈ
+ROW 5 | ദവൈവാഷ്ടത്ര്യക‖നാസൽക്കനരാടാവാമച്ചു‖ത്രികാരണന്ത്രവ
+ROW 6 | ബാഭിത്രാൎച്ചൂയ‖ത്രുസൽക്കാരുമ്മഷ്ട്രുകൈക്കി‖മിത്രകാരണാടാ
+ROW 7 | പൈവപരകതയ്ശ്ശ്ര‖ദാമെവാദവഭിദവഭിചന‖ന്ദാ[illegible]ക്രൈ
+ROW 8 | ത്രപഞ്ചതമിതിഗ[illegible]‖ക്കണ്ഡവാകാരണദ്രവാദി[illegible]‖കാരണഖ്യടാവ്
+ROW 9 | ഥൽതാൽഫടദൂപംക്ക[illegible]‖രണ്ടംഭക്രൽഖ്യടാവക്കൊഞ്ഞുംഖ്യപൈ[illegible]‖ഷ്ടഖ്യടാവൈദ്ദ്രു
+
+NOTE | Treat this as a very low-confidence attempt, mostly a copy of glyph shapes rather than a reading. I could follow all 9 rows across the 4 pieces, but many conjuncts and vowel signs are guesses, so a lot of the Sanskrit above probably isn't what the scribe wrote, and the [illegible] marks are where I couldn't decide on any glyph. Holes: hole 1 is between p01 and p02, and hole 2 is between p03 and p04 (p02 and p03 together make the middle column). Rows 1–2 and 8–9 run the full width. The joins between pieces may also contain mistakes: I aligned the overlaps by eye, so text near a join may be dropped or repeated.

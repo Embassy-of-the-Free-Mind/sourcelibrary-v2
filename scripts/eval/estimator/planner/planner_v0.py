@@ -36,7 +36,8 @@ WEEK = {'claude': 4250.0, 'gemini_thinking': 33600.0, 'gemini_low': 151200.0}
 # translation engines: label in report_v2 -> (route kind for cost, available today?)
 TR_ENGINES = {'Flash-Lite 3.1': ('api', True), '3 Flash': ('api', True), '3.8 Flash CLI': ('gemini_low', True),
               '3.1 Pro t128': ('api', False), '3.1 Pro high CLI': ('gemini_thinking', False),
-              'Sonnet 5.5': ('sonnet', True), 'Opus 5.5': ('claude', True)}
+              'Sonnet 5.5': ('sonnet', True), 'Opus 5.5': ('claude', True),
+              'G4L CLI': ('gemini_thinking', False)}   # Argon: refused by agy-guard without AGY_ALLOW_HEAVY (#7075)
 TR_PROD = {'gemini-3.1-flash-lite': 'Flash-Lite 3.1', 'gemini-3-flash-preview': '3 Flash'}
 TR_LANG = {'latin': ('la', ['Latin']), 'greek': ('grc', ['Greek']), 'german': ('de', ['German']),
            'french': ('fr', ['French']), 'italian': ('it', ['Italian']), 'hebrew': ('he', ['Hebrew']),
@@ -140,14 +141,12 @@ def main():
             test_first.append(dict(stage='translation', decision=c['title'], why='language not in the estimator data'))
             continue
         names, cols = [], []
+        names_all, cols_all = [], []     # every available measured engine, before the capacity filter (#6871)
         queue = V(langs, 'pages') - V(langs, 'pages_translated')
         infeasible = []
         for e, (kind, ok) in TR_ENGINES.items():
             t = known.get((code, e))
             if not ok or t is None:
-                continue
-            if e != inc and queue > CAP_Q['claude' if kind == 'claude' else kind]:
-                infeasible.append(e)
                 continue
             if t['untested_family']:
                 test_first.append(dict(stage='translation', decision=f"{c['title']}: {e}",
@@ -155,10 +154,17 @@ def main():
                 continue
             S = min(len(trd[f'{code}|{e}']), len(trd[f'{code}|{e}|gemini-3.1-pro']))
             two = 0.5 * (trd[f'{code}|{e}'][:S] + trd[f'{code}|{e}|gemini-3.1-pro'][:S])   # two-family judge
+            names_all.append(e)
+            cols_all.append((5 - two) / 4)
+            if e != inc and queue > CAP_Q['claude' if kind == 'claude' else kind]:
+                infeasible.append(e)
+                continue
             names.append(e)
             cols.append((5 - two) / 4)
         S = min(len(x) for x in cols)
         Q = 1 - np.stack([x[:S] for x in cols], 1)      # page-fraction right
+        S_all = min(len(x) for x in cols_all)
+        pb_all = np.bincount(np.stack([x[:S_all] for x in cols_all], 1).argmin(1), minlength=len(names_all)) / S_all
 
         def cost_tr(arms, n, inc=inc):
             calls, usd = {}, 0.0
@@ -179,7 +185,10 @@ def main():
         r.update(stage='translation', decision=f"translate {c['title']}", unit='page-fraction (fidelity/4)',
                  basis={e: known[(code, e)]['basis'] for e in r['arms']},
                  judges='Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled',
-                 queue_pages=queue, not_feasible_at_this_volume=infeasible)
+                 queue_pages=queue, not_feasible_at_this_volume=infeasible,
+                 # P(best) with the infeasible engines put back: the answer for a decision small enough to fit (a held
+                 # frame of books), where the capacity filter above does not apply
+                 p_best_all_engines={names_all[j]: round(float(pb_all[j]), 3) for j in np.argsort(-pb_all)[:4]})
         rows.append(r)
 
     # ---------- OCR accuracy: one decision per routing-table row with a chart ----------

@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṇaṃkaṣṭraikhasvi [illegible] ‖ [illegible] rajjudvajñanakodvyāpāraḥ ttantamanamū ‖ pasaṃhārattanmyābhitihiṃ
+2. gaṃvibhajñararachiṃgama [illegible] ‖ ttiññūyapravṛttarettiññāṃlakṣmayattana ‖ nvayenattihetusvāddhya
+3. yoddhyābhira ‖ bayavyāññiḥdabhāvataiyāṣkrā ‖ ṣkraddhyattekavyāṣṭiḥ
+4. kaivalyānmaṣṭira ‖ nālakṣaṇamāvāḥññabamayamena ‖ ttikaivalyāvaktisā
+5. bhṛktaṃkaivalyā ‖ baddhiññatrūññādabhāvāpratti ‖ yogitvaṃkaivalyāp
+6. ññibamiśrairadamāvi ‖ vibayabaṃsabhlavadābhimadhyatvābana ‖ savvvatrāśśittidvamiteva
+7. kkābhāvadṛññinerma ‖ ttiṇamṛdahinattilūṣavitinantvitara ‖ rārebhadaḥprasiddheṣonavākku
+8. glūñciññaḻanikkakka ‖ kkadravituḻbaibabittamasarattvāññā ‖ ññāṣādhāraṇṇakhaṃdikkiro
+
+TRANSCRIPTION B
+1. raṇaṃkajñaṛaikhyāstri [illegible] ‖ [illegible] kajñaṛjñanakodvrāpādaḥññanamanamūpa ‖ pasaṃhārattitantrāditihiṃ
+2. gaṃvibhajñararaṣiṃgama [illegible] ‖ ttiññabayappṛtrarerattiññaṃlakṣmayattina [illegible] ‖ nabamayanettihetusvāḻya
+3. reyāddhyādaṇṇira ‖ bayapyāttiḥdadāvadeyāktryā ‖ jñavyattirekavyāptiḥ
+4. kaivalyānmima ‖ nnālakṣaṇemāvāḥttacamayamena ‖ ttikaivalyānabakkisā
+5. dṛkkaṃkaivalyā ‖ baddhiṇnatryannodāvāprattime ‖ yāgatṛṃkaivalyānbi
+6. ttibamibālapramovi ‖ mimayabaṃsarvvavādābhimadhyabābana ‖ nsarvvatrāttittidṛkhile
+7. kkādāviddhruttireṇma ‖ ttiṇṭamudāhirattilebhuvittinanandattara ‖ raraidadaḥprasiddhonavāddhra
+8. oddābamilesiddhakkya ‖ kyattavitranbaibattibamasaottyantā ‖ ntādhāraṇabaṃttikkime
+
+TRANSCRIPTION C
+1. ññaṃrajjubhrābosra ‖ rajjujñanakkoālyāpādaḥtrasamanampa ‖ pasaṃhārattinantyāditihiṃ
+2. gaṃvibhajyateṣiṃgama ‖ ttiññabayapratyaterattiññaṃlakṣmayattina ‖ nabāyanittihetusvābhya
+3. aiyāntyākhyara ‖ khyayakhyāṅṅiḥdabhāvayoāṣṭyā ‖ kṣmalyātekekavyāṣṭhiḥ
+4. kaivalātthima ‖ nṟālakṣaṇamāhāḥavayamena ‖ ttikaivalānvakṣisā
+5. bhyakaṃkaivalyā ‖ batthiantṛttābhāvāprattima ‖ yāgatvaṃkaivalyāp
+6. ttibamibālumbhāvi ‖ mimāyabaṃsamplvapadābhimadhyabābasa ‖ sampūrttākṣittidyakṣitela
+7. kābhāviddhyūtireti ‖ naññamṭadahiratimpalūmpittinandratare ‖ taratvebhaḥprasiddhonavākka
+8. dṛṣṭabokralasiddhākka ‖ kkatravituḻbebamiścamasaratyāña ‖ ñānāthāraṇābaṃdittire
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

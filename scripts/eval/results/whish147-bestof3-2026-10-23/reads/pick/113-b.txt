@@ -1,0 +1,3 @@
+PICK | B
+RANK | BAC
+WHY | None of the three reads cleanly, but B keeps the most recognisable Tarkasaṃgraha-introduction phrasing in a continuous run (granthaḥ kriyate, bālānāṃ, grahaṇadhāraṇapa-, kiṃ…kṛtvā kriyate, padārtha, lakṣaṇaṃ, saṃkhyā), whereas C breaks up more often and A garbles most of those words.

@@ -17,6 +17,7 @@ import { readFile } from 'fs/promises';
 import { join, normalize, extname, sep } from 'path';
 import { createHmac, timingSafeEqual } from 'crypto';
 import { isAdmin } from '@/lib/auth-helpers';
+import { publicUrl } from '@/lib/public-origin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -146,7 +147,7 @@ export async function POST(req: NextRequest) {
         : 'No password is configured for this deck yet; admins can sign in instead.',
     );
   }
-  const res = NextResponse.redirect(new URL(BASE, req.url), 303);
+  const res = NextResponse.redirect(publicUrl(BASE, req), 303);
   res.cookies.set(COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',

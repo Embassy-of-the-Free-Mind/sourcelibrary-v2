@@ -1,0 +1,14 @@
+{
+  "_doc": "Estimator-row provenance (#6740). Read by provenance.mjs and provenance.py; change both readers' tests if you change this.",
+  "SCHEMA": "estimator-provenance/1",
+  "LEGACY": "legacy-not-recorded",
+  "NOT_RECORDED": "not_recorded",
+  "NA": "n/a",
+  "read_modes": ["image", "text", "image+draft", "text+image", "not_recorded"],
+  "access": ["api", "cli", "local", "archive", "human", "not_recorded"],
+  "instruments": ["mechanical", "reference-scorer", "model-judge", "human-judge", "change-measure", "none"],
+  "key_fields": ["engine", "prompt_id", "prompt_version", "read_mode"],
+  "covariate_fields": ["access", "prompt_hash", "sent_hash", "cli_name", "cli_version", "job_id", "code_version"],
+  "legacy_required": ["source", "prompt"],
+  "mechanical_judges": ["mechanical", "scorer", "cer", "reference"]
+}

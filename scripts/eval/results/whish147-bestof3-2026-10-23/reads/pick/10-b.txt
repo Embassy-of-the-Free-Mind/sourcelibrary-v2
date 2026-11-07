@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | A and B both give clean text of Sāṅkhyakārikā 70–72 in rows 1–4, with A a little better in rows 1 and 3, but only B makes sense in the colophon rows 5–9 ("śakābdasaṃkhya", "akṣaraikoṇṭu", "vidyārtthi", "ānandanāmo"), where A is nonsense syllables and C is broken everywhere.

@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. kramamiśādhāraṇātyābhicāraṇādbhāvatteyyāmiddhānyasyāmānādhikaraṇyābhāvatayāvya
+2. āpratyāsiddhānyāmipajñavyāddhyadāvattilayāsādhāraṇāsahāriṇauvyāptisaṃśa
+3. yāsādhakatāva ‖ nacavyāptijñānapratibandhakatva ‖ ntuśrayāsiddhabādhauvā
+4. siddhāyayāpekṣa ‖ yamutājñānapratibandhakatvaṃ ‖ upādhikkāntuvyabhica
+5. ānajñātaddhāna ‖ āvyāptijñānapratibandhakaḥ ‖ siddhasādhana [illegible] kāntu
+6. pakṣadharmmatākka ‖ vighaṭakatayāśrayāsiddheḥ ‖ kkūṭavattinigrahasthā
+7. ānānanamattina ‖ minnaḥupamānāṃlakṣa [illegible] u ‖ ṣamititiogandhaṃ
+8. chakṣayatiṇṇavjñttipāddhalakṣaṇamāhaśakkamittisaubhāgyattunakralavadapadārtthasa
+9. ṃbeghadasthikkunnasāracāyada [illegible] rtthānamitimīmāṃsakādre [illegible] nasābātmāhātmyāditi
+
+TRANSCRIPTION B
+1. krūṭamiśrādhāraṇatvyā ‖ ścārādāravattayāmiddhanyasāmānyā ‖ dhikaraṇyābhāvattayāvya
+2. āpyatvāsiddhānyāmiśa ‖ jñavyāttudāvattayāsādhāraṇānava ‖ sahānimaṇevyāptisaṃśa
+3. yāsādhakatvā ‖ nacavyāptijñānapratibandhakatva ‖ āśrayāsiddhasvarūpā
+4. siddhāyāyāpekṣa ‖ yamuttājñānapratibandhakatvaṃ ‖ upādhikkāntuvyabhica
+5. ārajñānaddhāra ‖ āvyāptijñānapratibandhakāḥ ‖ siddhasādhanakkukāntu
+6. pakṣadharmmatākka ‖ vighaṭakatayāśrayāsiddheḥ ‖ ṣaṭpattinigrahasthā
+7. ānānāmatrina ‖ minaḥupamānāṃlakṣaṇattiu ‖ ṣamititiośaṅkaṃ
+8. lakṣayatiatravartta ‖ ttiyadlakṣaṇamāhaśakṣamitiñjñasyañja ‖ jñatantrūlavaddhapadārtthasa
+9. ṃceśasṛṣṭikkiḥsvācā ‖ yadṛṣṭāntamitimīmāṃsakādeśena ‖ svātmābhihintyāmiti
+
+TRANSCRIPTION C
+1. kṛtamisādhāraṇatvā ‖ ccetanādeḥpakṣatayā [illegible] ddhāntasyāmānā ‖ dhikaraṇyābhāvatayāvya
+2. āpyatvāsiddhānyāmi ‖ pakṣavyāvṛttibhāvata [illegible] yāsādhāraṇānai [illegible] ‖ [illegible] hādibhirevyā [illegible] saṃśa
+3. yāsādhakatāva ‖ nacavyāptijñānapratibandhakatva ‖ ntu [illegible] yāsiddhasthalevā
+4. siddhāyāyāpekṣa ‖ yamutājñānapratibandhakatvaṃ ‖ upādhikāntuvṛddhica
+5. ānajñānaddhāna ‖ āvyāptijñānapratibandhakaḥ ‖ siddhasādhanakkāntu
+6. pakṣadharmmatākka ‖ niṣṭakatayāśrayāsiddheḥ ‖ jñedvatinigrahasthā
+7. ānāntamattina ‖ minaḥupamānaṃlakṣaṇatva ‖ ṣitamiti7śabdaṃ
+8. lakṣaṇatvānyarttha [illegible] ‖ tvapadalakṣaṇamāhaśaktima [illegible] ‖ [illegible] ttāna [illegible] lapadārtthasa
+9. ṃbodha [illegible] syāma ‖ [illegible] ttāntamitimīmāṃsakāḥ [illegible] ‖ [illegible] pārtthamāhuriti
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

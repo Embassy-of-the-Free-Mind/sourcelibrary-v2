@@ -346,8 +346,8 @@ const PAGE_PROJECTION = {
  * lives in `workerEmbeddingInput` (page-embedding-text.mjs) so a script that
  * predicts what this worker would write asks the same function (#6221).
  */
-function composeEmbedText(page) {
-  return workerEmbeddingInput(page);
+function composeEmbedText(page, book) {
+  return workerEmbeddingInput(page, { book });
 }
 
 // Book metadata cache
@@ -356,14 +356,16 @@ async function getBook(bookId) {
   if (bookCache.has(bookId)) return bookCache.get(bookId);
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { title: 1, display_title: 1, author: 1, language: 1, year: 1 } }
+    { projection: { title: 1, display_title: 1, author: 1, language: 1, year: 1, 'translation_state.english_original': 1 } }
   );
   const meta = book ? {
     title: book.display_title || book.title || 'Untitled',
     author: book.author || null,
     language: book.language || null,
     year: typeof book.year === 'number' ? book.year : null,
-  } : { title: 'Unknown', author: null, language: null, year: null };
+    // composeEmbedText's English-original test (#7100); not a row column.
+    translation_state: book.translation_state ? { english_original: book.translation_state.english_original } : null,
+  } : { title: 'Unknown', author: null, language: null, year: null, translation_state: null };
   bookCache.set(bookId, meta);
   return meta;
 }
@@ -580,9 +582,9 @@ async function collectEmbedJob(job, report) {
       if (values.length !== DIMS) throw new Error(`${pageId}: ${values.length}-dim vector, expected ${DIMS}`);
       const page = byId.get(pageId);
       if (!page) { counts.missing++; continue; }
-      const composed = composeEmbedText(page);
-      if (!composed || textHash(composed.text) !== hash) { counts.changed++; continue; }
       const book = await getBook(page.book_id);
+      const composed = composeEmbedText(page, book);
+      if (!composed || textHash(composed.text) !== hash) { counts.changed++; continue; }
       rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
     }
@@ -770,7 +772,7 @@ if (BOOK_ID) {
     const inflight = db.collection(EMBED_JOBS).find(
       { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting', 'held'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
       { projection: { page_ids: 1 } },
-    );
+    ).batchSize(1000);
     for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);
   }
   globalThis.SKIP_PAGE_IDS = skip;
@@ -821,7 +823,7 @@ if (BOOK_ID) {
     const inflight = db.collection(EMBED_JOBS).find(
       { book_ids: { $in: targetIds }, $or: [{ status: { $in: ['submitted', 'collecting'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
       { projection: { page_ids: 1 } },
-    );
+    ).batchSize(1000);
     let n = 0;
     for await (const j of inflight) for (const id of j.page_ids || []) { existing.add(id); n++; }
     console.log(`${n.toLocaleString()} pages are in uncollected Batch jobs — skipping those too.`);
@@ -1008,9 +1010,9 @@ async function dropAlreadyCurrent(pages) {
 
 async function embedPage(page) {
   // Skip pages with no usable text
-  const composed = composeEmbedText(page);
-  if (!composed) { skipped++; return; }
   const book = await getBook(page.book_id);
+  const composed = composeEmbedText(page, book);
+  if (!composed) { skipped++; return; }
   const item = { page, book, ...composed };
   if (BATCH_MODE) {
     await addToEmbedJob(item);

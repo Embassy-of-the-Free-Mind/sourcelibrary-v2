@@ -1,0 +1,102 @@
+[
+ {
+  "page_id": "6a3c66ddaf3c49b59c5ce173",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches all 7 columns; opening fragment 四條並面冪之比例 loosely rendered as 'four times the area of the flat circle' (gist from prior page, not literal); rest (6:1 cube face, 600:314 cube:sphere, 三倍一四奇=3.14) correct."
+ },
+ {
+  "page_id": "6a3c6a11af3c49b59c5e4923",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "乳母須預祝(囑)之 = wet nurse must instruct the shamans beforehand not to spray water, rendered as 'must pray and make vows'; also OCR 顧願經 misreads image 顱顖經, so gloss 'Guyuan Jing' is an OCR-driven title slip (minor; keywords say Luxin Jing)."
+ },
+ {
+  "page_id": "6a3c6ba639b4508b04e44d46",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR matches all 8 columns; Fu-to-Qian / Gou-to-Kun line counts 21+15=36, 72 total, 配合言亦三十六 and the closing objection 陽主生陰主殺 all rendered correctly."
+ },
+ {
+  "page_id": "6a3c726c01fe4f593c1df4f9",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Text and synchronism table match image; slips: cyclical year (己酉 for Ai 3) given as 'yiyou', 圍戚 romanised 'Qi' so it reads like the state 齊, 以說 glossed as 'appease Wu', and the 介/間 phonetic gloss is confused."
+ },
+ {
+  "page_id": "6a3c72d301fe4f593c1e3266",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches all columns incl. heading 戍鄭虎牢楚公子貞帥師救鄭; 犧牲玉帛待於境上口血未乾而背之久矣 (Zheng's long habit of breaking fresh covenants) rendered clumsily as a single past event, otherwise faithful."
+ },
+ {
+  "page_id": "6a3c739c01fe4f593c1e9e64",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 6,
+  "from_ocr": true,
+  "verdict": "sense-error",
+  "note": "Right leaf, but the OCR reads the 8 columns left-to-right and the English follows that order, so running sentences are cut apart and fragments become fake '###' headings: 以英蕩輔之 becomes 'Radiant Purity and Assistance'; 賜鈇鉞然|後殺 becomes '...granted battle-axes. Thus' plus a heading 'Executed Later'; 嚴助以|節發(會)稽兵 becomes 'Yan Zhu with' plus a heading 'Dispatching Tallies and Mobilizing Troops'; 凡君召以三|節二節以走 is split; 貨賄(用璽節)司市道路鄉遂大夫 becomes the heading 'Market Overseer Routes', which detaches who governs goods from who governs roads; 司關掌國貨之節以聯門市 becomes 'At the Gate and Pass Controller...'; 記曰 becomes 'He records for himself'; the separate 司隷 and 牧節 entries are merged into 'the Retainer-Commandant Pastures Tallies'."
+ },
+ {
+  "page_id": "6a3c73f801fe4f593c1ed14c",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "The English matches all 8 columns. It correctly renders the OCR's 第一相 (the image reads 茅一相) as Mao Yixiang. Minor issues: 'labeling it as a philosophical treatise' for 標之為論 (it means filed under the 'lun' heading); 'Retirement to the Fields' for 輟耕錄; 'It is preserved solely because' adds a predicate to the clause 特以其網羅本富…當, which runs on to the next page."
+ },
+ {
+  "page_id": "6a3c774901fe4f593c200f8b",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "The OCR and the English match the image column by column: the 復 quotation, the Wu Youqing notes at 第八 and 第十三, the 庶近也 gloss, the Su Shi quotation, the 天地絪縕 passage and the 損 quotation. The editorial additions are marked <note>. Reading the scribal 无吉 as 元吉 ('supreme good fortune') is correct."
+ },
+ {
+  "page_id": "6a3cbf51f9474f825c167441",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "The text is the correct stele inscription and all 缺 lacunae are kept. Sense error: 咸各有帷 is given as 'all maintaining their official curtains and carriages', which adds carriages and an idea of office not in the text (the context, 追慕聖烈, wants 'each had feelings'). Minor issues: 讓禮 is read 謙禮 (Qianli); the bottom-of-column text 百石巳氏 is treated as a margin note, 'Baishi, Jishi'; 奕孔禎 is rendered loosely as 'Kong descendants'."
+ },
+ {
+  "page_id": "6a3cbf6bf9474f825c16812d",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "The OCR and the English cover all 8 columns. The dates check out: 廣政七年甲辰=944, 廣政十四年辛亥=951, 皇祐元年己丑=1049. The titles and names (毋昭裔, 武令昇, 何維翰) are right. Minor: the image reads 黄東 where the OCR has 黄衷, so the English gives 'Huang Zhong'."
+ }
+]

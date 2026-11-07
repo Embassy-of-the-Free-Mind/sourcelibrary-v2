@@ -1,0 +1,185 @@
+{
+ "drawn": "2026-10-22, seed 51003, ≤4 lite-read pages per Meiji (1868–1912) Japanese book with >300 chars, then by eye on a contact sheet: typeset Japanese only (dropped: 4 English pages of the 1888 Taketori, 2 cursive pages of the 1912 Kanze utaibon, 1 colophon, 1 index table)",
+ "pages": [
+  {
+   "bid": "69bf6a4edd5a136c308e2f67",
+   "pid": "69bf6a4fdd5a136c308e3178",
+   "pn": 529,
+   "title": "枕草子",
+   "year": 1911,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/archived/69bf6a4edd5a136c308e2f67/529.jpg"
+  },
+  {
+   "bid": "69bf6a4edd5a136c308e2f67",
+   "pid": "69bf6a4fdd5a136c308e30f4",
+   "pn": 397,
+   "title": "枕草子",
+   "year": 1911,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/archived/69bf6a4edd5a136c308e2f67/397.jpg"
+  },
+  {
+   "bid": "69bf6a4edd5a136c308e2f67",
+   "pid": "69bf6a4fdd5a136c308e3136",
+   "pn": 463,
+   "title": "枕草子",
+   "year": 1911,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/archived/69bf6a4edd5a136c308e2f67/463.jpg"
+  },
+  {
+   "bid": "69e0151627a1381d2559963c",
+   "pid": "6a27281a8f525d33991ec17b",
+   "pn": 19,
+   "title": "Wagahai wa Neko de Aru (吾輩は猫である, I Am a Cat)",
+   "year": 1905,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/pages/69e0151627a1381d2559963c/spu37u-0020.jpg"
+  },
+  {
+   "bid": "69e0151627a1381d2559963c",
+   "pid": "6a27281a8f525d33991ec172",
+   "pn": 12,
+   "title": "Wagahai wa Neko de Aru (吾輩は猫である, I Am a Cat)",
+   "year": 1905,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/pages/69e0151627a1381d2559963c/spu37u-0011.jpg"
+  },
+  {
+   "bid": "69e0151627a1381d2559963c",
+   "pid": "6a27281a8f525d33991ec174",
+   "pn": 14,
+   "title": "Wagahai wa Neko de Aru (吾輩は猫である, I Am a Cat)",
+   "year": 1905,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/pages/69e0151627a1381d2559963c/spu37u-0013.jpg"
+  },
+  {
+   "bid": "69e0151627a1381d2559963c",
+   "pid": "6a27281a8f525d33991ec17a",
+   "pn": 20,
+   "title": "Wagahai wa Neko de Aru (吾輩は猫である, I Am a Cat)",
+   "year": 1905,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/pages/69e0151627a1381d2559963c/spu37u-0019.jpg"
+  },
+  {
+   "bid": "69ea6ec4d81c1e8a069c439d",
+   "pid": "69ea6ec4d81c1e8a069c4475",
+   "pn": 216,
+   "title": "益軒全集 (Ekiken Zenshu), Vol. 5 (Travel Writings)",
+   "year": 1910,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69ea6ec4d81c1e8a069c439d/216.jpg"
+  },
+  {
+   "bid": "69ea6ec4d81c1e8a069c439d",
+   "pid": "69ea6ec4d81c1e8a069c46dc",
+   "pn": 831,
+   "title": "益軒全集 (Ekiken Zenshu), Vol. 5 (Travel Writings)",
+   "year": 1910,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69ea6ec4d81c1e8a069c439d/831.jpg"
+  },
+  {
+   "bid": "69ea6ec4d81c1e8a069c439d",
+   "pid": "69ea6ec4d81c1e8a069c46f2",
+   "pn": 853,
+   "title": "益軒全集 (Ekiken Zenshu), Vol. 5 (Travel Writings)",
+   "year": 1910,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69ea6ec4d81c1e8a069c439d/853.jpg"
+  },
+  {
+   "bid": "69ea6ec4d81c1e8a069c439d",
+   "pid": "69ea6ec4d81c1e8a069c443d",
+   "pn": 160,
+   "title": "益軒全集 (Ekiken Zenshu), Vol. 5 (Travel Writings)",
+   "year": 1910,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69ea6ec4d81c1e8a069c439d/160.jpg"
+  },
+  {
+   "bid": "69e753e8095c302d3fddc6f5",
+   "pid": "69e753e9095c302d3fddc88a",
+   "pn": 405,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 2",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e753e8095c302d3fddc6f5/405.jpg"
+  },
+  {
+   "bid": "69e753e8095c302d3fddc6f5",
+   "pid": "69e753e9095c302d3fddc762",
+   "pn": 109,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 2",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e753e8095c302d3fddc6f5/109.jpg"
+  },
+  {
+   "bid": "69e75accb3d509fcb7a48f0e",
+   "pid": "69e75accb3d509fcb7a48fb4",
+   "pn": 166,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 3",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e75accb3d509fcb7a48f0e/166.jpg"
+  },
+  {
+   "bid": "69e75accb3d509fcb7a48f0e",
+   "pid": "69e75accb3d509fcb7a490a5",
+   "pn": 407,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 3",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e75accb3d509fcb7a48f0e/407.jpg"
+  },
+  {
+   "bid": "69e753db095c302d3fddc45c",
+   "pid": "69e753db095c302d3fddc63c",
+   "pn": 480,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 1",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e753db095c302d3fddc45c/480.jpg"
+  },
+  {
+   "bid": "69e753db095c302d3fddc45c",
+   "pid": "69e753db095c302d3fddc4eb",
+   "pn": 143,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 1",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e753db095c302d3fddc45c/143.jpg"
+  },
+  {
+   "bid": "69e753db095c302d3fddc45c",
+   "pid": "69e753db095c302d3fddc4d9",
+   "pn": 125,
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 1",
+   "year": 1912,
+   "model": "gemini-3.1-flash-lite-preview",
+   "url": "https://images.sourcelibrary.org/archived/69e753db095c302d3fddc45c/125.jpg"
+  },
+  {
+   "bid": "69bd068be26ef4b094821e3e",
+   "pid": "69bd068be26ef4b094821e44",
+   "pn": 6,
+   "title": "冠註無門関 (Mumonkan / Gateless Gate)",
+   "year": null,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/archived/69bd068be26ef4b094821e3e/6.jpg"
+  },
+  {
+   "bid": "69bd068be26ef4b094821e3e",
+   "pid": "69bd068be26ef4b094821e48",
+   "pn": 10,
+   "title": "冠註無門関 (Mumonkan / Gateless Gate)",
+   "year": null,
+   "model": "gemini-3.1-flash-lite",
+   "url": "https://images.sourcelibrary.org/archived/69bd068be26ef4b094821e3e/10.jpg"
+  }
+ ]
+}

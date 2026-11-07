@@ -39,7 +39,7 @@ const cursor = books.find(
       'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
     },
   },
-);
+).batchSize(1000);
 
 const transitions = new Map<string, { count: number; sample: Array<{ id: string; title: string }> }>();
 let total = 0;

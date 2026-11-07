@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Play, Pause, RotateCcw, CheckCircle, AlertCircle } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { usePipeline } from '@/hooks/usePipeline';
 import PipelineProgress from '@/components/pipeline/PipelineProgress';
+import PageRetranslateCard from '@/components/pipeline/PageRetranslateCard';
 import PipelineConfigForm, { PipelineConfigDisplay } from '@/components/pipeline/PipelineConfig';
 
 interface PipelinePageProps {
@@ -27,11 +29,17 @@ export default function PipelinePage({ params }: PipelinePageProps) {
     );
   }
 
-  return <PipelineContent bookId={bookId} />;
+  return (
+    <Suspense fallback={null}>
+      <PipelineContent bookId={bookId} />
+    </Suspense>
+  );
 }
 
 function PipelineContent({ bookId }: { bookId: string }) {
   const { data, loading, error, isRunning, start, pause, resume, reset } = usePipeline(bookId);
+  // Arriving from a reader page carries that page; the page-scoped action leads.
+  const pageId = useSearchParams().get('page');
 
   if (loading) {
     return (
@@ -138,6 +146,8 @@ function PipelineContent({ bookId }: { bookId: string }) {
 
       {/* Main content */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        {pageId && <PageRetranslateCard bookId={bookId} pageId={pageId} language={language} />}
+
         {/* Status banner */}
         {isCompleted && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">

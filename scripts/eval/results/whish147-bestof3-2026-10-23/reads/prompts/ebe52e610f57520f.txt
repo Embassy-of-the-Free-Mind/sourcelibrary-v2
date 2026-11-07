@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] ṃnabindrāvenāliṃgapari [illegible] taḥliṃpāravyāṭṭāvātmaḥkanmādiviṣayaḥpravṛttare
+2. sa [illegible] rkkaḥ [illegible] vikale [illegible] ññālaidaivadepai [illegible] kyaimṛ [illegible] kṣyāṭṭamarimana [illegible] jñeke
+3. ṇaviyaḥlemāsa ‖ taiāneddraika [illegible] kassa [illegible] ḥ [illegible] śraṃ ‖ satāviśāla [illegible] kkamā
+4. vi [illegible] lantṛ [illegible] lara ‖ śli [illegible] ḥmaitrai [illegible] aicchāvistārelo [illegible] ‖ mātriṇṭaṃ [illegible] ko
+5. śca [illegible] tatra [illegible] nāmaraṇa ‖ traiḥ [illegible] ḥ [illegible] dyā [illegible] ṣkāśicaira ‖ naḥpṛkṣaḥliṃga [illegible] vi
+6. [illegible] vṛttekkantā ‖ ddaḥ [illegible] syaṭṭā [illegible] vena [illegible] ubhaya [illegible] kṣa ‖ prakṛtiruperāmahā [illegible]
+7. diviśeṣa [illegible] aiva ‖ ṣṭaḥpra [illegible] raisavimomākṣā ‖ tthaṃsvā [illegible] kṣipāvatā
+8. ṣokkanāṃ [illegible] jñava ‖ sabibi [illegible] bimitaṃ [illegible] stu [illegible] ya [illegible] ‖ āpravṛtti [illegible] kṣa [illegible] ca
+9. [illegible] kṣivimemākṣamimi ‖ ttana [illegible] tthite [illegible] yāna [illegible] śe [illegible] ‖ [illegible] sṛ [illegible] vṛttya [illegible] ṃl
+10. ṣā [illegible] yānta [illegible] ppū ‖ ātaivāṭākṣa [illegible] śanāviśamākṣami ‖ titaṃ [illegible] pravṛttare [illegible] devya
+
+TRANSCRIPTION B
+1. ddhyaṃnavindrāvainali ‖ āliṃpañcakkaḥliṃpādavyāgrāvābhyaḥka ‖ ḥkanmādiviyaḥpravṛttare
+2. saṣṭhiḥśrubbacchavikaḻe ‖ ḻḻābhaidapañcabhaikkyulyumahyāhyaññecakka ‖ kṣayāddaṣikamanassuḻaikka
+3. ṇaviyaḥsamāsa ‖ tairateṭettaka [illegible] tkasthasthaḥ [illegible] bhrūṣṭaṃ ‖ satvinālakṣaṇā
+4. viśālantṛlara ‖ sliḥmabhajjranabhaiḻajjāviṃśālodra ‖ modindakkiṃpokṣaṇate
+5. ṣkṛtatraṣanāmanaḍa ‖ trurāddibheākṣāḻābheṣṭhābhibhecara ‖ naḥvṛkaṣḥliṃgahyāvi
+6. bhaivṛtattakkandrā ‖ ddūḥsāsaḍanāmavenakṣṭarejjrūta ‖ prakutiuḻetāmapadma
+7. druvilaśeddralara ‖ ṣyakkaḥpraticchaṇatunnavimemākṣiā ‖ ṇṇaṃnmākhyauvākyā
+8. bokkunāḍiṣyava ‖ ṇṇaviviḍvisamitaṃkṣenandyayama ‖ āpravṛttivajjanyac
+9. nnyalimemākṣamimi ‖ śśanamāprendrakkilibhleyānandyaḥbhūtraśa ‖ slūntatrūbhivṛntyarthaṃṣa
+10. mātriyāndapraddā ‖ ātammaibhākaḥppaṣakanmadimemākṣajimi ‖ inaṃpravṛttaoratadavya
+
+TRANSCRIPTION C
+1. dviṣaṃnavindrāvenāliṃ ‖ gatvajñakkeḥliṃgāvyāpyāvādyuḥ ‖ kanmādiviṣayaḥpravṛttakare
+2. sarggaḥśuddhasūkṣmavikale ‖ llomeṭapeṭekkalpumaprā [illegible] ñjāpakka ‖ yādikaḻimanuṣyarekkā
+3. kaviyaḥsamāsa ‖ torāteddattekkasarggaḥśaktumiṣṭaṃ ‖ saravinālakṣaṇā
+4. vinālakṣmalaka ‖ sthiṣṭiḥmatopyāleppāviśvālotra ‖ modikkaṃcoṣyate
+5. kṣmatatrajñanāmaraṇa ‖ traraṃdvayaṃetrālebhyūtrakṣecara ‖ naḥpṛṣṭhaḥliṃgatvāvi
+6. bhṛttekkanmā ‖ ddaḥyeghadrātevandappullūmo ‖ ṣkukkaḻukomapādya
+7. dviśeṣajugala ‖ tyūkaḥpratipattagandhāviśeṣākko ‖ tvaṃnṛāyakṣmūivayo
+8. boññāṃṭṭusthava ‖ sthivinṟitvamitaṃjñānasthayakha ‖ āpravṛttibhakṣāstha
+9. ṅṅgiviśeṣaṇami ‖ tattamāprohmidraiyānantyasyo ‖ gustibhivṛttyārtthaṃpa
+10. mātriyāntrapūrṇa ‖ ṇatattāmoḥprakkasaviśeṣaṇami ‖ mitaḥpravṛttakotadevya
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -4,6 +4,7 @@ import { PipelineStep, PipelineState, PipelineConfig, Job } from '@/lib/types';
 import { nanoid } from 'nanoid';
 import { withAuth } from '@/lib/auth-helpers';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { selfCallHeaders } from '@/lib/self-call';
 
 // Increase timeout for long-running steps
 export const maxDuration = 60;
@@ -190,7 +191,7 @@ async function executeSummarize(
 
     const indexResponse = await fetch(`${baseUrl}/api/${tenantSlug}/books/${bookId}/index`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...selfCallHeaders(baseUrl) },
     });
 
     if (!indexResponse.ok) {

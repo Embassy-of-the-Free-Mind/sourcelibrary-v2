@@ -12,6 +12,7 @@
 // Run: set -a; source .env.production.local; set +a; node scripts/workers/archive-ocr.mjs
 
 import { MongoClient } from 'mongodb';
+import sharp from 'sharp';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
@@ -19,6 +20,9 @@ import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
+import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
+import { THROTTLE_STATUSES, throttledError, isQuotaPlaceholderSize } from '../lib/archive-failure-class.mjs';
 
 const MAX_PAGES = 10_000;
 // MAX_PAGES_PER_DOMAIN caps how many pages from a single source make it into one
@@ -115,6 +119,17 @@ const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourceli
 // is big. Overridable per-run; raising it does not slow healthy fetches.
 const FETCH_STALL_MS = parseInt(process.env.ARCHIVE_STALL_TIMEOUT_MS || '60000', 10);
 
+// A refusal for quota or load (429/503, or BSB's 1×1 over-quota image) is recorded but never counted
+// against the page's failure_count (#7228; scripts/lib/archive-failure-class.mjs).
+async function isQuotaPlaceholder(buffer) {
+  try {
+    const { width, height } = await sharp(buffer).metadata();
+    return isQuotaPlaceholderSize(width, height);
+  } catch {
+    return false; // not an image sharp can read: let the normal path decide
+  }
+}
+
 async function downloadImage(url, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
@@ -128,17 +143,21 @@ async function downloadImage(url, retries = 2) {
         stallMs: FETCH_STALL_MS,
         headers: { 'User-Agent': USER_AGENT, Accept: 'image/jpeg,image/png,image/*;q=0.9,*/*;q=0.1' },
       });
-      if (res.status === 429 || res.status === 503) {
+      if (THROTTLE_STATUSES.includes(res.status)) {
         if (attempt < retries) {
           const delay = (attempt + 1) * 3000; // 3s, 6s backoff
           await new Promise(r => setTimeout(r, delay));
           continue;
         }
+        throw throttledError(`HTTP ${res.status}`);
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      // BSB answers an over-quota request with a 1×1 JPEG at 200 OK (#7176): a refusal, not the page.
+      if (await isQuotaPlaceholder(buffer)) throw throttledError('over-quota placeholder image');
       const mimeType = res.headers.get('content-type') || 'image/jpeg';
       return { buffer, mimeType };
     } catch (err) {
+      if (err.throttled) throw err;
       // A stalled fetch now reports "fetch aborted: stalled …" rather than a
       // bare AbortError, so retry on that too — otherwise the rename silently
       // removes a retry path that used to exist.
@@ -185,7 +204,8 @@ async function archivePage(page, db) {
       try {
         return (await downloadImage(u)).buffer;
       } catch (err) {
-        if (u !== originalUrl) return (await downloadImage(originalUrl)).buffer;
+        // A throttled host refuses the original URL too; asking again only spends more of its quota.
+        if (u !== originalUrl && !err.throttled) return (await downloadImage(originalUrl)).buffer;
         throw err;
       }
     };
@@ -220,6 +240,7 @@ async function archivePage(page, db) {
     // visibility into why the page is stuck (previously the worker returned
     // silently and left `archive_metadata` empty, producing infinite-retry
     // loops with no diagnostic trace — see MDZ 915-book stall, 2026-05-16).
+    // A throttled fetch is recorded but not counted (#7228): the page is retried on a later run.
     try {
       await db.collection(pagesCol).updateOne(
         { _id: page._id },
@@ -229,11 +250,11 @@ async function archivePage(page, db) {
             'archive_metadata.last_failure_reason': String(err.message || err).slice(0, 200),
             'archive_metadata.last_failure_source_url': sourceUrl,
           },
-          $inc: { 'archive_metadata.failure_count': 1 },
+          $inc: { [err.throttled ? 'archive_metadata.throttled_count' : 'archive_metadata.failure_count']: 1 },
         }
       );
     } catch {/* swallow — diagnostic write must not poison the result */}
-    return { ok: false, error: err.message, domain };
+    return { ok: false, error: err.message, domain, throttled: Boolean(err.throttled) };
   }
 }
 
@@ -289,12 +310,14 @@ async function main() {
   // dominated by fully-archived books and the per-book inner query returns 0
   // unarchived pages for nearly every book. Symptom is "Found 6 pages across
   // 3423 books" while the library has hundreds of thousands of unarchived pages.
-  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] } };
+  // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] }, ...PAGES_MATERIALIZED_FILTER };
   const priorityBooks = await db.collection('books')
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
         ...NEEDS_ARCHIVE_EXPR,
         ...SCOPE_FILTER,
@@ -312,7 +335,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         // 'harvard' excluded: mps.lib.harvard.edu HTTP 429s every request from Hetzner
         // IPs (verified 2026-05-25 at AWS ELB layer, both v4 and v6, all UAs, all paces).
         // Routed to Mac-side via scripts/workers/archive-harvard.mjs.
@@ -336,7 +360,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         'archive_metadata.bulk_unsuitable': true,
         'image_source.provider': 'internet_archive',
         ...NEEDS_ARCHIVE_EXPR,

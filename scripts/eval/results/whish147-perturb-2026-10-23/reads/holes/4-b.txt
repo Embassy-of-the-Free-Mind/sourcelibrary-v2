@@ -1,0 +1,11 @@
+ROW 1 | ഹരിഃശ്രീഗണപതയേ‖നമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദഭിഘാതകേഹെ‖തൌദൃഷ്ടേസാപാൎത്ഥാചേന്നൈ‖കാന്താത്യന്തതോ
+ROW 3 | ഭാവാൽ൧‖ദൃഷ്ടവദാനുശ്രവികസ്സഹ്യവിശു‖ദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരീ‖തശ്രേയാൻവ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽ൨മൂല
+ROW 5 | പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്ത
+ROW 6 | ഷോഡശകസ്തുവി‖കാരോനപ്രകൃതിൎന്നവികൃ‖തിഃപുരുഷഃ൩ദൃഷ്ട
+ROW 7 | മനുമാനമാ‖പ്തവചനഞ്ചസൎവ്വപ്രമാണ‖സിദ്ധത്വാൽത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ടം‖പ്രമേയസിദ്ധിഃ൪പ്രതിവിഷ‖യാധ്യവസായോദൃ
+ROW 9 | ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിം‖ഗിപൂൎവ്വകമാപ്തശ്രുതി
+ROW 10 | [blank]‖പ്രമാണാദ്ധി।‖[blank]
+NOTE | Most of the leaf is legible, but many conjuncts are my best reading (e.g. സ്സ in rows 3 and 5, the numerals ൧–൪, the start of row 1's middle, and ൎവ്വ in row 9); row 10 sits only in the middle column and seems to be an insertion keyed by the "+" mark after സിദ്ധിഃ in row 8; there is also a small leaf-number glyph in the left margin.

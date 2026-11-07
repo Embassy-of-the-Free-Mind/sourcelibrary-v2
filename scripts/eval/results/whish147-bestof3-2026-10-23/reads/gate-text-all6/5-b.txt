@@ -1,0 +1,3 @@
+PICK | D
+RANK | D, E, A, C, F, B
+WHY | D gives Sāṅkhyakārikā 11–17 as clean, continuous text: it has the correct readings "avivekyādeḥ siddhis traiguṇyāt" and "parimāṇāt samanvayāt", plausible verse numerals, and the "saṃghā(ta)" start of verse 17. E and A are close but put [illegible] where the numerals stand, C misreads "siddhaṃ" and doubles a "sa" ("sasamudayāc"), F inserts stray "ḻḻ" and misreads "siddhas", and B is mostly gibberish.

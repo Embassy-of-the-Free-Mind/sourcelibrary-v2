@@ -176,11 +176,21 @@ describe('the Latin locale has its own, smaller set of twins', () => {
   it('leaves a path with a Spanish twin but no Latin one untouched', () => {
     // Positive control first: the same paths DO prefix for Spanish, so an
     // unprefixed result below is the Latin registry answering, not a broken helper.
-    for (const p of ['/support', '/search', '/librarian', '/auth/signin', '/collections', '/collections/alchemy']) {
+    for (const p of ['/support', '/librarian', '/auth/signin', '/collections', '/collections/alchemy']) {
       expect(localePath(p, 'es')).toBe(`/es${p}`);
       expect(localePath(p, 'la')).toBe(p);
       expect(hasLocalizedTwin(p, 'la')).toBe(false);
     }
+  });
+
+  it('has a search twin on /la and /zh but not /nl (#7175)', () => {
+    expect(localePath('/search?q=lapis', 'la')).toBe('/la/search?q=lapis');
+    expect(localePath('/search', 'zh')).toBe('/zh/search');
+    expect(hasLocalizedTwin('/search', 'la')).toBe(true);
+    expect(hasLocalizedTwin('/search', 'zh')).toBe(true);
+    // Dutch has no search twin: the link stays English.
+    expect(localePath('/search', 'nl')).toBe('/search');
+    expect(localeHref('la', '/search')).toBe('/la/search');
   });
 
   it('switches language to the twin, or to that locale\'s front page', () => {
@@ -209,10 +219,19 @@ describe('the Dutch and Chinese sites are original-text sites like Latin (#6382)
       expect(localeHref(l, '/book/x')).toBe(`/${l}/book/x`);
       expect(localeHref(l, '/book/x/page/p1')).toBe(`/${l}/book/x/page/p1`);
       expect(localeHref(l, '/support')).toBe(`/support?lang=${l}`);
-      expect(localePath('/collections/alchemy', l)).toBe('/collections/alchemy');
       expect(localeFromPathname(`/${l}/book/x`)).toBe(l);
       expect(canonicalPath(`/${l}/book/x`)).toBe('/book/x');
     }
+    expect(localePath('/collections/alchemy', 'nl')).toBe('/collections/alchemy');
+  });
+
+  it('gives Chinese its collection pages and the 四部 catalogue, and no other locale (#8035)', () => {
+    for (const p of ['/collections', '/collections/chinese-classics', '/sibu', '/sibu/KR1a']) {
+      expect(localePath(p, 'zh')).toBe(`/zh${p}`);
+      expect(localePath(p, 'nl')).toBe(p);
+    }
+    expect(localePath('/sibu', 'es')).toBe('/sibu');
+    expect(localePath('/collections/x/overview', 'zh')).toBe('/collections/x/overview');
   });
 
   it('reads the original on la, nl and zh, and not on en or es', () => {

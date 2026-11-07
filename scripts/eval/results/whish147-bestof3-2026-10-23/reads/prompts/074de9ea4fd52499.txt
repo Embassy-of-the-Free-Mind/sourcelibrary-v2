@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṇmelakṣaṇamidā [illegible] sā ‖ dhāraṇa [illegible] kṣaṇasādhāraṇaikāraṇalakṣa [illegible] kkā ‖ [illegible] lādā [illegible] ṣṭhivādana
+2. dṛ [illegible] smayya [illegible] nna ‖ [illegible] kṣaṇa [illegible] lakṣma [illegible] māgākāra [illegible] ṣṭapla ‖ ppikāraṇamillū [illegible] kkara [illegible] sa
+3. ṭādā [illegible] pakṣi [illegible] kkindya ‖ lnannu [illegible] kha [illegible] kkaḻa [illegible] vamātra [illegible] ‖ [illegible] kkā [illegible] kkivyākki
+4. [illegible] dāḥ [illegible] yattṛ ‖ ṣṭṛ [illegible] kki [illegible] nana [illegible] ca [illegible] pa ‖ ṭāpra [illegible] kāraṇaṃ [illegible]
+5. [illegible] lekkā [illegible] ‖ ndra [illegible] si [illegible] tyā [illegible] skri [illegible] ‖ kāṇṭāl [illegible] nnā [illegible]
+6. kkidva [illegible] ndra ‖ [illegible] ndimida [illegible] ḥ [illegible] nnu [illegible] sikkinṟ ‖ midhāḥ [illegible] nnas [illegible]
+7. va [illegible] yantya ‖ [illegible] pra [illegible] ṣṭa [illegible] kki [illegible] mavadha [illegible] ‖ [illegible] nya [illegible] ddha [illegible] ṃ
+8. yathā [illegible] śca [illegible] pra [illegible] ‖ dṛṣṭi [illegible] kkāna [illegible] vapāṭa [illegible] tya [illegible] ‖ [illegible] śasya [illegible] ktrima
+9. [illegible] vi [illegible] nā [illegible] pa ‖ [illegible] cchasṃbhaiva [illegible] talsahadbha [illegible] mandā [illegible] ‖ [illegible] niddhaṃ [illegible] pākaḻa [illegible]
+
+TRANSCRIPTION B
+1. ddeṣikkaṇamidālā7sā ‖ dhāraṇakhaṇḍitasādhāraṇaikāraṇakhaṇḍikkā ‖ ālādāpakṣavyāptivāraṇa
+2. dṛṣṭasādhyatatannai ‖ kṣaṇānatvelakṣmaṇamāhakāratsyatvapravṛddha ‖ prattikāraṇamityaktārūsa
+3. ṭādāpakṣivyāptinyā ‖ lnanakhaṇḍanaviṣayakhaṇḍanāvamātrāde ‖ ścakharakkātvaṣṭivyāptiḥ
+4. ścaitadaḥṟiyatādṛ ‖ ṣṭaprakṣadhakkinanananandṛṣṭapamayipa ‖ paṭāpratyakkāraṇaṃhya
+5. udikkiyaṣaṇṇraba ‖ nandraphandiddhākhyasakṣikamimas ‖ kkaṇālsanandrāmā
+6. biddhathaṃbhanandapa ‖ āsiddhimiravamāḥandramāsikkinma ‖ diyāḥkhainnaskaipha
+7. va [illegible] yantraya ‖ ṃprakṣikkṛṣṇaprakṣitvamavadhatmarekṣa ‖ kṣyamāptiddhakkaṃ
+8. yamāgaṇḍeṃpratidṛṣṭa ‖ ṣṭatikkainakkināmalāpaṭaṃpratyākṣa ‖ kṣāśanyānhetrakṣitrya
+9. bhakṣyavaktinākṣyāpa ‖ pakṣāṣyasāṃmabhayatvalsahidgatamantrāmā ‖ māniḻaṃbhamāpākaḻḻapame
+
+TRANSCRIPTION C
+1. graṇeṣikṣaṇamālā āsā ‖ dhāraṇa [illegible] tthisādhāraṇākāraṇa [illegible] kkā ‖ ālādāva [illegible] vyāptivādaṇa
+2. dvitvabisthayāna [illegible] ‖ kṣādannelakṣma [illegible] māhakāra [illegible] vyapla ‖ kṣikāraṇamithya [illegible] kkara [illegible] sa
+3. ṭāṭhāva [illegible] vyākṣivya ‖ lnana [illegible] bhaktibhāvamā [illegible] ‖ [illegible] ḻu [illegible] kkāra [illegible] kivyāktiḥ
+4. [illegible] ḥ [illegible] yatra ‖ ṣpṛkṣa [illegible] nanana [illegible] padvipa ‖ ṭāpra [illegible] kkāraṇaṃ [illegible]
+5. [illegible] khala [illegible] ‖ [illegible] bu [illegible] sa [illegible] mmi [illegible] ‖ [illegible] ṇāl [illegible] nanā [illegible]
+6. [illegible] bu [illegible] ‖ [illegible] bbira [illegible] ḥ [illegible] sikki [illegible] ‖ [illegible] dhāḥ [illegible] naskai [illegible]
+7. va [illegible] yantya ‖ ṃpra [illegible] ṣṭa [illegible] mava [illegible] ‖ [illegible] dāmi [illegible]
+8. yathā [illegible] ṃ [illegible] ‖ ṣṭa [illegible] vapāṭapratyāka [illegible] ‖ kāśasya [illegible]
+9. [illegible] va [illegible] ‖ [illegible] stha [illegible] talsaha [illegible] tama [illegible] ‖ [illegible] pāka [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

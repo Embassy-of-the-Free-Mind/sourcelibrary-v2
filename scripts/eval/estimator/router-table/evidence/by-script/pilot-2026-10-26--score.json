@@ -1,0 +1,414 @@
+{
+ "cells": {
+  "chinese|print": {
+   "routes": {
+    "paddle": {
+     "n": 12,
+     "books": 12,
+     "accept": "1/12",
+     "wrong_text_pages": "10/12",
+     "classes_k_of_n": {
+      "O6": "11/12",
+      "O11": "4/12",
+      "O4": "9/12",
+      "D1": "1/12",
+      "O5": "9/12",
+      "O12": "3/12",
+      "O1": "4/12",
+      "O16": "3/12",
+      "O10": "3/12",
+      "O8": "1/12",
+      "O15": "1/12",
+      "O7": "2/12",
+      "E2": "3/12",
+      "O17": "2/12"
+     },
+     "script_basis": {
+      "page": 12
+     }
+    },
+    "paddle>opus-correct": {
+     "n": 12,
+     "books": 12,
+     "accept": "7/12",
+     "wrong_text_pages": "3/12",
+     "classes_k_of_n": {
+      "O6": "5/12",
+      "O16": "3/12",
+      "O10": "3/12",
+      "O12": "1/12",
+      "O8": "1/12",
+      "O11": "1/12",
+      "E2": "1/12",
+      "O17": "1/12",
+      "O5": "1/12"
+     },
+     "script_basis": {
+      "page": 12
+     }
+    }
+   }
+  },
+  "chinese|manuscript": {
+   "routes": {
+    "paddle": {
+     "n": 18,
+     "books": 18,
+     "accept": "2/18",
+     "wrong_text_pages": "14/18",
+     "classes_k_of_n": {
+      "O1": "4/18",
+      "O16": "3/18",
+      "O7": "3/18",
+      "O12": "2/18",
+      "D1": "2/18",
+      "O5": "7/18",
+      "O17": "2/18",
+      "O11": "12/18",
+      "O6": "11/18",
+      "E2": "4/18",
+      "O4": "4/18",
+      "O8": "1/18"
+     },
+     "script_basis": {
+      "page": 18
+     }
+    },
+    "paddle>opus-correct": {
+     "n": 18,
+     "books": 18,
+     "accept": "17/18",
+     "wrong_text_pages": "0/18",
+     "classes_k_of_n": {
+      "O16": "1/18",
+      "O7": "2/18",
+      "E2": "3/18",
+      "O11": "1/18",
+      "O6": "4/18",
+      "O15": "1/18"
+     },
+     "script_basis": {
+      "page": 18
+     }
+    }
+   }
+  },
+  "german|print": {
+   "routes": {
+    "flash-lite": {
+     "n": 27,
+     "books": 27,
+     "accept": "14/27",
+     "wrong_text_pages": "9/27",
+     "classes_k_of_n": {
+      "D1": "3/27",
+      "T8": "8/27",
+      "E2": "15/27",
+      "T6": "7/27",
+      "O6": "9/27",
+      "T9": "6/27",
+      "T10": "3/27",
+      "T13": "1/27",
+      "O5": "2/27",
+      "T5": "3/27",
+      "O8": "1/27",
+      "O12": "1/27",
+      "O1": "1/27",
+      "O11": "1/27",
+      "T7": "1/27",
+      "T16": "1/27"
+     },
+     "script_basis": {
+      "page": 26,
+      "book": 1
+     }
+    },
+    "flash3": {
+     "n": 18,
+     "books": 18,
+     "accept": "15/18",
+     "wrong_text_pages": "2/18",
+     "classes_k_of_n": {
+      "O11": "1/18",
+      "O12": "1/18",
+      "T15": "2/18",
+      "T6": "6/18",
+      "T9": "4/18",
+      "E2": "7/18",
+      "I1": "1/18",
+      "O6": "3/18",
+      "T10": "4/18",
+      "T8": "7/18",
+      "T5": "2/18",
+      "O8": "1/18",
+      "I4": "1/18",
+      "O16": "1/18"
+     },
+     "script_basis": {
+      "page": 13,
+      "book": 5
+     }
+    },
+    "opus-cli": {
+     "n": 22,
+     "books": 22,
+     "accept": "19/22",
+     "wrong_text_pages": "2/22",
+     "classes_k_of_n": {
+      "T8": "3/22",
+      "T15": "5/22",
+      "E2": "8/22",
+      "O11": "1/22",
+      "O6": "2/22",
+      "O8": "1/22",
+      "T9": "3/22",
+      "I1": "1/22",
+      "O12": "2/22",
+      "T10": "9/22",
+      "O7": "1/22",
+      "O5": "1/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    }
+   }
+  },
+  "german|manuscript": {
+   "routes": {
+    "flash-lite": {
+     "n": 1,
+     "books": 1,
+     "accept": "0/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "T7": "1/1",
+      "E2": "1/1",
+      "T8": "1/1",
+      "O8": "1/1",
+      "O6": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    },
+    "flash3": {
+     "n": 2,
+     "books": 2,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {
+      "O13": "2/2",
+      "T7": "2/2",
+      "O12": "1/2",
+      "O6": "2/2",
+      "T10": "1/2",
+      "O1": "1/2",
+      "O7": "1/2",
+      "I4": "1/2",
+      "O5": "1/2"
+     },
+     "script_basis": {
+      "book": 1,
+      "page": 1
+     }
+    },
+    "opus-cli": {
+     "n": 1,
+     "books": 1,
+     "accept": "0/1",
+     "wrong_text_pages": "1/1",
+     "classes_k_of_n": {
+      "T6": "1/1",
+      "I3": "1/1",
+      "T15": "1/1",
+      "O6": "1/1",
+      "T10": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "german|unknown": {
+   "routes": {
+    "flash-lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "1/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {
+      "T5": "1/2",
+      "T10": "2/2",
+      "E2": "1/2",
+      "T9": "1/2",
+      "T15": "1/2"
+     },
+     "script_basis": {
+      "none": 2
+     }
+    },
+    "flash3": {
+     "n": 10,
+     "books": 10,
+     "accept": "7/10",
+     "wrong_text_pages": "2/10",
+     "classes_k_of_n": {
+      "T15": "6/10",
+      "E2": "6/10",
+      "T10": "8/10",
+      "T8": "1/10",
+      "O6": "5/10",
+      "O8": "1/10",
+      "T9": "1/10",
+      "T16": "1/10",
+      "O4": "1/10",
+      "O7": "1/10"
+     },
+     "script_basis": {
+      "none": 10
+     }
+    },
+    "opus-cli": {
+     "n": 7,
+     "books": 7,
+     "accept": "7/7",
+     "wrong_text_pages": "0/7",
+     "classes_k_of_n": {
+      "T10": "6/7",
+      "T15": "4/7",
+      "T6": "1/7",
+      "E2": "2/7",
+      "O6": "2/7",
+      "T9": "1/7",
+      "O8": "1/7",
+      "T7": "1/7"
+     },
+     "script_basis": {
+      "none": 7
+     }
+    }
+   }
+  },
+  "latin|print": {
+   "routes": {
+    "lite": {
+     "n": 30,
+     "books": 9,
+     "accept": "17/30",
+     "wrong_text_pages": "12/30",
+     "classes_k_of_n": {
+      "O6": "21/30",
+      "O16": "8/30",
+      "O12": "9/30",
+      "E2": "11/30",
+      "O10": "2/30",
+      "O4": "2/30",
+      "O5": "12/30",
+      "O17": "1/30",
+      "D1": "2/30",
+      "T6": "5/30",
+      "O8": "9/30",
+      "O11": "2/30",
+      "O14": "1/30"
+     },
+     "script_basis": {
+      "page": 30
+     }
+    },
+    "lite>opus-correct": {
+     "n": 30,
+     "books": 9,
+     "accept": "30/30",
+     "wrong_text_pages": "0/30",
+     "classes_k_of_n": {
+      "O12": "4/30",
+      "O16": "3/30",
+      "E2": "7/30",
+      "O6": "3/30",
+      "D1": "4/30",
+      "T6": "2/30",
+      "O8": "5/30",
+      "O11": "1/30",
+      "O5": "1/30"
+     },
+     "script_basis": {
+      "page": 30
+     }
+    }
+   }
+  },
+  "tibetan|manuscript": {
+   "routes": {
+    "yigdzin": {
+     "n": 30,
+     "books": 30,
+     "accept": "17/30",
+     "wrong_text_pages": "12/30",
+     "classes_k_of_n": {
+      "O6": "27/30",
+      "O5": "8/30",
+      "O4": "5/30",
+      "E2": "27/30",
+      "O8": "1/30",
+      "T4": "1/30",
+      "O12": "8/30",
+      "O1": "2/30",
+      "T5": "1/30",
+      "I5": "2/30",
+      "O7": "1/30",
+      "O10": "1/30"
+     },
+     "script_basis": {
+      "book": 30
+     }
+    },
+    "yigdzin>flash-low-correct": {
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "3/30",
+     "classes_k_of_n": {
+      "O4": "1/30",
+      "O12": "14/30",
+      "O6": "11/30",
+      "O5": "3/30",
+      "O8": "4/30",
+      "E2": "10/30",
+      "O7": "1/30",
+      "I5": "1/30",
+      "O11": "1/30"
+     },
+     "script_basis": {
+      "book": 30
+     }
+    },
+    "yigdzin>opus-correct": {
+     "n": 30,
+     "books": 30,
+     "accept": "25/30",
+     "wrong_text_pages": "3/30",
+     "classes_k_of_n": {
+      "I5": "6/30",
+      "O12": "11/30",
+      "O8": "2/30",
+      "E2": "21/30",
+      "O6": "15/30",
+      "O5": "4/30",
+      "O11": "1/30",
+      "O7": "1/30",
+      "T5": "1/30",
+      "O1": "1/30",
+      "O4": "1/30"
+     },
+     "script_basis": {
+      "book": 30
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

@@ -1,0 +1,10 @@
+ROW 1 | വൃഷണ്ണായനാക്കളെ[illegible]ടാ ‖ ഷത്രിവൃത്തിക്ഷണാനന്താൎത്ഥംസ്സാദിതിപ്ര[illegible] ‖ യൊഗിസമവായികാരണഞ്
+ROW 2 | പ്ര[illegible]ഃപ്രതിയൊഗജ്ഞം ‖ ംകൊഭൂ[illegible]ദിവൃഷഫാരണവാത്തുഃപ്ര ‖ ഗഭാവഃഖഃസംലക്ഷ്യതെ।
+ROW 3 | സാദി[illegible]।ഷടാട്ടാം[illegible] ‖ ത്വ്യാപ്തിപാരണായ[illegible]ന്താജ്ഞി[illegible]കാ[illegible] ‖ ട്ടാവതിവ്യാപ്തിപാരണായ
+ROW 4 | സാമിതിതിപ്രതിയെ ‖ ാദിജ്ഞഗുഃപ്രതിയൊഗിസമവായി ‖ പ്രതിഃധ്യംജ്ഞഉതിവ്യംപ
+ROW 5 | ഫാദസമവത്തുഃഡ്യം ‖ സഃശത്രുനാദടാവംലക്ഷ്യതെ ‖ ഒത്രകാമികളതിഗെ
+ROW 6 | ന്യാന്യാഭിഭവംച ‖ ക്ഷഭിതടാമെത്രതിലതിമെയാഗി ‖ താപഭെജ്ഞദകാനാവൃ
+ROW 7 | സംസൎഗ്ഗെഭവെട ‖ കപ്രത്തിഭയാദിക്കകെയാസത്തുത്താഭാ ‖ ഭാപാഭെഞ്ഞാജ്ഞാഭാവയൊ
+ROW 8 | ജ്ഞദുഃഖം.കേവലം.ദേവ ‖ ടത്താഭൂപഞ്ജിതഞ്ജാഭാവഉതിപ്രകിത്വാ ‖ വിശിഷ്ടഭാവഃഏകസ
+ROW 9 | ഒതൈഭെഷൊനന്ത്യപ്രവൃ ‖ ത്തിത്വാദിത്യപക്ഷിനാഭാവഃസംബന്ധാ ‖ ഗസംബന്ധൊഷടവതി
+NOTE | The whole leaf is legible (9 rows), but most of this reading is low-confidence. Many letter groups are guesses, especially rows 1–3 and 5–7, and row 1 doesn't run straight across in every piece. The marginal "ഝ൧" by rows 6–7 is left out.

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, D, C, A
+WHY | B reads as continuous, correct Sāṅkhyakārikā verses 17–22, with the verse numbers and readings like "saṅghātaparārthatvāt", "puruṣabahutvaṃ siddham" and "kartteva bhavatyudāsīnaḥ"; D is close but has more gaps and some corrupt forms ("parārtthāl", "bhavatītyudāsīnaḥ"), C is mostly illegible, and A is mostly syllables that only look like words.

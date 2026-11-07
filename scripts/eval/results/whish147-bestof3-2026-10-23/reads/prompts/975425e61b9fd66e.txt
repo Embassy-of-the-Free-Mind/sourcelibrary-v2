@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. na [illegible] pradhānapratyakṣakayā ‖ dvibhāgaṃkarotityakṣaḥ [illegible] lpradhānaṃ ‖ nānyaḥpuruṣaiti [illegible] ṃ
+2. sāṃsārikajñānadṛṣṭiṣa [illegible] ‖ tvālviśeṣābhi [illegible] yi [illegible] ‖ āṃ [illegible] kaviśeṣāḥke
+3. [illegible] śeṣā [illegible] krāhaḥ [illegible] ‖ [illegible] ādi [illegible] kṣmaviṣaya [illegible] mātrā [illegible] ‖ [illegible] tyucyatetenkaści
+4. [illegible] manaḥitya ‖ viśeṣā [illegible] kṣma [illegible] ‖ grāva [illegible] kameka [illegible]
+5. ānalakṣyamevanāca ‖ [illegible] lprakāśa [illegible] ‖ [illegible] viśeṣāḥ [illegible]
+6. ā [illegible] pañcāpaka ‖ [illegible] ‖ ā [illegible] lpa [illegible]
+7. [illegible] ‖ [illegible] tanmātrā [illegible] ‖ [illegible] mākāra [illegible]
+8. kaḥ [illegible] ḻ [illegible] ‖ āl [illegible] catuḥ [illegible] vā [illegible] ‖ [illegible]
+9. [illegible] viśeṣa [illegible] ‖ [illegible] itiviśeṣa [illegible] kiṃ [illegible] ‖ [illegible]
+10. [illegible] ‖ [illegible] dāḥ [illegible] dāḥ [illegible] ‖ [illegible] dāiti [illegible]
+
+TRANSCRIPTION B
+1. naṅṅipradhānapuruṣayo [illegible] ‖ bhāgaṃkarotītya [illegible] lpradhānaṃ ‖ [illegible] puruṣa [illegible] ṃ
+2. nvāṃsārikajñānapravṛttiṣa ‖ batvālviśeṣābhi [illegible] trṛca ‖ āḥtatrakecidviśeṣāḥke
+3. ciśeṣādityukrāhaḥka ‖ mātrāṇītyādisūkṣmaviṣayakamātrā ‖ dityucyatetenka [illegible]
+4. nviśeṣajñamakaḥitya ‖ viśeṣā [illegible] prā [illegible] sūkṣmarūpā ‖ grāva [illegible] tayetaye
+5. ānalakṣyamatanaca ‖ ikkelprakārāśaya [illegible] tacurata ‖ druviśeṣāḥte [illegible]
+6. ṝ ābhūtānipañcapañca ‖ bhūta [illegible] māditya [illegible] ñcemadi ‖ ābhūtā [illegible] lpatyante
+7. etatsthatāvire ‖ bhūtādiśabda [illegible] tanmātrādikāl̤a ‖ ṇamākāśa [illegible] dru
+8. kaḥ [illegible] ḻāritubhrū ‖ ātrāl [illegible] catuḥpa [illegible] gnābhavāgu [illegible] ‖ yauṣṇa [illegible]
+9. jātrā [illegible] viśeṣata [illegible] ‖ itiviśeṣāḥ [illegible] tatha [illegible] sva [illegible] yāṇa ‖ [illegible] śāntā [illegible]
+10. śabdasparśā [illegible] ānāgna ‖ svakhapradāḥ [illegible] ādruḥ [illegible] dāḥmūḍhā ‖ [illegible] mohapradā [illegible]
+
+TRANSCRIPTION C
+1. najñapradhānapuruṣakayo [illegible] ‖ [illegible] bhāgaṃkarotītyarthaḥ [illegible] lpradhānaṃ ‖ [illegible] ḥpuruṣaiti [illegible] ṃ
+2. [illegible] sārikājñāna [illegible] ‖ [illegible] tvālviśeṣā [illegible] ‖ [illegible] kaika [illegible] śeṣāḥ [illegible]
+3. [illegible] śeṣā [illegible] trāhāḥ [illegible] ‖ [illegible] ndrādīnāṃ [illegible] viṣaya [illegible] mātrā [illegible] ‖ [illegible] dityucyateten [illegible]
+4. [illegible] śeṣa [illegible] ‖ viśeṣa [illegible] sūkṣma [illegible] ‖ [illegible] rāva [illegible]
+5. ānalakṣaṇa [illegible] ‖ [illegible] lprakāra [illegible] ‖ [illegible] viśeṣāḥ [illegible]
+6. ā [illegible] pañca ‖ bhū [illegible] mā [illegible] ā [illegible] ‖ [illegible] lpa [illegible]
+7. ete [illegible] ‖ [illegible] śa [illegible] nmātrā [illegible] ‖ [illegible] mākāra [illegible]
+8. [illegible] l [illegible] nmātrā ‖ trāl [illegible] catuḥpa [illegible] ‖ [illegible]
+9. [illegible] viśeṣa [illegible] ‖ [illegible] viśeṣa [illegible] kiṃ [illegible] ‖ [illegible] śāntāghorā
+10. śabda [illegible] śāntāssa ‖ ukhapradāḥghorā [illegible] duḥkhapradāḥmūḍhā ‖ [illegible] mohapradāiti [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

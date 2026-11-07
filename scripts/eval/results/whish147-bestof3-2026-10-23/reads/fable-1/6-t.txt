@@ -1,0 +1,11 @@
+ROW 1 | ഖ്യാകപരാത്ഥഖാൽആ ‖ ഉണാമിവിപഖ്യഖ്യാദധക്കാനാൽപുരുക ‖ ഷാന്ദിടോക്കുഭാവാൽക
+ROW 2 | കൈവല്യാഖ്യപ്രപ്പക്കൈ ‖ കഖസ്സ്ജ്ഞാനമനഖകരണാനാംപ്രകൃ ‖ തിനിയമാദയ്യക്കശവൽപ്ര
+ROW 3 | ആക്കതൈക്കളുരു ‖ ഖബല്ലഖാംസ്സഉദാക്രെഉഞ്ഞവി ‖ പഞ്ചയാക്കൈഷ്ണവാ
+ROW 4 | ന്ത്വാ'തരന്താചവി ‖ പഞ്ഞാസാൽസിദാംസാണിഖമ ‖ ഗ്യപരുഷസ്യകൈെ
+ROW 5 | വല്യാംമാത്രുസ്സ്യ ‖ ള്ളൾകംഠൂഉള്ളതരകഞ്ഞഭാവാ ‖ ഖരനാ'തന്താക്കൽ
+ROW 6 | സംയോഗാദം ‖ ചതനകക്കൊകനാപഉവെി ‖ 'ഗ'ഉണകന്ത്യഖെ
+ROW 7 | വിതമാളകൽ ‖ പടവഞ്ഞൃദാസിന്തു'ധ്യാ'പ്രരു ‖ ഖത്യാദൾനാഖംെ
+ROW 8 | കൈവല്യാഖ്യക ‖ ദാപ്രധാനന്തപാഗഖ്ഗപടടഭ ‖ ഖയാരവിസംയോഗ
+ROW 9 | ഈൽക്രതസ്സൈക്കഃ'ൿൻ ‖ കക്രതതൈഹാംന്തകകൊഹാകാനന്ത ‖ ടൽഗണത്രഷോധ
+ROW 10 | ശകഃതന്താദവി ‖ ഠൊധൾകാൽപഖൈഭാഖൊങ്ങക്രൈകാത ‖ ധ്യാ'ൽല്യപനായോ
+NOTE | All 10 rows of all four pieces are visible and were joined at the overlaps; rows 1, 2, 8 and the Kaivalya/pradhāna/saṃyoga words are fairly secure, but this hand is hard and roughly a third of the glyphs (especially rows 3–7, 9–10, and the ഖ/ഷ, ന/ാ, ൽ/ൾ distinctions) are low-confidence readings rather than certain ones.

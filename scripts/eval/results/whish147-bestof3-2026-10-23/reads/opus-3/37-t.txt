@@ -1,0 +1,11 @@
+ROW 1 | ച്വായ൭തസ്മാദപിഷോഡശകാൽപഞ്ചഭ്യഃപഞ്ചഭൂതാനിതിഷോഡശകാൽഗണാദ്യാനിപഞ്ചതന്മാത്ര
+ROW 2 | ാത്രാണിതേഭ്യഏകൈകോത്തരവൃദ്ധ്യാപഞ്ചമഹാഭൂതാന്യുൽപദ്യന്തേശബ്ദതന്മാത്രാദാകാശമേകഗു
+ROW 3 | ണംശബ്ദതന്മാത്രപ്രതിസംഹിതാൽസ്പൎശതന്മാത്രാദ്വിഗുണോവായുഃതാഭ്യാംപ്രതിസംഹിതാദ്രൂ
+ROW 4 | പതന്മാത്രാൽത്രിഗു ‖ ണന്തേജഃഏതൈഃപ്രതിസംഹിതാദ്ര ‖ സമാത്രാച്ചതുൎഗ്ഗുണാആ
+ROW 5 | പഃഏതൈഃപ്രതിസം ‖ ഹിതാൽഗന്ധതന്മാത്രാൽപഞ്ചഗുണാ ‖ പൃഥിവീതിഏകൈക[illegible]
+ROW 6 | കാദയസ്ഥൂലാവി ‖ ശേഷാഉച്യന്തേ[illegible] ‖ താനി[illegible]
+ROW 7 | [illegible] ‖ [illegible]മഹാഭൂതവസായഇത്യാദിഃശ ‖ ബ്ദാദി[illegible]
+ROW 8 | വസായശ[illegible]ായം ‖ യാവൽശര[illegible]ായ[illegible] ‖ [illegible]ക്ഷണം[illegible]
+ROW 9 | [illegible]വാണി[illegible] ‖ [illegible]നാംചിത[illegible] ‖ [illegible]തിതത്ര[illegible]മഃ[illegible]ജ്ഞാനാത്മ
+ROW 10 | [illegible]വസായ[illegible] ‖ [illegible]പംച[illegible] ‖ [illegible]ശബ്ദ[illegible]സാംഖ്യ[illegible]
+NOTE | 10 rows. I read rows 1–5 with reasonable confidence, though the opening of row 1 ("ച്വായ൭") is uncertain. Rows 6–10 are only partly legible. I used the passage (kārikā 22 and its commentary) only to tell similar letter shapes apart. Rows 9–10 seem to run under the string, but I couldn't confirm that; if they do, they would be a single line with no ‖.

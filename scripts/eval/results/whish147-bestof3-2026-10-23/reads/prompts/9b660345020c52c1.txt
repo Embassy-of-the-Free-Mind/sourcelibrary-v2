@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. rpratyakṣādibhyaḥ [illegible] vo ‖ tvāḥpaṅkelebbāṭāstāḥsapravṛtticcā ‖ levābhekkārkkikkaḥśetra
+2. diyaḥsāyāmāṇona ‖ yānmāṇāmmavsāṃhādisiṭeddālḥ [illegible] ‖ ttrasāmyāddākhavallai
+3. ṅkisthāyālabandhāne [illegible] ‖ hrāntiṅṅyaimurāpallatokkimānprame ‖ mayatvāddimiprameyatvṛ
+4. lahṛbhāvaptima ‖ hāntradevidyāmānatvālsa ‖ lsapakṣalyāvyo
+5. aosādhyānāṇaḥ ‖ yamaragaṇṇeḥbandhutvagaṇṇebha ‖ āḍakkiḥśaṇṇyatvaṃpa
+6. ompradriḥkaḻmai ‖ tvadrūmyāvyantāṃśaṅṅemamurutve ‖ ṅkistvayavṛttare
+7. kadṛcchānantarahika ‖ kāsvapasaṃhādīyamāsammate ‖ ttvaṃprameyatvāddikka
+8. ṅkirlakṣyāṃvipa ‖ pakṣitvāddimrāmemantānāntiḥsādṛ ‖ dṛśyāṭāvavṛāmeddoāme
+
+TRANSCRIPTION B
+1. pratyakṣādibhaveda [illegible] ‖ tvāḥpaṅkelekhyābha [illegible] āṭāśyaḥsavvbhacā ‖ [illegible] ṇadāoraikāntikaḥśeṣi
+2. ṣiyaḥsāyāṇānā [illegible] ‖ yānaṇānāmsāṃhādikaiṭadāl [illegible] ‖ trasāmyāddākhapalle
+3. ṅkiśirāyaśabdāraṇa [illegible] ‖ ālṅkiññyaṣāpallitoṇamānprame [illegible] ‖ mapatvāddittiprameyatvatrya
+4. laṣṭubhāvakṣima ‖ hāvradedavidyāumānakhānsa ‖ lsapkkālyāppe
+5. arāsvāyāṇāḥ ‖ yatharagañjeḥjñatyaśajñekhva ‖ ābhakkiśabdakhaṃpa
+6. daihyabhrūṣeṣai ‖ trabhyāvyattaṃśañjemaddhyutṛṣṇa ‖ ṅkiśabdayapraviai
+7. kadṛṣṭārattavika ‖ kāsapasaṃhāliyakṣāsavvma [illegible] ‖ bhityaprameyatvāddvakke
+8. ñcabhedravyādyāḥvipa ‖ pakṣitāddeśrāmemaṇānānāḥsādru ‖ ādruḥāṭavavṛttāṣṭhāme
+
+TRANSCRIPTION C
+1. lpratyakṣādibhyaḥco ‖ tāḥpakṣolaibhyāṭāsthāḥsavṛtticā ‖ [illegible] lodokkānikṣaḥkṣetra
+2. ṣiyaḥsvāyāṇṇāna ‖ yāṣaṇṇāṇaśasāṃhātamiṭeṭṭāḻ ‖ [illegible] trasāmyāddākhaple
+3. ṅkistrāyaṇṇeṇṇāre ‖ ndātmiṅṅyaprāpallūtomamānprame ‖ mayatvāddimiprameyatva
+4. lakṣyābhāvapakṣima ‖ hādradedavidyā [illegible] mānaṣātsa ‖ lsapakṣālpādṛśe
+5. arāsvāyāṇṇāḥ ‖ yagaragandheḥbhasmitrṛgandhe ‖ ābhiḥgandhetvaṃpa
+6. [illegible] draśva [illegible] ‖ trudramrādṛṣṭāṃgaṅṅemātralpa ‖ ṅkiṅkitvayavyatire
+7. kaṇṭhamppātoḻthika ‖ kānupasaṃhāriyamāsalpamai ‖ bhitvālprameyatvāddika
+8. ṅkigalstuṇyāḥvipa ‖ pakṣitvāddakṣiāmennānānāṅkisāddhya ‖ āṭāvavyāveḻḻāva
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

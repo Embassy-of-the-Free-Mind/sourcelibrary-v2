@@ -88,7 +88,7 @@ if (PRESERVE) {
       'translation.data': 1, 'translation.updated_at': 1, 'translation.edited_at': 1,
       'translation_withheld.data': 1,
     },
-  });
+  }).batchSize(1000);
   for await (const p of cur) {
     const live = translationText(p.translation);
     const parked = p.translation_withheld?.data || '';

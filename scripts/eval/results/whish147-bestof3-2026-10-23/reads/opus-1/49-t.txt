@@ -1,0 +1,11 @@
+ROW 1 | [illegible]ഃ കിമാത്രികാന്തൃഃാവ‖ഗസ്താംസിദ്ധിക്കാലഭ്യാത്താദിഃ[illegible]പ്രകൃത‖[illegible]ഭാവാഃ ഒക്കു സാംസിദ്ധികാ
+ROW 2 | ഉ[illegible]। [illegible] കപില[illegible]‖[illegible]മഹാ[illegible]ന്നു[illegible]‖[illegible]വ[illegible]സ
+ROW 3 | [illegible]സ്വഭാവ[illegible]ജ്ഞാന‖[illegible]സാംസിദ്ധിക[illegible]‖[illegible]ഭാവാഃ[illegible]
+ROW 4 | [illegible]‖[illegible]കാര[illegible]‖[illegible]
+ROW 5 | [illegible]‖[illegible]‖[illegible]
+ROW 6 | [illegible]‖[illegible]‖[illegible]
+ROW 7 | [illegible]‖[illegible]‖[illegible]
+ROW 8 | [illegible]ദശവിധം‖[illegible]‖[illegible]
+ROW 9 | [illegible]‖[illegible]‖[illegible]ഒക്കു[illegible]
+ROW 10 | [illegible]‖[illegible]സാം[illegible]‖[illegible]
+NOTE | I could read only scattered words on this 10-row leaf (rows 1–3 and 8–10 run the full width; rows 4–7 sit in three columns). ‖ marks the two hole positions in every row. The script is clear in the images, but I couldn't segment the conjuncts reliably, so I've marked most of the text [illegible] rather than guess or fill it in from the known text. Even the fragments I did give (e.g. സാംസിദ്ധികാ, ഭാവാഃ, ഒക്കു, കപില) are low-confidence.

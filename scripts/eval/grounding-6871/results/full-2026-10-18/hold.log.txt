@@ -1,0 +1,30 @@
+2026-10-18T05:51:48Z lock taken for /root/jobs/grounding-6871/pilot.jsonl --limit 20; GPU 11280 MiB
+2026-10-18T05:52:43Z server up
+2026-10-18T05:53:48Z scored for 65 s: 20 rows in /root/jobs/grounding-6871/pilot.jsonl
+2026-10-18T05:53:57Z released; GPU 2 MiB
+2026-10-18T06:00:04Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T06:00:49Z server up
+2026-10-18T06:18:49Z scored for 1080 s: 288 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T06:18:57Z released; GPU 2 MiB
+2026-10-18T06:23:50Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T06:24:30Z server up
+2026-10-18T06:42:30Z scored for 1080 s: 624 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T06:42:38Z released; GPU 2 MiB
+2026-10-18T06:47:17Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T06:47:57Z server up
+2026-10-18T07:05:57Z scored for 1080 s: 928 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T07:06:05Z released; GPU 2 MiB
+2026-10-18T07:12:35Z lock busy after 300 s — not run
+2026-10-18T07:19:05Z lock busy after 300 s — not run
+2026-10-18T15:50:01Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T15:50:51Z server up
+2026-10-18T17:04:25Z scored for 4414 s: 2219 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T17:04:33Z released; GPU 2 MiB
+2026-10-18T17:04:33Z lock taken for /root/jobs/grounding-6871/rerun.jsonl --only /root/jobs/grounding-6871/code/noise-ids.txt; GPU 2 MiB
+2026-10-18T17:05:13Z server up
+2026-10-18T17:20:35Z scored for 922 s: 300 rows in /root/jobs/grounding-6871/rerun.jsonl
+2026-10-18T17:20:44Z released; GPU 2 MiB
+2026-10-18T17:20:44Z lock taken for /root/jobs/grounding-6871/res1200.jsonl --only /root/jobs/grounding-6871/code/noise-ids.txt --cap 1200; GPU 2 MiB
+2026-10-18T17:21:24Z server up
+2026-10-18T17:27:36Z scored for 372 s: 300 rows in /root/jobs/grounding-6871/res1200.jsonl
+2026-10-18T17:27:44Z released; GPU 2 MiB

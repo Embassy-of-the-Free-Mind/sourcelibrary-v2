@@ -1,13 +1,22 @@
 import type { NextConfig } from "next";
-import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
+import { pageStatusSources } from './src/lib/page-status';
+import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
+import { waitForTurbopackRelease } from './src/lib/wait-for-turbopack-release';
+import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
+  // The type check runs in CI, not in the Vercel build. `next build` type-checks after compiling, in the same 8 GB
+  // container, and that step is what was SIGKILLed for OOM on 2026-10-29 21:16 and 2026-10-30 13:54 (release
+  // builds, cache restored, compile passed). Every PR already runs `npx tsc --noEmit` in the required `test` job
+  // (.github/workflows/unit-tests.yml), and production builds only merged PRs, so the in-build check was a second
+  // copy of the same gate. Run `npx tsc --noEmit` before opening a PR (CLAUDE.md).
+  typescript: { ignoreBuildErrors: true },
   experimental: {
     // Turbopack's build cache (on by default since Next 16) is what pushed
     // prod builds into OOM (#5887). It grows ~0.05–0.3 GB per build inside
@@ -19,6 +28,12 @@ const nextConfig: NextConfig = {
     // nothing to .next/cache/turbopack, so the reset never comes. Cost: the
     // ~40s a warm compile used to save. Re-measure before turning it back on.
     turbopackFileSystemCacheForBuild: false,
+    // Prerender workers, set by hand because the default follows the machine.
+    // Each worker queries production Atlas. On the 8-core Enhanced machine the
+    // default of 7 timed out the /works prerender and failed 1 build of 2,
+    // where the 3 workers of the 4-core machine hit the same timeouts and
+    // finished (#8364).
+    cpus: 3,
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
   // pdfkit must stay an unbundled runtime require: bundling it rewrites
@@ -40,6 +55,13 @@ const nextConfig: NextConfig = {
     '/talks/ai-case-study/[[...path]]': ['./src/content/talks/ai-case-study/**'],
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
+  },
+  // /api/image serves files from public/ by path (route.ts reads process.cwd()/public),
+  // so it traces the whole folder and sits at the 220 MB size guard. The AI-partners
+  // page's images are served statically and never through it: keep them out (#7710).
+  // Article heroes are pre-sized AVIFs, served statically too (26 MB; #7956).
+  outputFileTracingExcludes: {
+    '/api/image': ['./public/ai-partners/img/**', './public/articles/heroes/**'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -250,6 +272,27 @@ const nextConfig: NextConfig = {
         source: '/admin/work',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Token use (#8201): same belt and braces as the spend page.
+      {
+        source: '/admin/tokens/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/tokens',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      // Self-hosted Google Fonts (#7537). File names carry Google's version id, so a
+      // changed face is a new URL and the old one can be cached for good.
+      {
+        source: '/fonts/google/:file',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      // The covers image behind the /about and homepage walls. Versioned file name,
+      // so a new image is a new URL and this one can be cached for good.
+      {
+        source: '/about/covers-atlas.v1.avif',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
@@ -257,6 +300,13 @@ const nextConfig: NextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=300, stale-while-revalidate=3600' },
         ],
+      },
+      {
+        // A hit at Cloudflare never reaches the proxy, so the Embassy's room would
+        // be served past the gate that guards it (#8098). Only Cloudflare reads this
+        // header; Vercel's own page cache still holds these pages.
+        source: '/embed/bph/:path*',
+        headers: [{ key: 'Cloudflare-CDN-Cache-Control', value: 'no-store' }],
       },
       // CDN-Cache-Control for Cloudflare edge caching.
       // Cloudflare strips this header before sending to browsers —
@@ -302,6 +352,12 @@ const nextConfig: NextConfig = {
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
+      // The main-site catalogue moved to /library; /catalog above stays for partner hosts.
+      {
+        source: '/library',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
       {
         source: '/author/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
@@ -319,7 +375,9 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/gallery/:path*',
-        missing: [{ type: 'header', key: 'rsc' }],
+        // Not with `q`: the proxy sends assistant fetchers from /gallery?q= to a pictures
+        // view, and a person's cached copy would answer them first for a day (#8161).
+        missing: [{ type: 'header', key: 'rsc' }, { type: 'query', key: 'q' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
@@ -378,6 +436,17 @@ const nextConfig: NextConfig = {
         source: '/account',
         headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
       },
+      // Internal, draft and archived pages (src/lib/page-status.ts) are served
+      // to admins only, so Cloudflare must never keep a copy and search engines
+      // must never index one. Last in the list so they override the 24h
+      // CDN rules above for the same path.
+      ...pageStatusSources().map((source) => ({
+        source,
+        headers: [
+          { key: 'CDN-Cache-Control', value: 'private, no-store' },
+          { key: 'X-Robots-Tag', value: 'noindex' },
+        ],
+      })),
     ];
   },
   async rewrites() {
@@ -389,6 +458,10 @@ const nextConfig: NextConfig = {
       // /sitemap/[__metadata_id__] route and breaks the build, so the
       // index lives at /sitemap-index and we rewrite from /sitemap.xml.
       { source: '/sitemap.xml', destination: '/sitemap-index' },
+      // The strongest pages only (hubs, collections/works/authors, books), submitted
+      // to Search Console on its own so its processing is reported separately.
+      // Google spends ~150-250 HTML fetches a day here (crawl stats, Oct 2026). #3755
+      { source: '/sitemap-core.xml', destination: '/sitemap-core' },
       // The Source Library beta launch talk (embedded video + audio-aligned
       // transcript) lives in a standalone static deployment. Proxy it on-domain
       // at /launch so the email and site link to sourcelibrary.org, not a
@@ -407,12 +480,34 @@ const nextConfig: NextConfig = {
       // otherwise catch them and land on a 404 under the old slug. The prose
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
+      { source: '/partners', destination: '/ai-partners', permanent: true },
+      // The in-site Rithmomachia game departed from the 1563 rules it cites; the
+      // corrected game is a standalone app (#7821). Apex and www only: a tenant
+      // host serves global routes directly and must never redirect off its
+      // subdomain (tenant-lockdown.md). Temporary, so /rithmomachia stays the
+      // address to hand out if the game moves.
+      ...[
+        { source: '/rithmomachia', hash: '' },
+        { source: '/rithmomachia/guide', hash: '#rules' },
+        { source: '/rithmomachia/scenarios', hash: '#learn' },
+      ].map(({ source, hash }) => ({
+        source,
+        has: [{ type: 'host' as const, value: '(www\\.)?sourcelibrary\\.org' }],
+        destination: `https://rithmomachia-game.vercel.app/${hash}`,
+        permanent: false,
+      })),
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       // Choreia renamed to its main idea (2026-10-19).
       { source: '/articles/choreia', destination: '/articles/choreia-the-dance-of-the-cosmos', permanent: true },
       // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
       { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      // Superseded posts (UNLISTED_PAGES in src/app/articles/posts.ts): send readers
+      // to the post that replaced each one. The page files are kept.
+      { source: '/blog/2000-first-translations', destination: '/articles/counting-first-translations', permanent: true },
+      { source: '/articles/2000-first-translations', destination: '/articles/counting-first-translations', permanent: true },
+      { source: '/blog/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
+      { source: '/articles/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
       { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
       // Pages moved under /articles (2026-10-18). /in-memoriam is redirected in
       // src/proxy.ts instead, on the main site only: partner reading rooms keep it.
@@ -453,6 +548,8 @@ const nextConfig: NextConfig = {
         destination: '/blog/techniques-of-the-body',
         permanent: true,
       },
+      // A map whose concept has a conceptual history became that history's sources view (#7646).
+      ...MAP_THEMES.flatMap((t) => { const to = sourcesHref(t); return to ? [{ source: `/explore/maps/${t.slug}`, destination: to, permanent: true }] : []; }),
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {
@@ -470,11 +567,6 @@ const nextConfig: NextConfig = {
       {
         source: '/browse/subjects/:code+',
         destination: '/browse/subjects',
-        permanent: true,
-      },
-      {
-        source: '/library',
-        destination: '/search',
         permanent: true,
       },
       {
@@ -528,8 +620,10 @@ const nextConfig: NextConfig = {
         destination: '/press-releases',
         permanent: true,
       },
+      // ...except the unlisted English guide to the Trouw interview (#4049),
+      // a live page under /press/ that this catch-all was swallowing.
       {
-        source: '/press/:path*',
+        source: '/press/:path((?!trouw-interview-english$).*)',
         destination: '/press-releases',
         permanent: true,
       },
@@ -603,6 +697,15 @@ const nextConfig: NextConfig = {
         destination: '/gallery/:path*',
         permanent: true,
       },
+      // The BPH catalogue on /libraries/<bph> linked each record to
+      // /libraries/<slug>/catalog/<ubn>, which has no route (~150 404s a
+      // month in not_found_reports, Oct 2026). Catalogue records live at
+      // /embed/bph/catalog/<ubn|uuid>; send old and indexed links there.
+      {
+        source: '/libraries/:slug(bibliotheca-philosophica-hermetica|bph)/catalog/:key*',
+        destination: '/embed/bph/catalog/:key*',
+        permanent: true,
+      },
       // Short, sayable aliases for the MCP setup guide ("sourcelibrary.org/mcp").
       // The guide's canonical URL is /connect; these exist to be typed and read aloud.
       ...['/mcp', '/claude', '/chatgpt'].map((source) => ({
@@ -637,7 +740,16 @@ const nextConfig: NextConfig = {
 // concern, so only wrap when the PostHog credentials are actually present.
 const withAnalytics = (config: typeof nextConfig) =>
   process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
-    ? withPostHogConfig(config, {
+    ? withPostHogConfig({
+        ...config,
+        // Next and then the wrapper await this hook: the upload and page data start only once Turbopack has let go
+        // of its memory, and only the browser's maps go up (#7731).
+        compiler: { ...config.compiler, runAfterProductionCompile: async ({ distDir }) => {
+          const { released, waitedMs, rssBytes } = await waitForTurbopackRelease();
+          console.log(`Turbopack ${released ? 'released' : 'still holding'} memory after ${(waitedMs / 1000).toFixed(1)}s (next build RSS ${(rssBytes / 2 ** 30).toFixed(2)} GB)`);
+          console.log(`Dropped ${await dropServerSourcemaps(distDir)} server source maps before the PostHog upload`);
+        } },
+      }, {
         personalApiKey: process.env.POSTHOG_API_KEY,
         projectId: process.env.POSTHOG_PROJECT_ID,
         host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
@@ -648,4 +760,6 @@ const withAnalytics = (config: typeof nextConfig) =>
       })
     : config;
 
-export default withBotId(withAnalytics(nextConfig));
+// botid's withBotId wrapper was removed in #8374: it only added rewrites to
+// api.vercel.com/bot-protection, and nothing in src/ ever called checkBotId.
+export default withAnalytics(nextConfig);

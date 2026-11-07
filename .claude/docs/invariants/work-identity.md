@@ -52,6 +52,16 @@ NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
   it first with `resolveWorkIds()` (`src/lib/work-alias.ts`)**, which names the outcome
   (`live` / `alias` / `ambiguous` / `orphaned`) instead of reading "no books" as "done".
   The minter refuses an author that normalises to nothing rather than mint `local:n::<title>`.
+- **Splitting an over-merged work_id (#8293) goes through `scripts/maintenance/apply-reviewed-work-splits.mjs`
+  only** (dry-run plan with full before-docs → `--apply <plan>` → `--revert <sweep>`). It logs to
+  **`work_id_splits`**, never `work_id_merges` (whose readers count every row as a merge), and the
+  source id is never aliased on a moved book. A split is a standing "these are different works":
+  every merge writer refuses a pair recorded there via `splitPairIn()` / `loadSplitPairs()` in
+  `scripts/lib/work-merge-lib.mjs`, and a new merge writer must call it too.
+- **A `work_id` QID names the WORK, never an edition, translation or manuscript item** (Wikidata
+  P31 `Q3331189` and kin; #8325 found 96 such ids on 454 books). Re-key one with the same split
+  writer (`--issue 8325`): a dissolve onto the P629 work, the old id kept as an alias (a RENAME, which
+  the split guard does not fence). `scripts/audit/work-id-qid-class.mjs` is the standing check.
 - Full design, tool list, per-tradition candidate coverage, and open levers:
   **`.claude/docs/work-identity-coverage.md`**.
 - **Acquiring works we're missing — read FIRST, don't reinvent:**

@@ -1,0 +1,11 @@
+CHECK | row 1: The row begins സൂക്ഷ്മപൎയ്യന്തംസംസരതി and ends ലിംഗം।൪൦।ചിത്രംയഥാ. B matches the whole row, including the verse number ൪൦. A has the right letters but marks the readable ൪൦ as [illegible]. C stops after ലിംഗം.
+
+CHECK | row 5: The row begins ലിംഗം।൪൨।സാംസിദ്ധികാശ്ചഭാവാഃ, followed by a blank gap, then പ്രാകൃതികാവൈകൃത… B matches, and so does A apart from where it splits the word between rows 5 and 6. C reads only സിദ്ധി.
+
+CHECK | row 9: The row begins സംസാരോഭവതിരാ, continues ജസാദ്രാഗാ…ഐശ്വൎയ്യാദവി…, and ends ഘാതോവിപൎയ്യയാത്ത. A and B both match. C marks the whole row [illegible].
+
+PICK | B
+
+RANK | B, A, C
+
+WHY | B matches the strokes across the leaf, including ൪൦ in row 1 and ജ്ഞാനേന in row 8, while A marks readable spots [illegible] (row 1's number, row 2's വിനായ, row 8's start) and C loses almost every row.

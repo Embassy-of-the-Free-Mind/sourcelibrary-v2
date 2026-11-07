@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. sāṃprakṛtinānāṅku ‖ gra [illegible] coktāḥprakṛtayaścavikṛtayaśca ‖ prakṛtivikṛtayaḥva
+2. tramahāda [illegible] sāṃkirāsa ‖ jñasyānprakṛtiḥpra [illegible] yāntāddiṣṭāddamā ‖ ṃnāni [illegible] tiḥ [illegible]
+3. tanmātrāṇyeka ‖ ādaśendriyāṇica [illegible] nayanprakṛ ‖ [illegible] ḥmahābhūta [illegible]
+4. etaitāvikṛtiḥna ‖ nmātrāṇiśabdasparśarūparasaga ‖ ndhāḥpañcaiva [illegible] krama
+5. mākkāra [illegible] pādyuda ‖ kapṛṣṭhavyā [illegible] drakāndrijña ‖ nayanaḥprakṛte
+6. hyaṃkārādda ‖ [illegible] nmāḥvikṛtayaśca ‖ kārasa [illegible] tā
+7. [illegible] kārāvaśaṣi ‖ kāra [illegible] bhāra [illegible] vimā ‖ ṇamantri [illegible] va
+8. gakalekhalebuddhīndriya ‖ yāṇipañcakarmmendriyāṇimanaśce ‖ tyekādaśendriyāṇica
+9. [illegible] mahābhūtānitya ‖ yaṃṣoḍaśakogaṇaḥ [illegible] kāra ‖ eva [illegible] ḥvikā
+
+TRANSCRIPTION B
+1. sāṃprakṛtinānāntu ‖ ṣṭaivoktāḥprakṛtayaścavikṛtayaśca ‖ prakṛtivikṛtayaḥba
+2. tramahadādahaṃkāra [illegible] ‖ jñanānprakṛtiḥpra [illegible] dhānād [illegible] ddamā ‖ [illegible] nāmikṛtiḥ [illegible]
+3. nañcamātrāṇyeka ‖ ādaśendriyāṇicajñanayanprakṛ ‖ tiḥmahābhūta [illegible]
+4. ānaivavikṛtiḥna ‖ nmātrāṇiśabdasparśarūparasaga ‖ ndhāḥpañca [illegible] ma
+5. mātrāḥsa [illegible] ṣṭa ‖ kapṛthivyādyai [illegible] jña ‖ nayanaḥprakṛte
+6. haṃkārādda ‖ ṣoḍaśakaḥvikṛta [illegible] ‖ kāri [illegible]
+7. nnaṃ [illegible] mi ‖ kāraṇatvāda [illegible] mā ‖ ṇama [illegible] va
+8. [illegible] buddhīndriya ‖ yāṇipañcakarmmendriyāṇimanaścai ‖ kādaśendriyāṇica
+9. [illegible] ndriya ‖ yaṃ [illegible] gaṇaḥcatāra ‖ [illegible] pakṣānāndhaḥvikā
+
+TRANSCRIPTION C
+1. sāṃprakṛtinānāska ‖ gra [illegible] kkāḥprakṛtayoścamiśratayaśca ‖ [illegible] prakṛtivikṛtayaḥvi
+2. tramahadahaṃkārapa ‖ ñcatanmānprakṛtiḥpra [illegible] yānāddrodbhrāmāṃ ‖ nāmitiḥ [illegible]
+3. naṣkramātrāṇyeka ‖ ādaśendriyāṇicajñānayanprakṛ ‖ [illegible] ḥmahābhūtauddiṣṭa
+4. etevikṛtiḥta ‖ nmātrāṇiśabdasparśarūparasaga ‖ ndhāḥpañca [illegible] ma
+5. mākāśavāyu [illegible] ‖ kapṛthivyādyāpindrukāraṇa ‖ nayanaḥprakṛte
+6. ññihaṃkārādu ‖ ṣoḍaśakāgaṇaḥvikṛta [illegible] ‖ kārasthatatvā
+7. nnaṃkṣāravāśmi ‖ kāraṇatvādoṇāravāsipaliṣvā ‖ ṇamantrutaṣvāva
+8. lakabhedeṣu [illegible] ‖ ṇaṃvabhedeneṭṭidyāṇamagaśeṣayo ‖ grukādaśendriyāṇica
+9. ṣoḍaśa [illegible] ‖ [illegible] yaṃ [illegible] takāgaṇaḥcatāra ‖ raṣṭhapakāranārḥvikā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

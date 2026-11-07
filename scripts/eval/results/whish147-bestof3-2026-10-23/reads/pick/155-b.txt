@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most rows that read as real text, such as the Dīpikā's wording on samavāya ("guṇaguṇinoḥ kriyākriyāvatoḥ jātivyakti…"), "tādātmyasaṃbandhāvacchinnapratiyogitvā-" and "padārtha", plus Malayalam glosses; B's row 1 is strong but it breaks down later, and A is the most garbled overall.

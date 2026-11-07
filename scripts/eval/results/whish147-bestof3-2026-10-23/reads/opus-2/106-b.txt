@@ -1,0 +1,12 @@
+ROW 1 | തെഷിയാസ്ത്രിതിഅലമൽകജ്ഞാതെച്ചവഭ്രുവദെശെരുക്തിഃസാൎലാഭ്യാഷഉച്ച്യതെ
+ROW 2 | യാതുന്നക്കാലാന്നാപ്പൂചാദാന്നാൽപ്രകൃതെ[illegible]വെകിച്യാതിര[illegible]ത്രുടാഷ്ടാദെവ[illegible]തെഷ
+ROW 3 | മടാലസാവതു[illegible]ബാലാനിമാത്രുവദെശമാത്രാദെവനീചെകല്യാതി[illegible]ക്ഷൗകാനബദ്ധ്വഃതൽടാ
+ROW 4 | ഗ്രാമെവഹെതുൽഗ്രാഹ്യരുപദെശെരുക്തിഃസാദ്രാഗ്രാഹ്യാത്രി[illegible]ച്യതെ.ബാഹ്യാന്തൎയതിബ
+ROW 5 | ാഹ്യാന്തക്ലെയൊമിഷ ‖ യൊചരമാൽപഞ്ചതാഃഖലുനാത്മനഃ ‖ പ്രകൃതിമഹദഹംകാരാ
+ROW 6 | ദ്ദിനാദമ്യാത്രുട്ടിമന്മാ ‖ നസ്രെചെവരാഗ്രസന്ധിചതുർജ്ഞയാഃകാ ‖ ബാഹ്യാഭ്യന്തരാണാ
+ROW 7 | ടാചെക്കുത്താനമിതി ‖ ജ്ഞൃപ്രവൃത്തിജ്ജ്ഞാസചെവൊഗ്ര്യസ ‖ ബതുക്ഷ്യതിചൈവാ
+ROW 8 | ഗ്രഹെതുവബാദ്ധാൽചെചഭാഗ്രാഭിവബാതെഷ്ടബാമ്പാഉക്ഷ്യാഃചെബൊഭിഉചരസ്ത്രതെനെനൊക്തുപ
+ROW 9 | രമൊചെവരാഗ്രഃഭിക്ഷയാടുപരമഃഭിക്ഷായാടെടാഗ്രാഃപഞ്ചാദമഃമബാഉചരമാഞിതാഭാസ്ത്രി
+ROW 10 | ജ്ഞനക്കിണക്കിയടൊഗഭിഃസാദെക്കാദൾനബൊരുജ്ഞാനഉപരമാഃപബൊടഷടാഗ്ഗാഭാഗിബെപാദയൊ
+ROW 11 | യനാജ്ഞനൊഷായാഃചെത്ര്യെപകാരിൻദ്ദുഃപകൃഷ്ണദുഷ്ടാജ്ഞനെഷ്ണശിൎബാഗ്രന്ഥതദെബാ
+NOTE | All 11 rows have text, but my letter-level confidence is low, roughly 40–60%, especially for ligatures and conjuncts. Most of the text is a tentative reading of the strokes, not a verified one. Only rows 5–7 are broken by the string holes, so only they have ‖; rows 1–4 and 8–11 run past the holes unbroken. The overlaps between pieces were joined without repeating the shared text.
