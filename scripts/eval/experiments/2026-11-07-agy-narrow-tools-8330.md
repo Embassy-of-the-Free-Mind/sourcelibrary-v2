@@ -11,6 +11,10 @@ status: adopted
 decision: "cli-ocr.mjs narrows the tool list by default (--all-tools restores it), for plain reads and the correction template. Translation and the one-image calls are not switched: not tested here."
 superseded_by: null
 issue: [8330, 7558]
+feeds: cost
+landed: scripts/batch/cli-ocr.mjs
+router_evidence: "none — same model, prompt and route in every arm; this tests the tool list a call is offered, not a route"
+defect_rates: "none — the #7522 judge reports usable and fault counts by page, not misleads per 1,000 words; the comparison is against the live setup on those counts"
 ---
 
 PRIOR ART: `2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md` (its harness, draw, judge and token accounting are
