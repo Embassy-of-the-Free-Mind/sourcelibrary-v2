@@ -525,18 +525,56 @@ async function syncGalleryImages(db) {
  *
  * One direction only. A row marked hidden whose book is no longer `hidden` is
  * NOT un-hidden here: not-hidden is not the same as published (`visible`), so
- * showing those plates is a publication decision, not a sync.
+ * showing those plates is a publication decision, not a sync. The rows that
+ * drifted that way are counted and logged (`stale_hidden`), never written.
+ *
+ * It walks the GALLERY's book ids, not the books collection's hidden ones. Until
+ * #8318 it began with `books.distinct('id', { hidden: true })`: ~500K hidden
+ * books (mostly artwork records) is over the 16 MB cap on a single distinct
+ * result, so the phase threw on every run from 2026-10-30 and nothing was marked.
+ * The gallery holds ~20K books; they stream from an aggregation cursor and are
+ * looked up in batches by `id` OR `_id` (re-minted books, #4450).
  */
-async function markHiddenBooksGalleryRows(db) {
-  const hidden = await db.collection('books').distinct('id', { hidden: true });
-  let modified = 0;
-  for (let i = 0; i < hidden.length; i += 5000) {
-    const filter = { book_id: { $in: hidden.slice(i, i + 5000) }, book_hidden: { $ne: true } };
-    if (DRY_RUN) { modified += await db.collection('gallery_images').countDocuments(filter); continue; }
-    modified += (await db.collection('gallery_images').updateMany(filter, { $set: { book_hidden: true } })).modifiedCount;
+export async function markHiddenBooksGalleryRows(db, { dryRun = DRY_RUN, batchSize = 1000 } = {}) {
+  const gallery = db.collection('gallery_images');
+  const books = db.collection('books');
+  const cursor = gallery.aggregate(
+    [{ $sort: { book_id: 1 } }, { $group: { _id: '$book_id' } }],
+    { allowDiskUse: true, batchSize },
+  );
+  let modified = 0, staleHidden = 0, hiddenBooks = 0;
+
+  const flush = async (ids) => {
+    const oids = ids.filter(id => typeof id === 'string' && ObjectId.isValid(id) && id.length === 24).map(id => new ObjectId(id));
+    const found = await books.find(
+      { $or: [{ id: { $in: ids } }, { _id: { $in: [...ids, ...oids] } }] },
+      { projection: { _id: 1, id: 1, hidden: 1 } },
+    ).toArray();
+    // Key each book under every name the gallery might use for it.
+    const hiddenByKey = new Map();
+    for (const b of found) {
+      for (const k of [b.id, String(b._id)]) if (k != null && !hiddenByKey.has(k)) hiddenByKey.set(k, b.hidden === true);
+    }
+    const hidden = ids.filter(id => hiddenByKey.get(String(id)) === true);
+    const notHidden = ids.filter(id => hiddenByKey.get(String(id)) === false);
+    hiddenBooks += hidden.length;
+    if (notHidden.length) staleHidden += await gallery.countDocuments({ book_id: { $in: notHidden }, book_hidden: true });
+    if (!hidden.length) return;
+    const filter = { book_id: { $in: hidden }, book_hidden: { $ne: true } };
+    if (dryRun) { modified += await gallery.countDocuments(filter); return; }
+    modified += (await gallery.updateMany(filter, { $set: { book_hidden: true } })).modifiedCount;
+  };
+
+  let batch = [];
+  for await (const { _id } of cursor) {
+    if (_id == null) continue;
+    batch.push(_id);
+    if (batch.length >= batchSize) { await flush(batch); batch = []; }
   }
-  console.log(`[sync-worker] gallery_images book_hidden: ${DRY_RUN ? 'would mark' : 'marked'} ${modified} rows of hidden books`);
-  return modified;
+  if (batch.length) await flush(batch);
+
+  console.log(`[sync-worker] gallery_images book_hidden: ${dryRun ? 'would mark' : 'marked'} ${modified} rows of ${hiddenBooks} hidden books; ${staleHidden} rows still marked hidden for books no longer hidden (left alone)`);
+  return { modified, hidden_books: hiddenBooks, stale_hidden: staleHidden };
 }
 
 function authorSlugFn(author) {
