@@ -11,6 +11,8 @@ status: adopted
 decision: "Spanish route on (cron :45); French route on, ranked after Spanish (cron :15). One pool, .agy-milo."
 feeds: route
 superseded_by: null
+defect_rates: scripts/eval/route-judge-6740/results/euro-route-gate-6871/defect-rates.json
+landed: scripts/gpu/ocr-filler-routes.tsv
 issue: [6871]
 router_evidence: "none — the router table is not edited (brief); results under scripts/eval/route-judge-6740/results/euro-route-gate-6871/"
 ---
@@ -77,6 +79,7 @@ block is refused). One agy pool for both cells.
 | planted errors caught | none (no Spanish planter) | 2/2 |
 | **gate** | **PASS** | **PASS** |
 | marker residue in written text | 0 | 0 |
+| defects per 1,000 words (all Opus verdict defects; `defect-rates.json`) | wrong text 0.23, misleads 0.58, cosmetic 1.63 (8,579 words) | wrong text 0, misleads 0.10, cosmetic 2.20 (10,022 words) |
 | agy calls / written page | 1.43 (288/201); 1.10 without the 67 calls lost to exit -9 | 2.24 (193/86) |
 | GPU drafts | 290 in 8 min incl. vLLM start (~2,200 pages/h) | 210 in 10 min incl. image fetch (~1,260 pages/h) |
 | correction throughput | ~165 pages/h (1 book at a time, 2 reads) | ~400 pages/h (3 books at a time) |
