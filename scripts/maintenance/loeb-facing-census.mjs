@@ -26,7 +26,12 @@
  *     printed page number is one less (FACING_PAIRING_RULE);
  *   - flag when ≥ MIN_LEAVES originals, ≥ MIN_LEAVES English leaves, and the
  *     ≥ MIN_LEAVES pairs cover ≥ MIN_PAIR_SHARE of the smaller side ("mostly alternate");
- *   - only books published MIN_YEAR..MAX_YEAR (US public domain) are eligible.
+ *   - only books published MIN_YEAR..MAX_YEAR (US public domain) are eligible;
+ *   - frame shape: a book whose frames are landscape (image_width > image_height)
+ *     or whose transcriptions carry two printed page numbers is stored as
+ *     two-leaf SPREADS, not leaves. It is never flagged or paired: it is listed
+ *     as needing the split lane first (#7605), and a flag this detector wrote
+ *     earlier on it is removed by --apply.
  *
  * DRY RUN BY DEFAULT: writes the per-book census to --out (jsonl) and prints
  * counts. `--apply` $sets `facing_translation` on the eligible flagged books
@@ -58,6 +63,15 @@ const MAX_YEAR = 1930;
  */
 const MIN_YEAR = 1912;
 const RE = /loeb|heinemann/i;
+/** Share of measured frames that must be landscape / two-numbered to call a book spreads. */
+const SPREAD_SHARE = 0.3;
+
+/** The distinct arabic numbers in a transcription's `<page-num>` tags. */
+function pageNumsInOcr(ocrData) {
+  const nums = new Set();
+  for (const m of String(ocrData || '').matchAll(/<page-num>\s*(\d+)\s*<\/page-num>/gi)) nums.add(Number(m[1]));
+  return nums;
+}
 
 /** The year the edition was published: `year`, else the first 4-digit run in `published`. */
 function publicationYear(book) {
@@ -113,9 +127,20 @@ for (const book of books) {
   n++;
   const pages = await db.collection('pages').find(
     { book_id: book.id, page_number: { $gte: 0 } },
-    { projection: { page_number: 1, 'ocr.data': 1, printed_page: 1 } },
+    { projection: { page_number: 1, 'ocr.data': 1, printed_page: 1, image_width: 1, image_height: 1 } },
   ).sort({ page_number: 1 }).toArray();
   let original = 0, translation = 0, pairs = 0, pairsOnVerso = 0, reversePairs = 0;
+  let measured = 0, landscape = 0, twoNumbered = 0, numbered = 0;
+  for (const p of pages) {
+    const w = Number(p.image_width), h = Number(p.image_height);
+    if (w > 0 && h > 0) { measured++; if (w > h) landscape++; }
+    const nums = pageNumsInOcr(p.ocr?.data);
+    if (nums.size) numbered++;
+    if (nums.size >= 2) twoNumbered++;
+  }
+  const landscapeShare = measured ? landscape / measured : 0;
+  const twoNumberShare = numbered ? twoNumbered / numbered : 0;
+  const spreads = landscapeShare >= SPREAD_SHARE || twoNumberShare >= SPREAD_SHARE;
   const roles = pages.map((p) => leafRole(p.ocr?.data));
   for (let i = 0; i < pages.length; i++) {
     if (roles[i] === 'original') original++;
@@ -134,7 +159,7 @@ for (const book of books) {
     }
   }
   const pairShare = Math.min(original, translation) ? pairs / Math.min(original, translation) : 0;
-  const facing = original >= MIN_LEAVES && translation >= MIN_LEAVES && pairs >= MIN_LEAVES
+  const facing = !spreads && original >= MIN_LEAVES && translation >= MIN_LEAVES && pairs >= MIN_LEAVES
     && pairShare >= MIN_PAIR_SHARE;
   const year = publicationYear(book);
   const row = {
@@ -144,6 +169,8 @@ for (const book of books) {
     translator: translatorOf(book), matched_on: matchedOn(book),
     original_leaves: original, english_leaves: translation, pairs, pairs_on_verso: pairsOnVerso, reverse_pairs: reversePairs,
     pair_share: Math.round(pairShare * 100) / 100,
+    frames_measured: measured, landscape_share: Math.round(landscapeShare * 100) / 100,
+    two_number_share: Math.round(twoNumberShare * 100) / 100, spreads,
     facing, eligible: facing && year !== null && year >= MIN_YEAR && year <= MAX_YEAR,
     already_flagged: !!book.facing_translation,
   };
@@ -162,6 +189,7 @@ console.log(JSON.stringify({
   facing_no_year: count((r) => r.facing && r.year === null),
   facing_year_before_series: count((r) => r.facing && r.year !== null && r.year < MIN_YEAR),
   facing_after_1930: count((r) => r.facing && r.year !== null && r.year > MAX_YEAR),
+  spreads_need_split: count((r) => r.spreads),
   out: OUT,
 }, null, 1));
 
@@ -187,7 +215,21 @@ if (APPLY) {
       logged.push({ sweep: 'loeb-facing-census-8321', book_id: r.book_id, action: 'set-facing-translation', detail: value });
     }
   }
+  // A book this detector flagged that is no longer eligible (e.g. now seen to be spreads) loses the flag.
+  const dropped = rows.filter((r) => !r.eligible && r.already_flagged);
+  let unset = 0;
+  for (const r of dropped) {
+    const res = await db.collection('books').updateOne(
+      { id: r.book_id, 'facing_translation.detector': DETECTOR },
+      { $unset: { facing_translation: '' } },
+    );
+    unset += res.modifiedCount;
+    if (res.modifiedCount) {
+      logged.push({ sweep: 'loeb-facing-census-8321', book_id: r.book_id, action: 'unset-facing-translation',
+        detail: { spreads: r.spreads, landscape_share: r.landscape_share, two_number_share: r.two_number_share } });
+    }
+  }
   if (logged.length) await recordSweepActions(db, logged);
-  console.log(JSON.stringify({ eligible: eligible.length, modifiedCount: modified, sweep_log_rows: logged.length }));
+  console.log(JSON.stringify({ eligible: eligible.length, modifiedCount: modified, unsetCount: unset, sweep_log_rows: logged.length }));
 }
 await client.close();
