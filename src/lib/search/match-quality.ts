@@ -65,6 +65,30 @@ export function coversEveryToken(query: string, text: string): boolean {
   return tokens.every(t => folded.includes(t));
 }
 
+/** Scripts written without spaces between words: a token there is a run, not a word. */
+const UNSPACED_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Khmer}\p{Script=Lao}\p{Script=Myanmar}\p{Script=Tibetan}]/u;
+
+/**
+ * How many of the query's words (three or more letters) begin a word of `text`
+ * (#8309). "Getica" begins "Getica" and "Geticae", so both count; it sits inside
+ * "exegetica", which does not, and neither does "optic" in "Coptic".
+ *
+ * The test is deliberately "begins" and not "equals". Most of this corpus is
+ * inflected: a whole-word test put *De magia disputatio* above Porta's *Magiae
+ * naturalis* for "Magia". Pass the author with the title, or a book that does not
+ * repeat its author's name loses to one that does ("Aristotle Metaphysics").
+ *
+ * Returns 0 for a query it cannot judge: a word in a script with no word
+ * boundaries, where a run of characters says nothing about where words fall. The
+ * caller compares two rows, so 0 on both sides leaves their order alone.
+ */
+export function wordStartHits(query: string, text: string): number {
+  const words = [...new Set(tokenize(query))].filter(w => w.length >= 3);
+  if (words.length === 0 || !text || words.some(w => UNSPACED_SCRIPT.test(w))) return 0;
+  const textTokens = tokenize(text);
+  return words.filter(w => textTokens.some(t => t.startsWith(w))).length;
+}
+
 /**
  * Pictures for a query that names an author. Rows whose text names the person come
  * first ("Roger Bacon as a monk" beats a coat of arms on the binding of his book);

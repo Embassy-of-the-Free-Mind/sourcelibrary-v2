@@ -37,6 +37,7 @@ import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { NATIVE_EDITION_LANGUAGE } from '@/lib/localized';
 import { foldSimplifiedHan } from '@/lib/search/han-fold';
 import { locateQuery } from '@/lib/search/original-snippet';
+import { wordStartHits } from '@/lib/search/match-quality';
 
 export const preferredRegion = 'fra1';
 
@@ -1261,6 +1262,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       const ENGLISH = 'English';
       const queryLower = matchQuery.toLowerCase();
       const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
+      const namedAsWords = (r: SearchResult) =>
+        wordStartHits(matchQuery, `${r.display_title || ''} ${r.title} ${r.author || ''}`);
 
       // The legacy heuristic ladder. Used directly for ranking=ladder, and as
       // the tiebreaker when ranking=rrf (so equal fused scores still get a
@@ -1329,6 +1332,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aAuthorHits = authorHits(a);
         const bAuthorHits = authorHits(b);
         if (aAuthorHits !== bAuthorHits) return bAuthorHits - aAuthorHits;
+
+        // 2c'. A row that carries the query as a word before one that holds it
+        // inside a longer word (#8309). Rung 2 counts substrings, so "Getica"
+        // tied *Romana et Getica* with every *exegetica* and *apologetica*, and
+        // the tie fell to "older first": rank 71 of 100.
+        const aNamed = namedAsWords(a);
+        const bNamed = namedAsWords(b);
+        if (aNamed !== bNamed) return bNamed - aNamed;
 
         // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
