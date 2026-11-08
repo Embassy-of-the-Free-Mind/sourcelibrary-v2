@@ -52,6 +52,7 @@ interface ShareButtonProps {
   label?: string;          // Optional text label next to icon (icon variant only)
   className?: string;
   dropUp?: boolean;        // Open the desktop menu above the button (for bottom-anchored placements)
+  surface?: string;        // Which UI emitted the share, for analytics (article_end, article_quote, ...)
 }
 
 export default function ShareButton({
@@ -66,6 +67,7 @@ export default function ShareButton({
   label,
   className = '',
   dropUp = false,
+  surface,
 }: ShareButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -105,7 +107,7 @@ export default function ShareButton({
 
   // Share handlers
   const logShare = (channel: string) =>
-    trackEvent('share', { channel, url: shareUrl, page, hasDoi: !!doi });
+    trackEvent('share', { channel, url: shareUrl, page, hasDoi: !!doi, ...(surface && { surface }) });
 
   const shareToTwitter = () => {
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
@@ -161,10 +163,11 @@ export default function ShareButton({
 
   const copyQuote = async () => {
     if (!text) return;
-    const quoteToCopy = `"${text}"\n\n${citation}${doi ? `\nDOI: ${doi}` : ''}`;
+    // The link goes with the words: a pasted quote should lead back to the page it came from.
+    const quoteToCopy = `"${text}"\n\n${citation}${doi ? `\nDOI: ${doi}` : ''}${shareUrl ? `\n${shareUrl}` : ''}`;
     await navigator.clipboard.writeText(quoteToCopy);
     setCopied(true);
-    trackEvent('quote_copy', { url: shareUrl, page, hasDoi: !!doi });
+    trackEvent('quote_copy', { url: shareUrl, page, hasDoi: !!doi, ...(surface && { surface }) });
     setTimeout(() => setCopied(false), 2000);
     setShowMenu(false);
   };
@@ -189,7 +192,7 @@ export default function ShareButton({
               onClick={() => setShowMenu(false)}
             />
             {/* Desktop: absolute dropdown (below the button, or above with dropUp). Mobile: fixed bottom sheet */}
-            <div className={`fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 ${dropUp ? 'sm:bottom-full sm:mb-1' : 'sm:top-full sm:mt-1'} z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[160px] !text-stone-900`}>
+            <div className={`fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 ${dropUp ? 'sm:bottom-full sm:mb-1' : 'sm:top-full sm:mt-1'} z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[160px] sm:whitespace-nowrap !text-stone-900`}>
               <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto my-2" />
               <button
                 onClick={shareToTwitter}
