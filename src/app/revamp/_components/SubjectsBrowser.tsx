@@ -1,16 +1,15 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
 export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[] }
 type Group = SubjectRow & { narrower: SubjectRow[] };
-export type Variant = 'banner' | 'cards' | 'tiles' | 'boxes';
+export type Variant = 'banner' | 'cards';
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
-const n = (v: number) => v.toLocaleString('en-GB');
 // Every subject will have a page; in the prototype only some do, so the rest point at their own place on this page.
 const to = (s: SubjectRow) => s.href ?? `#${s.id}`;
 const Arrow = () => <span aria-hidden className="inline-block transition-transform group-hover:translate-x-1">→</span>;
@@ -24,37 +23,12 @@ function Strip({ pics, className = '' }: { pics: Pic[]; className?: string }) {
   );
 }
 
-function Square({ p }: { p?: Pic }) {
-  return <div className="aspect-square overflow-hidden bg-warm">{p && <img src={p.src} alt="" loading="lazy" className="w-full h-full object-cover" />}</div>;
-}
-
-/** Plain box: border darkens and the name is underlined on hover. */
-function Box({ s, also }: { s: SubjectRow; also?: string }) {
-  return (
-    <Link id={s.home ? s.id : undefined} href={to(s)} className="group block bg-white border border-border-light px-[18px] py-3.5 text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
-      <span className="group-hover:underline underline-offset-2">{s.label}</span>
-      {also && <span className="block text-[12.5px] text-muted mt-0.5">Also called {also}</span>}
-    </Link>
-  );
-}
-
 /** Box with a small square picture at the left. */
 function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   return (
     <Link id={s.home ? s.id : undefined} href={to(s)} className="group flex items-center gap-3 bg-white border border-border-light p-1.5 pr-4 text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
       <span className="w-12 h-12 shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover" />}</span>
       <span className="min-w-0"><span className="group-hover:underline underline-offset-2">{s.label}</span>{also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}</span>
-    </Link>
-  );
-}
-
-/** Square picture tile with the name under it. */
-function Tile({ s, also }: { s: SubjectRow; also?: string }) {
-  return (
-    <Link id={s.home ? s.id : undefined} href={to(s)} className="group block scroll-mt-20">
-      <div className="border border-transparent group-hover:border-primary transition-colors"><Square p={s.pics[0]} /></div>
-      <span className="block mt-2 text-[15px] leading-snug text-primary group-hover:underline underline-offset-2">{s.label}</span>
-      {also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}
     </Link>
   );
 }
@@ -70,11 +44,11 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
     const a = s.alt.find((x) => x.toLowerCase().includes(t));
     return { ok: !!a, also: a ?? '' };
   };
-  const shown = useMemo(() => groups.map((g) => {
+  const shown = groups.map((g) => {
     const self = match(g);
     const narrower = g.narrower.map((s) => ({ s, m: match(s) })).filter((x) => (!t ? true : x.m.ok));
     return { g, self, narrower };
-  }).filter((x) => !t || x.self.ok || x.narrower.length), [groups, t]); // eslint-disable-line react-hooks/exhaustive-deps
+  }).filter((x) => !t || x.self.ok || x.narrower.length);
   const total = new Set(groups.flatMap((g) => [g.id, ...g.narrower.map((s) => s.id)])).size;
 
   const search = (
@@ -157,10 +131,10 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
     <>
       {search}{empty}
       <div className="pb-16">
-        {shown.map(({ g, self, narrower }, i) => (
-          <section key={g.id} id={`g-${g.id}`} className={`scroll-mt-16 ${variant === 'tiles' && i % 2 ? 'bg-warm border-y border-border-light' : ''}`}>
+        {shown.map(({ g, self, narrower }) => (
+          <section key={g.id} id={`g-${g.id}`} className="scroll-mt-16">
             <div className={`${WRAP} py-8 md:py-10`}>
-              {variant === 'banner' && (
+              {(
                 // A: the whole picture band is the way into the subject.
                 <Link href={to(g)} className="group relative block h-[170px] md:h-[200px] overflow-hidden mb-4">
                   <Strip pics={g.pics} className="absolute inset-0 h-full" />
@@ -171,32 +145,10 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
                   </span>
                 </Link>
               )}
-              {variant === 'tiles' && (
-                // C: heading row with a clear button, subjects as picture tiles.
-                <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
-                  <div>
-                    <h2 className="font-serif text-3xl md:text-[40px] text-primary leading-none tracking-tight">{g.label}</h2>
-                    <p className="text-sm text-muted mt-2">{n(g.narrower.length)} subjects</p>
-                  </div>
-                  <Link href={to(g)} className="group inline-flex items-center gap-2 bg-primary text-cream text-sm font-medium px-5 py-2.5">Everything in {g.label} <Arrow /></Link>
-                </div>
-              )}
-              {variant === 'boxes' && (
-                <div className="flex items-baseline justify-between gap-4 mb-4">
-                  <h2 className="font-serif text-2xl md:text-3xl text-primary leading-tight tracking-tight"><Link href={to(g)} className="hover:underline underline-offset-4">{g.label}</Link></h2>
-                  <Link href={to(g)} className="text-sm text-primary underline underline-offset-2 decoration-border-medium hover:decoration-primary shrink-0">Open {g.label}</Link>
-                </div>
-              )}
               {self.also && <p className="text-[13px] text-muted -mt-2 mb-3">Also called {self.also}</p>}
-              {variant === 'tiles' ? (
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-3 gap-y-5">{narrower.map(({ s, m }) => <Tile key={s.id} s={s} also={m.also} />)}</div>
-              ) : variant === 'banner' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map(({ s, m }) => <PicBox key={s.id} s={s} also={m.also} />)}</div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map(({ s, m }) => <Box key={s.id} s={s} also={m.also} />)}</div>
-              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map(({ s, m }) => <PicBox key={s.id} s={s} also={m.also} />)}</div>
             </div>
-            {variant !== 'tiles' && <div className={`${WRAP}`}><div className="border-t border-border-light" /></div>}
+            <div className={WRAP}><div className="border-t border-border-light" /></div>
           </section>
         ))}
       </div>

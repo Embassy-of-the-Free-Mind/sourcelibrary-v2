@@ -4,12 +4,20 @@ import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
 import SubjectsBrowser, { type Pic, type SubjectRow, type Variant } from '../_components/SubjectsBrowser';
 import { collectionModel, dataFile, snapshotSlugs } from '../_lib/data';
+import { RAMP } from '../_lib/ramp';
 
 interface Subj { id: string; label: string; level: number; parents: string[]; altLabels?: Record<string, string[]> }
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
-const VARIANTS: [Variant, string][] = [['banner', 'A Picture bands'], ['cards', 'B Cards'], ['tiles', 'C Picture tiles'], ['boxes', 'Before']];
+const VARIANTS: [Variant, string][] = [['banner', 'A Picture bands'], ['cards', 'B Cards']];
+// Ways to say what a subject is, and how it differs from a collection.
+const INTROS = [
+  'Browse the whole library by topic. A subject gathers every book and image we hold on it. A collection is a smaller set someone chose.',
+  'Every book and image in the library, filed by what it is about. Collections are hand-picked sets; subjects cover everything on a topic.',
+  'Subjects are how the library is catalogued: each book and image sits under one or more. Unlike a collection, nobody picks what goes in.',
+  'Start from a topic and see all we hold on it, from broad fields like Medicine to specific ones like Paracelsianism. For chosen sets, see Collections.',
+];
 
 /** Pictures per subject, saved from the public gallery by _tools/snapshot-subject-images.py. */
 function pictures(): Record<string, Pic[]> {
@@ -20,8 +28,12 @@ function pictures(): Record<string, Pic[]> {
   return main;
 }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ v?: string }> }) {
-  const v = (await searchParams).v;
+export default async function Page({ searchParams }: { searchParams: Promise<{ v?: string; t?: string }> }) {
+  const { v, t } = await searchParams;
+  const ti = Math.min(Math.max(Number(t) || 1, 1), INTROS.length) - 1;
+  let lib: { works?: number; images?: number } = {};
+  try { lib = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/app/revamp/_data/snap/_library-stats.json'), 'utf8')); } catch { /* not saved */ }
+  const fmt = (x: number) => x.toLocaleString('en-GB');
   const variant: Variant = VARIANTS.some(([k]) => k === v) ? (v as Variant) : 'banner';
   const pics = pictures();
   const all = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
@@ -41,11 +53,21 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ v
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
         <PlateWall tiles={[...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-3">
-          {VARIANTS.map(([k, l]) => <Link key={k} href={`/revamp/subjects?v=${k}`} className={variant === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}
+          {VARIANTS.map(([k, l]) => <Link key={k} href={`/revamp/subjects?v=${k}&t=${ti + 1}`} className={variant === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}
+          <span className="ml-2">Intro</span>
+          {INTROS.map((_x, i) => <Link key={i} href={`/revamp/subjects?v=${variant}&t=${i + 1}`} className={ti === i ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{i + 1}</Link>)}
         </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Subjects</h1>
-          <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">Everything in the library by what it is about: {groups.length} broad subjects, each made up of more specific ones.</p>
+          <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{INTROS[ti]}</p>
+          <div className="mt-6 flex flex-wrap gap-x-7 gap-y-2">
+            {[[groups.length, 'broad subjects'], [new Set(all.map((x) => x.id)).size, 'subjects'], [lib.works, 'works'], [lib.images, 'images']].filter(([x]) => x).map(([x, l], i) => (
+              <span key={l as string} className="flex items-baseline gap-2" style={{ color: RAMP[i] }}>
+                <span className="text-[28px] md:text-[34px] font-medium leading-none tabular-nums">{fmt(x as number)}</span>
+                <span className="text-[14px] md:text-[15px] font-medium">{l}</span>
+              </span>
+            ))}
+          </div>
         </div>
       </section>
       <SubjectsBrowser groups={groups} variant={variant} />
