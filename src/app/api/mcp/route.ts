@@ -2609,7 +2609,9 @@ export async function OPTIONS() {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, MCP-Session-Id, MCP-Protocol-Version',
+      // Mcp-Method and Mcp-Name ride every 2026-07-28 request (#8443); without
+      // them here a browser-based client fails the preflight.
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, MCP-Session-Id, MCP-Protocol-Version, Mcp-Method, Mcp-Name',
     },
   });
 }
