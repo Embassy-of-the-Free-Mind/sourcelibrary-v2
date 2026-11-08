@@ -6,9 +6,15 @@
  * continue; a tail-only seed saw the seam but lost the page conventions and
  * names the head carried, and lost to it 13–24; the hybrid kept both and tied.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 // @ts-expect-error — plain .mjs module, no declarations
 import { continuityContext, CONTINUITY_CONTEXT_CHARS } from '../../scripts/lib/translate-core.mjs';
+
+// These tests pin the previous-page English context, which is opt-in since #8399.
+const PREV_EN = process.env.TRANSLATE_PREVIOUS_ENGLISH;
+beforeAll(() => { process.env.TRANSLATE_PREVIOUS_ENGLISH = '1'; });
+afterAll(() => { if (PREV_EN === undefined) delete process.env.TRANSLATE_PREVIOUS_ENGLISH; else process.env.TRANSLATE_PREVIOUS_ENGLISH = PREV_EN; });
+
 
 const SEAM = 'Furthermore, he ought to inquire whether he sinned in a time of joy or a time of mourning. It is graver...';
 

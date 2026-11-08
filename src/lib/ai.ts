@@ -318,7 +318,9 @@ export async function performTranslation(
 
   // #5274: a nearly empty leaf (plate, caption, title) gets no previous English: with it the model wrote n-1's
   // text as this leaf's (470 of 695 Feb-Mar 2026 leaves written 0-10 min after n-1). Twin of translate-core.
-  if (previousPageTranslation && !isNearlyEmptySource(ocrText)) {
+  // #8399: the previous page's English is OFF by default on every page (twin of previousEnglishAllowed in
+  // scripts/lib/translate-core.mjs): the model writes it out again as this page. TRANSLATE_PREVIOUS_ENGLISH=1 restores it.
+  if (previousPageTranslation && !isNearlyEmptySource(ocrText) && process.env.TRANSLATE_PREVIOUS_ENGLISH === '1') {
     // Head AND tail, plus the page's <summary>/<keywords> — the head carries
     // the page's conventions and names, the tail carries the seam the model
     // is told to continue (#4968; twin of continuityContext in
@@ -458,7 +460,9 @@ export async function performModernization(
 
   let prompt = customPrompt || MODERNIZATION_PROMPT;
 
-  // Previous context FIRST so the model knows what it's continuing from
+  // Previous context FIRST so the model knows what it's continuing from. OFF by default (#8399): the previous
+  // page's English comes back as this page's text; TRANSLATE_PREVIOUS_ENGLISH=1 restores it.
+  if (process.env.TRANSLATE_PREVIOUS_ENGLISH !== '1') previousContext = undefined;
   if (previousContext?.modernized) {
     prompt += `\n\n**Previous page (modernized) — continue seamlessly from here:**\n...${previousContext.modernized.slice(-1500)}`;
   }

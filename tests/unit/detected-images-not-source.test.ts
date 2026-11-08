@@ -1,5 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { isCollapsed, isRecited, sourceWeight, assessTranslationHealth } from '../../scripts/lib/translate-core.mjs';
+
+// These tests pin the previous-page English context, which is opt-in since #8399.
+const PREV_EN = process.env.TRANSLATE_PREVIOUS_ENGLISH;
+beforeAll(() => { process.env.TRANSLATE_PREVIOUS_ENGLISH = '1'; });
+afterAll(() => { if (PREV_EN === undefined) delete process.env.TRANSLATE_PREVIOUS_ENGLISH; else process.env.TRANSLATE_PREVIOUS_ENGLISH = PREV_EN; });
+
 
 /**
  * The picture detector's `<detected-images>` JSON is not source text (#5274).

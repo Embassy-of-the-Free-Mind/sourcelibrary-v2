@@ -286,6 +286,8 @@ export function sameLanguageReason({ book, page } = {}) {
 // 52.7% sits exactly on. The hybrid is chosen because it strictly contains
 // what the head carried AND fixes the blind seam, not because it won.
 export const CONTINUITY_CONTEXT_CHARS = 2000;
+/** Whether a prompt may carry the previous page's English (#8399): only when TRANSLATE_PREVIOUS_ENGLISH=1. */
+export const previousEnglishAllowed = () => process.env.TRANSLATE_PREVIOUS_ENGLISH === '1';
 const CONTINUITY_HEAD_CHARS = 600;
 const CONTINUITY_TAIL_CHARS = 1400;
 
@@ -294,6 +296,11 @@ const CONTINUITY_TAIL_CHARS = 1400;
  * when there is nothing to continue from.
  */
 export function continuityContext(previousTranslation, { english = false } = {}) {
+  // OFF by default (#8399, 2026-11-08): the previous page's English is the cause of "text on the wrong page" —
+  // the model writes it out again as the page in front of it (16,589 page pairs in 5,542 books on the 2026-11-07
+  // mirror; #5026, #5274). The neighbouring SOURCE (prevOcrText / nextOcrText, page-break device, folio markers)
+  // still goes in, so a seam is resolved from the original. TRANSLATE_PREVIOUS_ENGLISH=1 restores the old context.
+  if (!previousEnglishAllowed()) return '';
   if (!previousTranslation) return '';
   const raw = String(previousTranslation);
   // The blocks that close a page: dropped from the body so they cannot eat the

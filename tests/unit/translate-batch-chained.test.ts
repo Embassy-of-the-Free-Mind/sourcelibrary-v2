@@ -16,7 +16,7 @@
  *     dial, estimate over the approval;
  *   - every round is metered: a placeholder at submit, completed from the response.
  */
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi, beforeAll, afterAll } from 'vitest';
 import {
   enrolChainedRun, tickChained, planNextRound, packJobs, selectAutoCandidates, AUTO_STATUSES, PHASE, MAX_STRIKES, MAX_REQUESTS_PER_JOB, looksCollapsed,
   phase4Lane, phase4ExcludedBookIds, enrolForPhase4,
@@ -29,6 +29,12 @@ import { RUNS_COLLECTION } from '../../scripts/lib/translate-batch-seam.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { buildBlockTranslationPrompt, buildTranslationPrompt, PAGE_BREAK_SCOPED, contentHash } from '../../scripts/lib/translate-core.mjs';
+
+// These tests pin the previous-page English context, which is opt-in since #8399.
+const PREV_EN = process.env.TRANSLATE_PREVIOUS_ENGLISH;
+beforeAll(() => { process.env.TRANSLATE_PREVIOUS_ENGLISH = '1'; });
+afterAll(() => { if (PREV_EN === undefined) delete process.env.TRANSLATE_PREVIOUS_ENGLISH; else process.env.TRANSLATE_PREVIOUS_ENGLISH = PREV_EN; });
+
 
 type Doc = Record<string, any>;
 

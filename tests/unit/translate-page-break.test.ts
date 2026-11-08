@@ -7,13 +7,19 @@
  * input with that piece switched off must leave the text as production sends it — so a test here
  * is red when its piece is disabled, and a future "simplification" that drops one is noticed.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { resolvePageBreak, lookaheadSnippet, overlapLength, maskApparatus, continuationPlausible, LOOKAHEAD_CLAUSE } from '../../scripts/lib/page-break-devices.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { buildTranslationPrompt, buildBlockTranslationPrompt, continuityContext, translationPromptHeader, PAGE_BREAK_FIX, PAGE_BREAK_SCOPED, PAGE_BREAK_RULE } from '../../scripts/lib/translate-core.mjs';
+
+// These tests pin the previous-page English context, which is opt-in since #8399.
+const PREV_EN = process.env.TRANSLATE_PREVIOUS_ENGLISH;
+beforeAll(() => { process.env.TRANSLATE_PREVIOUS_ENGLISH = '1'; });
+afterAll(() => { if (PREV_EN === undefined) delete process.env.TRANSLATE_PREVIOUS_ENGLISH; else process.env.TRANSLATE_PREVIOUS_ENGLISH = PREV_EN; });
+
 
 const HEAD = '<language>German</language>\n<page-type>text</page-type>\n<page-num>17</page-num>\n<header>Vorrede.</header>\n\n';
 
