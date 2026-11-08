@@ -550,11 +550,12 @@
 "books": 31,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "library_slice",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "History plus a region. Too broad for a term; a place is a filter.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -618,9 +619,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "New term under Religion and mysticism. An independent religion, so not under Islam.",
+"first_pass": "subject",
+"subject_term": "Bahá’í Faith"
 },
 {
 "source": "collection",
@@ -1622,9 +1624,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "New term under Islam and Religion and mysticism, as library headings usually place it.",
+"first_pass": "subject",
+"subject_term": "Druze"
 },
 {
 "source": "collection",
@@ -1650,11 +1653,12 @@
 "books": 106,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "library_slice",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "Medicine plus a date range. A period is a filter, not a subject.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -2353,11 +2357,12 @@
 "books": 87,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "collection",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "A historian’s argument about one movement and moment. A chosen set with a point of view, so a collection.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -2522,9 +2527,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "Two subjects in one. Split: tag each book Buddhism or Jainism, retire this page with a redirect to Indian religions.",
+"first_pass": "subject",
+"subject_term": "Buddhism"
 },
 {
 "source": "collection",
@@ -2586,9 +2592,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "Matches Indian philosophy.",
+"first_pass": "subject",
+"subject_term": "Indian philosophy"
 },
 {
 "source": "collection",
@@ -3156,8 +3163,9 @@
 "proposed": "subject",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Names a real tradition or field, but with only 2 books it may be too small to stand alone.",
-"first_pass": "subject"
+"reason": "Too small for its own term (2 books). Lojong becomes a tag on these books.",
+"first_pass": "subject",
+"subject_term": "Tibetan Buddhism"
 },
 {
 "source": "collection",
@@ -3220,8 +3228,9 @@
 "proposed": "subject",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Names a real tradition or field, but with only 6 books it may be too small to stand alone.",
-"first_pass": "subject"
+"reason": "New term under Gnosticism and Ancient religions. The surviving gnostic religion.",
+"first_pass": "subject",
+"subject_term": "Mandaeism"
 },
 {
 "source": "collection",
@@ -3396,11 +3405,12 @@
 "books": 275,
 "images": null,
 "artworks": 25,
-"proposed": "subject",
+"proposed": "library_slice",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "A region covering 275 books across many subjects. A place is a filter.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -3715,8 +3725,9 @@
 "proposed": "subject",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "A tradition. Overlaps Norse & Scandinavian Antiquities.",
-"first_pass": "subject"
+"reason": "Same field as Norse religion. Widen that label to Norse and Germanic religion.",
+"first_pass": "subject",
+"subject_term": "Norse religion"
 },
 {
 "source": "collection",
@@ -3971,8 +3982,9 @@
 "proposed": "subject",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Names a real place or people, but with only 14 books it may be too small to stand alone.",
-"first_pass": "subject"
+"reason": "Matches Persian literature.",
+"first_pass": "subject",
+"subject_term": "Persian literature"
 },
 {
 "source": "collection",
@@ -4104,8 +4116,9 @@
 "proposed": "subject",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Typed exhibit, but it names a regional tradition.",
-"first_pass": "subject"
+"reason": "Matches Pacific traditions.",
+"first_pass": "subject",
+"subject_term": "Pacific traditions"
 },
 {
 "source": "collection",
@@ -4266,11 +4279,12 @@
 "books": 26,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "library_slice",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "Architecture plus a date range. A period is a filter, not a subject.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -4481,9 +4495,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "Where two subjects meet. Tag books Rosicrucianism and Alchemy; the overlap is a search, not a term.",
+"first_pass": "subject",
+"subject_term": "Rosicrucianism"
 },
 {
 "source": "collection",
@@ -4624,11 +4639,12 @@
 "books": 12,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "collection",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Names a real place or people, but with only 12 books it may be too small to stand alone.",
-"first_pass": "subject"
+"reason": "A specific story (one country, one movement). A collection; its books also get Theosophy.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -4703,9 +4719,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "New term under Religion and mysticism, related to Judaism but not filed under it.",
+"first_pass": "subject",
+"subject_term": "Samaritanism"
 },
 {
 "source": "collection",
@@ -4831,9 +4848,10 @@
 "artworks": 0,
 "proposed": "subject",
 "proposed_subject": null,
-"confidence": "high",
-"reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"confidence": "medium",
+"reason": "New term under Indian religions.",
+"first_pass": "subject",
+"subject_term": "Sikhism"
 },
 {
 "source": "collection",
@@ -4861,11 +4879,12 @@
 "books": 4,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "collection",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Names a real place or people, but with only 4 books it may be too small to stand alone.",
-"first_pass": "subject"
+"reason": "Defined by a translation project, not a field. A collection.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",
@@ -5237,11 +5256,12 @@
 "books": 14,
 "images": null,
 "artworks": 0,
-"proposed": "subject",
+"proposed": "collection",
 "proposed_subject": null,
 "confidence": "medium",
-"reason": "Typed exhibit, but it is a broad theme with its own children.",
-"first_pass": "subject"
+"reason": "A broad theme, not a field anyone catalogues under. Works as a collection.",
+"first_pass": "subject",
+"subject_term": null
 },
 {
 "source": "collection",

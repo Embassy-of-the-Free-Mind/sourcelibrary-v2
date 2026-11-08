@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { LayoutGrid, List } from 'lucide-react';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
@@ -11,43 +11,52 @@ const HOLDS: [string, string][] = [['books', 'Books'], ['plates', 'Plates'], ['a
 const SORTS: [string, string][] = [['featured', 'Featured first'], ['books', 'Most books'], ['images', 'Most images'], ['az', 'A to Z']];
 const n = (v: number) => v.toLocaleString('en-GB');
 
-/** Square. A grid of plates like the collection hero, or one image. */
-export function Thumb({ item, mode }: { item: IndexItem; mode: 'grid' | 'single' }) {
-  const t = item.thumbs;
-  if (!t.length) {
-    return <div className="aspect-square bg-warm" />;
-  }
-  if (mode === 'single' || t.length < 4) {
-    return <div className="aspect-square overflow-hidden bg-warm"><img src={t[0]} alt="" loading="lazy" className="w-full h-full object-cover" /></div>;
-  }
-  const cols = [0, 1, 2].map((c) => t.filter((_x, i) => i % 3 === c));
+export interface Crop { src: string; x: number; y: number; w: number; aspect: number }
+export const cropKey = (slug: string) => `revamp-thumb:${slug}`;
+
+/** A square cut from one image. x, y: top-left as fractions of the image; w: side as a fraction of its width; aspect: width / height. */
+export function CropSquare({ crop, className = '' }: { crop: Crop; className?: string }) {
   return (
-    <div className="aspect-square overflow-hidden flex gap-[3px]" style={{ background: '#1a1612' }}>
-      {cols.map((col, i) => (
-        <div key={i} className="flex-1 min-w-0 flex flex-col gap-[3px]" style={{ marginTop: i === 1 ? -24 : 0 }}>
-          {[...col, ...col].map((src, j) => <img key={j} src={src} alt="" loading="lazy" className="w-full h-auto block" />)}
-        </div>
-      ))}
+    <div className={`aspect-square overflow-hidden relative bg-warm ${className}`}>
+      <img src={crop.src} alt="" loading="lazy" className="absolute max-w-none" style={{ width: `${100 / crop.w}%`, left: `${(-crop.x / crop.w) * 100}%`, top: `${(-crop.y / (crop.w * crop.aspect)) * 100}%` }} />
     </div>
   );
 }
 
+/** Square: one representative picture, the maker's own crop if they chose one. Strip: covers, pages and plates in a row, no gaps, each at its own proportions. */
+export function Thumb({ item, mode }: { item: IndexItem; mode: 'square' | 'strip' }) {
+  const [own, setOwn] = useState<Crop | null>(null);
+  useEffect(() => { try { const v = localStorage.getItem(cropKey(item.slug)); if (v) setOwn(JSON.parse(v)); } catch { /* none saved */ } }, [item.slug]);
+  if (mode === 'strip') {
+    const s = item.strip?.length ? item.strip : item.thumbs;
+    return (
+      <div className="aspect-[5/2] overflow-hidden flex" style={{ background: '#1a1612' }}>
+        {s.map((src, i) => <img key={i} src={src} alt="" loading="lazy" className="h-full w-auto max-w-none shrink-0 block" />)}
+      </div>
+    );
+  }
+  if (own) return <CropSquare crop={own} />;
+  const src = item.cover || item.thumbs[0];
+  if (!src) return <div className="aspect-square bg-warm" />;
+  return <div className="aspect-square overflow-hidden bg-warm"><img src={src} alt="" loading="lazy" className="w-full h-full object-cover" /></div>;
+}
+
+const pl = (v: number, w: string) => (v ? `${n(v)} ${w}${v === 1 ? '' : 's'}` : '');
 const meta = (c: IndexItem) => [
-  c.books ? `${n(c.books)} books` : '', c.images ? `${n(c.images)} images` : '', c.artworks ? `${n(c.artworks)} artworks` : '',
-  c.pages ? `${c.pages} pages` : '', c.quotes ? `${c.quotes} quotes` : '',
+  pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, featured, subjects }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[] }) {
+export default function CollectionsBrowser({ items, featured, subjects, initialSubject = '' }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
   const [maker, setMaker] = useState<'all' | 'source-library' | 'reader'>('all');
   const [holds, setHolds] = useState<string[]>([]);
   const [lang, setLang] = useState('');
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState(initialSubject);
   const [sort, setSort] = useState('featured');
   const [view, setView] = useState<'grid' | 'list'>('grid');
-  const [thumb, setThumb] = useState<'grid' | 'single'>('grid');
+  const [thumb, setThumb] = useState<'square' | 'strip'>('square');
 
   const languages = useMemo(() => {
     const c = new Map<string, number>();
@@ -128,13 +137,13 @@ export default function CollectionsBrowser({ items, featured, subjects }: { item
 
       <div className="flex justify-between md:justify-end gap-2 items-center text-xs text-muted mt-2">
         <span className="md:hidden">{n(shown.length)} collections</span><span className="flex gap-2 items-center">Thumbnails
-        {(['grid', 'single'] as const).map((k) => <button key={k} type="button" aria-pressed={thumb === k} onClick={() => setThumb(k)} className={thumb === k ? 'text-primary underline underline-offset-2' : ''}>{k === 'grid' ? 'Image grid' : 'Single image'}</button>)}</span>
+        {(['square', 'strip'] as const).map((k) => <button key={k} type="button" aria-pressed={thumb === k} onClick={() => setThumb(k)} className={thumb === k ? 'text-primary underline underline-offset-2' : ''}>{k === 'square' ? 'Square' : 'Strip'}</button>)}</span>
       </div>
 
       {shown.length === 0 ? (
         <p className="py-16 text-center text-muted">{maker === 'reader' ? 'No reader collections are public yet.' : 'Nothing matches all of that. Remove one of the filters above.'}</p>
       ) : view === 'grid' ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-5 gap-y-8 mt-4">
+        <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
               <Thumb item={c} mode={thumb} />
@@ -147,7 +156,7 @@ export default function CollectionsBrowser({ items, featured, subjects }: { item
         <div className="mt-4">
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="grid grid-cols-[72px_1fr] gap-4 py-3 border-t border-border-light group">
-              <Thumb item={c} mode="single" />
+              <Thumb item={c} mode="square" />
               <span className="min-w-0">
                 <span className="block text-[17px] text-primary font-display group-hover:underline underline-offset-2">{c.name}</span>
                 <span className="block text-sm text-secondary truncate">{c.deck}</span>

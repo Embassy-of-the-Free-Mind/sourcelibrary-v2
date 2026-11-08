@@ -7,8 +7,8 @@ import { demoItems } from '../_lib/demos-index';
 
 interface Sorted { source: string; slug: string; name: string; proposed: string; proposed_subject?: string | null }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ hero?: string }> }) {
-  const { hero } = await searchParams;
+export default async function Page({ searchParams }: { searchParams: Promise<{ hero?: string; subject?: string }> }) {
+  const { hero, subject } = await searchParams;
   const full = hero === '100';
   const sched = dataFile<{ entries: { collection: string }[] }>('schedule');
   const lead = sched?.entries[0] ? collectionModel(sched.entries[0].collection) : null;
@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ h
           </div>
         </section>
       )}
-      <CollectionsBrowser items={items} featured={lead?.slug} subjects={subjects} />
+      <CollectionsBrowser items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} />
     </div>
   );
 }

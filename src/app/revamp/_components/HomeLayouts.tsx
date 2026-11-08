@@ -65,7 +65,7 @@ function Popular({ pop }: { pop: IndexItem[] }) {
         <div className="grid grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-5">
           {pop.slice(0, 6).map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
-              <Thumb item={c} mode="grid" />
+              <Thumb item={c} mode="square" />
               <span className="block mt-2 text-[14px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span>
             </Link>
           ))}

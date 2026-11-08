@@ -151,6 +151,10 @@ export interface IndexItem {
   slug: string; name: string; deck: string; href: string; maker: 'source-library' | 'reader';
   holds: string[]; books: number; images: number; artworks: number; pages: number; quotes: number;
   thumbs: string[]; languages: string[]; label?: string; example?: boolean; order: number;
+  /** One representative picture, shown square. Until a maker picks one, the best upright illustration. */
+  cover?: string;
+  /** Covers, pages and plates for the strip card, each at its own proportions. */
+  strip?: string[];
 }
 
 /** One record per collection, for the /collections grid. A collection can hold any mix. */
@@ -166,7 +170,13 @@ export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
     const images = m.opensOn === 'artworks' ? 0 : m.stats.images;
     const holds = [m.stats.works > 0 && 'books', images > 0 && 'plates', art > 0 && 'artworks', m.pages.length > 0 && 'pages', m.quotes.length > 0 && 'quotes'].filter(Boolean) as string[];
     const thumbs = m.heroTiles.length >= 4 ? m.heroTiles.slice(0, 9) : [m.plates[0]?.src || m.heroImage || m.books[0]?.thumbnail_blob || m.books[0]?.thumbnail].filter(Boolean) as string[];
-    items.push({ slug: m.slug, name: m.name, deck: m.deck, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
+    const am = m.askMedia && 'plate' in m.askMedia ? m.askMedia : null;
+    const cover = am?.fallback || am?.plate || m.introPlate?.src || m.heroImage || thumbs[0];
+    const covers = m.books.map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean) as string[];
+    const pics = m.plates.map((p) => p.src);
+    const strip: string[] = [];
+    for (let i = 0; strip.length < 12 && (i < covers.length || i < pics.length); i++) [covers[i], pics[i]].forEach((x) => x && strip.length < 12 && strip.push(x));
+    items.push({ slug: m.slug, name: m.name, deck: m.deck, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
   };
   for (const slug of snapshotSlugs()) {
     const k = sortedKind.get(slug);

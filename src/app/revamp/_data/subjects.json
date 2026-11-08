@@ -42,7 +42,7 @@
     "fastPct": 94.4,
     "fastExact": 177,
     "wikidataLinked": 245,
-    "wikidataPct": 98.0,
+    "wikidataPct": 98,
     "wikidataExact": 191,
     "withImageCount": 216,
     "withBookCount": 181,
@@ -5932,7 +5932,7 @@
     },
     {
       "id": "norse-religion",
-      "label": "Norse religion",
+      "label": "Norse and Germanic religion",
       "level": 2,
       "parents": [
         "ancient-religions"
@@ -12401,6 +12401,108 @@
         "books": "collection:art-of-memory"
       },
       "confidence": "high"
+    },
+    {
+      "id": "bahai",
+      "label": "Bahá’í Faith",
+      "level": 2,
+      "parents": [
+        "religion"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": null,
+      "wikidata": null,
+      "warrant": [
+        "collection:bahai"
+      ],
+      "merges": [],
+      "imageCount": null,
+      "bookCount": null,
+      "confidence": "medium",
+      "note": "Added 2026-11-08 to place an unmatched collection; authority match still to do"
+    },
+    {
+      "id": "druze",
+      "label": "Druze",
+      "level": 2,
+      "parents": [
+        "islam",
+        "religion"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": null,
+      "wikidata": null,
+      "warrant": [
+        "collection:druze"
+      ],
+      "merges": [],
+      "imageCount": null,
+      "bookCount": null,
+      "confidence": "medium",
+      "note": "Added 2026-11-08 to place an unmatched collection; authority match still to do"
+    },
+    {
+      "id": "mandaeism",
+      "label": "Mandaeism",
+      "level": 2,
+      "parents": [
+        "gnosticism",
+        "ancient-religions"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": null,
+      "wikidata": null,
+      "warrant": [
+        "collection:mandaeanism"
+      ],
+      "merges": [],
+      "imageCount": null,
+      "bookCount": null,
+      "confidence": "medium",
+      "note": "Added 2026-11-08 to place an unmatched collection; authority match still to do"
+    },
+    {
+      "id": "samaritanism",
+      "label": "Samaritanism",
+      "level": 2,
+      "parents": [
+        "religion"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": null,
+      "wikidata": null,
+      "warrant": [
+        "collection:samaritan"
+      ],
+      "merges": [],
+      "imageCount": null,
+      "bookCount": null,
+      "confidence": "medium",
+      "note": "Added 2026-11-08 to place an unmatched collection; authority match still to do"
+    },
+    {
+      "id": "sikhism",
+      "label": "Sikhism",
+      "level": 2,
+      "parents": [
+        "indian-religions"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": null,
+      "wikidata": null,
+      "warrant": [
+        "collection:sikhism"
+      ],
+      "merges": [],
+      "imageCount": null,
+      "bookCount": null,
+      "confidence": "medium",
+      "note": "Added 2026-11-08 to place an unmatched collection; authority match still to do"
     }
   ]
 }
