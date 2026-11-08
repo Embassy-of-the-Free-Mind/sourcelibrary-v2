@@ -9,7 +9,7 @@
  * offleaf-fix-5309 — put each stranded IA page's OWN text back beside its (already right) image (#5309).
  *
  *   node --env-file=.env.production.local scripts/maintenance/offleaf-fix-5309.mjs plan --diagnose F --out DIR
- *   … run --out DIR --wave NAME --max-pages N [--concurrency 3] [--apply] [--weekly-end 0.25]
+ *   … run --out DIR --diagnose F --wave NAME --max-pages N [--max-book-pages N] [--concurrency 3] [--apply] [--weekly-end 0.25]
  *   … status --out DIR
  *
  * plan   The queue: every page scripts/eval/offleaf-5309/diagnose.mjs lists (the stranded audit's pages; whatever the
@@ -134,6 +134,9 @@ async function fixBook(b, wave, pool) {
     if (r3 === 0 || fs.existsSync(trDir)) {
       await run(['scripts/batch/cli-translate.mjs', 'apply', `--out=${trDir}`, `--reason=#5309 residual: re-translated after the page's stranded (wrong-leaf) OCR was re-read from its own image; no previous-page English in the prompt (#5026)`, '--apply'], { ...env, CLI_RUN_ID: `${SWEEP}-${wave}-tr` }, L);
       trWritten = new Set((await db.collection('pages').find({ id: { $in: wrote }, 'translation.updated_at': { $gte: t1 } }, { projection: { id: 1 } }).toArray()).map((p) => p.id));
+      // A page withheld before (2026-10-02's stale_after_reocr, or step 4 of an earlier wave) that now has its own English
+      // drops the marker, as wrong-leaf-fix-5021.mjs does; the old English stays in page_revisions.
+      if (trWritten.size) await db.collection('pages').updateMany({ id: { $in: [...trWritten] }, 'translation.data': { $exists: true }, translation_withheld: { $exists: true } }, { $unset: { translation_withheld: '' } });
     }
   }
   // 4. withhold the old English a written page still carries
@@ -163,7 +166,9 @@ async function runWave() {
   const done = new Set(readJsonl(F('ledger.jsonl')).map((r) => r.book_id));
   const take = [];
   let n = 0;
-  for (const b of q) { if (done.has(b.book_id) || b.hold) continue; if (n + b.pages.length > MAX && take.length) continue; take.push(b); n += b.pages.length; if (n >= MAX) break; }
+  // --max-book-pages: leave books bigger than this for a later wave (a top-up for the spot check's one-page-per-book draw)
+  const BIG = Number(arg('max-book-pages', 'Infinity'));
+  for (const b of q) { if (done.has(b.book_id) || b.hold || b.pages.length > BIG) continue; if (n + b.pages.length > MAX && take.length) continue; take.push(b); n += b.pages.length; if (n >= MAX) break; }
   log(`wave ${wave}: ${n} pages in ${take.length} books${has('apply') ? '' : ' (DRY RUN)'}`);
   await open();
   const conc = Number(arg('concurrency', '3'));

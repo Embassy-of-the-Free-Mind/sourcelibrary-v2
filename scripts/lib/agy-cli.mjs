@@ -129,6 +129,18 @@ export function imageNeverOpened(meta) {
   return !meta.tool_calls.some((t) => t === 'read_file' || t === 'view_file');
 }
 
+/**
+ * #5309: the model asked for the page image under a path the gate refused, after (or instead of) the one it was given.
+ * On the 2026-11-08 offleaf pilot, 14 written reads had this shape (`read_file`, then `read_file:deny` on an invented
+ * absolute path): 13 of them were another book's page entirely (a Latin life of St Jerome on a Spanish herbal page), read
+ * blind by Opus against the image. Of the 315 without one, 289 agreed with an earlier read of their leaf and the 26 that
+ * did not were all read as their own leaf by Opus.
+ */
+export function imageReadDenied(meta) {
+  if (!meta || meta.cli !== 'agy' || !Array.isArray(meta.tool_calls)) return false;
+  return meta.tool_calls.some((t) => t === 'read_file:deny' || t === 'view_file:deny');
+}
+
 /** The paths the gate let the model read, from the same log. */
 export const gateReads = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.decision === 'allow' && r.path).map((r) => r.path); } catch { return []; } };
 

@@ -19,11 +19,18 @@ describe('stranded-leaf-gate', () => {
     expect(sharedShare(leafTokens(L[1]), leafTokens(L[2]))).toBe(0);
   });
 
-  it('A: the stored text is a settled neighbour\'s leaf and the read is not → lift', () => {
-    // page 3 stores leaf 2's text (offset −1); page 2 was re-read and holds leaf 2; the read is leaf 3
-    const g = strandedLift({ stored: L[2], read: L[3], neighbours: [{ id: 'p2', n: 2, d: -1, text: L[2], stranded: false }, { id: 'p4', n: 4, d: 1, text: L[4], stranded: false }] });
+  it('A: the stored text is a settled neighbour\'s leaf, and page n−d\'s pre-repair read corroborates the read → lift', () => {
+    // page 3 stores leaf 2's text (offset −1); page 2 was re-read and holds leaf 2; page 4 was re-read too, and before
+    // that it held leaf 3 (its revision); the read is leaf 3
+    const g = strandedLift({ stored: L[2], read: L[3], neighbours: [{ id: 'p2', n: 2, d: -1, text: L[2], stranded: false }, { id: 'p4', n: 4, d: 1, text: L[4], stranded: false, history: [L[3]] }] });
     expect(g.lift).toBe(true);
-    expect(g.evidence).toMatchObject({ kind: 'stored-is-neighbour', ref_n: 2, d: -1 });
+    expect(g.evidence).toMatchObject({ kind: 'stored-is-neighbour', ref_n: 2, d: -1, corroborated_by: { n: 4, revision: true } });
+  });
+
+  it('A refuses an uncorroborated read: the stored text is wrong, but nothing says the read is right (pilot: an invented page)', () => {
+    const g = strandedLift({ stored: L[2], read: L[5], neighbours: [{ id: 'p2', n: 2, d: -1, text: L[2], stranded: false }, { id: 'p4', n: 4, d: 1, text: L[4], stranded: false, history: [L[3]] }] });
+    expect(g.lift).toBe(false);
+    expect(g.why).toMatch(/corroborates/);
   });
 
   it('A refuses a read that is the same leaf as the neighbour', () => {

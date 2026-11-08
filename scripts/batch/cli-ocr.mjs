@@ -122,8 +122,9 @@
  * scripts/audit/stranded-image-repair-text.mjs lists, as scripts/eval/offleaf-5309/diagnose.mjs writes them). Their
  * stored text was read from the shifted image, so the 40% floor compares the read with another leaf's text. For a listed
  * page still holding the listed text, scripts/lib/stranded-leaf-gate.mjs replaces the floor with the book's neighbours:
- * the stored text is a settled neighbour's leaf (and the read is not), or the read is the leaf the shift parked on a
- * still-stranded neighbour. The evidence is written into `engine.input.stranded`; every other guard stays.
+ * the stored text is a settled neighbour's leaf (and the read is not, and page n−d holds an earlier read of this leaf the
+ * read agrees with), or the read is the leaf the shift parked on a still-stranded neighbour. The evidence is written
+ * into `engine.input.stranded`; every other guard stays.
  *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
@@ -143,7 +144,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, cliExitCode } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, imageReadDenied, cliExitCode } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { strandedLift, STRANDED_WINDOW } from '../lib/stranded-leaf-gate.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
@@ -648,7 +649,10 @@ async function strandedEvidence(page, text) {
   if (!row) return { lift: false, why: 'not on the stranded list' };
   if (row.stored_hash !== contentHash(page.ocr?.data ?? '')) return { lift: false, why: 'the stored text is not the one the stranded list named' };
   const near = await db.collection('pages').find({ book_id: page.book_id, page_number: { $gte: page.page_number - STRANDED_WINDOW, $lte: page.page_number + STRANDED_WINDOW, $ne: page.page_number } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1 } }).toArray();
-  const neighbours = near.map((x) => { const r = STRANDED.get(x.id); return { id: x.id, n: x.page_number, d: x.page_number - page.page_number, text: x.ocr?.data ?? '', stranded: !!r && r.stored_hash === contentHash(x.ocr?.data ?? '') }; });
+  // Earlier OCR of each neighbour: a re-read neighbour's pre-repair read is where the shift parked this leaf's text.
+  const hist = new Map();
+  for (const r of await db.collection('page_revisions').find({ page_id: { $in: near.map((x) => x.id) }, field: 'ocr' }, { projection: { page_id: 1, data: 1 } }).toArray()) if (typeof r.data === 'string') (hist.get(r.page_id) || hist.set(r.page_id, []).get(r.page_id)).push(r.data);
+  const neighbours = near.map((x) => { const r = STRANDED.get(x.id); return { id: x.id, n: x.page_number, d: x.page_number - page.page_number, text: x.ocr?.data ?? '', history: hist.get(x.id) || [], stranded: !!r && r.stored_hash === contentHash(x.ocr?.data ?? '') }; });
   return strandedLift({ stored: page.ocr.data, read: text, neighbours });
 }
 const BY_EYE = new Map();
@@ -682,6 +686,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (m.wrapper) { failed(m, `reply wrapper: ${m.wrapper}`, 'wrapper'); continue; }
   // #5274: the gate denied every image read, so the reply is not a reading of this leaf (blank stub or invented page).
   if (imageNeverOpened(m)) { skip(m, 'the model never opened the page image (every read_file/view_file denied): not a read of this leaf'); continue; }
+  // #5309: a plain read whose model asked for the image under a refused path wrote another book's page 13 times in 14.
+  if (!correct && imageReadDenied(m)) { failed(m, 'a denied image read (the model asked for the page image under another path): 13 of 14 such reads were invented pages (#5309)', 'refused'); continue; }
   if (text.length < 5) { failed(m, 'empty read (refusal or blank)', 'empty'); continue; }
   // A corrector answers UNCHANGED (the draft stands) or `CONTAIN: <why>` (not this leaf's text) instead of a text: the
   // #5924 template's two non-text answers, parsed as correct.mjs parseAnswer does. Neither is ever written as OCR. A

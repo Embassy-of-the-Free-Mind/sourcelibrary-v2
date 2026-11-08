@@ -17,6 +17,12 @@
  *      the text read from the shifted image), beating every other neighbour by >= 0.15 — the read is the leaf whose
  *      text the shift parked on that neighbour, which is this page's leaf; and it matches no non-stranded neighbour.
  *
+ * A alone proves only that the STORED text is wrong, not that the read is right: on the pilot (2026-11-08) agy, failing
+ * to open a 2765×3955 scan, wrote a Latin "Vita S. Hieronymi" onto a Spanish page about Datura, and A passed it. So A
+ * also needs the read CORROBORATED: on a uniform shift d the page n−d once held leaf n's text (it still does if it is
+ * stranded; its pre-repair read is in page_revisions if it was re-read), so the read must share >= 0.4 with the current
+ * text or an earlier OCR revision of page n−d. B is its own corroboration.
+ *
  * Neither is a quality check: a read that passes is still subject to every other cli-ocr guard, and the lane's own
  * spot check judges a sample against the image (scripts/eval/offleaf-5309/judge.mjs).
  */
@@ -56,7 +62,7 @@ export function bestNeighbour(tok, neighbours) {
 
 /**
  * The gate. `stored` and `read` are texts; `neighbours` are the book's pages n-8 … n+8 (not n) as {n, d, id, text,
- * stranded}. Returns { lift: true, evidence } or { lift: false, why }.
+ * stranded, history?: [earlier OCR texts]}. Returns { lift: true, evidence } or { lift: false, why }.
  */
 export function strandedLift({ stored, read, neighbours }) {
   const st = leafTokens(stored), rd = leafTokens(read);
@@ -69,7 +75,9 @@ export function strandedLift({ stored, read, neighbours }) {
   if (a.decisive) {
     const readVsRef = sharedShare(rd, a.best.tok);
     if (readVsRef >= STRANDED_SHARED_MIN) return { lift: false, why: `the read is the same leaf as page ${a.best.n} (${Math.round(readVsRef * 100)}%)` };
-    return { lift: true, evidence: { kind: 'stored-is-neighbour', ref_page: a.best.id, ref_n: a.best.n, d: a.best.d, stored_vs_ref: round(a.best.s), next_best: round(a.second?.s || 0), read_vs_ref: round(readVsRef) } };
+    const c = corroboration(rd, nb, -a.best.d);
+    if (!c) return { lift: false, why: `nothing corroborates the read: page ${a.best.n - 2 * a.best.d} holds no earlier read of this leaf` };
+    return { lift: true, evidence: { kind: 'stored-is-neighbour', ref_page: a.best.id, ref_n: a.best.n, d: a.best.d, stored_vs_ref: round(a.best.s), next_best: round(a.second?.s || 0), read_vs_ref: round(readVsRef), corroborated_by: c } };
   }
   const b = bestNeighbour(rd, nb);
   if (b.decisive && b.best.stranded) {
@@ -78,4 +86,17 @@ export function strandedLift({ stored, read, neighbours }) {
     return { lift: true, evidence: { kind: 'read-is-shifted-neighbour', ref_page: b.best.id, ref_n: b.best.n, d: b.best.d, read_vs_ref: round(b.best.s), next_best: round(b.second?.s || 0) } };
   }
   return { lift: false, why: 'no neighbour places the stored text or the read' };
+}
+
+/** Does page n+dd (dd = −d, the page the shift parked leaf n's text on) hold, now or in an earlier OCR revision, a text
+ * the read shares >= 0.4 with? Returns {page, n, d, shared, revision} or null. */
+export function corroboration(rd, nb, dd) {
+  const m = nb.find((x) => x.d === dd);
+  if (!m) return null;
+  // Its CURRENT text counts only while it is still stranded: once re-read it holds its own leaf, not this one.
+  const texts = [...(m.stranded ? [{ t: m.tok, revision: false }] : []), ...(m.history || []).map((h) => ({ t: leafTokens(h), revision: true }))];
+  let best = null;
+  for (const x of texts) { if (x.t.size < 15) continue; const s = sharedShare(rd, x.t); if (!best || s > best.s) best = { s, revision: x.revision }; }
+  if (!best || best.s < STRANDED_SHARED_MIN) return null;
+  return { page: m.id, n: m.n, d: dd, shared: Number(best.s.toFixed(3)), revision: best.revision };
 }
