@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
-import { PARTNER_TERMS_URL, PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
+import { API_TERMS_URL, API_TERMS_VERSION } from '@/lib/api-terms-version';
 
 /**
  * POST /api/dataset/v1/request-key — Public endpoint to request an API key
@@ -26,9 +26,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (accept_terms !== PARTNER_TERMS_VERSION) {
+  if (accept_terms !== API_TERMS_VERSION) {
     return NextResponse.json(
-      { error: 'Agree to the terms of use to request a key.', terms_required: true, terms_version: PARTNER_TERMS_VERSION, terms_url: PARTNER_TERMS_URL },
+      { error: 'Agree to the terms of use to request a key.', terms_required: true, terms_version: API_TERMS_VERSION, terms_url: API_TERMS_URL },
       { status: 400 },
     );
   }

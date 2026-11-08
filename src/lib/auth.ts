@@ -15,6 +15,7 @@ import { activatePendingMembership } from './memberships';
 import { membershipState } from './membership-status';
 import { recordAuthEvent } from './auth-events';
 import { resolvePostSignInRedirect } from './auth-redirect';
+import { SITE_TERMS_VERSION } from './api-terms-version';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
 
@@ -270,7 +271,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const db = client.db(dbName);
         await db.collection('users').updateOne(
           { email: user.email },
-          { $set: { createdAt: new Date(), welcomedAt: null } }
+          // The sign-in form says signing in is agreeing to /terms: record which text (#8235).
+          { $set: { createdAt: new Date(), welcomedAt: null, terms_version: SITE_TERMS_VERSION, terms_accepted_at: new Date() } }
         );
       } catch (error) {
         console.error('[auth] Failed to set createdAt:', error);

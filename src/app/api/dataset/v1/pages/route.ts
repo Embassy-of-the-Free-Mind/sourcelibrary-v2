@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { resolveApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { apiTermsRequiredBody } from '@/lib/api-terms-version';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
 import { getClientIp } from '@/lib/rate-limit';
 import { DatasetPageRecord } from '@/lib/dataset/types';
@@ -53,7 +54,8 @@ function parseCursor(after: string | null): Record<string, unknown> | null {
  */
 export async function GET(request: NextRequest) {
   // Authenticate
-  const apiKey = await validateApiKey(request.headers.get('authorization'));
+  const { doc: apiKey, termsRequired } = await resolveApiKey(request.headers.get('authorization'));
+  if (termsRequired) return NextResponse.json(apiTermsRequiredBody(), { status: 403 });
   if (!apiKey) {
     return NextResponse.json(
       { error: 'Invalid or missing API key. Get one at https://sourcelibrary.org/dataset' },
