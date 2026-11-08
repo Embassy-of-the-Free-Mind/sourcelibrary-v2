@@ -14,7 +14,8 @@
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { resolveApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { apiTermsRequiredBody } from '@/lib/api-terms-version';
 import { API_LIMITS } from '@/lib/api-limits';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
@@ -37,7 +38,7 @@ export interface ApiIdentity {
 export interface ApiAuthDecision {
   allowed: boolean;
   identity: ApiIdentity;
-  status: number;       // 200, 401, or 429
+  status: number;       // 200, 401, 403 (terms_required) or 429
   retryAfter?: number;  // seconds, when 429
   reason?: string;      // why blocked (for logging + error body)
 }
@@ -116,7 +117,17 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   // 2) Bearer API key. validateApiKey already updates last_used_at atomically.
   const authHeader = request.headers.get('authorization');
   if (authHeader) {
-    const keyDoc = await validateApiKey(authHeader);
+    const { doc: keyDoc, termsRequired } = await resolveApiKey(authHeader);
+    if (keyDoc && termsRequired) {
+      // A real key whose holder has not agreed to the API terms (#8235). Not a
+      // rate decision: refused even while API_AUTH_ENFORCE is off (see withApiAuth).
+      return {
+        allowed: false,
+        status: 403,
+        identity: { kind: 'apikey', apiKeyId: String((keyDoc as ApiKeyDoc)._id), userId: keyDoc.user_id, apiKeyTier: keyDoc.tier },
+        reason: 'terms_required',
+      };
+    }
     if (keyDoc) {
       const identity: ApiIdentity = {
         kind: 'apikey',
@@ -283,7 +294,8 @@ export interface WithApiAuthOptions {
 type RateLimitBody = ReturnType<typeof buildAnonRateLimitBody>
   | ReturnType<typeof buildSessionRateLimitBody>
   | ReturnType<typeof buildKeyRateLimitBody>
-  | ReturnType<typeof buildAssistantRateLimitBody>;
+  | ReturnType<typeof buildAssistantRateLimitBody>
+  | ReturnType<typeof apiTermsRequiredBody>;
 
 /** JSON-RPC error envelope for MCP-style clients. */
 function buildJsonRpcError(httpStatus: number, body: RateLimitBody) {
@@ -312,9 +324,10 @@ export function withApiAuth<C = unknown>(
     const start = Date.now();
     const decision = await requireApiAccess(request);
 
-    if (!decision.allowed && enforce) {
+    if (!decision.allowed && (enforce || decision.reason === 'terms_required')) {
       const httpBody =
-        decision.status === 401 ? buildAnonRateLimitBody(decision.retryAfter)
+        decision.reason === 'terms_required' ? apiTermsRequiredBody()
+        : decision.status === 401 ? buildAnonRateLimitBody(decision.retryAfter)
         : decision.reason === 'key_rate_limit' ? buildKeyRateLimitBody(decision.retryAfter)
         : decision.reason === 'assistant_rate_limit' ? buildAssistantRateLimitBody(decision.retryAfter)
         : buildSessionRateLimitBody(decision.retryAfter);
