@@ -57,6 +57,7 @@ import { isBot, isTrustedBot } from '@/lib/bot-gate';
 import { NextRequest } from 'next/server';
 import { logBotRead } from '@/lib/bot-reads';
 import { checkReadBudget, chargeRead } from '@/lib/read-budget';
+import { API_LIMITS } from '@/lib/api-limits';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { freeMaxPage } from '@/lib/free-preview';
 import { markForExport } from '@/lib/provenance';
@@ -696,7 +697,19 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           if (carried.length) out.push(<div key="carried-tail" className="mt-10">{carriedHeads(carried)}</div>);
           return out;
         })()}
-        {gateFrom !== null && (
+        {gateFrom !== null && meter?.identity.kind === 'session' && (
+          // A signed-in reader past the daily whole-book budget: telling them to sign in
+          // would ask for what they have done. The page-by-page reader is not counted.
+          <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
+            <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">You have reached today&rsquo;s limit for this view</Heading>
+            <p className="mt-2">
+              The whole-book view serves up to {API_LIMITS.session.pagesPerDay.toLocaleString('en-US')} pages a day to each reader. The page-by-page reader has no
+              such limit: <Link href={`/book/${bookPath}/page-number/${gateFrom}`} className="underline underline-offset-2 hover:text-accent-rust">continue
+              at page {gateFrom}</Link>. This view opens in full again within a day.
+            </p>
+          </section>
+        )}
+        {gateFrom !== null && meter?.identity.kind !== 'session' && (
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
             <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>
             <p className="mt-2">
