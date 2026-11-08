@@ -189,7 +189,7 @@ export const GET = withApiAuth(async (
     if (!(await isBookReadable(book, request))) {
       // A copy hidden as a duplicate of an edition we kept: name the kept copy, so a
       // client holding the old id can switch instead of retrying a bare 404 (#8235).
-      const kept = book.hidden_reason === 'same_edition_duplicate' ? await resolveKeptEdition(db, book.duplicate_of) : null;
+      const kept = (book.hidden_reason === 'same_edition_duplicate' || book.hidden_reason === 'duplicate') && book.duplicate_of ? await resolveKeptEdition(db, book.duplicate_of) : null;
       return NextResponse.json(
         kept
           ? { error: 'Book not found', reason: 'duplicate_edition', message: `This copy was hidden as a duplicate of an edition we kept. Read that one instead: ${kept.text_api}`, kept_edition: kept }
