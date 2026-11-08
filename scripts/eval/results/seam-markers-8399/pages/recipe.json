@@ -1,0 +1,30 @@
+{
+ "question": "prompt",
+ "issue": 8399,
+ "stage": "translation",
+ "languages": [
+  "la",
+  "de"
+ ],
+ "baseline": "A",
+ "arms": [
+  "A",
+  "A2",
+  "B4",
+  "Bb"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": [
+  "latin-cli-agy4",
+  "german-cli-agy4"
+ ],
+ "waive": {}
+}

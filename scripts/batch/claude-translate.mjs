@@ -32,6 +32,15 @@
  * sent is saved under DIR/prompts/<hash>.txt, and `apply` checks the meta's hash against it; each call's whole reply
  * is kept under DIR/raw/<call id>.txt.
  *
+ * --folio-markers=1 (#8399, --cli=agy, text reads): a block of Latin-script pages goes as ONE continuous text with
+ * `<pb n="N"/>` where each page begins (translate-core FOLIO_MARKER_RULE, the #7118 lane extended to the block) and is
+ * split at the markers (folio-markers.mjs splitMarkedReply: every page turn within the balance bound); the wrong-leaf
+ * checks (absorption, number vote) and the leaf-seam check apply, not the clause-drift test (a sentence may cross a
+ * marker). An unusable or unbalanced split reads the block one page per call. No call of the run is sent the previous
+ * page's English. Reads carry prompt_variant agy-block-7503-folio-8399, context.folio_markers and folio_block.
+ * --block-chars=N: the source-character budget of one call (planBlocks maxChars; default its 20,000), so dense pages go
+ * fewer to a call (#8399).
+ *
  * --images-dir=D (#6948, image-attached reads): D/<page_id>/ holds that page's images, already cut (t1.jpg, t2.jpg, ... in
  * reading order: full-resolution strips of the leaf; scripts/eval/tib-concept-opus-6948/prep-images.mjs makes them).
  * Each call's sealed folder gets its pages' images as p<N>-t<k>.jpg, the CLI is allowed the Read tool and nothing
@@ -74,7 +83,10 @@ import { PAGE_BREAK_SCOPED, pageBreakVariant, buildBlockTranslationPrompt, loadT
 import { leafNumberOf } from '../lib/split-stage.mjs';
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
-import { anchorRule, takeAnchors, lengthRatioK } from '../lib/block-page-guard.mjs';
+import { anchorRule, takeAnchors, lengthRatioK, blockPageRefusals } from '../lib/block-page-guard.mjs';
+import { splitMarkedReply } from '../lib/folio-markers.mjs';
+import { sourceProse } from '../lib/block-drift.mjs';
+import { dominantScript } from '../lib/page-integrity.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
@@ -91,6 +103,11 @@ const AGY_MAX_PROMPT_CHARS = 120_000;
 /** Part of the prompt SENT, so part of what is hashed: the CLI is an agent and must answer with text only. */
 // The <unclear> line: on the #6559 paired check Opus copied doubtful Nahuatl words through untranslated inside
 // <unclear> tags (Promptuario p. 67), where Gemini translated them. Translate the best reading and keep the doubt.
+/**
+ * The --folio-markers suffix (#8399): a marked block answers with ONE <translation> wrapper holding the whole block's
+ * English with a <pb n="N"/> where each page begins (translate-core FOLIO_MARKER_RULE), then one summary and keywords.
+ */
+export const MARKED_CALL_SUFFIX = '\n\nWhere the source marks a word <unclear>, translate your best reading of it into English and keep the <unclear> tag around the English; never copy the source word through untranslated.\n\nAnswer with the one <translation> wrapper, the page markers inside it, then the one <summary> and the one <keywords>, and nothing before, between or after them: no commentary, no code fence. Do not use any tool: the text is above.\n';
 export const CALL_SUFFIX = '\n\nWhere the source marks a word <unclear>, translate your best reading of it into English and keep the <unclear> tag around the English; never copy the source word through untranslated.\n\nAnswer with the translation tags only, one per page in the order given, and nothing before, between or after them: no commentary, no code fence. Do not use any tool: the text is above.\n';
 
 /**
@@ -222,7 +239,12 @@ async function main() {
   // 49 parsed, 1 refused and re-read, translations within 1% of the tag reply's length); Opus keeps the tags.
   const REPLY = arg('reply') || (CLI === 'agy' && !IMAGES ? 'json' : 'tags');
   if (!['tags', 'json'].includes(REPLY) || (REPLY === 'json' && IMAGES)) { console.error('--reply is tags or json (json: text-only reads)'); process.exit(2); }
-  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI] + (IMAGES ? '-image' : '') + (REPLY === 'json' ? '-json' : '');
+  // --folio-markers (#8399, agy text reads only): a block of Latin-script pages goes as ONE continuous text with a
+  // folio marker at each page turn and is split at the markers (the #7118 lane extended from 2 pages to the block);
+  // no call of the run is sent the previous page's English, the marked block's or a page read alone. An unusable or
+  // unbalanced split reads the block's pages one per call.
+  const MARKED = CLI === 'agy' && !IMAGES && (arg('folio-markers') ?? '0') !== '0';
+  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI] + (IMAGES ? '-image' : '') + (MARKED ? '-folio-8399' : REPLY === 'json' ? '-json' : '');
   /** A page's prepared images, in reading order, or [] (#6948). */
   const imagesOf = (p) => { const d = IMAGES && path.join(IMAGES, p.id); return d && fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /^t\d+\.jpg$/.test(f)).sort((a, b) => Number(a.slice(1, -4)) - Number(b.slice(1, -4))) : []; };
   const MODEL = arg('model') || (CLI === 'agy' ? 'gemini-3.8-flash-low' : 'opus');
@@ -295,7 +317,9 @@ async function main() {
     const run = runs[runs.length - 1], last = run?.[run.length - 1];
     if (last && last.book_id === p.book_id && last.page_number + 1 === p.page_number) run.push(p); else runs.push([p]);
   }
-  const blocks = runs.flatMap((r) => planBlocks(r, { blockSize: PER_CALL }));
+  // --block-chars=N (#8399): the source-character budget of one call, so dense pages go fewer to a call.
+  const BLOCK_CHARS = Number(arg('block-chars')) || undefined;
+  const blocks = runs.flatMap((r) => planBlocks(r, { blockSize: PER_CALL, ...(BLOCK_CHARS && { maxChars: BLOCK_CHARS }) }));
   console.log(`${found.size} of ${ids.length} page ids found; ${todo.length} to translate in ${blocks.length} calls; model ${MODEL}; ${CLI} ${version}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'claude-translate-sealed', path.basename(OUT));
@@ -318,15 +342,17 @@ async function main() {
     const first = group[0], lastP = group[group.length - 1];
     const prev = byNum.get(`${first.book_id}:${first.page_number - 1}`), next = byNum.get(`${lastP.book_id}:${lastP.page_number + 1}`);
     const prevRead = prev ? readOf(prev.id) : '';
-    const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
+    const previousTranslation = MARKED ? null : prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
+    const marked = MARKED && group.length > 1 && dominantScript(group.map((p) => sourceProse(p.ocr?.data || '')).join(' ')) === 'latin';
+    const nums = group.map((p) => leafNumberOf(p));
     // A staged split leaf (#7605) is shown, and split back, by the number it will have once swapped in, not "-999983".
-    const built = buildBlockTranslationPrompt({ prompts, book, pages: group.map((p) => ({ ...p, page_number: leafNumberOf(p) })), previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
+    const built = buildBlockTranslationPrompt({ prompts, book, pages: group.map((p) => ({ ...p, page_number: leafNumberOf(p) })), previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED, folioMarkers: marked });
     const instruction = [...new Set(group.map((p) => INSTRUCTIONS[p.id]).filter(Boolean))].join('\n\n') || null;
     const imgFiles = IMAGES ? group.map((p) => [p, imagesOf(p)]) : null;
     // #5021: a call of 2+ pages asks each page's section to open on an anchor copied from its own source.
-    const anchored = group.length > 1;
+    const anchored = group.length > 1 && !marked;
     const json = anchored && REPLY === 'json';
-    const sent = json ? built.prompt + (instruction ? `\n\n${instruction}` : '') + jsonReplySuffix(group.map((p) => leafNumberOf(p)))
+    const sent = marked ? built.prompt + (instruction ? `\n\n${instruction}` : '') + MARKED_CALL_SUFFIX : json ? built.prompt + (instruction ? `\n\n${instruction}` : '') + jsonReplySuffix(group.map((p) => leafNumberOf(p)))
       : built.prompt + (instruction ? `\n\n${instruction}` : '') + (anchored ? anchorRule(group.map((p) => leafNumberOf(p))) : '') + (imgFiles ? imageCallSuffix(imgFiles.map(([p, fs_]) => [p.page_number, fs_.map((f) => `p${p.page_number}-${f}`)])) : CALL_SUFFIX);
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
@@ -343,20 +369,25 @@ async function main() {
     const r = CLI === 'agy' ? await agyBlockCall(sent, MODEL, dir) : await claudeCall(sent, MODEL, dir, { readImages: !!imgFiles });
     fs.rmSync(dir, { recursive: true, force: true });
     const jsonShown = json && !r.cls ? splitJsonReply(r.text, group.map((p) => leafNumberOf(p))) : null;
-    const shown = r.cls ? null : json ? jsonShown?.texts ?? null : splitBlockReply(r.text, group.map((p) => leafNumberOf(p)));
+    const markedSplit = marked && !r.cls ? splitMarkedReply(r.text, nums, { sources: group.map((p) => p.ocr.data) }) : null;
+    const shown = r.cls ? null : marked ? (markedSplit.ok ? new Map(nums.map((n, i) => [n, markedSplit.texts[i]])) : null) : json ? jsonShown?.texts ?? null : splitBlockReply(r.text, nums);
     const texts = shown && new Map(group.map((p) => [p.page_number, shown.get(leafNumberOf(p))]));
     // The anchors come off every section before anything else reads it (a one-page reply has none to give); a JSON
     // reply carries them as fields.
-    const tagAnchors = texts ? takeAnchors(texts) : null;
+    const tagAnchors = texts && !marked ? takeAnchors(texts) : null;
     const anchors = jsonShown ? new Map(group.map((p) => [p.page_number, jsonShown.anchors.get(leafNumberOf(p))])) : tagAnchors;
     fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
     fs.writeFileSync(path.join(OUT, 'raw', `${callId}.txt`), r.text);   // the whole reply, so a refused call can be read
-    fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (texts ? null : 'page_tags_mismatch'), usage: r.usage }) + '\n');
+    fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (texts ? null : marked ? 'folio_split_refused' : 'page_tags_mismatch'), ...(markedSplit && { folio: { ok: markedSplit.ok, reading: markedSplit.reading, why: markedSplit.why } }), usage: r.usage }) + '\n');
     if (r.cls === 'usage_limit') { stop = `usage limit: ${r.err || r.text.slice(0, 200)}`; return null; }
+    // #8399 (as #7118): a marked reply that does not split cleanly, or splits out of balance, is not retried as a
+    // block: each of its pages is read alone.
+    if (markedSplit && !markedSplit.ok) { console.log(`  ${first.book_id} p.${first.page_number}-${lastP.page_number}: marked block not usable (${markedSplit.why}): one page per call`); return [...group]; }
     const common = {
       model: r.model || MODEL, model_requested: MODEL, call_id: callId, call_pages: group.length, attempts: attempt + 1, started_at: t0.toISOString(), finished_at: new Date().toISOString(),
       prompt_ref: built.promptRef, is_english_book: built.isEnglish, prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage, ...(instruction && { instruction }),
-      context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT, block: group.map((p) => p.page_number) },
+      context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT, block: group.map((p) => p.page_number), ...(marked && { folio_markers: true }) },
+      ...(marked && { folio_block: { pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), reading: markedSplit.reading } }),
     };
     const pageMeta = (p, i) => ({ ...common, call_position: i + 1, ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, ...(imgMeta.has(p.id) && { images: imgMeta.get(p.id), tool_turns: r.usage?.turns ?? null }) });
     if (r.cls || !texts) {
@@ -382,9 +413,17 @@ async function main() {
       // caseless: the Han test (#7503) runs here, on the subscription; the paid block lanes have not opted in.
       // #5021 (block-page-guard.mjs): the anchors, the call's absorption check (k from the book's stored English
       // when the call has too few text pages) and the single-page number vote, each refused page read alone.
-      const guard = dropDriftedPages(group, texts, { caseless: true, anchors: anchored ? anchors : null, prevOcr: prev?.ocr?.data ?? null, nextOcr: next?.ocr?.data ?? null, k: bookK(first.book_id) }).drifted;
-      for (const d of guard) { again.add(d.prev); again.add(d.next); }
-      if (guard.length) fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: guard.map((d) => ({ prev: d.prev, next: d.next, kind: d.kind, fragment: String(d.fragment || '').slice(0, 160) })) }) + '\n');
+      // A marked block carries a sentence across a turn on purpose, so the clause-drift test does not apply; the
+      // wrong-leaf checks (absorption, number vote) do, as on cli-translate.mjs's marked pairs (#7118).
+      if (marked) {
+        const refused = blockPageRefusals(group.map((p) => ({ page_number: p.page_number, page_type: p.page_type, ocr: p.ocr })), texts, { prevOcr: prev?.ocr?.data ?? null, nextOcr: next?.ocr?.data ?? null, k: bookK(first.book_id) });
+        for (const w of refused) again.add(w.page_number);
+        if (refused.length) fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: refused.map((w) => ({ page: w.page_number, kind: w.reason, detail: w.detail })) }) + '\n');
+      } else {
+        const guard = dropDriftedPages(group, texts, { caseless: true, anchors: anchored ? anchors : null, prevOcr: prev?.ocr?.data ?? null, nextOcr: next?.ocr?.data ?? null, k: bookK(first.book_id) }).drifted;
+        for (const d of guard) { again.add(d.prev); again.add(d.next); }
+        if (guard.length) fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: guard.map((d) => ({ prev: d.prev, next: d.next, kind: d.kind, fragment: String(d.fragment || '').slice(0, 160) })) }) + '\n');
+      }
       for (const b of dropLeafSeamBreaches(group, texts).breached) again.add(b.page);
     }
     const redo = [], kept = [];
