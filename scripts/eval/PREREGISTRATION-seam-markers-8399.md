@@ -129,5 +129,5 @@ than the A-vs-A2 swing, or Bb accepts more than 2 fewer dense pages than B4. If 
 the same rule (its per-page check on the dense books, against A and A2 on those books), and the markers ship at a
 fixed 4 if it passes.
 
-**Smallest detectable gap, revised.** n = 120: 9.5–13.5 per 100 joins on one join type. Dense stratum alone (n = 39):
-about 20–25 per 100 — the per-stratum rates are descriptive.
+**Smallest detectable gap, revised.** n = 120: 10.4–13.2 per 100 joins on one join type. Dense stratum alone (n = 39):
+about 16–22 per 100 — the per-stratum rates are descriptive.
