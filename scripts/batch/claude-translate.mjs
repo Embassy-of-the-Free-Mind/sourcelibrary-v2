@@ -38,6 +38,8 @@
  * checks (absorption, number vote) and the leaf-seam check apply, not the clause-drift test (a sentence may cross a
  * marker). An unusable or unbalanced split reads the block one page per call. No call of the run is sent the previous
  * page's English. Reads carry prompt_variant agy-block-7503-folio-8399, context.folio_markers and folio_block.
+ * --block-chars=N: the source-character budget of one call (planBlocks maxChars; default its 20,000), so dense pages go
+ * fewer to a call (#8399).
  *
  * --images-dir=D (#6948, image-attached reads): D/<page_id>/ holds that page's images, already cut (t1.jpg, t2.jpg, ... in
  * reading order: full-resolution strips of the leaf; scripts/eval/tib-concept-opus-6948/prep-images.mjs makes them).
@@ -315,7 +317,9 @@ async function main() {
     const run = runs[runs.length - 1], last = run?.[run.length - 1];
     if (last && last.book_id === p.book_id && last.page_number + 1 === p.page_number) run.push(p); else runs.push([p]);
   }
-  const blocks = runs.flatMap((r) => planBlocks(r, { blockSize: PER_CALL }));
+  // --block-chars=N (#8399): the source-character budget of one call, so dense pages go fewer to a call.
+  const BLOCK_CHARS = Number(arg('block-chars')) || undefined;
+  const blocks = runs.flatMap((r) => planBlocks(r, { blockSize: PER_CALL, ...(BLOCK_CHARS && { maxChars: BLOCK_CHARS }) }));
   console.log(`${found.size} of ${ids.length} page ids found; ${todo.length} to translate in ${blocks.length} calls; model ${MODEL}; ${CLI} ${version}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'claude-translate-sealed', path.basename(OUT));

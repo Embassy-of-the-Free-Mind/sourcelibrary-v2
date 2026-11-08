@@ -88,3 +88,46 @@ B vs A, B vs A2, C vs B; the share of B's blocks read marked vs fallen back to o
 
 Non-Latin scripts; pages outside prose; the cost per page (B makes one call per block when the split holds, and
 one per page when it falls back).
+
+## Amendment 1 (2026-11-08, before any arm output was read): block size by page density
+
+**Why.** Derek's note in the job inbox (04:09Z, read 04:2xZ): "block size should follow page density, not a fixed 4.
+Dense pages go 1-2 per call, light pages up to 4. Use a source-character budget per call, with translate-batch-seam
+MAX_BLOCK_OCR_CHARS and planBlocks as prior art, and report the budget you pick. Stratify the test sample by density,
+dense vs ordinary, and report seam and usable rates per stratum so the budget rests on evidence." The note overrides
+the brief where they conflict.
+
+**Disclosure.** Arms A, A2 and B had been started when the note was read. They were stopped after about 3 blocks
+each; only the reader's progress lines (characters per page) were seen, no translation text. Their reads are kept:
+A and A2 are unchanged, and the B reads become arm B4 below.
+
+**Budget: 8,000 source characters per call** (`planBlocks` `maxChars`, new `claude-translate.mjs --block-chars`;
+production's `MAX_BLOCK_OCR_CHARS` is 20,000 over up to 4 pages, so it never cuts a 4-page block on these rows). In
+the drawn sample a page's OCR runs 1,330 / 1,842 / 2,866 characters at p10 / p50 / p90 and a 4-page block 7,460 at the
+median: at 8,000 an ordinary block stays at 4 a call (the #7503 quota saving holds), pages above about 2,700
+characters go 2 a call, and pages above 4,000 go alone.
+
+**Arms now.**
+- **A**, **A2** as registered.
+- **B4**: markers, no previous English, a fixed 4 a call (B as first registered; the evidence arm for the budget).
+- **Bb**: B4 + the 8,000-character budget. **Bb is the B of the decision rule.**
+- **C**: Bb + one seam call on each join Bb reads across a call boundary: the block-start join (S) always, and the
+  seam (T) when Bb read its two pages in different calls. Elsewhere C is Bb.
+
+**Dense stratum.** A block is dense when its 4 pages average ≥ 3,000 OCR characters. The first draw held 9 such
+blocks (all leak seams). `dense` added 30 blocks, one per book: Latin/German books in seeded random order (83995),
+a run of 4 translated pages averaging ≥ 3,000 characters, a seam inside it that is a mid-flow break by #7118's
+`qualifies` (the source runs across the turn), placed as above. 102 books scanned. **Now 120 blocks: 39 dense,
+81 ordinary**, 69 books.
+
+**Per page.** A, A2 and Bb on one page per book (69); B4 on the books whose picked block is dense, where the budget
+changes the blocks. Controls as registered.
+
+**Rule.** Unchanged, evaluated on Bb over all 120 blocks; seam and usable rates are reported per stratum.
+**The budget is kept** with the markers unless, on the dense stratum, Bb's seam-defect rate is above B4's by more
+than the A-vs-A2 swing, or Bb accepts more than 2 fewer dense pages than B4. If the budget is not kept, B4 is held to
+the same rule (its per-page check on the dense books, against A and A2 on those books), and the markers ship at a
+fixed 4 if it passes.
+
+**Smallest detectable gap, revised.** n = 120: 9.5–13.5 per 100 joins on one join type. Dense stratum alone (n = 39):
+about 20–25 per 100 — the per-stratum rates are descriptive.

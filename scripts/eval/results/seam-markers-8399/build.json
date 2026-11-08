@@ -41,5 +41,22 @@
    "N": 53,
    "why": "no 4-page prose block"
   }
- ]
+ ],
+ "dense": {
+  "at": "2026-11-08T04:33:21.645Z",
+  "kept": 30,
+  "scannedBooks": 102,
+  "booksWithDenseRun": 39,
+  "denseChars": 3000,
+  "blockChars": 8000,
+  "strata": {
+   "ordinary": 81,
+   "dense": 39
+  },
+  "languages": {
+   "German": 6,
+   "Latin": 23,
+   "ger": 1
+  }
+ }
 }
