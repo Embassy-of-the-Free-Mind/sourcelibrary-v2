@@ -10,13 +10,13 @@
  *   node --env-file=.env.production.local scripts/eval/offleaf-5309/judge.mjs pre-draw  --diagnose F --out DIR [--seed 5309] [--n 30]
  *   … pre-judge  --out DIR [--concurrency 3]     blind Opus: which leaf of n-3 … n+3 does the stored transcription render?
  *   … pre-score  --out DIR                       precision of "stranded = another leaf", offsets, controls
- *   … post-draw  --ledger F --out DIR [--wave W] [--seed 5310] [--n 30]   one repaired page per book
+ *   … post-draw  --ledger F --out DIR [--wave W] [--seed 5310] [--n 30] [--per-book 1]   one repaired page per book
  *   … post-judge --out DIR [--judge opus|agy] [--concurrency 3]   the new transcription and English against the image
  *   … post-score --out DIR                       own leaf, usable, defects by kind; agy vs Opus agreement
  *   … screen-draw  --pre-sample F --pre-verdicts F --out DIR   the pre pages + 4 planted controls, reshuffled blind
  *   … screen-judge --out DIR [--model gemini-3.8-flash-medium]  agy: own / prev / next / other, from scans n-1 … n+1
  *   … screen-score --out DIR [--model …]          agreement with Opus (own vs off), false alarms, misses, controls
- *   … screen-queue --queue F --ledger F --out DIR [--max-pages 2000]   the runner's next books, all pages, for screen-judge
+ *   … screen-queue --queue F --ledger F --out DIR [--max-pages 2000] [--max-book-pages N] [--smallest-first]   the runner's next books, all pages, for screen-judge
  *   … screen-confirm-draw --out DIR [--n 30]   DIR/opus/pre-sample.json: every page agy did not call off, + 30 agy-off
  *   … screen-merge --out DIR                   DIR/screen.jsonl, one off/own decision per page (Opus over agy)
  *   … record     --out DIR --stage pre|post [--apply]   book_checks rows (recordPageVerdicts), Opus verdicts only
@@ -35,6 +35,7 @@ import { wilson } from '../lib/agreement-stats.mjs';
 
 const MODE = process.argv[2];
 const arg = (n, d = null) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1] : d; };
+const has = (n) => process.argv.includes(`--${n}`);
 const OUT = path.resolve(arg('out', '.'));
 fs.mkdirSync(OUT, { recursive: true });
 const F = (f) => path.join(OUT, f);
@@ -170,9 +171,13 @@ async function postDraw() {
   await open();
   const items = [];
   const books = shuffle([...byBook.keys()], rnd);
-  for (const b of books) {
+  // --per-book K: a wave of a few big books (p6: three) draws up to K pages from each, round by round
+  const K = Number(arg('per-book', '1'));
+  for (const b of books) byBook.set(b, shuffle(byBook.get(b), rnd));
+  for (let k = 0; k < K && items.length < N; k++) for (const b of books) {
     if (items.length >= N) break;
-    const r = shuffle(byBook.get(b), rnd)[0];
+    const r = byBook.get(b)[k];
+    if (!r) continue;
     const page = await db.collection('pages').findOne({ id: r.page_id }, { projection: PAGE_PROJ });
     if (!page?.ocr?.data) continue;
     items.push({ kind: 'item', book_id: b, page_id: page.id, n: page.page_number, language: r.language, ocr: page.ocr.data, en: page.translation?.data ?? null, ocr_model: page.ocr.model });
@@ -368,7 +373,10 @@ function screenScore() {
 // ── the screen in front of the repair (offleaf-fix-5309.mjs run --screen) ──
 // screen-queue: the next books the runner would take (same order and skips), every page with its stored text.
 async function screenQueue() {
+  // --smallest-first: the tail of the queue is a few huge books and many small ones; small first keeps a wave's books
+  // at 30 or more for the one-page-per-book post check
   const q = JSON.parse(fs.readFileSync(arg('queue'), 'utf8'));
+  if (has('smallest-first')) q.sort((a, b) => a.pages.length - b.pages.length);
   const done = new Set(readJsonl(arg('ledger')).map((r) => r.book_id));
   const MAX = Number(arg('max-pages', '2000')), BIG = Number(arg('max-book-pages', 'Infinity'));
   const take = []; let n = 0;
