@@ -11,12 +11,12 @@ interface Subj { id: string; label: string; level: number; parents: string[]; al
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
 const VARIANTS: [Variant, string][] = [['banner', 'A Picture bands'], ['cards', 'B Cards']];
-// Ways to say what a subject is, and how it differs from a collection.
+// Ways to say what a subject is.
 const INTROS = [
-  'Browse the whole library by topic. A subject gathers every book and image we hold on it. A collection is a smaller set someone chose.',
-  'Every book and image in the library, filed by what it is about. Collections are hand-picked sets; subjects cover everything on a topic.',
-  'Subjects are how the library is catalogued: each book and image sits under one or more. Unlike a collection, nobody picks what goes in.',
-  'Start from a topic and see all we hold on it, from broad fields like Medicine to specific ones like Paracelsianism. For chosen sets, see Collections.',
+  'Browse the whole library by topic. Each subject gathers every book and image we hold on it.',
+  'Every book and image in the library, filed by what it is about.',
+  'Find everything we hold on a topic, from broad fields like Medicine to specific ones like Paracelsianism.',
+  'The library by topic: every book and image, filed under what it is about, from broad fields to specific ones.',
 ];
 
 /** Pictures per subject, saved from the public gallery by _tools/snapshot-subject-images.py. */
