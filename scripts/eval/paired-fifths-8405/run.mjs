@@ -187,6 +187,41 @@ async function frame() {
 }
 
 // ── judge ──
+/**
+ * The census stratum from the corpus (amendment 1, 2026-11-08): breaks openingEcho flagged in RECENT output, from
+ * scripts/audit/translation-page-boundaries.mjs's flagged lines ({kind:'echo', book, prev, next, parallel, ...}).
+ * The #7866 books are older translations, where the defect is rare, so the frame's own census measures little.
+ * Parallel-language editions (parallel: true) are dropped, at most CENSUS_PER_BOOK a book, CENSUS_CAP in all, seeded.
+ */
+const CENSUS_PER_BOOK = 3;
+async function censusStage() {
+  const file = arg('census-file');
+  if (!file) { console.error('census needs --census-file=<flagged.jsonl from translation-page-boundaries.mjs>'); process.exit(2); }
+  const lines = jsonl(file).filter((l) => l.kind === 'echo' && l.parallel !== true && Number.isFinite(l.prev) && Number.isFinite(l.next));
+  const perBook = new Map();
+  const pick = [];
+  for (const l of shuffle([...lines].sort((x, y) => `${x.book}:${x.next}`.localeCompare(`${y.book}:${y.next}`)), makeRng(SEED.census + 1))) {
+    if (pick.length >= CENSUS_CAP) break;
+    if ((perBook.get(l.book) ?? 0) >= CENSUS_PER_BOOK) continue;
+    perBook.set(l.book, (perBook.get(l.book) ?? 0) + 1);
+    pick.push(l);
+  }
+  const out = [];
+  await withMongo(async (db) => {
+    for (const l of pick) {
+      const meta = await db.collection('books').findOne({ $or: [{ id: l.book }, { _id: l.book }] }, { projection: { id: 1, language: 1 } });
+      const [a, b] = await Promise.all([l.prev, l.next].map((n) => db.collection('pages').findOne({ book_id: l.book, page_number: n }, { projection: PAGE_PROJECTION })));
+      if (!a || !b || !clean(a.translation?.data) || !clean(b.translation?.data)) continue;
+      saveText(a); saveText(b);
+      out.push({ book: l.book, lang: meta?.language ?? l.lang ?? 'unknown', first: a.page_number, second: b.page_number, share: l.share, in_block: l.inBlock ?? null,
+        a: pageRec(a), b: pageRec(b), break_kind: breakKind(a, b), source: 'corpus' });
+    }
+  });
+  W('census.json', { from: path.basename(file), flagged_lines: lines.length, picked: pick.length, judged_pages_found: out.length, census: out });
+  console.log(`census: ${lines.length} flagged (non-parallel) lines, ${pick.length} picked, ${out.length} with both pages' texts`);
+}
+const censusAll = (F) => [...F.census, ...(fs.existsSync(path.join(OUT, 'census.json')) ? J('census.json').census : [])];
+
 export function jobs() {
   const F = J('frame.json');
   const order = shuffle([...F.books].sort((x, y) => (x.id < y.id ? -1 : 1)), makeRng(SEED.books));
@@ -199,7 +234,7 @@ export function jobs() {
       out.push({ id: `join:${a.page_id}:${bb.page_id}`, kind: 'join', set: 'random', book: b.id, lang: b.lang, a, b: bb });
     }
   }
-  for (const c of F.census) out.push({ id: `join:${c.a.page_id}:${c.b.page_id}`, kind: 'join', set: 'census', book: c.book, lang: c.lang, a: c.a, b: c.b });
+  for (const c of censusAll(F)) out.push({ id: `join:${c.a.page_id}:${c.b.page_id}`, kind: 'join', set: 'census', book: c.book, lang: c.lang, a: c.a, b: c.b });
   // Controls: a known defect planted at a break the random set holds, judged as one more join.
   const pool = shuffle(out.filter((j) => j.kind === 'join' && j.set === 'random' && j.a.has_tr && j.b.has_tr), makeRng(SEED.controls));
   for (const j of pool.slice(0, CONTROLS_PER_KIND)) out.push({ ...j, id: `ctl-carry:${j.id}`, set: 'control_carry_over' });
@@ -309,7 +344,7 @@ function analyze() {
   const carry = ctl('control_carry_over', (x) => x.verdict.defects.some((d) => ['carry_over', 'duplicated'].includes(d.kind) && d.material)),
     leaf = ctl('control_wrong_leaf', (x) => x.verdict.defects.some((d) => d.kind === 'wrong_leaf' && d.page === 'B'));
   const valid = carry.judged >= 8 && leaf.judged >= 8 && carry.caught / carry.judged >= 0.8 && leaf.caught / leaf.judged >= 0.8;
-  const census = F.census.map((c) => ({ ...c, v: V.get(`join:${c.a.page_id}:${c.b.page_id}`)?.verdict ?? null })).filter((c) => c.v);
+  const census = censusAll(F).map((c) => ({ ...c, v: V.get(`join:${c.a.page_id}:${c.b.page_id}`)?.verdict ?? null })).filter((c) => c.v);
   const byKind = Object.fromEntries(['call_boundary', 'in_call', 'unknown'].map((k) => { const x = breaks.filter((bk) => bk.kind === k); return [k, { breaks: x.length, failed: x.filter((bk) => bk.fails).length }]; }));
   const direction = { A: 0, B: 0, both: 0 }; for (const bk of breaks.filter((x) => x.fails)) { if (bk.pages.length > 1) direction.both++; else if (bk.pages[0] === 'A') direction.A++; else direction.B++; }
   const flipShare = n ? flipsUp.length / n : null;
@@ -335,6 +370,7 @@ function analyze() {
 // Stages run only when this file is the script, so the judges can be imported (a smoke run calls judgeOne).
 const stage = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) ? process.argv[2] : null;
 if (stage === 'frame') await frame();
+else if (stage === 'census') await censusStage();
 else if (stage === 'judge') await judge();
 else if (stage === 'analyze') analyze();
 else if (stage) { console.error('stages: frame | judge | analyze'); process.exit(2); }

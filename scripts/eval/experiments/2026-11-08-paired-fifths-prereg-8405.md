@@ -58,3 +58,6 @@ About 800 partner pages, 800 joins, the stale anchors (3 of 20 in a 4-book frame
 
 ### 8. Run
 `node --env-file=… scripts/eval/paired-fifths-8405/run.mjs frame`, then `… judge` (resumable), then `… analyze` → `scripts/eval/paired-fifths-8405/results/score.json`. Nothing writes to Mongo.
+
+### Amendment 1 (2026-11-08, before any census break was judged)
+The frame's own census (breaks inside the 160 #7866 books) flagged 0 breaks, because #8409 was not yet merged when the frame ran. Those books are also older translations: 753 of 789 pair breaks carry no `read_call`. The defect #8399 measures sits in recent agy output, so the census stratum is drawn from there instead: `run.mjs census --census-file=<flagged.jsonl>` takes `scripts/audit/translation-page-boundaries.mjs`'s `kind:"echo"` lines and drops `parallel: true` (facing-language editions, the top false positive per #8399). It draws with seed 84054, at most 3 breaks a book and 40 in all. The breaks are judged by the same join judge. Census precision is reported for #8399 and stays outside every book-level number, as before. Nothing in §4–§5 changes.
