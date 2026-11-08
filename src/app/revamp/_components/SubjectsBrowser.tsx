@@ -33,10 +33,23 @@ function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   );
 }
 
+// Editorial groups for "By theme". Draft: nobody has reviewed these.
+const THEMES: [string, string[]][] = [
+  ['Philosophy and religion', ['philosophy', 'religion', 'christianity', 'judaism', 'islam', 'buddhism', 'indian-religions', 'east-asian-thought', 'ancient-religions', 'indigenous-traditions']],
+  ['Esoteric traditions and the occult', ['esoteric-traditions', 'alchemy', 'magic', 'astrology-divination']],
+  ['Sciences and medicine', ['astronomy', 'mathematics', 'physical-sciences', 'natural-history', 'medicine']],
+  ['History and society', ['geography', 'history', 'society']],
+  ['Arts and letters', ['literature', 'arts', 'language-books']],
+];
+
 export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; variant: Variant }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
   const [open, setOpen] = useState<string[]>([]);
+  const [order, setOrder] = useState<'theme' | 'az'>('theme');
+  const themed = THEMES.map(([name, ids]) => [name, ids.map((id) => groups.find((g) => g.id === id)).filter(Boolean) as Group[]] as const)
+    .concat([['Other', groups.filter((g) => !THEMES.some(([, ids]) => ids.includes(g.id)))] as const]).filter(([, gs]) => gs.length);
+  const sorted = order === 'az' ? [...groups].sort((a, b) => a.label.localeCompare(b.label, 'en')) : themed.flatMap(([, gs]) => gs);
   const t = q.trim().toLowerCase();
   // Matches the English name or any other name, and says which other name matched.
   const match = (s: SubjectRow) => {
@@ -44,7 +57,7 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
     const a = s.alt.find((x) => x.toLowerCase().includes(t));
     return { ok: !!a, also: a ?? '' };
   };
-  const shown = groups.map((g) => {
+  const shown = sorted.map((g) => {
     const self = match(g);
     const narrower = g.narrower.map((s) => ({ s, m: match(s) })).filter((x) => (!t ? true : x.m.ok));
     return { g, self, narrower };
@@ -72,16 +85,40 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
           <li>Search finds it by any of its names, in Latin, German, Chinese and more.</li>
         </ul>
       )}
-      {!t && variant !== 'cards' && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 mt-8">
-          {groups.map((g) => (
-            <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
-              <span className="block text-[15px] text-primary leading-snug group-hover:underline underline-offset-2">{g.label}</span>
-              <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
-            </a>
+      {!t && (
+        <div className="flex items-center gap-2 mt-8 mb-3 text-[13px] text-muted">
+          Order
+          {([['theme', 'By theme'], ['az', 'A to Z']] as const).map(([k, l]) => (
+            <button key={k} type="button" aria-pressed={order === k} onClick={() => setOrder(k)} className={`px-2.5 py-1 border ${order === k ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium hover:border-primary'}`}>{l}</button>
           ))}
         </div>
       )}
+      {!t && variant !== 'cards' && (order === 'az' ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
+            {sorted.map((g) => (
+              <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
+                <span className="block text-[15px] text-primary leading-snug group-hover:underline underline-offset-2">{g.label}</span>
+                <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
+              </a>
+            ))}
+          </div>
+      ) : (
+        <div className="space-y-6">
+          {themed.map(([name, gs]) => (
+            <div key={name}>
+              <h2 className="font-sans text-[15px] font-semibold text-primary mb-2.5">{name}</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
+            {gs.map((g) => (
+              <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
+                <span className="block text-[15px] text-primary leading-snug group-hover:underline underline-offset-2">{g.label}</span>
+                <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
+              </a>
+            ))}
+          </div>
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 
