@@ -227,7 +227,7 @@ export const LANES = [
     budget: 'dial (scoped)', respectsHold: 'marker', pause: 'translate' },
   { name: 'translate-chained', serves: 'translate',
     files: ['scripts/workers/translate-batch-worker.mjs', 'scripts/lib/translate-batch-chained.mjs'],
-    selects: 'priority < 90, visible, not English (auto-enrolled or approved runs)', trigger: 'cron, 5 min ticker + hourly enrol',
+    selects: 'priority < 90, visible, not English (auto-enrolled or approved runs)', trigger: 'none since 2026-11-08: both cron lines retired (#8283; #8279 routes every translation to agy). By hand only',
     budget: 'envelope', respectsHold: 'marker', pause: 'translate',
     reason: 'Every submit (each round, queued runs included) asks translateSubmitBrake; a paused run waits READY and resumes on the next tick. Submitted rounds keep being collected under a pause — they are paid (#5492).' },
   { name: 'orchestrator-translate', serves: 'translate', files: [ORCH],
@@ -360,7 +360,6 @@ export const OFF_REPO_CRON = [
   { match: '/root/bin/atlas-egress-meter.sh', reason: 'cost alarm: hand-placed copy of scripts/workers/atlas-egress-meter.sh, the cron fallback until the checkout has it; counts bytes from Atlas, no step work (#5189)' },
   { match: '/root/bin/disk-steward.sh', reason: 'disk: hand-placed copy of scripts/workers/disk-steward.sh, the cron fallback until the checkout has cold-r2.mjs (#6223)' },
   { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
-  { match: '/root/leaf-break/fullrun-4523-watchdog.sh', reason: 'watchdog of the #4523 Tibetan re-OCR driver (Yigdzin, specialist); remove when DONE-4523 exists' },
   { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
 ];
 
