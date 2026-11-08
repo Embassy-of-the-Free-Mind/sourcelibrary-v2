@@ -126,7 +126,11 @@ export const GET = withApiAuth(async (
     // The MCP connector's get_book_text runs this handler in-process (#4307) and
     // is exempt by that marker, which no client can forge: a claude.ai connector
     // cannot send a key, so it keeps its own page budget in src/app/api/mcp/route.ts.
-    if (identity.kind === 'anon' && !inProcessCaller(request) && !hasCronAuth(request) && !isSiteBrowserRequest(request)) {
+    // An assistant reading for a person, PROVEN by name and published address
+    // (identity.assistantFetcher, #8161), is exempt too: it reads a partner book a
+    // window at a time (#8098). A bare "Claude-User" name proves nothing and is refused.
+    if (identity.kind === 'anon' && !identity.assistantFetcher && !inProcessCaller(request)
+      && !hasCronAuth(request) && !isSiteBrowserRequest(request)) {
       return NextResponse.json(
         {
           error: 'key_required',
@@ -136,7 +140,14 @@ export const GET = withApiAuth(async (
           get_key: 'https://sourcelibrary.org/developers#get-key',
           terms_url: 'https://sourcelibrary.org/terms#api-terms',
         },
-        { status: 401, headers: { 'WWW-Authenticate': 'Bearer realm="sourcelibrary.org", get_key="https://sourcelibrary.org/developers#get-key"' } },
+        {
+          status: 401,
+          headers: {
+            'WWW-Authenticate': 'Bearer realm="sourcelibrary.org", get_key="https://sourcelibrary.org/developers#get-key"',
+            // Who-is-asking decides this answer, so no shared cache may keep it.
+            'Cache-Control': 'private, no-store',
+          },
+        },
       );
     }
 
