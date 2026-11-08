@@ -248,6 +248,7 @@ async function makeRows(want) {
         ocr_model: p.ocr?.model ?? null, ocr_first: ocrForce || uncheckedLite({ ocr }), ...(ocrForce && { ocr_force: true }), ...(w.family && { family: w.family }),
         language: bk.language, title: String(bk.title || '').slice(0, 90),
         lane_row: lane.row?.id ?? 'default', engine: lane.engine, channel: lane.channel ?? 'batch', reader: translateReader(lane),
+        ...(lane.row?.seam_pass && { seam_pass: lane.row.seam_pass }),
         reads: bk.human_read_count || 0, hold: bk.pipeline_auto?.hold?.reason ?? null, ...(w.near_blank && { near_blank: true }),
       });
     }
@@ -518,6 +519,14 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   const rc = await spawnP(readArgs, { env, log });
   if (rc === 3) return { quota: true, out };
   if (rc === 2) { for (const r of work) out.push({ ...r, _p: undefined, state: 'gate-refused' }); return { out }; }
+  // #5026 round 3 (slice): the seam pass (#8399, #8417) stays on for a row that has it (latin-/german-cli-agy4,
+  // 'edit-before'): over the reads just made, one agy call per turn into a read page from the stored page before it;
+  // its repairs are written by `cli-translate.mjs apply` below, behind its own guards and the neighbourGate, under
+  // their own run id (seam-pass-8399-<ts>, in the book's run.log).
+  if (P5026 && !opus && work[0].seam_pass && !has('no-seam-pass')) {
+    const sc = await spawnP([path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'seam', `--out=${trDir}`, '--cli=agy', ...(work[0].seam_pass === 'edit-before' ? ['--seam-edit-before=1'] : [])], { env, log });
+    if (sc === 3) return { quota: true, out };
+  }
   const skips = readerSkips(fs.readFileSync(log, 'utf8'));
   const hasRead = (r) => fs.existsSync(path.join(trDir, `${r.page_id}.txt`)) && fs.statSync(path.join(trDir, `${r.page_id}.txt`)).size > 0;
   // a page the reader will not translate (an English book, a blank or same-language page) is out of this repair's reach
