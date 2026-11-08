@@ -11,6 +11,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
+import { notBlockedForModel } from '@/lib/page-counts';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
 
@@ -209,6 +210,10 @@ export const POST = withAuth(async (request, session, context) => {
     const ocrFilter = force
       ? hasImageFilter
       : {
+          // Skip pages batch-collector has given up on (N=3 RECITATION, or
+          // N=3 other failures for this model), as the orchestrator does.
+          // Without this, every manual round re-sent the same refused pages (#8320).
+          'ocr.recitation_blocked': { $ne: true },
           $and: [
             hasImageFilter,
             {
@@ -217,7 +222,8 @@ export const POST = withAuth(async (request, session, context) => {
                 { 'ocr.data': null },
                 { 'ocr.data': '' }
               ]
-            }
+            },
+            notBlockedForModel(model),
           ]
         };
 
