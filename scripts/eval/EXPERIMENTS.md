@@ -315,6 +315,59 @@ PRIOR ART:
 
 Artifact: `scripts/eval/neighbour-guard-5026/measure.mjs`; draws and labels in the job scratch (`neighbour-guard-5026`, archived to R2).
 
+## 2026-11-08 · Containment by strip: remove the duplicated passage from the wrong page (#5026)
+
+PRIOR ART:
+- `2026-11-08-leak-repair-5026.md`: the own-leaf re-translation of the same flagged pairs (pilot 384 pages; gate 27/30). This experiment asks whether a $0 text edit can hide the duplicate first.
+- `scripts/lib/neighbour-guard.mjs` `neighbourVerdict` (#8401): the rule for which page carries the neighbour's text, used here as it is.
+- `scripts/maintenance/strip-proquest-stamp.mjs`: the shape of a deterministic edit through `writePageText`.
+
+**Question.** Derek, 2026-11-08: "I really don't want this obvious kind of mistake all over." The re-translation waves reach the 16,589 flagged pairs only over days. Can the duplicate be removed tonight, without a model, by cutting the shared run from the page that does not own it?
+
+**Plan** (`scripts/maintenance/leak-strip-5026.mjs plan`, live Atlas, 2026-11-08 06:46Z). The input was `/tmp/leak-joined-500.jsonl`: 16,589 pairs in 5,542 books.
+
+| outcome | pairs |
+|---|---|
+| planned strip | 7,797 (7,699 pages) |
+| no longer flagged on the live English (re-translated since) | 2,360 |
+| page 0 / soft-hidden neighbour | 1,955 |
+| leaves are one text (OCR token share ≥ 0.5) | 927 |
+| shared English printed on the page (facing/bilingual; English books on both) | 882 |
+| Tibetan / Pali | 833 |
+| rule undecided (neither or both sides refused) | 595 |
+| strip would leave < 20% of exp(K) × source | 576 |
+| cut would split a markup element or page-level block | 333 |
+| withheld | 149 |
+| English book, passage printed on the wrong page | 85 |
+| removed passage would vanish from both pages (chain) | 34 |
+| sources share a run | 33 |
+| runs remain after 4 cuts | 30 |
+
+The planned strips were 5,120 on page N (N+1's text carried back) and 2,677 on page N+1. By stratum: pre07 6,337, en 795, late 309, mid 191, cur 164.
+
+**Edit.** The cut is the longest shared run, widened to whole words. At each edge it was widened further, one sentence fragment at a time, while that fragment's tokens still matched the neighbour's English (share ≥ 0.6). It was snapped to whole `<note>`/`<term>`/centred-line elements, and repeated while a run of 400 or more remained.
+
+**Spot check** (blind sealed `claude -p --model opus`, subscription, 32 calls). The draw was 30 planned strips, one per book, seeded 50264, with books with readers first and no language over 25%. There were 2 planted controls: a planned strip inverted, so that the passage is cut from the page the rule says owns it. The judge saw both scans, both transcriptions, both stored Englishes, the removed passage(s) and the English after the cut.
+
+| result | n |
+|---|---|
+| right (each page only its own text, nothing of the edited page's own removed) | **8 / 30** |
+| incomplete: the cut text was the neighbour's, but more of the neighbour's text stays | 18 |
+| wrong page: the cut removed the edited page's own text (major) | 4 |
+| controls caught | 2 / 2 |
+
+**Why it fails.** The leak is not usually a verbatim copy alone. The neighbour's passage was translated twice, and only the run where the two wordings agree letter for letter is shared. The rest of the copy is a paraphrase: the end of a paragraph, a heading, a footnote run. An exact-match cut leaves it on the page. Five of the 18 incomplete pages have almost no print of their own (a plate, a blank leaf, a heading, under 300 characters of source), so the whole English is the neighbour's. Finding where the page's own text ends needs the page image, or at least a source-to-English alignment, and a text-only edit has neither.
+
+Lengths do not separate the cases either. The log length residual after the cut, `log(en) − K − log(src)`, runs from −0.35 to 0.32 for the right strips. The incomplete ones overlap it at 0.06 to 0.45 and the wrong-page ones at −0.13 to 0.02. So no threshold on the planned set would pass the gate.
+
+**The #8401 rule as a direction call.** On the 30 judged, the removed passage was printed on the neighbour in 26 and on the edited page in 4 (0.87). That is good enough to refuse a new write, which is what the guard does. It is not good enough to cut stored text without a re-read.
+
+**Not done** (gate failed): no page was written, no wave was run and no post-check was made. The `apply`, `redetect`, `post-*` modes are in the script, untested on live writes.
+
+**Detector now** (`redetect --tag=before`, the detector's LEAK test on the live English, 07:10Z). Over the 3,602 books with a planned strip: 1,680,844 consecutive pairs, **21,894 sharing a run ≥ 200** with sources that do not (10,431 ≥ 500), and 3,055 source repeats. Unchanged by this run, so it is the baseline for the waves: `scripts/eval/results/leak-strip-5026/redetect-before.summary.json`.
+
+Files: `scripts/eval/results/leak-strip-5026/` (plan summary and rows, spot sample, verdicts, score). The 15 MB planned-edit list is kept on l7a only, in `$JOB_SCRATCH/plan/plan-edits.jsonl.gz`. book_checks: 30 rows, method `leak-strip-5026` v1, run `leak-strip-5026-spot`.
+
 ## 2026-11-08 · Leak repair: neighbouring-page English duplicated into a page (#5026)
 
 PRIOR ART:
