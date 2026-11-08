@@ -534,6 +534,22 @@ export const SCAN_ZOOM_STEPS = [
 export const SCAN_ZOOM_MAX = 6;
 
 const LENS_SIZE = 220;
+
+/**
+ * The scan's look during a page turn. While the previous page's picture is
+ * still on screen it is blurred and dimmed, after a short delay so a cached or
+ * fast image never flickers; the new scan comes in sharp, at once.
+ */
+function scanTurnStyle(stale: boolean, brightness: number | undefined): React.CSSProperties {
+  const bright = brightness ? `brightness(${brightness})` : '';
+  return stale
+    ? {
+        filter: `${bright} blur(8px) grayscale(0.4)`.trim(),
+        opacity: 0.45,
+        transition: 'filter 250ms ease 150ms, opacity 250ms ease 150ms',
+      }
+    : { filter: bright || undefined, opacity: 1, transition: 'none' };
+}
 const LENS_MAG_MIN = 1.5;
 const LENS_MAG_MAX = 6;
 
@@ -633,7 +649,17 @@ export function ScanViewer({
     const s = Math.min(c.clientWidth / n.w, c.clientHeight / n.h);
     setFit({ w: Math.max(1, Math.round(n.w * s)), h: Math.max(1, Math.round(n.h * s)), frame: appliedFrame.current });
   };
+  // Which page's scan is actually painted. The <img> is reused across page
+  // turns, and a browser keeps showing the OLD picture until the new src has
+  // fully downloaded — on a slow connection the new text sat beside the
+  // previous page's scan for seconds, reading as the wrong image. While the
+  // two disagree the old scan is blurred and dimmed (see `staleScan`), so it
+  // reads as "loading", not as this page. null until the first image lands:
+  // a landing has no old picture to disguise.
+  const [paintedFor, setPaintedFor] = useState<string | null>(null);
+  const staleScan = paintedFor !== null && paintedFor !== page.id;
   const takeNatural = (nw: number, nh: number) => {
+    setPaintedFor(page.id);
     const f = frameForImage(storedFrame, nw, nh);
     appliedFrame.current = f;
     natural.current = f ? { w: nw * f.w, h: nh * f.h } : { w: nw, h: nh };
@@ -1051,7 +1077,7 @@ export function ScanViewer({
               src={src}
               alt={alt}
               draggable={false}
-              onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
+              onError={() => { if (src === native && native !== display) setNativeFailed(native); else setPaintedFor(page.id); }}
               onLoad={e => {
                 const el = e.currentTarget;
                 takeNatural(el.naturalWidth, el.naturalHeight);
@@ -1059,7 +1085,7 @@ export function ScanViewer({
               className="absolute max-w-none"
               style={{
                 ...framedImageBox(fit.w, fit.h, fit.frame),
-                filter: brightness ? `brightness(${brightness})` : undefined,
+                ...scanTurnStyle(staleScan, brightness),
               }}
             />
           </div>
@@ -1070,7 +1096,7 @@ export function ScanViewer({
             src={src}
             alt={alt}
             draggable={false}
-            onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
+            onError={() => { if (src === native && native !== display) setNativeFailed(native); else setPaintedFor(page.id); }}
             onLoad={e => {
               const el = e.currentTarget;
               takeNatural(el.naturalWidth, el.naturalHeight);
@@ -1086,7 +1112,7 @@ export function ScanViewer({
               // slide out of step with it and read as a wobble.
               willChange: 'transform',
               boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
-              filter: brightness ? `brightness(${brightness})` : undefined,
+              ...scanTurnStyle(staleScan, brightness),
             }}
           />
         )}
