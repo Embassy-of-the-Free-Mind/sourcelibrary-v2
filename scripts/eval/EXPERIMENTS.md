@@ -315,6 +315,92 @@ PRIOR ART:
 
 Artifact: `scripts/eval/neighbour-guard-5026/measure.mjs`; draws and labels in the job scratch (`neighbour-guard-5026`, archived to R2).
 
+## 2026-11-08 · Leak repair: neighbouring-page English duplicated into a page (#5026)
+
+PRIOR ART:
+- `2026-11-04-context-bleed-5274.md`: the own-leaf re-translation route and its 28/30 gate, reused here unchanged (`scripts/batch/cli-translate.mjs --own-leaf` through `scripts/maintenance/wrong-leaf-fix-5021.mjs --issue=5026`).
+- `scripts/audit/translation-page-boundaries.mjs`: the detector. Page N's English shares a run of 500 characters or more with page N+1's English, while their sources do not repeat it.
+- The harness is `scripts/eval/leak-repair-5026/pair-judge.mjs`, with the modes draw, judge, score, refresh, post-draw, post-judge, post-score, agy-judge, agy-score and record. It is extended from `leaf-shift-confirm-5021.mjs` (`fetchLeaf`, `claudeCall`).
+
+**Question.** Of the 16,589 flagged pairs (5,542 books, corpus mirror 2026-11-07), how many really carry a neighbour's English? Does an own-leaf re-translation remove the duplicate without making the page worse? Derek, 2026-11-08: "spot check then fix a set then spot check."
+
+### 1. Spot check (before any write)
+
+**Draw.** 50 pairs, one per book, seeded. The pairs are stratified by month cohort (`pre07`, `mid` 07–09, `late` 10/11 outside the cli lane), by the current cli lane (`cur`), by English books (`en`, prompt 21 modernisation) and by length band (500–999, ≥1000), with languages spread. There are 4 planted controls: 2 made duplicates and 2 clean consecutive pairs.
+
+**Judge.** Blind sealed `claude -p --model opus` on the subscription. It reads both page images, both transcriptions and both Englishes, without truncation. It answers whether N's text is in N+1's English or N+1's in N's, and which page is wrong.
+
+**Two rounds.** Round 1 (`v1` prompt, input as given) found many flags stale: the #5274 repair of 2026-11-04 had already rewritten the current-lane pages. In round 2, the frame was re-detected on the live English first (`refresh`). Pairs whose shape has a legitimate cause were taken out: a near-blank leaf, a duplicated scan, English printed on the page, a human edit, a withheld page. The v2 prompt is symmetric.
+
+| stratum | n | real duplicate | precision [95% CI] |
+|---|---|---|---|
+| all | 50 | 44 | 0.88 [0.76–0.94] |
+| cur (cli lane) | 10 | 7 | 0.70 [0.40–0.89] **left out** |
+| en (prompt 21) | 10 | 10 | 1.00 [0.72–1.00] |
+| pre07 | 12 | 11 | 0.92 [0.65–0.99] |
+| mid | 8 | 8 | 1.00 [0.68–1.00] |
+| late | 10 | 8 | 0.80 [0.49–0.94] |
+| band 500–999 | 25 | 20 | 0.80 [0.61–0.91] |
+| band ≥1000 | 25 | 24 | 0.96 [0.80–0.99] |
+
+Controls: 4/4. Which page is wrong: N 29, N+1 15. So in most pairs it is page N that carries N+1's opening (the #5021 forward shape), not N+1 carrying N's continuity English. The repair re-translates by position. A run at the head of N is a leak and N+1 is wrong. Identical or forward runs make N wrong. Unclear runs make both wrong.
+
+**The current lane does not leak in this sample.** Its 3 misses are refrains printed twice (2 Tibetan, 1 Pali). The other 7 `cur` hits were all page N wrong (forward). Tibetan and Pali are left out of the repair frame (4 of the 6 misses). This was posted on #8399.
+
+**agy as a judge** (Derek's inbox note, 05:19Z). The same 54 sealed prompts, with both images, were sent to agy `gemini-3.8-flash-low`. Flash-medium was asked for, but the only pool with a login on this box is pinned to flash-low. Agreement with Opus on duplicate yes/no is 50/50 (1.00 [0.93–1.00]), and every stratum is 1.00. On which page is wrong, agy and Opus agree on 43 of the 44 duplicates. Both made duplicates were caught, but agy flagged one clean control (P48): a verse sentence that runs across the page break, two lines long. The note's rule needs every control caught, so agy is **not** adopted as the per-wave check. A medium-effort rerun needs a pool that can run it.
+
+### 2. Pilot (493 pages, 202 books)
+
+The repair frame after round 2 is 8,399 pairs, which give 10,457 pages in 3,683 books (2,902 of those pages are in books with readers). The pilot queue was 493 pages, books with readers first, *L'escole des filles* included. Each page was re-translated one call at a time from its own transcription, with no neighbouring English. The writes went through the write door, with run id `leak-repair-5026-pilot` and `-pilot-ocr` for OCR re-reads. The neighbour guard (#8401) had not merged, so it was off.
+
+| outcome | pages |
+|---|---|
+| re-translated | 384 |
+| not translatable: English book or English page (the cli reader skips English) | 40 |
+| not translatable: other (unsplit book 3, no body 2, skip type 3, illegible 1) | 9 |
+| OCR re-read refused under the guards (English kept) | 48 |
+| write refused (a kept read copying printed English) | 12 |
+
+The OCR re-reads wrote 82 pages.
+
+**The `en` stratum is not repairable on this route.** Its precision was 10/10, but `cli-translate.mjs` skips English books. Those pages need the modernisation prompt, run own-leaf.
+
+**Detector after the pilot** (`refresh` on the 202 books, compared with the frame before): every one of the 304 in-frame pairs with a re-translated page leaves the frame, and none is still flagged. The 82 pairs still flagged are pairs where no page was fixed: not translatable 38, OCR refused 37, write refused 7.
+
+### 3. Spot check after the pilot (FAIL)
+
+The draw was 30 re-translated pages, one per book, spread over languages. The blind Opus judge read each page against its image, together with the neighbour that its duplicate came from. The harness was fixed for this round: v1 of post-draw always compared a page with the previous one, but 2/3 of the repaired pages are page N, whose duplicate came from the next page. There were 4 controls: 2 made duplicates and 2 unrepaired flagged pages.
+
+| measure | result | gate |
+|---|---|---|
+| duplicate gone | 29/30 | 30/30 ✗ |
+| usable | 27/30 [0.74–0.97] | ≥ 28/30 ✗ |
+| renders its own leaf | 29/30 | |
+| defects | major: 3 mistranslated, 2 invented. minor: 24 mistranslated, 9 omitted, 5 invented, 15 other | |
+
+The three failures:
+- **Q32**, Hebrew Bible (69c1ba97…, p.494). The English renders Isaiah 63:7–64:10a, which is printed on p.493. **The OCR of p.494 holds that text** (`אך עמי המה`), so the re-translation renders its own OCR faithfully. The fault is in the OCR, and an own-leaf re-translation cannot repair it. Contained: the book is held (`leak-contained-5026`) and p.494 is withheld.
+- **Q28**, Chinese (69935b6f…, p.7). One gloss cell is page 8's text showing through the paper, and the OCR transcribes it as a gloss. The rest of the page is its own leaf. This is a finding about the OCR, not a containment.
+- **Q02**, Latin (69b3e607…, p.71), a heavily abbreviated scholastic dialogue. Three major mistranslations, for example *dicta* read as *divina*. This is a quality failure of Flash-low on a hard page.
+
+Controls:
+- Q31 (made duplicate) and Q14 (a stored leak) were caught. Q14, Greek Sophocles p.32, mainly renders p.31. It is contained: the book is held and the page withheld.
+- Q24 (made duplicate) was judged not usable, with "invented major", but not as a duplicate. The planted text was its neighbour's English, and that English is itself junk ("severely faded", 17 lines of `<unclear>`). The judge saw the block and called it invented rather than the neighbour's.
+- Q08 (stored leak) was judged clean. Its pair is a forward one, where the wrong page is N, and the control asked about N+1. This control was built wrong.
+
+### Reading
+
+The detector's flags are real at 0.88, and the own-leaf route removes the duplication: 29/30 judged pages, and every one of the 304 re-translated pairs leaves the detector. The gate fails on what the re-translation inherits. Two of the three failing pages carry a fault in their own OCR, and one is a hard page the lite model mistranslates. These pages served another page's English before the repair, so the pilot is **kept**. Revert is `scripts/maintenance/revert-run.mjs leak-repair-5026-pilot` (and `-pilot-ocr`).
+
+**Not done, and why.**
+- **The waves** (about 10,000 pages). The gate failed, and the brief says stop. The next run should screen each page's OCR against its neighbour's OCR before it re-translates (the `skip-ocr-neighbour` state in the runner), then gate again.
+- **English books** (the `en` stratum, about 1,300 pairs). They need an own-leaf modernisation route.
+- **Tibetan and Pali**, where the detector over-flags refrains printed twice.
+
+Quota: about 509 agy Flash-low calls on `.agy-james` for the pilot (re-translations and OCR re-reads), 54 agy calls for the judge comparison, and 54 + 54 + 34 sealed Opus calls on the subscription. No paid API was used.
+
+Results: `scripts/eval/results/leak-repair-5026/`. That folder holds `spot-*` (round 2, sample, Opus and agy verdicts, scores), `pilot-*` (ledger, progress, re-detect) and `post-*`. The verdicts are in `book_checks` under method `leak-repair-5026`: 50 round-2 pairs and 30 post-check pages.
+
 ## 2026-11-07 · After the split, is each repaired work_id route under about 2% different-work clusters? (#8293)
 <!-- PRIOR ART: 2026-11-07-work-id-overmerge-audit-8291.md (the first measure, same instrument) and 2026-11-07-work-id-split-census-8293.md (the census and split list); overmerge-audit.mjs is reused unchanged. -->
 
