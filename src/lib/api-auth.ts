@@ -88,6 +88,16 @@ function sameOrigin(request: NextRequest): boolean {
   }
 }
 
+/**
+ * The site's own pages fetching the API from a browser: an Origin header on our
+ * domain, or the browser's Sec-Fetch-Site. A same-origin GET sends no Origin, so
+ * the second is what the compare page's fetch carries. Both are spoofable by a
+ * script; a spoofer gets what an anonymous reader gets, never more.
+ */
+export function isSiteBrowserRequest(request: NextRequest): boolean {
+  return sameOrigin(request) || request.headers.get('sec-fetch-site') === 'same-origin';
+}
+
 /** Resolve the request's identity and decide whether it gets through the gate. */
 export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDecision> {
   // 1) NextAuth session cookie — best identity, generous limit.
