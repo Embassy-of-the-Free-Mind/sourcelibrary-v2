@@ -111,7 +111,7 @@
 # says whether it can be switched to enforce.
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-status-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/status-output-drift.mjs" >> /var/log/sourcelibrary/status-output-drift.log 2>&1
 
-# New-translation leak check (#5026): did any translation written in the last 24 h put a neighbouring page's English
+# New-translation leak check (#5026): did any translation written in the last 24 h (25 h window, overlap deduplicated) put a neighbouring page's English
 # on a page? The third layer after the write-time neighbourGate (#8401) and no previous-page English (#8410). Mongo
 # reads only, $0, ~1 min. 03:20 UTC = after the translation lanes' 00-02 UTC peak. JSONL per day in
 # /data/scratch/sl/new-translation-leaks/; ntfy sourcelibrary-uptime on any NEW pair, and on Mondays a "0 leaks" line.

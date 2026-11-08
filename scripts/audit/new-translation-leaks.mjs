@@ -21,6 +21,8 @@
  *   - the guard's own verdict (neighbourVerdict, against that one neighbour, with the book's K) refuses the page
  *     written in the window: 'neighbour-leak' or 'absorbs-neighbour'.
  *
+ * Window: 25 h by default, so a late or slow daily run leaves no gap; the overlap is deduplicated by key.
+ *
  * Output: <out-dir>/<YYYY-MM-DD>.jsonl, one line per flagged pair, and a summary line on stdout. A pair is NEW when
  * its key (book, pages, hash of the receiving page's English) is in no earlier file in out-dir. One ntfy line to
  * sourcelibrary-uptime when any new pair appears, naming book, pages, lane (translation.engine.call_site) and model.
@@ -30,7 +32,7 @@
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/new-translation-leaks.mjs
- *        [--hours=24] [--since=ISO] [--books=id,id] [--out-dir=/data/scratch/sl/new-translation-leaks]
+ *        [--hours=25] [--since=ISO] [--books=id,id] [--out-dir=/data/scratch/sl/new-translation-leaks]
  *        [--date=YYYY-MM-DD] [--no-ntfy]
  */
 import fs from 'node:fs';
@@ -54,7 +56,7 @@ export function writerOf(p) {
   return {
     page: p?.page_number, model: t.model ?? t.engine?.model ?? null,
     lane: t.engine?.call_site ?? (t.source === 'manual' ? 'human' : null), job: t.engine?.run?.job_id ?? null,
-    at: t.updated_at ? new Date(t.updated_at).toISOString() : null,
+    at: t.updated_at && !Number.isNaN(new Date(t.updated_at).getTime()) ? new Date(t.updated_at).toISOString() : null,
   };
 }
 
@@ -97,7 +99,7 @@ export function bookFlags({ bookId, pages, windowed, k = null }) {
     out.push({
       key: `${bookId}:${n}-${n + 1}:${hash(enOf(receiver))}`,
       book: bookId, prev: n, next: n + 1, rules, run_len: run.len,
-      share: +(run.len / Math.max(1, leakNorm(enOf(B)).length)).toFixed(3), sources_repeat: sourcesRepeat,
+      share: +(run.len / Math.max(1, leakNorm(enOf(receiver)).length)).toFixed(3), sources_repeat: sourcesRepeat,
       receiver: writerOf(receiver), receiver_in_window: windowed.has(receiver.page_number),
       other: writerOf(other), text: String(text).slice(0, 200),
     });
@@ -141,7 +143,7 @@ const arg = (k, d) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split('
 
 async function main() {
   const now = new Date();
-  const since = arg('since') ? new Date(arg('since')) : new Date(now.getTime() - Number(arg('hours', 24)) * 36e5);
+  const since = arg('since') ? new Date(arg('since')) : new Date(now.getTime() - Number(arg('hours', 25)) * 36e5);
   const only = arg('books') ? arg('books').split(',').filter(Boolean) : null;
   const outDir = arg('out-dir', DEFAULT_OUT);
   const date = arg('date', now.toISOString().slice(0, 10));
