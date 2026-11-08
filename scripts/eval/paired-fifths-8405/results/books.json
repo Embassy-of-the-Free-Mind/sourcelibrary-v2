@@ -915,6 +915,21 @@
   "p_share": 0.2
  },
  {
+  "id": "69f325c852a77bb28fdb5cd7",
+  "lang": "Arabic",
+  "stratum": "low",
+  "anchors": 5,
+  "pages": 10,
+  "anchor_bad_pages": 5,
+  "partner_bad_pages": 4,
+  "anchor_bad": true,
+  "paired_pages_bad": true,
+  "join_bad": false,
+  "paired_bad": true,
+  "a_share": 1,
+  "p_share": 0.8
+ },
+ {
   "id": "69f3263852a77bb28fdb6738",
   "lang": "Korean",
   "stratum": "low",
