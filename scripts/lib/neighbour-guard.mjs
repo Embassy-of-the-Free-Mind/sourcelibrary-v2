@@ -162,3 +162,43 @@ export async function checkNeighbours(db, { page, text, ocr, bookId, neighbours 
     return { refuse: false };
   }
 }
+
+// ── the opening echo: a sentence of n-1's English at the head of n (#8399) ────────────────────────────────────────────
+
+/**
+ * Words of page n's English read for the echo test, the word-shingle size, and the share of those shingles that must
+ * appear in page n-1's English. Sized on live agy4-lane output, 2026-11-08 (6,195 pages, 30 h): 77 pages at >= 0.3,
+ * 72 of them in the reader-visible text; at call boundaries the rate was 3.0% against 0.7% inside a call.
+ */
+export const ECHO_HEAD_WORDS = 40;
+export const ECHO_SHINGLE = 6;
+export const ECHO_MIN_SHARE = 0.3;
+
+const echoWords = (t) => leakNorm(t).toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean);
+function shingles(words, k) {
+  const s = new Set();
+  for (let i = 0; i + k <= words.length; i++) s.add(words.slice(i, i + k).join(' '));
+  return s;
+}
+const shareIn = (a, b) => { if (!a.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / a.size; };
+
+/**
+ * Does page n's English open with words already on page n-1's? The repeat sharedRun cannot see: one sentence
+ * (~250 chars) on a long page, under LEAK_MIN_CHARS and too small to explain the page's length, so neighbourVerdict
+ * passes it. Reads only what a reader sees (leakNorm drops <meta>, <summary>, <keywords> and every tag).
+ *
+ * `share`: the fraction of page n's opening ECHO_SHINGLE-word shingles (its first ECHO_HEAD_WORDS words) found
+ * anywhere in n-1's English. `echo`: share >= ECHO_MIN_SHARE and the SOURCES do not repeat the same way (n's OCR
+ * opening against n-1's OCR, same test; a book that repeats itself is not a defect). `sourceRepeats` is null when
+ * either OCR is missing. It does not say WHICH page holds the extra text: at a call boundary it is usually n
+ * (copying the seed it was given), inside a call it can be either; a judge with both scans decides.
+ *
+ * Space-separated scripts only: a text with no spaces (Chinese, Japanese, Tibetan without tsheg spacing) yields
+ * no shingles and share 0, never a false hit.
+ */
+export function openingEcho({ tr, prevTr, ocr = null, prevOcr = null }) {
+  const share = shareIn(shingles(echoWords(tr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE), shingles(echoWords(prevTr), ECHO_SHINGLE));
+  const sourceShare = ocr && prevOcr ? shareIn(shingles(echoWords(ocr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE), shingles(echoWords(prevOcr), ECHO_SHINGLE)) : null;
+  const sourceRepeats = sourceShare == null ? null : sourceShare >= ECHO_MIN_SHARE;
+  return { share: +share.toFixed(3), sourceShare: sourceShare == null ? null : +sourceShare.toFixed(3), sourceRepeats, echo: share >= ECHO_MIN_SHARE && sourceRepeats !== true };
+}
