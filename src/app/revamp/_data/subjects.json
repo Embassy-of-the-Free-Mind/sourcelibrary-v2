@@ -34,21 +34,21 @@
     "Confidence is a drafting judgement about the term and its placement, not a measured score. High is the default where nothing raised doubt, so it is generous."
   ],
   "stats": {
-    "terms": 250,
+    "terms": 262,
     "topLevel": 25,
-    "level2": 225,
-    "twoParents": 80,
-    "fastLinked": 236,
-    "fastPct": 94.4,
-    "fastExact": 177,
-    "wikidataLinked": 245,
-    "wikidataPct": 98,
-    "wikidataExact": 191,
-    "withImageCount": 216,
-    "withBookCount": 181,
+    "level2": 237,
+    "twoParents": 86,
+    "fastLinked": 243,
+    "fastPct": 92.7,
+    "fastExact": 181,
+    "wikidataLinked": 252,
+    "wikidataPct": 96.2,
+    "wikidataExact": 196,
+    "withImageCount": 222,
+    "withBookCount": 188,
     "confidence": {
       "high": 187,
-      "medium": 60,
+      "medium": 72,
       "low": 3
     }
   },
@@ -2697,7 +2697,8 @@
           "Ethiopian Christianity",
           "Ethiopian Orthodox Church",
           "Armenian Christianity",
-          "Armenian Church"
+          "Armenian Church",
+          "Coptic Christianity"
         ],
         "la": [
           "Ecclesiae Orientales"
@@ -12503,6 +12504,254 @@
       "bookCount": null,
       "confidence": "medium",
       "note": "Added 2026-11-08 to place an unmatched collection; authority match still to do"
+    },
+    {
+      "id": "spiritualism",
+      "label": "Spiritualism",
+      "level": 2,
+      "parents": [
+        "esoteric-traditions",
+        "religion"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": {
+        "id": "fst01130170",
+        "heading": "Spiritualism",
+        "match": "exact"
+      },
+      "wikidata": {
+        "id": "Q829348",
+        "label": "spiritualism",
+        "match": "exact"
+      },
+      "warrant": [
+        "search:spiritualism"
+      ],
+      "merges": [],
+      "imageCount": 11,
+      "bookCount": 167,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+    },
+    {
+      "id": "plague-epidemics",
+      "label": "Plague and epidemics",
+      "level": 2,
+      "parents": [
+        "medicine"
+      ],
+      "altLabels": {
+        "en": [
+          "Plague",
+          "Epidemics",
+          "Black Death"
+        ]
+      },
+      "scopeNote": null,
+      "fast": {
+        "id": "fst00914079",
+        "heading": "Epidemics",
+        "match": "close"
+      },
+      "wikidata": {
+        "id": "Q44512",
+        "label": "epidemic",
+        "match": "close"
+      },
+      "warrant": [
+        "search:plague and epidemics"
+      ],
+      "merges": [],
+      "imageCount": 18,
+      "bookCount": 155,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+    },
+    {
+      "id": "swedenborgianism",
+      "label": "Swedenborgianism",
+      "level": 2,
+      "parents": [
+        "esoteric-traditions",
+        "christianity"
+      ],
+      "altLabels": {
+        "en": [
+          "New Church",
+          "New Jerusalem Church"
+        ]
+      },
+      "scopeNote": null,
+      "fast": {
+        "id": "fst01139995",
+        "heading": "Swedenborgians",
+        "match": "close"
+      },
+      "wikidata": {
+        "id": "Q1755789",
+        "label": "The New Church",
+        "match": "close"
+      },
+      "warrant": [
+        "search:swedenborgianism"
+      ],
+      "merges": [],
+      "imageCount": 0,
+      "bookCount": 83,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+    },
+    {
+      "id": "rabbinic-literature",
+      "label": "Rabbinic literature",
+      "level": 2,
+      "parents": [
+        "judaism",
+        "literature"
+      ],
+      "altLabels": {
+        "en": [
+          "Talmud",
+          "Midrash"
+        ]
+      },
+      "scopeNote": null,
+      "fast": {
+        "id": "fst01086288",
+        "heading": "Rabbinical literature",
+        "match": "exact"
+      },
+      "wikidata": {
+        "id": "Q3985225",
+        "label": "rabbinic literature",
+        "match": "exact"
+      },
+      "warrant": [
+        "search:rabbinic literature"
+      ],
+      "merges": [],
+      "imageCount": 1,
+      "bookCount": 52,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+    },
+    {
+      "id": "korean-history",
+      "label": "Korean history",
+      "level": 2,
+      "parents": [
+        "history",
+        "east-asian-thought"
+      ],
+      "altLabels": {
+        "en": [
+          "Korea"
+        ]
+      },
+      "scopeNote": null,
+      "fast": {
+        "id": "fst01206434",
+        "heading": "Korea",
+        "match": "close"
+      },
+      "wikidata": {
+        "id": "Q713414",
+        "label": "history of Korea",
+        "match": "exact"
+      },
+      "warrant": [
+        "search:korean history"
+      ],
+      "merges": [],
+      "imageCount": 30,
+      "bookCount": 39,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+    },
+    {
+      "id": "pietism",
+      "label": "Pietism",
+      "level": 2,
+      "parents": [
+        "christianity"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": {
+        "id": "fst01063905",
+        "heading": "Pietism",
+        "match": "exact"
+      },
+      "wikidata": {
+        "id": "Q193664",
+        "label": "Pietism",
+        "match": "exact"
+      },
+      "warrant": [
+        "search:pietism"
+      ],
+      "merges": [],
+      "imageCount": 23,
+      "bookCount": 37,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+    },
+    {
+      "id": "electricity",
+      "label": "Electricity",
+      "level": 2,
+      "parents": [
+        "physical-sciences"
+      ],
+      "altLabels": {},
+      "scopeNote": null,
+      "fast": {
+        "id": "fst00906253",
+        "heading": "Electricity",
+        "match": "exact"
+      },
+      "wikidata": {
+        "id": "Q12725",
+        "label": "electricity",
+        "match": "exact"
+      },
+      "warrant": [
+        "search:electricity"
+      ],
+      "merges": [],
+      "imageCount": 63,
+      "bookCount": 19,
+      "countSource": {
+        "images": "gallery subject search",
+        "books": "library word search"
+      },
+      "confidence": "medium",
+      "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
     }
   ]
 }

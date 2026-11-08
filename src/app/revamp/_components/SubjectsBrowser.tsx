@@ -33,23 +33,13 @@ function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   );
 }
 
-// Editorial groups for "By theme". Draft: nobody has reviewed these.
-const THEMES: [string, string[]][] = [
-  ['Philosophy and religion', ['philosophy', 'religion', 'christianity', 'judaism', 'islam', 'buddhism', 'indian-religions', 'east-asian-thought', 'ancient-religions', 'indigenous-traditions']],
-  ['Esoteric traditions and the occult', ['esoteric-traditions', 'alchemy', 'magic', 'astrology-divination']],
-  ['Sciences and medicine', ['astronomy', 'mathematics', 'physical-sciences', 'natural-history', 'medicine']],
-  ['History and society', ['geography', 'history', 'society']],
-  ['Arts and letters', ['literature', 'arts', 'language-books']],
-];
 
 export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; variant: Variant }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
   const [open, setOpen] = useState<string[]>([]);
   const [order, setOrder] = useState<'theme' | 'az'>('theme');
-  const themed = THEMES.map(([name, ids]) => [name, ids.map((id) => groups.find((g) => g.id === id)).filter(Boolean) as Group[]] as const)
-    .concat([['Other', groups.filter((g) => !THEMES.some(([, ids]) => ids.includes(g.id)))] as const]).filter(([, gs]) => gs.length);
-  const sorted = order === 'az' ? [...groups].sort((a, b) => a.label.localeCompare(b.label, 'en')) : themed.flatMap(([, gs]) => gs);
+  const sorted = order === 'az' ? [...groups].sort((a, b) => a.label.localeCompare(b.label, 'en')) : groups; // By theme: the list's own order, related subjects side by side
   const t = q.trim().toLowerCase();
   // Matches the English name or any other name, and says which other name matched.
   const match = (s: SubjectRow) => {
@@ -93,7 +83,7 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
           ))}
         </div>
       )}
-      {!t && variant !== 'cards' && (order === 'az' ? (
+      {!t && variant !== 'cards' && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
             {sorted.map((g) => (
               <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
@@ -102,23 +92,7 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
               </a>
             ))}
           </div>
-      ) : (
-        <div className="space-y-6">
-          {themed.map(([name, gs]) => (
-            <div key={name}>
-              <h2 className="font-sans text-[15px] font-semibold text-primary mb-2.5">{name}</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
-            {gs.map((g) => (
-              <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
-                <span className="block text-[15px] text-primary leading-snug group-hover:underline underline-offset-2">{g.label}</span>
-                <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
-              </a>
-            ))}
-          </div>
-            </div>
-          ))}
-        </div>
-      ))}
+      )}
     </div>
   );
 
