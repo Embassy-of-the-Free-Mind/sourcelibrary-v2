@@ -35,7 +35,9 @@ import os from 'os';
 import { detectBlockDrift, MIN_ABSORBED_SHARE } from '../lib/block-drift.mjs';
 
 const MIN_OCR_CHARS_FOR_BLOCK = 200, BLOCK_SIZE = 8, MAX_BLOCK_OCR_CHARS = 20000; // translate-batch-seam mirrors
-export const LEAK_MIN_CHARS = 200;
+// sharedRun and LEAK_MIN_CHARS live in the write door's guard now (#5026), so the door does not load this script.
+import { sharedRun, LEAK_MIN_CHARS } from '../lib/neighbour-guard.mjs';
+export { sharedRun, LEAK_MIN_CHARS };
 // --min-absorbed=x lowers the drift floor to record near-misses (each flag carries its score).
 const MIN_ABSORBED = Number(process.argv.find(a => a.startsWith('--min-absorbed='))?.split('=')[1] ?? MIN_ABSORBED_SHARE);
 const NON_PROSE = new Set(['index', 'toc', 'title-page', 'illustration', 'blank', 'errata', 'diagram', 'frontispiece',
@@ -68,22 +70,6 @@ export function blockStarts(rows) {
 const normTr = (t) => String(t || '')
   .replace(/<(meta|summary|keywords|vocab|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
   .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-
-/** Longest run a and b share, found through 40-char shingles of b then extended (dupscan). */
-export function sharedRun(a, b, min = LEAK_MIN_CHARS) {
-  if (a.length < min || b.length < min) return { len: 0, text: '' };
-  const K = 40, idx = new Map();
-  for (let i = 0; i + K <= b.length; i += 8) { const s = b.slice(i, i + K); if (!idx.has(s)) idx.set(s, i); }
-  let best = 0, bestA = -1;
-  for (let i = 0; i + K <= a.length; i++) {
-    const j = idx.get(a.slice(i, i + K)); if (j == null) continue;
-    let back = 0; while (i - back > 0 && j - back > 0 && a[i - back - 1] === b[j - back - 1]) back++;
-    let L = K; while (i + L < a.length && j + L < b.length && a[i + L] === b[j + L]) L++;
-    if (L + back > best) { best = L + back; bestA = i - back; }
-    i += Math.max(0, L - K); // skip what this match already covered
-  }
-  return { len: best, text: bestA >= 0 ? a.slice(bestA, bestA + Math.min(best, 200)) : '' };
-}
 
 function main() {
   const dir = arg('dir', path.join(os.homedir(), 'sl-corpus/books'));

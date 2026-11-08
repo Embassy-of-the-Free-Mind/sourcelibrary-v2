@@ -11,7 +11,7 @@ import { ocrTrustGate } from '../../../../../../scripts/lib/ocr-trust-gate.mjs';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
-import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { withAuth } from '@/lib/auth-helpers';
 import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
@@ -442,6 +442,13 @@ export const GET = withAuth(async (request, session, context) => {
               continue;
             }
             text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+            // A page's English that is its neighbour's (#5026): refused, stamped and kept the same way.
+            const nb = await neighbourGate(db, { id: pageId, book_id: bookId }, text, { jobId: jobName, model: jobDoc.model });
+            if (nb.refused) {
+              console.warn(`[batch-translate] NEIGHBOUR: refusing page ${pageId} (${nb.reason})`);
+              failCount++;
+              continue;
+            }
           }
 
           if (text) {

@@ -6,7 +6,7 @@ import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookup
 import { withAuth } from '@/lib/auth-helpers';
 import { assertLaneGuards } from '@/lib/lane-guards';
 import { createRevision } from '@/lib/page-revisions';
-import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, neighbourGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -378,9 +378,13 @@ export const POST = withAuth(async (request: NextRequest) => {
 
     // The page's text inside its continuity <meta> is text no reader sees (#5376): the result
     // goes back to the caller, flagged, but is not saved as the page's translation.
+    // #5026: and a page's English that is its neighbour's (judged only when it would be saved).
+    const neighbourReason = results.translation && autoSave && pageId && !translationProtected
+      ? (await neighbourGate(db, { id: pageId }, results.translation, { ocr: metadata.translation?.sourceText ?? null, model, dryRun: true })).reason ?? null
+      : null;
     const refusedReason = !results.translation ? null
       : hidesPageInMeta(results.translation) ? HIDDEN_META_REASON
-      : strayRefused ? STRAY_SCRIPT_REASON : null;
+      : strayRefused ? STRAY_SCRIPT_REASON : neighbourReason;
     const translationRefused = !!refusedReason;
     if (refusedReason && autoSave && pageId && !translationProtected) {
       const refusedPage = await db.collection('pages').findOne({ id: pageId, tenantId }, { projection: { book_id: 1 } });
