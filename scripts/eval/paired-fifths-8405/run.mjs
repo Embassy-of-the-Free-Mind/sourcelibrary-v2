@@ -351,6 +351,8 @@ function analyze() {
   const carry = ctl('control_carry_over', (x) => x.verdict.defects.some((d) => ['carry_over', 'duplicated'].includes(d.kind) && d.material)),
     leaf = ctl('control_wrong_leaf', (x) => x.verdict.defects.some((d) => d.kind === 'wrong_leaf' && d.page === 'B'));
   const valid = carry.judged >= 8 && leaf.judged >= 8 && carry.caught / carry.judged >= 0.8 && leaf.caught / leaf.judged >= 0.8;
+  const censusSplit = (rows, key) => { const m = {}; for (const c of rows) { const k = key(c); m[k] ??= { judged: 0, judged_defect: 0 }; m[k].judged++; if (joinFails(c.v)) m[k].judged_defect++; }
+    for (const k of Object.keys(m)) m[k].precision = r3(m[k].judged_defect / m[k].judged); return m; };
   const census = censusAll(F).map((c) => ({ ...c, v: V.get(`join:${c.a.page_id}:${c.b.page_id}`)?.verdict ?? null })).filter((c) => c.v);
   const byKind = Object.fromEntries(['call_boundary', 'in_call', 'unknown'].map((k) => { const x = breaks.filter((bk) => bk.kind === k); return [k, { breaks: x.length, failed: x.filter((bk) => bk.fails).length }]; }));
   const direction = { A: 0, B: 0, both: 0 }; for (const bk of breaks.filter((x) => x.fails)) { if (bk.pages.length > 1) direction.both++; else if (bk.pages[0] === 'A') direction.A++; else direction.B++; }
@@ -365,7 +367,9 @@ function analyze() {
     breaks: { random: breaks.length, failed: breaks.filter((b) => b.fails).length, by_kind: byKind, direction_of_failed: direction },
     reliability: { split_half_r_anchor_vs_partner: r3(r), spearman_brown_10_pages: r != null ? r3((2 * r) / (1 + r)) : null, books: sh.length },
     census: { flagged_in_frame: F.census_flagged_total, judged: census.length, judged_defect: census.filter((c) => joinFails(c.v)).length,
-      precision: census.length ? r3(census.filter((c) => joinFails(c.v)).length / census.length) : null },
+      precision: census.length ? r3(census.filter((c) => joinFails(c.v)).length / census.length) : null,
+      by_break_kind: censusSplit(census, (c) => c.break_kind ?? 'unknown'),
+      by_source_unknown: censusSplit(census, (c) => (c.source_unknown ? 'source_unknown' : 'source_checked')) },
     decision: !valid ? 'controls failed: no decision' : n < 80 ? `too few complete books (${n} < 80): no decision` : flipShare >= 0.05 ? 'pairs for the standing Opus QA' : 'keep 5 pages for the Opus QA; pairs only in the volunteer shift',
   };
   fs.mkdirSync(RESULTS, { recursive: true });

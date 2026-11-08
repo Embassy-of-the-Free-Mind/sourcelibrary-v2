@@ -67,3 +67,40 @@ Wrong-leaf or duplicated, from the join judge (cases 1 and 5 confirmed by eye; t
 - 大唐西域記 / Vie et voyages de Hiouen-Thsang `69e961652beefe2f6f72b4a8`: p. 111 (stored page number; printed p. 11)
 - Ueber den Nutzen eines frühzeitigen Studiums `6a243d6f0f0e4f405e630221`: p. 14 (English)
 - Duplicated English: Derge Tengyur `6abe8dbb6a920ffd924d59c0` p. 480; 植物名實圖考(六) `6992cf0e284cdd19fef46f38` p. 54; Sidereal Messenger `6953e47477f38f6761bee59e` pp. 35, 124; Post-Reuter `6a267ed26c1f37c9c4f3cc35` p. 13
+
+## Addendum: census stratum (amendment 1), 2026-11-08
+
+**What was run.** `run.mjs census` on `echo-flagged-8405.jsonl` (`scripts/audit/translation-page-boundaries.mjs`, `kind:"echo"` lines): 5,577 lines after dropping `parallel: true` and `sourceRepeats: true`. Seed 84054 drew 40 breaks, at most 3 per book; all 40 had both pages' texts. Same join judge (Opus 5.5, same prompt). The 160th frame book also finished in this run, so the book-level numbers moved by one book (24/160 flips, 15.0%; decision unchanged).
+
+**Detector precision (judged defect / judged): 23/40 = 0.575.**
+
+| split | judged | judged defect | precision |
+|---|---|---|---|
+| break_kind `unknown` (no `read_call` on one or both pages) | 37 | 23 | 0.62 |
+| break_kind `in_call` | 2 | 0 | 0 |
+| break_kind `call_boundary` | 1 | 0 | 0 |
+| `sourceRepeats: null` (source side unknown) | 0 | — | — |
+| `sourceRepeats: false` (source checked) | 40 | 23 | 0.575 |
+
+Most breaks were `unknown` (37/40) because one or both pages carry no `translation.engine.run.read_call`. With only 3 breaks of known kind, the split cannot say whether call boundaries leak more. The 135 `sourceRepeats: null` lines are 2.4% of the frame, and none was drawn, so the source-unknown split is empty.
+
+**Why the judge passed 17 flagged breaks.** These are the judge's notes, not by eye except where marked. 2 were facing-page editions the `parallel` flag missed (Welsh/English *Barddas*, Loeb *Historia Augusta*; both checked by eye). 1 was a colour calibration target shot twice. 2 were overlapping photographs where the same background leaf shows on both scans. The rest were clean joins whose English shares wording across the break, such as running heads or repeated technical vocabulary.
+
+### By eye (both scans opened)
+Judge **failed**:
+1. Wolff, *Psychologia rationalis* (Latin), pp. 612/613, carry_over A: **real leak.** Scan A ends "adeoque in". A's English goes on through "…neither can a distinct notion of the origin of a contingent spirit be formed", which is printed on B, and B's English translates the same passage again.
+2. Benzo, *Scheeps-togt* (Dutch), pp. 23/24, carry_over + duplicated A: **real leak.** Scan A ends "welker handen op / ha-". A's English carries B's first sentence ("These he presented to our commander…"), and B's English repeats it.
+3. Dostoevsky, *Дневник писателя* (Russian), pp. 316/317, wrong_leaf A: **real, and worse than a carry-over.** A's English is a second translation of B (printed p. 314). Printed p. 313 has no English at all.
+4. Yogananda, *Songs of the Soul* (English), pp. 88/89, duplicated B: **real, but a different mechanism.** Scan B prints only "PART III". Its English layer contains a leaked "**Previous page (modernized) for continuity:**" block that repeats p. 82's poem. The context prompt leaked into the output.
+5. Ferdinand III, *Manifest und Abmahnungs Schreiben* (German, Vienna 1644), pp. 19/20, duplicated + carry_over A: **not a translation leak.** Scan A is a cropped second shot of the same printed p. 8 shown in full on B. Both translations follow their scans. The duplication is in the capture, which a reader still sees as the same page twice.
+
+Judge **passed**:
+1. Fictuld, *Azoth et Ignis* (German), pp. 87/88: **clean, by eye.** Scan A ends "…ein reines Gold/" with catchword "das", and B begins "das durch alles Creutz". The English splits at the same point.
+2. *Barddas* (Welsh), pp. 11/12: **a facing-page edition, by eye** (Welsh left, English right). This is a detector false positive that `parallel` did not catch.
+3. *Sammlung … Frankfurter Wirren* (German; the pamphlet *Humanität, Religion und Christenthum*), pp. 317/318: **clean, by eye.** Both photographs show the same title leaf behind the open pamphlet, and that leaf is the shared text. The body text joins at "hoch- / erleuchteten Bruders".
+4. Descartes, *Opera philosophica* (Latin; *Principia*, pars IV), pp. 709/710: **a small real leak the judge marked immaterial.** Scan A ends "…quæ mensis / spatio" (catchword). A's English goes on with "traverses the circle A B C D in the space of a month", which is printed on B, and B's English repeats it.
+5. *Historia Augusta*, Loeb (Latin/English), pp. 230/231: **a facing-page edition, by eye.** This is a detector false positive.
+
+By eye, then: 4 of the 5 judge-failed breaks are real translation leaks, and the fifth is a duplicate capture. 1 of the 5 judge-passed breaks has a small real leak. The judge's 0.575 is a fair reading of how often a flagged break is a defect a reader would see. Most of the detector's false positives are facing-page editions and clean joins.
+
+The full list of judged leaks, with page links, is in the #8399 comment. Containment is a separate step, and no page was hidden or re-translated here.
