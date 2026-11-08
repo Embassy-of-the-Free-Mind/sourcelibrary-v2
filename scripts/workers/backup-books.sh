@@ -49,7 +49,22 @@ else
   exit 1
 fi
 
-mongodump --uri="$MONGODB_URI" --db=bookstore --collection=deleted_books --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1 || true
+mongodump --uri="$MONGODB_URI" --db=bookstore --collection=deleted_books --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1 || log "ERROR: deleted_books mongodump failed"
+
+# A dump of nothing exits 0 too (#8225). Floors are ~40% of the 2026-11-07 dump
+# (books.bson.gz 910 MB, deleted_books.bson.gz 24 MB). /root/restic-backup.sh on main
+# runs the same floor against the offsite snapshot an hour later.
+SHORT=""
+for spec in books:400000000 deleted_books:10000000; do
+  f="$LATEST_DIR/bookstore/${spec%%:*}.bson.gz"
+  size=$(stat -c %s "$f" 2>/dev/null || echo 0)
+  [ "$size" -ge "${spec##*:}" ] || SHORT+="${spec%%:*}.bson.gz is $size bytes (floor ${spec##*:}); "
+done
+if [ -n "$SHORT" ]; then
+  log "ERROR: dump below size floor: $SHORT"
+  curl -s -m 15 -H "Priority: high" -H "Title: books mongodump below size floor" -d "backup-books.sh on main: $SHORT(#8225)" https://ntfy.sh/sourcelibrary-uptime >/dev/null || true
+  exit 1
+fi
 
 # On Sundays, copy to a weekly snapshot for point-in-time history
 if [ "$DAY_OF_WEEK" = "7" ]; then
