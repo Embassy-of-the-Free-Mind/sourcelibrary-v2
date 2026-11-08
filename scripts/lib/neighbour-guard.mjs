@@ -25,7 +25,7 @@
  */
 import { lengthRatioK } from './block-page-guard.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
-import { ABSORB_OWN_MIN, ABSORB_TWO_MAX, ABSORB_SRC_MIN, ABSORB_SKIP_TYPES } from './leaf-shift.mjs';
+import { ABSORB_OWN_MIN, ABSORB_TWO_MAX, ABSORB_SRC_MIN, ABSORB_SKIP_TYPES, windowLang } from './leaf-shift.mjs';
 
 export const NEIGHBOUR_LEAK_REASON = 'neighbour-leak';
 export const ABSORBS_NEIGHBOUR_REASON = 'absorbs-neighbour';
@@ -193,12 +193,22 @@ const shareIn = (a, b) => { if (!a.size) return 0; let n = 0; for (const x of a)
  * either OCR is missing. It does not say WHICH page holds the extra text: at a call boundary it is usually n
  * (copying the seed it was given), inside a call it can be either; a judge with both scans decides.
  *
- * Space-separated scripts only: a text with no spaces (Chinese, Japanese, Tibetan without tsheg spacing) yields
- * no shingles and share 0, never a false hit.
+ * Not an echo, either: `parallel` (n and n-1 transcribe different languages, a facing-page edition) or
+ * `sourceRepeats` (the sources open the same way). The English is always space-separated, so `share` is defined
+ * for every book; the source test is not (no spaces in Chinese or Tibetan OCR), and then `sourceRepeats` is null and
+ * a refrain in those books can still read as an echo. A judge decides those.
  */
 export function openingEcho({ tr, prevTr, ocr = null, prevOcr = null }) {
   const share = shareIn(shingles(echoWords(tr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE), shingles(echoWords(prevTr), ECHO_SHINGLE));
-  const sourceShare = ocr && prevOcr ? shareIn(shingles(echoWords(ocr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE), shingles(echoWords(prevOcr), ECHO_SHINGLE)) : null;
+  // The source side: null (unknown) when either OCR is missing or yields no shingles (a script without spaces), so a
+  // Chinese or Tibetan refrain is never read as "the sources differ".
+  const head = ocr ? shingles(echoWords(ocr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE) : null;
+  const prevSh = prevOcr ? shingles(echoWords(prevOcr), ECHO_SHINGLE) : null;
+  const sourceShare = head?.size && prevSh?.size ? shareIn(head, prevSh) : null;
   const sourceRepeats = sourceShare == null ? null : sourceShare >= ECHO_MIN_SHARE;
-  return { share: +share.toFixed(3), sourceShare: sourceShare == null ? null : +sourceShare.toFixed(3), sourceRepeats, echo: share >= ECHO_MIN_SHARE && sourceRepeats !== true };
+  // A facing-page edition (Loeb Latin/English, Kühn's Galen) prints a passage and its translation on neighbouring
+  // pages, so their English agrees by design: the leaf-shift screen's cross-language rule (windowLang, #5021 gate 1).
+  const langs = ocr && prevOcr ? [windowLang(ocr), windowLang(prevOcr)] : [null, null];
+  const parallel = !!langs[0] && !!langs[1] && langs[0] !== langs[1];
+  return { share: +share.toFixed(3), sourceShare: sourceShare == null ? null : +sourceShare.toFixed(3), sourceRepeats, parallel, echo: share >= ECHO_MIN_SHARE && sourceRepeats !== true && !parallel };
 }

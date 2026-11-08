@@ -26,10 +26,9 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn } from 'node:child_process';
 import { agyCall, installToolGate, CLI_SAFE_ARGS } from '../lib/agy-cli.mjs';
-import { splitLayer } from '../lib/leaf-shift.mjs';
+import { splitLayer, windowLang } from '../lib/leaf-shift.mjs';
 import { priceFor, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
-import { classifyLanguageContent } from '../lib/language-content-classify.mjs';
 
 const argv = process.argv.slice(2);
 const MODE = argv[0];
@@ -55,23 +54,8 @@ export function prep(text, { tail = 0 } = {}) {
   return tail ? `${body.slice(0, cap)} […] ${body.slice(-tail)}` : `${body.slice(0, cap)} […]`;
 }
 
-const SCRIPTS = Object.entries({ Latin: /\p{Script=Latin}/gu, Greek: /\p{Script=Greek}/gu, Cyrillic: /\p{Script=Cyrillic}/gu, Han: /\p{Script=Han}/gu, Kana: /[\p{Script=Hiragana}\p{Script=Katakana}]/gu,
-  Hangul: /\p{Script=Hangul}/gu, Tibetan: /\p{Script=Tibetan}/gu, Devanagari: /\p{Script=Devanagari}/gu, Arabic: /\p{Script=Arabic}/gu, Hebrew: /\p{Script=Hebrew}/gu, Syriac: /\p{Script=Syriac}/gu,
-  Coptic: /\p{Script=Coptic}/gu, Armenian: /\p{Script=Armenian}/gu, Georgian: /\p{Script=Georgian}/gu, Ethiopic: /\p{Script=Ethiopic}/gu, Myanmar: /\p{Script=Myanmar}/gu, Thai: /\p{Script=Thai}/gu });
-/**
- * The language of one transcription, $0: its dominant script, and for Latin script the stopword language
- * (scripts/lib/language-content-classify.mjs) when it reaches 5% of 40+ words, else 'latin-script-other'.
- * null when the page has too little text to say.
- */
-export function windowLang(text) {
-  const t = splitLayer(text).body;
-  const counts = SCRIPTS.map(([k, re]) => [k, (t.match(re) || []).length]).sort((a, b) => b[1] - a[1]);
-  if (counts[0][1] < 60) return null;
-  if (counts[0][0] === 'Kana' || (counts[0][0] === 'Han' && counts.find(([k]) => k === 'Kana')[1] > counts[0][1] * 0.15)) return 'Japanese';
-  if (counts[0][0] !== 'Latin') return counts[0][0];
-  const c = classifyLanguageContent(t);
-  return c.words >= 40 && c.score >= 0.05 ? c.dominant : 'latin-script-other';
-}
+// windowLang moved to scripts/lib/leaf-shift.mjs (#8399: the page-join echo detector applies the same rule); re-exported here.
+export { windowLang };
 /** A facing-page (parallel-text) window: the page and a neighbour hold text in two different languages. */
 export const isParallelWindow = (w) => !!w.own && [w.prev, w.next].some((x) => x && x !== w.own);
 /**

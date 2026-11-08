@@ -281,8 +281,21 @@ describe('openingEcho — n-1\'s English at the head of n (#8399)', () => {
     expect(r.sourceRepeats).toBeNull();
     expect(r.echo).toBe(true);
   });
-  it('a text without spaces yields no shingles, never a false hit', () => {
+  it('a facing-page edition (Latin page beside its English) is parallel, not an echo', () => {
+    const la = 'et in principio erat verbum quod est in deo et cum deo sed non sine homine neque ad finem est '.repeat(6);
+    const en = 'and in the beginning was the word which is in god and with god but not without the man and to the end '.repeat(6);
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: en, prevOcr: la });
+    expect(r.parallel).toBe(true);
+    expect(r.echo).toBe(false);
+    // twin: both pages Latin, so the same English repeat IS an echo
+    const twin = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: la.replace(/verbum/g, 'lux'), prevOcr: la });
+    expect(twin.parallel).toBe(false);
+  });
+  it('a source without spaces leaves the source test unknown (null), not "the sources differ"', () => {
     const zh = '天地玄黃宇宙洪荒日月盈昃辰宿列張寒來暑往秋收冬藏'.repeat(20);
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: zh, prevOcr: zh });
+    expect(r.sourceShare).toBeNull();
+    expect(r.sourceRepeats).toBeNull();
     expect(openingEcho({ tr: zh, prevTr: zh }).share).toBe(0);
   });
 });

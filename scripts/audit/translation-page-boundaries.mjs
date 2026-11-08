@@ -20,7 +20,8 @@
  *   ECHO  (#8399)   page N+1 OPENS with words already in page N's English (neighbour-guard
  *                   openingEcho: first 40 visible words, 6-word shingles, share >= 0.3) — the
  *                   one-sentence repeat under LEAK_MIN_CHARS that LEAK and the write door miss.
- *                   A pair whose sources open the same way is counted apart.
+ *                   A pair whose sources open the same way, or whose two pages are in different
+ *                   languages (a facing-page edition), is counted apart.
  *
  * Block position is RECONSTRUCTED with translate-batch-seam planBlocks over each book's
  * translated pages in order — the partition a first full translation run would have used.
@@ -96,7 +97,7 @@ function main() {
     .filter((f, i) => (only ? only.has(f.slice(0, -6)) : i % n === k));
   const flagged = fs.createWriteStream(path.join(out, `shard-${k}.jsonl`));
   const summary = { books: 0, booksTranslated: 0, byLang: {}, perBook: {} };
-  const bucket = (l) => (summary.byLang[l] ||= { pairs: 0, inBlock: 0, blockStart: 0, eligible: 0, driftInBlock: 0, driftBlockStart: 0, leak: 0, leakSourceRepeat: 0, echo: 0, echoBlockStart: 0, echoSourceRepeat: 0, books: 0 });
+  const bucket = (l) => (summary.byLang[l] ||= { pairs: 0, inBlock: 0, blockStart: 0, eligible: 0, driftInBlock: 0, driftBlockStart: 0, leak: 0, leakSourceRepeat: 0, echo: 0, echoBlockStart: 0, echoSourceRepeat: 0, echoParallel: 0, books: 0 });
 
   let done = 0;
   for (const f of files) {
@@ -134,8 +135,8 @@ function main() {
       // ECHO — every consecutive pair; counted whether or not LEAK fired (a whole-page leak also opens with the copy)
       const e = openingEcho({ tr: B.tr, prevTr: A.tr, ocr: B.ocr, prevOcr: A.ocr });
       if (e.share >= ECHO_MIN_SHARE) {
-        if (e.sourceRepeats) b.echoSourceRepeat++; else { b.echo++; pb.echo++; if (!inBlock) b.echoBlockStart++; }
-        flagged.write(JSON.stringify({ kind: 'echo', book: id, lang: l, prev: A.p, next: B.p, inBlock, share: e.share, sourceShare: e.sourceShare, sourceRepeats: e.sourceRepeats }) + '\n');
+        if (e.parallel) b.echoParallel++; else if (e.sourceRepeats) b.echoSourceRepeat++; else { b.echo++; pb.echo++; if (!inBlock) b.echoBlockStart++; }
+        flagged.write(JSON.stringify({ kind: 'echo', book: id, lang: l, prev: A.p, next: B.p, inBlock, share: e.share, sourceShare: e.sourceShare, sourceRepeats: e.sourceRepeats, parallel: e.parallel }) + '\n');
       }
 
       // DRIFT — prose pages only
