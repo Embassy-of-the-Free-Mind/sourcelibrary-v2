@@ -11,6 +11,7 @@ defect_rates: scripts/eval/results/seam-pass-8399/defect-rates.json
 verdict: "On #8407's 120 four-page blocks (69 Latin/German books, 3.8 Flash low via agy), dropping the previous-page English (A0, PR #8410) left more broken joins at block starts: 44.9 per 100 against 40.7/39.0 for production (A/A2), a 5.1 rise against a 1.7 swing. Term consistency over 16 runs of 12 pages was no better and slightly worse under the Opus check (24/190 inconsistent against 18/193 and 19/184). The seam pass as built scores like #8407's eval copy C: lane 8.1 vs 9.7 per 100 (production mean 19.2), block starts 16.9 vs 18.6. On A0 it brings block starts down to 17.8. Almost all of that gain comes from editing the page before the block. With that page locked, block starts stay at 39.8. Every edit passed the span, growth and neighbour-gate guards. Usable rate was unchanged at about 50%, and translation-made leaks were 0 for every arm without previous English."
 status: adopted
 decision: "seam_pass 'edit-before' on latin-cli-agy4 and german-cli-agy4: the per-call reader runs claude-translate.mjs --seam-pass=1 --seam-edit-before=1, and cli-translate.mjs apply writes the repairs under their own run id (seam-pass-8399-<ts>). PR #8410 stays blocked: it fails the block-start clause on its own and the term-consistency clause with or without the pass."
+landed: scripts/lib/translation-routing-table.json
 superseded_by: null
 issue: [8399, 8407, 8410, 8401, 7118]
 feeds: route
