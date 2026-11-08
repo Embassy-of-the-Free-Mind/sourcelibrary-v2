@@ -1,6 +1,6 @@
 ---
 stage: ocr
-measure: measured
+measure: judged_vs_reference
 languages: []
 scripts: []
 canons: []

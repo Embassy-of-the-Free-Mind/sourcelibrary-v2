@@ -54,6 +54,7 @@ export async function readOrderPages(db, bookId, { pageNumberOf = null } = {}) {
     // in reverse and reads exactly like a book stored back to front.
     { $match: { book_id: bookId, page_number: { $gte: 0 } } },
     { $sort: { page_number: 1 } },
+    // strlen-safe: `ocr` is the $type-guarded expression above
     { $project: { _id: 1, id: 1, page_number: 1, head: { $substrCP: [ocr, 0, 700] },
       tail: { $substrCP: [ocr, { $max: [0, { $subtract: [{ $strLenCP: ocr }, 800] }] }, 800] } } },
   ], { hint: { book_id: 1, page_number: 1 }, maxTimeMS: 120000 }).toArray();
