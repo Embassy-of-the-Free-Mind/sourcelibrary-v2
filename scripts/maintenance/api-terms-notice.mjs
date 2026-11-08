@@ -24,6 +24,9 @@ const API_TERMS_VERSION = '2026-11-08';
 const API_TERMS_DEADLINE = '2026-11-23T00:00:00Z';
 
 const GO = process.argv.includes('--go');
+// --preview-to=<email>: send ONE copy of the notice to that address (a sample key
+// prefix stands in), stamp nothing, and stop. For reading the email as sent.
+const PREVIEW_TO = (process.argv.find(a => a.startsWith('--preview-to=')) || '').split('=')[1] || null;
 const RESERVED = /(@|\.)(example\.(com|org|net)|test|invalid|localhost)$/i;
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -86,6 +89,18 @@ const html = (prefixes) => text(prefixes)
   .split('\n\n').map(p => `<p>${p.replace(/https:\/\/[^\s]+[^\s.,)]/g, u => `<a href="${u}">${u}</a>`).replace(/\n/g, '<br>')}</p>`).join('');
 
 let resend = null;
+if (PREVIEW_TO) {
+  if (!process.env.RESEND_API_KEY) { console.error('RESEND_API_KEY not set: cannot send'); await client.close(); process.exit(1); }
+  const { Resend } = await import('resend');
+  const r = await new Resend(process.env.RESEND_API_KEY).emails.send({
+    from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+    to: PREVIEW_TO, replyTo: 'team@sourcelibrary.org', subject: `[copy] ${subject}`,
+    text: text(['sl_data_ab12cd34...']), html: html(['sl_data_ab12cd34...']),
+  });
+  console.log(r.error ? `Resend error: ${JSON.stringify(r.error).slice(0, 160)}` : `Copy sent to ${PREVIEW_TO} (id ${r.data?.id})`);
+  await client.close();
+  process.exit(r.error ? 1 : 0);
+}
 if (GO) {
   if (!process.env.RESEND_API_KEY) { console.error('RESEND_API_KEY not set: cannot send'); await client.close(); process.exit(1); }
   const { Resend } = await import('resend');
