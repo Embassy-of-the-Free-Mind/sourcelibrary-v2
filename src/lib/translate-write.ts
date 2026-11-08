@@ -32,6 +32,7 @@ import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
 import { guardTranslationText } from './translation-write-guard';
+import { checkNeighbours } from '../../scripts/lib/neighbour-guard.mjs'; // #5026: the page is not its neighbour's English
 import { translationLayers, writePageAnnotations } from './translation-text'; // #5942: text + annotations beside data
 
 /**
@@ -315,6 +316,8 @@ export interface WritePageTranslationArgs {
    * 'batch_api'); a person's edit (`source: 'manual'`) carries none.
    */
   engine?: GeminiEngine | NotRecorded;
+  /** page_number → English for pages of the same reply written together: overrides the stored n-1 / n+1 in the neighbour check (#5026). */
+  neighbours?: Record<number, string> | null;
 }
 
 /**
@@ -352,7 +355,7 @@ export async function strayScriptGate(
 export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
-  /** Set when the text was refused (e.g. 'hidden-meta', #5376; 'stray-script', #5734): nothing was written, the reason is on the page. */
+  /** Set when the text was refused (e.g. 'hidden-meta', #5376; 'stray-script', #5734; 'neighbour-leak' / 'absorbs-neighbour', #5026): nothing was written, the reason is on the page. */
   refused?: string;
   /** Set when the model's answer was empty (#4685): nothing was written, the page is marked `fail_reason: 'empty_response'`. */
   emptyResponse?: boolean;
@@ -373,7 +376,7 @@ export async function writePageTranslation(
 ): Promise<WritePageTranslationResult> {
   const {
     pageId, text, model, source = 'ai', language = 'English',
-    promptRef, jobId, extraTranslationFields, extraSet, overwriteHuman = false, engine,
+    promptRef, jobId, extraTranslationFields, extraSet, overwriteHuman = false, engine, neighbours = null,
   } = args;
 
   // Model output must say what produced it (#4613) — refuse rather than stamp a partial record.
@@ -390,7 +393,7 @@ export async function writePageTranslation(
   // Promise 1: the human-edit guard.
   const current = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation as HumanEditableField | undefined;
   if (isHumanEditedField(existing) && !overwriteHuman) {
@@ -418,6 +421,20 @@ export async function writePageTranslation(
     const stray = await strayScriptGate(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, { targetLanguage: language, jobId, model });
     if (stray.refused) return { written: false, protected: false, refused: STRAY_SCRIPT_REASON, text: stray.text };
     finalText = guardTranslationText(stray.text); // #5902: term definitions → <note>
+    // #5026: a page's English that is its neighbour's (shared run with the stored n-1 / n+1, or the length of this
+    // page's source plus a neighbour's) is refused like the hidden page. Not on a restore (notRecorded engine).
+    if (!(engine && isNotRecorded(engine))) {
+      const bookId = current?.book_id as string | undefined;
+      const nb = await checkNeighbours(db, {
+        page: { id: pageId, book_id: bookId, page_number: current?.page_number, page_type: current?.page_type },
+        text: finalText, ocr: (current?.ocr as { data?: string } | undefined)?.data ?? '', bookId, neighbours,
+      });
+      if (nb.refuse) {
+        console.warn(`[neighbour-guard] ${pageId} refused (${nb.reason}): ${nb.detail}`);
+        await recordRefusedTranslation(db, { id: pageId, book_id: bookId }, finalText, nb.reason, { jobId, model });
+        return { written: false, protected: false, refused: nb.reason, text: finalText };
+      }
+    }
   }
 
   // Promise 2: snapshot existing content first (non-fatal — createRevision

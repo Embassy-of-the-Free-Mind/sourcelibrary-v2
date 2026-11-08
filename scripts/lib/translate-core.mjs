@@ -33,6 +33,7 @@ import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { stripAnchor } from './block-page-guard.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
+import { checkNeighbours } from './neighbour-guard.mjs';
 import { guardTranslationText } from './translation-write-guard.mjs';
 import { checkWrittenText, writeGuardReason } from './write-text-guard.mjs';
 export { STRAY_SCRIPT_REASON };
@@ -1338,11 +1339,15 @@ export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.S
  *   An empty or whitespace-only `text` is never stored either (#4685): the page is stamped
  *   `translation.fail_reason: 'empty_response'` (recordEmptyTranslation) and the result carries
  *   {written:false, emptyResponse:true, reason:'empty_response'}, `text` = the existing translation.
+ *   Nor a page that carries its neighbour's English (#5026, neighbour-guard.mjs): reasons 'neighbour-leak' and
+ *   'absorbs-neighbour', judged against the stored English of n-1 and n+1, stamped and kept like 'hidden-meta'.
+ * @param {Object<number,string>} [args.neighbours] page_number → English, for pages of the same reply written
+ *   together: overrides the stored English of n-1 / n+1 in the neighbour check.
  * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, emptyResponse?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true, neighbours = null }) {
   // What produced this text (#4613) — required, one of:
   //   call:   { call_site, api?, model?, promptText, generationConfig, run?, context?, response?,
   //             prompt_sent_hash?, prompt_sent_chars? } — the door builds the engine block here,
@@ -1408,7 +1413,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
@@ -1445,6 +1450,21 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   if (stray.refuse) {
     await recordRefusedTranslation(db, page, clean, STRAY_SCRIPT_REASON, { jobId, model: resolvedModel });
     return { written: false, protected: false, unhealthy: true, reason: STRAY_SCRIPT_REASON, text: clean };
+  }
+
+  // Always on too (#5026): a page's English that is its neighbour's (a shared run with the stored English of n-1 or
+  // n+1 the sources do not share, or a length that is this page's source plus a neighbour's) is refused, stamped and
+  // kept. Not on a restore (writeGuard: false, or a notRecorded engine), whose text is not this run's.
+  if (writeGuard && !isNotRecorded(engineBlock)) {
+    const nb = await checkNeighbours(db, {
+      page: { ...current, ...page, page_number: page?.page_number ?? current?.page_number, page_type: page?.page_type ?? current?.page_type },
+      text: clean, ocr: page?.ocr?.data ?? current?.ocr?.data, bookId: page?.book_id ?? current?.book_id ?? book?.id, neighbours,
+    });
+    if (nb.refuse) {
+      console.warn(`[neighbour-guard] ${page.id} refused (${nb.reason}): ${nb.detail}`);
+      await recordRefusedTranslation(db, page, clean, nb.reason, { jobId, model: resolvedModel });
+      return { written: false, protected: false, unhealthy: true, reason: nb.reason, text: clean };
+    }
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

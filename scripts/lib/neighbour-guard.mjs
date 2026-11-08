@@ -23,18 +23,35 @@
  *
  * Pure functions here; the doors (translate-core.mjs writePageTranslation and its TS twin) read the neighbours.
  */
-import { sharedRun, LEAK_MIN_CHARS } from '../audit/translation-page-boundaries.mjs';
 import { lengthRatioK } from './block-page-guard.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { ABSORB_OWN_MIN, ABSORB_TWO_MAX, ABSORB_SRC_MIN, ABSORB_SKIP_TYPES } from './leaf-shift.mjs';
 
 export const NEIGHBOUR_LEAK_REASON = 'neighbour-leak';
 export const ABSORBS_NEIGHBOUR_REASON = 'absorbs-neighbour';
-export { LEAK_MIN_CHARS };
+/** The audit's floor (scripts/audit/translation-page-boundaries.mjs, which imports it from here). */
+export const LEAK_MIN_CHARS = 200;
 
-/** The audit's normalisation: editorial blocks and every tag out, whitespace folded. */
-export const leakNorm = (t) => String(t || '')
-  .replace(/<(meta|summary|keywords|vocab|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
-  .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+/** Longest run a and b share, found through 40-char shingles of b then extended (dupscan). */
+export function sharedRun(a, b, min = LEAK_MIN_CHARS) {
+  if (a.length < min || b.length < min) return { len: 0, text: '' };
+  const K = 40, idx = new Map();
+  for (let i = 0; i + K <= b.length; i += 8) { const s = b.slice(i, i + K); if (!idx.has(s)) idx.set(s, i); }
+  let best = 0, bestA = -1;
+  for (let i = 0; i + K <= a.length; i++) {
+    const j = idx.get(a.slice(i, i + K)); if (j == null) continue;
+    let back = 0; while (i - back > 0 && j - back > 0 && a[i - back - 1] === b[j - back - 1]) back++;
+    let L = K; while (i + L < a.length && j + L < b.length && a[i + L] === b[j + L]) L++;
+    if (L + back > best) { best = L + back; bestA = i - back; }
+    i += Math.max(0, L - K); // skip what this match already covered
+  }
+  return { len: best, text: bestA >= 0 ? a.slice(bestA, bestA + Math.min(best, 200)) : '' };
+}
+
+/** The audit's normalisation: editorial blocks and every tag out (stripMarkupTags, so a `<-` centring marker does not
+ *  eat the text after it, #5564), whitespace folded. */
+export const leakNorm = (t) => stripMarkupTags(String(t || '')
+  .replace(/<(meta|summary|keywords|vocab|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')).replace(/\s+/g, ' ').trim();
 
 const len = (s) => String(s || '').length;
 
@@ -119,6 +136,10 @@ export async function bookLengthRatioK(db, bookId, { now = Date.now() } = {}) {
  * The door's check. Reads page n-1 and n+1 (source and stored English) and the book's K; `neighbours` (page_number →
  * English) overrides the stored English, for the reply's own pages when a block is written together. Fail-open: a
  * read that throws returns { refuse: false } (the write itself would fail on a dead db).
+ *
+ * @param {any} db
+ * @param {{ page: any, text: string, ocr?: string | null, bookId?: string | null, neighbours?: Record<number, string> | null }} args
+ * @returns {Promise<{ refuse: false } | { refuse: true, reason: string, side: 'prev' | 'next', detail: string }>}
  */
 export async function checkNeighbours(db, { page, text, ocr, bookId, neighbours = null }) {
   try {
