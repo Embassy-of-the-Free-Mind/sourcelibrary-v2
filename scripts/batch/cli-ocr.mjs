@@ -118,6 +118,13 @@
  * `read --image-prep=gnu` (Amendment 6) sends each image, after the long-edge fit, as grayscale + normalise + unsharp
  * (scripts/lib/image-long-edge.mjs prepImage, #5250's arms); the meta's `image_fit` records `prep`.
  *
+ * STRANDED BY THE IMAGE REPAIR (#5309): `apply --stranded=FILE` (JSONL {page_id, stored_hash}, the pages
+ * scripts/audit/stranded-image-repair-text.mjs lists, as scripts/eval/offleaf-5309/diagnose.mjs writes them). Their
+ * stored text was read from the shifted image, so the 40% floor compares the read with another leaf's text. For a listed
+ * page still holding the listed text, scripts/lib/stranded-leaf-gate.mjs replaces the floor with the book's neighbours:
+ * the stored text is a settled neighbour's leaf (and the read is not), or the read is the leaf the shift parked on a
+ * still-stranded neighbour. The evidence is written into `engine.input.stranded`; every other guard stays.
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -138,6 +145,7 @@ import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
 import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, cliExitCode } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { strandedLift, STRANDED_WINDOW } from '../lib/stranded-leaf-gate.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
@@ -593,7 +601,8 @@ const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
 const CODE_VERSION = await codeVersion();
 // The pid keeps two applies started in the same second (cli-ocr-lane.mjs --concurrency, #7558) on separate run ids.
-const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
+// CLI_RUN_ID (#5026): one run id for a whole repair wave (the OCR re-reads get `<id>-ocr`), so revert-run.mjs undoes it in one call
+const runId = process.env.CLI_RUN_ID ? `${process.env.CLI_RUN_ID}-ocr` : `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
 const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|^#{2,3} Summary\b|overview and summary of the text/im;
 // Distinct words of 5+ letters, folded: enough to tell "the same page read again" from "a different text".
 const longWords = (t) => new Set((String(t).replace(/<[^>]+>/g, ' ').replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u').match(/\p{L}{5,}/gu) || []));
@@ -627,6 +636,20 @@ if (LANE_GATE) {
     : gateUsable(LANE_GATE, { lane: LANE, bookId: [...bookIds][0], model: [...models][0], readHash: (id) => { try { return sha256(fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8')); } catch { return null; } } });
   if (why) { console.error(`lane gate refused, nothing written: ${why}`); fs.writeFileSync(path.join(OUT, `apply-summary-${APPLY ? 'refused' : 'dry'}.json`), JSON.stringify({ at: new Date().toISOString(), apply: APPLY, lane: LANE, gate_refused: why, written: 0 }, null, 1)); await client.close(); process.exit(1); }
   console.log(`lane gate ${LANE}: PASS (${LANE_GATE.sample.better} better / ${LANE_GATE.sample.same} same / ${LANE_GATE.sample.worse} worse of ${LANE_GATE.sample.n}; controls ${LANE_GATE.controls.pass}/${LANE_GATE.controls.n}) — the 40% shared-words floor is lifted for this book`);
+}
+// --stranded=FILE (#5309): JSONL {page_id, stored_hash} of pages the #3368 image repair stranded (their text was read
+// from the shifted image, scripts/audit/stranded-image-repair-text.mjs). On such a page the 40% floor compares the read
+// with ANOTHER leaf's text; scripts/lib/stranded-leaf-gate.mjs asks the book's neighbours instead, and lifts the floor
+// only on model-free evidence that the stored text is a neighbour's leaf, or that the read is the leaf parked on one.
+const STRANDED = new Map();
+if (arg('stranded')) for (const l of fs.readFileSync(arg('stranded'), 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); STRANDED.set(r.page_id, r); }
+async function strandedEvidence(page, text) {
+  const row = STRANDED.get(page.id);
+  if (!row) return { lift: false, why: 'not on the stranded list' };
+  if (row.stored_hash !== contentHash(page.ocr?.data ?? '')) return { lift: false, why: 'the stored text is not the one the stranded list named' };
+  const near = await db.collection('pages').find({ book_id: page.book_id, page_number: { $gte: page.page_number - STRANDED_WINDOW, $lte: page.page_number + STRANDED_WINDOW, $ne: page.page_number } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1 } }).toArray();
+  const neighbours = near.map((x) => { const r = STRANDED.get(x.id); return { id: x.id, n: x.page_number, d: x.page_number - page.page_number, text: x.ocr?.data ?? '', stranded: !!r && r.stored_hash === contentHash(x.ocr?.data ?? '') }; });
+  return strandedLift({ stored: page.ocr.data, read: text, neighbours });
 }
 const BY_EYE = new Map();
 if (arg('by-eye')) for (const l of fs.readFileSync(arg('by-eye'), 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); BY_EYE.set(r.page_id, r); }
@@ -701,7 +724,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
-  let yat = null, byEye = null, change = null;
+  let yat = null, byEye = null, change = null, stranded = null;
   if (!correct && FIRST_READ_ONLY && page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: --first-read-only'); continue; }
   if (!correct && PRINT_ONLY) {
     const hand = (text.match(/<script>\s*(\w+)\s*<\/script>/i)?.[1] || '').toLowerCase();
@@ -797,10 +820,15 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
     if (was.size >= 40 && shared < MIN_SHARED) {
       const eye = BY_EYE.get(page.id);
-      if (!eye) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
-      if (eye.read_sha256 !== sha256(text)) { skip(m, 'the by-eye check was made on a different read'); continue; }
-      if (eye.verdict !== 'read-matches-image') { skip(m, `by-eye verdict: ${eye.verdict}`); continue; }
-      byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
+      if (eye) {
+        if (eye.read_sha256 !== sha256(text)) { skip(m, 'the by-eye check was made on a different read'); continue; }
+        if (eye.verdict !== 'read-matches-image') { skip(m, `by-eye verdict: ${eye.verdict}`); continue; }
+        byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
+      } else if (STRANDED.has(page.id)) {
+        const g = await strandedEvidence(page, text);
+        if (!g.lift) { skip(m, `stranded gate: ${g.why}`); continue; }
+        stranded = { issue: 5309, ...g.evidence, read_vs_stored: Number(shared.toFixed(3)) };
+      } else { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
     }
   }
   if (scriptsSeen.length) byEye = { verdict: seenRow.verdict, checked_by: seenRow.checked_by ?? null, at: seenRow.at ?? null, note: seenRow.note ?? null, read_sha256: seenRow.read_sha256, ...byEye, scripts_seen: scriptsSeen };
@@ -819,7 +847,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }), ...(change && change) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
-      ...(byEye && { by_eye: byEye }) },
+      ...(byEye && { by_eye: byEye }),
+      ...(stranded && { stranded }) },
   });
   const tags = liftOcrTags(text);
   const detectedImages = parseDetectedImages(text);
