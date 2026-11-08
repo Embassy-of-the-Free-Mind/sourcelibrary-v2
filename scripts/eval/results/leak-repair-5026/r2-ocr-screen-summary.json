@@ -1,0 +1,30 @@
+{
+ "method": "scripts/eval/leak-repair-5026/ocr-neighbour.mjs: 4-token shingles, covered run gap<=3, ocr_dup when run >= 20 words or 12 CJK chars against page n-1 or n+1",
+ "frame": {
+  "pages": 10457,
+  "flagged": 336
+ },
+ "random_translated": {
+  "pages": 2385,
+  "flagged": 128,
+  "note": "94 of the flagged are Tibetan (formulaic); 34 non-Tibetan, many real (duplicate scans, Pali refrains)"
+ },
+ "known_pilot_failures": [
+  {
+   "book_id": "69c1ba978522835be845973b",
+   "page": 494,
+   "ocr_dup": true,
+   "side": "prev",
+   "prev_run": 269,
+   "next_run": 5
+  },
+  {
+   "book_id": "69935b6f2c63944063134103",
+   "page": 7,
+   "ocr_dup": true,
+   "side": "next",
+   "prev_run": 0,
+   "next_run": 15
+  }
+ ]
+}
