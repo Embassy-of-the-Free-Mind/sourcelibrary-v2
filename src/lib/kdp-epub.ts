@@ -1,4 +1,4 @@
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import { translationCorpus } from '@/lib/text-provenance';
 import sharp from 'sharp';
 import type { Db } from 'mongodb';
@@ -367,7 +367,7 @@ export async function generateKdpEpub(
 
   return new Promise<Buffer>((resolve, reject) => {
     const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
     archive.on('data', (c: Buffer) => chunks.push(c));
     archive.on('end', () => resolve(Buffer.concat(chunks)));
     archive.on('error', reject);
