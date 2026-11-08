@@ -1,6 +1,5 @@
 import type { NextRequest } from 'next/server';
 import { pageEnvelope, parseOffset } from '@/lib/mcp-pagination';
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { countToolResults, logMcpToolCall, logMcpInitialize, mintMcpSessionId, readMcpSessionId } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
@@ -27,15 +26,15 @@ import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import { MCP_HEADERS, mcpApiGet, mcpApiGetText, type McpCaller } from '@/lib/mcp-inprocess';
+// The v2 SDK (#8443): it serves protocol 2026-07-28 (server/discover, the
+// per-request envelope) next to the 2025-era initialize handshake.
 import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-  ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
+  Server,
+  WebStandardStreamableHTTPServerTransport,
+  createMcpHandler,
+  isLegacyRequest,
   type Tool,
-} from '@modelcontextprotocol/sdk/types.js';
-import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
-import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
+} from '@modelcontextprotocol/server';
 
 /**
  * The MCP server version, in ONE place.
@@ -2264,11 +2263,11 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     },
   ] as const;
 
-  server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+  server.setRequestHandler('resources/list', async () => ({
     resources: RESOURCES.map((r) => ({ ...r })),
   }));
 
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  server.setRequestHandler('resources/read', async (request) => {
     const uri = request.params.uri;
     const known = RESOURCES.find((r) => r.uri === uri);
     if (!known) throw new Error(`Unknown resource: ${uri}`);
@@ -2295,7 +2294,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     return { contents: [{ uri, mimeType: known.mimeType, text: await resp.text() }] };
   });
 
-  server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  server.setRequestHandler('tools/list', async () => ({
     tools: TOOLS,
     _meta: {
       about: 'Source Library — 15,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org',
@@ -2315,7 +2314,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     },
   }));
 
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler('tools/call', async (request) => {
     const { name, arguments: args } = request.params;
     const argsObj = (args || {}) as ToolArgs;
     const started = Date.now();
@@ -2490,14 +2489,18 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null, 
   const messages = Array.isArray(body) ? body : [body];
   for (const msg of messages) {
     const m = msg as { method?: unknown; params?: Record<string, unknown> } | null;
-    if (!m || m.method !== 'initialize') continue;
-    const info = (m.params?.clientInfo || {}) as Record<string, unknown>;
+    if (!m || (m.method !== 'initialize' && m.method !== 'server/discover')) continue;
+    // A 2026-07-28 client opens with `server/discover` instead of `initialize`
+    // and carries its identity in the per-request `_meta` envelope (#8443).
+    // Logged the same way, so mcp_clients keeps counting connections.
+    const envelope = (m.method === 'server/discover' ? m.params?._meta || {} : {}) as Record<string, unknown>;
+    const info = (m.params?.clientInfo || envelope['io.modelcontextprotocol/clientInfo'] || {}) as Record<string, unknown>;
     const s = (v: unknown) => (typeof v === 'string' ? v : null);
     logMcpInitialize({
       clientName: s(info.name),
       clientVersion: s(info.version),
       clientTitle: s(info.title),
-      protocolVersion: s(m.params?.protocolVersion),
+      protocolVersion: s(m.params?.protocolVersion ?? envelope['io.modelcontextprotocol/protocolVersion']),
       ip,
       userAgent,
       sessionId,
@@ -2539,18 +2542,37 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
     const headers = new Headers(req.headers);
     headers.set('accept', 'application/json, text/event-stream');
     const fixedReq = new Request(req.url, { method: req.method, headers });
-
-    const transport = new WebStandardStreamableHTTPServerTransport({
-      sessionIdGenerator: undefined, // Stateless for serverless
-      enableJsonResponse: true,
-    });
-    const server = createServer({
+    const makeServer = () => createServer({
       ip: getClientIp(req),
       userAgent: req.headers.get('user-agent'),
       identity,
       request: req,
       sessionId,
     });
+
+    // Protocol 2026-07-28 (#8443): Claude Code and claude.ai open with
+    // `server/discover` and send every request in a per-request `_meta`
+    // envelope, with no initialize handshake and no session. The SDK's own
+    // classifier decides the era, so this branch and the SDK cannot disagree.
+    // Served per request, JSON only (no tool here streams), with the same
+    // server and the same tools as the 2025-era path below.
+    if (!(await isLegacyRequest(fixedReq, body))) {
+      const handler = createMcpHandler(makeServer, { legacy: 'reject', responseMode: 'json' });
+      try {
+        const res = await handler.fetch(fixedReq, { parsedBody: body });
+        return res.ok ? res : withErrorReason(res, body, req.headers);
+      } finally {
+        await handler.close();
+      }
+    }
+
+    // 2025-era clients (initialize at 2025-11-25, 2025-06-18 and older), served
+    // exactly as before the v2 SDK: stateless, JSON responses.
+    const transport = new WebStandardStreamableHTTPServerTransport({
+      sessionIdGenerator: undefined, // Stateless for serverless
+      enableJsonResponse: true,
+    });
+    const server = makeServer();
     await server.connect(transport);
     try {
       const res = await transport.handleRequest(fixedReq, { parsedBody: body });
