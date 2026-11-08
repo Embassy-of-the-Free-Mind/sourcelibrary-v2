@@ -178,9 +178,12 @@ async function postDraw() {
     items.push({ kind: 'item', book_id: b, page_id: page.id, n: page.page_number, language: r.language, ocr: page.ocr.data, en: page.translation?.data ?? null, ocr_model: page.ocr.model });
   }
   // planted: two repaired pages from other books given back their pre-repair (wrong-leaf) transcription, no English
-  for (const b of books.slice(N, N + 20)) {
+  // (a wave with no books past the N drawn: another page of a drawn book)
+  const drawn = new Set(items.map((x) => x.page_id));
+  const spare = [...books.slice(N, N + 20).map((b) => byBook.get(b)[0]), ...books.flatMap((b) => byBook.get(b).filter((r) => !drawn.has(r.page_id)).slice(0, 1))];
+  for (const r of spare) {
     if (items.filter((x) => x.kind === 'ctl-old').length >= 2) break;
-    const r = byBook.get(b)[0];
+    const b = r.book_id;
     const page = await db.collection('pages').findOne({ id: r.page_id }, { projection: PAGE_PROJ });
     const old = page && await preRepairText(page.id);
     if (!old || old.text === page.ocr?.data) continue;
@@ -192,13 +195,16 @@ async function postDraw() {
   await client.close();
 }
 
+// 2026-11-08: at 6,000 characters a dense two-column Migne page (7.6K OCR, 9.8K English) reached the judge cut, and Opus
+// called the cut a serious omission. The judge must see the whole text it is asked about.
+const POST_CLIP = 30_000;
 export const DEFECT_KINDS = ['omission', 'misread', 'invented', 'wrong_leaf', 'garble', 'mistranslation', 'other'];
 export function postPrompt({ title, language, n, win, ocr, en, tool = 'the Read tool' }) {
   const L = [`You are checking the text shown to readers on page ${n} of "${title}" (language: ${language || 'unknown'}): a machine transcription of the page${en ? ' and its English translation' : ''}.`,
     '', `Scans of pages ${win.map((w) => w.n).join(', ')} (open EVERY image with ${tool} before answering; page ${n} is the one being checked, its neighbours are there so you can tell the leaves apart):`];
   for (const w of win) L.push(`Page ${w.n}: ${w.img ? `image file ${w.img}` : '(no image available)'}`);
-  L.push('', `Transcription shown for page ${n}:`, '<<<', clip(strip(ocr), 6000), '>>>');
-  if (en) L.push('', `English shown for page ${n}:`, '<<<', clip(en, 6000), '>>>');
+  L.push('', `Transcription shown for page ${n}:`, '<<<', clip(strip(ocr), POST_CLIP), '>>>');
+  if (en) L.push('', `English shown for page ${n}:`, '<<<', clip(en, POST_CLIP), '>>>');
   L.push('', 'Questions:',
     `1. leaf: which leaf's printed text does the transcription render? "own" (page ${n}), "prev" (page ${n - 1}), "next" (page ${n + 1}), "other", or "cannot_tell".`,
     `2. ocr_usable: true if a reader could rely on the transcription as page ${n}'s text: no line or more left out, nothing added that is not printed, misreadings only minor; else false.`,

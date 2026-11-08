@@ -1,0 +1,647 @@
+{
+ "n": 50,
+ "decided": 41,
+ "cannot_tell": 9,
+ "another_leaf": 30,
+ "precision": 0.7317073170731707,
+ "wilson": [
+  0.5806646676750733,
+  0.8430503602034056
+ ],
+ "precision_all_answered": 0.6,
+ "offsets": {
+  "-1": 30
+ },
+ "by_diagnose": {
+  "agy-off-sample:prev": {
+   "n": 30,
+   "other": 30,
+   "own": 0,
+   "cannot": 0,
+   "offset_agrees": 0
+  },
+  "agy-not-off:own": {
+   "n": 11,
+   "other": 0,
+   "own": 11,
+   "cannot": 0,
+   "offset_agrees": 0
+  },
+  "agy-not-off:cannot_tell": {
+   "n": 9,
+   "other": 0,
+   "own": 0,
+   "cannot": 9,
+   "offset_agrees": 0
+  }
+ },
+ "controls": {
+  "n": 0,
+  "ok": 0,
+  "rows": []
+ },
+ "unanswered": [],
+ "rows": [
+  {
+   "key": "O001",
+   "book_id": "69e41fab4fc48a88423e0693",
+   "n": 36,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p35",
+   "d": -1,
+   "evidence": "The opening 'in some recension other than the original Sanskrit; the Hammīr Haṭh' is the first line under the 'PAHĀṚĪ 23' header on leaf p35. Its footnotes 'Mola Rāma was born A.D. 1760' and the Dohā 'Kahā hazāra kahā lakha' are at the bottom of p35. Leaf p36 is folio 24 and begins 'The painting of Paṭyāla'."
+  },
+  {
+   "key": "O002",
+   "book_id": "69af4554e9a2e38648e40465",
+   "n": 595,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p594",
+   "d": -1,
+   "evidence": "The transcription opens with 'Cui dedi in solitudine domum' at the top of the left column and ends with 'Quis revelabit faciem indumenti ejus? et in medium oris ejus quis intrabit?' at the bottom of the right column. The header reads '1179 S. HIERONYMI DIVINA BIBLIOTHECA. 1180'. All of this matches leaf p594. Leaf p595 is printed 1181-1182 and begins 'Portas vultus ejus quis aperiet?'"
+  },
+  {
+   "key": "O003",
+   "book_id": "69ee93b9f2c6312502f6a526",
+   "n": 348,
+   "language": "Spanish",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p347",
+   "d": -1,
+   "evidence": "The heading '§ XXXVIII. — Sacrifices de l'année nouvelle au signe de Cauac.' and the folio '— 229 —' are at the top of leaf p347. Its main text ends with 'mettaient vis-à-vis d'elle l'image', and its footnotes include '(4) Ceci rappelle l'antique empire'. Leaf p348 is the Spanish page 230."
+  },
+  {
+   "key": "O004",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 28,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p28",
+   "d": 0,
+   "evidence": "The transcription opens with \"kitchen lest said cook 'up and leaves,'\" which matches the top of leaf p28 under the running head '14 MENTAL TYRANNY, OR HOW WE'. It closes with \"But they do act on you in such place. A\", which matches the last line of that leaf."
+  },
+  {
+   "key": "O005",
+   "book_id": "69f8c1350c0c281d4bd32bfd",
+   "n": 64,
+   "language": "French",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p63",
+   "d": -1,
+   "evidence": "The transcription begins '[84 bis] Toz, toztli, plumes jaunes très-précieuses' and ends '[93] ... (2) Ordinairement (Cod. Valeriano, Vergara, etc.)', followed by the footnotes '(1) Toztlan, Kingsb., pl. 48 et 50' and '(2) C'est le symbole de l'année'. All of this is on leaf p63, which is headed '— LVII —'. Leaf p64 is headed LVIII and starts with '[94] Xo, pied'."
+  },
+  {
+   "key": "O006",
+   "book_id": "6a0b251a620b66ad8f233312",
+   "n": 78,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p77",
+   "d": -1,
+   "evidence": "The text opens with \"not only in a proportionate quantity, and by degrees\" at the top of the leaf under the header \"Book I. of Plants. 7\". It closes with \"Now because the primitive course of the Sap into the\" at the bottom of the same leaf."
+  },
+  {
+   "key": "O007",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 31,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p31",
+   "d": 0,
+   "evidence": "The running head 'MESMERIZE EACH OTHER.' and the first line 'and influenced by it. We might even say we shall' are at the top of leaf p31. The last line 'This is man's teaching — not God's. That Power' is at the bottom of the same leaf."
+  },
+  {
+   "key": "O008",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 18,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p17",
+   "d": -1,
+   "evidence": "The transcription starts with \"He mixed his mental gunpowder with sawdust\" and ends with \"to some line of action damaging to your purpose.\" Leaf p17 starts and ends with the same lines, and its running head is \"MESMERIZE EACH OTHER.\" with folio 3. Leaf p18 has folio 4 and starts \"Is there danger to us then\"."
+  },
+  {
+   "key": "O009",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 163,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription says only '<page-type>blank</page-type>' and 'blank flyleaf or endpaper' and has no text to compare. Leaf p163 is not blank: it has 'PLATE V. SÂRÍNDA. SÂRANGI.' and the signature '21'. Leaves p160, p162, p165 and p166 are all blank, so the transcription fits any of them equally."
+  },
+  {
+   "key": "O010",
+   "book_id": "6a1aa526c8638d1ea5c80f42",
+   "n": 149,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p148",
+   "d": -1,
+   "evidence": "The transcription opens with \"they have attained redemption through their perfect attainment of the secret of the Christs\" and ends with \"any explanation I could make on the matter. She\". Those are the first and last lines of leaf p148, which has folio 114 and the running head \"Clothed with the Sun.\" Leaf p149 is folio 115 and starts with \"wept bitterly\"."
+  },
+  {
+   "key": "O011",
+   "book_id": "69aec1eb1fc60a4bf5bbe928",
+   "n": 65,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p64",
+   "d": -1,
+   "evidence": "The transcription opens with 'cient Stature. And the Instance was, (III.) THE MATHEMATICKS.' and ends with the catchword 'more'. Leaf p64 (printed page 20, header 'Modern Improvements') has the same opening at the top and the same catchword 'more' at the bottom."
+  },
+  {
+   "key": "O012",
+   "book_id": "6a08f93f9c1b82475e159c73",
+   "n": 252,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p251",
+   "d": -1,
+   "evidence": "The transcription opens with \"My uncle was foremost in the battle.\" That is the first line of leaf p251, under the running header \"Wild Harvests 233\". The heading \"III: Wild Harvests\" and the decorated 'W' initial come mid-page on that leaf, and it ends with \"was this wild cereal found. In-\". Leaf p252 is folio 234 and starts with \"deed, some of the watery fields\"."
+  },
+  {
+   "key": "O013",
+   "book_id": "69ee93cff2c6312502f6a7ae",
+   "n": 149,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p148",
+   "d": -1,
+   "evidence": "The transcription opens with 'for a good one made of dogs' skins, which they think are warmer' and ends with 'the skin of his paws behind: it is observed that these paws are' plus the catchword 'sometimes'. Leaf p148 (folio 132, running head 'The NATURAL HISTORY of') opens and closes with the same lines. Leaf p149 is folio 133 and starts with 'sometimes divided in two', so the transcription stored for p149 actually renders p148."
+  },
+  {
+   "key": "O014",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 168,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p168",
+   "d": 0,
+   "evidence": "The transcription begins with the running head \"2 ABOUT ECONOMIZING OUR FORCES.\" and the line \"One great source of our present waste of force\" at the top of the leaf. It ends with \"so as to rack and strain its\" and the footer \"Thoughts are Forces.\" at the bottom of the same leaf."
+  },
+  {
+   "key": "O015",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 40,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p40",
+   "d": 0,
+   "evidence": "The transcription opens with 'fogies, “ grannies” and “daddies” now as are those', which is the first line under the running head '8 SPELLS, OR THE LAW OF CHANGE.' on leaf p40. It closes with 'ideas beget newer and fresher views of life. There', which is the last line of the same leaf."
+  },
+  {
+   "key": "O016",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 34,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p33",
+   "d": -1,
+   "evidence": "The transcription begins \"therefore decline to teach him anything else but this râga\" and ends \"Each was jealous of the other's\". Leaf p33 has the same first and last lines, the running head \"THE MUSIC OF SOUTHERN INDIA. 9\" and footnote 10 citing Ouseley's \"An Essay on the Music of Hindustan\". Leaf p34 is printed page 10 and begins \"powers, and claimed to be most skilled\". The transcription also gives Ouseley's dates as 1797-1800, but the print reads 1797-1800."
+  },
+  {
+   "key": "O017",
+   "book_id": "69aea85d1cbf28a363a4f63c",
+   "n": 696,
+   "language": "German",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p695",
+   "d": -1,
+   "evidence": "Opens 'das, vom Standpunkt der Herreninteressen aus, gegenüber der Gründlichkeit' at the top of leaf p695 (header 'Bürokratie. 675') and ends 'Und endlich findet sich die Fachprüfung auch' at the bottom of that leaf"
+  },
+  {
+   "key": "O018",
+   "book_id": "69af4550004a024aaf2166b1",
+   "n": 436,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription runs from 'Et iterum : Ego ero fidens in eo' at the top of the left column to 'Nec quisquam sumit sibi honorem, sed qui vocatur a Deo, tanq' near the foot of the right column on folio 853-854 (header 'S. PAULI EPIST AD HEBRÆOS'). That folio appears twice in this set: leaves p435 and p437 are identical scans. Leaf p436 is a duplicate of folio 851-852 (the start of the Epistle to the Hebrews), so it does not match. Because the matching page appears on two leaves, the scans cannot say which one the transcription renders."
+  },
+  {
+   "key": "O019",
+   "book_id": "6a1aa526c8638d1ea5c80f42",
+   "n": 309,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "Transcription says 'This page is a blank flyleaf or endpaper... No text or illustrations are present.' Leaves p306 and p308 are both blank, so the two can't be told apart. p309 itself has text, starting with the heading 'CONCERNING THE DIVINE IMAGE, OR THE VISION OF ADONAI.'"
+  },
+  {
+   "key": "O020",
+   "book_id": "69dc23ac39623978967d750d",
+   "n": 168,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p167",
+   "d": -1,
+   "evidence": "Starts with 'sel of occult science. Not necessarily that they understand...' and ends with '...the result is that there is a very tolerable revival of'. These are the first and last lines of leaf p167, which has the header 'KAMA LOCA.' and folio 159. Leaf p168 (folio 160) starts with 'consciousness in the shell...' instead."
+  },
+  {
+   "key": "O021",
+   "book_id": "6a353228c8ce407afbe04b97",
+   "n": 6,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription only says 'blank page'. Leaf p6 is not blank: it has the 'Dedication' text inside a border. Leaves p3, p4 and p5 are blank, and p7 is blank apart from a handwritten '111-D' at the top. So the transcription fits several identical-looking leaves, and nothing in it picks out one of them."
+  },
+  {
+   "key": "O022",
+   "book_id": "69aec1eeca7400b16b4f7649",
+   "n": 287,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p286",
+   "d": -1,
+   "evidence": "The transcription opens 'fes, which have been fince compo'd by fome of their Body' and ends 'other Pendulums counterpois'd above the Center of Motion,'. These are the first and last lines of p286, which has the printed folio 254 and the header 'The HISTORY of the'. p287 is folio 255 and starts with 'Motion, and of others lying Horizontal'."
+  },
+  {
+   "key": "O023",
+   "book_id": "69ee646e7b983848aff573c6",
+   "n": 83,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p82",
+   "d": -1,
+   "evidence": "The transcription opens with 'last, hight Loki. \"I ken a feat which I am qnite ready to prove' and ends with 'a serving-lad who is named Hugi'. Both lines match the first and last lines of leaf p82 under the header '58 GYLFI'S MOCKING.' The faint pencilled margin note also appears on that leaf. Leaf p83 is printed page 59 and opens 'and bade him run a match with Þiálfi'."
+  },
+  {
+   "key": "O024",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 202,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p202",
+   "d": 0,
+   "evidence": "The transcription opens with \"bis dotage, dead already to the world of business\" (an OCR misreading of \"his dotage\"), which is the first line under the running head \"4 WHAT IS JUSTICE?\". It ends with \"we owe a thought of gratitude to the man\", the last line above the \"Thoughts are Things.\" footer on the same leaf."
+  },
+  {
+   "key": "O025",
+   "book_id": "69f8c1260c0c281d4bd32961",
+   "n": 16,
+   "language": "Cakchiquel / English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p15",
+   "d": -1,
+   "evidence": "The transcription's 'THE ANNALS OF THE CAKCHIQUELS. INTRODUCTION. Ethnologic Position of the Cakchiquels.', the Reese Library stamp at the top, the closing words 'as it is spoken' and the folio 9 with signature B all match leaf p15. Leaf p16 is folio 10 and begins 'in its purity in Yucatan'."
+  },
+  {
+   "key": "O026",
+   "book_id": "6a09ff8dfa20006dbaba9e20",
+   "n": 165,
+   "language": "German",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p164",
+   "d": -1,
+   "evidence": "The transcription's first row, 'Band I, Seite 286, Zeile 8 von oben: — sechs … lies: — fünf', is the first line under the header '154 Druckfehlerverzeichniss.' on p164. Its last row, 'II, 238, 17 unten: — mizcitlalichichiuh', is the last line of that page. p165 is printed page 155 and starts with 'Band II, Seite 253 … Yacinto'."
+  },
+  {
+   "key": "O027",
+   "book_id": "69ef285385daccce30f2c71d",
+   "n": 198,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p197",
+   "d": -1,
+   "evidence": "The header 'LIBER I. 191' and the opening line 'huius lapidis vsu pristinae sanitati restitutos fuisse intelligo' are at the top of leaf p197. The footnote '* Inuenitur interdum Vlysipone venalis hic Lapis' is at the bottom, and the catchword 'De' is at the foot. Leaf p198 is folio 192 and opens with 'De lapide Malacensi CAP. XLVI.'"
+  },
+  {
+   "key": "O028",
+   "book_id": "6a08f8bf9c1b82475e15802a",
+   "n": 147,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p146",
+   "d": -1,
+   "evidence": "The transcription's first line, \"that Akhiska had fallen into the hands of the enemy\", is the top line of leaf p146 (folio 122, header THE TRAVELS OF). Its last line, \"before the imperial stirrup. It was\", is the bottom line of the same leaf. Leaf p147 is folio 123 and begins \"on the day of a grand divan\"."
+  },
+  {
+   "key": "O029",
+   "book_id": "69dc23c539623978967d7994",
+   "n": 45,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p44",
+   "d": -1,
+   "evidence": "The text opens with 'has no personal and private ends that therefore such ends are realized?' and closes with 'For that twice-born man, by whom not'. Both lines match the top and bottom of leaf p44, which has the running head 'THE ANCIENT WISDOM.' and folio 30. Leaf p45 has folio 31 and starts 'the smallest danger even is caused...'"
+  },
+  {
+   "key": "O030",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 123,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p123",
+   "d": 0,
+   "evidence": "Running head 'REGENERATION; OR, BEING BORN AGAIN. 5' and first line 'and a most important agency for the fullest enjoyment of life' at the top of the leaf; last line 'drawn into another re-incarnation, and perhaps' just above the 'Truths Prove Themselves' footer"
+  },
+  {
+   "key": "O031",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 135,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription says page-type 'blank', with 'No text or illustrations are present'. Leaf 135 is not blank: it carries 'PLATE I. A BÎN PLAYER.' with footnotes and the signature '2 E'. Leaves 132, 134, 137 and 138 are all blank and look the same, so the transcription cannot be tied to any one of them."
+  },
+  {
+   "key": "O032",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 209,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription says '<page-type>blank</page-type>' and 'No text or illustrations are present.' It does not match p209, which carries the PLATE XIII text 'TÂLA. JÂLRA. BUDBÚDIKA.' Four leaves are blank (p206, p208, p211 and p212), and nothing in the transcription tells them apart."
+  },
+  {
+   "key": "O033",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 219,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription contains no text and calls the page 'a blank flyleaf or endpaper'. Leaf 219 is not blank: it carries the heading 'PLATE XV. PILLAGOVI. MUKAVINA. S'RUTI. NÂGASÂRA. ALGOA.' and body text. Leaves 216, 218 and 222 are all blank, so an empty transcription could match any of them."
+  },
+  {
+   "key": "O034",
+   "book_id": "69ea3eb8300d991d0f1d4152",
+   "n": 66,
+   "language": "Old Norse",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p65",
+   "d": -1,
+   "evidence": "The heading 'CHAPTER III. The Wineland History of the Flatey Book.' and the opening line 'THE Flatey Book [Flateyjarbók] is the most extensive...' appear at the top of the p65 leaf. The last body line 'It has been conjectured that the manuscript was written in the north of Iceland⁶,' and footnotes 1–6 also match that leaf. The stored page 66 leaf is printed page 54 and begins 'but, according to the editors of the printed text...'. No page number is printed on the p65 chapter-opening leaf; it would be 53."
+  },
+  {
+   "key": "O035",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 175,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription says the page is blank ('page-type: blank', 'blank flyleaf or endpaper') and has no text. Leaf 175 is not blank: it carries the 'PLATE VII. TAMBURI. YEKTAR. PERSIAN SITÂRA.' heading and text with signature '2 K', so the transcription is wrong for it. Leaves 172, 174 and 178 are all blank (174 and 178 are plate tissues/backs), so there is nothing to show which of them it renders."
+  },
+  {
+   "key": "O036",
+   "book_id": "6a353228c8ce407afbe04b97",
+   "n": 61,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p60",
+   "d": -1,
+   "evidence": "The transcription opens with \"glory. Although the priest no longer is his counsellor\" and closes with \"our own Master we find one who joined himself to those\". Both lines match the first and last lines of leaf p60. That leaf is headed 'The Initiates of the Flame' and has the printed folio 52. Leaf p61 is headed 'The Egyptian Initiate', carries folio 53, and begins \"who served, and was a true King\"."
+  },
+  {
+   "key": "O037",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 194,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p194",
+   "d": 0,
+   "evidence": "The transcription's heading is \"10 GOD IN THE TREES; OR,\". Its first line, \"lost theirs. The ascetic has not trusted to the\", is the first line of the leaf. Its text ends with \"love we cannot abuse, kill or enslave.\", the last line of body text, and then \"Where life is, there is intelligence.\", the footer of the leaf."
+  },
+  {
+   "key": "O038",
+   "book_id": "69e9618b2beefe2f6f72bcd1",
+   "n": 437,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p436",
+   "d": -1,
+   "evidence": "Header '226 ODORIC'. The text opens with 'homme appelé A-tan, autrement Pankou.' at the top of leaf p436 and ends with 'and also lign-aloes,' on its last line. Leaf p437 is printed page 227 and begins 'and precious stones, such as the carbuncle'."
+  },
+  {
+   "key": "O039",
+   "book_id": "69e9c969625ec74a14473450",
+   "n": 31,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p30",
+   "d": -1,
+   "evidence": "The heading 'IO. RVFFVS FOROLIVIENSIS Archiepiscopus Consentinus...' and the six-line poem from 'Accipe non noti praeclara uolumina mundi' to 'Qui facit haec cunctis regna uidenda locis' are the only text on leaf 30, set in the upper middle. Leaf 31 is the opening page of 'PETRI MARTYRIS... Oceaneae decadis liber primus'."
+  },
+  {
+   "key": "O040",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 211,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p211",
+   "d": 0,
+   "evidence": "The transcription opens with 'Infinite Justice does not inflict pain unnecessarily' and closes with 'we are not to judge ourselves'. Those are the first and last lines of the text on leaf 211, which has the running head 'WHAT IS JUSTICE?', the folio 13 and the footer 'Thoughts are Things.'"
+  },
+  {
+   "key": "O041",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 95,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p95",
+   "d": 0,
+   "evidence": "The transcription's header is 'HEALTHY AND UNHEALTHY SPIRIT COMMUNION. 13' and its first line is 'bringing the satisfaction or pleasure imagined.' Both match the top of leaf p95. Its last line, 'municate in any way. What satisfaction would', matches the bottom of p95, just above the 'Thoughts are Things.' footer."
+  },
+  {
+   "key": "O042",
+   "book_id": "69f8c10d0c0c281d4bd3247c",
+   "n": 232,
+   "language": "Spanish",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p231",
+   "d": -1,
+   "evidence": "The heading 'CAPITULO XIV.' and the opening line 'Estos indios itzaes son de nacimiento yucatecos' sit at the top of leaf p231, under the header 'LIBRO NONO. 227'. The last line, 'Este era menos poderoso que el primero, y así viendo que despues le habia', matches the bottom of p231. Leaf p232 is printed folio 228 and opens with 'de hacer guerra'."
+  },
+  {
+   "key": "O043",
+   "book_id": "69aebe605e312cf82457c68e",
+   "n": 363,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p362",
+   "d": -1,
+   "evidence": "The transcription opens with \"Fluors, which though they be applied unto, and subingress into the pores of a Compact body\" and ends with \"because the Atoms, of which the\". These are the first and last lines of leaf p362 (folio 322, header \"Fluidity, Firmness, Book III\"). That leaf also has the same margin notes: Art. 2 \"Siccity defined\", Art. 3 and Art. 4. Leaf p363 is folio 323 and begins \"the Aqueous doth consist\"."
+  },
+  {
+   "key": "O044",
+   "book_id": "69af4550004a024aaf2166b1",
+   "n": 246,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p245",
+   "d": -1,
+   "evidence": "The transcription opens with 'In hominem similem sibi non habet misericordiam', which is the first line of the left column on p245. It includes 'CAPUT XXIX.' lower in the left column, and its right column starts 'Sin autem, fraudaot illum pecunia sua'. The header 'LIBER ECCLESIASTICI.' and page numbers 473/474 match p245. The page labelled 246 is printed 475-476 and starts 'Non des illi potestatem'."
+  },
+  {
+   "key": "O045",
+   "book_id": "6a08e38250bd891addfb6e5c",
+   "n": 233,
+   "language": "Middle English",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p232",
+   "d": -1,
+   "evidence": "The transcription opens with \"It helpeth, for in other wey,\" and ends with \"But yet he herde all that they saide,\". These are the first and last lines of leaf p232, which is printed as folio 224 and has the heading CONFESSIO AMANTIS. The same leaf has the margin notes \"Quidquid delirant reges...\" and \"Hic de Lucio imperatore...\". Leaf p233 is folio 225 (LIBER SEPTIMUS) and opens with \"And therof toke they non hede.\""
+  },
+  {
+   "key": "O046",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 96,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p96",
+   "d": 0,
+   "evidence": "The transcription opens with \"result to you after a short time, from seeing your\" under the running head \"14 HEALTHY AND UNHEALTHY SPIRIT COMMUNION\". That is the first line of p96. It closes with \"are unnatural. They are not self-sustaining. The\", which is p96's last line before the \"Thoughts are Things.\" footer."
+  },
+  {
+   "key": "O047",
+   "book_id": "6a3e662e629ea5110b4c8e34",
+   "n": 60,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:own"
+   },
+   "renders": "p60",
+   "d": 0,
+   "evidence": "The transcription opens with \"of the recollection of people who only knew yon\", which is the first line under the running head \"12 LOOK FORWARD !\" on p60. It ends with \"The majority of my old acquaintances\", the last line of that leaf."
+  },
+  {
+   "key": "O048",
+   "book_id": "69ef2b7985daccce30f2e810",
+   "n": 141,
+   "language": "English",
+   "diag": {
+    "verdict": "agy-not-off:cannot_tell"
+   },
+   "renders": "cannot_tell",
+   "d": null,
+   "evidence": "The transcription only says 'blank, aged piece of paper ... no text, illustration, or marking'. Two leaves are blank: p138 and p140. Neither has a folio or any distinguishing mark, so the transcription can't be tied to one of them. p141 is not blank: it has the 'PLATE II. SOUTHERN INDIAN VINA. SMALL SITAR.' text."
+  },
+  {
+   "key": "O049",
+   "book_id": "69ea0f7e13a685002bb8e4d8",
+   "n": 482,
+   "language": "Dutch",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p481",
+   "d": -1,
+   "evidence": "The left column opens with 'Het Schip daer men dese reyse ofte vaert met beghinnen soude' and ends with 'aldus ge-schreven binne de stadt va Macau in China, anno 1585.&c.' The right column has the heading 'Dat 52. Capittel.', a decorative initial D, and 'En 10. dagh vande maent Martius/anno 1582.' This all matches leaf 481 (folio 101). The running head on that leaf is 'Vande Eylanden los Lucones tot Acapulco in nieu Spaengien', and the margin note 'Leeringhe hoe ende waer mede ee schip moet versien zijn' is in the top left."
+  },
+  {
+   "key": "O050",
+   "book_id": "6a357ed02aadc65cf0907ea1",
+   "n": 397,
+   "language": "Latin",
+   "diag": {
+    "verdict": "agy-off-sample:prev"
+   },
+   "renders": "p396",
+   "d": -1,
+   "evidence": "The opening line 'incidebat, sed ex intimis inspiratio per animam' is the first line under the header '408 PROCLVS DE'. The side heading 'Daemones alij sub alijs dijs ordinati' is in the middle of the page, and the page ends with 'clientibus suis ad' followed by the catchword 'beatam'."
+  }
+ ],
+ "stop": true
+}
