@@ -71,6 +71,7 @@ import { uncheckedLite } from '../lib/ocr-first-gate.mjs';
 import { readPools, agyEnv, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
 import { releaseBook } from '../lib/pipeline-hold.mjs';
 import { claudeBlocked } from '../lib/model-limits.mjs';
+import { screen as ocrNeighbourScreen } from '../eval/leak-repair-5026/ocr-neighbour.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -91,6 +92,11 @@ const P5274 = PROFILE === '5274' || P5274CB;
 // sources not repeating), judged in scripts/eval/leak-repair-5026/. Queued with `enqueue --from=` and read exactly as
 // 5274cb reads (--own-leaf: no neighbouring English); no hold, no withheld markers of its own. --run-id=ID names one
 // revert-run id for the wave (CLI_RUN_ID; the OCR re-reads get ID-ocr).
+// Round 2 (OCR-neighbour screen, the pilot's next step 1): before a page is read, its OCR is screened against the OCR of
+// n-1 and n+1 (scripts/eval/leak-repair-5026/ocr-neighbour.mjs, on the OCR as it is at run time). A page whose OCR holds
+// a neighbour's passage is re-read from its image first (the OCR-first re-read below, every guard on), screened again
+// on the new OCR, and translated only if the passage is gone: `ocr-neighbour-persists` when the image read still has
+// it (printed twice, a duplicated scan, or show-through read again), `ocr-refused` when the re-read is not written.
 const P5026 = PROFILE === '5026';
 const OWN_LEAF = P5274CB || P5026;
 const ISSUE = P5026 ? 5026 : P5274 ? 5274 : 5021;
@@ -110,7 +116,7 @@ const VERDICT_FILES = [
 // Named by eye on #5021 / #5274 (2026-11-03): 農政全書 p.490-492 withheld, p.489's English stops halfway down the
 // leaf; 皇極經世書 p.63's OCR and English add four table columns (its OCR is Flash-Lite, so it is re-read first).
 const NAMED = [['6992cbd8018b80967354ba40', [489, 490, 491, 492]], ['6a0a4e9f7cd8e1e3d0f496d7', [63]]];
-const FINAL = new Set(['retranslated', 'ocr-refused', 'apply-refused', 'read-failed', 'not-translatable', 'skip-human', 'skip-changed', 'skip-gone', 'gate-refused', 'skip-opus-context', 'skip-ocr-neighbour']);
+const FINAL = new Set(['retranslated', 'ocr-refused', 'apply-refused', 'read-failed', 'not-translatable', 'skip-human', 'skip-changed', 'skip-gone', 'gate-refused', 'skip-opus-context', 'skip-ocr-neighbour', 'ocr-neighbour-persists']);
 /** The reader's own skip lines in a book's run.log ("  63 skipped: english-book") → Map(page_number → reason). */
 export function readerSkips(logText) {
   const m = new Map();
@@ -415,6 +421,8 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
       no_text: { $regexMatch: { input: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] }, regex: '<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
   ]).toArray()).map((p) => [p.id, p]));
   let work = [];
+  // #5026 round 2: the OCR-neighbour screen, on the OCR as stored now
+  const ocrNb = P5026 ? new Map((await ocrNeighbourScreen(db.collection('pages'), rows)).map((o) => [o.page_id, o])) : new Map();
   for (const r of rows) {
     const p = fresh.get(r.page_id);
     if (!p) { out.push({ ...r, state: 'skip-gone' }); continue; }
@@ -423,7 +431,8 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
     // #5274cb: claude-translate.mjs (the Opus route, Pali) still sends the previous page's English; not read here, listed
     // #5274cb: the page's OWN OCR is a neighbour's text (show-through, a wrong-leaf read; ocr-overlap.mjs): re-translating
     // it gives the same wrong English, so it is listed for an OCR repair instead of read
-    if (OWN_LEAF && ocrDup().has(r.page_id)) { out.push({ ...r, state: 'skip-ocr-neighbour', why: 'its OCR is a neighbour leaf\'s text (ocr-overlap.jsonl): needs an OCR re-read from the image, not a re-translation' }); continue; }
+    if (P5026 && ocrNb.get(r.page_id)?.ocr_dup) { const o = ocrNb.get(r.page_id); r.ocr_force = true; r.ocr_nb = { side: o.side, prev_run: o.prev_run, next_run: o.next_run, sample: o.sample.slice(0, 80) }; }
+    else if (OWN_LEAF && ocrDup().has(r.page_id)) { out.push({ ...r, state: 'skip-ocr-neighbour', why: 'its OCR is a neighbour leaf\'s text (ocr-overlap.jsonl): needs an OCR re-read from the image, not a re-translation' }); continue; }
     if (OWN_LEAF && r.reader === 'opus') { out.push({ ...r, state: 'skip-opus-context', why: 'the Opus route sends neighbour context; not read by the own-leaf repair' }); continue; }
     if (r.state === 'served' && trAt !== r.tr_at) { out.push({ ...r, state: 'skip-changed', why: `English rewritten ${trAt} since the queue was built` }); continue; }
     if (r.state === 'withheld' && !p.translation_withheld) { out.push({ ...r, state: 'skip-changed', why: 'no longer withheld' }); continue; }
@@ -444,15 +453,30 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
     const code = await spawnP([path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${ocrDir}`, `--model=${AGY_MODEL}`, `--lane=${REREAD_LANE}`, `--job=${JOB}`, '--stop-on-quota', ...(again.length ? ['--fresh'] : [])], { env, log });
     if (code === 3) return { quota: true, out };
     if (applyOcr) {
-      const why = P5274
+      const why = P5026
+        ? `#5026 OCR first: this page's stored OCR holds a passage of a neighbouring page's OCR (ocr-neighbour screen), so its English cannot be repaired from it; re-read from the page image (agy ${AGY_MODEL}, one page a call, the ${REREAD_LANE} route, every apply guard) before the English is re-translated`
+        : P5274
         ? `#5274 OCR first: the stored OCR under a near-blank-flagged page is re-read (agy ${AGY_MODEL}, one page a call, the ${REREAD_LANE} route) before its English is re-translated: the screen found it dropped text that is on the leaf, or it is an unchecked Flash-Lite draft`
         : `#5021 OCR first: the stored Flash-Lite draft under a wrong-leaf page is re-read (agy ${AGY_MODEL}, one page a call, the ${REREAD_LANE} route) before its English is re-translated`;
+      const tOcr = new Date();
       await spawnP([path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'apply', `--out=${path.join(dir, 'ocr')}`, `--only=${ids}`, `--reason=${why}`, `--lane=${REREAD_LANE}`, '--print-only', '--apply'], { env, log });
-      const after = new Map((await db.collection('pages').find({ id: { $in: lite.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.model': 1, 'ocr.pipeline': 1 } }).toArray()).map((p) => [p.id, p]));
+      const after = new Map((await db.collection('pages').find({ id: { $in: lite.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.updated_at': 1 } }).toArray()).map((p) => [p.id, p]));
+      // an OCR-neighbour page counts as re-read only if THIS run wrote its OCR (a page re-read on the lane before has
+      // the lane stamp already)
+      const wroteNow = (r, a) => !r.ocr_nb || (a?.ocr?.updated_at && new Date(a.ocr.updated_at) >= tOcr);
       for (const r of lite) {
         const a = after.get(r.page_id);
-        if (a?.ocr?.pipeline === REREAD_LANE && !/flash-lite/i.test(a.ocr.model || '')) { r.ocr_reread = true; continue; }
-        out.push({ ...r, _p: undefined, state: 'ocr-refused' });
+        if (a?.ocr?.pipeline === REREAD_LANE && !/flash-lite/i.test(a.ocr.model || '') && wroteNow(r, a)) { r.ocr_reread = true; continue; }
+        out.push({ ...r, _p: undefined, state: 'ocr-refused', ...(r.ocr_nb && { why: 'ocr-neighbour: the image re-read was not written (see the book run.log)' }) });
+      }
+      // the re-read OCR is screened again; the page goes on only if the neighbour's passage is gone
+      const nbRead = lite.filter((r) => r.ocr_nb && r.ocr_reread);
+      if (nbRead.length) {
+        const again = new Map((await ocrNeighbourScreen(db.collection('pages'), nbRead)).map((o) => [o.page_id, o]));
+        for (const r of nbRead) {
+          const o = again.get(r.page_id);
+          if (o?.ocr_dup) { r.ocr_reread = false; out.push({ ...r, _p: undefined, state: 'ocr-neighbour-persists', why: `the image re-read still holds the ${o.side} page's passage (${o.sample.slice(0, 80)})` }); }
+        }
       }
       work = work.filter((r) => !lite.includes(r) || r.ocr_reread);
     } else {

@@ -287,22 +287,40 @@ async function postDraw() {
   // forward / unclear: its duplicate came from page N+1, after it). The judge compares it with THAT neighbour. Pages
   // repaired from both sides are left out of the draw (no single neighbour to ask about).
   const side = (r) => { const t = (r.src || []).filter((x) => x.startsWith('leak5026-')); const n1 = t.some((x) => x.endsWith('-N1')), n0 = t.some((x) => x.endsWith('-N')); return n1 && n0 ? null : n1 ? -1 : n0 ? 1 : null; };
-  const done = shuffle([...led.values()].filter((r) => r.state === 'retranslated' && side(r)), rnd);
+  // --exclude=post-sample.json,…: not from books an earlier post-check drew (round 2: "30 fresh pages")
+  const excl = new Set(String(arg('exclude', '')).split(',').filter(Boolean).flatMap((f) => JSON.parse(fs.readFileSync(f, 'utf8')).map((r) => r.book)));
+  const done = shuffle([...led.values()].filter((r) => r.state === 'retranslated' && side(r) && !excl.has(r.book_id)), rnd);
+  // --min-ocr-nb=K: at least K of the draw are pages whose OCR the ocr-neighbour screen sent to an image re-read first
+  const minNb = Number(arg('min-ocr-nb', 0));
   const byLang = new Map(); for (const r of done) { const a = byLang.get(r.language) || []; a.push(r); byLang.set(r.language, a); }
   const N = Number(arg('n', 30)), used = new Set(), picked = [];
   // round-robin over languages so the 30 spread the way the pilot does, one page per book
   const langs = [...byLang.keys()].sort((a, b) => byLang.get(b).length - byLang.get(a).length);
   const quota = new Map(langs.map((l) => [l, Math.max(1, Math.round((byLang.get(l).length / done.length) * N))]));
+  for (const r of done.filter((x) => x.ocr_nb)) { if (picked.length >= minNb) break; if (used.has(r.book_id)) continue; used.add(r.book_id); picked.push(r); const q = quota.get(r.language); if (q) quota.set(r.language, q - 1); }
   for (const l of langs) for (const r of byLang.get(l)) { if (picked.length >= N || (quota.get(l) || 0) <= 0) break; if (used.has(r.book_id)) continue; used.add(r.book_id); picked.push(r); quota.set(l, quota.get(l) - 1); }
   for (const r of done) { if (picked.length >= N) break; if (!used.has(r.book_id)) { used.add(r.book_id); picked.push(r); } }
   const pair = (r) => { const nb = r.page + side(r); return { book: r.book_id, prev: Math.min(r.page, nb), next: Math.max(r.page, nb), checked: r.page, nb, page_id: r.page_id, lang: r.language }; };
   const sample = picked.map((r) => pair(r));
-  // controls: 2 made duplicates on repaired pages from other books, 2 stored pages from the input's flagged set
-  // that are NOT repaired (the leak still there), so the judge must say "duplicated" there
-  const rest = done.filter((r) => !used.has(r.book_id)).slice(0, 2);
-  for (const r of rest) sample.push({ ...pair(r), control: 'made-dup' });
-  const unrepaired = shuffle(readJsonl(arg('in', '/tmp/leak-joined-500.jsonl')).filter((r) => !led.has(r.page_id) && !used.has(r.book) && r.site?.startsWith('scripts/batch/cli-translate') === false && r.len >= 1000), rnd).slice(0, 2);
-  for (const r of unrepaired) sample.push({ book: r.book, prev: r.prev, next: r.next, checked: r.next, nb: r.prev, page_id: r.page_id, lang: r.lang, control: 'stored-leak' });
+  // controls: 2 made duplicates on repaired pages from other books, 2 stored pages that still carry a neighbour's
+  // English, so the judge must say "duplicated" there.
+  // Round 2 (the pilot's controls failed by construction, not by the judge): a made duplicate takes its planted text
+  // from a neighbour whose English is a real rendering (>= 800 chars of body, no <unclear>/illegible/faded markers),
+  // since a block of "illegible" lines reads as invented, not as the neighbour's; a stored-leak control is a pair the
+  // round-2 spot check judged a real duplicate (--controls-from=verdicts.jsonl) with ONE wrong page, unrepaired and
+  // unchanged since, and it asks about THAT page against the other (the pilot asked about N+1 on a forward pair).
+  const nbEn = new Map((await db.collection('pages').find({ $or: done.filter((r) => !used.has(r.book_id)).slice(0, 40).map((r) => ({ book_id: r.book_id, page_number: r.page + side(r) })) }, { projection: { _id: 0, book_id: 1, page_number: 1, 'translation.data': 1 } }).toArray()).map((p) => [`${p.book_id}:${p.page_number}`, String(p.translation?.data || '')]));
+  const realEn = (t) => body(t).length >= 800 && !/<unclear|illegible|faded|\[\.\.\.\]/i.test(t);
+  const rest = done.filter((r) => !used.has(r.book_id) && realEn(nbEn.get(`${r.book_id}:${r.page + side(r)}`) || '')).slice(0, 2);
+  for (const r of rest) { used.add(r.book_id); sample.push({ ...pair(r), control: 'made-dup' }); }
+  if (arg('controls-from')) {
+    const spot = readJsonl(arg('controls-from')).filter((r) => r.verdict && !r.control && ['N', 'N+1'].includes(wrongPages(r)) && !used.has(r.book));
+    const pids = spot.flatMap((r) => [r.prev_id, r.page_id]);
+    const live = new Map((await db.collection('pages').find({ id: { $in: pids } }, { projection: { _id: 0, id: 1, 'translation.updated_at': 1, translation_withheld: 1 } }).toArray()).map((p) => [p.id, p]));
+    const same = (id, at) => { const p = live.get(id); return p && !p.translation_withheld && at && p.translation?.updated_at && new Date(p.translation.updated_at).toISOString() === new Date(at).toISOString(); };
+    const ok = shuffle(spot.filter((r) => same(r.prev_id, r.tr_at_a) && same(r.page_id, r.tr_at_b) && !led.has(r.page_id) && !led.has(r.prev_id)), rnd).slice(0, 2);
+    for (const r of ok) { const fwd = wrongPages(r) === 'N'; used.add(r.book); sample.push({ book: r.book, prev: r.prev, next: r.next, checked: fwd ? r.prev : r.next, nb: fwd ? r.next : r.prev, page_id: fwd ? r.prev_id : r.page_id, lang: r.lang, control: 'stored-leak', spot_key: r.key }); }
+  }
   const all = shuffle(sample, rnd).map((r, i) => ({ ...r, key: `Q${String(i + 1).padStart(2, '0')}` }));
   fs.writeFileSync(path.join(OUT, 'post-sample.json'), JSON.stringify(all, null, 1));
   console.log(`${all.length} pages`, all.reduce((m, r) => ((m[r.control || r.lang] = (m[r.control || r.lang] || 0) + 1), m), {}));
