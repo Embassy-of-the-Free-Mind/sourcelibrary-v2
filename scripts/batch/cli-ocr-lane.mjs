@@ -55,7 +55,10 @@
  *
  *   ... cli-ocr-lane.mjs correct-count
  *   ... cli-ocr-lane.mjs correct --out=DIR [--max-pages=N] [--concurrency=N] [--book-chunk=40] [--deadline-min=M]
- *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--reread-per-call=4] [--apply | --dry-run]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--reread-per-call=4] [--book=ID]
+ *        [--first=PAGE_ID,PAGE_ID] [--apply | --dry-run]
+ *
+ * `--first` reads those pages of a book before its others (reader-request-lane.mjs: the pages a reader asked for, #8395).
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
  * French book, idle in the pipeline and not held (or held for the CLI translation lane, whose OCR-first gate waits on this
@@ -413,9 +416,14 @@ export function untaggedPagesAllowed(book, byEye = { print: new Set() }) {
   return (y != null && y >= UNKNOWN_SCRIPT_FROM_YEAR) || byEye.print.has(book.id);
 }
 /** One pool's `latin-first` run (header: LATIN FIRST): [{ step, args, minMinutes }], each a `correct` run of this file. */
+/** latin-first's default --root, and the re-read's day folder under it: its ledger and claims sit in the folder above. */
+export const LATIN_FIRST_ROOT = '/root/jobs';
+export const rereadOutDir = (root, date) => `${root}/cli-ocr-reread/${date}`;
+/** `--first=ID,ID`: those pages first, the rest in their order (reader-request-lane.mjs puts a reader's pages first). */
+export const firstPagesFirst = (pages, first) => (first?.size ? [...pages.filter((p) => first.has(p.id)), ...pages.filter((p) => !first.has(p.id))] : pages);
 export function latinFirstSteps({ home, root, date, maxPages, latinMaxPages = 8000, concurrency, chunk = 40, apply }) {
   const common = [`--concurrency=${concurrency}`, `--book-chunk=${chunk}`, `--agy-home=${home}`, ...(apply ? ['--apply'] : [])];
-  const latin = (tiers) => ['correct', '--reread-per-call=4', '--reread-languages=Latin', `--reread-tiers=${tiers}`, `--out=${root}/cli-ocr-reread/${date}`, `--max-pages=${latinMaxPages}`, ...common];
+  const latin = (tiers) => ['correct', '--reread-per-call=4', '--reread-languages=Latin', `--reread-tiers=${tiers}`, `--out=${rereadOutDir(root, date)}`, `--max-pages=${latinMaxPages}`, ...common];
   return [
     { step: 'latin-priority', args: latin('readers,period') },
     { step: 'german-french-correct', args: ['correct', `--out=${root}/cli-ocr-correct/${date}`, `--max-pages=${maxPages}`, ...common] },
@@ -652,6 +660,7 @@ async function correctMain(mode, arg) {
     await client.close(); return;
   }
   const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40);
+  const FIRST = arg('first') ? new Set(arg('first').split(',').filter(Boolean)) : null;
   const CONCURRENCY = Number(arg('concurrency') || 1);
   // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
@@ -678,7 +687,7 @@ async function correctMain(mode, arg) {
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
       ledgerTail(LEDGER, ledger, tailState);
-      const open = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id));
+      const open = firstPagesFirst((await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id)), FIRST);
       if (open.length) return { book: b, open };
       releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
     }
@@ -757,7 +766,7 @@ async function latinFirstMain(arg) {
   const home = arg('agy-home'), maxPages = Number(arg('max-pages')), concurrency = Number(arg('concurrency')), minutes = Number(arg('deadline-min'));
   if (!home || !(maxPages > 0) || !(concurrency > 0) || !(minutes > 0)) { console.error('latin-first needs --agy-home --max-pages --concurrency --deadline-min'); process.exit(2); }
   const end = Date.now() + minutes * 60_000;
-  const steps = latinFirstSteps({ home, root: arg('root') || '/root/jobs', date: new Date().toISOString().slice(0, 10), maxPages, concurrency, apply: process.argv.includes('--apply') });
+  const steps = latinFirstSteps({ home, root: arg('root') || LATIN_FIRST_ROOT, date: new Date().toISOString().slice(0, 10), maxPages, concurrency, apply: process.argv.includes('--apply') });
   for (const { step, args } of steps) {
     const left = Math.floor((end - Date.now()) / 60_000);
     if (left < 5) { console.log(`latin-first: ${left} min left: stop before ${step}`); break; }
