@@ -86,8 +86,15 @@ const PROFILE = String(process.argv.find((a) => a.startsWith('--issue='))?.split
 // scripts/eval/context-bleed-5274/judge.mjs (blind, scans of n-1, n, n+1). It shares 5274's withheld markers; no hold.
 const P5274CB = PROFILE === '5274cb';
 const P5274 = PROFILE === '5274' || P5274CB;
-const ISSUE = P5274 ? 5274 : 5021;
-const HOLD_REASON = P5274CB ? null : P5274 ? 'near-blank-invented-5274' : 'leaf-shift-5021';
+// --issue=5026 (leak-repair-5026, Derek 2026-11-08 "spot check then fix a set then spot check"): pages whose English
+// repeats a passage of the previous page's English (scripts/audit/translation-page-boundaries.mjs, runs >= 500 chars,
+// sources not repeating), judged in scripts/eval/leak-repair-5026/. Queued with `enqueue --from=` and read exactly as
+// 5274cb reads (--own-leaf: no neighbouring English); no hold, no withheld markers of its own. --run-id=ID names one
+// revert-run id for the wave (CLI_RUN_ID; the OCR re-reads get ID-ocr).
+const P5026 = PROFILE === '5026';
+const OWN_LEAF = P5274CB || P5026;
+const ISSUE = P5026 ? 5026 : P5274 ? 5274 : 5021;
+const HOLD_REASON = OWN_LEAF ? null : P5274 ? 'near-blank-invented-5274' : 'leaf-shift-5021';
 const NB_DIR = path.join(ROOT, 'scripts/eval/results/zh-near-blank-screen-5274');
 // The one prompt line the 5274 gate may add (--prompt-line), appended to each page's prompt via --instructions-file.
 const NB_PROMPT_LINE = 'This leaf may carry only a title, a caption or a few labels beside a picture. In the translation, the notes, the summary and the keywords alike, say only what is printed on this leaf or plainly visible in its picture: translate the printed words, describe the picture if there is one, and add no entry text, use, date, dynasty, source work, author or background that the leaf itself does not give.';
@@ -124,7 +131,7 @@ if (!OUT || !['build', 'enqueue', 'gate-pick', 'run', 'judge', 'gate-verdict', '
 }
 fs.mkdirSync(OUT, { recursive: true });
 const ENV_FILE = process.env.SL_ENV_FILE || path.join(ROOT, '.env.production.local');
-const JOB = process.env.JOB_NAME || (P5274CB ? 'context-bleed-find-fix-5274' : P5274 ? 'near-blank-fix-5274' : 'wrong-leaf-fix-5021');
+const JOB = process.env.JOB_NAME || (P5026 ? 'leak-repair-5026' : P5274CB ? 'context-bleed-find-fix-5274' : P5274 ? 'near-blank-fix-5274' : 'wrong-leaf-fix-5021');
 const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const gz = (f) => (f.endsWith('.gz') ? zlib.gunzipSync(fs.readFileSync(f)).toString() : fs.readFileSync(f, 'utf8'));
 const LEDGER = path.join(OUT, 'ledger.jsonl');
@@ -193,6 +200,8 @@ const NB_SCREENED = '2026-11-03T13:00:00Z';
 let ocrDupSet = null;
 const ocrDup = () => (ocrDupSet ??= new Set(readJsonl(path.join(OUT, 'ocr-overlap.jsonl')).filter((o) => o.ocr_dup).map((o) => o.page_id)));
 const CB_WEEK_AGO = new Date(Date.now() - 7 * 86400e3).toISOString();
+// #5026: the corpus mirror the leak detector ran on; English rewritten after it is not the English that was flagged
+const LEAK_MIRROR = '2026-11-07T00:00:00Z';
 // #5274cb: the caption line, on leaves whose source is nearly empty (near_blank in the queue row). Stricter than
 // NB_PROMPT_LINE on the summary and keywords, where gate 2 of near-blank-fix-5274 found its four misses.
 const CB_CAPTION_LINE = 'This leaf carries little or no text: a title, a caption or a few labels, perhaps beside a picture. Translate only the words printed on this leaf. If there is a picture, describe only what is visible, in one short note. Add nothing else: no entry text, explanation, use, date, dynasty, source work, author or background, in the translation, the notes, the summary or the keywords. The summary is one sentence saying what is printed and shown on this leaf.';
@@ -222,7 +231,7 @@ async function makeRows(want) {
       if (p.tw && !withheld) { left.other_withheld++; continue; }
       if (!withheld && !p.has_tr) { left.no_english++; continue; }
       const trAt = p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null;
-      if (!withheld && trAt && trAt >= (P5274CB ? CB_WEEK_AGO : FLAG_CUTOFF)) { left.since++; continue; }
+      if (!withheld && trAt && trAt >= (P5026 ? LEAK_MIRROR : P5274CB ? CB_WEEK_AGO : FLAG_CUTOFF)) { left.since++; continue; }
       const ocr = { ...p.ocr, data: p.no_text ? '<page-type>blank' : '' };
       // #5274 ocr_dropped: the OCR the screen saw left the leaf's text out, so it is re-read first whatever its model,
       // unless it was rewritten after the screen.
@@ -398,7 +407,7 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   const book = rows[0].book_id, dir = path.join(OUT, 'books', book);
   fs.mkdirSync(dir, { recursive: true });
   const log = path.join(dir, 'run.log');
-  const env = agyEnv(home, process.env, { TRANSLATE_FOLIO_MARKERS_CLI: '0', AGY_JOB: JOB });
+  const env = agyEnv(home, process.env, { TRANSLATE_FOLIO_MARKERS_CLI: '0', AGY_JOB: JOB, ...(arg('run-id') && { CLI_RUN_ID: arg('run-id') }) });
   const out = [];
   const fresh = new Map((await db.collection('pages').aggregate([
     { $match: { id: { $in: rows.map((r) => r.page_id) } } },
@@ -414,8 +423,8 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
     // #5274cb: claude-translate.mjs (the Opus route, Pali) still sends the previous page's English; not read here, listed
     // #5274cb: the page's OWN OCR is a neighbour's text (show-through, a wrong-leaf read; ocr-overlap.mjs): re-translating
     // it gives the same wrong English, so it is listed for an OCR repair instead of read
-    if (P5274CB && ocrDup().has(r.page_id)) { out.push({ ...r, state: 'skip-ocr-neighbour', why: 'its OCR is a neighbour leaf\'s text (ocr-overlap.jsonl): needs an OCR re-read from the image, not a re-translation' }); continue; }
-    if (P5274CB && r.reader === 'opus') { out.push({ ...r, state: 'skip-opus-context', why: 'the Opus route sends neighbour context; not read by the own-leaf repair' }); continue; }
+    if (OWN_LEAF && ocrDup().has(r.page_id)) { out.push({ ...r, state: 'skip-ocr-neighbour', why: 'its OCR is a neighbour leaf\'s text (ocr-overlap.jsonl): needs an OCR re-read from the image, not a re-translation' }); continue; }
+    if (OWN_LEAF && r.reader === 'opus') { out.push({ ...r, state: 'skip-opus-context', why: 'the Opus route sends neighbour context; not read by the own-leaf repair' }); continue; }
     if (r.state === 'served' && trAt !== r.tr_at) { out.push({ ...r, state: 'skip-changed', why: `English rewritten ${trAt} since the queue was built` }); continue; }
     if (r.state === 'withheld' && !p.translation_withheld) { out.push({ ...r, state: 'skip-changed', why: 'no longer withheld' }); continue; }
     work.push({ ...r, _p: p });
@@ -481,7 +490,7 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   }
   const readArgs = opus
     ? [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, '--model=opus', '--per-call=1', `--job=${JOB}`]
-    : [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, `--model=${AGY_MODEL}`, ...instr, ...(P5274CB ? ['--own-leaf', '--caption-leaves'] : []), ...(retried.length ? ['--fresh'] : [])];
+    : [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, `--model=${AGY_MODEL}`, ...instr, ...(OWN_LEAF ? ['--own-leaf', '--caption-leaves'] : []), ...(retried.length ? ['--fresh'] : [])];
   const rc = await spawnP(readArgs, { env, log });
   if (rc === 3) return { quota: true, out };
   if (rc === 2) { for (const r of work) out.push({ ...r, _p: undefined, state: 'gate-refused' }); return { out }; }
@@ -493,7 +502,9 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   // 3. Write through translate-core's door, then lift the withheld marker on what it wrote.
   const t0 = new Date();
   const reader = opus ? 'Opus, claude -p' : `agy ${AGY_MODEL}`;
-  const why = P5274CB
+  const why = P5026
+    ? `#5026 leak repair: this page's English repeated a passage of the previous page's English (the previous page's English was sent as context and translated again here; judged on a stratified blind Opus spot check); re-translated one page a call from its own transcription only, no neighbouring text (${reader})`
+    : P5274CB
     ? `#5274 context-bleed repair: this leaf's English was another leaf's text (the previous page's English was sent as context and translated in its place) or composed for the leaf; re-translated one page a call from its own transcription only, no neighbouring text (${reader}${instr.length ? ', with the caption line' : ''})`
     : P5274
     ? `#5274 near-blank repair: this leaf's English carried text that is not on the leaf (Opus screen with the image; withheld by eye) or its OCR dropped the leaf's text; re-translated one page a call from its own transcription (${reader}${instr.length ? ', with the caption-only prompt line' : ''})`
