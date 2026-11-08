@@ -197,7 +197,7 @@ const CENSUS_PER_BOOK = 3;
 async function censusStage() {
   const file = arg('census-file');
   if (!file) { console.error('census needs --census-file=<flagged.jsonl from translation-page-boundaries.mjs>'); process.exit(2); }
-  const lines = jsonl(file).filter((l) => l.kind === 'echo' && l.parallel !== true && Number.isFinite(l.prev) && Number.isFinite(l.next));
+  const lines = jsonl(file).filter((l) => l.kind === 'echo' && l.parallel !== true && l.sourceRepeats !== true && Number.isFinite(l.prev) && Number.isFinite(l.next));
   const perBook = new Map();
   const pick = [];
   for (const l of shuffle([...lines].sort((x, y) => `${x.book}:${x.next}`.localeCompare(`${y.book}:${y.next}`)), makeRng(SEED.census + 1))) {
@@ -213,7 +213,7 @@ async function censusStage() {
       const [a, b] = await Promise.all([l.prev, l.next].map((n) => db.collection('pages').findOne({ book_id: l.book, page_number: n }, { projection: PAGE_PROJECTION })));
       if (!a || !b || !clean(a.translation?.data) || !clean(b.translation?.data)) continue;
       saveText(a); saveText(b);
-      out.push({ book: l.book, lang: meta?.language ?? l.lang ?? 'unknown', first: a.page_number, second: b.page_number, share: l.share, in_block: l.inBlock ?? null,
+      out.push({ book: l.book, lang: meta?.language ?? l.lang ?? 'unknown', first: a.page_number, second: b.page_number, share: l.share, in_block: l.inBlock ?? null, source_unknown: l.sourceRepeats == null,
         a: pageRec(a), b: pageRec(b), break_kind: breakKind(a, b), source: 'corpus' });
     }
   });
