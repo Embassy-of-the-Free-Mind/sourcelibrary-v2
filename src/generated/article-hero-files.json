@@ -83,6 +83,18 @@
    }
   ]
  },
+ "/articles/solve-et-coagula/atalanta-title-page-race.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ca09813c639c-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ca09813c639c-1920.avif",
+    "w": 1800
+   }
+  ]
+ },
  "/articles/techniques-of-the-body/hero-khrul-khor.jpg": {
   "srcset": [
    {

@@ -1,0 +1,116 @@
+// Lists for the Solve et Coagula read-along (built from the standalone page's extras.json and
+// extras.es.json; links made relative). BOOKS is every library book the episode's references point to,
+// in the order they come up: it also feeds the "Books in this article" grid
+// (scripts/maintenance/generate-article-books.mjs reads the /book/ links in this folder).
+
+export interface ReadAlongLink {
+  title: string;
+  url: string;
+}
+
+export const BOOKS = [
+  '/book/plotinus-enneads-i-xxvi-ficino-translation-dedicatory-copy-translator',
+  '/book/iamblichus-de-mysteriis-1497-aldine-editio-princeps-trans',
+  '/book/de-voluptate-ficino',
+  '/book/the-complete-works-of-marsilio-ficino-ficino',
+  '/book/plato-complete-works-ficino-translation-translator',
+  '/book/philolaos-des-pythagoreers-lehren-nebst-den-bruchstucken-boeckh',
+  '/book/corpus-hermeticum-pimander-ficino-translation-translator',
+  '/book/history-of-both-worlds-macrocosm-fludd',
+  '/book/atalanta-fleeing-maier',
+  '/book/oedipus-aegyptiacus-volume-i-1652-kircher',
+  '/book/original-writings-of-the-order-of-the-illuminati-zwack',
+  '/book/complete-plato-thomas-taylor-trans-plato-taylor',
+  '/book/aureum-vellus-splendor-solis-golden-fleece-trismosin',
+  '/book/drebbel-tractatus-duo-1628-latin-laurembergius',
+  '/book/on-the-uncertainty-and-vanity-of-the-sciences-and-arts-agrippa',
+  '/book/occult-philosophy-agrippa',
+  '/book/ioannis-pici-mirandulae-omnia-opera-mirandola',
+  '/book/on-the-nobility-and-excellence-of-the-female-sex-agrippa',
+  '/book/two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel',
+];
+
+export const LISTS: Record<'en' | 'es', { mentioned: ReadAlongLink[]; reading: ReadAlongLink[]; tools: ReadAlongLink[] }> = {
+  en: {
+    mentioned: [
+      { title: "Agrippa reading list Derek promised (on the soul, the sceptic and the occultist)", url: '/articles/agrippa-against-himself' },
+      { title: "Iamblichus, De mysteriis, Aldine 1497 (Ficino's translation)", url: '/book/iamblichus-de-mysteriis-1497-aldine-editio-princeps-trans' },
+      { title: "Ficino, De voluptate (same 1497 volume)", url: '/book/de-voluptate-ficino' },
+      { title: "Ficino, Opera (Basel 1561)", url: '/book/the-complete-works-of-marsilio-ficino-ficino' },
+      { title: "Michael Maier, Atalanta fugiens (1618)", url: '/book/atalanta-fleeing-maier' },
+      { title: "Splendor solis / Aureum vellus (1598)", url: '/book/aureum-vellus-splendor-solis-golden-fleece-trismosin' },
+      { title: "Agrippa, De occulta philosophia (1533)", url: '/book/occult-philosophy-agrippa' },
+      { title: "Agrippa, De incertitudine et vanitate scientiarum (1531)", url: '/book/on-the-uncertainty-and-vanity-of-the-sciences-and-arts-agrippa' },
+      { title: "Agrippa, De nobilitate et praecellentia foeminei sexus (1529)", url: '/book/on-the-nobility-and-excellence-of-the-female-sex-agrippa' },
+      { title: "Kircher, Oedipus Aegyptiacus, vols 1–3 (1652–54)", url: '/book/oedipus-aegyptiacus-volume-i-1652-kircher' },
+      { title: "Pico della Mirandola, Opera omnia (1519, includes the Oration)", url: '/book/ioannis-pici-mirandulae-omnia-opera-mirandola' },
+      { title: "Zwack, Einige Originalschriften des Illuminatenordens (1787)", url: '/book/original-writings-of-the-order-of-the-illuminati-zwack' },
+      { title: "Drebbel, Tractatus duo de natura elementorum, de quinta essentia (1628)", url: '/book/two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel' },
+      { title: "Article: Hyperborea", url: '/articles/hyperborea' },
+    ],
+    reading: [
+      { title: "Where Source Library came from (18:23)", url: '/articles/origin-story' },
+      { title: "How much of the Renaissance has been translated? We tried to count (6:00)", url: '/articles/untranslated-renaissance' },
+      { title: "The giants were never fully translated (8:00)", url: '/articles/the-giants-werent-translated' },
+      { title: "Philolaus in the Library: soul and body (13:50)", url: '/articles/philolaus-in-the-library' },
+      { title: "Claude can now read thousands of rare books: the MCP (22:30)", url: '/articles/mcp-server' },
+      { title: "What are demons? Five answers from the primary sources (40:30)", url: '/articles/demonology' },
+      { title: "How big is the library? (44:30)", url: '/articles/how-big-is-the-library' },
+      { title: "Pythagoras in the Library (48:00)", url: '/articles/pythagoras-in-the-library' },
+      { title: "The Ngram Viewer: chart a word, then read the page (51:40)", url: '/articles/ngram-viewer' },
+      { title: "The engraver who went under the Thames: Drebbel (1:07:00)", url: '/articles/drebbel' },
+      { title: "Beeckman on Drebbel: the journal passages, 1619–1634 (1:07:00)", url: '/articles/beeckman-on-drebbel' },
+      { title: "The Singularity was published in 1486: Pico and the techno-optimists (1:18:40)", url: '/articles/singularity-1486' },
+      { title: "Kircher and the hieroglyphs: what he got wrong, and what he got right (1:10:05)", url: '/articles/kircher-hieroglyphs' },
+    ],
+    tools: [
+      { title: "Ask the Librarian (33:00)", url: '/librarian' },
+      { title: "Connect Source Library to Claude or ChatGPT (1:03:00)", url: '/connect' },
+      { title: "Ngram viewer (51:40)", url: '/ngrams' },
+      { title: "Timeline of people (51:40)", url: '/explore/timeline' },
+      { title: "Conceptual histories: soul, consciousness, markets, magic (51:40)", url: '/explore/histories' },
+      { title: "Support the Embassy of the Free Mind (1:05:00)", url: '/give' },
+    ],
+  },
+  es: {
+    mentioned: [
+      { title: "Lista de lecturas de Agripa que Derek prometió (sobre el alma, el escéptico y el ocultista)", url: '/articles/agrippa-against-himself' },
+      { title: "Iamblichus, De mysteriis, Aldine 1497 (traducción de Ficino)", url: '/es/book/iamblichus-de-mysteriis-1497-aldine-editio-princeps-trans' },
+      { title: "Ficino, De voluptate (mismo volumen de 1497)", url: '/es/book/de-voluptate-ficino' },
+      { title: "Ficino, Opera (Basilea 1561)", url: '/es/book/the-complete-works-of-marsilio-ficino-ficino' },
+      { title: "Michael Maier, Atalanta fugiens (1618)", url: '/es/book/atalanta-fleeing-maier' },
+      { title: "Splendor solis / Aureum vellus (1598)", url: '/es/book/aureum-vellus-splendor-solis-golden-fleece-trismosin' },
+      { title: "Agrippa, De occulta philosophia (1533)", url: '/es/book/occult-philosophy-agrippa' },
+      { title: "Agrippa, De incertitudine et vanitate scientiarum (1531)", url: '/es/book/on-the-uncertainty-and-vanity-of-the-sciences-and-arts-agrippa' },
+      { title: "Agrippa, De nobilitate et praecellentia foeminei sexus (1529)", url: '/es/book/on-the-nobility-and-excellence-of-the-female-sex-agrippa' },
+      { title: "Kircher, Oedipus Aegyptiacus, vols. 1–3 (1652–54)", url: '/es/book/oedipus-aegyptiacus-volume-i-1652-kircher' },
+      { title: "Pico della Mirandola, Opera omnia (1519, incluye la Oración)", url: '/es/book/ioannis-pici-mirandulae-omnia-opera-mirandola' },
+      { title: "Zwack, Einige Originalschriften des Illuminatenordens (1787)", url: '/es/book/original-writings-of-the-order-of-the-illuminati-zwack' },
+      { title: "Drebbel, Tractatus duo de natura elementorum, de quinta essentia (1628)", url: '/es/book/two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel' },
+      { title: "Artículo: Hiperbórea", url: '/articles/hyperborea' },
+    ],
+    reading: [
+      { title: "De dónde surgió Source Library (18:23)", url: '/articles/origin-story' },
+      { title: "¿Cuánto del Renacimiento se ha traducido? Intentamos contarlo (6:00)", url: '/articles/untranslated-renaissance' },
+      { title: "Los gigantes nunca se tradujeron por completo (8:00)", url: '/articles/the-giants-werent-translated' },
+      { title: "Filolao en la Biblioteca: el alma y el cuerpo (13:50)", url: '/articles/philolaus-in-the-library' },
+      { title: "Claude ahora puede leer miles de libros raros: el MCP (22:30)", url: '/articles/mcp-server' },
+      { title: "¿Qué son los demonios? Cinco respuestas a partir de fuentes primarias (40:30)", url: '/articles/demonology' },
+      { title: "¿Qué tan grande es la biblioteca? (44:30)", url: '/articles/how-big-is-the-library' },
+      { title: "Pitágoras en la Biblioteca (48:00)", url: '/articles/pythagoras-in-the-library' },
+      { title: "El visor de ngramas: traza una palabra y luego lee la página (51:40)", url: '/articles/ngram-viewer' },
+      { title: "El grabador que cruzó bajo el Támesis: Drebbel (1:07:00)", url: '/articles/drebbel' },
+      { title: "Beeckman sobre Drebbel: fragmentos de su diario, 1619–1634 (1:07:00)", url: '/articles/beeckman-on-drebbel' },
+      { title: "La Singularidad se publicó en 1486: Pico y los tecnooptimistas (1:18:40)", url: '/articles/singularity-1486' },
+      { title: "Kircher y los jeroglíficos: en qué se equivocó y en qué acertó (1:10:05)", url: '/articles/kircher-hieroglyphs' },
+    ],
+    tools: [
+      { title: "Pregunta al bibliotecario (33:00)", url: '/es/librarian' },
+      { title: "Conectar Source Library a Claude o ChatGPT (1:03:00)", url: '/connect' },
+      { title: "Visor de ngramas (51:40)", url: '/ngrams' },
+      { title: "Cronología de personajes (51:40)", url: '/explore/timeline' },
+      { title: "Historias conceptuales: alma, conciencia, mercados, magia (51:40)", url: '/explore/histories' },
+      { title: "Apoyar a la Embassy of the Free Mind (1:05:00)", url: '/give' },
+    ],
+  },
+};

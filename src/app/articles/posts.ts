@@ -125,6 +125,20 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'solve-et-coagula',
+    title: 'Solve et Coagula: Derek Lomas on Source Library',
+    subtitle:
+      'Alex of Agrippa’s Diary in conversation with Derek Lomas, at the Embassy of the Free Mind in Amsterdam. The full episode, with a transcript you can click.',
+    summary:
+      'Derek Lomas talks with Alex of Agrippa’s Diary about Ficino, Agrippa, Maier and Source Library. Watch the episode and click any word of the transcript.',
+    date: '9 November 2026',
+    readTime: 'video, 1 h 32 min',
+    kind: 'interactive',
+    image: '/articles/solve-et-coagula/atalanta-title-page-race.jpg',
+    imageAlt:
+      'Engraving from the title page of Maier’s Atalanta fugiens (1618): Hippomenes runs holding golden apples while Atalanta stoops to pick one up, with two lions and a round temple behind them.',
+  },
+  {
     slug: 'kircher-hieroglyphs',
     title: 'Kircher and the Hieroglyphs',
     subtitle:
