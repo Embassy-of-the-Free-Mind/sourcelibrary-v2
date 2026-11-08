@@ -1,0 +1,29 @@
+{
+ "pages": 2000,
+ "off": 1536,
+ "own": 464,
+ "undecided": 0,
+ "agy": {
+  "prev": 1504,
+  "own": 416,
+  "cannot_tell": 53,
+  "other": 26,
+  "null": 1
+ },
+ "opus_on_agy_not_off": {
+  "own→own": 95,
+  "cannot_tell→cannot_tell": 46,
+  "unanswered→own": 1,
+  "own→cannot_tell": 1,
+  "cannot_tell→own": 1,
+  "cannot_tell→prev": 6
+ },
+ "agy_off_sample": {
+  "n": 30,
+  "opus_off": 30,
+  "wilson": [
+   0.886486605238548,
+   1
+  ]
+ }
+}
