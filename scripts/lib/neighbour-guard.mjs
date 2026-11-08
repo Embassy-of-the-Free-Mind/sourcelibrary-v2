@@ -25,7 +25,7 @@
  */
 import { lengthRatioK } from './block-page-guard.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
-import { ABSORB_OWN_MIN, ABSORB_TWO_MAX, ABSORB_SRC_MIN, ABSORB_SKIP_TYPES } from './leaf-shift.mjs';
+import { ABSORB_OWN_MIN, ABSORB_TWO_MAX, ABSORB_SRC_MIN, ABSORB_SKIP_TYPES, windowLang } from './leaf-shift.mjs';
 
 export const NEIGHBOUR_LEAK_REASON = 'neighbour-leak';
 export const ABSORBS_NEIGHBOUR_REASON = 'absorbs-neighbour';
@@ -161,4 +161,54 @@ export async function checkNeighbours(db, { page, text, ocr, bookId, neighbours 
     console.error(`[neighbour-guard] ${page?.id}: ${String(e?.message || e).slice(0, 80)}`);
     return { refuse: false };
   }
+}
+
+// ── the opening echo: a sentence of n-1's English at the head of n (#8399) ────────────────────────────────────────────
+
+/**
+ * Words of page n's English read for the echo test, the word-shingle size, and the share of those shingles that must
+ * appear in page n-1's English. Sized on live agy4-lane output, 2026-11-08 (6,195 pages, 30 h): 77 pages at >= 0.3,
+ * 72 of them in the reader-visible text; at call boundaries the rate was 3.0% against 0.7% inside a call.
+ */
+export const ECHO_HEAD_WORDS = 40;
+export const ECHO_SHINGLE = 6;
+export const ECHO_MIN_SHARE = 0.3;
+
+const echoWords = (t) => leakNorm(t).toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean);
+function shingles(words, k) {
+  const s = new Set();
+  for (let i = 0; i + k <= words.length; i++) s.add(words.slice(i, i + k).join(' '));
+  return s;
+}
+const shareIn = (a, b) => { if (!a.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / a.size; };
+
+/**
+ * Does page n's English open with words already on page n-1's? The repeat sharedRun cannot see: one sentence
+ * (~250 chars) on a long page, under LEAK_MIN_CHARS and too small to explain the page's length, so neighbourVerdict
+ * passes it. Reads only what a reader sees (leakNorm drops <meta>, <summary>, <keywords> and every tag).
+ *
+ * `share`: the fraction of page n's opening ECHO_SHINGLE-word shingles (its first ECHO_HEAD_WORDS words) found
+ * anywhere in n-1's English. `echo`: share >= ECHO_MIN_SHARE and the SOURCES do not repeat the same way (n's OCR
+ * opening against n-1's OCR, same test; a book that repeats itself is not a defect). `sourceRepeats` is null when
+ * either OCR is missing. It does not say WHICH page holds the extra text: at a call boundary it is usually n
+ * (copying the seed it was given), inside a call it can be either; a judge with both scans decides.
+ *
+ * Not an echo, either: `parallel` (n and n-1 transcribe different languages, a facing-page edition) or
+ * `sourceRepeats` (the sources open the same way). The English is always space-separated, so `share` is defined
+ * for every book; the source test is not (no spaces in Chinese or Tibetan OCR), and then `sourceRepeats` is null and
+ * a refrain in those books can still read as an echo. A judge decides those.
+ */
+export function openingEcho({ tr, prevTr, ocr = null, prevOcr = null }) {
+  const share = shareIn(shingles(echoWords(tr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE), shingles(echoWords(prevTr), ECHO_SHINGLE));
+  // The source side: null (unknown) when either OCR is missing or yields no shingles (a script without spaces), so a
+  // Chinese or Tibetan refrain is never read as "the sources differ".
+  const head = ocr ? shingles(echoWords(ocr).slice(0, ECHO_HEAD_WORDS), ECHO_SHINGLE) : null;
+  const prevSh = prevOcr ? shingles(echoWords(prevOcr), ECHO_SHINGLE) : null;
+  const sourceShare = head?.size && prevSh?.size ? shareIn(head, prevSh) : null;
+  const sourceRepeats = sourceShare == null ? null : sourceShare >= ECHO_MIN_SHARE;
+  // A facing-page edition (Loeb Latin/English, Kühn's Galen) prints a passage and its translation on neighbouring
+  // pages, so their English agrees by design: the leaf-shift screen's cross-language rule (windowLang, #5021 gate 1).
+  const langs = ocr && prevOcr ? [windowLang(ocr), windowLang(prevOcr)] : [null, null];
+  const parallel = !!langs[0] && !!langs[1] && langs[0] !== langs[1];
+  return { share: +share.toFixed(3), sourceShare: sourceShare == null ? null : +sourceShare.toFixed(3), sourceRepeats, parallel, echo: share >= ECHO_MIN_SHARE && sourceRepeats !== true && !parallel };
 }
