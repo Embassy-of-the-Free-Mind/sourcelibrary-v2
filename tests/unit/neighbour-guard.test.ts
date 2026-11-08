@@ -8,13 +8,15 @@
  * scripts/eval/experiments/2026-11-08-neighbour-guard-5026.md, not here.
  */
 import { describe, it, expect, vi } from 'vitest';
+import fs from 'fs';
+import path from 'path';
 
 const state = vi.hoisted(() => ({ db: null as any }));
 vi.mock('@/lib/mongodb', () => ({ getDb: vi.fn(async () => state.db) }));
 
 import { neighbourVerdict, checkNeighbours, sharedRun, LEAK_MIN_CHARS } from '../../scripts/lib/neighbour-guard.mjs';
 import { sharedRun as auditSharedRun, LEAK_MIN_CHARS as AUDIT_MIN } from '../../scripts/audit/translation-page-boundaries.mjs';
-import { writePageTranslation } from '../../scripts/lib/translate-core.mjs';
+import { writePageTranslation, neighbourGate } from '../../scripts/lib/translate-core.mjs';
 import { writePageTranslation as writeTs } from '@/lib/translate-write';
 import { geminiEngine, translationInput, notRecorded } from '@/lib/write-provenance';
 
@@ -203,5 +205,49 @@ describe('checkNeighbours', () => {
   it('returns no verdict for a page with no page_number', async () => {
     const { db } = makeDb([]);
     expect(await checkNeighbours(db, { page: { id: 'x', book_id: 'b' }, text: 'x', ocr: 'y' })).toEqual({ refuse: false });
+  });
+});
+
+describe('neighbourGate — a block judged against itself', () => {
+  it("refuses page 2 against the reply's own page 1, though the stored page 1 is different English", async () => {
+    const b = book(); b.pages[0].translation = { data: prose(12, 1000), source: 'ai' }; // the old page 1, being replaced
+    const { db, calls } = makeDb(b.pages);
+    const newP1 = prose(1, 1000);
+    const r = await neighbourGate(db, { id: b.pages[1].id }, `${newP1.slice(500, 900)} ${prose(2, 1000)}`, { neighbours: { 1: newP1 } });
+    expect(r).toMatchObject({ refused: true, reason: 'neighbour-leak' });
+    expect(stamp(calls)).toBe('neighbour-leak');
+  });
+  it('dryRun judges without stamping', async () => {
+    const b = book(); const { db, calls } = makeDb(b.pages);
+    const r = await neighbourGate(db, { id: b.pages[1].id }, b.leak, { dryRun: true });
+    expect(r.refused).toBe(true);
+    expect(stamp(calls)).toBeUndefined();
+  });
+});
+
+// Every production writer of model translation text asks the gate before it stores a page — the list the stray-script
+// and hidden-meta guards keep (#5734, #5376). Catches a writer LOSING its check.
+describe('the writers', () => {
+  const WRITERS: Record<string, RegExp> = {
+    'scripts/lib/translate-core.mjs': /neighbourGate\(db, at, clean/,                         // the door
+    'scripts/workers/translate-worker.mjs': /neighbourGate\(db, page, text, \{ neighbours/,     // Hetzner realtime, one page
+    'scripts/workers/batch-collector.mjs': /neighbourGate\(db, \{ id: pageId[^\n]*neighbours: jobEnglish/, // Hetzner batch collector
+    'scripts/batch/collect-batch-results.mjs': /neighbourGate\([^\n]*neighbours: jobEnglish/,  // manual batch collect
+    'scripts/maintenance/recover-uncollected-batches.mjs': /h\.neighbourGate\(/,
+    'src/lib/translate-write.ts': /neighbourGate\(db, at, finalText/,                          // the TS door
+    'src/workers/translation-processor-logic.ts': /neighbourGate\(/,                          // Lambda
+    'src/app/api/books/[id]/batch-translate-async/route.ts': /neighbourGate\(/,
+    'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts': /neighbourGate\(/,
+    'src/app/api/batch-save/route.ts': /neighbourGate\(/,
+    'src/app/api/process/route.ts': /neighbourGate\(/,
+    'src/app/api/contribute/process/route.ts': /neighbourGate\(/,
+  };
+  for (const [f, re] of Object.entries(WRITERS)) {
+    it(`${f} asks the neighbour gate`, () => {
+      expect(fs.readFileSync(path.join(__dirname, '../..', f), 'utf8')).toMatch(re);
+    });
+  }
+  it('the worker judges a block against its own pages', () => {
+    expect(fs.readFileSync(path.join(__dirname, '../../scripts/workers/translate-worker.mjs'), 'utf8')).toMatch(/neighbourGate\(db, e\.page, e\.text, \{ neighbours: blockText/);
   });
 });

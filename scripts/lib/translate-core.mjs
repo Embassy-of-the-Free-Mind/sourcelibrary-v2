@@ -1235,6 +1235,31 @@ export async function strayScriptGate(db, page, text, { ocr, language, jobId, mo
   return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
 }
 
+/**
+ * The neighbour gate (#5026), for every writer of model translation text, the door included: refuses (stamp +
+ * evidence, via `recordRefusedTranslation`) a page's English that is its neighbour's — 'neighbour-leak' or
+ * 'absorbs-neighbour' (scripts/lib/neighbour-guard.mjs). Reads the page's number, type and OCR when `page` lacks them,
+ * then n-1, n+1 and the book's K. `neighbours` (page_number → English) are the other pages of the same reply when a
+ * block is written together: they stand in for the stored English, so a block is judged against itself. Fail-open.
+ * @returns {Promise<{ refused: boolean, reason?: string, detail?: string, page_number?: number }>} `page_number` (when
+ *   read) lets a collector keep the job's accepted English for the next page's `neighbours`.
+ */
+export async function neighbourGate(db, page, text, { ocr, neighbours = null, jobId, model, dryRun = false } = {}) {
+  if (!text || !page?.id) return { refused: false };
+  let p = page;
+  if (p.page_number == null || p.book_id == null || (ocr ?? p.ocr?.data) == null) {
+    try {
+      const doc = await db.collection('pages').findOne({ id: p.id }, { projection: { _id: 0, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } });
+      if (doc) p = { ...doc, ...Object.fromEntries(Object.entries(p).filter(([, v]) => v != null)) };
+    } catch { return { refused: false }; }
+  }
+  const v = await checkNeighbours(db, { page: p, text, ocr: ocr ?? p.ocr?.data ?? '', bookId: p.book_id, neighbours });
+  if (!v.refuse) return { refused: false, page_number: p.page_number };
+  console.warn(`[neighbour-guard] ${p.id} p${p.page_number}: ${v.reason} — ${v.detail}${dryRun ? ' (dry run)' : ''}`);
+  if (!dryRun) await recordRefusedTranslation(db, { id: p.id, book_id: p.book_id }, text, v.reason, { jobId, model });
+  return { refused: true, reason: v.reason, detail: v.detail };
+}
+
 /** The reason value stamped on `translation.health_blocked` for a looping source. */
 export const SOURCE_LOOP_REASON = 'source_loop';
 
@@ -1456,15 +1481,9 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // n+1 the sources do not share, or a length that is this page's source plus a neighbour's) is refused, stamped and
   // kept. Not on a restore (writeGuard: false, or a notRecorded engine), whose text is not this run's.
   if (writeGuard && !isNotRecorded(engineBlock)) {
-    const nb = await checkNeighbours(db, {
-      page: { ...current, ...page, page_number: page?.page_number ?? current?.page_number, page_type: page?.page_type ?? current?.page_type },
-      text: clean, ocr: page?.ocr?.data ?? current?.ocr?.data, bookId: page?.book_id ?? current?.book_id ?? book?.id, neighbours,
-    });
-    if (nb.refuse) {
-      console.warn(`[neighbour-guard] ${page.id} refused (${nb.reason}): ${nb.detail}`);
-      await recordRefusedTranslation(db, page, clean, nb.reason, { jobId, model: resolvedModel });
-      return { written: false, protected: false, unhealthy: true, reason: nb.reason, text: clean };
-    }
+    const at = { id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, page_number: page.page_number ?? current?.page_number, page_type: page.page_type ?? current?.page_type };
+    const nb = await neighbourGate(db, at, clean, { ocr: page?.ocr?.data ?? current?.ocr?.data ?? '', neighbours, jobId, model: resolvedModel });
+    if (nb.refused) return { written: false, protected: false, unhealthy: true, reason: nb.reason, text: clean };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

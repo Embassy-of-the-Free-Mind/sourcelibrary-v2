@@ -8,7 +8,7 @@ n_books: null
 n_pages: 5989
 verdict: "The write-time neighbour guard refuses 0.43% of correct stored pages on an out-of-sample random draw (13/2,997, Opus-read against the sources) and 0.27% in-sample (8/2,992); it refuses all 21 pre-repair Atalanta Fugiens receiving pages and 8 of the 11 L'escole des filles pages named in feedback."
 status: adopted
-decision: "scripts/lib/neighbour-guard.mjs wired into both translation write doors (translate-core.mjs and src/lib/translate-write.ts), always on, reasons 'neighbour-leak' and 'absorbs-neighbour' (#5026)."
+decision: "scripts/lib/neighbour-guard.mjs, through neighbourGate (translate-core.mjs and its TS twin), wired into every writer of model translation text (both doors, translate-worker, both batch collectors, the Lambda, the batch routes, /api/process, contribute), always on, reasons 'neighbour-leak' and 'absorbs-neighbour' (#5026)."
 feeds: none
 supersedes: []
 superseded_by: null

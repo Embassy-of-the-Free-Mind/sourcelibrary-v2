@@ -352,6 +352,38 @@ export async function strayScriptGate(
   return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
 }
 
+/**
+ * The neighbour gate (#5026), TS twin of `neighbourGate` in scripts/lib/translate-core.mjs: every app-side writer of
+ * model translation text asks it before storing a page. Refuses — stamp + evidence, via recordRefusedTranslation — a
+ * page's English that is its neighbour's ('neighbour-leak' / 'absorbs-neighbour', scripts/lib/neighbour-guard.mjs).
+ * Reads the page's number, type and OCR when not given; `neighbours` (page_number → English) are the other pages of the
+ * same reply written together. Fail-open.
+ */
+export async function neighbourGate(
+  db: Db,
+  page: { id: string; book_id?: string | null; page_number?: number | null; page_type?: string | null },
+  text: string,
+  opts: { ocr?: string | null; neighbours?: Record<number, string> | null; jobId?: string; model?: string; dryRun?: boolean } = {}
+): Promise<{ refused: boolean; reason?: string; detail?: string; page_number?: number }> {
+  if (!text || !page?.id) return { refused: false };
+  let p: { id: string; book_id?: string | null; page_number?: number | null; page_type?: string | null } = page;
+  let ocr = opts.ocr;
+  if (p.page_number == null || p.book_id == null || ocr == null) {
+    try {
+      const doc = await db.collection('pages').findOne({ id: p.id }, { projection: { _id: 0, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } });
+      if (doc) {
+        p = { id: p.id, book_id: p.book_id ?? doc.book_id, page_number: p.page_number ?? doc.page_number, page_type: p.page_type ?? doc.page_type };
+        ocr = ocr ?? (doc.ocr as { data?: string } | undefined)?.data ?? null;
+      }
+    } catch { return { refused: false }; }
+  }
+  const v = await checkNeighbours(db, { page: p, text, ocr: ocr ?? '', bookId: p.book_id ?? null, neighbours: opts.neighbours ?? null });
+  if (!v.refuse) return { refused: false, page_number: p.page_number ?? undefined };
+  console.warn(`[neighbour-guard] ${p.id} p${p.page_number}: ${v.reason} — ${v.detail}${opts.dryRun ? ' (dry run)' : ''}`);
+  if (!opts.dryRun) await recordRefusedTranslation(db, { id: p.id, book_id: p.book_id ?? undefined }, text, v.reason, { jobId: opts.jobId, model: opts.model });
+  return { refused: true, reason: v.reason, detail: v.detail };
+}
+
 export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
@@ -424,16 +456,9 @@ export async function writePageTranslation(
     // #5026: a page's English that is its neighbour's (shared run with the stored n-1 / n+1, or the length of this
     // page's source plus a neighbour's) is refused like the hidden page. Not on a restore (notRecorded engine).
     if (!(engine && isNotRecorded(engine))) {
-      const bookId = current?.book_id as string | undefined;
-      const nb = await checkNeighbours(db, {
-        page: { id: pageId, book_id: bookId, page_number: current?.page_number, page_type: current?.page_type },
-        text: finalText, ocr: (current?.ocr as { data?: string } | undefined)?.data ?? '', bookId, neighbours,
-      });
-      if (nb.refuse) {
-        console.warn(`[neighbour-guard] ${pageId} refused (${nb.reason}): ${nb.detail}`);
-        await recordRefusedTranslation(db, { id: pageId, book_id: bookId }, finalText, nb.reason, { jobId, model });
-        return { written: false, protected: false, refused: nb.reason, text: finalText };
-      }
+      const at = { id: pageId, book_id: current?.book_id as string | undefined, page_number: current?.page_number as number | undefined, page_type: current?.page_type as string | undefined };
+      const nb = await neighbourGate(db, at, finalText, { ocr: (current?.ocr as { data?: string } | undefined)?.data ?? '', neighbours, jobId, model });
+      if (nb.refused) return { written: false, protected: false, refused: nb.reason, text: finalText };
     }
   }
 
