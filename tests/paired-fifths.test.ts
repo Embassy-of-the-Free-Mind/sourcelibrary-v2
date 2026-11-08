@@ -3,6 +3,43 @@ import { describe, expect, it } from 'vitest';
 import { PAIRED_SKIP_PAGE_TYPES, pairedFifths, pairedReadingOrder, type DrawPage } from '../src/lib/paired-fifths';
 import * as scripts from '../scripts/lib/paired-fifths.mjs';
 import { SKIP_TYPES } from '../scripts/eval/confidence-7866/lib.mjs';
+import { pageVerdict } from '../scripts/eval/paired-fifths-check.mjs';
+import { joinPrompt } from '../scripts/eval/paired-fifths-8405/run.mjs';
+
+describe('paired-fifths-check page mapping (#8405)', () => {
+  const page = { id: 'p1', ocr: { data: 'x' }, translation: { data: 'y' } };
+  const clean = { accept: true, fidelity: 5, defects: [] };
+  // recordPageVerdicts refuses a row unless a serious page, and only a serious page, has a finding.
+  const consistent = (v: { outcome: string; errors: unknown[]; wrong_page?: boolean }) => (v.outcome === 'serious') === (v.errors.length > 0 || v.wrong_page === true);
+
+  it('a clean page with a clean break shows', () => {
+    const v = pageVerdict(page, clean, []);
+    expect(v).toMatchObject({ outcome: 'clean', page_verdict: 'show' });
+    expect(consistent(v)).toBe(true);
+  });
+  it('a carry-over at the break makes a clean page serious, a caveat, on the English stage', () => {
+    const v = pageVerdict(page, clean, [{ kind: 'carry_over', layer: 'english', page: 'B', quote: 'q', material: true }]);
+    expect(v).toMatchObject({ outcome: 'serious', page_verdict: 'caveat' });
+    expect(v.errors[0]).toMatchObject({ stage: 'translation', kind: 'carry_over' });
+    expect(consistent(v)).toBe(true);
+  });
+  it('a wrong-leaf break is a fix and marks the page wrong_page', () => {
+    const v = pageVerdict(page, clean, [{ kind: 'wrong_leaf', layer: 'transcription', page: 'A', quote: 'q', material: true }]);
+    expect(v).toMatchObject({ page_verdict: 'fix', wrong_page: true });
+    expect(consistent(v)).toBe(true);
+  });
+  it('fidelity 3 is serious, 2 is a fix, 4 is minor', () => {
+    const d = [{ severity: 'misleads', what: 'w', class: 'O6' }];
+    expect(pageVerdict(page, { accept: false, fidelity: 3, defects: d }, [])).toMatchObject({ outcome: 'serious', page_verdict: 'caveat' });
+    expect(pageVerdict(page, { accept: false, fidelity: 2, defects: d }, [])).toMatchObject({ page_verdict: 'fix' });
+    expect(pageVerdict(page, { accept: true, fidelity: 4, defects: [] }, [])).toMatchObject({ outcome: 'minor', page_verdict: 'show' });
+  });
+  it('join prompt v2 adds the sentence-across-the-break rule; v1 is the study prompt unchanged', () => {
+    const a = { ocr: 'a', tr: 'a' }, b = { ocr: 'b', tr: 'b' };
+    expect(joinPrompt('Latin', a, b)).not.toContain('translators finish a sentence');
+    expect(joinPrompt('Latin', a, b, { version: 2 })).toContain('translators finish a sentence');
+  });
+});
 
 const book = (n: number, ineligible: number[] = []): DrawPage[] =>
   Array.from({ length: n }, (_, i) => ({ page_number: i + 1, eligible: !ineligible.includes(i + 1) }));

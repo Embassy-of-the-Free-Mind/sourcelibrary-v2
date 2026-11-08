@@ -52,6 +52,7 @@ method: a change to it is a new version.
 | What did the route judge say about the stored text? | [judged-pages](judged-pages.md) | the English: transcription only, in the frames of the runs that judged |
 | Where does a second machine reading differ from the stored OCR? | [ocr-convergence](ocr-convergence.md) | the corpus: books are ranked by page views |
 | Is a new English worse than the old, before it is written? | [retranslation-gate](retranslation-gate.md) | anything beyond the run it gates |
+| What is this book like to read, page by page and across its page breaks? | [paired-fifths-check](paired-fifths-check.md) | the corpus: books are checked one by one; 10 pages a book |
 | What did a volunteer's Claude find on a book's paired-fifths pages? | [volunteer-paired-check](volunteer-paired-check.md) | anything readers are told: an unknown model, kept for measurement only |
 | May this running lane keep running? | [lane-spot-check](lane-spot-check.md) | the corpus: new output of one lane, on few pages |
 | Which pages hold a refusal, or the model's own reasoning? | [refusal-empty](refusal-empty.md), [reasoning-leak](reasoning-leak.md) | any other error: these are detectors |

@@ -29,6 +29,7 @@ export const CHECK_METHODS: Record<string, CheckMethodInfo> = {
   'gpu-print-6871': { label: 'Lane check: one page the GPU print lane transcribed, read by an AI reviewer against the page image' },
   'leak-repair-5026': { label: 'Repeated-English check: two neighbouring pages whose English repeats the same passage, read by an AI reviewer against both page images, before and after re-translation' },
   'leak-strip-5026': { label: 'Repeated-English strip check: a proposed cut of the passage a page’s English shares with its neighbour, read by an AI reviewer against both page images before any write' },
+  'paired-fifths-check': { label: 'Book check: two facing pages from each fifth of the book and the break between them, read by an AI reviewer against the page images' },
   'volunteer-paired-check': { label: 'Volunteer check: two facing pages from each fifth of the book, read by a volunteer’s AI assistant against the page images' },
   'reasoning-leak': { label: 'Automated check for the model’s own reasoning stored as the translation', issue: 6117 },
   'refusal-empty': { label: 'Automated check for a transcription that is a refusal or is empty', issue: 4686 },

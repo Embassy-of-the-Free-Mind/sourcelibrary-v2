@@ -53,8 +53,14 @@ const JOIN_KINDS = ['carry_over', 'duplicated', 'dropped', 'wrong_leaf', 'other'
 export const joinFails = (j) => (j?.defects || []).some((d) => d.material === true && ['carry_over', 'duplicated', 'dropped', 'wrong_leaf'].includes(d.kind));
 
 // ── the join judge ──
-const clean = (s) => (typeof s === 'string' ? stripEditorialWrappers(s).trim() : '');
-export function joinPrompt(lang, a, b) {
+export const clean = (s) => (typeof s === 'string' ? stripEditorialWrappers(s).trim() : '');
+/**
+ * v1 is the #8405 study's prompt, unchanged. v2 (the standing paired-fifths-check method) adds one rule the study
+ * showed was missing: 13 of its 72 failed breaks were only "page A's English finishes a sentence whose last words are
+ * printed on B", with nothing lost or repeated, which a reader is not misled by.
+ */
+export const JOIN_PROMPT_V2_RULE = '\nA sentence that runs across the break and is rendered whole on one of the two pages, with nothing lost and nothing rendered twice, is not a defect: translators finish a sentence where it ends. Report it only if words are missing or repeated.';
+export function joinPrompt(lang, a, b, { version = 1 } = {}) {
   return `You are checking the break between two consecutive pages of a historical ${lang} book, for a library that publishes each page's transcription and English translation beside its scan. The scans are the only authority.
 
 Open both images with Read before you answer: ./a.jpg is page A, ./b.jpg is page B, the page that follows it.
@@ -65,7 +71,7 @@ Judge the BREAK, not each page's general quality. Look for:
 - dropped: words printed at the end of A or the start of B are missing from both pages' transcriptions, or from both English texts;
 - wrong_leaf: a page's text does not belong to its scan at all;
 - other: anything else wrong at the break.
-A catchword at the foot of A that repeats the first word of B is printed furniture, not a defect. Running heads, page numbers and signatures are not defects. Normalised spelling is not a defect.
+A catchword at the foot of A that repeats the first word of B is printed furniture, not a defect. Running heads, page numbers and signatures are not defects. Normalised spelling is not a defect.${version >= 2 ? JOIN_PROMPT_V2_RULE : ''}
 
 For each defect: kind, layer (transcription | english), page (A | B: the page that holds the misplaced or duplicated text, or that lacks the dropped text), quote (the words at issue, exactly as in the text given), and material (true when a reader would be misled about what the page says).
 
@@ -100,7 +106,7 @@ export const parseJoin = (t) => {
 };
 
 // ── images: fetched once, resized as #7866 did (over 4 MB → long edge 3000 px, JPEG q90) ──
-async function imageFor(pageId, url) {
+export async function imageFor(pageId, url) {
   const f = path.join(OUT, 'img', `${pageId}.jpg`);
   if (fs.existsSync(f)) return fs.readFileSync(f);
   const r = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary-eval/8405 (https://sourcelibrary.org)' }, signal: AbortSignal.timeout(60e3) });
@@ -115,7 +121,7 @@ async function imageFor(pageId, url) {
 }
 
 // ── frame ──
-const PAGE_PROJECTION = { _id: 0, id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.updated_at': 1,'translation.data': 1, 'translation.engine.run.read_call': 1,
+export const PAGE_PROJECTION = { _id: 0, id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.updated_at': 1,'translation.data': 1, 'translation.engine.run.read_call': 1,
   script_type: 1, archived_photo: 1, display_photo: 1, photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, hidden: 1, split_into: 1 };
 const breakKind = (a, b) => {
   const x = a.translation?.engine?.run?.read_call, y = b.translation?.engine?.run?.read_call;
