@@ -130,6 +130,7 @@
     "scripts/lib/review-vocabulary.mjs",
     "scripts/lib/scholarly-pdf.mjs",
     "scripts/lib/scholarly-typst.mjs",
+    "scripts/lib/seam-pass.mjs",
     "scripts/lib/split-stage.mjs",
     "scripts/lib/stale-translation.mjs",
     "scripts/lib/syriac-kraken-lane.mjs",
