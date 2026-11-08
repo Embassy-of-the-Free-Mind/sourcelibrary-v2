@@ -13,6 +13,13 @@ import { withArticleMeta } from '@/lib/article-metadata';
 // them. Lingua Aegyptiaca restituta is linked but not quoted: its stored text sits on the wrong
 // leaves (text for one page shown against the image of another), reported on #7987.
 //
+// 2026-11-09 (Derek's feedback: more references, linked to library pages): every Kircher book named
+// in the opening is linked; Horapollo (Aldine 1505, Latin 1595), Valeriano, Ficino's Hermes and
+// Champollion's Lettre are linked to the library's copies. The Iamblichus quote (De mysteriis, Ficino's
+// Latin, Lyon 1607, scan 153 / p. 145) was compared with the stored translation and its page image
+// opened on 2026-11-09; the bracketed editorial note on "rationes" is left out, and an ellipsis marks
+// the omitted middle. Horapollo is linked, not quoted: its Latin copies have no English yet.
+//
 // Outside claims are cited in the text: Erman (1917) and Bourgois (2024) for the Domitian
 // inscription; Budge (1910); Iversen (1961); Champollion (1822, 1824); Godwin (1979, 2009);
 // Stolzenberg (2013). The first-translation paragraph follows the library's own records
@@ -48,6 +55,8 @@ const PRODROMUS = 'coptic-forerunner-on-the-egyptian-language-kircher';
 const PRODROMUS_ID = '6952db5777f38f6761bc7519';
 const LINGUA = 'lingua-aegyptiaca-restituta-kircher';
 const SPHINX = 'sphinx-mystagoga-kircher';
+const IAMBLICHUS = 'iamblichus-de-mysteriis-aegyptiorum-lyon-1607-ficino';
+const IAMBLICHUS_ID = '69ae9f1011ecaed4043f3739';
 
 const PAMPHILIUS_SOURCE = (
   <>
@@ -95,13 +104,23 @@ export default function KircherHieroglyphsPage() {
           drawn out flat, with the monument itself standing between them.
         </p>
         <p className={P}>
-          Kircher (1602&ndash;1680) wrote on magnetism, music, optics, volcanoes, China and the Tower of Babel,
-          but the hieroglyphs were the work he cared about most and the one that made and later unmade his
-          name. Source Library holds the whole run of it: the Coptic grammar of 1636, the Coptic dictionary of
-          1643, the Pamphilian obelisk of 1650, the three volumes of <em>Oedipus Aegyptiacus</em> (1652&ndash;54),
-          the little book on the obelisk carried by Bernini&rsquo;s elephant (1666), and a late book on mummies
-          (1676). All of them can be read in Latin beside an English translation. This article quotes that English
-          and shows the printed page each passage comes from.
+          Kircher (1602&ndash;1680) wrote on{' '}
+          <Link href="/book/magnes-sive-de-arte-magnetica-kircher">magnetism</Link>,{' '}
+          <Link href="/book/universal-music-making-musurgia-universalis-volume-i-kircher">music</Link>,{' '}
+          <Link href="/book/the-great-art-of-light-and-shadow-kircher">optics</Link>,{' '}
+          <Link href="/book/athanasii-kircheri-e-soc-jesu-mundus-subterraneus-in-xii-kircher">volcanoes</Link>,{' '}
+          <Link href="/book/kircher-china-illustrata-1667-kircher">China</Link> and{' '}
+          <Link href="/book/kircher-turris-babel-1679-kircher">the Tower of Babel</Link>, but the hieroglyphs were
+          the work he cared about most and the one that made and later unmade his name. Source Library holds the
+          whole run of it: the <Link href={`/book/${PRODROMUS}`}>Coptic grammar of 1636</Link>, the{' '}
+          <Link href={`/book/${LINGUA}`}>Coptic dictionary of 1643</Link>, the{' '}
+          <Link href={`/book/${PAMPHILIUS}`}>Pamphilian obelisk of 1650</Link>, the three volumes of{' '}
+          <em>Oedipus Aegyptiacus</em> (<Link href={`/book/${OA1}`}>1652</Link>,{' '}
+          <Link href={`/book/${OA2}`}>1653</Link>, <Link href={`/book/${OA3}`}>1654</Link>), the{' '}
+          <Link href={`/book/${MINERVA}`}>little book on the obelisk carried by Bernini&rsquo;s elephant</Link>{' '}
+          (1666), and a <Link href={`/book/${SPHINX}`}>late book on a mummy</Link> (1676). All of them can be read
+          in Latin beside an English translation. This article quotes that English and shows the printed page each
+          passage comes from; every quotation links to its page in the reader.
         </p>
 
         <section className="mb-14">
@@ -110,9 +129,48 @@ export default function KircherHieroglyphsPage() {
             Kircher did not come to the hieroglyphs cold. A long tradition, from the Greek writers of late
             antiquity to the Renaissance, held that the Egyptian signs were not writing in the ordinary sense. The
             fifth-century <em>Hieroglyphica</em> of Horapollo explained them one by one as emblems: a hawk for
-            the divine, a snake biting its tail for the universe. The Neoplatonist Iamblichus wrote that the
-            Egyptian priests hid their teaching in symbols. Renaissance readers added Hermes Trismegistus, the
-            supposed Egyptian sage behind the Hermetic writings, whom they took to be as old as Moses or older.
+            the divine, a snake biting its tail for the universe. Its Greek text was{' '}
+            <Link href="/book/aesop-fabulae-bundled-volume-aldine-with-horapollo-horapollo">
+              first printed by Aldus Manutius in Venice in 1505
+            </Link>
+            , bound with Aesop, and a{' '}
+            <Link href="/book/hieroglyphica-horapollinis-horapollo">Latin version</Link> went through many
+            editions; Pierio Valeriano built on it a{' '}
+            <Link href="/book/valeriano-hieroglyphica-1575-valeriano">
+              <em>Hieroglyphica</em>
+            </Link>{' '}
+            of his own, an encyclopedia of symbols first published in 1556. Renaissance readers added Hermes
+            Trismegistus, the supposed Egyptian sage behind the{' '}
+            <Link href="/book/hermes-trismegistus-translated-by-apuleius-ficino-ficino">Hermetic writings</Link>{' '}
+            that Marsilio Ficino put into Latin, whom they took to be as old as Moses or older.
+          </p>
+          <p className={P}>
+            The Neoplatonist Iamblichus, writing around AD 300, gave the idea its theory.{' '}
+            <Link href={`/book/${IAMBLICHUS}`}>
+              <em>On the Mysteries of the Egyptians</em>
+            </Link>
+            , which Ficino also put into Latin, says the priests copied nature itself, which shows hidden reasons
+            in visible forms, and he tells the reader how to take their symbols:
+          </p>
+          <SourceQuote
+            book={IAMBLICHUS}
+            page={153}
+            printedPage={145}
+            src={IMG(IAMBLICHUS_ID, 153)}
+            source={
+              <>
+                Iamblichus, <em>De mysteriis</em> VII.1, in Marsilio Ficino&rsquo;s Latin (Lyon, 1607)
+              </>
+            }
+            pageAlt="Printed page 145 of Iamblichus, De mysteriis, in Ficino's Latin, with the italic heading Expositio symbolorum Aegyptiae theologiae."
+          >
+            By imitating the very nature of the universe and the craftsmanship of the gods, the Egyptians also
+            display certain images of mystical and hidden notions through the creation of symbols. &hellip; In
+            interpreting these symbols, dismiss the mere sounds of the words and instead grasp the meaning.
+          </SourceQuote>
+          <p className={P}>
+            &ldquo;Dismiss the sounds, grasp the meaning&rdquo; is, in five words, the rule Kircher would follow
+            for the rest of his life.
           </p>
           <p className={P}>
             Kircher put these together into a single story. Hermes, in his telling, invented the hieroglyphs to
@@ -228,7 +286,7 @@ export default function KircherHieroglyphsPage() {
             monument at all. It was quarried in Egypt but carved in Rome in the first century AD, for the emperor
             Domitian, and its inscription is a dedication naming Domitian with his father Vespasian and his
             brother Titus. Adolf Erman published a critical edition of it in <em>R&ouml;mische Obelisken</em>{' '}
-            (Berlin, 1917); Elise Bourgois reviews the editions since in <em>BABELAO</em> (2024). Kircher had
+            (Berlin, 1917); &Eacute;lise Bourgois reviews the editions since in <em>BABELAO</em> (2024). Kircher had
             also had to work from a monument in pieces. Where signs were missing from the broken shaft, he drew in
             what he thought belonged there, as John Fletcher notes in his study of Kircher&rsquo;s life and works
             (Brill, 2011).
@@ -360,7 +418,11 @@ export default function KircherHieroglyphsPage() {
             Some stand for whole words. Others are put after a word to show what kind of thing it is: a man, a
             town, a god, an action. Names of kings are written in sound signs inside an oval ring, the cartouche.
             Jean-Fran&ccedil;ois Champollion worked this out from the Rosetta Stone and other inscriptions and
-            set it out in his <em>Lettre &agrave; M. Dacier</em> (1822) and his <em>Pr&eacute;cis du syst&egrave;me
+            set it out in his{' '}
+            <Link href="/book/lettre-a-m-dacier-relative-a-l-alphabet-des-hieroglyphes-champollion">
+              <em>Lettre &agrave; M. Dacier</em>
+            </Link>{' '}
+            (1822) and his <em>Pr&eacute;cis du syst&egrave;me
             hi&eacute;roglyphique</em> (1824). The key, for him as for no one before, was that the Egyptian words
             he could spell out in the sound signs were words he already knew from Coptic.
           </p>
@@ -470,8 +532,55 @@ export default function KircherHieroglyphsPage() {
           </p>
         </section>
 
+        <section className="mb-10">
+          <h2 className={H2}>Works cited from outside the library</h2>
+          <ul className="text-sm text-secondary font-body leading-relaxed space-y-2 list-none pl-0">
+            <li>
+              Budge, E. A. Wallis. <em>Egyptian Language: Easy Lessons in Egyptian Hieroglyphics</em>. London:
+              Kegan Paul, Trench, Tr&uuml;bner, 1910.
+            </li>
+            <li>
+              Champollion, Jean-Fran&ccedil;ois. <em>Pr&eacute;cis du syst&egrave;me hi&eacute;roglyphique des
+              anciens &Eacute;gyptiens</em>. Paris, 1824. (His <em>Lettre &agrave; M. Dacier</em> of 1822 is{' '}
+              <Link href="/book/lettre-a-m-dacier-relative-a-l-alphabet-des-hieroglyphes-champollion">
+                in the library
+              </Link>
+              .)
+            </li>
+            <li>
+              Erman, Adolf. <em>R&ouml;mische Obelisken</em>. Abhandlungen der K&ouml;niglich Preussischen
+              Akademie der Wissenschaften, Berlin, 1917.
+            </li>
+            <li>
+              Bourgois, &Eacute;lise. &ldquo;Les inscriptions de l&rsquo;ob&eacute;lisque de Domitien (piazza
+              Navona). &Eacute;tat de la question.&rdquo; <em>BABELAO</em> 13 (2024): 47&ndash;73.{' '}
+              <a href="https://doi.org/10.14428/babelao.vol13.2024.84463">doi:10.14428/babelao.vol13.2024.84463</a>
+            </li>
+            <li>
+              Fletcher, John Edward. <em>A Study of the Life and Works of Athanasius Kircher, &lsquo;Germanus
+              Incredibilis&rsquo;</em>. Ed. Elizabeth Fletcher. Leiden: Brill, 2011.
+            </li>
+            <li>
+              Godwin, Joscelyn. <em>Athanasius Kircher: A Renaissance Man and the Quest for Lost Knowledge</em>.
+              London: Thames &amp; Hudson, 1979.
+            </li>
+            <li>
+              Godwin, Joscelyn. <em>Athanasius Kircher&rsquo;s Theatre of the World</em>. London: Thames &amp;
+              Hudson, 2009.
+            </li>
+            <li>
+              Iversen, Erik. <em>The Myth of Egypt and its Hieroglyphs in European Tradition</em>. Copenhagen: Gad,
+              1961.
+            </li>
+            <li>
+              Stolzenberg, Daniel. <em>Egyptian Oedipus: Athanasius Kircher and the Secrets of Antiquity</em>.
+              Chicago: University of Chicago Press, 2013.
+            </li>
+          </ul>
+        </section>
+
         <p className="text-sm text-muted font-body">
-          Quotations from Kircher are the library&rsquo;s English, machine translations made with AI from the
+          Quotations from Kircher and Iamblichus are the library&rsquo;s English, machine translations made with AI from the
           Latin and labelled as such on each page; they are quoted as they stand on the linked page, without the
           editorial notes and, in the Pamphilian reading, the small key numbers that link words to the drawing.
           Page numbers are the printed ones; the links open the scan. Claims about the inscriptions and about
