@@ -1,5 +1,5 @@
 ---
-stage: ocr
+stage: image
 measure: judged_vs_reference
 languages: []
 scripts: []
@@ -11,6 +11,8 @@ status: adopted
 decision: "Phase 4 holds fresh books on a 5+ marker descending run (page-order-descending-8068)"
 superseded_by: null
 issue: 8068
+feeds: guard
+landed: scripts/lib/page-order-gate.mjs
 ---
 ## 2026-11-08 · Can the printed page numbers hold a back-to-front book before it is translated? (#8068)
 
