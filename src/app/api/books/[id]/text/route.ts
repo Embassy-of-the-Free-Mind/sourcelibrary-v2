@@ -7,6 +7,7 @@ import { logBotRead } from '@/lib/bot-reads';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { withApiAuth, isSiteBrowserRequest, type ApiIdentity } from '@/lib/api-auth';
 import { inProcessCaller } from '@/lib/inprocess-caller';
+import { resolveKeptEdition } from '@/lib/kept-edition';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
 import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
@@ -168,7 +169,7 @@ export const GET = withApiAuth(async (
     // Find book by id or _id. `translation_state.english_original`: on an
     // English edition an English leaf serves its transcription, never a stored
     // English-to-English rewording (#7100).
-    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, tenantId: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
+    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, tenantId: 1, hidden_reason: 1, duplicate_of: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
     let book = await db.collection('books').findOne(
       { id: bookId },
       { projection: TEXT_BOOK_PROJECTION }
@@ -186,7 +187,15 @@ export const GET = withApiAuth(async (
     // Hidden (visible:false) books are not public — 404 unless editor session
     // or CRON_SECRET (pipeline / Claude Code).
     if (!(await isBookReadable(book, request))) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      // A copy hidden as a duplicate of an edition we kept: name the kept copy, so a
+      // client holding the old id can switch instead of retrying a bare 404 (#8235).
+      const kept = book.hidden_reason === 'same_edition_duplicate' ? await resolveKeptEdition(db, book.duplicate_of) : null;
+      return NextResponse.json(
+        kept
+          ? { error: 'Book not found', reason: 'duplicate_edition', message: `This copy was hidden as a duplicate of an edition we kept. Read that one instead: ${kept.text_api}`, kept_edition: kept }
+          : { error: 'Book not found' },
+        { status: 404 },
+      );
     }
 
     const resolvedBookId = book.id || bookId;
