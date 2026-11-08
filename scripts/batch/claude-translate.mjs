@@ -41,6 +41,15 @@
  * --block-chars=N: the source-character budget of one call (planBlocks maxChars; default its 20,000), so dense pages go
  * fewer to a call (#8399).
  *
+ * --seam-pass=1 (#8399, --cli=agy, text reads): after the reads, ONE agy call per page turn that falls between two calls
+ * (the turn into the run from the page before it, each block's end, a page re-read alone) gets the last source paragraph
+ * of page N, the first of N+1 and their English, and returns replacements for those two edge spans only
+ * (scripts/lib/seam-pass.mjs: placement, growth, outside-unchanged, both-pages and neighbour-gate guards). Nothing is
+ * written here: DIR/seam-pass.jsonl holds each turn, DIR/seam/<page_id>.txt the page as repaired, and
+ * `cli-translate.mjs apply` writes the repairs after the reads under their own run id. --seam-edit-before=1 allows an
+ * edit to the stored English of the page before a run (default: only its turn's first page changes).
+ * `claude-translate.mjs seam --out=DIR [--seam-edit-before=1]` runs the pass alone over reads already in DIR.
+ *
  * --images-dir=D (#6948, image-attached reads): D/<page_id>/ holds that page's images, already cut (t1.jpg, t2.jpg, ... in
  * reading order: full-resolution strips of the leaf; scripts/eval/tib-concept-opus-6948/prep-images.mjs makes them).
  * Each call's sealed folder gets its pages' images as p<N>-t<k>.jpg, the CLI is allowed the Read tool and nothing
@@ -95,6 +104,7 @@ import { engineNameForCli } from '../lib/write-provenance.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
+import { seamStage, SEAM_PASS_MODEL } from '../lib/seam-pass.mjs';
 
 const READ_SITE = 'scripts/batch/claude-translate.mjs';
 const PROMPT_VARIANTS = { claude: 'claude-block-6559-unclear', agy: 'agy-block-7503' };
@@ -244,6 +254,9 @@ async function main() {
   // no call of the run is sent the previous page's English, the marked block's or a page read alone. An unusable or
   // unbalanced split reads the block's pages one per call.
   const MARKED = CLI === 'agy' && !IMAGES && (arg('folio-markers') ?? '0') !== '0';
+  // --seam-pass=1 (#8399): after the reads, the seam pass over every turn between two calls (scripts/lib/seam-pass.mjs);
+  // --seam-edit-before=1 lets it edit the stored English of the page before a run. Text reads through agy only.
+  const SEAM_PASS = CLI === 'agy' && !IMAGES && (arg('seam-pass') ?? '0') !== '0';
   const PROMPT_VARIANT = PROMPT_VARIANTS[CLI] + (IMAGES ? '-image' : '') + (MARKED ? '-folio-8399' : REPLY === 'json' ? '-json' : '');
   /** A page's prepared images, in reading order, or [] (#6948). */
   const imagesOf = (p) => { const d = IMAGES && path.join(IMAGES, p.id); return d && fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /^t\d+\.jpg$/.test(f)).sort((a, b) => Number(a.slice(1, -4)) - Number(b.slice(1, -4))) : []; };
@@ -251,6 +264,16 @@ async function main() {
   const PER_CALL = Math.max(1, Math.min(CLI === 'agy' ? 4 : 10, Number(arg('per-call') || (CLI === 'agy' ? 2 : 10))));
   const JOB = arg('job') || 'claude-translate';
   const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
+  // `seam --out=DIR` (#8399): the seam pass alone, over reads already in DIR (what `read --seam-pass=1` runs at its end).
+  if (process.argv[2] === 'seam' && OUT) {
+    const { MongoClient } = await import('mongodb');
+    const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+    await client.connect();
+    const t = await seamStage(client.db('bookstore'), OUT, { model: arg('seam-model') || SEAM_PASS_MODEL, editBefore: arg('seam-edit-before') === '1' });
+    await client.close();
+    console.log(`seam pass: ${t.runs} run(s), ${t.joins} turn(s) passed, ${t.changed} repaired`);
+    process.exit(t.stopped ? 3 : 0);
+  }
   if (process.argv[2] !== 'read' || !OUT || !arg('page-ids-file')) { console.error('usage: claude-translate.mjs read --page-ids-file=F --out=DIR (see the header)'); process.exit(2); }
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
@@ -455,6 +478,12 @@ async function main() {
       const m = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null;
       if (m?.write_guard === 'truncated' && m.call_pages === 1 && !/-[23]$/.test(m.call_id || '')) await readGroup([p], 3);
     }
+  }
+  // --seam-pass=1 (#8399, agy): one call per turn between two calls, after the reads (scripts/lib/seam-pass.mjs).
+  if (SEAM_PASS && !stop) {
+    const t = await seamStage(db, OUT, { model: arg('seam-model') || SEAM_PASS_MODEL, editBefore: arg('seam-edit-before') === '1' });
+    console.log(`seam pass: ${t.runs} run(s), ${t.joins} turn(s) passed, ${t.changed} repaired${t.stopped ? ' (stopped: agy quota)' : ''}`);
+    if (t.stopped) stop = 'usage limit (seam pass): re-run to resume';
   }
   await client.close();
   const metas = todo.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));

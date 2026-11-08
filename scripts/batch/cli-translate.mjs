@@ -371,4 +371,10 @@ if (APPLY) {
   }
 }
 console.log(`\n${APPLY ? 'written' : 'would write'}: ${tally.written}   skipped: ${JSON.stringify(tally.skipped)}${APPLY ? `   run ${runId}` : '   (dry run; add --apply)'}`);
+// #8399: a read made with claude-translate.mjs --seam-pass=1 carries its seam repairs in DIR/seam-pass.jsonl; they are
+// written after the reads, against the stored text, under their own run id (scripts/lib/seam-pass.mjs applySeamPass).
+if (fs.existsSync(path.join(OUT, 'seam-pass.jsonl'))) {
+  const { applySeamPass } = await import('../lib/seam-pass.mjs');
+  await applySeamPass(db, OUT, { apply: APPLY });
+}
 await client.close();

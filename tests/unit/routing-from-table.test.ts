@@ -187,6 +187,11 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect(v(cliRow({ unless: { providers: [] } }))).toThrow(/providers/);
     expect(v(cliRow({ unless: { providers: ['bph'] } }))).not.toThrow();
     expect(v(cliRow({ ...agy, per_call: 4 }))).not.toThrow();
+    // #8399: seam_pass rides on a per_call row only, as true or 'edit-before'
+    expect(v(cliRow({ ...agy, per_call: 4, seam_pass: true }))).not.toThrow();
+    expect(v(cliRow({ ...agy, per_call: 4, seam_pass: 'edit-before' }))).not.toThrow();
+    expect(v(cliRow({ ...agy, per_call: 4, seam_pass: 'yes' }))).toThrow(/seam_pass/);
+    expect(v(cliRow({ ...agy, seam_pass: true }))).toThrow(/seam_pass/);
     expect(v(cliRow({ ...agy, per_call: 5 }))).toThrow(/per_call/);
     expect(v(cliRow({ ...agy, per_call: 2.5 }))).toThrow(/per_call/);
     expect(v(cliRow({ per_call: 4 }))).toThrow(/per_call/);   // an Opus row: claude-translate has its own --per-call
