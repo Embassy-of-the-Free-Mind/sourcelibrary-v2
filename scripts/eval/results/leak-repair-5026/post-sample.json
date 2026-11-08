@@ -1,0 +1,346 @@
+[
+ {
+  "book": "6956952b8c9559f6c2db06a3",
+  "prev": 338,
+  "next": 339,
+  "checked": 338,
+  "nb": 339,
+  "page_id": "695696f91479a63c1108d699",
+  "lang": "Greek/Latin",
+  "key": "Q01"
+ },
+ {
+  "book": "69b3e607304c1c6b3950ae60",
+  "prev": 71,
+  "next": 72,
+  "checked": 71,
+  "nb": 72,
+  "page_id": "69b3e607304c1c6b3950aea7",
+  "lang": "Latin",
+  "key": "Q02"
+ },
+ {
+  "book": "69af0f70ef6e1afe25b63049",
+  "prev": 695,
+  "next": 696,
+  "checked": 695,
+  "nb": 696,
+  "page_id": "69af0f70ef6e1afe25b63300",
+  "lang": "Latin",
+  "key": "Q03"
+ },
+ {
+  "book": "69bd9cbf6120d54bd0370cee",
+  "prev": 204,
+  "next": 205,
+  "checked": 205,
+  "nb": 204,
+  "page_id": "69bd9cbf6120d54bd0370dbb",
+  "lang": "Latin",
+  "key": "Q04"
+ },
+ {
+  "book": "69905d732fd6a0399389f5b7",
+  "prev": 173,
+  "next": 174,
+  "checked": 173,
+  "nb": 174,
+  "page_id": "69905d742fd6a0399389f664",
+  "lang": "Latin",
+  "key": "Q05"
+ },
+ {
+  "book": "69905881aaa7f10ed4cf9e7f",
+  "prev": 766,
+  "next": 767,
+  "checked": 766,
+  "nb": 767,
+  "page_id": "69905881aaa7f10ed4cfa17d",
+  "lang": "German",
+  "key": "Q06"
+ },
+ {
+  "book": "69aff9e23f1fcb29634ce545",
+  "prev": 52,
+  "next": 53,
+  "checked": 52,
+  "nb": 53,
+  "page_id": "69aff9e23f1fcb29634ce579",
+  "lang": "Latin",
+  "key": "Q07"
+ },
+ {
+  "book": "69b52bf33dd6d9423027cd90",
+  "prev": 495,
+  "next": 496,
+  "checked": 496,
+  "nb": 495,
+  "page_id": "69b52bf33dd6d9423027cf80",
+  "lang": "Latin",
+  "control": "stored-leak",
+  "key": "Q08"
+ },
+ {
+  "book": "6953e49f77f38f6761beec48",
+  "prev": 217,
+  "next": 218,
+  "checked": 218,
+  "nb": 217,
+  "page_id": "6953e49f77f38f6761beed22",
+  "lang": "Latin",
+  "key": "Q09"
+ },
+ {
+  "book": "694f3d6ebe37f451a5324e95",
+  "prev": 67,
+  "next": 68,
+  "checked": 67,
+  "nb": 68,
+  "page_id": "694f3d6fbe37f451a5324ed8",
+  "lang": "Latin",
+  "key": "Q10"
+ },
+ {
+  "book": "6974b63d19126e775cf6d7d3",
+  "prev": 746,
+  "next": 747,
+  "checked": 747,
+  "nb": 746,
+  "page_id": "6975e8a632ad2394c06e8142",
+  "lang": "German",
+  "key": "Q11"
+ },
+ {
+  "book": "6a0a46f8ef9e0385fbdf5903",
+  "prev": 420,
+  "next": 421,
+  "checked": 420,
+  "nb": 421,
+  "page_id": "6a0a479def9e0385fbdf5aa7",
+  "lang": "Latin",
+  "key": "Q12"
+ },
+ {
+  "book": "69593280b91a6184ea9439f4",
+  "prev": 112,
+  "next": 113,
+  "checked": 112,
+  "nb": 113,
+  "page_id": "69593280b91a6184ea943a64",
+  "lang": "French",
+  "key": "Q13"
+ },
+ {
+  "book": "6993839450654cbbe29177a5",
+  "prev": 31,
+  "next": 32,
+  "checked": 32,
+  "nb": 31,
+  "page_id": "6993839450654cbbe29177c5",
+  "lang": "Greek",
+  "control": "stored-leak",
+  "key": "Q14"
+ },
+ {
+  "book": "695910f5ecb01322b306854d",
+  "prev": 531,
+  "next": 532,
+  "checked": 531,
+  "nb": 532,
+  "page_id": "695910f6ecb01322b3068760",
+  "lang": "Spanish",
+  "key": "Q15"
+ },
+ {
+  "book": "69943ceda668f66e6953d13b",
+  "prev": 477,
+  "next": 478,
+  "checked": 477,
+  "nb": 478,
+  "page_id": "69943ceea668f66e6953d318",
+  "lang": "Armenian",
+  "key": "Q16"
+ },
+ {
+  "book": "699249a3a2d53df4853bdd12",
+  "prev": 364,
+  "next": 365,
+  "checked": 365,
+  "nb": 364,
+  "page_id": "699249a4a2d53df4853bde7f",
+  "lang": "Japanese",
+  "key": "Q17"
+ },
+ {
+  "book": "69bd9d546120d54bd0375241",
+  "prev": 2296,
+  "next": 2297,
+  "checked": 2297,
+  "nb": 2296,
+  "page_id": "69bd9d546120d54bd0375b3a",
+  "lang": "German",
+  "key": "Q18"
+ },
+ {
+  "book": "69a5e66085fa13e734e42582",
+  "prev": 82,
+  "next": 83,
+  "checked": 83,
+  "nb": 82,
+  "page_id": "69a5e66085fa13e734e425d5",
+  "lang": "Arabic",
+  "key": "Q19"
+ },
+ {
+  "book": "69aebfc3e997cc01b0caafe3",
+  "prev": 255,
+  "next": 256,
+  "checked": 256,
+  "nb": 255,
+  "page_id": "69aebfc3e997cc01b0cab0e3",
+  "lang": "Italian",
+  "key": "Q20"
+ },
+ {
+  "book": "69af1f3c9743b43208f861e6",
+  "prev": 136,
+  "next": 137,
+  "checked": 136,
+  "nb": 137,
+  "page_id": "69af1f3c9743b43208f8626e",
+  "lang": "Latin",
+  "key": "Q21"
+ },
+ {
+  "book": "6992c88d4f3a879124230200",
+  "prev": 174,
+  "next": 175,
+  "checked": 174,
+  "nb": 175,
+  "page_id": "6992c88d4f3a8791242302ae",
+  "lang": "Chinese",
+  "key": "Q22"
+ },
+ {
+  "book": "69e80677fdad300064d9f438",
+  "prev": 10,
+  "next": 11,
+  "checked": 10,
+  "nb": 11,
+  "page_id": "69e80677fdad300064d9f442",
+  "lang": "Sanskrit",
+  "key": "Q23"
+ },
+ {
+  "book": "6991eb072f801130a473ef4a",
+  "prev": 175,
+  "next": 176,
+  "checked": 175,
+  "nb": 176,
+  "page_id": "6991eb082f801130a473eff9",
+  "lang": "French",
+  "control": "made-dup",
+  "key": "Q24"
+ },
+ {
+  "book": "695201adab34727b1f0419c7",
+  "prev": 263,
+  "next": 264,
+  "checked": 264,
+  "nb": 263,
+  "page_id": "695201adab34727b1f041acf",
+  "lang": "Latin",
+  "key": "Q25"
+ },
+ {
+  "book": "6991eb0d2f801130a473f42a",
+  "prev": 166,
+  "next": 167,
+  "checked": 166,
+  "nb": 167,
+  "page_id": "6991eb0d2f801130a473f4d0",
+  "lang": "German",
+  "key": "Q26"
+ },
+ {
+  "book": "69b3018b78de5de2306d57b7",
+  "prev": 123,
+  "next": 124,
+  "checked": 124,
+  "nb": 123,
+  "page_id": "69b3018b78de5de2306d5833",
+  "lang": "Latin",
+  "key": "Q27"
+ },
+ {
+  "book": "69935b6f2c63944063134103",
+  "prev": 7,
+  "next": 8,
+  "checked": 7,
+  "nb": 8,
+  "page_id": "69935b6f2c6394406313410a",
+  "lang": "Chinese",
+  "key": "Q28"
+ },
+ {
+  "book": "6990688d249ce014347d6e76",
+  "prev": 68,
+  "next": 69,
+  "checked": 69,
+  "nb": 68,
+  "page_id": "6990688d249ce014347d6ebb",
+  "lang": "Latin",
+  "key": "Q29"
+ },
+ {
+  "book": "699437d76879ff0184cb79f4",
+  "prev": 176,
+  "next": 177,
+  "checked": 176,
+  "nb": 177,
+  "page_id": "699437d76879ff0184cb7aa4",
+  "lang": "Greek",
+  "key": "Q30"
+ },
+ {
+  "book": "69a5ee0bbfd8cafd91e42e34",
+  "prev": 1,
+  "next": 2,
+  "checked": 1,
+  "nb": 2,
+  "page_id": "69a5ee0cbfd8cafd91e42e35",
+  "lang": "Syriac",
+  "control": "made-dup",
+  "key": "Q31"
+ },
+ {
+  "book": "69c1ba978522835be845973b",
+  "prev": 493,
+  "next": 494,
+  "checked": 494,
+  "nb": 493,
+  "page_id": "69c1ba978522835be8459929",
+  "lang": "Hebrew",
+  "key": "Q32"
+ },
+ {
+  "book": "695932b8b91a6184ea943faf",
+  "prev": 302,
+  "next": 303,
+  "checked": 302,
+  "nb": 303,
+  "page_id": "695932b8b91a6184ea9440dd",
+  "lang": "French",
+  "key": "Q33"
+ },
+ {
+  "book": "69af131693903bf8119f36db",
+  "prev": 303,
+  "next": 304,
+  "checked": 303,
+  "nb": 304,
+  "page_id": "69af131693903bf8119f380a",
+  "lang": "Latin",
+  "key": "Q34"
+ }
+]

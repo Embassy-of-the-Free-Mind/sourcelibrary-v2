@@ -309,7 +309,8 @@ if (STAGE === 'read') {
 const REASON = arg('reason');
 if (!REASON) { console.error('--reason is required: say why these pages are being translated through the CLI'); process.exit(2); }
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'))).sort((a, b) => a.page_number - b.page_number);
-const runId = `cli-translate-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+// CLI_RUN_ID (#5026): a repair that applies book by book names ONE run id for a whole wave, so revert-run.mjs undoes it in one call
+const runId = process.env.CLI_RUN_ID || `cli-translate-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
 const tally = { written: 0, skipped: {} };
 const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
 const books = {};

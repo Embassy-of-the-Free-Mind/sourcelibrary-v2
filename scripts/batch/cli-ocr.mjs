@@ -593,7 +593,8 @@ const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
 const CODE_VERSION = await codeVersion();
 // The pid keeps two applies started in the same second (cli-ocr-lane.mjs --concurrency, #7558) on separate run ids.
-const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
+// CLI_RUN_ID (#5026): one run id for a whole repair wave (the OCR re-reads get `<id>-ocr`), so revert-run.mjs undoes it in one call
+const runId = process.env.CLI_RUN_ID ? `${process.env.CLI_RUN_ID}-ocr` : `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
 const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|^#{2,3} Summary\b|overview and summary of the text/im;
 // Distinct words of 5+ letters, folded: enough to tell "the same page read again" from "a different text".
 const longWords = (t) => new Set((String(t).replace(/<[^>]+>/g, ' ').replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u').match(/\p{L}{5,}/gu) || []));
