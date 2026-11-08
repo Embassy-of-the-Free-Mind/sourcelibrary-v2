@@ -2505,6 +2505,26 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null, 
   }
 }
 
+/**
+ * The transport's refusal, kept for the usage log (X-SL-Error-Reason, read by
+ * withApiAuth): its message, the JSON-RPC method(s) asked for, and the protocol
+ * version header. On 2026-11-08, 1 in 10 Claude Code and claude.ai calls got a
+ * 3 ms 400 from here and api_usage kept only the status, so nobody could say why.
+ */
+async function withErrorReason(res: Response, body: unknown, reqHeaders: Headers): Promise<Response> {
+  const text = await res.clone().text().catch(() => '');
+  let message = '';
+  try { message = String((JSON.parse(text) as { error?: { message?: string } }).error?.message ?? ''); } catch { message = text; }
+  const methods = (Array.isArray(body) ? body : [body])
+    .map((m) => (m && typeof m === 'object' ? (m as { method?: string; id?: unknown }).method ?? ('id' in (m as object) ? 'response' : '?') : typeof m))
+    .join(',');
+  const proto = reqHeaders.get('mcp-protocol-version') || '-';
+  const reason = `${message.replace(/\s+/g, ' ').slice(0, 140)} | method=${methods.slice(0, 60)} | proto=${proto.slice(0, 20)}`;
+  const headers = new Headers(res.headers);
+  headers.set('X-SL-Error-Reason', reason.replace(/[^\x20-\x7e]/g, '?'));
+  return new Response(text, { status: res.status, statusText: res.statusText, headers });
+}
+
 export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
   try {
     const body = await req.json();
@@ -2534,7 +2554,8 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
     await server.connect(transport);
     try {
       const res = await transport.handleRequest(fixedReq, { parsedBody: body });
-      if (!initializing || !sessionId || !res.ok) return res;
+      if (!res.ok) return withErrorReason(res, body, req.headers);
+      if (!initializing || !sessionId) return res;
       const headers = new Headers(res.headers);
       headers.set('Mcp-Session-Id', sessionId);
       headers.set('Access-Control-Expose-Headers', 'Mcp-Session-Id');

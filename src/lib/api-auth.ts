@@ -375,7 +375,9 @@ export function withApiAuth<C = unknown>(
       pagesServed,
       wouldBlock: !decision.allowed,
       blocked: false,
-      reason: decision.reason,
+      // A handler can say why it failed (X-SL-Error-Reason), so an error row is not
+      // a bare status: the MCP route's 400s were 1 in 10 Claude calls with no reason kept.
+      reason: decision.reason ?? (response.status >= 400 ? response.headers.get('x-sl-error-reason') ?? undefined : undefined),
     });
 
     return response;
