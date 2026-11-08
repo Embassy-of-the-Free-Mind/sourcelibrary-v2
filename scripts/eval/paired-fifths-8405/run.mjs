@@ -293,6 +293,7 @@ async function judge() {
       if (calls >= max) { stop = `call budget (${CALL_BUDGET} for the study)`; break; }
       const why = await paceCheck(limits, state);
       if (why) { stop = `pace: ${why}`; break; }
+      if (stop || i >= todo.length) break; // another worker took the last job while this one waited on the pace check
       const j = todo[i++]; calls++;
       let r;
       try { r = await judgeOne(j); } catch (e) { r = { verdict: null, cls: 'error', err: e.message }; }
