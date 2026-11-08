@@ -73,7 +73,7 @@ export default function SubjectsBrowser({ groups, variant }: { groups: Group[]; 
         </ul>
       )}
       {!t && variant !== 'cards' && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 mt-8">
           {groups.map((g) => (
             <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
               <span className="block text-[15px] text-primary leading-snug group-hover:underline underline-offset-2">{g.label}</span>
