@@ -39,6 +39,10 @@ dst="${1:-/root/bin/claude-job.sh}"; bin=$(dirname "$dst"); rc=0
 install_one claude-job.sh "$dst" || rc=1
 install_one box-rpc.sh "$bin/box-rpc.sh" || rc=1
 install_one box.sh "$bin/box.sh" || rc=1
+# Remote Control launchers (2026-11-09): the always-on server (claude-rc.sh, started by cron where wanted)
+# and phone-visible agent jobs (claude-rc-job.sh). Installing them starts nothing.
+install_one claude-rc.sh "$bin/claude-rc.sh" || rc=1
+install_one claude-rc-job.sh "$bin/claude-rc-job.sh" || rc=1
 # The Claude pace guard (#7869), only where it is already the box's `claude` (claude-pace-guard.sh --install made
 # the link): it was hand-copied once on 2026-10-27 and never updated, so a fix to it reached no box.
 [ "$(readlink /usr/local/bin/claude 2>/dev/null)" = /root/claude-pace/claude-pace-guard.sh ] && \

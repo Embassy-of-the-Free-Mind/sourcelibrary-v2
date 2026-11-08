@@ -104,3 +104,6 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # Display-mark backfill (#4406) moved to cloudlayer 2026-11-07. Do not start a watchdog here: two writers on one shard
 # interleave its ledger. The relay recreates the finished-/stopped- files run-chain.sh waits on (#7708).
 */10 * * * * f=/root/sourcelibrary/scripts/workers/backfill-marks-relay.sh; [ -x $f ] && $f fetch >> /var/log/sourcelibrary/backfill-marks-relay.log 2>&1
+# Claude Code Remote Control server (sessions show in the Claude app as gex45, account dereklomas@gmail.com), 2026-11-09
+@reboot sleep 60 && /root/bin/claude-rc.sh start >> /var/log/claude-rc.log 2>&1
+*/10 * * * * /root/bin/claude-rc.sh ensure >> /var/log/claude-rc.log 2>&1
