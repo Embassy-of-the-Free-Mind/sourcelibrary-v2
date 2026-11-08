@@ -206,18 +206,22 @@ export const MARKED_PAIR_BALANCE = Object.freeze({ min: 0.6, max: 1.67 });
 /**
  * A marked block reply split into one text per page for the CLI lane: each page's span, followed by the block's
  * <summary> and <keywords> (one pair for the block, so both pages carry it). `ok: false` when the parse does not give
- * every page its own span, a span runs on over a missing page, or (with `sources`, the pages' OCR) a two-page split
- * is out of MARKED_PAIR_BALANCE: the caller then reads the pages one by one.
+ * every page its own span, a span runs on over a missing page, or (with `sources`, the pages' OCR) any page turn of
+ * the split is out of MARKED_PAIR_BALANCE: the caller then reads the pages one by one.
  */
 export function splitMarkedReply(reply, pageNumbers, { sources = null } = {}) {
   const pr = parseFolioMarkedText(reply, pageNumbers);
   if (pr.reading === 'rejected' || pr.missing.length || pr.overrun.length || pr.pages.some((p) => !p.span)) {
     return { ok: false, reading: pr.reading, why: pr.rejected || `missing ${pr.missing.join(',') || '-'}, overrun ${pr.overrun.join(',') || '-'}` };
   }
-  if (sources && sources.length === 2 && pr.pages.length === 2) {
+  // Every page turn of the block is held to the bound, page against the page after it (#8399: blocks of 4 on the
+  // per-call rows; a two-page block is the #7118 check unchanged).
+  if (sources && sources.length === pr.pages.length && pr.pages.length >= 2) {
     const per = pr.pages.map((p, k) => translationProse(p.span).length / Math.max(1, sourceProse(sources[k]).length));
-    const balance = per[0] / Math.max(1e-9, per[1]);
-    if (!(balance >= MARKED_PAIR_BALANCE.min && balance <= MARKED_PAIR_BALANCE.max)) return { ok: false, reading: pr.reading, why: `unbalanced split (${balance.toFixed(2)}): a marker is likely misplaced` };
+    for (let k = 0; k + 1 < per.length; k++) {
+      const balance = per[k] / Math.max(1e-9, per[k + 1]);
+      if (!(balance >= MARKED_PAIR_BALANCE.min && balance <= MARKED_PAIR_BALANCE.max)) return { ok: false, reading: pr.reading, why: `unbalanced split (${balance.toFixed(2)} at ${pr.pages[k].page_number}|${pr.pages[k + 1].page_number}): a marker is likely misplaced` };
+    }
   }
   const blocks = (String(reply || '').match(/<(summary|keywords)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi) || []).join('\n');
   return { ok: true, reading: pr.reading, texts: pr.pages.map((p) => (blocks ? `${p.span}\n\n${blocks}` : p.span)) };

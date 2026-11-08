@@ -1,0 +1,45 @@
+{
+ "at": "2026-11-08T04:17:05.549Z",
+ "seams5103": 60,
+ "leak": 30,
+ "leakFrameBooks": 10662,
+ "leakScannedBooks": 97,
+ "leakPairs": 19983,
+ "leakFlags": 140,
+ "books": 39,
+ "languages": {
+  "Latin": 74,
+  "German": 16
+ },
+ "seamPos": {
+  "0": 3,
+  "1": 85,
+  "2": 2
+ },
+ "skipped": [
+  {
+   "origin": "5103",
+   "book": "69b6304e1c1c21a3738009c8",
+   "N": 51,
+   "why": "no 4-page prose block"
+  },
+  {
+   "origin": "5103",
+   "book": "69b630c31c1c21a373804063",
+   "N": 83,
+   "why": "no 4-page prose block"
+  },
+  {
+   "origin": "5103",
+   "book": "69b631fb1c1c21a37380c13a",
+   "N": 30,
+   "why": "no 4-page prose block"
+  },
+  {
+   "origin": "leak",
+   "book": "6970e36e9b09d309d780a292",
+   "N": 53,
+   "why": "no 4-page prose block"
+  }
+ ]
+}
