@@ -8,7 +8,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
-import { LikeTargetType } from '@/lib/types';
+import { LikeTargetType, isLikeTargetType } from '@/lib/types';
+import { posts, postHref } from '@/app/articles/posts';
 import { buildCropUrl } from '@/lib/social-image-selector';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
@@ -19,7 +20,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
  *
  * Query params:
  *   - visitor_id: string (required)
- *   - type: 'image' | 'page' | 'book' | 'collection' (required)
+ *   - type: 'image' | 'page' | 'book' | 'collection' | 'article' (required)
  */
 export async function GET(request: NextRequest) {
   try {
@@ -39,8 +40,8 @@ export async function GET(request: NextRequest) {
     if (!visitorId) {
       return NextResponse.json({ error: 'visitor_id is required' }, { status: 400 });
     }
-    if (!targetType || !['image', 'page', 'book', 'collection'].includes(targetType)) {
-      return NextResponse.json({ error: 'type is required (image, page, book, or collection)' }, { status: 400 });
+    if (!isLikeTargetType(targetType)) {
+      return NextResponse.json({ error: 'type is required (image, page, book, collection, or article)' }, { status: 400 });
     }
 
     const limit = Math.min(parseInt(searchParams.get('limit') || '1000'), 5000);
@@ -68,6 +69,21 @@ export async function GET(request: NextRequest) {
     ];
     const counts = await db.collection('likes').aggregate(countPipeline).toArray();
     const countMap = new Map(counts.map(c => [c._id, c.count]));
+
+    if (targetType === 'article') {
+      // Saved articles, most recently saved first. Liked by slug; title and
+      // image come from the article list in code. No like count: an article
+      // like is private, a bookmark rather than a vote.
+      const bySlug = new Map(posts.map(p => [p.slug, p]));
+      const items = targetIds
+        .map(slug => {
+          const p = bySlug.get(slug);
+          if (!p) return null;
+          return { slug, title: p.title, summary: p.summary, image: p.image, href: postHref(p) };
+        })
+        .filter(Boolean);
+      return NextResponse.json({ items, total: items.length });
+    }
 
     if (targetType === 'collection') {
       // Saved collections, most recently saved first. Liked by slug.

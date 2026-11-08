@@ -156,6 +156,7 @@ export async function POST(request: NextRequest) {
         : source === 'reader_gate_magic' ? 'reader_gate_magic'
         : source === 'ficino_society' ? 'ficino_society'
         : source === 'support' ? 'support'
+        : source === 'article' ? 'article'
         : 'beta_landing',
       subscribed_at: new Date(),
       notified: false,
