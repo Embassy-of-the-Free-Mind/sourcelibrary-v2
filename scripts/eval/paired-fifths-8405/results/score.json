@@ -1,0 +1,61 @@
+{
+ "generated_at": "2026-11-08T08:46:04.934Z",
+ "issue": 8405,
+ "prereg": "scripts/eval/experiments/2026-11-08-paired-fifths-prereg-8405.md",
+ "controls": {
+  "carry_over": {
+   "judged": 10,
+   "caught": 10
+  },
+  "wrong_leaf": {
+   "judged": 10,
+   "caught": 10
+  },
+  "valid": true,
+  "rule": ">= 8 judged and >= 0.80 caught in each kind"
+ },
+ "books_complete": 159,
+ "books_framed": 160,
+ "anchor_bad": 66,
+ "paired_bad": 83,
+ "flips_good_to_bad": 24,
+ "flips_by_join_only": 18,
+ "flips_by_partner_pages_only": 4,
+ "flips_bad_to_good": 6,
+ "flip_share": 0.151,
+ "breaks": {
+  "random": 759,
+  "failed": 72,
+  "by_kind": {
+   "call_boundary": {
+    "breaks": 7,
+    "failed": 1
+   },
+   "in_call": {
+    "breaks": 0,
+    "failed": 0
+   },
+   "unknown": {
+    "breaks": 752,
+    "failed": 71
+   }
+  },
+  "direction_of_failed": {
+   "A": 26,
+   "B": 31,
+   "both": 15
+  }
+ },
+ "reliability": {
+  "split_half_r_anchor_vs_partner": 0.681,
+  "spearman_brown_10_pages": 0.811,
+  "books": 158
+ },
+ "census": {
+  "flagged_in_frame": 0,
+  "judged": 0,
+  "judged_defect": 0,
+  "precision": null
+ },
+ "decision": "pairs for the standing Opus QA"
+}
