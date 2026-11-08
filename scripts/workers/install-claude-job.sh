@@ -43,6 +43,8 @@ install_one box.sh "$bin/box.sh" || rc=1
 # and phone-visible agent jobs (claude-rc-job.sh). Installing them starts nothing.
 install_one claude-rc.sh "$bin/claude-rc.sh" || rc=1
 install_one claude-rc-job.sh "$bin/claude-rc-job.sh" || rc=1
+# The phone-session workspace's instructions (claude-rc.sh runs its servers in /root/work). Not a script, so plain copy.
+mkdir -p /root/work && { cmp -s "$here/claude-rc-workspace.md" /root/work/CLAUDE.md || cp "$here/claude-rc-workspace.md" /root/work/CLAUDE.md; }
 # The Claude pace guard (#7869), only where it is already the box's `claude` (claude-pace-guard.sh --install made
 # the link): it was hand-copied once on 2026-10-27 and never updated, so a fix to it reached no box.
 [ "$(readlink /usr/local/bin/claude 2>/dev/null)" = /root/claude-pace/claude-pace-guard.sh ] && \
