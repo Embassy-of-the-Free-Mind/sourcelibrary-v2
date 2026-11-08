@@ -15,10 +15,14 @@ import { withArticleMeta } from '@/lib/article-metadata';
 //
 // 2026-11-09 (Derek's feedback: more references, linked to library pages): every Kircher book named
 // in the opening is linked; Horapollo (Aldine 1505, Latin 1595), Valeriano, Ficino's Hermes and
-// Champollion's Lettre are linked to the library's copies. The Iamblichus quote (De mysteriis, Ficino's
+// Champollion's Lettre are linked to the library's copies. Claims link to the page that makes them:
+// Horapollo's hawk = God (1597 Greek-Latin, scan 22) and serpent biting its tail = the world (Trebazio's
+// Latin in the 1534 Nifo volume, scan 145; the text says "world", so the article now does too); the
+// Pamphilian "simple meaning" phrase (scan 473); Joseph's Egyptian name (Prodromus scan 135); the
+// dedication and the emperor's funding (OA I scans 14, 19); de Four's request (Sphinx scan 9). The Iamblichus quote (De mysteriis, Ficino's
 // Latin, Lyon 1607, scan 153 / p. 145) was compared with the stored translation and its page image
 // opened on 2026-11-09; the bracketed editorial note on "rationes" is left out, and an ellipsis marks
-// the omitted middle. Horapollo is linked, not quoted: its Latin copies have no English yet.
+// the omitted middle.
 //
 // Outside claims are cited in the text: Erman (1917) and Bourgois (2024) for the Domitian
 // inscription; Budge (1910); Iversen (1961); Champollion (1822, 1824); Godwin (1979, 2009);
@@ -128,13 +132,20 @@ export default function KircherHieroglyphsPage() {
           <p className={P}>
             Kircher did not come to the hieroglyphs cold. A long tradition, from the Greek writers of late
             antiquity to the Renaissance, held that the Egyptian signs were not writing in the ordinary sense. The
-            fifth-century <em>Hieroglyphica</em> of Horapollo explained them one by one as emblems: a hawk for
-            the divine, a snake biting its tail for the universe. Its Greek text was{' '}
+            fifth-century <em>Hieroglyphica</em> of Horapollo explained them one by one as emblems:{' '}
+            <Link href="/book/horou-apollonos-neiloou-hieroglyphika-eklekta-hori-horapollo?page=22">
+              a hawk for God
+            </Link>
+            ,{' '}
+            <Link href="/book/on-auguries-and-hieroglyphics-nifo?page=145">
+              a serpent devouring its own tail for the world
+            </Link>
+            . Its Greek text was{' '}
             <Link href="/book/aesop-fabulae-bundled-volume-aldine-with-horapollo-horapollo">
               first printed by Aldus Manutius in Venice in 1505
             </Link>
-            , bound with Aesop, and a{' '}
-            <Link href="/book/hieroglyphica-horapollinis-horapollo">Latin version</Link> went through many
+            , bound with Aesop, and Bernardino Trebazio&rsquo;s{' '}
+            <Link href="/book/on-auguries-and-hieroglyphics-nifo?page=144">Latin version</Link> went through many
             editions; Pierio Valeriano built on it a{' '}
             <Link href="/book/valeriano-hieroglyphica-1575-valeriano">
               <em>Hieroglyphica</em>
@@ -235,7 +246,9 @@ export default function KircherHieroglyphsPage() {
             obelisks, on Egyptian religion, on Hermes, on the symbolism of animals and plants, on Pythagorean
             number. Only in the fifth book does he reach the stone itself. He divides each face into six parts, which
             he calls schematisms, and each of those into smaller groups of signs. For every part he gives
-            &ldquo;the simple meaning of the entire ideal concept&rdquo;, and then a commentary to back it up from
+            <Link href={`/book/${PAMPHILIUS}?page=473`}>
+              &ldquo;the simple meaning of the entire ideal concept&rdquo;
+            </Link>, and then a commentary to back it up from
             Greek, Hebrew, Arabic and Chaldean authorities. Before he begins, he promises the reader he will be
             careful:
           </p>
@@ -314,7 +327,9 @@ export default function KircherHieroglyphsPage() {
           <p className={P}>
             The Pamphilian book was the trial run. The full answer came in{' '}
             <em>Oedipus Aegyptiacus</em>, &ldquo;the Egyptian Oedipus&rdquo;, three volumes in four parts
-            published in Rome from 1652 to 1654 with money from the emperor Ferdinand III, to whom it is dedicated. The title
+            published in Rome from 1652 to 1654{' '}
+            <Link href={`/book/${OA1}?page=19`}>with money from the emperor Ferdinand III</Link>, to whom{' '}
+            <Link href={`/book/${OA1}?page=14`}>it is dedicated</Link>. The title
             casts Kircher as the hero who answers the riddle of the sphinx.
           </p>
           <p className={P}>
@@ -473,7 +488,8 @@ export default function KircherHieroglyphsPage() {
           </SourceQuote>
           <p className={P}>
             His answer was that Coptic was that language, in its late form. He tested it by taking Egyptian words
-            preserved in the Bible and in Greek writers, such as the name Pharaoh gave Joseph in Genesis 41, and
+            preserved in the Bible and in Greek writers, such as{' '}
+            <Link href={`/book/${PRODROMUS}?page=135`}>the name Pharaoh gave Joseph in Genesis 41</Link>, and
             finding them in Coptic. That answer was right. In 1643 he followed it with{' '}
             <Link href="/book/lingua-aegyptiaca-restituta-kircher">
               <em>Lingua Aegyptiaca restituta</em>
@@ -494,8 +510,9 @@ export default function KircherHieroglyphsPage() {
         <section className="mb-14">
           <h2 className={H2}>The last book: a mummy from Lyon</h2>
           <p className={P}>
-            Kircher kept at it into old age. In 1673 a gentleman of Lyon, Monsieur de Four, asked him to decipher a mummy
-            lately brought from Egypt to France. The result was{' '}
+            Kircher kept at it into old age. In 1673 a gentleman of Lyon, Monsieur de Four,{' '}
+            <Link href={`/book/${SPHINX}?page=9`}>asked him to decipher a mummy</Link> lately brought from Egypt to
+            France. The result was{' '}
             <Link href="/book/sphinx-mystagoga-kircher">
               <em>Sphinx mystagoga</em>
             </Link>{' '}
