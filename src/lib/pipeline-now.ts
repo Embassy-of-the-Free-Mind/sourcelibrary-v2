@@ -27,6 +27,9 @@ export interface CronLine {
   stage: Stage; schedule: string; one_shot: boolean; disabled: boolean; disabled_tag: string | null;
   script: string | null; mode: string | null; flags: string[]; env: string[];
   log: string | null; log_at: string | null; log_last: string | null; comment: string;
+  /** The cron-row registry verdict (scripts/lib/lanes.mjs CRON_ROWS, #8283); absent on a box running an older pusher. */
+  registry?: { id: string; status: string; issue: number | null; route: string | null; review_by: string | null; open: string | null } | null;
+  red?: { flag: string; why: string }[];
 }
 export interface AgyPool { pool: string; busy: boolean; weekly: number | null; weekly_reset: string | null; five_hour: number | null; five_hour_reset: string | null }
 export interface LaneState {
@@ -102,6 +105,11 @@ export function linesByStage(lines: CronLine[]): { stage: Stage; lines: CronLine
     stage,
     lines: lines.filter(l => l.stage === stage).sort((a, b) => Number(a.disabled || a.one_shot) - Number(b.disabled || b.one_shot)),
   })).filter(g => g.lines.length);
+}
+
+/** Every red cron line across the boxes (#8283), boxes in page order. */
+export function redLines(boxes: PipelineNow['boxes']): { box: string; line: CronLine }[] {
+  return boxes.flatMap(({ box, doc }) => (doc?.lines ?? []).filter(l => l.red?.length).map(line => ({ box, line })));
 }
 
 /** Pages per lane × model over the window: total and one count per UTC day (oldest first; the last day is partial). */
