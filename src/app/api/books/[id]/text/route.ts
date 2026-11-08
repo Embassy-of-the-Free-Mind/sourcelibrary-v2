@@ -5,7 +5,8 @@ import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
 import { logBotRead } from '@/lib/bot-reads';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
-import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { withApiAuth, isSiteBrowserRequest, type ApiIdentity } from '@/lib/api-auth';
+import { inProcessCaller } from '@/lib/inprocess-caller';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
 import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
@@ -116,6 +117,27 @@ export const GET = withApiAuth(async (
 
     if (!['ocr', 'translation', 'both'].includes(content)) {
       return NextResponse.json({ error: 'content must be ocr, translation, or both' }, { status: 400 });
+    }
+
+    // Whole-book text needs an identity (#8235, Derek 2026-11-08): a free key or a
+    // signed-in session, both of which carry an email and the terms. Search, quotes
+    // and single pages stay open to anyone. Exempt: the site's own pages (the
+    // compare view fetches ranges from the browser), our cron, verified crawlers.
+    // The MCP connector's get_book_text runs this handler in-process (#4307) and
+    // is exempt by that marker, which no client can forge: a claude.ai connector
+    // cannot send a key, so it keeps its own page budget in src/app/api/mcp/route.ts.
+    if (identity.kind === 'anon' && !inProcessCaller(request) && !hasCronAuth(request) && !isSiteBrowserRequest(request)) {
+      return NextResponse.json(
+        {
+          error: 'key_required',
+          message: 'Whole-book text needs a free API key (an email and a minute) or a signed-in session. '
+            + 'Get a key at https://sourcelibrary.org/developers#get-key and send it as "Authorization: Bearer sl_data_...". '
+            + `Search, quotes and single pages need no key, and the book reads free at https://sourcelibrary.org/book/${encodeURIComponent(bookId)}.`,
+          get_key: 'https://sourcelibrary.org/developers#get-key',
+          terms_url: 'https://sourcelibrary.org/terms#api-terms',
+        },
+        { status: 401, headers: { 'WWW-Authenticate': 'Bearer realm="sourcelibrary.org", get_key="https://sourcelibrary.org/developers#get-key"' } },
+      );
     }
 
     // Bulk-page budget: defends the paid-tier business model. Key holders pass
