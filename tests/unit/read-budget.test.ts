@@ -44,13 +44,19 @@ describe('checkReadBudget', () => {
     expect((await checkReadBudget(req()))?.overBudget).toBe(true);
   });
 
-  it('never caps a signed-in reader, and still meters them', async () => {
+  it('caps a signed-in reader past the session budget, and still meters them (Derek, 2026-11-08)', async () => {
     state.allowed = false;
     state.identity = { kind: 'session', userId: 'u1' };
     const meter = await checkReadBudget(req());
-    expect(meter?.overBudget).toBe(false);
+    expect(meter?.overBudget).toBe(true);
     chargeRead(meter, 60, 5);
     expect(state.logged).toHaveLength(1);
+  });
+
+  it('lets a signed-in reader under the budget read in full', async () => {
+    state.allowed = true;
+    state.identity = { kind: 'session', userId: 'u1' };
+    expect((await checkReadBudget(req()))?.overBudget).toBe(false);
   });
 
   it('lets the reader through when the check fails', async () => {
