@@ -9,7 +9,7 @@
  * offleaf-fix-5309 — put each stranded IA page's OWN text back beside its (already right) image (#5309).
  *
  *   node --env-file=.env.production.local scripts/maintenance/offleaf-fix-5309.mjs plan --diagnose F --out DIR
- *   … run --out DIR --diagnose F --wave NAME --max-pages N [--max-book-pages N] [--concurrency 3] [--apply] [--weekly-end 0.25]
+ *   … run --out DIR --diagnose F --wave NAME --max-pages N [--max-book-pages N] [--screen F] [--concurrency 3] [--apply] [--weekly-end 0.25]
  *   … status --out DIR
  *
  * plan   The queue: every page scripts/eval/offleaf-5309/diagnose.mjs lists (the stranded audit's pages; whatever the
@@ -27,6 +27,8 @@
  *           reader-triggered (/api/pages/[id]/modernize), never dispatched.
  *        4. A written page whose English is still the old (wrong-leaf) one — the translation was refused, or the book
  *           is English — has it withheld (`stale_after_reocr`, the old English to page_revisions first).
+ *        With --screen F (scripts/eval/offleaf-5309/judge.mjs screen-merge) only the pages the agy leaf screen, or Opus
+ *        over it, found on another leaf are re-read; the rest are ledgered `screen-own`.
  *        Every page lands in DIR/ledger.jsonl. Undo: scripts/maintenance/revert-run.mjs --run-id offleaf-5309-<wave>-ocr
  *        (and -tr). A re-run skips books already in the ledger for any wave.
  */
@@ -168,8 +170,26 @@ async function runWave() {
   let n = 0;
   // --max-book-pages: leave books bigger than this for a later wave (a top-up for the spot check's one-page-per-book draw)
   const BIG = Number(arg('max-book-pages', 'Infinity'));
-  for (const b of q) { if (done.has(b.book_id) || b.hold || b.pages.length > BIG) continue; if (n + b.pages.length > MAX && take.length) continue; take.push(b); n += b.pages.length; if (n >= MAX) break; }
-  log(`wave ${wave}: ${n} pages in ${take.length} books${has('apply') ? '' : ' (DRY RUN)'}`);
+  // --screen F: judge.mjs screen-merge's decisions. Only books screened whole are taken, and only their off-leaf pages
+  // re-read; a page the screen found on its own leaf is ledgered `screen-own` and left as it is.
+  const screen = arg('screen') ? new Map(readJsonl(arg('screen')).map((r) => [r.page_id, r])) : null;
+  const screenOwn = [];
+  for (const b0 of q) {
+    if (done.has(b0.book_id) || b0.hold || b0.pages.length > BIG) continue;
+    let b = b0;
+    if (screen) {
+      if (!b0.pages.every((p) => screen.get(p.page_id)?.off != null)) continue;
+      const own = b0.pages.filter((p) => !screen.get(p.page_id).off);
+      if (own.length) screenOwn.push({ b: b0, own });
+      b = { ...b0, pages: b0.pages.filter((p) => screen.get(p.page_id).off) };
+      if (!b.pages.length) continue;
+    }
+    if (n + b.pages.length > MAX && take.length) continue; take.push(b); n += b.pages.length; if (n >= MAX) break;
+  }
+  const taken = new Set(take.map((b) => b.book_id));
+  const ownRows = screenOwn.filter((x) => taken.has(x.b.book_id) || x.own.length === x.b.pages.length);
+  log(`wave ${wave}: ${n} pages in ${take.length} books${screen ? `; ${ownRows.reduce((s, x) => s + x.own.length, 0)} pages left as screened own-leaf` : ''}${has('apply') ? '' : ' (DRY RUN)'}`);
+  if (has('apply')) for (const { b, own } of ownRows) for (const p of own) fs.appendFileSync(F('ledger.jsonl'), JSON.stringify({ wave, book_id: b.book_id, language: b.language, english: b.english, ...p, ocr_written: false, state: 'screen-own', screen: screen.get(p.page_id), at: new Date().toISOString() }) + '\n');
   await open();
   const conc = Number(arg('concurrency', '3'));
   let stop = null;

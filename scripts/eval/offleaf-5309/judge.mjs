@@ -10,12 +10,15 @@
  *   node --env-file=.env.production.local scripts/eval/offleaf-5309/judge.mjs pre-draw  --diagnose F --out DIR [--seed 5309] [--n 30]
  *   … pre-judge  --out DIR [--concurrency 3]     blind Opus: which leaf of n-3 … n+3 does the stored transcription render?
  *   … pre-score  --out DIR                       precision of "stranded = another leaf", offsets, controls
- *   … post-draw  --ledger F --out DIR [--seed 5310] [--n 30]   one repaired page per book
+ *   … post-draw  --ledger F --out DIR [--wave W] [--seed 5310] [--n 30]   one repaired page per book
  *   … post-judge --out DIR [--judge opus|agy] [--concurrency 3]   the new transcription and English against the image
  *   … post-score --out DIR                       own leaf, usable, defects by kind; agy vs Opus agreement
  *   … screen-draw  --pre-sample F --pre-verdicts F --out DIR   the pre pages + 4 planted controls, reshuffled blind
  *   … screen-judge --out DIR [--model gemini-3.8-flash-medium]  agy: own / prev / next / other, from scans n-1 … n+1
  *   … screen-score --out DIR [--model …]          agreement with Opus (own vs off), false alarms, misses, controls
+ *   … screen-queue --queue F --ledger F --out DIR [--max-pages 2000]   the runner's next books, all pages, for screen-judge
+ *   … screen-confirm-draw --out DIR [--n 30]   DIR/opus/pre-sample.json: every page agy did not call off, + 30 agy-off
+ *   … screen-merge --out DIR                   DIR/screen.jsonl, one off/own decision per page (Opus over agy)
  *   … record     --out DIR --stage pre|post [--apply]   book_checks rows (recordPageVerdicts), Opus verdicts only
  *
  * Controls (judged the same way, not told apart, never recorded): pre — the six #5309 positive-control pages with their
@@ -27,7 +30,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { fetchLeaf, claudeCall } from '../../audit/leaf-shift-confirm-5021.mjs';
-import { agyCall, installToolGate, installNarrowAgent, CLI_SAFE_ARGS, gateReads, gateCalls } from '../../lib/agy-cli.mjs';
+import { agyCall, agyQuota, installToolGate, installNarrowAgent, CLI_SAFE_ARGS, gateReads, gateCalls } from '../../lib/agy-cli.mjs';
 import { wilson } from '../lib/agreement-stats.mjs';
 
 const MODE = process.argv[2];
@@ -161,7 +164,7 @@ function preScore() {
 async function postDraw() {
   const rnd = mulberry32(Number(arg('seed', '5310')));
   const N = Number(arg('n', '30'));
-  const led = readJsonl(arg('ledger')).filter((r) => r.ocr_written);
+  const led = readJsonl(arg('ledger')).filter((r) => r.ocr_written && (!arg('wave') || r.wave === arg('wave')));
   const byBook = new Map();
   for (const r of led) (byBook.get(r.book_id) || byBook.set(r.book_id, []).get(r.book_id)).push(r);
   await open();
@@ -301,6 +304,8 @@ async function screenJudge() {
   const items = JSON.parse(fs.readFileSync(F('screen-sample.json'), 'utf8'));
   const vf = F(`screen-verdicts-${model}.jsonl`);
   const done = new Set(readJsonl(vf).filter((r) => r.answer).map((r) => r.key));
+  const q = agyQuota(process.env.AGY_HOME || '', { ttlMs: 0 });
+  if (!(q?.gemini?.weekly >= Number(arg('weekly-end', '0.25')))) throw new Error(`screen: agy Gemini weekly ${q?.gemini?.weekly} under the floor`);
   await open();
   const titles = new Map();
   let quota = false;
@@ -354,6 +359,70 @@ function screenScore() {
   console.log(JSON.stringify({ ...res, rows: undefined }, null, 1));
 }
 
+// ── the screen in front of the repair (offleaf-fix-5309.mjs run --screen) ──
+// screen-queue: the next books the runner would take (same order and skips), every page with its stored text.
+async function screenQueue() {
+  const q = JSON.parse(fs.readFileSync(arg('queue'), 'utf8'));
+  const done = new Set(readJsonl(arg('ledger')).map((r) => r.book_id));
+  const MAX = Number(arg('max-pages', '2000')), BIG = Number(arg('max-book-pages', 'Infinity'));
+  const take = []; let n = 0;
+  for (const b of q) { if (done.has(b.book_id) || b.hold || b.pages.length > BIG) continue; if (n + b.pages.length > MAX && take.length) continue; take.push(b); n += b.pages.length; if (n >= MAX) break; }
+  await open();
+  const items = [];
+  for (const b of take) {
+    const held = await db.collection('books').findOne({ id: b.book_id }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+    if (held?.pipeline_auto?.hold) continue;
+    const ps = new Map((await db.collection('pages').find({ id: { $in: b.pages.map((p) => p.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data || '']));
+    for (const p of b.pages) items.push({ kind: 'item', book_id: b.book_id, page_id: p.page_id, n: p.n, language: b.language, diag: { verdict: p.verdict }, text: ps.get(p.page_id) ?? '' });
+  }
+  const all = items.map((x, i) => ({ ...x, key: `W${String(i + 1).padStart(4, '0')}` }));
+  fs.writeFileSync(F('screen-sample.json'), JSON.stringify(all));
+  console.log(`${all.length} pages in ${new Set(all.map((x) => x.book_id)).size} books`);
+  await client.close();
+}
+
+// screen-confirm-draw: what Opus reads blind (pre-judge in DIR/opus): every page agy did not call off-leaf, and a sample
+// of agy's off-leaf calls, one page per book (--n 30).
+function screenConfirmDraw() {
+  const model = arg('model', 'gemini-3.8-flash-medium');
+  const rnd = mulberry32(Number(arg('seed', '5312')));
+  const items = JSON.parse(fs.readFileSync(F('screen-sample.json'), 'utf8'));
+  const V = new Map(readJsonl(F(`screen-verdicts-${model}.jsonl`)).filter((r) => r.answer).map((r) => [r.key, r.answer.leaf]));
+  const OFF = new Set(['prev', 'next', 'other']);
+  const disagree = items.filter((x) => !OFF.has(V.get(x.key)));
+  const byBook = new Map();
+  for (const x of shuffle(items.filter((x) => OFF.has(V.get(x.key))), rnd)) if (!byBook.has(x.book_id)) byBook.set(x.book_id, x);
+  const sample = shuffle([...byBook.values()], rnd).slice(0, Number(arg('n', '30')));
+  const all = shuffle([...disagree.map((x) => ({ ...x, why: 'agy-not-off' })), ...sample.map((x) => ({ ...x, why: 'agy-off-sample' }))], rnd)
+    .map((x, i) => ({ ...x, diag: { verdict: `${x.why}:${V.get(x.key) ?? 'unanswered'}` }, screen_key: x.key, key: `O${String(i + 1).padStart(3, '0')}` }));
+  fs.mkdirSync(F('opus'), { recursive: true });
+  fs.writeFileSync(F('opus/pre-sample.json'), JSON.stringify(all, null, 1));
+  console.log(`opus confirms ${all.length}: ${disagree.length} agy-not-off, ${sample.length} sampled agy-off`);
+}
+
+// screen-merge: one decision per page for the runner. Off-leaf = Opus says another leaf when Opus read it, else agy does.
+function screenMerge() {
+  const model = arg('model', 'gemini-3.8-flash-medium');
+  const items = JSON.parse(fs.readFileSync(F('screen-sample.json'), 'utf8'));
+  const V = new Map(readJsonl(F(`screen-verdicts-${model}.jsonl`)).filter((r) => r.answer).map((r) => [r.key, r.answer.leaf]));
+  const conf = fs.existsSync(F('opus/pre-sample.json')) ? JSON.parse(fs.readFileSync(F('opus/pre-sample.json'), 'utf8')) : [];
+  const ov = new Map(readJsonl(F('opus/pre-verdicts.jsonl')).filter((r) => r.answer).map((r) => [r.key, r.answer.renders]));
+  const O = new Map(conf.filter((c) => ov.has(c.key)).map((c) => [c.screen_key, opusLeaf(ov.get(c.key), c.n)]));
+  const OFF = new Set(['prev', 'next', 'other']);
+  const rows = items.map((x) => { const a = V.get(x.key) ?? null, o = O.get(x.key) ?? null; const by = o ? 'opus' : a ? 'agy' : null;
+    return { page_id: x.page_id, book_id: x.book_id, n: x.n, agy: a, opus: o, by, off: by ? OFF.has(o ?? a) : null }; });
+  fs.writeFileSync(F('screen.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const sampled = conf.filter((c) => c.why === 'agy-off-sample' && O.has(c.screen_key));
+  const sOk = sampled.filter((c) => OFF.has(O.get(c.screen_key))).length;
+  const dis = conf.filter((c) => c.why === 'agy-not-off');
+  const res = { pages: rows.length, off: rows.filter((r) => r.off === true).length, own: rows.filter((r) => r.off === false).length, undecided: rows.filter((r) => r.off === null).length,
+    agy: rows.reduce((m, r) => ((m[r.agy] = (m[r.agy] || 0) + 1), m), {}),
+    opus_on_agy_not_off: dis.reduce((m, c) => { const k = `${V.get(c.screen_key) ?? 'unanswered'}→${O.get(c.screen_key) ?? 'unread'}`; m[k] = (m[k] || 0) + 1; return m; }, {}),
+    agy_off_sample: { n: sampled.length, opus_off: sOk, wilson: wilson(sOk, sampled.length) } };
+  fs.writeFileSync(F('screen-merge.json'), JSON.stringify(res, null, 1));
+  console.log(JSON.stringify(res, null, 1));
+}
+
 // ── book_checks rows ──
 async function record() {
   const { recordPageVerdicts, readMethod } = await import('../../lib/book-checks.mjs');
@@ -395,6 +464,6 @@ async function record() {
   await client.close();
 }
 
-const MODES = { 'pre-draw': preDraw, 'pre-judge': preJudge, 'pre-score': preScore, 'post-draw': postDraw, 'post-judge': postJudge, 'post-score': postScore, 'screen-draw': screenDraw, 'screen-judge': screenJudge, 'screen-score': screenScore, record };
+const MODES = { 'pre-draw': preDraw, 'pre-judge': preJudge, 'pre-score': preScore, 'post-draw': postDraw, 'post-judge': postJudge, 'post-score': postScore, 'screen-draw': screenDraw, 'screen-judge': screenJudge, 'screen-score': screenScore, 'screen-queue': screenQueue, 'screen-confirm-draw': screenConfirmDraw, 'screen-merge': screenMerge, record };
 if (!MODES[MODE]) { console.error(`mode: ${Object.keys(MODES).join(' | ')}`); process.exit(2); }
 await MODES[MODE]();

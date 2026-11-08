@@ -1,0 +1,36 @@
+{
+ "pages": 540,
+ "books": 38,
+ "states": {
+  "fixed+translated": 64,
+  "fixed-ocr (English)": 253,
+  "ocr-not-written": 211,
+  "fixed-ocr, english withheld": 12
+ },
+ "waves": {
+  "p1": {
+   "fixed+translated": 50,
+   "fixed-ocr (English)": 249,
+   "ocr-not-written": 192,
+   "fixed-ocr, english withheld": 9
+  },
+  "p1b": {
+   "fixed+translated": 14,
+   "fixed-ocr, english withheld": 3,
+   "ocr-not-written": 19,
+   "fixed-ocr (English)": 4
+  }
+ },
+ "ocr_skips": {
+  "reply wrapper: a second marker inside the block": 34,
+  "stranded gate: read too short to place": 11,
+  "reply wrapper: reply cut before <<<END>>>": 112,
+  "letters outside the book's scripts": 17,
+  "stranded gate: no neighbour places the stored text or the read": 24,
+  "the model never opened the page image (every read_file/view_file denie": 6,
+  "stranded gate: the read is the same leaf as page 53 (N%)": 1,
+  "stranded gate: the read is the same leaf as page 151 (N%)": 1,
+  "stranded gate: the read is the same leaf as page 465 (N%)": 1,
+  "reply wrapper: text outside the markers": 4
+ }
+}

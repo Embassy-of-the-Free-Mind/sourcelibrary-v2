@@ -27,12 +27,16 @@ export const GUARD_CONFIG_REFUSAL = /agy-guard: quota reached \(refused \(config
 // short enough to BE an error message. A transcription is long and can say "429" (a year, a folio): on 2026-10-12
 // one Latin page matched `\b429\b`, was taken for a quota stop 39 times, and held the whole read run for 6.5 h.
 const QUOTA_REPLY_MAX = 400;
+// #5309 (2026-11-08): a short answer is not only an error message. A leaf-identity screen replies in one line of JSON
+// ("Page 429 is numbered 331 …"), matched a bare 429, and locked flash-medium on the box for an hour. In a reply, 429
+// counts only beside error words.
+const QUOTA_IN_REPLY = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b[^\n]{0,80}(?:too many|rate.?limit|error)|(?:too many|rate.?limit|error)[^\n]{0,80}\b429\b/i;
 export function isQuotaError({ out = '', err = '', j = {}, text = '' }) {
   // The envelope's counters are numbers, not errors: a page whose usage.input_tokens was 429 matched `\b429\b` on
   // every retry and stopped its whole read (#6559, 2026-10-18).
   const envelope = j && Object.keys(j).length ? JSON.stringify({ ...j, response: undefined, usage: undefined, duration_seconds: undefined, num_turns: undefined, conversation_id: undefined }) : out;
   if (QUOTA.test(err) || QUOTA.test(envelope)) return true;
-  return text.length > 0 && text.length <= QUOTA_REPLY_MAX && QUOTA.test(text);
+  return text.length > 0 && text.length <= QUOTA_REPLY_MAX && QUOTA_IN_REPLY.test(text);
 }
 // #6523: 300 s, not 120: at high thinking 3.8 Flash takes 70–240 s on a dense page, and at the limit agy returns a cut reply.
 export const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '300s', '--output-format', 'json'];
