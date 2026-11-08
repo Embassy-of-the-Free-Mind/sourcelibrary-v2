@@ -51,6 +51,9 @@ const EDGE = 1500;
 export const tail = (t) => t.length > EDGE ? '…' + t.slice(-EDGE) : t;
 export const head = (t) => t.length > EDGE ? t.slice(0, EDGE) + '…' : t;
 /** The detector's own normalisation (translation-page-boundaries normTr). */
+/** OCR folded for a source-repeat check: no tags, no marks, long s as s, u/v and i/j merged, words of 3+ letters. */
+export const foldOcrWords = (t) => String(t || '').replace(/<[^>]*>/g, ' ').normalize('NFD').replace(/\p{M}/gu, '').replace(/ſ/g, 's')
+  .toLowerCase().replace(/[^a-z\s]/g, ' ').replace(/v/g, 'u').replace(/j/g, 'i').split(/\s+/).filter(w => w.length >= 3);
 export const normTr = (t) => String(t || '')
   .replace(/<(meta|summary|keywords|vocab|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
   .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -405,6 +408,21 @@ export function leaks(out, { write = true } = {}) {
     }
     rep[arm] = { pairs, leak, sourceRepeat };
   }
+  // Amendment 2 (post hoc, after the flags were read): the detector's source check compares raw OCR, so a source repeat
+  // spelled with long s, abbreviation marks or another edition's orthography is missed. Every flag is classed, the same
+  // way for every arm: 'source' when the two pages' FOLDED OCR shares >= 10 word 4-grams and >= 10% of the smaller
+  // page's; 'stored_left' on a block-start join (left side = the stored English, which no arm wrote) that an arm which
+  // never saw the stored English (B4, Bb, C) also flags, because such an arm cannot have copied it; else 'translation'.
+  const grams = (t) => { const w = foldOcrWords(t), g = new Set(); for (let i = 0; i + 4 <= w.length; i++) g.add(w.slice(i, i + 4).join(' ')); return g; };
+  const byRow = new Map(ctx.map(r => [r.id, r]));
+  const noPrev = new Set(flags.filter(f => f.boundary && ['B4', 'Bb', 'C'].includes(f.arm)).map(f => `${f.row}|${f.prev}`));
+  for (const f of flags) {
+    const r = byRow.get(f.row), a = grams(r.ocr[f.prev]), b = grams(r.ocr[f.next]);
+    let sh = 0; for (const g of b) if (a.has(g)) sh++;
+    f.src_shared4 = sh;
+    f.class = sh >= 10 && sh >= 0.1 * Math.min(a.size, b.size) ? 'source' : f.boundary && noPrev.has(`${f.row}|${f.prev}`) ? 'stored_left' : 'translation';
+  }
+  for (const arm of Object.keys(rep)) for (const c of ['source', 'stored_left', 'translation']) rep[arm][`class_${c}`] = flags.filter(f => f.arm === arm && f.class === c).length;
   if (write) { fs.writeFileSync(path.join(out, 'leaks.json'), JSON.stringify({ rep, flags }, null, 1)); console.log(JSON.stringify(rep)); }
   return { rep, flags };
 }
@@ -435,8 +453,12 @@ async function packet(out) {
   // A, A2 and Bb on every book's page; B4 (markers at a fixed 4) on the dense stratum's, where the budget changes the blocks
   const armsFor = (r) => (r.stratum === 'dense' ? READ_ARMS : READ_ARMS.filter(a => a !== 'B4'));
   for (const r of picks) { sample.push({ book_id: r.book.id, page_id: r.pageIds[r.seamPos], row: r.id, cell: CELL(r.book.language), stratum: r.stratum }); for (const arm of armsFor(r)) add(r, arm, 'item'); }
-  // controls: per arm, 3 wrong-page items (the arm's text under another book's leaf); 6 repeats of A
-  for (const arm of READ_ARMS) { const ps = picks.filter(r => armsFor(r).includes(arm)); for (let k = 0; k < 3; k++) { const r = ps[(k * 7 + READ_ARMS.indexOf(arm)) % ps.length], o = picks[(picks.indexOf(r) + 1) % picks.length]; add(r, arm, 'wrong_page', o, k); } }
+  // controls: per arm and cell, wrong-page items (the arm's text under another book's leaf: 3 latin, 2 german, as
+  // paired-arm.mjs R3 asks a control per cell); 6 repeats of A
+  for (const arm of READ_ARMS) for (const cell of ['latin-cli-agy4', 'german-cli-agy4']) {
+    const ps = picks.filter(r => armsFor(r).includes(arm) && CELL(r.book.language) === cell);
+    for (let k = 0; k < Math.min(ps.length, cell === 'latin-cli-agy4' ? 3 : 2); k++) { const r = ps[(k * 7 + READ_ARMS.indexOf(arm)) % ps.length], o = picks[(picks.indexOf(r) + 1) % picks.length]; add(r, arm, 'wrong_page', o, k); }
+  }
   for (let k = 0; k < 6; k++) add(picks[(k * 5) % picks.length], 'A', 'repeat', picks[(k * 5) % picks.length], k);
   const order = shuffle(items.map((_, i) => i), makeRng(83993));
   fs.writeFileSync(path.join(dir, 'packet.json'), JSON.stringify({ items: order.map(i => items[i]) }, null, 1));
@@ -533,7 +555,7 @@ async function score(out) {
   // B4 is judged per page on the dense books only (it equals Bb's blocks elsewhere): it is held to A on those books
   const dA = rep.acceptDense, denseFloor = dA?.A?.n ? (dA.A.rate + dA.A2.rate) / 2 - Math.max(Math.abs(dA.A.rate - dA.A2.rate), 200 / dA.A.n) : null;
   const usable = (arm) => arm === 'B4' ? (dA?.B4?.n ? dA.B4.rate >= denseFloor : null) : acc[arm] ? acc[arm].rate >= pageFloor : null;
-  const rule = (a, usableArm = a === 'C' ? 'Bb' : a) => ({ seamAtOrBelowA: rep.lane[a].def100 <= A_, leaksZero: rep.leaks[a].leak === 0, usableNotLower: usable(usableArm),
+  const rule = (a, usableArm = a === 'C' ? 'Bb' : a) => ({ seamAtOrBelowA: rep.lane[a].def100 <= A_, leaksZero: rep.leaks[a].class_translation === 0, leaksZeroRaw: rep.leaks[a].leak === 0, usableNotLower: usable(usableArm),
     get passes() { return this.seamAtOrBelowA && this.leaksZero && this.usableNotLower === true; } });
   const fixRule = (x) => ({ ...x, passes: x.passes });
   rep.rule = { Aavg: A_, pageNoise, pageFloor, Bb: fixRule(rule('Bb')), B4: fixRule(rule('B4')), C: fixRule(rule('C', 'Bb')) };

@@ -131,3 +131,21 @@ fixed 4 if it passes.
 
 **Smallest detectable gap, revised.** n = 120: 10.4–13.2 per 100 joins on one join type. Dense stratum alone (n = 39):
 about 16–22 per 100 — the per-stratum rates are descriptive.
+
+## Amendment 2 (2026-11-08, POST HOC: written after the leak flags were read, before any seam or page verdict was read)
+
+**What was seen.** `leaks` flagged A 10, A2 10, B4 4, Bb 4, C 4 consecutive pairs. Reading the OCR under each flag:
+the same rows flag in every arm because the **source** repeats (a duplicated scan — `69b630dc…` p.25 and p.26 both
+print leaf 13; two editions of one licence on facing pages, `69b21d9e…` p.9/10; a table header reprinted on each page).
+The detector's source-repeat check compares raw OCR, and long s, abbreviation marks and another edition's spelling
+break its 200-character run, so these pass as leaks. One Bb flag (`69b51e72…` p.70|71, the block-start join) is the
+**stored** English of p.70 carrying p.71's text (the Latin of that passage is on p.71 only, at its foot); Bb's p.71 is a
+correct reading of p.71, and Bb never saw the stored English.
+
+**Change.** Every flag, in every arm, is classed by one mechanical rule (`leaks()` in the harness): `source` when the
+two pages' folded OCR (no tags or marks, ſ→s, u/v and i/j merged) shares ≥ 10 word 4-grams and ≥ 10% of the smaller
+page's; `stored_left` on a block-start join that an arm which never saw the stored English (B4, Bb, C) also flags; else
+`translation`. On the 48 distinct flagged pairs the folded share separates cleanly (≥ 12 and ≥ 21% on every pair read as
+a source repeat; ≤ 9 elsewhere, but one 19/321 = 6% pair, classed `translation`). **The rule's "0 leaks" now reads
+`class_translation = 0`**; the raw count is reported beside it (`leaksZeroRaw`). A reader who rejects this amendment
+reads B as failing the leak clause on raw counts, with A failing it too (10 flags).
