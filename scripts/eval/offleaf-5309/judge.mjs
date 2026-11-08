@@ -13,6 +13,9 @@
  *   … post-draw  --ledger F --out DIR [--seed 5310] [--n 30]   one repaired page per book
  *   … post-judge --out DIR [--judge opus|agy] [--concurrency 3]   the new transcription and English against the image
  *   … post-score --out DIR                       own leaf, usable, defects by kind; agy vs Opus agreement
+ *   … screen-draw  --pre-sample F --pre-verdicts F --out DIR   the pre pages + 4 planted controls, reshuffled blind
+ *   … screen-judge --out DIR [--model gemini-3.8-flash-medium]  agy: own / prev / next / other, from scans n-1 … n+1
+ *   … screen-score --out DIR [--model …]          agreement with Opus (own vs off), false alarms, misses, controls
  *   … record     --out DIR --stage pre|post [--apply]   book_checks rows (recordPageVerdicts), Opus verdicts only
  *
  * Controls (judged the same way, not told apart, never recorded): pre — the six #5309 positive-control pages with their
@@ -24,7 +27,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { fetchLeaf, claudeCall } from '../../audit/leaf-shift-confirm-5021.mjs';
-import { agyCall, installToolGate, installNarrowAgent, CLI_SAFE_ARGS, gateReads } from '../../lib/agy-cli.mjs';
+import { agyCall, installToolGate, installNarrowAgent, CLI_SAFE_ARGS, gateReads, gateCalls } from '../../lib/agy-cli.mjs';
 import { wilson } from '../lib/agreement-stats.mjs';
 
 const MODE = process.argv[2];
@@ -256,6 +259,101 @@ function postScore() {
   console.log(JSON.stringify({ ...res, rows: undefined }, null, 1));
 }
 
+// ── screen: can agy tell, from the image, whether a stored transcription is this leaf, the previous, the next or other? ──
+// Blind on the pre sample's stranded pages plus four planted controls (two of the issue's control pages with their own,
+// repaired text; two given the text of the leaf before / after). Reference: the Opus pre verdicts (n−3 … n+3 window).
+export const SCREEN_ANSWERS = ['own', 'prev', 'next', 'other', 'cannot_tell'];
+export function screenPrompt({ title, language, n, win, text, tool = 'read_file (the only tool here)' }) {
+  const L = [`You are checking which printed page a stored machine transcription comes from. Book: "${title}" (language: ${language || 'unknown'}).`,
+    '', `Below are the scans of pages ${win.map((w) => w.n).join(', ')}. Open EVERY image with ${tool} before answering.`, ''];
+  for (const w of win) L.push(`Page ${w.n}: ${w.img ? `image file ${w.img}` : '(no image available)'}`);
+  L.push('', `This is the transcription stored for page ${n}:`, '<<<', clip(strip(text)), '>>>', '',
+    `Question: whose printed text does this transcription render? Compare the opening and closing lines, headings, page numbers, notes and pictures.`,
+    `Answer "own" (page ${n}), "prev" (page ${n - 1}), "next" (page ${n + 1}), "other" (none of these leaves: text from further away or from no page here), or "cannot_tell" (blank, illegible or identical pages).`,
+    'Reply with JSON only, no other text:',
+    '{"leaf": "own" | "prev" | "next" | "other" | "cannot_tell", "evidence": "<a short quote from the transcription and where it is, or why it is on none of the leaves>"}');
+  return L.join('\n');
+}
+const opusLeaf = (renders, n) => { if (!renders) return null; if (renders === 'cannot_tell') return 'cannot_tell'; const m = /^p(-?\d+)$/.exec(renders); if (!m) return 'other'; const d = Number(m[1]) - n; return d === 0 ? 'own' : d === -1 ? 'prev' : d === 1 ? 'next' : 'other'; };
+
+async function screenDraw() {
+  const rnd = mulberry32(Number(arg('seed', '5311')));
+  const pre = JSON.parse(fs.readFileSync(arg('pre-sample'), 'utf8'));
+  const opus = new Map(readJsonl(arg('pre-verdicts')).filter((r) => r.answer).map((r) => [r.key, r.answer.renders]));
+  await open();
+  const items = pre.filter((x) => x.kind === 'item').map((x) => ({ kind: 'item', book_id: x.book_id, page_id: x.page_id, n: x.n, language: x.language, text: x.text, pre_key: x.key, opus: opusLeaf(opus.get(x.key), x.n) }));
+  const ctl = shuffle(pre.filter((x) => x.kind === 'ctl-current'), rnd).slice(0, 4);
+  for (const [i, c] of ctl.entries()) {
+    if (i < 2) { items.push({ kind: 'ctl-own', book_id: c.book_id, page_id: c.page_id, n: c.n, name: c.name, text: c.text, expect: 'own' }); continue; }
+    const dn = i === 2 ? -1 : 1;
+    const nb = await db.collection('pages').findOne({ book_id: c.book_id, page_number: c.n + dn }, { projection: PAGE_PROJ });
+    items.push({ kind: 'ctl-neighbour', book_id: c.book_id, page_id: c.page_id, n: c.n, name: c.name, text: nb?.ocr?.data || '', from_page: c.n + dn, expect: dn < 0 ? 'prev' : 'next' });
+  }
+  const all = shuffle(items, rnd).map((x, i) => ({ ...x, key: `Q${String(i + 1).padStart(2, '0')}` }));
+  fs.writeFileSync(F('screen-sample.json'), JSON.stringify(all, null, 1));
+  console.log(`${all.length} items: ${all.filter((x) => x.kind === 'item').length} pages, controls ${all.filter((x) => x.kind !== 'item').map((x) => `${x.name}:${x.expect}`).join(', ')}`);
+  await client.close();
+}
+
+async function screenJudge() {
+  const model = arg('model', 'gemini-3.8-flash-medium');
+  if (/argon/.test(model)) throw new Error('screen: never Argon (#5309 inbox)');
+  const items = JSON.parse(fs.readFileSync(F('screen-sample.json'), 'utf8'));
+  const vf = F(`screen-verdicts-${model}.jsonl`);
+  const done = new Set(readJsonl(vf).filter((r) => r.answer).map((r) => r.key));
+  await open();
+  const titles = new Map();
+  let quota = false;
+  await pool(items.filter((x) => !done.has(x.key)), Number(arg('concurrency', '3')), async (it) => {
+    if (quota) return;
+    const ws = path.join(OUT, `ws-screen-${model}`, it.key); fs.mkdirSync(ws, { recursive: true });
+    if (!titles.has(it.book_id)) titles.set(it.book_id, await db.collection('books').findOne({ id: it.book_id }, { projection: { title: 1, language: 1 } }));
+    const book = titles.get(it.book_id);
+    const win = [];
+    for (const p of await windowPages(it.book_id, it.n, 1)) { const f = path.join(ws, `page-${p.page_number}.jpg`); const got = await fetchLeaf(p, f); win.push({ n: p.page_number, img: got ? path.basename(f) : null }); }
+    installToolGate(ws, { task: 'ocr' });
+    const res = await agyCall(['-p', screenPrompt({ title: book?.title, language: book?.language, n: it.n, win, text: it.text }), '--model', model, ...installNarrowAgent(ws, 'ocr'), ...CLI_SAFE_ARGS], ws);
+    if (res.cls === 'quota') { quota = true; console.error(`agy quota: ${res.err}`); return; }
+    const opened = gateReads(path.join(ws, '.agents', 'gate.jsonl')).map((p) => path.basename(p));
+    const calls = gateCalls(path.join(ws, '.agents', 'gate.jsonl'));
+    const answer = res.cls ? null : parseJson(res.text);
+    fs.appendFileSync(vf, JSON.stringify({ key: it.key, model, answer, cls: res.cls, usage: res.usage ?? null, secs: res.secs, opened, window: win.filter((w) => w.img).length, tool_calls: calls, raw: answer ? undefined : String(res.text || res.err).slice(-400) }) + '\n');
+    console.log(`${it.key} p.${it.n}: ${answer?.leaf ?? res.cls} (opened ${opened.length}/${win.filter((w) => w.img).length})`);
+  });
+  await client.close();
+}
+
+function screenScore() {
+  const model = arg('model', 'gemini-3.8-flash-medium');
+  const items = JSON.parse(fs.readFileSync(F('screen-sample.json'), 'utf8'));
+  const V = new Map(readJsonl(F(`screen-verdicts-${model}.jsonl`)).filter((r) => r.answer).map((r) => [r.key, r]));
+  const off = (l) => l === 'prev' || l === 'next' || l === 'other';
+  const S = items.filter((x) => x.kind === 'item' && V.has(x.key) && x.opus && x.opus !== 'cannot_tell');
+  const c = { n: S.length, agree_binary: 0, agree_exact: 0, false_alarm: 0, miss: 0, agy_cannot_tell: 0, opus_off: 0, agy_off: 0, all_images_opened: 0, denied_reads: 0 };
+  const rows = [];
+  for (const x of S) {
+    const v = V.get(x.key), a = v.answer.leaf;
+    if (a === 'cannot_tell') c.agy_cannot_tell++;
+    else if (off(a) === off(x.opus)) c.agree_binary++;
+    if (a === x.opus) c.agree_exact++;
+    if (off(a) && !off(x.opus)) c.false_alarm++;
+    if (a === 'own' && off(x.opus)) c.miss++;
+    if (off(x.opus)) c.opus_off++; if (off(a)) c.agy_off++;
+    if ((v.tool_calls || []).some((t) => t.endsWith(':deny'))) c.denied_reads++;
+    if (new Set(v.opened).size >= (v.window ?? 3)) c.all_images_opened++;
+    rows.push({ key: x.key, book_id: x.book_id, n: x.n, language: x.language, opus: x.opus, agy: a, evidence: v.answer.evidence, opened: v.opened, tool_calls: v.tool_calls });
+  }
+  const ctl = items.filter((x) => x.kind !== 'item').map((x) => { const a = V.get(x.key)?.answer?.leaf ?? null; return { key: x.key, name: x.name, kind: x.kind, expect: x.expect, agy: a, caught: a === x.expect }; });
+  const usage = [...V.values()].reduce((m, r) => { for (const k of ['input_tokens', 'output_tokens', 'thinking_tokens', 'cache_read_tokens']) m[k] = (m[k] || 0) + (r.usage?.[k] || 0); return m; }, {});
+  const res = { model, ...c, agreement: c.n ? c.agree_binary / c.n : null, agreement_wilson: wilson(c.agree_binary, c.n), exact: c.n ? c.agree_exact / c.n : null,
+    controls: { n: ctl.length, caught: ctl.filter((x) => x.caught).length, rows: ctl },
+    pass: c.n >= 28 && c.agree_binary / c.n >= 0.9 && ctl.length === 4 && ctl.every((x) => x.caught),
+    unanswered: items.filter((x) => !V.has(x.key)).map((x) => x.key), opus_cannot_tell: items.filter((x) => x.kind === 'item' && x.opus === 'cannot_tell').map((x) => x.key),
+    usage, secs_mean: V.size ? [...V.values()].reduce((s, r) => s + (r.secs || 0), 0) / V.size : null, rows };
+  fs.writeFileSync(F('screen-result.json'), JSON.stringify(res, null, 1));
+  console.log(JSON.stringify({ ...res, rows: undefined }, null, 1));
+}
+
 // ── book_checks rows ──
 async function record() {
   const { recordPageVerdicts, readMethod } = await import('../../lib/book-checks.mjs');
@@ -297,6 +395,6 @@ async function record() {
   await client.close();
 }
 
-const MODES = { 'pre-draw': preDraw, 'pre-judge': preJudge, 'pre-score': preScore, 'post-draw': postDraw, 'post-judge': postJudge, 'post-score': postScore, record };
+const MODES = { 'pre-draw': preDraw, 'pre-judge': preJudge, 'pre-score': preScore, 'post-draw': postDraw, 'post-judge': postJudge, 'post-score': postScore, 'screen-draw': screenDraw, 'screen-judge': screenJudge, 'screen-score': screenScore, record };
 if (!MODES[MODE]) { console.error(`mode: ${Object.keys(MODES).join(' | ')}`); process.exit(2); }
 await MODES[MODE]();
