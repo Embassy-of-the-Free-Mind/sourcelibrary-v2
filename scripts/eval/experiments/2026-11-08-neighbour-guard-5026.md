@@ -13,6 +13,8 @@ feeds: none
 supersedes: []
 superseded_by: null
 issue: [5026, 8399]
+router_evidence: "none — a write-time guard sized on stored pages; no route or model was compared"
+defect_rates: "none — the judge read refusals for neighbour text, not translation fidelity; no route was compared"
 ---
 ## 2026-11-08 · Can a write-time check refuse a page holding its neighbour's English without refusing correct pages? (#5026)
 
