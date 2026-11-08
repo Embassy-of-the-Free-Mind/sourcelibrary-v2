@@ -24,6 +24,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { MongoClient } from 'mongodb';
 import { fetchLeaf, claudeCall } from '../../audit/leaf-shift-confirm-5021.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
@@ -282,7 +283,11 @@ async function postDraw() {
   await open();
   const rnd = mulberry32(Number(arg('seed', 50263)));
   const led = new Map(); for (const r of readJsonl(arg('ledger'))) led.set(r.page_id, r);
-  const done = shuffle([...led.values()].filter((r) => r.state === 'retranslated'), rnd);
+  // The repaired page is N+1 of a "-N1" pair (its duplicate came from page N, before it) or N of a "-N" pair (ident /
+  // forward / unclear: its duplicate came from page N+1, after it). The judge compares it with THAT neighbour. Pages
+  // repaired from both sides are left out of the draw (no single neighbour to ask about).
+  const side = (r) => { const t = (r.src || []).filter((x) => x.startsWith('leak5026-')); const n1 = t.some((x) => x.endsWith('-N1')), n0 = t.some((x) => x.endsWith('-N')); return n1 && n0 ? null : n1 ? -1 : n0 ? 1 : null; };
+  const done = shuffle([...led.values()].filter((r) => r.state === 'retranslated' && side(r)), rnd);
   const byLang = new Map(); for (const r of done) { const a = byLang.get(r.language) || []; a.push(r); byLang.set(r.language, a); }
   const N = Number(arg('n', 30)), used = new Set(), picked = [];
   // round-robin over languages so the 30 spread the way the pilot does, one page per book
@@ -290,29 +295,32 @@ async function postDraw() {
   const quota = new Map(langs.map((l) => [l, Math.max(1, Math.round((byLang.get(l).length / done.length) * N))]));
   for (const l of langs) for (const r of byLang.get(l)) { if (picked.length >= N || (quota.get(l) || 0) <= 0) break; if (used.has(r.book_id)) continue; used.add(r.book_id); picked.push(r); quota.set(l, quota.get(l) - 1); }
   for (const r of done) { if (picked.length >= N) break; if (!used.has(r.book_id)) { used.add(r.book_id); picked.push(r); } }
-  const sample = picked.map((r) => ({ book: r.book_id, prev: r.page - 1, next: r.page, page_id: r.page_id, lang: r.language, stratum: r.stratum || null }));
+  const pair = (r) => { const nb = r.page + side(r); return { book: r.book_id, prev: Math.min(r.page, nb), next: Math.max(r.page, nb), checked: r.page, nb, page_id: r.page_id, lang: r.language }; };
+  const sample = picked.map((r) => pair(r));
   // controls: 2 made duplicates on repaired pages from other books, 2 stored pages from the input's flagged set
   // that are NOT repaired (the leak still there), so the judge must say "duplicated" there
   const rest = done.filter((r) => !used.has(r.book_id)).slice(0, 2);
-  for (const r of rest) sample.push({ book: r.book_id, prev: r.page - 1, next: r.page, page_id: r.page_id, lang: r.language, control: 'made-dup' });
+  for (const r of rest) sample.push({ ...pair(r), control: 'made-dup' });
   const unrepaired = shuffle(readJsonl(arg('in', '/tmp/leak-joined-500.jsonl')).filter((r) => !led.has(r.page_id) && !used.has(r.book) && r.site?.startsWith('scripts/batch/cli-translate') === false && r.len >= 1000), rnd).slice(0, 2);
-  for (const r of unrepaired) sample.push({ book: r.book, prev: r.prev, next: r.next, page_id: r.page_id, lang: r.lang, control: 'stored-leak' });
+  for (const r of unrepaired) sample.push({ book: r.book, prev: r.prev, next: r.next, checked: r.next, nb: r.prev, page_id: r.page_id, lang: r.lang, control: 'stored-leak' });
   const all = shuffle(sample, rnd).map((r, i) => ({ ...r, key: `Q${String(i + 1).padStart(2, '0')}` }));
   fs.writeFileSync(path.join(OUT, 'post-sample.json'), JSON.stringify(all, null, 1));
   console.log(`${all.length} pages`, all.reduce((m, r) => ((m[r.control || r.lang] = (m[r.control || r.lang] || 0) + 1), m), {}));
 }
 
+/** win = [P, Q]: P the neighbour page (before or after), Q the page being checked. */
 export function postPrompt({ title, language, n, win }) {
   const [P, Q] = win;
-  const L = [`You are checking the English translation readers are shown for page ${n} of "${title}" (language: ${language}), against the page itself. The previous page, ${n - 1}, is given too. Open BOTH images with the Read tool; the transcriptions are machine readings that can be wrong (trust the images).`, ''];
-  L.push(`=== Page ${P.n} (the previous page, for reference) ===`, P.img ? `Image file: ${P.img}` : 'Image: (not available)', `Transcription of page ${P.n}:`, '<<<', P.ocr || '(empty)', '>>>', `English shown on page ${P.n}:`, '<<<', P.en || '(none)', '>>>', '');
+  const nb = P.n, where = nb < n ? 'previous' : 'next';
+  const L = [`You are checking the English translation readers are shown for page ${n} of "${title}" (language: ${language}), against the page itself. The ${where} page, ${nb}, is given too. Open BOTH images with the Read tool; the transcriptions are machine readings that can be wrong (trust the images).`, ''];
+  L.push(`=== Page ${P.n} (the ${where} page, for reference) ===`, P.img ? `Image file: ${P.img}` : 'Image: (not available)', `Transcription of page ${P.n}:`, '<<<', P.ocr || '(empty)', '>>>', `English shown on page ${P.n}:`, '<<<', P.en || '(none)', '>>>', '');
   L.push(`=== Page ${Q.n} (the page being checked) ===`, `Image file: ${Q.img}`, `Transcription of page ${Q.n}:`, '<<<', Q.ocr || '(empty)', '>>>', `English shown on page ${Q.n}:`, '<<<', Q.en, '>>>', '');
   L.push('Questions, about the English of page ' + n + ':',
-    `1. dup: does it contain a passage of a paragraph or more that renders text printed on page ${n - 1} and not on page ${n}? "yes" or "no".`,
-    `2. leaf: whose printed text does its body mainly render? "own" (page ${n}), "prev", "mixed", or "other".`,
+    `1. dup: does it contain a passage of a paragraph or more that renders text printed on page ${nb} and not on page ${n}? "yes" or "no".`,
+    `2. leaf: whose printed text does its body mainly render? "own" (page ${n}), "neighbour" (page ${nb}), "mixed", or "other".`,
     `3. usable: would a reader who cannot read the original get a faithful account of what page ${n} says? "yes" or "no". "no" if a major defect: a sentence or more of the page left out, meaning changed so the reader is misled, or text added that is not on the page.`,
     '4. defects: each real error against page ' + n + '\'s printed text: type omitted|mistranslated|invented|other, severity major|minor, a short note. Do not count style.',
-    'Answer with JSON only, no code fence: {"dup":"yes|no","leaf":"own|prev|mixed|other","usable":"yes|no","defects":[{"type":"…","severity":"major|minor","note":"…"}],"evidence":"one phrase of the English and the original words it renders"}');
+    'Answer with JSON only, no code fence: {"dup":"yes|no","leaf":"own|neighbour|mixed|other","usable":"yes|no","defects":[{"type":"…","severity":"major|minor","note":"…"}],"evidence":"one phrase of the English and the original words it renders"}');
   return L.join('\n');
 }
 
@@ -327,11 +335,12 @@ async function postJudge() {
     for (let s = items.shift(); s; s = items.shift()) {
       const dir = path.join(OUT, 'post', s.key);
       fs.mkdirSync(dir, { recursive: true });
-      const win = await loadWindow(s, dir);
-      if (win.length !== 2 || !win[1].img) { fs.appendFileSync(RES, JSON.stringify({ ...s, cls: 'no_image' }) + '\n'); continue; }
+      const got = await loadWindow(s, dir);
+      const chk = s.checked ?? s.next, win = [got.find((w) => w.n !== chk), got.find((w) => w.n === chk)];
+      if (got.length !== 2 || !win[1]?.img) { fs.appendFileSync(RES, JSON.stringify({ ...s, cls: 'no_image' }) + '\n'); continue; }
       if (s.control === 'made-dup') win[1].en = makeDup(win[0].en, win[1].en).slice(0, 6000);
       const book = await db.collection('books').findOne({ id: s.book }, { projection: { title: 1, language: 1 } });
-      const prompt = postPrompt({ title: book?.title, language: book?.language, n: s.next, win });
+      const prompt = postPrompt({ title: book?.title, language: book?.language, n: chk, win });
       fs.writeFileSync(path.join(dir, 'prompt.txt'), prompt);
       const res = await claudeCall(prompt, dir);
       let v = null;
@@ -355,8 +364,72 @@ function postScore() {
     defects: real.reduce((m, r) => { for (const d of r.verdict.defects || []) { const k = `${d.type}/${d.severity}`; m[k] = (m[k] || 0) + 1; } return m; }, {}),
     pass: real.length >= 30 && dupGone === real.length && usable >= 28,
     controls: rs.filter((r) => r.control).map((r) => ({ key: r.key, control: r.control, dup: r.verdict.dup, caught: r.verdict.dup === 'yes' })),
-    fails: real.filter((r) => r.verdict.dup !== 'no' || r.verdict.usable !== 'yes').map((r) => ({ key: r.key, book: r.book, page: r.next, lang: r.lang, dup: r.verdict.dup, leaf: r.verdict.leaf, usable: r.verdict.usable, defects: r.verdict.defects })) };
+    fails: real.filter((r) => r.verdict.dup !== 'no' || r.verdict.usable !== 'yes').map((r) => ({ key: r.key, book: r.book, page: r.checked ?? r.next, nb: r.nb ?? r.prev, lang: r.lang, dup: r.verdict.dup, leaf: r.verdict.leaf, usable: r.verdict.usable, defects: r.verdict.defects })) };
   fs.writeFileSync(path.join(OUT, 'post-score.json'), JSON.stringify(out, null, 1));
+  console.log(JSON.stringify(out, null, 1));
+}
+
+// ── agy judge (Derek 2026-11-08 05:19Z): the SAME sealed prompts Opus answered, to an agy Flash judge ──
+/** --out=DIR (a judged round: pairs/<key>/prompt.txt + images, sample.json) --model=gemini-3.8-flash-medium
+ * [--prefix=pairs --res=verdicts-agy.jsonl --concurrency=3]. Each call is a fresh gated workspace holding the two page
+ * images; the prompt goes in on stdin, word for word, with "Read tool" said as agy's read_file. Resumable. */
+async function agyJudge() {
+  const { agyCall, installToolGate, installNarrowAgent, stdinArgs, stdinMessage, replyEnvelope, isQuotaError } = await import('../../lib/agy-cli.mjs');
+  const model = arg('model', 'gemini-3.8-flash-medium');
+  const prefix = arg('prefix', 'pairs');
+  const RES = path.join(OUT, arg('res', 'verdicts-agy.jsonl'));
+  const sample = JSON.parse(fs.readFileSync(path.join(OUT, arg('sample', 'sample.json')), 'utf8'));
+  const done = new Set(readJsonl(RES).filter((r) => r.verdict).map((r) => r.key));
+  const items = sample.filter((s) => !done.has(s.key) && fs.existsSync(path.join(OUT, prefix, s.key, 'prompt.txt')));
+  console.log(`${items.length} to judge with ${model} (${done.size} done)`);
+  let stop = false;
+  const worker = async () => {
+    for (let s = items.shift(); s && !stop; s = items.shift()) {
+      const src = path.join(OUT, prefix, s.key);
+      const prompt = fs.readFileSync(path.join(src, 'prompt.txt'), 'utf8').replace(/the Read tool/g, 'read_file');
+      let v = null, r = null;
+      for (let i = 0; i < 2 && !v; i++) {
+        const ws = fs.mkdtempSync(path.join(os.tmpdir(), 'agy-leakjudge-'));
+        for (const f of fs.readdirSync(src).filter((f) => f.endsWith('.jpg'))) fs.copyFileSync(path.join(src, f), path.join(ws, f));
+        installToolGate(ws, { task: 'ocr' });
+        const agentArgs = installNarrowAgent(ws, 'ocr');
+        r = await agyCall([...stdinArgs(300), '--model', model, ...agentArgs], ws, { input: stdinMessage(prompt), killAfterMs: 360e3 });
+        fs.rmSync(ws, { recursive: true, force: true });
+        const text = String(replyEnvelope(r.text)?.text ?? replyEnvelope(r.text)?.response ?? r.text ?? '');
+        try { const a = text.indexOf('{'), b = text.lastIndexOf('}'); v = JSON.parse(text.slice(a, b + 1)); } catch { /* unparsed */ }
+        if (!v) r.raw = text.slice(0, 600);
+        if (r.cls === 'quota' || isQuotaError({ out: r.text, err: r.err })) { stop = true; break; }
+      }
+      fs.appendFileSync(RES, JSON.stringify({ ...s, verdict: v, judge: model, cls: r.cls || (v ? null : 'unparsed'), secs: r.secs, ...(v ? {} : { raw: r.raw, err: String(r.err || '').slice(0, 300) }) }) + '\n');
+      console.log(`  ${s.key} ${s.stratum || ''} ${s.lang || s.control}: ${v ? `${v.dup}/${v.fwd}/${v.wrong}` : r.cls || 'unparsed'}`);
+    }
+  };
+  await Promise.all(Array.from({ length: Number(arg('concurrency', 3)) }, worker));
+  if (stop) console.log('quota: stopped; re-run to resume');
+}
+
+/** Agreement of the agy verdicts with Opus's on the same pairs: defect yes/no (dup or fwd), per stratum; agy false
+ * alarms (agy yes, Opus no) and misses (agy no, Opus yes) apart; controls caught. */
+function agyScore() {
+  const last = (f) => { const m = new Map(); for (const r of readJsonl(path.join(OUT, f))) if (r.verdict) m.set(r.key, r); return m; };
+  const O = last(arg('opus', 'verdicts.jsonl')), A = last(arg('res', 'verdicts-agy.jsonl'));
+  const sample = JSON.parse(fs.readFileSync(path.join(OUT, 'sample.json'), 'utf8'));
+  const by = {}, controls = [];
+  for (const s of sample) {
+    const o = O.get(s.key), a = A.get(s.key);
+    if (!a) continue;
+    if (s.control) { controls.push({ key: s.key, control: s.control, agy: defect(a) ? 'dup' : 'clean', caught: defect(a) === (s.control === 'made-dup') }); continue; }
+    if (!o) continue;
+    for (const k of ['all', s.stratum]) {
+      const t = (by[k] ||= { n: 0, agree: 0, false_alarm: 0, miss: 0, same_page: 0 });
+      t.n++;
+      if (defect(a) === defect(o)) { t.agree++; if (defect(o) && wrongPages(a) === wrongPages(o)) t.same_page++; } else if (defect(a)) t.false_alarm++; else t.miss++;
+    }
+  }
+  for (const t of Object.values(by)) { const [lo, hi] = wilson(t.agree, t.n); Object.assign(t, { rate: +(t.agree / t.n).toFixed(2), ci95: [+lo.toFixed(2), +hi.toFixed(2)] }); }
+  const out = { judge: [...A.values()][0]?.judge, unjudged: sample.filter((s) => !A.has(s.key)).map((s) => s.key), by_stratum: by, controls,
+    pass: (by.all?.rate ?? 0) >= 0.9 && controls.length === 4 && controls.every((c) => c.caught) };
+  fs.writeFileSync(path.join(OUT, 'agy-score.json'), JSON.stringify(out, null, 1));
   console.log(JSON.stringify(out, null, 1));
 }
 
@@ -365,7 +438,6 @@ function postScore() {
  * recorded. --apply writes; without it the rows are built and checked only. */
 async function record() {
   await open();
-  const os = await import('node:os');
   const { recordPageVerdicts, readMethod } = await import('../../lib/book-checks.mjs');
   const post = arg('round', 'spot') === 'post';
   const file = path.join(OUT, arg('verdicts', post ? 'post-verdicts.jsonl' : 'verdicts.jsonl'));
@@ -379,7 +451,7 @@ async function record() {
     if (post) {
       const carry = v.dup === 'yes', unusable = v.usable !== 'yes';
       const major = (v.defects || []).filter((d) => d.severity === 'major');
-      const errors = [...(carry ? [{ stage: 'translation', kind: 'carry_over', problem: `the re-translated English still carries page ${r.prev}'s text: ${String(v.evidence || '').slice(0, 300)}` }] : []),
+      const errors = [...(carry ? [{ stage: 'translation', kind: 'carry_over', problem: `the re-translated English still carries page ${r.nb ?? r.prev}'s text: ${String(v.evidence || '').slice(0, 300)}` }] : []),
         ...(unusable ? (major.length ? major : [{ note: 'judged not usable' }]).map((d) => ({ stage: 'translation', problem: `${d.type || 'not usable'}: ${String(d.note || '').slice(0, 300)}` })) : [])];
       const minor = (v.defects || []).length > 0;
       verdicts.push({ page_id: r.page_id, outcome: errors.length ? 'serious' : minor ? 'minor' : 'clean', page_verdict: errors.length ? 'fix' : minor ? 'caveat' : 'show',
@@ -399,7 +471,7 @@ async function record() {
   const res = await recordPageVerdicts(db, { method_id: 'leak-repair-5026', method_version: readMethod('leak-repair-5026').version, run_id: `leak-repair-5026-${path.basename(OUT)}`, checked_at: new Date(),
     selection: 'random', stages: ['translation'], reader: { kind: 'model', model: 'claude -p --model opus', image_opened: true },
     evidence_path: `box:${os.hostname()}:${file}`, reader_warning: false, exposure: 'live',
-    note: post ? 'One page per book from the pages the #5026 leak repair re-translated; judged blind against the page image with the previous page for reference.' : 'Pairs drawn from the #5026 leak detector\'s flagged pairs (seeded, stratified); both pages judged blind against their images.',
+    note: post ? 'One page per book from the pages the #5026 leak repair re-translated; judged blind against the page image with the neighbour its duplicate came from for reference.' : 'Pairs drawn from the #5026 leak detector\'s flagged pairs (seeded, stratified); both pages judged blind against their images.',
     frame: { round: path.basename(OUT), pairs: rs.length }, verdicts }, { apply: has('apply') });
   console.log(`book_checks: ${res.inserted} inserted, ${res.already} already, ${res.rows.length} rows, ${res.failed.length} failed`, res.failed.slice(0, 5));
 }
@@ -413,5 +485,7 @@ try {
   else if (MODE === 'post-draw') await postDraw();
   else if (MODE === 'post-judge') await postJudge();
   else if (MODE === 'post-score') postScore();
+  else if (MODE === 'agy-judge') await agyJudge();
+  else if (MODE === 'agy-score') agyScore();
   else { console.error('usage: pair-judge.mjs draw|judge|score|post-draw|post-judge|post-score --out=DIR'); process.exitCode = 2; }
 } finally { await client?.close(); }
