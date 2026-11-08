@@ -26,7 +26,7 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import sharp from 'sharp';
 
 // ─── Config ─────────────────────────────────────────────────────────────────
@@ -638,7 +638,7 @@ ${spine}
   // Assemble the ZIP.
   const zip = await new Promise((resolvePromise, reject) => {
     const chunks = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
     archive.on('data', c => chunks.push(c));
     archive.on('end', () => resolvePromise(Buffer.concat(chunks)));
     archive.on('error', reject);
