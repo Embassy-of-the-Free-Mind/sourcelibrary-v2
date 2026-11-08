@@ -15,6 +15,7 @@ import { classifyApiError } from '@/lib/mcp-errors';
 import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { getRatingOptions } from '@/lib/review-queue';
+import { SITE_TERMS_VERSION } from '@/lib/api-terms-version';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
@@ -1330,7 +1331,8 @@ async function startReviewShift(args: Record<string, unknown>) {
       'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
       'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
       'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +
-      'to do. Give them volunteer_code so a later chat can pick up where this one stops.',
+      'to do; if they say yes, pass user_agreed_to_terms true on every submit_page_review and propose_correction of the shift ' +
+      '(if they say no, submit nothing). Give them volunteer_code so a later chat can pick up where this one stops.',
   };
 }
 
@@ -1400,6 +1402,10 @@ async function submitPageReview(args: Record<string, unknown>) {
       client: clipStr(args._client_user_agent, 200),
       reader_languages: clipStr(args.reader_languages, 200),
       text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
+      // The volunteer's yes to licensing findings under /terms, asked once before the
+      // first submission (first_time), and which /terms text was current.
+      terms_agreed: typeof args.user_agreed_to_terms === 'boolean' ? args.user_agreed_to_terms : null,
+      terms_version: SITE_TERMS_VERSION,
     },
   });
   return { ok: true, message: 'Review recorded. Thank you. It is evidence about this page; it does not change the page by itself.' };
@@ -1420,6 +1426,7 @@ async function proposeCorrection(args: Record<string, unknown>) {
     client: clipStr(args._client_user_agent, 200),
     note: clipStr(args.note, 2000),
     shift_id: clipStr(args.shift_id, 64),
+    terms_agreed: typeof args.user_agreed_to_terms === 'boolean' ? args.user_agreed_to_terms : undefined,
   }) as Record<string, unknown>;
   return {
     ok: true,
@@ -1843,6 +1850,7 @@ const TOOLS: Tool[] = [
         text_version: { type: 'object', description: 'page.text_version, passed back unchanged.' },
         shift_id: { type: 'string', description: 'shift_id (blind check only)' },
         name: { type: 'string', description: 'How the user wants to be credited (optional).' },
+        user_agreed_to_terms: { type: 'boolean', description: 'book-run and blind: true if the user said yes when you asked, before the first submission, whether their findings may be licensed to Source Library under https://sourcelibrary.org/terms. Pass it on every submission of the shift.' },
       },
       required: ['item_id', 'volunteer_code', 'verdict', 'assistant_model'],
     },
@@ -1877,6 +1885,7 @@ const TOOLS: Tool[] = [
         assistant_model: { type: 'string', description: MODEL_FIELD_HELP },
         shift_id: { type: 'string' },
         name: { type: 'string', description: 'How the user wants to be credited (optional)' },
+        user_agreed_to_terms: { type: 'boolean', description: 'true if the user said yes when you asked whether their findings may be licensed to Source Library under https://sourcelibrary.org/terms. Pass it on every proposal of the shift.' },
       },
       required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by', 'assistant_model'],
     },
