@@ -4,7 +4,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { parseRequestUrl, requestTitle, replyText, judgeRequest, requestedFirst, LANE_HOLDS, BOOK_CEILING, rereadSkip, rereadArgs, rereadRows, stalled, blockers, STALL_DAYS } from '../../scripts/batch/reader-request-lane.mjs';
+import { parseRequestUrl, requestTitle, replyText, judgeRequest, requestedFirst, LANE_HOLDS, BOOK_CEILING, rereadSkip, rereadArgs, rereadRows, rereadTake, REREAD_CHUNK, stalled, blockers, STALL_DAYS } from '../../scripts/batch/reader-request-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { latinFirstSteps, firstPagesFirst } from '../../scripts/batch/cli-ocr-lane.mjs';
@@ -48,6 +48,14 @@ describe('the OCR-first gate sends the book to the re-read (#8395)', () => {
     ].map((r) => JSON.stringify(r)).join('\n') + '\n{half');
     expect(rereadRows(f, 'b1', '2026-11-08T10:00:00.000Z').map((r: { page_id: string }) => r.page_id)).toEqual(['b', 'c']);
     expect(rereadRows(f + '.none', 'b1', '2026-11-08T10:00:00.000Z')).toEqual([]);
+  });
+
+  it('re-reads one chunk a book a run, or every requested page, inside the budget', () => {
+    expect(rereadTake({ left: 200, lite: 185, requested: 0 })).toBe(REREAD_CHUNK);
+    expect(rereadTake({ left: 200, lite: 461, requested: 60 })).toBe(60);
+    expect(rereadTake({ left: 15, lite: 461, requested: 2 })).toBe(15);
+    expect(rereadTake({ left: 200, lite: 7 })).toBe(7);
+    expect(rereadTake({ left: 0, lite: 7 })).toBe(0);
   });
 
   it('reads the requested pages first in the re-read', () => {

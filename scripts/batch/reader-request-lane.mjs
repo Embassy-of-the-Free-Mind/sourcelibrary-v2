@@ -41,7 +41,8 @@
  *   3. on the gate, the book's Flash-Lite pages go to the re-read (#8395): `cli-ocr-lane.mjs correct --reread-per-call=4
  *      --book=ID --first=<requested>` (`--reread-languages=Latin` for Latin), in the day folder the gex45 latin-first cron
  *      uses (rereadOutDir under LATIN_FIRST_ROOT: one ledger, one set of claims, so no page is re-read twice on a box),
- *      on this run's pool (AGY_HOME) and behind the re-read's own quota floor. Pages it tried take the page budget. Then
+ *      on this run's pool (AGY_HOME) and behind the re-read's own quota floor: one chunk (REREAD_CHUNK) a book a run, or
+ *      every requested page, and the pages it tried take the page budget. Then
  *      the pages that no longer rest on an unchecked Flash-Lite draft are translated, requested first. The rest wait,
  *      and the summary line names a book whose language the re-read does not serve (Latin, German and French print).
  *      Claims and the ledger are one box's: on another box the guard is the page's REREAD_LANE stamp and apply's
@@ -172,6 +173,14 @@ export function rereadArgs(book, { maxPages, first = [], date, apply, home = pro
     '--concurrency=1', '--book-chunk=40', `--deadline-min=${deadlineMin}`, `--agy-home=${home || 'default'}`, ...(apply ? ['--apply'] : [])];
 }
 
+/** Pages a book's re-read may take in one run: one re-read chunk, or every requested page, inside the run's budget. */
+export const REREAD_CHUNK = 40;
+/**
+ * One chunk a book a run, so a book whose requested pages are not Flash-Lite (its gate tripped on the rest) cannot spend
+ * the page budget another reader's lite pages wait on (#8395: 185 of 200 on such a book, 15 left for the next).
+ */
+export const rereadTake = ({ left, lite, requested = 0 }) => Math.max(0, Math.min(left, lite, Math.max(REREAD_CHUNK, requested)));
+
 /** The re-read ledger's rows for one book since `since` (ISO): every page the re-read tried, with its outcome. */
 export function rereadRows(file, bookId, since) {
   if (!fs.existsSync(file)) return [];
@@ -292,11 +301,12 @@ export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
   out.reread_skip = rereadSkip(book);
   const lite = untranslated.filter((p) => p.lite);
   if (!out.reread_skip && lite.length && budget.left > 0) {
-    const n = Math.min(budget.left, lite.length);
+    const first = lite.filter((p) => w.wanted.has(p.id)).map((p) => p.id);
+    const n = rereadTake({ left: budget.left, lite: lite.length, requested: first.length });
     const date = new Date().toISOString().slice(0, 10);
     const since = new Date().toISOString();
     console.log(`\n${label}: OCR-first gate: re-read up to ${n} of ${lite.length} Flash-Lite page(s), requested first`);
-    const code = run(rereadArgs(book, { maxPages: n, first: lite.filter((p) => w.wanted.has(p.id)).map((p) => p.id), date, apply: APPLY }));
+    const code = run(rereadArgs(book, { maxPages: n, first, date, apply: APPLY }));
     const rows = rereadRows(path.join(path.dirname(rereadOutDir(LATIN_FIRST_ROOT, date)), 'reread-ledger.jsonl'), book.id, since);
     out.reread = rows.filter((r) => r.outcome === 'written').length;
     // The re-read ledgers every page it tried, written or not; a dry run ledgers nothing, so count what it was allowed.
