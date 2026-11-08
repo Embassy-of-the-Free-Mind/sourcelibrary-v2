@@ -2034,7 +2034,7 @@ async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<
 // not just relay them (the old ['user']-only annotation let clients withhold
 // them from the model).
 const MAX_INLINE_IMAGES = 5;
-const IMAGE_AUDIENCE = { audience: ['user', 'assistant'] };
+const IMAGE_AUDIENCE: { audience: Array<'user' | 'assistant'> } = { audience: ['user', 'assistant'] };
 
 // Embeddable-thumbnail knobs (#3937 item 5). ~1000px q70 JPEG keeps a plate
 // legible in a slide while a full batch stays near ~1MB of base64.
@@ -2397,7 +2397,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         ? []
         : collectImageAttachments(name, result);
       if (attachments.length > 0) {
-        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: string[] } }> = [];
+        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: Array<'user' | 'assistant'> } }> = [];
 
         // Text summary first, then image + caption pairs
         content.push({ type: 'text' as const, text: JSON.stringify(result, null, 2) });
