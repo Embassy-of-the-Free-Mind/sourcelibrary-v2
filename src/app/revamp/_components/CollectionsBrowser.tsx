@@ -141,7 +141,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
       </div>
 
       {shown.length === 0 ? (
-        <p className="py-16 text-center text-muted">{maker === 'reader' ? 'No reader collections are public yet.' : 'Nothing matches all of that. Remove one of the filters above.'}</p>
+        <p className="py-16 text-center text-muted">{maker === 'reader' ? <>No reader collections are public yet. <Link href="/auth/signin?callbackUrl=%2Fcollections" className="text-primary underline underline-offset-2">Sign in to make the first one</Link>.</> : 'Nothing matches all of that. Remove one of the filters above.'}</p>
       ) : view === 'grid' ? (
         <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
           {shown.map((c) => (

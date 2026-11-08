@@ -37,6 +37,18 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ h
           </div>
         </section>
       )}
+      <section className="bg-warm border-b border-border-light">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10 grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-center">
+          <div>
+            <h2 className="font-serif text-3xl md:text-4xl text-primary leading-[1.05] tracking-tight">Make your own collection</h2>
+            <p className="text-secondary mt-3 max-w-2xl leading-relaxed">Gather the books, pages, plates, artworks and quotes you find as you read, in any mix. Give it a name and a picture, and it appears here under your username next to ours.</p>
+          </div>
+          <div className="md:text-right">
+            <Link href="/auth/signin?callbackUrl=%2Fcollections" className="inline-flex bg-primary text-cream text-sm font-medium px-6 py-3">Sign in to start</Link>
+            <p className="text-[13px] text-muted mt-2">New here? Signing in makes your free account.</p>
+          </div>
+        </div>
+      </section>
       <CollectionsBrowser items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} />
     </div>
   );

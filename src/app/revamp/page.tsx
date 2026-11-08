@@ -6,7 +6,8 @@ const ITEMS: [string, string, string][] = [
   ['/revamp/c', 'Collections page', 'The new /collections: featured hero, then search and filters for who made it and what it holds.'],
   ['/revamp/home', 'Homepage layouts', 'Three full-height featured layouts built on single plates, with Popular this week as a smaller section below.'],
   ['/revamp/featured', 'Featured collection', 'One schedule file driving the homepage, Library and Gallery.'],
-  ['/revamp/subjects', 'Draft subject list', 'Two levels, linked to FAST and Wikidata.'],
+  ['/revamp/subjects', 'All subjects', 'The reader-facing list, with how subjects are chosen.'],
+  ['/revamp/subjects/draft', 'Draft subject list', 'The working list for review: two levels, linked to FAST and Wikidata.'],
   ['/revamp/review', 'Sorting review', 'Every public collection and gallery set sorted into the new types, to correct.'],
 ];
 
