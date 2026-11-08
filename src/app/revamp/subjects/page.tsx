@@ -29,29 +29,6 @@ export default function Page() {
         </div>
       </section>
       <SubjectsBrowser groups={groups} />
-      <section id="how" className="bg-warm border-t border-border-light scroll-mt-16">
-        <div className={`${WRAP} py-12 md:py-16 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 lg:gap-16`}>
-          <h2 className="font-serif text-3xl md:text-4xl text-primary leading-[1.05] tracking-tight">How we choose subjects</h2>
-          <div className="border-b border-border-medium">
-            {[
-              ['From what the library holds', 'A subject is added when there are books or images about it here, not from a list drawn up in advance. Librarians call this literary warrant.'],
-              ['Two levels', `${groups.length} broad subjects, each made up of more specific ones. A specific subject can sit under two broad ones when it belongs to both, as Arabic alchemy belongs to Alchemy and to Islam.`],
-              ['Linked to library standards', 'Where a match exists, each subject is linked to FAST, the subject headings OCLC builds from the Library of Congress list, and to Wikidata. That lets our records connect with other catalogues.'],
-              ['One subject, many names', 'Each subject has one name in plain English, plus the other names and spellings people search for, in Latin, German, Dutch, Chinese and more. Searching any of them finds it.'],
-              ['Periods and places are filters', 'Early modern, Renaissance, Persia or Japan narrow a search in the Library rather than being subjects of their own, so a subject means the same thing in every century.'],
-              ['Subjects and collections', 'A subject covers everything we hold on a topic. A collection is a set someone chose, with a point of view, made by Source Library or by readers.'],
-            ].map(([h, t]) => (
-              <details key={h} className="group border-t border-border-medium">
-                <summary className="flex items-center justify-between gap-6 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[17px] font-semibold text-primary">
-                  {h}
-                  <span aria-hidden className="relative w-3.5 h-3.5 shrink-0"><span className="absolute inset-x-0 top-1/2 h-[1.5px] -translate-y-1/2 bg-current" /><span className="absolute inset-y-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-current transition-transform group-open:scale-y-0" /></span>
-                </summary>
-                <p className="text-secondary leading-relaxed max-w-[62ch] pb-6 -mt-1">{t}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

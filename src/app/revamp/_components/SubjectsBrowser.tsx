@@ -18,6 +18,7 @@ function Box({ s, also }: { s: SubjectRow; also?: string }) {
 
 export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
   const [q, setQ] = useState('');
+  const [how, setHow] = useState(false);
   const t = q.trim().toLowerCase();
   // Matches the English name or any other name, and says which other name matched.
   const match = (s: SubjectRow) => {
@@ -43,9 +44,17 @@ export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
           <div className="flex flex-wrap gap-x-1 mt-1.5 sm:mt-2 text-[11.5px] sm:text-[12.5px]">
             <span className="text-muted mr-0.5">Try</span>
             {['Alchemie', 'medicine', '佛教'].map((x) => <button key={x} type="button" onClick={() => setQ(x)} className="px-1 text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">{x}</button>)}
-            <a href="#how" className="ml-auto text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects</a>
+            <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="ml-auto text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
           </div>
         </form>
+        {how && (
+          <ul id="how" className="max-w-2xl mt-4 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
+            <li>A subject exists when the library holds books or images about it.</li>
+            <li>Broad subjects hold more specific ones, and a specific one can sit under two.</li>
+            <li>Each is linked to library standards (FAST and Wikidata) where a match exists.</li>
+            <li>Search finds it by any of its names, in Latin, German, Chinese and more.</li>
+          </ul>
+        )}
 
         {!t && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mt-8">
