@@ -1,0 +1,22 @@
+{
+ "at": "2026-11-08T06:46:37.279Z",
+ "books": 5542,
+ "pairs": 16589,
+ "pages_to_edit": 7699,
+ "by_state": {
+  "skip:soft-hidden": 1955,
+  "skip:printed": 882,
+  "skip:no-longer-flagged": 2360,
+  "edit": 7797,
+  "skip:one-text-ocr": 927,
+  "skip:markup-in-cut": 333,
+  "skip:printed-on-wrong-page": 85,
+  "skip:chain": 34,
+  "skip:undecided": 595,
+  "skip:too-short": 576,
+  "skip:sources-share": 33,
+  "skip:withheld": 149,
+  "skip:runs-remain": 30,
+  "skip:tibetan-pali": 833
+ }
+}

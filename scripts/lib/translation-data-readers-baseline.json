@@ -169,6 +169,7 @@
     "scripts/maintenance/flag-showthrough-page-ruyi-2026-10-18.mjs",
     "scripts/maintenance/force-complete-job.mjs",
     "scripts/maintenance/hide-cdli-fabricated.mjs",
+    "scripts/maintenance/leak-strip-5026.mjs",
     "scripts/maintenance/longs-pass-5924.mjs",
     "scripts/maintenance/mark-stale-translations.mjs",
     "scripts/maintenance/move-hidden-meta-own-text.mjs",
