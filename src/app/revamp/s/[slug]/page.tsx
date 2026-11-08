@@ -65,7 +65,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
                 <div className="flex items-baseline justify-between gap-4"><h3 className={H3}>Collections</h3>{about.length > SHOW && <Link href={`/revamp/c?subject=${encodeURIComponent(m.name)}`} className="text-sm text-primary underline underline-offset-2 decoration-border-medium hover:decoration-primary">See all {about.length} collections</Link>}</div>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
                   {about.slice(0, SHOW).map((c) => (
-                    <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="grid" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
+                    <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="square" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
                   ))}
                 </div>
               </div>
