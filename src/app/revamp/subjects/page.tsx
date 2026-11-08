@@ -31,9 +31,6 @@ function pictures(): Record<string, Pic[]> {
 export default async function Page({ searchParams }: { searchParams: Promise<{ v?: string; t?: string }> }) {
   const { v, t } = await searchParams;
   const ti = Math.min(Math.max(Number(t) || 1, 1), INTROS.length) - 1;
-  let lib: { works?: number; images?: number } = {};
-  try { lib = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/app/revamp/_data/snap/_library-stats.json'), 'utf8')); } catch { /* not saved */ }
-  const fmt = (x: number) => x.toLocaleString('en-GB');
   const variant: Variant = VARIANTS.some(([k]) => k === v) ? (v as Variant) : 'banner';
   const pics = pictures();
   const all = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
@@ -60,13 +57,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ v
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Subjects</h1>
           <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{INTROS[ti]}</p>
-          <div className="mt-6 flex flex-wrap gap-x-7 gap-y-2">
-            {[[groups.length, 'broad subjects'], [new Set(all.map((x) => x.id)).size, 'subjects'], [lib.works, 'works'], [lib.images, 'images']].filter(([x]) => x).map(([x, l], i) => (
-              <span key={l as string} className="flex items-baseline gap-2" style={{ color: RAMP[i] }}>
-                <span className="text-[28px] md:text-[34px] font-medium leading-none tabular-nums">{fmt(x as number)}</span>
-                <span className="text-[14px] md:text-[15px] font-medium">{l}</span>
-              </span>
-            ))}
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[14px] md:text-[15px] font-medium">
+            {[`${groups.length} broad subjects`, `${new Set(all.map((x) => x.id)).size} subjects`].map((l, i) => <span key={l} style={{ color: RAMP[i] }}>{l}</span>)}
           </div>
         </div>
       </section>
