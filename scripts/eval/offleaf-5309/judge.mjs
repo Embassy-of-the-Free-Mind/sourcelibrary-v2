@@ -395,7 +395,12 @@ function screenConfirmDraw() {
   const items = JSON.parse(fs.readFileSync(F('screen-sample.json'), 'utf8'));
   const V = new Map(readJsonl(F(`screen-verdicts-${model}.jsonl`)).filter((r) => r.answer).map((r) => [r.key, r.answer.leaf]));
   const OFF = new Set(['prev', 'next', 'other']);
-  const disagree = items.filter((x) => !OFF.has(V.get(x.key)));
+  // --cap-own-per-book N: a book agy reads as its own leaf throughout (p3: 522 pages of one "undecided" book) gets N of
+  // its own calls confirmed, not all. An unconfirmed own call is never re-read, so the cap costs recall, never a write.
+  const CAP = Number(arg('cap-own-per-book', 'Infinity')), seen = new Map();
+  const disagree = shuffle(items.filter((x) => !OFF.has(V.get(x.key))), rnd).filter((x) => {
+    if (V.get(x.key) !== 'own') return true;
+    const k = (seen.get(x.book_id) || 0) + 1; seen.set(x.book_id, k); return k <= CAP; });
   const byBook = new Map();
   for (const x of shuffle(items.filter((x) => OFF.has(V.get(x.key))), rnd)) if (!byBook.has(x.book_id)) byBook.set(x.book_id, x);
   const sample = shuffle([...byBook.values()], rnd).slice(0, Number(arg('n', '30')));
