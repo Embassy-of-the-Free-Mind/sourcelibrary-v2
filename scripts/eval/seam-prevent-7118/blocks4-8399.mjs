@@ -167,7 +167,7 @@ async function dense(out, target) {
     if (rows.length >= target || scanned >= 3000) break;
     scanned++;
     // lengths first (cheap): does the book hold 4 consecutive translated pages averaging >= DENSE_CHARS?
-    const lens = await db.collection('pages').aggregate([{ $match: { book_id: book.id } }, { $project: { _id: 0, n: '$page_number', l: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, t: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] } } }]).toArray();
+    const lens = await db.collection('pages').aggregate([{ $match: { book_id: book.id } }, { $project: { _id: 0, n: '$page_number', l: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, t: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] } } }]).toArray();
     const L = new Map(lens.map(x => [x.n, x]));
     const starts = lens.filter(x => [0, 1, 2, 3].every(k => L.get(x.n + k)?.t && L.get(x.n + k).l >= 200) && L.get(x.n - 1)?.t && [0, 1, 2, 3].reduce((s, k) => s + L.get(x.n + k).l, 0) / 4 >= DENSE_CHARS);
     if (!starts.length) continue;
