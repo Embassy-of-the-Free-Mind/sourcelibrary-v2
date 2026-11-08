@@ -52,7 +52,7 @@ export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
             {groups.map((g) => (
               <a key={g.id} href={`#${g.id}`} className="block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
                 <span className="block text-[15px] text-primary leading-snug">{g.label}</span>
-                <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} narrower</span>
+                <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
               </a>
             ))}
           </div>

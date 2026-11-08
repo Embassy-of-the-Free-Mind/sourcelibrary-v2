@@ -56,7 +56,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
             <h2 className={`${H2} mb-6 md:mb-8`}>Inside {m.name}</h2>
             {narrower.length > 0 && (
               <div className={about.length > 0 ? 'mb-8 md:mb-10' : ''}>
-                <h3 className={H3}>Narrower subjects</h3>
+                <h3 className={H3}>Subjects</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block bg-white border border-border-light px-[18px] py-3.5 text-[15px] text-primary hover:border-primary transition-colors">{s.label}</Link>)}</div>
               </div>
             )}
