@@ -1928,6 +1928,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={hasScans ? t.scansTooltip : t.textEditionTooltip}>
                       <FileText className={chipIcon} />{hasScans ? t.scans(totalPages) : t.pagesOfText(totalPages)}
                     </span>
+                    {/* human_read_count (#5048): reading visits by people, rebuilt nightly.
+                        #7210 added it only to the stats line of the second layout further
+                        down, so the hero most books render never showed it. Hidden at
+                        zero rather than reading "0 reads". */}
+                    {humanReads > 0 && (
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={t.readsTooltip}>
+                        <Eye className={chipIcon} />{t.reads(humanReads)}
+                      </span>
+                    )}
                     {/* The gallery has no embed route: a plain count inside a partner frame. */}
                     {imageCount > 0 && (isEmbedded ? (
                       <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }}>
