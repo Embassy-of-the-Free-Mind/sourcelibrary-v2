@@ -91,6 +91,13 @@ const DEFAULT_DISALLOW = [
   // letting Google crawl this burns budget on tens of thousands of
   // redirects (showed up as "Blocked 403" / "Page with redirect" in GSC).
   '/book/*/page-number/',
+  // The whole-book reading view (/book/{slug}/read, ?part=N). It is noindex, so
+  // a search crawler gains nothing from it, and each fetch is an uncached
+  // function call that reads the book's text from Mongo: search crawlers made
+  // ~23.5K such fetches across 6.7K books in the week to 2026-11-08. Anchored
+  // with `$`/`?` so no other path that happens to contain "/read" is caught.
+  '/book/*/read$',
+  '/book/*/read?',
   // Auto-generated thin concept stubs. Google classifies these as
   // soft-404 (see 2026-05-31 GSC Coverage report) and crawling them burns
   // budget that should go to the ~15K /book/ landing pages.

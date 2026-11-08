@@ -74,9 +74,9 @@ export async function notifyPageTranslation(bookId: string, pageNumber: number, 
 export async function notifyBatchTranslation(bookId: string, pageNumbers: number[], slug?: string): Promise<void> {
   const bookPath = slug || bookId;
   const urls = pageNumbers.map(p => `https://${INDEXNOW_HOST}/book/${bookPath}/page-number/${p}`);
-  // Also include the book page and read page
+  // Also include the book page. Not /read: it is noindex and disallowed in
+  // robots.txt, so announcing it only invites an uncached whole-book fetch.
   urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}`);
-  urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/read`);
   urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/guide`);
   await notifyIndexNow(urls);
 }
@@ -98,7 +98,6 @@ export async function notifyEditionPublished(bookId: string, slug?: string): Pro
   const bookPath = slug || bookId;
   await notifyIndexNow([
     `https://${INDEXNOW_HOST}/book/${bookPath}`,
-    `https://${INDEXNOW_HOST}/book/${bookPath}/read`,
     `https://${INDEXNOW_HOST}/book/${bookPath}/guide`,
   ]);
 }
