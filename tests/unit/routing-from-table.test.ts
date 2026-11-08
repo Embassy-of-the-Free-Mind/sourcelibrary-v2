@@ -169,6 +169,9 @@ describe('Translation: both routers read translation-routing-table.json', () => 
       expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id, per_call: 4 } });
       expect(translateEngineFor(t, { language })).toBe(MODEL_LITE);
     }
+    // #8399: the seam pass (with edits to the page before the block) is on for the two cells it was measured on, not the others
+    for (const id of ['latin-cli-agy4', 'german-cli-agy4']) expect(t.rows.find(r => r.id === id)?.seam_pass).toBe('edit-before');
+    for (const id of ['italian-cli-agy4', 'french-cli-agy4']) expect(t.rows.find(r => r.id === id)?.seam_pass).toBeUndefined();
     // BPH skips the language rows (their `unless`) and, since 2026-11-06, reaches agy by the catch-all; its Batch row
     // is still what a Batch caller would get.
     for (const language of ['Latin', 'German', 'Latin. French. English']) {
