@@ -360,6 +360,143 @@ list). No paid API calls and no page writes.
 `judge.jsonl.gz`, `leaks.json`, `seam-c.jsonl.gz`, `build.json`, and `pages/` (key, sample, recipe,
 `verdicts-opus.jsonl.gz`, `packet.json.gz`, `paired-score.json`).
 
+## 2026-11-08 · Two adjacent pages from each fifth: does the paired check find bad books the 5-page check misses? Results (#8405)
+
+Preregistration: `2026-11-08-paired-fifths-prereg-8405.md` (the rules and the decision were not changed).
+Code: `scripts/eval/paired-fifths-8405/run.mjs`, run from #8411's branch (#8411 was not yet merged).
+Output: `scripts/eval/paired-fifths-8405/results/{score.json,books.json,frame-summary.json}`. Verdicts are in
+`$JOB_SCRATCH/paired-fifths-8405/verdicts.jsonl` on the job host. Nothing was written to Mongo or `book_checks`.
+
+### Run
+- **Frame:** 160 books, 789 pairs, 29 anchors left unpaired, 17 stale anchors judged again.
+- **Census stratum skipped:** #8409 (`openingEcho`) was not merged at frame time, so the frame printed "census stratum skipped". No census precision for #8399.
+- **Calls:** 1,557 Opus calls (`claude -p`, subscription), under the 1,800 cap. One join parsed to nothing, and its retry was stopped by the pace guard (`meter unreadable … fail closed`). The guard was not bypassed. That leaves **159 of 160 books complete**.
+- **Harness fix:** a worker could take a job index past the end of the list while it waited on the pace check. It now re-checks first (one line, no rule touched).
+
+### Results against the preregistered rule
+| | |
+|---|---|
+| Controls (join judge) | carry-over **10/10** caught, wrong-leaf **10/10**: **valid** |
+| Complete books | 159 (≥ 80) |
+| Bad on anchors (5 pages) | 66 |
+| Bad paired (10 pages or any failed join) | 83 |
+| **Good → bad** | **24 (15.1%)**: 18 by joins only, 4 by partner pages only, 2 by both |
+| Bad → good | 6 |
+
+**Decision line as analyze printed it: `pairs for the standing Opus QA`** (15.1% ≥ 5%).
+
+### Also reported
+- **Breaks:** 759 judged, 72 failed (9.5%). By kind: `call_boundary` 7 (1 failed), `in_call` 0, `unknown` 752 (71 failed). Almost no frame page carries `translation.engine.run.read_call`, so the kind split says nothing yet.
+- **Direction of failed breaks:** page A holds the misplaced text in 26, page B in 31, both in 15.
+- **Failed defects by kind and layer:** dropped/english 38, dropped/transcription 19, carry_over/english 21, wrong_leaf/transcription 12, wrong_leaf/english 8, duplicated/english 6, carry_over/transcription 1, duplicated/transcription 1.
+- **Reliability of the 10-page grade:** split-half r (anchors vs partners) 0.681 over 158 books; Spearman–Brown to 10 pages **0.811** (an upper bound, since pair-mates are not independent). The #7866 5-page figure was 0.75.
+
+### By eye (5 failed joins, both scans opened)
+1. **Arati Phaenomena** (Latin), pp. 188/189, wrong_leaf: confirmed. Scan A is a Hydra/Crow woodcut over prose ("Ydra sup cui⁹ caudã coruũ…"). Scan B is prose followed by verse from "Etherium uenit in thalamum". The stored texts are verse from other leaves. This book failed 4 joins of this kind.
+2. **Armenian homily**, pp. 169/170, carry_over/english A: real but minor. Scan A ends "…յառնել վաղվաղակի 'ի սե-" and B opens "ղանոյ անտի, զի մի ընդ գինեմոլան…". A's English finishes the sentence with B's first clause and B's English starts after it. Nothing is lost.
+3. **yid bzhin mdzod** (Tibetan), pp. 8/9, dropped/english B: page B has **no English at all** (an empty translation). That is a missing page translation, which the `dropped` rule counts as a break defect.
+4. **German address to Grand Duke Karl**, pp. 6/7, carry_over/english A: same shape as case 2. The verb "aufgenommen und ernannt worden bin" is printed on B, and German is verb-final, so A's English can only finish its sentence by reaching onto B. The judge itself notes "nothing is duplicated or dropped". **This flipped a good book to bad.**
+5. **Vie et voyages de Hiouen-Thsang** (French), pp. 10/11, wrong_leaf + duplicated: confirmed. Scan B is p. 11 ("LIVRE PREMIER … Après avoir terminé ces conférences…"), but its transcription and English repeat p. 10.
+
+**What this means for the rule (no decision changed).** The join rule counts every material `carry_over`, and the judge marks a translator finishing a sentence across the break as material. 13 of the 72 failures are only that shape (English carried over on A). Sensitivities, all computed from the same verdicts:
+- A-finishes-sentence not counted as a failure: 20 flips (12.6%).
+- That, and English-only `dropped` not counted either: 14 flips (8.8%).
+- Only wrong-leaf joins plus the page rule: 8 flips (5.0%).
+
+The decision holds in every one of these readings, at the threshold in the strictest. A standing join check should not fail a book on "A finishes its sentence" alone. Before the paired check becomes the standing QA, either the join prompt or the fail rule should exclude it.
+
+### Pages that carry another page's text (containment is a separate step)
+Wrong-leaf or duplicated, from the join judge (cases 1 and 5 confirmed by eye; the rest are the judge's call):
+- Arati Phaenomena, Geographia, Ora Maritima `69af48642a821385be062737`: pp. 77, 78, 127, 128, 188, 189, 206, 207
+- De Rebus Fatisque Huius Seculi `6a4cb63519ae103166961ce4`: pp. 2, 3, 15
+- 大唐西域記 / Vie et voyages de Hiouen-Thsang `69e961652beefe2f6f72b4a8`: p. 111 (stored page number; printed p. 11)
+- Ueber den Nutzen eines frühzeitigen Studiums `6a243d6f0f0e4f405e630221`: p. 14 (English)
+- Duplicated English: Derge Tengyur `6abe8dbb6a920ffd924d59c0` p. 480; 植物名實圖考(六) `6992cf0e284cdd19fef46f38` p. 54; Sidereal Messenger `6953e47477f38f6761bee59e` pp. 35, 124; Post-Reuter `6a267ed26c1f37c9c4f3cc35` p. 13
+
+## Addendum: census stratum (amendment 1), 2026-11-08
+
+**What was run.** `run.mjs census` on `echo-flagged-8405.jsonl` (`scripts/audit/translation-page-boundaries.mjs`, `kind:"echo"` lines): 5,577 lines after dropping `parallel: true` and `sourceRepeats: true`. Seed 84054 drew 40 breaks, at most 3 per book; all 40 had both pages' texts. Same join judge (Opus 5.5, same prompt). The 160th frame book also finished in this run, so the book-level numbers moved by one book (24/160 flips, 15.0%; decision unchanged).
+
+**Detector precision (judged defect / judged): 23/40 = 0.575.**
+
+| split | judged | judged defect | precision |
+|---|---|---|---|
+| break_kind `unknown` (no `read_call` on one or both pages) | 37 | 23 | 0.62 |
+| break_kind `in_call` | 2 | 0 | 0 |
+| break_kind `call_boundary` | 1 | 0 | 0 |
+| `sourceRepeats: null` (source side unknown) | 0 | — | — |
+| `sourceRepeats: false` (source checked) | 40 | 23 | 0.575 |
+
+Most breaks were `unknown` (37/40) because one or both pages carry no `translation.engine.run.read_call`. With only 3 breaks of known kind, the split cannot say whether call boundaries leak more. The 135 `sourceRepeats: null` lines are 2.4% of the frame, and none was drawn, so the source-unknown split is empty.
+
+**Why the judge passed 17 flagged breaks.** These are the judge's notes, not by eye except where marked. 2 were facing-page editions the `parallel` flag missed (Welsh/English *Barddas*, Loeb *Historia Augusta*; both checked by eye). 1 was a colour calibration target shot twice. 2 were overlapping photographs where the same background leaf shows on both scans. The rest were clean joins whose English shares wording across the break, such as running heads or repeated technical vocabulary.
+
+### By eye (both scans opened)
+Judge **failed**:
+1. Wolff, *Psychologia rationalis* (Latin), pp. 612/613, carry_over A: **real leak.** Scan A ends "adeoque in". A's English goes on through "…neither can a distinct notion of the origin of a contingent spirit be formed", which is printed on B, and B's English translates the same passage again.
+2. Benzo, *Scheeps-togt* (Dutch), pp. 23/24, carry_over + duplicated A: **real leak.** Scan A ends "welker handen op / ha-". A's English carries B's first sentence ("These he presented to our commander…"), and B's English repeats it.
+3. Dostoevsky, *Дневник писателя* (Russian), pp. 316/317, wrong_leaf A: **real, and worse than a carry-over.** A's English is a second translation of B (printed p. 314). Printed p. 313 has no English at all.
+4. Yogananda, *Songs of the Soul* (English), pp. 88/89, duplicated B: **real, but a different mechanism.** Scan B prints only "PART III". Its English layer contains a leaked "**Previous page (modernized) for continuity:**" block that repeats p. 82's poem. The context prompt leaked into the output.
+5. Ferdinand III, *Manifest und Abmahnungs Schreiben* (German, Vienna 1644), pp. 19/20, duplicated + carry_over A: **not a translation leak.** Scan A is a cropped second shot of the same printed p. 8 shown in full on B. Both translations follow their scans. The duplication is in the capture, which a reader still sees as the same page twice.
+
+Judge **passed**:
+1. Fictuld, *Azoth et Ignis* (German), pp. 87/88: **clean, by eye.** Scan A ends "…ein reines Gold/" with catchword "das", and B begins "das durch alles Creutz". The English splits at the same point.
+2. *Barddas* (Welsh), pp. 11/12: **a facing-page edition, by eye** (Welsh left, English right). This is a detector false positive that `parallel` did not catch.
+3. *Sammlung … Frankfurter Wirren* (German; the pamphlet *Humanität, Religion und Christenthum*), pp. 317/318: **clean, by eye.** Both photographs show the same title leaf behind the open pamphlet, and that leaf is the shared text. The body text joins at "hoch- / erleuchteten Bruders".
+4. Descartes, *Opera philosophica* (Latin; *Principia*, pars IV), pp. 709/710: **a small real leak the judge marked immaterial.** Scan A ends "…quæ mensis / spatio" (catchword). A's English goes on with "traverses the circle A B C D in the space of a month", which is printed on B, and B's English repeats it.
+5. *Historia Augusta*, Loeb (Latin/English), pp. 230/231: **a facing-page edition, by eye.** This is a detector false positive.
+
+By eye, then: 4 of the 5 judge-failed breaks are real translation leaks, and the fifth is a duplicate capture. 1 of the 5 judge-passed breaks has a small real leak. The judge's 0.575 is a fair reading of how often a flagged break is a defect a reader would see. Most of the detector's false positives are facing-page editions and clean joins.
+
+The full list of judged leaks, with page links, is in the #8399 comment. Containment is a separate step, and no page was hidden or re-translated here.
+
+## 2026-11-08 · Two adjacent pages from each fifth: does the paired check find bad books the 5-page check misses? Preregistration (#8405)
+
+PRIOR ART:
+- `2026-10-31-confidence-validation-7866.md`: 160 books, 5 pages each (one from each fifth), blind Opus; ICC 0.38, so 5 pages give reliability 0.75. Its 800 verdicts are in `book_checks` (method `judged-pages`, run `confidence-validation-7866`) and are reused as the anchors here.
+- #8399 (session sourcelibrary-b3): in 30 h, 77 of 6,195 agy translations opened with English already on the previous page. Per-page judges cannot see that; this run adds a judge of the break. Its census function `openingEcho` (`scripts/lib/neighbour-guard.mjs`, PR #8409) picks the census stratum.
+- `src/lib/paired-fifths.ts` / `scripts/lib/paired-fifths.mjs`: the shared draw. Here `pairsFromAnchors` adds to each #7866 anchor the next page, else the previous one.
+
+### 1. Question
+Derek (2026-11-08): "maybe we should have 10 page checks, 2 pages next to each other across each 5th of the book", for both the volunteer shift and the Opus QA, "and test". The shift's reading costs us nothing, but pairs double the Opus QA's reading. The question is whether the extra pages and the five joins turn enough books from good to bad to be worth that.
+
+### 2. Frame
+The 160 books of #7866, with its 5 anchors each. For each anchor, the partner is the next page if it passes `eligiblePage` (#7866) and is not another anchor, else the previous page. An anchor with neither stays single. An anchor whose OCR `updated_at` has changed since its check (or is later than the check) is judged again. Books are judged in a seeded order (`SEED.books = 84051`), so a run that stops is still whole books.
+
+**Census stratum** (outside every book-level number): breaks in the same books, not in any pair, where `openingEcho` flags page n's opening English as already on n-1. Up to 40 are drawn with `SEED.census = 84053`. It measures the detector's precision, the share of flagged breaks the join judge fails, for #8399.
+
+### 3. Readers
+- **Page judge:** the #7866 judge unchanged (`judgeAbsolute`: route-judge-6740 `judgePrompt`, OCR task, Opus via `claude -p`, page image in the workspace), on the partner pages and the stale anchors.
+- **Join judge (new):** Opus via `claude -p` with both scans (`a.jpg`, `b.jpg`), both transcriptions and both English texts (`joinPrompt` in `run.mjs`). Defects are `carry_over | duplicated | dropped | wrong_leaf | other`, each with its layer, its page (the direction) and `material`. Catchwords, running heads and signatures are not defects.
+- **Controls (join judge):** 10 carry-over plants (B's English opens with the last sentence of A's English) and 10 wrong-leaf plants (B's texts replaced by a page of another book, same language when one exists), on random-set breaks. The judge is **valid** when each kind has ≥ 8 judged and ≥ 0.80 caught: carry-over as a material `carry_over`/`duplicated`, wrong-leaf as `wrong_leaf` on page B.
+- **Smoke, 2026-11-08 (laptop, not part of the run):** one page (fidelity 5, accepted), one random join (clean, quoting both sides of the seam), and one carry-over control (caught: `carry_over`, English, page B, the planted sentence quoted).
+
+### 4. Rules
+- Bad page (#7866): not accepted, or any `wrong_text` defect.
+- Book bad on its anchors (#7866): ≥ 2 bad of ≥ 4 judged.
+- Book bad on its 10 pages: ≥ 4 bad of ≥ 8 judged (the same share).
+- Join fails: any material `carry_over`, `duplicated`, `dropped` or `wrong_leaf`.
+- **Book bad, paired:** bad on its 10 pages, or any of its joins fails.
+- A book counts only when all of its partners, joins and anchors are judged.
+
+### 5. Decision (fixed now)
+With valid controls and ≥ 80 complete books: if ≥ 5% of complete books are **good on the anchors and bad paired**, the standing Opus QA moves to paired-fifths. Otherwise it stays at 5 pages, and pairs are used only in the volunteer shift (already built, #8405).
+
+### 6. Also reported (no decision rides on them)
+- Flips split by cause (joins only, partner pages only), and bad-to-good flips.
+- Breaks by kind: `call_boundary` vs `in_call` vs `unknown`, from `translation.engine.run.read_call` (#8399), with failure counts and the direction (which page holds the misplaced text).
+- Reliability of the 10-page grade: the split-half correlation of the anchors' and partners' bad-page shares across books, Spearman–Brown stepped up to 10 pages. This treats pair-mates as independent halves, so it is an upper bound.
+- Census precision.
+
+### 7. Budget
+About 800 partner pages, 800 joins, the stale anchors (3 of 20 in a 4-book frame), 20 controls and up to 40 census breaks: ~1,700 Opus calls on the subscriptions, capped at 1,800 (`CALL_BUDGET`), behind the lane-judge pace guard (weekly 85%, 5-hour 95%). No API spend.
+
+### 8. Run
+`node --env-file=… scripts/eval/paired-fifths-8405/run.mjs frame`, then `… judge` (resumable), then `… analyze` → `scripts/eval/paired-fifths-8405/results/score.json`. Nothing writes to Mongo.
+
+### Amendment 1 (2026-11-08, before any census break was judged)
+The frame's own census (breaks inside the 160 #7866 books) flagged 0 breaks, because #8409 was not yet merged when the frame ran. Those books are also older translations: 753 of 789 pair breaks carry no `read_call`. The defect #8399 measures sits in recent agy output, so the census stratum is drawn from there instead: `run.mjs census --census-file=<flagged.jsonl>` takes `scripts/audit/translation-page-boundaries.mjs`'s `kind:"echo"` lines and drops `parallel: true` (facing-language editions, the top false positive per #8399) and `sourceRepeats: true` (the source text itself repeats across the break); `sourceRepeats: null` (no-space scripts, source side unknown) is kept and tagged. It draws with seed 84054, at most 3 breaks a book and 40 in all. The breaks are judged by the same join judge. Census precision is reported for #8399 and stays outside every book-level number, as before. Nothing in §4–§5 changes.
+
 ## 2026-11-08 · Can a write-time check refuse a page holding its neighbour's English without refusing correct pages? (#5026)
 
 PRIOR ART:
