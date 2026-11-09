@@ -16,6 +16,7 @@
 #   ping                      "pong <host> <installed wrapper commit>"
 #   where | status            the job wrapper's own one-line placement record / job list
 #   decisions | taken | landings   the last 300 lines of that job ledger
+#   usage                     "USAGE <email> <json>" per Claude login here, read with its own token, never refreshed
 #   put-limits  (stdin)       the climits meter's latest.json, ≤ 64 KB, must parse with an accounts list
 #   start <name> (stdin)      start a job from the brief on stdin (≤ 200 KB, with Lands:/PR: header lines).
 #                             Refuses a name already used here, and more than $MESH_MAX_STARTS_PER_HOUR remote starts an hour.
@@ -40,6 +41,34 @@ case "$verb" in
     log "$verb"; exec "$CJ" "$verb" ;;
   decisions|taken|landings)
     log "$verb"; f="$JD/$verb.txt"; [ -f "$f" ] && tail -n 300 "$f"; exit 0 ;;
+  usage)
+    # Each Claude login on this box (/root, and every JOB_CLAUDE_HOME dir /root/.claude-*), read with that login's
+    # own access token as it stands. Prints "USAGE <email> <usage json>" per login, never a token. Never refreshes:
+    # a refresh rotates the token under the running claude. Lets main's climits fill in an account whose own
+    # climits grant expired, without a browser login (2026-11-09).
+    log usage
+    python3 - <<'PY'
+import glob, json, os, time, urllib.request
+homes = [("/root/.claude.json", "/root/.claude/.credentials.json")]
+homes += [(os.path.join(d, ".claude.json"), os.path.join(d, ".credentials.json")) for d in sorted(glob.glob("/root/.claude-*"))]
+seen = set()
+for j, c in homes:
+    try:
+        email = ((json.load(open(j)).get("oauthAccount") or {}).get("emailAddress") or "").lower()
+        o = json.load(open(c))["claudeAiOauth"]
+    except Exception:
+        continue
+    if not email or email in seen or o.get("expiresAt", 0) / 1000 - time.time() < 60:
+        continue
+    try:
+        r = urllib.request.Request("https://api.anthropic.com/api/oauth/usage", headers={
+            "Authorization": "Bearer " + o["accessToken"], "anthropic-beta": "oauth-2025-04-20", "User-Agent": "climits/1.0 (mesh read)"})
+        print("USAGE", email, json.dumps(json.load(urllib.request.urlopen(r, timeout=15))))
+        seen.add(email)
+    except Exception:
+        pass
+PY
+    exit 0 ;;
   put-limits)
     dst=/root/.claude-limits/latest.json; mkdir -p -m 700 /root/.claude-limits
     tmp=$(mktemp /root/.claude-limits/.in.XXXXXX)
@@ -66,5 +95,5 @@ case "$verb" in
     echo "$out"
     if [ $rc -eq 0 ]; then log "start $arg ok"; else log "start $arg failed rc=$rc"; exit 4; fi ;;
   *)
-    die 2 bad "unknown verb '${verb}' (ping where status decisions taken landings put-limits start)" ;;
+    die 2 bad "unknown verb '${verb}' (ping where status decisions taken landings usage put-limits start)" ;;
 esac
