@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { fill } from '../_lib/tones';
 
-/** The see-through fill shared by the bar and anything set beside it on the hero. */
-export const GLASS = 'bg-white/[0.13] backdrop-blur-md text-white';
+
 
 /**
  * One bar for a collection: the same words either narrow the works below (Search) or go to the
@@ -12,7 +12,7 @@ export const GLASS = 'bg-white/[0.13] backdrop-blur-md text-white';
  * for over the hero pictures; focus shows as a white ring. If kept, this becomes a tone on
  * search-kit/SearchAskBars rather than a second bar.
  */
-export default function CollectionBars({ works, after }: { works: number; after?: ReactNode }) {
+export default function CollectionBars({ works, after, tone = 'ink' }: { works: number; after?: ReactNode; tone?: string }) {
   const [v, setV] = useState('');
   const [asked, setAsked] = useState('');
   const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
@@ -20,7 +20,7 @@ export default function CollectionBars({ works, after }: { works: number; after?
   return (
     <div>
       <div className="flex items-stretch gap-1.5 sm:gap-2 max-w-4xl">
-        <form onSubmit={(e) => { e.preventDefault(); search(v); }} role="search" className={`flex-1 min-w-0 flex items-stretch h-11 sm:h-[52px] ${GLASS} focus-within:ring-1 focus-within:ring-white/80`} data-catalog-bar>
+        <form onSubmit={(e) => { e.preventDefault(); search(v); }} role="search" className="flex-1 min-w-0 flex items-stretch h-11 sm:h-[52px] text-white backdrop-blur-md focus-within:ring-1 focus-within:ring-white/80" style={{ background: fill(tone) }} data-catalog-bar>
           <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
           <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)} placeholder="Search or ask a question"
             className="flex-1 min-w-0 px-3.5 sm:px-5 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none" />

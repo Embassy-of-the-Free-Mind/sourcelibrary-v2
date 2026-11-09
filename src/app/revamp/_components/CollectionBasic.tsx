@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import { Bell, Copy } from 'lucide-react';
 import PlateWall from './PlateWall';
-import CollectionBars, { GLASS } from './CollectionBars';
+import CollectionBars from './CollectionBars';
+import { GLASS, TONES, fill } from '../_lib/tones';
 import CollectionItems from './CollectionItems';
 import IntroBand from './IntroBand';
 import { RAMP } from '../_lib/ramp';
@@ -20,7 +21,7 @@ const n = (v: number) => v.toLocaleString('en-GB');
 const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
 const ACTS: [string, string][] = [['beside', 'A Beside the bar'], ['icons', 'B Icons by the title'], ['top', 'C Top line']];
 
-export default function CollectionBasic({ m, act = 'beside' }: { m: CollectionModel; act?: string }) {
+export default function CollectionBasic({ m, act = 'beside', tone = 'ink' }: { m: CollectionModel; act?: string; tone?: string }) {
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
@@ -34,7 +35,9 @@ export default function CollectionBasic({ m, act = 'beside' }: { m: CollectionMo
         {m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null}
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
           <span className="flex gap-2">Follow and Copy
-            {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+            {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}&tone=${tone}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+          <span className="flex gap-2">Colour
+            {TONES.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${act}&tone=${k}`} className={tone === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <div className="flex items-center justify-between gap-4 mb-3">
@@ -52,8 +55,8 @@ export default function CollectionBasic({ m, act = 'beside' }: { m: CollectionMo
             <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
             {act === 'icons' && (
               <div className="flex gap-1.5 shrink-0 mb-2">
-                <Link href={SIGN_IN} aria-label="Follow" title="Follow" className={`w-11 h-11 grid place-items-center ${GLASS} hover:bg-white/25`}><Bell className="w-[18px] h-[18px]" aria-hidden /></Link>
-                <Link href={SIGN_IN} aria-label="Copy to my collections" title="Copy to my collections" className={`w-11 h-11 grid place-items-center ${GLASS} hover:bg-white/25`}><Copy className="w-[18px] h-[18px]" aria-hidden /></Link>
+                <Link href={SIGN_IN} aria-label="Follow" title="Follow" className={`w-11 h-11 grid place-items-center ${GLASS}`} style={{ background: fill(tone) }}><Bell className="w-[18px] h-[18px]" aria-hidden /></Link>
+                <Link href={SIGN_IN} aria-label="Copy to my collections" title="Copy to my collections" className={`w-11 h-11 grid place-items-center ${GLASS}`} style={{ background: fill(tone) }}><Copy className="w-[18px] h-[18px]" aria-hidden /></Link>
               </div>
             )}
           </div>
@@ -63,9 +66,9 @@ export default function CollectionBasic({ m, act = 'beside' }: { m: CollectionMo
             <span className="text-white/60">{m.byline}</span>
           </div>
           <div className="mt-8 md:mt-10">
-            <CollectionBars works={works} after={act === 'beside' && <>
-              <Link href={SIGN_IN} className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS} hover:bg-white/25`}><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
-              <Link href={SIGN_IN} className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS} hover:bg-white/25`}><Copy className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Copy</span></Link>
+            <CollectionBars works={works} tone={tone} after={act === 'beside' && <>
+              <Link href={SIGN_IN} className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS}`} style={{ background: fill(tone) }}><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
+              <Link href={SIGN_IN} className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS}`} style={{ background: fill(tone) }}><Copy className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Copy</span></Link>
             </>} />
           </div>
         </div>
