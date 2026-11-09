@@ -9,7 +9,6 @@ import { GLASS, TONES, fill } from '../_lib/tones';
 import CollectionItems from './CollectionItems';
 import IntroBand from './IntroBand';
 import { RAMP } from '../_lib/ramp';
-import { MAKER_DEMO, type MakerOptions } from '../_data/maker-demo';
 import type { CollectionModel } from '../_lib/types';
 
 const WRAP = 'max-w-[1500px] mx-auto px-6 md:px-12';
@@ -33,8 +32,6 @@ export default function CollectionBasic({ m, act = 'beside', tone = 'ink', hero 
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
   const span = years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : '';
-  const d = MAKER_DEMO[m.slug] ?? {};
-  const opts: MakerOptions = { notes: d.notes ?? m.notes.length > 0, numbered: !!d.numbered, sections: !!d.sections, startHere: d.startHere ?? (works > 60 && m.notes.length >= 3) };
   const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, span].filter(Boolean) as string[];
   return (
     <div className="min-h-screen bg-cream">
@@ -98,7 +95,7 @@ export default function CollectionBasic({ m, act = 'beside', tone = 'ink', hero 
 
       <IntroBand m={m} />
 
-      <CollectionItems slug={m.slug} books={m.all} notes={m.notes} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} opts={opts} />
+      <CollectionItems slug={m.slug} books={m.all} notes={m.notes} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} />
     </div>
   );
 }

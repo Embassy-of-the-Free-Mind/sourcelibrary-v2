@@ -4,7 +4,9 @@ import type { CollectionBook } from '@/components/CollectionBookCard';
 import WorksGrid from '../../_components/WorksGrid';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import PlateWall from '../../_components/PlateWall';
-import SubjectSearch from '../../_components/SubjectSearch';
+import { Bell } from 'lucide-react';
+import CollectionBars from '../../_components/CollectionBars';
+import { GLASS, fill } from '../../_lib/tones';
 import OverviewBand from '../../_components/OverviewBand';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
@@ -17,9 +19,8 @@ const H2 = 'font-serif text-3xl md:text-4xl text-primary leading-[1.05] tracking
 const SHOW = 10; // two rows; more go to the Collections page, filtered to this subject
 const H3 = 'text-lg font-semibold text-primary mb-3';
 
-export default async function Page({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ hero?: string }> }) {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const full = (await searchParams).hero === '100';
   const m = collectionModel(slug);
   if (!m) notFound();
   const sorted = (dataFile<{ records: Sorted[] }>('sorting')?.records ?? []).filter((r) => r.source === 'collection');
@@ -30,22 +31,20 @@ export default async function Page({ params, searchParams }: { params: Promise<{
   const narrower = self ? subjects.filter((s) => s.parents.includes(self.id)) : [];
   return (
     <div className="bg-cream min-h-screen">
-      <section className={`relative overflow-hidden text-white flex items-end ${full ? 'min-h-[calc(100svh-3.5rem)] lg:min-h-[calc(100svh-4rem)]' : 'min-h-[56svh] md:min-h-[75vh]'}`}>
+      {/* The collection hero, minus what only a collection has (byline, Copy, a chosen picture). */}
+      <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
         <PlateWall tiles={m.heroTiles} rows={3} still />
-        <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-2">
-          Hero height
-          <Link href={`/revamp/s/${m.slug}`} className={full ? '' : 'text-white underline underline-offset-2'}>75%</Link>
-          <Link href={`/revamp/s/${m.slug}?hero=100`} className={full ? 'text-white underline underline-offset-2' : ''}>100%</Link>
-        </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
             <Link href="/revamp/subjects" className="hover:text-white">Subjects</Link>
             {parent && <><span className="opacity-50">/</span><Link href={`/revamp/subjects#${parent.id}`} className="hover:text-white">{parent.label}</Link></>}
           </nav>
-          <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
-          {m.intro[0] && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.intro[0]}</p>}
-          <div className="on-dark mt-8 md:mt-10">
-            <SubjectSearch name={m.name} authors={[...new Set(m.books.map((b) => (b.author || '').split(/[;,|]/)[0].trim()).filter((a) => a && !/unknown|anonym/i.test(a)))].slice(0, 3)} />
+          <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
+          {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
+          <div className="mt-8 md:mt-10">
+            <CollectionBars works={m.listed || m.stats.works} tone="ink" after={
+              <Link href="/auth/signin?callbackUrl=%2Fsubjects" className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS}`} style={{ background: fill('ink') }}><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
+            } />
           </div>
         </div>
       </section>
