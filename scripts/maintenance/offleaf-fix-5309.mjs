@@ -142,7 +142,8 @@ async function fixBook(b, wave, pool) {
     }
   }
   // 4. withhold the old English a written page still carries
-  const left = await db.collection('pages').find({ id: { $in: wrote.filter((id) => !trWritten.has(id)) }, 'translation.data': { $exists: true } }, { projection: { id: 1, page_number: 1, translation: 1 } }).toArray();
+  const left = (await db.collection('pages').find({ id: { $in: wrote.filter((id) => !trWritten.has(id)) }, translation: { $exists: true, $ne: null } }, { projection: { id: 1, page_number: 1, translation: 1 } }).toArray())
+    .filter((p) => withholdUpdate(p, WITHHOLD_REASONS.STALE_AFTER_REOCR)); // only pages with English to withhold
   let withheld = new Set();
   if (left.length) {
     const saved = await saveRevisionsBeforeOverwrite(db, left.map((p) => p.id), 'translation', { reason: WITHHOLD_REVISION_SOURCE, keepMeta: true });
