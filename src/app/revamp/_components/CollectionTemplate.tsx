@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, BookOpen, Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import HeroScrim from '@/components/HeroScrim';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import type { CollectionBook } from '@/components/CollectionBookCard';
@@ -9,14 +8,11 @@ import WorksGrid from './WorksGrid';
 import { RAMP } from '../_lib/ramp';
 import BookSlider from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
-import { getBookThumbnailUrl } from '@/lib/utils';
 import PlateWall from './PlateWall';
-import OverviewBand from './OverviewBand';
 import type { CollectionModel } from '../_lib/types';
 
 const WRAP = 'max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16';
 const H2 = 'text-2xl sm:text-3xl text-primary font-display';
-const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity';
 
 /**
  * One template for every collection, from the Mycology and Slime Moulds format.
@@ -30,7 +26,6 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
   const sections = [
     m.intro.length ? { id: 'introduction', label: 'Introduction' } : null,
     m.firstTranslations.length ? { id: 'translations', label: 'First translations' } : null,
-    m.featured ? { id: 'featured', label: 'Featured' } : null,
     m.pages.length ? { id: 'pages', label: 'Pages' } : null,
     m.quotes.length ? { id: 'quotes', label: 'Quotes' } : null,
     m.plates.length ? { id: 'gallery', label: m.platesLabel } : null,
@@ -53,6 +48,9 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
         >
           <GalleryMasonry plates={m.plates} />
         </div>
+        {m.stats.images > m.plates.length && (
+          <div className="mt-6"><Link href={`/gallery?collection=${m.slug}`} className="inline-flex items-center gap-2 h-11 px-5 bg-primary text-cream text-sm font-medium hover:opacity-90 transition-opacity">See all {n(m.stats.images)} in the Gallery <ArrowRight className="w-4 h-4" /></Link></div>
+        )}
       </div>
     </section>
   );
@@ -113,11 +111,6 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
         </section>
       )}
 
-      {m.overview && (
-        <section className="bg-cream border-b border-border-light">
-          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-6 md:py-8"><OverviewBand o={m.overview} /></div>
-        </section>
-      )}
 
       {single && gallery}
 
@@ -169,27 +162,6 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
         </section>
       )}
 
-      {m.featured && (
-        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-16">
-          <div className={WRAP}>
-            <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
-              <div className="w-full md:w-[min(33%,53.333vh)] shrink-0">
-                <div className="w-4/5 md:w-full relative aspect-[2/3] overflow-hidden bg-warm shadow-md">
-                  {getBookThumbnailUrl(m.featured.book)
-                    ? <Image src={getBookThumbnailUrl(m.featured.book)!} alt={m.featured.title} fill className="object-cover" sizes="(min-width:768px) 420px, 80vw" />
-                    : <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>}
-                </div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-primary leading-[1.06] mb-3" style={{ fontFamily: 'var(--font-serif)' }}>{m.featured.title}</h2>
-                <p className="text-sm text-muted mb-6 italic">{m.featured.byline}</p>
-                {m.featured.text.map((t, i) => <p key={i} className="text-secondary leading-relaxed font-body mb-3 max-w-prose">{t}</p>)}
-                <div className="mt-6"><Link href={`/book/${m.featured.book.slug || m.featured.book.id}`} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link></div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
       {!single && gallery}
 

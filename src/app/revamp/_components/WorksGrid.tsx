@@ -12,7 +12,7 @@ const n = (v: number) => v.toLocaleString('en-GB');
 export default function WorksGrid({ books, total, slug }: { books: CollectionBook[]; total: number; slug: string }) {
   const [shown, setShown] = useState(STEP);
   const more = books.length - shown;
-  const box = 'inline-flex items-center gap-2 h-11 px-5 border border-border-medium bg-white text-sm text-primary hover:border-primary transition-colors';
+  const box = 'inline-flex items-center gap-2 h-11 px-5 bg-primary text-cream text-sm font-medium hover:opacity-90 transition-opacity';
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">

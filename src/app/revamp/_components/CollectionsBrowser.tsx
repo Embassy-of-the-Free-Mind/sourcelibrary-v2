@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { LayoutGrid, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
+import Pick from './Pick';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import type { IndexItem } from '../_lib/data';
 
@@ -87,7 +88,6 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
 
   const tile = 'bg-warm border border-border-light px-3 py-2.5 sm:p-5';
   const pick = (on: boolean) => `text-left px-2 py-0.5 -mx-0.5 text-sm ${on ? 'bg-primary text-cream' : 'text-primary hover:bg-border-light'}`;
-  const sel = 'h-9 sm:h-[38px] px-2.5 border border-border-medium bg-white text-base sm:text-sm';
   const count = (k: string) => items.filter((i) => i.holds.includes(k)).length;
 
   return (
@@ -122,16 +122,10 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
       </div>
 
       <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-4 pb-3 border-b border-border-light">
-        {subjects.length > 0 && (
-          <select aria-label="Subject" value={subject} onChange={(e) => setSubject(e.target.value)} className={sel}>
-            <option value="">All subjects</option>{subjects.map((s) => <option key={s.name}>{s.name}</option>)}
-          </select>
-        )}
-        <select aria-label="Language" value={lang} onChange={(e) => setLang(e.target.value)} className={sel}>
-          <option value="">All languages</option>{languages.map((l) => <option key={l}>{l}</option>)}
-        </select>
+        {subjects.length > 0 && <Pick label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} />}
+        <Pick label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} />
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
-          <select aria-label="Sort" value={sort} onChange={(e) => setSort(e.target.value)} className={sel}>{SORTS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
+          <Pick label="Sort" value={sort} onChange={setSort} options={SORTS} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-label="Grid" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={`w-[38px] h-9 grid place-items-center ${view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={`w-[38px] h-9 grid place-items-center ${view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
