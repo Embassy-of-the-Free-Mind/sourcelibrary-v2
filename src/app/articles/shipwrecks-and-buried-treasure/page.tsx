@@ -416,24 +416,9 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           four came out on top, and none of them has a wreck site that we could find in published sources.
         </p>
 
-        <Find
-          title="The 1502 gold fleet, and a nugget like a loaf of bread"
-          book="69ea06f14c15c76fe934a77a"
-          page={41}
-          printedPage={13}
-          src={IMG('69ea06f14c15c76fe934a77a', 41)}
-          pageAlt="Page 13 of a modern printing of Las Casas’s Brevísima relación, in Spanish, on the kingdoms of Hispaniola"
-          source={
-            <>
-              Bartolomé de las Casas,{' '}
-              <Link href="/book/brevisima-relacion-de-la-destruccion-de-las-indias-casas">
-                <em>Brevísima relación de la destrucción de las Indias</em>
-              </Link>{' '}
-              (Seville, 1552)
-            </>
-          }
-          quote="The ship was lost at sea, and along with him, many Christians and a large quantity of gold drowned; among the items lost was a large nugget that was like a loaf of bread and weighed three thousand six hundred castellanos."
-        >
+        <div className="mb-12">
+          <h3 className="text-xl text-primary mb-3">The 1502 gold fleet, and a nugget like a loaf of bread</h3>
+          <p className="text-secondary leading-relaxed mb-4">
           The &ldquo;him&rdquo; is Guarionex, a Taíno king captured on Hispaniola and shipped to Castile in chains. He
           sailed with the fleet that left Santo Domingo in 1502 carrying the outgoing governor, Francisco de
           Bobadilla, against Columbus’s warning that a storm was coming. Oviedo gives the same story from the island
@@ -442,7 +427,14 @@ export default function ShipwrecksAndBuriedTreasurePage() {
             Oviedo, Historia general, vol. 1, ch. VII
           </Link>
           ). Most of the fleet sank in the hurricane, and later accounts disagree on the number of ships.
-        </Find>
+          </p>
+          <blockquote className="border-l-4 border-accent-gold/30 pl-6">
+            <p className="text-secondary italic mb-2">&ldquo;The ship was lost at sea, and along with him, many Christians and a large quantity of gold drowned; among the items lost was a large nugget that was like a loaf of bread and weighed three thousand six hundred castellanos.&rdquo;</p>
+            <p className="text-sm text-muted">
+              Bartolomé de las Casas, <em>Brevísima relación de la destrucción de las Indias</em> (Seville, 1552)
+            </p>
+          </blockquote>
+        </div>
 
         <div className="mx-auto max-w-md">
           <PageFigure
