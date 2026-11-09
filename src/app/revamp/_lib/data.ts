@@ -58,6 +58,19 @@ function leadSplit(ps: string[]): string[] {
 }
 const paras = (s?: string | null) => (s || '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 
+// Pictures that make a poor card: decorated initials, ornaments, bindings, title pages, blank leaves.
+const NOT_COVER = /initial|letter|ornament|headpiece|tailpiece|fleuron|border|binding|cover|spine|title.?page|endpaper|bookplate|ex.?libris|stamp|blank|printer'?s mark|colophon|text block|page of text/i;
+const BAD_KIND = /decorative|symbol|exlibris|unknown|document|manuscript$/i;
+function coverPicks(items: Rec[]): string[] {
+  return items
+    .filter((i) => {
+      const a = Number(i.aspect) || 0;
+      return (i.cardUrl || i.extractedUrl) && a > 0.55 && a < 1.8 && !BAD_KIND.test(String(i.type || '')) && !NOT_COVER.test(`${i.type || ''} ${i.description || ''}`);
+    })
+    .sort((x, y) => (Number(y.galleryQuality) || 0) - (Number(x.galleryQuality) || 0))
+    .map((i) => (i.cardUrl || i.extractedUrl) as string);
+}
+
 export function collectionModel(slug: string): CollectionModel | null {
   const snap = read<{ c: Rec; g: { items?: Rec[]; total?: number } | null }>(slug);
   if (!snap) return null;
@@ -116,6 +129,7 @@ export function collectionModel(slug: string): CollectionModel | null {
       images: artworks ? Number(col.artwork_count) : (allImages || 0),
     },
     heroTiles: heroTiles.length >= 8 ? heroTiles : artTiles.slice(0, 24),
+    coverPicks: coverPicks(items),
     heroImage: (col.hero_image as string) || undefined,
     books: artworks ? [] : books,
     firstTranslations: ft,
@@ -142,7 +156,7 @@ export function gallerySetModel(slug: string): CollectionModel | null {
   return {
     slug, name: s.title as string, deck: firstSentence((s.description as string) || ''), intro: [], byline: 'By Source Library', subjects: [],
     stats: { works: 0, years: years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : null, firstTranslations: 0, images: (s.imageCount as number) || plates.length },
-    heroTiles: plates.slice(0, 40).map((p) => p.src), books: [], firstTranslations: [], featured: null,
+    heroTiles: plates.slice(0, 40).map((p) => p.src), coverPicks: coverPicks(items), books: [], firstTranslations: [], featured: null,
     plates, platesLabel: 'Plates', platesNote: '', pages: [], quotes: [], quoteBand: null, opensOn: 'plates', ask: null, askMedia: null, moreWorks: 0,
   };
 }
@@ -160,6 +174,7 @@ export interface IndexItem {
 /** One record per collection, for the /collections grid. A collection can hold any mix. */
 export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
   const items: IndexItem[] = [];
+  const used = new Set<string>();
   const records = indexRecords();
   const langs = (slug: string) => {
     const r = records.find((x) => x.slug === slug);
@@ -170,12 +185,15 @@ export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
     const images = m.opensOn === 'artworks' ? 0 : m.stats.images;
     const holds = [m.stats.works > 0 && 'books', images > 0 && 'plates', art > 0 && 'artworks', m.pages.length > 0 && 'pages', m.quotes.length > 0 && 'quotes'].filter(Boolean) as string[];
     const thumbs = m.heroTiles.length >= 4 ? m.heroTiles.slice(0, 9) : [m.plates[0]?.src || m.heroImage || m.books[0]?.thumbnail_blob || m.books[0]?.thumbnail].filter(Boolean) as string[];
-    const am = m.askMedia && 'plate' in m.askMedia ? m.askMedia : null;
-    const cover = am?.fallback || am?.plate || m.introPlate?.src || m.heroImage || thumbs[0];
-    const covers = m.books.map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean) as string[];
-    const pics = m.plates.map((p) => p.src);
+    // One picture per collection, never the same one twice on the page: the best unused pick, else the
+    // full-size first page of a book (text-only collections), never the small thumbnails.
+    const pages = m.books.map((b) => b.thumbnail || b.thumbnail_blob).filter(Boolean) as string[];
+    const authored = AUTHORED[m.slug]?.introImage;
+    const cover = [authored, ...m.coverPicks, ...pages].find((x) => x && !used.has(x)) || thumbs[0];
+    if (cover) used.add(cover);
+    const pics = m.coverPicks.length ? m.coverPicks : m.plates.map((p) => p.src);
     const strip: string[] = [];
-    for (let i = 0; strip.length < 12 && (i < covers.length || i < pics.length); i++) [covers[i], pics[i]].forEach((x) => x && strip.length < 12 && strip.push(x));
+    for (let i = 0; strip.length < 12 && (i < pages.length || i < pics.length); i++) [pages[i], pics[i]].forEach((x) => x && strip.length < 12 && strip.push(x));
     items.push({ slug: m.slug, name: m.name, deck: m.deck, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
   };
   for (const slug of snapshotSlugs()) {

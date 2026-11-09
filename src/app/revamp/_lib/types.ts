@@ -20,6 +20,8 @@ export interface CollectionModel {
   subjects: { id: string; label: string }[];
   stats: { works: number; years: string | null; firstTranslations: number; images: number };
   heroTiles: string[];
+  /** Best pictures to stand for the collection, sharpest first: medium-size crops, no initials, ornaments, bindings or blank pages. */
+  coverPicks: string[];
   heroImage?: string;
   books: Book[];
   firstTranslations: Book[];

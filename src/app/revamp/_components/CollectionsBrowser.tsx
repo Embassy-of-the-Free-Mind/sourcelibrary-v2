@@ -26,6 +26,8 @@ export function CropSquare({ crop, className = '' }: { crop: Crop; className?: s
 /** Square: one representative picture, the maker's own crop if they chose one. Strip: covers, pages and plates in a row, no gaps, each at its own proportions. */
 export function Thumb({ item, mode }: { item: IndexItem; mode: 'square' | 'strip' }) {
   const [own, setOwn] = useState<Crop | null>(null);
+  // A maker's saved crop lives in this browser only, so it can only be read after mounting.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { try { const v = localStorage.getItem(cropKey(item.slug)); if (v) setOwn(JSON.parse(v)); } catch { /* none saved */ } }, [item.slug]);
   if (mode === 'strip') {
     const s = item.strip?.length ? item.strip : item.thumbs;
@@ -46,7 +48,7 @@ const meta = (c: IndexItem) => [
   pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, featured, subjects, initialSubject = '' }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string }) {
+export default function CollectionsBrowser({ items, featured, subjects, initialSubject = '', hideTitle = false }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
@@ -88,7 +90,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
 
   return (
     <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10">
-      <h1 className="text-4xl sm:text-5xl text-primary font-display mb-5">Collections</h1>
+      {!hideTitle && <h1 className="text-4xl sm:text-5xl text-primary font-display mb-5">Collections</h1>}
       <SearchAskBars
         search={{ id: 'col-search', label: 'Search the collections', placeholder: 'Name, subject, person', value: text, onChange: (v) => { setText(v); setQuery(v); }, onSubmit: setQuery, examples: ['Slime Moulds', 'Sibyls', 'Yoga'] }}
         ask={{ id: 'col-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?', value: ask, onChange: setAsk, onSubmit: (v) => window.open(`https://sourcelibrary.org/librarian?q=${encodeURIComponent(v)}`, '_blank', 'noopener'), examples: ['dragons and monsters', 'witch trials in German'] }}
@@ -146,8 +148,8 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
         <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
-              <Thumb item={c} mode={thumb} />
-              <span className="block mt-2.5 text-[17px] leading-snug text-primary font-display group-hover:underline underline-offset-2">{c.name}</span>
+              <div className="border border-transparent group-hover:border-primary transition-colors"><Thumb item={c} mode={thumb} /></div>
+              <span className="block mt-2.5 text-[17px] leading-snug text-primary font-display">{c.name}</span>
               <span className="block text-[13px] text-muted mt-0.5">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
             </Link>
           ))}
