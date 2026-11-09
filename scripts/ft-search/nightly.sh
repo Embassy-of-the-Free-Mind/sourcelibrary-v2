@@ -12,8 +12,13 @@
 # $ENV_FILE (default <repo>/.env.production.local) unless MONGODB_URI is already set. It never touches an account
 # other than the one named, and refuses to start while the previous nightly batch is still running.
 # Batches live in ~/ft-batches/<date>-nightly-<hhmm>/; the path is written to ~/ft-batches/last-nightly.txt.
-# --exclude: every ~/ft-batches/*/ids.txt not marked INGESTED (or recheck/held/gate dirs), so two un-ingested
-# batches never draw the same books.
+# --exclude keeps two un-ingested batches from drawing the same books. Per batch dir:
+#   INGESTED / NO_POSTRUN / GATE        -> not excluded (done, or not a real batch)
+#   name starts with hold- OR has HOLD  -> ALL its ids excluded, always (a deliberate hold; `touch <dir>/HOLD`)
+#   a live run-batch.sh on the dir      -> all its ids excluded (still being searched)
+#   any other dir (stopped, dead)       -> only ids that have a verdict json (searched, awaiting ingest) are
+#                                          excluded; unsearched ids return to the pool (#8482). If it holds
+#                                          searched-but-uningested verdicts, ntfy is paged once (<dir>/PAGED).
 HERE=$(cd "$(dirname "$0")" && pwd)
 REPO=$(cd "$HERE/../.." && pwd)
 CFG=$1; EMAIL=$2; N=${3:-1000}
@@ -43,10 +48,21 @@ fi
 EXCL=""
 for f in "$ROOT"/*/ids.txt; do
   [ -f "$f" ] || continue
-  d=$(dirname "$f")
+  d=$(dirname "$f"); b=$(basename "$d")
+  case "$b" in hold-*) EXCL="$EXCL,$f"; continue;; esac
+  [ -f "$d/HOLD" ] && { EXCL="$EXCL,$f"; continue; }
   [ -f "$d/INGESTED" ] && continue
   [ -f "$d/NO_POSTRUN" ] || [ -f "$d/GATE" ] && continue
-  EXCL="$EXCL,$f"
+  if pgrep -f "run-batch.sh $d" >/dev/null; then EXCL="$EXCL,$f"; continue; fi
+  # Stopped, dead batch: exclude only the ids already searched (a verdict json named <id>.json).
+  S="$d/searched-ids.txt"; : > "$S"
+  while read -r id; do
+    [ -n "$id" ] && [ -f "$d/$id.json" ] && grep -q verdict "$d/$id.json" 2>/dev/null && echo "$id" >> "$S"
+  done < "$f"
+  if [ -s "$S" ]; then
+    EXCL="$EXCL,$S"
+    [ -f "$d/PAGED" ] || { page "ft-search results not ingested: $b" "$(wc -l < "$S" | tr -d ' ') searched verdicts sit in $d with no INGESTED; unsearched ids were released to the pool (#8482)"; touch "$d/PAGED"; }
+  fi
 done
 DIR="$ROOT/$(date -u +%Y-%m-%d)-nightly-$(date -u +%H%M)"
 cd "$REPO" || exit 1
