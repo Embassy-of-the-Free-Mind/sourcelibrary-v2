@@ -2120,7 +2120,7 @@ async function generateScholarlyEpubDownload(
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
     <p>English translation prepared by Source Library</p>
     <p>&#160;</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'}${(edition?.license || 'CC-BY-NC-SA-4.0') === 'CC-BY-NC-SA-4.0' ? ' (Creative Commons Attribution-NonCommercial-ShareAlike)' : ''}</p>
     <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit and distribute under the same license.</p>
     ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&#160;</p>

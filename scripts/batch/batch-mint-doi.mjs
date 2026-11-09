@@ -75,7 +75,7 @@ const LANG_MAP = {
 const LICENSE_MAP = {
   'CC0-1.0': 'cc-zero',
   'CC-BY-4.0': 'cc-by-4.0',
-  'CC-BY-NC-SA-4.0': 'cc-by-sa-4.0',
+  'CC-BY-SA-4.0': 'cc-by-sa-4.0',
   'CC-BY-NC-4.0': 'cc-by-nc-4.0',
   'CC-BY-NC-SA-4.0': 'cc-by-nc-sa-4.0',
 };
@@ -593,6 +593,7 @@ async function mintOneBook(db, book) {
     introduction: edition.front_matter?.introduction,
     methodology: edition.front_matter?.methodology,
     version: edition.version,
+    license: edition.license || LICENSE,
     frontispiece: await fetchFrontispiece(book),
     credits: editionCredits(book),
     dedication: resolveDedication(book, book.collections?.length
