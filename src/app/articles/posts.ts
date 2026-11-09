@@ -539,7 +539,7 @@ export const posts: BlogPost[] = [
     summary:
       'Blocking, a rule written before the data, and staged tests: how we compared reading settings on 145 German and Latin books with typed editions.',
     date: '31 October 2026',
-    readTime: '10 min read',
+    readTime: '11 min read',
     kind: 'research',
     // Glauber, Furni Novi Philosophici (1649), reader page 25, opened by eye: a full Fraktur text page.
     image: 'https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg',

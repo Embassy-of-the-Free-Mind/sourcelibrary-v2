@@ -94,7 +94,7 @@ export default function CheapestReadPage() {
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">31 October 2026 &middot; 10 min read</p>
+          <p className="text-stone-400 text-sm mt-4">31 October 2026 &middot; 11 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
