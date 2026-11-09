@@ -1921,12 +1921,12 @@ async function firstReadMain(mode, arg) {
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
       await rungs.before(book.id);
-      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${book.pages_ocr ?? 0}/${book.pages_count} read, ${FINISH ? `${Math.round(100 * translatedShare(book))}% translated` : `hold ${book.pipeline_auto.hold.reason}`}): ${take.length} of ${c.open.length} pages, ${perCall}/call; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${book.pages_ocr ?? 0}/${book.pages_count} read, ${FINISH ? `${Math.floor(100 * translatedShare(book))}% translated` : `hold ${book.pipeline_auto.hold.reason}`}): ${take.length} of ${c.open.length} pages, ${perCall}/call; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
       const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${FIRST_READ_MODEL}`, `--job=${job}`, '--stop-on-quota',
         ...(perCall > 1 ? [`--per-call=${perCall}`] : [])], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = `${FIRST_READ_REASON}: ${FINISH ? `finish cohort (#8482): visible book ${Math.round(100 * translatedShare(book))}% translated` : `visible book held ${book.pipeline_auto.hold.reason} (the hold stays)`}, routed ${routed}, first read by ${FIRST_READ_MODEL} through agy${perCall > 1 ? `, ${perCall} pages a call (#7522)` : ''}`;
+      const reason = `${FIRST_READ_REASON}: ${FINISH ? `finish cohort (#8482): visible book ${Math.floor(100 * translatedShare(book))}% translated` : `visible book held ${book.pipeline_auto.hold.reason} (the hold stays)`}, routed ${routed}, first read by ${FIRST_READ_MODEL} through agy${perCall > 1 ? `, ${perCall} pages a call (#7522)` : ''}`;
       const t0 = Date.now();
       const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only', ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
       if (!APPLY || applied !== 0) { release(); continue; }

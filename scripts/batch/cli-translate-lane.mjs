@@ -85,7 +85,7 @@ import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_LANES } from '../lib/translation-routing.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
 import { agyEnv, readPools, choosePool, poolName, quotaBuckets, readQuotaStdout, writeFinishQueue } from '../lib/agy-pools.mjs';
-import { quotaFloor, parseAgyHome, byRereadPriority, byFinishFirst, isFinishBook, rungTracker, IDLE_STATUSES } from './cli-ocr-lane.mjs';
+import { quotaFloor, parseAgyHome, byRereadPriority, byFinishFirst, isFinishBook, translatedShare, rungTracker, IDLE_STATUSES } from './cli-ocr-lane.mjs';
 import { ocrFirstGate, uncheckedLite, NO_TEXT } from '../lib/ocr-first-gate.mjs';
 import { WITHHOLD_REASONS } from '../lib/stale-translation.mjs';
 
@@ -354,7 +354,7 @@ async function finishMain(arg) {
       const file = path.join(dir, 'page-ids.json');
       fs.writeFileSync(file, JSON.stringify(take.map((p) => p.id)));
       await rungs.before(book.id);
-      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${Math.round(100 * (book.translation_state.translated / book.translation_state.translatable))}% translated): ${take.length} of ${open.length} pages${split.wait.length ? `; ${split.wait.length} Flash-Lite page(s) wait on a correction` : ''}${note ? `; ${note}` : ''} (weekly ${(100 * q.weekly).toFixed(1)}%, 5h ${(100 * q.five_h).toFixed(1)}%)`);
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${Math.floor(100 * translatedShare(book))}% translated): ${take.length} of ${open.length} pages${split.wait.length ? `; ${split.wait.length} Flash-Lite page(s) wait on a correction` : ''}${note ? `; ${note}` : ''} (weekly ${(100 * q.weekly).toFixed(1)}%, 5h ${(100 * q.five_h).toFixed(1)}%)`);
       tally.chunks++;
       const read = await runAsync(readerArgs(book.lane, { ids: file, dir, job, ocrChecked: note ?? book.lane.row.adoption?.ocr_checked }), ENV, tag, FINISH_JOB);
       if (read === 3) { stop ??= 'usage limit'; break; }
