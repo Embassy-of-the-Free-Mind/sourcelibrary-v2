@@ -76,7 +76,7 @@ case "$cmd" in
     echo "-> open the URL signed in as the account you want, then: $0 code $slug <code>"
     echo "-> afterwards add to $ACCTS:  $slug $d" ;;
   code)
-    tmux send-keys -t "claude-login-$slug" "$3" Enter; sleep 6
+    tmux send-keys -l -t "claude-login-$slug" "$3"; tmux send-keys -t "claude-login-$slug" Enter; sleep 8
     tmux capture-pane -pJt "claude-login-$slug" | grep -v '^\s*$' | tail -5
     echo "account: $(CLAUDE_CONFIG_DIR=/root/.claude-rc-$slug claude auth status 2>/dev/null | grep -o '"email": "[^"]*"' | cut -d'"' -f4)" ;;
   *) sed -n '2,26p' "$0"; exit 2 ;;
