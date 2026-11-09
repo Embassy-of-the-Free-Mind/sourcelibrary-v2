@@ -32,6 +32,7 @@ import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, CLI_TRANSLATE_BOOK_FILTER, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
+import { pageOrderGate } from '../lib/page-order-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
@@ -5165,6 +5166,18 @@ Rules:
             if (!trust.ok) {
               console.log(`  Not dispatched (${trust.reason}): ${label}`);
               continue;
+            }
+
+            // #8068: a fresh book whose printed page numbers descend (stored back to front, #5699) is held for a
+            // by-eye check before any lane translates it with the wrong neighbour as context. Fresh books only:
+            // they leave ocr_complete once dispatched, so each is read once; a gap-fill book was already translated.
+            if (freshBooks.includes(book)) {
+              const order = await pageOrderGate(db, book, { dryRun: DRY_RUN });
+              if (order.outcome !== 'pass' && order.outcome !== 'released_before') {
+                const runs = order.verdict.desc_runs.map((r) => `${r.ch}${r.from}-${r.to}`).join(', ');
+                console.log(`  Page order descends (${runs}), hold ${order.outcome} (#8068): ${label}`);
+                continue;
+              }
             }
 
             // THE CHANNEL RULE for translation (#7075): a book the table routes to a subscription CLI reader is held
