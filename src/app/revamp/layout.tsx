@@ -22,6 +22,10 @@ export default function RevampLayout({ children }: { children: React.ReactNode }
         .revamp-scope .on-dark button[class*="underline"] { text-decoration-color: rgba(255,255,255,.4); }
         .revamp-scope .on-dark button[class*="underline"]:hover { color: #fff; text-decoration-color: #fff; }
         .revamp-scope .on-dark [data-catalog-bar] { border-color: transparent; }
+        .revamp-scope :focus-visible { outline: 2px solid var(--text-primary, #1a1612); outline-offset: 2px; }
+        .revamp-scope input:focus-visible, .revamp-scope textarea:focus-visible, .revamp-scope select:focus-visible { outline: none; }
+        .revamp-scope select:focus, .revamp-scope textarea:focus { border-color: var(--text-primary, #1a1612); box-shadow: 0 0 0 1px var(--text-primary, #1a1612); }
+        .revamp-scope .on-dark :focus-visible { outline-color: #fff; }
       `}</style>
       <div className="revamp-scope">{children}</div>
     </>

@@ -71,6 +71,16 @@ Semantic tokens for success/error/warning/info states. Use these instead of hard
 <div className="border-status-success/30">
 ```
 
+## Focus States (proposed, collections revamp)
+
+Fields and controls show focus by darkening their own border, not with the rust outline.
+
+- **Text fields, search bars, selects:** border `border-border-medium` at rest; on focus `border-primary` plus a 1px `ring-primary` (Tailwind: `focus-within:border-primary focus-within:ring-1 focus-within:ring-primary` on the wrapper, or `focus:` on the field). The input itself has no outline. This is the `[data-catalog-bar]` pattern used by /library and /gallery.
+- **Buttons, links, boxes reached by keyboard:** `outline: 2px solid var(--text-primary)` with `outline-offset: 2px`. Keyboard focus must stay visible; only the colour changes from rust to near-black.
+- **Hover on boxes and cards:** border to `border-primary`. No colour change on text, no underline inside a box.
+
+Status: applied inside `/revamp` only (`src/app/revamp/layout.tsx`). Making it site-wide means changing the global `:focus-visible` rule in `globals.css`, which also changes the BPH embed, so it needs its own PR and BPH sign-off.
+
 ## Using Tailwind Tokens
 
 Tailwind v4 generates utility classes from `@theme inline` tokens. Use them directly:

@@ -70,11 +70,11 @@ export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
         </div>
       )}
       {!t && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-3">
             {sorted.map((g) => (
-              <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-4 py-3 hover:border-primary transition-colors">
-                <span className="block text-[15px] text-primary leading-snug">{g.label}</span>
-                <span className="block text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
+              <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-2.5 py-2 sm:px-4 sm:py-3 hover:border-primary transition-colors">
+                <span className="block text-[13px] sm:text-[15px] text-primary leading-snug">{g.label}</span>
+                <span className="block text-[11.5px] sm:text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
               </a>
             ))}
           </div>
@@ -99,22 +99,21 @@ export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
       <div className="pb-16">
         {shown.map(({ g, self, narrower }) => (
           <section key={g.id} id={`g-${g.id}`} className="scroll-mt-16">
-            <div className={`${WRAP} py-8 md:py-10`}>
+            <div className={`${WRAP} py-5 md:py-8`}>
               {(
                 // The whole picture band is the way into the subject.
-                <Link href={to(g)} className="group relative block h-[170px] md:h-[200px] overflow-hidden mb-4">
+                <Link href={to(g)} className="group relative flex min-h-[132px] md:min-h-[200px] overflow-hidden mb-3 md:mb-4">
                   <Strip pics={g.pics} className="absolute inset-0 h-full" />
                   <span className="absolute inset-0 transition-opacity group-hover:opacity-75" style={{ background: TINT }} />
-                  <span className="absolute inset-0 flex flex-col md:flex-row items-start md:items-end justify-end md:justify-between gap-2 md:gap-4 p-5 md:p-7 text-white">
-                    <span className="font-serif text-[34px] md:text-[48px] leading-none tracking-tight">{g.label}</span>
-                    <span className="text-[15px] font-medium whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5">Everything in {g.label} <Arrow /></span>
+                  <span className="relative self-end w-full flex flex-col md:flex-row items-start md:items-end md:justify-between gap-1.5 md:gap-4 p-4 pt-10 md:p-7 text-white">
+                    <span className="font-serif text-[26px] md:text-[48px] leading-[1.05] tracking-tight">{g.label}</span>
+                    <span className="text-[13px] md:text-[15px] font-medium md:whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5">Everything in {g.label} <Arrow /></span>
                   </span>
                 </Link>
               )}
               {self.also && <p className="text-[13px] text-muted -mt-2 mb-3">Also called {self.also}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map(({ s, m }) => <PicBox key={s.id} s={s} also={m.also} />)}</div>
             </div>
-            <div className={WRAP}><div className="border-t border-border-light" /></div>
           </section>
         ))}
       </div>
