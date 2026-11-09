@@ -279,7 +279,7 @@ export default function ChakraTraditionPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          All texts are freely readable: the Sanskrit originals are public domain, and our translations are <Link href="/licensing" className="text-accent-rust hover:text-accent-rust underline">CC BY-SA 4.0</Link>. The originals are preserved alongside any translations, and every page links back to its source institution. This is a growing collection; as we process, translate, and verify these texts, their status will update on the site.
+          All texts are freely readable: the Sanskrit originals are public domain, and our translations are <Link href="/licensing" className="text-accent-rust hover:text-accent-rust underline">CC BY-NC-SA 4.0</Link>. The originals are preserved alongside any translations, and every page links back to its source institution. This is a growing collection; as we process, translate, and verify these texts, their status will update on the site.
         </p>
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">

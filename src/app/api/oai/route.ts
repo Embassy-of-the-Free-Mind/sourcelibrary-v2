@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { Document } from 'mongodb';
+import { dcRightsForBook } from '@/lib/license-info';
 
 /**
  * OAI-PMH 2.0 endpoint — exposes Source Library catalog for harvesting
@@ -77,7 +78,7 @@ function bookToOaiDc(book: Document): string {
   add('type', 'Text');
   add('publisher', book.dublin_core?.dc_publisher || book.image_source?.provider_name);
   add('source', book.image_source?.source_url);
-  add('rights', book.dublin_core?.dc_rights || 'CC BY-NC-SA 4.0');
+  add('rights', dcRightsForBook(book.dublin_core?.dc_rights));
   add('identifier', `https://sourcelibrary.org/book/${book.slug || book.id}`);
 
   // Subjects from categories and faceted tags

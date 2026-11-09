@@ -150,16 +150,24 @@ function renderRichText(doc, text, fontSize, lineGap) {
 
 // ── PDF Generator ───────────────────────────────────────────────────
 
+// New editions are CC BY-NC-SA 4.0 (/terms since 2026-11-05, #8488); an
+// edition minted earlier keeps the CC BY-SA 4.0 stated on its DOI record.
+const PDF_LICENSES = {
+  'CC-BY-NC-SA-4.0': { short: 'CC BY-NC-SA 4.0', long: 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International', url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/' },
+  'CC-BY-SA-4.0': { short: 'CC BY-SA 4.0', long: 'Creative Commons Attribution-ShareAlike 4.0 International', url: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+};
+
 /**
  * Generate a scholarly PDF for a book.
  *
  * @param {Object} book - Book document from MongoDB
  * @param {Array} pages - Page documents with translation.data
- * @param {Object} options - { introduction, methodology }
+ * @param {Object} options - { introduction, methodology, license } (license: SPDX id, default CC-BY-NC-SA-4.0)
  * @returns {Promise<Buffer>} PDF buffer
  */
 export async function generateScholarlyPdf(book, pages, options = {}) {
-  const { introduction, methodology } = options;
+  const { introduction, methodology, license = 'CC-BY-NC-SA-4.0' } = options;
+  const lic = PDF_LICENSES[license] || PDF_LICENSES['CC-BY-NC-SA-4.0'];
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const now = new Date().toISOString().split('T')[0];
@@ -222,7 +230,7 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
 
 This AI-assisted translation has NOT been reviewed by human editors or translators. It captures the meaning and structure of the original text but may not reflect every nuance a specialist human translator would convey. Readers are encouraged to consult the original language text, available alongside this translation at Source Library.
 
-This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).`;
+This work is licensed under ${lic.long} (${lic.short}).`;
 
   doc.text(disclosure, { lineGap: 4 });
 
@@ -368,8 +376,8 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
     `Source Library: https://sourcelibrary.org/book/${bookSlug}`,
     book.ia_identifier ? `Internet Archive: https://archive.org/details/${book.ia_identifier}` : null,
     '',
-    'License: CC BY-SA 4.0',
-    'https://creativecommons.org/licenses/by-sa/4.0/',
+    `License: ${lic.short}`,
+    lic.url,
   ].filter(Boolean);
 
   doc.text(colophon.join('\n'), { lineGap: 4 });
