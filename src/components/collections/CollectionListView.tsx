@@ -39,6 +39,10 @@ interface CollectionListViewProps {
   collectionType?: string;
   /** Collection slug carried on artwork links (?from=) so prev/next walks this collection. */
   fromCollection?: string;
+  /** A maker's note per book id, shown under the title (collections with notes). */
+  notes?: Record<string, string>;
+  /** A maker's number per book id, shown before the title (numbered collections). */
+  numbers?: Record<string, number>;
 }
 
 function SortIcon({ column, currentSort }: { column: string; currentSort: string }) {
@@ -62,6 +66,8 @@ export default function CollectionListView({
   loading,
   collectionType,
   fromCollection,
+  notes,
+  numbers,
 }: CollectionListViewProps) {
   const handleColumnSort = (column: string) => {
     if (column === 'year') {
@@ -129,6 +135,7 @@ export default function CollectionListView({
                       className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors line-clamp-1"
                       style={{ fontFamily: 'var(--font-serif)' }}
                     >
+                      {numbers?.[book.id] != null && <span className="tabular-nums text-muted mr-2">{numbers[book.id]}.</span>}
                       {book.display_title || book.title}
                     </span>
                     {book.is_first_translation && (
@@ -141,6 +148,7 @@ export default function CollectionListView({
                       {bylineNode}
                     </span>
                   </Link>
+                  {notes?.[book.id] && <p className="mt-1 text-[13px] text-secondary leading-snug max-w-2xl">{notes[book.id]}</p>}
                 </td>
                 <td className="py-3 pr-4 hidden sm:table-cell">
                   <Link href={href} className="text-sm text-secondary line-clamp-1 block">

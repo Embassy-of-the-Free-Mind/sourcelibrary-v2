@@ -102,7 +102,7 @@ Status: applied inside `/revamp` only (`src/app/revamp/layout.tsx`). Making it s
 ## Buttons and Dropdowns (proposed, collections revamp)
 
 - **Buttons are black.** Any action button (See all, Show more, Search, Ask, Sign in to start): `bg-primary text-cream`, square corners, `h-11 px-5 text-sm font-medium`, hover `opacity-90`. No white outlined buttons, no rounded corners. Rust stays only where the site header already uses it (Sign in).
-- **Dropdowns look like /library's sort.** A bordered white box with the current choice and a small chevron (`search-kit/SortSelect`; `revamp/_components/Pick` adds a label). The real `<select>` sits invisibly on top so phones get their own picker and it keeps 16px text so iOS doesn't zoom. No native-looking selects.
+- **Dropdowns look like /library's sort.** A bordered white box with the current choice and a small chevron (`search-kit/SortSelect`, with its optional `label`). The real `<select>` sits invisibly on top so phones get their own picker and it keeps 16px text so iOS doesn't zoom. No native-looking selects.
 
 ## Using Tailwind Tokens
 

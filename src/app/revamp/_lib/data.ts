@@ -135,6 +135,9 @@ export function collectionModel(slug: string): CollectionModel | null {
     coverPicks: coverPicks(items),
     heroImage: (col.hero_image as string) || undefined,
     books: artworks ? [] : books,
+    all: artworks ? [] : (read<{ books: Book[] }>(`_manifest-${slug}`)?.books ?? books),
+    byBook: items.reduce<Record<string, Plate[]>>((acc, i) => { const pl = toPlate(i); const k = i.bookId as string; if (pl && k) (acc[k] ??= []).push(pl); return acc; }, {}),
+    notes: hl.filter((h) => h.note).map((h, i) => ({ id: (h.book_id || h.id)!, rank: h.rank ?? i + 1, note: h.note! })).sort((x, y) => x.rank - y.rank),
     firstTranslations: ft,
     featured,
     plates: artworks ? artTiles.map((src) => ({ src })) : plates,
@@ -160,7 +163,7 @@ export function gallerySetModel(slug: string): CollectionModel | null {
   return {
     slug, name: s.title as string, deck: firstSentence((s.description as string) || ''), short: shortLine(firstSentence((s.description as string) || '')), intro: [], byline: 'By Source Library', subjects: [],
     stats: { works: 0, years: years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : null, firstTranslations: 0, images: (s.imageCount as number) || plates.length },
-    heroTiles: plates.slice(0, 40).map((p) => p.src), coverPicks: coverPicks(items), books: [], firstTranslations: [], featured: null,
+    heroTiles: plates.slice(0, 40).map((p) => p.src), coverPicks: coverPicks(items), books: [], all: [], notes: [], byBook: {}, firstTranslations: [], featured: null,
     plates, platesLabel: 'Plates', platesNote: '', pages: [], quotes: [], quoteBand: null, opensOn: 'plates', ask: null, askMedia: null, moreWorks: 0, listed: 0,
   };
 }

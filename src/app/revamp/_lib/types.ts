@@ -28,6 +28,12 @@ export interface CollectionModel {
   coverPicks: string[];
   heroImage?: string;
   books: Book[];
+  /** Every work, from the saved full list (_tools/snapshot-manifest.mjs); else the same as books. */
+  all: Book[];
+  /** The maker's notes on single works, with the order they ranked them in. */
+  notes: { id: string; rank: number; note: string }[];
+  /** The saved plates grouped under the work they come from, by book id. */
+  byBook: Record<string, Plate[]>;
   firstTranslations: Book[];
   featured: null | { book: Book; title: string; byline: string; text: string[] };
   plates: Plate[];
