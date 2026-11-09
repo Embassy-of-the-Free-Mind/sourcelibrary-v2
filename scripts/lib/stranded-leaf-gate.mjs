@@ -27,13 +27,15 @@
  * spot check judges a sample against the image (scripts/eval/offleaf-5309/judge.mjs).
  */
 
+import { stripMarkupTags } from './strip-markup-tags.mjs';
+
 export const STRANDED_SHARED_MIN = 0.4;
 export const STRANDED_MARGIN = 0.15;
 export const STRANDED_WINDOW = 8;
 
 /** Distinct folded tokens: words of 5+ letters, or character trigrams where the script does not space words. */
 export function leafTokens(t) {
-  const s = String(t || '').replace(/<[^>]+>/g, ' ').replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u');
+  const s = stripMarkupTags(String(t || '')).replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u');
   const UNSPACED = /[぀-ヿ㐀-鿿가-힯ༀ-࿿]/gu;
   if ((s.match(UNSPACED) || []).length > 40) {
     const c = (s.match(UNSPACED) || []).join('');

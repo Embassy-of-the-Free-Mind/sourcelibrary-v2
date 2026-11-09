@@ -138,7 +138,7 @@ async function fixBook(b, wave, pool) {
       trWritten = new Set((await db.collection('pages').find({ id: { $in: wrote }, 'translation.updated_at': { $gte: t1 } }, { projection: { id: 1 } }).toArray()).map((p) => p.id));
       // A page withheld before (2026-10-02's stale_after_reocr, or step 4 of an earlier wave) that now has its own English
       // drops the marker, as wrong-leaf-fix-5021.mjs does; the old English stays in page_revisions.
-      if (trWritten.size) await db.collection('pages').updateMany({ id: { $in: [...trWritten] }, 'translation.data': { $exists: true }, translation_withheld: { $exists: true } }, { $unset: { translation_withheld: '' } });
+      if (trWritten.size) await db.collection('pages').updateMany({ id: { $in: [...trWritten] }, translation_withheld: { $exists: true } }, { $unset: { translation_withheld: '' } });
     }
   }
   // 4. withhold the old English a written page still carries
