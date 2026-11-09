@@ -83,6 +83,18 @@
    }
   ]
  },
+ "/articles/solve-et-coagula/episode-artwork-169.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d394fd600630-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d394fd600630-1920.avif",
+    "w": 1280
+   }
+  ]
+ },
  "/articles/techniques-of-the-body/hero-khrul-khor.jpg": {
   "srcset": [
    {

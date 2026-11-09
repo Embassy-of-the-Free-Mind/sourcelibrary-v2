@@ -103,6 +103,7 @@ export function isCloudflareEdge(ip: string | null | undefined): boolean {
  * production.
  */
 export function trustedClientIp(headers: Headers): string {
+  if (onReaderOriginBox()) return headers.get('cf-connecting-ip')?.trim() || 'unknown';
   const peer =
     headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     headers.get('x-real-ip')?.trim() ||
@@ -111,4 +112,30 @@ export function trustedClientIp(headers: Headers): string {
   if (!peer) return viaCdn || 'unknown';
   if (isCloudflareEdge(peer)) return viaCdn || peer;
   return peer;
+}
+
+/**
+ * The reader-origin box (#8384, trap 2). On Vercel the `x-vercel-*` headers and the
+ * peer address are set by the platform. On a self-hosted box nothing sets them: they are
+ * empty, or written by whoever connects. There the only trusted identity is
+ * `cf-connecting-ip` / `cf-ipcountry`, which the box's Caddy sets from the Worker's own
+ * headers after checking the Worker's shared secret, and strips from everything else
+ * (infrastructure/web-box/Caddyfile). Next listens on loopback only, so nothing reaches it
+ * without passing Caddy.
+ *
+ * Set `SL_BOX_CLIENT_IDENTITY=cloudflare` on the box only. Unset (every Vercel
+ * deployment), every function in this file behaves exactly as before.
+ */
+export function onReaderOriginBox(): boolean {
+  return process.env.SL_BOX_CLIENT_IDENTITY === 'cloudflare';
+}
+
+/**
+ * The caller's country code, or null. On Vercel: `x-vercel-ip-country`, then
+ * `cf-ipcountry` (what every call site read inline before). On the box: `cf-ipcountry`
+ * only, because a client could write an `x-vercel-*` header there.
+ */
+export function clientCountry(headers: Headers): string | null {
+  if (onReaderOriginBox()) return headers.get('cf-ipcountry') || null;
+  return headers.get('x-vercel-ip-country') || headers.get('cf-ipcountry') || null;
 }

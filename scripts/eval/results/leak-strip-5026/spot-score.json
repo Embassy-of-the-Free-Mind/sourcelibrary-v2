@@ -1,0 +1,342 @@
+{
+ "judged": 30,
+ "right": 8,
+ "wrong": [
+  {
+   "key": "S03",
+   "book": "6992caf8d4d545ae73feec07",
+   "page": 9,
+   "language": "Chinese",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "8",
+    "right": "no",
+    "why": "The cut only removes page 8 text, but page 9 still keeps page 8 material such as \"In my days of leisure... pruning away redundant\" and \"ten volumes, totaling over twenty thousand words\". The only text printed on page 9 is the heading 朱學詩謹序."
+   }
+  },
+  {
+   "key": "S02",
+   "book": "69bfcc9f8ab50eb88e8c5846",
+   "page": 447,
+   "language": "Greek",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "448",
+    "right": "no",
+    "why": "Page 447's printed text ends at 'ἀποκρυψάμενος δὲ ἅπαντα' ('Having hidden everything'). After the edit, page 447's English still carries page 448 text after the column-break, from '[He fled] and became hidden… waiting until they left the oratory' through 'A wonder… This, brothers and genuine friends, was written by God'. Only the later part of the page 448 text was removed."
+   }
+  },
+  {
+   "key": "S04",
+   "book": "69528b19ab34727b1f04f2fe",
+   "page": 13,
+   "language": "English",
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "none",
+    "removed_where": "12",
+    "right": "no",
+    "why": "The cut from page 13 is correct. The removed 'THE BOOK OF DIVINE CONSOLATION… CHATTO AND WINDUS… 1909' block is printed on page 12, and the call number and 'All rights reserved' stay on page 13. But page 12's English still has 'The title on the reverse of this page has been adapted by Miss Blanche F. Hunter…' and the decorative 'The BOOK of the Divine… MCMIX' title. Neither is printed on page 12's scan."
+   }
+  },
+  {
+   "key": "S07",
+   "book": "69a99d136c7545e2236e1c44",
+   "page": 654,
+   "language": "German",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "655",
+    "right": "no",
+    "why": "The removed passage ('character was attributed... African homeland even on foreign soil') is printed on p.655, so cutting it was correct. But page 654 still contains p.655 text, because p.654 ends at 'Dies ist allerdings von ihren'. The leftover 'carried into it by their theologians; the food prohibition shows rather... sacris... The same' is printed on p.655."
+   }
+  },
+  {
+   "key": "S06",
+   "book": "69ae9bddf3bd47924caccec8",
+   "page": 88,
+   "language": "German",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "89",
+    "right": "no",
+    "why": "The cut text (§52 to §58, e.g. 'Tascodrugites, Passalorhynchites') is printed only on page 89. But page 88 still carries other page-89 text: the end of §48 after 'Seine ga', §49 to §51 ('Whether Montanus called himself the Holy Spirit') and §59 to §62 ('The heresy of the orthodox')."
+   }
+  },
+  {
+   "key": "S09",
+   "book": "699259843d2d40d1b0590fe6",
+   "page": 159,
+   "language": "English",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "158",
+    "right": "no",
+    "why": "Page 159 is only Plate 22 (the posts and their caption). After the edit it still carries page 158's Fig. 36 caption 'POST OF LĒ'LAXA IN XUMTA'SPĒ' and the paragraph '\"He will never return to us.\" As they were singing this…'. So the removal of the Lā'liliLax passage, which is printed on page 158, was correct but leaves the job unfinished."
+   }
+  },
+  {
+   "key": "S05",
+   "book": "69c8a2816c6f3cc53c85e442",
+   "page": 17,
+   "language": "English",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "16",
+    "right": "no",
+    "why": "Page 17 is a blank page, so all of its English duplicates page 16. The edit removed only part of that copy and left page-16 text behind, such as \"...and a third of the moon, and a third of the stars;\", \"occurred in 585 B.C.\" and \"In Job 37:22, the Authorized Version reads\", along with the Thales and Luke notes. The whole of page 17's English should have been cleared."
+   }
+  },
+  {
+   "key": "S11",
+   "book": "69c72037da9771c716316bb6",
+   "page": 464,
+   "language": "Dutch",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "465",
+    "right": "no",
+    "why": "The removed text ('This second answer now is the following', sections 61–62) is printed on page 465, so cutting it was correct. But page 464 still carries sections 63–65 ('The single difficulty alone…', 'For with what right…', 'We'), which are also printed on page 465."
+   }
+  },
+  {
+   "key": "S13",
+   "book": "69a99cc41cb97318b41731ed",
+   "page": 262,
+   "language": "English",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "261",
+    "right": "no",
+    "why": "Page 262 prints only the heading 'APPENDIX.' The removed passage ('time should be observed in states of rest…') is page 261 text, but after the edit page 262 still has other page-261 text, such as 'from the intellect in the same way that time is derived from the soul' and 'each planet has a differ…'."
+   }
+  },
+  {
+   "key": "S10",
+   "book": "69a5eac7d507939f0352c9a7",
+   "page": 494,
+   "language": "Armenian",
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "major",
+    "removed_where": "494",
+    "right": "no",
+    "why": "The removed text, 'With which he rebuked the idolatry…' and note (12) 'In the deep dangerous…', is printed on page 494 ('որովք կշտամբեաց զկռապաշտութիւն…', '(12) Ի ծուփս Բազմովանդս'), so page 494 lost its own text. Page 493's English also carries notes (9)–(16), which are printed on page 494; page 493 itself has only the prayer's end and notes (1)–(8)."
+   }
+  },
+  {
+   "key": "S17",
+   "book": "6a10093ff7172929509684a4",
+   "page": 674,
+   "language": "Latin",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "675",
+    "right": "no",
+    "why": "The removed text, from 'fluids are blood, yellow bile…' to '…foul, feminine', is printed on page 675, so page 674 lost none of its own text. But the cut stopped too early: page 674 still carries '; and the same in its depth is airy…', the 'Of Lead' section and the 'Of Lead again' section, all printed on page 675 after 'quatuor humores'."
+   }
+  },
+  {
+   "key": "S16",
+   "book": "69b51db4cf111105c428e961",
+   "page": 42,
+   "language": "German",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "43",
+    "right": "no",
+    "why": "The removed passage ('HERMETIC ART OF MAKING-COMPLETELY…', 'Let no man suggest…') is printed on p.43, so cutting it was correct. But p.42 still carries p.43 text: 'be / that / mainly / from lack…' and 'Believe me one truly…' (p.43 'wol sein / das…', 'Glaub Mir einer…'), plus a stray '[The]'. P.42 ends at 'könte es nicht auch wol'."
+   }
+  },
+  {
+   "key": "S19",
+   "book": "6953af0577f38f6761bd92a5",
+   "page": 227,
+   "language": "Aramaic",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "226",
+    "right": "no",
+    "why": "Both removed passages are commentary printed on page 226, but page 227 still carries the leftover 'it also appears in the writings of the Greek grammarian Hesychius as Delephat… Bar Baḥlul… as Dilbath', which is also printed on page 226."
+   }
+  },
+  {
+   "key": "S18",
+   "book": "69dbcbc81040d1d5e20bac9c",
+   "page": 40,
+   "language": "Latin",
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "major",
+    "removed_where": "40",
+    "right": "no",
+    "why": "The removed passage, from \"contributes greatly to cultivating that closer society of friendship\" through \"Farewell\", renders \"plurimum ad illā de qua loquebar interozē societatē amicicie colendā pficit … Uale\", which is printed on page 40, so the edit cut page 40's own text. The duplicate is on page 39: its English runs past \"mibi vero id\" into the rest of Letter 48, which is printed on page 40, and that page is left unchanged."
+   }
+  },
+  {
+   "key": "S23",
+   "book": "69dbc7e91040d1d5e2095644",
+   "page": 250,
+   "language": "Latin",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "251",
+    "right": "no",
+    "why": "Page 250 ends at 'appetitum cuius ca'. The edit still leaves 'captured by pleasure. How much more… because they did not have knowledge' (Latin 'pitur uoluptate… Isaie. v.') on page 250, but that text is printed on page 251."
+   }
+  },
+  {
+   "key": "S22",
+   "book": "69b2f40e0e2f024dfbfba5c2",
+   "page": 662,
+   "language": "Greek",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "661",
+    "right": "no",
+    "why": "The cut passage (\"Frapper sur la joue… Praefectus… Budé p. 489… over palms and\") is printed on page 661, so removing it from 662 was correct. But page 662 still opens with \"performs the function of a preposition… Paedagogus 4\", which is also page 661 text (\"ΕΠΙ praepositio… Pausanias 4\"), so the leak is only partly removed."
+   }
+  },
+  {
+   "key": "S24",
+   "book": "6992d66d46b85e738a0c416a",
+   "page": 1182,
+   "language": "Sanskrit",
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "major",
+    "removed_where": "1182",
+    "right": "no",
+    "why": "The removed verses 21–28 ('these flow eastward and join the Alakananda… one hundred and ninety-ninth chapter') are printed on page 1182 (क्षेमायाः संगमे… नवनवत्युत्तरैकशततमोऽध्यायः), so the edit cut page 1182's own text. The leaked copy actually sits on page 1181, whose English runs past verse 19 ('…of My lingas, O Maheshvari. 19. By seeing them…') into verses 20–28."
+   }
+  },
+  {
+   "key": "S25",
+   "book": "6991eb0d2f801130a473f42a",
+   "page": 50,
+   "language": "German",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "49",
+    "right": "no",
+    "why": "Page 50 is a blank page, so all the crossbow text that was removed is printed on page 49. But the edit leaves the heading 'CODEX ATLANTICUS FOLIO 53 v. b; LEONARDO, CROSSBOW' (printed on p49) on blank p50. The removed passage also starts at 'And the string', so the p49 lines 'This crossbow is for throwing 200-pound stones' / 'weighs 2,000 pounds' may still be there too."
+   }
+  },
+  {
+   "key": "S29",
+   "book": "69b2f41b0e2f024dfbfbb280",
+   "page": 152,
+   "language": "Greek",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "153",
+    "right": "no",
+    "why": "Both removed passages ('joked with him… fell asleep', 'took down his brother's corpse… superior to the Egyptians') are printed on page 153, but the edit leaves the fragment 'When it was late in the night, he' (ὡς πρόσω ἦν τῆς νυκτὸς, printed on p.153) stuck onto page 152 after 'and someone'."
+   }
+  },
+  {
+   "key": "S27",
+   "book": "69905f1140bc3a0478efa1d3",
+   "page": 144,
+   "language": "Greek",
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "major",
+    "removed_where": "144",
+    "right": "no",
+    "why": "The removed passage 'each, one in the same spot and uniform… her he fashioned' translates the Greek printed on page 144 ('προσῆψεν ἑκάστῳ, τὴν μὲν ἐν ταὐτῷ… γῆν δὲ τροφὸν μὲν ἡμετέραν'), so the edit cut page 144's own main text. The duplicate is on page 143, which shows this passage instead of its own printed English ('when the relative swiftnesses… And he bestowed two movements upon')."
+   }
+  },
+  {
+   "key": "S20",
+   "book": "6a10099af71729295096ac97",
+   "page": 31,
+   "language": "Latin",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "32",
+    "right": "no",
+    "why": "The removed body text ('THAT Chemical powder… rarefies the thick,') is printed on page 32, so cutting it is correct. But page 31 still keeps the heading 'OF THE POWDER… CHAPTER THREE', which is also printed on page 32. Page 31's own 'CAPVT SECVNDVM' text was never translated."
+   }
+  },
+  {
+   "key": "S32",
+   "book": "69dbcc1d0f8c5edf20f45c6b",
+   "page": 17,
+   "language": "Latin",
+   "v": {
+    "own_after": "no",
+    "other_ok": "yes",
+    "removed_own": "none",
+    "removed_where": "18",
+    "right": "no",
+    "why": "The cut passage ('Others put the works of restoration… ordered to our restoration') is printed only on page 18 ('Quidā autē opa restaurationis… quodammodo ordinant'), so removing it is correct. But page 17 still ends with 'To the other it is said: things and signs taken commonly are not the subject…', which is page 18's 'Ad aliud dr: res z signa coiter accepta…', so the edit is incomplete."
+   }
+  }
+ ],
+ "controls": [
+  {
+   "key": "S01",
+   "caught": true,
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "major",
+    "removed_where": "186",
+    "right": "no",
+    "why": "Footnote 1 (\"Sur la première feuille du manuscrit… Dioptrice mea, ubi quædam tollenda…\") is printed at the foot of page 186, so the edit cut a whole note that belongs to page 186. Page 187's English still repeats that same footnote 1, which is not printed on 187: the edit removed the wrong copy."
+   }
+  },
+  {
+   "key": "S30",
+   "caught": true,
+   "v": {
+    "own_after": "yes",
+    "other_ok": "no",
+    "removed_own": "major",
+    "removed_where": "550",
+    "right": "no",
+    "why": "The cut passage (\"as the hardness of their age resists… it will lack this vice\") translates 'aetatis repugnante duritia… carebit hoc uitio', which is printed on page 550, so the edit deleted page 550's own text. The leaked copy is on page 549's English, which still runs past 549's last printed words 'quia post quinquennium'."
+   }
+  }
+ ],
+ "unjudged": [],
+ "pass": false
+}

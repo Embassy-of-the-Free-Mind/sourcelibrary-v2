@@ -75,7 +75,7 @@ import { blockPageRefusals, lengthRatioK } from '../lib/block-page-guard.mjs';
 import { sourceProse } from '../lib/block-drift.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash, bodyLen } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
-import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage } from '../lib/agy-cli.mjs';
+import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage, cliExitCode } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
@@ -196,7 +196,7 @@ if (STAGE === 'read') {
       const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(pg.ocr.data), prompt_variant: PROMPT_VARIANT_MARKED, instruction: null });
       const meta = {
         page_id: pg.id, book_id: pg.book_id, page_number: pg.page_number, cli: CLI, cli_version: version, model: MODEL,
-        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null, attempts: r.calls, chars: text.length,
+        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: null, attempts: r.calls, chars: text.length,
         prompt_variant: PROMPT_VARIANT_MARKED, wrapper: null, tool_calls: r.tool_calls,
         ocr_hash: contentHash(pg.ocr.data), ocr_updated_at: pg.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
         prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), call_usage: agyUsage(r.usage),
@@ -281,8 +281,8 @@ if (STAGE === 'read') {
     fs.writeFileSync(path.join(OUT, `${id}.txt`), text);
     const meta = {
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
-      prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(caption && { caption_leaf: true }),
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: r.cls, attempts: r.calls, chars: text.length,
+      prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(r.agent && { agent: r.agent }), ...(caption && { caption_leaf: true }),
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
       // agy's own token counts for the call that produced this read (the last attempt; a cut first read's are kept
@@ -309,7 +309,8 @@ if (STAGE === 'read') {
 const REASON = arg('reason');
 if (!REASON) { console.error('--reason is required: say why these pages are being translated through the CLI'); process.exit(2); }
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'))).sort((a, b) => a.page_number - b.page_number);
-const runId = `cli-translate-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+// CLI_RUN_ID (#5026): a repair that applies book by book names ONE run id for a whole wave, so revert-run.mjs undoes it in one call
+const runId = process.env.CLI_RUN_ID || `cli-translate-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
 const tally = { written: 0, skipped: {} };
 const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
 const books = {};
@@ -346,7 +347,7 @@ for (const m of metas) {
     prompt: { id: m.prompt_ref?.id, name: m.prompt_ref?.name, version: m.prompt_ref?.version, hash: m.prompt_ref?.content_hash, sent_hash: sentHash, sent_chars: m.prompt_sent_chars },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     // A two-pass read (#6865: a Gemini draft reviewed by Opus against the image) lists both passes in its meta.
-    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
+    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
     // The lane's suffix (#7499): a read made before the context carried it still names it in its meta.
     input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.prompt_variant && m.context ? { prompt_variant: m.prompt_variant, ...m.context } : m.context }),
   });
@@ -371,4 +372,10 @@ if (APPLY) {
   }
 }
 console.log(`\n${APPLY ? 'written' : 'would write'}: ${tally.written}   skipped: ${JSON.stringify(tally.skipped)}${APPLY ? `   run ${runId}` : '   (dry run; add --apply)'}`);
+// #8399: a read made with claude-translate.mjs --seam-pass=1 carries its seam repairs in DIR/seam-pass.jsonl; they are
+// written after the reads, against the stored text, under their own run id (scripts/lib/seam-pass.mjs applySeamPass).
+if (fs.existsSync(path.join(OUT, 'seam-pass.jsonl'))) {
+  const { applySeamPass } = await import('../lib/seam-pass.mjs');
+  await applySeamPass(db, OUT, { apply: APPLY });
+}
 await client.close();

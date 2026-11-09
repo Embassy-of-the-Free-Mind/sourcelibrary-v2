@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { resolvePageByNumber } from '@/lib/page-number-resolve';
+import { publicUrl } from '@/lib/public-origin';
 
 /**
  * `/book/<id>/page-number/<n>` → the reader for that printed page.
@@ -45,7 +46,7 @@ export async function pageNumberRedirect(
   }
 
   const pageId = page.id || page._id?.toString();
-  const destination = new URL(`${prefix}/book/${bookSlug}/page/${pageId}`, request.url);
+  const destination = publicUrl(`${prefix}/book/${bookSlug}/page/${pageId}`, request);
   // Preserve the incoming query string (e.g. ?highlight=, ?v=) so search-result
   // links that land here still highlight/pin on the resolved page reader.
   destination.search = request.nextUrl.search;

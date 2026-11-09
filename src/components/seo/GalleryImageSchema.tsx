@@ -1,5 +1,4 @@
-import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
-import { displayedImageRights, libraryRightsUri, type LibraryRightsStatement } from '@/lib/types/image-source';
+import { BASE_URL, imageRightsFields, type ImageRightsSource } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { institutionalByline } from '@/lib/corporate-bylines';
@@ -25,12 +24,7 @@ interface GalleryImageSchemaProps {
     author?: string;
     published?: string;
     license?: string;
-    image_source?: {
-      provider?: string;
-      license?: string;
-      attribution?: string;
-      rights_normalized?: LibraryRightsStatement | null;
-    };
+    image_source?: ImageRightsSource;
   };
 }
 
@@ -65,11 +59,6 @@ export default function GalleryImageSchema({
     symbol: 'Symbol',
     decorative: 'Decorative element',
   };
-
-  // Determine license from book or image source
-  const license = book?.image_source?.license || book?.license;
-  const statedUri = libraryRightsUri(book?.image_source);
-  const libraryRights = displayedImageRights(book?.image_source);
 
   const artwork = {
     '@type': ['VisualArtwork', 'ImageObject'],
@@ -113,18 +102,13 @@ export default function GalleryImageSchema({
         ? { creator: { '@type': 'Person', name: formatAuthor(book.author).name || book.author } }
         : {}),
     ...(book?.published && { dateCreated: book.published }),
-    // The holding library's own statement wins when we have read one (#7771);
-    // a library that gave only its terms of use gets no `license` URL rather
-    // than the public-domain default, and its own name for the statement.
-    ...(statedUri === undefined
-      ? { license: license ? getLicenseUrl(license) : PUBLIC_DOMAIN_MARK_URL }
-      : statedUri ? { license: statedUri } : {}),
+    // The holding library's own statement wins when we have read one (#7771).
     usageInfo: `${BASE_URL}/licensing`,
-    creditText: libraryRights.credit || `Digitized by ${book?.image_source?.provider || 'Internet Archive'}`,
-    copyrightNotice: libraryRights.fromLibrary && libraryRights.license
-      ? `${libraryRights.license.name}. Original published ${book?.published || 'before 1900'}.`
-      : `Public domain. Original published ${book?.published || 'before 1900'}.`,
-    acquireLicensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
+    ...imageRightsFields(book?.image_source, {
+      published: book?.published,
+      storedLicense: book?.license,
+      licensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
+    }),
     isPartOf: {
       '@type': 'Book',
       '@id': book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,

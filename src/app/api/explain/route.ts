@@ -5,6 +5,7 @@ import { MODEL_PRICING } from '@/lib/ai';
 import { withAuth } from '@/lib/auth-helpers';
 import { logAiUsage } from '@/lib/log-ai-usage';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { clientCountry } from '@/lib/client-ip';
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -217,7 +218,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       costUsd: calculateCost(inputTokens, outputTokens, DEFAULT_MODEL),
       ms: Date.now() - _aiStart,
       ok: true,
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null,
+      country: clientCountry(request.headers) || null,
     });
 
     // For analyze mode, parse the JSON response

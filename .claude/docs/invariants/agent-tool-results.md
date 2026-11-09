@@ -24,6 +24,17 @@ filter, exact count, a representative page, and the browse URL.
 **When a question class needs a different query shape, give it a different
 tool.** Prompt wording cannot make a ranker count.
 
+## Prompt wording cannot make a model search, either
+
+A follow-up's earlier answers reach the model as bare text, so it answers from
+them. Told to search in the prompt alone, flash-lite still skipped 29.3% of
+research follow-ups (n=41, #8151). Requiring a tool in the first round
+(`FunctionCallingConfigMode.ANY`), with `no_search_needed` as the way to decline,
+took that to 2.4%. **When the model must make a choice, make it a tool call.**
+That also records the choice: each call lands in `toolCalls` on the AI message,
+and in `embassy_errors` when a turn dies. A no-search turn is where the invented
+links were: 33 of 106 book links dead against 0 of 93.
+
 ## Silence in a tool result is an invitation to fabricate
 
 Both defects below were invisible in the code and in the query measurements —

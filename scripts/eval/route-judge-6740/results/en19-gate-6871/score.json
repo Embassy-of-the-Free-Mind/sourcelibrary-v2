@@ -1,0 +1,21 @@
+{
+ "scored_at": "2026-11-07T11:17:04.140Z",
+ "cells": {
+  "en19": {
+   "lang": "English",
+   "route": "lighton (bare, guarded)",
+   "drawn": 30,
+   "books": 12,
+   "written": 30,
+   "judged": 30,
+   "accepted": 21,
+   "wrong_text": 3,
+   "p_acc_ge_08": 0.075,
+   "all_drawn_accepted": "21/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "0/0",
+   "decision": "HOLD",
+   "why": "wrong text 3/30; P(acc>=0.8) 0.075"
+  }
+ }
+}

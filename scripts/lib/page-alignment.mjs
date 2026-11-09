@@ -143,6 +143,35 @@ export function readerVisibleShift(pages) {
 }
 
 /**
+ * May an image repair finish a book whose text was already moved (#8266)?
+ *
+ * repair-bulkjp2-text-shift.mjs moved text on 8 books and left the images for later, under
+ * `archive_metadata.jp2_text_shift_awaiting_image_rearchive`. The timing test above cannot judge
+ * such a book: its OCR timestamps predate the move, and on Lingua Aegyptiaca they said the text
+ * had read the shifted image when it had not. So the witness is a person: slots whose source
+ * leaf was opened and showed the stored text, one near each end of the repaired range.
+ *
+ * @param {{archive_metadata?: object}} book
+ * @param {number[]} byEye slots opened against the source leaf
+ * @param {number[]} slots page numbers the repair would rewrite
+ * @returns {{ok: boolean, reason?: string}}
+ */
+export function halfRepairWitness(book, byEye, slots) {
+  if (book?.archive_metadata?.jp2_text_shift_awaiting_image_rearchive !== true) {
+    return { ok: false, reason: 'book is not awaiting an image re-archive' };
+  }
+  if (!slots.length) return { ok: false, reason: 'no pages to repair' };
+  const from = Math.min(...slots), to = Math.max(...slots), third = (to - from) / 3;
+  const inRange = (byEye || []).filter(n => Number.isInteger(n) && n >= from && n <= to);
+  const nearStart = inRange.some(n => n <= from + third);
+  const nearEnd = inRange.some(n => n >= to - third);
+  if (!nearStart || !nearEnd) {
+    return { ok: false, reason: `needs an opened slot in the first and last third of ${from}-${to}` };
+  }
+  return { ok: true };
+}
+
+/**
  * Was this page's text stranded by an IMAGE repair (#5309)?
  *
  * repair-bulk-jp2-offset.mjs (#3368) re-archived shifted bulk-JP2 images from
@@ -179,4 +208,43 @@ export function strandedByImageRepair(page, repairedAt) {
   if (moved >= r) return 'resolved';
   if (o < a) return 'pre_archival';
   return 'stranded';
+}
+
+// ── Per-page leaf check (#3186, Siku Quanshu re-fetch) ──
+//
+// The sampled verdict above uses an 8×8 dHash, and so does its 12/16 cut. That cannot separate two
+// leaves of one ruled layout: on 55 Siku pages (10 books, 2026-11-07) a 16×16 dHash put one page's
+// own leaf at 40 and the leaf two over at 39, and the sampled guard had already blocked an aligned
+// Siku book as `ambiguous`. A grayscale signature correlates the CONTENT instead: same leaf (stored
+// 3-channel ~770 px vs the Archive's 1-bit ~2300 px master) r 0.920–0.993; leaves ±1/±2 at most 0.848.
+export const LEAF_SIG_W = 48;
+export const LEAF_SIG_H = 64;
+export const LEAF_MIN_CORR = 0.9;
+
+/** 48×64 grayscale signature of an image buffer. */
+export async function leafSignature(buffer) {
+  const { default: sharp } = await import('sharp');
+  const px = await sharp(buffer, { limitInputPixels: false }).greyscale()
+    .resize(LEAF_SIG_W, LEAF_SIG_H, { fit: 'fill' }).raw().toBuffer();
+  return Float64Array.from(px);
+}
+
+/** Pearson r of two signatures; 0 when either is flat (a blank page carries no evidence). */
+export function signatureCorrelation(a, b) {
+  const n = Math.min(a.length, b.length);
+  let sa = 0, sb = 0;
+  for (let i = 0; i < n; i++) { sa += a[i]; sb += b[i]; }
+  const ma = sa / n, mb = sb / n;
+  let num = 0, da = 0, db = 0;
+  for (let i = 0; i < n; i++) {
+    const x = a[i] - ma, y = b[i] - mb;
+    num += x * y; da += x * x; db += y * y;
+  }
+  return da && db ? num / Math.sqrt(da * db) : 0;
+}
+
+/** Is `fetched` the same leaf as `held`? { same, r }. */
+export async function sameLeaf(held, fetched, { minCorr = LEAF_MIN_CORR } = {}) {
+  const r = signatureCorrelation(await leafSignature(held), await leafSignature(fetched));
+  return { same: r >= minCorr, r: Math.round(r * 1000) / 1000 };
 }

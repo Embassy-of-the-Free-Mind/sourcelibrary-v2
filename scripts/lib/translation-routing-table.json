@@ -49,10 +49,13 @@
       "unless": { "providers": ["bph"] },
       "engine": "gemini-3.8-flash+agy-cli",
       "per_call": 4,
+      "seam_pass": "edit-before",
       "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
       "evidence": [
         {"issue": 7263, "n": "Latin print first translation, cell latin-tr-first/print (PR #7909): agy Flash-low@4 accepted 16/29 vs the served Flash-Lite lane 11/29, wrong text 11/29 vs 13/29, paired gained/lost 6/1; blind Opus judge with the page image open; 50,523 print pages waiting", "date": "2026-11-01"},
-        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"},
+        {"issue": 8399, "n": "SEAM/LEAK term (the page judge cannot see a join): 97 Latin 4-page blocks, #7118 Opus seam judge, blind; production @4 with previous English 16.5/15.7 broken joins per 100 (two runs), marked text without it 18.6, marked + 8,000-char budget 26.3, + one seam call per call boundary 9.0; kept @4 (scripts/eval/estimator/router-table/2026-11-08-seam-markers-8399.json)", "date": "2026-11-08"},
+        {"issue": 8399, "n": "SEAM PASS adopted (seam_pass 'edit-before'): 95 Latin 4-page blocks, #7118 Opus seam judge, blind; broken block-start joins 34/95 (A) and 33/95 (A2) with previous English, 38/95 without it (A0), 17/95 with A0 + the built stage, 16/95 with Bb + the built stage vs 17/95 for #8407's eval copy (C); with the page before the block locked the stage reaches only 34/95, so the edit to the earlier page is what the gain is, and it passes the same span/growth/neighbourGate guards. Usable rate unchanged (A0+stage 32/68 vs A0 32/68). scripts/eval/estimator/router-table/2026-11-08-seam-pass-stage-8399.json", "date": "2026-11-08"}
       ]
     },
     {
@@ -62,10 +65,13 @@
       "unless": { "providers": ["bph"] },
       "engine": "gemini-3.8-flash+agy-cli",
       "per_call": 4,
+      "seam_pass": "edit-before",
       "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
       "evidence": [
         {"issue": 7263, "n": "German print first translation, cell german-tr-first/print (PR #7909): agy Flash-low@4 accepted 22/30 vs the served Flash-Lite lane 20/30, wrong text 5/30 vs 9/30, paired gained/lost 4/2; blind Opus judge with the page image open; 41,964 print pages waiting", "date": "2026-11-01"},
-        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"},
+        {"issue": 8399, "n": "SEAM/LEAK term (the page judge cannot see a join): 23 German 4-page blocks, #7118 Opus seam judge, blind; production @4 with previous English 28.3/17.4 broken joins per 100 (two runs), marked text without it 25.0, marked + 8,000-char budget 29.3, + one seam call per call boundary 7.6; kept @4 (scripts/eval/estimator/router-table/2026-11-08-seam-markers-8399.json)", "date": "2026-11-08"},
+        {"issue": 8399, "n": "SEAM PASS adopted (seam_pass 'edit-before'): 22 German 4-page blocks, #7118 Opus seam judge, blind; broken block-start joins 13/22 (A) and 12/22 (A2) with previous English, 14/22 without it (A0), 3/22 with A0 + the built stage, 3/22 with Bb + the built stage vs 4/22 for #8407's eval copy (C); page before the block locked: 12/22. scripts/eval/estimator/router-table/2026-11-08-seam-pass-stage-8399.json", "date": "2026-11-08"}
       ]
     },
     {
@@ -99,9 +105,23 @@
       "match": { "optional_lead": ["ancient"], "language_prefix": ["greek", "hebrew", "heb", "aramaic", "arabic", "persian", "sanskrit", "pali", "chinese", "classical chinese"] },
       "engine": "gemini-3-flash-preview",
       "evidence": [{ "issue": 5695, "n": "191 pages judged against published human translations (Greek 75, Hebrew/Aramaic/Arabic/Persian 52, Sanskrit/Pali/Chinese 64)", "date": "2026-10-03" }]
+    },
+    {
+      "id": "everything-cli-agy",
+      "channel": "cli",
+      "match": { "any": true },
+      "unless": { "title_words": ["loeb"], "publisher_words": ["loeb", "heinemann"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "per_call": 4,
+      "why": "Derek, 2026-11-06: \"no one should use lite\", \"everything on agy\", \"its just better and cheaper\". Every book no earlier cli row takes (Spanish, Dutch, Portuguese, the non-Latin scripts once on Batch Flash, BPH) translates on agy 3.8 Flash-low, 4 pages a call. Measured as a cell for Latin, German, Italian and French (rows above); for the rest the adoption sample is the nearest measured cell, and the nightly lane judge is the check.",
+      "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-06" },
+      "evidence": [
+        {"issue": 7263, "n": "European print first translation cells (PR #7909): agy Flash-low@4 against the served Flash-Lite lane, blind Opus judge with the page image open (Latin 16/29 vs 11/29 accepted, French 20/29 vs 16/29)", "date": "2026-11-01"},
+        {"issue": 8038, "n": "Derek 2026-11-06: everything on agy; the paid spend dial set to $0 the same day", "date": "2026-11-06"}
+      ]
     }
   ],
-  "_router_cells": "GENERATED by scripts/maintenance/router-routing-rows.mjs from scripts/eval/estimator/router-table/current.json (#7913): one row per decided cell (keep / switch) of the live router table, its route, the route's judged k/n, the build the decision comes from and any waiver. Do not edit: move the pointer in current.json and run the script with --write; tests/unit/router-routing-rows-7913.test.ts fails while this block and current.json disagree. Lanes bind to these decisions through routeCheck (scripts/lib/router-binding.mjs); the routers read `rows` and `default`, not this block.",
+  "_router_cells": "GENERATED by scripts/maintenance/router-routing-rows.mjs from scripts/eval/estimator/router-table/current.json (#7913): one row per cell of the live router table that binds a route, that route, the route's judged k/n, the build the decision comes from and any waiver. Do not edit: move the pointer in current.json and run the script with --write; tests/unit/router-routing-rows-7913.test.ts fails while this block and current.json disagree. getOcrModelForBook routes from this block in the OCR table (`reads`, #8283); lanes bind through routeCheck (scripts/lib/router-binding.mjs); translation's routers read `rows`, and tests/unit/router-bound-table.test.ts fails when they disagree with it.",
   "router_cells": [
     {
       "cell": "german-tr-flash3/unknown",

@@ -57,7 +57,7 @@ export default function TermsPage() {
         </p>
 
         <p className="text-sm text-muted">
-          <strong>Effective date:</strong> November 5, 2026
+          <strong>Effective date:</strong> November 8, 2026
           &middot; Operated by Stichting Het Wereldhart (Embassy of the Free Mind), Amsterdam, the Netherlands.
         </p>
 
@@ -132,20 +132,48 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="bg-white rounded-xl p-8 border border-border-light">
+        {/* ── API terms (#8235). A change of substance here needs a new API_TERMS_VERSION (src/lib/api-terms-version.ts); every key holder is then asked again. ── */}
+        <section id="api-terms" className="bg-white rounded-xl p-8 border border-border-light scroll-mt-24">
           <h2 className="text-2xl text-primary mb-4">API, MCP server and automated access</h2>
           <p className="text-secondary mb-4">
             Programs should use our{' '}
             <Link href="/developers" className="text-accent-rust hover:underline">REST API or MCP server</Link>,
             within the posted limits, rather than scraping the website. Search engines and assistants reading
-            on a person&rsquo;s behalf are welcome. Getting or using an API key means you agree to these terms.
+            on a person&rsquo;s behalf are welcome.
           </p>
-          <p className="text-secondary">
+          <p className="text-secondary mb-4">
+            A free API key is for a person studying, teaching, writing or doing non-profit research. You agree to
+            these terms when you create a key or keep using one:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-secondary mb-4">
+            <li><strong>One person, one key.</strong> Do not share or publish your key. An organisation,
+              a product or a service that many people use asks us for a key of its own.</li>
+            <li><strong>Limits.</strong> Stay within the{' '}
+              <Link href="/developers" className="text-accent-rust hover:underline">posted limits</Link>. Do not get
+              around them with more accounts, keys or addresses.</li>
+            <li><strong>Bulk copying.</strong> Quote, cite and work with what you read. Do not republish,
+              redistribute or sell our text in bulk, or build a mirror or dataset of a collection or a large part
+              of the library, without written permission.</li>
+            <li><strong>AI training.</strong> Training, fine-tuning or evaluating an AI model for a commercial
+              product needs a{' '}
+              <Link href="/licensing" className="text-accent-rust hover:underline">licence</Link>.</li>
+            <li><strong>Credit.</strong> Credit Source Library, and link to the page, when you use our
+              transcriptions or translations.</li>
+            <li><strong>The Embassy&rsquo;s collection.</strong> Its books also carry the{' '}
+              <a href="#embassy-collection" className="text-accent-rust hover:underline">terms below</a>.</li>
+            <li><strong>Suspension.</strong> We may suspend or revoke a key that breaks these terms or strains
+              the service. Where we can, we write to you first.</li>
+            <li><strong>What we keep.</strong> When you agree, we record the date and these terms&rsquo; version
+              on your key. For each call we log the time, the route, the pages served, your client&rsquo;s
+              description of itself and a hash of your network address, not the address.</li>
+          </ul>
+          <p className="text-secondary mb-4">
             We reserve commercial text and data mining under Article 4 of EU Directive 2019/790, in
             machine-readable form: <code>/.well-known/tdmrep.json</code>, the <code>TDM-Reservation</code>{' '}
             header and <a href="/robots.txt" className="text-accent-rust hover:underline">robots.txt</a>.
             We may rate-limit or block automated traffic that strains the service or ignores these limits.
           </p>
+          <p className="text-sm text-muted">Version 2026-11-08.</p>
         </section>
 
         {/* ── The Embassy's collection. Asked for by src/lib/partner-terms.ts; a change of substance here needs a new PARTNER_TERMS_VERSION. ── */}
@@ -176,6 +204,33 @@ export default function TermsPage() {
             </ul>
           </div>
           <p className="text-secondary text-sm">Version 2026-11-04.</p>
+        </section>
+
+        {/* ── Asked by the edge rule in scripts/maintenance/reader-terms-rule.mjs. A change of substance here needs a new READER_TERMS_VERSION. ── */}
+        <section id="reading-terms" className="bg-white rounded-xl p-8 border border-border-light scroll-mt-24">
+          <h2 className="text-2xl text-primary mb-4">Reading the library</h2>
+          <p className="text-secondary mb-4">
+            If you open a page of a book directly, without following a link or a citation, we ask you
+            once to agree to these terms. You agree by ticking the box and continuing.
+          </p>
+          <div className="bg-cream rounded-lg p-6 mb-4">
+            <ul className="text-secondary space-y-2 list-disc list-inside">
+              <li><strong>What you may do:</strong> read, study, teach from and quote the library, as
+                set out at the top of this page.</li>
+              <li><strong>Bulk copying:</strong> you may not copy the library, a collection or a large
+                part of either by automated means without written permission. Non-profit academic
+                research can use our{' '}
+                <Link href="/developers" className="text-accent-rust hover:underline">API</Link> within
+                the posted limits.</li>
+              <li><strong>AI training:</strong> training, fine-tuning or evaluating an AI model for a
+                commercial product needs a{' '}
+                <Link href="/licensing" className="text-accent-rust hover:underline">licence</Link>.</li>
+              <li><strong>What we keep:</strong> when you agree, we record the date, these
+                terms&rsquo; version, the page, your browser&rsquo;s description of itself, and a hash
+                of your network address, not the address. A cookie remembers your answer for a year.</li>
+            </ul>
+          </div>
+          <p className="text-secondary text-sm">Version 2026-11-06.</p>
         </section>
 
         <section>

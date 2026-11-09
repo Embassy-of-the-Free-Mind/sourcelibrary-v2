@@ -102,6 +102,8 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/admin/quality',
   // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
   '/admin/work',
+  // Laura's work record: unreleased work and open decisions. Same reasoning as /admin/work.
+  '/admin/laura',
   // Token use (#8201): our accounts, machines and job names. Same reasoning as /admin/work.
   '/admin/tokens',
   // Pipeline now (#7759): our boxes' cron lanes, quota pools and account meters. Same reasoning as /admin/work.
@@ -212,8 +214,20 @@ export function catalogueHref(isTenantHost: boolean): string {
   return isTenantHost ? '/catalog' : '/library';
 }
 
+/**
+ * /book/<slug>/search/text: one book's passages for an assistant (#8161). A route
+ * handler with no page, like /search/text, and its links and quote URLs point at
+ * sourcelibrary.org, so a reading room must not serve it. Not a prefix, so it is
+ * matched on its own rather than listed above.
+ */
+const BOOK_SEARCH_TEXT_RE = /^\/book\/[^/]+\/search\/text\/?$/;
+
+export function isBookSearchTextPath(pathname: string): boolean {
+  return BOOK_SEARCH_TEXT_RE.test(pathname);
+}
+
 export function isGlobalOnlyTenantPath(pathname: string): boolean {
-  return ALL_GLOBAL_ONLY_PATHS.some(
+  return isBookSearchTextPath(pathname) || ALL_GLOBAL_ONLY_PATHS.some(
     p => pathname === p || pathname.startsWith(`${p}/`)
   );
 }

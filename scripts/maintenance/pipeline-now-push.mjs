@@ -15,7 +15,13 @@
  *   --corpus       on main only, nightly. Pages translated and OCR'd per day by lane × model (last 7 days, from the
  *                  indexed translation.updated_at / ocr.updated_at), the spend dial (system_config processing_control),
  *                  the last quality gates. Upserts {_id:'pipeline-now:corpus'}.
- *   --dry-run      print the document, write nothing.
+ *   --red-ntfy     on main, Mondays: one ntfy line to sourcelibrary-uptime naming every red line across the boxes
+ *                  (#8283), read from the box documents. Nothing when no line is red.
+ *   --dry-run      print the document (or the ntfy line), write nothing.
+ *
+ * RED LINES (#8283): each live line is judged against the cron-row registry (scripts/lib/lanes.mjs CRON_ROWS,
+ * judgeCronLine): UNREGISTERED, RETIRED BUT LIVE, PAST REVIEW, IDLE 7 DAYS (from the corpus document's pages per
+ * stamp), MATCHES A RETIRED PATTERN. The verdicts ride on the line as `red`; the page shows them at the top.
  *
  * The boxes cannot ssh to each other, so each writes its own section and main's page assembles them. Claude account
  * headroom is not collected here: the page reads ops_reports `claude-limits:latest`, which main already pushes.
@@ -31,10 +37,12 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { redact } from './work-board-push.mjs';
+import { cronRowFor, judgeCronLine } from '../lib/lanes.mjs';
 
 export const COLLECTION = 'ops_reports';
 export const TYPE = 'pipeline-now';
 export const CORPUS_DAYS = 7;
+export const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
 
 // ───────────────────────────────────────────── pure helpers (unit-tested)
 
@@ -163,18 +171,31 @@ export function isOneShot(schedule) {
   return p.length === 5 && /^\d+$/.test(p[2]) && /^\d+$/.test(p[3]);
 }
 
-/** The pipeline lanes in a crontab: one row per job line whose script runs a stage. */
-export function pipelineLines(text) {
+/**
+ * The pipeline lanes in a crontab: one row per job line whose script runs a stage. With `box`, each row also carries
+ * its registry row id (`registry`, null when unregistered) and its red verdicts (`red`, judgeCronLine, #8283); the
+ * raw command is judged here and never stored.
+ */
+export function pipelineLines(text, { box = null, now = new Date(), laneTotals = null } = {}) {
   const rows = [];
   for (const { schedule, cmd, comment, disabled, tag } of parseCrontab(text)) {
     const stage = stageOf(cmd);
     if (!stage) continue;
     const scripts = scriptsOf(cmd);
-    rows.push({
+    const row = {
       stage, schedule, one_shot: isOneShot(schedule), disabled, disabled_tag: tag,
       script: scripts[0] ?? null, scripts: scripts.slice(0, 4), mode: modeOf(cmd, scripts[0]),
       ...flagsOf(cmd), log: logPathOf(cmd), comment: redact(comment, 200),
-    });
+    };
+    if (box) {
+      const line = { cmd, stage, script: row.script, mode: row.mode, disabled, one_shot: row.one_shot };
+      const reg = cronRowFor(box, line);
+      Object.assign(row, {
+        registry: reg ? { id: reg.id, status: reg.status, issue: reg.issue ?? null, route: reg.route ?? null, review_by: reg.review_by ?? null, open: reg.open ?? null } : null,
+        red: judgeCronLine(box, line, { now, laneTotals }),
+      });
+    }
+    rows.push(row);
   }
   return rows.sort((a, b) => STAGES.indexOf(a.stage) - STAGES.indexOf(b.stage) || String(a.script).localeCompare(String(b.script)));
 }
@@ -269,8 +290,27 @@ function writePoolsFile(doc, file = POOLS_FILE) {
   } catch { /* the admin page still has the reading */ }
 }
 
-export async function collectBox({ box, now = new Date() }) {
-  const lines = pipelineLines(liveCrontab()).map(r => ({
+/** Pages per stamp (lane, else source) over the corpus document's window, both fields summed; null without it. */
+export function laneTotalsOf(corpus) {
+  if (!corpus?.translated_per_day && !corpus?.ocr_per_day) return null;
+  const t = {};
+  for (const r of [...(corpus.translated_per_day ?? []), ...(corpus.ocr_per_day ?? [])]) t[r.lane] = (t[r.lane] ?? 0) + r.pages;
+  return t;
+}
+
+/** The red lines of every box document, for the weekly ntfy: "box: script mode (FLAG, FLAG)". */
+export function redSummary(docs) {
+  const out = [];
+  for (const d of docs) for (const l of d.lines ?? []) {
+    if (!l.red?.length) continue;
+    const name = `${l.script?.split('/').pop() ?? '(inline)'}${l.mode ? ` ${l.mode}` : ''}`;
+    out.push(`${d.box}: ${name} (${[...new Set(l.red.map(r => r.flag))].join(', ')})`);
+  }
+  return [...new Set(out)];
+}
+
+export async function collectBox({ box, now = new Date(), laneTotals = null }) {
+  const lines = pipelineLines(liveCrontab(), { box, now, laneTotals }).map(r => ({
     ...r,
     log_at: r.log ? mtimeIso(r.log) : null,
     log_last: r.log ? redact(lastLine(tailOf(r.log)), 200) : null,
@@ -330,10 +370,11 @@ async function main() {
   const arg = k => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined; };
   const dry = argv.includes('--dry-run');
   const corpus = argv.includes('--corpus');
+  const redNtfy = argv.includes('--red-ntfy');
   const box = arg('--box');
-  if (!corpus && !box) { console.error('usage: pipeline-now-push.mjs --box <name> | --corpus [--dry-run]'); process.exit(2); }
+  if (!corpus && !box && !redNtfy) { console.error('usage: pipeline-now-push.mjs --box <name> | --corpus | --red-ntfy [--dry-run]'); process.exit(2); }
 
-  const needDb = corpus || !dry;
+  const needDb = corpus || redNtfy || !dry;
   let client = null, db = null;
   if (needDb) {
     const { MongoClient } = await import('mongodb');
@@ -342,7 +383,19 @@ async function main() {
     db = client.db(process.env.MONGODB_DB || 'bookstore');
   }
   try {
-    const doc = corpus ? await collectCorpus(db) : await collectBox({ box });
+    if (redNtfy) {
+      const docs = await db.collection(COLLECTION).find({ type: TYPE, box: { $ne: 'corpus' } }).toArray();
+      const red = redSummary(docs);
+      if (!red.length) { console.log(`${new Date().toISOString()} no red lines on ${docs.length} boxes`); return; }
+      const body = `${red.length} red cron line${red.length === 1 ? '' : 's'}: ${red.join('; ')}. /admin/pipeline/now (#8283)`;
+      if (dry) { console.log(body); return; }
+      const res = await fetch(NTFY_TOPIC, { method: 'POST', body, headers: { Title: 'Pipeline: red cron lines', Tags: 'warning' } });
+      console.log(`${new Date().toISOString()} ntfy ${res.status}: ${body}`);
+      return;
+    }
+    // IDLE 7 DAYS reads main's nightly corpus document; a dry run without the db does not judge it.
+    const laneTotals = corpus || !db ? null : laneTotalsOf(await db.collection(COLLECTION).findOne({ _id: `${TYPE}:corpus` }).catch(() => null));
+    const doc = corpus ? await collectCorpus(db) : await collectBox({ box, laneTotals });
     if (dry) { console.log(JSON.stringify(doc, null, 2)); return; }
     if (!corpus) writePoolsFile(doc);
     await db.collection(COLLECTION).replaceOne({ _id: doc._id }, doc, { upsert: true });

@@ -43,6 +43,7 @@
 import { MongoClient } from 'mongodb';
 import blockedAsnPrefixes from '../../src/lib/blocked-asn-prefixes.json' with { type: 'json' };
 import { ntfyPost } from '../lib/ntfy-send.mjs';
+import { resolveTxt } from 'node:dns/promises';
 
 // Same topic as uptime-monitor.mjs and daily-health-snapshot.mjs — the channel
 // Derek actually reads daily. Deliberately NOT email: `sync_worker_missing`
@@ -110,6 +111,13 @@ export const SPRAY_MAX_READS_PER_NET = 3;
 // alone fires on busy ones.
 export const SPRAY_MIN_READS = 2000;
 export const SPRAY_MIN_SHARE = 0.05;
+
+// A surge a phone never saw (#8353). On 2026-11-05/06 reads classed human rose about 6x on desktop browsers and not
+// at all on phones, across 20,111 books, on the day a YouTube episode went out. It read as an audience and was a
+// proxy pool. An audience arrives on phones too: the YouTube visitors of those days were 68% phones.
+export const DESKTOP_SURGE_RATIO = 3;
+export const DESKTOP_SURGE_MIN_READS = 10000;
+export const PHONE_FLAT_RATIO = 1.5;
 
 // ── The fingerprint axis (added 2026-09-20, #4947) ────────────────────────
 // Every check above thresholds a NETWORK, and the 2026-09-20 pool showed what
@@ -265,6 +273,9 @@ export function isCdnEgress(ip) {
 
 /** A hostname serving reader traffic that we did not expect. */
 export function isUnexpectedHost(host) {
+  // Loopback is a local dev server writing to the shared database. It cannot be a public host, so it is not an
+  // exposure: two reads from one Mac paged as critical on 2026-11-07 (#8353).
+  if (/^(localhost|127\.\d+\.\d+\.\d+|\[?::1\]?)(:\d+)?$/.test(host || '')) return false;
   return Boolean(host) && !EXPECTED_HOSTS.has(host);
 }
 
@@ -305,6 +316,82 @@ export function prefix16(ip) {
  * nothing about volume: the pool's defining property is that its per-unit
  * volume is ~1 at every unit you might threshold.
  */
+/** Which kind of device a user agent claims to be. Phones and tablets count together. */
+export function deviceClass(ua = '') {
+  if (/iPhone|iPad|Android/.test(ua)) return 'phone';
+  if (/Windows NT|Macintosh/.test(ua)) return 'desktop';
+  return 'other';
+}
+
+export const medianOf = (xs) => {
+  const v = [...xs].sort((a, b) => a - b);
+  if (!v.length) return 0;
+  const m = Math.floor(v.length / 2);
+  return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
+};
+
+/** Today's desktop reads far above their baseline while phone reads are not. Baselines are daily medians. */
+export function looksLikeDesktopSurge({ desktop, phone, desktopBase, phoneBase }) {
+  if (desktop < DESKTOP_SURGE_MIN_READS || !desktopBase) return false;
+  return desktop >= desktopBase * DESKTOP_SURGE_RATIO && phone < Math.max(phoneBase, 1) * PHONE_FLAT_RATIO;
+}
+
+// ── Who owns a network? ─────────────────────────────────────────────────────
+// Every network alarm used to end with "run whois yourself", and the spray
+// alarm's advice (block or don't) depended entirely on that answer. On
+// 2026-11-08 it fired for two days calling a DigitalOcean fleet a "residential
+// proxy pool" because nobody ran the whois. So the detector asks Team Cymru's
+// DNS service itself and puts the owner in the message.
+//
+// HOSTING_ASNS: rented-server networks we already treat as non-readers on
+// /book (Cloudflare rules 62774895 / 5330bd83 / cb7dfe4b, crawl register),
+// plus the operators in blocked-asn-prefixes.json. Not AWS (our Vercel
+// functions) and not Hetzner (our job boxes) — those are never "safe to block".
+export const HOSTING_ASNS = new Map([
+  [14061, 'DigitalOcean'], [16276, 'OVH'], [8075, 'Microsoft Azure'], [9009, 'M247'],
+  [20473, 'Vultr'], [51167, 'Contabo'], [60781, 'Leaseweb NL'], [63949, 'Akamai/Linode'],
+  [212238, 'Datacamp'], [394380, 'Leaseweb US'], [396982, 'Google Cloud'],
+  [45102, 'Alibaba Cloud'], [396986, 'Bytedance'],
+  ...blockedAsnPrefixes.groups.map((g) => [g.asn, g.name]),
+]);
+
+/** "137.184.x.x" → { asn, name } via origin.asn.cymru.com; null when the lookup fails. */
+export async function lookupPrefixOwner(prefix) {
+  const [a, b] = String(prefix).split('.');
+  if (!/^\d+$/.test(a) || !/^\d+$/.test(b)) return null;
+  try {
+    const [origin] = await resolveTxt(`1.1.${b}.${a}.origin.asn.cymru.com`);
+    const asn = Number(String(origin.join('')).split('|')[0].trim().split(' ')[0]);
+    if (!asn) return null;
+    let name = HOSTING_ASNS.get(asn) || '';
+    if (!name) {
+      const [desc] = await resolveTxt(`AS${asn}.asn.cymru.com`).catch(() => [['']]);
+      name = String(desc.join('')).split('|').pop().trim().split(' - ')[0].slice(0, 40);
+    }
+    return { asn, name, hosting: HOSTING_ASNS.has(asn) };
+  } catch {
+    return null;
+  }
+}
+
+/** One line naming the owners of the top prefixes and what that means for the lever. */
+export async function describeOwners(prefixes) {
+  const owners = await Promise.all(prefixes.map(lookupPrefixOwner));
+  const known = owners.filter(Boolean);
+  if (!known.length) return 'Owner lookup failed (Team Cymru DNS); resolve by hand: whois -h whois.cymru.com " -v A.B.1.1".';
+  const byAsn = new Map();
+  for (const o of known) byAsn.set(o.asn, o);
+  const list = [...byAsn.values()].map((o) => `AS${o.asn} ${o.name}${o.hosting ? ' (hosting)' : ''}`).join(', ');
+  const allHosting = known.every((o) => o.hosting) && known.length === prefixes.length;
+  const noneHosting = known.every((o) => !o.hosting);
+  const verdict = allHosting
+    ? 'Every top network is a RENTED-SERVER network: no readers live there, so this is not a residential pool. Block it at the edge on reader paths (extend the hosting-ASN clause of Cloudflare rule cb7dfe4b), then re-run scripts/workers/attack-canary.mjs.'
+    : noneHosting
+      ? 'None of the top networks is a hosting network: this is consumer/mobile space where real readers live. Do NOT block the networks; the lever is a managed challenge or the breadth cap (#5995), a decision for a human.'
+      : 'Mixed hosting and consumer networks: block only the hosting ASNs at the edge; leave the consumer ones to a challenge.';
+  return `Owners: ${list}. ${verdict}`;
+}
+
 export function looksLikeSpray(reads, nets) {
   if (!nets || nets < SPRAY_MIN_NETS) return false;
   return reads / nets <= SPRAY_MAX_READS_PER_NET;
@@ -571,10 +658,11 @@ async function run() {
   const sprayShare = classifiedCount ? sprayReads / classifiedCount : 0;
 
   if (sprayed.length && sprayReads >= SPRAY_MIN_READS && sprayShare >= SPRAY_MIN_SHARE) {
+    const sprayOwners = await describeOwners(sprayed.slice(0, 6).map((v) => v.p));
     alerts.push({
       level: 'critical',
       check: 'distributed_proxy_pool',
-      message: `${sprayReads.toLocaleString()} reads in ${HOURS}h (${(sprayShare * 100).toFixed(1)}% of classified traffic) arrived as a SPRAY: ${sprayed.length} /16 networks, ${sprayNets.toLocaleString()} distinct /24s, averaging ${(sprayReads / sprayNets).toFixed(2)} reads per /24. That is a residential/mobile proxy pool, not a datacenter fleet — each exit address is used once and discarded, so no per-IP, per-/24 or per-/16 threshold can see it. **Do NOT add these to blocked-networks.ts**: measured 2026-08-06 they were China Mobile provincial ASNs (Hebei, Hunan, Heilongjiang, Jilin, Henan), consumer mobile space where real readers live, and an app-layer block would refuse them along with the pool. The lever that fits this shape is a Cloudflare managed challenge scoped to the offending ASNs (real browsers pass, headless pool clients mostly do not) — a decision with a real blast radius, so it wants a human. Top: ${sprayed.slice(0, 6).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
+      message: `${sprayReads.toLocaleString()} reads in ${HOURS}h (${(sprayShare * 100).toFixed(1)}% of classified traffic) arrived as a SPRAY: ${sprayed.length} /16 networks, ${sprayNets.toLocaleString()} distinct /24s, averaging ${(sprayReads / sprayNets).toFixed(2)} reads per /24. This shape says only that the reads were spread too thin for any per-IP, per-/24 or per-/16 threshold to see; it does not say who sent them. ${sprayOwners} It has been both: consumer mobile space on 2026-08-06 (China Mobile provincial ASNs) and mostly DigitalOcean on 2026-11-07. **If the owner is a consumer ISP or mobile carrier, do NOT add it to blocked-networks.ts**: real readers live there and an app-layer block would refuse them too. The lever that fits is a Cloudflare managed challenge scoped to the offending ASNs (real browsers pass, headless clients mostly do not), a decision with a real blast radius, so it wants a human. Top: ${sprayed.slice(0, 6).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
     });
   }
 
@@ -772,6 +860,31 @@ async function run() {
         message: `${net.label} is supposed to be refused, but produced ${n.toLocaleString()} read events in ${HOURS}h via ${leaked.map(r => `${r._id ?? '?'}=${r.n}`).join(' ')}. Either the app-layer block regressed (src/lib/blocked-networks.ts + the check at the top of src/proxy.ts), or traffic is arriving on a host that bypasses it. NOTE: a Cloudflare rule can read as "enabled" and never fire — a terminating action above it (managed_challenge) stops evaluation. Verify placement, don't trust the dashboard.`,
       });
     }
+  }
+
+  // ── 1e. Desktop surge — the audience that is not one (#8353) ─────────────
+  // Compares the last 24 h with the median of the seven days before it, in 24 h buckets counted back from now, so
+  // it ignores --hours and needs no calendar. A median, because a surge sits in the baseline for a week afterwards.
+  const NOW = Date.now();
+  const byDay = await ev.aggregate([
+    { $match: { event: { $in: ['page_read', 'book_read'] }, traffic_class: 'human', timestamp: { $gte: new Date(NOW - 8 * 864e5) } } },
+    { $group: { _id: { d: { $floor: { $divide: [{ $subtract: [new Date(NOW), '$timestamp'] }, 864e5] } }, ua: '$user_agent' }, n: { $sum: 1 } } },
+  ], { allowDiskUse: true }).toArray();
+  const days = Array.from({ length: 8 }, () => ({ desktop: 0, phone: 0 }));
+  for (const r of byDay) {
+    const device = deviceClass(r._id.ua);
+    if (device !== 'other' && days[r._id.d]) days[r._id.d][device] += r.n;
+  }
+  const surge = {
+    desktop: days[0].desktop, phone: days[0].phone,
+    desktopBase: medianOf(days.slice(1).map((d) => d.desktop)), phoneBase: medianOf(days.slice(1).map((d) => d.phone)),
+  };
+  if (looksLikeDesktopSurge(surge)) {
+    alerts.push({
+      level: 'critical',
+      check: 'desktop_surge',
+      message: `Desktop reads ${surge.desktop.toLocaleString()} in 24 h against a daily median of ${surge.desktopBase.toLocaleString()}, while phone reads are ${surge.phone.toLocaleString()} against ${surge.phoneBase.toLocaleString()}. An audience shows up on phones too, so treat this as a proxy pool until shown otherwise, even if a talk or video just came out. Count the real audience by referrer in analytics_pageviews, then read Cloudflare's firewall events (CLOUDFLARE_API_TOKEN_READ). #8286 is the last time this happened.`,
+    });
   }
 
   // ── Report ────────────────────────────────────────────────────────────────

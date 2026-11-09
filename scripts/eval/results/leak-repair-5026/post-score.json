@@ -1,0 +1,138 @@
+{
+ "judged": 30,
+ "dup_gone": 29,
+ "usable": 27,
+ "usable_ci95": [
+  0.74,
+  0.97
+ ],
+ "own_leaf": 29,
+ "defects": {
+  "mistranslated/minor": 24,
+  "omitted/minor": 9,
+  "mistranslated/major": 3,
+  "invented/minor": 5,
+  "other/minor": 15,
+  "invented/major": 2
+ },
+ "pass": false,
+ "controls": [
+  {
+   "key": "Q08",
+   "control": "stored-leak",
+   "dup": "no",
+   "caught": false
+  },
+  {
+   "key": "Q14",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q24",
+   "control": "made-dup",
+   "dup": "no",
+   "caught": false
+  },
+  {
+   "key": "Q31",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  }
+ ],
+ "fails": [
+  {
+   "key": "Q02",
+   "book": "69b3e607304c1c6b3950ae60",
+   "page": 71,
+   "nb": 72,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "'Si non divina voluntas... plus proferret in magnificando dictam naturam angeli quam dictam naturam Christi' is rendered as 'the divine nature of the angel ... the divine nature of Christ'. 'dicta' (the said) was read as 'divina' (divine), so the conditional argument comes out garbled."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "'alteratio et contrarietas propter naturam humanam Christi et propter naturam angeli, quod est impossibile' becomes 'alteration and generation ... since the human nature of Christ would surpass the nature of the angel', which misstates the reasoning."
+    },
+    {
+     "type": "invented",
+     "severity": "minor",
+     "note": "Editorial notes are added that are not on the page: 'the text contrasts the divine valuation...' and 'without divine assumption'."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "In the final sentence, 'natura animae ita est intensa in spiritualitate sicut natura angeli, et magis est gloriosa ... per rationem corporis humani cum quo naturaliter participat et ipsum informat et perficit' is turned into 'just as the nature of an angel is more glorious... by reason of humanity'. The comparison of the soul with the angel is dropped and the body (corpus) is lost."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'potentialiter mortalis' is rendered as 'mortal only in a slight degree'."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'quam trinitas ipsam exaltavit' is probably misread as 'which the Divine Spirit exalted'."
+    },
+    {
+     "type": "other",
+     "severity": "minor",
+     "note": "The summary and keywords name 'Raymond of Sabunde', but the speaker is Raymundus (Ramon Lull)."
+    }
+   ]
+  },
+  {
+   "key": "Q28",
+   "book": "69935b6f2c63944063134103",
+   "page": 7,
+   "nb": 8,
+   "lang": "Chinese",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The final cell is a gloss, 'These two issue from the same origin… mystery upon mystery'. That text is not printed on page 7. It is page 8's Daodejing ch.1 text (此兩者同出而異名同謂之玄玄之又) showing through the thin paper, and the English presents it as part of page 7."
+    },
+    {
+     "type": "omitted",
+     "severity": "minor",
+     "note": "The margin heading 道德經篇目 (Daodejing table of contents) and the leaf numbers are not rendered."
+    }
+   ]
+  },
+  {
+   "key": "Q32",
+   "book": "69c1ba978522835be845973b",
+   "page": 494,
+   "nb": 493,
+   "lang": "Hebrew",
+   "dup": "yes",
+   "leaf": "mixed",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The whole first English column renders Isaiah 63:7–64:10a ('which He granted us according to His mercies…' through 'has been burned'). On the page images, that text sits on page 493: its right column ends at 'המון מעיך' and its left column ends at 'היה לשרפת'. Page 494's first column actually starts at 'אש וכל מחמדינו היה לחרבה' (64:10b). So about half of the English body repeats the previous page and is not on page 494."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "In the repeated passage, 'משה עמו' is rendered 'Moses His servant'; it means 'Moses, His people'."
+    }
+   ]
+  }
+ ]
+}

@@ -32,7 +32,7 @@ import {
   isNativeEdition,
   type LocalizedBookMap,
 } from '@/lib/localized';
-import { GoogleGenAI, ThinkingLevel, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
+import { GoogleGenAI, ThinkingLevel, Type, type FunctionDeclaration, FunctionCallingConfigMode, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
@@ -100,6 +100,16 @@ const FAST_TOOL_ROUNDS_DEFAULT = process.env.LIBRARIAN_FAST_TOOL_ROUNDS !== '0';
  * registered gate failed and the default prompt is unchanged.
  */
 const CITE_PAGES_DEFAULT = process.env.LIBRARIAN_CITE_PAGES === '1';
+/**
+ * Follow-up search (#8151): from a thread's second message on, the first round
+ * must call a tool, and no_search_needed is the way to decline. Over 90 days,
+ * 16.7% of follow-up answers used one round or fewer and cited nothing, against
+ * 4.3% of first answers. The prompt lines alone left 29% of research follow-ups
+ * unsearched on replay (scripts/eval/experiments/2026-11-05-librarian-followup-
+ * search-8151.md). First messages are unchanged. On by default;
+ * LIBRARIAN_FOLLOWUP_SEARCH=0 turns it off.
+ */
+const FOLLOWUP_SEARCH_DEFAULT = process.env.LIBRARIAN_FOLLOWUP_SEARCH !== '0';
 /**
  * Cite by ID (#6946): every page in a tool result carries an ID (`[P7]`), the
  * model cites the ID, and the server writes the page link while the text
@@ -183,7 +193,7 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'link_removals' | 'grounding_edits';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'tool_log' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'link_removals' | 'grounding_edits';
   text?: string;
   // Link repairs computed after citation verification — the route and the
   // streaming clients apply these to the already-emitted text (see
@@ -205,6 +215,8 @@ export interface LibrarianStep {
   options?: string[];
   descriptions?: (string | undefined)[];
   sources?: SourceCard[];
+  // The tool call behind this step (#8151). The route saves it; never sent to the client.
+  toolCall?: ToolCallRecord;
   // Token accounting for the whole turn (all agent rounds summed). Emitted
   // last and persisted on the AI message; never rendered to the user.
   usage?: TurnUsage;
@@ -222,6 +234,47 @@ export interface LibrarianStep {
       bookSlug?: string;
       pageNumber: number;
     };
+  };
+}
+
+/**
+ * One tool call as the turn made it, saved on the AI message as `toolCalls`
+ * (#8151) so a failed answer can be read back: what it searched, and what came
+ * back. Server-side accounting, never sent to the client.
+ */
+export interface ToolCallRecord {
+  name: string;
+  /** The query or question the model wrote; no_search_needed's reason; for catalogue and page reads, what the tool says it did. */
+  query: string;
+  found: number;
+  /** Which agent round, from 1. Calls in one round ran in parallel. */
+  round: number;
+  /** The book, for tools that read one. */
+  book?: string;
+  /** The collection a search leaned toward. */
+  collection?: string;
+  /** The tool failed, so `found: 0` says nothing about the library. */
+  failed?: true;
+}
+
+const TOOL_QUERY_LOG_CHARS = 300;
+
+export function toolCallRecord(
+  name: string,
+  args: Record<string, unknown>,
+  step: Pick<LibrarianStep, 'query' | 'found'>,
+  result: unknown,
+  round: number,
+): ToolCallRecord {
+  const text = (v: unknown) => (typeof v === 'string' && v ? v : undefined);
+  return {
+    name,
+    query: (text(args.query) ?? text(args.question) ?? text(args.reason) ?? step.query ?? '').slice(0, TOOL_QUERY_LOG_CHARS),
+    found: step.found ?? 0,
+    round,
+    ...(text(args.book_id) ? { book: text(args.book_id) } : {}),
+    ...(text(args.collection) ? { collection: text(args.collection) } : {}),
+    ...((result as { error?: unknown } | null)?.error ? { failed: true as const } : {}),
   };
 }
 
@@ -1631,6 +1684,12 @@ async function executeTool(
       };
     }
 
+    case NO_SEARCH_TOOL:
+      return {
+        result: { ok: true, next: 'Write your answer now. You have searched nothing this turn, so say nothing about what the library holds or lacks, and write no page or book link you were not given this turn.' },
+        step: { type: 'tool_log', name, found: 0 },
+      };
+
     default:
       return { result: { error: `Unknown tool: ${name}` }, step: { type: 'tool_result', name, summary: 'Unknown tool', found: 0 } };
   }
@@ -1646,6 +1705,7 @@ function buildSystemPrompt(
   fastToolRounds = false,
   citePages = false,
   citeIds = false,
+  followupSearch = false,
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -1664,7 +1724,7 @@ ${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not eve
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds, citePages, citeIds);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds, citePages, citeIds, followupSearch);
 }
 
 /**
@@ -1693,7 +1753,7 @@ Links: the tool results give URLs under \`${base}/book/…\` — copy them exact
 `;
 }
 
-export function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false, citePages = false, citeIds = false): string {
+export function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false, citePages = false, citeIds = false, followupSearch = false): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -1704,7 +1764,7 @@ You are a research agent, not just a Q&A chatbot. You help users conduct real re
 
 ## Conversation state
 
-This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user has established their direction — skip choices and go straight to research.' : ''}
+This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user has established their direction — skip choices and go straight to research.' : ''}${followupSearch && messageIndex >= 2 ? `\n\n${FOLLOWUP_SEARCH_LINES}` : ''}
 
 ## Your approach — conversational first, then deep research
 
@@ -1779,6 +1839,7 @@ ${collectionSection}## Formatting
 - Use markdown headers (## and ###) to organize longer responses into clear sections
 - Use **bold** for key terms and *italics* for book titles (linked: *[Title](url)*)
 - Use blockquotes (>) for important quotations from primary sources — always with page citation
+- A blockquote means "the page says exactly this". When the reader asks for your own version of a text — modern English, an adaptation, a paraphrase, a translation — give it as plain lines or paragraphs under a short heading, never in a blockquote
 - Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
 - Cite 2-4 key passages rather than dumping everything. ${citeIds ? 'Every passage needs its page ID' : 'Every passage needs a page number and link'}
@@ -1790,6 +1851,37 @@ ${citePages ? CITE_PAGES_LINES : `- Make clear when speaking from general knowle
 - Quotation marks and numbers are claims about a page. Put words in quotation marks only if you read them on a page this turn, and give a measure, sum or count ("280 pounds", "twenty times an hour") only if a page or tool result gave it to you — otherwise paraphrase without quotation marks and leave the number out. Answers are checked against the pages you read after you write them; an unsupported quote loses its quotation marks and an unsupported number loses its sentence.
 - Under every embedded image, write one italic caption line saying what the image is and where it is from: its own book and page, as the tool gave them. Never caption a picture as illustrating something its own book does not say — an athanor from Khunrath's book is Khunrath's athanor, not Drebbel's oven, however closely it resembles it.`}`;
 }
+
+/**
+ * Follow-up search (#8151). The earlier answers are in the thread as bare text:
+ * their tool results are gone, so the model has no page to quote and no slug it
+ * may link until it searches again.
+ */
+const NO_SEARCH_TOOL = 'no_search_needed';
+const NO_SEARCH_DECLARATION: FunctionDeclaration = {
+  name: NO_SEARCH_TOOL,
+  description: 'Say that this message needs nothing from the library, then write your answer. Only for thanks or small talk, or a request to rewrite, shorten, translate or reformat what you already wrote. Never because your earlier answers or your own knowledge seem to cover a question about the texts: that question gets a search. The reader does not see this call.',
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      reason: { type: Type.STRING, enum: ['thanks_or_small_talk', 'rewrite_of_my_own_answer', 'other'], description: 'Why no search is needed.' },
+    },
+    required: ['reason'],
+  },
+};
+
+/**
+ * What a follow-up's first round may call. Not present_choices, which ends the
+ * turn with no answer, and not add_to_notebook, which saves without looking.
+ */
+const FOLLOWUP_FIRST_ROUND_TOOLS = [
+  ...TOOL_DECLARATIONS.map(t => t.name as string).filter(n => n !== 'present_choices' && n !== 'add_to_notebook'),
+  NO_SEARCH_TOOL,
+];
+
+const FOLLOWUP_SEARCH_LINES = `**This is a follow-up, and a follow-up gets its own search.** Your earlier answers in this thread are only text now: the pages behind them are no longer in front of you, and quotes and links must come from a tool result this turn. So if this message asks anything about the texts, an author, an idea, a symbol, a picture or what the library holds, in any language and however short, call a tool this turn BEFORE you write the answer, even if your earlier answers or your own knowledge seem to cover it. Write the query from what the thread has established: "what does he say about it" has to become the author's name and the subject. A closer question about a book already discussed still needs its pages: search for it, then read_nearby_pages.
+
+Your first step this turn must be a tool call. When the message needs nothing from the library (thanks or small talk, or a request to rewrite, shorten, translate or reformat what you already wrote), call no_search_needed and then answer. Without a search, never say what the library holds or lacks.`;
 
 /**
  * Arm B of the citation-prompt A/B (#6946): the four closing Formatting lines,
@@ -1821,12 +1913,13 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean; citePages?: boolean; citeIds?: boolean; model?: string },
+  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean; citePages?: boolean; citeIds?: boolean; followupSearch?: boolean; model?: string },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   const lang: Locale = options?.lang ?? 'en';
   const fastToolRounds = options?.fastToolRounds ?? FAST_TOOL_ROUNDS_DEFAULT;
   const citePages = options?.citePages ?? CITE_PAGES_DEFAULT;
+  const followupSearch = options?.followupSearch ?? FOLLOWUP_SEARCH_DEFAULT;
   const model = options?.model ?? MODEL;
   // Cite by ID (#6946): the turn's page IDs, and the rewrite of IDs to links in the text the reader gets.
   const cite = (options?.citeIds ?? CITE_IDS_DEFAULT) ? new CiteIds(siteBase(lang), lang === 'es' ? 'Página' : 'Page') : undefined;
@@ -1853,7 +1946,8 @@ export async function* streamAgenticResponse(
     resolveCollectionSlug(options?.collection),
   ]);
   const notebookContext = formatNotebookForPrompt(notebook);
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds, citePages, !!cite);
+  const mustChooseTool = followupSearch && messageIndex >= 2;
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds, citePages, !!cite, followupSearch);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
@@ -1977,7 +2071,8 @@ export async function* streamAgenticResponse(
       model,
       contents,
       config: {
-        tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
+        tools: [{ functionDeclarations: mustChooseTool ? [...TOOL_DECLARATIONS, NO_SEARCH_DECLARATION] : TOOL_DECLARATIONS }],
+        ...(mustChooseTool && round === 0 ? { toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY, allowedFunctionNames: FOLLOWUP_FIRST_ROUND_TOOLS } } } : {}),
         temperature: TEMPERATURE,
         ...(fastToolRounds ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } } : {}),
       },
@@ -2034,6 +2129,7 @@ export async function* streamAgenticResponse(
     // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
       const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
+      if (fc.name === NO_SEARCH_TOOL) continue;
       yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.question as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
     }
 
@@ -2059,7 +2155,7 @@ export async function* streamAgenticResponse(
       const fc = (functionCalls[i] as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
       const { result, step, sources, retrievedPages, images } = toolResults[i];
 
-      yield step;
+      yield { ...step, toolCall: toolCallRecord(fc.name, fc.args || {}, step, result, round + 1) };
       if (step.type === 'notebook_update') notebookSaved = true;
       collectSources(sources);
       collectToolImageUrls(result);

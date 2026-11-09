@@ -16,8 +16,16 @@
 #   3. `cli-ocr-lane.mjs armc-collect`: one draft file a page in $LANE_DIR/drafts/<book>/<page>.json.
 # Nothing here writes to Mongo or calls agy: the correction and the write are the lane's cron run.
 #   LANE_DIR=/root/jobs/euro-armc-7567 CODE_DIR=/root/sourcelibrary ENV_FILE=… MAX_PAGES=1500 bash euro-draft-task.sh
+# Disk guard (#6871): $LANE_DIR/limits.env, when present, sets MIN_FREE_G (refuse to start under that many GB free on
+# the root disk; the chunk exits 75, a recorded skip), MAX_LANE_GB (armc-fetch stages no more images than keep the lane
+# dir under it) and MAX_PAGES. The euro lane dirs (/root/jobs/euro-<cell>-6871) carry MIN_FREE_G=25 MAX_LANE_GB=3.
 set -uo pipefail
 L=${LANE_DIR:-/root/jobs/euro-armc-7567}
+[ -f "$L/limits.env" ] && . "$L/limits.env"
+if [ -n "${MIN_FREE_G:-}" ]; then
+  free_g=$(df -BG --output=avail / | tail -1 | tr -dc 0-9)
+  [ "${free_g:-0}" -lt "$MIN_FREE_G" ] && { echo "OCR-FILLER-SKIP root disk ${free_g}G free < MIN_FREE_G=${MIN_FREE_G} ($L/limits.env): not starting"; exit 75; }
+fi
 CODE_DIR=${CODE_DIR:-/root/sourcelibrary}
 ENV_FILE=${ENV_FILE:-/root/sourcelibrary/.env.production.local}
 MAX=${MAX_PAGES:-1500}
@@ -28,7 +36,12 @@ read -r before _ < <(lane armc-left)
 echo "$(date -u +%FT%TZ) start: ${before} pages left; GPU $(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits) MiB"
 # a stage left by a killed chunk is fetched again (the images are kept by book); start clean
 rm -rf "$L/stage"
-lane armc-fetch --max-pages="$MAX" || exit 1
+lane armc-fetch --max-pages="$MAX" ${MAX_LANE_GB:+--max-lane-gb=$MAX_LANE_GB} || exit 1
+# the lane cap left no room (the correction is behind): a recorded skip, not a failed chunk
+if [ -n "${MAX_LANE_GB:-}" ] && ! ls "$L"/stage/*/*.jpg >/dev/null 2>&1; then
+  read -r now_left _ < <(lane armc-left)
+  [ "${now_left:-0}" -ge "${before:-0}" ] && { echo "OCR-FILLER-SKIP nothing staged under MAX_LANE_GB=${MAX_LANE_GB}: waiting for the correction"; exit 75; }
+fi
 if ls "$L/stage/la"/*.jpg >/dev/null 2>&1; then
   python3 "$CODE_DIR/scripts/batch/pero-draft.py" "$L/stage/la" "$W/pero.json" --threads="${PERO_THREADS:-12}" --device="${PERO_DEVICE:-gpu}" &&
   lane armc-collect --engine=pero --engine-out="$W/pero.json" --stage-dir="$L/stage/la"
@@ -48,4 +61,6 @@ gzip -f "$W"/*.json "$W"/out/*.jsonl 2>/dev/null
 read -r after _ < <(lane armc-left)
 echo "$(date -u +%FT%TZ) end: ${after} pages left; GPU $(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits) MiB"
 # a chunk that drafted nothing failed (the filler disables the route after three in a row)
-[ "${after:-0}" -lt "${before:-0}" ] || { echo "no page drafted this chunk"; exit 1; }
+# (the engine's own reason goes into task.log, which the failure page points at: 2026-11-09 it said only this
+# line for nine chunks while drive.log held "LocalEntryNotFoundError", the model trimmed from the HF cache)
+[ "${after:-0}" -lt "${before:-0}" ] || { echo "no page drafted this chunk"; tail -3 "$W/drive.log" 2>/dev/null; exit 1; }

@@ -1,5 +1,6 @@
 'use client';
 
+import { BOOK_VIEW_PAGE_SIZE } from '@/lib/gallery-book-view';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -140,7 +141,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
 
   // Pages of 100 (about twenty rows of five), turned with the catalogue's own
   // pagination; ?page= keeps a page shareable and the back button working.
-  const limit = 100;
+  const limit = BOOK_VIEW_PAGE_SIZE;
   const pageParam = parseInt(searchParams.get('page') || '1', 10);
   const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
 
@@ -184,17 +185,24 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
     // The SSR payload is illustration-only; for the merged default ('all') or
     // artwork-only we must fetch on mount to pull artworks in. Only skip when the
     // request matches what the server already rendered (illustration-only, no filters).
-    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration' && page === 1) {
+    // One book's view is already complete for any page. Refetching it would clear the
+    // server's pictures and ask /api/gallery, which robots.txt closes to a rendering crawler.
+    const matchesServer = bookId ? true : sourceFilter === 'illustration' && page === 1;
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && matchesServer) {
       setIsInitialLoad(false);
       return;
     }
+    // On first load with no filter the server ignored, its pictures stay up. Clearing them
+    // first left a crawler, which robots.txt keeps off /api/, a red error and no pictures:
+    // Search Console called the book view a soft 404.
+    const keepServerItems = isInitialLoad && !hasNonBookFilters && bookId === initialBookId && initialData.items.length > 0;
     if (isInitialLoad) setIsInitialLoad(false);
 
     // Drop the previous filter's results the moment the filter set changes.
     // Keeping them meant a zero-result filter rendered "No images found"
     // alongside leftover items and a live "Load more" from the old query
     // (#3605) — two inconsistent pieces of state in one view.
-    setAllItems([]);
+    if (!keepServerItems) setAllItems([]);
 
     // Only the newest request may write state. Two fetches can overlap when
     // filters change quickly, and an older one resolving last used to restore
@@ -233,6 +241,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
         setAllItems(firstPage);
       } catch (e) {
         if (requestId !== fetchSeqRef.current) return;
+        if (keepServerItems) return;
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
       } finally {
         if (requestId === fetchSeqRef.current) setLoading(false);

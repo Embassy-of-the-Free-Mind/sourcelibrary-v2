@@ -7,7 +7,7 @@ import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompt
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
-import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { sendWriteResult } from '@/lib/sqs-client';
@@ -321,6 +321,27 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       return;
     }
     finalTranslation = guardTranslationText(stray.text); // #5902: term definitions → <note>
+
+    // The previous page's English, handed in as continuity context, written back as this page's (#5026): refused when
+    // the page shares a long run with a neighbour's English that the sources do not share, or is two leaves long.
+    const nb = await neighbourGate(db, { id: pageId, book_id: bookId, page_number: page.page_number, page_type: page.page_type }, finalTranslation, { ocr: page.ocr.data, jobId, model: modelId });
+    if (nb.refused) {
+      await sendWriteResult({
+        type: 'translation',
+        bookId, pageId, jobId, targetPageIds,
+        timestamp: new Date().toISOString(),
+        failed: true,
+        error: { message: `Translation refused: the page carries its neighbour's English (${nb.detail ?? nb.reason}) (#5026)`, category: nb.reason ?? 'neighbour-leak' },
+        geminiUsage: buildUsagePayload({
+          model: modelId, bookId, pageId, jobId, durationMs,
+          inputTokens: translationResult.usage.inputTokens,
+          outputTokens: translationResult.usage.outputTokens,
+          status: 'success',
+          promptRef,
+        }),
+      });
+      return;
+    }
 
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.

@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
@@ -7,9 +6,14 @@ import { pageStatusSources } from './src/lib/page-status';
 import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
 import { waitForTurbopackRelease } from './src/lib/wait-for-turbopack-release';
 import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
+import { assetPrefixFromEnv, withAssetOrigin } from './src/lib/asset-prefix';
+
+// Unset on Vercel. Set only on the reader-origin box (#8384, trap 1).
+const ASSETS = assetPrefixFromEnv(process.env.SL_ASSET_PREFIX);
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  ...(ASSETS.assetPrefix ? { assetPrefix: ASSETS.assetPrefix } : {}),
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   // The type check runs in CI, not in the Vercel build. `next build` type-checks after compiling, in the same 8 GB
@@ -29,6 +33,12 @@ const nextConfig: NextConfig = {
     // nothing to .next/cache/turbopack, so the reset never comes. Cost: the
     // ~40s a warm compile used to save. Re-measure before turning it back on.
     turbopackFileSystemCacheForBuild: false,
+    // Prerender workers, set by hand because the default follows the machine.
+    // Each worker queries production Atlas. On the 8-core Enhanced machine the
+    // default of 7 timed out the /works prerender and failed 1 build of 2,
+    // where the 3 workers of the 4-core machine hit the same timeouts and
+    // finished (#8364).
+    cpus: 3,
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
   // pdfkit must stay an unbundled runtime require: bundling it rewrites
@@ -147,7 +157,7 @@ const nextConfig: NextConfig = {
             value: [
               // Next.js requires 'unsafe-inline' for styles and 'unsafe-eval' for dev; in prod we need 'unsafe-inline' for React inline styles
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com https://www.youtube.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               // Images: self + all configured remote image sources + data URIs for base64 thumbnails.
@@ -160,12 +170,14 @@ const nextConfig: NextConfig = {
               // (with the R2 bucket's missing CORS header, #4630).
               "connect-src 'self' https://images.sourcelibrary.org https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
-              "frame-src 'self' https://translate.google.com",
+              // YouTube: the IFrame API script and its player, for the podcast read-along
+              // (/articles/solve-et-coagula), which falls back to our own MP4 when they fail.
+              "frame-src 'self' https://translate.google.com https://www.youtube.com",
               "worker-src 'self' blob: data:",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-            ].join('; '),
+            ].map((d) => withAssetOrigin(d, ASSETS.cspOrigin)).join('; '),
           },
           {
             key: 'Strict-Transport-Security',
@@ -238,6 +250,16 @@ const nextConfig: NextConfig = {
         has: [{ type: 'host', value: '.*\\.vercel\\.app' }],
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
+      // A search results URL is an empty shell to a crawler: the results come from
+      // /api/search, which robots.txt disallows, so Google reports it as a Soft 404.
+      // A header because the page is a client component and cannot read the query
+      // in its metadata. `/search` itself stays indexable. Not robots.txt: Google
+      // only sees a noindex on a page it may fetch (#8368).
+      {
+        source: '/:locale(es|la|zh)?/search',
+        has: [{ type: 'query', key: 'q' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      },
       // The private spend report (#5225) is behind a named allow-list, but a
       // sign-in redirect is still a URL a crawler can record. Belt and braces
       // with the page's `metadata.robots`; robots.txt already disallows /admin/.
@@ -280,6 +302,12 @@ const nextConfig: NextConfig = {
       // changed face is a new URL and the old one can be cached for good.
       {
         source: '/fonts/google/:file',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      // The covers image behind the /about and homepage walls. Versioned file name,
+      // so a new image is a new URL and this one can be cached for good.
+      {
+        source: '/about/covers-atlas.v1.avif',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
       {
@@ -364,7 +392,9 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/gallery/:path*',
-        missing: [{ type: 'header', key: 'rsc' }],
+        // Not with `q`: the proxy sends assistant fetchers from /gallery?q= to a pictures
+        // view, and a person's cached copy would answer them first for a day (#8161).
+        missing: [{ type: 'header', key: 'rsc' }, { type: 'query', key: 'q' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
@@ -468,6 +498,21 @@ const nextConfig: NextConfig = {
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
       { source: '/partners', destination: '/ai-partners', permanent: true },
+      // The in-site Rithmomachia game departed from the 1563 rules it cites; the
+      // corrected game is a standalone app (#7821). Apex and www only: a tenant
+      // host serves global routes directly and must never redirect off its
+      // subdomain (tenant-lockdown.md). Temporary, so /rithmomachia stays the
+      // address to hand out if the game moves.
+      ...[
+        { source: '/rithmomachia', hash: '' },
+        { source: '/rithmomachia/guide', hash: '#rules' },
+        { source: '/rithmomachia/scenarios', hash: '#learn' },
+      ].map(({ source, hash }) => ({
+        source,
+        has: [{ type: 'host' as const, value: '(www\\.)?sourcelibrary\\.org' }],
+        destination: `https://rithmomachia-game.vercel.app/${hash}`,
+        permanent: false,
+      })),
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       // Choreia renamed to its main idea (2026-10-19).
@@ -732,4 +777,6 @@ const withAnalytics = (config: typeof nextConfig) =>
       })
     : config;
 
-export default withBotId(withAnalytics(nextConfig));
+// botid's withBotId wrapper was removed in #8374: it only added rewrites to
+// api.vercel.com/bot-protection, and nothing in src/ ever called checkBotId.
+export default withAnalytics(nextConfig);

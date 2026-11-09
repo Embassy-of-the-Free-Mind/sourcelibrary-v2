@@ -1,0 +1,78 @@
+{
+ "status": "result",
+ "controls_caught": "4/4",
+ "controls": [
+  {
+   "page_id": "69b51e0147b06ecd581889b5",
+   "kind": "drop",
+   "caught": true
+  },
+  {
+   "page_id": "69b51e63768235dc65992907",
+   "kind": "bleed",
+   "caught": true
+  },
+  {
+   "page_id": "69b51e6f9a81ef7feb3d4f4d",
+   "kind": "drop",
+   "caught": true
+  },
+  {
+   "page_id": "69b51edaff09e4fe943b6144",
+   "kind": "bleed",
+   "caught": true
+  }
+ ],
+ "arms": {
+  "base": {
+   "pages": 20,
+   "judged": 20,
+   "usable": 20,
+   "usable_ci95": [
+    0.839,
+    1
+   ],
+   "faults": {
+    "omissions": 0,
+    "additions": 0,
+    "cross_page_bleed": 0,
+    "order_errors": 0,
+    "misreads": 7
+   },
+   "agy_calls": 20,
+   "tool_calls": 41,
+   "denied_tool_calls": 21,
+   "input_per_page": 30331,
+   "uncached_input_per_page": 22000,
+   "output_per_page": 2004
+  },
+  "once": {
+   "pages": 20,
+   "judged": 20,
+   "usable": 20,
+   "usable_ci95": [
+    0.839,
+    1
+   ],
+   "faults": {
+    "omissions": 0,
+    "additions": 0,
+    "cross_page_bleed": 0,
+    "order_errors": 0,
+    "misreads": 6
+   },
+   "agy_calls": 20,
+   "tool_calls": 23,
+   "denied_tool_calls": 0,
+   "input_per_page": 16941,
+   "uncached_input_per_page": 16941,
+   "output_per_page": 2912
+  }
+ },
+ "paired": {
+  "base→once": {
+   "new_worse": 0,
+   "new_better": 0
+  }
+ }
+}

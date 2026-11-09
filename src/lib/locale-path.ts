@@ -102,12 +102,12 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 // prefixed locale; a shared set would have sent a Latin reader to
 // `/la/support`, which no route serves.
 export const LOCALIZED_PATHS: Record<PrefixedLocale, Set<string>> = {
-  es: new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search', '/articles/techniques-of-the-body']),
+  es: new Set<string>(['/', '/about', '/support', '/auth/signin', '/librarian', '/search', '/articles/techniques-of-the-body', '/articles/solve-et-coagula']),
   // `/search` on Latin and Chinese (#7175): books written in the language,
   // quoted in it. Dutch has no search twin yet.
-  la: new Set<string>(['/', '/search']),
-  nl: new Set<string>(['/']),
-  zh: new Set<string>(['/', '/search']),
+  la: new Set<string>(['/', '/about', '/search']),
+  nl: new Set<string>(['/', '/about']),
+  zh: new Set<string>(['/', '/about', '/search']),
 };
 
 // Path SHAPES with a twin, per locale. One pattern per route under

@@ -105,9 +105,8 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 // Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider). The Rithmomachia game stays at /rithmomachia: it is a
-// full-width game with its own guide and scenario pages, not an article; the
-// article about it is /articles/rithmomachia.
+// home slider). /rithmomachia redirects to the standalone game (#7821), which
+// is not an article; the article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
   {
     slug: 'play-rithmomachia',
@@ -125,6 +124,20 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'solve-et-coagula',
+    title: 'Solve et Coagula: Derek Lomas on Source Library',
+    subtitle:
+      'Alex of Agrippa’s Diary in conversation with Derek Lomas, at the Embassy of the Free Mind in Amsterdam. The full episode, with a transcript you can click.',
+    summary:
+      'Derek Lomas talks with Alex of Agrippa’s Diary about Ficino, Agrippa, Maier and Source Library. Watch the episode and click any word of the transcript.',
+    date: '9 November 2026',
+    readTime: 'video, 1 h 32 min',
+    kind: 'interactive',
+    image: '/articles/solve-et-coagula/episode-artwork-169.jpg',
+    imageAlt:
+      'Alexander of Agrippa’s Diary (left) and Derek Lomas (right), in the video call recorded for the Solve et Coagula podcast.',
+  },
   {
     slug: 'kircher-hieroglyphs',
     title: 'Kircher and the Hieroglyphs',

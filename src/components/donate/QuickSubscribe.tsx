@@ -7,7 +7,14 @@ import { useState } from 'react';
  * signup (Mongo `beta_subscribers` + Resend audience). No account required.
  * `source` tags where the signup came from so it's traceable in the data.
  */
-export default function QuickSubscribe({ source = 'support' }: { source?: string }) {
+export default function QuickSubscribe({
+  source = 'support',
+  doneMessage = "Thank you, you're on the list. We'll share new translations as they land.",
+}: {
+  source?: string;
+  /** What the reader sees once subscribed; say what they will actually receive. */
+  doneMessage?: string;
+}) {
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -37,7 +44,7 @@ export default function QuickSubscribe({ source = 'support' }: { source?: string
   if (done) {
     return (
       <p className="text-stone-600 text-sm">
-        Thank you, you&apos;re on the list. We&apos;ll share new translations as they land.
+        {doneMessage}
       </p>
     );
   }

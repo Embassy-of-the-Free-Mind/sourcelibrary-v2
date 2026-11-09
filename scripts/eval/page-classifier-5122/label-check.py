@@ -1,7 +1,7 @@
 # PRIOR ART: scripts/eval/benchmark/script-class/ (Sonnet by eye: print technique + spread, not page kind),
 # paddle_table_corrections_6561 (Opus layout call, Chinese flagged pages only). This labels a fresh random draw by
 # eye on all three classifier outputs at once, so the classifier is scored outside the sets it was trained on (#5122).
-# Opus on the subscription through `claude -p` (rule 2 of ocr-lane-decision-tree.md: never the API). $0. Read only.
+# Opus on the subscription through `claude -p` (.claude/docs/routing.md: never the API). $0. Read only.
 # Usage: python label-check.py MANIFEST IMGDIR OUTDIR [workers]
 import sys, json, hashlib, subprocess, os, concurrent.futures as cf
 man, imgdir, outdir = sys.argv[1:4]; W = int(sys.argv[4]) if len(sys.argv) > 4 else 4

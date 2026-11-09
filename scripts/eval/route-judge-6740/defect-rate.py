@@ -10,6 +10,8 @@
       (repo root; stdlib only, no model calls; --recheck: defect-rate.mjs recheck's output, for amendment S1)
   python3 scripts/eval/route-judge-6740/defect-rate.py --add-pooled scripts/eval/route-judge-6740/results/defect-rate-2026-10-30
       (pools the later studies in ADD into that score.json's router cells and rewrites defect-rates.json; no --rows)
+  python3 scripts/eval/route-judge-6740/defect-rate.py --store-rows <route-evidence.mjs rows.jsonl.gz> [--coverage <its coverage.json>]
+      (#8283: the rates build.py decides on, per router cell (with script type) x route, from the whole evidence store)
 
 The rule is RULE.md in --out, committed before this ran (950d1cb75). Writes score.json (everything; prices as Claude points / agy calls,
 never dollars, build.py's convention; a break-even weight is in dollars per defect at rules.json's default plan fee) and scripts/eval/estimator/router-table/defect-rates.json (the per-route fields
@@ -19,7 +21,7 @@ import collections, gzip, json, math, os, random, re, statistics, sys, zlib
 sh = lambda x: zlib.crc32(repr(x).encode())   # a stable hash (Python's hash() is salted per process)
 
 arg = lambda f, d=None: sys.argv[sys.argv.index(f) + 1] if f in sys.argv else d
-ROWS, OUT, RECHECK = arg('--rows'), arg('--out'), arg('--recheck')
+ROWS, OUT, RECHECK = arg('--rows') or arg('--store-rows'), arg('--out'), arg('--recheck')
 RT = 'scripts/eval/estimator/router-table/'
 SEED, BOOT = 6740, 2000
 SEV = ('cosmetic', 'misleads', 'wrong_text')
@@ -189,7 +191,7 @@ def summary(rs, seed):
              words_own_text=sum(r['words'] for r in rw if r.get('words_src') == 'candidate'),
              median_words_per_page=statistics.median([r['words'] for r in rw]) if rw else None,
              accept=f"{sum(r['accept'] for r in rs)}/{len(rs)}", wrong_text_pages=f"{sum(1 for r in rs if r['n_wrong_text'])}/{len(rs)}",
-             fidelity_mean=round(statistics.mean([r['fidelity'] for r in rs]), 2) if rs else None, prompts=dict(collections.Counter(r['prompt'] for r in rs)))
+             fidelity_mean=round(statistics.mean(fs), 2) if (fs := [r['fidelity'] for r in rs if r['fidelity'] is not None]) else None, prompts=dict(collections.Counter(r['prompt'] for r in rs)))
     for i, sev in enumerate(SEV):
         k = sum(r[f'n_{sev}'] for r in rw)
         s[sev] = dict(count=k, per_1k_words=round(1000 * k / W, 3) if W else None, ci95_by_book=boot_ratio(rw, sev, seed + i), phi=phi_of(rw, sev))
@@ -560,6 +562,62 @@ ADD = [
 # Not added: #7845 (open Fraktur models): 6 judged pages an arm (< MIN_PAGES), and no arm is a route in rules.json.
 
 
+def store_rates(cov_path=None, recheck_from='scripts/eval/route-judge-6740/results/defect-rate-2026-10-30/score.json'):
+    """#8283: defect-rates.json from route-evidence.mjs rows, one entry per router cell x route with >= MIN_PAGES pages that
+    have words. Same model as main(): a phi per group, a pooled prior per task x severity, the gamma posterior; the k/n and
+    classes a route needs for the floor are counted from the same rows. The re-check's deflation is the 2026-10-30 one."""
+    rows, G = load_rows(), collections.defaultdict(list)
+    for r in rows:
+        G[(r['cell'], r['route'])].append(r)
+    rated = {k: [r for r in v if r.get('words')] for k, v in G.items()}
+    rated = {k: v for k, v in rated.items() if len(v) >= MIN_PAGES}
+    PH, PR = {}, {}
+    for sev in SEV:
+        for task in ('ocr', 'translation'):
+            ks = [k for k, rs in rated.items() if task_of(rs) == task]
+            phs = [p for p in (phi_of(rated[k], sev) for k in ks) if p]
+            med = statistics.median(phs) if phs else 1.0
+            for k in ks:
+                PH[(k, sev)] = phi_of(rated[k], sev) or med
+            data = [(sum(r[f'n_{sev}'] for r in rated[k]) / PH[(k, sev)], sum(r['words'] for r in rated[k]) / 1000 / PH[(k, sev)]) for k in ks]
+            PR[(task, sev)] = dict(fit_prior(data) or dict(prior_alpha=1.0, prior_beta=1.0, a0=None, note='flat: < 3 groups'), phi_median=round(med, 3))
+    rng, cells = random.Random(SEED), {}
+    for k in sorted(rated):
+        rs, task = rated[k], task_of(rated[k])
+        d = dict(task=task, **summary(G[k], SEED + sh(k) % 1000))
+        E = sum(r['words'] for r in rs) / 1000
+        for sev in SEV:
+            a, b = posterior(sum(r[f'n_{sev}'] for r in rs), E, PH[(k, sev)], PR[(task, sev)])
+            d[sev]['posterior'] = dict(mean=round(a / b, 4), q05=round(gq(a, b, .05, rng), 4), q95=round(gq(a, b, .95, rng), 4), a=round(a, 3), b=round(b, 3), phi=round(PH[(k, sev)], 3))
+        n = len(G[k])
+        cl = collections.Counter(c for r in G[k] for c in {x.split(':')[0] for x in r['classes']})
+        cells.setdefault(k[0], {})[k[1]] = dict(task=task, **fields_of(d), accept=d['accept'], wrong_text_pages=d['wrong_text_pages'], classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()},
+                                                hash_by=dict(collections.Counter(r['hash_by'] for r in G[k])), sources=dict(collections.Counter(r['source'] for r in G[k])))
+    # A route the store cannot rate keeps the 2026-10-30 inventory's rate: a test arm never written to a page has no words
+    # here, and its candidates sit on the box that ran it. Not split by script type, so print and unknown, never manuscript.
+    carried = json.load(open(os.path.join(os.path.dirname(recheck_from), 'defect-rates-inventory.json')))['cells']
+    for base, rs in carried.items():
+        for route, d in rs.items():
+            if not any(c.split('/')[0] == base and route in v for c, v in cells.items()):
+                for sc in ('print', 'unknown'):
+                    cells.setdefault(f'{base}/{sc}', {})[route] = dict(d, carried='2026-10-30 inventory')
+    S = json.load(open(recheck_from))
+    json.dump(dict(_about='Defect rates per 1,000 words of the judged text, per router cell (with script type) x route: scripts/eval/route-evidence.mjs export, the whole evidence store (lanes, tests, QA draws), rows with no tie to the judged text left out (#8283). build.py decides on them. Severity weights and the re-check are rules.json decision_rule and `recheck`.',
+                   coverage=json.load(open(cov_path)) if cov_path and os.path.exists(cov_path) else None, recheck=dict(misleads=S['recheck']['misleads']['confirmed_rate'], wrong_text=S['recheck']['wrong_text']['confirmed_rate']),
+                   priors={f'{t}/{s}': v for (t, s), v in PR.items()}, cells=cells), open(RT + 'defect-rates.json', 'w'), indent=1, ensure_ascii=False)
+    print(f"{sum(len(v) for v in cells.values())} routes rated in {len(cells)} cells, from {len(rows)} rows")
+
+
+def fields_of(d):
+    """The per-route fields of defect-rates.json."""
+    return dict(pages=d['pages'], books=d['books'], words=d['words'], words_own_text_share=round(d['words_own_text'] / d['words'], 2) if d['words'] else None,
+                fidelity_mean=d['fidelity_mean'], median_words_per_page=d['median_words_per_page'],
+                **{f'{s}_per_1k': d[s]['per_1k_words'] for s in SEV if s in d}, **{f'{s}_per_1k_ci95_by_book': d[s]['ci95_by_book'] for s in SEV if s in d},
+                **{f'{s}_per_1k_posterior': [d[s]['posterior']['q05'], d[s]['posterior']['mean'], d[s]['posterior']['q95']] for s in SEV if 'posterior' in d.get(s, {})},
+                **{f'{s}_per_1k_gamma': [d[s]['posterior']['a'], d[s]['posterior']['b']] for s in SEV if 'posterior' in d.get(s, {})},
+                class_mix=d.get('class_mix', {}), **({'added': [dict(source=x['source'], pages=x['pages'], words=x['words']) for x in d['added']]} if d.get('added') else {}))
+
+
 def add_pooled(out_dir):
     """Re-read score.json's router cells (the 2026-10-30 inventory) and pool ADD into them: k/phi and E/phi added to the
     group's gamma posterior, phi = the group's own (the task's median phi for a new group: one page a book gives no
@@ -614,12 +672,7 @@ def add_pooled(out_dir):
     fl = {}
     for c, rs in out.items():
         for r, d in rs.items():
-            fl.setdefault(c, {})[r] = dict(pages=d['pages'], books=d['books'], words=d['words'], words_own_text_share=round(d['words_own_text'] / d['words'], 2) if d['words'] else None,
-                                           fidelity_mean=d['fidelity_mean'], median_words_per_page=d['median_words_per_page'],
-                                           **{f'{s}_per_1k': d[s]['per_1k_words'] for s in SEV if s in d}, **{f'{s}_per_1k_ci95_by_book': d[s]['ci95_by_book'] for s in SEV if s in d},
-                                           **{f'{s}_per_1k_posterior': [d[s]['posterior']['q05'], d[s]['posterior']['mean'], d[s]['posterior']['q95']] for s in SEV if 'posterior' in d.get(s, {})},
-                                           **{f'{s}_per_1k_gamma': [d[s]['posterior']['a'], d[s]['posterior']['b']] for s in SEV if 'posterior' in d.get(s, {})},
-                                           class_mix=d.get('class_mix', {}), **({'added': [dict(source=x['source'], pages=x['pages'], words=x['words']) for x in d['added']]} if d.get('added') else {}))
+            fl.setdefault(c, {})[r] = fields_of(d)
     json.dump(dict(_about='Defect rates per 1,000 words of the candidate text, per router base cell x route, from the stored Opus verdicts (#6740, defect-rate.py; rule RULE.md in scripts/eval/route-judge-6740/results/defect-rate-2026-10-30). '
                           'build.py decides on them (rules.json decision_rule, #6740 job defect-router-6740); `added` names the later sources pooled in by --add-pooled (#7818, #7835) from their score files\' pooled counts.',
                    generated_from=os.path.join(out_dir, 'score.json'), recheck=dict(misleads=S['recheck']['misleads']['confirmed_rate'], wrong_text=S['recheck']['wrong_text']['confirmed_rate']) if S.get('recheck') else None,
@@ -632,5 +685,7 @@ def add_pooled(out_dir):
 if __name__ == '__main__':
     if '--add-pooled' in sys.argv:
         add_pooled(arg('--add-pooled'))
+    elif '--store-rows' in sys.argv:
+        store_rates(arg('--coverage'))
     else:
         main()

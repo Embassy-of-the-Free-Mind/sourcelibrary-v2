@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Copy, Check, Key, Loader2 } from 'lucide-react';
-import { PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
+import { API_TERMS_VERSION, API_TERMS_DEADLINE } from '@/lib/api-terms-version';
 
 /** Existing keys for the signed-in user */
 interface UserKey {
@@ -14,6 +14,8 @@ interface UserKey {
   status: string;
   created_at: string;
   rate_limit: { requests_per_minute: number; pages_per_day: number };
+  /** False for a key made before the current API terms (#8235). */
+  has_current_terms?: boolean;
 }
 
 function TermsCheckbox({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
@@ -22,7 +24,7 @@ function TermsCheckbox({ checked, onChange }: { checked: boolean; onChange: (che
       <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} className="mt-1" />
       <span>
         I agree to the{' '}
-        <Link href="/terms" className="text-accent-rust hover:underline">terms of use</Link>, including the{' '}
+        <Link href="/terms#api-terms" className="text-accent-rust hover:underline">API terms</Link>, including the{' '}
         <Link href="/terms#embassy-collection" className="text-accent-rust hover:underline">terms for the Embassy of the Free Mind&rsquo;s collection</Link>.
       </span>
     </label>
@@ -42,6 +44,28 @@ export default function ApiKeyRequestForm() {
   const [keyName, setKeyName] = useState('');
   const [error, setError] = useState('');
   const [termsAgreed, setTermsAgreed] = useState(false);
+  const [renewAgreed, setRenewAgreed] = useState(false);
+  const [renewing, setRenewing] = useState(false);
+  const keysNeedingTerms = existingKeys.filter(k => k.has_current_terms === false);
+
+  // Keys made before the API terms: agree once for all of them, the keys stay the same.
+  const handleAcceptTerms = async () => {
+    setRenewing(true);
+    setError('');
+    try {
+      const res = await fetch('/api/dataset/v1/keys', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accept_terms: API_TERMS_VERSION }),
+      });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Could not record your agreement');
+      setExistingKeys(keys => keys.map(k => ({ ...k, has_current_terms: true })));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not record your agreement');
+    } finally {
+      setRenewing(false);
+    }
+  };
 
   // Request form state (anonymous users)
   const [form, setForm] = useState({
@@ -72,7 +96,7 @@ export default function ApiKeyRequestForm() {
       const res = await fetch('/api/dataset/v1/keys', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: keyName || 'API Key', accept_terms: PARTNER_TERMS_VERSION }),
+        body: JSON.stringify({ name: keyName || 'API Key', accept_terms: API_TERMS_VERSION }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -107,7 +131,7 @@ export default function ApiKeyRequestForm() {
       const res = await fetch('/api/dataset/v1/request-key', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, accept_terms: PARTNER_TERMS_VERSION }),
+        body: JSON.stringify({ ...form, accept_terms: API_TERMS_VERSION }),
       });
       const data = await res.json();
 
@@ -160,6 +184,26 @@ export default function ApiKeyRequestForm() {
             <p className="text-xs text-green-600 mt-3">
               Or use it directly: <code className="text-green-700">Authorization: Bearer YOUR_KEY</code>
             </p>
+          </div>
+        )}
+
+        {/* Keys made before the API terms */}
+        {keysNeedingTerms.length > 0 && (
+          <div className="p-4 rounded-lg border border-amber-300 bg-amber-50 space-y-3">
+            <p className="text-sm text-stone-800">
+              We have written terms for the API. Please agree to keep using your{' '}
+              {keysNeedingTerms.length === 1 ? 'key' : `${keysNeedingTerms.length} keys`}: from{' '}
+              {new Date(API_TERMS_DEADLINE).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}{' '}
+              a free key whose holder has not agreed stops working until they do. Your key does not change.
+            </p>
+            <TermsCheckbox checked={renewAgreed} onChange={setRenewAgreed} />
+            <button
+              onClick={handleAcceptTerms}
+              disabled={renewing || !renewAgreed}
+              className="px-4 py-2 bg-stone-800 text-white text-sm rounded-lg hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {renewing ? 'Saving...' : 'Agree and keep my key'}
+            </button>
           </div>
         )}
 

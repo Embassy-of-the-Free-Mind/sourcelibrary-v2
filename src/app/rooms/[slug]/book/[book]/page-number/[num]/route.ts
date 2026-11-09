@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { getRoomBySlug, findBookInRoom } from '@/lib/reading-rooms';
 import { ROOMS_ROOT } from '@/lib/reading-rooms-paths';
 import { resolvePageByNumber } from '@/lib/page-number-resolve';
+import { publicUrl } from '@/lib/public-origin';
 
 interface RouteContext {
   params: Promise<{ slug: string; book: string; num: string }>;
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
   if (!room) return new NextResponse('Not Found', { status: 404 });
 
   const result = await findBookInRoom(db, room, book, { id: 1, slug: 1 });
-  if (!result) return NextResponse.redirect(new URL(`${ROOMS_ROOT}/${room.slug}`, request.url), 307);
+  if (!result) return NextResponse.redirect(publicUrl(`${ROOMS_ROOT}/${room.slug}`, request), 307);
 
   const bookId = (result.book.id || result.book._id?.toString()) as string;
   const bookSlug = (result.book.slug || bookId) as string;
@@ -32,7 +33,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
   if (!page) return new NextResponse('Not Found', { status: 404 });
 
   const pageId = page.id || page._id?.toString();
-  const destination = new URL(`${ROOMS_ROOT}/${room.slug}/book/${bookSlug}/page/${pageId}`, request.url);
+  const destination = publicUrl(`${ROOMS_ROOT}/${room.slug}/book/${bookSlug}/page/${pageId}`, request);
   destination.search = request.nextUrl.search;
   return NextResponse.redirect(destination, 308);
 }

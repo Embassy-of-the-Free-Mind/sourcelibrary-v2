@@ -33,6 +33,7 @@ import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { stripAnchor } from './block-page-guard.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
+import { checkNeighbours } from './neighbour-guard.mjs';
 import { guardTranslationText } from './translation-write-guard.mjs';
 import { checkWrittenText, writeGuardReason } from './write-text-guard.mjs';
 export { STRAY_SCRIPT_REASON };
@@ -168,7 +169,7 @@ export const CLI_TRANSLATE_BOOK_FILTER = cliBookFilter(TRANSLATION_ROUTING_TABLE
  * OCR is the problem), Hebrew/Aramaic/Arabic/Persian +0.53 (52), Sanskrit/
  * Pali/classical Chinese +0.40 (64; reversed statements 15 → 6 per 100 pages).
  * Latin (+0.22) and the Latin-script vernaculars (+0.21) also gained, but
- * stay on lite pending Derek's cost call (scripts/eval/DECISIONS.md).
+ * stayed on lite then (routes are now the router table, .claude/docs/routing.md).
  * Matches the book's FIRST language label, so "Greek-Latin" and
  * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
  */
@@ -1234,6 +1235,31 @@ export async function strayScriptGate(db, page, text, { ocr, language, jobId, mo
   return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
 }
 
+/**
+ * The neighbour gate (#5026), for every writer of model translation text, the door included: refuses (stamp +
+ * evidence, via `recordRefusedTranslation`) a page's English that is its neighbour's — 'neighbour-leak' or
+ * 'absorbs-neighbour' (scripts/lib/neighbour-guard.mjs). Reads the page's number, type and OCR when `page` lacks them,
+ * then n-1, n+1 and the book's K. `neighbours` (page_number → English) are the other pages of the same reply when a
+ * block is written together: they stand in for the stored English, so a block is judged against itself. Fail-open.
+ * @returns {Promise<{ refused: boolean, reason?: string, detail?: string, page_number?: number }>} `page_number` (when
+ *   read) lets a collector keep the job's accepted English for the next page's `neighbours`.
+ */
+export async function neighbourGate(db, page, text, { ocr, neighbours = null, jobId, model, dryRun = false } = {}) {
+  if (!text || !page?.id) return { refused: false };
+  let p = page;
+  if (p.page_number == null || p.book_id == null || (ocr ?? p.ocr?.data) == null) {
+    try {
+      const doc = await db.collection('pages').findOne({ id: p.id }, { projection: { _id: 0, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } });
+      if (doc) p = { ...doc, ...Object.fromEntries(Object.entries(p).filter(([, v]) => v != null)) };
+    } catch { return { refused: false }; }
+  }
+  const v = await checkNeighbours(db, { page: p, text, ocr: ocr ?? p.ocr?.data ?? '', bookId: p.book_id, neighbours });
+  if (!v.refuse) return { refused: false, page_number: p.page_number };
+  console.warn(`[neighbour-guard] ${p.id} p${p.page_number}: ${v.reason} — ${v.detail}${dryRun ? ' (dry run)' : ''}`);
+  if (!dryRun) await recordRefusedTranslation(db, { id: p.id, book_id: p.book_id }, text, v.reason, { jobId, model });
+  return { refused: true, reason: v.reason, detail: v.detail };
+}
+
 /** The reason value stamped on `translation.health_blocked` for a looping source. */
 export const SOURCE_LOOP_REASON = 'source_loop';
 
@@ -1338,11 +1364,15 @@ export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.S
  *   An empty or whitespace-only `text` is never stored either (#4685): the page is stamped
  *   `translation.fail_reason: 'empty_response'` (recordEmptyTranslation) and the result carries
  *   {written:false, emptyResponse:true, reason:'empty_response'}, `text` = the existing translation.
+ *   Nor a page that carries its neighbour's English (#5026, neighbour-guard.mjs): reasons 'neighbour-leak' and
+ *   'absorbs-neighbour', judged against the stored English of n-1 and n+1, stamped and kept like 'hidden-meta'.
+ * @param {Object<number,string>} [args.neighbours] page_number → English, for pages of the same reply written
+ *   together: overrides the stored English of n-1 / n+1 in the neighbour check.
  * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, emptyResponse?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true, neighbours = null }) {
   // What produced this text (#4613) — required, one of:
   //   call:   { call_site, api?, model?, promptText, generationConfig, run?, context?, response?,
   //             prompt_sent_hash?, prompt_sent_chars? } — the door builds the engine block here,
@@ -1408,7 +1438,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
@@ -1445,6 +1475,15 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   if (stray.refuse) {
     await recordRefusedTranslation(db, page, clean, STRAY_SCRIPT_REASON, { jobId, model: resolvedModel });
     return { written: false, protected: false, unhealthy: true, reason: STRAY_SCRIPT_REASON, text: clean };
+  }
+
+  // Always on too (#5026): a page's English that is its neighbour's (a shared run with the stored English of n-1 or
+  // n+1 the sources do not share, or a length that is this page's source plus a neighbour's) is refused, stamped and
+  // kept. Not on a restore (writeGuard: false, or a notRecorded engine), whose text is not this run's.
+  if (writeGuard && !isNotRecorded(engineBlock)) {
+    const at = { id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, page_number: page.page_number ?? current?.page_number, page_type: page.page_type ?? current?.page_type };
+    const nb = await neighbourGate(db, at, clean, { ocr: page?.ocr?.data ?? current?.ocr?.data ?? '', neighbours, jobId, model: resolvedModel });
+    if (nb.refused) return { written: false, protected: false, unhealthy: true, reason: nb.reason, text: clean };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

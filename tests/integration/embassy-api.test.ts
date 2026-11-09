@@ -103,6 +103,30 @@ describe('Embassy API', () => {
       expect(messages[1].authorName).toBe('The Librarian');
     });
 
+    it('saves what the turn searched, even when it dies part way, and never sends it to the reader', async () => {
+      const db = getTestDb();
+      const { streamAgenticResponse } = await import('@/lib/embassy/librarian');
+      const toolCall = { name: 'search', query: 'azoth in Paracelsus', found: 0, round: 1 };
+      (streamAgenticResponse as any).mockImplementationOnce(async function* () {
+        yield { type: 'text', text: 'Looking.' };
+        yield { type: 'tool_result', name: 'search', query: 'azoth in Paracelsus', found: 0, summary: 'none', toolCall };
+        throw new Error('stream died');
+      });
+
+      const req = makeRequest('/api/embassy/chat', { message: 'What about azoth?', stream: true });
+      const res = await chatPost(req as any);
+      const body = await res.text();
+      expect(body).toContain('azoth in Paracelsus');
+      expect(body).not.toContain('toolCall');
+
+      const threadId = body.match(/"threadId":"([0-9a-f]{24})"/)![1];
+      const expectSaved = async () => {
+        const saved = await db.collection('embassy_messages').findOne({ threadId: new ObjectId(threadId), authorType: 'ai' });
+        expect(saved?.toolCalls).toEqual([toolCall]);
+      };
+      await vi.waitFor(expectSaved);
+    });
+
     it('lists an anonymous visitor\'s thread, with no creator attached', async () => {
       const { auth } = await import('@/lib/auth');
       (auth as any).mockResolvedValueOnce(null);

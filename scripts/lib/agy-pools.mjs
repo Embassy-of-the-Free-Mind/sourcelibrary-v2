@@ -80,7 +80,58 @@ export function homeBusy(home) {
 export function readQuotaStdout(home, { model = null, env = {} } = {}) {
   const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json', ...(model ? ['--model', model] : [])],
     { encoding: 'utf8', env: agyEnv(home, process.env, env), timeout: 120e3, cwd: os.tmpdir() });
+  if (quotaError(`${r.stdout || ''}\n${r.stderr || ''}`) === 'auth') noteAuthLoss(home);
   return r.stdout || '';
+}
+
+// ── a lost login is not an empty pool (2026-11-08) ──
+/**
+ * Why a /quota reply has no buckets: 'auth' when the login is gone ("authentication required", "authentication failed
+ * or timed out"), 'error' for any other ERROR reply, null for a good reply or one this cannot read. Every lane reads a
+ * missing bucket as "no quota" and skips quietly (cli-ocr-lane: "no Gemini weekly bucket in /quota"), so on
+ * 2026-11-08 the milo login on gex45 had expired and its lanes made 11 calls in an hour, with 77% of its week left and
+ * no page. noteAuthLoss() turns that case into a page.
+ */
+export function quotaError(text) {
+  const s = String(text || '');
+  if (/authentication (required|failed)/i.test(s)) return 'auth';
+  try {
+    const j = JSON.parse(s.trim().split('\n').filter((l) => l.startsWith('{')).pop());
+    if (j?.status === 'ERROR') return /auth/i.test(j.error || '') ? 'auth' : 'error';
+  } catch { /* not JSON */ }
+  return null;
+}
+
+export const AUTH_PAGE_EVERY_MS = 6 * 3600e3;
+const HERE = path.dirname(new URL(import.meta.url).pathname);
+const NTFY_SH = path.join(HERE, '../workers/ntfy-send.sh');
+const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
+const defaultStampDir = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/auth-lost' : path.join(os.tmpdir(), 'agy-auth-lost'));
+
+/**
+ * Record and page a lost agy login, at most once per AUTH_PAGE_EVERY_MS per pool on this box (a stamp file per pool).
+ * Synchronous on purpose: readQuotaStdout is, and a lane may exit right after. AGY_AUTH_PAGE=0 records without paging.
+ * Returns { paged, stamp }.
+ */
+export function noteAuthLoss(home, { now = Date.now(), stampDir = defaultStampDir(), send = sendPage, host = os.hostname() } = {}) {
+  const pool = home ? path.basename(home) : 'default';
+  const stamp = path.join(stampDir, `${pool}.stamp`);
+  console.error(`agy-pools: pool ${pool} on ${host} is NOT LOGGED IN (agy /quota: authentication); its lanes skip until it is restored`);
+  try {
+    const last = fs.existsSync(stamp) ? fs.statSync(stamp).mtimeMs : 0;
+    if (now - last < AUTH_PAGE_EVERY_MS) return { paged: false, stamp };
+    fs.mkdirSync(stampDir, { recursive: true });
+    fs.writeFileSync(stamp, new Date(now).toISOString() + '\n');
+  } catch { return { paged: false, stamp }; }
+  if (process.env.AGY_AUTH_PAGE === '0') return { paged: false, stamp };
+  send(`agy NOT LOGGED IN: ${pool} on ${host}`,
+    `The ${pool} agy login on ${host} fails /quota with an authentication error, so every lane on that pool skips. `
+    + `Fix (scripts/workers/JOB-HOSTS.md): copy antigravity-oauth-token from main's ${home ? `${home}/` : '/root/'}.gemini/antigravity-cli/ to this box; do not log in again here.`);
+  return { paged: true, stamp };
+}
+
+function sendPage(title, msg) {
+  try { spawnSync('bash', [NTFY_SH, NTFY_TOPIC, title, 'high', 'key', msg], { env: { ...process.env, NTFY_SRC: 'agy-pools.mjs' }, timeout: 20e3 }); } catch { /* a page never fails the lane */ }
 }
 
 /** One pool's reading (parseQuota), tried twice, or null. */

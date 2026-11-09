@@ -141,7 +141,7 @@ export default function DevelopersPage() {
 
       {/* Free API key — soft CTA */}
       <section className="mb-16">
-        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+        <div id="get-key" className="bg-white rounded-xl border border-border-light p-6 md:p-8 scroll-mt-24">
           <h2 className="text-lg font-semibold text-primary mb-2">Building something? Grab a free key.</h2>
           <p className="text-secondary mb-6">
             The endpoints work without one. Keys lift rate limits, give your traffic attribution, and help us learn what

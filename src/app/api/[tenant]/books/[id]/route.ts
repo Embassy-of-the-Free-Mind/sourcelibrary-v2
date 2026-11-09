@@ -66,7 +66,7 @@ export async function GET(
       // a book with no pages and rendered no format at all (twin of the apex
       // route's nav projection).
       pages_count: 1, pages_ocr: 1, pages_translated: 1,
-      'translation_state.rung': 1, 'translation_state.english_original': 1,
+      'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1,
       year: 1, 'image_source.provider': 1, 'image_source.license': 1, 'image_source.rights_normalized': 1,
     } : undefined;
 

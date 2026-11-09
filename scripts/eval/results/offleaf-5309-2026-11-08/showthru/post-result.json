@@ -1,0 +1,1318 @@
+{
+ "n": 53,
+ "own_leaf": 53,
+ "usable": 53,
+ "usable_wilson": [
+  0.9324180104293549,
+  1
+ ],
+ "pass": true,
+ "defects_by_kind": {
+  "ocr/other/minor": 5,
+  "translation/mistranslation/minor": 3,
+  "ocr/misread/minor": 11,
+  "ocr/garble/minor": 1,
+  "translation/other/minor": 1,
+  "translation/invented/minor": 1,
+  "ocr/omission/minor": 1
+ },
+ "agy_checker": {
+  "n": 0,
+  "agree": 0,
+  "false_alarm": 0,
+  "miss": 0,
+  "leaf_agree": 0,
+  "opus_flags": 0,
+  "agy_flags": 0
+ },
+ "controls": [],
+ "unanswered_opus": [],
+ "rows": [
+  {
+   "key": "T01",
+   "book_id": "69e80561fdad300064d9d53c",
+   "n": 103,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 103 (printed p. 85) from 'Another Way' to the start of 'To make Fry'd Toasts', ending at catchword 'put'. I found no missing lines, no added text and no meaningful misreadings; the long-s spellings are kept consistently.",
+    "images_opened": [
+     102,
+     103,
+     104
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T02",
+   "book_id": "69f8c1030c0c281d4bd321fd",
+   "n": 602,
+   "language": "Spanish",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The warning gets the page sides backwards: page 590 is a verso, and the show-through comes from page 589 (the recto) on the other side of the leaf.",
+      "quote": "only the top six lines and printer's ornament are printed on this recto side"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "The translation adds 'his', which the Spanish 'vino sucesor' does not have.",
+      "quote": "when his successor arrived"
+     }
+    ],
+    "note": "The transcription correctly gives the six printed lines and the tailpiece on page 590 and ignores the mirrored show-through from page 589; the English is faithful.",
+    "images_opened": [
+     601,
+     602,
+     603
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T03",
+   "book_id": "69f8c1030c0c281d4bd321fd",
+   "n": 628,
+   "language": "Spanish",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 628 is a blank verso showing only mirrored show-through of the index on p.627; the transcription correctly marks it blank and does not transcribe the show-through as text.",
+    "images_opened": [
+     627,
+     628,
+     629
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T04",
+   "book_id": "69f8c1170c0c281d4bd32721",
+   "n": 270,
+   "language": "Spanish / Latin",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 270 is a blank leaf whose only own mark is the handwritten '0735' at upper right. The printed text visible on it is mirror-reversed show-through of p.269 (and fainter text beneath), and the transcription correctly leaves it out.",
+    "images_opened": [
+     269,
+     270,
+     271
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T05",
+   "book_id": "69ee93cff2c6312502f6a7ae",
+   "n": 72,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 72 is blank. The only marks are mirrored show-through of page 71 (p.55) plus faint bleed from page 73. The transcription correctly marks it blank with no text.",
+    "images_opened": [
+     71,
+     72,
+     73
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T06",
+   "book_id": "69ee93cff2c6312502f6a7ae",
+   "n": 199,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches the printed text of page 199 (printed 183) line for line, including the header, page number and the 'CHAP.' catchword; I found no omissions or misreadings.",
+    "images_opened": [
+     198,
+     199,
+     200
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T07",
+   "book_id": "69ee93cff2c6312502f6a7ae",
+   "n": 296,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches printed page 278 (scan 296) line for line, from 'verſts from the laſt paſſage' through 're-' and the catchword 'covering'. The header and page number are also correct.",
+    "images_opened": [
+     295,
+     296,
+     297
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T08",
+   "book_id": "69f8c1350c0c281d4bd32bfd",
+   "n": 430,
+   "language": "French",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 430 is blank. The only marks on it are mirrored show-through from page 429 (p. 331), so a blank transcription with a show-through warning is correct.",
+    "images_opened": [
+     429,
+     430,
+     431
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T09",
+   "book_id": "69ee4f106dd925d126f42acd",
+   "n": 149,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Footnote italics extended to 'Deut.', which is in roman type in print",
+      "quote": "*Pol. Synops. Deut.* xviii."
+     }
+    ],
+    "note": "Transcription matches the printed text of page lxi in full, including the header, body paragraphs and both footnotes; the faint show-through was not transcribed into the text.",
+    "images_opened": [
+     148,
+     149,
+     150
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T10",
+   "book_id": "69ee4f106dd925d126f42acd",
+   "n": 150,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 150 (lxii, Logan Stone, Cornwall) almost word for word through the last line, which breaks off at 'forming a kind of'. Page 149 is lxi on Rock Basons, and page 151 is blank with show-through.",
+    "images_opened": [
+     149,
+     150,
+     151
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T11",
+   "book_id": "69ef254d85daccce30f2ba13",
+   "n": 356,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 356 is blank apart from mirrored show-through of p.355 (Corrigenda p.347), and the transcription correctly marks it as blank with a show-through warning.",
+    "images_opened": [
+     355,
+     356,
+     357
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T12",
+   "book_id": "6a08f9299c1b82475e1597a3",
+   "n": 48,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches all 8 printed lines of p.48 (24), from 'to that of his Majeſty' to 'Iſland of Cuba.' The show-through faintly visible below the text (mirrored text from p.47) was correctly left out.",
+    "images_opened": [
+     47,
+     48,
+     49
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T13",
+   "book_id": "6a08f9299c1b82475e1597a3",
+   "n": 334,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 334 is blank. The only text on it is reversed show-through from page 333 (p.317), so the blank transcription is correct.",
+    "images_opened": [
+     333,
+     334,
+     335
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T14",
+   "book_id": "6a08f9299c1b82475e1597a3",
+   "n": 366,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The four printed lines of p.350 are transcribed correctly. The mirrored show-through from p.349 is rightly left out.",
+    "images_opened": [
+     365,
+     366,
+     367
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T15",
+   "book_id": "69ef284385daccce30f2c27b",
+   "n": 496,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 496 is a blank verso. All that shows is mirrored show-through from p.479 (495) plus faint text from an earlier leaf, so the transcription is correct to mark it blank.",
+    "images_opened": [
+     495,
+     496,
+     497
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T16",
+   "book_id": "69f8c0e64c6a515115aed859",
+   "n": 158,
+   "language": "Maya hieroglyphs / French",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 158 has no printed text. The only marks are mirrored show-through from page 157 (the multiplication table and 'Compte, calcul' list). The transcription correctly labels it blank with show-through and adds no text.",
+    "images_opened": [
+     157,
+     158,
+     159
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T17",
+   "book_id": "69af595e569075d6ffc0745a",
+   "n": 608,
+   "language": "French",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The pencil shelfmark looks like '3506-54'; the transcription's third digit may be wrong",
+      "quote": "3508-54"
+     },
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Metadata gives the language as English, but the page has no text in any language, only numbers",
+      "quote": "<language>English</language>"
+     }
+    ],
+    "note": "Page 608 is blank verso: only faint show-through from the p.607 table of contents and a pencil shelfmark, which the transcription renders and correctly does not transcribe the show-through.",
+    "images_opened": [
+     607,
+     608,
+     609
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T18",
+   "book_id": "69ea0f7013a685002bb8e200",
+   "n": 119,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Margin note 'fugitiues' misread as 'fugitrues'",
+      "quote": "The Salvages returne our fugitrues."
+     }
+    ],
+    "note": "The transcription matches page 119 (p. 87, sig. M4) from start to end, including the Seneca verse, all four margin notes and the catchword 'them'. Spelling is normalized throughout (u/v, long s), and the only error is one minor misreading in a margin note.",
+    "images_opened": [
+     118,
+     119,
+     120
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T19",
+   "book_id": "69ea0f7013a685002bb8e200",
+   "n": 146,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 146 (p.118, The Lottery): the opening paragraph, the Welcomes, Prizes and Rewards tables, the Addition of new Rewards, and the catchword 'The' are all present and correct. The show-through from p.117 is flagged correctly and none of it was transcribed.",
+    "images_opened": [
+     145,
+     146,
+     147
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T20",
+   "book_id": "69ea0f7013a685002bb8e200",
+   "n": 272,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 272 (printed p. 238) from start to finish, including the header, all four side notes and the catchword 'The'. The show-through from the reverse page was not copied into the text.",
+    "images_opened": [
+     271,
+     272,
+     273
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T21",
+   "book_id": "6a0b252e620b66ad8f233555",
+   "n": 144,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 144 (p.78): the end of §15 and all of §16, with the header and the 'An' catchword. The faint show-through text below the rules is correctly left out.",
+    "images_opened": [
+     143,
+     144,
+     145
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T22",
+   "book_id": "6a0b252e620b66ad8f233555",
+   "n": 430,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 430 is the blank back of the Tab 18 plate. The only marks on it are mirrored show-through from page 429, so the transcription correctly calls it blank and adds no text.",
+    "images_opened": [
+     429,
+     430,
+     431
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T23",
+   "book_id": "6a09e9ef3ca4edcd1ef01c3b",
+   "n": 496,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 496 is blank. Only mirrored show-through of page 495 (p. 353) is visible, and the transcription correctly marks it blank with no text.",
+    "images_opened": [
+     495,
+     496,
+     497
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T24",
+   "book_id": "69e41fb14fc48a88423e06fa",
+   "n": 61,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 61 has no printed text of its own; the only visible content is faint mirrored show-through of the Plate XII A/B captions and plate images from page 62, so the transcription's 'blank' with a show-through warning is correct.",
+    "images_opened": [
+     60,
+     61,
+     62
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T25",
+   "book_id": "69e41fb14fc48a88423e06fa",
+   "n": 129,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 129 has no printed text of its own. The only things visible are faint ghosts: the Plate XXIX caption text from page 130, printed in mirror image, and an outline of the plate picture. So the empty 'blank' transcription with its show-through warning is correct.",
+    "images_opened": [
+     128,
+     129,
+     130
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T26",
+   "book_id": "69ef3d5872c1376fdf2b0374",
+   "n": 262,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 262 is a blank verso. Only mirrored show-through of page 261 (p. 239) is visible, so the 'blank' transcription with a show-through warning is correct.",
+    "images_opened": [
+     261,
+     262,
+     263
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T27",
+   "book_id": "69ef3d5872c1376fdf2b0374",
+   "n": 365,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 365 is blank. The only marks are mirrored show-through of page 364's final text and 'The END'. The transcription correctly marks it blank and renders no text.",
+    "images_opened": [
+     364,
+     365,
+     366
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T28",
+   "book_id": "69ef2b0685daccce30f2d6ce",
+   "n": 28,
+   "language": "French",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Printed 'feroit' (= ferait) is transcribed with a long s as 'ſeroit'",
+      "quote": "Ce qu'il ſeroit à propos"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Accent added to 'avant', which is printed without one",
+      "quote": "miſe ávant la Clef"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Circumflex added: the scan reads 'viteſſe', not 'vîteſſe'",
+      "quote": "la vîteſſe du mouvement"
+     }
+    ],
+    "note": "Both the transcription and the English render page 28 (TABLE xiv, Harmonie through Meſure) completely. Only small spelling and accent misreadings were found.",
+    "images_opened": [
+     27,
+     28,
+     29
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T29",
+   "book_id": "6a0b2589620b66ad8f233d4f",
+   "n": 493,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The image description calls Figure VI a 4x4 grid and doesn't label it as VI. The plate shows a 3x3 grid.",
+      "quote": "Top right shows a 4x4 square grid"
+     },
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The warning calls the show-through mirror-reversed, but the bleed from page 492 reads the right way round on the plate.",
+      "quote": "Mirror-reversed text visible throughout the page"
+     }
+    ],
+    "note": "Page 493 is engraved Plate XVII. The transcription gets the header, figure numbers I–XII, letter labels and engraver credits right, and correctly leaves out the show-through text from page 492.",
+    "images_opened": [
+     492,
+     493,
+     494
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T30",
+   "book_id": "69e961732beefe2f6f72b7d9",
+   "n": 178,
+   "language": "Italian",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "garble",
+      "severity": "minor",
+      "what": "The minutes mark after 30 comes out as the literal word 'tilde' instead of a symbol",
+      "quote": "46.° 30.tilde di Latitudine"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "'di sopra 200 miglia' means 'the 200 miles mentioned above', but it is translated as 'over 200 miles'",
+      "quote": "the run of over 200 miles in twenty-four hours"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The translator added a gloss explaining Greco that is not printed on the page",
+      "quote": "<note>Greek wind, <term>Greco</term></note>"
+     }
+    ],
+    "note": "Page 140 (scan 178) matches: chapter LV heading, opening sentence and note 273 are complete; there are only minor errors.",
+    "images_opened": [
+     177,
+     178,
+     179
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T31",
+   "book_id": "69e961732beefe2f6f72b7d9",
+   "n": 260,
+   "language": "Italian",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 260 is blank (the back of page 259's leaf). The only marks are mirror-image show-through of page 259 and faint text from another leaf. The transcription correctly calls it blank and outputs no text.",
+    "images_opened": [
+     259,
+     260,
+     261
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T32",
+   "book_id": "69e961732beefe2f6f72b7d9",
+   "n": 554,
+   "language": "Italian",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 554 is blank apart from mirrored show-through of the page 553 INDICE; the transcription correctly marks it blank and does not render the show-through as text.",
+    "images_opened": [
+     553,
+     554,
+     555
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T33",
+   "book_id": "69b63f17a85a63b8ab1954d5",
+   "n": 624,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 624 is blank. The only text visible is mirrored show-through from page 623 (the Conclusion), plus faint bleed in the lower half, so marking it blank is correct.",
+    "images_opened": [
+     623,
+     624,
+     625
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T34",
+   "book_id": "69af21ad7c27d4b637fedb65",
+   "n": 604,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 604 has no printed text of its own; all that shows is mirrored text bleeding through from page 603, plus faint Latin. Marking it blank with a show-through warning is correct.",
+    "images_opened": [
+     603,
+     604,
+     605
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T35",
+   "book_id": "69e786b34a6785cfd60c8fbf",
+   "n": 752,
+   "language": "Arabic",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The Arabic word after خرنوب looks like المعزي (goat) in the scan; the transcription has المغري",
+      "quote": "هو خرنوب المغري"
+     },
+     {
+      "stage": "translation",
+      "kind": "invented",
+      "severity": "minor",
+      "what": "The printed 'Vide' entry for يوذينه has no target, but the English adds a circular cross-reference to the same word",
+      "quote": "Yūdhinah . . . See yūdhinah"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "The carob's qualifier is rendered as 'red', which matches neither المغري nor the likely المعزي (goat carob)",
+      "quote": "it is the red carob"
+     }
+    ],
+    "note": "The transcription renders page 744 (scan 752): the end of the Ya entries and the NOTA errata. The heavy show-through below was correctly left out, and there are only minor issues.",
+    "images_opened": [
+     751,
+     752,
+     753
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T36",
+   "book_id": "69ea0f7713a685002bb8e323",
+   "n": 62,
+   "language": "French",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 62 is blank apart from mirrored show-through of page 61's text. The transcription correctly marks it blank and adds no text.",
+    "images_opened": [
+     61,
+     62,
+     63
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T37",
+   "book_id": "6a3e6f4c6493e2d21129b882",
+   "n": 20,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Printed 'ingeniouſly' transcribed as 'ingenieuſly'",
+      "quote": "very ingenieuſly"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Item 9 is misprinted as '6.' on the page; the transcription silently corrects it to 9",
+      "quote": "9. Exp. about Amber"
+     }
+    ],
+    "note": "The transcription matches page 20 (640): the Saggi del Cimento list and the start of the Gregory review. Only trivial misreadings; the show-through was not mixed into the text.",
+    "images_opened": [
+     19,
+     20,
+     21
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T38",
+   "book_id": "69e80572fdad300064d9d810",
+   "n": 233,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The warning metadata claims heavy show-through across the top half, but the scan shows almost none and no verso text leaked into the transcription",
+      "quote": "Significant show-through of printed text from the verso page"
+     }
+    ],
+    "note": "The transcription matches page 233 (Chapter X heading, No. 362 Anchovy Sauce, the Cayenne note and the capsicum woodcut), with no omissions or added text.",
+    "images_opened": [
+     232,
+     233,
+     234
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T39",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 86,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches printed page 64 (scan 86) in full, including the chapter heading 'VII. Of the Raja of Pasi' and every line through 'procured a great quantity of'; I found no omissions or misreadings.",
+    "images_opened": [
+     85,
+     86,
+     87
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T40",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 110,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 110 (printed p. 88, chapter XI) word for word. The show-through warning is an editorial note and adds no text.",
+    "images_opened": [
+     109,
+     110,
+     111
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T41",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 224,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The accent on Cabah is rendered as a circumflex; the print shows a grave or short mark",
+      "quote": "Câbah"
+     },
+     {
+      "stage": "ocr",
+      "kind": "omission",
+      "severity": "minor",
+      "what": "A faint section mark between the paragraphs is not transcribed; it may be show-through from another page",
+      "quote": "II."
+     }
+    ],
+    "note": "The transcription matches page 202 (scan 224) from 'Canayen is a braver man' to 'and he'; only small differences.",
+    "images_opened": [
+     223,
+     224,
+     225
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T42",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 376,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The signature mark is shown with an extra leading 'Z'. The scan shows only 'A A' with a faint mark before it.",
+      "quote": "Z A A"
+     }
+    ],
+    "note": "The transcription matches page 354 (the page-376 scan) line for line. No text is missing or added, and the bleed-through did not cause misreadings.",
+    "images_opened": [
+     375,
+     376,
+     377
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T43",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 379,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 379 (printed number 357) line by line, from 'easily be cured' to 'In a short'. Bleed-through from the other side of the leaf did not get into the text.",
+    "images_opened": [
+     378,
+     379,
+     380
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T44",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 380,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 380 (printed 358) line for line, from 'time, the Frangis appeared' to 'turmeric, and roasted'. It follows on from page 379 and leads into page 381. Show-through did not cause any visible misreadings.",
+    "images_opened": [
+     379,
+     380,
+     381
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T45",
+   "book_id": "69ef282b85daccce30f2bc06",
+   "n": 381,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 381 (printed p. 359) line for line, from 'fowls, all of them' to 'the daugh-'. Show-through from the other side of the leaf did not get into the text.",
+    "images_opened": [
+     380,
+     381,
+     382
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T46",
+   "book_id": "69af41dbeaef59aff2e0e8b2",
+   "n": 748,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 748 is a blank page that only shows mirror-image show-through of index text from neighbouring leaves (e.g. 727's 'Vulturnus', 'Xerxes' entries); the transcription correctly marks it blank with a show-through warning.",
+    "images_opened": [
+     747,
+     748,
+     749
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T47",
+   "book_id": "69e8b2e52ff2a8dc09e78cf9",
+   "n": 250,
+   "language": "German",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 250 prints only the running header '230 Transz. Deduktion d. reinen Verstandesbegriffe [nach Ausg. A]'. The rest is mirrored show-through of page 249, and the transcription correctly reports it as such.",
+    "images_opened": [
+     249,
+     250,
+     251
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T48",
+   "book_id": "69d14ba11c2a66dc094b503f",
+   "n": 105,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 105 is the blank back of the fold-out plate. The only visible text is mirrored show-through from page 106's table. The transcription correctly marks the page blank and adds no text.",
+    "images_opened": [
+     104,
+     105,
+     106
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T49",
+   "book_id": "69ef287d85daccce30f2cdc2",
+   "n": 186,
+   "language": "Latin",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 186 is blank (verso of p.141); only mirrored show-through from p.185 is visible, and the transcription correctly marks it blank with no text.",
+    "images_opened": [
+     185,
+     186,
+     187
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T50",
+   "book_id": "69d149c01c2a66dc094b2f40",
+   "n": 380,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 380 is blank. The only marks are mirrored show-through of page 379 ('THE END') and faint ghosting from another leaf, so the 'blank' transcription is correct.",
+    "images_opened": [
+     379,
+     380,
+     381
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T51",
+   "book_id": "69af1398356d04f8db194c74",
+   "n": 628,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 628 is a blank verso. Its only marks are mirrored show-through from page 627 and faint bleed from another leaf. The transcription correctly marks it blank and includes no text.",
+    "images_opened": [
+     627,
+     628,
+     629
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T52",
+   "book_id": "69af139893903bf8119f3cb1",
+   "n": 574,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 574 is a blank verso. The only marks are mirrored show-through from the reverse side: page 561's text, footnote and folio, matching the scan of page 573. The transcription marks it blank with a show-through warning, which is correct.",
+    "images_opened": [
+     573,
+     574,
+     575
+    ]
+   },
+   "agy": null
+  },
+  {
+   "key": "T53",
+   "book_id": "69af139893903bf8119f3cb1",
+   "n": 588,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 588 is a blank verso. The only text visible is faint show-through: page 587's text in mirror image plus faded text from another leaf. The transcription correctly marks the page blank.",
+    "images_opened": [
+     587,
+     588,
+     589
+    ]
+   },
+   "agy": null
+  }
+ ]
+}

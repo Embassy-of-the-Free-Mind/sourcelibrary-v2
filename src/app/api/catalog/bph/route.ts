@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { applyBphFilters, readBphFilters, isUnfiltered } from '@/lib/bph-catalog-filters';
+import { applyBphFilters, bphBestMatchTiers, readBphFilters, isUnfiltered } from '@/lib/bph-catalog-filters';
 import { getReadDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
@@ -114,21 +114,53 @@ export async function GET(req: NextRequest) {
         : [...FIELDS_NEW_CORE, ...FIELDS_EXTERNAL];
       fields = cols.join(', ');
     }
-    let query = supabase
-      .from('bph_works')
-      .select(fields, isPinnedDigitizedView ? { count: 'planned', head: false } : { count: 'exact' });
-
+    const caps = {
+      mode,
+      hasNormalizedColumns: hasNormalizedColumns !== false,
+      hasFirstTranslationColumn: hasFirstTranslationColumn !== false,
+    };
     // Every user-facing filter and the sort live in src/lib/bph-catalog-filters.ts,
     // shared with the CSV export route so the two can never match different
     // sets. Schema-mode fallbacks stay here — they are about what the database
     // can answer, not about what the user asked for.
-    query = applyBphFilters(query, filters, {
-      mode,
-      hasNormalizedColumns: hasNormalizedColumns !== false,
-      hasFirstTranslationColumn: hasFirstTranslationColumn !== false,
-    });
+    const build = () => {
+      const base = supabase
+        .from('bph_works')
+        .select(fields, isPinnedDigitizedView ? { count: 'planned', head: false } : { count: 'exact' });
+      return applyBphFilters(base, filters, caps);
+    };
 
-    return await query.range(offset, offset + limit - 1);
+    const tiers = bphBestMatchTiers(filters, caps);
+    if (!tiers) return await build().range(offset, offset + limit - 1);
+
+    // Best match: count every tier at once, then fetch only the slices of the
+    // tiers this page spans. The counts add up to the plain search's total.
+    const inTier = (filters: string[]) => {
+      let tierQuery = build();
+      for (const filter of filters) tierQuery = tierQuery.or(filter);
+      return tierQuery;
+    };
+    const counted = await Promise.all(tiers.map((t) => inTier(t).range(0, 0)));
+    const failed = counted.find((r) => r.error);
+    if (failed) return failed;
+    const counts = counted.map((r) => r.count ?? 0);
+
+    const slices: Array<{ tier: number; from: number; to: number }> = [];
+    let tierStart = 0;
+    for (let i = 0; i < tiers.length; i++) {
+      const from = Math.max(offset, tierStart) - tierStart;
+      const to = Math.min(offset + limit, tierStart + counts[i]) - tierStart - 1;
+      if (to >= from) slices.push({ tier: i, from, to });
+      tierStart += counts[i];
+    }
+    const pages = await Promise.all(slices.map((s) => inTier(tiers[s.tier]).range(s.from, s.to)));
+    const pageFailed = pages.find((r) => r.error);
+    if (pageFailed) return pageFailed;
+    return {
+      ...counted[0],
+      data: pages.flatMap((r) => r.data ?? []),
+      count: counts.reduce((a, b) => a + b, 0),
+    };
   }
 
   // Try the cached mode; on missing-column error, retry — first by

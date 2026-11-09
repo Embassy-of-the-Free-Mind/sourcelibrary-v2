@@ -1,0 +1,222 @@
+[
+ {
+  "page_id": "69a5b9a1d76b98f272fcee1e",
+  "book_id": "69a5b9a1d76b98f272fcedeb",
+  "title": "Mechanicorum liber",
+  "year": 1589,
+  "n": 51,
+  "from": 1,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69aeabda67e6731bc1366f8d",
+  "book_id": "69aeabda67e6731bc1366f62",
+  "title": "Institutionum Grammaticarum Libri Quatuor",
+  "year": 1538,
+  "n": 43,
+  "from": 2,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69af135f93903bf8119f39ac",
+  "book_id": "69af135f93903bf8119f397d",
+  "title": "Articella Nuperrime Impressa",
+  "year": 1519,
+  "n": 47,
+  "from": 6,
+  "face": "gothic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b630501c1c21a373800a42",
+  "book_id": "69b630501c1c21a373800a10",
+  "title": "In librum Danielis prophetae, Roberti Rolloci Scoti, Ministri Jesu Christi in Ecclesia Edinburgensi, commentarius. Accessit doctrinarum, quae in commentario explicantur, utilis index.",
+  "year": 1594,
+  "n": 50,
+  "from": 7,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b65de4b3f4fc044151d947",
+  "book_id": "69b65de4b3f4fc044151d918",
+  "title": "Commentarii D. Andreae Hyperii, doctissimi ac clarissimi theologi, in omnes D. Pauli Apostoli epistolas, atque etiam in epistolam D. Iudae / Commentarii D. Andreae Hyperii, doctissimi ac clarissimi theologi, in epistolas D. Pauli ad Galatas & Ephesios. ...",
+  "year": 1582,
+  "n": 47,
+  "from": 8,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a26bba74045b346e6ad3074",
+  "book_id": "6a26bba74045b346e6ad3064",
+  "title": "Labyrinthus Medicorum Errantium, D. Theophrasti Paracelsi : Cum Adiunctis",
+  "year": 1553,
+  "n": 16,
+  "from": 10,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b222ce56715b0e324754cb",
+  "book_id": "69b222ce56715b0e32475495",
+  "title": "Apuleius, Metamorphoses: The Golden Ass, with Asclepius Trismegistus (Aldine Press)",
+  "year": 1521,
+  "n": 54,
+  "from": 18,
+  "face": "italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69af0d04067c0c26ee26d102",
+  "book_id": "69af0d04067c0c26ee26d0cf",
+  "title": "Syntagma Selectorum Arcanorum Chymicorum",
+  "year": 1613,
+  "n": 51,
+  "from": 23,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b51ddacf111105c4291e31",
+  "book_id": "69b51ddacf111105c4291de3",
+  "title": "Joh. Joachimi Becheri Spirensis Medicinae Doctoris, Tripus Hermeticus Fatidicus : pandens oracula chymica, seu I. Laboratorium portatile ... Accessit pro praxi & exemplo II. Magnorum duorum Productorum ... adjunctum est III. Alphabetum minerale ...exaratum in Cornubia ad extrema Anglia ora inter ipsa mineralia experimenta & autopsiam",
+  "year": 1689,
+  "n": 78,
+  "from": 24,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a0b355eb8a02dd156f1dcdc",
+  "book_id": "6a0b355eb8a02dd156f1dca8",
+  "title": "Elementorum curvilineorum libri tres",
+  "year": 1601,
+  "n": 52,
+  "from": 25,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b51dbbff09e4fe943a8397",
+  "book_id": "69b51dbbff09e4fe943a8366",
+  "title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia : In duo Volumina secundum Cosmi differentiam divisa. [2,2,]1,3, De Anatomia Triplici : In partes tres divisa ...",
+  "year": 1623,
+  "n": 49,
+  "from": 27,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "695207e5ab34727b1f043d26",
+  "book_id": "695207e4ab34727b1f043cf6",
+  "title": "Artis auriferae quam chemiam vocant",
+  "year": 1609,
+  "n": 48,
+  "from": 28,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b699a7080b19f98fcfb5a3",
+  "book_id": "69b699a7080b19f98fcfb56c",
+  "title": "Athanasii Kircheri... Magnes sive de arte magnetica : opus tripartitum quo praeterquam quod universa magnetis natura, eiusque in omnibus artibus & scientiis usus nova methodo explicetur, e viribus quoque & prodigiosis effectibus magneticarum, aliarumque abditarum naturae motionum in elementis, lapidibus, plantis & animalibus elucescentium, multa hucusque incognita naturae arcana per physica, medica, chymica & mathematica omnis generis experimenta recluduntur",
+  "year": 1643,
+  "n": 55,
+  "from": 36,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69bd9d966120d54bd0377c10",
+  "book_id": "69bd9d966120d54bd0377bd4",
+  "title": "Magistri Ioannis Isaaci Hollandi ... Opera mineralia, sive de lapide philosophico philosophico, omnia duobus libris comprehensa : nunquam antehac edita, ac nunc primum ex optimis manu-scriptis Teutonicis exemplaribus fidelissime in Latinum sermonem translata ...",
+  "year": 1600,
+  "n": 60,
+  "from": 38,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b51e999a81ef7feb3d7e09",
+  "book_id": "69b51e999a81ef7feb3d7d8c",
+  "title": "Opera Poetica omnia. 7",
+  "year": 1729,
+  "n": 125,
+  "from": 41,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a267d316c1f37c9c4f38eb0",
+  "book_id": "6a267d316c1f37c9c4f38e92",
+  "title": "Dissertatio Academica De Praecavenda Polyporum Generatione",
+  "year": 1736,
+  "n": 30,
+  "from": 44,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b51e72ff09e4fe943af128",
+  "book_id": "69b51e72ff09e4fe943af0f5",
+  "title": "Brevis Notitia De Phantasmate Jansenismi, Pro Minus Rerum Gnaris",
+  "year": 1782,
+  "n": 51,
+  "from": 45,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69c833d16e5b7bc664632e66",
+  "book_id": "69c80ecb6c6f3cc53c8470b8",
+  "title": "Apologia pro Jul. Caesare Vanino",
+  "year": 1712,
+  "n": 54,
+  "from": 48,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "695435231479a63c1108b05f",
+  "book_id": "695435231479a63c1108b019",
+  "title": "Philosophia prima sive Ontologia",
+  "year": 1736,
+  "n": 70,
+  "from": 49,
+  "face": "roman+italic",
+  "lang": "Latin",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "695594f97bd6d2cd1d61e6b4",
+  "book_id": "695594f97bd6d2cd1d61e685",
+  "title": "Swedenborg Arcana Caelestia Vol. IV (1750)",
+  "year": 1750,
+  "n": 47,
+  "from": 53,
+  "face": "roman",
+  "lang": "Latin",
+  "kind": "prose-print"
+ }
+]

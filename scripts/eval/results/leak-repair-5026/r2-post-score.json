@@ -1,0 +1,235 @@
+{
+ "judged": 30,
+ "dup_gone": 29,
+ "usable": 24,
+ "usable_ci95": [
+  0.63,
+  0.9
+ ],
+ "own_leaf": 28,
+ "defects": {
+  "mistranslated/minor": 29,
+  "invented/minor": 10,
+  "invented/major": 4,
+  "omitted/major": 3,
+  "mistranslated/major": 5,
+  "other/minor": 12,
+  "omitted/minor": 1
+ },
+ "pass": false,
+ "controls": [
+  {
+   "key": "Q15",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q18",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q32",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q31",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  }
+ ],
+ "fails": [
+  {
+   "key": "Q04",
+   "book": "69c1bf288522835be846c264",
+   "page": 1,
+   "nb": 2,
+   "lang": "Hebrew",
+   "dup": "no",
+   "leaf": "other",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The whole English body translates a made-up Syriac transcription: an exhortation to 'my beloved', holy ones, laws and seasons, ending in a threefold Amen. None of that is on page 1. The page is Hebrew in cursive script."
+    },
+    {
+     "type": "omitted",
+     "severity": "major",
+     "note": "The real text is left out entirely. Line 1 is the 42-letter name of God: אבג יתץ קרע שטן נגד יכש בטר צתג חקב טנע. It is followed by about ten more lines of Hebrew cursive, and none of them is translated."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "The summary and keywords call it a 'Syriac Christian manuscript'. It is a Hebrew kabbalistic or amulet text, so the reader is misled about its language and content."
+    },
+    {
+     "type": "other",
+     "severity": "minor",
+     "note": "The small mark at top center is a red X (saltire), not a cross-shaped '+'."
+    }
+   ]
+  },
+  {
+   "key": "Q13",
+   "book": "6952d19c77f38f6761bc5fd2",
+   "page": 92,
+   "nb": 93,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "omitted",
+     "severity": "major",
+     "note": "The English stops at 'Therefore'. The rest of the closing sentence printed on page 92 is left out: 'Ergo materia fuit proximè circa solem, adeoq; illi adhærens, ut durare per annum potuerit hæc obtenebratio, sic ut solem undique circumdaret, ut is ex nulla cœli plaga... quovis anni tempore posset sine impedimento adspici'. That missing part is Kepler's conclusion: the matter clung close around the Sun, so the darkening could last a year and the Sun could not be seen clearly from any region of the earth at any time of year."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "The marker before 'Interdum' is the item number '1.' (page 93 continues with '2.', '3.' and so on), but the English presents it as a marginal reference 'b'."
+    }
+   ]
+  },
+  {
+   "key": "Q20",
+   "book": "6a0850d349638a50931b761f",
+   "page": 38,
+   "nb": 37,
+   "lang": "Latin",
+   "dup": "yes",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The English opens with a long block of about 28 fragment lines presented as a marginal gloss on page 38. Page 38 has no marginal gloss. These lines are the edge of facing page 37 showing at the left of the scan ('...tor. Nam / non ideo / ...mum est / ... ribus:'). They render page 37 text and give it to page 38."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "The bleed fragments are also badly rendered. 'murium' (of mice) and 'crurium' come out as 'of murex-dyes, of mice'. 'Pulsantes aeribus aera' becomes 'with copper bells'. 'Ortus' (rising) becomes 'by birth'. 'mihi nulla est religio' (I have no hesitation) becomes 'is religion'."
+    },
+    {
+     "type": "other",
+     "severity": "minor",
+     "note": "The body adds interpretations not printed on the page, for example 'which is neuter' for 'quod est Supparum' and 'the ancient neuter form' for 'antiquo supellectile'. The sense is not changed."
+    }
+   ]
+  },
+  {
+   "key": "Q29",
+   "book": "69a5e3d8006a409842216887",
+   "page": 141,
+   "nb": 142,
+   "lang": "Greek",
+   "dup": "no",
+   "leaf": "other",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The image shows four columns of continuous dense prose across the spread. It has no new-treatise heading, no 'ἑκατοντὰς πρώτη' and no numbered marginal chapters. The opening of Maximus's 'Chapters on Love' (chapters 1–9) is a standard text supplied from memory, not read from this page."
+    },
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The left-page ending '…unconfused and blessed union with Him. Amen' and the bracketed note that the page concludes Maximus's Mystagogia are not supported by the image. The text there runs on without any visible ending."
+    },
+    {
+     "type": "omitted",
+     "severity": "major",
+     "note": "Nearly all of the actual text on the four columns is left untranslated. This includes the running header at the top of the right page."
+    },
+    {
+     "type": "invented",
+     "severity": "minor",
+     "note": "The summary and keywords (Four Hundred Chapters on Love, apatheia, etc.) describe content that is not on the page."
+    }
+   ]
+  },
+  {
+   "key": "Q33",
+   "book": "69b2f437f9f1ad2b3b151671",
+   "page": 720,
+   "nb": 719,
+   "lang": "Greek",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "The Greek 'πρὸς δὲ ἀρειανίζοντας διεκρίνετο, διὰ τὸ ἄρειον εἰς κοινωνίαν ἐδέξαντο' means Aetius split from the Arian party because they had received Arius into communion. The English says he 'distinguished himself by pursuing disputes, on account of which he also received Arius into communion', which reverses who admitted Arius and why Aetius broke away."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'ἐπικατέσφαξεν ἑαυτόν' means he then also killed himself, after killing others. The English 'killed himself upon his body' is garbled."
+    },
+    {
+     "type": "invented",
+     "severity": "minor",
+     "note": "'Moved by anger at this' adds 'anger'. The Greek 'ἐφ’ ᾧ κινηθεὶς' only says Constantius was moved by this."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'τὸ ἐπισυνῆψε... ἕτερος ἐγχώριος πόλεμος' means another war at home was added to the troubles in the East. 'broke out upon the events' is loose."
+    }
+   ]
+  },
+  {
+   "key": "Q27",
+   "book": "6a1d81b45afc14a085e6d8a2",
+   "page": 308,
+   "nb": 309,
+   "lang": "Chinese",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "The commentary line 取鹿者用其言而以為夢取其鹿而爭其鹿 means the man who took the deer used the woodcutter's words, treated them as a dream, took the deer and then disputed it. The English says he 'fabricated his words and yet was deemed correct' and that 'they each dreamed of taking the deer'."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "據鹿而二分之安可以為聽訟之善乎 asks how splitting the deer in two could count as good judging, which is why the Lord of Zheng sighed (歎) and consulted the minister. The English garbles this into 'How could a lawsuit based on the physical deer be decided fairly? Did the judge excel...?' and drops the sighing."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "覺夢之理平分晝夜，信覺不語，信夢不達 says waking and dreaming divide day and night equally: those who trust waking will not talk of dreams, and those who trust dreams cannot see through them. The English instead says the Yellow Emperor and Confucius 'day and night believed waking yet did not speak of it'."
+    },
+    {
+     "type": "invented",
+     "severity": "minor",
+     "note": "'his obtaining of it in the half-division' adds the idea of a half-division. The original only says 得之蓋出於夢 (his getting it came from a dream)."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "雖為之不得已 means the judge split the deer only because he had no choice. The English renders it as 'though trustworthy'."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "The fold label reads 沖虛真經卷三 (the Liezi), but the English gives 'True Scripture of Kangcangzi, Fascicle Two' and calls the fragment 中 'Middle.'"
+    }
+   ]
+  }
+ ]
+}

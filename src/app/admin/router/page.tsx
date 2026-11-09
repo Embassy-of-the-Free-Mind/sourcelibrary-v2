@@ -11,7 +11,7 @@ import {
  * then a decision no lane runs, then a waiver, then served.
  *
  * Renderer only: scripts/maintenance/router-board-push.mjs (hourly, Hetzner main) writes one ops_reports document
- * from router-table-drift.mjs's data; src/lib/router-board.ts reads it. The document's age is shown and turns red past
+ * from router-board-push.mjs's driftReport; src/lib/router-board.ts reads it. The document's age is shown and turns red past
  * ROUTER_BOARD_STALE_MIN. force-dynamic: a failed read renders an error for this request only.
  * Gate: the admin layout's requireAdmin(); refused on partner hosts (tenant-global-paths); X-Robots-Tag noindex.
  */
@@ -146,7 +146,7 @@ function Board({ doc, now }: { doc: RouterBoardDoc; now: Date }) {
         Routing tables: {doc.routing_tables.map((r) => `${r.file.split('/').pop()} changed ${r.changed ?? r.as_of ?? '–'}`).join('; ')}.
         Crontabs are the repo copies ({doc.crontabs.length}), not a live <code>crontab -l</code>.
         Decisions move by the pointer in <a className={LINK} href={`${REPO}/blob/main/scripts/eval/estimator/router-table/current.json`}>current.json</a>;
-        the audit is <a className={LINK} href={`${REPO}/blob/main/scripts/audit/router-table-drift.mjs`}>router-table-drift.mjs</a> (<a className={LINK} href={`${REPO}/issues/7913`}>#7913</a>).
+        the audit is <a className={LINK} href={`${REPO}/blob/main/scripts/maintenance/router-board-push.mjs`}>router-board-push.mjs</a> (<a className={LINK} href={`${REPO}/issues/7913`}>#7913</a>).
       </p>
     </>
   );

@@ -3,8 +3,8 @@
  *
  * Shared provenance marker: use it anywhere AI-generated text (descriptions,
  * inferred metadata, summaries) renders next to catalog data, so readers can
- * tell which is which. Pair with a `title` naming the generating model when
- * known. Originally inline in ArtworkInfo.tsx; extracted for the gallery
+ * tell which is which. Pair with a `title` saying when it was generated,
+ * if known. Originally inline in ArtworkInfo.tsx; extracted for the gallery
  * image provenance work (issue #2406).
  */
 export default function AiBadge({ title, className }: { title?: string; className?: string }) {

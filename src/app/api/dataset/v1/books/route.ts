@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { resolveApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { apiTermsRequiredBody } from '@/lib/api-terms-version';
 import { logAccess } from '@/lib/dataset/access-logger';
 import { getClientIp } from '@/lib/rate-limit';
 
@@ -22,7 +23,8 @@ export const maxDuration = 15;
  *   limit        - max records (default: 100, max: 1000)
  */
 export async function GET(request: NextRequest) {
-  const apiKey = await validateApiKey(request.headers.get('authorization'));
+  const { doc: apiKey, termsRequired } = await resolveApiKey(request.headers.get('authorization'));
+  if (termsRequired) return NextResponse.json(apiTermsRequiredBody(), { status: 403 });
   if (!apiKey) {
     return NextResponse.json(
       { error: 'Invalid or missing API key. Get one at https://sourcelibrary.org/dataset' },

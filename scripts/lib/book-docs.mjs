@@ -79,6 +79,10 @@ export const BOOK_FIELDS = Object.freeze([
   'notes', 'scholarly_notes',
   'normalized_title', 'normalized_author',
   'is_translation', 'text_role', 'text_source', 'translation_status',
+  // #8321: a facing-page edition whose English leaves are the PUBLISHED translation (a Loeb) —
+  // { source: 'published', series, translator?, year, pairing, detected_at, detector, pairs }.
+  // Written by scripts/maintenance/loeb-facing-census.mjs; read by src/lib/facing-translation.ts.
+  'facing_translation',
   'content_type', 'work_id', 'work_id_source',
   // provenance / source
   'ia_identifier', 'source_fingerprint', 'source_fingerprints',

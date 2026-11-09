@@ -6,7 +6,7 @@ import { notifyEditionPublished } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateKdpEpub } from '@/lib/kdp-epub';
-import { screenBookPages } from '../../../../../../../../scripts/lib/modern-intrusion.mjs';
+import { IMPRINT_PAGES, screenBookPages, screenImprint } from '../../../../../../../../scripts/lib/modern-intrusion.mjs';
 import { resolveTenantId } from '@/lib/tenant-context';
 
 interface RouteContext {
@@ -81,6 +81,21 @@ export const POST = withAuth(async (request, session, context) => {
         {
           error: `Modern text on page(s) ${intrusions.map(i => i.page_number).join(', ')} that cannot belong to this book; read and repair before minting.`,
           intrusions: intrusions.map(i => ({ page_number: i.page_number, markers: i.hits.map(h => h.marker) })),
+        },
+        { status: 409 }
+      );
+    }
+
+    // The English cannot show a modern edition with an old `published` date. The colophon can.
+    const frontMatter = await db.collection('pages')
+      .find({ book_id: bookId, page_number: { $lte: IMPRINT_PAGES } }, { projection: { _id: 0, page_number: 1, 'ocr.data': 1 } })
+      .toArray();
+    const imprints = screenImprint(frontMatter) as { page_number: number; hits: { marker: string }[] }[];
+    if (imprints.length) {
+      return NextResponse.json(
+        {
+          error: `Modern imprint on page(s) ${imprints.map(i => i.page_number).join(', ')}; read the colophon before minting.`,
+          imprints: imprints.map(i => ({ page_number: i.page_number, markers: i.hits.map(h => h.marker) })),
         },
         { status: 409 }
       );

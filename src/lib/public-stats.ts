@@ -23,3 +23,20 @@ export const IMAGE_CORPUS_STATS = {
   /** Standalone museum artworks (books rows with resource_type). */
   artworks: '24,000+',
 } as const;
+
+/**
+ * Book counts for copy that is fixed when the module loads (page metadata,
+ * FAQ text). Pages that render on the server should prefer the live
+ * getLibraryStats() in src/lib/library-stats.ts; these are the floors for
+ * everything else.
+ *
+ * Measured 2026-11-09 from system_config.homepage_stats:
+ *   totalBooks (visible, pages_count > 0):  71,212
+ *   readableInEnglish:                      22,683
+ */
+export const BOOK_CORPUS_STATS = {
+  /** Readable books (visible, with pages). */
+  books: '70,000+',
+  /** The readable_in_english view (translation-state.md). */
+  readableInEnglish: '22,000+',
+} as const;

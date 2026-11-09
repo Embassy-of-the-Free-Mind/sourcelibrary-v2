@@ -1,0 +1,12 @@
+{
+ "at": "2026-11-08T05:55:45.092Z",
+ "queued": 493,
+ "by_state": {
+  "served:retranslated": 384,
+  "served:not-translatable": 49,
+  "served:ocr-refused": 48,
+  "served:apply-refused": 12
+ },
+ "running": false,
+ "finished_at": "2026-11-08T05:55:45.086Z"
+}

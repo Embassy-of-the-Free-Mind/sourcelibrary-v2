@@ -103,7 +103,7 @@ const PLANT = {
   reversal: 'Below is an English translation of one page. Choose ONE sentence (or clause of at least eight words) whose meaning is clear, and rewrite it so that it says the opposite: flip a negation, swap who does what to whom, or turn a prohibition into a command. Keep its length and style so that it reads naturally in place. Reply with one JSON object and nothing else: {"original": "<the sentence, copied exactly, character for character>", "planted": "<the rewritten sentence>"}',
   invention: 'Below is an English translation of one page. Write ONE new sentence, of twelve to twenty-five words, in the same style and on the same subject, that states something this text does not say (a new claim, name, number or instruction), so that it would pass unnoticed by a reader. Choose the sentence of the text after which it goes. Reply with one JSON object and nothing else: {"after": "<a sentence of the text, copied exactly, character for character>", "planted": "<the new sentence>"}',
 };
-function claudeText(prompt) {
+export function claudeText(prompt) {
   const env = { ...process.env }; for (const k of Object.keys(env)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_/.test(k)) delete env[k];
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'plant-'));
   const r = spawnSync('claude', ['-p', '--model', 'opus', '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { input: prompt, cwd, env, encoding: 'utf8', timeout: 600e3 });
@@ -183,7 +183,7 @@ export async function fetchImage(page, file) {
   return null;
 }
 /** page.jpg ≤ 1568 px and tiles of ≤ ~1300 px with 8% overlap, at most 4 columns × 3 rows. */
-async function tile(src, dir, { pageOnly = false } = {}) {
+export async function tile(src, dir, { pageOnly = false } = {}) {
   const sharp = (await import('sharp')).default;
   const img = sharp(src, { limitInputPixels: false }).rotate();
   const { width: W, height: H } = await img.metadata();
@@ -206,7 +206,7 @@ async function tile(src, dir, { pageOnly = false } = {}) {
  * A IIIF image whose server caps the whole-image size (the British Library serves 1,200 px of a 4,752 px leaf) still
  * serves a REGION at native resolution, so the tiles are fetched as regions of ≤ 1,600 px. Returns null if not IIIF.
  */
-async function iiifTiles(url, dir) {
+export async function iiifTiles(url, dir) {
   const m = /^(https?:\/\/.+?)\/full\/[^/]+\/0\/default\.jpg$/.exec(url || '');
   if (!m) return null;
   let info;

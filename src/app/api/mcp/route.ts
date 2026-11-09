@@ -1,6 +1,5 @@
 import type { NextRequest } from 'next/server';
 import { pageEnvelope, parseOffset } from '@/lib/mcp-pagination';
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { countToolResults, logMcpToolCall, logMcpInitialize, mintMcpSessionId, readMcpSessionId } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
@@ -15,6 +14,7 @@ import { classifyApiError } from '@/lib/mcp-errors';
 import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { getRatingOptions } from '@/lib/review-queue';
+import { SITE_TERMS_VERSION } from '@/lib/api-terms-version';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
@@ -26,15 +26,15 @@ import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import { MCP_HEADERS, mcpApiGet, mcpApiGetText, type McpCaller } from '@/lib/mcp-inprocess';
+// The v2 SDK (#8443): it serves protocol 2026-07-28 (server/discover, the
+// per-request envelope) next to the 2025-era initialize handshake.
 import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-  ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
+  Server,
+  WebStandardStreamableHTTPServerTransport,
+  createMcpHandler,
+  isLegacyRequest,
   type Tool,
-} from '@modelcontextprotocol/sdk/types.js';
-import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
-import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
+} from '@modelcontextprotocol/server';
 
 /**
  * The MCP server version, in ONE place.
@@ -416,7 +416,7 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `${absent ? `No page of this book prints these words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift): this book most likely does not contain what you are looking for. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
+    tip: `${absent ? `No page of this book prints these exact words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift). Matching here is by spelling, so this does not show the book lacks a name or term: it may be printed in another spelling or Latin case (Zalmoxis, Zamolxis, Zalmoxen). Try those forms before saying the book does not contain it. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
@@ -768,6 +768,26 @@ function ocrOriginalQuote(result: Record<string, unknown>): boolean {
   return quote?.text_source === 'ocr_original';
 }
 
+// A facing-page edition (a Loeb, #8321). Its English leaf is the PUBLISHED
+// translator's words — not the author's, and not ours — and its original leaf
+// has the printed English on the page opposite. `quote.facing` names that leaf.
+const FACING_TRANSLATION_TIP =
+  'This page is the PUBLISHED English translation printed facing the original in this edition (see ' +
+  '`facing`, which names the original-language leaf and the translator). The verbatim text is in `original`. ' +
+  'Copy it exactly and attribute it to the translator, never to the ancient author as their own English and ' +
+  'never to Source Library. Render as:\n' +
+  '> [exact text, verbatim]\n' +
+  '> — [Author], trans. [facing.translator], [citation.locator]. [citation_link]';
+const FACING_ORIGINAL_TIP =
+  'This edition prints a published English translation facing this leaf: `facing.page` / `facing.url` name ' +
+  'it. To quote the translator\'s words, call get_quote on that page; the translation on this response is ' +
+  'Source Library\'s own.';
+
+function facingRole(result: Record<string, unknown>): 'original' | 'translation' | null {
+  const facing = (result.quote as Record<string, unknown> | undefined)?.facing as { role?: unknown } | undefined;
+  return facing?.role === 'original' || facing?.role === 'translation' ? facing.role : null;
+}
+
 // The requested edition IS on the leaf — a bilingual manuscript whose parallel
 // column is already in that language. The words are the historical translator's
 // (Ximenez's Spanish of 1701, Sahagun's of 1577), not ours, and their period
@@ -855,7 +875,12 @@ async function getQuote(args: Record<string, unknown>, caller?: McpCaller) {
   const baseHint = continuityHint(continuity, Number(args.page));
   const hint = baseHint && inExtract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
 
-  const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
+  // `facing.role` is what the OTHER leaf is: 'original' means this one is the printed English.
+  const facingOther = facingRole(result);
+  const tips = [ocrOriginalQuote(result)
+    ? (facingOther === 'original' ? FACING_TRANSLATION_TIP : OCR_ORIGINAL_TIP)
+    : QUOTE_TIP];
+  if (facingOther === 'translation') tips.push(FACING_ORIGINAL_TIP);
   if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
   if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
@@ -1264,8 +1289,11 @@ const BOOK_RUN_STEPS =
   'or is argued on this page, in your own words, then one sentence on what you found and sent (quote ' +
   'only the words at issue; never paste the full texts unless asked; they need not read the language); ' +
   '(6) KEEP GOING: call continue_review_shift with ' +
-  'next.book and next.after straight away, without asking, until you have done the number of pages the ' +
-  'user chose (10 if they did not say), the book ends, or the user interrupts. Then give a short tally ' +
+  'every field of next straight away, without asking, until the check is done (page.plan.kind "paired": ' +
+  'the book\'s 10-page check, two facing pages from each fifth of the book; on a page whose plan.role is ' +
+  '"first", say in a few words where in the book you have jumped to; on a "second" page, check the join with ' +
+  'the page before it with special care, since that join is why the pages come in pairs), or, reading in ' +
+  'order, the number of pages the user chose (10 if they did not say), or the book ends, or the user interrupts. Then give a short tally ' +
   '(pages, fixes sent, anything serious such as English that belongs to another page) and ask whether ' +
   'to do another stretch. Submit only after the user agreed, once at the start, that findings are ' +
   'submitted as you go. Never invent a problem to have something to report: "both_sound" with no ' +
@@ -1298,14 +1326,16 @@ async function startReviewShift(args: Record<string, unknown>) {
   const result = await getBookRunPage(args, extra);
   return {
     ...result,
-    first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
-      'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
+    first_time: 'Before the first page, tell the user in a few lines: their Claude will check this book ' +
+      'against the scans: 10 pages, two facing pages from each fifth of the book, so the check covers the whole book and the joins between pages ' +
+      '(afterwards they can read on in order, or start another book), retelling each page in a short paragraph as it goes, ' +
       'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
       'proposed fixes are licensed to Source Library to publish and license as part of the library (terms: https://sourcelibrary.org/terms), and ' +
       'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
       'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
-      'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +
-      'to do. Give them volunteer_code so a later chat can pick up where this one stops.',
+      'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK; ' +
+      'if they say yes, pass user_agreed_to_terms true on every submit_page_review and propose_correction of the shift ' +
+      '(if they say no, submit nothing). Give them volunteer_code so a later chat can pick up where this one stops.',
   };
 }
 
@@ -1313,6 +1343,8 @@ async function continueReviewShift(args: Record<string, unknown>) {
   const book = clipStr(args.book, 300);
   if (!book) return { error: 'book is required: pass next.book from the previous page' };
   const extra: Record<string, string> = { book };
+  if (args.plan === 'paired' || args.plan === 'walk') extra.plan = args.plan;
+  if (args.step != null) extra.step = String(args.step);
   if (args.after != null) extra.after = String(args.after);
   return getBookRunPage(args, extra);
 }
@@ -1375,6 +1407,10 @@ async function submitPageReview(args: Record<string, unknown>) {
       client: clipStr(args._client_user_agent, 200),
       reader_languages: clipStr(args.reader_languages, 200),
       text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
+      // The volunteer's yes to licensing findings under /terms, asked once before the
+      // first submission (first_time), and which /terms text was current.
+      terms_agreed: typeof args.user_agreed_to_terms === 'boolean' ? args.user_agreed_to_terms : null,
+      terms_version: SITE_TERMS_VERSION,
     },
   });
   return { ok: true, message: 'Review recorded. Thank you. It is evidence about this page; it does not change the page by itself.' };
@@ -1395,6 +1431,7 @@ async function proposeCorrection(args: Record<string, unknown>) {
     client: clipStr(args._client_user_agent, 200),
     note: clipStr(args.note, 2000),
     shift_id: clipStr(args.shift_id, 64),
+    terms_agreed: typeof args.user_agreed_to_terms === 'boolean' ? args.user_agreed_to_terms : undefined,
   }) as Record<string, unknown>;
   return {
     ok: true,
@@ -1739,7 +1776,7 @@ const TOOLS: Tool[] = [
   {
     name: 'start_review_shift',
     title: 'Start a Review Shift',
-    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user starts the shift, chooses how many pages, watches and asks questions. Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page, working through the stretch of pages without stopping between them. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Run shifts only while the user is in this conversation; never set one up to run on a schedule or from a script.',
+    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book against its scans: by default its 10-page check, two facing pages from each fifth of the book, then reading on in order if the user wants. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user starts the shift, chooses how many pages, watches and asks questions. Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page, working through the stretch of pages without stopping between them. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Run shifts only while the user is in this conversation; never set one up to run on a schedule or from a script.',
     annotations: { title: 'Start a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -1754,16 +1791,18 @@ const TOOLS: Tool[] = [
   {
     name: 'continue_review_shift',
     title: 'Continue a Review Shift',
-    description: 'Next page of the book being reviewed. Call it straight after finishing a page until the stretch the user chose is done, and again when they ask for more. Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
+    description: 'Next page of the book being reviewed. Call it straight after finishing a page until the check or the stretch the user chose is done, and again when they ask for more. Pass every field of next from the previous page (book, plan, and step or after), and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null, read message: the book\'s check is complete or the book has ended; say so and offer what message offers.',
     annotations: { title: 'Continue a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
       properties: {
         book: { type: 'string', description: 'next.book from the previous page' },
-        after: { type: 'number', description: 'next.after from the previous page' },
+        plan: { type: 'string', enum: ['paired', 'walk'], description: 'next.plan from the previous page' },
+        step: { type: 'number', description: 'next.step from the previous page (a paired check)' },
+        after: { type: 'number', description: 'next.after from the previous page (reading in order)' },
         volunteer_code: { type: 'string' },
       },
-      required: ['book', 'after', 'volunteer_code'],
+      required: ['book', 'volunteer_code'],
     },
   },
   {
@@ -1818,6 +1857,7 @@ const TOOLS: Tool[] = [
         text_version: { type: 'object', description: 'page.text_version, passed back unchanged.' },
         shift_id: { type: 'string', description: 'shift_id (blind check only)' },
         name: { type: 'string', description: 'How the user wants to be credited (optional).' },
+        user_agreed_to_terms: { type: 'boolean', description: 'book-run and blind: true if the user said yes when you asked, before the first submission, whether their findings may be licensed to Source Library under https://sourcelibrary.org/terms. Pass it on every submission of the shift.' },
       },
       required: ['item_id', 'volunteer_code', 'verdict', 'assistant_model'],
     },
@@ -1852,6 +1892,7 @@ const TOOLS: Tool[] = [
         assistant_model: { type: 'string', description: MODEL_FIELD_HELP },
         shift_id: { type: 'string' },
         name: { type: 'string', description: 'How the user wants to be credited (optional)' },
+        user_agreed_to_terms: { type: 'boolean', description: 'true if the user said yes when you asked whether their findings may be licensed to Source Library under https://sourcelibrary.org/terms. Pass it on every proposal of the shift.' },
       },
       required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by', 'assistant_model'],
     },
@@ -1993,7 +2034,7 @@ async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<
 // not just relay them (the old ['user']-only annotation let clients withhold
 // them from the model).
 const MAX_INLINE_IMAGES = 5;
-const IMAGE_AUDIENCE = { audience: ['user', 'assistant'] };
+const IMAGE_AUDIENCE: { audience: Array<'user' | 'assistant'> } = { audience: ['user', 'assistant'] };
 
 // Embeddable-thumbnail knobs (#3937 item 5). ~1000px q70 JPEG keeps a plate
 // legible in a slide while a full batch stays near ~1MB of base64.
@@ -2222,11 +2263,11 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     },
   ] as const;
 
-  server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+  server.setRequestHandler('resources/list', async () => ({
     resources: RESOURCES.map((r) => ({ ...r })),
   }));
 
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  server.setRequestHandler('resources/read', async (request) => {
     const uri = request.params.uri;
     const known = RESOURCES.find((r) => r.uri === uri);
     if (!known) throw new Error(`Unknown resource: ${uri}`);
@@ -2253,7 +2294,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     return { contents: [{ uri, mimeType: known.mimeType, text: await resp.text() }] };
   });
 
-  server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  server.setRequestHandler('tools/list', async () => ({
     tools: TOOLS,
     _meta: {
       about: 'Source Library — 15,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org',
@@ -2273,7 +2314,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     },
   }));
 
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler('tools/call', async (request) => {
     const { name, arguments: args } = request.params;
     const argsObj = (args || {}) as ToolArgs;
     const started = Date.now();
@@ -2356,7 +2397,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         ? []
         : collectImageAttachments(name, result);
       if (attachments.length > 0) {
-        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: string[] } }> = [];
+        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: Array<'user' | 'assistant'> } }> = [];
 
         // Text summary first, then image + caption pairs
         content.push({ type: 'text' as const, text: JSON.stringify(result, null, 2) });
@@ -2448,19 +2489,43 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null, 
   const messages = Array.isArray(body) ? body : [body];
   for (const msg of messages) {
     const m = msg as { method?: unknown; params?: Record<string, unknown> } | null;
-    if (!m || m.method !== 'initialize') continue;
-    const info = (m.params?.clientInfo || {}) as Record<string, unknown>;
+    if (!m || (m.method !== 'initialize' && m.method !== 'server/discover')) continue;
+    // A 2026-07-28 client opens with `server/discover` instead of `initialize`
+    // and carries its identity in the per-request `_meta` envelope (#8443).
+    // Logged the same way, so mcp_clients keeps counting connections.
+    const envelope = (m.method === 'server/discover' ? m.params?._meta || {} : {}) as Record<string, unknown>;
+    const info = (m.params?.clientInfo || envelope['io.modelcontextprotocol/clientInfo'] || {}) as Record<string, unknown>;
     const s = (v: unknown) => (typeof v === 'string' ? v : null);
     logMcpInitialize({
       clientName: s(info.name),
       clientVersion: s(info.version),
       clientTitle: s(info.title),
-      protocolVersion: s(m.params?.protocolVersion),
+      protocolVersion: s(m.params?.protocolVersion ?? envelope['io.modelcontextprotocol/protocolVersion']),
       ip,
       userAgent,
       sessionId,
     });
   }
+}
+
+/**
+ * The transport's refusal, kept for the usage log (X-SL-Error-Reason, read by
+ * withApiAuth): its message, the JSON-RPC method(s) asked for, and the protocol
+ * version header. On 2026-11-08, 1 in 10 Claude Code and claude.ai calls got a
+ * 3 ms 400 from here and api_usage kept only the status, so nobody could say why.
+ */
+async function withErrorReason(res: Response, body: unknown, reqHeaders: Headers): Promise<Response> {
+  const text = await res.clone().text().catch(() => '');
+  let message = '';
+  try { message = String((JSON.parse(text) as { error?: { message?: string } }).error?.message ?? ''); } catch { message = text; }
+  const methods = (Array.isArray(body) ? body : [body])
+    .map((m) => (m && typeof m === 'object' ? (m as { method?: string; id?: unknown }).method ?? ('id' in (m as object) ? 'response' : '?') : typeof m))
+    .join(',');
+  const proto = reqHeaders.get('mcp-protocol-version') || '-';
+  const reason = `${message.replace(/\s+/g, ' ').slice(0, 140)} | method=${methods.slice(0, 60)} | proto=${proto.slice(0, 20)}`;
+  const headers = new Headers(res.headers);
+  headers.set('X-SL-Error-Reason', reason.replace(/[^\x20-\x7e]/g, '?'));
+  return new Response(text, { status: res.status, statusText: res.statusText, headers });
 }
 
 export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
@@ -2477,22 +2542,42 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
     const headers = new Headers(req.headers);
     headers.set('accept', 'application/json, text/event-stream');
     const fixedReq = new Request(req.url, { method: req.method, headers });
-
-    const transport = new WebStandardStreamableHTTPServerTransport({
-      sessionIdGenerator: undefined, // Stateless for serverless
-      enableJsonResponse: true,
-    });
-    const server = createServer({
+    const makeServer = () => createServer({
       ip: getClientIp(req),
       userAgent: req.headers.get('user-agent'),
       identity,
       request: req,
       sessionId,
     });
+
+    // Protocol 2026-07-28 (#8443): Claude Code and claude.ai open with
+    // `server/discover` and send every request in a per-request `_meta`
+    // envelope, with no initialize handshake and no session. The SDK's own
+    // classifier decides the era, so this branch and the SDK cannot disagree.
+    // Served per request, JSON only (no tool here streams), with the same
+    // server and the same tools as the 2025-era path below.
+    if (!(await isLegacyRequest(fixedReq, body))) {
+      const handler = createMcpHandler(makeServer, { legacy: 'reject', responseMode: 'json' });
+      try {
+        const res = await handler.fetch(fixedReq, { parsedBody: body });
+        return res.ok ? res : withErrorReason(res, body, req.headers);
+      } finally {
+        await handler.close();
+      }
+    }
+
+    // 2025-era clients (initialize at 2025-11-25, 2025-06-18 and older), served
+    // exactly as before the v2 SDK: stateless, JSON responses.
+    const transport = new WebStandardStreamableHTTPServerTransport({
+      sessionIdGenerator: undefined, // Stateless for serverless
+      enableJsonResponse: true,
+    });
+    const server = makeServer();
     await server.connect(transport);
     try {
       const res = await transport.handleRequest(fixedReq, { parsedBody: body });
-      if (!initializing || !sessionId || !res.ok) return res;
+      if (!res.ok) return withErrorReason(res, body, req.headers);
+      if (!initializing || !sessionId) return res;
       const headers = new Headers(res.headers);
       headers.set('Mcp-Session-Id', sessionId);
       headers.set('Access-Control-Expose-Headers', 'Mcp-Session-Id');
@@ -2524,7 +2609,9 @@ export async function OPTIONS() {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, MCP-Session-Id, MCP-Protocol-Version',
+      // Mcp-Method and Mcp-Name ride every 2026-07-28 request (#8443); without
+      // them here a browser-based client fails the preflight.
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, MCP-Session-Id, MCP-Protocol-Version, Mcp-Method, Mcp-Name',
     },
   });
 }

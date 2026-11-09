@@ -1,0 +1,13 @@
+{
+ "books": 160,
+ "pairs": 789,
+ "unpaired_anchors": 29,
+ "stale_anchors": 17,
+ "break_kinds": {
+  "call_boundary": 7,
+  "in_call": 0,
+  "unknown": 753
+ },
+ "census_flagged_total": 0,
+ "census_judged": 0
+}

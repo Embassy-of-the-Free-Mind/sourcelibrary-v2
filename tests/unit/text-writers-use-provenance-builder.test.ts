@@ -173,7 +173,7 @@ describe('every Gemini writer of page text goes through the provenance builder (
  * writePageText fails here.
  */
 const GRANDFATHER_FILE = path.join(REPO, 'tests/unit/fixtures/page-text-writers-grandfathered.json');
-const GRANDFATHER_CEILING = 89; // measured 2026-10-21; lower it as writers migrate, never raise it
+const GRANDFATHER_CEILING = 88; // measured 2026-10-21 (90), 89 after #7384, 88 after paddle-zh-guarded-lane migrated (#6871); lower it as writers migrate, never raise it
 
 const CLEAR_FIELD = /['"]?\b(ocr|translation)(\.data)?['"]?\s*:/;
 const SET_EMPTY = /['"](ocr|translation)\.data['"]\s*:\s*(null|''|""|undefined)\b/;

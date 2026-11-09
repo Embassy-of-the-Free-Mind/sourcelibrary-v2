@@ -5,6 +5,7 @@ import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
+import { findFacingPartner, facingTranslationNote, facingTranslationOf, hasPublishedFacingTranslation, type FacingPartner } from '@/lib/facing-translation';
 import { stripEditorialWrappers, stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
 import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, ORIGINAL_LANGUAGE_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { languageCode, toBcp47 } from '@/lib/language-normalize';
@@ -40,7 +41,7 @@ const QUOTE_BOOK_PROJECTION = {
   language: 1, original_language: 1, text_role: 1, text_role_source: 1, is_translation: 1,
   visible: 1, pages_count: 1, doi: 1, format: 1, publisher: 1, ustc_id: 1,
   // resolveQuoteText's English-original test (#7100).
-  'translation_state.english_original': 1,
+  'translation_state.english_original': 1, facing_translation: 1,
   content_type: 1, resource_type: 1, field_provenance: 1,
   ...IMPRINT_PLACE_PROJECTION,
   contributing_library: 1, shelfmark: 1,
@@ -58,7 +59,7 @@ const QUOTE_BOOK_PROJECTION = {
  * ?include_image=true: the image-field family below; citation: id, printed_page.
  */
 const QUOTE_PAGE_PROJECTION = {
-  _id: 0, id: 1, page_number: 1, printed_page: 1,
+  _id: 0, id: 1, page_number: 1, printed_page: 1, page_type: 1,
   'ocr.data': 1, 'translation.data': 1, translations: 1, translation_es: 1, transliteration: 1,
   photo: 1, photo_original: 1, archived_photo: 1, display_photo: 1, cropped_photo: 1, enhanced_photo: 1,
   thumbnail: 1, thumbnail_blob: 1, image_thumb: 1, crop: 1, split_from_spread: 1,
@@ -94,6 +95,20 @@ interface QuoteResponse {
     text_source: QuoteTextSource;
     /** Set when text_source is `ocr_original` or `source_column` — see those notes. */
     transcription_note?: string;
+    /**
+     * A facing-page edition (a Loeb, #8321): the leaf this one faces. On the
+     * original-language leaf, `facing` is the published English printed opposite
+     * it; on the English leaf, the original it translates. Absent on any other book.
+     */
+    facing?: {
+      role: 'original' | 'translation';
+      page: number;
+      printed_page?: string;
+      url: string;
+      translator?: string;
+      year?: number;
+      note: string;
+    };
     /**
      * The page carries marginal text (#4362) — copy-specific by nature: it
      * exists only in the one physical copy that was scanned. Set together
@@ -250,6 +265,8 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // already English and therefore is itself the citable text (#3939).
     await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const quotable = resolveQuoteText(page, book.id, requestedLang, { book });
+    // The leaf facing this one, on a flagged facing-page edition only (#8321).
+    const facing = await findFacingPartner<Page>(db, book, { ...page, book_id: resolvedBookId });
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
@@ -258,15 +275,31 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       // The way back in for a transcribed foreign page (#7458): ask for it in its
       // own language. Named here because the caller cannot guess the code.
       const originalLang = hasOriginal ? toBcp47(languageCode(book.language)) : null;
+      // A blank leaf is a third fact (#8235): one key asked Philo vol. 2 for a quote
+      // 532 times with no page, landed on blank page 1, and was told "No translation
+      // available". Say it is blank, say when page 1 was a default, and name the next
+      // page that has text so the caller can move on.
+      const blank = page.page_type === 'blank';
+      const pageDefaulted = !searchParams.get('page');
+      const nextText = blank || pageDefaulted
+        ? await db.collection('pages').findOne(
+          { book_id: resolvedBookId, page_number: { $gt: pageNumber }, page_type: { $nin: ['blank', 'cover', 'flyleaf'] }, 'ocr.data': { $exists: true, $ne: '' } },
+          { projection: { _id: 0, page_number: 1 }, sort: { page_number: 1 }, maxTimeMS: 3000 },
+        ).catch(() => null)
+        : null;
       return NextResponse.json({
         // Two different facts, and they need different sentences: an
         // untranscribed leaf holds no text at all, while "no translation" now
         // implies a foreign source (an English one is served as a quote —
         // #3939). Conflating them told callers an un-OCR'd page was foreign.
-        error: hasOriginal
+        error: blank
+          ? 'This page is blank: the leaf carries no text to quote'
+          : hasOriginal
           ? 'No translation available for this page'
           : 'No text available for this page: the scan has not been transcribed',
         page_number: pageNumber,
+        ...(pageDefaulted ? { page_defaulted: true, note: 'No page was given, so page 1 was used. Pass ?page=N.' } : {}),
+        ...(nextText ? { next_text_page: nextText.page_number } : {}),
         // Lets the caller fall back to the original language instead of reading
         // this as "the page is missing" (see src/lib/mcp-errors.ts).
         has_original: hasOriginal,
@@ -312,7 +345,16 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
           ? { lang_note: `This page has no text in "${requestedLang}", so the English translation was served (lang: "${quotable.lang}"). Do not present it as the "${requestedLang}" edition.` }
           : {}),
         ...(quotable.source === 'ocr_original'
-          ? { transcription_note: quotable.lang === 'en' ? OCR_ORIGINAL_NOTE : ORIGINAL_LANGUAGE_NOTE }
+          ? {
+              // The printed English of a Loeb is the translator's, not the author's (#8321).
+              // Keyed on the flag, not on a found pair: an unpaired English leaf
+              // of a Loeb is still not the author's own words.
+              transcription_note: facing?.role === 'translation'
+                ? facingTranslationNote(book)
+                : quotable.lang === 'en' && hasPublishedFacingTranslation(book)
+                  ? facingTranslationNote(book, { paired: false })
+                  : quotable.lang === 'en' ? OCR_ORIGINAL_NOTE : ORIGINAL_LANGUAGE_NOTE,
+            }
           : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
         // Checked on the served text AND the OCR original: a translation often
@@ -330,6 +372,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         published: book.published,
         language: book.language,
         ...languageApparatusFields(book),
+        ...(facing ? { facing: facingQuoteField(facing, book, getRequestBaseUrl(request.headers)) } : {}),
       },
       citation,
       license: CONTENT_LICENSE,
@@ -417,3 +460,31 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     return NextResponse.json({ error: 'Failed to get quote' }, { status: 500 });
   }
 }, { route: 'books.quote' });
+
+/**
+ * The `facing` field of a quote on a facing-page edition (#8321): which leaf
+ * this one faces, with its printed number and a link, and whose words it holds.
+ */
+function facingQuoteField(
+  facing: FacingPartner<Page>,
+  book: { id: string; slug?: string | null },
+  baseUrl: string,
+): NonNullable<QuoteResponse['quote']['facing']> {
+  const f = facingTranslationOf(book);
+  const other = facing.page;
+  const printed = other.printed_page?.label;
+  const where = `p. ${printed ?? other.page_number} [scan ${other.page_number}]`;
+  const by = f?.translator ? ` (${f.translator}${f.year ? `, ${f.year}` : ''})` : '';
+  return {
+    // What the OTHER leaf is.
+    role: facing.role === 'original' ? 'translation' : 'original',
+    page: other.page_number,
+    ...(printed ? { printed_page: printed } : {}),
+    url: `${baseUrl}${readerPageUrl({ slug: book.slug, id: book.id }, other.id)}`,
+    ...(f?.translator ? { translator: f.translator } : {}),
+    ...(f?.year ? { year: f.year } : {}),
+    note: facing.role === 'original'
+      ? `The published English translation${by} of this leaf is printed facing it, on ${where}. Quote that page for the translator's words; the translation served here is Source Library's own.`
+      : `This leaf is the published English translation${by} of the original printed facing it, on ${where}.`,
+  };
+}

@@ -286,6 +286,28 @@ export interface ReaderStrings {
     marksHiddenByNotes: string;
   };
 
+  /**
+   * A facing-page edition (a Loeb, #8321): the published English printed
+   * opposite the original, shown in the translation pane in place of ours.
+   */
+  facing: {
+    /** The pane label, before " · <translator>, <year>". */
+    loebTranslation: string;
+    /** Our AI translation, one click away. */
+    sourceLibraryTranslation: string;
+    showSourceLibraryTranslation: string;
+    showLoebTranslation: string;
+    /** Under our translation, so nobody mistakes it for the Loeb's. */
+    sourceLibraryTranslationNote: string;
+    /** On the English leaf itself: it is the translation of the page opposite. */
+    englishLeafNote: (printedPage: string) => string;
+    goToOriginal: string;
+    /** The page counter on an opening: the two printed pages it shows. */
+    openingPages: (left: string, right: string) => string;
+    /** The original leaf's column label, before " · p. N". */
+    originalLeaf: string;
+  };
+
   /** Contents panel. */
   contents: {
     noContentsTranscribed: string;
@@ -392,6 +414,12 @@ export interface ReaderStrings {
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
+    /** machineDraftNotice with the month the translation was produced, when the record has one (#7263). */
+    machineDraftNoticeDated: (month: string) => string;
+    /** A month as a reader reads it. Spelled out per locale, not Intl: Latin has no ICU data, and server and browser must print the same words. */
+    producedMonth: (date: Date) => string;
+    /** A provenance label with that month: "Machine transcription of the scan, March 2026". */
+    producedLabel: (label: string, month: string) => string;
     /**
      * Printed pages absent between two scans, shown on the scans either side of the gap (#6675). `last` is null
      * when one page is missing. Derek's wording (2026-10-15): "Pages 41–44 are missing from this scan."
@@ -921,6 +949,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Added here by an editor, not on the original.',
       marksHiddenByNotes: 'Notes hides all of them.',
     },
+    facing: {
+      loebTranslation: 'Loeb translation',
+      sourceLibraryTranslation: 'Source Library translation',
+      showSourceLibraryTranslation: 'Show the Source Library translation',
+      showLoebTranslation: 'Show the Loeb translation',
+      sourceLibraryTranslationNote: 'Our AI translation of the original on this page, not the published one.',
+      englishLeafNote: (p: string) => `This page is the published English translation of p. ${p}, printed facing it.`,
+      goToOriginal: 'Go to the original',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Original',
+    },
     contents: {
       noContentsTranscribed: 'This edition’s table of contents has not been transcribed yet. Use the reading guide or the page strip to move around.',
       noContentsAtAll: 'This book has no table of contents.',
@@ -1003,6 +1042,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      machineDraftNoticeDated: (month) => `AI translation, ${month}, not yet reviewed by a scholar.`,
+      producedMonth: (date) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Pages ${first}–${last} are missing from this scan.` : `Page ${first} is missing from this scan.`),
       qualityKinds: {
         wrong_page: 'the scan and the text are from different pages',
@@ -1419,6 +1461,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Añadida aquí por un editor; no está en el original.',
       marksHiddenByNotes: 'El botón «Notas» las oculta todas.',
     },
+    facing: {
+      loebTranslation: 'Traducción Loeb',
+      sourceLibraryTranslation: 'Traducción de Source Library',
+      showSourceLibraryTranslation: 'Ver la traducción de Source Library',
+      showLoebTranslation: 'Ver la traducción Loeb',
+      sourceLibraryTranslationNote: 'Nuestra traducción automática del original de esta página, no la publicada.',
+      englishLeafNote: (p: string) => `Esta página es la traducción inglesa publicada de la p. ${p}, impresa enfrente.`,
+      goToOriginal: 'Ir al original',
+      openingPages: (a: string, b: string) => `págs. ${a}–${b}`,
+      originalLeaf: 'Original',
+    },
     contents: {
       noContentsTranscribed: 'El índice de esta edición aún no se ha transcrito. Usa la guía de lectura o la tira de páginas para moverte.',
       noContentsAtAll: 'Este libro no tiene índice.',
@@ -1501,6 +1554,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
       machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      machineDraftNoticeDated: (month) => `Traducción por IA, ${month}, aún no revisada por un especialista.`,
+      producedMonth: (date) => `${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][date.getUTCMonth()]} de ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Faltan en este escaneo las páginas ${first}–${last}.` : `Falta en este escaneo la página ${first}.`),
       qualityKinds: {
         wrong_page: 'la imagen y el texto son de páginas distintas',
@@ -1942,6 +1998,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Hic ab editore addita; in exemplari non est.',
       marksHiddenByNotes: 'Notis celatis omnia celantur.',
     },
+    facing: {
+      loebTranslation: 'Versio Loebiana',
+      sourceLibraryTranslation: 'Versio Source Library',
+      showSourceLibraryTranslation: 'Versionem Source Library ostende',
+      showLoebTranslation: 'Versionem Loebianam ostende',
+      sourceLibraryTranslationNote: 'Versio nostra machinalis huius paginae, non edita.',
+      englishLeafNote: (p: string) => `Haec pagina est versio Anglica edita paginae ${p}, ex adverso impressa.`,
+      goToOriginal: 'Ad textum primigenium',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Textus primigenius',
+    },
     contents: {
       noContentsTranscribed: 'Index capitum huius editionis nondum transcriptus est. Duce legendi vel serie paginarum utere, ut per librum eas.',
       noContentsAtAll: 'Hic liber indicem capitum non habet.',
@@ -2024,6 +2091,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Textus: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Textus: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'Conversio intellegentiae artificialis, a docto nondum recensita.',
+      machineDraftNoticeDated: (month) => `Conversio intellegentiae artificialis, ${month}, a docto nondum recensita.`,
+      producedMonth: (date) => `mense ${['Ianuario','Februario','Martio','Aprili','Maio','Iunio','Iulio','Augusto','Septembri','Octobri','Novembri','Decembri'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Paginae ${first}–${last} in hac imagine desunt.` : `Pagina ${first} in hac imagine deest.`),
       // Latin has no neat "found that X, and that Y": each kind is a full
       // clause and the sentence frames them after a colon.
@@ -2448,6 +2518,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Hier toegevoegd door een redacteur, niet in het origineel.',
       marksHiddenByNotes: 'Met Noten uit zijn ze allemaal verborgen.',
     },
+    facing: {
+      loebTranslation: 'Loeb-vertaling',
+      sourceLibraryTranslation: 'Vertaling van Source Library',
+      showSourceLibraryTranslation: 'Toon de vertaling van Source Library',
+      showLoebTranslation: 'Toon de Loeb-vertaling',
+      sourceLibraryTranslationNote: 'Onze AI-vertaling van het origineel op deze pagina, niet de gepubliceerde.',
+      englishLeafNote: (p: string) => `Deze pagina is de gepubliceerde Engelse vertaling van p. ${p}, er tegenover gedrukt.`,
+      goToOriginal: 'Naar het origineel',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Origineel',
+    },
     contents: {
       noContentsTranscribed: 'De inhoudsopgave van deze editie is nog niet getranscribeerd. Gebruik de leeswijzer of de paginastrook om door het boek te gaan.',
       noContentsAtAll: 'Dit boek heeft geen inhoudsopgave.',
@@ -2530,6 +2611,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Tekst: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Tekst: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI-vertaling, nog niet door een wetenschapper nagekeken.',
+      machineDraftNoticeDated: (month) => `AI-vertaling, ${month}, nog niet door een wetenschapper nagekeken.`,
+      producedMonth: (date) => `${['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Pagina's ${first}–${last} ontbreken in deze scan.` : `Pagina ${first} ontbreekt in deze scan.`),
       // Each kind is a subordinate clause (verb last): it follows "vond dat".
       qualityKinds: {
@@ -2949,6 +3033,17 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: '由编者在此添加，原书上没有。',
       marksHiddenByNotes: '关闭“注释”会隐藏全部标记。',
     },
+    facing: {
+      loebTranslation: '洛布译文',
+      sourceLibraryTranslation: 'Source Library 译文',
+      showSourceLibraryTranslation: '显示 Source Library 译文',
+      showLoebTranslation: '显示洛布译文',
+      sourceLibraryTranslationNote: '这是我们对本页原文的 AI 译文，并非出版译本。',
+      englishLeafNote: (p: string) => `本页是第 ${p} 页的出版英译，印在其对页。`,
+      goToOriginal: '前往原文',
+      openingPages: (a: string, b: string) => `第 ${a}–${b} 页`,
+      originalLeaf: '原文',
+    },
     contents: {
       noContentsTranscribed: '本版本的目录尚未转录。可以通过阅读指南或页面缩略条在书中跳转。',
       noContentsAtAll: '本书没有目录。',
@@ -3031,6 +3126,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `文本：${shortName}，${license}`,
       textSourceTranscript: (name, license, version) => `文本：${name}${version ? `（${version}）` : ''}，${license}`,
       machineDraftNotice: 'AI 译文，尚未经学者审校。',
+      machineDraftNoticeDated: (month) => `AI 译文（${month}），尚未经学者审校。`,
+      producedMonth: (date) => `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月`,
+      producedLabel: (label, month) => `${label}（${month}）`,
       missingPages: (first, last) => (last ? `本扫描件缺第 ${first}–${last} 页。` : `本扫描件缺第 ${first} 页。`),
       qualityKinds: {
         wrong_page: '扫描图和文本来自不同的页面',

@@ -104,9 +104,11 @@ const DEAD_STATES = new Set(['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STA
 /**
  * Partition pages (already in page order) into blocks exactly as the realtime worker
  * does: up to BLOCK_SIZE pages, ended early by a page under MIN_OCR_CHARS_FOR_BLOCK or by
- * the block passing MAX_BLOCK_OCR_CHARS; a short first page is a block of one.
+ * the block passing MAX_BLOCK_OCR_CHARS; a short first page is a block of one. `maxChars` is the source-character
+ * budget of one call (#8399: the marked per-call lane sizes its blocks by page density, so dense pages go 1–2 a call
+ * and light pages up to blockSize); a first page over the budget is still a block of one.
  */
-export function planBlocks(pages, { blockSize = BLOCK_SIZE } = {}) {
+export function planBlocks(pages, { blockSize = BLOCK_SIZE, maxChars = MAX_BLOCK_OCR_CHARS } = {}) {
   const blocks = [];
   let i = 0;
   while (i < pages.length) {
@@ -118,7 +120,7 @@ export function planBlocks(pages, { blockSize = BLOCK_SIZE } = {}) {
         const len = (rest[j].ocr?.data || '').length;
         if (len < MIN_OCR_CHARS_FOR_BLOCK) break;
         chars += len;
-        if (chars > MAX_BLOCK_OCR_CHARS) break;
+        if (chars > maxChars) break;
         size++;
       }
     }

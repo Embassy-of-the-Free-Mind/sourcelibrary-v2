@@ -1,0 +1,663 @@
+{
+ "model": "gemini-3.8-flash-medium",
+ "n": 30,
+ "agree_binary": 30,
+ "agree_exact": 30,
+ "false_alarm": 0,
+ "miss": 0,
+ "agy_cannot_tell": 0,
+ "opus_off": 28,
+ "agy_off": 28,
+ "all_images_opened": 30,
+ "denied_reads": 0,
+ "agreement": 1,
+ "agreement_wilson": [
+  0.886486605238548,
+  1
+ ],
+ "exact": 1,
+ "controls": {
+  "n": 4,
+  "caught": 4,
+  "rows": [
+   {
+    "key": "Q02",
+    "name": "Strutt",
+    "kind": "ctl-own",
+    "expect": "own",
+    "agy": "own",
+    "caught": true
+   },
+   {
+    "key": "Q18",
+    "name": "Geronimo",
+    "kind": "ctl-neighbour",
+    "expect": "next",
+    "agy": "next",
+    "caught": true
+   },
+   {
+    "key": "Q26",
+    "name": "Oxyrhynchus V",
+    "kind": "ctl-neighbour",
+    "expect": "prev",
+    "agy": "prev",
+    "caught": true
+   },
+   {
+    "key": "Q32",
+    "name": "Rajput Painting",
+    "kind": "ctl-own",
+    "expect": "own",
+    "agy": "own",
+    "caught": true
+   }
+  ]
+ },
+ "pass": true,
+ "unanswered": [],
+ "opus_cannot_tell": [],
+ "usage": {
+  "input_tokens": 447185,
+  "output_tokens": 46466,
+  "thinking_tokens": 36752,
+  "cache_read_tokens": 0
+ },
+ "secs_mean": 25.37882352941177,
+ "rows": [
+  {
+   "key": "Q01",
+   "book_id": "69cf7b9e878f40c5945f1c42",
+   "n": 39,
+   "language": "Greek",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 38 (page-38.jpg) is numbered 14 and begins with '5-6. For the variation in the quantity of καλά cf. Theocr. vi. 19' followed by 'IX. ARISTOXENUS ΡΥΘΜΙΚΑ ΣΤΟΙΧΕΙΑ.'",
+   "opened": [
+    "page-38.jpg",
+    "page-39.jpg",
+    "page-40.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q03",
+   "book_id": "69ee64a07b983848aff58240",
+   "n": 295,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The opening line 'issue of a war he had commenced against the Wisigoths' and page number 272 are found on page 294 (page-294.jpg).",
+   "opened": [
+    "page-294.jpg",
+    "page-295.jpg",
+    "page-296.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q04",
+   "book_id": "69af5946522dc3dfdf725a23",
+   "n": 84,
+   "language": "French",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "page 83 has printed page number 71 and opens with 'nous voyons ici Anaximandre affirmer un double infini'",
+   "opened": [
+    "page-83.jpg",
+    "page-84.jpg",
+    "page-85.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q05",
+   "book_id": "69ef284385daccce30f2c27b",
+   "n": 308,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The transcription matches page 307 (page 291), which begins 'of the islands farther eastward observed to me, with great simplicity' and has signature '2 P 2'.",
+   "opened": [
+    "page-307.jpg",
+    "page-308.jpg",
+    "page-309.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q06",
+   "book_id": "69e41fb64fc48a88423e0847",
+   "n": 154,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Heading 'INDEX' and entries from 'Abanindra Nath Tagore 58' to 'Chengiz Khan 84' appear on page 153",
+   "opened": [
+    "page-153.jpg",
+    "page-154.jpg",
+    "page-155.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q07",
+   "book_id": "6a353228c8ce407afbe04b97",
+   "n": 61,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "page-60.jpg has page number 52 and matches the text beginning 'glory. Although the priest no longer is his counsellor' and ending 'joined himself to those'",
+   "opened": [
+    "page-60.jpg",
+    "page-61.jpg",
+    "page-62.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q08",
+   "book_id": "6a3e6e456493e2d2112984ab",
+   "n": 151,
+   "language": "English",
+   "opus": "own",
+   "agy": "own",
+   "evidence": "Page 151 bears the heading 'MEMORANDA' and page number 615 at the top, opens with 'tion— were always making one another's acquaintance', and ends with 'printed here.'",
+   "opened": [
+    "page-150.jpg",
+    "page-151.jpg",
+    "page-152.jpg",
+    "page-150.jpg",
+    "page-151.jpg",
+    "page-152.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q09",
+   "book_id": "69aec0eadd3c98abc0da7bfe",
+   "n": 537,
+   "language": "Latin",
+   "opus": "other",
+   "agy": "other",
+   "evidence": "The transcription corresponds to Latin page 496 (lines 608–635), whereas page 536 is page 498 (lines 636–659), page 537 is page 499 (English translation), and page 538 is page 500 (lines 660–686).",
+   "opened": [
+    "page-536.jpg",
+    "page-537.jpg",
+    "page-538.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q10",
+   "book_id": "69e786a94a6785cfd60c88a8",
+   "n": 111,
+   "language": "Arabic",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 110 has page number 34 and begins with 'con su auxílio qualquier viage en mé-' and 'العزوف في الحج وشبهه ذلك', exactly matching the transcription stored for page 111.",
+   "opened": [
+    "page-110.jpg",
+    "page-111.jpg",
+    "page-112.jpg",
+    "page-110.jpg",
+    "page-111.jpg",
+    "page-112.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q11",
+   "book_id": "69f8c1260c0c281d4bd32961",
+   "n": 93,
+   "language": "Cakchiquel / English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The transcription matches page 92 (printed page 86), which begins with 'Jobakil, rubij, Chiyol Chiabak ru bi huyu xilitah vi' and ends with 'Xecha 4a, ok xca4axah : Chinak ri'.",
+   "opened": [
+    "page-92.jpg",
+    "page-93.jpg",
+    "page-94.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q12",
+   "book_id": "69ea0f7013a685002bb8e200",
+   "n": 75,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 74 bears page number 42, header 'The Discoveries and Accidents, Lib.3.', and begins with 'had even then overthrowne the businesse, so many discontents did then arise'.",
+   "opened": [
+    "page-74.jpg",
+    "page-75.jpg",
+    "page-76.jpg",
+    "page-74.jpg",
+    "page-75.jpg",
+    "page-76.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q13",
+   "book_id": "69b00a0ec42435fcd0cf9acb",
+   "n": 619,
+   "language": "Greek",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 618 shows printed page number 610 and begins with [259] \"Ἔπειτα ἐκ προσαγωγῆς κατὰ λόγον φαύλην δίαιταν ἄγειν\".",
+   "opened": [
+    "page-618.jpg",
+    "page-619.jpg",
+    "page-620.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q14",
+   "book_id": "69d5ac3dd0bd3547a5655c53",
+   "n": 246,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The transcription matches page 245 (printed page 217), which opens with 'Here the poet, after having rebutted the complaints of the tribes of Taghlib' and includes verses 36 and 37 with signature 28 at the bottom.",
+   "opened": [
+    "page-245.jpg",
+    "page-246.jpg",
+    "page-247.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q15",
+   "book_id": "69af5956569075d6ffc07222",
+   "n": 115,
+   "language": "French",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 114 (page-114.jpg, printed page 104) begins with 'de Constantin, ni ceux d\\'aucun physicien' and ends with 'une autre raison, qui'.",
+   "opened": [
+    "page-114.jpg",
+    "page-115.jpg",
+    "page-116.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q16",
+   "book_id": "6a08f62850bd891addfbabfc",
+   "n": 33,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The opening line 'who have served it. It is our first duty to serve society' and header '12 Rousseau and Wilkes. [A.D. 1766.' appear on page 32.",
+   "opened": [
+    "page-32.jpg",
+    "page-33.jpg",
+    "page-34.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q17",
+   "book_id": "69cf7bf2878f40c5945f245c",
+   "n": 209,
+   "language": "Greek",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "page-208.jpg has page number 188 and starts with 'information regarding its provisions is incomplete.' and ends with 'Εὐσεβοῦς Εὐτυχοῦς Σεβαστοῦ'",
+   "opened": [
+    "page-208.jpg",
+    "page-209.jpg",
+    "page-210.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q19",
+   "book_id": "6a0e569eb8ad266ebed2362e",
+   "n": 102,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "page 101 displays page number 75, header 'The Methods of Man's Ascent.', and begins with 'at Paris in the years 1825 and 1829 on the history of modern philosophy'",
+   "opened": [
+    "page-101.jpg",
+    "page-102.jpg",
+    "page-103.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q20",
+   "book_id": "69af21afa854057228c07c20",
+   "n": 523,
+   "language": "Latin",
+   "opus": "other",
+   "agy": "other",
+   "evidence": "The transcription is from printed page 508 ('et medios sermones intercipiant... Nam quod fideliter firmum'), whereas page 522 is printed page 510, page 523 is printed page 511 (English translation), and page 524 is printed page 512.",
+   "opened": [
+    "page-522.jpg",
+    "page-523.jpg",
+    "page-524.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q21",
+   "book_id": "6a3e6c858e2683a046da1cbc",
+   "n": 60,
+   "language": "English",
+   "opus": "own",
+   "agy": "own",
+   "evidence": "Page 60 is numbered 678 with the header 'PIONEER PACKHORSES IN ALASKA.', beginning with 'energetic plunging she broke her way through and climbed out.' and ending with 'avoid the bad places'.",
+   "opened": [
+    "page-59.jpg",
+    "page-60.jpg",
+    "page-61.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q22",
+   "book_id": "69d5ac5f4dc55b8478ddd6b5",
+   "n": 630,
+   "language": "Hebrew",
+   "opus": "next",
+   "agy": "next",
+   "evidence": "Heading 'תוספתא יומא פרק ראשון' and opening line 'פרק א א למה מפרישין כהן גדול מביתו ללשכת' appear at the top of page 631",
+   "opened": [
+    "page-629.jpg",
+    "page-630.jpg",
+    "page-631.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q23",
+   "book_id": "69af0a9068bf0754164e4558",
+   "n": 405,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The transcription corresponds to page 404 (printed page 384), beginning with 'XXIX. Imp. Caes. Domit. Aug. Germ.' and ending with 'Paper or Pastboard-Money. Lugdunum Batavorum'.",
+   "opened": [
+    "page-404.jpg",
+    "page-405.jpg",
+    "page-406.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q24",
+   "book_id": "69ef2b4685daccce30f2e066",
+   "n": 599,
+   "language": "Latin",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Header 'VIII. IX. X.' and sections 'Traversa: Querpfeiff. Querflött.' and 'Bombyces, pommern. Piffari, Schallmeyen.' are printed on page 598",
+   "opened": [
+    "page-598.jpg",
+    "page-599.jpg",
+    "page-600.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q25",
+   "book_id": "69e7928c80b52390feb16343",
+   "n": 30,
+   "language": "Sanskrit",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 29 bears printed page number 21 and begins with 'On his death his son Chândaghosha becomes Raja, with'.",
+   "opened": [
+    "page-29.jpg",
+    "page-30.jpg",
+    "page-31.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q27",
+   "book_id": "69ef254385daccce30f2b86a",
+   "n": 103,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 102 displays printed page number 80 and contains the text beginning with 'or Madhwáchárya, Vaishńava teachers, in the South of India, in the twelfth century.'",
+   "opened": [
+    "page-102.jpg",
+    "page-103.jpg",
+    "page-104.jpg",
+    "page-102.jpg",
+    "page-103.jpg",
+    "page-104.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q28",
+   "book_id": "69cf7d616d17d9f121ccf340",
+   "n": 102,
+   "language": "Latin",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 101 (printed page 86) contains the opening 'scriptores antiquissimi Corax et Tisias Siculi' and ends with item 22 'μᾶλλον ἢ ποιητήν.'",
+   "opened": [
+    "page-101.jpg",
+    "page-102.jpg",
+    "page-103.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q29",
+   "book_id": "69ef287d85daccce30f2cdc2",
+   "n": 186,
+   "language": "Latin",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 185 bears page number 141, header 'OLEA.', signature 'S 3', catchword 'VNG.', and the opening text 'Aquæ impregnatæ, Anethi, Thymi'.",
+   "opened": [
+    "page-185.jpg",
+    "page-186.jpg",
+    "page-187.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q30",
+   "book_id": "69e759d2095c302d3fdde331",
+   "n": 45,
+   "language": "French",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "page-44.jpg bears printed page number 42 and contains SCENE VII opening with 'J'avais une marraine, Que toujours adorai' through SCENE IX ending with 'il reçoit le plus rude soufflet, et s'enfuit en éclatant de rire.'",
+   "opened": [
+    "page-44.jpg",
+    "page-45.jpg",
+    "page-46.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q31",
+   "book_id": "69ef251c85daccce30f2b1f2",
+   "n": 58,
+   "language": "Sanskrit",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "Page 57 (page-57.jpg) bears page number ४७ (47) with header '[ अ०२ श्लो० १८ ] श्रीमद्भगवद्गीता । ४७' and contains verse 18 'अन्तवन्त इमे देहा नित्यस्योक्ताः शरीरिणः' along with the full commentary transcribed.",
+   "opened": [
+    "page-57.jpg",
+    "page-58.jpg",
+    "page-59.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q33",
+   "book_id": "6a357f405307b013ee584667",
+   "n": 45,
+   "language": "Latin",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "The transcription matches page 44, opening with 'homine lapis: ad tale aliquam significationem' and containing 'Capitulum. xi.', while page 45 begins with 'cōgruā presentareť'.",
+   "opened": [
+    "page-44.jpg",
+    "page-45.jpg",
+    "page-46.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  },
+  {
+   "key": "Q34",
+   "book_id": "6a35c9aadf59c9f0ef280166",
+   "n": 53,
+   "language": "English",
+   "opus": "prev",
+   "agy": "prev",
+   "evidence": "nobis retulit, maiori consideratione intelligeret et gemeret, which is the opening line on page 52 (printed page 48)",
+   "opened": [
+    "page-52.jpg",
+    "page-53.jpg",
+    "page-54.jpg"
+   ],
+   "tool_calls": [
+    "read_file",
+    "read_file",
+    "read_file"
+   ]
+  }
+ ]
+}

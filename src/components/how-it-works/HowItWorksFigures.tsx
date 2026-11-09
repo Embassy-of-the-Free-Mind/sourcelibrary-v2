@@ -199,8 +199,8 @@ export type PageRecord = {
   pageLabel: string;
   readerUrl: string;
   image: { from: string; sourceUrl?: string; archivedAt?: string; width?: number; height?: number };
-  text?: { model: string; prompt?: string; at?: string };
-  english?: { model: string; modelVersion?: string; prompt?: string; api?: string; batch?: string; hash?: string; at?: string };
+  text?: { prompt?: string; at?: string };
+  english?: { prompt?: string; api?: string; batch?: string; hash?: string; at?: string };
   alignment?: { pairs: number; model?: string };
   revisions: number;
 };
@@ -244,15 +244,14 @@ export function RecordFigure({ r }: { r: PageRecord }) {
         </RecordRow>
         {r.text && (
           <RecordRow label="Transcription">
-            Read by <Code>{r.text.model}</Code>
+            Read by a machine
             {r.text.prompt && <>, with our prompt {r.text.prompt}</>}
             {r.text.at && <>, on {r.text.at}</>}.
           </RecordRow>
         )}
         {r.english && (
           <RecordRow label="English">
-            Drafted by <Code>{r.english.model}</Code>
-            {r.english.modelVersion && <> (version <Code>{r.english.modelVersion}</Code>)</>}
+            Drafted by a machine
             {r.english.prompt && <>, prompt {r.english.prompt}</>}
             {r.english.api && <>, through the {r.english.api}</>}
             {r.english.at && <>, on {r.english.at}</>}.

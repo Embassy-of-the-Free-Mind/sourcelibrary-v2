@@ -31,24 +31,31 @@
  *   node --env-file=.env.production.local scripts/maintenance/repair-catalogue-7144.mjs            # dry run
  *   node --env-file=.env.production.local scripts/maintenance/repair-catalogue-7144.mjs --apply
  *   node --env-file=.env.production.local scripts/maintenance/repair-catalogue-7144.mjs --revert --apply
+ *
+ * A later batch on #7144 passes its own plan, which brings its own RUN (so its backup, sweep_log rows and --revert
+ * cover only that batch) and BY; the PLAN below is the 2026-10-22 batch and stays the default:
+ *   node --env-file=.env.production.local scripts/maintenance/repair-catalogue-7144.mjs --plan=scripts/maintenance/repair-catalogue-7144/porta-imprints.mjs [--apply]
  */
 import { MongoClient } from 'mongodb';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { setCatalogueFields } from '../lib/catalogue-fields.mjs';
 import { provenanceUpdate } from '../lib/field-provenance.mjs';
 import { computeIdentityFields } from '../lib/identity-fields.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const RUN = 'repair-catalogue-7144';
+const PLAN_ARG = process.argv.find((a) => a.startsWith('--plan='))?.slice('--plan='.length);
+const EXT = PLAN_ARG ? await import(pathToFileURL(resolve(PLAN_ARG)).href) : null;
+if (EXT && !(EXT.RUN && EXT.BY && Array.isArray(EXT.PLAN))) throw new Error(`${PLAN_ARG} must export RUN, BY and PLAN`);
+const RUN = EXT?.RUN ?? 'repair-catalogue-7144';
 const SCRIPT = 'scripts/maintenance/repair-catalogue-7144.mjs';
 const BACKUP = join(HERE, 'backups', `${RUN}.json`);
 const APPLY = process.argv.includes('--apply');
 const REVERT = process.argv.includes('--revert');
 const NOW = new Date();
-const BY = 'Claude (job fix-catalogue-7144), fix approved by Derek 2026-10-22';
+const BY = EXT?.BY ?? 'Claude (job fix-catalogue-7144), fix approved by Derek 2026-10-22';
 const stampFor = (evidence) => ({
   source: 'hand-adjudicated', method: 'title page read by image', script: SCRIPT, by: BY, issue: '#7144', date: NOW, evidence,
 });
@@ -70,7 +77,7 @@ const PORTA_EV = {
  * Per book: `set` (identity fields get a provenance stamp), `raw` ($set without a stamp: derived or bookkeeping),
  * `unset`, `imprint` (setCatalogueFields), `supabase` extra columns, `indexUnset` (book_indexes).
  */
-const PLAN = [
+const PLAN = EXT?.PLAN ?? [
   {
     id: '69bfcd228ab50eb88e8c7d27', evidence: BAROCCI_EV,
     set: {
@@ -254,7 +261,7 @@ for (const p of PLAN) {
   }
   for (const [f, v] of Object.entries(p.push || {})) $push[f] = v;
   const $unset = Object.fromEntries((p.unset || []).map((f) => [f, '']));
-  const r = await books.updateOne({ id: b.id }, { $set, $push, ...(Object.keys($unset).length ? { $unset } : {}) });
+  const r = await books.updateOne({ id: b.id }, { $set, ...(Object.keys($push).length ? { $push } : {}), ...(Object.keys($unset).length ? { $unset } : {}) });
   console.log(`  books modified ${r.modifiedCount}`);
   if (r.modifiedCount !== 1) { console.error('!! book not modified'); process.exitCode = 1; continue; }
   if (indexBefore && Object.keys(indexBefore).length) {

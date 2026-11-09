@@ -4,9 +4,9 @@
  */
 import { describe, it, expect } from 'vitest';
 import {
-  flagsOf, gateTime, isOneShot, logPathOf, modeOf, parseCrontab, pipelineLines, scriptsOf, stageOf, trailingComment,
+  flagsOf, gateTime, isOneShot, laneTotalsOf, logPathOf, modeOf, parseCrontab, pipelineLines, redSummary, scriptsOf, stageOf, trailingComment,
 } from '../../scripts/maintenance/pipeline-now-push.mjs';
-import { laneTable, linesByStage, untilText, type CronLine } from '@/lib/pipeline-now';
+import { laneTable, linesByStage, redLines, untilText, type CronLine } from '@/lib/pipeline-now';
 
 const CHAINED = `*/5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-chained.log 2>&1`;
 const SIKU = `*/15 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply --max-minutes=180 --parallel=6 >> /var/log/sourcelibrary/siku-lane.log 2>&1`;
@@ -110,5 +110,39 @@ describe('page helpers', () => {
     const now = new Date('2026-10-29T22:00:00Z');
     expect(untilText('2026-10-30T22:00:00Z', now)).toBe('in 24 h');
     expect(untilText('2026-10-29T21:00:00Z', now)).toBe('–');
+  });
+});
+
+describe('red cron lines (#8283)', () => {
+  const now = new Date('2026-11-09T08:00:00Z');
+  const text = [CHAINED, SIKU, READER, KRAKEN, OFF, `*/10 * * * * node /root/sourcelibrary/scripts/batch/new-ocr-thing.mjs run >> /l 2>&1`].join('\n');
+  const totals = laneTotalsOf({ translated_per_day: [{ day: '2026-11-08', lane: 'agy-flash-translate', model: 'm', pages: 40 }], ocr_per_day: [] });
+  const rows = pipelineLines(text, { box: 'hetzner', now, laneTotals: totals });
+  const by = (script: string) => rows.find(r => r.script?.endsWith(script))!;
+  it('marks a retired line still live, and the paid flash-lite pattern on it', () => {
+    expect(by('translate-batch-worker.mjs').registry?.id).toBe('main-chained-tick');
+    expect(by('translate-batch-worker.mjs').red.map((r: { flag: string }) => r.flag)).toEqual(['RETIRED BUT LIVE', 'MATCHES A RETIRED PATTERN']);
+  });
+  it('a registered current line that wrote pages is clean; one that wrote none is IDLE; a paused one is not judged idle', () => {
+    expect(by('reader-request-lane.mjs').red).toEqual([]);
+    expect(by('syriac-kraken-relaunch.sh').red.map((r: { flag: string }) => r.flag)).toEqual(['IDLE 7 DAYS']);
+    expect(by('siku-translate-lane.mjs').registry?.status).toBe('paused');
+    expect(by('siku-translate-lane.mjs').red).toEqual([]);
+  });
+  it('an unknown page-work line is UNREGISTERED; a disabled line is never red', () => {
+    expect(by('new-ocr-thing.mjs').red.map((r: { flag: string }) => r.flag)).toEqual(['UNREGISTERED']);
+    expect(rows.find(r => r.disabled)!.red).toEqual([]);
+  });
+  it('without a box, lines carry no verdicts (older callers)', () => {
+    expect(pipelineLines(text)[0]).not.toHaveProperty('red');
+  });
+  it('summarises the red lines for the weekly ntfy and the page', () => {
+    const docs = [{ box: 'hetzner', lines: rows }];
+    expect(redSummary(docs)).toEqual([
+      'hetzner: translate-batch-worker.mjs (RETIRED BUT LIVE, MATCHES A RETIRED PATTERN)',
+      'hetzner: new-ocr-thing.mjs run (UNREGISTERED)',
+      'hetzner: syriac-kraken-relaunch.sh (IDLE 7 DAYS)',
+    ]);
+    expect(redLines([{ box: 'hetzner', doc: { lines: rows } as never }]).length).toBe(3);
   });
 });

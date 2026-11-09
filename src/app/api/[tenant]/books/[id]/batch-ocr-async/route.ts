@@ -11,6 +11,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
+import { notBlockedForModel } from '@/lib/page-counts';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
 
@@ -209,6 +210,10 @@ export const POST = withAuth(async (request, session, context) => {
     const ocrFilter = force
       ? hasImageFilter
       : {
+          // Skip pages batch-collector has given up on (N=3 RECITATION, or
+          // N=3 other failures for this model), as the orchestrator does.
+          // Without this, every manual round re-sent the same refused pages (#8320).
+          'ocr.recitation_blocked': { $ne: true },
           $and: [
             hasImageFilter,
             {
@@ -217,7 +222,8 @@ export const POST = withAuth(async (request, session, context) => {
                 { 'ocr.data': null },
                 { 'ocr.data': '' }
               ]
-            }
+            },
+            notBlockedForModel(model),
           ]
         };
 
@@ -483,19 +489,13 @@ Output structure:
       });
     }
 
-    // Multiple batches: submit ALL children to Gemini first, then create DB records.
-    // This prevents orphan parent records if Gemini submission fails (e.g. quota exhaustion).
+    // Multiple batches: record each child the moment Gemini accepts it, and the
+    // parent last. A submitted Gemini job is paid for; if this function dies
+    // mid-loop (300 s limit, a quota throw on child N), every child already
+    // submitted must still have a batch_jobs row or the collector never reads
+    // it (#8298: 11 jobs, 220 pages, submitted and never recorded). The
+    // collector handles a child whose parent row is missing.
     const parentJobId = nanoid();
-
-    // Phase 1: Submit all child batches to Gemini (no DB writes yet)
-    const submittedChildren: Array<{
-      childJobId: string;
-      batchJobName: string;
-      batchJobState: string;
-      geminiRawState: string;
-      batchPageIds: string[];
-      requestCount: number;
-    }> = [];
 
     for (let bi = 0; bi < batches.length; bi++) {
       const batch = batches[bi];
@@ -513,26 +513,14 @@ Output structure:
         }
       });
 
-      submittedChildren.push({
-        childJobId,
-        batchJobName: batchJob.name!,
-        batchJobState: normalizeGeminiState(batchJob.state),
-        geminiRawState: batchJob.state || 'JOB_STATE_PENDING',
-        batchPageIds,
-        requestCount: batch.length,
-      });
-    }
-
-    // Phase 2: All children submitted successfully — now create DB records
-    for (const child of submittedChildren) {
-      childJobNames.push(child.batchJobName);
-      childJobIds.push(child.childJobId);
+      childJobNames.push(batchJob.name!);
+      childJobIds.push(childJobId);
 
       await db.collection('batch_jobs').insertOne({
         submitted_by: ROUTE_CALL_SITE,
-        id: child.childJobId,
+        id: childJobId,
         parent_job_id: parentJobId,
-        job_name: child.batchJobName,
+        job_name: batchJob.name!,
         book_id: bookId,
         tenantId,
         type: 'ocr',
@@ -541,12 +529,12 @@ Output structure:
         force,
         ...promptProvenance,
         ocr_generation: ocrGeneration, // #2449 generation guard
-        page_ids: child.batchPageIds,
-        page_count: child.batchPageIds.length,
+        page_ids: batchPageIds,
+        page_count: batchPageIds.length,
         pages_per_request: effectivePPR,
-        request_count: child.requestCount,
-        status: child.batchJobState,
-        gemini_state: child.geminiRawState,
+        request_count: batch.length,
+        status: normalizeGeminiState(batchJob.state),
+        gemini_state: batchJob.state || 'JOB_STATE_PENDING',
         created_at: now,
         updated_at: now,
       });
