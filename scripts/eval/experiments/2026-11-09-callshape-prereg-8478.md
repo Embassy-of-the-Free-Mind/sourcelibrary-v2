@@ -63,3 +63,19 @@ Cost order, cheapest first: B10-sonnet, B10-opus, P5-sonnet, P5-opus (calls a bo
 Too few books (under 40 study books complete in all arms and V) or V invalid on its own controls (it confirms under 9/10 of the planted defects raised) → no decision. The point estimates decide; book-bootstrap 95% intervals are reported beside them.
 
 Nothing is written to `book_checks` or to pages. Pages found invented or off-leaf with the image open are contained per `containment-on-finding.md`.
+
+### 7. Amendment (2026-11-09 ~19:25Z, before any result was read; 1 of 110 units judged, a control smoke unit)
+Two corrections from Derek on #8478 (comments 19:07Z and 19:14Z) reached the job after §1–6 were committed. They replace §6 and narrow §5. No prompt, arm, control or frame changes: the runner already records `layer` per finding and `usage` per call, so both are scoring changes.
+
+**Scope (like-for-like).** R's page judge reads the transcription only and the English only at breaks. So the decision is taken on **OCR findings**: page defects with layer `transcription`, and material break defects (any layer). **Translation findings** (page defects with layer `english`: mistranslation, omission, added text mid-page) are reported beside it as their own V-confirmed measure, with their own rate per quota; R has none by construction. Translation yield may justify a shape on its own, but it does not enter rule 1–3.
+
+**Primary measure: V-confirmed serious OCR findings per unit of quota**, not per book. Quota per arm = the run's climits weekly delta (team@, % of a week) × the arm's share of the run's price-weighted tokens (input 1×, cache creation 1.25×, cache read 0.1×, output 5× input; Sonnet weighted 0.6× Opus, the list-price ratio). R's quota is priced the same way from its #8405 `usage` rows. Reported per arm: confirmed serious OCR findings per book (recall), books per 1% of a week, and their product; and each arm's point on the recall-per-book vs books-per-week frontier. Other team@ use during the run inflates the delta; it is reported, and the token shares stand regardless.
+
+**Decision rule (replaces §6).**
+1. An arm is eligible if valid on controls (≥ 9/10 every kind).
+2. Precision floor: an eligible arm whose precision on OCR findings is more than 10 points below R's must be paired with V, and V's per-book cost is added to its quota.
+3. **Adopt the eligible arm (with V if rule 2 requires) with the most V-confirmed serious OCR findings per 1% of a week**, provided it beats R on that measure. A cheap arm that finds 70% of R's findings per book at a fifth of the quota wins.
+4. Otherwise R stays.
+The §6 "no decision" conditions stand (under 40 complete study books, or V confirming under 9/10 of the planted defects raised). The per-book rule of §6 is reported beside it for comparison, not used.
+
+Checks: none. This is a test; nothing is written to `book_checks`.
