@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { generateApiKey, listApiKeys, revokeApiKey } from '@/lib/dataset/api-keys';
+import { acceptApiTerms, generateApiKey, listApiKeys, revokeApiKey } from '@/lib/dataset/api-keys';
 import { DatasetTier, DATASET_TIERS } from '@/lib/dataset/types';
-import { PARTNER_TERMS_URL, PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
+import { API_TERMS_URL, API_TERMS_VERSION, API_TERMS_DEADLINE, keyHasCurrentTerms } from '@/lib/api-terms-version';
 
 /**
  * GET /api/dataset/v1/keys — List API keys for the authenticated user
@@ -14,7 +14,11 @@ export async function GET() {
   }
 
   const keys = await listApiKeys(session.user.id);
-  return NextResponse.json({ keys });
+  return NextResponse.json({
+    keys: keys.map(k => ({ ...k, has_current_terms: keyHasCurrentTerms(k) })),
+    terms_version: API_TERMS_VERSION,
+    terms_deadline: API_TERMS_DEADLINE,
+  });
 }
 
 /**
@@ -35,9 +39,9 @@ export async function POST(request: NextRequest) {
   const name = body.name || 'Default';
 
   // A key opens more than a browser gets, so it is issued on an agreement.
-  if (body.accept_terms !== PARTNER_TERMS_VERSION) {
+  if (body.accept_terms !== API_TERMS_VERSION) {
     return NextResponse.json(
-      { error: 'Agree to the terms of use to create a key.', terms_required: true, terms_version: PARTNER_TERMS_VERSION, terms_url: PARTNER_TERMS_URL },
+      { error: 'Agree to the terms of use to create a key.', terms_required: true, terms_version: API_TERMS_VERSION, terms_url: API_TERMS_URL },
       { status: 400 },
     );
   }
@@ -60,7 +64,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { key, doc } = await generateApiKey(session.user.id, tier, name, { termsVersion: PARTNER_TERMS_VERSION });
+  const { key, doc } = await generateApiKey(session.user.id, tier, name, { termsVersion: API_TERMS_VERSION });
 
   return NextResponse.json({
     key, // Only returned once — user must save it
@@ -96,4 +100,26 @@ export async function DELETE(request: NextRequest) {
   }
 
   return NextResponse.json({ revoked: true });
+}
+
+/**
+ * PATCH /api/dataset/v1/keys — agree to the current API terms for every active
+ * key this account holds (#8235). Body: { accept_terms: API_TERMS_VERSION }.
+ * Keys made before the terms keep working until API_TERMS_DEADLINE; after it
+ * they are refused until this is called. The key itself does not change.
+ */
+export async function PATCH(request: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+  }
+  const body = await request.json().catch(() => ({}));
+  if (body.accept_terms !== API_TERMS_VERSION) {
+    return NextResponse.json(
+      { error: 'Agree to the terms of use to keep using your key.', terms_required: true, terms_version: API_TERMS_VERSION, terms_url: API_TERMS_URL },
+      { status: 400 },
+    );
+  }
+  const updated = await acceptApiTerms(session.user.id);
+  return NextResponse.json({ updated, terms_version: API_TERMS_VERSION });
 }

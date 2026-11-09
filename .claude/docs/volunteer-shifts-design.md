@@ -12,6 +12,18 @@ five-page verdict-first shift survives as the opt-in `start_blind_check`
 Derek's question "could people contribute the remaining tokens of their subscriptions, and could
 we package up jobs for them?" The tracking issue (#6418) carries the decisions.
 
+## Revision 2026-11-08: a shift is a paired-fifths check of a book (#8405)
+
+A shift now reads a book's 10-page check by default: two adjacent pages from each fifth of the book
+(`src/lib/paired-fifths.ts`, seeded by the book id), so one shift covers the whole book and five
+page joins, and its pages are the same ones any other reader of that book gets. Reading on in order
+is still there (`plan: "walk"`, offered when the check is done). A volunteer's completed check
+becomes a `book_checks` row (method `volunteer-paired-check`, `reader_warning: false`) through
+`scripts/audit/volunteer-paired-checks.mjs`. Why: a walk from the front can't grade a book and
+sat apart from every other check; a single page per fifth can't see a join. The Opus 5-page QA is
+being tested on the same design (`scripts/eval/experiments/2026-11-08-paired-fifths-prereg-8405.md`).
+The "Unit" and "Pacing" rows below describe the walk.
+
 ## Revision 2026-10-11: the volunteer lends their Claude; the model does the checking
 
 The first live shift (claude.ai, Latin) asked a non-Latinist for a blind verdict on Latin. Derek:

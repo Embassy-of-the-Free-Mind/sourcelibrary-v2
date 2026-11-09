@@ -160,6 +160,730 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-08 · Continuity: can we drop the previous page's English (A0), and does the seam pass work as a production stage? (#8399)
+<!-- PRIOR ART: 2026-11-08-seam-markers-4-per-call-8399.md (#8407: the sample, the #7118 seam judge, the page judge and
+the controls are reused unchanged; arm C there is the eval copy this stage productionises); seam-repair-6742/seam-repair.mjs
+(writeRepairs, now with a runId option, is the write path); the neighbourGate is #8401's. Harness:
+scripts/eval/seam-prevent-7118/seam-pass-8399.mjs. -->
+
+**Answer for Derek.** Keep the previous-page English, and turn the seam pass on. Without the previous English (A0), more
+joins break at block starts (44.9 per 100 against 39.9 for production, about three times the run-to-run swing), and names
+and terms are rendered slightly less consistently, so #8410 stays blocked. The seam pass as built does what #8407's eval
+copy did: it halves the broken joins (lane 19.2 → 8.1 per 100). It is now on for Latin and German.
+
+### What ran
+- **Sample:** #8407's 120 blocks (69 books; 95 Latin and 22 German blocks scored, 3 not scored for parse failures). Every
+  arm was judged again together in one blind #7118 Opus seam-judge session, in both orders: 478 calls, 477 parsed. The
+  judge floor (the same text twice) agreed 235/236. Planted defects were caught 227/230.
+- **A0:** production per-call=4 with TRANSLATE_PREVIOUS_ENGLISH unset (PR #8410's `translate-core.mjs`), 126 agy calls.
+  The prompt was checked to carry no "Previous page translation" block.
+- **The stage, as built:** `claude-translate.mjs seam --out=DIR --seam-edit-before=1` (the code the lane runs, not the
+  eval copy), over A0's reads (126 turns) and over Bb's reads (219 turns, the like-for-like check against C).
+  "Locked" versions (A0L) use the same turns with every edit to the page before the block refused.
+- **Term consistency:** 16 runs of 12 consecutive pages (16 books), read again under A, A2 and A0 (49–51 agy calls each).
+  The mechanical count is distinct English renderings per recurring source name or term. 8 of the runs per arm were checked
+  by Opus (24 calls).
+- **Page judge:** route-judge-6740, Opus with the image open, on A0's pages and every page the stage changed (103 items,
+  including 5 wrong-page controls, all rejected, and 6 bridge repeats of #8407's A verdicts, 0 flips).
+
+### Results (per 100 joins; S = block start, T = inside a block, lane = 0.75 T + 0.25 S)
+
+| arm | S | T | lane | translation leaks /480 | terms: renderings/term · Opus-inconsistent | usable |
+|---|---|---|---|---|---|---|
+| A (production) | 40.7 | 15.3 | 21.6 | 2 | 1.442 · 18/193 | 34/69 |
+| A2 (production, run 2) | 39.0 | 9.3 | 16.7 | 2 | 1.417 · 19/184 | 35/69 |
+| A0 (no previous English) | 44.9 | 11.9 | 20.1 | 0 | 1.450 · 24/190 | 32/68 |
+| C (#8407 eval copy, on Bb) | 18.6 | 6.8 | 9.7 | 0 | — | (Bb 36/69) |
+| Bb + built stage | 16.9 | 5.1 | 8.1 | 0 | — | 35/68 |
+| A0 + built stage | 17.8 | 11.9 | 13.3 | 0 | as A0 | 32/68 |
+| A0 + built stage, page before locked | 39.8 | 11.9 | 18.9 | 0 | as A0 | 32/68 |
+
+By language (S, k/n): Latin A 34/95, A2 33/95, A0 38/95, A0+stage 17/95, locked 34/95, C 17/95, Bb+stage 16/95.
+German A 13/22, A2 12/22, A0 14/22, A0+stage 3/22, locked 12/22, C 4/22, Bb+stage 3/22.
+
+**Rule 1 (A0 decides #8410).** A0's S is 5.1 above mean(A, A2), and the A-vs-A2 swing is 1.7, so it fails. Term
+consistency is not better, and it is a little worse on both counts: A0 is worse than both A and A2 in 4 of the 8 Opus-checked
+runs and better in 2. One run (5 inconsistent terms against 1) carries most of the gap, so this is weak evidence, but the
+rule asks for "not worse". **A0 + seam pass:** S recovers to 17.8. Terms do not change, because the pass only rewrites the
+two edge spans. #8410 stays blocked.
+
+**Rule 2 (the stage scores like C).** Bb+stage has lane 8.1 [4.9, 11.9] against C's 9.7 and production's 19.2. Paired
+against C it is better on 5 S joins and worse on 3. It passes.
+
+**#8407's caveat: the earlier page.** In the built stage on A0, 34 of the 42 turns it changed edit the stored English of the
+page *before* the block, and that edit is the gain. With it refused, S is 39.8, the same as production. Each such edit passes
+the same guards as an in-block one: it stays inside its span, the span grows no more than its set share, nothing outside the
+spans changes, and the neighbourGate (#8401) runs on the result. Refusals over the A0 stage: 21 of 126 turns. 1 was refused
+by the neighbourGate (a leak), 2 by span growth, 3 by touching more than 3 sentences, 5 returned no repair, and 10 by placement. In
+production the edit is written by `cli-translate.mjs apply` against the stored text, and is skipped when the stored edges
+differ from what the pass read (checked in a dry run: 9 of 11 refused as stale on an unstored eval read). So the flag is
+`seam_pass: 'edit-before'`, not `true`.
+
+**Not measured:** the stage on A itself, which is what the flag now runs on (A + previous English + pass). It helped A0 and
+Bb by the same amount, so the same gain is expected on A.
+
+### What the failing pages fail on (usable ≈ 50% on every arm; not chased here)
+The page judge read each page with its image open. 35 of A's 69 pages fail (A2 34, A0 36). By main defect, A's failures are
+16 translation, 10 OCR and 8 other (mostly a wrong-leaf I1 or mixed), plus 1 editorial. A0's are 14 translation, 13 OCR and 9 other. The single largest class is OCR **O6
+misread rendered as fluent English** (42 defects on A's failing pages, 52 on A0's). After it come translation T9 quiet omission (17/16),
+T7 fluent-over-garble (14/11) and T8 sense inverted (8/7). I1 wrong leaf appears 6–8 times. So about half the failures start in
+the OCR and the translator smooths them over. A seam stage cannot fix those.
+
+### Quota
+agy: A0 reads 126 calls; stage on A0 126, on Bb 219; term-run reads A 51, A2 49, A0 49. That is 620 agy calls (Flash low, subscription). The
+production cost of the flag is about one extra agy call per 4-page block (+25%). Claude (subscription `claude -p`, no
+paid API): seam judge 478 Opus calls (list-price equivalent $45.52), term check 24 ($6.86), page judge 103 (not metered).
+
+## 2026-11-08 · Do folio markers at 4 pages a call, with no previous-page English, stop text landing on the wrong page? (#8399)
+<!-- PRIOR ART: 2026-10-29-seam-prevent-markers-7118.md (markers on page PAIRS, adopted in cli-translate.mjs; its judge
+and harness are imported, not rebuilt: seam-prevent-7118/ab.mjs, seams-6742/lib.mjs, opus-reference.mjs); the per-page
+judge is route-judge-6740/judge.mjs with paired-arm.mjs; the leak flag is scripts/audit/translation-page-boundaries.mjs
+sharedRun. Harness: scripts/eval/seam-prevent-7118/blocks4-8399.mjs. -->
+
+**Answer for Derek.** No. Markers at 4 a call are no better than production at the page joins, and the density budget
+you asked for makes them worse. It splits dense blocks into 1- or 2-page calls, and each new call starts with no context.
+What works is one extra seam call at every call boundary: it halves broken joins, 17.4 → 8.8 per 100. That pass is the
+follow-up, and nothing in the translation lane changes now.
+
+**Design.** Preregistered in `scripts/eval/PREREGISTRATION-seam-markers-8399.md` (commit 12a411cd4) before any arm
+ran. Amendment 1 (01156ce74, from Derek's inbox note, before any output was read) added the 8,000-character budget,
+the dense stratum and arm B4. Amendment 2 was **post hoc**: it was written after the leak flags were read, before any
+seam or page verdict. It classes each leak flag as source repeat, stored page or translation (see Leaks).
+- **Sample:** 120 blocks in 69 books. 60 are the #5103 seams, 30 are page-boundary LEAK seams and 30 are dense
+  mid-flow breaks. By density: 39 dense blocks (≥ 3,000 OCR characters a page), 81 ordinary. 97 blocks are Latin
+  (55 books) and 23 German (14 books).
+- **Arms**, all `gemini-3.8-flash-low` through the agy `.agy-james` pool, $0, reading the same stored OCR:
+  - A, A2: production `claude-translate.mjs --cli=agy --per-call=4`, run twice.
+  - B4: markers, no previous English, a fixed 4 a call.
+  - Bb: B4 with the 8,000-character budget. Bb is the B of the rule.
+  - C: Bb plus one seam call (`seam-repair-6742` gemini-repair) on each join that crosses a call boundary.
+- **Measures:**
+  - Seam defects: the #7118 Opus seam judge, blind, both orders, with an identical copy of A and a planted break.
+    It judges two joins per block: T inside the block, and S at the block start (the stored English of the page
+    before). The rate is 0.75·T + 0.25·S, with a by-row bootstrap.
+  - Leaks: `sharedRun` ≥ 200 characters on every consecutive pair.
+  - Usable pages: route-judge Opus with the page image, one page per book.
+- **Smallest detectable gap:** 10–13 per 100 joins on one join type with n = 120. On the dense stratum alone it is
+  16–22, so the per-stratum rates are descriptive.
+
+**Instrument.** The copy of A agreed with A on 240/240 joins. Planted breaks were caught on 232/234 (99.1%).
+Wrong-page controls were accepted 0/20. Repeat flips were 1/6. One C row's seam call failed to parse twice, so C
+equals Bb there.
+
+### Seam defects per 100 joins (120 blocks; A vs A2 first)
+
+| arm | lane rate [95%] | T (in block) [95%] | S (block start) [95%] | Δ vs mean(A, A2) [95%] |
+|---|---|---|---|---|
+| A | 18.8 [14.0, 23.8] | 12.5 [7.7, 19.6] | 37.5 [29.4, 46.4] | — |
+| A2 | 16.0 [12.1, 20.4] | 9.2 [5.2, 15.7] | 36.7 [28.6, 45.6] | swing 2.8 (T 3.3, S 0.8) |
+| B4 | 19.8 [15.0, 25.0] | 11.7 [7.1, 18.6] | 44.2 [35.6, 53.1] | +2.4 [−2.2, 7.3] |
+| **Bb** | **26.9** [21.0, 33.3] | 21.7 [15.2, 29.9] | 42.5 [34.0, 51.4] | **+9.5 [2.9, 16.4]** |
+| C | 8.8 [5.2, 12.9] | 6.7 [3.4, 12.6] | 15.0 [9.7, 22.5] | −8.6 [−13.1, −4.2] |
+
+Paired at T: Bb is better than A on 11 joins and worse on 22 (p 0.98). Bb against B4: 9 better, 21 worse. C against
+Bb: 18 better, 0 worse. At S, B4 is better than A on 3 and worse on 11. Removing the previous English costs
+something at the block start, as #8399 expected.
+
+**Per stratum** (lane rate; T / S):
+
+| stratum | n | A | A2 | B4 | Bb | C |
+|---|---|---|---|---|---|---|
+| dense | 39 | 17.3 (12.8/30.8) | 12.8 (5.1/35.9) | 12.8 (5.1/35.9) | **47.4 (51.3/35.9)** | 10.9 (10.3/12.8) |
+| ordinary | 81 | 19.4 (12.3/40.7) | 17.6 (11.1/37.0) | 23.1 (14.8/48.1) | 17.0 (7.4/45.7) | 7.7 (4.9/16.0) |
+
+On ordinary pages the budget leaves blocks at 4 a call, and Bb's in-block T is the lowest of the read arms (7.4). On
+dense pages the budget cuts the T join across calls with no context, and Bb breaks there half the time. Under
+Amendment 1's rule the budget is not kept (dense Bb 47.4 against B4 12.8, more than the swing). B4 is then held to
+the rule and fails it on usable pages (below).
+
+**Per cell** (lane rate): Latin, 97 blocks: A 16.5, A2 15.7, B4 18.6, Bb 26.3, C 9.0. German, 23 blocks: A 28.3,
+A2 17.4, B4 25.0, Bb 29.3, C 7.6.
+
+### Leaks (consecutive pairs, 480 per arm)
+
+| arm | detector flags | source repeat | stored page | **made by the translation** |
+|---|---|---|---|---|
+| A | 10 | 8 | 0 | **2** |
+| A2 | 10 | 7 | 1 | **2** |
+| B4 | 4 | 4 | 0 | **0** |
+| Bb | 4 | 3 | 1 | **0** |
+| C | 4 | 3 | 1 | **0** |
+| stored (served text) | 44 | 8 | — | 36 |
+
+The detector's source check compares raw OCR, so it misses repeats spelled with ſ or abbreviation marks. Examples
+are a duplicated scan (`69b630dc…` p.25 and p.26 both print leaf 13), two editions of one licence on facing pages
+(`69b21d9e…` p.9/10), and a reprinted table header. Amendment 2 classes every flag in every arm by the same rule:
+folded OCR, shared word 4-grams. "Stored page": the flag is on Bb's block-start join, where the stored English of
+p.70 already carries p.71's last paragraph (the Latin is only on p.71). On raw counts every arm fails the "0 leaks"
+clause, A included.
+
+### Usable pages (Opus route judge, image open, one page per book)
+
+| arm | accepted [95%] | Latin | German | fidelity | misleads / 1k words |
+|---|---|---|---|---|---|
+| A | 34/69 (49.3%) [37.8, 60.8] | 26/55 | 8/14 | 3.51 | 2.33 / 2.32 |
+| A2 | 35/69 (50.7%) [39.2, 62.2] | 25/55 | 10/14 | 3.58 | 2.63 / 1.55 |
+| Bb | 36/69 (52.2%) [40.6, 63.5] | 25/55 | 11/14 | 3.38 | 2.97 / 3.43 |
+| B4 (dense books) | 18/39 against A 22, A2 23 | 12/30 | 6/9 | — | 2.79 / 2.04 |
+
+Bb clears the page floor (47.1 = mean − noise). B4 does not on the dense books (46.2% against a floor of 52.6%).
+
+### The rule
+
+| | seam ≤ A (17.4) | translation leaks 0 | usable not lower | passes |
+|---|---|---|---|---|
+| Bb | no (26.9) | yes | yes | **no** |
+| B4 (budget dropped) | no (19.8) | yes | no | **no** |
+| C | yes (8.8) | yes | yes (= Bb) | yes |
+
+The preregistration says: "If only C passes, nothing ships in this PR and the seam pass becomes the follow-up." Two
+caveats for that follow-up. C's S-join gain partly comes from editing the stored English of the page before the
+block, which no other arm can touch. C costs one more agy call per call boundary (158 calls on 120 blocks here).
+
+### Three breaks, quoted from the judge
+
+1. **Production's own leak (A and A2, `69b4c085…` p.216|217, block start).** A's p.217 repeats 861 characters of the
+   previous page's English, which it was given as context: "…those things benefit the body which either restore or
+   preserve life, health, strength, form, and its own proper nature. To the soul, however, …". No marker arm repeats it.
+2. **The budget's call boundary (Bb only, `69b630c3…` p.73).** "'ut sententia tua n̅ negligeres. prospiceresqʒ tibi i
+   futurum' is untranslated; 'I have warned you,' runs straight into 'You, however, have treated this with neglect'."
+   A, A2, B4 and C are clean here.
+3. **The block start that every reader gets wrong (`69b6304e…` p.34, S).** "N ends 'to break out, even though it was
+   covered and concealed by him'; N+1 repeats 'covered and concealed by him, to break out'." A, A2, B4 and Bb all
+   duplicate it (major). C's seam call repairs it.
+
+**Quota.** agy calls: A 132, A2 135, B4 144, Bb 223 (the budget's single-page calls), C +158 seam calls, for 792 in
+total. Claude, on this box's subscription: 480 seam-judge calls ($43.72 at list) and 272 page-judge calls ($24.45 at
+list). No paid API calls and no page writes.
+
+**Results:** `scripts/eval/results/seam-markers-8399/`. It holds `report.json` (with every row's verdicts),
+`judge.jsonl.gz`, `leaks.json`, `seam-c.jsonl.gz`, `build.json`, and `pages/` (key, sample, recipe,
+`verdicts-opus.jsonl.gz`, `packet.json.gz`, `paired-score.json`).
+
+## 2026-11-08 · Two adjacent pages from each fifth: does the paired check find bad books the 5-page check misses? Results (#8405)
+
+Preregistration: `2026-11-08-paired-fifths-prereg-8405.md` (the rules and the decision were not changed).
+Code: `scripts/eval/paired-fifths-8405/run.mjs`, run from #8411's branch (#8411 was not yet merged).
+Output: `scripts/eval/paired-fifths-8405/results/{score.json,books.json,frame-summary.json}`. Verdicts are in
+`$JOB_SCRATCH/paired-fifths-8405/verdicts.jsonl` on the job host. Nothing was written to Mongo or `book_checks`.
+
+### Run
+- **Frame:** 160 books, 789 pairs, 29 anchors left unpaired, 17 stale anchors judged again.
+- **Census stratum skipped:** #8409 (`openingEcho`) was not merged at frame time, so the frame printed "census stratum skipped". No census precision for #8399.
+- **Calls:** 1,557 Opus calls (`claude -p`, subscription), under the 1,800 cap. One join parsed to nothing, and its retry was stopped by the pace guard (`meter unreadable … fail closed`). The guard was not bypassed. That leaves **159 of 160 books complete**.
+- **Harness fix:** a worker could take a job index past the end of the list while it waited on the pace check. It now re-checks first (one line, no rule touched).
+
+### Results against the preregistered rule
+| | |
+|---|---|
+| Controls (join judge) | carry-over **10/10** caught, wrong-leaf **10/10**: **valid** |
+| Complete books | 159 (≥ 80) |
+| Bad on anchors (5 pages) | 66 |
+| Bad paired (10 pages or any failed join) | 83 |
+| **Good → bad** | **24 (15.1%)**: 18 by joins only, 4 by partner pages only, 2 by both |
+| Bad → good | 6 |
+
+**Decision line as analyze printed it: `pairs for the standing Opus QA`** (15.1% ≥ 5%).
+
+### Also reported
+- **Breaks:** 759 judged, 72 failed (9.5%). By kind: `call_boundary` 7 (1 failed), `in_call` 0, `unknown` 752 (71 failed). Almost no frame page carries `translation.engine.run.read_call`, so the kind split says nothing yet.
+- **Direction of failed breaks:** page A holds the misplaced text in 26, page B in 31, both in 15.
+- **Failed defects by kind and layer:** dropped/english 38, dropped/transcription 19, carry_over/english 21, wrong_leaf/transcription 12, wrong_leaf/english 8, duplicated/english 6, carry_over/transcription 1, duplicated/transcription 1.
+- **Reliability of the 10-page grade:** split-half r (anchors vs partners) 0.681 over 158 books; Spearman–Brown to 10 pages **0.811** (an upper bound, since pair-mates are not independent). The #7866 5-page figure was 0.75.
+
+### By eye (5 failed joins, both scans opened)
+1. **Arati Phaenomena** (Latin), pp. 188/189, wrong_leaf: confirmed. Scan A is a Hydra/Crow woodcut over prose ("Ydra sup cui⁹ caudã coruũ…"). Scan B is prose followed by verse from "Etherium uenit in thalamum". The stored texts are verse from other leaves. This book failed 4 joins of this kind.
+2. **Armenian homily**, pp. 169/170, carry_over/english A: real but minor. Scan A ends "…յառնել վաղվաղակի 'ի սե-" and B opens "ղանոյ անտի, զի մի ընդ գինեմոլան…". A's English finishes the sentence with B's first clause and B's English starts after it. Nothing is lost.
+3. **yid bzhin mdzod** (Tibetan), pp. 8/9, dropped/english B: page B has **no English at all** (an empty translation). That is a missing page translation, which the `dropped` rule counts as a break defect.
+4. **German address to Grand Duke Karl**, pp. 6/7, carry_over/english A: same shape as case 2. The verb "aufgenommen und ernannt worden bin" is printed on B, and German is verb-final, so A's English can only finish its sentence by reaching onto B. The judge itself notes "nothing is duplicated or dropped". **This flipped a good book to bad.**
+5. **Vie et voyages de Hiouen-Thsang** (French), pp. 10/11, wrong_leaf + duplicated: confirmed. Scan B is p. 11 ("LIVRE PREMIER … Après avoir terminé ces conférences…"), but its transcription and English repeat p. 10.
+
+**What this means for the rule (no decision changed).** The join rule counts every material `carry_over`, and the judge marks a translator finishing a sentence across the break as material. 13 of the 72 failures are only that shape (English carried over on A). Sensitivities, all computed from the same verdicts:
+- A-finishes-sentence not counted as a failure: 20 flips (12.6%).
+- That, and English-only `dropped` not counted either: 14 flips (8.8%).
+- Only wrong-leaf joins plus the page rule: 8 flips (5.0%).
+
+The decision holds in every one of these readings, at the threshold in the strictest. A standing join check should not fail a book on "A finishes its sentence" alone. Before the paired check becomes the standing QA, either the join prompt or the fail rule should exclude it.
+
+### Pages that carry another page's text (containment is a separate step)
+Wrong-leaf or duplicated, from the join judge (cases 1 and 5 confirmed by eye; the rest are the judge's call):
+- Arati Phaenomena, Geographia, Ora Maritima `69af48642a821385be062737`: pp. 77, 78, 127, 128, 188, 189, 206, 207
+- De Rebus Fatisque Huius Seculi `6a4cb63519ae103166961ce4`: pp. 2, 3, 15
+- 大唐西域記 / Vie et voyages de Hiouen-Thsang `69e961652beefe2f6f72b4a8`: p. 111 (stored page number; printed p. 11)
+- Ueber den Nutzen eines frühzeitigen Studiums `6a243d6f0f0e4f405e630221`: p. 14 (English)
+- Duplicated English: Derge Tengyur `6abe8dbb6a920ffd924d59c0` p. 480; 植物名實圖考(六) `6992cf0e284cdd19fef46f38` p. 54; Sidereal Messenger `6953e47477f38f6761bee59e` pp. 35, 124; Post-Reuter `6a267ed26c1f37c9c4f3cc35` p. 13
+
+## Addendum: census stratum (amendment 1), 2026-11-08
+
+**What was run.** `run.mjs census` on `echo-flagged-8405.jsonl` (`scripts/audit/translation-page-boundaries.mjs`, `kind:"echo"` lines): 5,577 lines after dropping `parallel: true` and `sourceRepeats: true`. Seed 84054 drew 40 breaks, at most 3 per book; all 40 had both pages' texts. Same join judge (Opus 5.5, same prompt). The 160th frame book also finished in this run, so the book-level numbers moved by one book (24/160 flips, 15.0%; decision unchanged).
+
+**Detector precision (judged defect / judged): 23/40 = 0.575.**
+
+| split | judged | judged defect | precision |
+|---|---|---|---|
+| break_kind `unknown` (no `read_call` on one or both pages) | 37 | 23 | 0.62 |
+| break_kind `in_call` | 2 | 0 | 0 |
+| break_kind `call_boundary` | 1 | 0 | 0 |
+| `sourceRepeats: null` (source side unknown) | 0 | — | — |
+| `sourceRepeats: false` (source checked) | 40 | 23 | 0.575 |
+
+Most breaks were `unknown` (37/40) because one or both pages carry no `translation.engine.run.read_call`. With only 3 breaks of known kind, the split cannot say whether call boundaries leak more. The 135 `sourceRepeats: null` lines are 2.4% of the frame, and none was drawn, so the source-unknown split is empty.
+
+**Why the judge passed 17 flagged breaks.** These are the judge's notes, not by eye except where marked. 2 were facing-page editions the `parallel` flag missed (Welsh/English *Barddas*, Loeb *Historia Augusta*; both checked by eye). 1 was a colour calibration target shot twice. 2 were overlapping photographs where the same background leaf shows on both scans. The rest were clean joins whose English shares wording across the break, such as running heads or repeated technical vocabulary.
+
+### By eye (both scans opened)
+Judge **failed**:
+1. Wolff, *Psychologia rationalis* (Latin), pp. 612/613, carry_over A: **real leak.** Scan A ends "adeoque in". A's English goes on through "…neither can a distinct notion of the origin of a contingent spirit be formed", which is printed on B, and B's English translates the same passage again.
+2. Benzo, *Scheeps-togt* (Dutch), pp. 23/24, carry_over + duplicated A: **real leak.** Scan A ends "welker handen op / ha-". A's English carries B's first sentence ("These he presented to our commander…"), and B's English repeats it.
+3. Dostoevsky, *Дневник писателя* (Russian), pp. 316/317, wrong_leaf A: **real, and worse than a carry-over.** A's English is a second translation of B (printed p. 314). Printed p. 313 has no English at all.
+4. Yogananda, *Songs of the Soul* (English), pp. 88/89, duplicated B: **real, but a different mechanism.** Scan B prints only "PART III". Its English layer contains a leaked "**Previous page (modernized) for continuity:**" block that repeats p. 82's poem. The context prompt leaked into the output.
+5. Ferdinand III, *Manifest und Abmahnungs Schreiben* (German, Vienna 1644), pp. 19/20, duplicated + carry_over A: **not a translation leak.** Scan A is a cropped second shot of the same printed p. 8 shown in full on B. Both translations follow their scans. The duplication is in the capture, which a reader still sees as the same page twice.
+
+Judge **passed**:
+1. Fictuld, *Azoth et Ignis* (German), pp. 87/88: **clean, by eye.** Scan A ends "…ein reines Gold/" with catchword "das", and B begins "das durch alles Creutz". The English splits at the same point.
+2. *Barddas* (Welsh), pp. 11/12: **a facing-page edition, by eye** (Welsh left, English right). This is a detector false positive that `parallel` did not catch.
+3. *Sammlung … Frankfurter Wirren* (German; the pamphlet *Humanität, Religion und Christenthum*), pp. 317/318: **clean, by eye.** Both photographs show the same title leaf behind the open pamphlet, and that leaf is the shared text. The body text joins at "hoch- / erleuchteten Bruders".
+4. Descartes, *Opera philosophica* (Latin; *Principia*, pars IV), pp. 709/710: **a small real leak the judge marked immaterial.** Scan A ends "…quæ mensis / spatio" (catchword). A's English goes on with "traverses the circle A B C D in the space of a month", which is printed on B, and B's English repeats it.
+5. *Historia Augusta*, Loeb (Latin/English), pp. 230/231: **a facing-page edition, by eye.** This is a detector false positive.
+
+By eye, then: 4 of the 5 judge-failed breaks are real translation leaks, and the fifth is a duplicate capture. 1 of the 5 judge-passed breaks has a small real leak. The judge's 0.575 is a fair reading of how often a flagged break is a defect a reader would see. Most of the detector's false positives are facing-page editions and clean joins.
+
+The full list of judged leaks, with page links, is in the #8399 comment. Containment is a separate step, and no page was hidden or re-translated here.
+
+## 2026-11-08 · Two adjacent pages from each fifth: does the paired check find bad books the 5-page check misses? Preregistration (#8405)
+
+PRIOR ART:
+- `2026-10-31-confidence-validation-7866.md`: 160 books, 5 pages each (one from each fifth), blind Opus; ICC 0.38, so 5 pages give reliability 0.75. Its 800 verdicts are in `book_checks` (method `judged-pages`, run `confidence-validation-7866`) and are reused as the anchors here.
+- #8399 (session sourcelibrary-b3): in 30 h, 77 of 6,195 agy translations opened with English already on the previous page. Per-page judges cannot see that; this run adds a judge of the break. Its census function `openingEcho` (`scripts/lib/neighbour-guard.mjs`, PR #8409) picks the census stratum.
+- `src/lib/paired-fifths.ts` / `scripts/lib/paired-fifths.mjs`: the shared draw. Here `pairsFromAnchors` adds to each #7866 anchor the next page, else the previous one.
+
+### 1. Question
+Derek (2026-11-08): "maybe we should have 10 page checks, 2 pages next to each other across each 5th of the book", for both the volunteer shift and the Opus QA, "and test". The shift's reading costs us nothing, but pairs double the Opus QA's reading. The question is whether the extra pages and the five joins turn enough books from good to bad to be worth that.
+
+### 2. Frame
+The 160 books of #7866, with its 5 anchors each. For each anchor, the partner is the next page if it passes `eligiblePage` (#7866) and is not another anchor, else the previous page. An anchor with neither stays single. An anchor whose OCR `updated_at` has changed since its check (or is later than the check) is judged again. Books are judged in a seeded order (`SEED.books = 84051`), so a run that stops is still whole books.
+
+**Census stratum** (outside every book-level number): breaks in the same books, not in any pair, where `openingEcho` flags page n's opening English as already on n-1. Up to 40 are drawn with `SEED.census = 84053`. It measures the detector's precision, the share of flagged breaks the join judge fails, for #8399.
+
+### 3. Readers
+- **Page judge:** the #7866 judge unchanged (`judgeAbsolute`: route-judge-6740 `judgePrompt`, OCR task, Opus via `claude -p`, page image in the workspace), on the partner pages and the stale anchors.
+- **Join judge (new):** Opus via `claude -p` with both scans (`a.jpg`, `b.jpg`), both transcriptions and both English texts (`joinPrompt` in `run.mjs`). Defects are `carry_over | duplicated | dropped | wrong_leaf | other`, each with its layer, its page (the direction) and `material`. Catchwords, running heads and signatures are not defects.
+- **Controls (join judge):** 10 carry-over plants (B's English opens with the last sentence of A's English) and 10 wrong-leaf plants (B's texts replaced by a page of another book, same language when one exists), on random-set breaks. The judge is **valid** when each kind has ≥ 8 judged and ≥ 0.80 caught: carry-over as a material `carry_over`/`duplicated`, wrong-leaf as `wrong_leaf` on page B.
+- **Smoke, 2026-11-08 (laptop, not part of the run):** one page (fidelity 5, accepted), one random join (clean, quoting both sides of the seam), and one carry-over control (caught: `carry_over`, English, page B, the planted sentence quoted).
+
+### 4. Rules
+- Bad page (#7866): not accepted, or any `wrong_text` defect.
+- Book bad on its anchors (#7866): ≥ 2 bad of ≥ 4 judged.
+- Book bad on its 10 pages: ≥ 4 bad of ≥ 8 judged (the same share).
+- Join fails: any material `carry_over`, `duplicated`, `dropped` or `wrong_leaf`.
+- **Book bad, paired:** bad on its 10 pages, or any of its joins fails.
+- A book counts only when all of its partners, joins and anchors are judged.
+
+### 5. Decision (fixed now)
+With valid controls and ≥ 80 complete books: if ≥ 5% of complete books are **good on the anchors and bad paired**, the standing Opus QA moves to paired-fifths. Otherwise it stays at 5 pages, and pairs are used only in the volunteer shift (already built, #8405).
+
+### 6. Also reported (no decision rides on them)
+- Flips split by cause (joins only, partner pages only), and bad-to-good flips.
+- Breaks by kind: `call_boundary` vs `in_call` vs `unknown`, from `translation.engine.run.read_call` (#8399), with failure counts and the direction (which page holds the misplaced text).
+- Reliability of the 10-page grade: the split-half correlation of the anchors' and partners' bad-page shares across books, Spearman–Brown stepped up to 10 pages. This treats pair-mates as independent halves, so it is an upper bound.
+- Census precision.
+
+### 7. Budget
+About 800 partner pages, 800 joins, the stale anchors (3 of 20 in a 4-book frame), 20 controls and up to 40 census breaks: ~1,700 Opus calls on the subscriptions, capped at 1,800 (`CALL_BUDGET`), behind the lane-judge pace guard (weekly 85%, 5-hour 95%). No API spend.
+
+### 8. Run
+`node --env-file=… scripts/eval/paired-fifths-8405/run.mjs frame`, then `… judge` (resumable), then `… analyze` → `scripts/eval/paired-fifths-8405/results/score.json`. Nothing writes to Mongo.
+
+### Amendment 1 (2026-11-08, before any census break was judged)
+The frame's own census (breaks inside the 160 #7866 books) flagged 0 breaks, because #8409 was not yet merged when the frame ran. Those books are also older translations: 753 of 789 pair breaks carry no `read_call`. The defect #8399 measures sits in recent agy output, so the census stratum is drawn from there instead: `run.mjs census --census-file=<flagged.jsonl>` takes `scripts/audit/translation-page-boundaries.mjs`'s `kind:"echo"` lines and drops `parallel: true` (facing-language editions, the top false positive per #8399) and `sourceRepeats: true` (the source text itself repeats across the break); `sourceRepeats: null` (no-space scripts, source side unknown) is kept and tagged. It draws with seed 84054, at most 3 breaks a book and 40 in all. The breaks are judged by the same join judge. Census precision is reported for #8399 and stays outside every book-level number, as before. Nothing in §4–§5 changes.
+
+## 2026-11-08 · Can the stranded-leaf residual on Internet Archive books be repaired on agy at $0? (#5309)
+
+PRIOR ART: `scripts/audit/stranded-image-repair-text.mjs` (the frame), `scripts/batch/cli-ocr.mjs` /
+`cli-translate.mjs` (the writers, guards on), `scripts/lib/stranded-leaf-gate.mjs` (stands in for the 40%
+shared-words floor on a page whose stored text is another leaf's), `2026-11-04-stranded-run-repoint-5803.md`
+(re-pointed whole runs at $0; this run reads the pages no shift could place).
+
+**Who it is for.** A reader on an Internet Archive book who sees the right scan beside the previous
+page's text. The 2026-10-02 repair deferred this residual only because paid flash would have overrun its envelope.
+
+**Frame (2026-11-08 audit).** 11,455 stranded pages in 322 books (11,169 live in 299). Of the 6,111
+deferred on 10-02, 5,225 were still stranded (110 books). Withheld English never remade: 26,554 pages in
+English books (modernisation is reader-triggered since #4958, so not this job's), 3,485 live non-English.
+Positive controls in the issue: 12/12 still read their own leaf.
+
+**Pre (precision of the audit).** 30 stranded pages, one per book, blind Opus with scans n-3…n+3:
+28/30 another leaf = 93% (Wilson 79–98%); offsets -1×25, -3×2, +1×1.
+
+**Screen (Derek's inbox note, 06:13Z).** agy gemini-3.8-flash-medium, given the stored text and scans
+n-1…n+1: own / prev / next / other. On the 30 pre pages: 30/30 agreement with Opus (binary and exact),
+4/4 planted controls, 0 false alarms, 0 misses (only 2 own-leaf items, so own-leaf recall was thin there).
+In production, Opus read every page agy did not call off-leaf (own capped at 5–15 per book from p3, since an
+unconfirmed own call is never written) and 30 sampled off-leaf calls per wave:
+
+| wave | screened (books) | agy off | Opus on agy own | Opus on 30 agy off |
+|---|---|---|---|---|
+| p2 | 600 (33) | 580 | 20/20 (all not-off calls) | 30/30 |
+| p3 | 2,000 (40) | 1,423 | 42/42 | 30/30 |
+| p4 | 2,000 (89) | 1,536 | 95/96 (1 cannot tell) | 30/30 |
+| p5 | 1,651 (76) | 1,511 | 19/19 | 30/30 |
+
+The screen also removed false positives the audit cannot see. Lingua Aegyptiaca Restituta (523 pages,
+diagnose "undecided") was own leaf on 522; Opus agreed on the 15 it read.
+
+**Repair and post checks.** For each confirmed off-leaf page: a cli-ocr read on agy flash-low (the live
+prompt, one page a call), then apply with every guard on. Non-English pages were then translated
+through cli-translate with `--no-previous-translation`. A post check takes one repaired page per book (30 a wave)
+plus 2 planted wrong-leaf controls, judged blind by Opus with scans n-1…n+1 and by agy flash-low as a second checker.
+
+| wave | written | not written (guards) | own leaf | usable | agy checker vs Opus | controls (Opus / agy) |
+|---|---|---|---|---|---|---|
+| p1+p1b | 329 | 211 | 29/30 FAIL | 29/30 | 29/30, 1 FA | 2/2, 2/2 |
+| p2 | 325 | 255 | 30/30 | 30/30 | 30/30 | 2/2, 1/2 |
+| p3 | 638 | 785 | 30/30 | 30/30 | 30/30 | 2/2, 2/2 |
+| p4 | 723 | 802 | 30/30 | 30/30 | 27/30, 3 FA, 0 miss | 2/2, 2/2 |
+| p5 | 1,006 | 505 | 29/30 FAIL | 29/30 | 28/30, 2 FA, 0 miss | 2/2, 2/2 |
+
+Every other defect Opus found was minor: misreads and the odd added word, never a passage.
+
+**The two failures.** p1: page 117 of 69ef286185daccce30f2ca01 had invented Jerome text. A corroboration audit
+found 13 invented reads, all with the agy read_file allow→deny shape. They were reverted
+(revert-run, offleaf-5309-p1-ocr/-p1-tr), re-read (p1fix), and two guards were added: the gate now needs
+corroboration, and a denied image read is refused. p5: R06, Florus p.748, is a blank verso.
+The read transcribed the faint ghost of another index page as print. The agy checker flagged it too. It was
+contained in the same run: the book was held, the page was re-read fresh and came back `blank`, the read was checked by eye
+against the image and applied (`offleaf-5309-fix748-ocr`), and the hold was released. To see whether this was a class, Opus
+then read every written page whose read carries a show-through/offset/mirror warning (53 pages, all waves):
+53/53 own leaf and usable. The brief's stop rule was followed: p6 was not run.
+
+**What the guards refused (2,558 pages).** The largest share is agy answering with a summary of the page
+("Would you like a more detailed summary…") instead of a transcription, on 19th–20th-century English
+books (p3: 164 of 376 refusals in the first five books). Next come cut replies, a second marker,
+denied image reads, and no neighbour corroborating the read. They stay stranded, and none was written.
+
+**Harness bugs found.** `isQuotaError` read a short reply "Page 429 …" as an HTTP 429 and locked the model
+for an hour; fixed, with a unit test. The post-judge prompt clipped the stored text at 6,000 chars, and Opus
+called the clip an omission; the clip is now 30,000 and the two affected verdicts were re-judged.
+
+**Not done.** p6: three books of 465–688 pages (1,683; Buddhism in Translations is likely the djvu
+artifact #5803 found aligned). 43 held books (2,981 pages) are skipped by design. A retry pass over the 2,558 refused pages
+was not run, and English modernisation of the 26,554 withheld English-book pages is #4958's lane.
+
+**Replicated?** The screen held across four production waves (296/297 Opus confirmations). Post checks: 5 waves, 3 passes.
+
+Artifacts: `scripts/eval/results/offleaf-5309-2026-11-08/` (pre, screen-p2…p5, post1…post5, showthru,
+ledger.jsonl.gz). Revert run ids: offleaf-5309-{p1,p1b,p1fix,p2,p3,p4,p5}-{ocr,tr}, offleaf-5309-fix748-ocr.
+
+## 2026-11-08 · Can a write-time check refuse a page holding its neighbour's English without refusing correct pages? (#5026)
+
+PRIOR ART:
+- `scripts/eval/context-bleed-5274/door-refusals.mjs` — the false-refusal count for a door change over a `$sample` of pages; it runs the one-page health check. The neighbour check needs n-1, n+1 and the book's K, so `scripts/eval/neighbour-guard-5026/measure.mjs` reads those per page.
+- `scripts/audit/translation-page-boundaries.mjs` — `sharedRun`, `LEAK_MIN_CHARS` and the source-repeat exemption (moved into the guard module, re-exported by the audit).
+- `scripts/lib/block-page-guard.mjs` `lengthRatioK` / `blockAbsorptions`, `scripts/lib/leaf-shift.mjs` `ABSORB_*` — the length rule, which ran only inside multi-page calls and only forward.
+
+**Who it is for.** A reader of page n+1 who is shown page n's English (Atalanta Fugiens, 21 pairs; L'escole des filles, feedback 6aeff0e1e94c27b5c3c82d3b on #8399). The one-page health check cannot see it: the copy is good English, 1.5–1.9× the OCR, under `isExcess`'s 3×.
+
+**Design.** Each stored page's English is put through `neighbourVerdict` as if it were written again, against its stored neighbours and its book's K. Draw A: 2,992 random pages (`$sample`, translated with OCR), used to tune. Draw B: 2,997 fresh random pages, the rule frozen, out of sample. Every refusal was read blind by an Opus subagent against the two sources and both Englishes: carries neighbour text / otherwise defective / correct. Positive controls: Atalanta's 21 receiving pages as stored before the 2026-09-24 repair (`page_revisions` `anomaly-fix`), and L'escole as stored today.
+
+**Result.**
+
+| set | n | refused | carries neighbour text | otherwise defective | correct (false refusal) |
+|---|---:|---:|---:|---:|---:|
+| draw A, the brief's literal rule | 2,992 | 51 | 18 | 8 | 25 (0.84%) |
+| draw A, final rule (in sample) | 2,992 | 31 | 17 of 18 | 6 | 8 (0.27%) |
+| draw B, final rule (out of sample) | 2,997 | 31 | 15 of 16 | 3 | 13 (0.43%: leak 7, absorb 6) |
+
+- The literal absorption rule (own > 0.5 and the length of two leaves) refused 20 pages in draw A and **none** held the neighbour's text (14 were correct); it now also requires the page to be 0.5 longer than that neighbour's own English. In draw B it refuses 9: 1 real, 2 defective, 6 correct.
+- Leak test: run ≥ 200 chars the sources do not share (the shorter of 200 and half the shorter source, ≥ 40, for title pages), on the side with more English per source character, and either ≥ 30% of the page, or (no K) ≥ 15%, or taking the run out brings the page back toward the book's ratio.
+- Atalanta: **21/21** refused (all `neighbour-leak`). L'escole: **8** refused (pp. 13, 14, 25, 26, 33, 61, 111 leak; 72 absorb). Feedback named 12–14, 25–26, 32–33, 61, 72, 111, 132–133; p.15 passes (its run is shared with p.14, the longer side, which is refused), 132–133 match no signal.
+- Moving `leakNorm` from the audit's bare `/<[^>]+>/g` to `stripMarkupTags` (#5564) drops one draw-B real leak: the bare strip ate text after a `<-` centring marker and made a 593-char run 49% of the page; on the whole text it is 12% and the length test passes it. The correct-page count is unchanged.
+- Side finding: ~0.5% of random stored pages (16/2,997) hold a neighbour's English, mostly FORWARD (n's English runs into n+1's opening). The guard prevents new ones; repairing the stored ones is not in this change.
+
+*Replicated?* Yes for the false-refusal rate: tuned on A, measured on B (0.27% → 0.43%). Labels are one Opus read per page, no second reader.
+
+Artifact: `scripts/eval/neighbour-guard-5026/measure.mjs`; draws and labels in the job scratch (`neighbour-guard-5026`, archived to R2).
+
+## 2026-11-08 · Containment by strip: remove the duplicated passage from the wrong page (#5026)
+
+PRIOR ART:
+- `2026-11-08-leak-repair-5026.md`: the own-leaf re-translation of the same flagged pairs (pilot 384 pages; gate 27/30). This experiment asks whether a $0 text edit can hide the duplicate first.
+- `scripts/lib/neighbour-guard.mjs` `neighbourVerdict` (#8401): the rule for which page carries the neighbour's text, used here as it is.
+- `scripts/maintenance/strip-proquest-stamp.mjs`: the shape of a deterministic edit through `writePageText`.
+
+**Question.** Derek, 2026-11-08: "I really don't want this obvious kind of mistake all over." The re-translation waves reach the 16,589 flagged pairs only over days. Can the duplicate be removed tonight, without a model, by cutting the shared run from the page that does not own it?
+
+**Plan** (`scripts/maintenance/leak-strip-5026.mjs plan`, live Atlas, 2026-11-08 06:46Z). The input was `/tmp/leak-joined-500.jsonl`: 16,589 pairs in 5,542 books.
+
+| outcome | pairs |
+|---|---|
+| planned strip | 7,797 (7,699 pages) |
+| no longer flagged on the live English (re-translated since) | 2,360 |
+| page 0 / soft-hidden neighbour | 1,955 |
+| leaves are one text (OCR token share ≥ 0.5) | 927 |
+| shared English printed on the page (facing/bilingual; English books on both) | 882 |
+| Tibetan / Pali | 833 |
+| rule undecided (neither or both sides refused) | 595 |
+| strip would leave < 20% of exp(K) × source | 576 |
+| cut would split a markup element or page-level block | 333 |
+| withheld | 149 |
+| English book, passage printed on the wrong page | 85 |
+| removed passage would vanish from both pages (chain) | 34 |
+| sources share a run | 33 |
+| runs remain after 4 cuts | 30 |
+
+The planned strips were 5,120 on page N (N+1's text carried back) and 2,677 on page N+1. By stratum: pre07 6,337, en 795, late 309, mid 191, cur 164.
+
+**Edit.** The cut is the longest shared run, widened to whole words. At each edge it was widened further, one sentence fragment at a time, while that fragment's tokens still matched the neighbour's English (share ≥ 0.6). It was snapped to whole `<note>`/`<term>`/centred-line elements, and repeated while a run of 400 or more remained.
+
+**Spot check** (blind sealed `claude -p --model opus`, subscription, 32 calls). The draw was 30 planned strips, one per book, seeded 50264, with books with readers first and no language over 25%. There were 2 planted controls: a planned strip inverted, so that the passage is cut from the page the rule says owns it. The judge saw both scans, both transcriptions, both stored Englishes, the removed passage(s) and the English after the cut.
+
+| result | n |
+|---|---|
+| right (each page only its own text, nothing of the edited page's own removed) | **8 / 30** |
+| incomplete: the cut text was the neighbour's, but more of the neighbour's text stays | 18 |
+| wrong page: the cut removed the edited page's own text (major) | 4 |
+| controls caught | 2 / 2 |
+
+**Why it fails.** The leak is not usually a verbatim copy alone. The neighbour's passage was translated twice, and only the run where the two wordings agree letter for letter is shared. The rest of the copy is a paraphrase: the end of a paragraph, a heading, a footnote run. An exact-match cut leaves it on the page. Five of the 18 incomplete pages have almost no print of their own (a plate, a blank leaf, a heading, under 300 characters of source), so the whole English is the neighbour's. Finding where the page's own text ends needs the page image, or at least a source-to-English alignment, and a text-only edit has neither.
+
+Lengths do not separate the cases either. The log length residual after the cut, `log(en) − K − log(src)`, runs from −0.35 to 0.32 for the right strips. The incomplete ones overlap it at 0.06 to 0.45 and the wrong-page ones at −0.13 to 0.02. So no threshold on the planned set would pass the gate.
+
+**The #8401 rule as a direction call.** On the 30 judged, the removed passage was printed on the neighbour in 26 and on the edited page in 4 (0.87). That is good enough to refuse a new write, which is what the guard does. It is not good enough to cut stored text without a re-read.
+
+**Not done** (gate failed): no page was written, no wave was run and no post-check was made. The `apply`, `redetect`, `post-*` modes are in the script, untested on live writes.
+
+**Detector now** (`redetect --tag=before`, the detector's LEAK test on the live English, 07:10Z). Over the 3,602 books with a planned strip: 1,680,844 consecutive pairs, **21,894 sharing a run ≥ 200** with sources that do not (10,431 ≥ 500), and 3,055 source repeats. Unchanged by this run, so it is the baseline for the waves: `scripts/eval/results/leak-strip-5026/redetect-before.summary.json`.
+
+Files: `scripts/eval/results/leak-strip-5026/` (plan summary and rows, spot sample, verdicts, score). The 15 MB planned-edit list is kept on l7a only, in `$JOB_SCRATCH/plan/plan-edits.jsonl.gz`. book_checks: 30 rows, method `leak-strip-5026` v1, run `leak-strip-5026-spot`.
+
+## 2026-11-08 · Leak repair round 3: the clean Latin and German print slice (#5026)
+
+PRIOR ART:
+- `2026-11-08-leak-repair-5026.md` and `2026-11-08-leak-repair-5026-round2.md`: the pilot and round 2. Both gates failed on mixed slices, from OCR faults and refused re-reads spread over four scripts. Round 2 named the clean Latin/German print slice as the default next step.
+- `scripts/maintenance/wrong-leaf-fix-5021.mjs --issue=5026`, `scripts/eval/leak-repair-5026/pair-judge.mjs` and `ocr-neighbour.mjs`: the same runner, judge and screen. This round adds `slice-frame.mjs` (the cut), `slice-waves.mjs` (gate/wave picker and the era rule) and the seam pass in the runner.
+
+**Question.** Restricted to Latin and German print pages whose OCR is clean against its neighbours, does the own-leaf repair pass the gate (duplicate gone 30/30, usable ≥ 28/30)? And if it does, how much of the leak does it remove at scale?
+
+### 1. Frame
+
+All 16,589 flagged pairs were re-checked on live Atlas (2026-11-08 19:00Z). Cut, step by step:
+
+| step | pairs |
+|---|---|
+| in frame (pair-judge `inFrame`) | 8,481 |
+| not English, Tibetan or Pali | 7,953 |
+| book Latin or German | 5,799 |
+| book print (under 5% of its tagged pages handwritten or mixed) | 4,664 |
+| both pages print | 4,607 |
+| page to repair is Latin or German | 4,586 |
+| OCR-neighbour screen clean on both pages | **4,516** |
+
+That gives 5,474 pages in 1,795 books, and a runner queue of 5,446 (2,385 of them with an unchecked Flash-Lite OCR, re-read from the image first). Page language is the page's own (`ocr.language` / `<lang>`), with the book's as fallback.
+
+### 2. Gates
+
+Route: agy `gemini-3.8-flash-low`, own-leaf, one page per call. The neighbourGate (#8401) and the seam pass (#8417, `edit-before`) are on. Post-check: blind sealed `claude -p --model opus` against the image, on fresh books. Controls are built the round-2 way.
+
+| | gate 1 | gate 2 (era rule) | bar |
+|---|---|---|---|
+| duplicate gone | 29/30 | **30/30** | 30/30 |
+| usable | 25/30 [0.66–0.93] | **29/30 [0.83–0.99]** | ≥ 28/30 |
+| own leaf | 30/30 | 30/30 | |
+| controls caught | 4/4 | 4/4 | all |
+
+Gate 1: three Latin failures are incunabula (1475, 1489, 14uu), each with a reversed or garbled sense. Of the 4 incunabula judged, 3 were unusable, against 2 of the other 26. **Era rule:** books printed before 1501 are left out (631 queue pages, 240 books). The other failures: an invented identification in a note, and a German page whose OCR read the facing page's edge as a margin (contained). Gate 2's one failure is a wrong chronogram date in a translator's note (Latin p.43). That is a quality finding, not wrong-leaf text.
+
+Contained (held `leak-contained-5026`, page withheld): 69c80da5… p.224 and the four stored-leak controls. `book_checks`: 60 rows, runs `leak-repair-5026-post3` and `-post4`.
+
+### 3. Waves
+
+| | wave 1 | wave 2 | wave 3 | total |
+|---|---|---|---|---|
+| pages | 2,004 | 2,001 | 722 | 4,727 |
+| re-translated | 1,793 | 1,804 | 640 | 4,237 |
+| OCR re-read refused | 141 | 139 | 68 | 348 |
+| apply refused | 59 | 44 | 12 | 115 |
+| not translatable / changed | 11 | 14 | 2 | 27 |
+| seam turns written | 502/553 | 572/620 | 195/205 | |
+| detector, slice pairs still flagged (from 4,433) | 2,930 | 1,472 | 913 | |
+
+Refusals, all waves: on the OCR side, letters outside the book's scripts and the 40% shared-words floor make up most of them. On the English side, the door's `absorbs-neighbour` (the neighbourGate working) is the largest group, then "copies the English printed on the page". Books with readers went first.
+
+**Incident:** about 21:00–21:23Z the shared `node_modules` on l7a was reinstalled by another process. 103 books' children failed with `ERR_MODULE_NOT_FOUND` and wrote nothing. Those 715 pages were re-run as `leak-slice-5026-wave1b`.
+
+Quota: `.agy-james` Gemini weekly 68% → 61% (floor 35%) for the gates plus all three waves (OCR re-reads, translations and seam calls), plus 68 sealed Opus calls on the subscription for the gates. No paid API.
+
+### 4. Left, listed (not written)
+
+- `r3-next-era-out.jsonl.gz`: 631 pre-1501 pages in 240 books.
+- `r3-next-ocr-refused.jsonl.gz`: 416 pages in 247 books (all three rounds) whose OCR re-read the agy reader refuses. They still serve leaked English.
+- `r3-next-ocr-dirty-pairs.jsonl.gz`: 70 pairs (51 books) the OCR screen kept out.
+- `r3-next-en-pairs.jsonl.gz`: 1,414 English-book pairs in 512 books (round 2 counted 1,308 on an older frame). There is still no own-leaf route under #5154.
+
+### Reading
+
+Cutting by script and print, plus one era rule, turns a failing repair into a passing one. The remaining faults in the pilot and round 2 sat in OCR and in hard scripts, not in the own-leaf route. At scale the route removed about 80% of the slice's flagged pairs. What is left is the part the gates and guards deliberately keep out.
+
+Results: `scripts/eval/results/leak-repair-5026/r3-*` (gate samples, scores and Opus verdicts; `r3-waves.json`; `r3-ledger.jsonl.gz`; `r3-slice-summary.json`; `r3-next-*`).
+
+## 2026-11-08 · Leak repair: neighbouring-page English duplicated into a page (#5026)
+
+PRIOR ART:
+- `2026-11-04-context-bleed-5274.md`: the own-leaf re-translation route and its 28/30 gate, reused here unchanged (`scripts/batch/cli-translate.mjs --own-leaf` through `scripts/maintenance/wrong-leaf-fix-5021.mjs --issue=5026`).
+- `scripts/audit/translation-page-boundaries.mjs`: the detector. Page N's English shares a run of 500 characters or more with page N+1's English, while their sources do not repeat it.
+- The harness is `scripts/eval/leak-repair-5026/pair-judge.mjs`, with the modes draw, judge, score, refresh, post-draw, post-judge, post-score, agy-judge, agy-score and record. It is extended from `leaf-shift-confirm-5021.mjs` (`fetchLeaf`, `claudeCall`).
+
+**Question.** Of the 16,589 flagged pairs (5,542 books, corpus mirror 2026-11-07), how many really carry a neighbour's English? Does an own-leaf re-translation remove the duplicate without making the page worse? Derek, 2026-11-08: "spot check then fix a set then spot check."
+
+### 1. Spot check (before any write)
+
+**Draw.** 50 pairs, one per book, seeded. The pairs are stratified by month cohort (`pre07`, `mid` 07–09, `late` 10/11 outside the cli lane), by the current cli lane (`cur`), by English books (`en`, prompt 21 modernisation) and by length band (500–999, ≥1000), with languages spread. There are 4 planted controls: 2 made duplicates and 2 clean consecutive pairs.
+
+**Judge.** Blind sealed `claude -p --model opus` on the subscription. It reads both page images, both transcriptions and both Englishes, without truncation. It answers whether N's text is in N+1's English or N+1's in N's, and which page is wrong.
+
+**Two rounds.** Round 1 (`v1` prompt, input as given) found many flags stale: the #5274 repair of 2026-11-04 had already rewritten the current-lane pages. In round 2, the frame was re-detected on the live English first (`refresh`). Pairs whose shape has a legitimate cause were taken out: a near-blank leaf, a duplicated scan, English printed on the page, a human edit, a withheld page. The v2 prompt is symmetric.
+
+| stratum | n | real duplicate | precision [95% CI] |
+|---|---|---|---|
+| all | 50 | 44 | 0.88 [0.76–0.94] |
+| cur (cli lane) | 10 | 7 | 0.70 [0.40–0.89] **left out** |
+| en (prompt 21) | 10 | 10 | 1.00 [0.72–1.00] |
+| pre07 | 12 | 11 | 0.92 [0.65–0.99] |
+| mid | 8 | 8 | 1.00 [0.68–1.00] |
+| late | 10 | 8 | 0.80 [0.49–0.94] |
+| band 500–999 | 25 | 20 | 0.80 [0.61–0.91] |
+| band ≥1000 | 25 | 24 | 0.96 [0.80–0.99] |
+
+Controls: 4/4. Which page is wrong: N 29, N+1 15. So in most pairs it is page N that carries N+1's opening (the #5021 forward shape), not N+1 carrying N's continuity English. The repair re-translates by position. A run at the head of N is a leak and N+1 is wrong. Identical or forward runs make N wrong. Unclear runs make both wrong.
+
+**The current lane does not leak in this sample.** Its 3 misses are refrains printed twice (2 Tibetan, 1 Pali). The other 7 `cur` hits were all page N wrong (forward). Tibetan and Pali are left out of the repair frame (4 of the 6 misses). This was posted on #8399.
+
+**agy as a judge** (Derek's inbox note, 05:19Z). The same 54 sealed prompts, with both images, were sent to agy `gemini-3.8-flash-low`. Flash-medium was asked for, but the only pool with a login on this box is pinned to flash-low. Agreement with Opus on duplicate yes/no is 50/50 (1.00 [0.93–1.00]), and every stratum is 1.00. On which page is wrong, agy and Opus agree on 43 of the 44 duplicates. Both made duplicates were caught, but agy flagged one clean control (P48): a verse sentence that runs across the page break, two lines long. The note's rule needs every control caught, so agy is **not** adopted as the per-wave check. A medium-effort rerun needs a pool that can run it.
+
+### 2. Pilot (493 pages, 202 books)
+
+The repair frame after round 2 is 8,399 pairs, which give 10,457 pages in 3,683 books (2,902 of those pages are in books with readers). The pilot queue was 493 pages, books with readers first, *L'escole des filles* included. Each page was re-translated one call at a time from its own transcription, with no neighbouring English. The writes went through the write door, with run id `leak-repair-5026-pilot` and `-pilot-ocr` for OCR re-reads. The neighbour guard (#8401) had not merged, so it was off.
+
+| outcome | pages |
+|---|---|
+| re-translated | 384 |
+| not translatable: English book or English page (the cli reader skips English) | 40 |
+| not translatable: other (unsplit book 3, no body 2, skip type 3, illegible 1) | 9 |
+| OCR re-read refused under the guards (English kept) | 48 |
+| write refused (a kept read copying printed English) | 12 |
+
+The OCR re-reads wrote 82 pages.
+
+**The `en` stratum is not repairable on this route.** Its precision was 10/10, but `cli-translate.mjs` skips English books. Those pages need the modernisation prompt, run own-leaf.
+
+**Detector after the pilot** (`refresh` on the 202 books, compared with the frame before): every one of the 304 in-frame pairs with a re-translated page leaves the frame, and none is still flagged. The 82 pairs still flagged are pairs where no page was fixed: not translatable 38, OCR refused 37, write refused 7.
+
+### 3. Spot check after the pilot (FAIL)
+
+The draw was 30 re-translated pages, one per book, spread over languages. The blind Opus judge read each page against its image, together with the neighbour that its duplicate came from. The harness was fixed for this round: v1 of post-draw always compared a page with the previous one, but 2/3 of the repaired pages are page N, whose duplicate came from the next page. There were 4 controls: 2 made duplicates and 2 unrepaired flagged pages.
+
+| measure | result | gate |
+|---|---|---|
+| duplicate gone | 29/30 | 30/30 ✗ |
+| usable | 27/30 [0.74–0.97] | ≥ 28/30 ✗ |
+| renders its own leaf | 29/30 | |
+| defects | major: 3 mistranslated, 2 invented. minor: 24 mistranslated, 9 omitted, 5 invented, 15 other | |
+
+The three failures:
+- **Q32**, Hebrew Bible (69c1ba97…, p.494). The English renders Isaiah 63:7–64:10a, which is printed on p.493. **The OCR of p.494 holds that text** (`אך עמי המה`), so the re-translation renders its own OCR faithfully. The fault is in the OCR, and an own-leaf re-translation cannot repair it. Contained: the book is held (`leak-contained-5026`) and p.494 is withheld.
+- **Q28**, Chinese (69935b6f…, p.7). One gloss cell is page 8's text showing through the paper, and the OCR transcribes it as a gloss. The rest of the page is its own leaf. This is a finding about the OCR, not a containment.
+- **Q02**, Latin (69b3e607…, p.71), a heavily abbreviated scholastic dialogue. Three major mistranslations, for example *dicta* read as *divina*. This is a quality failure of Flash-low on a hard page.
+
+Controls:
+- Q31 (made duplicate) and Q14 (a stored leak) were caught. Q14, Greek Sophocles p.32, mainly renders p.31. It is contained: the book is held and the page withheld.
+- Q24 (made duplicate) was judged not usable, with "invented major", but not as a duplicate. The planted text was its neighbour's English, and that English is itself junk ("severely faded", 17 lines of `<unclear>`). The judge saw the block and called it invented rather than the neighbour's.
+- Q08 (stored leak) was judged clean. Its pair is a forward one, where the wrong page is N, and the control asked about N+1. This control was built wrong.
+
+### Reading
+
+The detector's flags are real at 0.88, and the own-leaf route removes the duplication: 29/30 judged pages, and every one of the 304 re-translated pairs leaves the detector. The gate fails on what the re-translation inherits. Two of the three failing pages carry a fault in their own OCR, and one is a hard page the lite model mistranslates. These pages served another page's English before the repair, so the pilot is **kept**. Revert is `scripts/maintenance/revert-run.mjs leak-repair-5026-pilot` (and `-pilot-ocr`).
+
+**Not done, and why.**
+- **The waves** (about 10,000 pages). The gate failed, and the brief says stop. The next run should screen each page's OCR against its neighbour's OCR before it re-translates (the `skip-ocr-neighbour` state in the runner), then gate again.
+- **English books** (the `en` stratum, about 1,300 pairs). They need an own-leaf modernisation route.
+- **Tibetan and Pali**, where the detector over-flags refrains printed twice.
+
+Quota: about 509 agy Flash-low calls on `.agy-james` for the pilot (re-translations and OCR re-reads), 54 agy calls for the judge comparison, and 54 + 54 + 34 sealed Opus calls on the subscription. No paid API was used.
+
+Results: `scripts/eval/results/leak-repair-5026/`. That folder holds `spot-*` (round 2, sample, Opus and agy verdicts, scores), `pilot-*` (ledger, progress, re-detect) and `post-*`. The verdicts are in `book_checks` under method `leak-repair-5026`: 50 round-2 pairs and 30 post-check pages.
+
+## 2026-11-08 · Leak repair round 2: OCR-neighbour screen, then re-gate (#5026)
+
+PRIOR ART:
+- `2026-11-08-leak-repair-5026.md`: the pilot. Its gate failed on the page's own OCR (Hebrew p.494, Chinese show-through), and it named an OCR check against the neighbours as next step 1. This round adds that check and runs the gate again.
+- `scripts/eval/leak-repair-5026/pair-judge.mjs` and `scripts/maintenance/wrong-leaf-fix-5021.mjs --issue=5026`: the same runner and judge as the pilot, extended.
+
+**Question.** If each page's OCR is checked against its neighbours' OCR first, and pages whose OCR holds a neighbour's text are re-read from the image, does the own-leaf repair pass the gate? The gate: duplicate gone 30/30 and usable ≥ 28/30.
+
+### 1. The OCR-neighbour screen
+
+`scripts/eval/leak-repair-5026/ocr-neighbour.mjs`. Tokens are Han or kana characters, otherwise words (combining marks kept; Latin, Greek, Hebrew and Arabic marks folded). It builds 4-token shingles that occur once on page n, and finds the longest covered run against page n−1 and page n+1, allowing gaps of up to 3. A page is flagged `ocr_dup` when that run is at least 20 words or 12 CJK characters.
+
+| set | pages | flagged |
+|---|---|---|
+| the pilot's two known OCR failures | 2 | 2 (Hebrew run 269 against p.493; Chinese run 15 against p.8) |
+| repair frame | 10,457 | 336 (3.2%) |
+| random translated pages | 2,385 | 128. 94 are Tibetan (formulaic text), 34 are not (1.4%) |
+
+Many of the 34 random hits are really repeated: duplicate scans (share about 0.99) and Pali refrains. So the screen routes a page to an image re-read. It is not used as a leak verdict.
+
+In the runner (`P5026` in `doBook`), each page's OCR is screened live. A flagged page gets an OCR re-read through `cli-ocr` with all its guards on, and that re-read must be written in this run. The page is then screened again. If it still holds the neighbour's text, it ends as `ocr-neighbour-persists` and is not translated. If the re-read is refused, it ends as `ocr-refused`, with the reason.
+
+### 2. Gate run (44 books, one page each)
+
+Run id `leak-repair-5026-r2-gate` (OCR re-reads: `leak-repair-5026-r2-gate-ocr`). 8 OCR-flagged pages were picked on purpose.
+
+| outcome | pages |
+|---|---|
+| re-translated | 32 |
+| OCR re-read refused: Flash-Lite draft under the 40% floor | 5 |
+| OCR re-read refused on an OCR-flagged page (40% floor, or handwritten/mixed script under `--print-only`) | 6 of 8 |
+| re-read still holds the neighbour's passage (`ocr-neighbour-persists`) | 1 of 8 |
+
+Only 1 of the 8 OCR-flagged pages reached re-translation. Under its guards, the screen's remedy (an agy image re-read) mostly refuses. Those pages keep their stored English, and that English is a known leak. A second batch of 12 books was not run, because the only agy pool with a login (`.agy-james`) was taken by another job.
+
+### 3. Post-check (FAIL)
+
+30 re-translated pages, one per book, from books not used in the pilot's post-check. A blind sealed `claude -p --model opus` judge read each page against its image and the neighbour its duplicate came from. The controls were rebuilt:
+- A made duplicate is planted only from a neighbour with real English: a body of at least 800 characters, and no unclear, illegible or faded markers. In the pilot, the Q24 control was junk.
+- A stored-leak control is taken from a pair judged a real duplicate in the spot check. It must be the page found wrong, unchanged since then, and the control asks about that page. In the pilot, Q08 asked about the wrong page.
+
+| measure | result | gate |
+|---|---|---|
+| duplicate gone | 29/30 | 30/30 ✗ |
+| usable | 24/30 [0.63–0.90] | ≥ 28/30 ✗ |
+| renders its own leaf | 28/30 | |
+| controls caught | 4/4 (2 made duplicates, 2 stored leaks) | all |
+
+The six failures:
+- **OCR, 3.** Q04, a Hebrew cursive manuscript, p.1: the OCR invented Syriac. Q29, Reg.gr.80, p.141: the OCR wrote Maximus "from memory". Q20, Latin, 6a0850d3…, p.38: the OCR read the edge of the facing p.37 as a margin, so the duplicate stays.
+- **Engine, 3.** Q13, Latin, 6952d19c…, p.92: the closing sentence is left out. Q33, Greek, 69b2f437…, p.720: a major mistranslation. Q27, Chinese, 6a1d81b4…, p.308: three major mistranslations in a dense commentary.
+
+The failures fall on four scripts, so leaving out one slice would not pass the gate. **Pilot and round 2 together:** usable 51/60. The faults are OCR on 5/60 and engine on 4/60. Before the repair, every one of these pages served another page's English.
+
+**Contained** (by eye, in the same run): the books 69c1bf28 (Kabbalistic text), 6953ae81 (PGM) and 6a2032bf (Qur'an juz, Or.7092) are held with `leak-contained-5026`. Reg.gr.80 (69a5e3d8) was already held (`ocr-unsettled-6420`). The withheld pages are 69c1bf28 p.1, 69a5e3d8 p.141, 6953ae81 p.116 (the Q15 control) and 6a2032bf p.8 (the Q18 control). Q20 is not contained: the bulk of that page is its own leaf, like the pilot's Chinese show-through.
+
+The 30 verdicts are recorded in `book_checks` under method `leak-repair-5026`, round `post`.
+
+### 4. English books
+
+There are 1,308 flagged pairs in 481 books (`en-books-list.jsonl.gz`): 109 books (311 pairs) printed before 1820, and 372 books (997 pairs) from 1820 on or undated. **No own-leaf modernisation route exists.** The #5154 policy has every writer refuse English books (`sameLanguageReason` in translate-core; `cli-translate` skips them). The reader always shows the transcription for these books (`TranslationEditor.tsx:666`), so the leaked modernisation sits one toggle away.
+
+### Reading
+
+The screen finds the OCR fault it was built for. But the remedy, an agy image re-read under the existing guards, refuses most of the pages it is sent. Meanwhile, the post-check found a second set of OCR faults (invented script, text written "from memory", a facing-page margin) that do not show up as a match with a neighbour. The engine errors (about 4/60) are what Flash-low does on hard pages, and they spread across scripts. The own-leaf route still removes the duplicate (58/60 over both rounds), so the gate is failing on page quality the repair inherits, not on the leak itself.
+
+**Not done.** The waves (about 9,700 queued pages in 3,355 books), because the gate failed. The second gate batch, because the pool was busy. English books, which have no route.
+
+Quota: about 50 agy Flash-low calls on `.agy-james` (32 translations and 13 OCR re-reads, some retried) and 34 sealed Opus calls on the subscription. No paid API was used.
+
+Results: `scripts/eval/results/leak-repair-5026/r2-*` and `en-books-list.jsonl.gz`.
+
 ## 2026-11-07 · After the split, is each repaired work_id route under about 2% different-work clusters? (#8293)
 <!-- PRIOR ART: 2026-11-07-work-id-overmerge-audit-8291.md (the first measure, same instrument) and 2026-11-07-work-id-split-census-8293.md (the census and split list); overmerge-audit.mjs is reused unchanged. -->
 

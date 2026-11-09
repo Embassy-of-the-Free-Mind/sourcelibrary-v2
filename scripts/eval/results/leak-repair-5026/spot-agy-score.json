@@ -1,0 +1,105 @@
+{
+ "judge": "gemini-3.8-flash-low",
+ "unjudged": [],
+ "by_stratum": {
+  "all": {
+   "n": 50,
+   "agree": 50,
+   "false_alarm": 0,
+   "miss": 0,
+   "same_page": 43,
+   "rate": 1,
+   "ci95": [
+    0.93,
+    1
+   ]
+  },
+  "late": {
+   "n": 10,
+   "agree": 10,
+   "false_alarm": 0,
+   "miss": 0,
+   "same_page": 8,
+   "rate": 1,
+   "ci95": [
+    0.72,
+    1
+   ]
+  },
+  "cur": {
+   "n": 10,
+   "agree": 10,
+   "false_alarm": 0,
+   "miss": 0,
+   "same_page": 7,
+   "rate": 1,
+   "ci95": [
+    0.72,
+    1
+   ]
+  },
+  "mid": {
+   "n": 8,
+   "agree": 8,
+   "false_alarm": 0,
+   "miss": 0,
+   "same_page": 8,
+   "rate": 1,
+   "ci95": [
+    0.68,
+    1
+   ]
+  },
+  "en": {
+   "n": 10,
+   "agree": 10,
+   "false_alarm": 0,
+   "miss": 0,
+   "same_page": 10,
+   "rate": 1,
+   "ci95": [
+    0.72,
+    1
+   ]
+  },
+  "pre07": {
+   "n": 12,
+   "agree": 12,
+   "false_alarm": 0,
+   "miss": 0,
+   "same_page": 10,
+   "rate": 1,
+   "ci95": [
+    0.76,
+    1
+   ]
+  }
+ },
+ "controls": [
+  {
+   "key": "P09",
+   "control": "made-dup",
+   "agy": "dup",
+   "caught": true
+  },
+  {
+   "key": "P27",
+   "control": "made-dup",
+   "agy": "dup",
+   "caught": true
+  },
+  {
+   "key": "P48",
+   "control": "clean",
+   "agy": "dup",
+   "caught": false
+  },
+  {
+   "key": "P49",
+   "control": "clean",
+   "agy": "clean",
+   "caught": true
+  }
+ ],
+ "pass": false
+}

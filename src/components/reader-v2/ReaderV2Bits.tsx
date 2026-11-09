@@ -9,6 +9,8 @@ import { displayPublished } from '@/lib/publication-date';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '@/lib/page-frame';
+import { pageImageFrame } from '@/lib/framed-image';
+import FramedImg from '@/components/FramedImg';
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
 import { transcriptProvenance, transcriptProvenanceLabel, textProducedAt, datedProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
@@ -534,6 +536,25 @@ export const SCAN_ZOOM_STEPS = [
 export const SCAN_ZOOM_MAX = 6;
 
 const LENS_SIZE = 220;
+
+/**
+ * The scan's look during a page turn. While the previous page's picture is
+ * still on screen it is blurred and dimmed, after a short delay so a cached or
+ * fast image never flickers; the new scan comes in sharp, at once.
+ */
+function scanTurnStyle(stale: boolean, brightness: number | undefined, covered = false): React.CSSProperties {
+  const bright = brightness ? `brightness(${brightness})` : '';
+  // The new page's thumbnail is showing in its place: hide the old scan
+  // outright, so its outline cannot ghost behind a differently shaped page.
+  if (stale && covered) return { filter: bright || undefined, opacity: 0, transition: 'none' };
+  return stale
+    ? {
+        filter: `${bright} blur(8px) grayscale(0.4)`.trim(),
+        opacity: 0.45,
+        transition: 'filter 250ms ease 150ms, opacity 250ms ease 150ms',
+      }
+    : { filter: bright || undefined, opacity: 1, transition: 'none' };
+}
 const LENS_MAG_MIN = 1.5;
 const LENS_MAG_MAX = 6;
 
@@ -633,7 +654,27 @@ export function ScanViewer({
     const s = Math.min(c.clientWidth / n.w, c.clientHeight / n.h);
     setFit({ w: Math.max(1, Math.round(n.w * s)), h: Math.max(1, Math.round(n.h * s)), frame: appliedFrame.current });
   };
+  // Which page's scan is actually painted. The <img> is reused across page
+  // turns, and a browser keeps showing the OLD picture until the new src has
+  // fully downloaded — on a slow connection the new text sat beside the
+  // previous page's scan for seconds, reading as the wrong image. While the
+  // two disagree the old scan is blurred and dimmed (see `staleScan`), so it
+  // reads as "loading", not as this page. null until the first image lands:
+  // a landing has no old picture to disguise.
+  const [paintedFor, setPaintedFor] = useState<string | null>(null);
+  const staleScan = paintedFor !== null && paintedFor !== page.id;
+  // Progressive turn: while the new scan downloads, show the NEW page's
+  // 150px thumbnail scaled up to page size. The page strip has usually
+  // fetched it already, so the right page appears at once, soft, and
+  // sharpens when the full scan lands. Until the thumbnail itself is in, the
+  // blurred old scan stays as the fallback. Not while zoomed: the placeholder
+  // fills the pane at 100% and would not line up with a zoomed page.
+  const thumbSrc = srcOverride ? null : resolved.thumb;
+  const [thumbReady, setThumbReady] = useState<string | null>(null);
+  const showThumb = staleScan && !!thumbSrc && zoom <= 1;
+  const thumbShown = showThumb && thumbReady === thumbSrc;
   const takeNatural = (nw: number, nh: number) => {
+    setPaintedFor(page.id);
     const f = frameForImage(storedFrame, nw, nh);
     appliedFrame.current = f;
     natural.current = f ? { w: nw * f.w, h: nh * f.h } : { w: nw, h: nh };
@@ -1051,7 +1092,7 @@ export function ScanViewer({
               src={src}
               alt={alt}
               draggable={false}
-              onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
+              onError={() => { if (src === native && native !== display) setNativeFailed(native); else setPaintedFor(page.id); }}
               onLoad={e => {
                 const el = e.currentTarget;
                 takeNatural(el.naturalWidth, el.naturalHeight);
@@ -1059,7 +1100,7 @@ export function ScanViewer({
               className="absolute max-w-none"
               style={{
                 ...framedImageBox(fit.w, fit.h, fit.frame),
-                filter: brightness ? `brightness(${brightness})` : undefined,
+                ...scanTurnStyle(staleScan, brightness, thumbShown),
               }}
             />
           </div>
@@ -1070,7 +1111,7 @@ export function ScanViewer({
             src={src}
             alt={alt}
             draggable={false}
-            onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
+            onError={() => { if (src === native && native !== display) setNativeFailed(native); else setPaintedFor(page.id); }}
             onLoad={e => {
               const el = e.currentTarget;
               takeNatural(el.naturalWidth, el.naturalHeight);
@@ -1086,11 +1127,31 @@ export function ScanViewer({
               // slide out of step with it and read as a wobble.
               willChange: 'transform',
               boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
-              filter: brightness ? `brightness(${brightness})` : undefined,
+              ...scanTurnStyle(staleScan, brightness, thumbShown),
             }}
           />
         )}
       </div>
+      {showThumb && thumbSrc && (
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{ opacity: thumbShown ? 1 : 0 }}>
+          <FramedImg
+            key={thumbSrc}
+            frame={pageImageFrame(page as unknown as Parameters<typeof pageImageFrame>[0], thumbSrc)}
+            fit="contain"
+            src={thumbSrc}
+            alt=""
+            draggable={false}
+            decoding="async"
+            // Ahead of the neighbour-scan warm-ups sharing a slow link.
+            fetchPriority="high"
+            onLoad={() => setThumbReady(thumbSrc)}
+            className="absolute inset-0 h-full w-full object-contain"
+            // A 150px image blown up to page size: a touch of blur hides the
+            // JPEG blocks so it reads as "coming into focus", not as damage.
+            style={{ filter: `${brightness ? `brightness(${brightness}) ` : ''}blur(1.5px)` }}
+          />
+        </div>
+      )}
       {lens && lensOn && !zoomed && (
         <div
           aria-hidden="true"

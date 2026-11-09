@@ -1,0 +1,4135 @@
+{
+ "build": {
+  "at": "2026-11-08T04:17:05.549Z",
+  "seams5103": 60,
+  "leak": 30,
+  "leakFrameBooks": 10662,
+  "leakScannedBooks": 97,
+  "leakPairs": 19983,
+  "leakFlags": 140,
+  "books": 39,
+  "languages": {
+   "Latin": 74,
+   "German": 16
+  },
+  "seamPos": {
+   "0": 3,
+   "1": 85,
+   "2": 2
+  },
+  "skipped": [
+   {
+    "origin": "5103",
+    "book": "69b6304e1c1c21a3738009c8",
+    "N": 51,
+    "why": "no 4-page prose block"
+   },
+   {
+    "origin": "5103",
+    "book": "69b630c31c1c21a373804063",
+    "N": 83,
+    "why": "no 4-page prose block"
+   },
+   {
+    "origin": "5103",
+    "book": "69b631fb1c1c21a37380c13a",
+    "N": 30,
+    "why": "no 4-page prose block"
+   },
+   {
+    "origin": "leak",
+    "book": "6970e36e9b09d309d780a292",
+    "N": 53,
+    "why": "no 4-page prose block"
+   }
+  ],
+  "dense": {
+   "at": "2026-11-08T04:33:21.645Z",
+   "kept": 30,
+   "scannedBooks": 102,
+   "booksWithDenseRun": 39,
+   "denseChars": 3000,
+   "blockChars": 8000,
+   "strata": {
+    "ordinary": 81,
+    "dense": 39
+   },
+   "languages": {
+    "German": 6,
+    "Latin": 23,
+    "ger": 1
+   }
+  }
+ },
+ "model": "gemini-3.8-flash-low",
+ "prereg": "scripts/eval/PREREGISTRATION-seam-markers-8399.md",
+ "n": {
+  "rows": 120,
+  "judgeCallsParsed": 480
+ },
+ "T": {
+  "A": {
+   "def100": 12.5,
+   "ci": [
+    7.7,
+    19.6
+   ],
+   "defects": 15,
+   "majors": 1,
+   "labels": {
+    "omission": 1,
+    "duplication": 3,
+    "drift": 3,
+    "broken_syntax": 5,
+    "catchword": 2,
+    "other": 2
+   }
+  },
+  "A2": {
+   "def100": 9.2,
+   "ci": [
+    5.2,
+    15.7
+   ],
+   "defects": 11,
+   "majors": 1,
+   "labels": {
+    "omission": 1,
+    "duplication": 4,
+    "drift": 1,
+    "broken_syntax": 5,
+    "catchword": 1,
+    "other": 1
+   }
+  },
+  "B4": {
+   "def100": 11.7,
+   "ci": [
+    7.1,
+    18.6
+   ],
+   "defects": 14,
+   "majors": 4,
+   "labels": {
+    "omission": 5,
+    "duplication": 2,
+    "drift": 1,
+    "broken_syntax": 6,
+    "catchword": 1,
+    "other": 1
+   }
+  },
+  "Bb": {
+   "def100": 21.7,
+   "ci": [
+    15.2,
+    29.9
+   ],
+   "defects": 26,
+   "majors": 7,
+   "labels": {
+    "omission": 4,
+    "duplication": 6,
+    "drift": 0,
+    "broken_syntax": 15,
+    "catchword": 4,
+    "other": 2
+   }
+  },
+  "C": {
+   "def100": 6.7,
+   "ci": [
+    3.4,
+    12.6
+   ],
+   "defects": 8,
+   "majors": 2,
+   "labels": {
+    "omission": 2,
+    "duplication": 1,
+    "drift": 0,
+    "broken_syntax": 4,
+    "catchword": 2,
+    "other": 2
+   }
+  }
+ },
+ "S": {
+  "A": {
+   "def100": 37.5,
+   "ci": [
+    29.4,
+    46.4
+   ],
+   "defects": 45,
+   "majors": 12,
+   "labels": {
+    "omission": 9,
+    "duplication": 14,
+    "drift": 1,
+    "broken_syntax": 18,
+    "catchword": 13,
+    "other": 5
+   }
+  },
+  "A2": {
+   "def100": 36.7,
+   "ci": [
+    28.6,
+    45.6
+   ],
+   "defects": 44,
+   "majors": 11,
+   "labels": {
+    "omission": 8,
+    "duplication": 16,
+    "drift": 1,
+    "broken_syntax": 15,
+    "catchword": 14,
+    "other": 6
+   }
+  },
+  "B4": {
+   "def100": 44.2,
+   "ci": [
+    35.6,
+    53.1
+   ],
+   "defects": 53,
+   "majors": 14,
+   "labels": {
+    "omission": 12,
+    "duplication": 15,
+    "drift": 1,
+    "broken_syntax": 27,
+    "catchword": 16,
+    "other": 5
+   }
+  },
+  "Bb": {
+   "def100": 42.5,
+   "ci": [
+    34,
+    51.4
+   ],
+   "defects": 51,
+   "majors": 12,
+   "labels": {
+    "omission": 10,
+    "duplication": 16,
+    "drift": 1,
+    "broken_syntax": 22,
+    "catchword": 15,
+    "other": 5
+   }
+  },
+  "C": {
+   "def100": 15,
+   "ci": [
+    9.7,
+    22.5
+   ],
+   "defects": 18,
+   "majors": 7,
+   "labels": {
+    "omission": 7,
+    "duplication": 6,
+    "drift": 1,
+    "broken_syntax": 4,
+    "catchword": 5,
+    "other": 5
+   }
+  }
+ },
+ "byOrigin": {
+  "5103": {
+   "n": 60,
+   "T": {
+    "A": {
+     "def100": 8.3,
+     "ci": [
+      3.6,
+      18.1
+     ],
+     "defects": 5,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 3,
+      "catchword": 1,
+      "other": 0
+     }
+    },
+    "A2": {
+     "def100": 8.3,
+     "ci": [
+      3.6,
+      18.1
+     ],
+     "defects": 5,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 5,
+      "catchword": 0,
+      "other": 0
+     }
+    },
+    "B4": {
+     "def100": 10,
+     "ci": [
+      4.7,
+      20.1
+     ],
+     "defects": 6,
+     "majors": 1,
+     "labels": {
+      "omission": 2,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 4,
+      "catchword": 0,
+      "other": 0
+     }
+    },
+    "Bb": {
+     "def100": 3.3,
+     "ci": [
+      0.9,
+      11.4
+     ],
+     "defects": 2,
+     "majors": 2,
+     "labels": {
+      "omission": 2,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 0,
+      "catchword": 0,
+      "other": 0
+     }
+    },
+    "C": {
+     "def100": 1.7,
+     "ci": [
+      0.3,
+      8.9
+     ],
+     "defects": 1,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 0,
+      "catchword": 0,
+      "other": 0
+     }
+    }
+   },
+   "S": {
+    "A": {
+     "def100": 36.7,
+     "ci": [
+      25.6,
+      49.3
+     ],
+     "defects": 22,
+     "majors": 5,
+     "labels": {
+      "omission": 3,
+      "duplication": 7,
+      "drift": 1,
+      "broken_syntax": 10,
+      "catchword": 5,
+      "other": 1
+     }
+    },
+    "A2": {
+     "def100": 36.7,
+     "ci": [
+      25.6,
+      49.3
+     ],
+     "defects": 22,
+     "majors": 5,
+     "labels": {
+      "omission": 3,
+      "duplication": 9,
+      "drift": 1,
+      "broken_syntax": 9,
+      "catchword": 5,
+      "other": 1
+     }
+    },
+    "B4": {
+     "def100": 45,
+     "ci": [
+      33.1,
+      57.5
+     ],
+     "defects": 27,
+     "majors": 6,
+     "labels": {
+      "omission": 5,
+      "duplication": 8,
+      "drift": 1,
+      "broken_syntax": 15,
+      "catchword": 8,
+      "other": 1
+     }
+    },
+    "Bb": {
+     "def100": 45,
+     "ci": [
+      33.1,
+      57.5
+     ],
+     "defects": 27,
+     "majors": 5,
+     "labels": {
+      "omission": 4,
+      "duplication": 9,
+      "drift": 1,
+      "broken_syntax": 13,
+      "catchword": 7,
+      "other": 1
+     }
+    },
+    "C": {
+     "def100": 13.3,
+     "ci": [
+      6.9,
+      24.2
+     ],
+     "defects": 8,
+     "majors": 2,
+     "labels": {
+      "omission": 2,
+      "duplication": 3,
+      "drift": 1,
+      "broken_syntax": 1,
+      "catchword": 3,
+      "other": 1
+     }
+    }
+   }
+  },
+  "leak": {
+   "n": 30,
+   "T": {
+    "A": {
+     "def100": 20,
+     "ci": [
+      9.5,
+      37.3
+     ],
+     "defects": 6,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 1,
+      "drift": 3,
+      "broken_syntax": 0,
+      "catchword": 1,
+      "other": 1
+     }
+    },
+    "A2": {
+     "def100": 16.7,
+     "ci": [
+      7.3,
+      33.6
+     ],
+     "defects": 5,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 3,
+      "drift": 1,
+      "broken_syntax": 0,
+      "catchword": 1,
+      "other": 1
+     }
+    },
+    "B4": {
+     "def100": 26.7,
+     "ci": [
+      14.2,
+      44.4
+     ],
+     "defects": 8,
+     "majors": 3,
+     "labels": {
+      "omission": 3,
+      "duplication": 2,
+      "drift": 1,
+      "broken_syntax": 2,
+      "catchword": 1,
+      "other": 1
+     }
+    },
+    "Bb": {
+     "def100": 26.7,
+     "ci": [
+      14.2,
+      44.4
+     ],
+     "defects": 8,
+     "majors": 2,
+     "labels": {
+      "omission": 1,
+      "duplication": 2,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 3,
+      "other": 2
+     }
+    },
+    "C": {
+     "def100": 16.7,
+     "ci": [
+      7.3,
+      33.6
+     ],
+     "defects": 5,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 2,
+      "other": 2
+     }
+    }
+   },
+   "S": {
+    "A": {
+     "def100": 46.7,
+     "ci": [
+      30.2,
+      63.9
+     ],
+     "defects": 14,
+     "majors": 7,
+     "labels": {
+      "omission": 6,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 5,
+      "catchword": 4,
+      "other": 4
+     }
+    },
+    "A2": {
+     "def100": 36.7,
+     "ci": [
+      21.9,
+      54.5
+     ],
+     "defects": 11,
+     "majors": 6,
+     "labels": {
+      "omission": 5,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 3,
+      "catchword": 4,
+      "other": 4
+     }
+    },
+    "B4": {
+     "def100": 50,
+     "ci": [
+      33.2,
+      66.8
+     ],
+     "defects": 15,
+     "majors": 8,
+     "labels": {
+      "omission": 7,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 6,
+      "catchword": 4,
+      "other": 4
+     }
+    },
+    "Bb": {
+     "def100": 43.3,
+     "ci": [
+      27.4,
+      60.8
+     ],
+     "defects": 13,
+     "majors": 7,
+     "labels": {
+      "omission": 6,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 4,
+      "catchword": 4,
+      "other": 4
+     }
+    },
+    "C": {
+     "def100": 23.3,
+     "ci": [
+      11.8,
+      40.9
+     ],
+     "defects": 7,
+     "majors": 5,
+     "labels": {
+      "omission": 5,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 1,
+      "catchword": 1,
+      "other": 4
+     }
+    }
+   }
+  },
+  "dense": {
+   "n": 30,
+   "T": {
+    "A": {
+     "def100": 13.3,
+     "ci": [
+      5.3,
+      29.7
+     ],
+     "defects": 4,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 0,
+      "other": 1
+     }
+    },
+    "A2": {
+     "def100": 3.3,
+     "ci": [
+      0.6,
+      16.7
+     ],
+     "defects": 1,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 0,
+      "catchword": 0,
+      "other": 0
+     }
+    },
+    "B4": {
+     "def100": 0,
+     "ci": [
+      0,
+      11.4
+     ],
+     "defects": 0,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 0,
+      "catchword": 0,
+      "other": 0
+     }
+    },
+    "Bb": {
+     "def100": 53.3,
+     "ci": [
+      36.1,
+      69.8
+     ],
+     "defects": 16,
+     "majors": 3,
+     "labels": {
+      "omission": 1,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 13,
+      "catchword": 1,
+      "other": 0
+     }
+    },
+    "C": {
+     "def100": 6.7,
+     "ci": [
+      1.8,
+      21.3
+     ],
+     "defects": 2,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 0,
+      "other": 0
+     }
+    }
+   },
+   "S": {
+    "A": {
+     "def100": 30,
+     "ci": [
+      16.7,
+      47.9
+     ],
+     "defects": 9,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 3,
+      "catchword": 4,
+      "other": 0
+     }
+    },
+    "A2": {
+     "def100": 36.7,
+     "ci": [
+      21.9,
+      54.5
+     ],
+     "defects": 11,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 3,
+      "catchword": 5,
+      "other": 1
+     }
+    },
+    "B4": {
+     "def100": 36.7,
+     "ci": [
+      21.9,
+      54.5
+     ],
+     "defects": 11,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 6,
+      "catchword": 4,
+      "other": 0
+     }
+    },
+    "Bb": {
+     "def100": 36.7,
+     "ci": [
+      21.9,
+      54.5
+     ],
+     "defects": 11,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 5,
+      "catchword": 4,
+      "other": 0
+     }
+    },
+    "C": {
+     "def100": 10,
+     "ci": [
+      3.5,
+      25.6
+     ],
+     "defects": 3,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 1,
+      "other": 0
+     }
+    }
+   }
+  }
+ },
+ "lane": {
+  "A": {
+   "def100": 18.8,
+   "ci": [
+    14,
+    23.8
+   ]
+  },
+  "A2": {
+   "def100": 16,
+   "ci": [
+    12.1,
+    20.4
+   ]
+  },
+  "B4": {
+   "def100": 19.8,
+   "ci": [
+    15,
+    25
+   ]
+  },
+  "Bb": {
+   "def100": 26.9,
+   "ci": [
+    21,
+    33.3
+   ]
+  },
+  "C": {
+   "def100": 8.8,
+   "ci": [
+    5.2,
+    12.9
+   ]
+  },
+  "Aavg": {
+   "def100": 17.4,
+   "ci": [
+    13.5,
+    21.6
+   ]
+  }
+ },
+ "laneDiffVsAavg": {
+  "B4": {
+   "delta100": 2.4,
+   "ci": [
+    -2.2,
+    7.3
+   ]
+  },
+  "Bb": {
+   "delta100": 9.5,
+   "ci": [
+    2.9,
+    16.4
+   ]
+  },
+  "C": {
+   "delta100": -8.6,
+   "ci": [
+    -13.1,
+    -4.2
+   ]
+  }
+ },
+ "swing": {
+  "T": 3.3,
+  "S": 0.8,
+  "lane": 2.8
+ },
+ "paired": {
+  "T": {
+   "A2vsA": {
+    "better": 9,
+    "worse": 5,
+    "p": 0.212
+   },
+   "BbvsA": {
+    "better": 11,
+    "worse": 22,
+    "p": 0.9825
+   },
+   "BbvsA2": {
+    "better": 8,
+    "worse": 23,
+    "p": 0.9983
+   },
+   "B4vsA": {
+    "better": 10,
+    "worse": 9,
+    "p": 0.5
+   },
+   "BbvsB4": {
+    "better": 9,
+    "worse": 21,
+    "p": 0.9919
+   },
+   "CvsBb": {
+    "better": 18,
+    "worse": 0,
+    "p": 0
+   }
+  },
+  "S": {
+   "A2vsA": {
+    "better": 4,
+    "worse": 3,
+    "p": 0.5
+   },
+   "BbvsA": {
+    "better": 3,
+    "worse": 9,
+    "p": 0.9807
+   },
+   "BbvsA2": {
+    "better": 3,
+    "worse": 10,
+    "p": 0.9888
+   },
+   "B4vsA": {
+    "better": 3,
+    "worse": 11,
+    "p": 0.9935
+   },
+   "BbvsB4": {
+    "better": 5,
+    "worse": 3,
+    "p": 0.3633
+   },
+   "CvsBb": {
+    "better": 33,
+    "worse": 0,
+    "p": 0
+   }
+  }
+ },
+ "strata": {
+  "dense": {
+   "n": 39,
+   "T": {
+    "A": {
+     "def100": 12.8,
+     "ci": [
+      5.6,
+      26.7
+     ],
+     "defects": 5,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 0,
+      "other": 1
+     }
+    },
+    "A2": {
+     "def100": 5.1,
+     "ci": [
+      1.4,
+      16.9
+     ],
+     "defects": 2,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 0,
+      "catchword": 0,
+      "other": 0
+     }
+    },
+    "B4": {
+     "def100": 5.1,
+     "ci": [
+      1.4,
+      16.9
+     ],
+     "defects": 2,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 0,
+      "drift": 1,
+      "broken_syntax": 0,
+      "catchword": 0,
+      "other": 1
+     }
+    },
+    "Bb": {
+     "def100": 51.3,
+     "ci": [
+      36.2,
+      66.1
+     ],
+     "defects": 20,
+     "majors": 4,
+     "labels": {
+      "omission": 1,
+      "duplication": 5,
+      "drift": 0,
+      "broken_syntax": 14,
+      "catchword": 3,
+      "other": 1
+     }
+    },
+    "C": {
+     "def100": 10.3,
+     "ci": [
+      4.1,
+      23.6
+     ],
+     "defects": 4,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 3,
+      "catchword": 1,
+      "other": 1
+     }
+    }
+   },
+   "S": {
+    "A": {
+     "def100": 30.8,
+     "ci": [
+      18.6,
+      46.4
+     ],
+     "defects": 12,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 4,
+      "catchword": 6,
+      "other": 0
+     }
+    },
+    "A2": {
+     "def100": 35.9,
+     "ci": [
+      22.7,
+      51.6
+     ],
+     "defects": 14,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 4,
+      "drift": 0,
+      "broken_syntax": 4,
+      "catchword": 7,
+      "other": 1
+     }
+    },
+    "B4": {
+     "def100": 35.9,
+     "ci": [
+      22.7,
+      51.6
+     ],
+     "defects": 14,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 7,
+      "catchword": 6,
+      "other": 0
+     }
+    },
+    "Bb": {
+     "def100": 35.9,
+     "ci": [
+      22.7,
+      51.6
+     ],
+     "defects": 14,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 3,
+      "drift": 0,
+      "broken_syntax": 6,
+      "catchword": 6,
+      "other": 0
+     }
+    },
+    "C": {
+     "def100": 12.8,
+     "ci": [
+      5.6,
+      26.7
+     ],
+     "defects": 5,
+     "majors": 1,
+     "labels": {
+      "omission": 1,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 2,
+      "catchword": 2,
+      "other": 0
+     }
+    }
+   },
+   "lane": {
+    "A": 17.3,
+    "A2": 12.8,
+    "B4": 12.8,
+    "Bb": 47.4,
+    "C": 10.9
+   },
+   "paired": {
+    "T": {
+     "A2vsA": {
+      "better": 3,
+      "worse": 0,
+      "p": 0.125
+     },
+     "BbvsA": {
+      "better": 2,
+      "worse": 17,
+      "p": 1
+     },
+     "BbvsA2": {
+      "better": 1,
+      "worse": 19,
+      "p": 1
+     },
+     "B4vsA": {
+      "better": 4,
+      "worse": 1,
+      "p": 0.1875
+     },
+     "BbvsB4": {
+      "better": 1,
+      "worse": 19,
+      "p": 1
+     },
+     "CvsBb": {
+      "better": 16,
+      "worse": 0,
+      "p": 0
+     }
+    },
+    "S": {
+     "A2vsA": {
+      "better": 0,
+      "worse": 2,
+      "p": 1
+     },
+     "BbvsA": {
+      "better": 0,
+      "worse": 2,
+      "p": 1
+     },
+     "BbvsA2": {
+      "better": 2,
+      "worse": 2,
+      "p": 0.6875
+     },
+     "B4vsA": {
+      "better": 0,
+      "worse": 2,
+      "p": 1
+     },
+     "BbvsB4": {
+      "better": 2,
+      "worse": 2,
+      "p": 0.6875
+     },
+     "CvsBb": {
+      "better": 9,
+      "worse": 0,
+      "p": 0.002
+     }
+    }
+   }
+  },
+  "ordinary": {
+   "n": 81,
+   "T": {
+    "A": {
+     "def100": 12.3,
+     "ci": [
+      6.8,
+      21.3
+     ],
+     "defects": 10,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 2,
+      "drift": 3,
+      "broken_syntax": 3,
+      "catchword": 2,
+      "other": 1
+     }
+    },
+    "A2": {
+     "def100": 11.1,
+     "ci": [
+      6,
+      19.8
+     ],
+     "defects": 9,
+     "majors": 0,
+     "labels": {
+      "omission": 0,
+      "duplication": 3,
+      "drift": 1,
+      "broken_syntax": 5,
+      "catchword": 1,
+      "other": 1
+     }
+    },
+    "B4": {
+     "def100": 14.8,
+     "ci": [
+      8.7,
+      24.1
+     ],
+     "defects": 12,
+     "majors": 3,
+     "labels": {
+      "omission": 4,
+      "duplication": 2,
+      "drift": 0,
+      "broken_syntax": 6,
+      "catchword": 1,
+      "other": 0
+     }
+    },
+    "Bb": {
+     "def100": 7.4,
+     "ci": [
+      3.4,
+      15.2
+     ],
+     "defects": 6,
+     "majors": 3,
+     "labels": {
+      "omission": 3,
+      "duplication": 1,
+      "drift": 0,
+      "broken_syntax": 1,
+      "catchword": 1,
+      "other": 1
+     }
+    },
+    "C": {
+     "def100": 4.9,
+     "ci": [
+      1.9,
+      12
+     ],
+     "defects": 4,
+     "majors": 2,
+     "labels": {
+      "omission": 2,
+      "duplication": 0,
+      "drift": 0,
+      "broken_syntax": 1,
+      "catchword": 1,
+      "other": 1
+     }
+    }
+   },
+   "S": {
+    "A": {
+     "def100": 40.7,
+     "ci": [
+      30.7,
+      51.6
+     ],
+     "defects": 33,
+     "majors": 11,
+     "labels": {
+      "omission": 8,
+      "duplication": 10,
+      "drift": 1,
+      "broken_syntax": 14,
+      "catchword": 7,
+      "other": 5
+     }
+    },
+    "A2": {
+     "def100": 37,
+     "ci": [
+      27.3,
+      47.9
+     ],
+     "defects": 30,
+     "majors": 10,
+     "labels": {
+      "omission": 7,
+      "duplication": 12,
+      "drift": 1,
+      "broken_syntax": 11,
+      "catchword": 7,
+      "other": 5
+     }
+    },
+    "B4": {
+     "def100": 48.1,
+     "ci": [
+      37.6,
+      58.9
+     ],
+     "defects": 39,
+     "majors": 13,
+     "labels": {
+      "omission": 11,
+      "duplication": 12,
+      "drift": 1,
+      "broken_syntax": 20,
+      "catchword": 10,
+      "other": 5
+     }
+    },
+    "Bb": {
+     "def100": 45.7,
+     "ci": [
+      35.3,
+      56.5
+     ],
+     "defects": 37,
+     "majors": 11,
+     "labels": {
+      "omission": 9,
+      "duplication": 13,
+      "drift": 1,
+      "broken_syntax": 16,
+      "catchword": 9,
+      "other": 5
+     }
+    },
+    "C": {
+     "def100": 16,
+     "ci": [
+      9.6,
+      25.5
+     ],
+     "defects": 13,
+     "majors": 6,
+     "labels": {
+      "omission": 6,
+      "duplication": 6,
+      "drift": 1,
+      "broken_syntax": 2,
+      "catchword": 3,
+      "other": 5
+     }
+    }
+   },
+   "lane": {
+    "A": 19.4,
+    "A2": 17.6,
+    "B4": 23.1,
+    "Bb": 17,
+    "C": 7.7
+   },
+   "paired": {
+    "T": {
+     "A2vsA": {
+      "better": 6,
+      "worse": 5,
+      "p": 0.5
+     },
+     "BbvsA": {
+      "better": 9,
+      "worse": 5,
+      "p": 0.212
+     },
+     "BbvsA2": {
+      "better": 7,
+      "worse": 4,
+      "p": 0.2744
+     },
+     "B4vsA": {
+      "better": 6,
+      "worse": 8,
+      "p": 0.788
+     },
+     "BbvsB4": {
+      "better": 8,
+      "worse": 2,
+      "p": 0.0547
+     },
+     "CvsBb": {
+      "better": 2,
+      "worse": 0,
+      "p": 0.25
+     }
+    },
+    "S": {
+     "A2vsA": {
+      "better": 4,
+      "worse": 1,
+      "p": 0.1875
+     },
+     "BbvsA": {
+      "better": 3,
+      "worse": 7,
+      "p": 0.9453
+     },
+     "BbvsA2": {
+      "better": 1,
+      "worse": 8,
+      "p": 0.998
+     },
+     "B4vsA": {
+      "better": 3,
+      "worse": 9,
+      "p": 0.9807
+     },
+     "BbvsB4": {
+      "better": 3,
+      "worse": 1,
+      "p": 0.3125
+     },
+     "CvsBb": {
+      "better": 24,
+      "worse": 0,
+      "p": 0
+     }
+    }
+   }
+  }
+ },
+ "judgeFloor": {
+  "agree": 240,
+  "n": 240
+ },
+ "plants": {
+  "caught": 232,
+  "n": 234,
+  "rate": 99.1
+ },
+ "leaks": {
+  "A": {
+   "pairs": 480,
+   "leak": 10,
+   "sourceRepeat": 1,
+   "class_source": 8,
+   "class_stored_left": 0,
+   "class_translation": 2
+  },
+  "A2": {
+   "pairs": 480,
+   "leak": 10,
+   "sourceRepeat": 1,
+   "class_source": 7,
+   "class_stored_left": 1,
+   "class_translation": 2
+  },
+  "B4": {
+   "pairs": 480,
+   "leak": 4,
+   "sourceRepeat": 0,
+   "class_source": 4,
+   "class_stored_left": 0,
+   "class_translation": 0
+  },
+  "Bb": {
+   "pairs": 480,
+   "leak": 4,
+   "sourceRepeat": 0,
+   "class_source": 3,
+   "class_stored_left": 1,
+   "class_translation": 0
+  },
+  "C": {
+   "pairs": 480,
+   "leak": 4,
+   "sourceRepeat": 0,
+   "class_source": 3,
+   "class_stored_left": 1,
+   "class_translation": 0
+  },
+  "stored": {
+   "pairs": 480,
+   "leak": 44,
+   "sourceRepeat": 1,
+   "class_source": 8,
+   "class_stored_left": 0,
+   "class_translation": 36
+  }
+ },
+ "pages": {
+  "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+  "recipe": {
+   "question": "prompt",
+   "issue": 8399,
+   "stage": "translation",
+   "languages": [
+    "la",
+    "de"
+   ],
+   "baseline": "A",
+   "arms": [
+    "A",
+    "A2",
+    "B4",
+    "Bb"
+   ],
+   "batch": {
+    "pages_per_call": 1,
+    "tested": null
+   },
+   "noise_floor": {
+    "repeat_kind": "repeat",
+    "from": null
+   },
+   "feeds": "route",
+   "router_evidence": [
+    "latin-cli-agy4",
+    "german-cli-agy4"
+   ],
+   "waive": {}
+  },
+  "judges": {
+   "opus": {
+    "cells": {
+     "latin-cli-agy4": {
+      "routes": {
+       "A": {
+        "n": 55,
+        "books": 55,
+        "unjudged": 0,
+        "accept": "26/55",
+        "accept_wilson": [
+         0.347,
+         0.602
+        ],
+        "accept_by_book": [
+         0.345,
+         0.6
+        ],
+        "wrong_text_pages": "26/55",
+        "wrong_text_wilson": [
+         0.347,
+         0.602
+        ],
+        "fidelity_mean": 3.44,
+        "counts": true,
+        "words": 34788,
+        "misleads_per_1k": 2.33,
+        "wrong_text_per_1k": 1.29
+       },
+       "A2": {
+        "n": 55,
+        "books": 55,
+        "unjudged": 0,
+        "accept": "25/55",
+        "accept_wilson": [
+         0.33,
+         0.585
+        ],
+        "accept_by_book": [
+         0.309,
+         0.582
+        ],
+        "wrong_text_pages": "24/55",
+        "wrong_text_wilson": [
+         0.314,
+         0.567
+        ],
+        "fidelity_mean": 3.45,
+        "counts": true,
+        "words": 34952,
+        "misleads_per_1k": 2.63,
+        "wrong_text_per_1k": 1.32
+       },
+       "B4": {
+        "n": 30,
+        "books": 30,
+        "unjudged": 0,
+        "accept": "12/30",
+        "accept_wilson": [
+         0.246,
+         0.577
+        ],
+        "accept_by_book": [
+         0.233,
+         0.567
+        ],
+        "wrong_text_pages": "18/30",
+        "wrong_text_wilson": [
+         0.423,
+         0.754
+        ],
+        "fidelity_mean": 3.4,
+        "counts": true,
+        "words": 25438,
+        "misleads_per_1k": 2.79,
+        "wrong_text_per_1k": 1.26
+       },
+       "Bb": {
+        "n": 55,
+        "books": 55,
+        "unjudged": 0,
+        "accept": "25/55",
+        "accept_wilson": [
+         0.33,
+         0.585
+        ],
+        "accept_by_book": [
+         0.327,
+         0.582
+        ],
+        "wrong_text_pages": "27/55",
+        "wrong_text_wilson": [
+         0.364,
+         0.619
+        ],
+        "fidelity_mean": 3.27,
+        "counts": true,
+        "words": 35970,
+        "misleads_per_1k": 2.97,
+        "wrong_text_per_1k": 1.39
+       }
+      },
+      "controls": {
+       "A": {
+        "n": 3,
+        "passed": true
+       },
+       "A2": {
+        "n": 3,
+        "passed": true
+       },
+       "B4": {
+        "n": 3,
+        "passed": true
+       },
+       "Bb": {
+        "n": 3,
+        "passed": true
+       }
+      },
+      "noise_floor": {
+       "pairs": 5,
+       "accept_flips": "0/5",
+       "flip_rate": 0,
+       "fidelity_abs_diff": 0
+      },
+      "against_baseline": {
+       "A -> A2": {
+        "shared_pages": 55,
+        "better": "6/55",
+        "worse": "5/55",
+        "accept_gained": 5,
+        "accept_lost": 6,
+        "accept_sign_test_p": 1,
+        "fidelity_diff": 0.02
+       },
+       "A -> B4": {
+        "shared_pages": 30,
+        "better": "1/30",
+        "worse": "8/30",
+        "accept_gained": 0,
+        "accept_lost": 5,
+        "accept_sign_test_p": 0.06,
+        "fidelity_diff": -0.23
+       },
+       "A -> Bb": {
+        "shared_pages": 55,
+        "better": "6/55",
+        "worse": "16/55",
+        "accept_gained": 7,
+        "accept_lost": 8,
+        "accept_sign_test_p": 1,
+        "fidelity_diff": -0.16
+       }
+      }
+     },
+     "german-cli-agy4": {
+      "routes": {
+       "A": {
+        "n": 14,
+        "books": 14,
+        "unjudged": 0,
+        "accept": "8/14",
+        "accept_wilson": [
+         0.326,
+         0.786
+        ],
+        "accept_by_book": [
+         0.286,
+         0.786
+        ],
+        "wrong_text_pages": "6/14",
+        "wrong_text_wilson": [
+         0.214,
+         0.674
+        ],
+        "fidelity_mean": 3.79,
+        "counts": true,
+        "words": 6479,
+        "misleads_per_1k": 2.32,
+        "wrong_text_per_1k": 1.08
+       },
+       "A2": {
+        "n": 14,
+        "books": 14,
+        "unjudged": 0,
+        "accept": "10/14",
+        "accept_wilson": [
+         0.454,
+         0.883
+        ],
+        "accept_by_book": [
+         0.5,
+         0.929
+        ],
+        "wrong_text_pages": "4/14",
+        "wrong_text_wilson": [
+         0.117,
+         0.546
+        ],
+        "fidelity_mean": 4.07,
+        "counts": true,
+        "words": 6468,
+        "misleads_per_1k": 1.55,
+        "wrong_text_per_1k": 0.62
+       },
+       "Bb": {
+        "n": 14,
+        "books": 14,
+        "unjudged": 0,
+        "accept": "11/14",
+        "accept_wilson": [
+         0.524,
+         0.924
+        ],
+        "accept_by_book": [
+         0.571,
+         1
+        ],
+        "wrong_text_pages": "3/14",
+        "wrong_text_wilson": [
+         0.076,
+         0.476
+        ],
+        "fidelity_mean": 3.79,
+        "counts": true,
+        "words": 6711,
+        "misleads_per_1k": 3.43,
+        "wrong_text_per_1k": 0.6
+       },
+       "B4": {
+        "n": 9,
+        "books": 9,
+        "unjudged": 0,
+        "accept": "6/9",
+        "accept_wilson": [
+         0.354,
+         0.879
+        ],
+        "accept_by_book": [
+         0.333,
+         0.889
+        ],
+        "wrong_text_pages": "3/9",
+        "wrong_text_wilson": [
+         0.121,
+         0.646
+        ],
+        "fidelity_mean": 3.78,
+        "counts": true,
+        "words": 5391,
+        "misleads_per_1k": 2.04,
+        "wrong_text_per_1k": 1.11
+       }
+      },
+      "controls": {
+       "A": {
+        "n": 2,
+        "passed": true
+       },
+       "A2": {
+        "n": 2,
+        "passed": true
+       },
+       "Bb": {
+        "n": 2,
+        "passed": true
+       },
+       "B4": {
+        "n": 2,
+        "passed": true
+       }
+      },
+      "noise_floor": {
+       "pairs": 1,
+       "accept_flips": "1/1",
+       "flip_rate": 1,
+       "fidelity_abs_diff": 0
+      },
+      "against_baseline": {
+       "A -> A2": {
+        "shared_pages": 14,
+        "better": "4/14",
+        "worse": "0/14",
+        "accept_gained": 2,
+        "accept_lost": 0,
+        "accept_sign_test_p": 0.5,
+        "fidelity_diff": 0.29
+       },
+       "A -> Bb": {
+        "shared_pages": 14,
+        "better": "3/14",
+        "worse": "3/14",
+        "accept_gained": 3,
+        "accept_lost": 0,
+        "accept_sign_test_p": 0.25,
+        "fidelity_diff": 0
+       },
+       "A -> B4": {
+        "shared_pages": 9,
+        "better": "1/9",
+        "worse": "2/9",
+        "accept_gained": 1,
+        "accept_lost": 0,
+        "accept_sign_test_p": 1,
+        "fidelity_diff": -0.11
+       }
+      }
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "rule": "R1",
+    "ok": true,
+    "detail": "8 arm(s), one page per book each",
+    "waived": false
+   },
+   {
+    "rule": "R2",
+    "ok": true,
+    "detail": "ids opaque, packet fields carry no arm name",
+    "waived": false
+   },
+   {
+    "rule": "R3",
+    "ok": true,
+    "detail": "controls for all 8 arm(s)",
+    "waived": false
+   },
+   {
+    "rule": "R4",
+    "ok": true,
+    "detail": "6 same-arm repeat rows",
+    "waived": false
+   },
+   {
+    "rule": "R5",
+    "ok": true,
+    "detail": "1 page a call",
+    "waived": false
+   }
+  ]
+ },
+ "acceptDense": {
+  "A": {
+   "accept": 22,
+   "n": 39,
+   "rate": 56.4
+  },
+  "A2": {
+   "accept": 23,
+   "n": 39,
+   "rate": 59
+  },
+  "B4": {
+   "accept": 18,
+   "n": 39,
+   "rate": 46.2
+  },
+  "Bb": {
+   "accept": 19,
+   "n": 39,
+   "rate": 48.7
+  }
+ },
+ "pageControls": {
+  "wrongPageAccepted": 0,
+  "wrongPageN": 20,
+  "repeatFlips": 1,
+  "repeatN": 6
+ },
+ "accept": {
+  "A": {
+   "accept": 34,
+   "n": 69,
+   "rate": 49.3,
+   "ci": [
+    37.8,
+    60.8
+   ],
+   "meanFidelity": 3.51
+  },
+  "A2": {
+   "accept": 35,
+   "n": 69,
+   "rate": 50.7,
+   "ci": [
+    39.2,
+    62.2
+   ],
+   "meanFidelity": 3.58
+  },
+  "Bb": {
+   "accept": 36,
+   "n": 69,
+   "rate": 52.2,
+   "ci": [
+    40.6,
+    63.5
+   ],
+   "meanFidelity": 3.38
+  }
+ },
+ "rule": {
+  "Aavg": 17.4,
+  "pageNoise": 2.898550724637681,
+  "pageFloor": 47.10144927536232,
+  "Bb": {
+   "seamAtOrBelowA": false,
+   "leaksZero": true,
+   "leaksZeroRaw": false,
+   "usableNotLower": true,
+   "passes": false
+  },
+  "B4": {
+   "seamAtOrBelowA": false,
+   "leaksZero": true,
+   "leaksZeroRaw": false,
+   "usableNotLower": false,
+   "passes": false
+  },
+  "C": {
+   "seamAtOrBelowA": true,
+   "leaksZero": true,
+   "leaksZeroRaw": false,
+   "usableNotLower": true,
+   "passes": true
+  }
+ },
+ "budget": {
+  "chars": 8000,
+  "denseSeam": {
+   "Bb": 47.4,
+   "B4": 12.8
+  },
+  "denseAccept": {
+   "A": {
+    "accept": 22,
+    "n": 39,
+    "rate": 56.4
+   },
+   "A2": {
+    "accept": 23,
+    "n": 39,
+    "rate": 59
+   },
+   "B4": {
+    "accept": 18,
+    "n": 39,
+    "rate": 46.2
+   },
+   "Bb": {
+    "accept": 19,
+    "n": 39,
+    "rate": 48.7
+   }
+  },
+  "worseAtSeam": true,
+  "worseAtPage": false,
+  "keep": false
+ },
+ "verdict": "C passes and Bb does not: markers alone do not ship; the seam pass is a follow-up",
+ "perRow": {
+  "69b51e72ff09e4fe943af0f5:16": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "minor:duplication",
+    "A2": "minor:duplication",
+    "B4": "minor:duplication",
+    "Bb": "minor:duplication",
+    "C": "minor:duplication",
+    "P": "minor:duplication"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:32": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:40": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "minor:catchword",
+    "P": "MAJOR:duplication+catchword"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:48": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:",
+    "A2": "minor:",
+    "B4": "minor:duplication+broken_syntax",
+    "Bb": "minor:duplication",
+    "C": "minor:duplication",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:56": {
+   "T": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:duplication+drift",
+    "A2": "minor:duplication+drift",
+    "B4": "minor:duplication+drift",
+    "Bb": "minor:duplication+drift",
+    "C": "minor:drift",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:64": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:72": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:broken_syntax+omission"
+   },
+   "S": {
+    "A": "MAJOR:duplication+other+omission+broken_syntax",
+    "A2": "MAJOR:duplication+other+omission+broken_syntax",
+    "B4": "MAJOR:duplication+other+omission+broken_syntax",
+    "Bb": "MAJOR:duplication+other+omission+broken_syntax",
+    "C": "MAJOR:duplication+other+omission+broken_syntax",
+    "P": "MAJOR:duplication+other+omission+broken_syntax"
+   }
+  },
+  "69b51e72ff09e4fe943af0f5:80": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication+catchword"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "MAJOR:broken_syntax+catchword",
+    "Bb": "minor:broken_syntax+catchword",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:8": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "minor:broken_syntax+duplication",
+    "A2": "minor:broken_syntax+duplication",
+    "B4": "minor:broken_syntax+omission",
+    "Bb": "minor:broken_syntax+duplication",
+    "C": "ok",
+    "P": "MAJOR:duplication+broken_syntax"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:16": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:24": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:32": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "ok",
+    "P": "minor:"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:40": {
+   "T": {
+    "A": "minor:catchword",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:",
+    "A2": "minor:",
+    "B4": "minor:",
+    "Bb": "minor:",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:48": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:catchword",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "ok"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:56": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:catchword"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:64": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:72": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b51e949a81ef7feb3d7864:80": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b6304e1c1c21a3738009c8:10": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "MAJOR:omission",
+    "A2": "MAJOR:omission",
+    "B4": "MAJOR:omission",
+    "Bb": "MAJOR:omission",
+    "C": "MAJOR:omission",
+    "P": "MAJOR:omission+duplication"
+   }
+  },
+  "69b6304e1c1c21a3738009c8:26": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "MAJOR:omission",
+    "Bb": "MAJOR:omission",
+    "C": "MAJOR:omission",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b6304e1c1c21a3738009c8:34": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "MAJOR:duplication+broken_syntax",
+    "A2": "MAJOR:duplication+broken_syntax",
+    "B4": "MAJOR:duplication+broken_syntax",
+    "Bb": "MAJOR:duplication+broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:duplication+broken_syntax"
+   }
+  },
+  "69b6304e1c1c21a3738009c8:42": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b6304e1c1c21a3738009c8:61": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:omission",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication+broken_syntax"
+   }
+  },
+  "69b630791c1c21a3738028ac:26": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "minor:duplication",
+    "B4": "minor:duplication+broken_syntax",
+    "Bb": "minor:duplication",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b630791c1c21a3738028ac:51": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630791c1c21a3738028ac:59": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "minor:catchword",
+    "P": "ok"
+   }
+  },
+  "69b630791c1c21a3738028ac:67": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630c31c1c21a373804063:8": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "minor:duplication+broken_syntax",
+    "A2": "minor:duplication+broken_syntax",
+    "B4": "minor:duplication+broken_syntax",
+    "Bb": "minor:duplication+broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b630c31c1c21a373804063:33": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630c31c1c21a373804063:41": {
+   "T": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission"
+   }
+  },
+  "69b630c31c1c21a373804063:49": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630c31c1c21a373804063:57": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "MAJOR:broken_syntax",
+    "A2": "MAJOR:broken_syntax",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69b630c31c1c21a373804063:65": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:",
+    "A2": "minor:",
+    "B4": "MAJOR:broken_syntax+omission",
+    "Bb": "MAJOR:broken_syntax+omission",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630c31c1c21a373804063:73": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "MAJOR:omission",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b630c31c1c21a373804063:100": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630c31c1c21a373804063:108": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:"
+   }
+  },
+  "69b630c31c1c21a373804063:116": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax+duplication",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:8": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:16": {
+   "T": {
+    "A": "ok",
+    "A2": "minor:broken_syntax",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:24": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:32": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:67": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:75": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:83": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:duplication",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b630dc1c1c21a3738049a3:91": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b6311a1c1c21a3738052ca:13": {
+   "T": {
+    "A": "minor:duplication",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b6311a1c1c21a3738052ca:37": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b6311a1c1c21a3738052ca:53": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69b6312f1c1c21a373805dbb:28": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b6312f1c1c21a373805dbb:36": {
+   "T": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b6312f1c1c21a373805dbb:44": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "69b6312f1c1c21a373805dbb:76": {
+   "T": {
+    "A": "ok",
+    "A2": "minor:broken_syntax",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:21": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:38": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "MAJOR:omission+duplication",
+    "A2": "MAJOR:omission+duplication",
+    "B4": "MAJOR:omission",
+    "Bb": "MAJOR:omission",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:46": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:54": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:62": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "minor:catchword",
+    "P": "minor:duplication+catchword"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:70": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword+duplication",
+    "Bb": "minor:catchword",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:78": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b631fb1c1c21a37380c13a:86": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69af0bdafd75e3c62284c4ce:483": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "-"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "69dbcc181040d1d5e20bd032:54": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "MAJOR:catchword",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b51dddcf111105c4292540:22": {
+   "T": {
+    "A": "ok",
+    "A2": "minor:duplication",
+    "B4": "ok",
+    "Bb": "minor:duplication",
+    "C": "minor:broken_syntax",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b2224208069e96e84331ba:333": {
+   "T": {
+    "A": "ok",
+    "A2": "minor:catchword+duplication",
+    "B4": "minor:catchword+duplication",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b300005545150b61b4b45a:288": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "MAJOR:omission",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword+duplication",
+    "Bb": "minor:catchword+duplication",
+    "C": "ok",
+    "P": "MAJOR:duplication+catchword"
+   }
+  },
+  "6a0ac153ccff0aaf8df94dc7:69": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "695575b457e3b773024f224c:21": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:omission",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b2233c56715b0e32476b05:268": {
+   "T": {
+    "A": "minor:drift",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69dbcae31040d1d5e20afa1d:17": {
+   "T": {
+    "A": "minor:duplication",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "MAJOR:other+omission+duplication",
+    "A2": "MAJOR:other+omission+duplication",
+    "B4": "MAJOR:other+omission+duplication",
+    "Bb": "MAJOR:other+omission+duplication",
+    "C": "MAJOR:other+omission+duplication",
+    "P": "MAJOR:duplication+other+omission"
+   }
+  },
+  "6a437c2757a09c2c0fcb516f:19": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "MAJOR:omission",
+    "Bb": "MAJOR:omission",
+    "C": "MAJOR:omission",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "MAJOR:broken_syntax+omission",
+    "A2": "MAJOR:broken_syntax+omission",
+    "B4": "MAJOR:omission+broken_syntax",
+    "Bb": "MAJOR:broken_syntax+omission",
+    "C": "MAJOR:omission+broken_syntax",
+    "P": "MAJOR:broken_syntax+omission"
+   }
+  },
+  "69522ff2ab34727b1f044362:132": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:duplication",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69b4ccead5b6c3815e1a29dd:241": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "MAJOR:catchword",
+    "A2": "MAJOR:catchword",
+    "B4": "MAJOR:catchword+broken_syntax",
+    "Bb": "MAJOR:catchword",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "6a42c7ca97284560a2b12b58:4": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "6ab5a6856122fe9080c03856:221": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "-"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "-"
+   }
+  },
+  "69b4c08986a5921d5bc444b1:54": {
+   "T": {
+    "A": "minor:drift",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "MAJOR:other+omission+duplication",
+    "A2": "MAJOR:other+omission+duplication",
+    "B4": "MAJOR:other+omission+duplication",
+    "Bb": "MAJOR:other+omission+duplication",
+    "C": "MAJOR:other+omission+duplication",
+    "P": "MAJOR:other+omission+duplication"
+   }
+  },
+  "69bd9ad746b01553e33bd100:113": {
+   "T": {
+    "A": "minor:drift",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication+drift"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b51e4fcf111105c429a6f9:129": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:",
+    "A2": "ok",
+    "B4": "minor:",
+    "Bb": "minor:",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "69b4c08586a5921d5bc4427f:218": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "MAJOR:duplication+omission+other",
+    "A2": "MAJOR:duplication+omission+other",
+    "B4": "MAJOR:duplication+omission+other",
+    "Bb": "MAJOR:duplication+omission+other",
+    "C": "MAJOR:duplication+omission+other",
+    "P": "MAJOR:duplication+omission+other"
+   }
+  },
+  "6a08574849638a50931c42e9:329": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69af0f705cbd92c1521f5b33:235": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:drift+other",
+    "Bb": "minor:catchword",
+    "C": "minor:catchword",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "minor:catchword",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "6a0970dbbf2196cdca904f44:28": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "698255f30b7815826b5ac95b:40": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "-"
+   },
+   "S": {
+    "A": "minor:other",
+    "A2": "minor:other",
+    "B4": "MAJOR:other",
+    "Bb": "minor:other",
+    "C": "minor:other",
+    "P": "-"
+   }
+  },
+  "69b21d9e94025df5d2908ddc:9": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69dbcadb1040d1d5e20af614:26": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax+other",
+    "C": "minor:broken_syntax+other",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "698fb78b6b95eeda7d2d2e1f:181": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69c834a66c6f3cc53c84e5ea:470": {
+   "T": {
+    "A": "minor:other+catchword",
+    "A2": "minor:other",
+    "B4": "minor:duplication",
+    "Bb": "minor:other+catchword",
+    "C": "minor:other+catchword",
+    "P": "MAJOR:other+catchword"
+   },
+   "S": {
+    "A": "MAJOR:omission+broken_syntax",
+    "A2": "ok",
+    "B4": "MAJOR:omission+broken_syntax",
+    "Bb": "MAJOR:omission+broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "698255f272562d277d385143:645": {
+   "T": {
+    "A": "MAJOR:omission",
+    "A2": "MAJOR:omission",
+    "B4": "MAJOR:omission",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "MAJOR:omission+catchword",
+    "A2": "MAJOR:omission+catchword",
+    "B4": "MAJOR:omission+catchword",
+    "Bb": "MAJOR:omission+catchword",
+    "C": "MAJOR:omission",
+    "P": "MAJOR:omission+duplication+catchword"
+   }
+  },
+  "69c7f5526c6f3cc53c841b9b:250": {
+   "T": {
+    "A": "ok",
+    "A2": "minor:duplication+drift",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "6988a5a076a49ee3a652f51c:1107": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "minor:duplication+broken_syntax"
+   }
+  },
+  "69b631bf1c1c21a37380a556:143": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "6975158da88d83c830d99e38:724": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69aeac132834f3a3bf99ff66:214": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "minor:duplication",
+    "A2": "minor:duplication",
+    "B4": "minor:duplication",
+    "Bb": "minor:duplication",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "6aed22bf4aa40cc243654994:226": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "minor:broken_syntax",
+    "P": "MAJOR:duplication+broken_syntax"
+   }
+  },
+  "6a4f225a8afd506469a564bb:19": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69af0cfe067c0c26ee26cfa9:191": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "6a4e1320d96a1b7b49bb46a8:22": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "6a26c2e4aad44c98627c69ce:6": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "MAJOR:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "6984e8498a2f054f912420c3:145": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "MAJOR:omission",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "6a243c460f0e4f405e62d9cb:23": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:duplication+broken_syntax",
+    "C": "ok",
+    "P": "minor:broken_syntax+omission"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "minor:catchword",
+    "P": "MAJOR:duplication+catchword"
+   }
+  },
+  "6a267fd588f11913ee9ca683:6": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "MAJOR:broken_syntax",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69c85a876c6f3cc53c8548cd:296": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:duplication+broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "minor:broken_syntax+duplication+catchword",
+    "A2": "minor:broken_syntax+duplication+catchword",
+    "B4": "minor:broken_syntax+duplication+catchword",
+    "Bb": "minor:broken_syntax+duplication+catchword",
+    "C": "ok",
+    "P": "MAJOR:duplication+broken_syntax+catchword"
+   }
+  },
+  "69dbcc1f1040d1d5e20bd526:6": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69dbcc0c1040d1d5e20bc0b7:88": {
+   "T": {
+    "A": "minor:duplication",
+    "A2": "minor:duplication",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax+duplication",
+    "C": "minor:broken_syntax+duplication",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "6955da57646474023271beb0:32": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "minor:broken_syntax",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission"
+   }
+  },
+  "69b51e22261c58d63664fed6:92": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "minor:broken_syntax",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "6a26be780e247ebad6de7523:9": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:duplication",
+    "A2": "minor:duplication",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69c83b456c6f3cc53c84f60f:79": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "minor:broken_syntax",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "6a26c413aad44c98627cd57e:12": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "minor:catchword",
+    "A2": "minor:catchword",
+    "B4": "minor:catchword",
+    "Bb": "minor:catchword",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69dbca601040d1d5e20abba7:136": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:duplication",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69dbc45256c1abd5f7337a09:35": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "minor:catchword",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   }
+  },
+  "69dbcb3a1040d1d5e20b41ed:444": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:omission+broken_syntax"
+   },
+   "S": {
+    "A": "minor:broken_syntax",
+    "A2": "minor:broken_syntax",
+    "B4": "minor:broken_syntax",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:duplication+broken_syntax"
+   }
+  },
+  "6a4eaf849251fb3056f70eb9:8": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69dbcb6c1040d1d5e20b685f:43": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "-"
+   }
+  },
+  "69b2feee65b9d6bf89925558:538": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "minor:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69dbc80d1040d1d5e209698b:386": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   }
+  },
+  "6a45bfd08355d631d121b925:3": {
+   "T": {
+    "A": "minor:broken_syntax",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "minor:duplication+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "minor:other",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69b51eb747b06ecd58195d39:132": {
+   "T": {
+    "A": "minor:broken_syntax",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "6a3f026097e91e1768f672bf:50": {
+   "T": {
+    "A": "minor:other",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:duplication+other"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  },
+  "69dbcb061040d1d5e20b10da:133": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "minor:catchword+broken_syntax",
+    "C": "ok",
+    "P": "MAJOR:omission+broken_syntax"
+   },
+   "S": {
+    "A": "minor:duplication",
+    "A2": "minor:duplication",
+    "B4": "minor:duplication",
+    "Bb": "minor:duplication",
+    "C": "ok",
+    "P": "minor:duplication"
+   }
+  },
+  "69520ee0ab34727b1f044285:80": {
+   "T": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:duplication"
+   },
+   "S": {
+    "A": "ok",
+    "A2": "ok",
+    "B4": "ok",
+    "Bb": "ok",
+    "C": "ok",
+    "P": "MAJOR:omission"
+   }
+  }
+ },
+ "claudeListUsd": 43.72
+}

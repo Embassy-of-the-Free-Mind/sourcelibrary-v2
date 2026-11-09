@@ -10,7 +10,7 @@ import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance }
 
 /** Provenance identity of this route (#4613). */
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
-import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { endBatchJob } from '../../../../scripts/lib/end-batch-job.mjs';
 
@@ -173,6 +173,13 @@ export const POST = withAuth(async (request, session) => {
               continue;
             }
             text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+            // A page's English that is its neighbour's (#5026).
+            const nb = await neighbourGate(db, { id: pageId!, book_id: job.book_id }, text, { jobId: job.id, model: job.model });
+            if (nb.refused) {
+              console.warn(`[batch-save] NEIGHBOUR: refusing page ${pageId} (${nb.reason})`);
+              failed++;
+              continue;
+            }
             await createRevision(pageId!, 'translation', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },

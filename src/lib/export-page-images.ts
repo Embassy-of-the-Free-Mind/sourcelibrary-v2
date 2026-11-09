@@ -1,4 +1,4 @@
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -155,9 +155,9 @@ export async function fetchPageImagesOrdered(
  * crossed Cloudflare's ~100s origin window and died with a 524, and the reader
  * saved the Cloudflare error page as a corrupt `.zip`.
  */
-export function generateImagesZipStream(pages: Page[]): archiver.Archiver {
+export function generateImagesZipStream(pages: Page[]): ZipArchive {
   const validPages = pages.filter(hasExportImage);
-  const archive = archiver('zip', { zlib: { level: 6 } });
+  const archive = new ZipArchive({ zlib: { level: 6 } });
 
   (async () => {
     console.log(`Fetching ${validPages.length} images for ZIP (streaming)...`);

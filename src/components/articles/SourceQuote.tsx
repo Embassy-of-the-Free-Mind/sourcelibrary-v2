@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import ArticleImage from './ArticleImage';
+import QuoteShare from './QuoteShare';
 
 /**
  * A quotation from a book in the library, with the page it comes from beside
@@ -52,9 +53,10 @@ export default function SourceQuote({
     <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-center">
       <blockquote className="border-l-2 border-accent-gold/60 pl-5 font-body text-lg leading-relaxed text-primary">
         {original && <p className="mb-3 text-secondary italic">{original}</p>}
-        <div>{children}</div>
+        <div data-quote-text>{children}</div>
         <figcaption className="mt-3 text-sm text-muted not-italic">
-          {source}, <Link href={href}>p. {printedPage ?? page}</Link>
+          <span data-quote-source>{source}</span>, <Link href={href}>p. {printedPage ?? page}</Link>
+          <QuoteShare href={href} page={printedPage ?? page} />
         </figcaption>
       </blockquote>
       {linkToPage ? (

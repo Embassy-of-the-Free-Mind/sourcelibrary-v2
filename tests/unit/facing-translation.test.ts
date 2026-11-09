@@ -1,6 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import fixtures from '../fixtures/facing-translation-8321.json';
+import { setInProcessCaller } from '@/lib/inprocess-caller';
+
+/** get_book_text reaches /text in-process (src/lib/mcp-inprocess.ts); mark the request the same way (#8235). */
+function asMcpCall(req: NextRequest): NextRequest {
+  setInProcessCaller(req, { kind: 'anon' });
+  return req;
+}
 
 /**
  * A facing-page Loeb serves the PUBLISHED English, from every door (#8321).
@@ -302,7 +309,7 @@ describe('/api/books/[id]/quote and MCP get_quote', () => {
 describe('/api/books/[id]/text — get_book_text', () => {
   it('serves Godley, not the rewording', async () => {
     const { GET } = await import('@/app/api/books/[id]/text/route');
-    const res = await GET(new NextRequest(`https://sourcelibrary.org/api/books/${L118_BOOK.id}/text`), { params: Promise.resolve({ id: L118_BOOK.id }) });
+    const res = await GET(asMcpCall(new NextRequest(`https://sourcelibrary.org/api/books/${L118_BOOK.id}/text`)), { params: Promise.resolve({ id: L118_BOOK.id }) });
     expect(res.status).toBe(200);
     const body = await res.json();
     const p322 = body.pages.find((p: Doc) => p.page_number === 322);
@@ -514,7 +521,7 @@ describe('every door on a flagged, Greek-catalogued Loeb (L118)', () => {
   const PREFACE_REWORDED = 'This page concludes the critique';
   const text = async (book: { id: string }, qs: string) => {
     const { GET } = await import('@/app/api/books/[id]/text/route');
-    return GET(new NextRequest(`https://sourcelibrary.org/api/books/${book.id}/text?${qs}`), { params: Promise.resolve({ id: book.id }) });
+    return GET(asMcpCall(new NextRequest(`https://sourcelibrary.org/api/books/${book.id}/text?${qs}`)), { params: Promise.resolve({ id: book.id }) });
   };
 
   it('/text content=translation (MCP get_book_text) never serves the rewording, and says where Godley is', async () => {

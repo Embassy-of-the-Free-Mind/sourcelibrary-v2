@@ -1,0 +1,70 @@
+{
+ "n": 1,
+ "own_leaf": 1,
+ "usable": 1,
+ "usable_wilson": [
+  0.2065493117918027,
+  1
+ ],
+ "pass": false,
+ "defects_by_kind": {},
+ "agy_checker": {
+  "n": 1,
+  "agree": 1,
+  "false_alarm": 0,
+  "miss": 0,
+  "leaf_agree": 1,
+  "opus_flags": 0,
+  "agy_flags": 0
+ },
+ "controls": [
+  {
+   "key": "R02",
+   "expect": "other",
+   "opus": "prev",
+   "agy": "prev"
+  },
+  {
+   "key": "R03",
+   "expect": "other",
+   "opus": "prev",
+   "agy": "prev"
+  }
+ ],
+ "unanswered_opus": [],
+ "rows": [
+  {
+   "key": "R01",
+   "book_id": "69e729b4a409200ea79f1109",
+   "n": 334,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 294 (scan 334) and correctly joins the text from both columns around the illustration. The header, page number, decorated caption and image description are all accurate.",
+    "images_opened": [
+     333,
+     334,
+     335
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 334 (numbered 294) is correctly transcribed across both columns around the central illustration, with no defects.",
+    "images_opened": [
+     333,
+     334,
+     335
+    ]
+   }
+  }
+ ]
+}

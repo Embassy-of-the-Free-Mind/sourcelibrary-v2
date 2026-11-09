@@ -38,6 +38,17 @@ export interface McpErrorPayload {
   recovery: string;
   /** Present when the page exists in the original language but not in translation. */
   has_original?: boolean;
+  /** A book hidden as a duplicate: the edition we kept, to call again with (#8235). */
+  kept_edition?: { id: string; url?: string };
+  /** A blank (or defaulted) page: the next page that has text (#8235). */
+  next_text_page?: number;
+}
+
+/** The JSON body inside `API 404: {...}`, or null. */
+function apiJson(raw: string): Record<string, unknown> | null {
+  const json = raw.match(/\{[\s\S]*\}/)?.[0];
+  if (!json) return null;
+  try { return JSON.parse(json) as Record<string, unknown>; } catch { return null; }
 }
 
 /**
@@ -99,6 +110,28 @@ export function classifyApiError(err: unknown): McpErrorPayload {
       message: 'This page exists but holds no text yet: the scan has not been transcribed. This says nothing about the language of the page or the rest of the book.',
       has_original: false,
       recovery: 'Call get_book and compare pages_ocr with pages_count — the book is partly processed, and pages within the transcribed range work. Do NOT tell the user the page is in another language or that the text does not exist; it has not been read yet.',
+    };
+  }
+
+  // The REST routes now say these two things (#8235); a flat "No such book or page"
+  // threw them away, and the agent had nowhere to go.
+  const body = status === 404 ? apiJson(raw) : null;
+  const kept = body?.kept_edition as { id?: unknown; url?: unknown } | undefined;
+  if (kept && typeof kept.id === 'string') {
+    return {
+      error: 'not_found',
+      message: 'This copy was hidden as a duplicate of an edition the library kept. The text exists under the kept edition.',
+      kept_edition: { id: kept.id, url: typeof kept.url === 'string' ? kept.url : undefined },
+      recovery: `Call the same tool again with book_id "${kept.id}". Do NOT tell the user the book is missing.`,
+    };
+  }
+  if (lower.includes('page is blank')) {
+    const next = typeof body?.next_text_page === 'number' ? body.next_text_page : undefined;
+    return {
+      error: 'not_found',
+      message: 'This page is a blank leaf: there is no text on it to return. The book itself is fine.',
+      ...(next ? { next_text_page: next } : {}),
+      recovery: next ? `Ask for page ${next}, the next page with text.` : 'Ask for a later page; get_book lists the book\'s pages.',
     };
   }
 

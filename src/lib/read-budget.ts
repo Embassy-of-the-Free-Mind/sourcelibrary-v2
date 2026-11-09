@@ -12,8 +12,10 @@
  * a whole book is a handful of requests, well under a brake that counts page loads.
  *
  * Over budget, an anonymous caller gets the free sample and the sign-in notice /read
- * already has. Signed-in readers are logged and never capped, since the notice could
- * only tell them to do what they have done. A failure here never stops a reader.
+ * already has. A signed-in reader is capped too (Derek, 2026-11-08: one free account
+ * could otherwise read every book in full here), at the session budget of 1,000 pages
+ * a day it shares with the API, and /read tells them the page-by-page reader is not
+ * counted. A failure here never stops a reader.
  * Addresses can be shared by a whole library: READ_PAGE_BUDGET=off is the rollback.
  */
 import { NextRequest } from 'next/server';
@@ -40,7 +42,7 @@ export async function checkReadBudget(request: NextRequest): Promise<ReadMeter |
     // The decision's `allowed` is the API's hourly limit, not this page's: only the identity is used.
     const { identity } = await requireApiAccess(request);
     const budget = await checkPageBudget({ identity, request });
-    return { request, identity, overBudget: !budget.allowed && identity.kind !== 'session' };
+    return { request, identity, overBudget: !budget.allowed };
   } catch {
     return null;
   }

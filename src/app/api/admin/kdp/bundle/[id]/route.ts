@@ -4,7 +4,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 import { generateKdpCover, pickKdpCoverImageUrl } from '@/lib/kdp-cover';
 import { generateKdpEpub } from '@/lib/kdp-epub';
 import type { Book, Page } from '@/lib/types';
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 
 // EPUB generation now fetches inline facsimile/illustration images, so give it
 // the same headroom as the image-heavy public download route.
@@ -117,7 +117,7 @@ export const GET = withAdminAuth(async (request: NextRequest, session, { params 
     // Package into ZIP
     const zipBuffer = await new Promise<Buffer>((resolve, reject) => {
       const chunks: Buffer[] = [];
-      const archive = archiver('zip', { zlib: { level: 6 } });
+      const archive = new ZipArchive({ zlib: { level: 6 } });
 
       archive.on('data', (chunk: Buffer) => chunks.push(chunk));
       archive.on('end', () => resolve(Buffer.concat(chunks)));

@@ -406,15 +406,15 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     .filter(a => a && a !== authorName && !nameVariants.some(v => v.toLowerCase() === a.toLowerCase()));
   const allVariants = [...nameVariants, ...bookVariants].slice(0, 8);
 
-  // Artist-page link surfaces whenever there are visual works. Tracks the
-  // /artist/[slug] route's own definition (resource_type-based) so the link
-  // doesn't dangle on records that haven't been backfilled to content_type.
+  // Artist-page link surfaces only when /artist/[slug] will actually render:
+  // that route (loadArtistData) requires a visible record whose `author` is
+  // exactly this name AND whose resource_type is in VISUAL_RESOURCE_TYPES.
+  // Any looser test dangles: an `|| artworks.length > 0` fallback sent readers
+  // from /author/marsilio-ficino (emblems, illuminations) to a 404 (2026-11-09).
   // "Artist page" reads the heading as a person who made pictures, so it is
   // suppressed for a non-person even when visual records are present.
-  const hasVisualWorks = !nonPerson && (
-    artworks.some(b => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type))
-    || artworks.length > 0
-  );
+  const hasVisualWorks = !nonPerson && artworks.some(b =>
+    b.author === authorName && !!b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type));
 
   // Language breakdown — texts only; artworks rarely carry a language and
   // the count would dilute the signal in the stats row.

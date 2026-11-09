@@ -299,5 +299,23 @@ describe('the CLI lane (#7118): a misplaced marker falls back', () => {
   it('accepts a balanced split', () => {
     const reply = `<translation><pb n="1"/>${'word '.repeat(100)}<pb n="2"/>${'word '.repeat(110)}</translation>`;
     expect(splitMarkedReply(reply, [1, 2], { sources: [src, src] }).ok).toBe(true);
+  });});
+
+describe('blocks of 4 (#8399): every page turn is held to the bound', () => {
+  const src = 'verbum '.repeat(100);
+  const four = (ws: number[]) => `<translation>${ws.map((w, i) => `<pb n="${i + 1}"/>${'word '.repeat(w)}`).join('')}</translation>\n<summary>s</summary>\n<keywords>k</keywords>`;
+  it('accepts a balanced 4-page split, each page its own span with the block summary', () => {
+    const r = splitMarkedReply(four([100, 110, 95, 105]), [1, 2, 3, 4], { sources: [src, src, src, src] });
+    expect(r.ok).toBe(true);
+    expect(r.texts).toHaveLength(4);
+    expect(r.texts[3]).toContain('<summary>s</summary>');
+  });
+  it('refuses a split whose INNER turn is out of balance, though the first turn is fine', () => {
+    const r = splitMarkedReply(four([100, 100, 30, 170]), [1, 2, 3, 4], { sources: [src, src, src, src] });
+    expect(r.ok).toBe(false);
+    expect(r.why).toMatch(/unbalanced .* at 2\|3/);
+  });
+  it('refuses a 4-page reply with a page left unmarked', () => {
+    expect(splitMarkedReply('<translation><pb n="1"/>a b<pb n="2"/>c d<pb n="4"/>e f</translation>', [1, 2, 3, 4]).ok).toBe(false);
   });
 });
