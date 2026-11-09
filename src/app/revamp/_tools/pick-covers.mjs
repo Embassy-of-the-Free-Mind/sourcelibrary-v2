@@ -41,8 +41,23 @@ async function judge(url) {
   return { src: url, detail, aspect, crop: { x: -(info.cropOffsetLeft ?? 0) / meta.width, y: -(info.cropOffsetTop ?? 0) / meta.height, w: side / meta.width, aspect } };
 }
 
-function candidates(snap) {
-  const items = snap.g?.items || snap.items || [];
+// Hand-written plate filters from authored.ts (e.g. Slime Moulds keeps only slime-mould plates).
+const AUTH = fs.readFileSync(path.join(process.cwd(), 'src/app/revamp/_data/authored.ts'), 'utf8');
+function plateFilter(slug) {
+  const block = AUTH.split(/\n  '?([a-z-]+)'?: \{/);
+  const i = block.indexOf(slug);
+  if (i < 0) return null;
+  const body = block[i + 1] || '';
+  const pm = body.match(/plateMatch: '([^']+)'/);
+  const wm = body.match(/wholeBookMatch: '([^']+)'/);
+  if (!pm) return null;
+  const rx = new RegExp(pm[1], 'i'); const whole = wm ? new RegExp(wm[1], 'i') : null;
+  return (it) => rx.test(String(it.description || '')) || (whole?.test(String(it.bookTitle || '')) ?? false);
+}
+
+function candidates(snap, slug) {
+  const keep = plateFilter(slug);
+  const items = (snap.g?.items || snap.items || []).filter((i) => !keep || keep(i));
   const pics = items
     .filter((i) => {
       const a = Number(i.aspect) || 0;
@@ -71,10 +86,10 @@ const out = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {};
 const files = fs.readdirSync(SNAP).filter((f) => f.endsWith('.json') && (!f.startsWith('_') || f.startsWith('_set-')));
 for (const f of files) {
   const slug = f.replace(/^_set-/, '').replace(/\.json$/, '');
-  if (out[slug]?.length) continue;
+  if (out[slug]?.length && !process.argv.includes(slug)) continue;
   const snap = JSON.parse(fs.readFileSync(path.join(SNAP, f), 'utf8'));
   const good = [];
-  for (const url of candidates(snap)) {
+  for (const url of candidates(snap, slug)) {
     const j = await judge(url).catch(() => null);
     if (j) good.push(j);
     if (good.length >= 4) break;
