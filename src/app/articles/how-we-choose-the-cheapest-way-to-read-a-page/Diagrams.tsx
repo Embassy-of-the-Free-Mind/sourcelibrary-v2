@@ -1,8 +1,8 @@
 /**
  * Diagrams for "How we choose the cheapest way to read a page" (#6740). Server-rendered SVG; a point's <title> is its
- * hover text. The numbers come from the article's RUNS table (scripts/eval/experiments/
- * 2026-10-30-read-surface-box-behnken-6740.md). Colours: stone for marks, amber-700 for the live setting, teal-600
- * for the setting the test chose (the site's ParetoCharts convention).
+ * hover text. Numbers come from src/data/ocr-read-surface-6740-a6.json (scripts/eval/experiments/
+ * 2026-10-30-read-surface-box-behnken-6740.md, Amendment 6). Colours: stone for marks, amber-700 for the setting in use,
+ * teal-600 for the setting the test chose (the site's ParetoCharts convention).
  */
 const INK = '#44403c';
 const MUTED = '#57534e';
@@ -41,44 +41,56 @@ export function DesignCube() {
   );
 }
 
-export interface RunPoint { lang: 'German' | 'Latin'; label: string; calls: number; cer: number; live?: boolean; pick?: boolean }
+export interface CostPoint { name: string; relCost: number; cerPct: number; live?: boolean; pick?: boolean }
+export interface CostPanel { lang: string; books: number; points: CostPoint[] }
 
-/** One panel per language: agy calls a page across, CER up, one dot per run. */
-export function RunsChart({ runs }: { runs: RunPoint[] }) {
-  const W = 330, H = 240, M = { l: 46, r: 10, t: 24, b: 40 };
+/** Dots labelled on the chart besides the setting in use and the chosen one; the rest carry hover titles. */
+const LABELLED = ['8 a call, low', '4 a call, medium', '1 a call, high'];
+const short = (name: string) => name.replace(' a call, ', '/');
+
+/** One panel per language: cost relative to the setting in use across (log scale), error rate up, one dot per setting. */
+export function CostChart({ panels, caption }: { panels: CostPanel[]; caption: React.ReactNode }) {
+  const W = 330, H = 250, M = { l: 54, r: 14, t: 26, b: 42 };
+  const ticks = [0.5, 1, 2, 5, 10];
+  const lx0 = Math.log(0.35), lx1 = Math.log(18);
+  const X = (v: number) => M.l + ((Math.log(v) - lx0) / (lx1 - lx0)) * (W - M.l - M.r);
   return (
     <figure className="my-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {(['German', 'Latin'] as const).map((lang) => {
-          const rs = runs.filter((r) => r.lang === lang);
-          const x1 = 1.2, y1 = Math.max(0.045, ...rs.map((r) => r.cer)) * 1.1;
-          const X = (v: number) => M.l + (v / x1) * (W - M.l - M.r);
-          const Y = (v: number) => M.t + (1 - v / y1) * (H - M.t - M.b);
-          const yt = [0, 0.01, 0.02, 0.03, 0.04].filter((t) => t <= y1);
+        {panels.map(({ lang, books, points }) => {
+          const yMax = Math.ceil(Math.max(...points.map((p) => p.cerPct)) * 1.25 * 2) / 2;
+          const step = yMax <= 1 ? 0.2 : 1;
+          const yt: number[] = [];
+          for (let t = 0; t <= yMax + 1e-9; t += step) yt.push(Math.round(t * 10) / 10);
+          const Y = (v: number) => M.t + (1 - v / yMax) * (H - M.t - M.b);
           return (
-            <svg key={lang} viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={`${lang}: agy calls a page against character error rate, one dot per run`}>
-              <text x={M.l} y={14} fontSize={13} fontWeight={600} fill={INK}>{lang}</text>
-              {yt.map((t) => <g key={t}><line x1={M.l} x2={W - M.r} y1={Y(t)} y2={Y(t)} stroke={GRID} /><text x={M.l - 6} y={Y(t) + 4} fontSize={11} textAnchor="end" fill={MUTED}>{(t * 100).toFixed(0)}%</text></g>)}
-              {[0, 0.25, 0.5, 0.75, 1].map((t) => <text key={t} x={X(t)} y={H - M.b + 16} fontSize={11} textAnchor="middle" fill={MUTED}>{t}</text>)}
-              <text x={(W + M.l) / 2} y={H - 6} fontSize={11} textAnchor="middle" fill={MUTED}>agy calls a page</text>
-              <text transform={`translate(12 ${(H - M.b + M.t) / 2}) rotate(-90)`} fontSize={11} textAnchor="middle" fill={MUTED}>character error rate</text>
-              {rs.map((r) => (
-                <g key={r.label}>
-                  <circle cx={X(r.calls)} cy={Y(r.cer)} r={r.live || r.pick ? 7 : 5} fill={r.live ? LIVE : r.pick ? PICK : INK} stroke="#fff" strokeWidth={2}>
-                    <title>{`${r.label}: ${r.calls.toFixed(2)} agy calls a page, CER ${(100 * r.cer).toFixed(2)}% (accuracy, against the typed edition)`}</title>
-                  </circle>
-                  {(r.live || r.pick) && <text x={X(r.calls) + 9} y={Y(r.cer) - 8} fontSize={11} fill={INK}>{r.live ? 'live' : 'chosen'}</text>}
-                </g>
-              ))}
+            <svg key={lang} viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img"
+              aria-label={`${lang}, ${books} books: error rate against cost relative to the setting in use, for nine settings.`}>
+              <text x={M.l} y={15} fontSize={13} fontWeight={600} fill={INK}>{`${lang} (${books} books)`}</text>
+              {yt.map((t) => <g key={t}><line x1={M.l} x2={W - M.r} y1={Y(t)} y2={Y(t)} stroke={GRID} /><text x={M.l - 6} y={Y(t) + 4} fontSize={11} textAnchor="end" fill={MUTED}>{`${t}%`}</text></g>)}
+              {ticks.map((t) => <text key={t} x={X(t)} y={H - M.b + 16} fontSize={11} textAnchor="middle" fill={MUTED}>{`${t}×`}</text>)}
+              <line x1={X(1)} x2={X(1)} y1={M.t} y2={H - M.b} stroke={GRID} strokeDasharray="3 3" />
+              <text x={(W + M.l) / 2} y={H - 6} fontSize={11} textAnchor="middle" fill={MUTED}>cost a page, × the setting in use (log scale)</text>
+              <text transform={`translate(13 ${(H - M.b + M.t) / 2}) rotate(-90)`} fontSize={11} textAnchor="middle" fill={MUTED}>error rate</text>
+              {points.map((p) => {
+                const hi = p.live || p.pick;
+                const labelled = hi || LABELLED.includes(p.name);
+                return (
+                  <g key={p.name}>
+                    <circle cx={X(p.relCost)} cy={Y(p.cerPct)} r={hi ? 7 : 5} fill={p.live ? LIVE : p.pick ? PICK : INK} stroke="#fff" strokeWidth={2}>
+                      <title>{`${p.name}${p.live ? ' (in use)' : ''}: ${p.relCost.toFixed(2)} times the cost of the setting in use, error rate ${p.cerPct.toFixed(2)}%`}</title>
+                    </circle>
+                    {labelled && <text x={X(p.relCost)} y={Y(p.cerPct) + (p.live ? 20 : -11)} fontSize={10} textAnchor="middle" fill={hi ? INK : MUTED}>
+                      {p.live ? `${short(p.name)} (in use)` : short(p.name)}
+                    </text>}
+                  </g>
+                );
+              })}
             </svg>
           );
         })}
       </div>
-      <figcaption className="text-sm text-muted mt-2 font-sans">
-        Each dot is one run: the same target page of every book read at one combination of settings. Amber: the live
-        setting (two runs). Teal: the setting the test chose for Latin. Hover a dot for its settings and numbers.
-        Character error rate is measured against the human-typed edition of each page (German n = 35 books, Latin n = 34).
-      </figcaption>
+      <figcaption className="text-sm text-muted mt-2 font-sans">{caption}</figcaption>
     </figure>
   );
 }

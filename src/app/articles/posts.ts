@@ -535,11 +535,11 @@ export const posts: BlogPost[] = [
     slug: 'how-we-choose-the-cheapest-way-to-read-a-page',
     title: 'How we choose the cheapest way to read a page',
     subtitle:
-      'Every page we read uses part of a weekly allowance charged in tokens. We tested how many pages go in a call and how much the model thinks, against typed editions.',
+      'Two settings decide most of what it costs to read a page. We tested them together, against typed editions, with the rule for choosing written down first.',
     summary:
-      'Reading a page uses an allowance charged in tokens. We tested pages per call and thinking on 145 German and Latin books with typed editions.',
+      'Blocking, a rule written before the data, and staged tests: how we compared reading settings on 145 German and Latin books with typed editions.',
     date: '31 October 2026',
-    readTime: '12 min read',
+    readTime: '10 min read',
     kind: 'research',
     // Glauber, Furni Novi Philosophici (1649), reader page 25, opened by eye: a full Fraktur text page.
     image: 'https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg',
