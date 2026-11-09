@@ -354,6 +354,8 @@
 # Atlas egress meter (#5189, PR #7898): daily bytes from Atlas, ntfy HIGH over 40 GB/box/day. Counting only.
 @reboot f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f ensure
 5 0 * * * f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f report
+# Hourly attribution sample (#5189, 2026-11-09): ~55 min of per-process socket bytes, read by the 00:05 report.
+1 * * * * f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f sample
 
 # Partner frame check (#8054): book pages on the Embassy's real page must fit their frame. Pages ntfy on a failure or if it cannot run; silent when clean.
 20 6 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; cd /root/sourcelibrary && flock -n /tmp/sl-embed-frame.lock timeout 20m node scripts/audit/embed-frame-height.mjs --alert --shots /var/log/sourcelibrary/embed-frame >> /var/log/sourcelibrary/embed-frame-height.log 2>&1
