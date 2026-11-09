@@ -166,6 +166,9 @@ describe('quotes', () => {
       expect(ground(text, { question: q }).report.blockquotesUnquoted).toBe(1);
     }
     // Negative twin: the same unsupported blockquote, no rewrite asked for — still removed.
+    for (const q of ["Who translated Ficino's Plato?", 'Was the play an adaptation of the novel?', 'Is this an adapted text?']) {
+      expect(ground(text, { question: q }).report.blockquotesRemoved).toBe(1);
+    }
     const notAsked = ground(text, { question: 'What does the bird song mean?' });
     expect(notAsked.report.blockquotesRemoved).toBe(1);
     expect(notAsked.out).not.toContain('Rejoice');

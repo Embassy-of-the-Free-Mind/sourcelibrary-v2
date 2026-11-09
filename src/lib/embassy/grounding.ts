@@ -594,8 +594,16 @@ const LEAD_IN_COLON = /:(\s*)$/;
  * Such a blockquote is kept and loses its quote markers instead — the same
  * treatment an unsupported inline quote gets — so it no longer asserts that a
  * page says it. Every other unsupported blockquote is still removed.
+ * "Translate", "adapt" and "simplify" count only when aimed at a text
+ * ("translate this", "the adapted version"): "Who translated Ficino?" is a
+ * question, not a request, and must not let an invented quote survive.
  */
-export const REWRITE_REQUEST = /\b(?:modern\w*\s+(?:english|language|spelling|prose|words|terms|idiom)|moderni[sz]\w*|rewrit\w*|re-writ\w*|rephras\w*|paraphras\w*|adapt\w*|plain(?:er)?\s+english|simpl(?:e|er)\s+(?:english|language|words|terms)|simplif\w*|translat\w*|in\s+your\s+own\s+words)/i;
+const AT_A_TEXT = String.raw`\s+(?:it|this|that|these|them|the\s+\w+)`;
+export const REWRITE_REQUEST = new RegExp(
+  String.raw`\b(?:modern\w*\s+(?:english|language|spelling|prose|words|terms|idiom)|moderni[sz]\w*|rewrit\w*|re-writ\w*|rephras\w*|paraphras\w*|in\s+your\s+own\s+words|plain(?:er)?\s+english|simpl(?:e|er)\s+(?:english|language|words|terms)`
+  + String.raw`|adapt(?:ed)?(?:\s+version|${AT_A_TEXT})|simplify${AT_A_TEXT}|translate${AT_A_TEXT}|translation\s+of\s+(?:it|this|that|these))`,
+  'i',
+);
 
 /** A blockquote unit with its `>` markers removed, line structure kept. */
 function unquoteBlock(raw: string): string {
