@@ -444,6 +444,17 @@ function clusters(findings, vv) {
   return findings.map((f) => ({ ...f, v: by.get(f.id), root: root(f.id) }));
 }
 const tok = (u) => (u ? (u.input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) + (u.cache_read_input_tokens ?? 0) : 0);
+/** Prereg §7: price-weighted tokens (input 1, cache write 1.25, cache read 0.1, output 5; Sonnet 0.6 of Opus). */
+const wtok = (u, model) => (u ? ((u.input_tokens ?? 0) + 1.25 * (u.cache_creation_input_tokens ?? 0) + 0.1 * (u.cache_read_input_tokens ?? 0) + 5 * (u.output_tokens ?? 0)) * (/sonnet/.test(model ?? '') ? 0.6 : 1) : 0);
+/** Prereg §7 scope: OCR = transcription page defects + every break defect (R's like-for-like); translation = English page defects. */
+const scopeOf = (f) => (!f.break && f.layer === 'english' ? 'translation' : 'ocr');
+/** The run's team@ weekly delta in % (--weekly-delta=, else meter-start.json / meter-end.json beside DIR). */
+function weeklyDelta() {
+  if (arg('weekly-delta')) return Number(arg('weekly-delta'));
+  const m = (f) => { try { return JSON.parse(fs.readFileSync(path.join(path.dirname(DIR), f), 'utf8')).weekly; } catch { return null; } };
+  const a = m('meter-start.json'), b = m('meter-end.json');
+  return a != null && b != null ? b - a : null;
+}
 
 export function analyze({ quiet = false } = {}) {
   const F = J('frame.json');
@@ -467,17 +478,25 @@ export function analyze({ quiet = false } = {}) {
     const confirmedRoots = new Set(cl.filter((f) => f.v?.verdict === 'confirmed').map((f) => f.root));
     const seriousRoots = new Set(cl.filter((f) => f.v?.verdict === 'confirmed' && f.v?.serious === true).map((f) => f.root));
     const rBad = bookBad(av.R);
-    const brow = { id: u.id, lang: u.lang, union_confirmed: confirmedRoots.size, union_serious: seriousRoots.size, R_bad: rBad };
+    const ocrRoots = (fs_) => new Set(fs_.filter((f) => scopeOf(f) === 'ocr' && f.v?.verdict === 'confirmed' && f.v?.serious === true).map((f) => f.root));
+    const trRoots = (fs_) => new Set(fs_.filter((f) => scopeOf(f) === 'translation' && f.v?.verdict === 'confirmed' && f.v?.serious === true).map((f) => f.root));
+    const uOcr = ocrRoots(cl), uTr = trRoots(cl);
+    const brow = { id: u.id, lang: u.lang, union_confirmed: confirmedRoots.size, union_serious: seriousRoots.size, union_serious_ocr: uOcr.size, union_serious_tr: uTr.size, R_bad: rBad };
     for (const a of armIds) {
       const mine = cl.filter((f) => f.arm === a);
+      const mOcr = mine.filter((f) => scopeOf(f) === 'ocr');
+      const armRows = a === 'R' ? [] : armJobs(u).filter((j) => j.arm === a).map((j) => V.get(j.id));
       const conf = new Set(mine.filter((f) => f.v?.verdict === 'confirmed').map((f) => f.root));
       const ser = new Set(mine.filter((f) => f.v?.verdict === 'confirmed' && f.v?.serious === true).map((f) => f.root));
       const rec = { raised: mine.length, confirmed_raised: mine.filter((f) => f.v?.verdict === 'confirmed').length, confirmed: conf.size, serious: ser.size,
         recall: confirmedRoots.size ? conf.size / confirmedRoots.size : null, serious_recall: seriousRoots.size ? ser.size / seriousRoots.size : null,
+        ocr_raised: mOcr.length, ocr_confirmed_raised: mOcr.filter((f) => f.v?.verdict === 'confirmed').length, serious_ocr: ocrRoots(mine).size, serious_tr: trRoots(mine).size,
+        serious_ocr_recall: uOcr.size ? ocrRoots(mine).size / uOcr.size : null,
+        wtok: armRows.reduce((s, r) => s + wtok(r?.usage, r?.model), 0),
         bad: bookBad(av[a]), calls: av[a].calls, tokens_in: (av[a].usage ?? []).reduce((s, x) => s + tok(x), 0), tokens_out: (av[a].usage ?? []).reduce((s, x) => s + (x?.output_tokens ?? 0), 0) };
       per[a].books.push(rec); brow[a] = rec;
     }
-    brow.V = { tokens_in: tok(vr.usage), tokens_out: vr.usage?.output_tokens ?? 0, findings: cl.length };
+    brow.V = { tokens_in: tok(vr.usage), tokens_out: vr.usage?.output_tokens ?? 0, wtok: wtok(vr.usage, vr.model), findings: cl.length };
     books.push(brow);
   }
   const n = books.length;
@@ -485,6 +504,7 @@ export function analyze({ quiet = false } = {}) {
   for (const a of armIds) {
     const bs = per[a].books;
     const raised = bs.reduce((s, b) => s + b.raised, 0), cr = bs.reduce((s, b) => s + b.confirmed_raised, 0);
+    const oRaised = bs.reduce((s, b) => s + b.ocr_raised, 0), oCr = bs.reduce((s, b) => s + b.ocr_confirmed_raised, 0);
     const ctl = Object.fromEntries(Object.entries(per[a].ctl).map(([k, [j, c]]) => [k, { judged: j, caught: c }]));
     const valid = a === 'R' ? true : Object.values(ctl).every((c) => c.judged >= 9 && c.caught / c.judged >= 0.9);
     arms[a] = {
@@ -492,6 +512,11 @@ export function analyze({ quiet = false } = {}) {
       findings_per_book: r3(mean(bs.map((b) => b.raised))), confirmed_per_book: r3(mean(bs.map((b) => b.confirmed))),
       serious_per_book: r3(mean(bs.map((b) => b.serious))), serious_per_book_ci: bootCI(bs.map((b) => b.serious)),
       precision: raised ? r3(cr / raised) : null, raised, confirmed_raised: cr,
+      serious_ocr_per_book: r3(mean(bs.map((b) => b.serious_ocr))), serious_ocr_per_book_ci: bootCI(bs.map((b) => b.serious_ocr)),
+      serious_tr_per_book: r3(mean(bs.map((b) => b.serious_tr))), serious_tr_per_book_ci: bootCI(bs.map((b) => b.serious_tr)),
+      ocr_precision: oRaised ? r3(oCr / oRaised) : null, ocr_raised: oRaised, ocr_confirmed_raised: oCr,
+      serious_ocr_recall_vs_union: r3(mean(bs.filter((b) => b.serious_ocr_recall != null).map((b) => b.serious_ocr_recall))),
+      wtok_per_book: Math.round(mean(bs.map((b) => b.wtok)) ?? 0),
       recall_vs_union: r3(mean(bs.filter((b) => b.recall != null).map((b) => b.recall))),
       serious_recall_vs_union: r3(mean(bs.filter((b) => b.serious_recall != null).map((b) => b.serious_recall))),
       bad_books: bs.filter((b) => b.bad).length,
@@ -506,23 +531,46 @@ export function analyze({ quiet = false } = {}) {
   arms.R.tokens_per_call_8405 = { in: Math.round(mean(rTok.map(tok))), out: Math.round(mean(rTok.map((x) => x.output_tokens ?? 0))), calls: rTok.length };
   const vVals = books.map((b) => b.V);
   const vValid = vCtl.raised ? vCtl.confirmed / vCtl.raised >= 0.9 : false;
-  // Decision (prereg §6).
+  // Quota (prereg §7): the run's weekly delta spread over the run's price-weighted tokens; R priced from its #8405 rows.
+  const runW = rows.reduce((s, r) => s + wtok(r.usage, r.model), 0);
+  const delta = weeklyDelta();
+  const pctPerW = delta != null && runW ? delta / runW : null;
+  const RW = jsonl(path.join(F.r_dir, 'verdicts.jsonl')).filter((r) => r.usage);
+  arms.R.wtok_per_book = Math.round(mean(RW.map((r) => wtok(r.usage, r.model))) * 15);
+  const vW = Math.round(mean(books.map((b) => b.V.wtok)) ?? 0);
+  for (const a of armIds) {
+    const A = arms[a];
+    A.needs_V = a !== 'R' && A.ocr_precision != null && arms.R.ocr_precision != null && A.ocr_precision < arms.R.ocr_precision - 0.10;
+    A.wtok_per_book_with_V = A.wtok_per_book + (A.needs_V ? vW : 0);
+    A.pct_week_per_book = pctPerW ? +(A.wtok_per_book_with_V * pctPerW).toFixed(4) : null;
+    A.books_per_pct_week = A.pct_week_per_book ? r3(1 / A.pct_week_per_book) : null;
+    A.serious_ocr_per_pct_week = A.books_per_pct_week != null && A.serious_ocr_per_book != null ? r3(A.serious_ocr_per_book * A.books_per_pct_week) : null;
+    A.serious_tr_per_pct_week = A.books_per_pct_week != null && A.serious_tr_per_book != null ? r3(A.serious_tr_per_book * A.books_per_pct_week) : null;
+  }
   const R = arms.R;
+  // The per-book rule of §6, reported beside the §7 rule (not used).
+  let decision_per_book;
+  { const cand = COST_ORDER.filter((a) => a !== 'R' && arms[a].valid && arms[a].serious_ocr_per_book >= R.serious_ocr_per_book);
+    const adopt = cand.find((a) => arms[a].ocr_precision >= R.ocr_precision - 0.10);
+    decision_per_book = adopt ? `adopt ${adopt}` : cand.length ? `standing check becomes ${cand[0]} + V` : 'R stays'; }
   let decision;
   if (n < 40) decision = `too few complete study books (${n} < 40): no decision`;
   else if (!vValid) decision = `V invalid on controls (${vCtl.confirmed}/${vCtl.raised} planted findings confirmed): no decision`;
+  else if (pctPerW == null) decision = 'no weekly delta (meter-end.json missing): no decision';
   else {
-    const cand = COST_ORDER.filter((a) => a !== 'R' && arms[a].valid && arms[a].serious_per_book >= R.serious_per_book);
-    const adopt = cand.find((a) => arms[a].precision >= R.precision - 0.10);
-    decision = adopt ? `adopt ${adopt}` : cand.length ? `standing check becomes ${cand[0]} + V` : 'R stays';
+    const cand = COST_ORDER.filter((a) => a !== 'R' && arms[a].valid && arms[a].serious_ocr_per_pct_week > R.serious_ocr_per_pct_week)
+      .sort((a, b) => arms[b].serious_ocr_per_pct_week - arms[a].serious_ocr_per_pct_week);
+    decision = cand.length ? `adopt ${cand[0]}${arms[cand[0]].needs_V ? ' + V' : ''}` : 'R stays';
   }
   const score = {
     generated_at: new Date().toISOString(), issue: 8478, prereg: 'scripts/eval/experiments/2026-11-09-callshape-prereg-8478.md',
     study_books_complete: n, units_framed: F.units.length,
-    union: { confirmed_per_book: r3(mean(books.map((b) => b.union_confirmed))), serious_per_book: r3(mean(books.map((b) => b.union_serious))) },
+    union: { confirmed_per_book: r3(mean(books.map((b) => b.union_confirmed))), serious_per_book: r3(mean(books.map((b) => b.union_serious))),
+      serious_ocr_per_book: r3(mean(books.map((b) => b.union_serious_ocr))), serious_tr_per_book: r3(mean(books.map((b) => b.union_serious_tr))) },
+    quota: { weekly_delta_pct: delta, run_wtok: Math.round(runW), pct_week_per_mwtok: pctPerW ? +(pctPerW * 1e6).toFixed(4) : null, V_wtok_per_book: vW },
     arms, V: { controls: vCtl, valid: vValid, calls: vVals.length, tokens_in_per_book: Math.round(mean(vVals.map((x) => x.tokens_in)) ?? 0), tokens_out_per_book: Math.round(mean(vVals.map((x) => x.tokens_out)) ?? 0) },
     calls_made: rows.filter((r) => !r.skipped).length, calls_failed: rows.filter((r) => !r.verdict && !r.skipped).length,
-    decision,
+    decision, decision_per_book,
   };
   if (!quiet) {
     fs.mkdirSync(RESULTS, { recursive: true });
