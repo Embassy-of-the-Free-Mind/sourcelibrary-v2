@@ -199,15 +199,19 @@ case "${1:-run}" in
         continue
       fi
       # 3 failed chunks in a row (skips excluded) stop the route
-      fails=0
+      # (a disable records the newest failure it counted in <route>.FAILS-COUNTED, so removing .DISABLED gives the route
+      # three fresh tries; without it the same three old failures disabled the route again on the next tick, 2026-11-09)
+      fails=0; counted=$(cat "$ST/$route.FAILS-COUNTED" 2>/dev/null)
       for t in $(ls -1 "$Q"/done "$Q"/failed 2>/dev/null | grep "^zy-ocr-$route-c[0-9]*\.sh$" | sort -r); do   # newest chunk first
         [ -e "$Q/done/$t" ] && break
+        [ "$t" = "$counted" ] && break
         grep -q OCR-FILLER-SKIP "$OUT/${t%.sh}/task.log" 2>/dev/null && continue
         fails=$((fails + 1))
       done
       if [ "$fails" -ge 3 ]; then
         echo "$(now) $route: $fails chunks failed in a row: route disabled (rm $ST/$route.DISABLED to retry)"
         touch "$ST/$route.DISABLED"
+        ls -1 "$Q"/failed | grep "^zy-ocr-$route-c[0-9]*\.sh$" | sort -r | head -1 > "$ST/$route.FAILS-COUNTED"
         page "OCR filler: route $route disabled (#6871)" "$fails chunks in a row failed; logs gex45:$OUT/zy-ocr-$route-c*/task.log"
         continue
       fi
