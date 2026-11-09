@@ -157,7 +157,7 @@ const nextConfig: NextConfig = {
             value: [
               // Next.js requires 'unsafe-inline' for styles and 'unsafe-eval' for dev; in prod we need 'unsafe-inline' for React inline styles
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com https://www.youtube.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               // Images: self + all configured remote image sources + data URIs for base64 thumbnails.
@@ -170,7 +170,9 @@ const nextConfig: NextConfig = {
               // (with the R2 bucket's missing CORS header, #4630).
               "connect-src 'self' https://images.sourcelibrary.org https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
-              "frame-src 'self' https://translate.google.com",
+              // YouTube: the IFrame API script and its player, for the podcast read-along
+              // (/articles/solve-et-coagula), which falls back to our own MP4 when they fail.
+              "frame-src 'self' https://translate.google.com https://www.youtube.com",
               "worker-src 'self' blob: data:",
               "object-src 'none'",
               "base-uri 'self'",
