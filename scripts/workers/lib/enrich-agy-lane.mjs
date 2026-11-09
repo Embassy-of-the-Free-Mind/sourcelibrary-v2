@@ -56,9 +56,8 @@ import { readPools, choosePool, poolName } from '../../lib/agy-pools.mjs';
 import { quotaFloor } from '../../batch/cli-ocr-lane.mjs';
 import { geminiEngine, notRecorded, codeVersion, host, contentHash } from '../../lib/write-provenance.mjs';
 import { provenanceUpdate } from '../../lib/field-provenance.mjs';
-import { NOT_HELD } from '../../lib/pipeline-hold.mjs';
 import { buildPageIndex, groundQuotes } from './quote-grounding.mjs';
-import { gapFilter, hasWithheldPages, stillEligible, enrichPauseMode, BOOKS_COLL, MIN_CHAPTER_PAGES } from './enrich-batch-lane.mjs';
+import { gapFilter, enrichmentSkip, admissionClause, stillEligible, enrichPauseMode, BOOKS_COLL, MIN_CHAPTER_PAGES } from './enrich-batch-lane.mjs';
 
 export const JOB = 'enrich-agy';
 export const CALL_SITE = 'scripts/workers/lib/enrich-agy-lane.mjs';
@@ -135,7 +134,7 @@ async function releaseClaim(states, bookId, me, how) {
  */
 export async function runEnrichAgyLane(o) {
   const { db, phases, args, dryRun } = o;
-  const report = { written: 0, chaptersWritten: 0, calls: 0, failed: 0, dropped: 0, released: 0, considered: 0, stop: null, pool: null, errors: [], books: [] };
+  const report = { written: 0, chaptersWritten: 0, calls: 0, failed: 0, dropped: 0, released: 0, considered: 0, skipped: {}, admittedWithWithheld: 0, admittedHeld: 0, stop: null, pool: null, errors: [], books: [] };
   const pause = enrichPauseMode(o.control, { batchMode: false });
   if (pause.mode !== 'run') { report.stop = pause.reason; console.log(`[ENRICH-AGY] ${pause.reason}: nothing called`); return report; }
 
@@ -181,11 +180,11 @@ export async function runEnrichAgyLane(o) {
   // Compare mode writes nothing, so it may read a held book (the Siku cohort stays held, #5600).
   const retryEmpty = args.includes('--retry-empty-chapters');
   if (retryEmpty && !o.bookIds?.length) { report.stop = '--retry-empty-chapters needs --book or --book-ids-file'; console.log(`[ENRICH-AGY] ${report.stop}`); return report; }
-  const filter = compareDir ? { id: { $in: o.bookIds } } : retryEmpty ? retryEmptyFilter(gapFilter(o.scopeFilter)) : gapFilter(o.scopeFilter);
+  const filter = compareDir ? { id: { $in: o.bookIds } } : retryEmpty ? retryEmptyFilter(gapFilter(o.scopeFilter)) : gapFilter(o.scopeFilter, { allowHeld: true });
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
   const known = new Map((await states.find({}, { projection: { stage: 1, lane: 1 } }).toArray()).map(r => [r._id, r]));
   const cursor = db.collection('books').find(filter).batchSize(1000).sort({ read_count: -1, pages_translated: -1 })
-    .project({ id: 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: { $size: { $ifNull: ['$chapters', []] } }, chapters_extracted_at: 1, pages_count: 1 });
+    .project({ id: 1, 'pipeline_auto.hold': 1, pages_translatable: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: { $size: { $ifNull: ['$chapters', []] } }, chapters_extracted_at: 1, pages_count: 1 });
 
   let stop = null, claimed = 0;
   const work = [];
@@ -201,7 +200,14 @@ export async function runEnrichAgyLane(o) {
       if (compareDir) { claimed++; return { id: b.id, needIndex: true, needChapters: (b.pages_count || 0) >= MIN_CHAPTER_PAGES, compareDir }; }
       const prior = known.get(b.id);
       if (prior && !(prior.stage === 'failed' && prior.lane !== 'agy')) continue;
-      if (!retryEmpty && await hasWithheldPages(db, b.id)) continue;
+      let withheldIds = [];
+      if (!retryEmpty) {
+        const sk = await enrichmentSkip(db, b, { allowHeld: true, tolerateWithheld: true });
+        if (sk.skip) { report.skipped[sk.skip] = (report.skipped[sk.skip] || 0) + 1; continue; }
+        withheldIds = sk.withheldIds;
+        if (withheldIds.length) report.admittedWithWithheld++;
+        if (b.pipeline_auto?.hold) report.admittedHeld++;
+      }
       const hasIndexRow = retryEmpty || !!(await db.collection('book_indexes').findOne({ book_id: b.id }, { projection: { _id: 1 } }));
       const needIndex = !retryEmpty && (!b.summary || !hasIndexRow);
       const needChapters = needsChapters(b, { retryEmpty });
@@ -210,7 +216,7 @@ export async function runEnrichAgyLane(o) {
       const how = await claimBook(states, b.id, me);
       if (!how) continue;
       claimed++;
-      return { id: b.id, needIndex, needChapters, how, chaptersOnly: retryEmpty };
+      return { id: b.id, needIndex, needChapters, how, chaptersOnly: retryEmpty, withheldIds };
     }
   };
 
@@ -249,6 +255,9 @@ export async function runEnrichAgyLane(o) {
   await cursor.close().catch(() => {});
   report.stop = stop || (Date.now() >= deadline ? 'deadline' : claimed >= limit ? 'limit' : 'queue empty');
   for (const e of report.errors.slice(0, 20)) console.log(`    ${e}`);
+  // One line that says why a run is small: how many candidates were considered and why each skipped one was (#8482 B).
+  const skips = Object.entries(report.skipped).sort((x, y) => y[1] - x[1]).map(([k, n]) => `${k} ${n}`).join(', ') || 'none';
+  console.log(`[ENRICH-AGY] run ${run} skips: considered ${report.considered}; skipped ${skips}; admitted ${report.admittedWithWithheld} with withheld pages left out, ${report.admittedHeld} held; failed ${report.failed}`);
   console.log(`[ENRICH-AGY] run ${run} ended (${report.stop}): ${report.written} written, ${report.chaptersWritten} chapters, ${report.calls} calls, ${report.failed} failed, ${report.released} released, ${report.dropped} dropped`);
   return report;
 }
@@ -258,7 +267,7 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
   const { db, phases } = o;
   const t0 = Date.now();
   const row = { book_id: c.id, run: me.run, pool, model, calls: 0, secs: 0, usage: { input: 0, output: 0, thinking: 0 }, parts: 1 };
-  const book = await db.collection('books').findOne({ id: c.id, ...(c.compareDir ? {} : NOT_HELD) });
+  const book = await db.collection('books').findOne({ id: c.id, ...(c.compareDir ? {} : admissionClause(true)) });
   if (!book) return { dropped: 'held or missing', calls: 0, row };
   const title = book.display_title || book.title, author = book.author || 'Unknown', lang = book.language || undefined;
   const sent = [];
@@ -295,6 +304,13 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
 
   if (c.needIndex) {
     inputs = await phases.loadPhase6Inputs(db, book);
+    // A withheld page is left OUT of the input (#8482 part B). Its English is empty by definition, but the exclusion is
+    // by id so the rule does not rest on the page projection never growing a field that carries withheld text.
+    if (c.withheldIds?.length) {
+      const out = new Set(c.withheldIds);
+      inputs.pages = inputs.pages.filter(p => !out.has(p.id));
+      row.withheld_pages_excluded = c.withheldIds.length;
+    }
     const batches = phases.planPageBatches(inputs.pages, inputs.chapterTexts);
     if (!batches.length) return fail('no translated text');
     const rangeOf = (b) => ({ start: b[0].page_number, end: b[b.length - 1].page_number });
@@ -369,7 +385,7 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
   }
 
   // Write-time recheck: the book may have been held or had a translation withheld during the call.
-  const why = await stillEligible(db, c.id, { withheld: !c.chaptersOnly });
+  const why = await stillEligible(db, c.id, { withheld: !c.chaptersOnly, allowHeld: true });
   if (why) return { dropped: why, calls: row.calls, row };
   const mine = await db.collection(BOOKS_COLL).findOne({ _id: c.id, agy_run: me.run, stage: 'agy_claimed' }, { projection: { _id: 1 } });
   if (!mine) return fail('claim lost before the write');
