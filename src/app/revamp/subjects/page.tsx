@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
 import SubjectsBrowser, { type Pic, type SubjectRow } from '../_components/SubjectsBrowser';
 import { collectionModel, dataFile, snapshotSlugs } from '../_lib/data';
@@ -10,13 +9,7 @@ interface Subj { id: string; label: string; level: number; parents: string[]; al
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
-// Ways to say what a subject is.
-const INTROS = [
-  'Browse the library by what its books and images are about.',
-  'Start with a broad subject, then narrow down: from Medicine to Paracelsianism, from Religion to Sufism.',
-  'Books and images from every century, arranged by subject.',
-  'Find what the library holds on any subject, in any language.',
-];
+const INTRO = 'Browse the library by what its books and images are about.';
 
 /** Pictures per subject, saved from the public gallery by _tools/snapshot-subject-images.py. */
 function pictures(): Record<string, Pic[]> {
@@ -27,9 +20,7 @@ function pictures(): Record<string, Pic[]> {
   return main;
 }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ t?: string }> }) {
-  const { t } = await searchParams;
-  const ti = Math.min(Math.max(Number(t) || 1, 1), INTROS.length) - 1;
+export default function Page() {
   const pics = pictures();
   const all = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
   // Subjects with saved data get their own page in the prototype; the rest are listed without a link.
@@ -47,13 +38,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
         <PlateWall tiles={[...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
-        <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-3">
-          <span>Intro</span>
-          {INTROS.map((_x, i) => <Link key={i} href={`/revamp/subjects?t=${i + 1}`} className={ti === i ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{i + 1}</Link>)}
-        </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Subjects</h1>
-          <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{INTROS[ti]}</p>
+          <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{INTRO}</p>
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[14px] md:text-[15px] font-medium">
             {[`${groups.length} broad subjects`, `${new Set(all.map((x) => x.id)).size} subjects`].map((l, i) => <span key={l} style={{ color: RAMP[i] }}>{l}</span>)}
           </div>
