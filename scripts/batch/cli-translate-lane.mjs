@@ -316,23 +316,34 @@ async function finishMain(arg) {
   const tally = { written: 0, not_written: 0, chunks: 0, lite_waiting: 0, lite_released: 0 };
   const rungs = rungTracker(db);
   const job = `cli-tr-finish-${new Date().toISOString().slice(0, 10)}`;
-  const worker = async () => {
-    while (!stop) {
-      if (budget <= 0) { stop ??= 'page budget spent'; break; }
-      if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      if (bi >= books.length) { stop ??= 'queue empty'; break; }
-      const q = quotaFloor(quotaBuckets(readQuotaStdout(home)) ?? quotaBuckets(readQuotaStdout(home)), { floor5h, lane: 'cli-translate' });
-      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+  // The next book with pages it can translate now (most books near the end of a frame have none: health-blocked,
+  // ledgered, or waiting on a correction), found before /quota is read, so an empty book costs one query, not a call.
+  const nextChunk = async () => {
+    while (bi < books.length) {
       const book = books[bi++];
       const open = (await db.collection('pages').find(finishPages(book.id), { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).toArray()).filter((p) => !ledger.has(p.id));
       if (!open.length) continue;
       const lite = new Set((await gatePages(db, open)).filter(uncheckedLite).map((p) => p.id));
-      if (lite.size && waits[book.id] == null) { waits[book.id] = Date.now(); fs.writeFileSync(WAITS, JSON.stringify(waits)); }
+      if (lite.size && waits[book.id] == null) { waits[book.id] = Date.now(); if (APPLY) fs.writeFileSync(WAITS, JSON.stringify(waits)); }
       const split = gateSplit(open, lite, waits[book.id] ?? null);
       tally.lite_waiting += split.wait.length;
       const ready = new Set([...split.now, ...split.released]);
-      const take = open.filter((p) => ready.has(p.id)).slice(0, Math.min(CHUNK, budget));
-      if (!take.length) continue;
+      const pages = open.filter((p) => ready.has(p.id));
+      if (pages.length) return { book, open, split, pages };
+    }
+    return null;
+  };
+  const worker = async () => {
+    while (!stop) {
+      if (budget <= 0) { stop ??= 'page budget spent'; break; }
+      if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
+      const c = await nextChunk();
+      if (!c) { stop ??= 'queue empty'; break; }
+      const { book, open, split } = c;
+      const q = quotaFloor(quotaBuckets(readQuotaStdout(home)) ?? quotaBuckets(readQuotaStdout(home)), { floor5h, lane: 'cli-translate' });
+      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+      if (budget <= 0) { stop ??= 'page budget spent'; break; }
+      const take = c.pages.slice(0, Math.min(CHUNK, budget));
       budget -= take.length;
       const released = take.filter((p) => split.released.includes(p.id)).length;
       tally.lite_released += released;
@@ -362,7 +373,7 @@ async function finishMain(arg) {
       }
       console.log(`${tag}  ${JSON.stringify(tally)}`);
       // The rest of this book next, ahead of books further from done; only now, so no two workers hold one book.
-      if (open.length - split.wait.length > take.length) books.splice(bi, 0, book);
+      if (c.pages.length > take.length) books.splice(bi, 0, book);
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
