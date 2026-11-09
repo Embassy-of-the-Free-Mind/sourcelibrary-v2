@@ -83,15 +83,15 @@
    }
   ]
  },
- "/articles/solve-et-coagula/atalanta-title-page-race.jpg": {
+ "/articles/solve-et-coagula/episode-hero.jpg": {
   "srcset": [
    {
-    "src": "/articles/heroes/ca09813c639c-1280.avif",
+    "src": "/articles/heroes/40e037bd39ae-1280.avif",
     "w": 1280
    },
    {
-    "src": "/articles/heroes/ca09813c639c-1920.avif",
-    "w": 1800
+    "src": "/articles/heroes/40e037bd39ae-1920.avif",
+    "w": 1280
    }
   ]
  },

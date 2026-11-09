@@ -10,16 +10,16 @@ import { LISTS, type ReadAlongLink } from './extras';
 // and lists it reuses (see ReadAlong.tsx and extras.ts). Everything said about the episode below comes
 // from that transcript and its chapter list. Spanish twin: src/app/es/articles/solve-et-coagula.
 //
-// Hero: a detail of the engraved title page of Maier's Atalanta fugiens (Oppenheim, 1618), the race of
-// Atalanta and Hippomenes with the imprint above it, cut from the library's scan of reader page 10 (the
-// scan's right-hand leaf); the book is shown on screen in the episode.
+// Hero: a frame of the episode itself (1:31:10), Alexander and Derek side by side; Derek chose a picture of
+// the podcast over a plate (2026-11-09). Screen grabs from his tour of the site sit in the transcript
+// (FIGURES in ReadAlong.tsx), cut from the episode video with the browser bar cropped off.
 
 const TITLE = 'Solve et Coagula: Derek Lomas on Source Library';
 const DESCRIPTION =
   'Derek Lomas talks with Alex of Agrippa’s Diary about Ficino, Agrippa, Maier and Source Library. Watch the episode and click any word of the transcript.';
-const HERO = '/articles/solve-et-coagula/atalanta-title-page-race.jpg';
+const HERO = '/articles/solve-et-coagula/episode-hero.jpg';
 const HERO_ALT =
-  'Engraving from the title page of Maier’s Atalanta fugiens (1618): Hippomenes runs holding golden apples while Atalanta stoops to pick one up, with two lions and a round temple behind them.';
+  'Alexander of Agrippa’s Diary (left) and Derek Lomas (right), in the video call recorded for the Solve et Coagula podcast.';
 
 export const metadata: Metadata = withArticleMeta('solve-et-coagula', {
   title: `${TITLE} - Articles - Source Library`,

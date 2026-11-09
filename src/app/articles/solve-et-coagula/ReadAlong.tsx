@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 
 // The read-along for the Solve et Coagula episode: the video, its chapters and a transcript in which
 // every word is timed. Click a word to seek; the word being spoken is highlighted; "Following" keeps it
@@ -21,6 +22,36 @@ const YT_TIMEOUT_MS = 10_000;
 const POSTER = '/articles/solve-et-coagula/poster.jpg';
 
 type Lang = 'en' | 'es';
+
+// Screen grabs from Derek's tour of the site, cut from the episode video (browser bar cropped off). Each sits
+// before the first paragraph that starts at or after its time; clicking it plays from that moment.
+interface Figure { s: number; src: string; alt: Record<Lang, string>; caption: Record<Lang, string> }
+const FIGURES: Figure[] = [
+  { s: 1850, src: '/articles/solve-et-coagula/screen-1850.jpg',
+    alt: { en: 'The Source Library catalogue: a search box and a grid of book covers, sorted by most read.', es: 'El catálogo de Source Library: un buscador y una cuadrícula de portadas, ordenadas por las más leídas.' },
+    caption: { en: 'The catalogue, every book in the library.', es: 'El catálogo, todos los libros de la biblioteca.' } },
+  { s: 2050, src: '/articles/solve-et-coagula/screen-2050.jpg',
+    alt: { en: 'Ask the Librarian: an answer about planetary seals and magic squares, with a picture from the books and links to them.', es: 'Pregunta al bibliotecario: una respuesta sobre sellos planetarios y cuadrados mágicos, con una imagen de los libros y enlaces a ellos.' },
+    caption: { en: 'Ask the Librarian: an answer drawn from the books, with links to the pages.', es: 'Pregunta al bibliotecario: una respuesta sacada de los libros, con enlaces a las páginas.' } },
+  { s: 2330, src: '/articles/solve-et-coagula/screen-2330.jpg',
+    alt: { en: 'An emblem of Atalanta fugiens in the reader: the scan on the left, the English translation and notes on the right.', es: 'Un emblema de Atalanta fugiens en el lector: el escaneo a la izquierda, la traducción inglesa y las notas a la derecha.' },
+    caption: { en: 'Reading Atalanta fugiens: the scan beside its English translation.', es: 'Leyendo Atalanta fugiens: el escaneo junto a su traducción al inglés.' } },
+  { s: 2500, src: '/articles/solve-et-coagula/screen-2500.jpg',
+    alt: { en: 'The collection page for Hermeticism, Rosicrucians and fraternal orders, with pictures for each sub-collection.', es: 'La página de la colección de hermetismo, rosacruces y órdenes fraternales, con una imagen para cada subcolección.' },
+    caption: { en: 'A collection: secret societies and fraternal orders.', es: 'Una colección: sociedades secretas y órdenes fraternales.' } },
+  { s: 2950, src: '/articles/solve-et-coagula/screen-2950.jpg',
+    alt: { en: 'The article on Hyperborea, with its contents list in the margin.', es: 'El artículo sobre Hiperbórea, con su índice en el margen.' },
+    caption: { en: 'An article: Hyperborea.', es: 'Un artículo: Hiperbórea.' } },
+  { s: 3350, src: '/articles/solve-et-coagula/screen-3350.jpg',
+    alt: { en: 'A world map of the library: 72,309 books across 2,728 cities, marked by where they were published and where their authors were born and died.', es: 'Un mapa del mundo de la biblioteca: 72.309 libros en 2.728 ciudades, según dónde se publicaron y dónde nacieron y murieron sus autores.' },
+    caption: { en: 'The library on a map: where the books were published, and where their authors were born and died.', es: 'La biblioteca en un mapa: dónde se publicaron los libros y dónde nacieron y murieron sus autores.' } },
+  { s: 3600, src: '/articles/solve-et-coagula/screen-3600.jpg',
+    alt: { en: 'The page for The Splendour of the Sun (Splendor Solis), found by browsing pictures.', es: 'La página de El esplendor del sol (Splendor Solis), encontrada al explorar imágenes.' },
+    caption: { en: 'Browsing by pictures: Splendor Solis.', es: 'Explorar por imágenes: Splendor Solis.' } },
+  { s: 3820, src: '/articles/solve-et-coagula/screen-3820.jpg',
+    alt: { en: 'Claude’s connector settings, with Source Library being added as a connector.', es: 'La configuración de conectores de Claude, al añadir Source Library como conector.' },
+    caption: { en: 'Connecting Source Library to Claude.', es: 'Conectar Source Library con Claude.' } },
+];
 
 interface Ref {
   n: number;
@@ -367,6 +398,7 @@ export default function ReadAlong({ lang, otherLanguage }: { lang: Lang; otherLa
   };
 
   let wordIndex = 0;
+  let figCursor = 0; // next FIGURES entry to place, in reading order
 
   return (
     <div className="sc-readalong not-prose">
@@ -444,11 +476,23 @@ export default function ReadAlong({ lang, otherLanguage }: { lang: Lang; otherLa
               </button>
             </div>
             {turn.p.map((para, pi) => {
+              const paraStart = para.w[0]?.[1] ?? turn.s;
+              const figsHere: Figure[] = [];
+              while (figCursor < FIGURES.length && FIGURES[figCursor].s <= paraStart) figsHere.push(FIGURES[figCursor++]);
               const hasAside = !!(para.note || para.refs?.length);
               const refsAt = new Map<number, Ref[]>();
               para.refs?.forEach((r) => refsAt.set(r.w, [...(refsAt.get(r.w) || []), r]));
               return (
-                <div key={pi} className={`sc-para ${hasAside ? 'sc-has-aside' : ''}`}>
+                <div key={pi}>
+                {figsHere.map((f) => (
+                  <figure key={f.src} className="sc-figure" data-s={f.s} data-testid="screen-grab">
+                    <Image src={f.src} alt={f.alt[lang]} width={1280} height={658} sizes="(min-width: 1024px) 720px, 100vw" className="sc-figure-img" />
+                    <figcaption className="font-sans">
+                      <span className="sc-time">{fmtTime(f.s)}</span> {f.caption[lang]}
+                    </figcaption>
+                  </figure>
+                ))}
+                <div className={`sc-para ${hasAside ? 'sc-has-aside' : ''}`}>
                   <p className="sc-text leading-relaxed" data-testid="para">
                     {para.note && (
                       <span className="sc-note sc-note-inline" data-s={para.w[0]?.[1] ?? turn.s}>
@@ -506,6 +550,7 @@ export default function ReadAlong({ lang, otherLanguage }: { lang: Lang; otherLa
                     </aside>
                   )}
                 </div>
+                </div>
               );
             })}
           </div>
@@ -544,6 +589,10 @@ const CSS = `
 .sc-ts { font-weight: 400; letter-spacing: 0.02em; color: var(--color-muted); background: none; border: 0; padding: 0; cursor: pointer; }
 .sc-ts:hover { color: var(--color-primary); text-decoration: underline; }
 .sc-para { margin: 0 0 1rem; }
+.sc-figure { margin: 1.75rem 0; cursor: pointer; }
+.sc-figure-img { display: block; width: 100%; height: auto; border: 1px solid var(--color-border-light); border-radius: 4px; }
+.sc-figure figcaption { margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.4; color: var(--color-muted); }
+.sc-figure:hover .sc-figure-img { border-color: var(--color-accent-gold); }
 .sc-text { margin: 0; font-size: var(--reader-font-size, 1.125rem); overflow-wrap: anywhere; }
 .sc-w { cursor: pointer; border-radius: 2px; }
 .sc-w:hover { background: var(--color-warm); }
@@ -568,6 +617,7 @@ const CSS = `
 @media (min-width: 1024px) {
   .sc-para.sc-has-aside { display: grid; grid-template-columns: minmax(0, 1fr) 13.5rem; column-gap: 2rem; align-items: start; }
   .sc-para:not(.sc-has-aside) { margin-right: 15.5rem; }
+  .sc-figure { margin-right: 15.5rem; }
   .sc-has-aside .sc-note-inline { display: none; }
   .sc-note-aside { display: block; margin: 0.2rem 0 0.25rem; }
   .sc-aside { margin: 0; }

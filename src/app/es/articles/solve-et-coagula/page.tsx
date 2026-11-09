@@ -11,9 +11,9 @@ import { LISTS, type ReadAlongLink } from '@/app/articles/solve-et-coagula/extra
 const TITLE = 'Solve et Coagula: Derek Lomas habla de Source Library';
 const DESCRIPTION =
   'Derek Lomas conversa con Alex, de Agrippa’s Diary, sobre Ficino, Agripa, Maier y Source Library. El episodio, con una transcripción en español sincronizada.';
-const HERO = '/articles/solve-et-coagula/atalanta-title-page-race.jpg';
+const HERO = '/articles/solve-et-coagula/episode-hero.jpg';
 const HERO_ALT =
-  'Grabado de la portada de Atalanta fugiens de Maier (1618): Hipómenes corre con manzanas de oro mientras Atalanta se agacha a recoger una, con dos leones y un templo redondo al fondo.';
+  'Alexander, de Agrippa’s Diary (izquierda), y Derek Lomas (derecha), en la videollamada grabada para el podcast Solve et Coagula.';
 
 export const metadata: Metadata = {
   title: `${TITLE} - Source Library`,

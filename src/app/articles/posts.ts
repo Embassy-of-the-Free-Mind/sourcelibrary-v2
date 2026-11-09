@@ -134,9 +134,9 @@ export const posts: BlogPost[] = [
     date: '9 November 2026',
     readTime: 'video, 1 h 32 min',
     kind: 'interactive',
-    image: '/articles/solve-et-coagula/atalanta-title-page-race.jpg',
+    image: '/articles/solve-et-coagula/episode-hero.jpg',
     imageAlt:
-      'Engraving from the title page of Maier’s Atalanta fugiens (1618): Hippomenes runs holding golden apples while Atalanta stoops to pick one up, with two lions and a round temple behind them.',
+      'Alexander of Agrippa’s Diary (left) and Derek Lomas (right), in the video call recorded for the Solve et Coagula podcast.',
   },
   {
     slug: 'kircher-hieroglyphs',
