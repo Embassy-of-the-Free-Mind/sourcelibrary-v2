@@ -191,6 +191,8 @@
 # RETIRED 2026-11-08 (#8283): SUPERSEDED by #8279 (every translation routes to agy; paid dial $0). Ticked 46 runs as spend-dial-closed every 5 min, writing nothing. Was: */5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
 # RETIRED 2026-11-08 (#8283): SUPERSEDED by #8279; enrolled nothing since the translate NO-GO of 2026-10-10, and does not ask the router, so a GO would pull books into paid flash-lite. Was: 23 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -w 240 /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --enrol-auto --limit=40 --max-open=60" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
 @reboot sleep 60 && /root/bin/claude-rc.sh start >> /var/log/claude-rc.log 2>&1
+# Remote Control watchdog: restart the claude-rc server if it died (2026-11-09; it was found dead with no trace)
+*/10 * * * * /root/bin/claude-rc.sh ensure >> /var/log/claude-rc.log 2>&1
 # Daily digest (#5441): ONE message a day to Derek — yesterday's spend vs the dial by lane, jobs on the box,
 # DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
 # GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
