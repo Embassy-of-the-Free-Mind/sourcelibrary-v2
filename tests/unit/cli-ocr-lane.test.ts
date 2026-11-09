@@ -351,8 +351,8 @@ describe('Latin re-read (#7263)', () => {
     expect(() => parseRereadTiers('nope')).toThrow();
     expect(loadLatinByEye().print).toBeInstanceOf(Set);
   });
-  it('latin-first runs the priority tiers, then the correction, then the rest, on one pool', () => {
-    const s = latinFirstSteps({ home: '/root/.agy-milo', root: '/r', date: '2026-11-03', maxPages: 3000, concurrency: 6, apply: true });
+  it('latin-first runs the finishing steps (#8482), then the priority tiers, the correction and the rest, on one pool', () => {
+    const s = latinFirstSteps({ home: '/root/.agy-milo', root: '/r', date: '2026-11-03', maxPages: 3000, concurrency: 6, apply: true }).slice(2);
     expect(s.map((x) => x.step)).toEqual(['latin-priority', 'german-french-correct', 'latin-rest']);
     expect(s[0].args).toEqual(expect.arrayContaining(['--reread-per-call=4', '--reread-languages=Latin', '--reread-tiers=readers,period', '--out=/r/cli-ocr-reread/2026-11-03', '--agy-home=/root/.agy-milo', '--apply']));
     expect(s[1].args).toEqual(expect.arrayContaining(['correct', '--out=/r/cli-ocr-correct/2026-11-03', '--max-pages=3000']));
