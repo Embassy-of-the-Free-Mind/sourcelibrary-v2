@@ -15,6 +15,9 @@
  *   --corpus       on main only, nightly. Pages translated and OCR'd per day by lane × model (last 7 days, from the
  *                  indexed translation.updated_at / ocr.updated_at), the spend dial (system_config processing_control),
  *                  the last quality gates. Upserts {_id:'pipeline-now:corpus'}.
+ *                  Also per-day hand-off counts (GPU drafts, agy corrections, translated and completed books, first-
+ *                  translation searches and ingests) and `stalls` (#8482 part C, scripts/lib/hand-off-stalls.mjs): ntfy
+ *                  high priority once a day per edge when a stage hands 0 for 24 h after its feeder produced.
  *   --red-ntfy     on main, Mondays: one ntfy line to sourcelibrary-uptime naming every red line across the boxes
  *                  (#8283), read from the box documents. Nothing when no line is red.
  *   --dry-run      print the document (or the ntfy line), write nothing.
@@ -38,6 +41,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { redact } from './work-board-push.mjs';
 import { cronRowFor, judgeCronLine } from '../lib/lanes.mjs';
+import { windowOf, ocrStageWindows, GPU_DRAFT_LANE_RE, ARMC_LANE, evaluateStalls, edgesToPage, recordPaged, pageText, WINDOW_HOURS } from '../lib/hand-off-stalls.mjs';
 
 export const COLLECTION = 'ops_reports';
 export const TYPE = 'pipeline-now';
@@ -346,6 +350,83 @@ export function gateTime(id) {
   return m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:00.000Z` : null;
 }
 
+
+// ───────────────────────────────────────────── hand-off counts (#8482 part C)
+
+const HOUR = 36e5;
+const dayOf = (d) => new Date(d).toISOString().slice(0, 10);
+
+/**
+ * OCR pages per lane per window (last 24 h, the 72 h before), on the indexed ocr.updated_at, hinted like perDay.
+ * The armc lane (agy-flash-ocr) also writes first reads, so a zero there is a stall but a non-zero does not prove
+ * the GPU drafts are being picked up (a false negative, never a false alarm).
+ */
+async function ocrWindows(db, now) {
+  const since = new Date(now.getTime() - (WINDOW_HOURS.last24h + WINDOW_HOURS.prev72h) * HOUR);
+  const cut = new Date(now.getTime() - WINDOW_HOURS.last24h * HOUR);
+  const rows = await db.collection('pages').aggregate([
+    { $match: { 'ocr.updated_at': { $gte: since } } },
+    { $group: { _id: { lane: { $ifNull: ['$ocr.lane', { $ifNull: ['$ocr.source', 'unlabelled'] }] }, w: { $cond: [{ $gt: ['$ocr.updated_at', cut] }, 'last24h', 'prev72h'] } }, pages: { $sum: 1 } } },
+  ], { hint: { 'ocr.updated_at': -1 }, maxTimeMS: 300_000, allowDiskUse: true }).toArray();
+  return rows.map(r => ({ lane: String(r._id.lane), window: r._id.w, pages: r.pages }));
+}
+
+/**
+ * Books per day reaching pipeline_auto.status translate_complete / complete, on the indexed
+ * {pipeline_auto.status, pipeline_auto.last_updated}. PROXY: `books.summary.generated_at` / `index.generatedAt` are
+ * unindexed (a full books scan, 72 s on 587K docs, measured 2026-11-10), so enrichment is read as the book reaching
+ * `complete`, which also counts books completed without enrichment. A book enriched on the side (a held book,
+ * #8482 stall 3) does not move pipeline_auto and is not counted.
+ */
+async function bookStatusPerDay(db, since, now) {
+  const cut = new Date(now.getTime() - WINDOW_HOURS.last24h * HOUR);
+  const cut96 = new Date(now.getTime() - (WINDOW_HOURS.last24h + WINDOW_HOURS.prev72h) * HOUR);
+  const rows = await db.collection('books').aggregate([
+    { $match: { 'pipeline_auto.status': { $in: ['translate_complete', 'complete'] }, 'pipeline_auto.last_updated': { $gte: since } } },
+    { $group: { _id: { s: '$pipeline_auto.status', d: { $dateToString: { format: '%Y-%m-%d', date: '$pipeline_auto.last_updated' } }, w: { $cond: [{ $gt: ['$pipeline_auto.last_updated', cut] }, 'last24h', { $cond: [{ $gt: ['$pipeline_auto.last_updated', cut96] }, 'prev72h', 'older'] }] } }, n: { $sum: 1 } } },
+  ], { hint: { 'pipeline_auto.status': 1, 'pipeline_auto.last_updated': 1 }, maxTimeMS: 120_000 }).toArray();
+  return rows.map(r => ({ status: r._id.s, day: r._id.d, window: r._id.w, books: r.n }));
+}
+
+/**
+ * first_translation_attempts rows from the last `days`, via the only index (_id; an ObjectId carries its insert time).
+ * ingest = the insert day, search = the row's own `date` (when the search ran). A row exists only once ingested, so
+ * a search never ingested is invisible here: this edge catches an ingest that stops while searches still land late,
+ * not a runner killed before it ever wrote (that needs the batch directory on the box; out of scope).
+ */
+async function ftAttempts(db, now, days) {
+  const { ObjectId } = await import('mongodb');
+  const from = ObjectId.createFromTime(Math.floor((now.getTime() - days * 24 * HOUR) / 1000));
+  const rows = await db.collection('first_translation_attempts').find({ _id: { $gte: from } }, { projection: { date: 1 } }).toArray();
+  return rows.map(r => ({ ingested: r._id.getTimestamp(), searched: r.date ? new Date(r.date) : null }));
+}
+
+/** Per-day counts of every hand-off stage for the last CORPUS_DAYS, and the stage window totals. Pure given its rows. */
+export function handoffCounts({ ocrRows, ocrWin, bookRows, ft, translatedRows, now }) {
+  const days = [];
+  for (let i = CORPUS_DAYS - 1; i >= 0; i--) days.push(dayOf(now.getTime() - i * 24 * HOUR));
+  const per = Object.fromEntries(days.map(d => [d, { day: d, gpu_draft: 0, armc_correct: 0, translated_pages: 0, translate_books: 0, enrich_books: 0, ft_search: 0, ft_ingest: 0 }]));
+  for (const r of ocrRows ?? []) {
+    const p = per[r.day]; if (!p) continue;
+    if (GPU_DRAFT_LANE_RE.test(r.lane)) p.gpu_draft += r.pages; else if (r.lane === ARMC_LANE) p.armc_correct += r.pages;
+  }
+  for (const r of translatedRows ?? []) if (per[r.day]) per[r.day].translated_pages += r.pages;
+  const win = { translate: { last24h: 0, prev72h: 0 }, enrich: { last24h: 0, prev72h: 0 }, ft_search: { last24h: 0, prev72h: 0 }, ft_ingest: { last24h: 0, prev72h: 0 } };
+  for (const r of bookRows ?? []) {
+    const stage = r.status === 'complete' ? 'enrich' : 'translate';
+    if (per[r.day]) per[r.day][`${stage}_books`] += r.books;
+    if (r.window in win[stage]) win[stage][r.window] += r.books;
+  }
+  for (const r of ft ?? []) {
+    const searched = r.searched && !isNaN(r.searched) ? r.searched : null;
+    if (per[dayOf(r.ingested)]) per[dayOf(r.ingested)].ft_ingest++;
+    if (searched && per[dayOf(searched)]) per[dayOf(searched)].ft_search++;
+    const wi = windowOf(r.ingested, now); if (wi) win.ft_ingest[wi]++;
+    const ws = searched ? windowOf(searched, now) : null; if (ws) win.ft_search[ws]++;
+  }
+  return { per_day: days.map(d => per[d]), windows: { ...ocrStageWindows(ocrWin), ...win } };
+}
+
 export async function collectCorpus(db, now = new Date()) {
   const since = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - (CORPUS_DAYS - 1)));
   const dial = await db.collection('system_config').findOne({ _id: 'processing_control' }, { projection: { paused: 1, daily_budget_usd: 1, updated_at: 1 } });
@@ -353,14 +434,44 @@ export async function collectCorpus(db, now = new Date()) {
     .sort({ _id: -1 }).limit(3).toArray();
   const errors = [];
   const safe = async (label, fn) => { try { return await fn(); } catch (e) { errors.push(`${label}: ${redact(e.message, 160)}`); return null; } };
+  const translatedPerDay = await safe('translation', () => perDay(db, 'translation', since));
+  const ocrPerDay = await safe('ocr', () => perDay(db, 'ocr', since));
+  const ocrWin = await safe('ocr windows', () => ocrWindows(db, now));
+  const bookRows = await safe('books by status', () => bookStatusPerDay(db, since, now));
+  const ft = await safe('first_translation_attempts', () => ftAttempts(db, now, 14));
+  const counts = handoffCounts({ ocrRows: ocrPerDay, ocrWin, bookRows, ft, translatedRows: translatedPerDay, now });
+  // An unread side is UNKNOWN, never zero: drop a stage whose query failed so its edge cannot raise a false stall.
+  const dropStages = (cond, ...stages) => { if (cond) for (const st of stages) delete counts.windows[st]; };
+  dropStages(!ocrWin, 'gpu_draft', 'armc_correct');
+  dropStages(!bookRows, 'translate', 'enrich');
+  dropStages(!ft, 'ft_search', 'ft_ingest');
+  const previous = (await db.collection(COLLECTION).findOne({ _id: `${TYPE}:corpus` }, { projection: { stalls: 1 } }).catch(() => null))?.stalls ?? [];
+  const stalls = recordPaged(evaluateStalls(counts.windows), previous, [], now);
   return {
     _id: `${TYPE}:corpus`, type: TYPE, box: 'corpus', generated_at: now.toISOString(), since: since.toISOString(),
     dial: dial ? { paused: dial.paused ?? null, daily_budget_usd: dial.daily_budget_usd ?? null } : null,
     quality_gates: gates.map(g => ({ id: g.id ?? String(g._id), step: g.step ?? null, verdict: g.verdict ?? g.decision ?? null, window: g.window?.label ?? null, books: g.window?.books ?? null, at: g.created_at ?? gateTime(g.id) })),
-    translated_per_day: await safe('translation', () => perDay(db, 'translation', since)),
-    ocr_per_day: await safe('ocr', () => perDay(db, 'ocr', since)),
+    translated_per_day: translatedPerDay,
+    ocr_per_day: ocrPerDay,
+    handoffs_per_day: counts?.per_day ?? null,
+    handoff_windows: counts?.windows ?? null,
+    stalls,
     errors,
   };
+}
+
+/**
+ * Page ntfy (high priority, one message) for stalled edges not paged in the last 24 h, then record last_paged_at on
+ * the document. The record is written only if ntfy answered 2xx, so a failed page is tried again tomorrow's run.
+ */
+async function pageStalls(doc, now = new Date()) {
+  const due = edgesToPage(doc.stalls, doc.stalls, now);
+  if (!due.length) return;
+  try {
+    const res = await fetch(NTFY_TOPIC, { method: 'POST', body: pageText(due), headers: { Title: 'Pipeline: hand-off stalled', Priority: 'high', Tags: 'rotating_light' } });
+    console.log(`${now.toISOString()} ntfy ${res.status}: ${due.map(d => d.edge).join(', ')}`);
+    if (res.ok) doc.stalls = recordPaged(doc.stalls, doc.stalls, due, now);
+  } catch (e) { doc.errors.push(`ntfy: ${redact(e.message, 120)}`); }
 }
 
 // ───────────────────────────────────────────── main
@@ -396,7 +507,8 @@ async function main() {
     // IDLE 7 DAYS reads main's nightly corpus document; a dry run without the db does not judge it.
     const laneTotals = corpus || !db ? null : laneTotalsOf(await db.collection(COLLECTION).findOne({ _id: `${TYPE}:corpus` }).catch(() => null));
     const doc = corpus ? await collectCorpus(db) : await collectBox({ box, laneTotals });
-    if (dry) { console.log(JSON.stringify(doc, null, 2)); return; }
+    if (dry) { console.log(JSON.stringify(doc, null, 2)); if (corpus) { const due = edgesToPage(doc.stalls, doc.stalls, new Date()); if (due.length) console.log(`would page: ${pageText(due)}`); } return; }
+    if (corpus) await pageStalls(doc);
     if (!corpus) writePoolsFile(doc);
     await db.collection(COLLECTION).replaceOne({ _id: doc._id }, doc, { upsert: true });
     const n = corpus ? `${doc.translated_per_day?.length ?? 0} translation rows, ${doc.ocr_per_day?.length ?? 0} ocr rows` : `${doc.lines.length} lines, ${doc.agy_pools?.length ?? 0} pools`;
