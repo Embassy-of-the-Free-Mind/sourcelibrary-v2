@@ -172,6 +172,11 @@ export function plantPageDefect(tr, rnd) {
   return null;
 }
 const has = (s, tok) => String(s ?? '').toLowerCase().includes(String(tok).toLowerCase());
+/** Prereg §8: a removed negation's stored token ran on past the sentence ("speak. He is"); its site is the first word
+ * after the negation. --strict-plant scores the stored token as first written. */
+const STRICT_PLANT = process.argv.includes('--strict-plant');
+const siteTok = (plant) => (!STRICT_PLANT && plant.plant_kind === 'negation_removed' ? String(plant.token).split(/\s+/)[0].replace(/[^\p{L}\p{N}'-]/gu, '') || plant.token : plant.token);
+const hitPlant = (plant, d) => has(d.quote, siteTok(plant)) || has(d.what, siteTok(plant));
 /** Did this arm's verdict catch the unit's plant? pageVs keyed by tag; breakVs [{break, verdict}]. */
 export function caught(plant, pageVs, breakVs) {
   const br = breakVs.find((b) => b.break === plant.break)?.verdict;
@@ -181,11 +186,11 @@ export function caught(plant, pageVs, breakVs) {
     return (br?.defects ?? []).some((d) => d.kind === 'wrong_leaf' && d.page === 'B') || Number(pv?.fidelity) === 1 || (pv?.defects ?? []).some((d) => /^I1$/.test(d.class ?? ''));
   }
   const pv = pageVs[plant.page];
-  return (pv?.defects ?? []).some((d) => d.layer === 'english' && SEVERE.includes(d.severity) && (has(d.quote, plant.token) || has(d.what, plant.token)));
+  return (pv?.defects ?? []).some((d) => d.layer === 'english' && SEVERE.includes(d.severity) && hitPlant(plant, d));
 }
 /** Is a raised finding the plant (for V's control share)? */
 export function isPlantFinding(plant, f) {
-  if (plant.kind === 'page_defect') return !f.break && f.page === plant.page && f.layer === 'english' && (has(f.quote, plant.token) || has(f.what, plant.token));
+  if (plant.kind === 'page_defect') return !f.break && f.page === plant.page && f.layer === 'english' && hitPlant(plant, f);
   if (f.break !== plant.break) return plant.kind === 'wrong_leaf' && !f.break && f.page === plant.page && /^I1$/.test(f.class ?? '');
   return plant.kind === 'carry_over' ? ['carry_over', 'duplicated'].includes(f.kind) : f.kind === 'wrong_leaf' && f.page === 'B';
 }

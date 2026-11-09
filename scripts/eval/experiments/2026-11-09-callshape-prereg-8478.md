@@ -79,3 +79,6 @@ Two corrections from Derek on #8478 (comments 19:07Z and 19:14Z) reached the job
 The §6 "no decision" conditions stand (under 40 complete study books, or V confirming under 9/10 of the planted defects raised). The per-book rule of §6 is reported beside it for comparison, not used.
 
 Checks: none. This is a test; nothing is written to `book_checks`.
+
+### 8. Correction to the page_defect catch matcher (2026-11-09 ~20:45Z, after 3 of 10 page_defect units were judged)
+For a removed negation the runner stored as "token" the next three whitespace words, which can run past the sentence ("speak. He is"). In control unit `6abe9f2c6a920ffd924da190` all four arms flagged the planted sentence ("meaning the one who does speak", "the negation is inverted") and the strict substring test missed it. The site token for `negation_removed` is now the first word after the removed negation, punctuation stripped ("speak"). Numeral and added-negation plants are unchanged. Both counts are reported: strict (as first written, `--strict-plant`) and corrected. Validity uses the corrected count.
