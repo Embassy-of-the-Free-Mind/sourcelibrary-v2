@@ -4,7 +4,11 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import TranslationLagViz from '@/components/research/TranslationLagViz';
 import { isPublishedFirstTranslation } from '@/lib/book';
 
-export const revalidate = 60;
+// One hour, not one minute: each render reads every dated visible book (~19K docs), so a
+// 60 s window under crawler traffic pulled ~28 GB/day out of Atlas (measured 2026-11-09).
+// Kept short of a day because the query falls back to an empty chart on error, and ISR
+// would serve that fallback for the whole window.
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Translation Lag | Source Library Research',
