@@ -90,10 +90,6 @@ export const TRIAGE: TriageRow[] = [
 
 // Every hard-coded library count that should read from the live stats instead.
 export const NUMBERS: NumberRow[] = [
-  ['Sign-in email', 'src/lib/auth.ts:74', '"over 2,000 rare books"', 'Every magic-link email.'],
-  ['Membership email', 'src/lib/membership-email.ts:101', '"over 10,000 digitized texts"', ''],
-  ['Librarian (what the AI tells readers)', 'src/lib/embassy/librarian.ts:1530', '"over 10,000 rare books"', 'The Librarian repeats this to users.'],
-  ['Librarian page intro (EN and ES)', 'src/lib/librarian-i18n.ts:78-79', '"over 10,000 rare books"', ''],
   ['Claude connect consent screen', 'src/app/oauth/authorize/route.ts:86', '"90,000+ historical illustrations"', ''],
   ['Identify loading message', 'src/app/identify/page.tsx:219', '"Comparing against 152,000 illustrations"', ''],
   ['Site search and MCP feature list', 'src/lib/site-features.json:53, 136', '"10,000+ books", "19,000+ texts in 200+ languages"', 'Feeds site search and the AI tools.'],
