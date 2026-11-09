@@ -2,8 +2,6 @@
 export const TONES: [string, string, string][] = [
   ['ink', 'A Ink', 'rgba(20,16,12,.88)'],
   ['smoke', 'B Smoked glass', 'rgba(0,0,0,.5)'],
-  ['umber', 'C Umber', 'rgba(52,38,27,.9)'],
-  ['oxblood', 'D Oxblood', 'rgba(70,30,24,.85)'],
 ];
 export const fill = (tone: string) => TONES.find((t) => t[0] === tone)?.[2] ?? TONES[0][2];
 /** Shared look: white text, blur behind, hover lightens a step. */

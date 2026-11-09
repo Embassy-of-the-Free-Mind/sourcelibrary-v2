@@ -6,7 +6,6 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import PlateWall from '../../_components/PlateWall';
 import { Bell } from 'lucide-react';
 import CollectionBars from '../../_components/CollectionBars';
-import { GLASS, fill } from '../../_lib/tones';
 import OverviewBand from '../../_components/OverviewBand';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
@@ -34,19 +33,18 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       {/* The collection hero, minus what only a collection has (byline, Copy, a chosen picture). */}
       <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
         <PlateWall tiles={m.heroTiles} rows={3} still />
-        <div className={`${WRAP} relative w-full py-10 md:py-14`}>
+        <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-24 md:pb-28`}>
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
             <Link href="/revamp/subjects" className="hover:text-white">Subjects</Link>
             {parent && <><span className="opacity-50">/</span><Link href={`/revamp/subjects#${parent.id}`} className="hover:text-white">{parent.label}</Link></>}
           </nav>
           <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
           {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
-          <div className="mt-8 md:mt-10">
-            <CollectionBars works={m.listed || m.stats.works} tone="ink" after={
-              <Link href="/auth/signin?callbackUrl=%2Fsubjects" className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS}`} style={{ background: fill('ink') }}><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
-            } />
-          </div>
         </div>
+        <CollectionBars strip works={m.listed || m.stats.works} tone="ink" after={<>
+          <span aria-hidden className="w-px my-4 bg-white/25 ml-1 sm:ml-2" />
+          <Link href="/auth/signin?callbackUrl=%2Fsubjects" className="inline-flex items-center gap-2 px-3.5 sm:px-5 -mr-3.5 sm:-mr-5 text-[13px] sm:text-sm hover:bg-white/10"><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
+        </>} />
       </section>
       {m.overview && <div className={`${WRAP} py-8 md:py-10`}><OverviewBand o={m.overview} /></div>}
       {(narrower.length > 0 || about.length > 0) && (
