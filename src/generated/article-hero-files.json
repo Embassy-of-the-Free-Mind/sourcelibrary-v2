@@ -83,14 +83,14 @@
    }
   ]
  },
- "/articles/solve-et-coagula/episode-artwork.jpg": {
+ "/articles/solve-et-coagula/episode-artwork-169.jpg": {
   "srcset": [
    {
-    "src": "/articles/heroes/4482fea8cc6d-1280.avif",
+    "src": "/articles/heroes/d394fd600630-1280.avif",
     "w": 1280
    },
    {
-    "src": "/articles/heroes/4482fea8cc6d-1920.avif",
+    "src": "/articles/heroes/d394fd600630-1920.avif",
     "w": 1280
    }
   ]

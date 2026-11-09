@@ -134,7 +134,7 @@ export const posts: BlogPost[] = [
     date: '9 November 2026',
     readTime: 'video, 1 h 32 min',
     kind: 'interactive',
-    image: '/articles/solve-et-coagula/episode-artwork.jpg',
+    image: '/articles/solve-et-coagula/episode-artwork-169.jpg',
     imageAlt:
       'Alexander of Agrippa’s Diary (left) and Derek Lomas (right), in the video call recorded for the Solve et Coagula podcast.',
   },

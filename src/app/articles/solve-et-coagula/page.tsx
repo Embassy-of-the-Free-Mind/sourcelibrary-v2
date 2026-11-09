@@ -17,7 +17,7 @@ import { LISTS, type ReadAlongLink } from './extras';
 const TITLE = 'Solve et Coagula: Derek Lomas on Source Library';
 const DESCRIPTION =
   'Derek Lomas talks with Alex of Agrippa’s Diary about Ficino, Agrippa, Maier and Source Library. Watch the episode and click any word of the transcript.';
-const HERO = '/articles/solve-et-coagula/episode-artwork.jpg';
+const HERO = '/articles/solve-et-coagula/episode-artwork-169.jpg';
 const HERO_ALT =
   'Derek Lomas (left) and Alexander of Agrippa’s Diary (right), either side of a green lion devouring the sun: the episode’s artwork, from Agrippa’s Diary.';
 
