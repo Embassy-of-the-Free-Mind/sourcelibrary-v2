@@ -13,13 +13,14 @@ type Row = {
   printedLabel: string;
   what: string;
   book: string;
-  href: string;
+  /** Absent when we hold no public edition to link (#4809). */
+  href?: string;
 };
 
 const ROWS: Row[] = [
   { lost: 1445, lostLabel: 'after 1445', printed: 1598, printedLabel: '1598', what: 'King Christopher’s treasure ship, Baltic', book: 'Münster, Cosmographey', href: '/book/69c8716b6c6f3cc53c857589?page=1331' },
   { lost: 1475, lostLabel: '1475', printed: 1765, printedLabel: '1765', what: 'The loot of Kaffa, Black Sea', book: 'Italian chronicle in Pagnini, Della decima', href: '/book/6991e7ecc91ce7d733e50311?page=283' },
-  { lost: 1502, lostLabel: '1502', printed: 1552, printedLabel: '1552', what: 'The gold fleet from Santo Domingo', book: 'Las Casas, Brevísima relación', href: '/book/69ea06f14c15c76fe934a77a?page=41' },
+  { lost: 1502, lostLabel: '1502', printed: 1552, printedLabel: '1552', what: 'The gold fleet from Santo Domingo', book: 'Las Casas, Brevísima relación' },
   { lost: 1521, lostLabel: '1521', printed: 1853, printedLabel: '1853', what: 'Moctezuma’s gold in the lagoon', book: 'Oviedo, Historia general, vol. 2', href: '/book/695910f9ecb01322b3068858?page=533' },
   { lost: 1553, lostLabel: '1553', printed: 1706, printedLabel: '1706', what: 'Six chests of gold off Cadiz', book: 'Ulrich Schmidt, in Gedenkwaardige scheeps-togten', href: '/book/69b525c46be6046083031e1b?page=90' },
   { lost: 1580, lostLabel: '1580', printed: 1599, printedLabel: '1599', what: 'A chest of dollars in the Caspian', book: 'Hakluyt, Principal Navigations', href: '/book/69e961ab2beefe2f6f72c3b6?page=460' },
@@ -129,7 +130,7 @@ export default function LossToPrint() {
           <p className="text-muted">
             <span className="tabular-nums">{r.lostLabel}</span>, in print{' '}
             <span className="tabular-nums">{r.printedLabel}</span>
-            {gap > 0 ? <> ({gap} years later)</> : null}: <Link href={r.href}>{r.book}</Link>
+            {gap > 0 ? <> ({gap} years later)</> : null}: {r.href ? <Link href={r.href}>{r.book}</Link> : r.book}
           </p>
         </div>
       </div>

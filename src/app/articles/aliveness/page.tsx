@@ -77,7 +77,6 @@ const B = {
   bichat: '/book/recherches-physiologiques-sur-la-vie-et-la-mort-bichat',
   psychicHealing: '/book/the-science-of-psychic-healing-atkinson',
   zunsheng: '/book/vol-7-1782366595479',
-  taoistCanon: '/book/essence-of-taoist-canon-masters',
   caraka: '/book/caraka-samhita-charaka',
   ramazzini: '/book/opera-omnia-medica-et-physiologica-ramazzini',
   ficino1489: '/book/three-books-on-life-ficino-2',

@@ -492,9 +492,7 @@ export default function TreesOfLifePage() {
             1702 history of the Old and New Testaments
           </Link>
           , and the woodcut of Christ on the tree of life that Jung reproduced in{' '}
-          <Link href="/book/wandlungen-und-symbole-der-libido-jung?page=244">
-            <em>Psychology of the Unconscious</em>
-          </Link>
+          <em>Psychology of the Unconscious</em>
           .
         </p>
 
@@ -585,7 +583,6 @@ export default function TreesOfLifePage() {
         <Fig
           src={`${IMG}/kayon.jpg`}
           alt="Leaf-shaped shadow puppet: a tree trunk rising above a gated house with steps"
-          href="/book/kilatbuwana-a-javanese-wayang-kulit-performance-rachmadi?page=154"
           source={<><em>Kilatbuwana</em>, the text of a Javanese wayang kulit performance (1984)</>}
         >
           A <em>kayon</em>.
