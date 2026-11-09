@@ -18,6 +18,7 @@ export default function RevampLayout({ children }: { children: React.ReactNode }
         .revamp-scope .group:hover .group-hover\\:text-accent-rust { color: inherit; text-decoration: none; }
         .revamp-scope [class*="hover:shadow"]:hover { box-shadow: none; }
         .revamp-scope .hover\\:border-accent-rust:hover, .revamp-scope [class*="hover:border-accent-rust"]:hover { border-color: var(--text-primary, #1a1612); }
+        .revamp-scope .border-border-light[class*="hover:border-accent-rust"]:hover { border-color: var(--border-light); } /* book cards: no hover border at all */
         .revamp-scope .on-dark label { color: #fff; }
         .revamp-scope .on-dark [class*="text-muted"] { color: rgba(255,255,255,.72); }
         .revamp-scope .on-dark button[class*="underline"] { text-decoration-color: rgba(255,255,255,.4); }
