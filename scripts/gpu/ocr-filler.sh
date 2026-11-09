@@ -170,7 +170,12 @@ case "${1:-run}" in
     # a job outside the queue that takes the lock (e.g. an eval's drafting arms) owns the card until it lets go
     # (a running backfill chunk holds the lock through gpu-queue.sh; it yields to whatever is queued, so it does not count)
     if [ "$backfill_running" -eq 0 ]; then
-      flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
+      if ! flock -n /root/gpu.lock true; then
+        echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"
+        # a holder that uses no card is either between an eval's arms or orphaned workers keeping the fd (10-29): after 2 h, rescue
+        [ -z "$(guests)" ] && idle_check "/root/gpu.lock is held by pid(s) $(lsof -t /root/gpu.lock 2>/dev/null | tr '\n' ' ')outside the queue, and no process uses the card"
+        exit 0
+      fi
     fi
     vram=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1)
     case "$vram" in ''|*[!0-9]*) echo "$(now) nvidia-smi unreadable: queueing nothing"; exit 0 ;; esac
