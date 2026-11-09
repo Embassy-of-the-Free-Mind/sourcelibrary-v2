@@ -61,4 +61,6 @@ gzip -f "$W"/*.json "$W"/out/*.jsonl 2>/dev/null
 read -r after _ < <(lane armc-left)
 echo "$(date -u +%FT%TZ) end: ${after} pages left; GPU $(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits) MiB"
 # a chunk that drafted nothing failed (the filler disables the route after three in a row)
-[ "${after:-0}" -lt "${before:-0}" ] || { echo "no page drafted this chunk"; exit 1; }
+# (the engine's own reason goes into task.log, which the failure page points at: 2026-11-09 it said only this
+# line for nine chunks while drive.log held "LocalEntryNotFoundError", the model trimmed from the HF cache)
+[ "${after:-0}" -lt "${before:-0}" ] || { echo "no page drafted this chunk"; tail -3 "$W/drive.log" 2>/dev/null; exit 1; }
