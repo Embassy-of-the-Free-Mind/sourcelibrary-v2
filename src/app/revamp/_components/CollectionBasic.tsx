@@ -20,7 +20,9 @@ const n = (v: number) => v.toLocaleString('en-GB');
 const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
 const ACTS: [string, string][] = [['line', 'A In the line'], ['outline', 'B Small outline'], ['below', 'C Under the hero']];
 
-export default function CollectionBasic({ m, act = 'line' }: { m: CollectionModel; act?: string }) {
+const BARS: [string, string][] = [['dark', 'A One bar, see-through'], ['light', 'B One bar, white'], ['below', 'C Under the hero']];
+
+export default function CollectionBasic({ m, act = 'line', bar = 'dark' }: { m: CollectionModel; act?: string; bar?: string }) {
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
@@ -33,9 +35,11 @@ export default function CollectionBasic({ m, act = 'line' }: { m: CollectionMode
     <div className="min-h-screen bg-cream">
       <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
         {m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null}
-        <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-2">
-          Follow and Copy
-          {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}
+        <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
+          <span className="flex gap-2">Follow and Copy
+            {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}&bar=${bar}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+          <span className="flex gap-2">Search bar
+            {BARS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${act}&bar=${k}`} className={bar === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
@@ -57,7 +61,7 @@ export default function CollectionBasic({ m, act = 'line' }: { m: CollectionMode
               <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-8 px-3 border border-white/45 text-white text-[13px] hover:border-white"><Copy className="w-3.5 h-3.5" aria-hidden />Copy</Link>
             </div>
           )}
-          <div className="on-dark mt-8 md:mt-10"><CollectionBars name={m.name} works={works} authors={authors} /></div>
+          {bar !== 'below' && <div className="mt-8 md:mt-10"><CollectionBars works={works} examples={authors} tone={bar === 'light' ? 'light' : 'dark'} /></div>}
         </div>
       </section>
 
@@ -71,6 +75,7 @@ export default function CollectionBasic({ m, act = 'line' }: { m: CollectionMode
       )}
       <IntroBand m={m} />
 
+      {bar === 'below' && <div className="max-w-[1500px] mx-auto px-6 md:px-12 pt-10"><CollectionBars works={works} examples={authors} tone="light" onHero={false} /></div>}
       <CollectionItems slug={m.slug} books={m.all} notes={m.notes} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} opts={opts} />
     </div>
   );
