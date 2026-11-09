@@ -580,14 +580,6 @@ export default function TreesOfLifePage() {
           of scene, and planted again at the end. It stands for the world in which the story takes place.
         </p>
 
-        <Fig
-          src={`${IMG}/kayon.jpg`}
-          alt="Leaf-shaped shadow puppet: a tree trunk rising above a gated house with steps"
-          source={<><em>Kilatbuwana</em>, the text of a Javanese wayang kulit performance (1984)</>}
-        >
-          A <em>kayon</em>.
-        </Fig>
-
         <Section id="tibet">Tibet: the refuge tree</Section>
 
         <p className={p}>
