@@ -47,6 +47,9 @@ export interface CorpusDoc {
   dial: { paused: boolean | null; daily_budget_usd: number | null } | null;
   quality_gates: { id: string; step: string | null; verdict: string | null; window: string | null; books: number | null; at: string | null }[];
   translated_per_day: DayRow[] | null; ocr_per_day: DayRow[] | null; errors: string[];
+  /** Hand-off stalls (#8482 part C); absent on a document pushed before it existed. */
+  stalls?: { edge: string; label: string; stalled: boolean; unknown: boolean; upstream_prev72h: number | null; downstream_last24h: number | null; queue: number | null; last_paged_at: string | null }[];
+  handoffs_per_day?: { day: string; gpu_draft: number; armc_correct: number; translated_pages: number; translate_books: number; enrich_books: number; ft_search: number; ft_ingest: number }[] | null;
 }
 export interface ClaudeAccount { email: string; ok: boolean; limits?: { key: string; label: string; percent: number | null; resets_at: string | null }[] }
 

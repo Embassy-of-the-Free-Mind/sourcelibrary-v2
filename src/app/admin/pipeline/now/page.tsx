@@ -207,6 +207,15 @@ export default async function PipelineNowPage() {
       {error || !data ? <p className="text-sm text-red-700">Could not read ops_reports: {error}</p> : (
         <>
           <RedLines data={data} />
+          {data.corpus?.stalls?.some(x => x.stalled) ? (
+            <Section title="Stalled hand-offs">
+              <ul className="grid rounded border border-red-200 bg-white divide-y divide-stone-100 text-sm">
+                {data.corpus.stalls.filter(x => x.stalled).map(x => (
+                  <li key={x.edge} className="px-3 py-2 text-red-700"><b>{x.edge}</b>: {x.label}. Upstream {x.upstream_prev72h ?? '–'} in the 72 h before, downstream 0 in the last 24 h{x.last_paged_at ? ` · paged ${x.last_paged_at.slice(0, 16).replace('T', ' ')}Z` : ''}</li>
+                ))}
+              </ul>
+            </Section>
+          ) : null}
           <LaneTable title="Translated pages per day" rows={data.corpus?.translated_per_day ?? null} now={now} generated={data.corpus?.generated_at ?? null} />
           <LaneTable title="OCR pages per day" rows={data.corpus?.ocr_per_day ?? null} now={now} generated={data.corpus?.generated_at ?? null} />
           <Quota data={data} now={now} />
