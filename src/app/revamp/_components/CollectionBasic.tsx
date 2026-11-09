@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
+import { Bell, Copy } from 'lucide-react';
 import PlateWall from './PlateWall';
 import CollectionBars from './CollectionBars';
 import CollectionItems from './CollectionItems';
@@ -15,7 +16,10 @@ const n = (v: number) => v.toLocaleString('en-GB');
  * Hero, the collection's own search and Ask, then its works and images. Everything else is a
  * switch the maker turns on, and nothing shows that the collection has no material for.
  */
-export default function CollectionBasic({ m }: { m: CollectionModel }) {
+const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
+const ACTS: [string, string][] = [['line', 'A In the line'], ['outline', 'B Small outline'], ['below', 'C Under the hero']];
+
+export default function CollectionBasic({ m, act = 'line' }: { m: CollectionModel; act?: string }) {
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
@@ -28,6 +32,10 @@ export default function CollectionBasic({ m }: { m: CollectionModel }) {
     <div className="min-h-screen bg-cream">
       <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
         {m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null}
+        <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-2">
+          Follow and Copy
+          {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}
+        </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
             <Link href="/revamp/c" className="hover:text-white">Collections</Link>
@@ -37,21 +45,33 @@ export default function CollectionBasic({ m }: { m: CollectionModel }) {
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
             {counts.map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
             <span className="text-white/60">{m.byline}</span>
+            {act === 'line' && <>
+              <Link href={SIGN_IN} className="inline-flex items-center gap-1 text-white/80 underline decoration-white/40 underline-offset-[3px] hover:text-white hover:decoration-white"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
+              <Link href={SIGN_IN} className="inline-flex items-center gap-1 text-white/80 underline decoration-white/40 underline-offset-[3px] hover:text-white hover:decoration-white"><Copy className="w-3.5 h-3.5" aria-hidden />Copy</Link>
+            </>}
           </div>
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Link href="/auth/signin?callbackUrl=%2Fcollections" className="inline-flex items-center h-9 px-4 bg-white text-primary text-[13.5px] font-medium hover:opacity-90">Follow</Link>
-            <Link href="/auth/signin?callbackUrl=%2Fcollections" className="inline-flex items-center h-9 px-4 bg-white text-primary text-[13.5px] font-medium hover:opacity-90">Copy to my collections</Link>
-          </div>
+          {act === 'outline' && (
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-8 px-3 border border-white/45 text-white text-[13px] hover:border-white"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
+              <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-8 px-3 border border-white/45 text-white text-[13px] hover:border-white"><Copy className="w-3.5 h-3.5" aria-hidden />Copy</Link>
+            </div>
+          )}
           <div className="on-dark mt-8 md:mt-10"><CollectionBars name={m.name} works={works} authors={authors} /></div>
         </div>
       </section>
 
-      {m.intro.length > 0 && (
-        <div className="bg-warm border-b border-border-light">
-          <details className={`${WRAP} py-4 group/about`}>
+      {(m.intro.length > 0 || act === 'below') && (
+        <div className="bg-warm border-b border-border-light relative">
+          {act === 'below' && (
+            <div className={`${WRAP} absolute inset-x-0 top-0 flex justify-end gap-2 pt-2.5 pointer-events-none`}>
+              <Link href={SIGN_IN} className="pointer-events-auto inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
+              <Link href={SIGN_IN} className="pointer-events-auto inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Copy className="w-3.5 h-3.5" aria-hidden />Copy to my collections</Link>
+            </div>
+          )}
+          {m.intro.length > 0 ? <details className={`${WRAP} py-4 group/about`}>
             <summary className="cursor-pointer list-none text-[14px] text-primary underline decoration-border-medium underline-offset-[3px] w-fit">About this collection <span className="group-open/about:hidden">+</span><span className="hidden group-open/about:inline">−</span></summary>
             <div className="max-w-3xl pt-4 pb-2 space-y-3 text-secondary leading-relaxed font-body">{m.intro.map((p, i) => <p key={i}>{p}</p>)}</div>
-          </details>
+          </details> : <div className="h-14" />}
         </div>
       )}
 
