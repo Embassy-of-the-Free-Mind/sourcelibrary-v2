@@ -102,6 +102,9 @@ const both = [...new Map(pairs.flatMap((r) => [r.prev, r.next].map((n) => { cons
 const scr = new Map((await screen(db.collection('pages'), both)).map((o) => [o.page_id, o]));
 const dirty = (r) => [r.prev, r.next].some((n) => scr.get(pageRows.get(`${r.book}:${n}`).id)?.ocr_dup);
 cut.ocr_screen_dirty_pairs = pairs.filter(dirty).length;
+// --dirty-out=FILE: the pairs the screen leaves out, with each page's screen result — next work, not this slice's
+if (arg('dirty-out')) fs.writeFileSync(arg('dirty-out'), pairs.filter(dirty).map((r) => JSON.stringify({ book_id: r.book, lang: r.lang, prev: r.prev, next: r.next, len: r.len, dir: direction(r), reads: books.get(r.book)?.human_read_count || 0,
+  screen: [r.prev, r.next].map((n) => { const p = pageRows.get(`${r.book}:${n}`); const s = scr.get(p.id) || {}; return { page: n, page_id: p.id, ocr_dup: !!s.ocr_dup, side: s.side ?? null, prev_run: s.prev_run ?? null, next_run: s.next_run ?? null }; }) })).join('\n') + '\n');
 pairs = pairs.filter((r) => !dirty(r));
 cut.ocr_screen_clean = pairs.length;
 await c.close();
