@@ -1,5 +1,7 @@
 # Hetzner crontab (root@46.224.122.120)
-# Source of truth: this file. To apply: ssh root@46.224.122.120 "crontab -" < infrastructure/hetzner-crontab
+# STALE (found 2026-11-08, #8283): 144 lines differ from the live crontab. Main's snapshot of record is
+# scripts/workers/crontab.production (scripts/lib/lanes.mjs CRONTAB_SNAPSHOTS; sync-crontab.sh reports its drift daily).
+# Do NOT install this file: it would restore lines retired since. Was: "Source of truth: this file."
 #
 # All Source Library workers use flock to prevent overlapping runs.
 # Logs: /var/log/sourcelibrary/*.log
