@@ -28,6 +28,7 @@ export default function BlogShareButton() {
       <ShareButton
         variant="icon"
         dropUp
+        surface="article_float"
         className="!w-12 !h-12 !rounded-full justify-center bg-white/95 backdrop-blur-sm border border-border-light shadow-lg hover:!bg-stone-50"
       />
     </div>

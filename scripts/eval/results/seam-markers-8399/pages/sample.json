@@ -1,0 +1,485 @@
+[
+ {
+  "book_id": "69dbc45256c1abd5f7337a09",
+  "page_id": "69dbc45756c1abd5f7337a2c",
+  "row": "69dbc45256c1abd5f7337a09:35",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b630dc1c1c21a3738049a3",
+  "page_id": "69b630dc1c1c21a3738049f6",
+  "row": "69b630dc1c1c21a3738049a3:83",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b4c08986a5921d5bc444b1",
+  "page_id": "69b4c08986a5921d5bc444e7",
+  "row": "69b4c08986a5921d5bc444b1:54",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69dbcb6c1040d1d5e20b685f",
+  "page_id": "69dbcb6c1040d1d5e20b688a",
+  "row": "69dbcb6c1040d1d5e20b685f:43",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b631fb1c1c21a37380c13a",
+  "page_id": "69b631fb1c1c21a37380c180",
+  "row": "69b631fb1c1c21a37380c13a:70",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b51e949a81ef7feb3d7864",
+  "page_id": "69b51e949a81ef7feb3d78ac",
+  "row": "69b51e949a81ef7feb3d7864:72",
+  "cell": "german-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b51e22261c58d63664fed6",
+  "page_id": "69b51e22261c58d63664ff32",
+  "row": "69b51e22261c58d63664fed6:92",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69dbcb3a1040d1d5e20b41ed",
+  "page_id": "69dbcb3a1040d1d5e20b43a9",
+  "row": "69dbcb3a1040d1d5e20b41ed:444",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6975158da88d83c830d99e38",
+  "page_id": "6976e2f6efda190f3fc3e7bf",
+  "row": "6975158da88d83c830d99e38:724",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69c83b456c6f3cc53c84f60f",
+  "page_id": "69c83b796c6f3cc53c84f693",
+  "row": "69c83b456c6f3cc53c84f60f:79",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69520ee0ab34727b1f044285",
+  "page_id": "69520ee0ab34727b1f0442d5",
+  "row": "69520ee0ab34727b1f044285:80",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b630791c1c21a3738028ac",
+  "page_id": "69b630791c1c21a3738028c6",
+  "row": "69b630791c1c21a3738028ac:26",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b51dddcf111105c4292540",
+  "page_id": "69b51dddcf111105c4292556",
+  "row": "69b51dddcf111105c4292540:22",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69522ff2ab34727b1f044362",
+  "page_id": "69522ff3ab34727b1f0443e6",
+  "row": "69522ff2ab34727b1f044362:132",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b630c31c1c21a373804063",
+  "page_id": "69b630c31c1c21a3738040d7",
+  "row": "69b630c31c1c21a373804063:116",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b6312f1c1c21a373805dbb",
+  "page_id": "69b6312f1c1c21a373805e07",
+  "row": "69b6312f1c1c21a373805dbb:76",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "6a4f225a8afd506469a564bb",
+  "page_id": "6a4f225a8afd506469a564ce",
+  "row": "6a4f225a8afd506469a564bb:19",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "page_id": "69b4c08586a5921d5bc44359",
+  "row": "69b4c08586a5921d5bc4427f:218",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69aeac132834f3a3bf99ff66",
+  "page_id": "69aeac132834f3a3bf9a003c",
+  "row": "69aeac132834f3a3bf99ff66:214",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b6311a1c1c21a3738052ca",
+  "page_id": "69b6311a1c1c21a3738052ff",
+  "row": "69b6311a1c1c21a3738052ca:53",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "6a42c7ca97284560a2b12b58",
+  "page_id": "6a42c7ca97284560a2b12b5c",
+  "row": "6a42c7ca97284560a2b12b58:4",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69c85a876c6f3cc53c8548cd",
+  "page_id": "69f6ec8cd14f080f85baff88",
+  "row": "69c85a876c6f3cc53c8548cd:296",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b51e72ff09e4fe943af0f5",
+  "page_id": "69b51e72ff09e4fe943af105",
+  "row": "69b51e72ff09e4fe943af0f5:16",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "6a4e1320d96a1b7b49bb46a8",
+  "page_id": "6a4e1320d96a1b7b49bb4736",
+  "row": "6a4e1320d96a1b7b49bb46a8:22",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a267fd588f11913ee9ca683",
+  "page_id": "6a267fd588f11913ee9ca689",
+  "row": "6a267fd588f11913ee9ca683:6",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b4ccead5b6c3815e1a29dd",
+  "page_id": "69b4ccead5b6c3815e1a2ace",
+  "row": "69b4ccead5b6c3815e1a29dd:241",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69af0cfe067c0c26ee26cfa9",
+  "page_id": "69af0cfe067c0c26ee26d068",
+  "row": "69af0cfe067c0c26ee26cfa9:191",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a0ac153ccff0aaf8df94dc7",
+  "page_id": "6a0ac1feccff0aaf8df94e0c",
+  "row": "6a0ac153ccff0aaf8df94dc7:69",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "698fb78b6b95eeda7d2d2e1f",
+  "page_id": "698fb78c6b95eeda7d2d2ed5",
+  "row": "698fb78b6b95eeda7d2d2e1f:181",
+  "cell": "german-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b6304e1c1c21a3738009c8",
+  "page_id": "69b6304e1c1c21a3738009d2",
+  "row": "69b6304e1c1c21a3738009c8:10",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b2feee65b9d6bf89925558",
+  "page_id": "69b2feef65b9d6bf89925772",
+  "row": "69b2feee65b9d6bf89925558:538",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a26c413aad44c98627cd57e",
+  "page_id": "6a26c413aad44c98627cd58a",
+  "row": "6a26c413aad44c98627cd57e:12",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a0970dbbf2196cdca904f44",
+  "page_id": "6a0970dbbf2196cdca904f60",
+  "row": "6a0970dbbf2196cdca904f44:28",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b2233c56715b0e32476b05",
+  "page_id": "69b2233c56715b0e32476c11",
+  "row": "69b2233c56715b0e32476b05:268",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69c7f5526c6f3cc53c841b9b",
+  "page_id": "69f6ac6dc8ce6cd34dbe5e37",
+  "row": "69c7f5526c6f3cc53c841b9b:250",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b2224208069e96e84331ba",
+  "page_id": "69b2224208069e96e8433307",
+  "row": "69b2224208069e96e84331ba:333",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69dbcae31040d1d5e20afa1d",
+  "page_id": "69dbcae31040d1d5e20afa2e",
+  "row": "69dbcae31040d1d5e20afa1d:17",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "6a437c2757a09c2c0fcb516f",
+  "page_id": "6a437c2757a09c2c0fcb5182",
+  "row": "6a437c2757a09c2c0fcb516f:19",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69dbc80d1040d1d5e209698b",
+  "page_id": "69dbc80d1040d1d5e2096b0d",
+  "row": "69dbc80d1040d1d5e209698b:386",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6984e8498a2f054f912420c3",
+  "page_id": "698510633e7d973603c51910",
+  "row": "6984e8498a2f054f912420c3:145",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6aed22bf4aa40cc243654994",
+  "page_id": "6aed22bf4aa40cc243654a76",
+  "row": "6aed22bf4aa40cc243654994:226",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a243c460f0e4f405e62d9cb",
+  "page_id": "6a243c460f0e4f405e62d9e2",
+  "row": "6a243c460f0e4f405e62d9cb:23",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69dbcc1f1040d1d5e20bd526",
+  "page_id": "69dbcc1f1040d1d5e20bd52c",
+  "row": "69dbcc1f1040d1d5e20bd526:6",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69dbca601040d1d5e20abba7",
+  "page_id": "69dbca601040d1d5e20abc2f",
+  "row": "69dbca601040d1d5e20abba7:136",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a4eaf849251fb3056f70eb9",
+  "page_id": "6a4eaf849251fb3056f70ec1",
+  "row": "6a4eaf849251fb3056f70eb9:8",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b300005545150b61b4b45a",
+  "page_id": "69b300005545150b61b4b57a",
+  "row": "69b300005545150b61b4b45a:288",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69af0f705cbd92c1521f5b33",
+  "page_id": "69af0f705cbd92c1521f5c1e",
+  "row": "69af0f705cbd92c1521f5b33:235",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6ab5a6856122fe9080c03856",
+  "page_id": "6ab5a6856122fe9080c03933",
+  "row": "6ab5a6856122fe9080c03856:221",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69c834a66c6f3cc53c84e5ea",
+  "page_id": "69f6d4d2971fcfe012e08044",
+  "row": "69c834a66c6f3cc53c84e5ea:470",
+  "cell": "german-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69b21d9e94025df5d2908ddc",
+  "page_id": "69b21d9e94025df5d2908de5",
+  "row": "69b21d9e94025df5d2908ddc:9",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "page_id": "699f24c34df443d32b86dcf4",
+  "row": "6988a5a076a49ee3a652f51c:1107",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "698255f272562d277d385143",
+  "page_id": "69830bcc2375df2aedc64685",
+  "row": "698255f272562d277d385143:645",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "698255f30b7815826b5ac95b",
+  "page_id": "69825cdd5fc7e4f7b599002d",
+  "row": "698255f30b7815826b5ac95b:40",
+  "cell": "german-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "6a3f026097e91e1768f672bf",
+  "page_id": "6a3f026097e91e1768f672f1",
+  "row": "6a3f026097e91e1768f672bf:50",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a26c2e4aad44c98627c69ce",
+  "page_id": "6a26c2e4aad44c98627c69d4",
+  "row": "6a26c2e4aad44c98627c69ce:6",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b51e4fcf111105c429a6f9",
+  "page_id": "69b51e4fcf111105c429a77a",
+  "row": "69b51e4fcf111105c429a6f9:129",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69dbcadb1040d1d5e20af614",
+  "page_id": "69dbcadb1040d1d5e20af62e",
+  "row": "69dbcadb1040d1d5e20af614:26",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b51eb747b06ecd58195d39",
+  "page_id": "69b51eb747b06ecd58195dbd",
+  "row": "69b51eb747b06ecd58195d39:132",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a08574849638a50931c42e9",
+  "page_id": "6a08574849638a50931c4432",
+  "row": "6a08574849638a50931c42e9:329",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "6a26be780e247ebad6de7523",
+  "page_id": "6a26be780e247ebad6de752c",
+  "row": "6a26be780e247ebad6de7523:9",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "695575b457e3b773024f224c",
+  "page_id": "695575b557e3b773024f2261",
+  "row": "695575b457e3b773024f224c:21",
+  "cell": "latin-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69af0bdafd75e3c62284c4ce",
+  "page_id": "69af0bdafd75e3c62284c6b1",
+  "row": "69af0bdafd75e3c62284c4ce:483",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6955da57646474023271beb0",
+  "page_id": "6955da57646474023271beda",
+  "row": "6955da57646474023271beb0:32",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69b631bf1c1c21a37380a556",
+  "page_id": "69b631bf1c1c21a37380a5e5",
+  "row": "69b631bf1c1c21a37380a556:143",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "6a45bfd08355d631d121b925",
+  "page_id": "6a45bfd08355d631d121b928",
+  "row": "6a45bfd08355d631d121b925:3",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69dbcc0c1040d1d5e20bc0b7",
+  "page_id": "69dbcc0c1040d1d5e20bc10f",
+  "row": "69dbcc0c1040d1d5e20bc0b7:88",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69bd9ad746b01553e33bd100",
+  "page_id": "69bd9ad746b01553e33bd171",
+  "row": "69bd9ad746b01553e33bd100:113",
+  "cell": "german-cli-agy4",
+  "stratum": "ordinary"
+ },
+ {
+  "book_id": "69dbcb061040d1d5e20b10da",
+  "page_id": "69dbcb061040d1d5e20b115f",
+  "row": "69dbcb061040d1d5e20b10da:133",
+  "cell": "latin-cli-agy4",
+  "stratum": "dense"
+ },
+ {
+  "book_id": "69dbcc181040d1d5e20bd032",
+  "page_id": "69dbcc181040d1d5e20bd068",
+  "row": "69dbcc181040d1d5e20bd032:54",
+  "cell": "german-cli-agy4",
+  "stratum": "dense"
+ }
+]

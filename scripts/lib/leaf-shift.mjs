@@ -7,6 +7,7 @@
  * The method, its controls and its limits are documented in scripts/audit/translation-leaf-shift.mjs.
  */
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { classifyLanguageContent } from './language-content-classify.mjs';
 
 export const MIN_VALUE = 10;
 export const BRACKET_MIN = 100;
@@ -375,4 +376,24 @@ function gappyRuns(rows, cls = 'cls') {
 export function blockLeafShiftRuns(pages, translations) {
   const rows = pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data || '', tr: translations.get(p.page_number) || '' }));
   return classifyBook(rows).runs;
+}
+
+// ── the language of one transcription (moved from scripts/audit/leaf-shift-screen-5021.mjs for #8399) ──
+
+const SCRIPTS = Object.entries({ Latin: /\p{Script=Latin}/gu, Greek: /\p{Script=Greek}/gu, Cyrillic: /\p{Script=Cyrillic}/gu, Han: /\p{Script=Han}/gu, Kana: /[\p{Script=Hiragana}\p{Script=Katakana}]/gu,
+  Hangul: /\p{Script=Hangul}/gu, Tibetan: /\p{Script=Tibetan}/gu, Devanagari: /\p{Script=Devanagari}/gu, Arabic: /\p{Script=Arabic}/gu, Hebrew: /\p{Script=Hebrew}/gu, Syriac: /\p{Script=Syriac}/gu,
+  Coptic: /\p{Script=Coptic}/gu, Armenian: /\p{Script=Armenian}/gu, Georgian: /\p{Script=Georgian}/gu, Ethiopic: /\p{Script=Ethiopic}/gu, Myanmar: /\p{Script=Myanmar}/gu, Thai: /\p{Script=Thai}/gu });
+/**
+ * The language of one transcription, $0: its dominant script, and for Latin script the stopword language
+ * (scripts/lib/language-content-classify.mjs) when it reaches 5% of 40+ words, else 'latin-script-other'.
+ * null when the page has too little text to say.
+ */
+export function windowLang(text) {
+  const t = splitLayer(text).body;
+  const counts = SCRIPTS.map(([k, re]) => [k, (t.match(re) || []).length]).sort((a, b) => b[1] - a[1]);
+  if (counts[0][1] < 60) return null;
+  if (counts[0][0] === 'Kana' || (counts[0][0] === 'Han' && counts.find(([k]) => k === 'Kana')[1] > counts[0][1] * 0.15)) return 'Japanese';
+  if (counts[0][0] !== 'Latin') return counts[0][0];
+  const c = classifyLanguageContent(t);
+  return c.words >= 40 && c.score >= 0.05 ? c.dominant : 'latin-script-other';
 }

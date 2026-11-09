@@ -1,0 +1,118 @@
+{
+ "_about": "#8399 per-page defect rates (Opus route judge, image open). A0 = PR #8410's reader on #8407's pages; A0S/A0L/BbS = only the pages the built seam pass changed (a subset, so not comparable to a full arm). A and A2 copied from scripts/eval/results/seam-markers-8399/defect-rates.json (#8407's session; 6 bridge repeats, 0 flips).",
+ "source": "scripts/eval/results/seam-pass-8399/pages/paired-score.json",
+ "cells": {
+  "latin-cli-agy4": {
+   "A": {
+    "n": 55,
+    "accept": "26/55",
+    "wrong_text_pages": "26/55",
+    "fidelity_mean": 3.44,
+    "words": 34788,
+    "misleads_per_1k": 2.33,
+    "wrong_text_per_1k": 1.29
+   },
+   "A2": {
+    "n": 55,
+    "accept": "25/55",
+    "wrong_text_pages": "24/55",
+    "fidelity_mean": 3.45,
+    "words": 34952,
+    "misleads_per_1k": 2.63,
+    "wrong_text_per_1k": 1.32
+   },
+   "A0": {
+    "n": 54,
+    "accept": "23/54",
+    "wrong_text_pages": "28/54",
+    "fidelity_mean": 3.44,
+    "words": 34382,
+    "misleads_per_1k": 2.04,
+    "wrong_text_per_1k": 1.66
+   },
+   "BbS": {
+    "n": 16,
+    "accept": "7/16",
+    "wrong_text_pages": "8/16",
+    "fidelity_mean": 3.5,
+    "words": 13944,
+    "misleads_per_1k": 2.65,
+    "wrong_text_per_1k": 1.51
+   },
+   "A0S": {
+    "n": 2,
+    "accept": "0/2",
+    "wrong_text_pages": "2/2",
+    "fidelity_mean": 2.5,
+    "words": 1607,
+    "misleads_per_1k": 3.73,
+    "wrong_text_per_1k": 3.73
+   },
+   "A0L": {
+    "n": 1,
+    "accept": "0/1",
+    "wrong_text_pages": "1/1",
+    "fidelity_mean": 3,
+    "words": 1022,
+    "misleads_per_1k": 5.87,
+    "wrong_text_per_1k": 1.96
+   }
+  },
+  "german-cli-agy4": {
+   "A": {
+    "n": 14,
+    "accept": "8/14",
+    "wrong_text_pages": "6/14",
+    "fidelity_mean": 3.79,
+    "words": 6479,
+    "misleads_per_1k": 2.32,
+    "wrong_text_per_1k": 1.08
+   },
+   "A2": {
+    "n": 14,
+    "accept": "10/14",
+    "wrong_text_pages": "4/14",
+    "fidelity_mean": 4.07,
+    "words": 6468,
+    "misleads_per_1k": 1.55,
+    "wrong_text_per_1k": 0.62
+   },
+   "A0": {
+    "n": 14,
+    "accept": "9/14",
+    "wrong_text_pages": "3/14",
+    "fidelity_mean": 4.07,
+    "words": 6365,
+    "misleads_per_1k": 2.36,
+    "wrong_text_per_1k": 0.47
+   },
+   "BbS": {
+    "n": 3,
+    "accept": "3/3",
+    "wrong_text_pages": "0/3",
+    "fidelity_mean": 4,
+    "words": 1658,
+    "misleads_per_1k": 3.62,
+    "wrong_text_per_1k": 0
+   },
+   "A0S": {
+    "n": 1,
+    "accept": "1/1",
+    "wrong_text_pages": "0/1",
+    "fidelity_mean": 4,
+    "words": 475,
+    "misleads_per_1k": 4.21,
+    "wrong_text_per_1k": 0
+   },
+   "A0L": {
+    "n": 1,
+    "accept": "1/1",
+    "wrong_text_pages": "0/1",
+    "fidelity_mean": 4,
+    "words": 475,
+    "misleads_per_1k": 4.21,
+    "wrong_text_per_1k": 0
+   }
+  }
+ }
+}

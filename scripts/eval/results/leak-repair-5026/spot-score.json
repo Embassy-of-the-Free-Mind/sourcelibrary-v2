@@ -1,0 +1,583 @@
+{
+ "judged": 54,
+ "of": 54,
+ "unjudged": [],
+ "controls": [
+  {
+   "key": "P09",
+   "control": "made-dup",
+   "dup": "yes",
+   "wrong": "380",
+   "caught": true
+  },
+  {
+   "key": "P27",
+   "control": "made-dup",
+   "dup": "yes",
+   "wrong": "62",
+   "caught": true
+  },
+  {
+   "key": "P48",
+   "control": "clean",
+   "dup": "no",
+   "wrong": "neither",
+   "caught": true
+  },
+  {
+   "key": "P49",
+   "control": "clean",
+   "dup": "no",
+   "wrong": "neither",
+   "caught": true
+  }
+ ],
+ "all": {
+  "n": 50,
+  "positive": 44,
+  "wrong_page": {
+   "N": 29,
+   "N+1": 15
+  },
+  "precision": 0.88,
+  "ci95": [
+   0.76,
+   0.94
+  ]
+ },
+ "by_stratum": {
+  "cur": {
+   "n": 10,
+   "positive": 7,
+   "wrong_page": {
+    "N": 7
+   },
+   "precision": 0.7,
+   "ci95": [
+    0.4,
+    0.89
+   ]
+  },
+  "en": {
+   "n": 10,
+   "positive": 10,
+   "wrong_page": {
+    "N+1": 9,
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.72,
+    1
+   ]
+  },
+  "pre07": {
+   "n": 12,
+   "positive": 11,
+   "wrong_page": {
+    "N": 7,
+    "N+1": 4
+   },
+   "precision": 0.92,
+   "ci95": [
+    0.65,
+    0.99
+   ]
+  },
+  "mid": {
+   "n": 8,
+   "positive": 8,
+   "wrong_page": {
+    "N": 7,
+    "N+1": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.68,
+    1
+   ]
+  },
+  "late": {
+   "n": 10,
+   "positive": 8,
+   "wrong_page": {
+    "N": 7,
+    "N+1": 1
+   },
+   "precision": 0.8,
+   "ci95": [
+    0.49,
+    0.94
+   ]
+  }
+ },
+ "by_band": {
+  "500-999": {
+   "n": 25,
+   "positive": 20,
+   "wrong_page": {
+    "N": 13,
+    "N+1": 7
+   },
+   "precision": 0.8,
+   "ci95": [
+    0.61,
+    0.91
+   ]
+  },
+  ">=1000": {
+   "n": 25,
+   "positive": 24,
+   "wrong_page": {
+    "N": 16,
+    "N+1": 8
+   },
+   "precision": 0.96,
+   "ci95": [
+    0.8,
+    0.99
+   ]
+  }
+ },
+ "by_stratum_band": {
+  "cur 500-999": {
+   "n": 5,
+   "positive": 3,
+   "wrong_page": {
+    "N": 3
+   },
+   "precision": 0.6,
+   "ci95": [
+    0.23,
+    0.88
+   ]
+  },
+  "cur >=1000": {
+   "n": 5,
+   "positive": 4,
+   "wrong_page": {
+    "N": 4
+   },
+   "precision": 0.8,
+   "ci95": [
+    0.38,
+    0.96
+   ]
+  },
+  "en 500-999": {
+   "n": 5,
+   "positive": 5,
+   "wrong_page": {
+    "N+1": 4,
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.57,
+    1
+   ]
+  },
+  "en >=1000": {
+   "n": 5,
+   "positive": 5,
+   "wrong_page": {
+    "N+1": 5
+   },
+   "precision": 1,
+   "ci95": [
+    0.57,
+    1
+   ]
+  },
+  "pre07 500-999": {
+   "n": 6,
+   "positive": 5,
+   "wrong_page": {
+    "N": 3,
+    "N+1": 2
+   },
+   "precision": 0.83,
+   "ci95": [
+    0.44,
+    0.97
+   ]
+  },
+  "pre07 >=1000": {
+   "n": 6,
+   "positive": 6,
+   "wrong_page": {
+    "N": 4,
+    "N+1": 2
+   },
+   "precision": 1,
+   "ci95": [
+    0.61,
+    1
+   ]
+  },
+  "mid 500-999": {
+   "n": 4,
+   "positive": 4,
+   "wrong_page": {
+    "N": 3,
+    "N+1": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.51,
+    1
+   ]
+  },
+  "mid >=1000": {
+   "n": 4,
+   "positive": 4,
+   "wrong_page": {
+    "N": 4
+   },
+   "precision": 1,
+   "ci95": [
+    0.51,
+    1
+   ]
+  },
+  "late 500-999": {
+   "n": 5,
+   "positive": 3,
+   "wrong_page": {
+    "N": 3
+   },
+   "precision": 0.6,
+   "ci95": [
+    0.23,
+    0.88
+   ]
+  },
+  "late >=1000": {
+   "n": 5,
+   "positive": 5,
+   "wrong_page": {
+    "N": 4,
+    "N+1": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.57,
+    1
+   ]
+  }
+ },
+ "by_language": {
+  "Italian": {
+   "n": 1,
+   "positive": 1,
+   "wrong_page": {
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.21,
+    1
+   ]
+  },
+  "Greek": {
+   "n": 4,
+   "positive": 4,
+   "wrong_page": {
+    "N": 2,
+    "N+1": 2
+   },
+   "precision": 1,
+   "ci95": [
+    0.51,
+    1
+   ]
+  },
+  "Spanish": {
+   "n": 1,
+   "positive": 1,
+   "wrong_page": {
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.21,
+    1
+   ]
+  },
+  "Tibetan": {
+   "n": 3,
+   "positive": 0,
+   "wrong_page": {},
+   "precision": 0,
+   "ci95": [
+    0,
+    0.56
+   ]
+  },
+  "German": {
+   "n": 5,
+   "positive": 5,
+   "wrong_page": {
+    "N": 5
+   },
+   "precision": 1,
+   "ci95": [
+    0.57,
+    1
+   ]
+  },
+  "Latin": {
+   "n": 14,
+   "positive": 13,
+   "wrong_page": {
+    "N": 11,
+    "N+1": 2
+   },
+   "precision": 0.93,
+   "ci95": [
+    0.69,
+    0.99
+   ]
+  },
+  "French": {
+   "n": 2,
+   "positive": 2,
+   "wrong_page": {
+    "N": 2
+   },
+   "precision": 1,
+   "ci95": [
+    0.34,
+    1
+   ]
+  },
+  "Sanskrit": {
+   "n": 1,
+   "positive": 1,
+   "wrong_page": {
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.21,
+    1
+   ]
+  },
+  "English": {
+   "n": 10,
+   "positive": 10,
+   "wrong_page": {
+    "N+1": 9,
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.72,
+    1
+   ]
+  },
+  "Russian": {
+   "n": 2,
+   "positive": 2,
+   "wrong_page": {
+    "N": 2
+   },
+   "precision": 1,
+   "ci95": [
+    0.34,
+    1
+   ]
+  },
+  "Armenian": {
+   "n": 1,
+   "positive": 1,
+   "wrong_page": {
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.21,
+    1
+   ]
+  },
+  "Ge'ez": {
+   "n": 1,
+   "positive": 1,
+   "wrong_page": {
+    "N": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.21,
+    1
+   ]
+  },
+  "Arabic": {
+   "n": 1,
+   "positive": 1,
+   "wrong_page": {
+    "N+1": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.21,
+    1
+   ]
+  },
+  "Pali": {
+   "n": 1,
+   "positive": 0,
+   "wrong_page": {},
+   "precision": 0,
+   "ci95": [
+    0,
+    0.79
+   ]
+  },
+  "Dutch": {
+   "n": 2,
+   "positive": 2,
+   "wrong_page": {
+    "N": 1,
+    "N+1": 1
+   },
+   "precision": 1,
+   "ci95": [
+    0.34,
+    1
+   ]
+  },
+  "Japanese": {
+   "n": 1,
+   "positive": 0,
+   "wrong_page": {},
+   "precision": 0,
+   "ci95": [
+    0,
+    0.79
+   ]
+  }
+ },
+ "forward_dup": [],
+ "negatives": [
+  {
+   "key": "P02",
+   "stratum": "cur",
+   "lang": "Tibetan",
+   "book": "6ac053c7f427c9bb06922196",
+   "next": 313,
+   "dup": "other",
+   "wrong": "neither",
+   "why": "The overlap is a refrain the book prints on both pages. Page 312 has the gods list ('Four Great Kings ... Highest Heaven ... pervades all sentient beings with loving-kindness') for the nadir. Page 313 prints the same list again for the zenith, and its English then goes on correctly to its own Sharadvati and dharani passage."
+  },
+  {
+   "key": "P24",
+   "stratum": "late",
+   "lang": "Pali",
+   "book": "69b99e856ed9e0490990a0b5",
+   "next": 308,
+   "dup": "other",
+   "wrong": "neither",
+   "why": "The shared refrain ('straight destination... heavens... high families... beings are heirs of their actions') is printed on both page 307 (§5) and page 308 (§6) as a repeated formula. Each page's English renders only its own text."
+  },
+  {
+   "key": "P33",
+   "stratum": "cur",
+   "lang": "Tibetan",
+   "book": "6ac045baf427c9bb06920aa6",
+   "next": 594,
+   "dup": "other",
+   "wrong": "neither",
+   "why": "The Tibetan really does print Devadatta's five-points speech ('the ascetic Gautama states… through five points of ascetic practice… distance yourselves… keep far away') twice. Page 593 gives it for the formal motion and page 594 repeats it for the taking of voting sticks, ending 'Take up voting sticks.' Each page's English renders its own printed text, so the overlap is legitimate."
+  },
+  {
+   "key": "P42",
+   "stratum": "late",
+   "lang": "Latin",
+   "book": "69c63eb2b463eebe7caac65f",
+   "next": 25,
+   "dup": "other",
+   "wrong": "neither",
+   "why": "This is a facing Greek–Latin edition. Page 24 prints the Greek and page 25 prints the Latin translation of the same passage, from 'καὶ ἐπιδεδωκότος… / & tradente…' (the bath, the lentil, the pig's feet) to 'Lycaena' and 'rogatus an'. So the shared English is legitimate. Page 25's English follows its Latin (fattened pig, two pigs have eight feet). Page 24's English follows the Greek but misreads it in places, wrongly cutting the foot from a dog."
+  },
+  {
+   "key": "P45",
+   "stratum": "pre07",
+   "lang": "Japanese",
+   "book": "699249a3a2d53df4853bdd12",
+   "next": 518,
+   "dup": "other",
+   "wrong": "neither",
+   "why": "The Kotoshironushi episode (from 'I cannot speak… Cape Miho… capsized his boat, Heavenly Reverse Hand, green brushwood fence') appears in both Englishes. That is correct, because the book prints it twice: in classical Chinese on p518 (僕者不得白…天逆手矣於青柴垣打成而隱也) and in Japanese reading on p517. The p518 English leaves out its own Japanese-reading passage (是を以て此の二ばしらの神…言依) and the line about the land being given to the heavenly child (汝之宇志波祁流葦原中國者…言依賜). It also adds two notes that are not in the source."
+  },
+  {
+   "key": "P53",
+   "stratum": "cur",
+   "lang": "Tibetan",
+   "book": "6ac05ee1f427c9bb06924649",
+   "next": 577,
+   "dup": "no",
+   "wrong": "neither",
+   "why": "Each page's English matches its own text. 576 ends mid-sentence at 'Because space does not exist, the Great Vehicle' (suchness series), and 577 continues from 'should be understood as non-existent' into the self/bhūtakoṭi series. The repeated immeasurable/insatiable/unfathomable chain is a refrain printed on both pages."
+  }
+ ],
+ "passing": [
+  "en",
+  "pre07",
+  "mid",
+  "late"
+ ],
+ "by_direction": {
+  "ident": {
+   "n": 7,
+   "positive": 7,
+   "wrong_page": {
+    "N": 7
+   },
+   "precision": 1,
+   "ci95": [
+    0.65,
+    1
+   ]
+  },
+  "leak": {
+   "n": 11,
+   "positive": 9,
+   "wrong_page": {
+    "N+1": 8,
+    "N": 1
+   },
+   "precision": 0.82,
+   "ci95": [
+    0.52,
+    0.95
+   ]
+  },
+  "forward": {
+   "n": 17,
+   "positive": 16,
+   "wrong_page": {
+    "N": 14,
+    "N+1": 2
+   },
+   "precision": 0.94,
+   "ci95": [
+    0.73,
+    0.99
+   ]
+  },
+  "unclear": {
+   "n": 15,
+   "positive": 12,
+   "wrong_page": {
+    "N": 7,
+    "N+1": 5
+   },
+   "precision": 0.8,
+   "ci95": [
+    0.55,
+    0.93
+   ]
+  }
+ }
+}

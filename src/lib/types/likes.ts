@@ -2,7 +2,17 @@
 // Likes System
 // =============================================================================
 
-export type LikeTargetType = 'image' | 'page' | 'book' | 'collection';
+/**
+ * What can be liked. `article` is liked by slug (/articles/<slug>) and is
+ * private: the article page shows no count, the like only files it under the
+ * reader's favorites.
+ */
+export const LIKE_TARGET_TYPES = ['image', 'page', 'book', 'collection', 'article'] as const;
+export type LikeTargetType = (typeof LIKE_TARGET_TYPES)[number];
+
+export function isLikeTargetType(v: unknown): v is LikeTargetType {
+  return typeof v === 'string' && (LIKE_TARGET_TYPES as readonly string[]).includes(v);
+}
 
 /**
  * A like from an anonymous visitor

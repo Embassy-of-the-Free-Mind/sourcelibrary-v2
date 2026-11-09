@@ -14,7 +14,7 @@ import path from 'path';
 const state = vi.hoisted(() => ({ db: null as any }));
 vi.mock('@/lib/mongodb', () => ({ getDb: vi.fn(async () => state.db) }));
 
-import { neighbourVerdict, checkNeighbours, sharedRun, LEAK_MIN_CHARS } from '../../scripts/lib/neighbour-guard.mjs';
+import { neighbourVerdict, checkNeighbours, sharedRun, LEAK_MIN_CHARS, openingEcho, ECHO_MIN_SHARE } from '../../scripts/lib/neighbour-guard.mjs';
 import { sharedRun as auditSharedRun, LEAK_MIN_CHARS as AUDIT_MIN } from '../../scripts/audit/translation-page-boundaries.mjs';
 import { writePageTranslation, neighbourGate } from '../../scripts/lib/translate-core.mjs';
 import { writePageTranslation as writeTs } from '@/lib/translate-write';
@@ -249,5 +249,53 @@ describe('the writers', () => {
   }
   it('the worker judges a block against its own pages', () => {
     expect(fs.readFileSync(path.join(__dirname, '../../scripts/workers/translate-worker.mjs'), 'utf8')).toMatch(/neighbourGate\(db, e\.page, e\.text, \{ neighbours: blockText/);
+  });
+});
+
+describe('openingEcho — n-1\'s English at the head of n (#8399)', () => {
+  const prevEn = prose(1, 1200);
+  const tail = prevEn.slice(-260);            // n-1's last sentence or so, under the leak floor's reach
+  const ownEn = prose(2, 1200);
+  it('flags a page that opens with n-1\'s closing words', () => {
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: src(2), prevOcr: src(1) });
+    expect(r.share).toBeGreaterThanOrEqual(ECHO_MIN_SHARE);
+    expect(r.sourceRepeats).toBe(false);
+    expect(r.echo).toBe(true);
+  });
+  it('twin: the page\'s own opening is not an echo', () => {
+    const r = openingEcho({ tr: ownEn, prevTr: prevEn, ocr: src(2), prevOcr: src(1) });
+    expect(r.share).toBeLessThan(ECHO_MIN_SHARE);
+    expect(r.echo).toBe(false);
+  });
+  it('twin: the same words inside the <meta> continuity note are invisible to readers, so not an echo', () => {
+    const r = openingEcho({ tr: `<meta>continues from previous page: ${tail}</meta> ${ownEn}`, prevTr: prevEn });
+    expect(r.echo).toBe(false);
+  });
+  it('twin: when the SOURCES open the same way, the book repeats itself, so not an echo', () => {
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: `${src(1).slice(-300)} ${src(2)}`, prevOcr: src(1) });
+    expect(r.sourceRepeats).toBe(true);
+    expect(r.echo).toBe(false);
+  });
+  it('without the sources it still judges the English (sourceRepeats null)', () => {
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn });
+    expect(r.sourceRepeats).toBeNull();
+    expect(r.echo).toBe(true);
+  });
+  it('a facing-page edition (Latin page beside its English) is parallel, not an echo', () => {
+    const la = 'et in principio erat verbum quod est in deo et cum deo sed non sine homine neque ad finem est '.repeat(6);
+    const en = 'and in the beginning was the word which is in god and with god but not without the man and to the end '.repeat(6);
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: en, prevOcr: la });
+    expect(r.parallel).toBe(true);
+    expect(r.echo).toBe(false);
+    // twin: both pages Latin, so the same English repeat IS an echo
+    const twin = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: la.replace(/verbum/g, 'lux'), prevOcr: la });
+    expect(twin.parallel).toBe(false);
+  });
+  it('a source without spaces leaves the source test unknown (null), not "the sources differ"', () => {
+    const zh = '天地玄黃宇宙洪荒日月盈昃辰宿列張寒來暑往秋收冬藏'.repeat(20);
+    const r = openingEcho({ tr: `${tail} ${ownEn}`, prevTr: prevEn, ocr: zh, prevOcr: zh });
+    expect(r.sourceShare).toBeNull();
+    expect(r.sourceRepeats).toBeNull();
+    expect(openingEcho({ tr: zh, prevTr: zh }).share).toBe(0);
   });
 });

@@ -88,7 +88,9 @@ export function readerArgs(lane, { ids, dir, job, ocrChecked }) {
   }
   // A row's per_call (#7263): the block reader its adoption sample ran, Gemini through agy.
   if (lane.row?.per_call) {
-    return [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', '--cli=agy', `--per-call=${lane.row.per_call}`, `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${lane.model}`, `--job=${job}`, ...(ocrChecked ? [`--ocr-checked=${ocrChecked}`] : [])];
+    // A row's seam_pass (#8399): the seam pass after the reads; cli-translate.mjs apply writes its repairs under their own run id.
+    const seam = lane.row.seam_pass ? ['--seam-pass=1', ...(lane.row.seam_pass === 'edit-before' ? ['--seam-edit-before=1'] : [])] : [];
+    return [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', '--cli=agy', `--per-call=${lane.row.per_call}`, ...seam, `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${lane.model}`, `--job=${job}`, ...(ocrChecked ? [`--ocr-checked=${ocrChecked}`] : [])];
   }
   return [reader, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${lane.model}`, ...(ocrChecked ? [`--ocr-checked=${ocrChecked}`] : [])];
 }
