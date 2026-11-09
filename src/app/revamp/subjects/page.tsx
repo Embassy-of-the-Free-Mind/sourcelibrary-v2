@@ -12,10 +12,10 @@ const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
 // Ways to say what a subject is.
 const INTROS = [
-  'Browse the whole library by topic. Each subject gathers every book and image we hold on it.',
-  'Every book and image in the library, filed by what it is about.',
-  'Find everything we hold on a topic, from broad fields like Medicine to specific ones like Paracelsianism.',
-  'The library by topic: every book and image, filed under what it is about, from broad fields to specific ones.',
+  'Browse the library by what its books and images are about.',
+  'Start with a broad subject, then narrow down: from Medicine to Paracelsianism, from Religion to Sufism.',
+  'Books and images from every century, arranged by subject.',
+  'Find what the library holds on any subject, in any language.',
 ];
 
 /** Pictures per subject, saved from the public gallery by _tools/snapshot-subject-images.py. */

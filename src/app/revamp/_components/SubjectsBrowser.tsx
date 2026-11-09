@@ -26,9 +26,9 @@ function Strip({ pics, className = '' }: { pics: Pic[]; className?: string }) {
 /** Box with a small square picture at the left. */
 function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   return (
-    <Link id={s.home ? s.id : undefined} href={to(s)} className="group flex items-center gap-3 bg-white border border-border-light p-1.5 pr-4 text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
-      <span className="w-12 h-12 shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover" />}</span>
-      <span className="min-w-0"><span>{s.label}</span>{also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}</span>
+    <Link id={s.home ? s.id : undefined} href={to(s)} className="group flex items-stretch bg-white border border-border-light text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
+      <span className="w-[58px] h-[58px] shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover" />}</span>
+      <span className="min-w-0 self-center px-3.5 py-2"><span>{s.label}</span>{also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}</span>
     </Link>
   );
 }
