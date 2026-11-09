@@ -5,12 +5,13 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { LayoutGrid, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
-import Pick from './Pick';
+import SortSelect from '@/components/search-kit/SortSelect';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import type { IndexItem } from '../_lib/data';
 
 const HOLDS: [string, string][] = [['books', 'Books'], ['plates', 'Plates'], ['artworks', 'Artworks'], ['pages', 'Pages'], ['quotes', 'Quotes']];
-const SORTS: [string, string][] = [['featured', 'Featured first'], ['books', 'Most books'], ['images', 'Most images'], ['az', 'A to Z']];
+const SORTS: [string, string][] = [['az', 'A to Z'], ['books', 'Most books'], ['images', 'Most images']];
+export type FilterLayout = 'tiles' | 'chips' | 'menus' | 'side';
 const n = (v: number) => v.toLocaleString('en-GB');
 
 export interface Crop { src: string; x: number; y: number; w: number; aspect: number }
@@ -51,7 +52,7 @@ const meta = (c: IndexItem) => [
   pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, featured, subjects, initialSubject = '', hideTitle = false }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean }) {
+export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles' }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
@@ -59,7 +60,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
   const [holds, setHolds] = useState<string[]>([]);
   const [lang, setLang] = useState('');
   const [subject, setSubject] = useState(initialSubject);
-  const [sort, setSort] = useState('featured');
+  const [sort, setSort] = useState('az');
   const [view, setView] = useState<'grid' | 'list' | 'bands'>('grid');
   const [thumb, setThumb] = useState<'square' | 'strip'>('square');
 
@@ -78,17 +79,21 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
       && (!sub || sub.slugs.includes(i.slug))
       && (!q || `${i.name} ${i.deck}`.toLowerCase().includes(q)));
     const by: Record<string, (a: IndexItem, b: IndexItem) => number> = {
-      featured: (a, b) => Number(b.slug === featured) - Number(a.slug === featured) || Number(!!a.example) - Number(!!b.example) || a.order - b.order,
       books: (a, b) => b.books - a.books,
       images: (a, b) => (b.images + b.artworks) - (a.images + a.artworks),
-      az: (a, b) => a.name.localeCompare(b.name),
+      az: (a, b) => a.name.replace(/^The /, '').localeCompare(b.name.replace(/^The /, '')),
     };
-    return [...r].sort(by[sort]);
-  }, [items, query, maker, holds, lang, subject, sort, featured, subjects]);
+    // The two made-up examples always go last, whatever the sort.
+    return [...r].sort((a, b) => Number(!!a.example) - Number(!!b.example) || by[sort](a, b));
+  }, [items, query, maker, holds, lang, subject, sort, subjects]);
 
   const tile = 'bg-warm border border-border-light px-3 py-2.5 sm:p-5';
   const pick = (on: boolean) => `text-left px-2 py-0.5 -mx-0.5 text-sm ${on ? 'bg-primary text-cream' : 'text-primary hover:bg-border-light'}`;
   const count = (k: string) => items.filter((i) => i.holds.includes(k)).length;
+  // The /gallery filter pill (GalleryControls), unchanged.
+  const chip = (on: boolean) => `h-[30px] px-3 border text-[13px] ${on ? 'bg-primary border-primary text-cream' : 'bg-white border-border-medium text-primary hover:border-primary'}`;
+  const toggleHold = (k: string) => setHolds(holds.includes(k) ? holds.filter((h) => h !== k) : [...holds, k]);
+  const makerOpts = [['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const;
 
   return (
     <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10">
@@ -98,34 +103,63 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
         ask={{ id: 'col-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?', value: ask, onChange: setAsk, onSubmit: (v) => window.open(`https://sourcelibrary.org/librarian?q=${encodeURIComponent(v)}`, '_blank', 'noopener'), examples: ['dragons and monsters', 'witch trials in German'] }}
       />
 
+      {filters === 'tiles' && (
       <div className="grid gap-3 md:grid-cols-[1fr_1.4fr_2.2fr] mt-5">
-        <div className={`${tile} hidden md:block`}>
-          <div className="text-3xl sm:text-[34px] leading-none text-primary font-medium">{n(shown.length)}</div>
-          <div className="text-sm text-muted mt-1.5">{shown.length === 1 ? 'collection' : 'collections'}</div>
-        </div>
-        <div className={tile}>
-          <div className="text-sm text-muted mb-1.5">Made by</div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {([['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const).map(([k, l, c]) => (
-              <button key={k} type="button" aria-pressed={maker === k} onClick={() => setMaker(k)} className={pick(maker === k)}>{l} <span className="opacity-60">{n(c)}</span></button>
-            ))}
+          <div className={`${tile} hidden md:block`}>
+            <div className="text-3xl sm:text-[34px] leading-none text-primary font-medium">{n(shown.length)}</div>
+            <div className="text-sm text-muted mt-1.5">{shown.length === 1 ? 'collection' : 'collections'}</div>
+          </div>
+          <div className={tile}>
+            <div className="text-sm text-muted mb-1.5">Made by</div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {([['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const).map(([k, l, c]) => (
+                <button key={k} type="button" aria-pressed={maker === k} onClick={() => setMaker(k)} className={pick(maker === k)}>{l} <span className="opacity-60">{n(c)}</span></button>
+              ))}
+            </div>
+          </div>
+          <div className={tile}>
+            <div className="text-sm text-muted mb-1.5">Holds</div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {HOLDS.map(([k, l]) => (
+                <button key={k} type="button" aria-pressed={holds.includes(k)} onClick={() => setHolds(holds.includes(k) ? holds.filter((h) => h !== k) : [...holds, k])} className={pick(holds.includes(k))}>{l} <span className="opacity-60">{n(count(k))}</span></button>
+              ))}
+            </div>
           </div>
         </div>
-        <div className={tile}>
-          <div className="text-sm text-muted mb-1.5">Holds</div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {HOLDS.map(([k, l]) => (
-              <button key={k} type="button" aria-pressed={holds.includes(k)} onClick={() => setHolds(holds.includes(k) ? holds.filter((h) => h !== k) : [...holds, k])} className={pick(holds.includes(k))}>{l} <span className="opacity-60">{n(count(k))}</span></button>
-            ))}
-          </div>
+      )}
+      {filters === 'chips' && (
+        // B: no boxes. The count, then who made it and what it holds as small toggles on one line.
+        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <span className="text-primary font-medium">{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</span>
+          <span className="flex flex-wrap items-center gap-1"><span className="text-muted mr-1">Made by</span>{makerOpts.map(([k, l, c]) => <button key={k} type="button" aria-pressed={maker === k} onClick={() => setMaker(k)} className={chip(maker === k)}>{l} <span className="opacity-60">{n(c)}</span></button>)}</span>
+          <span className="flex flex-wrap items-center gap-1"><span className="text-muted mr-1">Holds</span>{HOLDS.map(([k, l]) => <button key={k} type="button" aria-pressed={holds.includes(k)} onClick={() => toggleHold(k)} className={chip(holds.includes(k))}>{l} <span className="opacity-60">{n(count(k))}</span></button>)}</span>
         </div>
-      </div>
-
+      )}
+      <div className={filters === 'side' ? 'lg:grid lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-10 mt-6' : ''}>
+      {filters === 'side' && (
+        // D: a filter column beside the results, as in a library catalogue.
+        <aside className="mb-6 lg:mb-0 space-y-6 text-sm">
+          <div className="text-primary font-medium text-base">{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</div>
+          <div><div className="text-muted mb-2">Made by</div><div className="flex flex-wrap lg:flex-col gap-1 lg:items-start">{makerOpts.map(([k, l, c]) => <button key={k} type="button" aria-pressed={maker === k} onClick={() => setMaker(k)} className={pick(maker === k)}>{l} <span className="opacity-60">{n(c)}</span></button>)}</div></div>
+          <div><div className="text-muted mb-2">Holds</div><div className="flex flex-wrap lg:flex-col gap-1 lg:items-start">{HOLDS.map(([k, l]) => <button key={k} type="button" aria-pressed={holds.includes(k)} onClick={() => toggleHold(k)} className={pick(holds.includes(k))}>{l} <span className="opacity-60">{n(count(k))}</span></button>)}</div></div>
+          {subjects.length > 0 && <div><div className="text-muted mb-2">Subject</div><SortSelect label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} /></div>}
+          <div><div className="text-muted mb-2">Language</div><SortSelect label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} /></div>
+        </aside>
+      )}
+      <div className="min-w-0">
       <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-4 pb-3 border-b border-border-light">
-        {subjects.length > 0 && <Pick label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} />}
-        <Pick label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} />
+        {filters === 'menus' && <>
+          {/* C: everything is a menu in one toolbar, with the count as plain text */}
+          <span className="text-sm text-primary font-medium mr-1">{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</span>
+          <SortSelect label="Made by" value={maker} onChange={(v) => setMaker(v as typeof maker)} options={makerOpts.map(([k, l]) => [k, k === 'all' ? 'Made by anyone' : `By ${l === 'Readers' ? 'readers' : l}`] as const)} />
+          <SortSelect label="Holds" value={holds[0] ?? ''} onChange={(v) => setHolds(v ? [v] : [])} options={[['', 'Holds anything'], ...HOLDS.map(([k, l]) => [k, `Holds ${l.toLowerCase()}`] as const)]} />
+        </>}
+        {filters !== 'side' && <>
+          {subjects.length > 0 && <SortSelect label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} />}
+          <SortSelect label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} />
+        </>}
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
-          <Pick label="Sort" value={sort} onChange={setSort} options={SORTS} />
+          <SortSelect label="Sort" value={sort} onChange={setSort} options={SORTS} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-label="Grid" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={`w-[38px] h-9 grid place-items-center ${view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={`w-[38px] h-9 grid place-items-center ${view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
@@ -162,7 +196,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
           ))}
         </div>
       ) : view === 'grid' ? (
-        <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
+        <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : filters === 'side' ? 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
               <div className="border border-transparent group-hover:border-primary transition-colors"><Thumb item={c} mode={thumb} /></div>
@@ -178,7 +212,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
             <Link key={c.slug} href={c.href} className="grid grid-cols-[72px_1fr] gap-4 py-3 border-t border-border-light group">
               <Thumb item={c} mode="square" />
               <span className="min-w-0">
-                <span className="block text-[17px] text-primary font-display group-hover:underline underline-offset-2">{c.name}</span>
+                <span className="block text-[17px] text-primary font-display">{c.name}</span>
                 <span className="block text-sm text-secondary truncate">{c.short || c.deck}</span>
                 <span className="block text-[13px] text-muted">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
               </span>
@@ -186,6 +220,8 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
           ))}
         </div>
       )}
+      </div>
+      </div>
     </div>
   );
 }

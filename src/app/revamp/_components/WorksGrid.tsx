@@ -1,27 +1,43 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { useRef, useState } from 'react';
+import CatalogPagination from '@/components/collections/CatalogPagination';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 
-const STEP = 20;
-const n = (v: number) => v.toLocaleString('en-GB');
+const PER = 20;
 
-/** Four rows, then Show more. Past what the page holds, the Library takes over with its own filters. */
+/** Twenty works a page, paginated in place with the Library's own pagination (CatalogPagination, variant "search"). Pages past the saved ones load from the live site. */
 export default function WorksGrid({ books, total, slug }: { books: CollectionBook[]; total: number; slug: string }) {
-  const [shown, setShown] = useState(STEP);
-  const more = books.length - shown;
-  const box = 'inline-flex items-center gap-2 h-11 px-5 bg-primary text-cream text-sm font-medium hover:opacity-90 transition-opacity';
+  const [page, setPage] = useState(1);
+  const [fetched, setFetched] = useState<Record<number, CollectionBook[]>>({});
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const top = useRef<HTMLDivElement>(null);
+  const last = Math.max(1, Math.ceil(total / PER));
+  const local = books.slice((page - 1) * PER, page * PER);
+  const shown = fetched[page] ?? local;
+
+  const go = async (p: number) => {
+    setPage(p); setErr('');
+    top.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const need = books.slice((p - 1) * PER, p * PER).length < Math.min(PER, total - (p - 1) * PER);
+    if (!need || fetched[p]) return;
+    setBusy(true);
+    try {
+      const r = await fetch(`/revamp/api/works?slug=${slug}&offset=${(p - 1) * PER}`);
+      const j = await r.json();
+      if (!r.ok) throw new Error(r.status === 429 ? 'The live site asked us to slow down. Try again in a minute.' : 'This page could not load.');
+      setFetched((f) => ({ ...f, [p]: j.books }));
+    } catch (e) { setErr((e as Error).message); } finally { setBusy(false); }
+  };
+
   return (
-    <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {books.slice(0, shown).map((b) => <CollectionBookCard key={b.id} book={b} />)}
+    <div ref={top} className="scroll-mt-24">
+      <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 transition-opacity ${busy ? 'opacity-40' : ''}`}>
+        {shown.map((b) => <CollectionBookCard key={b.id} book={b} />)}
       </div>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        {more > 0 && <button type="button" onClick={() => setShown(shown + STEP)} className={box}>Show {Math.min(STEP, more)} more</button>}
-        {total > Math.min(shown, books.length) && <Link href={`/library?collection=${slug}`} className={box}>See all {n(total)} in the Library <ArrowRight className="w-4 h-4" /></Link>}
-      </div>
-    </>
+      {err && <p className="mt-6 text-center text-sm text-muted">{err}</p>}
+      <div className="mt-8"><CatalogPagination currentPage={page} totalPages={last} onPageChange={go} variant="search" /></div>
+    </div>
   );
 }

@@ -75,7 +75,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
       )}
       <section className={`${WRAP} py-10 md:py-14`}>
         <div className="flex items-end justify-between mb-6"><h2 className={H2}>Works</h2><span className="text-sm text-muted">{n(m.stats.works)} works</span></div>
-        <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.stats.works} slug={m.slug} />
+        <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.listed || m.books.length} slug={m.slug} />
       </section>
       {m.plates.length > 0 && (
         <section className="bg-warm border-t border-border-light">

@@ -214,7 +214,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
               <h2 className={H2}>Works in this collection</h2>
               <span className="text-sm text-muted whitespace-nowrap">{n(m.stats.works)} works</span>
             </div>
-            <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.stats.works} slug={m.slug} />
+            <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.listed || m.books.length} slug={m.slug} />
           </div>
         </section>
       )}

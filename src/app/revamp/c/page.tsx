@@ -7,8 +7,9 @@ import { demoItems } from '../_lib/demos-index';
 
 interface Sorted { source: string; slug: string; name: string; proposed: string; proposed_subject?: string | null }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string }> }) {
-  const { subject } = await searchParams;
+export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string; f?: string }> }) {
+  const { subject, f } = await searchParams;
+  const filters = (['tiles', 'chips', 'menus', 'side'] as const).find((x) => x === f) ?? 'tiles';
   const sched = dataFile<{ entries: { collection: string }[] }>('schedule');
   const lead = sched?.entries[0] ? collectionModel(sched.entries[0].collection) : null;
   const sorted = (dataFile<{ records: Sorted[] }>('sorting')?.records ?? []).filter((r) => r.source === 'collection');
@@ -20,6 +21,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
         <PlateWall tiles={lead?.heroTiles ?? []} rows={3} still />
+        <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-3">
+          Filters
+          {([['tiles', 'A Boxes'], ['chips', 'B One line'], ['menus', 'C Menus'], ['side', 'D Side column']] as const).map(([k, l]) => <Link key={k} href={`/revamp/c?f=${k}`} className={filters === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}
+        </div>
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 relative w-full py-10 md:py-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>
             <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Collections</h1>
@@ -37,7 +42,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
           )}
         </div>
       </section>
-      <CollectionsBrowser items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle />
+      <CollectionsBrowser items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
       <section className="bg-warm border-t border-border-light">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10 grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-center">
           <div>

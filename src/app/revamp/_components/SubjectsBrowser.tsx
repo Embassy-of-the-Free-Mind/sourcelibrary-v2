@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { BAND_TINT } from './PlateWall';
+import SortSelect from '@/components/search-kit/SortSelect';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
 export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[] }
@@ -62,12 +63,7 @@ export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
         </div>
       </form>
       {!t && (
-        <div className="flex items-center gap-2 mt-8 mb-3 text-[13px] text-muted">
-          Order
-          {([['theme', 'By theme'], ['az', 'A to Z']] as const).map(([k, l]) => (
-            <button key={k} type="button" aria-pressed={order === k} onClick={() => setOrder(k)} className={`px-2.5 py-1 border ${order === k ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium hover:border-primary'}`}>{l}</button>
-          ))}
-        </div>
+        <div className="mt-8 mb-3"><SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} /></div>
       )}
       {!t && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-3">

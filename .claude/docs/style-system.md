@@ -71,7 +71,25 @@ Semantic tokens for success/error/warning/info states. Use these instead of hard
 <div className="border-status-success/30">
 ```
 
-## Focus States (proposed, collections revamp)
+## Use What Exists (component inventory)
+
+Before drawing any control, use the one the site already has. A new page does not get its own pagination, dropdown, search bar or card. If something here doesn't fit, change it here (additive props) so every page moves together.
+
+| Need | Use | Where it's live |
+|---|---|---|
+| Search bar + Ask the librarian | `search-kit/SearchAskBars` | /library, /gallery |
+| Any dropdown (sort, subject, language, order) | `search-kit/SortSelect` (optional `label` for its accessible name) | /library, /gallery |
+| Filter chips under a search | `search-kit/FilterChips` | /library |
+| Stat boxes, printed-years chart, share bar | `search-kit/StatParts` (`statBox`, `PrintedBox`, `ShareBox`) | /library, /gallery |
+| Pagination | `collections/CatalogPagination` with `variant="search"` | /library |
+| On/off filter pills | the `pill` class in `gallery/GalleryControls` (`h-[30px] px-3 border text-[13px]`, black when on) | /gallery |
+| Grid / list switch | the bordered two-button group in `catalog/explorer/CatalogExplorer` (`bg-warm` when on) | /library |
+| Book card | `CollectionBookCard`, 5 per row on desktop | collections, /library |
+| Image grid | `GalleryMasonry`, pictures at their own proportions | /gallery, collections |
+| Dark hero over pictures | `HeroScrim`, or the revamp's `PlateWall` tint | book page, /about |
+| Buttons | black fill, see Buttons below | everywhere |
+
+
 
 Fields and controls show focus by darkening their own border, not with the rust outline.
 

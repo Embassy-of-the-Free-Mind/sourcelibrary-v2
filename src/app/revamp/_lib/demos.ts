@@ -7,7 +7,7 @@ import type { CollectionModel, PageItem, QuoteItem } from './types';
  */
 const blank = (slug: string, name: string): CollectionModel => ({
   slug, name, deck: '', short: '', intro: [], byline: 'Example collection', subjects: [],
-  stats: { works: 0, years: null, firstTranslations: 0, images: 0 }, heroTiles: [], coverPicks: [], books: [], firstTranslations: [],
+  stats: { works: 0, years: null, firstTranslations: 0, images: 0 }, heroTiles: [], listed: 0, coverPicks: [], books: [], firstTranslations: [],
   featured: null, plates: [], platesLabel: '', platesNote: '', pages: [], quotes: [], quoteBand: null, opensOn: 'mixed', ask: null, askMedia: null, moreWorks: 0,
 });
 

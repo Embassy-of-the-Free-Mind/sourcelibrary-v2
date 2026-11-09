@@ -146,6 +146,7 @@ export function collectionModel(slug: string): CollectionModel | null {
     opensOn: artworks ? 'artworks' : 'mixed',
     ask: a?.ask ?? `Ask a question about ${(col.name as string).toLowerCase()}…`,
     moreWorks: Math.max(0, total - books.length),
+    listed: artworks ? 0 : ((snap.c.total as number) ?? books.length),
     overview: ov,
   };
 }
@@ -160,7 +161,7 @@ export function gallerySetModel(slug: string): CollectionModel | null {
     slug, name: s.title as string, deck: firstSentence((s.description as string) || ''), short: shortLine(firstSentence((s.description as string) || '')), intro: [], byline: 'By Source Library', subjects: [],
     stats: { works: 0, years: years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : null, firstTranslations: 0, images: (s.imageCount as number) || plates.length },
     heroTiles: plates.slice(0, 40).map((p) => p.src), coverPicks: coverPicks(items), books: [], firstTranslations: [], featured: null,
-    plates, platesLabel: 'Plates', platesNote: '', pages: [], quotes: [], quoteBand: null, opensOn: 'plates', ask: null, askMedia: null, moreWorks: 0,
+    plates, platesLabel: 'Plates', platesNote: '', pages: [], quotes: [], quoteBand: null, opensOn: 'plates', ask: null, askMedia: null, moreWorks: 0, listed: 0,
   };
 }
 

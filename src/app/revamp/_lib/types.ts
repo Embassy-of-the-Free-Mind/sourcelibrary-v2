@@ -22,6 +22,8 @@ export interface CollectionModel {
   subjects: { id: string; label: string }[];
   stats: { works: number; years: string | null; firstTranslations: number; images: number };
   heroTiles: string[];
+  /** Works the collection itself lists (its own API total). Can differ from the catalogue count in stats.works. */
+  listed: number;
   /** Best pictures to stand for the collection, sharpest first: medium-size crops, no initials, ornaments, bindings or blank pages. */
   coverPicks: string[];
   heroImage?: string;
