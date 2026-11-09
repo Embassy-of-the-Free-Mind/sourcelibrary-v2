@@ -9,12 +9,17 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   npx tsx scripts/import/pdf-direct.ts <jobs.json>
+ *   npx tsx scripts/import/pdf-direct.ts <jobs.json> [--hold=<reason> --release-when=issue:N [--hold-release=<text>]]
+ *
+ * The book goes in through insertBookIfNew (the acquisition gate, edition-identity.md); with
+ * --hold it is inserted already held (pipeline-hold.mjs), as ia-manifest-direct.mjs does.
  *
  * jobs.json: [{ pdf_url | local_pdf+identifier, ia_identifier?, title, author, language,
  *               categories?, source_url?, acquisition_batch?,
  *               provider?, provider_name?, license?, license_url?,   // required without ia_identifier
- *               published?, place_published? }, ...]
+ *               published?, place_published?, allow_duplicate? }, ...]
+ *   allow_duplicate: the gate's match is a record you have checked is NOT this edition (e.g. a
+ *   withdrawn modern reprint carrying the original's date); the gate still records the match.
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, readFileSync, readdirSync, rmSync } from 'node:fs';
@@ -27,6 +32,22 @@ import { storagePut } from '@/lib/storage';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { applyTextRole } from '@/lib/text-role';
+// @ts-expect-error untyped .mjs helpers shared with the other direct importers
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
+// @ts-expect-error untyped .mjs helpers
+import { holdBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
+
+const argVal = (name: string) => { const a = process.argv.find(x => x.startsWith(`--${name}=`)); return a ? a.slice(name.length + 3) : null; };
+const HOLD_REASON = argVal('hold');
+const HOLD: Record<string, unknown> | null = HOLD_REASON ? {
+  reason: HOLD_REASON,
+  release: argVal('hold-release') || `Held at import by pdf-direct.ts (--hold=${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  release_when: parseReleaseWhen(argVal('release-when')),
+  source: 'script:pdf-direct',
+} : null;
+if (HOLD && (HOLD.release_when as { kind?: string })?.kind === 'issue') HOLD.issue = Number((HOLD.release_when as { ref: unknown }).ref) || null;
+// Refuse before any download or upload: a hold that throws after the insert leaves the book unheld (#7860).
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${(e as Error).message}\n  pass --release-when=issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 
 const DPI = 150;
 
@@ -40,6 +61,7 @@ type Job = {
   // A PDF a person downloaded through a browser (sources behind a human challenge, e.g. BNE Digital).
   // Needs `identifier` (the library's own item id) so the fingerprint is provider:id, never a disk path.
   local_pdf?: string; identifier?: string;
+  allow_duplicate?: boolean;
 };
 
 // Rasterise at the PDF's own image resolution (median x-ppi), clamped: a fixed 150 dpi undersamples
@@ -73,7 +95,7 @@ async function importOne(job: Job) {
   const fp = sourceFingerprint({ image_source: { provider, identifier: identifier || undefined, pdf_url: job.pdf_url } });
   if (await db.collection('books').findOne({ source_fingerprint: fp })) { console.log(`  SKIP (dupe fingerprint): ${job.title}`); return null; }
   const dedup = await checkDuplicate(db, { title: job.title, author: job.author, image_source: { provider, identifier: identifier || undefined, pdf_url: job.pdf_url, source_url } });
-  if (dedup.isDuplicate) { console.log(`  SKIP (dupe ${dedup.matches[0].matchType} -> ${dedup.matches[0].matchedTitle}): ${job.title}`); return null; }
+  if (dedup.isDuplicate && !job.allow_duplicate) { console.log(`  SKIP (dupe ${dedup.matches[0].matchType} -> ${dedup.matches[0].matchedTitle}): ${job.title}`); return null; }
 
   const tmp = mkdtempSync(join(tmpdir(), 'pdfimp-'));
   try {
@@ -128,10 +150,26 @@ async function importOne(job: Job) {
         extraction: { method: 'pdftoppm', dpi, pdf_sha256: sha256, ...(job.local_pdf ? { acquired_via: 'manual_browser_download' } : {}), jpeg_quality: 85, pdf_size_bytes: buf.length, pages_extracted: pageCount, extracted_at: now } },
       page_count_source: 'pdf_extraction', status: 'draft', hidden: true, visible: false,
       source_fingerprint: fp, normalized_title: normalizeTitle(job.title), normalized_author: normalizeAuthor(job.author),
+      ...(HOLD ? { pipeline_auto: { status: HOLD_STATUS, hold: makeHoldMarker({ ...HOLD, detail: null }, { from: null, now }), last_updated: now } } : {}),
       created_at: now, updated_at: now,
     };
     applyTextRole(bookDoc);
-    await db.collection('books').insertOne(bookDoc as any);
+    const acquired = await insertBookIfNew(db, bookDoc, { importer: 'script:pdf-direct', sourceIdentifier: identifier, sourceUrl: source_url },
+      job.allow_duplicate ? { allowDuplicate: true } : {});
+    if (!acquired.inserted) {
+      // The page JPEGs are already on R2 under this unused id; say so, so they can be found.
+      console.log(`  GATE ${acquired.reason}: ${acquired.message} (orphan R2 prefix books/${bookIdStr}/pages/): ${job.title}`);
+      return null;
+    }
+    if (HOLD) {
+      await db.collection('book_events').insertOne({ book_id: bookIdStr, type: HOLD_EVENT, at: now, source: HOLD.source,
+        details: { reason: HOLD.reason, issue: HOLD.issue ?? null, from_status: null, release: HOLD.release, release_when: makeHoldMarker(HOLD).release_when, at_insert: true } } as any);
+      const back = await db.collection('books').findOne({ id: bookIdStr }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+      if (back?.pipeline_auto?.hold?.reason !== HOLD.reason) {
+        const h = await holdBook(db, bookIdStr, HOLD);
+        if (h.outcome !== 'held') { console.log(`  FAIL book ${bookIdStr} inserted but NOT held (${h.outcome}); no pages written: ${job.title}`); return null; }
+      }
+    }
 
     // 5. pages
     const pageDocs = files.map((_, i) => {
