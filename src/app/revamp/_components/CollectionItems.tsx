@@ -123,7 +123,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
 
   const card = (b: Book) => (
     <div key={b.id} className="relative">
-      {numbers[b.id!] != null && <span className="absolute -top-2 -left-2 z-10 min-w-7 h-7 px-1.5 grid place-items-center bg-primary text-cream text-[13px] tabular-nums">{numbers[b.id!]}</span>}
       {/* Wrapped so the card's own full height doesn't push the note into the next row. */}
       <div><CollectionBookCard book={b as unknown as CollectionBook} /></div>
       {notesOn[b.id!] && <p className="mt-2 text-[13px] text-secondary leading-snug line-clamp-4">{notesOn[b.id!]}</p>}

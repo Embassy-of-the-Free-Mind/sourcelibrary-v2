@@ -111,7 +111,9 @@ export function collectionModel(slug: string): CollectionModel | null {
   const askMedia: CollectionModel['askMedia'] = a?.askVideo ? { video: a.askVideo }
     : tall ? { plate: fallback || tall.src, fallback: tall.src, label: tall.label, href: tall.href }
     : a?.quote ? { quote: a.quote.text, source: a.quote.source } : null;
-  const lead = plates[0];
+  // The intro picture: the first real illustration, not a bookplate, initial, ornament or binding.
+  const goodItem = items.find((i) => !BAD_KIND.test(String(i.type || '')) && !NOT_COVER.test(`${i.type || ''} ${i.description || ''}`));
+  const lead = (!a?.intro && goodItem && toPlate(goodItem)) || plates[0]; // hand-made pages keep theirs
   const leadFull = Array.isArray(lead?.fallback) ? lead.fallback[0] : lead?.fallback;
   const introPlate = a?.introImage ? { src: a.introImage } : lead ? { src: leadFull || lead.src, label: lead.label, href: lead.href } : undefined;
   return {

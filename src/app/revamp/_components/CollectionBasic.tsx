@@ -4,6 +4,7 @@ import { Bell, Copy } from 'lucide-react';
 import PlateWall from './PlateWall';
 import CollectionBars from './CollectionBars';
 import CollectionItems from './CollectionItems';
+import IntroBand from './IntroBand';
 import { RAMP } from '../_lib/ramp';
 import { MAKER_DEMO, type MakerOptions } from '../_data/maker-demo';
 import type { CollectionModel } from '../_lib/types';
@@ -60,20 +61,15 @@ export default function CollectionBasic({ m, act = 'line' }: { m: CollectionMode
         </div>
       </section>
 
-      {(m.intro.length > 0 || act === 'below') && (
-        <div className="bg-warm border-b border-border-light relative">
-          {act === 'below' && (
-            <div className={`${WRAP} absolute inset-x-0 top-0 flex justify-end gap-2 pt-2.5 pointer-events-none`}>
-              <Link href={SIGN_IN} className="pointer-events-auto inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
-              <Link href={SIGN_IN} className="pointer-events-auto inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Copy className="w-3.5 h-3.5" aria-hidden />Copy to my collections</Link>
-            </div>
-          )}
-          {m.intro.length > 0 ? <details className={`${WRAP} py-4 group/about`}>
-            <summary className="cursor-pointer list-none text-[14px] text-primary underline decoration-border-medium underline-offset-[3px] w-fit">About this collection <span className="group-open/about:hidden">+</span><span className="hidden group-open/about:inline">−</span></summary>
-            <div className="max-w-3xl pt-4 pb-2 space-y-3 text-secondary leading-relaxed font-body">{m.intro.map((p, i) => <p key={i}>{p}</p>)}</div>
-          </details> : <div className="h-14" />}
+      {act === 'below' && (
+        <div className="bg-cream border-b border-border-light">
+          <div className={`${WRAP} py-3 flex justify-end gap-2`}>
+            <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
+            <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Copy className="w-3.5 h-3.5" aria-hidden />Copy to my collections</Link>
+          </div>
         </div>
       )}
+      <IntroBand m={m} />
 
       <CollectionItems slug={m.slug} books={m.all} notes={m.notes} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} opts={opts} />
     </div>
