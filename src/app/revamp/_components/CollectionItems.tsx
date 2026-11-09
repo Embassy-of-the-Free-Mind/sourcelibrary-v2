@@ -243,7 +243,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
             <button type="button" role="tab" aria-selected={tab === 'works'} onClick={() => setTab('works')} className={pill(tab === 'works')}>Works {fmt(n)}</button>
             <button type="button" role="tab" aria-selected={tab === 'images'} onClick={() => setTab('images')} className={pill(tab === 'images')}>Images {fmt(imagesTotal)}</button>
           </div>
-        ) : <h2 className={`${H2} mb-5`}>{mixed && imagesHere ? "Works and images" : "Works"}</h2>}
+        ) : group === 'sections' && !mixed ? null /* the sections' own headings lead */ : <h2 className={`${H2} mb-5`}>{mixed && imagesHere ? "Works and images" : "Works"}</h2>}
 
         {(!tabs || tab === 'works') && <>
           {!small && (
@@ -267,14 +267,15 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
           {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
           {mixed && (pics === 'mixB' ? rows(pageEntries) : columns(pageEntries))}
           {!mixed && blocks.map((g, i) => (
-            <div key={`${g.k}-${i}`} className={g.k ? 'mb-10' : ''}>
+            <div key={`${g.k}-${i}`} className={g.k ? `${i > 0 ? 'mt-16 md:mt-24 pt-10 md:pt-14 border-t border-border-light' : 'mt-4'}` : ''}>
               {g.k && (
-                <div className="flex items-baseline gap-3 mb-4">
-                  <h3 className="text-xl text-primary font-display">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : g.k}</h3>
-                  <span className="text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'work' : 'works'}</span>
-                </div>
+                // Section header: the heading at H2 scale, its line as a standfirst, the count kept small.
+                <header className="mb-8 md:mb-10 max-w-3xl">
+                  <h3 className="font-serif text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-primary">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : g.k}</h3>
+                  {group === 'sections' && sections.get(g.k)?.text && <p className="mt-3 md:mt-4 text-[17px] md:text-[19px] text-secondary leading-relaxed">{sections.get(g.k)!.text}</p>}
+                  <p className="mt-3 text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'work' : 'works'}</p>
+                </header>
               )}
-              {group === 'sections' && sections.get(g.k)?.text && <p className="text-[15px] text-secondary leading-relaxed -mt-2 mb-5 max-w-2xl">{sections.get(g.k)!.text}</p>}
               {body(g.items)}
             </div>
           ))}
