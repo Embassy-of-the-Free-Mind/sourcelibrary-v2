@@ -7,7 +7,7 @@ export interface Authored {
   name?: string; deck?: string; intro?: string[]; label?: string;
   subjects?: { id: string; label: string }[];
   featuredPrefix?: string; featuredTitle?: string; featuredBy?: string; featuredText?: string[];
-  plateMatch?: string; wholeBookMatch?: string; platesNote?: string; ask?: string | null; askVideo?: string; introImage?: string;
+  plateMatch?: string; wholeBookMatch?: string; platesNote?: string; ask?: string | null; askVideo?: string; introImage?: string; short?: string;
   quote?: { text: string; original?: string; source: string };
 }
 

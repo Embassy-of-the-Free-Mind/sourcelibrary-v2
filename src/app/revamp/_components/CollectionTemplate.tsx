@@ -10,7 +10,7 @@ import { RAMP } from '../_lib/ramp';
 import BookSlider from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import HeroMosaic from './HeroMosaic';
+import PlateWall from './PlateWall';
 import OverviewBand from './OverviewBand';
 import type { CollectionModel } from '../_lib/types';
 
@@ -59,10 +59,13 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
 
   return (
     <div className="min-h-screen bg-cream">
-      <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end md:items-center" style={{ backgroundColor: '#1a1612' }}>
-        {mosaic ? <HeroMosaic tiles={m.heroTiles} /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover" /> : null}
-        <div className="absolute inset-0 md:hidden"><HeroScrim variant="bottom" /></div>
-        <div className="absolute inset-0 hidden md:block"><HeroScrim /></div>
+      <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end" style={{ backgroundColor: '#1a1612' }}>
+        {/* Plates in still rows, as on Collections and the subject pages */}
+        {mosaic ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <>
+          <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 md:hidden"><HeroScrim variant="bottom" /></div>
+          <div className="absolute inset-0 hidden md:block"><HeroScrim /></div>
+        </> : null}
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 12px rgba(0,0,0,.5)' }}>
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3" style={{ color: 'rgba(255,255,255,.7)' }}>
             <Link href="/revamp/c" className="hover:opacity-80">Collections</Link>

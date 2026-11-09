@@ -45,6 +45,8 @@ function toPlate(i: Rec): Plate | null {
     ...(a ? { w: Math.round(a * 1000), h: 1000 } : {}),
   };
 }
+/** A one-line description: the maker's own, else trimmed to 140 characters at a word. */
+const shortLine = (t: string) => (t.length <= 140 ? t : `${t.slice(0, 137).replace(/\s+\S*$/, '')}…`);
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? s);
 /** The large lead holds a sentence or two; the rest of a long first paragraph drops to body text. */
 function leadSplit(ps: string[]): string[] {
@@ -118,6 +120,7 @@ export function collectionModel(slug: string): CollectionModel | null {
     introPlate,
     name: a?.name || (col.name as string),
     deck: a?.deck || (col.subtitle as string) || firstSentence(description),
+    short: shortLine(a?.short || (col.subtitle as string) || firstSentence(a?.deck || description)),
     intro: a?.intro || leadSplit(paras((col.expanded_description as string) || description)),
     byline: 'By Source Library',
     label: a?.label,
@@ -154,7 +157,7 @@ export function gallerySetModel(slug: string): CollectionModel | null {
   const plates = items.map(toPlate).filter(Boolean) as Plate[];
   const years = items.map((i) => i.year as number).filter((y) => typeof y === 'number' && y > 0);
   return {
-    slug, name: s.title as string, deck: firstSentence((s.description as string) || ''), intro: [], byline: 'By Source Library', subjects: [],
+    slug, name: s.title as string, deck: firstSentence((s.description as string) || ''), short: shortLine(firstSentence((s.description as string) || '')), intro: [], byline: 'By Source Library', subjects: [],
     stats: { works: 0, years: years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : null, firstTranslations: 0, images: (s.imageCount as number) || plates.length },
     heroTiles: plates.slice(0, 40).map((p) => p.src), coverPicks: coverPicks(items), books: [], firstTranslations: [], featured: null,
     plates, platesLabel: 'Plates', platesNote: '', pages: [], quotes: [], quoteBand: null, opensOn: 'plates', ask: null, askMedia: null, moreWorks: 0,
@@ -162,7 +165,7 @@ export function gallerySetModel(slug: string): CollectionModel | null {
 }
 
 export interface IndexItem {
-  slug: string; name: string; deck: string; href: string; maker: 'source-library' | 'reader';
+  slug: string; name: string; deck: string; short?: string; href: string; maker: 'source-library' | 'reader';
   holds: string[]; books: number; images: number; artworks: number; pages: number; quotes: number;
   thumbs: string[]; languages: string[]; label?: string; example?: boolean; order: number;
   /** The cover's square crop, worked out by _tools/pick-covers.mjs from the picture itself. */
@@ -199,7 +202,7 @@ export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
     const pics = m.coverPicks.length ? m.coverPicks : m.plates.map((p) => p.src);
     const strip: string[] = [];
     for (let i = 0; strip.length < 12 && (i < pages.length || i < pics.length); i++) [pages[i], pics[i]].forEach((x) => x && strip.length < 12 && strip.push(x));
-    items.push({ slug: m.slug, name: m.name, deck: m.deck, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, coverCrop, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
+    items.push({ slug: m.slug, name: m.name, deck: m.deck, short: m.short, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, coverCrop, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
   };
   for (const slug of snapshotSlugs()) {
     const k = sortedKind.get(slug);

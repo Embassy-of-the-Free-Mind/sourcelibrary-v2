@@ -7,7 +7,7 @@ export function demoItems(): IndexItem[] {
     const m = demoModel(slug);
     if (!m) return [];
     return [{
-      slug, name: m.name, deck: m.deck, href: `/revamp/c/${slug}`, maker: 'source-library' as const,
+      slug, name: m.name, deck: m.deck, short: m.short, href: `/revamp/c/${slug}`, maker: 'source-library' as const,
       holds: m.pages.length ? ['pages'] : ['quotes'], books: 0, images: 0, artworks: 0, pages: m.pages.length, quotes: m.quotes.length,
       thumbs: m.pages.length ? m.pages.map((p) => p.src) : [], cover: m.pages[0]?.src, strip: m.pages.map((p) => p.src), languages: ['English'], example: true, order: 999,
     }];

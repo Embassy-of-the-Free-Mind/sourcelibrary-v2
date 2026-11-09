@@ -13,6 +13,8 @@ export interface CollectionModel {
   slug: string;
   name: string;
   deck: string;
+  /** One short line the maker writes, like a Letterboxd list description. Up to 140 characters. */
+  short: string;
   introPlate?: { src: string; label?: string; href?: string };
   intro: string[];
   byline: string;

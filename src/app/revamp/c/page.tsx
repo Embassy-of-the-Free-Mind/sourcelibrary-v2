@@ -29,10 +29,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
             </div>
           </div>
           {lead && (
-            <Link href={`/revamp/c/${lead.slug}`} className="group block md:max-w-[300px] border border-white/25 hover:border-white bg-black/30 px-4 py-3 transition-colors">
-              <span className="block text-[12.5px] text-white/70">Featured collection</span>
-              <span className="block font-serif text-[24px] leading-tight mt-0.5">{lead.name}</span>
-              <span className="inline-block text-[13px] font-medium mt-2 border-b border-white/60 group-hover:border-white pb-0.5">See the collection <span aria-hidden className="inline-block transition-transform group-hover:translate-x-1">→</span></span>
+            <Link href={`/revamp/c/${lead.slug}`} className="group block md:max-w-[320px] border border-white/25 hover:border-white bg-black/30 px-4 py-3 transition-colors">
+              <span className="block text-[12.5px] text-white/70">Featured</span>
+              <span className="block font-serif text-[24px] leading-tight mt-0.5">{lead.name} <span aria-hidden className="inline-block text-[18px] transition-transform group-hover:translate-x-1">→</span></span>
+              {lead.short && <span className="block text-[13.5px] text-stone-200 mt-1 truncate">{lead.short}</span>}
             </Link>
           )}
         </div>
