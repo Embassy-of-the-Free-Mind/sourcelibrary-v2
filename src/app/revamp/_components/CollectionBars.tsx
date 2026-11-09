@@ -22,7 +22,7 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
   if (strip) return (
     <div className="absolute inset-x-0 bottom-0 z-10">
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">{note}</div>
-      <div className="text-white backdrop-blur-md border-t border-white/10" style={{ background: fill(tone) }}>
+      <div className="text-white" style={{ background: fill(tone) }}>
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-14 sm:h-16">
           <form onSubmit={(e) => { e.preventDefault(); search(v); }} role="search" className="flex-1 min-w-0 flex items-stretch focus-within:shadow-[inset_0_-2px_0_rgba(255,255,255,.8)]" data-catalog-bar>
             <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>

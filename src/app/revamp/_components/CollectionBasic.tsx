@@ -5,7 +5,6 @@ import PlateWall from './PlateWall';
 import CollectionBars from './CollectionBars';
 import HeroPicture, { type HeroCandidate } from './HeroPicture';
 import { dataFile } from '../_lib/data';
-import { TONES } from '../_lib/tones';
 import CollectionItems from './CollectionItems';
 import IntroBand from './IntroBand';
 import { RAMP } from '../_lib/ramp';
@@ -41,8 +40,6 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall' }: { m:
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
           <span className="flex gap-2">Hero
             {HEROES.map(([k, l]) => <Link key={k} href={q({ hero: k })} className={hero === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
-          <span className="flex gap-2">Colour
-            {TONES.map(([k, l]) => <Link key={k} href={q({ tone: k })} className={tone === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
         <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-24 md:pb-28`}>
           <div className="flex items-center justify-between gap-4 mb-3">

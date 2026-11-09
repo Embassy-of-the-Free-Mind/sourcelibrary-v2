@@ -10,7 +10,7 @@ def get(path):
             if e.code==429: time.sleep(int(e.headers.get('retry-after') or 60)+3); continue
             print('ERR',path,e.code,flush=True); time.sleep(3); return None
     return None
-S=['slime-moulds','mycology','harmony-east-west','signs-in-the-sky','sibyls','sacred-plants','druids-megaliths','hogwarts-library','jungs-library','javanese-kraton','index-librorum-prohibitorum','yoga','alchemy','balinese-narrative-drawings','shwep']
+S=sys.argv[1:] or ['slime-moulds','mycology','harmony-east-west','signs-in-the-sky','sibyls','sacred-plants','druids-megaliths','hogwarts-library','jungs-library','javanese-kraton','index-librorum-prohibitorum','yoga','alchemy','balinese-narrative-drawings','shwep']
 if not os.path.exists(OUT+'_index.json'):
     json.dump(get('/api/collections'),open(OUT+'_index.json','w'),ensure_ascii=False)
 for s in S:

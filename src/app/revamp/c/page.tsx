@@ -80,7 +80,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
           )}
         </div>
         {lead && feat === 'caption' && (
-          <Link href={`/revamp/c/${lead.slug}`} className="group absolute inset-x-0 bottom-0 z-10 border-t border-white/10 backdrop-blur-md" style={{ background: 'rgba(20,16,12,.88)' }}>
+          <Link href={`/revamp/c/${lead.slug}`} className="group absolute inset-x-0 bottom-0 z-10 bg-dark">
             <span className="max-w-[1500px] mx-auto px-6 md:px-12 h-12 flex items-center gap-4 text-[12.5px] text-white/70">
               <span className={`${MICRO} text-white/50 shrink-0`}>Featured</span>
               <span className="text-white shrink-0">{lead.name}</span>

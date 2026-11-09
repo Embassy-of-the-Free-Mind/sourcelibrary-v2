@@ -92,7 +92,7 @@ export function collectionModel(slug: string): CollectionModel | null {
   const ft = books.filter((b) => b.is_first_translation && (b.pages_translated ?? 0) > 0);
   const years = books.map((b) => b.year).filter((y): y is number => typeof y === 'number' && y > 0);
   const fb = a?.featuredPrefix ? books.find((b) => String(b.slug || '').startsWith(a.featuredPrefix!)) : undefined;
-  const hl = (col.highlighted_books as { book_id?: string; id?: string; note?: string; rank?: number }[] | undefined) || [];
+  const hl = (col.highlighted_books as { book_id?: string; id?: string; note?: string; rank?: number; tier?: number }[] | undefined) || [];
   const noted = hl.find((h) => h.note);
   const nb = noted ? books.find((b) => b.id === (noted.book_id || noted.id)) : undefined;
   const featured = fb && a
@@ -139,7 +139,7 @@ export function collectionModel(slug: string): CollectionModel | null {
     books: artworks ? [] : books,
     all: artworks ? [] : (read<{ books: Book[] }>(`_manifest-${slug}`)?.books ?? books),
     byBook: items.reduce<Record<string, Plate[]>>((acc, i) => { const pl = toPlate(i); const k = i.bookId as string; if (pl && k) (acc[k] ??= []).push(pl); return acc; }, {}),
-    notes: hl.filter((h) => h.note).map((h, i) => ({ id: (h.book_id || h.id)!, rank: h.rank ?? i + 1, note: h.note! })).sort((x, y) => x.rank - y.rank),
+    notes: hl.filter((h) => h.note).map((h, i) => ({ id: (h.book_id || h.id)!, rank: h.rank ?? i + 1, note: h.note!, tier: h.tier })).sort((x, y) => x.rank - y.rank),
     firstTranslations: ft,
     featured,
     plates: artworks ? artTiles.map((src) => ({ src })) : plates,

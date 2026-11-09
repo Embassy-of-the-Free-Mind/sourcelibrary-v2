@@ -31,7 +31,8 @@ export interface CollectionModel {
   /** Every work, from the saved full list (_tools/snapshot-manifest.mjs); else the same as books. */
   all: Book[];
   /** The maker's notes on single works, with the order they ranked them in. */
-  notes: { id: string; rank: number; note: string }[];
+  /** The maker's notes on single works, with their rank and tier (1 essential, 2 important, 3 also notable) from the old collection pages. */
+  notes: { id: string; rank: number; note: string; tier?: number }[];
   /** The saved plates grouped under the work they come from, by book id. */
   byBook: Record<string, Plate[]>;
   firstTranslations: Book[];
