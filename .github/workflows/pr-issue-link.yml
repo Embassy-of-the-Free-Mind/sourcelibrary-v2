@@ -10,9 +10,12 @@ name: PR issue link
 #
 # `edited` is in the trigger list so that fixing the description re-runs the
 # check without a push.
+#
+# Trigger is `pull_request` (read-only job): GitHub blocks `pull_request_target`
+# in public repos from 2026-12-02; see pr-tier.yml.
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, edited, synchronize, reopened, ready_for_review]
 
 permissions:
@@ -30,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      # Checkout MAIN, not the PR head: pull_request_target must run trusted code.
+      # Checkout MAIN, not the PR head: the checker comes from reviewed code.
       - uses: actions/checkout@v4
         with:
           ref: main
