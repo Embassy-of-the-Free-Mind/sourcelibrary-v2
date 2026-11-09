@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Bell, Copy } from 'lucide-react';
 import PlateWall from './PlateWall';
 import CollectionBars from './CollectionBars';
+import HeroPicture, { type HeroCandidate } from './HeroPicture';
+import { dataFile } from '../_lib/data';
 import { GLASS, TONES, fill } from '../_lib/tones';
 import CollectionItems from './CollectionItems';
 import IntroBand from './IntroBand';
@@ -21,7 +23,11 @@ const n = (v: number) => v.toLocaleString('en-GB');
 const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
 const ACTS: [string, string][] = [['beside', 'A Beside the bar'], ['icons', 'B Icons by the title'], ['top', 'C Top line']];
 
-export default function CollectionBasic({ m, act = 'beside', tone = 'ink' }: { m: CollectionModel; act?: string; tone?: string }) {
+const HEROES: [string, string][] = [['wall', 'A Plate rows'], ['bleed', 'B One picture, full bleed'], ['whole', 'C One picture, whole']];
+
+export default function CollectionBasic({ m, act = 'beside', tone = 'ink', hero = 'wall' }: { m: CollectionModel; act?: string; tone?: string; hero?: string }) {
+  const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ act, tone, hero, ...o })}`;
+  const cands = dataFile<Record<string, HeroCandidate[]>>('snap/_hero')?.[m.slug] ?? [];
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
@@ -32,12 +38,17 @@ export default function CollectionBasic({ m, act = 'beside', tone = 'ink' }: { m
   return (
     <div className="min-h-screen bg-cream">
       <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
-        {m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null}
+        {(() => {
+          const wall = m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null;
+          return hero === 'wall' ? wall : <HeroPicture slug={m.slug} mode={hero === 'whole' ? 'whole' : 'bleed'} cands={cands} fallback={wall} />;
+        })()}
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
           <span className="flex gap-2">Follow and Copy
-            {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}&tone=${tone}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+            {ACTS.map(([k, l]) => <Link key={k} href={q({ act: k })} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+          <span className="flex gap-2">Hero
+            {HEROES.map(([k, l]) => <Link key={k} href={q({ hero: k })} className={hero === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
           <span className="flex gap-2">Colour
-            {TONES.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${act}&tone=${k}`} className={tone === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+            {TONES.map(([k, l]) => <Link key={k} href={q({ tone: k })} className={tone === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
           <div className="flex items-center justify-between gap-4 mb-3">
