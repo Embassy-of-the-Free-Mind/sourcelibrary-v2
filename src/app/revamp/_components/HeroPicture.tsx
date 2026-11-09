@@ -66,7 +66,7 @@ export default function HeroPicture({ slug, mode, cands, fallback }: { slug: str
         </>
       )}
 
-      <button type="button" onClick={() => setOpen(true)} className="absolute bottom-3 right-4 z-20 text-xs text-white/75 underline underline-offset-2 hover:text-white">
+      <button type="button" onClick={() => setOpen(true)} className="absolute top-3 left-4 z-20 text-xs text-white/75 underline underline-offset-2 hover:text-white">
         {chosen ? 'Choose the picture' : 'No picture is big enough for this hero'} (prototype)
       </button>
 
