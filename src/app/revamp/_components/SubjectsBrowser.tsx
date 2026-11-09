@@ -3,14 +3,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import Link from 'next/link';
+import { BAND_TINT } from './PlateWall';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
 export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[] }
 type Group = SubjectRow & { narrower: SubjectRow[] };
-
-// The hero tint (PlateWall), a step lighter: bands are short, so the pictures need to show more.
-const BAND_TINT =
-  'linear-gradient(180deg, transparent 30%, rgba(14,10,7,.62) 100%), radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,.22) 0%, transparent 55%), linear-gradient(90deg, rgba(14,10,7,.42) 0%, rgba(14,10,7,.08) 60%, transparent 100%), rgba(16,12,8,.4)';
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 // Every subject will have a page; in the prototype only some do, so the rest point at their own place on this page.

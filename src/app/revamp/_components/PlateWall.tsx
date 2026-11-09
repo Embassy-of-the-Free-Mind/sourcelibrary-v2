@@ -8,6 +8,10 @@
 export const TINT =
   'linear-gradient(180deg, transparent 35%, rgba(14,10,7,.78) 100%), radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,.22) 0%, transparent 55%), linear-gradient(90deg, rgba(14,10,7,.5) 0%, rgba(14,10,7,.12) 60%, transparent 100%), rgba(16,12,8,.62)';
 
+// The hero tint a step lighter, for short picture bands where the pictures need to show more.
+export const BAND_TINT =
+  'linear-gradient(180deg, transparent 30%, rgba(14,10,7,.62) 100%), radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,.22) 0%, transparent 55%), linear-gradient(90deg, rgba(14,10,7,.42) 0%, rgba(14,10,7,.08) 60%, transparent 100%), rgba(16,12,8,.4)';
+
 export default function PlateWall({ tiles, rows = 4, still = false }: { tiles: string[]; rows?: number; still?: boolean }) {
   const lanes = Array.from({ length: rows }, (_, r) => tiles.filter((_t, i) => i % rows === r));
   return (

@@ -3,7 +3,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { LayoutGrid, List } from 'lucide-react';
+import { LayoutGrid, List, Rows3 } from 'lucide-react';
+import { BAND_TINT } from './PlateWall';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import type { IndexItem } from '../_lib/data';
 
@@ -38,6 +39,7 @@ export function Thumb({ item, mode }: { item: IndexItem; mode: 'square' | 'strip
     );
   }
   if (own) return <CropSquare crop={own} />;
+  if (item.coverCrop) return <CropSquare crop={item.coverCrop} />;
   const src = item.cover || item.thumbs[0];
   if (!src) return <div className="aspect-square bg-warm" />;
   return <div className="aspect-square overflow-hidden bg-warm"><img src={src} alt="" loading="lazy" className="w-full h-full object-cover" /></div>;
@@ -57,7 +59,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
   const [lang, setLang] = useState('');
   const [subject, setSubject] = useState(initialSubject);
   const [sort, setSort] = useState('featured');
-  const [view, setView] = useState<'grid' | 'list'>('grid');
+  const [view, setView] = useState<'grid' | 'list' | 'bands'>('grid');
   const [thumb, setThumb] = useState<'square' | 'strip'>('square');
 
   const languages = useMemo(() => {
@@ -133,6 +135,7 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-label="Grid" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={`w-[38px] h-9 grid place-items-center ${view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={`w-[38px] h-9 grid place-items-center ${view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
+            <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={`w-[38px] h-9 grid place-items-center ${view === 'bands' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><Rows3 className="w-4 h-4" /></button>
           </div>
         </div>
       </div>
@@ -144,6 +147,25 @@ export default function CollectionsBrowser({ items, featured, subjects, initialS
 
       {shown.length === 0 ? (
         <p className="py-16 text-center text-muted">{maker === 'reader' ? <>No reader collections are public yet. <Link href="/auth/signin?callbackUrl=%2Fcollections" className="text-primary underline underline-offset-2">Sign in to make the first one</Link>.</> : 'Nothing matches all of that. Remove one of the filters above.'}</p>
+      ) : view === 'bands' ? (
+        // Picture bands, as on All subjects: the whole band is the way in.
+        <div className="mt-4 space-y-3">
+          {shown.map((c) => (
+            <Link key={c.slug} href={c.href} className="group relative flex min-h-[128px] md:min-h-[170px] overflow-hidden">
+              <div className="absolute inset-0 flex overflow-hidden" style={{ background: '#1a1612' }}>
+                {(c.strip?.length ? c.strip : c.thumbs).map((src, i) => <img key={i} src={src} alt="" loading="lazy" className="h-full w-auto max-w-none shrink-0 block" />)}
+              </div>
+              <span className="absolute inset-0 transition-opacity group-hover:opacity-80" style={{ background: BAND_TINT }} />
+              <span className="relative self-end w-full flex flex-col md:flex-row items-start md:items-end md:justify-between gap-1.5 md:gap-6 p-4 pt-10 md:p-6 text-white">
+                <span className="min-w-0">
+                  <span className="block font-serif text-[24px] md:text-[36px] leading-[1.05] tracking-tight">{c.name}</span>
+                  <span className="block text-[13px] md:text-[14px] text-white/80 mt-1">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
+                </span>
+                <span className="text-[13px] md:text-[14px] font-medium md:whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5 shrink-0">See the collection <span aria-hidden className="inline-block transition-transform group-hover:translate-x-1">→</span></span>
+              </span>
+            </Link>
+          ))}
+        </div>
       ) : view === 'grid' ? (
         <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
           {shown.map((c) => (

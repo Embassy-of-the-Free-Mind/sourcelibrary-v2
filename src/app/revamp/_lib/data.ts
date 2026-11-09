@@ -165,6 +165,8 @@ export interface IndexItem {
   slug: string; name: string; deck: string; href: string; maker: 'source-library' | 'reader';
   holds: string[]; books: number; images: number; artworks: number; pages: number; quotes: number;
   thumbs: string[]; languages: string[]; label?: string; example?: boolean; order: number;
+  /** The cover's square crop, worked out by _tools/pick-covers.mjs from the picture itself. */
+  coverCrop?: { src: string; x: number; y: number; w: number; aspect: number };
   /** One representative picture, shown square. Until a maker picks one, the best upright illustration. */
   cover?: string;
   /** Covers, pages and plates for the strip card, each at its own proportions. */
@@ -175,6 +177,7 @@ export interface IndexItem {
 export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
   const items: IndexItem[] = [];
   const used = new Set<string>();
+  const covers = read<Record<string, { src: string; crop: { x: number; y: number; w: number; aspect: number } }[]>>('_covers') ?? {};
   const records = indexRecords();
   const langs = (slug: string) => {
     const r = records.find((x) => x.slug === slug);
@@ -188,13 +191,15 @@ export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
     // One picture per collection, never the same one twice on the page: the best unused pick, else the
     // full-size first page of a book (text-only collections), never the small thumbnails.
     const pages = m.books.map((b) => b.thumbnail || b.thumbnail_blob).filter(Boolean) as string[];
-    const authored = AUTHORED[m.slug]?.introImage;
-    const cover = [authored, ...m.coverPicks, ...pages].find((x) => x && !used.has(x)) || thumbs[0];
+    // Judged covers first (blank pages and flat bindings already rejected, crop chosen), then the old order.
+    const judged = (covers[m.slug] ?? []).find((c) => !used.has(c.src));
+    const cover = judged?.src ?? ([...m.coverPicks, ...pages].find((x) => x && !used.has(x)) || thumbs[0]);
     if (cover) used.add(cover);
+    const coverCrop = judged ? { src: judged.src, ...judged.crop } : undefined;
     const pics = m.coverPicks.length ? m.coverPicks : m.plates.map((p) => p.src);
     const strip: string[] = [];
     for (let i = 0; strip.length < 12 && (i < pages.length || i < pics.length); i++) [pages[i], pics[i]].forEach((x) => x && strip.length < 12 && strip.push(x));
-    items.push({ slug: m.slug, name: m.name, deck: m.deck, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
+    items.push({ slug: m.slug, name: m.name, deck: m.deck, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, coverCrop, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
   };
   for (const slug of snapshotSlugs()) {
     const k = sortedKind.get(slug);
