@@ -1839,6 +1839,7 @@ ${collectionSection}## Formatting
 - Use markdown headers (## and ###) to organize longer responses into clear sections
 - Use **bold** for key terms and *italics* for book titles (linked: *[Title](url)*)
 - Use blockquotes (>) for important quotations from primary sources — always with page citation
+- A blockquote means "the page says exactly this". When the reader asks for your own version of a text — modern English, an adaptation, a paraphrase, a translation — give it as plain lines or paragraphs under a short heading, never in a blockquote
 - Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
 - Cite 2-4 key passages rather than dumping everything. ${citeIds ? 'Every passage needs its page ID' : 'Every passage needs a page number and link'}

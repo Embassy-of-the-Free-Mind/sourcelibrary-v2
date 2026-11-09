@@ -89,7 +89,7 @@ export interface GroundingImage {
 
 // 'notebook_claim' is not produced here: src/lib/embassy/notebook-claims.ts (#6255).
 // 'citation_page' is produced by src/lib/embassy/citation-pages.ts (#6946).
-export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim' | 'citation_page';
+export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim' | 'citation_page' | 'requested_rewrite';
 
 export interface GroundingEdit {
   /** Exact substring of the streamed text. Edits are in document order. */
@@ -108,6 +108,8 @@ export interface GroundingReport {
   quotesChecked: number;
   quotesUnquoted: number;
   blockquotesRemoved: number;
+  /** Unsupported blockquotes kept, unquoted, because the reader asked for a rewrite (REWRITE_REQUEST). */
+  blockquotesUnquoted: number;
   quantitiesChecked: number;
   sentencesDropped: number;
   captionsChecked: number;
@@ -583,11 +585,28 @@ export function blockquoteWords(body: string): string {
  */
 const LEAD_IN_COLON = /:(\s*)$/;
 
+/**
+ * The reader asked for the model's OWN version of a text: modern English, an
+ * adaptation, a paraphrase, a translation. That version is on no page by
+ * construction, so the blockquote check below would delete exactly what was
+ * asked for (2026-11-08: a reader asked three times for the Chemical Wedding's
+ * bird song in modern English and got an empty heading, then a bare citation).
+ * Such a blockquote is kept and loses its quote markers instead — the same
+ * treatment an unsupported inline quote gets — so it no longer asserts that a
+ * page says it. Every other unsupported blockquote is still removed.
+ */
+export const REWRITE_REQUEST = /\b(?:modern\w*\s+(?:english|language|spelling|prose|words|terms|idiom)|moderni[sz]\w*|rewrit\w*|re-writ\w*|rephras\w*|paraphras\w*|adapt\w*|plain(?:er)?\s+english|simpl(?:e|er)\s+(?:english|language|words|terms)|simplif\w*|translat\w*|in\s+your\s+own\s+words)/i;
+
+/** A blockquote unit with its `>` markers removed, line structure kept. */
+function unquoteBlock(raw: string): string {
+  return raw.split('\n').map(l => l.replace(/^(\s*)>\s?/, '$1')).join('\n');
+}
+
 export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; report: GroundingReport } {
   const { text, pages, siteBase } = input;
   const report: GroundingReport = {
     checkable: input.supportLoaded, claimUnits: 0, attached: 0, uncitedLeft: 0, quotesChecked: 0, quotesUnquoted: 0,
-    blockquotesRemoved: 0, quantitiesChecked: 0, sentencesDropped: 0, captionsChecked: 0, captionsRewritten: 0, details: [],
+    blockquotesRemoved: 0, blockquotesUnquoted: 0, quantitiesChecked: 0, sentencesDropped: 0, captionsChecked: 0, captionsRewritten: 0, details: [],
   };
   const edits: GroundingEdit[] = [];
   const idx = buildIndex(pages, `${input.extraSupport ?? ''}\n${input.question}`);
@@ -631,6 +650,12 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
       report.quotesChecked++;
       if (checkQuote(quote, idx) !== 'unsupported') return;
+      if (REWRITE_REQUEST.test(input.question)) {
+        edits.push({ find: u.raw, replace: unquoteBlock(u.raw), at: u.start, reasons: ['requested_rewrite'] });
+        report.blockquotesUnquoted++;
+        report.details.push(`blockquote kept as the requested rewrite, unquoted: ${quote.slice(0, 120)}`);
+        return;
+      }
       const prev = units[i - 1];
       if (prev && (prev.kind === 'prose' || prev.kind === 'list')) {
         const prevEdit = edits.length > 0 && edits[edits.length - 1].at === prev.start ? edits[edits.length - 1] : undefined;
