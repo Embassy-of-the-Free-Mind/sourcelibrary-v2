@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Bell, Copy } from 'lucide-react';
 import PlateWall from './PlateWall';
-import CollectionBars from './CollectionBars';
+import CollectionBars, { GLASS } from './CollectionBars';
 import CollectionItems from './CollectionItems';
 import IntroBand from './IntroBand';
 import { RAMP } from '../_lib/ramp';
@@ -18,16 +18,13 @@ const n = (v: number) => v.toLocaleString('en-GB');
  * switch the maker turns on, and nothing shows that the collection has no material for.
  */
 const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
-const ACTS: [string, string][] = [['line', 'A In the line'], ['outline', 'B Small outline'], ['below', 'C Under the hero']];
+const ACTS: [string, string][] = [['beside', 'A Beside the bar'], ['icons', 'B Icons by the title'], ['top', 'C Top line']];
 
-const BARS: [string, string][] = [['dark', 'A One bar, see-through'], ['light', 'B One bar, white'], ['below', 'C Under the hero']];
-
-export default function CollectionBasic({ m, act = 'line', bar = 'dark' }: { m: CollectionModel; act?: string; bar?: string }) {
+export default function CollectionBasic({ m, act = 'beside' }: { m: CollectionModel; act?: string }) {
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
   const span = years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : '';
-  const authors = [...new Set(m.all.map((b) => (b.author || '').split(/[;,|]/)[0].trim()).filter((a) => a && !/unknown|anonym|various/i.test(a)))].slice(0, 3);
   const d = MAKER_DEMO[m.slug] ?? {};
   const opts: MakerOptions = { notes: d.notes ?? m.notes.length > 0, numbered: !!d.numbered, sections: !!d.sections, startHere: d.startHere ?? (works > 60 && m.notes.length >= 3) };
   const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, span].filter(Boolean) as string[];
@@ -37,45 +34,45 @@ export default function CollectionBasic({ m, act = 'line', bar = 'dark' }: { m: 
         {m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null}
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
           <span className="flex gap-2">Follow and Copy
-            {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}&bar=${bar}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
-          <span className="flex gap-2">Search bar
-            {BARS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${act}&bar=${k}`} className={bar === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+            {ACTS.map(([k, l]) => <Link key={k} href={`/revamp/c/${m.slug}?act=${k}`} className={act === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
-            <Link href="/revamp/c" className="hover:text-white">Collections</Link>
-          </nav>
-          <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] text-white/70">
+              <Link href="/revamp/c" className="hover:text-white">Collections</Link>
+            </nav>
+            {act === 'top' && (
+              <div className="flex items-center gap-4 text-[13px] md:text-[14px] text-white/80">
+                <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 hover:text-white"><Bell className="w-4 h-4" aria-hidden />Follow</Link>
+                <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 hover:text-white"><Copy className="w-4 h-4" aria-hidden />Copy to my collections</Link>
+              </div>
+            )}
+          </div>
+          <div className="flex items-end justify-between gap-6">
+            <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
+            {act === 'icons' && (
+              <div className="flex gap-1.5 shrink-0 mb-2">
+                <Link href={SIGN_IN} aria-label="Follow" title="Follow" className={`w-11 h-11 grid place-items-center ${GLASS} hover:bg-white/25`}><Bell className="w-[18px] h-[18px]" aria-hidden /></Link>
+                <Link href={SIGN_IN} aria-label="Copy to my collections" title="Copy to my collections" className={`w-11 h-11 grid place-items-center ${GLASS} hover:bg-white/25`}><Copy className="w-[18px] h-[18px]" aria-hidden /></Link>
+              </div>
+            )}
+          </div>
           {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
             {counts.map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
             <span className="text-white/60">{m.byline}</span>
-            {act === 'line' && <>
-              <Link href={SIGN_IN} className="inline-flex items-center gap-1 text-white/80 underline decoration-white/40 underline-offset-[3px] hover:text-white hover:decoration-white"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
-              <Link href={SIGN_IN} className="inline-flex items-center gap-1 text-white/80 underline decoration-white/40 underline-offset-[3px] hover:text-white hover:decoration-white"><Copy className="w-3.5 h-3.5" aria-hidden />Copy</Link>
-            </>}
           </div>
-          {act === 'outline' && (
-            <div className="mt-5 flex flex-wrap gap-2">
-              <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-8 px-3 border border-white/45 text-white text-[13px] hover:border-white"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
-              <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-8 px-3 border border-white/45 text-white text-[13px] hover:border-white"><Copy className="w-3.5 h-3.5" aria-hidden />Copy</Link>
-            </div>
-          )}
-          {bar !== 'below' && <div className="mt-8 md:mt-10"><CollectionBars works={works} examples={authors} tone={bar === 'light' ? 'light' : 'dark'} /></div>}
+          <div className="mt-8 md:mt-10">
+            <CollectionBars works={works} after={act === 'beside' && <>
+              <Link href={SIGN_IN} className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS} hover:bg-white/25`}><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
+              <Link href={SIGN_IN} className={`inline-flex items-center gap-2 px-4 sm:px-5 text-[13px] sm:text-sm ${GLASS} hover:bg-white/25`}><Copy className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Copy</span></Link>
+            </>} />
+          </div>
         </div>
       </section>
 
-      {act === 'below' && (
-        <div className="bg-cream border-b border-border-light">
-          <div className={`${WRAP} py-3 flex justify-end gap-2`}>
-            <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Bell className="w-3.5 h-3.5" aria-hidden />Follow</Link>
-            <Link href={SIGN_IN} className="inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-cream text-[13.5px] font-medium hover:opacity-90"><Copy className="w-3.5 h-3.5" aria-hidden />Copy to my collections</Link>
-          </div>
-        </div>
-      )}
       <IntroBand m={m} />
 
-      {bar === 'below' && <div className="max-w-[1500px] mx-auto px-6 md:px-12 pt-10"><CollectionBars works={works} examples={authors} tone="light" onHero={false} /></div>}
       <CollectionItems slug={m.slug} books={m.all} notes={m.notes} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} opts={opts} />
     </div>
   );
