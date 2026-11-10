@@ -14,6 +14,7 @@ import { findPendingBatchJob } from '@/lib/translate-write';
 import { notBlockedForModel } from '@/lib/page-counts';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
+import { liteReadAllowed, batchOcrStamps, OCR_MODEL_LITE } from '../../../../../../scripts/lib/ocr-routing.mjs';
 
 /** Provenance identity of this route (#4613): it both submits and collects. */
 const ROUTE_CALL_SITE = 'src/app/api/books/[id]/batch-ocr-async/route.ts';
@@ -177,6 +178,26 @@ export const POST = withAuth(async (request, session, context) => {
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // The router decides who reads this book (#8519, #7075). Only Flash-Lite may run on the paid API, and only in a
+    // cell whose bound route IS Flash-Lite; anywhere else a Flash-Lite read is rework the cell's lane (agy, Opus, a
+    // GPU draft) has to redo. 6,298 such pages came through this route on 2026-11-06/08. Refuse, write nothing, and
+    // leave the book for the bound lane.
+    if (model !== OCR_MODEL_LITE) {
+      return NextResponse.json({
+        error: 'ocr_model_not_on_api',
+        message: `Only ${OCR_MODEL_LITE} may run OCR on the paid Gemini API (#7075); ${model} reads through the agy CLI lane (scripts/batch/cli-ocr.mjs).`,
+      }, { status: 409 });
+    }
+    const liteGate = liteReadAllowed(book);
+    if (!liteGate.ok) {
+      return NextResponse.json({
+        error: 'router_refuses_lite',
+        message: `Refusing a Flash-Lite read of this book: ${liteGate.why}`,
+        cell: liteGate.cell,
+        bound_route: liteGate.route,
+      }, { status: 409 });
     }
 
     // Double-submit guard (#3749, archaeology I68): a pending OCR batch for
@@ -806,6 +827,7 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.prompt_hash': jobDoc.prompt_hash,
                   'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
                   'ocr.batch_job_id': jobDoc.job_name,
+                  ...batchOcrStamps(jobDoc), // ocr.lane + ocr.pipeline (#8519)
                   ...(jobDoc.pages_per_request > 1 && { 'ocr.pages_per_request': jobDoc.pages_per_request }),
                   ...tags, // page_type, columns, script_type — whichever parsed
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),
