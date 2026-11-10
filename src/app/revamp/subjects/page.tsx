@@ -12,7 +12,7 @@ interface Subj { id: string; label: string; level: number; parents: string[]; al
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
 // Enough to feature: this many works and images, and enough pictures for the hero rows.
-const FEATURE_MIN = { works: 40, images: 100, pictures: 8 };
+const FEATURE_MIN = { works: 10, images: 20, pictures: 8 };
 
 function featuredSubject(slugs: string[]) {
   const ok = slugs.map((s) => collectionModel(s)).filter((m): m is NonNullable<typeof m> => !!m

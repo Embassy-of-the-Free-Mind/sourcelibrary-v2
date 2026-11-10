@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useRef, useState } from 'react';
-import { ChevronDown, ChevronUp, GripVertical, Plus, X } from 'lucide-react';
+import { ArrowUpToLine, ChevronDown, ChevronUp, GripVertical, Plus, X } from 'lucide-react';
 import SortSelect from '@/components/search-kit/SortSelect';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import type { Book } from '../_lib/types';
@@ -83,7 +83,7 @@ export default function CollectionEditor({ start, original, books, onDone, onCan
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
           <h2 className="text-2xl sm:text-3xl text-primary font-display">Edit collection</h2>
-          <p className="text-[14px] text-muted mt-1">{works.toLocaleString('en-GB')} works. Drag by the handle or use the arrows to change the order.</p>
+          <p className="text-[14px] text-muted mt-1">{works.toLocaleString('en-GB')} works. Drag by the handle or use the arrows to change the order. The first arrow moves a work straight to the top.</p>
         </div>
         <div className="flex items-center gap-3">
           <button type="button" onClick={() => setDoc(original)} className="text-[13.5px] text-muted underline underline-offset-[3px] hover:text-primary">Back to the original</button>
@@ -154,6 +154,7 @@ export default function CollectionEditor({ start, original, books, onDone, onCan
                   </div>
                 )}
                 <div className="flex items-center shrink-0">
+                  <button type="button" aria-label="Move to top" title="Move to top" disabled={i === 0} onClick={() => move(i, 0)} className={`${iconBtn} disabled:opacity-30`}><ArrowUpToLine className="w-4 h-4" /></button>
                   <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => move(i, i - 1)} className={`${iconBtn} disabled:opacity-30`}><ChevronUp className="w-4 h-4" /></button>
                   <button type="button" aria-label="Move down" disabled={i === doc.order.length - 1} onClick={() => move(i, i + 2)} className={`${iconBtn} disabled:opacity-30`}><ChevronDown className="w-4 h-4" /></button>
                   <button type="button" aria-label={e.kind === 'section' ? 'Remove section' : 'Remove from the collection'} onClick={() => remove(i)} className={iconBtn}><X className="w-4 h-4" /></button>
