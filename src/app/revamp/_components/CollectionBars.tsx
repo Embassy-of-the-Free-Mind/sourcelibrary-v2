@@ -29,7 +29,7 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">{note}</div>
       <div className="text-white transition-colors" style={{ background: hover === 'lift' && over ? '#26211b' : fill(tone) }}>
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-12 sm:h-[52px]">
-          <form onSubmit={(e) => { e.preventDefault(); submit(v); }} role="search" className="flex-1 min-w-0 flex items-stretch focus-within:shadow-[inset_0_-2px_0_rgba(255,255,255,.8)]" data-catalog-bar>
+          <form onSubmit={(e) => { e.preventDefault(); submit(v); }} role="search" className="flex-1 min-w-0 flex items-stretch" data-catalog-bar>
             <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
             <span className="group/field relative flex-1 min-w-0 flex items-stretch" onMouseEnter={() => setOver(true)} onMouseLeave={() => setOver(false)}>
               {hover === 'edge' && <span aria-hidden className="absolute -left-4 inset-y-3 w-0.5 bg-white scale-y-0 group-hover/field:scale-y-100 group-focus-within/field:scale-y-100 transition-transform origin-center" />}
