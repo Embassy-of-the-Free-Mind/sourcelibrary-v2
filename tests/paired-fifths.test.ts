@@ -70,6 +70,12 @@ describe('paired-fifths-check v2: one Opus call per facing pair (P5, #8478/#8518
     expect(vb).toMatchObject({ page_id: 'pb', outcome: 'serious', page_verdict: 'caveat' });
     expect(vb.errors[0]).toMatchObject({ stage: 'translation', kind: 'carry_over' });
   });
+  it('pairVerdicts follows the page names when the judge lists them out of order', () => {
+    const bad = { ...ok, fidelity: 2, page: 'p02' };
+    const [va, vb] = pairVerdicts(A, B, judged([bad, { ...ok, page: 'p01' }]));
+    expect(va.page_verdict).toBe('show');
+    expect(vb.page_verdict).toBe('fix');
+  });
   it('a wrong-leaf break or an I1 page defect is a fix (the wrong-leaf control)', () => {
     expect(pairVerdicts(A, B, judged([ok, ok], [{ kind: 'wrong_leaf', layer: 'transcription', page: 'B', quote: 'q', material: true }]))[1]).toMatchObject({ page_verdict: 'fix', wrong_page: true });
     expect(pageVerdict(A, { ...ok, defects: [{ layer: 'transcription', class: 'I1', severity: 'wrong_text', what: 'other leaf' }] }, [])).toMatchObject({ page_verdict: 'fix', wrong_page: true });

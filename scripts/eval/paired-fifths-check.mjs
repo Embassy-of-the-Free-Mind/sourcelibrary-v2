@@ -130,7 +130,10 @@ export function pageVerdict(page, v, joinDefects) {
 /** The page verdicts of one judged pair: [first, second], each with the material break defects that name it. */
 export function pairVerdicts(pageA, pageB, v) {
   const brk = (v.breaks?.[0]?.defects ?? []).filter((d) => d.material === true && KIND[d.kind]);
-  return [pageVerdict(pageA, v.pages[0], brk.filter((d) => d.page === 'A')), pageVerdict(pageB, v.pages[1], brk.filter((d) => d.page === 'B'))];
+  // The judge names each entry (p01, p02); trust the names over the order when both are given.
+  const byTag = Object.fromEntries(v.pages.map((p) => [p.page, p]));
+  const [first, second] = byTag.p01 && byTag.p02 ? [byTag.p01, byTag.p02] : v.pages;
+  return [pageVerdict(pageA, first, brk.filter((d) => d.page === 'A')), pageVerdict(pageB, second, brk.filter((d) => d.page === 'B'))];
 }
 
 const textHash = (p) => `${contentHash(p.ocr?.data ?? '')}:${contentHash(p.translation?.data ?? '')}`;
@@ -179,7 +182,9 @@ async function main() {
           if (calls >= maxCalls) { stop = `call cap ${maxCalls}`; break; }
           const why = await paceCheck(limits, state);
           if (why) { stop = `pace: ${why}`; break; }
-          const p = todo.shift(), key = `${p.first}/${p.second}`;
+          const p = todo.shift(); // another worker may have taken the last pair while this one awaited the meter
+          if (!p) break;
+          const key = `${p.first}/${p.second}`;
           calls++;
           try {
             const a = byNum.get(p.first), b = byNum.get(p.second);
