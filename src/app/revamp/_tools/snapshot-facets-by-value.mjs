@@ -22,6 +22,8 @@ for (const [facet, values] of Object.entries(VALUES)) for (const v of values) {
       o.form = [...new Set([...(o.form || []), ...(t.form || [])])];
       o.era = [...new Set([...(o.era || []), ...(t.era || [])])];
       o.material ??= t.material_type || null;
+      o.sphere = [...new Set([...(o.sphere || []), ...(t.sphere || [])])];
+      o.region = [...new Set([...(o.region || []), ...(t.region || [])])];
     }
     fs.writeFileSync(OUT, JSON.stringify(out));
     console.log(`${facet}=${v} page ${page}/${pages}, ${Object.keys(out).length} books`);

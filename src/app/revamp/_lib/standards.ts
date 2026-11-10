@@ -15,16 +15,16 @@ const aat = (label: string, id: string): Term => ({ scheme: 'AAT', label, uri: `
 /** Type of text. Libraries use LCGFT for this. */
 export const TEXT_TYPE_MAP: Mapping[] = [
   { ours: 'treatise', label: 'Treatise', match: 'close', terms: [aat('treatises', '300026681')], note: 'LCGFT has no Treatises term. AAT does.' },
-  { ours: 'encyclopedia', label: 'Encyclopaedia or compendium', match: 'close', terms: [lc('Encyclopedias', 'gf2014026092')], note: 'No LCGFT term for compendium.' },
+  { ours: 'encyclopedia', label: 'Encyclopaedia', match: 'close', terms: [lc('Encyclopedias', 'gf2014026092')], note: 'No LCGFT term for compendium.' },
   { ours: 'commentary', label: 'Commentary', match: 'exact', terms: [lc('Commentaries', 'gf2025026014')], note: 'Narrower terms exist: Religious commentaries (gf2025026002), Law commentaries.' },
-  { ours: 'manual', label: 'Manual or recipe book', match: 'close', terms: [lc('Handbooks and manuals', 'gf2014026109'), lc('Recipes', 'gf2014026162')], note: 'Ours joins two LCGFT terms; they could be split.' },
-  { ours: 'letters', label: 'Letters', match: 'exact', terms: [lc('Correspondence', 'gf2025026080')], note: 'Narrower: Personal correspondence (gf2014026141).' },
+  { ours: 'manual', label: 'Handbook or manual', match: 'close', terms: [lc('Handbooks and manuals', 'gf2014026109'), lc('Recipes', 'gf2014026162')], note: 'Ours joins two LCGFT terms; they could be split.' },
+  { ours: 'letters', label: 'Correspondence', match: 'exact', terms: [lc('Correspondence', 'gf2025026080')], note: 'Narrower: Personal correspondence (gf2014026141).' },
   { ours: 'poetry', label: 'Poetry and literature', match: 'close', terms: [lc('Poetry', 'gf2014026481'), lc('Literature', 'gf2014026415')], note: 'Ours also covers fiction and drama: LCGFT keeps them apart (Fiction gf2014026339).' },
   { ours: 'dialogue', label: 'Dialogue', match: 'exact', terms: [lc('Dialogues (Literature)', 'gf2014026285')] },
   { ours: 'anthology', label: 'Anthology', match: 'close', terms: [lc('Anthologies', 'gf2026026016')], note: 'Ours also includes collected works (opera omnia), which are not anthologies.' },
   { ours: 'polemic', label: 'Polemic', match: 'exact', terms: [lc('Polemics', 'gf2026026027')] },
-  { ours: 'scripture', label: 'Sacred text', match: 'exact', terms: [lc('Sacred works', 'gf2015026045')] },
-  { ours: 'biography', label: 'Life', match: 'exact', terms: [lc('Biographies', 'gf2014026049'), lc('Hagiographies', 'gf2015026032')], note: "Hagiographies covers saints' lives." },
+  { ours: 'scripture', label: 'Sacred work', match: 'exact', terms: [lc('Sacred works', 'gf2015026045')] },
+  { ours: 'biography', label: 'Biography', match: 'exact', terms: [lc('Biographies', 'gf2014026049'), lc('Hagiographies', 'gf2015026032')], note: "Hagiographies covers saints' lives." },
   { ours: 'history', label: 'History or chronicle', match: 'close', terms: [lc('Annals and chronicles', 'gf2014026045')], note: 'LCGFT has no general Histories term; this covers chronicles only.' },
   { ours: 'catalog', label: 'Catalogue', match: 'exact', terms: [lc('Catalogs', 'gf2014026057'), lc('Bibliographies', 'gf2014026048')] },
 ];

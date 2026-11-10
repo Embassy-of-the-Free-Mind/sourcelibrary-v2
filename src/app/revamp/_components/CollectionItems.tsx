@@ -12,7 +12,7 @@ import SortSelect from '@/components/search-kit/SortSelect';
 import FilterChips from '@/components/search-kit/FilterChips';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import type { Book, RPlate } from '../_lib/types';
-import { PERIODS, PICTURE_TYPES, TEXT_TYPES, periodLabel, periodsOf } from '../_lib/facets';
+import { PERIODS, PICTURE_TYPES, TEXT_TYPES, centuryLabel, centuryOf, periodLabel, periodsOf } from '../_lib/facets';
 import CollectionEditor from './CollectionEditor';
 import { SORTS, docKey, initialDoc, type CollectionDoc } from '../_lib/collection-doc';
 
@@ -71,6 +71,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const [period, setPeriod] = useState('all');
   const [ptype, setPtype] = useState('all');
   const [fmtPick, setFmt] = useState('all');
+  const [made, setMade] = useState('all');
+  const [how, setHow] = useState(false);
   const [q, setQ] = useState('');
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
@@ -111,6 +113,10 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const periodCount = tally(works.map(periodsOf));
   const formatCount = tally(works.map(formatOf));
   const canFormat = !small && formatCount.has('book') && formatCount.has('manuscript');
+  const madeOf = (b: Book) => { const c = centuryOf(b.year); return c ? [String(c)] : []; };
+  const madeCount = tally(works.map(madeOf));
+  const madeOrder = [...madeCount.keys()].filter((k) => k !== NONE).sort((a, b) => Number(a) - Number(b));
+  const canMade = !small && madeOrder.length > 1;
   const canType = !small && [...typeCount.keys()].filter((k) => k !== NONE).length > 1;
   const canPeriod = !small && [...periodCount.keys()].filter((k) => k !== NONE).length > 1;
   const firstPeriod = (b: Book) => [...periodsOf(b)].sort((x, y) => ORDER_P.indexOf(x) - ORDER_P.indexOf(y))[0] ?? NONE;
@@ -129,11 +135,12 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
     author: (a, b) => (a.author || '~').localeCompare(b.author || '~', 'en'),
   };
   const t = q.toLowerCase();
-  let list = works.filter((b) => (lang === 'all' || b.language === lang) && matches(ttype, typesOf(b)) && matches(fmtPick, formatOf(b)) && matches(period, periodsOf(b))
+  let list = works.filter((b) => (lang === 'all' || b.language === lang) && matches(ttype, typesOf(b)) && matches(fmtPick, formatOf(b)) && matches(made, madeOf(b)) && matches(period, periodsOf(b))
     && (!t || `${b.display_title} ${b.title} ${b.author} ${noteOf[b.id!] ?? ''}`.toLowerCase().includes(t)));
   list = [...list].sort(by[group === 'sections' ? 'maker' : sort] ?? by.year_asc);
-  const keyOf = (b: Book) => group === 'period' ? firstPeriod(b) : group === 'type' ? (typesOf(b)[0] ?? NONE) : group === 'language' ? (b.language || 'Language not recorded') : group === 'sections' ? (sectionOf.get(b.id!) ?? '') : '';
+  const keyOf = (b: Book) => group === 'made' ? (madeOf(b)[0] ?? NONE) : group === 'period' ? firstPeriod(b) : group === 'type' ? (typesOf(b)[0] ?? NONE) : group === 'language' ? (b.language || 'Language not recorded') : group === 'sections' ? (sectionOf.get(b.id!) ?? '') : '';
   const rank = (order: string[], v: string) => (v === NONE ? 999 : order.indexOf(v));
+  if (group === 'made') list.sort((a, b) => (centuryOf(a.year) ?? 9999) - (centuryOf(b.year) ?? 9999));
   if (group === 'period') list.sort((a, b) => rank(ORDER_P, firstPeriod(a)) - rank(ORDER_P, firstPeriod(b)));
   if (group === 'type') list.sort((a, b) => rank(ORDER_T, typesOf(a)[0] ?? NONE) - rank(ORDER_T, typesOf(b)[0] ?? NONE));
   if (group === 'language') list.sort((a, b) => (langCount.get(b.language!) ?? 0) - (langCount.get(a.language!) ?? 0) || (a.language || '').localeCompare(b.language || ''));
@@ -198,14 +205,30 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
     fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
     ttype !== 'all' && { key: 'type', label: ttype === NONE ? 'Type not recorded' : TEXT_TYPES[ttype] },
-    period !== 'all' && { key: 'period', label: period === NONE ? 'Date not recorded' : periodLabel(period) },
+    period !== 'all' && { key: 'period', label: period === NONE ? 'Written: not recorded' : `Written: ${periodLabel(period)}` },
+    made !== 'all' && { key: 'made', label: made === NONE ? 'Made: undated' : `Made: ${centuryLabel(Number(made))}` },
     ptype !== 'all' && { key: 'ptype', label: ptype === NONE ? 'Picture type not recorded' : PICTURE_TYPES[ptype] }].filter(Boolean) as { key: string; label: string }[];
-  const clear = (k: string) => { if (k === 'q') setQ(''); if (k === 'lang') setLang('all'); if (k === 'type') setTtype('all'); if (k === 'format') setFmt('all'); if (k === 'period') setPeriod('all'); if (k === 'ptype') setPtype('all'); setPage(1); };
+  const clear = (k: string) => { if (k === 'q') setQ(''); if (k === 'lang') setLang('all'); if (k === 'type') setTtype('all'); if (k === 'format') setFmt('all'); if (k === 'period') setPeriod('all'); if (k === 'made') setMade('all'); if (k === 'ptype') setPtype('all'); setPage(1); };
   const formatMenu = canFormat && <SortSelect label="Format" value={fmtPick} onChange={reset(setFmt)} options={facetOptions('Printed or manuscript', formatCount, ['book', 'manuscript'], (v) => FORMATS[v], 'Not recorded')} />;
-  const hasMenus = (big && canLang) || canType || canFormat || canPeriod || (mixed && canPicType);
-  const active = [lang, ttype, fmtPick, period, ...(mixed ? [ptype] : [])].filter((v) => v !== 'all').length;
+  const hasMenus = (big && canLang) || canType || canFormat || canPeriod || canMade || (mixed && canPicType);
+  const active = [lang, ttype, fmtPick, period, made, ...(mixed ? [ptype] : [])].filter((v) => v !== 'all').length;
+  // How each filter is described, and the standard it follows. Same pattern as "How we choose subjects".
+  const howBtn = (cls: string) => <button type="button" aria-expanded={how} aria-controls="how-described" onClick={() => setHow(!how)} className={`${cls} text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary`}>How we describe works {how ? '−' : '+'}</button>;
+  const howList = how && (
+    <ul id="how-described" className="max-w-3xl -mt-2 mb-8 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
+      <li><b className="font-medium text-primary">Subjects</b> are our own list, each linked to the library standards FAST and Wikidata where a match exists.</li>
+      <li><b className="font-medium text-primary">Type</b> is the kind of text, named after the Library of Congress genre and form terms.</li>
+      <li><b className="font-medium text-primary">Printed or manuscript</b> follows the split library catalogue records already make.</li>
+      <li><b className="font-medium text-primary">Period written</b> is when the original text was written, by era with fixed dates. The era names are ours: no shared standard covers every culture.</li>
+      <li><b className="font-medium text-primary">Date made</b> is the century this copy was printed or written out, as a date span, the way library catalogues give dates (FAST).</li>
+      <li><b className="font-medium text-primary">Picture type</b> is named after the Getty Art &amp; Architecture Thesaurus.</li>
+      <li><b className="font-medium text-primary">Language</b> is the language of this copy, which can differ from the original&apos;s.</li>
+      <li>Not every work is described yet. Those that aren&apos;t are counted under &ldquo;not recorded&rdquo;. <Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></li>
+    </ul>
+  );
   const typeMenu = canType && <SortSelect label="Type" value={ttype} onChange={reset(setTtype)} options={facetOptions('Any type', typeCount, ORDER_T, (v) => TEXT_TYPES[v], 'Type not recorded')} />;
-  const periodMenu = (counts: Map<string, number>) => <SortSelect label="Period" value={period} onChange={reset(setPeriod)} options={facetOptions('Any period', counts, ORDER_P, periodLabel, 'Date not recorded')} />;
+  const periodMenu = (counts: Map<string, number>) => <SortSelect label="Period written" value={period} onChange={reset(setPeriod)} options={facetOptions('Written any time', counts, ORDER_P, periodLabel, 'Not recorded')} />;
+  const madeMenu = canMade && <SortSelect label="Date made" value={made} onChange={reset(setMade)} options={facetOptions('Made any time', madeCount, madeOrder, (v) => centuryLabel(Number(v)), 'Undated')} />;
   const picTypeMenu = canPicType && <SortSelect label="Picture type" value={ptype} onChange={reset(setPtype)} options={facetOptions(mixed ? 'Any picture' : 'Any type', picCount, ORDER_I, (v) => PICTURE_TYPES[v], 'Type not recorded')} />;
 
   const images = (
@@ -216,8 +239,10 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
           {picTypeMenu}
           {canPeriod && periodMenu(picPeriodCount)}
           <FilterChips chips={chips.filter((c) => c.key === 'ptype' || c.key === 'period')} onRemove={clear} onClearAll={() => { clear('ptype'); clear('period'); }} />
+          {howBtn('ml-2')}
         </div>
       )}
+      {(canPicType || canPeriod) && howList}
       {shownPlates.length === 0 ? <p className="py-10 text-muted">No pictures match. <button type="button" className="underline underline-offset-[3px]" onClick={() => { clear('ptype'); clear('period'); }}>Clear the filters</button></p> : <GalleryMasonry plates={shownPlates} />}
       {imagesTotal > plates.length && (
         <div className="mt-6"><Link href={`/gallery?collection=${slug}`} className="inline-flex items-center gap-2 h-11 px-5 bg-primary text-cream text-sm font-medium hover:opacity-90">See all {fmt(imagesTotal)} in the Gallery <ArrowRight className="w-4 h-4" /></Link></div>
@@ -266,12 +291,14 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                   {typeMenu}
                   {formatMenu}
                   {canPeriod && periodMenu(periodCount)}
+                  {madeMenu}
                   {mixed && picTypeMenu}
                 </div>
               </>}
               <FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
+              {hasMenus && howBtn('hidden md:inline ml-2')}
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
-                {group !== 'sections' && !mixed && (canPeriod || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
+                {group !== 'sections' && !mixed && (canPeriod || canMade || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period written'] as [string, string]] : []), ...(canMade ? [['made', 'By date made'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
                 <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
                 {pics === 'tab' && (
                   <div className="flex border border-border-medium" role="group" aria-label="View">
@@ -282,6 +309,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               </div>
             </div>
           )}
+          {!small && hasMenus && <>{howBtn('md:hidden -mt-3 mb-4')}{howList}</>}
           {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
           {mixed && columns(pageEntries)}
           {!mixed && blocks.map((g, i) => (
@@ -289,7 +317,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               {g.k && (
                 // Section header: the heading at H2 scale, its line as a standfirst, the count kept small.
                 <header className="mb-8 md:mb-10 max-w-3xl">
-                  <h3 className="font-serif text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-primary">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : group === 'period' ? periodLabel(g.k) : group === 'type' ? (g.k === NONE ? 'Type not recorded' : TEXT_TYPES[g.k]) : g.k}</h3>
+                  <h3 className="font-serif text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-primary">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : group === 'made' ? (g.k === NONE ? 'Undated' : centuryLabel(Number(g.k))) : group === 'period' ? (g.k === NONE ? 'Period not recorded' : periodLabel(g.k)) : group === 'type' ? (g.k === NONE ? 'Type not recorded' : TEXT_TYPES[g.k]) : g.k}</h3>
                   {group === 'sections' && sections.get(g.k)?.text && <p className="mt-3 md:mt-4 text-[17px] md:text-[19px] text-secondary leading-relaxed">{sections.get(g.k)!.text}</p>}
                   <p className="mt-3 text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'work' : 'works'}</p>
                 </header>

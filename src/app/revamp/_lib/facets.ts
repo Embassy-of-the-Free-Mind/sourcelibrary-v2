@@ -4,10 +4,11 @@
  * Text types are the site's existing form tags; picture types are the gallery's image types.
  * Periods are the site's existing eras, given fixed dates. Plain file: shared by server and client.
  */
+/** Labels follow the standard terms (see standards.ts), in the singular and British spelling. */
 export const TEXT_TYPES: Record<string, string> = {
-  treatise: 'Treatise', encyclopedia: 'Encyclopaedia or compendium', commentary: 'Commentary', manual: 'Manual or recipe book',
-  letters: 'Letters', poetry: 'Poetry and literature', dialogue: 'Dialogue', anthology: 'Anthology', polemic: 'Polemic',
-  scripture: 'Sacred text', biography: 'Life', history: 'History or chronicle', catalog: 'Catalogue',
+  treatise: 'Treatise', encyclopedia: 'Encyclopaedia', commentary: 'Commentary', manual: 'Handbook or manual',
+  letters: 'Correspondence', poetry: 'Poetry and literature', dialogue: 'Dialogue', anthology: 'Anthology', polemic: 'Polemic',
+  scripture: 'Sacred work', biography: 'Biography', history: 'History or chronicle', catalog: 'Catalogue',
 };
 export const PICTURE_TYPES: Record<string, string> = {
   engraving: 'Engraving', woodcut: 'Woodcut', diagram: 'Diagram', emblem: 'Emblem', portrait: 'Portrait',
@@ -30,5 +31,9 @@ export const periodLabel = (id: string) => {
   return p.id === 'ancient' ? `${p.label}, before ${p.to} CE` : p.id === 'modern' ? `${p.label}, from ${p.from}` : `${p.label}, ${yr(p.from)} to ${yr(p.to)}`;
 };
 export const periodOfYear = (y?: number | null) => (typeof y === 'number' && y !== 0 ? PERIODS.find((p) => y >= p.from && y < p.to)?.id : undefined);
-/** A work's periods: when it was written (its era tags), else when this copy was printed. */
-export const periodsOf = (b: { era?: string[]; year?: number | null }) => (b.era?.length ? b.era : [periodOfYear(b.year)].filter(Boolean) as string[]);
+/** A work's periods: when the original was written, from its era tags. The copy's own date is a separate menu (centuryOf). */
+export const periodsOf = (b: { era?: string[] }) => b.era ?? [];
+
+/** Date made: the century this copy was printed or written out, as a FAST-style span (1500–1599). */
+export const centuryOf = (y?: number | null) => (typeof y === 'number' && y > 0 ? Math.floor(y / 100) * 100 : undefined);
+export const centuryLabel = (c: number) => `${c}–${c + 99}`;
