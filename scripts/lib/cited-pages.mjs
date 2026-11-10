@@ -38,7 +38,9 @@ export function citedPageRefs(cwd = process.cwd()) {
       const [, bookKey, pageKey, num] = m;
       const key = `${bookKey}|${pageKey || `#${num}`}`;
       if (seen.has(key)) continue;
-      seen.set(key, num ? { bookKey, pageNumber: Number(num), source: file } : { bookKey, pageKey, source: file });
+      // /page/62 is a page NUMBER (the reader accepts both); ids are 24-hex or longer.
+      const asNumber = num ?? (/^\d{1,5}$/.test(pageKey) ? pageKey : null);
+      seen.set(key, asNumber != null ? { bookKey, pageNumber: Number(asNumber), source: file } : { bookKey, pageKey, source: file });
     }
   }
   return [...seen.values()];
