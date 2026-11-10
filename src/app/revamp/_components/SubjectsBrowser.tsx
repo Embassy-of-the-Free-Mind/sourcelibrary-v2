@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDown, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
@@ -9,7 +9,7 @@ import SortSelect from '@/components/search-kit/SortSelect';
 import { FIRST, TOOLBAR, TOP, filtersBtn, vbtn } from './CollectionsBrowser';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
-export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[] }
+export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[]; /** A short line under the name, such as a count. */ note?: string; /** No picture slot when there is no picture. */ bare?: boolean }
 type Group = SubjectRow & { narrower: SubjectRow[] };
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
@@ -30,8 +30,8 @@ function Strip({ pics, className = '' }: { pics: Pic[]; className?: string }) {
 function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   return (
     <Link id={s.home ? s.id : undefined} href={to(s)} className="group flex items-stretch bg-white border border-border-light text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
-      <span className="w-[58px] h-[58px] shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover" />}</span>
-      <span className="min-w-0 self-center px-3.5 py-2"><span>{s.label}</span>{also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}</span>
+      {!(s.bare && !s.pics[0]) && <span className="w-[58px] h-[58px] shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover" />}</span>}
+      <span className={`min-w-0 self-center px-3.5 py-2 ${s.bare && !s.pics[0] ? 'min-h-[58px] flex flex-col justify-center' : ''}`}><span>{s.label}</span>{s.note && <span className="block text-[12.5px] text-muted">{s.note}</span>}{also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}</span>
     </Link>
   );
 }
@@ -40,17 +40,32 @@ function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
 function PicCard({ s, also }: { s: SubjectRow; also?: string }) {
   return (
     <Link id={s.home ? s.id : undefined} href={to(s)} className="group block bg-white border border-border-light text-primary hover:border-primary transition-colors scroll-mt-20">
-      <span className="block aspect-square overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />}</span>
-      <span className="block px-3.5 py-3 text-[15px] leading-snug">{s.label}{also && <span className="block text-[12.5px] text-muted mt-0.5">Also called {also}</span>}</span>
+      {!(s.bare && !s.pics[0]) && <span className="block aspect-square overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />}</span>}
+      <span className="block px-3.5 py-3 text-[15px] leading-snug">{s.label}{s.note && <span className="block text-[12.5px] text-muted mt-0.5">{s.note}</span>}{also && <span className="block text-[12.5px] text-muted mt-0.5">Also called {also}</span>}</span>
     </Link>
   );
 }
 const CARDS: [string, string][] = [['side', 'Picture at the side'], ['top', 'Picture on top']];
 
-export default function SubjectsBrowser({ groups, barSearch = false }: { groups: Group[]; barSearch?: boolean }) {
+const SUBJECT_HOW = [
+  'A subject exists when the library holds books or images about it.',
+  'Broad subjects hold more specific ones, and a specific one can sit under two.',
+  'Each is linked to library standards (FAST and Wikidata) where a match exists.',
+  'Search finds it by any of its names, in Latin, German, Chinese and more.',
+];
+
+/**
+ * The browse page under an index hero: picture bands for each group, with its members as cards.
+ * Built for Subjects; Periods and Languages use it too, with their own words.
+ */
+export default function SubjectsBrowser({ groups, barSearch = false, noun = ['subject', 'subjects'], group = ['Broad subject', 'All broad subjects'],
+  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']] }: {
+  groups: Group[]; barSearch?: boolean; noun?: [string, string]; group?: [string, string];
+  how?: { title: string; items: ReactNode[] }; orders?: [string, string][];
+}) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
-  const [order, setOrder] = useState<'theme' | 'az'>('theme');
+  const [order, setOrder] = useState(orders[0][0]);
   const [theme, setTheme] = useState('');
   const [view, setView] = useState<'bands' | 'list'>('bands');
   const [card, setCard] = useState<'side' | 'top'>('side');
@@ -61,7 +76,9 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
     window.addEventListener('collection-search', on);
     return () => window.removeEventListener('collection-search', on);
   }, []);
-  const sorted = order === 'az' ? [...groups].sort((a, b) => a.label.localeCompare(b.label, 'en')) : groups; // By theme: the list's own order, related subjects side by side
+  // The list's own order (by theme, or by date), A to Z, or the own order reversed.
+  const sorted = order === 'az' ? [...groups].sort((a, b) => a.label.localeCompare(b.label, 'en'))
+    : order === 'rev' ? [...groups].reverse().map((g) => ({ ...g, narrower: [...g.narrower].reverse() })) : groups;
   const t = q.trim().toLowerCase();
   // Matches the English name or any other name, and says which other name matched.
   const match = (s: SubjectRow) => {
@@ -88,38 +105,35 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
       </form>}
       {/* One toolbar, as on All collections: the count, a menu, then order and view on the right. */}
       <div className={`${TOOLBAR} ${barSearch ? '' : 'mt-6'}`}>
-        <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? 'subject' : 'subjects'}</span>
+        <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? noun[0] : noun[1]}</span>
 <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`sm:hidden ${filtersBtn(open)}`}>
           Filters{theme && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">1</span>}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
         </button>
         <div className={`${open ? 'flex' : 'hidden'} sm:contents order-last sm:order-none w-full`}>
-          <SortSelect label="Broad subject" value={theme} onChange={setTheme} options={[['', 'All broad subjects'], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
+          <SortSelect label={group[0]} value={theme} onChange={setTheme} options={[['', group[1]], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
           {view === 'bands' && <span className="sm:hidden"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
         </div>
-        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="hidden md:inline ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
+        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="hidden md:inline ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">{howText.title} {how ? '−' : '+'}</button>
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
           {view === 'bands' && <span className="hidden sm:inline-flex"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
-          <SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} />
+          <SortSelect label="Order" value={order} onChange={setOrder} options={orders} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={vbtn(view === 'list')}><List className="w-4 h-4" /></button>
           </div>
         </div>
       </div>
-      <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="md:hidden mt-3 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px]">How we choose subjects {how ? '−' : '+'}</button>
+      <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="md:hidden mt-3 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px]">{howText.title} {how ? '−' : '+'}</button>
       {how && (
         <ul id="how" className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
-          <li>A subject exists when the library holds books or images about it.</li>
-          <li>Broad subjects hold more specific ones, and a specific one can sit under two.</li>
-          <li>Each is linked to library standards (FAST and Wikidata) where a match exists.</li>
-          <li>Search finds it by any of its names, in Latin, German, Chinese and more.</li>
+          {howText.items.map((x, i) => <li key={i}>{x}</li>)}
         </ul>
       )}
     </div>
   );
 
-  const empty = shown.length === 0 && <p className={`${WRAP} py-12 text-muted`}>No subject by that name. Try a broader word, or search the Library instead.</p>;
+  const empty = shown.length === 0 && <p className={`${WRAP} py-12 text-muted`}>No {noun[0]} by that name. Try a broader word, or search the Library instead.</p>;
 
   return (
     <>

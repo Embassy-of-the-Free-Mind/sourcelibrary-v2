@@ -56,6 +56,8 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
             ['Featured', nav.featured?.name ?? '', nav.featured ? colHref(nav.featured.slug) : '/revamp/c'],
             ['All collections', 'Chosen by Source Library', '/revamp/c'],
             ['Subjects', 'The map of the whole library', '/revamp/subjects'],
+            ['Periods', 'When the works were written', '/revamp/periods'],
+            ['Languages', 'What the books are written in', '/revamp/languages'],
             ['From readers', 'Collections people have made', '/revamp/c#readers'],
             ['Libraries', 'Who holds the books', '/libraries'],
           ].map(([a, b, h]) => (

@@ -20,7 +20,7 @@ const has = (hay: string | null | undefined, w: string) => !!hay && hay.toLowerC
  * pictures under it are this collection's (or subject's) own, matched on the words of the question;
  * live, they are the ones the librarian cites.
  */
-export default function AskPanel({ books, plates, byBook, scope, name }: { books: Book[]; plates: Plate[]; byBook: Record<string, Plate[]>; scope: 'collection' | 'subject'; name: string }) {
+export default function AskPanel({ books, plates, byBook, scope, name }: { books: Book[]; plates: Plate[]; byBook: Record<string, Plate[]>; scope: 'collection' | 'subject' | 'period' | 'language'; name: string }) {
   const [q, setQ] = useState('');
   const box = useRef<HTMLElement>(null);
   useEffect(() => {
