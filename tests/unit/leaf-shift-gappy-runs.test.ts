@@ -113,6 +113,17 @@ describe('leaf-shift gappy runs: rule edges', () => {
     expect(classifyBook(split, { rule: 'gappy', absorb: true }).absorptions).toEqual([]);
   });
 
+  it('#8464: leaves with no transcription and no English are skipped, so a one-slot slip across them is a run', () => {
+    // Cicero De natura deorum 1546: pp.57-58 and 61-63 had no OCR; pp.56, 59, 60 carried the next OCR'd leaf's English.
+    const blank = (n: number) => ({ page_number: n, ocr: '', tr: '' });
+    const pages = [pg(55, v(55), v(55)), pg(56, v(56), v(59)), blank(57), blank(58), pg(59, v(59), v(60)), pg(60, v(60), v(64)), blank(61), blank(62), blank(63), pg(64, v(64), v(64))];
+    expect(runsOf(pages, { rule: 'gappy' })).toEqual([['next', 56, 60, null]]);
+    expect(runsOf(pages)).toEqual([['next', 56, 60, null]]);
+    // An OCR'd leaf that is merely untranslated is still a neighbour: it splits the run at p.58.
+    const held = pages.map(p => (p.page_number === 58 ? { page_number: 58, ocr: `text\n${v(58)} word`, tr: '' } : p));
+    expect(runsOf(held, { rule: 'gappy' })).toEqual([['next', 59, 60, null]]);
+  });
+
   it('the write-time gate keeps the strict rule: the Karl shape passes blockLeafShiftRuns', () => {
     const pages = controls.karl.pages.map((p: any) => ({ page_number: p.page_number, ocr: { data: p.ocr } }));
     const tr = new Map(controls.karl.pages.map((p: any) => [p.page_number, p.tr]));

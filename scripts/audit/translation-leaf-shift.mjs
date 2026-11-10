@@ -56,6 +56,9 @@
  *              direction (scripts/audit/leaf-shift-confirm-5021.mjs): tier A 76/80 real, tier B 156/220, 0/20 on
  *              random unflagged windows; the v2/v5 single-page lane 3/22 runs. Absorption (absorptionsOf, the
  *              `absorbed` field) confirms 40/59 outside the number runs. Names alone sit at the noise floor.
+ * MEASURED 2026-11-10 (#8464), scripts/eval/experiments/2026-11-10-leaf-shift-ocr-gaps-8464.md: neighbours are the
+ *              nearest pages with text, not page_number ±1 — Cicero 1546's English slipped one slot over leaves with
+ *              no OCR (p.56 = p.59's leaf). On 600 seeded live books: number runs unchanged (17/17), one name run added.
  * A flag is a work list; open the scan before acting on it (measurement-instruments.md).
  *
  * Usage (node --env-file=.env.production.local):
@@ -113,6 +116,10 @@ function selfTest() {
   eq(shifted.rows.map(r => r.cls), ['own', 'next', 'next', 'next', 'own'], 'shifted classes');
   eq(shifted.runs.map(r => [r.dir, r.start, r.end]), [['next', 2, 4]], 'shifted run');
   eq(classifyBook([mk(1, 170, 170), mk(2, 171, 171), mk(3, 172, 172)]).runs, [], 'aligned book');
+  // #8464: leaves with no transcription between the shifted pages are skipped, not neighbours.
+  const blank = n => ({ page_number: n, ocr: '', tr: '' });
+  const gapped = classifyBook([mk(1, 170, 170), blank(2), mk(3, 171, 172), blank(4), blank(5), mk(6, 172, 173), mk(7, 173, 174), blank(8), mk(9, 174, 174)], { rule: 'gappy' });
+  eq(gapped.runs.map(r => [r.dir, r.start, r.end, r.strict]), [['next', 3, 7, true]], 'run across untranscribed leaves');
   console.log('self-test ok');
 }
 
@@ -176,7 +183,7 @@ function summarise(book, loaded) {
     signal: translated.filter(r => r.cls !== 'none').length,
     nameSignal: translated.filter(r => r.cls === 'none' && r.nameCls && r.nameCls !== 'none').length,
     // Consecutive translated pages that BOTH vote: the only places a run could have been seen.
-    pairs: res.rows.filter((r, i) => i > 0 && r.translated && r.cls !== 'none' && res.rows[i - 1].translated && res.rows[i - 1].cls !== 'none' && res.rows[i - 1].page_number === r.page_number - 1).length,
+    pairs: res.rows.filter((r, i) => i > 0 && r.translated && r.cls !== 'none' && res.rows[i - 1].translated && res.rows[i - 1].cls !== 'none' && res.rows[i - 1].pos === r.pos - 1).length,
     singles: { next: res.rows.filter(r => r.cls === 'next').length, prev: res.rows.filter(r => r.cls === 'prev').length },
     runs: res.runs,
     flagged: res.runs.length > 0,
