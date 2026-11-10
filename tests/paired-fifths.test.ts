@@ -80,6 +80,11 @@ describe('paired-fifths-check v2: one Opus call per facing pair (P5, #8478/#8518
     expect(pairVerdicts(A, B, judged([ok, ok], [{ kind: 'wrong_leaf', layer: 'transcription', page: 'B', quote: 'q', material: true }]))[1]).toMatchObject({ page_verdict: 'fix', wrong_page: true });
     expect(pageVerdict(A, { ...ok, defects: [{ layer: 'transcription', class: 'I1', severity: 'wrong_text', what: 'other leaf' }] }, [])).toMatchObject({ page_verdict: 'fix', wrong_page: true });
   });
+  it('drops an empty quote or class the judge returned, which would make the whole book_checks row be refused (#8518)', () => {
+    const v = pageVerdict(A, { ...ok, fidelity: 2, defects: [{ layer: 'transcription', class: '', quote: '', severity: 'wrong_text', what: 'w' }] }, []);
+    expect(v.defects).toEqual([{ layer: 'transcription', severity: 'wrong_text', what: 'w' }]);
+    expect(v.errors[0]).not.toHaveProperty('class');
+  });
   it('parseBatch takes one entry per page and per break, and refuses anything else', () => {
     const good = JSON.stringify({ opened: ['p01.jpg', 'p02.jpg'], ...judged([ok, ok]) });
     expect(parseBatch(`text before ${good}`, 2)?.pages).toHaveLength(2);

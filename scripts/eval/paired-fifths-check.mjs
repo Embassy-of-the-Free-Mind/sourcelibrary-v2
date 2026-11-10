@@ -122,7 +122,8 @@ export function pageVerdict(page, v, joinDefects) {
     note: [v.reader_note, ...joinDefects.map((d) => `Break: ${d.kind} (${d.layer}) "${String(d.quote ?? '').slice(0, 160)}"`)].filter(Boolean).join(' ').slice(0, 1500),
     ...(wrongLeaf ? { wrong_page: true } : {}),
     errors: serious && !errors.length ? [{ stage: 'other', kind: 'wrong_leaf', problem: 'another leaf\'s text' }] : errors,
-    defects: v.defects ?? [],
+    // The judge sometimes returns "quote": "" (or class ""); validatePageNotes refuses the whole row for that (#8518).
+    defects: (v.defects ?? []).map((d) => Object.fromEntries(Object.entries(d).filter(([k, x]) => !(['class', 'quote'].includes(k) && (typeof x !== 'string' || !x.trim()))))),
     judged: { ocr: page.ocr?.data ?? '', translation: page.translation?.data ?? '' },
   };
 }
