@@ -8,6 +8,7 @@ import { dataFile } from '../_lib/data';
 import CollectionItems from './CollectionItems';
 import AskPanel from './AskPanel';
 import IntroBand from './IntroBand';
+import MakerBadge, { SOURCE_LIBRARY, type Maker } from './MakerBadge';
 import { RAMP, CURATED } from '../_lib/ramp';
 import type { CollectionModel } from '../_lib/types';
 
@@ -23,8 +24,12 @@ const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
 
 const HEROES: [string, string][] = [['wall', 'A Plate rows'], ['bleed', 'B One picture, full bleed'], ['whole', 'C One picture, whole']];
 
-export default function CollectionBasic({ m, tone = 'ink', hero = 'wall' }: { m: CollectionModel; tone?: string; hero?: string }) {
-  const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ tone, hero, ...o })}`;
+// Prototype only: no reader collection is public yet, so ?maker=reader shows how a reader's byline looks, with the plain avatar a reader has until they add a picture.
+const A_READER: Maker = { kind: 'reader', name: 'username' };
+
+export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', maker = 'source-library' }: { m: CollectionModel; tone?: string; hero?: string; maker?: string }) {
+  const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ tone, hero, maker, ...o })}`;
+  const by = maker === 'reader' ? A_READER : SOURCE_LIBRARY;
   const cands = dataFile<Record<string, HeroCandidate[]>>('snap/_hero')?.[m.slug] ?? [];
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
@@ -41,6 +46,8 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall' }: { m:
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
           <span className="flex gap-2">Hero
             {HEROES.map(([k, l]) => <Link key={k} href={q({ hero: k })} className={hero === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
+          <span className="flex gap-2">Made by
+            {[['source-library', 'Source Library'], ['reader', 'A reader']].map(([k, l]) => <Link key={k} href={q({ maker: k })} className={maker === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
         <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-20 md:pb-24`}>
           <div className="flex items-center justify-between gap-4 mb-3">
@@ -52,10 +59,10 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall' }: { m:
             <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
           </div>
           {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px] md:text-[13.5px] font-medium">
             {counts.map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
             {/* Who made it, next in the ramp after the counts. */}
-            <span style={{ color: RAMP[counts.length] ?? CURATED }}>Curated by {m.byline.replace(/^By\s+/i, '')}</span>
+            <MakerBadge maker={by} color={RAMP[counts.length] ?? CURATED} />
           </div>
         </div>
         {/* The bar: a strip along the hero's bottom edge, Follow and Copy part of it. */}
