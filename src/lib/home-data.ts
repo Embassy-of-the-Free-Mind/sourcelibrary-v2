@@ -9,7 +9,7 @@ import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SHELF_LEAD_IDS, NATIVE_SHOWCASE_SLUGS, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
-import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, type LocalizedCollectionMap } from '@/lib/localized';
+import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, LOCALIZED_CARD_PROJECTION, type LocalizedCollectionMap } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
 import { dedupeHomeSections } from '@/lib/home-dedupe';
@@ -41,7 +41,9 @@ const BOOK_PROJECTION = {
   translation_percent: { $ifNull: ['$translation_percent', 0] },
   // Inputs of localizedTitle and hasLocalizedEdition, so a locale homepage can
   // show the Spanish gloss and tell which books exist in Spanish (#7496).
-  localized: 1,
+  // Title and byline only: the full `localized` adds every language's
+  // summary and chapter list to the page payload.
+  ...LOCALIZED_CARD_PROJECTION,
   pages_translated_es: 1,
 };
 
@@ -100,7 +102,7 @@ async function getFeaturedCollections(preferSlugs: string[] = [], lang: HomeLang
   const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1, resource_type: 1,
     // Both inputs of hasLocalizedEdition, so a locale homepage links a book with
     // no edition in its language straight to the English page (#7076).
-    language: 1, pages_translated_es: 1, localized: 1 };
+    language: 1, pages_translated_es: 1, ...LOCALIZED_CARD_PROJECTION };
 
   // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
   const highlightedIdsBySlug = new Map<string, string[]>();
