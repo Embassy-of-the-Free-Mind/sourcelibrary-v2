@@ -67,6 +67,8 @@ export interface LibraryDashboard {
 export interface MetricsHistoryRow {
   date: string; mau: number; avgDau: number; signupsTotal: number; verified: number; humanPvs7: number; dwellMedianSec: number;
   storage?: { r2_bytes: number; r2_objects: number; text_bytes_est: number; pages_total: number };
+  /** Likely-human visitors per country over the 24h before the snapshot; from 2026-11-11 (#8522). */
+  geoLikely?: Record<string, number>;
 }
 
 /** The subset of system_config.metrics_snapshot the dashboard renders (full shape: scripts/analytics/snapshot-metrics.mjs). */
@@ -82,6 +84,8 @@ export interface MetricsSnapshot {
     topCollections?: { slug: string; hits: number }[];
   };
   series: { signupsByDay: { date: string; n: number }[] };
+  /** Likely-human visitors by country, 30 days (#8522); absent on snapshots before 2026-11-11. */
+  geo?: { windowDays: number; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
   search: { human: number; zeroResult: number; topQueries: { query: string; count: number }[]; zeroQueries: { query: string; count: number }[] };
   missionActions: { download: number; cite: number; share: number };
   social: { feedbackUnread: number; likes?: number; likeVisitors?: number };
@@ -117,7 +121,7 @@ export async function readHomepageStats(db: Db): Promise<HomepageStats | null> {
 /** One row per day since the register began (2026-06-28); a few hundred small docs at most. */
 export async function readMetricsHistory(db: Db): Promise<MetricsHistoryRow[]> {
   const rows = await db.collection('metrics_history')
-    .find({}, { projection: { date: 1, mau: 1, avgDau: 1, signupsTotal: 1, verified: 1, humanPvs7: 1, dwellMedianSec: 1, storage: 1 } })
+    .find({}, { projection: { date: 1, mau: 1, avgDau: 1, signupsTotal: 1, verified: 1, humanPvs7: 1, dwellMedianSec: 1, storage: 1, geoLikely: 1 } })
     .sort({ date: 1 }).limit(2000).toArray();
   return rows as unknown as MetricsHistoryRow[];
 }

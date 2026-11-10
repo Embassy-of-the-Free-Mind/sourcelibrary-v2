@@ -120,6 +120,40 @@ await withMongo(async (db) => {
   const dau = dauSeries.filter((d) => d._id >= day(14));
   const avgDau = Math.round(dau.reduce((s, d) => s + d.users, 0) / (dau.length || 1));
 
+  // ─── GEOGRAPHY: likely-human visitors by country (#8522) ──────────────────
+  // The fingerprint counts above still carry residential-proxy fleets: they run
+  // JavaScript and wear stock browser UAs, so neither BOT_RE nor the pool list
+  // sees most of them (measurement-instruments.md, 2026-08-09). Their signature
+  // is behavioural: desktop, no referrer, one or two pages. A fingerprint counts
+  // as LIKELY HUMAN when it breaks that signature in at least one way: it came
+  // from another site, read 3+ pages, or used a phone. On 2026-11-11 this kept
+  // 26,778 of 141,124 thirty-day fingerprints, and the three signals agreed on
+  // the Latin America share (6.0-6.9%), which is the two-instrument check.
+  // `referrer` is stored as a bare domain ('direct', 'google.com', ...).
+  const EXTERNAL_REF = '^(?!direct$|localhost|127\\.|([a-z0-9-]+\\.)*sourcelibrary\\.org$).+';
+  const geoByCountry = async (from) => (await pv.aggregate([
+    { $match: { timestamp: { $gt: from }, userAgent: { $exists: true, $not: BOT_RE }, ...notPool } },
+    { $group: {
+      _id: { ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } },
+      country: { $first: '$country' },
+      pv: { $sum: 1 },
+      referred: { $max: { $cond: [{ $regexMatch: { input: { $ifNull: ['$referrer', 'direct'] }, regex: EXTERNAL_REF } }, 1, 0] } },
+      phone: { $max: { $cond: [{ $regexMatch: { input: '$userAgent', regex: 'Mobile|Android|iPhone|iPad' } }, 1, 0] } },
+    } },
+    { $group: {
+      _id: { $ifNull: ['$country', 'unknown'] },
+      all: { $sum: 1 },
+      referred: { $sum: '$referred' },
+      likely: { $sum: { $cond: [{ $or: [{ $eq: ['$referred', 1] }, { $gte: ['$pv', 3] }, { $eq: ['$phone', 1] }] }, 1, 0] } },
+    } },
+  ], { allowDiskUse: true }).toArray())
+    .map((r) => ({ country: r._id, all: r.all, likely: r.likely, referred: r.referred }))
+    .sort((a, b) => b.likely - a.likely);
+  const geo30 = await geoByCountry(d30);
+  const geo1 = await geoByCountry(d1);
+  const geo = { windowDays: 30, method: 'likely-human-v1', countries: geo30 };
+  const geoLikely = Object.fromEntries(geo1.filter((r) => r.likely > 0).map((r) => [r.country, r.likely]));
+
   // Dwell: per-session (ip+ua, 30-min idle gap) duration, last 7d, multi-hit only.
   const rows = await pv.find({ timestamp: { $gt: d7 }, ...notPool }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
   const byFp = new Map();
@@ -333,6 +367,7 @@ await withMongo(async (db) => {
     readingMembers,
     missionActions,
     traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, topCountries },
+    geo,
     search,
     social,
     ai,
@@ -356,6 +391,7 @@ await withMongo(async (db) => {
     dwellMedianSec: dwellMedian, dwellMeanSec: dwellMean,
     uniqVisitors, returningVisitors: multiDay, returningTotal: totalFp,
     humanPvs7: pvLast7,
+    geoLikely, // likely-human visitors per country, last 24h (#8522)
   };
   // The two headline corpus counts, copied from homepage_stats (recomputed 05:00
   // by prewarm-browse) so "books made readable per day" can be read off history
