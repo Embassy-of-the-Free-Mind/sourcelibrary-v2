@@ -258,6 +258,20 @@ describe('TS/.mjs door parity', () => {
     expect(mjs.written).toBe(false);
   });
 
+  // #8465: Plotinus, Perna 1580 p.811 as stored — a reply to the request, not a translation.
+  it('both doors refuse a model refusal / reply to the request, and stamp it (no translation written)', async () => {
+    const REFUSAL = 'The Greek text to be translated is missing from your request. You have provided a Latin text under "Previous page text for continuity". Otherwise, please provide the Greek text you wish to have translated.';
+    setPage({ data: 'old ai', source: 'ai' });
+    const ts = await writePageTranslation({ ...writeArgs, text: REFUSAL });
+    expect(ts).toMatchObject({ written: false, refused: 'reasoning-leak' });
+    setPage({ data: 'old ai', source: 'ai' });
+    const mjs = await writePageTranslationMjs(makeDb(), { ...mjsArgs, text: REFUSAL });
+    expect(mjs).toMatchObject({ written: false, unhealthy: true, reason: 'reasoning-leak' });
+    // Only the refusal stamps touched pages: no write of translation.data.
+    for (const [, u] of state.updates) expect(JSON.stringify(u)).not.toContain('"translation":{"data"');
+    expect(state.updates.some(([, u]) => JSON.stringify(u).includes('reasoning-leak'))).toBe(true);
+  });
+
   it('both doors write over plain AI text', async () => {
     setPage({ data: 'old ai', source: 'ai' });
     const ts = await writePageTranslation(writeArgs);
