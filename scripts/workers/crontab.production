@@ -328,12 +328,12 @@
 5 1-23/2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/reader-request-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/reader-request-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/reader-request-lane/$(date +\%F-\%H) --max-pages=200 --apply >> /var/log/sourcelibrary/reader-request-lane.log 2>&1  # #7599
 # agy CLI enrichment (#7628): the same summary + index + chapters on Gemini 3.8 Flash through the subscription, one
 # conversation per book, $0 API. Each book is claimed in enrich_batch_books before its call, so the batch lane above
-# skips it; a book that fails here is handed back to the batch lane (the fallback). Stops at 600 model requests a day
-# (job ledger AGY_JOB=enrich-agy; a request is one message of up to 150K characters, which the pilot measured at
-# ~10 ordinary agy calls of /quota each, so 600 a day is about a quarter of one pool's week, the share Derek allowed),
-# when the chosen pool's weekly bucket is under the straight line to its reset or its 5-hour bucket under 25%, and at
-# the first quota reply. Guarded on the lane module so the line is inert until it is on main.
-35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=600 --deadline-min=110 --concurrency=2" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
+# skips it; a book that fails here is handed back to the batch lane (the fallback). Stops at 4,000 model requests a day
+# (job ledger AGY_JOB=enrich-agy; a request is one message of up to 150K characters; raised from 600 on 2026-11-10 at
+# Derek's ask, when 600 a day finished ~40 books and the pools stood at 13-35% of their week), when the chosen pool's
+# weekly bucket is under the other lanes' reserve (agy-pools.mjs LANE_RESERVES, #7911) or its 5-hour bucket under 25%,
+# and at the first quota reply. The pool floors, not the request cap, are what protect the other lanes. Guarded on the lane module so the line is inert until it is on main.
+35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=4000 --deadline-min=110 --concurrency=3" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
 # Claude transcripts -> restic (Hetzner Object Storage), never pruned; sourcelibrary #7673 (2026-10-29)
 30 3 * * * /root/restic-transcripts.sh
 # ft-search nightly (#7598): one batch per account per day; applies itself, pages ntfy
