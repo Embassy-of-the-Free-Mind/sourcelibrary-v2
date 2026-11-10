@@ -6,4 +6,4 @@ export const fill = (_tone?: string) => NAV_DARK;
 export const GLASS = 'text-white transition-[filter] hover:brightness-150';
 
 /** Hover on the strip's search field, to compare (?sh=). Each is slight; focus keeps its white underline. */
-export const HOVERS: [string, string][] = [['tint', 'A Tint'], ['line', 'B Underline'], ['bright', 'C Brighter words'], ['icon', 'D Icon']];
+export const HOVERS: [string, string][] = [['edge', 'A Edge line'], ['slide', 'B Slide'], ['lift', 'C Strip lifts'], ['hint', 'D Hint'], ['buttons', 'E Buttons answer'], ['none', 'F None']];

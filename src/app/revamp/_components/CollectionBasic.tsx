@@ -23,7 +23,7 @@ const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
 
 const HEROES: [string, string][] = [['wall', 'A Plate rows'], ['bleed', 'B One picture, full bleed'], ['whole', 'C One picture, whole']];
 
-export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', sh = 'tint' }: { m: CollectionModel; tone?: string; hero?: string; sh?: string }) {
+export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', sh = 'edge' }: { m: CollectionModel; tone?: string; hero?: string; sh?: string }) {
   const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ tone, hero, sh, ...o })}`;
   const cands = dataFile<Record<string, HeroCandidate[]>>('snap/_hero')?.[m.slug] ?? [];
   const works = m.all.length;

@@ -16,6 +16,7 @@ import { fill } from '../_lib/tones';
 export default function CollectionBars({ works, after, tone = 'ink', strip = false, hover = 'tint' }: { works: number; after?: ReactNode; tone?: string; strip?: boolean; hover?: string }) {
   const [v, setV] = useState('');
   const [asked, setAsked] = useState('');
+  const [over, setOver] = useState(false);
   const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
   const btn = 'px-3.5 sm:px-5 text-[13px] sm:text-sm shrink-0 hover:bg-white/10';
   const note = asked && <p className={`text-[13.5px] max-w-2xl text-white/80 ${strip ? 'mb-3' : 'mt-3'}`}>Prototype: nothing is sent. Live, the librarian would answer “{asked}” from these {works.toLocaleString('en-GB')} works only.</p>;
@@ -23,23 +24,20 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
   if (strip) return (
     <div className="absolute inset-x-0 bottom-0 z-10">
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">{note}</div>
-      <div className="text-white" style={{ background: fill(tone) }}>
+      <div className={`text-white transition-colors ${hover === 'lift' && over ? '!bg-[#26211b]' : ''}`} style={hover === 'lift' && over ? undefined : { background: fill(tone) }}>
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-14 sm:h-16">
           <form onSubmit={(e) => { e.preventDefault(); search(v); }} role="search" className="flex-1 min-w-0 flex items-stretch focus-within:shadow-[inset_0_-2px_0_rgba(255,255,255,.8)]" data-catalog-bar>
             <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
-            <span className="group/field flex-1 min-w-0 flex items-stretch">
-              {hover === 'icon' && <SearchIcon aria-hidden className="self-center w-4 h-4 mr-3 shrink-0 text-white/45 transition-[color,transform] group-hover/field:text-white group-hover/field:translate-x-0.5 group-focus-within/field:text-white" />}
-              <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)} placeholder="Search or ask a question"
-                className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none transition-[background-color,box-shadow,color] ${{
-                  tint: '-ml-4 pl-4 hover:bg-white/[0.06] focus:bg-white/[0.06]',
-                  line: 'hover:shadow-[inset_0_-1px_0_rgba(255,255,255,.4)]',
-                  bright: 'hover:placeholder:text-white/90',
-                  icon: 'group-hover/field:placeholder:text-white/90',
-                }[hover] ?? ''}`} />
+            <span className="group/field relative flex-1 min-w-0 flex items-stretch" onMouseEnter={() => setOver(true)} onMouseLeave={() => setOver(false)}>
+              {hover === 'edge' && <span aria-hidden className="absolute -left-4 inset-y-3 w-0.5 bg-white scale-y-0 group-hover/field:scale-y-100 group-focus-within/field:scale-y-100 transition-transform origin-center" />}
+              <SearchIcon aria-hidden className="self-center w-[18px] h-[18px] mr-3 shrink-0 text-white/60 group-hover/field:text-white group-focus-within/field:text-white transition-colors" />
+              <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)}
+                placeholder={hover === 'hint' && over ? 'A title, an author, or ask in your own words' : 'Search or ask a question'}
+                className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none transition-[padding] duration-200 ${hover === 'slide' ? 'group-hover/field:pl-1.5 focus:pl-1.5' : ''}`} />
             </span>
-            <button type="submit" className={btn}>Search</button>
+            <button type="submit" className={`${btn} ${hover === 'buttons' && over ? 'bg-white/10' : ''}`}>Search</button>
             <span aria-hidden className="w-px my-4 bg-white/25" />
-            <button type="button" onClick={() => setAsked(v.trim() || 'which work to read first')} className={btn}>Ask</button>
+            <button type="button" onClick={() => setAsked(v.trim() || 'which work to read first')} className={`${btn} ${hover === 'buttons' && over ? 'bg-white/10' : ''}`}>Ask</button>
           </form>
           {after}
         </div>
