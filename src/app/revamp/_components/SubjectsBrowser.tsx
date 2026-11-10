@@ -36,6 +36,16 @@ function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   );
 }
 
+/** Variant: a square picture on top, the name below. */
+function PicCard({ s, also }: { s: SubjectRow; also?: string }) {
+  return (
+    <Link id={s.home ? s.id : undefined} href={to(s)} className="group block bg-white border border-border-light text-primary hover:border-primary transition-colors scroll-mt-20">
+      <span className="block aspect-square overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />}</span>
+      <span className="block px-3.5 py-3 text-[15px] leading-snug">{s.label}{also && <span className="block text-[12.5px] text-muted mt-0.5">Also called {also}</span>}</span>
+    </Link>
+  );
+}
+const CARDS: [string, string][] = [['side', 'Picture at the side'], ['top', 'Picture on top']];
 
 export default function SubjectsBrowser({ groups, barSearch = false }: { groups: Group[]; barSearch?: boolean }) {
   const [q, setQ] = useState('');
@@ -43,6 +53,7 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
   const [order, setOrder] = useState<'theme' | 'az'>('theme');
   const [theme, setTheme] = useState('');
   const [view, setView] = useState<'bands' | 'list'>('bands');
+  const [card, setCard] = useState<'side' | 'top'>('side');
   const [open, setOpen] = useState(false); // phone: the menu behind Filters
   // The hero bar sends its words here while typing.
   useEffect(() => {
@@ -84,9 +95,11 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
         </button>
         <div className={`${open ? 'flex' : 'hidden'} sm:contents order-last sm:order-none w-full`}>
           <SortSelect label="Broad subject" value={theme} onChange={setTheme} options={[['', 'All broad subjects'], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
+          {view === 'bands' && <span className="sm:hidden"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
         </div>
         <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="hidden md:inline ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
+          {view === 'bands' && <span className="hidden sm:inline-flex"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
           <SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>
@@ -138,7 +151,9 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
                 </Link>
               )}
               {self.also && <p className="text-[13px] text-muted -mt-2 mb-3">Also called {self.also}</p>}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map(({ s, m }) => <PicBox key={s.id} s={s} also={m.also} />)}</div>
+              {card === 'top'
+                ? <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">{narrower.map(({ s, m }) => <PicCard key={s.id} s={s} also={m.also} />)}</div>
+                : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map(({ s, m }) => <PicBox key={s.id} s={s} also={m.also} />)}</div>}
             </div>
           </section>
         ))}
