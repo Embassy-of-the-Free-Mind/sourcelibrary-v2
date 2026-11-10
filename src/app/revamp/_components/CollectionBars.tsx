@@ -13,11 +13,12 @@ import { fill } from '../_lib/tones';
  * for over the hero pictures; focus shows as a white ring. If kept, this becomes a tone on
  * search-kit/SearchAskBars rather than a second bar.
  */
-export default function CollectionBars({ works, after, tone = 'ink', strip = false, placeholder = 'Search or ask a question', scope, live = false }: {
+export default function CollectionBars({ works, after, tone = 'ink', strip = false, placeholder = 'Search or ask a question', scope, live = false, panel = false }: {
   works: number; after?: ReactNode; tone?: string; strip?: boolean;
   /** What the field says before anything is typed. */ placeholder?: string;
   /** What a question would be answered from, for the prototype note. Defaults to "these N works". */ scope?: string;
   /** Narrow the list below while typing (index pages), not only on Enter. */ live?: boolean;
+  /** Questions open the answer panel under the hero (AskPanel) instead of the one-line note. */ panel?: boolean;
 }) {
   const [v, setV] = useState('');
   const [asked, setAsked] = useState('');
@@ -25,7 +26,7 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
   const btn = 'px-3.5 sm:px-5 text-[13px] sm:text-sm shrink-0 hover:bg-white/10';
   // One field, no buttons: a question goes to the librarian, anything else searches the works.
   const isQuestion = (t: string) => /\?\s*$/.test(t) || /^(who|what|which|when|where|why|how|is|are|does|did|do|can|was|were|tell|show|find|explain)\b/i.test(t.trim());
-  const submit = (t: string) => (isQuestion(t) ? setAsked(t.trim()) : search(t));
+  const submit = (t: string) => (!isQuestion(t) ? search(t) : panel ? window.dispatchEvent(new CustomEvent('collection-ask', { detail: t.trim() })) : setAsked(t.trim()));
   const note = asked && <p className={`text-[13.5px] max-w-2xl text-white/80 ${strip ? 'mb-3' : 'mt-3'}`}>Prototype: nothing is sent. Live, the librarian would answer “{asked}” from {scope ?? `these ${works.toLocaleString('en-GB')} works`} only.</p>;
   // Strip: one full-width band along the bottom edge of the hero, everything in it divided by hairlines.
   if (strip) return (

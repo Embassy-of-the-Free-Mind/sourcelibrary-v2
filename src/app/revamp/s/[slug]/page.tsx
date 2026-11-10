@@ -6,6 +6,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import PlateWall from '../../_components/PlateWall';
 import { Bell } from 'lucide-react';
 import CollectionBars from '../../_components/CollectionBars';
+import AskPanel from '../../_components/AskPanel';
 import OverviewBand from '../../_components/OverviewBand';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
@@ -41,11 +42,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
           {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
         </div>
-        <CollectionBars strip works={m.listed || m.stats.works} tone="ink" after={<>
+        <CollectionBars strip panel works={m.listed || m.stats.works} tone="ink" after={<>
           <span aria-hidden className="w-px my-4 bg-white/25 ml-1 sm:ml-2" />
           <Link href="/auth/signin?callbackUrl=%2Fsubjects" className="inline-flex items-center gap-2 px-3.5 sm:px-5 -mr-3.5 sm:-mr-5 text-[13px] sm:text-sm hover:bg-white/10"><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
         </>} />
       </section>
+      <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope="subject" name={m.name} />
       {m.overview && <div className={`${WRAP} py-8 md:py-10`}><OverviewBand o={m.overview} /></div>}
       {(narrower.length > 0 || about.length > 0) && (
         <section className="bg-warm border-y border-border-light">

@@ -6,6 +6,7 @@ import CollectionBars from './CollectionBars';
 import HeroPicture, { type HeroCandidate } from './HeroPicture';
 import { dataFile } from '../_lib/data';
 import CollectionItems from './CollectionItems';
+import AskPanel from './AskPanel';
 import IntroBand from './IntroBand';
 import { RAMP, CURATED } from '../_lib/ramp';
 import type { CollectionModel } from '../_lib/types';
@@ -58,13 +59,15 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall' }: { m:
           </div>
         </div>
         {/* The bar: a strip along the hero's bottom edge, Follow and Copy part of it. */}
-        <CollectionBars strip works={works} tone={tone} after={<>
+        <CollectionBars strip panel works={works} tone={tone} after={<>
           <span aria-hidden className="w-px my-4 bg-white/25 ml-1 sm:ml-2" />
           <Link href={SIGN_IN} className="inline-flex items-center gap-2 px-3.5 sm:px-5 text-[13px] sm:text-sm hover:bg-white/10"><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
           <span aria-hidden className="w-px my-4 bg-white/25" />
           <Link href={SIGN_IN} className="inline-flex items-center gap-2 px-3.5 sm:px-5 text-[13px] sm:text-sm hover:bg-white/10 -mr-3.5 sm:-mr-5"><Copy className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Copy</span></Link>
         </>} />
       </section>
+
+      <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope="collection" name={m.name} />
 
       <IntroBand m={m} />
 
