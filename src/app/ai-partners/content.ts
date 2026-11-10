@@ -5,7 +5,7 @@ export const PARTNERS_HTML = `
   <div class="wrap">
     <div>
       <h1>The world's largest library of <em>translated</em> historical sources</h1>
-      <p>22,500 books in English, translated from more than fifty languages, most of them printed between 1450 and 1800. Each translation is set opposite the page it came from, so any line can be checked against the original. About half had never been in English before. Behind them stand 131,000 books with their page scans, and 235,000 illustrations cropped from the pages.</p>
+      <p>22,700 books in English, translated from more than fifty languages, most of them printed between 1450 and 1800. Each translation is set opposite the page it came from, so any line can be checked against the original. About half had never been in English before. Behind them stand 131,000 books with their page scans, and 235,000 illustrations cropped from the pages.</p>
       <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
     </div>
     <figure>
@@ -19,10 +19,10 @@ export const PARTNERS_HTML = `
   <div class="wrap">
     <p class="hook-lead">The last time the world translated its ancient wisdom, it ignited the Renaissance.</p>
     <p>Now a new kind of mind is learning what humans have thought, and it knows only what was typed. Most of what humans wrote is still unread by AI or people, because it is in languages few speak, like Latin and Sanskrit, and in libraries few can access.</p>
-    <p class="hook-q">What if all of human writing could be available to all people, and machines?</p>
-    <p>Precious, human source material from a philanthropic organization devoted to making it free for humans to read, in all languages. By purchasing this dataset, you are generating enormous value for the future of AI and people.</p>
   </div>
 </section>
+
+<!--island:shelf-->
 
 <nav class="pillars" aria-label="What the corpus is">
   <div class="wrap">
@@ -38,6 +38,8 @@ export const PARTNERS_HTML = `
     </ol>
   </div>
 </nav>
+
+<!--island:demo-->
 
 <section class="dsband" id="v2-card">
   <div class="wrap">
@@ -198,6 +200,8 @@ export const PARTNERS_HTML = `
   </div>
 </section>
 
+<!--island:chart-->
+
 <section class="proof" id="v2-collected">
   <div class="wrap pf">
     <h2 class="pword">Collected</h2>
@@ -205,13 +209,13 @@ export const PARTNERS_HTML = `
       <p class="lede">Assembled from more than thirty libraries and catalogued by work, edition and author.</p>
       <table class="ledger">
         <tr><td>Books held, with their page scans</td><td class="n">131,547</td></tr>
-        <tr><td>Public on the site</td><td class="n">70,968</td></tr>
-        <tr><td>Public and readable in English</td><td class="n">20,278</td></tr>
+        <tr><td>Public on the site</td><td class="n">71,212</td></tr>
+        <tr><td>Public and readable in English</td><td class="n">22,731</td></tr>
         <tr><td>Page images held</td><td class="n">29.8M</td></tr>
         <tr><td>Images held: page scans, artworks and illustrations</td><td class="n">32 TB</td></tr>
         <tr><td>Ritman Library books, found only here</td><td class="n">2,347</td></tr>
       </table>
-      <p class="note">Counted 29 October 2026; duplicates, takedowns and catalogue-only records are excluded. A further 409,000 books printed before 1850 are catalogued from partner libraries, linked to their scans, and queued to be read; they are not counted above. Storage measured 28 October.</p>
+      <p class="note">Counted 29 October 2026, public figures 10 November; duplicates, takedowns and catalogue-only records are excluded. A further 409,000 books printed before 1850 are catalogued from partner libraries, linked to their scans, and queued to be read; they are not counted above. Storage measured 28 October.</p>
     </div>
   </div>
 </section>
@@ -373,7 +377,7 @@ export const PARTNERS_HTML = `
   <div class="wrap">
     <div class="letter">
       <p class="eyebrow">Summary</p>
-      <p>Source Library is a digital library of translated historical sources: 131,000 books in more than fifty languages, over 20,000 of them readable in English, each translation set beside its original page. Among them are 11,357 works translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
+      <p>Source Library is a digital library of translated historical sources: 131,000 books in more than fifty languages, over 22,000 of them readable in English, each translation set beside its original page. Among them are 11,357 works translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
       <p>Source Library is a non-profit project of Wisdom Frontiers and the Embassy of the Free Mind. We welcome conversations with partners who wish to see the remaining 20.2 million pages read and released.</p>
       <p class="sig">Derek Lomas<span>Founder, Source Library</span></p>
       <p class="addr"><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">derek@sourcelibrary.org</a></p>
