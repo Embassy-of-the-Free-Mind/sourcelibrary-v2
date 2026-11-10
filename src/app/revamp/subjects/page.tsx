@@ -56,7 +56,7 @@ export default function Page() {
   return (
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
-        <PlateWall tiles={[...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
+        <PlateWall tiles={featured ? featured.heroTiles : [...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
         <div className={`${WRAP} relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>
             <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Subjects</h1>
@@ -68,7 +68,6 @@ export default function Page() {
           {featured && (
             <Link href={`/revamp/s/${featured.slug}`} className={`group block md:text-right ${MICRO} text-white/70 leading-relaxed`}>
               <span className="text-white/50">Featured</span><span className="mx-2 text-white/30">/</span><span className="text-white group-hover:underline underline-offset-[3px]">{featured.name}</span>
-              {featured.short && <span className="block normal-case tracking-normal text-[12.5px] text-white/60 mt-1 max-w-sm md:ml-auto">{featured.short}</span>}
             </Link>
           )}
         </div>
