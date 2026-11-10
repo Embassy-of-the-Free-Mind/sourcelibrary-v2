@@ -66,7 +66,9 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient, ObjectId } from 'mongodb';
-import { requestVerdict, repeatReasons } from '../lib/translation-request-eligibility.mjs';
+import { requestVerdict, repeatReasons, REQUEST_MESSAGE, parseRequestUrl } from '../lib/translation-request-eligibility.mjs';
+// Moved to the lib (#8519) so cli-ocr-lane.mjs's REST YIELDS can read requests without importing this lane; re-exported.
+export { REQUEST_MESSAGE, parseRequestUrl };
 import { translateLaneForBook, isTranslatablePage, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { CLI_TRANSLATE_LANES, CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
 import { CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
@@ -79,8 +81,6 @@ import { uncheckedLite } from '../lib/ocr-first-gate.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
-/** The site's translation-request prompt (TranslationEditor), the only message shape this lane acts on. */
-export const REQUEST_MESSAGE = /Translation requested for/;
 /** OCR model for pages with none: agy's Flash, low thinking (#7517, the second pool). */
 export const OCR_MODEL = 'gemini-3.8-flash-low';
 /** Translation lane for a book with no cli row. */
@@ -107,13 +107,6 @@ export const LANE_HOLDS = Object.freeze([
 // RFC 2606 / 6761 reserved names (notify-addressed-feedback.mjs): mail there cannot be delivered.
 const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/i;
 
-/** { bookRef, pageId } from a request's page URL, or null. */
-export function parseRequestUrl(url) {
-  const m = String(url || '').match(/\/book\/([^/?#]+)\/page\/([^/?#]+)/);
-  if (!m) return null;
-  // `page` is a public write and a bad escape throws: one such row must not stop this lane or the Siku lane.
-  try { return { bookRef: decodeURIComponent(m[1]), pageId: decodeURIComponent(m[2]) }; } catch { return null; }
-}
 
 /** The title as the request message quotes it, shortened the way the hand run did. */
 export function requestTitle(message) {
