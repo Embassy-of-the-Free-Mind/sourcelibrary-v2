@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { gateLeafText, meteredReaderEnabled } from '@/lib/free-preview';
 import { displayPublished } from '@/lib/publication-date';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
 // (reader) group layout's visibility gate all read it, so one round trip
@@ -50,7 +51,13 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // Then drop the remaining inline tags (<note>, <term>, <sig>, …) but keep
   // their words: they are body text, and a snippet is plain text — Google was
   // showing the literal "<note>original: …" markup.
-  const textContent = stripEditorialWrappers(page.translation?.data || page.ocr?.data || '')
+  // Metered reader (#4357): a page past the free sample carries no excerpt of
+  // its text — 200 characters a page, over every page, is a scrape of the
+  // book's opening lines. Those pages are noindex, so no search snippet is
+  // lost. Reading rooms are exempt, as on the page itself.
+  const excerptPage = gateLeafText(page, (book as { pages_count?: number }).pages_count,
+    meteredReaderEnabled() && !(ctx?.id || ctx?.isEmbedded));
+  const textContent = stripEditorialWrappers(excerptPage.translation?.data || excerptPage.ocr?.data || '')
     .replace(/<\/?[a-z][a-z-]*(?:\s[^>]*)?>/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim();
