@@ -60,6 +60,10 @@ describe('the rest tier yields to first reads readers want (#8519)', () => {
     const w = await readerFirstReadsWaiting(fakeDb({ books: [held()], unread: new Set() }));
     expect(restTierOpen(w).open).toBe(true);
   });
+  it('an id the request names is matched though nobody opened the book', async () => {
+    const db = fakeDb({ books: [held({ human_read_count: 0 })], unread: new Set(['b1']), requests: [{ page: 'https://sourcelibrary.org/book/b1/page/p9' }] });
+    expect((await readerFirstReadsWaiting(db)).first).toBe('b1');
+  });
   it('the tiers themselves are unchanged: readers, period, rest', () => {
     expect(REREAD_TIERS).toEqual(['readers', 'period', 'rest']);
     expect(rereadTier({ human_read_count: 2, year: 1800 })).toBe('readers');

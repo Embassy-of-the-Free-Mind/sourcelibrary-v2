@@ -750,8 +750,10 @@ async function correctMain(mode, arg) {
   // German and French cli rows of translation-routing-table.json would take those books out of the correction frame.
   // REST YIELDS (#8519): a quality re-read whose frame holds the rest tier drops it while first reads wait for books
   // readers want. Not for --finish-first (finishing work) or --book (a named book: reader-request-lane.mjs re-reads one).
+  // A check that fails shuts the rest tier only (fail closed), so readers and period still run.
   const REST = LATIN && !FINISH && !arg('book') && (!TIERS || TIERS.includes('rest'))
-    ? restTierOpen(await readerFirstReadsWaiting(db)) : { open: true };
+    ? await readerFirstReadsWaiting(db).then(restTierOpen, (e) => ({ open: false, why: `the first-read check failed (${e.message})` }))
+    : { open: true };
   if (!REST.open) console.log(`correct: the rest tier yields: ${REST.why}`);
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },

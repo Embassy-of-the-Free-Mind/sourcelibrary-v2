@@ -107,7 +107,6 @@ export const LANE_HOLDS = Object.freeze([
 // RFC 2606 / 6761 reserved names (notify-addressed-feedback.mjs): mail there cannot be delivered.
 const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/i;
 
-
 /** The title as the request message quotes it, shortened the way the hand run did. */
 export function requestTitle(message) {
   const full = String(message || '').match(/for "(.+?)" \(/)?.[1] ?? 'the book';
