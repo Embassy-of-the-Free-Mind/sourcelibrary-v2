@@ -3,7 +3,12 @@ import type { MiniBook } from '@/components/BookSlider';
 import type { Plate } from '@/components/GalleryMasonry';
 import type { Overview } from '../_components/OverviewBand';
 
-export type Book = CollectionBook & MiniBook;
+export type Book = CollectionBook & MiniBook & {
+  /** Text types (the site's form tags) and eras (when the original was written), from _tools/snapshot-facets.mjs. */
+  form?: string[]; era?: string[]; material?: string | null;
+};
+/** A gallery plate with its picture type and the work it comes from. */
+export type RPlate = Plate & { kind?: string; bookId?: string };
 
 export interface PageItem { src: string; href: string; book: string; author: string; page: number; text: string }
 export interface QuoteItem { text: string; book: string; author: string; year?: number; page: number; href: string }
@@ -34,10 +39,10 @@ export interface CollectionModel {
   /** The maker's notes on single works, with their rank and tier (1 essential, 2 important, 3 also notable) from the old collection pages. */
   notes: { id: string; rank: number; note: string; tier?: number }[];
   /** The saved plates grouped under the work they come from, by book id. */
-  byBook: Record<string, Plate[]>;
+  byBook: Record<string, RPlate[]>;
   firstTranslations: Book[];
   featured: null | { book: Book; title: string; byline: string; text: string[] };
-  plates: Plate[];
+  plates: RPlate[];
   platesLabel: string;
   platesNote: string;
   pages: PageItem[];

@@ -3,14 +3,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, LayoutGrid, List } from 'lucide-react';
+import { ArrowRight, ChevronDown, LayoutGrid, List } from 'lucide-react';
+import { filtersBtn } from './CollectionsBrowser';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import SortSelect from '@/components/search-kit/SortSelect';
 import FilterChips from '@/components/search-kit/FilterChips';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
-import type { Book } from '../_lib/types';
+import type { Book, RPlate } from '../_lib/types';
+import { PERIODS, PICTURE_TYPES, TEXT_TYPES, periodLabel, periodsOf } from '../_lib/facets';
 import CollectionEditor from './CollectionEditor';
 import { SORTS, docKey, initialDoc, type CollectionDoc } from '../_lib/collection-doc';
 
@@ -22,15 +24,29 @@ const fmt = (v: number) => v.toLocaleString('en-GB');
 const titleOf = (b: Book) => (b.display_title || b.title || '').replace(/^(the|a|an)\s+/i, '');
 type Pics = 'tab' | 'mixA';
 type Entry = { kind: 'work'; b: Book } | { kind: 'image'; p: Plate; from: Book };
-const decade = (y?: number) => (y ? `${Math.floor(y / 100) * 100}s` : 'Undated');
+const NONE = 'none';
+/** Options for a facet menu: every value with its count, in the given order, then the untagged. */
+const facetOptions = (all: string, counts: Map<string, number>, order: string[], label: (v: string) => string, none: string): [string, string][] => [
+  ['all', all],
+  ...order.filter((v) => counts.has(v)).map((v) => [v, `${label(v)} (${counts.get(v)})`] as [string, string]),
+  ...(counts.has(NONE) ? [[NONE, `${none} (${counts.get(NONE)})`] as [string, string]] : []),
+];
+const tally = (lists: string[][]) => { const m = new Map<string, number>(); for (const l of lists) for (const v of l.length ? l : [NONE]) m.set(v, (m.get(v) ?? 0) + 1); return m; };
+const matches = (pick: string, vs: string[]) => pick === 'all' || (pick === NONE ? vs.length === 0 : vs.includes(pick));
+const typesOf = (b: Book) => (b.form ?? []).filter((f) => TEXT_TYPES[f]);
+const ORDER_T = Object.keys(TEXT_TYPES);
+const ORDER_P = PERIODS.map((p) => p.id);
+const ORDER_I = Object.keys(PICTURE_TYPES);
+const FORMATS: Record<string, string> = { book: 'Printed', manuscript: 'Manuscript' };
+const formatOf = (b: Book) => (b.material && FORMATS[b.material] ? [b.material] : []);
 
 export interface ItemsProps {
   slug: string;
   books: Book[];
   notes: { id: string; rank: number; note: string }[];
-  plates: Plate[];
+  plates: RPlate[];
   imagesTotal: number;
-  byBook: Record<string, Plate[]>;
+  byBook: Record<string, RPlate[]>;
   /** False on a subject page: nobody makes a subject, so there is no maker's version to load or edit. */
   curated?: boolean;
 }
@@ -51,9 +67,13 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const [sortPick, setSort] = useState<string | null>(null);
   const [groupPick, setGroup] = useState('none');
   const [lang, setLang] = useState('all');
-  const [cent, setCent] = useState('all');
+  const [ttype, setTtype] = useState('all');
+  const [period, setPeriod] = useState('all');
+  const [ptype, setPtype] = useState('all');
+  const [fmtPick, setFmt] = useState('all');
   const [q, setQ] = useState('');
   const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
   const top = useRef<HTMLDivElement>(null);
 
   // The hero's "Search within" bar sends its words here.
@@ -86,8 +106,14 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const langCount = new Map<string, number>();
   for (const b of works) if (b.language) langCount.set(b.language, (langCount.get(b.language) ?? 0) + 1);
   const langs = [...langCount.entries()].sort((a, b) => b[1] - a[1]);
-  const cents = [...new Set(works.map((b) => decade(b.year)))].sort();
-  const canCentury = !small && works.filter((b) => b.year).length >= n * 0.8 && cents.length > 1;
+  // Type and period: each its own menu; a work must match every one chosen.
+  const typeCount = tally(works.map(typesOf));
+  const periodCount = tally(works.map(periodsOf));
+  const formatCount = tally(works.map(formatOf));
+  const canFormat = !small && formatCount.has('book') && formatCount.has('manuscript');
+  const canType = !small && [...typeCount.keys()].filter((k) => k !== NONE).length > 1;
+  const canPeriod = !small && [...periodCount.keys()].filter((k) => k !== NONE).length > 1;
+  const firstPeriod = (b: Book) => [...periodsOf(b)].sort((x, y) => ORDER_P.indexOf(x) - ORDER_P.indexOf(y))[0] ?? NONE;
   const canLang = !small && langs.length >= 3;
   // A subject has no maker's order: oldest first, and no "Maker's order" to choose.
   const sort = sortPick ?? (curated ? doc.sort : 'year_asc');
@@ -103,18 +129,27 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
     author: (a, b) => (a.author || '~').localeCompare(b.author || '~', 'en'),
   };
   const t = q.toLowerCase();
-  let list = works.filter((b) => (lang === 'all' || b.language === lang) && (cent === 'all' || decade(b.year) === cent)
+  let list = works.filter((b) => (lang === 'all' || b.language === lang) && matches(ttype, typesOf(b)) && matches(fmtPick, formatOf(b)) && matches(period, periodsOf(b))
     && (!t || `${b.display_title} ${b.title} ${b.author} ${noteOf[b.id!] ?? ''}`.toLowerCase().includes(t)));
   list = [...list].sort(by[group === 'sections' ? 'maker' : sort] ?? by.year_asc);
-  const keyOf = (b: Book) => group === 'century' ? decade(b.year) : group === 'language' ? (b.language || 'Language not recorded') : group === 'sections' ? (sectionOf.get(b.id!) ?? '') : '';
-  if (group === 'century') list.sort((a, b) => decade(a.year).localeCompare(decade(b.year)));
+  const keyOf = (b: Book) => group === 'period' ? firstPeriod(b) : group === 'type' ? (typesOf(b)[0] ?? NONE) : group === 'language' ? (b.language || 'Language not recorded') : group === 'sections' ? (sectionOf.get(b.id!) ?? '') : '';
+  const rank = (order: string[], v: string) => (v === NONE ? 999 : order.indexOf(v));
+  if (group === 'period') list.sort((a, b) => rank(ORDER_P, firstPeriod(a)) - rank(ORDER_P, firstPeriod(b)));
+  if (group === 'type') list.sort((a, b) => rank(ORDER_T, typesOf(a)[0] ?? NONE) - rank(ORDER_T, typesOf(b)[0] ?? NONE));
   if (group === 'language') list.sort((a, b) => (langCount.get(b.language!) ?? 0) - (langCount.get(a.language!) ?? 0) || (a.language || '').localeCompare(b.language || ''));
   const keyed = list.map((b) => ({ b, k: keyOf(b) }));
   const groupSize = new Map<string, number>();
   for (const x of keyed) groupSize.set(x.k, (groupSize.get(x.k) ?? 0) + 1);
 
   const mixed = pics.startsWith('mix');
-  const mine = (b: Book) => (byBook[b.id!] ?? []).map((p) => ({ kind: 'image' as const, p, from: b }));
+  // Pictures: their own type, and the period of the work they come from.
+  const picOk = (p: RPlate) => ptype === 'all' || (ptype === NONE ? !p.kind || !PICTURE_TYPES[p.kind] : p.kind === ptype);
+  const plateBook = (p: RPlate) => (p.bookId ? byId[p.bookId] : undefined);
+  const shownPlates = plates.filter((p) => picOk(p) && (period === 'all' || (() => { const b = plateBook(p); return b ? matches(period, periodsOf(b)) : period === NONE; })()));
+  const picCount = tally(plates.map((p) => (p.kind && PICTURE_TYPES[p.kind] ? [p.kind] : [])));
+  const canPicType = [...picCount.keys()].filter((k) => k !== NONE).length > 1;
+  const picPeriodCount = tally(plates.map((p) => { const b = plateBook(p); return b ? periodsOf(b) : []; }));
+  const mine = (b: Book) => (byBook[b.id!] ?? []).filter(picOk).map((p) => ({ kind: 'image' as const, p, from: b }));
   const entries: Entry[] = [];
   if (mixed) {
     // Works and pictures taken in turn, one of each, until one runs out.
@@ -160,12 +195,30 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
 
   const imagesHere = plates.length > 0;
   const tabs = !small && imagesHere && pics === 'tab';
-  const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang }, cent !== 'all' && { key: 'cent', label: cent }].filter(Boolean) as { key: string; label: string }[];
-  const clear = (k: string) => { if (k === 'q') setQ(''); if (k === 'lang') setLang('all'); if (k === 'cent') setCent('all'); setPage(1); };
+  const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
+    fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
+    ttype !== 'all' && { key: 'type', label: ttype === NONE ? 'Type not recorded' : TEXT_TYPES[ttype] },
+    period !== 'all' && { key: 'period', label: period === NONE ? 'Date not recorded' : periodLabel(period) },
+    ptype !== 'all' && { key: 'ptype', label: ptype === NONE ? 'Picture type not recorded' : PICTURE_TYPES[ptype] }].filter(Boolean) as { key: string; label: string }[];
+  const clear = (k: string) => { if (k === 'q') setQ(''); if (k === 'lang') setLang('all'); if (k === 'type') setTtype('all'); if (k === 'format') setFmt('all'); if (k === 'period') setPeriod('all'); if (k === 'ptype') setPtype('all'); setPage(1); };
+  const formatMenu = canFormat && <SortSelect label="Format" value={fmtPick} onChange={reset(setFmt)} options={facetOptions('Printed or manuscript', formatCount, ['book', 'manuscript'], (v) => FORMATS[v], 'Not recorded')} />;
+  const hasMenus = (big && canLang) || canType || canFormat || canPeriod || (mixed && canPicType);
+  const active = [lang, ttype, fmtPick, period, ...(mixed ? [ptype] : [])].filter((v) => v !== 'all').length;
+  const typeMenu = canType && <SortSelect label="Type" value={ttype} onChange={reset(setTtype)} options={facetOptions('Any type', typeCount, ORDER_T, (v) => TEXT_TYPES[v], 'Type not recorded')} />;
+  const periodMenu = (counts: Map<string, number>) => <SortSelect label="Period" value={period} onChange={reset(setPeriod)} options={facetOptions('Any period', counts, ORDER_P, periodLabel, 'Date not recorded')} />;
+  const picTypeMenu = canPicType && <SortSelect label="Picture type" value={ptype} onChange={reset(setPtype)} options={facetOptions(mixed ? 'Any picture' : 'Any type', picCount, ORDER_I, (v) => PICTURE_TYPES[v], 'Type not recorded')} />;
 
   const images = (
     <>
-      <GalleryMasonry plates={plates} />
+      {(canPicType || canPeriod) && (
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
+          <span className="text-[13.5px] text-muted mr-2">{fmt(shownPlates.length)} {shownPlates.length === 1 ? 'picture' : 'pictures'}{shownPlates.length < plates.length ? ` of ${fmt(plates.length)}` : ''}</span>
+          {picTypeMenu}
+          {canPeriod && periodMenu(picPeriodCount)}
+          <FilterChips chips={chips.filter((c) => c.key === 'ptype' || c.key === 'period')} onRemove={clear} onClearAll={() => { clear('ptype'); clear('period'); }} />
+        </div>
+      )}
+      {shownPlates.length === 0 ? <p className="py-10 text-muted">No pictures match. <button type="button" className="underline underline-offset-[3px]" onClick={() => { clear('ptype'); clear('period'); }}>Clear the filters</button></p> : <GalleryMasonry plates={shownPlates} />}
       {imagesTotal > plates.length && (
         <div className="mt-6"><Link href={`/gallery?collection=${slug}`} className="inline-flex items-center gap-2 h-11 px-5 bg-primary text-cream text-sm font-medium hover:opacity-90">See all {fmt(imagesTotal)} in the Gallery <ArrowRight className="w-4 h-4" /></Link></div>
       )}
@@ -201,12 +254,24 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         {(!tabs || tab === 'works') && <>
           {!small && (
             <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
-              <span className="text-[13.5px] text-muted mr-2">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span>
-              {big && canLang && <SortSelect label="Language" value={lang} onChange={reset(setLang)} options={[['all', 'Any language'], ...langs.map(([l, c]) => [l, `${l} (${c})`] as [string, string])]} />}
-              {big && canCentury && <SortSelect label="Century" value={cent} onChange={reset(setCent)} options={[['all', 'Any date'], ...cents.map((c) => [c, c] as [string, string])]} />}
+              <span className="hidden sm:inline text-[13.5px] text-muted mr-2">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span>
+              {hasMenus && <>
+                {/* Below laptop width the filter menus fold behind Filters, as on the index pages. */}
+                <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${filtersBtn(open)}`}>
+                  Filters{active > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">{active}</span>}
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
+                </button>
+                <div className={`${open ? 'flex' : 'hidden'} lg:contents order-last lg:order-none w-full flex-wrap gap-2`}>
+                  {big && canLang && <SortSelect label="Language" value={lang} onChange={reset(setLang)} options={[['all', 'Any language'], ...langs.map(([l, c]) => [l, `${l} (${c})`] as [string, string])]} />}
+                  {typeMenu}
+                  {formatMenu}
+                  {canPeriod && periodMenu(periodCount)}
+                  {mixed && picTypeMenu}
+                </div>
+              </>}
               <FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
-                {group !== 'sections' && !mixed && (canCentury || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canCentury ? [['century', 'By century'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
+                {group !== 'sections' && !mixed && (canPeriod || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
                 <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
                 {pics === 'tab' && (
                   <div className="flex border border-border-medium" role="group" aria-label="View">
@@ -224,7 +289,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               {g.k && (
                 // Section header: the heading at H2 scale, its line as a standfirst, the count kept small.
                 <header className="mb-8 md:mb-10 max-w-3xl">
-                  <h3 className="font-serif text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-primary">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : g.k}</h3>
+                  <h3 className="font-serif text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-primary">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : group === 'period' ? periodLabel(g.k) : group === 'type' ? (g.k === NONE ? 'Type not recorded' : TEXT_TYPES[g.k]) : g.k}</h3>
                   {group === 'sections' && sections.get(g.k)?.text && <p className="mt-3 md:mt-4 text-[17px] md:text-[19px] text-secondary leading-relaxed">{sections.get(g.k)!.text}</p>}
                   <p className="mt-3 text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'work' : 'works'}</p>
                 </header>

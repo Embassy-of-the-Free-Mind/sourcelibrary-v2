@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { AUTHORED } from '../_data/authored';
-import type { Book, CollectionModel } from './types';
+import type { Book, CollectionModel, RPlate } from './types';
 import type { Plate } from '@/components/GalleryMasonry';
 import type { Overview } from '../_components/OverviewBand';
 
@@ -32,7 +32,7 @@ const thumb = (i: Rec) => {
   const full = (i.extractedUrl || i.imageUrl) as string | undefined;
   return full ? full.replace(/(\.[a-z0-9]+)(\?.*)?$/i, '-thumb$1$2') : undefined;
 };
-function toPlate(i: Rec): Plate | null {
+function toPlate(i: Rec): RPlate | null {
   const src = thumb(i);
   if (!src) return null;
   const a = Number(i.aspect) || 0;
@@ -42,6 +42,8 @@ function toPlate(i: Rec): Plate | null {
     fallback: [(i.extractedUrl || i.imageUrl) as string].filter(Boolean),
     href: id ? `/gallery/image/${id}` : undefined,
     label: (i.bookTitle as string)?.slice(0, 70),
+    kind: (i.type as string) || undefined,
+    bookId: (i.bookId as string) || undefined,
     ...(a ? { w: Math.round(a * 1000), h: 1000 } : {}),
   };
 }
@@ -73,6 +75,16 @@ function coverPicks(items: Rec[]): string[] {
     .map((i) => (i.cardUrl || i.extractedUrl) as string);
 }
 
+type Facets = Record<string, { form: string[]; era: string[]; material: string | null }>;
+let FACETS: { at: number; v: Facets } | null = null;
+/** Adds each work's text types and eras, where the site has tagged them. Re-read when the saved file changes. */
+function withFacets(bs: Book[]): Book[] {
+  let at = 0;
+  try { at = fs.statSync(path.join(SNAP, '_facets.json')).mtimeMs; } catch { /* not saved yet */ }
+  if (!FACETS || FACETS.at !== at) FACETS = { at, v: read<Facets>('_facets') ?? {} };
+  const v = FACETS.v;
+  return bs.map((b) => { const f = v[b.id!]; return f ? { ...b, form: f.form, era: f.era, material: f.material } : b; });
+}
 export function collectionModel(slug: string): CollectionModel | null {
   const snap = read<{ c: Rec; g: { items?: Rec[]; total?: number } | null }>(slug);
   if (!snap) return null;
@@ -136,8 +148,8 @@ export function collectionModel(slug: string): CollectionModel | null {
     heroTiles: heroTiles.length >= 8 ? heroTiles : artTiles.slice(0, 24),
     coverPicks: coverPicks(items),
     heroImage: (col.hero_image as string) || undefined,
-    books: artworks ? [] : books,
-    all: artworks ? [] : (read<{ books: Book[] }>(`_manifest-${slug}`)?.books ?? books),
+    books: artworks ? [] : withFacets(books),
+    all: artworks ? [] : withFacets(read<{ books: Book[] }>(`_manifest-${slug}`)?.books ?? books),
     byBook: items.reduce<Record<string, Plate[]>>((acc, i) => { const pl = toPlate(i); const k = i.bookId as string; if (pl && k) (acc[k] ??= []).push(pl); return acc; }, {}),
     notes: hl.filter((h) => h.note).map((h, i) => ({ id: (h.book_id || h.id)!, rank: h.rank ?? i + 1, note: h.note!, tier: h.tier })).sort((x, y) => x.rank - y.rank),
     firstTranslations: ft,
