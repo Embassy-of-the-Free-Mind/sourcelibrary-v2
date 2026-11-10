@@ -18,7 +18,9 @@ import { useReducedMotion } from './useReducedMotion';
  * Atlas = public/about/covers-atlas.jpg, rects in covers-atlas.json ([x, y, w, h]).
  */
 
-export type HeroStat = { value: string; label: string; href?: string; color: string };
+// Plain figures: white numbers, no pills, no colour coding (2026-11-11: the
+// five coloured chips read as a templated landing page).
+export type HeroStat = { value: string; label: string; href?: string };
 
 // Rows of covers at their own proportions, packed edge to edge and drifting
 // sideways (the left and right edges cut through covers, by design). Rows
@@ -372,18 +374,19 @@ export default function HeroWall({
           <p className="ah-in mt-6 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">
             {intro}
           </p>
-          <ul className="ah-in mt-8 flex flex-col items-start sm:flex-row sm:flex-wrap gap-2">
+          <ul className="ah-in mt-10 flex flex-wrap gap-x-10 md:gap-x-14 gap-y-5">
             {stats.map((s, i) => {
               const inner = (
                 <>
-                  <b className="font-semibold tabular-nums" style={{ color: s.color }}>{s.value}</b> {s.label}
+                  <b className="block font-serif font-normal text-3xl md:text-4xl text-white tabular-nums leading-none">{s.value}</b>
+                  <span className="block mt-2 text-sm md:text-[15px] text-stone-300">{s.label}</span>
                 </>
               );
-              const cls = 'ah-pill inline-block px-3 py-1.5 text-sm md:text-[15px] text-stone-200 border border-white/20 bg-white/[0.06]';
+              const cls = 'ah-pill block';
               return (
                 <li key={s.label} style={{ transitionDelay: ready ? `${0.9 + i * 0.1}s` : undefined }} className="ah-pill-wrap">
                   {s.href ? (
-                    <Link href={s.href} className={`${cls} hover:bg-white/[0.12] hover:border-white/40 transition-colors no-underline`}>{inner}</Link>
+                    <Link href={s.href} className={`${cls} no-underline hover:[&>span]:text-white transition-colors`}>{inner}</Link>
                   ) : (
                     <span className={cls}>{inner}</span>
                   )}
