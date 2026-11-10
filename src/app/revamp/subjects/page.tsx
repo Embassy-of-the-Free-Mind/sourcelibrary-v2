@@ -3,7 +3,6 @@ import path from 'node:path';
 import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
 import CollectionBars from '../_components/CollectionBars';
-import { LookSwitch, PlainHead, lookOf } from '../_components/IndexLook';
 import SubjectsBrowser, { type Pic, type SubjectRow } from '../_components/SubjectsBrowser';
 import { collectionModel, dataFile, snapshotSlugs } from '../_lib/data';
 import { RAMP } from '../_lib/ramp';
@@ -37,8 +36,7 @@ function pictures(): Record<string, Pic[]> {
   return main;
 }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ look?: string }> }) {
-  const look = lookOf((await searchParams).look);
+export default function Page() {
   const pics = pictures();
   const all = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
   // Subjects with saved data get their own page in the prototype; the rest are listed without a link.
@@ -57,9 +55,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ l
   const groups = all.filter((s) => s.level === 1).map((t) => ({ ...row(t), narrower: all.filter((s) => s.level === 2 && s.parents.includes(t.id)).map((s) => ({ ...row(s), home: s.parents[0] === t.id })).sort((a, b) => a.label.localeCompare(b.label, 'en')) }));
   return (
     <div className="bg-cream min-h-screen">
-      {look !== 'hero' ? <PlainHead title="Subjects" path="/revamp/subjects" look={look} featured={featured && { name: featured.name, href: `/revamp/s/${featured.slug}` }} /> : (
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
-        <div className="absolute top-3 right-4 z-20"><LookSwitch path="/revamp/subjects" look={look} dark /></div>
         <PlateWall tiles={featured ? featured.heroTiles : [...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
         <div className={`${WRAP} relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>
@@ -77,8 +73,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ l
         </div>
         <CollectionBars strip live works={total} placeholder="Search subjects or ask a question" scope={`all ${total} subjects`} />
       </section>
-      )}
-      <SubjectsBrowser groups={groups} barSearch={look === 'hero'} look={look} />
+      <SubjectsBrowser groups={groups} barSearch />
     </div>
   );
 }

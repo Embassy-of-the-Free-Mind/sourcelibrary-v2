@@ -66,29 +66,3 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
     </div>
   );
 }
-
-/**
- * The same one field for a page with no picture hero (the Gallery look): the Library's bar in size,
- * border and type, with the search icon. A question shows the prototype note; anything else narrows
- * the list below as you type.
- */
-export function LightBar({ placeholder, scope }: { placeholder: string; scope: string }) {
-  const [v, setV] = useState('');
-  const [asked, setAsked] = useState('');
-  const isQuestion = (t: string) => /\?\s*$/.test(t) || /^(who|what|which|when|where|why|how|is|are|does|did|do|can|was|were|tell|show|find|explain)\b/i.test(t.trim());
-  const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
-  return (
-    <div>
-      <form role="search" onSubmit={(e) => { e.preventDefault(); if (isQuestion(v)) setAsked(v.trim()); else search(v); }}
-        className="group/field flex items-center h-11 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" data-catalog-bar>
-        <label htmlFor="l-bar" className="sr-only">{placeholder}</label>
-        <SearchIcon aria-hidden className="w-[18px] h-[18px] ml-3.5 sm:ml-4 mr-3 shrink-0 text-muted group-focus-within/field:text-primary transition-colors" />
-        <input id="l-bar" type="text" value={v} placeholder={placeholder}
-          onChange={(e) => { setV(e.target.value); if (!isQuestion(e.target.value)) search(e.target.value); }}
-          className="flex-1 min-w-0 h-full pr-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
-        <button type="submit" className="sr-only">Search or ask</button>
-      </form>
-      {asked && <p className="mt-2 text-[13.5px] text-secondary max-w-2xl">Prototype: nothing is sent. Live, the librarian would answer “{asked}” from {scope} only.</p>}
-    </div>
-  );
-}
