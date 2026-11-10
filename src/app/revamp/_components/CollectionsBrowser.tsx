@@ -7,6 +7,9 @@ import { ChevronDown, LayoutGrid, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
+import { statBox, ShareBox } from '@/components/search-kit/StatParts';
+import { LightBar } from './CollectionBars';
+import type { Look } from './IndexLook';
 import type { IndexItem } from '../_lib/data';
 
 const HOLDS: [string, string][] = [['books', 'Books'], ['plates', 'Plates'], ['artworks', 'Artworks'], ['pages', 'Pages'], ['quotes', 'Quotes']];
@@ -61,7 +64,7 @@ const meta = (c: IndexItem) => [
   pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false }: { barSearch?: boolean; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
+export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false, look = 'hero' }: { barSearch?: boolean; look?: Look; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
@@ -73,6 +76,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const [view, setView] = useState<'grid' | 'list' | 'bands'>('grid');
   const [thumb, setThumb] = useState<'square' | 'strip'>('square');
   const [open, setOpen] = useState(false); // phone: the filter menus behind one button
+  const [asked, setAsked] = useState('');
   // The hero bar sends its words here while typing.
   useEffect(() => {
     const on = (e: Event) => { const v = (e as CustomEvent<string>).detail; setText(v); setQuery(v); };
@@ -84,6 +88,11 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
     const c = new Map<string, number>();
     items.forEach((i) => i.languages.forEach((l) => c.set(l, (c.get(l) ?? 0) + 1)));
     return [...c.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14).map(([l]) => l);
+  }, [items]);
+  const langCount = useMemo(() => {
+    const c = new Map<string, number>();
+    items.forEach((i) => i.languages.forEach((l) => c.set(l, (c.get(l) ?? 0) + 1)));
+    return c;
   }, [items]);
 
   const shown = useMemo(() => {
@@ -113,12 +122,29 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const makerOpts = [['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const;
 
   return (
-    <div className={`max-w-[1500px] mx-auto px-6 md:px-12 ${barSearch ? TOP : 'py-8 md:py-10'} pb-16 md:pb-20`}>
+    <div className={`max-w-[1500px] mx-auto px-6 md:px-12 ${barSearch ? TOP : look === 'hero' ? 'py-8 md:py-10' : ''} pb-16 md:pb-20`}>
       {!hideTitle && <h1 className="text-4xl sm:text-5xl text-primary font-display mb-5">Collections</h1>}
-      {!barSearch && <SearchAskBars
+      {look === 'gallery' && <div className="mb-6 md:mb-8"><LightBar placeholder="Search collections or ask a question" scope={`all ${items.length} collections`} /></div>}
+      {!barSearch && look !== 'gallery' && <SearchAskBars
         search={{ id: 'col-search', label: 'Search the collections', placeholder: 'Name, subject, person', value: text, onChange: (v) => { setText(v); setQuery(v); }, onSubmit: setQuery, examples: ['Slime Moulds', 'Sibyls', 'Yoga'] }}
-        ask={{ id: 'col-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?', value: ask, onChange: setAsk, onSubmit: (v) => window.open(`https://sourcelibrary.org/librarian?q=${encodeURIComponent(v)}`, '_blank', 'noopener'), examples: ['dragons and monsters', 'witch trials in German'] }}
+        ask={{ id: 'col-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?', value: ask, onChange: setAsk, onSubmit: (v) => setAsked(v.trim()), examples: ['dragons and monsters', 'witch trials in German'] }}
       />}
+      {asked && <p className="mt-3 text-[13.5px] text-secondary max-w-2xl">Prototype: nothing is sent. Live, the librarian would answer “{asked}” from all {items.length} collections only.</p>}
+      {look === 'library' && (
+        // The Library's numbers band, for collections: each named part narrows the list, as there.
+        <div className="hidden sm:grid mt-7 mb-7 gap-3 grid-cols-2 lg:[grid-template-columns:1fr_1.6fr_1.6fr_1.6fr]">
+          <div className={statBox}>
+            <div className="text-[28px] font-medium leading-tight tabular-nums text-primary">{n(shown.length)}</div>
+            <div className="text-[13px] text-muted mt-0.5 leading-snug">{shown.length === items.length ? 'collections' : `of ${n(items.length)} collections`}</div>
+            <div className="text-[12.5px] text-secondary mt-1.5">{n(items.filter((i) => i.maker === 'source-library').length)} by Source Library, {n(items.filter((i) => i.maker === 'reader').length)} by readers</div>
+          </div>
+          <ShareBox title="Holds" parts={HOLDS.map(([k, l]) => ({ value: l, count: count(k) })).sort((a, b) => b.count - a.count)} selected={HOLDS.filter(([k]) => holds.includes(k)).map(([, l]) => l)} onPick={(l) => { const k = HOLDS.find(([, x]) => x === l)?.[0]; if (k) toggleHold(k); }} />
+          <ShareBox title={`${n(langCount.size)} languages`} parts={[...langCount.entries()].sort((a, b) => b[1] - a[1]).map(([value, c]) => ({ value, count: c }))} selected={lang ? [lang] : []} onPick={(l) => setLang(lang === l ? '' : l)} />
+          <ShareBox title={`${n(subjects.length)} subjects`} parts={subjects.map((x) => ({ value: x.name, count: x.slugs.filter((sl) => items.some((i) => i.slug === sl)).length })).sort((a, b) => b.count - a.count)} selected={subject ? [subject] : []} onPick={(v) => setSubject(subject === v ? '' : v)} />
+        </div>
+      )}
+      {look === 'library' && <div className="sm:hidden mt-5" />}
+      {look === 'hero' && !barSearch && <div className="mt-4" />}
 
       {filters === 'tiles' && (
       <div className="grid gap-3 md:grid-cols-[1fr_1.4fr_2.2fr] mt-5">

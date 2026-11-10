@@ -6,6 +6,10 @@ import Link from 'next/link';
 import { ChevronDown, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
+import SearchAskBars from '@/components/search-kit/SearchAskBars';
+import { statBox, ShareBox } from '@/components/search-kit/StatParts';
+import { LightBar } from './CollectionBars';
+import type { Look } from './IndexLook';
 import { FIRST, TOOLBAR, TOP, filtersBtn, vbtn } from './CollectionsBrowser';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
@@ -37,13 +41,15 @@ function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
 }
 
 
-export default function SubjectsBrowser({ groups, barSearch = false }: { groups: Group[]; barSearch?: boolean }) {
+export default function SubjectsBrowser({ groups, barSearch = false, look = 'hero' }: { groups: Group[]; barSearch?: boolean; look?: Look }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
   const [order, setOrder] = useState<'theme' | 'az'>('theme');
   const [theme, setTheme] = useState('');
   const [view, setView] = useState<'bands' | 'list'>('bands');
   const [open, setOpen] = useState(false); // phone: the menu behind Filters
+  const [ask, setAsk] = useState('');
+  const [asked, setAsked] = useState('');
   // The hero bar sends its words here while typing.
   useEffect(() => {
     const on = (e: Event) => setQ((e as CustomEvent<string>).detail);
@@ -68,15 +74,35 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
   const n = (v: number) => v.toLocaleString('en-GB');
 
   const search = (
-    <div className={`${WRAP} ${barSearch ? TOP : 'py-8 md:py-10'}`}>
-      {!barSearch && <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-2xl">
+    <div className={`${WRAP} ${barSearch ? TOP : look === 'hero' ? 'py-8 md:py-10' : ''}`}>
+      {look === 'gallery' && <div className="mb-6 md:mb-8"><LightBar placeholder="Search subjects or ask a question" scope={`all ${total} subjects`} /></div>}
+      {look === 'library' && <SearchAskBars
+        search={{ id: 'subj-search', label: 'Find a subject', placeholder: `${total} subjects, in any language`, value: q, onChange: setQ, onSubmit: setQ, examples: ['Alchemy', 'Yoga', 'Fungi'] }}
+        ask={{ id: 'subj-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?', value: ask, onChange: setAsk, onSubmit: (v) => setAsked(v.trim()), examples: ['books about breath', 'early maps of the sky'] }}
+      />}
+      {asked && <p className="mt-3 text-[13.5px] text-secondary max-w-2xl">Prototype: nothing is sent. Live, the librarian would answer “{asked}” from the whole library.</p>}
+      {look === 'library' && (
+        <div className="hidden sm:grid mt-7 mb-7 gap-3 grid-cols-2 lg:[grid-template-columns:1fr_1fr_3.2fr]">
+          <div className={statBox}>
+            <div className="text-[28px] font-medium leading-tight tabular-nums text-primary">{n(total)}</div>
+            <div className="text-[13px] text-muted mt-0.5 leading-snug">subjects</div>
+          </div>
+          <div className={statBox}>
+            <div className="text-[28px] font-medium leading-tight tabular-nums text-primary">{n(groups.length)}</div>
+            <div className="text-[13px] text-muted mt-0.5 leading-snug">broad subjects</div>
+          </div>
+          <ShareBox title="Largest broad subjects" parts={[...groups].sort((a, b) => b.narrower.length - a.narrower.length).map((g) => ({ value: g.label, count: g.narrower.length }))} selected={groups.filter((g) => g.id === theme).map((g) => g.label)} onPick={(l) => { const g = groups.find((x) => x.label === l); if (g) setTheme(theme === g.id ? '' : g.id); }} />
+        </div>
+      )}
+      {look === 'library' && <div className="sm:hidden mt-5" />}
+      {look === 'hero' && !barSearch && <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-2xl">
         <label htmlFor="subj-find" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Find a subject</label>
         <div className="flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" data-catalog-bar>
           <input id="subj-find" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`${total} subjects, in any language`} className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
         </div>
       </form>}
       {/* One toolbar, as on All collections: the count, a menu, then order and view on the right. */}
-      <div className={`${TOOLBAR} ${barSearch ? '' : 'mt-6'}`}>
+      <div className={`${TOOLBAR} ${barSearch || look !== 'hero' ? '' : 'mt-6'}`}>
         <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? 'subject' : 'subjects'}</span>
 <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`sm:hidden ${filtersBtn(open)}`}>
           Filters{theme && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">1</span>}

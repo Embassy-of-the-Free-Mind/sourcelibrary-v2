@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
 import CollectionBars from '../_components/CollectionBars';
+import { LookSwitch, PlainHead, lookOf } from '../_components/IndexLook';
 import { RAMP } from '../_lib/ramp';
 import CollectionsBrowser from '../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../_lib/data';
@@ -11,8 +12,9 @@ const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
 interface Sorted { source: string; slug: string; name: string; proposed: string; proposed_subject?: string | null }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string }> }) {
-  const { subject } = await searchParams;
+export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string; look?: string }> }) {
+  const { subject, look: lk } = await searchParams;
+  const look = lookOf(lk);
   const filters = 'menus' as const;
   const sched = dataFile<{ entries: { collection: string }[] }>('schedule');
   const lead = sched?.entries[0] ? collectionModel(sched.entries[0].collection) : null;
@@ -23,8 +25,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
   const subjects = [...bySubject.entries()].filter(([, s]) => s.some((x) => items.some((i) => i.slug === x))).map(([name, slugs]) => ({ name, slugs })).sort((a, b) => a.name.localeCompare(b.name));
   return (
     <div className="bg-cream min-h-screen">
+      {look !== 'hero' ? <PlainHead title="Collections" path="/revamp/c" look={look} featured={lead && { name: lead.name, href: `/revamp/c/${lead.slug}` }} /> : (
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
         <PlateWall tiles={lead?.heroTiles ?? []} rows={3} still />
+        <div className="absolute top-3 right-4 z-20"><LookSwitch path="/revamp/c" look={look} dark /></div>
         <div className={`max-w-[1500px] mx-auto px-6 md:px-12 relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>
             <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Collections</h1>
@@ -41,7 +45,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
         </div>
         <CollectionBars strip live works={items.length} placeholder="Search collections or ask a question" scope={`all ${items.length} collections`} />
       </section>
-      <CollectionsBrowser barSearch items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
+      )}
+      <CollectionsBrowser barSearch={look === 'hero'} look={look} items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
       <section className="bg-warm border-t border-border-light">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10 grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-center">
           <div>
