@@ -143,7 +143,7 @@ async function main() {
       report.written += out.inserted; report.already += out.already; report.failed.push(...out.failed);
       if (!APPLY) console.log(JSON.stringify({ book: bookId, verdict: out.rows[0]?.verdict, findings: out.rows[0]?.page_findings?.length }));
     }
-  });
+  }, { noTimeout: true }); // a run judges many books, 15 calls each; the 300s default killed it after one (#8478)
   save();
   console.log(`${APPLY ? 'APPLY' : 'dry run'} ${runId}: ${report.judged}/${report.books} books fully judged, ${calls} calls; written ${report.written}, already ${report.already}, failed ${report.failed.length}${stop ? `; stopped: ${stop}` : ''}`);
   for (const f of report.failed) console.log(`  FAILED ${JSON.stringify(f)}`);
