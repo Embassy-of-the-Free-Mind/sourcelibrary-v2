@@ -61,7 +61,7 @@ export function ReadersMap({ countries, history }: { countries: GeoCountry[]; hi
   const byCc = useMemo(() => new Map(countries.map(c => [c.country, c])), [countries]);
   const total = countries.reduce((s, c) => s + c.likely, 0);
   const totalAll = countries.reduce((s, c) => s + c.all, 0);
-  const max = Math.max(1, ...countries.filter(c => c.country !== 'unknown').map(c => c.likely));
+  const max = Math.max(2, ...countries.filter(c => c.country !== 'unknown').map(c => c.likely));
   // Log scale: the US is ~10x the next country, so a linear ramp leaves the rest of the world blank.
   const shade = (n: number) => n <= 0 ? '#f5f5f4' : RAMP[Math.min(RAMP.length - 1, Math.floor((Math.log10(n) / Math.log10(max)) * RAMP.length))];
 
