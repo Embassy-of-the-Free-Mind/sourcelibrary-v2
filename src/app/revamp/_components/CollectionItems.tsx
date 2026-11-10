@@ -11,7 +11,6 @@ import SortSelect from '@/components/search-kit/SortSelect';
 import FilterChips from '@/components/search-kit/FilterChips';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import type { Book } from '../_lib/types';
-import { getBookThumbnailUrl } from '@/lib/utils';
 import CollectionEditor from './CollectionEditor';
 import { SORTS, docKey, initialDoc, type CollectionDoc } from '../_lib/collection-doc';
 
@@ -21,9 +20,8 @@ const pill = (on: boolean) => `h-[30px] px-3 border text-[13px] ${on ? 'bg-prima
 const H2 = 'text-2xl sm:text-3xl text-primary font-display';
 const fmt = (v: number) => v.toLocaleString('en-GB');
 const titleOf = (b: Book) => (b.display_title || b.title || '').replace(/^(the|a|an)\s+/i, '');
-type Pics = 'tab' | 'together' | 'mixA' | 'mixB' | 'mixC';
+type Pics = 'tab' | 'mixA';
 type Entry = { kind: 'work'; b: Book } | { kind: 'image'; p: Plate; from: Book };
-const MIXED: [Pics, string][] = [['mixA', 'Mixed A: columns'], ['mixB', 'Mixed B: rows'], ['mixC', 'Mixed C: each work, then its pictures']];
 const decade = (y?: number) => (y ? `${Math.floor(y / 100) * 100}s` : 'Undated');
 
 export interface ItemsProps {
@@ -56,8 +54,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const [cent, setCent] = useState('all');
   const [q, setQ] = useState('');
   const [page, setPage] = useState(1);
-  // Each cover's own proportions, measured as it loads (pictures know theirs already).
-  const [asp, setAsp] = useState<Record<string, number>>({});
   const top = useRef<HTMLDivElement>(null);
 
   // The hero's "Search within" bar sends its words here.
@@ -119,9 +115,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
 
   const mixed = pics.startsWith('mix');
   const mine = (b: Book) => (byBook[b.id!] ?? []).map((p) => ({ kind: 'image' as const, p, from: b }));
-  let entries: Entry[] = [];
-  if (pics === 'mixC') entries = list.flatMap((b) => [{ kind: 'work' as const, b }, ...mine(b)]);
-  else if (mixed) {
+  const entries: Entry[] = [];
+  if (mixed) {
     // Works and pictures taken in turn, one of each, until one runs out.
     const w = list.map((b) => ({ kind: 'work' as const, b }));
     const im = list.flatMap(mine);
@@ -146,67 +141,21 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
       {notesOn[b.id!] && <p className="mt-2 text-[13px] text-secondary leading-snug line-clamp-4">{notesOn[b.id!]}</p>}
     </div>
   );
-  // Together: each work as a row, its own pictures beside it at their own proportions.
-  const row = (b: Book) => (
-    <div key={b.id} className="grid grid-cols-[110px_minmax(0,1fr)] sm:grid-cols-[150px_minmax(0,1fr)] gap-4 sm:gap-6 py-5 border-t border-border-light first:border-t-0">
-      {card({ ...b })}
-      <div className="min-w-0">
-        {notesOn[b.id!] && <p className="text-[14.5px] text-secondary leading-relaxed max-w-2xl mb-3">{notesOn[b.id!]}</p>}
-        {byBook[b.id!]?.length ? (
-          <div className="flex h-[150px] sm:h-[190px] overflow-x-auto [scrollbar-width:thin]" style={{ background: '#1a1612' }}>
-            {byBook[b.id!].map((p) => <a key={p.src} href={p.href} className="shrink-0 h-full"><img src={p.src} alt={p.label || ''} loading="lazy" className="h-full w-auto max-w-none block hover:opacity-85" /></a>)}
-          </div>
-        ) : <p className="text-[13px] text-muted">No pictures saved for this work in the prototype.</p>}
-      </div>
-    </div>
+  // Mixed: works and pictures in one grid, five to a row. Works keep the usual book card; pictures
+  // the gallery's picture card at their own proportions. Each cell sits on the row's bottom line.
+  const tile = (e: Entry) => e.kind === 'work' ? card(e.b) : (
+    <a key={`i-${e.p.src}`} href={e.p.href} title={e.p.label} className="group block">
+      <span className="block w-full overflow-hidden border border-border-light">
+        <img src={e.p.src} alt={e.p.label || 'Illustration'} loading="lazy" decoding="async" width={e.p.w} height={e.p.h}
+          style={e.p.w && e.p.h ? { aspectRatio: `${e.p.w} / ${e.p.h}` } : undefined}
+          className="w-full h-auto block bg-warm group-hover:scale-105 transition-transform duration-300" />
+      </span>
+    </a>
   );
-  // Mixed grid: every item at its own proportions, bottom-aligned and centred, caption under it.
-  const src = (e: Entry) => e.kind === 'work' ? getBookThumbnailUrl(e.b as never, 'display') : e.p.src;
-  const href = (e: Entry) => e.kind === 'work' ? `/book/${e.b.slug || e.b.id}` : e.p.href;
-  const key = (e: Entry) => e.kind === 'work' ? `w-${e.b.id}` : `i-${e.p.src}`;
-  const ratio = (e: Entry) => e.kind === 'image' ? (e.p.w && e.p.h ? e.p.w / e.p.h : 0.75) : (asp[e.b.id!] ?? 0.7);
-  const capH = Object.values(noteOf).some(Boolean) ? 'h-[138px]' : 'h-[70px]';
-  const caption = (e: Entry) => (
-    <div className={`pt-3 overflow-hidden ${capH}`}>
-      {e.kind === 'work' ? <>
-        <p className="font-serif text-[15.5px] leading-snug text-primary line-clamp-2">{e.b.display_title || e.b.title}</p>
-        <p className="text-[12.5px] text-muted truncate">{[e.b.author, e.b.year].filter(Boolean).join(', ')}</p>
-        {notesOn[e.b.id!] && <p className="mt-1 text-[12.5px] text-secondary leading-snug line-clamp-3">{notesOn[e.b.id!]}</p>}
-      </> : <p className="text-[12.5px] text-muted leading-snug line-clamp-2">Picture from {e.from.display_title || e.from.title}</p>}
-    </div>
-  );
-  const picture = (e: Entry, cls: string) => {
-    const u = src(e);
-    return u ? <img src={u} alt={e.kind === 'work' ? (e.b.display_title || e.b.title) : (e.p.label || '')} loading="lazy" className={cls}
-      onLoad={e.kind === 'work' && !asp[e.b.id!] ? (ev) => { const t = ev.currentTarget; if (t.naturalWidth) setAsp((a) => ({ ...a, [e.b.id!]: t.naturalWidth / t.naturalHeight })); } : undefined} />
-      : <span className="block w-full aspect-[7/10] bg-warm" />;
-  };
   const columns = (es: Entry[]) => (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 md:gap-x-10 gap-y-10 md:gap-y-12">
-      {es.map((e) => (
-        <a key={key(e)} href={href(e)} className="group flex flex-col">
-          <span className="flex-1 flex items-end justify-center min-h-0"><span className="block group-hover:opacity-90 transition-opacity">{picture(e, 'block max-w-full max-h-[420px] w-auto h-auto mx-auto')}</span></span>
-          {caption(e)}
-        </a>
-      ))}
-    </div>
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6 items-end">{es.map(tile)}</div>
   );
-  const rows = (es: Entry[]) => (
-    <div className="flex flex-wrap gap-x-6 md:gap-x-8 gap-y-10">
-      {es.map((e) => {
-        const r = ratio(e);
-        return (
-          <a key={key(e)} href={href(e)} className="group block min-w-0" style={{ flexGrow: r * 100, flexBasis: `${r * 230}px` }}>
-            <span className="block relative w-full bg-warm" style={{ paddingBottom: `${100 / r}%` }}>{picture(e, 'absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity')}</span>
-            {caption(e)}
-          </a>
-        );
-      })}
-      <span aria-hidden style={{ flexGrow: 1e6 }} />
-    </div>
-  );
-  const body = (items: Book[]) => pics === 'together' ? <div>{items.map(row)}</div>
-    : view === 'list' ? <CollectionListView books={items as never} sort={sort} onSort={reset(setSort)} notes={notesOn} fromCollection={slug} />
+  const body = (items: Book[]) => view === 'list' ? <CollectionListView books={items as never} sort={sort} onSort={reset(setSort)} notes={notesOn} fromCollection={slug} />
     : <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">{items.map(card)}</div>;
 
   const imagesHere = plates.length > 0;
@@ -235,8 +184,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         {imagesHere && <>
           <span className="text-muted ml-3 mr-1">Pictures:</span>
           <button type="button" aria-pressed={pics === 'tab'} onClick={() => setPics('tab')} className={pill(pics === 'tab')}>Separate</button>
-          <button type="button" aria-pressed={pics === 'together'} onClick={() => setPics('together')} className={pill(pics === 'together')}>With their works</button>
-          {MIXED.map(([k, l]) => <button key={k} type="button" aria-pressed={pics === k} onClick={() => { setPics(k); setPage(1); }} className={pill(pics === k)}>{l}</button>)}
+          <button type="button" aria-pressed={pics === 'mixA'} onClick={() => { setPics('mixA'); setPage(1); }} className={pill(pics === 'mixA')}>Mixed A: columns</button>
         </>}
       </div>
 
@@ -270,7 +218,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
             </div>
           )}
           {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
-          {mixed && (pics === 'mixB' ? rows(pageEntries) : columns(pageEntries))}
+          {mixed && columns(pageEntries)}
           {!mixed && blocks.map((g, i) => (
             <div key={`${g.k}-${i}`} className={g.k ? `${i > 0 ? 'mt-16 md:mt-24 pt-10 md:pt-14 border-t border-border-light' : 'mt-4'}` : ''}>
               {g.k && (
