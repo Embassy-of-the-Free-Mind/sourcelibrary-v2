@@ -1,13 +1,12 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import type { CollectionBook } from '@/components/CollectionBookCard';
-import WorksGrid from '../../_components/WorksGrid';
-import GalleryMasonry from '@/components/GalleryMasonry';
 import PlateWall from '../../_components/PlateWall';
 import { Bell } from 'lucide-react';
 import CollectionBars from '../../_components/CollectionBars';
 import AskPanel from '../../_components/AskPanel';
-import OverviewBand from '../../_components/OverviewBand';
+import IntroBand from '../../_components/IntroBand';
+import CollectionItems from '../../_components/CollectionItems';
+import { RAMP } from '../../_lib/ramp';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
 
@@ -15,7 +14,7 @@ interface Sorted { source: string; slug: string; proposed: string; proposed_subj
 interface Subj { id: string; label: string; level: number; parents: string[] }
 const n = (v: number) => v.toLocaleString('en-GB');
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
-const H2 = 'font-serif text-3xl md:text-4xl text-primary leading-[1.05] tracking-tight';
+const H2 = 'text-2xl sm:text-3xl text-primary font-display'; // as CollectionItems
 const SHOW = 10; // two rows; more go to the Collections page, filtered to this subject
 const H3 = 'text-lg font-semibold text-primary mb-3';
 
@@ -28,6 +27,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const subjects = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
   const self = subjects.find((s) => s.label.toLowerCase() === m.name.toLowerCase());
   const parent = self?.parents[0] ? subjects.find((x) => x.id === self.parents[0]) : undefined;
+  const works = m.all.length || m.stats.works;
+  const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
+  const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
+  // The same coloured counts as a collection's hero; a subject has no maker, so no "Curated by".
+  const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : ''].filter(Boolean) as string[];
   const narrower = self ? subjects.filter((s) => s.parents.includes(self.id)) : [];
   return (
     <div className="bg-cream min-h-screen">
@@ -41,16 +45,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </nav>
           <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
           {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
+            {counts.map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
+          </div>
         </div>
-        <CollectionBars strip panel works={m.listed || m.stats.works} tone="ink" after={<>
+        <CollectionBars strip panel works={works} tone="ink" after={<>
           <span aria-hidden className="w-px my-4 bg-white/25 ml-1 sm:ml-2" />
           <Link href="/auth/signin?callbackUrl=%2Fsubjects" className="inline-flex items-center gap-2 px-3.5 sm:px-5 -mr-3.5 sm:-mr-5 text-[13px] sm:text-sm hover:bg-white/10"><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
         </>} />
       </section>
       <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope="subject" name={m.name} />
-      {m.overview && <div className={`${WRAP} py-8 md:py-10`}><OverviewBand o={m.overview} /></div>}
+      <IntroBand m={m} />
       {(narrower.length > 0 || about.length > 0) && (
-        <section className="bg-warm border-y border-border-light">
+        <section className="bg-cream border-b border-border-light">
           <div className={`${WRAP} py-10 md:py-14`}>
             <h2 className={`${H2} mb-6 md:mb-8`}>Inside {m.name}</h2>
             {narrower.length > 0 && (
@@ -72,18 +79,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </div>
         </section>
       )}
-      <section className={`${WRAP} py-10 md:py-14`}>
-        <div className="flex items-end justify-between mb-6"><h2 className={H2}>Works</h2><span className="text-sm text-muted">{n(m.stats.works)} works</span></div>
-        <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.listed || m.books.length} slug={m.slug} />
-      </section>
-      {m.plates.length > 0 && (
-        <section className="bg-warm border-t border-border-light">
-          <div className={`${WRAP} py-10 md:py-14`}>
-            <div className="flex items-end justify-between mb-6"><h2 className={H2}>Images</h2><span className="text-sm text-muted">{n(m.stats.images)} images</span></div>
-            <div className="max-h-[720px] overflow-hidden"><GalleryMasonry plates={m.plates.slice(0, 30)} /></div>
-          </div>
-        </section>
-      )}
+      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} curated={false} />
     </div>
   );
 }

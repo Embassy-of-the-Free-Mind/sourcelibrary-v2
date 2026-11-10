@@ -33,6 +33,8 @@ export interface ItemsProps {
   plates: Plate[];
   imagesTotal: number;
   byBook: Record<string, Plate[]>;
+  /** False on a subject page: nobody makes a subject, so there is no maker's version to load or edit. */
+  curated?: boolean;
 }
 
 /**
@@ -41,7 +43,7 @@ export interface ItemsProps {
  * their notes; over 60, filters too. What the maker sets (order, sections, notes, default order) comes
  * from the collection document, edited in CollectionEditor.
  */
-export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook }: ItemsProps) {
+export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true }: ItemsProps) {
   const original = initialDoc(books, notes);
   const [saved, setSaved] = useState<CollectionDoc | null>(null);
   const [editing, setEditing] = useState(false);
@@ -67,10 +69,11 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
 
   // The maker's saved version (prototype: this browser only), read once after mounting.
   useEffect(() => {
+    if (!curated) return;
     const raw = localStorage.getItem(docKey(slug));
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (raw) try { setSaved(JSON.parse(raw)); } catch { /* ignore a broken save */ }
-  }, [slug]);
+  }, [slug, curated]);
   const doc = saved ?? original;
   const byId: Record<string, Book> = { ...Object.fromEntries(books.map((b) => [b.id!, b])), ...doc.added };
   const works = doc.order.flatMap((e) => (e.kind === 'work' && byId[e.id] ? [byId[e.id]] : []));
@@ -90,7 +93,9 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const cents = [...new Set(works.map((b) => decade(b.year)))].sort();
   const canCentury = !small && works.filter((b) => b.year).length >= n * 0.8 && cents.length > 1;
   const canLang = !small && langs.length >= 3;
-  const sort = sortPick ?? doc.sort;
+  // A subject has no maker's order: oldest first, and no "Maker's order" to choose.
+  const sort = sortPick ?? (curated ? doc.sort : 'year_asc');
+  const sorts = curated ? SORTS : SORTS.filter(([k]) => k !== 'maker');
   // In the maker's order, their sections are the groups.
   const hasSections = sections.size > 0;
   const group = sort === 'maker' && hasSections ? 'sections' : groupPick;
@@ -225,7 +230,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
       {/* Prototype only: not part of the page. */}
       <div className="border border-dashed border-border-medium bg-white px-4 py-3 mb-10 flex flex-wrap items-center gap-2 text-[13px]">
         <span className="text-muted mr-1">Prototype only.</span>
-        <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>
+        {curated && <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>}
         {saved && <span className="text-muted ml-1">Your edits are kept in this browser.</span>}
         {imagesHere && <>
           <span className="text-muted ml-3 mr-1">Pictures:</span>
@@ -235,7 +240,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         </>}
       </div>
 
-      {editing && <div className="mb-12"><CollectionEditor start={doc} original={original} books={byId} onDone={done} onCancel={() => setEditing(false)} /></div>}
+      {curated && editing && <div className="mb-12"><CollectionEditor start={doc} original={original} books={byId} onDone={done} onCancel={() => setEditing(false)} /></div>}
 
       <div ref={top} className="scroll-mt-24" id="works">
         {tabs ? (
@@ -254,7 +259,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               <FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
                 {group !== 'sections' && !mixed && (canCentury || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canCentury ? [['century', 'By century'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
-                <SortSelect value={sort} onChange={reset(setSort)} options={SORTS} />
+                <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
                 {pics === 'tab' && (
                   <div className="flex border border-border-medium" role="group" aria-label="View">
                     <button type="button" aria-pressed={view === 'grid'} aria-label="Grid" onClick={() => setView('grid')} className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
