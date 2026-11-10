@@ -11,6 +11,8 @@ status: adopted
 decision: "PART_CHARS = 120K for books over MAX_CHARS (600K); books under it keep one conversation (the 2026-10-28 pilot). JSON repair (parseJsonLoose), one retry of an unusable reply, and one agy retry of a book this lane failed, in the same PR."
 superseded_by: null
 issue: [7628]
+feeds: cost
+landed: scripts/workers/lib/enrich-agy-lane.mjs
 ---
 PRIOR ART: `2026-10-28-enrich-agy-one-call-7628.md` (the whole-book pilot this changes only for books over its 600K cap) and
 `scripts/workers/lib/enrich-agy-lane.mjs` (its header carries the turn-cost note this measures).
