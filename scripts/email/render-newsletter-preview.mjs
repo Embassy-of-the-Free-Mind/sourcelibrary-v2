@@ -40,7 +40,15 @@ if (!shell.includes('${bodyHtml}') || !shell.includes('${subject}')) {
 
 // Strip the HTML comment block the body files carry for their editors.
 const campaign = campaignArg || path.basename(bodyPath).replace(/\.body\.html$|\.html$/, '');
-const body = readFileSync(bodyPath, 'utf8').replace(/^\s*<!--[\s\S]*?-->\s*/, '');
+const raw = readFileSync(bodyPath, 'utf8');
+// "Preview: …" in the header comment becomes the inbox preview line, as a hidden
+// preheader at the top of the body. Without one, inboxes show the body's first
+// words (the Nov 2026 letter previewed as "Leer en español →").
+const preview = ((raw.match(/^\s*<!--([\s\S]*?)-->/) || [, ''])[1].match(/^\s*Preview:\s*(.+)$/mi) || [, ''])[1].trim();
+const preheader = preview
+  ? `<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;">${preview.replace(/</g, '&lt;')}${'&#847;&zwnj;&nbsp;'.repeat(40)}</div>`
+  : '';
+const body = preheader + raw.replace(/^\s*<!--[\s\S]*?-->\s*/, '');
 
 const html = shell
   .replaceAll('${subject}', subject)

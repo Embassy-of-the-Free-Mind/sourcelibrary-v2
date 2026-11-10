@@ -6,6 +6,10 @@ before anyone noticed.
 
 This is a living doc. Update the queue as letters go out.
 
+**To send one, follow the `send-newsletter` skill** (`.claude/skills/send-newsletter/SKILL.md`):
+it runs `scripts/email/qa-letter.mjs` before the send and `scripts/email/letter-stats.mjs`
+after. The rules below are the why; the skill is the procedure.
+
 ## Where things are
 
 - **Audience:** the standing Resend audience `Source Library Newsletter`
@@ -57,6 +61,23 @@ each letter earns its ask. No fixed date — a letter with nothing to say is wor
 than a gap.
 
 ## Queue
+
+### Solve et Coagula episode — SENT 2026-11-10
+`scripts/email/solve-et-coagula-2026-11.{a,b}.body.html`
+
+Sent 2026-11-10 14:00 UTC (A: accounts created since 2026-11-05, 414 contacts) and
+14:07 UTC (B: everyone else, 7,857), subject "New Podcast about The Source Library".
+At ~1.5 h: 8,271 sent, 22.4% opened, 1.7% clicked (143), 24 bounced, 66 suppressed;
+unsubscribes A 1, B 26 (0.3%). Site traffic roughly doubled for an hour; the article took
+57 views in the first half hour and the Drebbel page 61.
+
+What went wrong, and is now checked by `qa-letter.mjs`: no preview line (inboxes showed
+"Leer en español →"); a generic subject; three bare URLs; four destinations; a P.S. with no
+action; the Spanish link on a retired vercel.app page (redirected 2026-11-10); the Drebbel
+link (page 62 of 69) outside the metered reader's free sample, so signed-out readers saw no
+English until pages 62–69 were flagged that afternoon; and the linked transcript ended in
+Whisper's hallucinated "he he he" (#8505). Links were untagged, so every click read as
+"direct" (#8507 tags them from now on).
 
 ### 1. "Can I get your feedback?" — SENT 2026-08-19
 `scripts/email/feedback-newsletter-2026-08.body.html`
