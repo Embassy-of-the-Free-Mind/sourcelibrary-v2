@@ -75,14 +75,13 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   const bookPath = (book as unknown as { slug?: string }).slug || id;
   const pageUrl = `/book/${bookPath}/page/${pageId}`;
 
-  // Reader pages are noindex by default (they outnumber book URLs ~100:1 and
-  // are thin on their own). Demand-proven pages — read >=5 in the rolling 90d
-  // window, or translated first-translations — are opened to indexing by
-  // scripts/seo/flag-indexable-pages.mjs (issue #2688), which sets
-  // `seo_indexable` on the page doc. Canonical is already self-referential, so
-  // an opened page indexes on its own URL. See robots.ts (crawling stays open
-  // for all; this gate controls *indexing*).
-  const indexable = (page as unknown as { seo_indexable?: boolean }).seo_indexable === true;
+  // A reader page names its book's front page as canonical (#3755): Google
+  // crawls ~150-250 HTML pages a day here, and ~380K reader URLs were splitting
+  // that between thin pages instead of the books. Crawling stays open, so links
+  // and text on the page still count toward the book. No noindex: combined with
+  // a canonical elsewhere it sends mixed signals. `seo_indexable` no longer
+  // affects metadata.
+  const bookUrl = `/book/${bookPath}`;
 
   // Reference managers read these to save a page with its book, author and page
   // (#8161). Same rules as the book page's scholarMeta: a holder or issuer is no
@@ -104,10 +103,10 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   return {
     title: `${title} - Source Library`,
     description,
-    robots: { index: indexable, follow: true },
+    robots: { index: true, follow: true },
     other: scholarMeta,
     alternates: {
-      canonical: pageUrl,
+      canonical: bookUrl,
     },
     openGraph: {
       title,
