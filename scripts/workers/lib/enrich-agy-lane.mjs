@@ -70,12 +70,48 @@ export const DEFAULT_MODEL = 'gemini-3.8-flash-low';
 export const MAX_CHARS = 600_000;
 /** Messages (model requests) one conversation may take; see `call` in enrichOne. A 600K-character part is 4-5. */
 export const MAX_TURNS = 8;
+/**
+ * Text characters per part, for a book over MAX_CHARS (2026-11-10, #7628). Each turn of a conversation re-reads every
+ * earlier message, so a 600K part sent as four 150K messages read 150+300+450+600 = 1.5M characters: measured, a
+ * 471K-character book took 242K input tokens, about twice its own text. A part that fits ONE message is read once.
+ * The parts' extractions are per section either way, and the summary of a parted book is written from them (the
+ * reduce prompt), so a smaller part changes only how much neighbouring text the model sees while it extracts.
+ * 120K leaves room in a 150K message for the page markers and the extraction task.
+ */
+export const PART_CHARS = 120_000;
 const PRINT_TIMEOUT_S = 900;
 const MSG_CHARS = STDIN_MESSAGE_MAX;
 const SUFFIX = '\n\nDo not open, read or write any file and do not use any tool: everything you need is above. Write the one JSON object between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.\n';
 
 const argOf = (args, k, d = null) => args.find(a => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=') ?? d;
 const textOf = (pages) => pages.reduce((t, p) => t + (p.translation?.data?.length || 0), 0);
+
+/**
+ * JSON.parse, then the repairs a Flash reply needs. Trailing commas and raw control characters first; then, at
+ * most `maxFixes` times, an unescaped double quote inside a string (the usual failure: `"text": "He called it "the
+ * stone" and…"`; 10 of the lane's 11 failures by 2026-11-10 read "Expected ',' or '}' after property value"). The
+ * parser stops just after the quote that closed the string early; that quote is escaped and the parse retried. A
+ * quote followed by structure (`,` `:` `}` `]` or another quote) is a real string end, so a missing comma or bracket is
+ * never "repaired" into a string that swallows the next key: it throws, and the call counts as failed.
+ */
+export function parseJsonLoose(text, maxFixes = 50) {
+  try { return JSON.parse(text); } catch { /* repaired below */ }
+  let t = String(text).replace(/,\s*([}\]])/g, '$1').replace(/[\x00-\x1f]/g, ' ');
+  let first = null;
+  for (let i = 0; i <= maxFixes; i++) {
+    try { return JSON.parse(t); } catch (e) {
+      first ??= e;
+      const m = /at position (\d+)/.exec(e.message);
+      if (!m || i === maxFixes) throw first;
+      const q = t.lastIndexOf('"', Number(m[1]) - 1);
+      if (q <= 0 || t[q - 1] === '\\') throw first;
+      const after = t.slice(q + 1).match(/^\s*(.)/)?.[1];
+      if (after == null || /[,:}\]"]/.test(after)) throw first;
+      t = `${t.slice(0, q)}\\"${t.slice(q + 1)}`;
+    }
+  }
+  throw first;
+}
 
 /** Group the planned page batches into parts of at most `maxChars` of text each (a batch is never split). */
 export function groupBatches(batches, maxChars) {
@@ -90,12 +126,21 @@ export function groupBatches(batches, maxChars) {
   return parts;
 }
 
+/** How many times this lane reads a book before leaving it to the API lane (a failure, then one retry). */
+export const AGY_ATTEMPTS = 2;
+/** The state-row clause for a failed book this lane may claim. */
+export const retryableClause = () => ({ $or: [{ lane: { $ne: 'agy' } }, { lane: 'agy', attempts: { $lt: AGY_ATTEMPTS } }] });
+/** The same rule on a row already read (the run's `known` map). */
+export const isRetryable = (r) => r.stage === 'failed' && (r.lane !== 'agy' || (r.attempts || 0) < AGY_ATTEMPTS);
+
 /** Claim a book in the batch lane's state collection. Returns 'new' | 'from_failed' | null (someone has it). */
 export async function claimBook(states, bookId, me) {
   const set = { book_id: bookId, stage: 'agy_claimed', lane: 'agy', run_tag: me.runTag, agy_run: me.run, claimed_at: new Date(), updated_at: new Date() };
   try { await states.insertOne({ _id: bookId, ...set, attempts: 0 }); return 'new'; } catch (e) { if (e.code !== 11000) throw e; }
-  // A book the batch lane failed (any attempts) may be tried here; one this lane already failed is left to the API.
-  const r = await states.updateOne({ _id: bookId, stage: 'failed', lane: { $ne: 'agy' } }, { $set: set, $unset: { error: '' } });
+  // A book the batch lane failed (any attempts) may be tried here; one this lane failed may be tried once more
+  // (attempts < AGY_ATTEMPTS: the API fallback was closed from 2026-10-25, which stranded every agy failure), and
+  // after that it is left to the API lane.
+  const r = await states.updateOne({ _id: bookId, stage: 'failed', ...retryableClause() }, { $set: set, $unset: { error: '' } });
   return r.modifiedCount === 1 ? 'from_failed' : null;
 }
 
@@ -143,6 +188,7 @@ export async function runEnrichAgyLane(o) {
   const deadline = Date.now() + Number(argOf(args, 'deadline-min', 100)) * 60_000;
   const concurrency = Math.max(1, Math.min(4, Number(argOf(args, 'concurrency', 2))));
   const maxChars = Number(argOf(args, 'max-chars', MAX_CHARS));
+  const partChars = Number(argOf(args, 'part-chars', PART_CHARS));
   const maxTurns = Number(argOf(args, 'max-turns', MAX_TURNS));
   const model = argOf(args, 'model', DEFAULT_MODEL);
   const floor5h = Number(argOf(args, 'floor-5h', 0.25));
@@ -182,7 +228,7 @@ export async function runEnrichAgyLane(o) {
   if (retryEmpty && !o.bookIds?.length) { report.stop = '--retry-empty-chapters needs --book or --book-ids-file'; console.log(`[ENRICH-AGY] ${report.stop}`); return report; }
   const filter = compareDir ? { id: { $in: o.bookIds } } : retryEmpty ? retryEmptyFilter(gapFilter(o.scopeFilter)) : gapFilter(o.scopeFilter, { allowHeld: true });
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
-  const known = new Map((await states.find({}, { projection: { stage: 1, lane: 1 } }).toArray()).map(r => [r._id, r]));
+  const known = new Map((await states.find({}, { projection: { stage: 1, lane: 1, attempts: 1 } }).toArray()).map(r => [r._id, r]));
   const cursor = db.collection('books').find(filter).batchSize(1000).sort({ read_count: -1, pages_translated: -1 })
     .project({ id: 1, 'pipeline_auto.hold': 1, pages_translatable: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: { $size: { $ifNull: ['$chapters', []] } }, chapters_extracted_at: 1, pages_count: 1 });
 
@@ -199,7 +245,7 @@ export async function runEnrichAgyLane(o) {
       report.considered++;
       if (compareDir) { claimed++; return { id: b.id, needIndex: true, needChapters: (b.pages_count || 0) >= MIN_CHAPTER_PAGES, compareDir }; }
       const prior = known.get(b.id);
-      if (prior && !(prior.stage === 'failed' && prior.lane !== 'agy')) continue;
+      if (prior && !isRetryable(prior)) continue;
       let withheldIds = [];
       if (!retryEmpty) {
         const sk = await enrichmentSkip(db, b, { allowHeld: true, tolerateWithheld: true });
@@ -227,7 +273,7 @@ export async function runEnrichAgyLane(o) {
       const c = await next();
       if (!c) return;
       try {
-        const r = await enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool: report.pool });
+        const r = await enrichOne(o, c, { model, maxChars, partChars, maxTurns, me, cliVersion, pool: report.pool });
         report.calls += r.calls;
         report.books.push(r.row);
         if (compareDir) { if (r.quota) stop ??= `quota: ${r.quota}`; else if (r.error) { report.failed++; report.errors.push(`${c.id}: ${r.error}`); fs.writeFileSync(path.join(compareDir, `${c.id}.failed.json`), JSON.stringify(r.row, null, 1)); } else report.written++; continue; }
@@ -263,7 +309,7 @@ export async function runEnrichAgyLane(o) {
 }
 
 /** One book: its calls, parse, recheck and writes. Never throws for a model failure; returns { error } instead. */
-async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool }) {
+async function enrichOne(o, c, { model, maxChars, partChars = PART_CHARS, maxTurns, me, cliVersion, pool }) {
   const { db, phases } = o;
   const t0 = Date.now();
   const row = { book_id: c.id, run: me.run, pool, model, calls: 0, secs: 0, usage: { input: 0, output: 0, thinking: 0 }, parts: 1 };
@@ -281,6 +327,7 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
     sent.push(msgs.join('\n\n'));
     const r = await gatedTextCall(msgs, { model, task: 'translate', attempts: 2, stdin: true, printTimeoutS: PRINT_TIMEOUT_S });
     row.calls += r.requests;
+    row.max_turns = Math.max(row.max_turns || 0, msgs.length);
     // A JSON answer wrapped in a markdown fence outside the markers (pilot: a 640-page Nahuatl evangeliary) is a clean
     // answer for a parse; anything else outside the markers is not.
     if (r.problem === 'text outside the markers' && /^\s*(```\w*)?\s*<<<BEGIN>>>[\s\S]*<<<END>>>\s*(```)?\s*$/.test(r.text)) r.problem = null;
@@ -293,6 +340,31 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
     return r;
   };
   const fail = (error) => ({ error, calls: row.calls, row: { ...row, secs: (Date.now() - t0) / 1000, error } });
+  /**
+   * One call and its parse, asked a second time when the reply is unusable (a bad marker, JSON that will not parse):
+   * a retry costs one part's requests, a failure the whole book's. Never retried: a quota stop, a conversation over
+   * --max-turns. Returns { parsed } | { quota } | { error }. A reply that will not parse keeps its error context on the
+   * row (`last_bad_reply.around`), so the next repair can be written from what Flash actually sent.
+   */
+  const ask = async (label, messages, parse) => {
+    let last = null;
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const r = await call(messages);
+      if (r.cls === 'quota') return { quota: r.err || 'quota' };
+      if (r.cls === 'too_long') return { error: `call${label}: ${r.err}` };
+      if (r.cls || r.problem) { last = `call${label}: ${r.cls || r.problem}`; continue; }
+      try {
+        const parsed = parse(r.answer, r);
+        if (attempt > 1) row.retried = (row.retried || 0) + 1;
+        return { parsed };
+      } catch (e) {
+        last = `parse${label}: ${e.message}`;
+        const at = Number(/at position (\d+)/.exec(e.message)?.[1] ?? -1), a = String(r.answer || '');
+        row.last_bad_reply = { cls: null, problem: 'parse', err: e.message, around: at >= 0 ? a.slice(Math.max(0, at - 200), at + 200) : null, head: a.slice(0, 300), tail: a.slice(-300) };
+      }
+    }
+    return { error: last };
+  };
 
   let prep = null;
   if (c.needChapters) {
@@ -315,7 +387,9 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
     if (!batches.length) return fail('no translated text');
     const rangeOf = (b) => ({ start: b[0].page_number, end: b[b.length - 1].page_number });
     row.text_chars = textOf(inputs.pages);
-    const parts = groupBatches(batches, maxChars);
+    // One conversation for a book under --max-chars; over it, parts of one message each (PART_CHARS).
+    let parts = groupBatches(batches, maxChars);
+    if (parts.length > 1) parts = groupBatches(batches, partChars);
     row.parts = parts.length;
     const chapters = (book.chapters || []).map(ch => ({ title: ch.title, pageNumber: ch.pageNumber, level: ch.level || 1 }));
     if (parts.length === 1) {
@@ -328,28 +402,29 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
         chapterSection: chapters.length ? `\n## Detected Chapter Structure\n${chapters.map(ch => `- Page ${ch.pageNumber}: ${ch.title}`).join('\n')}\n` : '',
         hasChapters: chapters.length > 0, material: phases.AGY_SUMMARY_MATERIAL,
       });
-      const r = await call(phases.buildAgyEnrichPrompt({ want, pages: batches.flat(), ranges, bookTitle: title, bookAuthor: author, bookLanguage: lang, summaryPrompt, chapterPrompt: prep?.prompt, msgChars: MSG_CHARS }));
-      if (r.cls === 'quota') return { quota: r.err || 'quota', calls: row.calls, row };
-      if (r.cls || r.problem) return fail(`call: ${r.cls === 'too_long' ? r.err : r.cls || r.problem}`);
-      let parsed;
-      try { parsed = phases.parseAgyEnrichResponse(r.answer, { want, ranges }, agyUsage(r.usage)); } catch (e) { return fail(`parse: ${e.message}`); }
-      ({ extractions, summary, chaptersText } = parsed);
+      const a = await ask('', phases.buildAgyEnrichPrompt({ want, pages: batches.flat(), ranges, bookTitle: title, bookAuthor: author, bookLanguage: lang, summaryPrompt, chapterPrompt: prep?.prompt, msgChars: MSG_CHARS }),
+        (answer, r) => phases.parseAgyEnrichResponse(answer, { want, ranges }, agyUsage(r.usage)));
+      if (a.quota) return { quota: a.quota, calls: row.calls, row };
+      if (a.error) return fail(a.error);
+      ({ extractions, summary, chaptersText } = a.parsed);
     } else {
       // Over the cap: extractions part by part, then summary + chapters from them (the batch lane's reduce prompt).
       extractions = [];
       for (const part of parts) {
         const ranges = part.map(rangeOf);
-        const r = await call(phases.buildAgyEnrichPrompt({ want: ['extractions'], pages: part.flat(), ranges, bookTitle: title, bookAuthor: author, bookLanguage: lang, msgChars: MSG_CHARS }));
-        if (r.cls === 'quota') return { quota: r.err || 'quota', calls: row.calls, row };
-        if (r.cls || r.problem) return fail(`call (part ${ranges[0].start}-${ranges[ranges.length - 1].end}): ${r.cls === 'too_long' ? r.err : r.cls || r.problem}`);
-        try { extractions.push(...phases.parseAgyEnrichResponse(r.answer, { want: ['extractions'], ranges }, null).extractions); } catch (e) { return fail(`parse: ${e.message}`); }
+        const a = await ask(` (part ${ranges[0].start}-${ranges[ranges.length - 1].end})`, phases.buildAgyEnrichPrompt({ want: ['extractions'], pages: part.flat(), ranges, bookTitle: title, bookAuthor: author, bookLanguage: lang, msgChars: MSG_CHARS }),
+          (answer) => phases.parseAgyEnrichResponse(answer, { want: ['extractions'], ranges }, null));
+        if (a.quota) return { quota: a.quota, calls: row.calls, row };
+        if (a.error) return fail(a.error);
+        extractions.push(...a.parsed.extractions);
       }
       want.push('summary', ...(chaptersWanted ? ['chapters'] : []));
       const summaryPrompt = phases.buildBookSummaryRequest(extractions, book.title || title, author, lang, chapters.length ? chapters : undefined, book.display_title || undefined);
-      const r = await call(phases.buildAgyEnrichPrompt({ want, bookTitle: title, bookAuthor: author, bookLanguage: lang, summaryPrompt, chapterPrompt: prep?.prompt, msgChars: MSG_CHARS }));
-      if (r.cls === 'quota') return { quota: r.err || 'quota', calls: row.calls, row };
-      if (r.cls || r.problem) return fail(`call (summary): ${r.cls === 'too_long' ? r.err : r.cls || r.problem}`);
-      try { ({ summary, chaptersText } = phases.parseAgyEnrichResponse(r.answer, { want }, agyUsage(r.usage))); } catch (e) { return fail(`parse: ${e.message}`); }
+      const a = await ask(' (summary)', phases.buildAgyEnrichPrompt({ want, bookTitle: title, bookAuthor: author, bookLanguage: lang, summaryPrompt, chapterPrompt: prep?.prompt, msgChars: MSG_CHARS }),
+        (answer, r) => phases.parseAgyEnrichResponse(answer, { want }, agyUsage(r.usage)));
+      if (a.quota) return { quota: a.quota, calls: row.calls, row };
+      if (a.error) return fail(a.error);
+      ({ summary, chaptersText } = a.parsed);
     }
     const useful = extractions.filter(e => e.summary || e.themes.length || e.people.length || e.concepts.length).length;
     row.extractions = { useful, of: extractions.length };
@@ -357,10 +432,11 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
     if (!summary?.brief) return fail('no summary brief in the reply');
   } else if (chaptersWanted) {
     want.push('chapters');
-    const r = await call(phases.buildAgyEnrichPrompt({ want, bookTitle: title, bookAuthor: author, bookLanguage: lang, chapterPrompt: prep.prompt, msgChars: MSG_CHARS }));
-    if (r.cls === 'quota') return { quota: r.err || 'quota', calls: row.calls, row };
-    if (r.cls || r.problem) return fail(`call (chapters): ${r.cls === 'too_long' ? r.err : r.cls || r.problem}`);
-    try { ({ chaptersText } = phases.parseAgyEnrichResponse(r.answer, { want }, null)); } catch (e) { return fail(`parse: ${e.message}`); }
+    const a = await ask(' (chapters)', phases.buildAgyEnrichPrompt({ want, bookTitle: title, bookAuthor: author, bookLanguage: lang, chapterPrompt: prep.prompt, msgChars: MSG_CHARS }),
+      (answer) => phases.parseAgyEnrichResponse(answer, { want }, null));
+    if (a.quota) return { quota: a.quota, calls: row.calls, row };
+    if (a.error) return fail(a.error);
+    ({ chaptersText } = a.parsed);
   } else {
     return { dropped: `nothing to do (${row.chapters_skipped || 'chapters not wanted'})`, calls: 0, row };
   }
