@@ -28,7 +28,9 @@ export async function GET(request: NextRequest, context: RouteContext) {
     const pageIds = searchParams.getAll('page_id');
 
     // Also support comma-separated: ?page_id=a,b,c
-    const allPageIds = pageIds.flatMap(id => id.split(',').map(s => s.trim())).filter(Boolean);
+    const allPageIds = pageIds.flatMap(id => id.split(',').map(s => s.trim())).filter(Boolean)
+      // Capped so every id served is one the metered gate below has checked.
+      .slice(0, 200);
 
     if (!version) {
       return NextResponse.json({ error: 'Missing ?v= version parameter' }, { status: 400 });
@@ -37,7 +39,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: 'Missing ?page_id= parameter' }, { status: 400 });
     }
 
-    const gated = await gatedPageIds(request, allPageIds.slice(0, 200));
+    const gated = await gatedPageIds(request, allPageIds);
 
     // Single page — simpler response
     if (allPageIds.length === 1) {
