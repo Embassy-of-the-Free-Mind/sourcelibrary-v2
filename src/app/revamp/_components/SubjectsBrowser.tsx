@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
 
@@ -39,6 +40,8 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
   const [order, setOrder] = useState<'theme' | 'az'>('theme');
+  const [theme, setTheme] = useState('');
+  const [view, setView] = useState<'bands' | 'list'>('bands');
   // The hero bar sends its words here while typing.
   useEffect(() => {
     const on = (e: Event) => setQ((e as CustomEvent<string>).detail);
@@ -53,12 +56,15 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
     const a = s.alt.find((x) => x.toLowerCase().includes(t));
     return { ok: !!a, also: a ?? '' };
   };
-  const shown = sorted.map((g) => {
+  const shown = sorted.filter((g) => !theme || g.id === theme).map((g) => {
     const self = match(g);
     const narrower = g.narrower.map((s) => ({ s, m: match(s) })).filter((x) => (!t ? true : x.m.ok));
     return { g, self, narrower };
   }).filter((x) => !t || x.self.ok || x.narrower.length);
   const total = new Set(groups.flatMap((g) => [g.id, ...g.narrower.map((s) => s.id)])).size;
+  const count = new Set(shown.flatMap(({ g, narrower }) => [g.id, ...narrower.map((x) => x.s.id)])).size;
+  const n = (v: number) => v.toLocaleString('en-GB');
+  const vbtn = (on: boolean) => `w-[38px] h-9 grid place-items-center ${on ? 'bg-warm text-primary' : 'bg-white text-muted'}`;
 
   const search = (
     <div className={`${WRAP} py-8 md:py-10`}>
@@ -68,19 +74,18 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
           <input id="subj-find" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`${total} subjects, in any language`} className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
         </div>
       </form>}
-      {!t && (
-        <div className={`${barSearch ? '' : 'mt-8 '}mb-3`}><SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} /></div>
-      )}
-      {!t && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-3">
-            {sorted.map((g) => (
-              <a key={g.id} href={`#g-${g.id}`} className="group block bg-warm border border-border-light px-2.5 py-2 sm:px-4 sm:py-3 hover:border-primary transition-colors">
-                <span className="block text-[13px] sm:text-[15px] text-primary leading-snug">{g.label}</span>
-                <span className="block text-[11.5px] sm:text-[12.5px] text-muted mt-0.5">{g.narrower.length} subjects</span>
-              </a>
-            ))}
+      {/* One toolbar, as on All collections: the count, a menu, then order and view on the right. */}
+      <div className={`flex flex-wrap items-center gap-2 sm:gap-2.5 ${barSearch ? '' : 'mt-6 '}pb-3 border-b border-border-light`}>
+        <span className="text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? 'subject' : 'subjects'}</span>
+        <SortSelect label="Broad subject" value={theme} onChange={setTheme} options={[['', 'All broad subjects'], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
+        <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
+          <SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} />
+          <div className="flex border border-border-medium" role="group" aria-label="View">
+            <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>
+            <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={vbtn(view === 'list')}><List className="w-4 h-4" /></button>
           </div>
-      )}
+        </div>
+      </div>
       <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="mt-4 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
       {how && (
         <ul id="how" className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
@@ -98,6 +103,17 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
   return (
     <>
       {search}{empty}
+      {view === 'list' ? (
+        // List: every broad subject with its subjects under it, names only.
+        <div className={`${WRAP} pb-16 columns-1 sm:columns-2 lg:columns-4 gap-8`}>
+          {shown.map(({ g, narrower }) => (
+            <div key={g.id} className="break-inside-avoid mb-8">
+              <Link href={to(g)} className="block font-serif text-[22px] text-primary leading-tight hover:underline underline-offset-[3px] mb-2">{g.label}</Link>
+              <ul className="space-y-1">{narrower.map(({ s: x, m }) => <li key={x.id}><Link href={to(x)} className="text-[15px] text-secondary hover:text-primary hover:underline underline-offset-[3px]">{x.label}</Link>{m.also && <span className="text-[12.5px] text-muted"> · {m.also}</span>}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      ) : (
       <div className="pb-16">
         {shown.map(({ g, self, narrower }) => (
           <section key={g.id} id={`g-${g.id}`} className="scroll-mt-16">
@@ -119,6 +135,7 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
           </section>
         ))}
       </div>
+      )}
     </>
   );
 }
