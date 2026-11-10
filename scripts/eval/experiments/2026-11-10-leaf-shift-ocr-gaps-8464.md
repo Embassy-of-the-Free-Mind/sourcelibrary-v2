@@ -8,6 +8,8 @@ n_books: 600
 n_pages: 0
 verdict: "Cicero, De natura deorum (Venice 1546) served English one leaf ahead of its Latin on 17 pages in three translation blocks. The 'three pages ahead' in the report is a one-slot slip across leaves that never got OCR: pp.57-58 and 61-63 are empty, so p.56's English was p.59's leaf. The leaf-shift classifier took page_number ±1 as the neighbours, so an empty neighbour could never get the vote, and the shape was invisible. With neighbours taken as the nearest page that carries text, the classifier finds the Cicero block. On a seeded draw of 600 live translated books (seed 8464) the number runs are identical under both rules (17 flagged, 4 tier A), nothing is lost, and one new name run appears (Claudian, Loeb vol.1, pp.94-95, across an empty p.96). That flag is real when the text is read."
 status: adopted
+feeds: [detector, repair]
+landed: "scripts/lib/leaf-shift.mjs#classifyBook"
 supersedes: []
 decision: "scripts/lib/leaf-shift.mjs classifyBook skips pages with neither OCR nor English, and runs are adjacent by position, not page_number (audit and write-time gate alike). The 17 Cicero pages were re-translated one page per call with wrong-leaf-fix-5021.mjs (agy gemini-3.8-flash-low; old English in page_revisions)."
 superseded_by: null
