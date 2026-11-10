@@ -48,6 +48,7 @@ import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERR
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { LONG_S_GLYPH_VARIANT, foldLongS } from '../lib/ocr-long-s-retry.mjs';
 import { collectableBatchJobsFilter } from '../lib/batch-job-filters.mjs';
+import { batchOcrStamps } from '../lib/ocr-routing.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -664,6 +665,7 @@ async function processOneJob(db, job) {
           'ocr.batch_job_id': jobIdStr,
           'ocr.input_tokens': inputTokens,
           'ocr.output_tokens': outputTokens,
+          ...batchOcrStamps(job), // ocr.lane + ocr.pipeline (#8519)
           updated_at: now,
         };
         // Provenance (#2297) — only stamp when present, so older jobs without
