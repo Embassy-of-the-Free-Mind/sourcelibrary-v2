@@ -10,10 +10,11 @@
  * 72 h, and put the 72 h line in .claude/docs/newsletter-queue.md.
  *
  * How it counts, and the limits:
- * - Resend's email objects carry no broadcast id, so an email belongs to a
- *   broadcast if it has the broadcast's subject and was created after that
- *   broadcast's sent_at and before the next matching broadcast's. Halves sent
- *   minutes apart under one subject split by that window.
+ * - Resend's email objects carry no broadcast id. An email with the letter's
+ *   subject is assigned to the broadcast whose audience holds its recipient
+ *   (addresses stay in memory, never printed); failing that, to the latest
+ *   matching broadcast sent before it. Splitting by time alone fails: Resend
+ *   created both halves' emails in the same minutes (Nov 2026).
  * - last_event is the furthest event per email: "clicked" emails are also opened.
  *   Apple Mail privacy preloads count as opens, so the open rate runs high;
  *   clicks are the number to trust.
@@ -54,6 +55,26 @@ if (!casts.length) {
 }
 for (const b of casts) Object.assign(b, await get(`/broadcasts/${b.id}`));
 
+// Who was in each broadcast's audience: the reliable way to split halves, since
+// Resend creates the emails for both halves in the same minutes.
+const owner = new Map();
+const audLines = [];
+for (const b of casts) {
+  const aud = b.audience_id || b.segment_id;
+  if (!aud) continue;
+  let n = 0, unsub = 0, cursor = '';
+  for (;;) {
+    const page = await get(`/audiences/${aud}/contacts?limit=100${cursor ? `&after=${cursor}` : ''}`);
+    const rows = page.data || [];
+    n += rows.length;
+    unsub += rows.filter((r) => r.unsubscribed).length;
+    for (const r of rows) if (r.email) owner.set(r.email.toLowerCase(), b.id);
+    if (!rows.length || !page.has_more) break;
+    cursor = rows.at(-1).id;
+  }
+  audLines.push(`${b.name}: audience ${n} contacts, ${unsub} unsubscribed (all time)`);
+}
+
 const first = ts(casts[0].sent_at);
 const counts = new Map(casts.map((b) => [b.id, {}]));
 let after = '';
@@ -62,9 +83,13 @@ for (;;) {
   const rows = page.data || [];
   for (const e of rows) {
     const t = ts(e.created_at);
-    const owner = [...casts].reverse().find((b) => e.subject === b.subject && t >= ts(b.sent_at) - 60_000);
-    if (!owner) continue;
-    const c = counts.get(owner.id);
+    if (t < first - 60_000 || !casts.some((b) => b.subject === e.subject)) continue;
+    const to = String(Array.isArray(e.to) ? e.to[0] : e.to || '').toLowerCase();
+    // Audience membership first; else the latest matching broadcast sent before it.
+    const id = owner.get(to)
+      ?? [...casts].reverse().find((b) => e.subject === b.subject && t >= ts(b.sent_at) - 60_000)?.id;
+    if (!id) continue;
+    const c = counts.get(id);
     c[e.last_event] = (c[e.last_event] || 0) + 1;
   }
   if (!rows.length || !page.has_more || ts(rows.at(-1).created_at) < first - 60_000) break;
@@ -85,21 +110,7 @@ for (const b of casts) {
   console.log(line(`${b.name} (sent ${b.sent_at.slice(0, 16)} UTC)`, c));
 }
 if (casts.length > 1) console.log(line('Together', all));
-
-for (const b of casts) {
-  const aud = b.audience_id || b.segment_id;
-  if (!aud) continue;
-  let n = 0, unsub = 0, cursor = '';
-  for (;;) {
-    const page = await get(`/audiences/${aud}/contacts?limit=100${cursor ? `&after=${cursor}` : ''}`);
-    const rows = page.data || [];
-    n += rows.length;
-    unsub += rows.filter((r) => r.unsubscribed).length;
-    if (!rows.length || !page.has_more) break;
-    cursor = rows.at(-1).id;
-  }
-  console.log(`${b.name}: audience ${n} contacts, ${unsub} unsubscribed (all time)`);
-}
+for (const l of audLines) console.log(l);
 
 if (process.env.MONGODB_URI) {
   const { MongoClient } = await import('mongodb');
