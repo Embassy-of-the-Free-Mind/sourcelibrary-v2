@@ -307,7 +307,9 @@ export function decide(packet, replies) {
 
 async function fetchScan(bookId, pageNumber, dest) {
   if (fs.existsSync(dest) && fs.statSync(dest).size > 10_000) return;
-  const run = await fetch(`https://sourcelibrary.org/api/review/book-run?book=${encodeURIComponent(bookId)}&after=${pageNumber - 1}`);
+  // Under the metered reader (#4357) book-run walls anonymous callers; cron auth is exempt.
+  const run = await fetch(`https://sourcelibrary.org/api/review/book-run?book=${encodeURIComponent(bookId)}&after=${pageNumber - 1}`,
+    { headers: process.env.CRON_SECRET ? { Authorization: `Bearer ${process.env.CRON_SECRET}` } : {} });
   if (!run.ok) throw new Error(`book-run ${run.status}`);
   const j = await run.json();
   if (j.page?.page_number !== pageNumber) throw new Error(`book-run returned p.${j.page?.page_number}, wanted p.${pageNumber}`);

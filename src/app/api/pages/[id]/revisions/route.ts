@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getRevisions } from '@/lib/page-revisions';
+import { getDb } from '@/lib/mongodb';
+import { pageGateForRequest, meteredSignInResponse } from '@/lib/metered-gate';
 
 /**
  * GET /api/pages/[id]/revisions?field=ocr&limit=50&offset=0
  *
  * List revision history for a page's OCR or translation content.
+ *
+ * Every revision carries the full text it replaced, so this is a page-text
+ * door like /api/pages/[id]: past the metered reader's free sample an
+ * anonymous caller gets the sign-in 401 (#4357). The [tenant] twin is
+ * exempt, as reading rooms are everywhere.
  */
 export async function GET(
   request: NextRequest,
@@ -22,6 +29,16 @@ export async function GET(
         { error: 'field parameter required (ocr or translation)' },
         { status: 400 }
       );
+    }
+
+    const db = await getDb();
+    const page = await db.collection('pages').findOne(
+      { id },
+      { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, seo_indexable: 1 } },
+    );
+    if (page) {
+      const gate = await pageGateForRequest(db, request, page);
+      if (gate) return meteredSignInResponse(gate);
     }
 
     const result = await getRevisions(id, field, { limit, offset });

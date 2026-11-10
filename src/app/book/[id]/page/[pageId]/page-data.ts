@@ -28,6 +28,9 @@ export const BOOK_META_PROJECTION = {
   // English edition? Its English leaves describe themselves by their own
   // words, not a stored rewording (#7100).
   'translation_state.english_original': 1, facing_translation: 1,
+  // The metered reader's free sample is a share of the book (#4357): a page
+  // past it gets no text excerpt in its meta description.
+  pages_count: 1,
 };
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
