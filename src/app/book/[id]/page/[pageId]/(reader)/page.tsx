@@ -15,7 +15,7 @@ import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { findFacingPartner } from '@/lib/facing-translation';
-import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
+import { meteredReaderEnabled, gateLeafText } from '@/lib/free-preview';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle } from '@/lib/localized';
@@ -213,13 +213,13 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // and its `isAccessibleForFree: true` JSON-LD stays honest. Editor preview
   // (allowHidden) and tenant/embed reading rooms are exempt. No-op unless
   // METERED_READER=1.
-  const metered = meteredReaderEnabled()
+  // `meteringApplies` is who is metered (this render, not this page); each page
+  // embedded below is then judged against the free sample on its OWN number.
+  const meteringApplies = meteredReaderEnabled()
     && !allowHidden
-    && !(ctx?.id || ctx?.isEmbedded)
-    && !isPageFree(serializedPage as unknown as { page_number?: number | null; seo_indexable?: boolean }, (book as unknown as { pages_count?: number }).pages_count);
-  const servedPage = metered
-    ? (stripGatedPage(serializedPage as unknown as Record<string, unknown>, (book as unknown as { pages_count?: number }).pages_count || 0) as unknown as Page)
-    : serializedPage;
+    && !(ctx?.id || ctx?.isEmbedded);
+  const bookPagesCount = (book as unknown as { pages_count?: number }).pages_count;
+  const servedPage = gateLeafText(serializedPage, bookPagesCount, meteringApplies);
 
   // The flight payload the reader (and anything scraping this URL) receives
   // carries the invisible provenance imprimatur in the translation. It is
@@ -238,9 +238,9 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const facingSeed = facing
     ? (() => {
         const p = serveEnglishOriginalPage(JSON.parse(JSON.stringify(withoutTextLayer(facing.page))) as Page, book);
-        const gated = metered
-          ? (stripGatedPage(p as unknown as Record<string, unknown>, (book as unknown as { pages_count?: number }).pages_count || 0) as unknown as Page)
-          : p;
+        // The facing leaf is gated on its own page number, not this one's: page 20
+        // of 100 is free, its facing page 21 is not (and the reverse at the edge).
+        const gated = gateLeafText(p, bookPagesCount, meteringApplies);
         return markPageForReader(gated, scopedBookId);
       })()
     : null;
