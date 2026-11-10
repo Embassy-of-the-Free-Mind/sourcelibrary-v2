@@ -3,15 +3,24 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { LayoutGrid, List, Rows3 } from 'lucide-react';
+import { ChevronDown, LayoutGrid, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import type { IndexItem } from '../_lib/data';
 
 const HOLDS: [string, string][] = [['books', 'Books'], ['plates', 'Plates'], ['artworks', 'Artworks'], ['pages', 'Pages'], ['quotes', 'Quotes']];
+const THUMBS: [string, string][] = [['square', 'Square pictures'], ['strip', 'Strip of pictures']];
+export const vbtn = (on: boolean) => `w-9 sm:w-[38px] h-9 sm:h-[38px] grid place-items-center ${on ? 'bg-warm text-primary' : 'bg-white text-muted'}`;
 const SORTS: [string, string][] = [['az', 'A to Z'], ['books', 'Most books'], ['images', 'Most images']];
 export type FilterLayout = 'tiles' | 'chips' | 'menus' | 'side';
+/** The spacing every index page shares under the hero bar: bar to toolbar, toolbar to the first row. */
+export const TOP = 'pt-6 sm:pt-8 md:pt-10';
+export const FIRST = 'mt-6 md:mt-8';
+export const TOOLBAR = 'flex flex-wrap items-center gap-2 sm:gap-2.5 pb-3 sm:pb-3.5 border-b border-border-light';
+/** The gallery's Advanced button, here opening the filters on a phone. */
+export const filtersBtn = (open: boolean) => `inline-flex items-center gap-2 h-9 sm:h-[38px] px-3 sm:px-3.5 border text-[13px] sm:text-sm ${open ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium'}`;
+
 const n = (v: number) => v.toLocaleString('en-GB');
 
 export interface Crop { src: string; x: number; y: number; w: number; aspect: number }
@@ -63,6 +72,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const [sort, setSort] = useState('az');
   const [view, setView] = useState<'grid' | 'list' | 'bands'>('grid');
   const [thumb, setThumb] = useState<'square' | 'strip'>('square');
+  const [open, setOpen] = useState(false); // phone: the filter menus behind one button
   // The hero bar sends its words here while typing.
   useEffect(() => {
     const on = (e: Event) => { const v = (e as CustomEvent<string>).detail; setText(v); setQuery(v); };
@@ -98,11 +108,12 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const count = (k: string) => items.filter((i) => i.holds.includes(k)).length;
   // The /gallery filter pill (GalleryControls), unchanged.
   const chip = (on: boolean) => `h-[30px] px-3 border text-[13px] ${on ? 'bg-primary border-primary text-cream' : 'bg-white border-border-medium text-primary hover:border-primary'}`;
+  const active = [maker !== 'all', holds.length > 0, !!subject, !!lang].filter(Boolean).length;
   const toggleHold = (k: string) => setHolds(holds.includes(k) ? holds.filter((h) => h !== k) : [...holds, k]);
   const makerOpts = [['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const;
 
   return (
-    <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10">
+    <div className={`max-w-[1500px] mx-auto px-6 md:px-12 ${barSearch ? TOP : 'py-8 md:py-10'} pb-16 md:pb-20`}>
       {!hideTitle && <h1 className="text-4xl sm:text-5xl text-primary font-display mb-5">Collections</h1>}
       {!barSearch && <SearchAskBars
         search={{ id: 'col-search', label: 'Search the collections', placeholder: 'Name, subject, person', value: text, onChange: (v) => { setText(v); setQuery(v); }, onSubmit: setQuery, examples: ['Slime Moulds', 'Sibyls', 'Yoga'] }}
@@ -153,37 +164,42 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
         </aside>
       )}
       <div className="min-w-0">
-      <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-4 pb-3 border-b border-border-light">
+      <div className={`${TOOLBAR} ${filters === 'side' ? 'mt-4' : ''}`}>
         {filters === 'menus' && <>
-          {/* C: everything is a menu in one toolbar, with the count as plain text */}
-          <span className="text-sm text-primary font-medium mr-1">{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</span>
-          <SortSelect label="Made by" value={maker} onChange={(v) => setMaker(v as typeof maker)} options={makerOpts.map(([k, l]) => [k, k === 'all' ? 'Made by anyone' : `By ${l === 'Readers' ? 'readers' : l}`] as const)} />
-          <SortSelect label="Holds" value={holds[0] ?? ''} onChange={(v) => setHolds(v ? [v] : [])} options={[['', 'Holds anything'], ...HOLDS.map(([k, l]) => [k, `Holds ${l.toLowerCase()}`] as const)]} />
+          {/* C: everything is a menu in one toolbar. Below laptop width the menus fold behind Filters. */}
+          <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</span>
+          <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${filtersBtn(open)}`}>
+            Filters{active > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">{active}</span>}
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
+          </button>
+          <div className={`${open ? 'flex' : 'hidden'} lg:contents order-last lg:order-none w-full flex-wrap gap-2`}>
+            <SortSelect label="Made by" value={maker} onChange={(v) => setMaker(v as typeof maker)} options={makerOpts.map(([k, l]) => [k, k === 'all' ? 'Made by anyone' : `By ${l === 'Readers' ? 'readers' : l}`] as const)} />
+            <SortSelect label="Holds" value={holds[0] ?? ''} onChange={(v) => setHolds(v ? [v] : [])} options={[['', 'Holds anything'], ...HOLDS.map(([k, l]) => [k, `Holds ${l.toLowerCase()}`] as const)]} />
+            {subjects.length > 0 && <SortSelect label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} />}
+            <SortSelect label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} />
+            {view === 'grid' && <span className="sm:hidden"><SortSelect label="Thumbnails" value={thumb} onChange={(v) => setThumb(v as typeof thumb)} options={THUMBS} /></span>}
+          </div>
         </>}
-        {filters !== 'side' && <>
+        {filters !== 'side' && filters !== 'menus' && <>
           {subjects.length > 0 && <SortSelect label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} />}
           <SortSelect label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} />
         </>}
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
+          {view === 'grid' && <span className="hidden sm:inline-flex"><SortSelect label="Thumbnails" value={thumb} onChange={(v) => setThumb(v as typeof thumb)} options={THUMBS} /></span>}
           <SortSelect label="Sort" value={sort} onChange={setSort} options={SORTS} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
-            <button type="button" aria-label="Grid" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={`w-[38px] h-9 grid place-items-center ${view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
-            <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={`w-[38px] h-9 grid place-items-center ${view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
-            <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={`w-[38px] h-9 grid place-items-center ${view === 'bands' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><Rows3 className="w-4 h-4" /></button>
+            <button type="button" aria-label="Grid" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={vbtn(view === 'grid')}><LayoutGrid className="w-4 h-4" /></button>
+            <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={vbtn(view === 'list')}><List className="w-4 h-4" /></button>
+            <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>
           </div>
         </div>
-      </div>
-
-      <div className="flex justify-between md:justify-end gap-2 items-center text-xs text-muted mt-2">
-        <span className="md:hidden">{n(shown.length)} collections</span><span className="flex gap-2 items-center">Thumbnails
-        {(['square', 'strip'] as const).map((k) => <button key={k} type="button" aria-pressed={thumb === k} onClick={() => setThumb(k)} className={thumb === k ? 'text-primary underline underline-offset-2' : ''}>{k === 'square' ? 'Square' : 'Strip'}</button>)}</span>
       </div>
 
       {shown.length === 0 ? (
         <p className="py-16 text-center text-muted">{maker === 'reader' ? <>No reader collections are public yet. <Link href="/auth/signin?callbackUrl=%2Fcollections" className="text-primary underline underline-offset-2">Sign in to make the first one</Link>.</> : 'Nothing matches all of that. Remove one of the filters above.'}</p>
       ) : view === 'bands' ? (
         // Picture bands, as on All subjects: the whole band is the way in.
-        <div className="mt-4 space-y-3">
+        <div className={`${FIRST} space-y-3`}>
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="group relative flex min-h-[128px] md:min-h-[170px] overflow-hidden">
               <div className="absolute inset-0 flex overflow-hidden" style={{ background: '#1a1612' }}>
@@ -202,7 +218,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
           ))}
         </div>
       ) : view === 'grid' ? (
-        <div className={`grid gap-x-5 gap-y-8 mt-4 ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : filters === 'side' ? 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
+        <div className={`grid gap-x-4 sm:gap-x-5 gap-y-7 sm:gap-y-8 ${FIRST} ${thumb === 'strip' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : filters === 'side' ? 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'}`}>
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
               <div className="border border-transparent group-hover:border-primary transition-colors"><Thumb item={c} mode={thumb} /></div>
@@ -213,7 +229,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
           ))}
         </div>
       ) : (
-        <div className="mt-4">
+        <div className={FIRST}>
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="grid grid-cols-[72px_1fr] gap-4 py-3 border-t border-border-light group">
               <Thumb item={c} mode="square" />

@@ -35,7 +35,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
           </div>
           {lead && (
             <Link href={`/revamp/c/${lead.slug}`} className={`group block md:text-right ${MICRO} text-white/70 leading-relaxed`}>
-              <span className="text-white/50">Featured</span><span className="mx-2 text-white/30">/</span><span className="text-white group-hover:underline underline-offset-[3px]">{lead.name}</span>
+              <span className="text-white/50">Featured</span><span className="mx-2 text-white/30">/</span><span className="text-white whitespace-nowrap group-hover:underline underline-offset-[3px]">{lead.name}</span>
             </Link>
           )}
         </div>

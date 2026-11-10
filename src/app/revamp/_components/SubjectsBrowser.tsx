@@ -3,9 +3,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { List, Rows3 } from 'lucide-react';
+import { ChevronDown, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
+import { FIRST, TOOLBAR, TOP, filtersBtn, vbtn } from './CollectionsBrowser';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
 export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[] }
@@ -42,6 +43,7 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
   const [order, setOrder] = useState<'theme' | 'az'>('theme');
   const [theme, setTheme] = useState('');
   const [view, setView] = useState<'bands' | 'list'>('bands');
+  const [open, setOpen] = useState(false); // phone: the menu behind Filters
   // The hero bar sends its words here while typing.
   useEffect(() => {
     const on = (e: Event) => setQ((e as CustomEvent<string>).detail);
@@ -64,10 +66,9 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
   const total = new Set(groups.flatMap((g) => [g.id, ...g.narrower.map((s) => s.id)])).size;
   const count = new Set(shown.flatMap(({ g, narrower }) => [g.id, ...narrower.map((x) => x.s.id)])).size;
   const n = (v: number) => v.toLocaleString('en-GB');
-  const vbtn = (on: boolean) => `w-[38px] h-9 grid place-items-center ${on ? 'bg-warm text-primary' : 'bg-white text-muted'}`;
 
   const search = (
-    <div className={`${WRAP} py-8 md:py-10`}>
+    <div className={`${WRAP} ${barSearch ? TOP : 'py-8 md:py-10'}`}>
       {!barSearch && <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-2xl">
         <label htmlFor="subj-find" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Find a subject</label>
         <div className="flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" data-catalog-bar>
@@ -75,10 +76,16 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
         </div>
       </form>}
       {/* One toolbar, as on All collections: the count, a menu, then order and view on the right. */}
-      <div className={`flex flex-wrap items-center gap-2 sm:gap-2.5 ${barSearch ? '' : 'mt-6 '}pb-3 border-b border-border-light`}>
-        <span className="text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? 'subject' : 'subjects'}</span>
-        <SortSelect label="Broad subject" value={theme} onChange={setTheme} options={[['', 'All broad subjects'], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
-        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
+      <div className={`${TOOLBAR} ${barSearch ? '' : 'mt-6'}`}>
+        <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? 'subject' : 'subjects'}</span>
+<button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`sm:hidden ${filtersBtn(open)}`}>
+          Filters{theme && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">1</span>}
+          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
+        </button>
+        <div className={`${open ? 'flex' : 'hidden'} sm:contents order-last sm:order-none w-full`}>
+          <SortSelect label="Broad subject" value={theme} onChange={setTheme} options={[['', 'All broad subjects'], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
+        </div>
+        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="hidden md:inline ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
           <SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
@@ -87,6 +94,7 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
           </div>
         </div>
       </div>
+      <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="md:hidden mt-3 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px]">How we choose subjects {how ? '−' : '+'}</button>
       {how && (
         <ul id="how" className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
           <li>A subject exists when the library holds books or images about it.</li>
@@ -105,7 +113,7 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
       {search}{empty}
       {view === 'list' ? (
         // List: every broad subject with its subjects under it, names only.
-        <div className={`${WRAP} pb-16 columns-1 sm:columns-2 lg:columns-4 gap-8`}>
+        <div className={`${WRAP} ${FIRST} pb-16 columns-1 sm:columns-2 lg:columns-4 gap-8`}>
           {shown.map(({ g, narrower }) => (
             <div key={g.id} className="break-inside-avoid mb-8">
               <Link href={to(g)} className="block font-serif text-[22px] text-primary leading-tight hover:underline underline-offset-[3px] mb-2">{g.label}</Link>
@@ -114,10 +122,10 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
           ))}
         </div>
       ) : (
-      <div className="pb-16">
-        {shown.map(({ g, self, narrower }) => (
+      <div className={`${FIRST} pb-16`}>
+        {shown.map(({ g, self, narrower }, i) => (
           <section key={g.id} id={`g-${g.id}`} className="scroll-mt-16">
-            <div className={`${WRAP} py-5 md:py-8`}>
+            <div className={`${WRAP} ${i ? 'pt-5 md:pt-8' : ''} pb-5 md:pb-8`}>
               {(
                 // The whole picture band is the way into the subject.
                 <Link href={to(g)} className="group relative flex min-h-[132px] md:min-h-[200px] overflow-hidden mb-3 md:mb-4">
