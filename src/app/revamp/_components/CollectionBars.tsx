@@ -19,14 +19,17 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
   const [over, setOver] = useState(false);
   const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
   const btn = 'px-3.5 sm:px-5 text-[13px] sm:text-sm shrink-0 hover:bg-white/10';
+  // One field, no buttons: a question goes to the librarian, anything else searches the works.
+  const isQuestion = (t: string) => /\?\s*$/.test(t) || /^(who|what|which|when|where|why|how|is|are|does|did|do|can|was|were|tell|show|find|explain)\b/i.test(t.trim());
+  const submit = (t: string) => (isQuestion(t) ? setAsked(t.trim()) : search(t));
   const note = asked && <p className={`text-[13.5px] max-w-2xl text-white/80 ${strip ? 'mb-3' : 'mt-3'}`}>Prototype: nothing is sent. Live, the librarian would answer “{asked}” from these {works.toLocaleString('en-GB')} works only.</p>;
   // Strip: one full-width band along the bottom edge of the hero, everything in it divided by hairlines.
   if (strip) return (
     <div className="absolute inset-x-0 bottom-0 z-10">
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">{note}</div>
-      <div className={`text-white transition-colors ${hover === 'lift' && over ? '!bg-[#26211b]' : ''}`} style={hover === 'lift' && over ? undefined : { background: fill(tone) }}>
-        <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-14 sm:h-16">
-          <form onSubmit={(e) => { e.preventDefault(); search(v); }} role="search" className="flex-1 min-w-0 flex items-stretch focus-within:shadow-[inset_0_-2px_0_rgba(255,255,255,.8)]" data-catalog-bar>
+      <div className="text-white transition-colors" style={{ background: hover === 'lift' && over ? '#26211b' : fill(tone) }}>
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-12 sm:h-[52px]">
+          <form onSubmit={(e) => { e.preventDefault(); submit(v); }} role="search" className="flex-1 min-w-0 flex items-stretch focus-within:shadow-[inset_0_-2px_0_rgba(255,255,255,.8)]" data-catalog-bar>
             <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
             <span className="group/field relative flex-1 min-w-0 flex items-stretch" onMouseEnter={() => setOver(true)} onMouseLeave={() => setOver(false)}>
               {hover === 'edge' && <span aria-hidden className="absolute -left-4 inset-y-3 w-0.5 bg-white scale-y-0 group-hover/field:scale-y-100 group-focus-within/field:scale-y-100 transition-transform origin-center" />}
@@ -35,9 +38,7 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
                 placeholder={hover === 'hint' && over ? 'A title, an author, or ask in your own words' : 'Search or ask a question'}
                 className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none transition-[padding] duration-200 ${hover === 'slide' ? 'group-hover/field:pl-1.5 focus:pl-1.5' : ''}`} />
             </span>
-            <button type="submit" className={`${btn} ${hover === 'buttons' && over ? 'bg-white/10' : ''}`}>Search</button>
-            <span aria-hidden className="w-px my-4 bg-white/25" />
-            <button type="button" onClick={() => setAsked(v.trim() || 'which work to read first')} className={`${btn} ${hover === 'buttons' && over ? 'bg-white/10' : ''}`}>Ask</button>
+            <button type="submit" className="sr-only">Search or ask</button>
           </form>
           {after}
         </div>

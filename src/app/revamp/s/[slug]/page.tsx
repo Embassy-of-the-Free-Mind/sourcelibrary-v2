@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       {/* The collection hero, minus what only a collection has (byline, Copy, a chosen picture). */}
       <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
         <PlateWall tiles={m.heroTiles} rows={3} still />
-        <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-24 md:pb-28`}>
+        <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-20 md:pb-24`}>
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
             <Link href="/revamp/subjects" className="hover:text-white">Subjects</Link>
             {parent && <><span className="opacity-50">/</span><Link href={`/revamp/subjects#${parent.id}`} className="hover:text-white">{parent.label}</Link></>}

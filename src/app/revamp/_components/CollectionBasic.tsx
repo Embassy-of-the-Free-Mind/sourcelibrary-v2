@@ -44,7 +44,7 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', sh = '
           <span className="flex gap-2">Hero
             {HEROES.map(([k, l]) => <Link key={k} href={q({ hero: k })} className={hero === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
-        <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-24 md:pb-28`}>
+        <div className={`${WRAP} relative w-full pt-10 md:pt-14 pb-20 md:pb-24`}>
           <div className="flex items-center justify-between gap-4 mb-3">
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] text-white/70">
               <Link href="/revamp/c" className="hover:text-white">Collections</Link>
