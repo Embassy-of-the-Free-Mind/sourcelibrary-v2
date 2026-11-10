@@ -3,7 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { PAIRED_SKIP_PAGE_TYPES, pairedFifths, pairedReadingOrder, type DrawPage } from '../src/lib/paired-fifths';
 import * as scripts from '../scripts/lib/paired-fifths.mjs';
 import { SKIP_TYPES } from '../scripts/eval/confidence-7866/lib.mjs';
-import { pageVerdict } from '../scripts/eval/paired-fifths-check.mjs';
+import { pageVerdict, pairVerdicts, parseBatch, batchPrompt, METHOD } from '../scripts/eval/paired-fifths-check.mjs';
+import { createHash } from 'node:crypto';
 import { joinPrompt } from '../scripts/eval/paired-fifths-8405/run.mjs';
 
 describe('paired-fifths-check page mapping (#8405)', () => {
@@ -38,6 +39,62 @@ describe('paired-fifths-check page mapping (#8405)', () => {
     const a = { ocr: 'a', tr: 'a' }, b = { ocr: 'b', tr: 'b' };
     expect(joinPrompt('Latin', a, b)).not.toContain('translators finish a sentence');
     expect(joinPrompt('Latin', a, b, { version: 2 })).toContain('translators finish a sentence');
+  });
+});
+
+describe('paired-fifths-check v2: one Opus call per facing pair (P5, #8478/#8518)', () => {
+  const A = { id: 'pa', ocr: { data: 'a' }, translation: { data: 'A' } }, B = { id: 'pb', ocr: { data: 'b' }, translation: { data: 'B' } };
+  const ok = { accept: true, fidelity: 5, en_accept: true, defects: [] };
+  const judged = (pages: unknown[], defects: unknown[] = []) => ({ pages, breaks: [{ break: 'p01/p02', join: defects.length ? 'defect' : 'clean', defects }] });
+
+  it('is method version 2 (the registry line must match)', () => expect(METHOD.version).toBe('2'));
+  it('an English misleads defect is serious on the translation stage even at fidelity 5 (the page_defect control)', () => {
+    const v = pageVerdict(A, { ...ok, en_accept: false, defects: [{ layer: 'english', class: 'T2', severity: 'misleads', what: '"not" added' }] }, []);
+    expect(v).toMatchObject({ outcome: 'serious', page_verdict: 'caveat' });
+    expect(v.errors).toEqual([{ stage: 'translation', class: 'T2', problem: '"not" added' }]);
+  });
+  it('a transcription misleads defect still counts only at fidelity <= 3, as v1', () => {
+    const d = [{ layer: 'transcription', severity: 'misleads', what: 'w' }];
+    expect(pageVerdict(A, { ...ok, fidelity: 4, defects: d }, [])).toMatchObject({ outcome: 'minor', page_verdict: 'show' });
+    expect(pageVerdict(A, { ...ok, fidelity: 3, defects: d }, []).errors[0].stage).toBe('ocr');
+  });
+  it('English not accepted with no serious defect is minor, not clean', () => {
+    expect(pageVerdict(A, { ...ok, en_accept: false }, [])).toMatchObject({ outcome: 'minor', page_verdict: 'show' });
+  });
+  it('pairVerdicts gives each break defect to the page it names, material ones only', () => {
+    const [va, vb] = pairVerdicts(A, B, judged([ok, ok], [
+      { kind: 'carry_over', layer: 'english', page: 'B', quote: 'q', material: true },
+      { kind: 'duplicated', layer: 'transcription', page: 'A', quote: 'r', material: false },
+    ]));
+    expect(va).toMatchObject({ page_id: 'pa', outcome: 'clean', page_verdict: 'show' });
+    expect(vb).toMatchObject({ page_id: 'pb', outcome: 'serious', page_verdict: 'caveat' });
+    expect(vb.errors[0]).toMatchObject({ stage: 'translation', kind: 'carry_over' });
+  });
+  it('pairVerdicts follows the page names when the judge lists them out of order', () => {
+    const bad = { ...ok, fidelity: 2, page: 'p02' };
+    const [va, vb] = pairVerdicts(A, B, judged([bad, { ...ok, page: 'p01' }]));
+    expect(va.page_verdict).toBe('show');
+    expect(vb.page_verdict).toBe('fix');
+  });
+  it('a wrong-leaf break or an I1 page defect is a fix (the wrong-leaf control)', () => {
+    expect(pairVerdicts(A, B, judged([ok, ok], [{ kind: 'wrong_leaf', layer: 'transcription', page: 'B', quote: 'q', material: true }]))[1]).toMatchObject({ page_verdict: 'fix', wrong_page: true });
+    expect(pageVerdict(A, { ...ok, defects: [{ layer: 'transcription', class: 'I1', severity: 'wrong_text', what: 'other leaf' }] }, [])).toMatchObject({ page_verdict: 'fix', wrong_page: true });
+  });
+  it('parseBatch takes one entry per page and per break, and refuses anything else', () => {
+    const good = JSON.stringify({ opened: ['p01.jpg', 'p02.jpg'], ...judged([ok, ok]) });
+    expect(parseBatch(`text before ${good}`, 2)?.pages).toHaveLength(2);
+    expect(parseBatch(JSON.stringify(judged([ok])), 2)).toBeNull();
+    expect(parseBatch(JSON.stringify(judged([ok, { ...ok, fidelity: 9 }])), 2)).toBeNull();
+    expect(parseBatch('no json', 2)).toBeNull();
+  });
+  it('the pair prompt is the one #8478 validated: changing it is a method version bump', () => {
+    const p = batchPrompt('Latin', [{ page_number: 3, ocr: 'Lorem ipsum', tr: 'The text' }, { page_number: 4, ocr: 'dolor', tr: '' }]);
+    expect(p).toContain('Open both images with Read before you answer: ./p01.jpg, ./p02.jpg');
+    expect(p).toContain('PART 2, EACH BREAK between the two pages of a pair (p01/p02)');
+    expect(p).toContain('ENGLISH:\n<<<\n(none)\n>>>');
+    // Byte-identical to callshape-8478 batchPrompt for this input (checked 2026-11-10). If the route-judge questions or
+    // the join rules change, this fails: re-validate on the #8478 controls and bump METHOD.version and the method doc.
+    expect(createHash('sha256').update(p).digest('hex').slice(0, 16)).toBe('419dfb07113c9be5');
   });
 });
 
