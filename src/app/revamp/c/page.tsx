@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
+import CollectionBars from '../_components/CollectionBars';
 import { RAMP } from '../_lib/ramp';
 import CollectionsBrowser from '../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../_lib/data';
@@ -24,7 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
         <PlateWall tiles={lead?.heroTiles ?? []} rows={3} still />
-        <div className={`max-w-[1500px] mx-auto px-6 md:px-12 relative w-full pt-12 md:pt-16 pb-10 md:pb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
+        <div className={`max-w-[1500px] mx-auto px-6 md:px-12 relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>
             <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Collections</h1>
             <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">Books, pages, plates and quotes chosen by Source Library and by readers.</p>
@@ -39,8 +40,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
             </Link>
           )}
         </div>
+        <CollectionBars strip live works={items.length} placeholder="Search collections or ask a question" scope={`all ${items.length} collections`} />
       </section>
-      <CollectionsBrowser items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
+      <CollectionsBrowser barSearch items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
       <section className="bg-warm border-t border-border-light">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10 grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-center">
           <div>

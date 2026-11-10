@@ -13,7 +13,12 @@ import { fill } from '../_lib/tones';
  * for over the hero pictures; focus shows as a white ring. If kept, this becomes a tone on
  * search-kit/SearchAskBars rather than a second bar.
  */
-export default function CollectionBars({ works, after, tone = 'ink', strip = false }: { works: number; after?: ReactNode; tone?: string; strip?: boolean }) {
+export default function CollectionBars({ works, after, tone = 'ink', strip = false, placeholder = 'Search or ask a question', scope, live = false }: {
+  works: number; after?: ReactNode; tone?: string; strip?: boolean;
+  /** What the field says before anything is typed. */ placeholder?: string;
+  /** What a question would be answered from, for the prototype note. Defaults to "these N works". */ scope?: string;
+  /** Narrow the list below while typing (index pages), not only on Enter. */ live?: boolean;
+}) {
   const [v, setV] = useState('');
   const [asked, setAsked] = useState('');
   const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
@@ -21,7 +26,7 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
   // One field, no buttons: a question goes to the librarian, anything else searches the works.
   const isQuestion = (t: string) => /\?\s*$/.test(t) || /^(who|what|which|when|where|why|how|is|are|does|did|do|can|was|were|tell|show|find|explain)\b/i.test(t.trim());
   const submit = (t: string) => (isQuestion(t) ? setAsked(t.trim()) : search(t));
-  const note = asked && <p className={`text-[13.5px] max-w-2xl text-white/80 ${strip ? 'mb-3' : 'mt-3'}`}>Prototype: nothing is sent. Live, the librarian would answer “{asked}” from these {works.toLocaleString('en-GB')} works only.</p>;
+  const note = asked && <p className={`text-[13.5px] max-w-2xl text-white/80 ${strip ? 'mb-3' : 'mt-3'}`}>Prototype: nothing is sent. Live, the librarian would answer “{asked}” from {scope ?? `these ${works.toLocaleString('en-GB')} works`} only.</p>;
   // Strip: one full-width band along the bottom edge of the hero, everything in it divided by hairlines.
   if (strip) return (
     <div className="absolute inset-x-0 bottom-0 z-10">
@@ -29,11 +34,11 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
       <div className="text-white" style={{ background: fill(tone) }}>
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-12 sm:h-[52px]">
           <form onSubmit={(e) => { e.preventDefault(); submit(v); }} role="search" className="flex-1 min-w-0 flex items-stretch" data-catalog-bar>
-            <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
+            <label htmlFor="c-bar" className="sr-only">{placeholder}</label>
             <span className="group/field relative flex-1 min-w-0 flex items-stretch">
               <SearchIcon aria-hidden className="self-center w-[18px] h-[18px] mr-3 shrink-0 text-white/60 group-hover/field:text-white group-focus-within/field:text-white transition-colors" />
-              <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)}
-                placeholder="Search or ask a question"
+              <input id="c-bar" type="text" value={v} onChange={(e) => { setV(e.target.value); if (live && !isQuestion(e.target.value)) search(e.target.value); }}
+                placeholder={placeholder}
                 className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none`} />
             </span>
             <button type="submit" className="sr-only">Search or ask</button>

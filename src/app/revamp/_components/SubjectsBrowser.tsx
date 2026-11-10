@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
@@ -35,10 +35,16 @@ function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
 }
 
 
-export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
+export default function SubjectsBrowser({ groups, barSearch = false }: { groups: Group[]; barSearch?: boolean }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
   const [order, setOrder] = useState<'theme' | 'az'>('theme');
+  // The hero bar sends its words here while typing.
+  useEffect(() => {
+    const on = (e: Event) => setQ((e as CustomEvent<string>).detail);
+    window.addEventListener('collection-search', on);
+    return () => window.removeEventListener('collection-search', on);
+  }, []);
   const sorted = order === 'az' ? [...groups].sort((a, b) => a.label.localeCompare(b.label, 'en')) : groups; // By theme: the list's own order, related subjects side by side
   const t = q.trim().toLowerCase();
   // Matches the English name or any other name, and says which other name matched.
@@ -56,14 +62,14 @@ export default function SubjectsBrowser({ groups }: { groups: Group[] }) {
 
   const search = (
     <div className={`${WRAP} py-8 md:py-10`}>
-      <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-2xl">
+      {!barSearch && <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-2xl">
         <label htmlFor="subj-find" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Find a subject</label>
         <div className="flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" data-catalog-bar>
           <input id="subj-find" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`${total} subjects, in any language`} className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
         </div>
-      </form>
+      </form>}
       {!t && (
-        <div className="mt-8 mb-3"><SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} /></div>
+        <div className={`${barSearch ? '' : 'mt-8 '}mb-3`}><SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} /></div>
       )}
       {!t && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-3">

@@ -52,7 +52,7 @@ const meta = (c: IndexItem) => [
   pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles' }: { items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
+export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false }: { barSearch?: boolean; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
@@ -63,6 +63,12 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const [sort, setSort] = useState('az');
   const [view, setView] = useState<'grid' | 'list' | 'bands'>('grid');
   const [thumb, setThumb] = useState<'square' | 'strip'>('square');
+  // The hero bar sends its words here while typing.
+  useEffect(() => {
+    const on = (e: Event) => { const v = (e as CustomEvent<string>).detail; setText(v); setQuery(v); };
+    window.addEventListener('collection-search', on);
+    return () => window.removeEventListener('collection-search', on);
+  }, []);
 
   const languages = useMemo(() => {
     const c = new Map<string, number>();
@@ -98,10 +104,10 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   return (
     <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10">
       {!hideTitle && <h1 className="text-4xl sm:text-5xl text-primary font-display mb-5">Collections</h1>}
-      <SearchAskBars
+      {!barSearch && <SearchAskBars
         search={{ id: 'col-search', label: 'Search the collections', placeholder: 'Name, subject, person', value: text, onChange: (v) => { setText(v); setQuery(v); }, onSubmit: setQuery, examples: ['Slime Moulds', 'Sibyls', 'Yoga'] }}
         ask={{ id: 'col-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?', value: ask, onChange: setAsk, onSubmit: (v) => window.open(`https://sourcelibrary.org/librarian?q=${encodeURIComponent(v)}`, '_blank', 'noopener'), examples: ['dragons and monsters', 'witch trials in German'] }}
-      />
+      />}
 
       {filters === 'tiles' && (
       <div className="grid gap-3 md:grid-cols-[1fr_1.4fr_2.2fr] mt-5">

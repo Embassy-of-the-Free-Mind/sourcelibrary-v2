@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
+import CollectionBars from '../_components/CollectionBars';
 import SubjectsBrowser, { type Pic, type SubjectRow } from '../_components/SubjectsBrowser';
 import { collectionModel, dataFile, snapshotSlugs } from '../_lib/data';
 import { RAMP } from '../_lib/ramp';
@@ -8,6 +10,8 @@ import { RAMP } from '../_lib/ramp';
 interface Subj { id: string; label: string; level: number; parents: string[]; altLabels?: Record<string, string[]> }
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
+
+const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
 const INTRO = 'Browse the library by what its books and images are about.';
 
@@ -33,20 +37,33 @@ export default function Page() {
     if (hit) { pages.set(hit.id, slug); tiles.push(...m.heroTiles.slice(0, 4)); }
   }
   const row = (s: Subj): SubjectRow => ({ id: s.id, label: s.label, href: pages.has(s.id) ? `/revamp/s/${pages.get(s.id)}` : undefined, alt: Object.values(s.altLabels ?? {}).flat(), pics: (pics[s.id] ?? []).filter((p) => p.src) });
+  // Featured: the subject that matches this week's featured collection, when it has a page.
+  const lead = dataFile<{ entries: { collection: string }[] }>('schedule')?.entries[0]?.collection;
+  const featured = lead && [...pages.values()].includes(lead) ? collectionModel(lead) : null;
+  const total = new Set(all.map((x) => x.id)).size;
   const groups = all.filter((s) => s.level === 1).map((t) => ({ ...row(t), narrower: all.filter((s) => s.level === 2 && s.parents.includes(t.id)).map((s) => ({ ...row(s), home: s.parents[0] === t.id })).sort((a, b) => a.label.localeCompare(b.label, 'en')) }));
   return (
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
         <PlateWall tiles={[...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
-        <div className={`${WRAP} relative w-full py-10 md:py-14`}>
-          <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Subjects</h1>
-          <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{INTRO}</p>
-          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[14px] md:text-[15px] font-medium">
-            {[`${groups.length} broad subjects`, `${new Set(all.map((x) => x.id)).size} subjects`].map((l, i) => <span key={l} style={{ color: RAMP[i] }}>{l}</span>)}
+        <div className={`${WRAP} relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
+          <div>
+            <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Subjects</h1>
+            <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{INTRO}</p>
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[14px] md:text-[15px] font-medium">
+              {[`${groups.length} broad subjects`, `${total} subjects`].map((l, i) => <span key={l} style={{ color: RAMP[i] }}>{l}</span>)}
+            </div>
           </div>
+          {featured && (
+            <Link href={`/revamp/s/${featured.slug}`} className={`group block md:text-right ${MICRO} text-white/70 leading-relaxed`}>
+              <span className="text-white/50">Featured</span><span className="mx-2 text-white/30">/</span><span className="text-white group-hover:underline underline-offset-[3px]">{featured.name}</span>
+              {featured.short && <span className="block normal-case tracking-normal text-[12.5px] text-white/60 mt-1">{featured.short}</span>}
+            </Link>
+          )}
         </div>
+        <CollectionBars strip live works={total} placeholder="Search subjects or ask a question" scope={`all ${total} subjects`} />
       </section>
-      <SubjectsBrowser groups={groups} />
+      <SubjectsBrowser groups={groups} barSearch />
     </div>
   );
 }
