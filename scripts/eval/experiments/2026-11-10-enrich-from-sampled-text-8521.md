@@ -8,6 +8,7 @@ n_books: 10
 n_pages: 2042
 verdict: "One agy request over a sample of a book's English text (at most 120K characters: the opening 15 pages, the first 1-2 pages of every planned section, then evenly spaced pages) passes the #8521 rule against the live full-text lane. Blind Opus judge on the 10 #8512 books: 19 unsupported or wrong claims in C's summaries against 21 in A's (the rule allowed C up to 22); preference A 6, C 4 (the rule fails C only at 7). Cost: 10 requests against 24, 388K input tokens against 1.75M, 593 s against 914 s. The pass is fragile: one book (Tuhfat, A 7 / C 0) carries it, and on the 3 books whose whole text fits 120K, so that C's prompt is A's, the two runs differed by 5 claims. The index is thinner: C names 47% of A's people and 43% of its concepts on the 7 sampled books, against 84% and 53% between two runs of the same input."
 status: undecided
+feeds: cost
 decision: "The rule says switch the lane to the sample. Owed: whether the index (book_indexes) may lose about half its named people on long books, or stays on the full text while summary + chapters use the sample."
 superseded_by: null
 issue: [8521, 8512, 8515, 7628]
