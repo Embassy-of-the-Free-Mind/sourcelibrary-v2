@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { AUTHORED_ARTICLES, BLOG_KINDS } from '@/app/articles/posts';
+import { AUTHORED_ARTICLES, BLOG_KINDS } from '@/app/articles/post-kinds';
 import revisions from '@/generated/blog-revisions.json';
 
 const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
