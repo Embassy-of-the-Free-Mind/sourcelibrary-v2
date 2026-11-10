@@ -13,10 +13,9 @@ import { fill } from '../_lib/tones';
  * for over the hero pictures; focus shows as a white ring. If kept, this becomes a tone on
  * search-kit/SearchAskBars rather than a second bar.
  */
-export default function CollectionBars({ works, after, tone = 'ink', strip = false, hover = 'tint' }: { works: number; after?: ReactNode; tone?: string; strip?: boolean; hover?: string }) {
+export default function CollectionBars({ works, after, tone = 'ink', strip = false }: { works: number; after?: ReactNode; tone?: string; strip?: boolean }) {
   const [v, setV] = useState('');
   const [asked, setAsked] = useState('');
-  const [over, setOver] = useState(false);
   const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
   const btn = 'px-3.5 sm:px-5 text-[13px] sm:text-sm shrink-0 hover:bg-white/10';
   // One field, no buttons: a question goes to the librarian, anything else searches the works.
@@ -27,16 +26,15 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
   if (strip) return (
     <div className="absolute inset-x-0 bottom-0 z-10">
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">{note}</div>
-      <div className="text-white transition-colors" style={{ background: hover === 'lift' && over ? '#26211b' : fill(tone) }}>
+      <div className="text-white" style={{ background: fill(tone) }}>
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-12 sm:h-[52px]">
           <form onSubmit={(e) => { e.preventDefault(); submit(v); }} role="search" className="flex-1 min-w-0 flex items-stretch" data-catalog-bar>
             <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
-            <span className="group/field relative flex-1 min-w-0 flex items-stretch" onMouseEnter={() => setOver(true)} onMouseLeave={() => setOver(false)}>
-              {hover === 'edge' && <span aria-hidden className="absolute -left-4 inset-y-3 w-0.5 bg-white scale-y-0 group-hover/field:scale-y-100 group-focus-within/field:scale-y-100 transition-transform origin-center" />}
+            <span className="group/field relative flex-1 min-w-0 flex items-stretch">
               <SearchIcon aria-hidden className="self-center w-[18px] h-[18px] mr-3 shrink-0 text-white/60 group-hover/field:text-white group-focus-within/field:text-white transition-colors" />
               <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)}
-                placeholder={hover === 'hint' && over ? 'A title, an author, or ask in your own words' : 'Search or ask a question'}
-                className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none transition-[padding] duration-200 ${hover === 'slide' ? 'group-hover/field:pl-1.5 focus:pl-1.5' : ''}`} />
+                placeholder="Search or ask a question"
+                className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none`} />
             </span>
             <button type="submit" className="sr-only">Search or ask</button>
           </form>

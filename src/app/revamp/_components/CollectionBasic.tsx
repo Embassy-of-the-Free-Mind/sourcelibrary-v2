@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Bell, Copy } from 'lucide-react';
 import PlateWall from './PlateWall';
 import CollectionBars from './CollectionBars';
-import { HOVERS } from '../_lib/tones';
 import HeroPicture, { type HeroCandidate } from './HeroPicture';
 import { dataFile } from '../_lib/data';
 import CollectionItems from './CollectionItems';
@@ -23,8 +22,8 @@ const SIGN_IN = '/auth/signin?callbackUrl=%2Fcollections';
 
 const HEROES: [string, string][] = [['wall', 'A Plate rows'], ['bleed', 'B One picture, full bleed'], ['whole', 'C One picture, whole']];
 
-export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', sh = 'edge' }: { m: CollectionModel; tone?: string; hero?: string; sh?: string }) {
-  const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ tone, hero, sh, ...o })}`;
+export default function CollectionBasic({ m, tone = 'ink', hero = 'wall' }: { m: CollectionModel; tone?: string; hero?: string }) {
+  const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ tone, hero, ...o })}`;
   const cands = dataFile<Record<string, HeroCandidate[]>>('snap/_hero')?.[m.slug] ?? [];
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
@@ -39,8 +38,6 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', sh = '
           return hero === 'wall' ? wall : <HeroPicture slug={m.slug} mode={hero === 'whole' ? 'whole' : 'bleed'} cands={cands} fallback={wall} />;
         })()}
         <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex flex-col items-end gap-1">
-          <span className="flex gap-2">Search hover
-            {HOVERS.map(([k, l]) => <Link key={k} href={q({ sh: k })} className={sh === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
           <span className="flex gap-2">Hero
             {HEROES.map(([k, l]) => <Link key={k} href={q({ hero: k })} className={hero === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</span>
         </div>
@@ -61,7 +58,7 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', sh = '
           </div>
         </div>
         {/* The bar: a strip along the hero's bottom edge, Follow and Copy part of it. */}
-        <CollectionBars strip works={works} tone={tone} hover={sh} after={<>
+        <CollectionBars strip works={works} tone={tone} after={<>
           <span aria-hidden className="w-px my-4 bg-white/25 ml-1 sm:ml-2" />
           <Link href={SIGN_IN} className="inline-flex items-center gap-2 px-3.5 sm:px-5 text-[13px] sm:text-sm hover:bg-white/10"><Bell className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Follow</span></Link>
           <span aria-hidden className="w-px my-4 bg-white/25" />
