@@ -10,7 +10,7 @@ const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 const SHOW = 10; // two rows of five
 
 // Words that say nothing about what is being asked for.
-const STOP = new Set('a an and are as at be by can could did do does for from had has have how i in into is it its me my of on or our so tell than that the their them there these they this those to was we were what when where which who whom why will with would you your about any some show find explain read first best book books work works most more text texts write wrote written say said.split(' '));
+const STOP = new Set('a an and are as at be by can could did do does for from had has have how i in into is it its me my of on or our so tell than that the their them there these they this those to was we were what when where which who whom why will with would you your about any some show find explain read first best book books work works most more text texts write wrote written say said'.split(' '));
 const words = (t: string) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w)).map((w) => w.replace(/(ies|es|s)$/, ''));
 const has = (hay: string | null | undefined, w: string) => !!hay && hay.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').includes(w);
 
