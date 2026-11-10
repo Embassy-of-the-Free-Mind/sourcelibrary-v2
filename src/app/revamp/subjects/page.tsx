@@ -11,6 +11,18 @@ interface Subj { id: string; label: string; level: number; parents: string[]; al
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
+// Enough to feature: this many works and images, and enough pictures for the hero rows.
+const FEATURE_MIN = { works: 40, images: 100, pictures: 8 };
+
+function featuredSubject(slugs: string[]) {
+  const ok = slugs.map((s) => collectionModel(s)).filter((m): m is NonNullable<typeof m> => !!m
+    && m.stats.works >= FEATURE_MIN.works && m.stats.images >= FEATURE_MIN.images && m.heroTiles.length >= FEATURE_MIN.pictures)
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+  if (!ok.length) return null;
+  const week = Math.floor(Date.now() / (7 * 24 * 3600 * 1000));
+  return ok[week % ok.length];
+}
+
 const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
 const INTRO = 'Browse the library by what its books and images are about.';
@@ -37,9 +49,8 @@ export default function Page() {
     if (hit) { pages.set(hit.id, slug); tiles.push(...m.heroTiles.slice(0, 4)); }
   }
   const row = (s: Subj): SubjectRow => ({ id: s.id, label: s.label, href: pages.has(s.id) ? `/revamp/s/${pages.get(s.id)}` : undefined, alt: Object.values(s.altLabels ?? {}).flat(), pics: (pics[s.id] ?? []).filter((p) => p.src) });
-  // Featured: the subject that matches this week's featured collection, when it has a page.
-  const lead = dataFile<{ entries: { collection: string }[] }>('schedule')?.entries[0]?.collection;
-  const featured = lead && [...pages.values()].includes(lead) ? collectionModel(lead) : null;
+  // Featured: one subject a week, chosen in turn from the subjects with enough in them to carry the hero.
+  const featured = featuredSubject([...pages.values()]);
   const total = new Set(all.map((x) => x.id)).size;
   const groups = all.filter((s) => s.level === 1).map((t) => ({ ...row(t), narrower: all.filter((s) => s.level === 2 && s.parents.includes(t.id)).map((s) => ({ ...row(s), home: s.parents[0] === t.id })).sort((a, b) => a.label.localeCompare(b.label, 'en')) }));
   return (
@@ -57,7 +68,7 @@ export default function Page() {
           {featured && (
             <Link href={`/revamp/s/${featured.slug}`} className={`group block md:text-right ${MICRO} text-white/70 leading-relaxed`}>
               <span className="text-white/50">Featured</span><span className="mx-2 text-white/30">/</span><span className="text-white group-hover:underline underline-offset-[3px]">{featured.name}</span>
-              {featured.short && <span className="block normal-case tracking-normal text-[12.5px] text-white/60 mt-1">{featured.short}</span>}
+              {featured.short && <span className="block normal-case tracking-normal text-[12.5px] text-white/60 mt-1 max-w-sm md:ml-auto">{featured.short}</span>}
             </Link>
           )}
         </div>

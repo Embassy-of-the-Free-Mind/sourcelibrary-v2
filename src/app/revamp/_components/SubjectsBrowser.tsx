@@ -78,6 +78,7 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
       <div className={`flex flex-wrap items-center gap-2 sm:gap-2.5 ${barSearch ? '' : 'mt-6 '}pb-3 border-b border-border-light`}>
         <span className="text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? 'subject' : 'subjects'}</span>
         <SortSelect label="Broad subject" value={theme} onChange={setTheme} options={[['', 'All broad subjects'], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
+        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
           <SortSelect label="Order" value={order} onChange={(v) => setOrder(v as 'theme' | 'az')} options={[['theme', 'By theme'], ['az', 'A to Z']]} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
@@ -86,7 +87,6 @@ export default function SubjectsBrowser({ groups, barSearch = false }: { groups:
           </div>
         </div>
       </div>
-      <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="mt-4 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">How we choose subjects {how ? '−' : '+'}</button>
       {how && (
         <ul id="how" className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
           <li>A subject exists when the library holds books or images about it.</li>

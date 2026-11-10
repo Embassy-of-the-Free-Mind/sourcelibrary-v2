@@ -36,7 +36,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
           {lead && (
             <Link href={`/revamp/c/${lead.slug}`} className={`group block md:text-right ${MICRO} text-white/70 leading-relaxed`}>
               <span className="text-white/50">Featured</span><span className="mx-2 text-white/30">/</span><span className="text-white group-hover:underline underline-offset-[3px]">{lead.name}</span>
-              <span className="block normal-case tracking-normal text-[12.5px] text-white/60 mt-1">{lead.short}</span>
+              <span className="block normal-case tracking-normal text-[12.5px] text-white/60 mt-1 max-w-sm md:ml-auto">{lead.short}</span>
             </Link>
           )}
         </div>
