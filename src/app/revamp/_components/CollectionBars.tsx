@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { Search as SearchIcon } from 'lucide-react';
 import { fill } from '../_lib/tones';
 
 
@@ -12,7 +13,7 @@ import { fill } from '../_lib/tones';
  * for over the hero pictures; focus shows as a white ring. If kept, this becomes a tone on
  * search-kit/SearchAskBars rather than a second bar.
  */
-export default function CollectionBars({ works, after, tone = 'ink', strip = false }: { works: number; after?: ReactNode; tone?: string; strip?: boolean }) {
+export default function CollectionBars({ works, after, tone = 'ink', strip = false, hover = 'tint' }: { works: number; after?: ReactNode; tone?: string; strip?: boolean; hover?: string }) {
   const [v, setV] = useState('');
   const [asked, setAsked] = useState('');
   const search = (q: string) => { setAsked(''); window.dispatchEvent(new CustomEvent('collection-search', { detail: q })); };
@@ -26,8 +27,16 @@ export default function CollectionBars({ works, after, tone = 'ink', strip = fal
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex items-stretch h-14 sm:h-16">
           <form onSubmit={(e) => { e.preventDefault(); search(v); }} role="search" className="flex-1 min-w-0 flex items-stretch focus-within:shadow-[inset_0_-2px_0_rgba(255,255,255,.8)]" data-catalog-bar>
             <label htmlFor="c-bar" className="sr-only">Search or ask about these {works} works</label>
-            <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)} placeholder="Search or ask a question"
-              className="flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none" />
+            <span className="group/field flex-1 min-w-0 flex items-stretch">
+              {hover === 'icon' && <SearchIcon aria-hidden className="self-center w-4 h-4 mr-3 shrink-0 text-white/45 transition-[color,transform] group-hover/field:text-white group-hover/field:translate-x-0.5 group-focus-within/field:text-white" />}
+              <input id="c-bar" type="text" value={v} onChange={(e) => setV(e.target.value)} placeholder="Search or ask a question"
+                className={`flex-1 min-w-0 pr-4 text-base bg-transparent text-white placeholder:text-white/60 outline-none focus-visible:outline-none transition-[background-color,box-shadow,color] ${{
+                  tint: '-ml-4 pl-4 hover:bg-white/[0.06] focus:bg-white/[0.06]',
+                  line: 'hover:shadow-[inset_0_-1px_0_rgba(255,255,255,.4)]',
+                  bright: 'hover:placeholder:text-white/90',
+                  icon: 'group-hover/field:placeholder:text-white/90',
+                }[hover] ?? ''}`} />
+            </span>
             <button type="submit" className={btn}>Search</button>
             <span aria-hidden className="w-px my-4 bg-white/25" />
             <button type="button" onClick={() => setAsked(v.trim() || 'which work to read first')} className={btn}>Ask</button>

@@ -4,3 +4,6 @@ export const NAV_DARK = 'var(--color-dark, #1a1612)';
 export const fill = (_tone?: string) => NAV_DARK;
 /** Shared look for blocks on the hero: white text, hover lightens a step. */
 export const GLASS = 'text-white transition-[filter] hover:brightness-150';
+
+/** Hover on the strip's search field, to compare (?sh=). Each is slight; focus keeps its white underline. */
+export const HOVERS: [string, string][] = [['tint', 'A Tint'], ['line', 'B Underline'], ['bright', 'C Brighter words'], ['icon', 'D Icon']];
