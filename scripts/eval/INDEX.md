@@ -814,7 +814,7 @@ Read these for the house conventions before designing a new study.
 | `page-order-gate-recall-8068.mjs` | page-order-gate-recall-8068 — score the #8068 gate (scripts/lib/page-order-gate.mjs) before it may hold anything. |
 | `page-verification-sample.mjs` | — |
 | `paired-fifths-8405/run.mjs` | #8405: is a paired-fifths check (10 pages, two adjacent from each fifth) worth twice the reading of the 5-page check for the standing Opus QA? Preregistration: scripts/eval/experiments/2026-11-08-p… |
-| `paired-fifths-check.mjs` | paired-fifths-check v1: the standing Opus check of a book (scripts/eval/methods/paired-fifths-check.md). |
+| `paired-fifths-check.mjs` | paired-fifths-check v2: the standing Opus check of a book (scripts/eval/methods/paired-fifths-check.md). |
 | `pareto-6182/calib.mjs` | calib.mjs — $0. |
 | `pareto-6182/claude-sub-cost.mjs` | mjs on eval/pareto-claude-6182 (OpenRouter-billed usage.cost; not usable: subscription only). |
 | `pareto-6182/claude-sub-stage.mjs` | mjs (pareto-6182's subscription Opus arm: prompt files + batch lists for subagents); this stages the same for CS/CH under PREREG-claude-arms.md as amended. |
