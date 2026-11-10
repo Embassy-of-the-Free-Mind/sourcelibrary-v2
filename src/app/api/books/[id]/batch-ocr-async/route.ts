@@ -14,7 +14,8 @@ import { findPendingBatchJob } from '@/lib/translate-write';
 import { notBlockedForModel } from '@/lib/page-counts';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
-import { liteReadAllowed, batchOcrStamps, OCR_MODEL_LITE } from '../../../../../../scripts/lib/ocr-routing.mjs';
+import { liteReadAllowed, batchOcrStamps, LITE_MODEL as OCR_MODEL_LITE } from '../../../../../../scripts/lib/ocr-lite-gate.mjs';
+import OCR_ROUTING_TABLE from '../../../../../../scripts/lib/ocr-routing-table.json';
 
 /** Provenance identity of this route (#4613): it both submits and collects. */
 const ROUTE_CALL_SITE = 'src/app/api/books/[id]/batch-ocr-async/route.ts';
@@ -190,7 +191,7 @@ export const POST = withAuth(async (request, session, context) => {
         message: `Only ${OCR_MODEL_LITE} may run OCR on the paid Gemini API (#7075); ${model} reads through the agy CLI lane (scripts/batch/cli-ocr.mjs).`,
       }, { status: 409 });
     }
-    const liteGate = liteReadAllowed(book);
+    const liteGate = liteReadAllowed(book, OCR_ROUTING_TABLE);
     if (!liteGate.ok) {
       return NextResponse.json({
         error: 'router_refuses_lite',

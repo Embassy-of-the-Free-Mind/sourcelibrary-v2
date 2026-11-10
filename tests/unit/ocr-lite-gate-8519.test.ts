@@ -9,7 +9,8 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { liteReadAllowed, batchOcrStamps, BATCH_OCR_LANE, OCR_ROUTING_TABLE } from '../../scripts/lib/ocr-routing.mjs';
+import { liteReadAllowed, batchOcrStamps, BATCH_OCR_LANE, OCR_ROUTING_TABLE, OCR_MODEL_LITE } from '../../scripts/lib/ocr-routing.mjs';
+import * as gate from '../../scripts/lib/ocr-lite-gate.mjs';
 
 const ROOT = path.resolve(__dirname, '../..');
 const read = (rel: string) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -71,12 +72,29 @@ describe('batchOcrStamps: lane and pipeline on every Batch OCR write', () => {
   });
 });
 
+describe('the Next-safe module the routes import', () => {
+  it('names the same lite model, and imports nothing that reaches translate-core', () => {
+    expect(gate.LITE_MODEL).toBe(OCR_MODEL_LITE);
+    expect(read('scripts/lib/ocr-lite-gate.mjs').match(/^import .*$/gm)).toEqual(["import { toLanguageCodes, codeFamily } from './language-normalize.mjs';"]);
+    expect(read('scripts/lib/language-normalize.mjs')).not.toMatch(/^import /m);
+  });
+  it('needs the table passed, and agrees with the ocr-routing default', () => {
+    expect(() => gate.liteReadAllowed({ language: 'Latin' }, undefined)).toThrow(/routing table/);
+    for (const language of ['Latin', 'Sanskrit', 'Italian']) expect(gate.liteReadAllowed({ language }, OCR_ROUTING_TABLE)).toEqual(liteReadAllowed({ language }));
+  });
+  for (const rel of ROUTES) it(`${rel} imports the gate, not ocr-routing.mjs`, () => {
+    const src = read(rel);
+    expect(src).toMatch(/scripts\/lib\/ocr-lite-gate\.mjs'/);
+    expect(src).not.toMatch(/scripts\/lib\/ocr-routing\.mjs'/);
+  });
+});
+
 describe('the writers call them', () => {
   for (const rel of ROUTES) {
     it(`${rel}: gates before it selects pages, and stamps what it collects`, () => {
       const src = read(rel);
       const post = src.slice(src.indexOf('export const POST'), src.indexOf('export const GET'));
-      const gate = post.indexOf('liteReadAllowed(book)');
+      const gate = post.indexOf('liteReadAllowed(book, OCR_ROUTING_TABLE)');
       expect(gate).toBeGreaterThan(0);
       expect(post.indexOf("collection('pages')")).toBeGreaterThan(gate);
       expect(post).toMatch(/model !== OCR_MODEL_LITE/);
