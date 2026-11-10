@@ -53,7 +53,7 @@ function Demo() {
           <ol className="mt-8 space-y-5 rd-mark list-none p-0">
             {STEPS.map((st, i) => (
               <li key={st.title} data-i={i} className="rd-step">
-                <h3 className="text-lg" style={{ fontFamily: 'var(--sans)' }}>{st.title}</h3>
+                <h3 style={{ fontFamily: 'var(--sans)', fontSize: 18, fontWeight: 600 }}>{st.title}</h3>
                 <p className="mt-1" style={{ color: 'var(--ink-soft)', fontSize: 17 }}>{st.body}</p>
               </li>
             ))}
@@ -71,7 +71,9 @@ function Chart() {
       <div className="wrap">
         <WrittenPastChart palette="hues" titleClass="text-[30px] md:text-[44px] leading-[1.08] max-w-5xl" t={t.chart} lang="en" />
         <p className="note mt-6" style={{ fontSize: 14, color: 'var(--muted)' }}>
-          {t.sources.body} <Link href="/research/translation-gap">{t.sources.link}</Link>
+          {t.sources.body} The chart counts only translations listed in those catalogues, so it reads
+          lower than the sampled search above, which found an English translation for 7% of Latin
+          works printed 1480–1620. <Link href="/research/translation-gap">{t.sources.link}</Link>
         </p>
       </div>
     </section>

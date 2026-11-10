@@ -378,7 +378,7 @@ export default function HeroWall({
             {stats.map((s, i) => {
               const inner = (
                 <>
-                  <b className="block font-serif font-normal text-3xl md:text-4xl text-white tabular-nums leading-none">{s.value}</b>
+                  <b className="block font-serif font-normal text-3xl md:text-4xl text-white [font-variant-numeric:lining-nums_tabular-nums] leading-none">{s.value}</b>
                   <span className="block mt-2 text-sm md:text-[15px] text-stone-300">{s.label}</span>
                 </>
               );
