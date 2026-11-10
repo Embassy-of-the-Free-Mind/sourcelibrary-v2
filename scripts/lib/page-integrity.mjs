@@ -670,6 +670,12 @@ export const TRANSLATION_LEAK_PREFILTER = new RegExp([
   '[\\[(][^\\])\\n]{0,80}(?:continu|omit|truncat|as per|abbreviat|brevity|elided|remaining|rest of|remainder|and so (?:on|forth))[^\\])\\n]{0,120}[\\])]',
   '(?:content|text|page) (?:seems|appears) to (?:be a continuation|continue)',
   'the text continues (?:from|on|as)',
+  // #8465: TRANSLATION_REQUEST_ECHO — a refusal, an answer to the request, the prompt's input labels
+  '(?:missing|absent|omitted) (?:from|in) (?:your|the) (?:request|message|prompt|input)',
+  'not (?:been )?(?:provided|included|given|present|supplied) in (?:your|the) (?:request|message|prompt)',
+  "^\\W{0,4}(?:i apologi[sz]e|i(?:'m| am) sorry|i(?:'m| am) unable to|i cannot|i can't)",
+  'previous page [^\\n]{0,30}for (?:continuity|context|reference)',
+  '\\*\\*text to translate',
 ].join('|'), 'i');
 /** The phrases that are the model talking to itself about the job, read off the corpus walk's candidates
  *  (2026-10-06). Each names the prompt, the user, the OCR as an input, a tag as a tag, or is a markdown
@@ -697,7 +703,26 @@ const TRANSLATION_LEAK_RULE = new RegExp([
  *  provided Latin text, preserving formatting and paragraph breaks:"), anywhere on the page. The bare line ("Here is
  *  the translation:") is NOT refused: the 2026-10-11 corpus walk found it in real book text (a study quoting a
  *  prayer, Huygens's notes, "here is a free translation:"), where it cannot be told from a reply by wording. */
-const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |a |my |your )?(?:[\w-]+ ){0,3}translation\b(?=[^\n]{0,200}:[ \t]*(?:\n|$))(?=[^\n]*\b(?:provided|preserv\w*|formatting|instructions?|contract|continuity|paragraph breaks|adher\w*|requested|accessible English|software|tagging|style rules|from the image)\b)/i;
+const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:[\w-]+ ){0,2}(?:text|ocr|transcription|source|latin|page)\b|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |a |my |your )?(?:[\w-]+ ){0,3}translation\b(?=[^\n]{0,200}:[ \t]*(?:\n|$))(?=[^\n]*\b(?:provided|preserv\w*|formatting|instructions?|contract|continuity|paragraph breaks|adher\w*|requested|accessible English|software|tagging|style rules|from the image)\b)/i;
+/**
+ * The model refusing, or answering the REQUEST rather than the page, and the prompt's own scaffolding copied into the
+ * English (#8465: Plotinus, Perna 1580, 14 pages — "The Greek text to be translated is missing from your request…",
+ * "I apologize, but the Greek text … is not provided in your request", and a page that opens on the prompt's
+ * "**Previous page text for continuity:**" block). Counted as 'assistant-reply', so the write gates refuse it.
+ *   - something "missing from / not provided in your request|prompt|message": no book addresses "your request" so;
+ *   - an apology or "unable to translate" that OPENS the page and speaks of the text or the request (a sermon may say
+ *     "I am sorry" mid-page, never as its first words about "the text");
+ *   - the labels the translation prompts put around their inputs (translate-core.mjs, src/lib/ai.ts): "Previous page
+ *     (translation|transcription|summary|text) for continuity|context", "**Text to translate:**".
+ */
+const TRANSLATION_REQUEST_ECHO = new RegExp([
+  '\\b(?:missing|absent|omitted) (?:from|in) (?:your|the) (?:request|message|prompt|input)\\b',
+  '\\bnot (?:been )?(?:provided|included|given|present|supplied) in (?:your|the) (?:request|message|prompt)\\b',
+  'previous page (?:\\([\\w ]+\\) |(?:text|translation|transcription|summary|ocr) )for (?:continuity|context|reference)',
+  '\\*\\*text to translate:?\\*\\*',
+].join('|'), 'i');
+/** The refusal that opens the stored text, asked of the RAW text so the walk's anchored prefilter stays a superset. */
+const TRANSLATION_REFUSAL_HEAD = /^\W{0,4}(?:i apologi[sz]e|i(?:'m| am) sorry|i(?:'m| am) unable to|i cannot|i can't)\b[^\n]{0,240}\b(?:your request|you(?:'ve| have)? (?:provided|sent|given|shared|supplied)|(?:not|been|was|is) provided|as requested)\b/i;
 /** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
 const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
 /**
@@ -781,6 +806,8 @@ export function translationReasoningLeak(text) {
   let m;
   if ((m = body.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, true);
   if ((m = body.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, true);
+  if ((m = body.match(TRANSLATION_REQUEST_ECHO))) return hit('assistant-reply', m, true);
+  if ((m = t.match(TRANSLATION_REFUSAL_HEAD))) return hit('assistant-reply', m, true);
   // A bracket inside a <note> is the translator talking about the page ("from the previous page: [continues regarding …]"),
   // beside a translation; the placeholder that stands FOR the translation sits in the body.
   const bodyNoNotes = body.replace(/<note\b[^>]*>[\s\S]*?<\/note>/gi, ' ');
@@ -790,6 +817,7 @@ export function translationReasoningLeak(text) {
   if (/^thought[ \t]*\n/.test(t)) return { kind: 'thought-token', phrase: 'thought', readerVisible: true };
   if ((m = t.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, false);
   if ((m = t.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, false);
+  if ((m = t.match(TRANSLATION_REQUEST_ECHO))) return hit('assistant-reply', m, false);
 
   if ((m = body.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, true);
   if ((m = t.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, false);

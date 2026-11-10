@@ -7,7 +7,7 @@ import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompt
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
-import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate } from '@/lib/translate-write';
+import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate, reasoningLeakGate, REASONING_LEAK_REASON } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { sendWriteResult } from '@/lib/sqs-client';
@@ -287,6 +287,26 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         timestamp: new Date().toISOString(),
         failed: true,
         error: { message: 'Translation refused: the page text is inside the continuity <meta>', category: HIDDEN_META_REASON },
+        geminiUsage: buildUsagePayload({
+          model: modelId, bookId, pageId, jobId, durationMs,
+          inputTokens: translationResult.usage.inputTokens,
+          outputTokens: translationResult.usage.outputTokens,
+          status: 'success',
+          promptRef,
+        }),
+      });
+      return;
+    }
+
+    // The model's scratchpad, a refusal, or a reply to the request ("…is missing from your request", #6117, #8465):
+    // refused, stamped and reported like the hidden page above.
+    if (await reasoningLeakGate(db, { id: pageId, book_id: bookId }, finalTranslation, { jobId, model: modelId })) {
+      await sendWriteResult({
+        type: 'translation',
+        bookId, pageId, jobId, targetPageIds,
+        timestamp: new Date().toISOString(),
+        failed: true,
+        error: { message: 'Translation refused: the model\'s reasoning, a refusal or a reply to the request (#8465)', category: REASONING_LEAK_REASON },
         geminiUsage: buildUsagePayload({
           model: modelId, bookId, pageId, jobId, durationMs,
           inputTokens: translationResult.usage.inputTokens,
