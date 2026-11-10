@@ -77,7 +77,10 @@ describe('both routers follow the bound table', () => {
   });
 
   it('NEGATIVE CONTROL: OCR rows the pointer does not say go red', () => {
-    const edited = { ...OCR_ROUTING_TABLE, router_cells: [...OCR_ROUTING_TABLE.router_cells, { cell: 'spanish-lite/print', route: 'opus-read', reads: routeReader('opus-read') }] };
+    // replace the cell's row if the OCR table already carries one (an appended duplicate is shadowed by the first match), else add it
+    const opus = { cell: 'spanish-lite/print', route: 'opus-read', reads: routeReader('opus-read') };
+    const has = OCR_ROUTING_TABLE.router_cells.some((r: any) => r.cell === opus.cell);
+    const edited = { ...OCR_ROUTING_TABLE, router_cells: has ? OCR_ROUTING_TABLE.router_cells.map((r: any) => (r.cell === opus.cell ? { ...r, ...opus } : r)) : [...OCR_ROUTING_TABLE.router_cells, opus] };
     expect(disagreements(liveRows(), edited).join('\n')).toContain('OCR Spanish');
   });
 
