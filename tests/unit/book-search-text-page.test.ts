@@ -53,11 +53,13 @@ import { proxy } from '@/proxy';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 
 const CLAUDE = 'Mozilla/5.0 (compatible; Claude-User/1.0; +Claude-User@anthropic.com)';
+const ANTHROPIC_IP = '160.79.104.10';
 
 const call = (q: string | null, { ua = CLAUDE, book = 'de-secretis', headers = {} as Record<string, string>, extra = '' } = {}) => GET(
   new NextRequest(
     `https://sourcelibrary.org/book/${book}/search/text${q === null ? '' : `?q=${encodeURIComponent(q)}`}${extra}`,
-    { headers: { 'user-agent': ua, ...headers } },
+    // A real Claude-User arrives from Anthropic's published range (#4357).
+    { headers: { 'user-agent': ua, 'x-forwarded-for': ANTHROPIC_IP, ...headers } },
   ),
   { params: Promise.resolve({ id: book }) },
 );
@@ -205,5 +207,12 @@ describe('/book/<slug>/search/text', () => {
     expect(res.status).toBe(400);
     expect(state.urls).toHaveLength(0);
     expect(await res.text()).toContain('https://sourcelibrary.org/book/de-secretis/search/text?q=YOUR+WORDS');
+  });
+});
+
+describe('a forged assistant name (#4357)', () => {
+  it('Claude-User from an address that is not Anthropic\'s is refused like any unproven bot', async () => {
+    const res = await call('archeus', { headers: { 'x-forwarded-for': '203.0.113.7' } });
+    expect(res.status).toBe(403);
   });
 });

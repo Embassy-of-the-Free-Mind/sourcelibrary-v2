@@ -33,11 +33,19 @@
 import { NextRequest } from 'next/server';
 import type { ApiIdentity } from '@/lib/api-auth';
 import { setInProcessCaller } from '@/lib/inprocess-caller';
+import { MCP_PROOF_HEADER, mintMcpProof } from '@/lib/mcp-self-proof';
 
 const API_ORIGIN = 'https://sourcelibrary.org';
 const API_BASE = `${API_ORIGIN}/api`;
 /** What the self-call sent. `search_queries.user_agent` is how MCP traffic is counted (#2049). */
-export const MCP_HEADERS = { 'User-Agent': 'SourceLibrary-MCP/4.3', 'Accept-Language': 'en' };
+// The proof header lets the page wall tell this server's self-calls from a
+// client that merely writes our name in its User-Agent (mcp-self-proof.ts).
+const MCP_PROOF = mintMcpProof();
+export const MCP_HEADERS: Record<string, string> = {
+  'User-Agent': 'SourceLibrary-MCP/4.3',
+  'Accept-Language': 'en',
+  ...(MCP_PROOF ? { [MCP_PROOF_HEADER]: MCP_PROOF } : {}),
+};
 
 export interface McpCaller {
   identity: ApiIdentity;

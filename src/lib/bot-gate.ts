@@ -15,6 +15,9 @@ import { CONTENT_LICENSE } from '@/lib/license-info';
 import { FREE_PAGE_PERCENT, freeMaxPage } from '@/lib/free-preview';
 import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
 import { getClientIp } from '@/lib/rate-limit';
+import { namesListedClient, provenByPublishedList } from '@/lib/assistant-fetchers';
+import { inProcessCaller } from '@/lib/inprocess-caller';
+import { hasMcpProof } from '@/lib/mcp-self-proof';
 
 // % of pages bots can read from each book — shared with the metered reader
 // (free-preview.ts) so the bot sample and the human sample can never drift.
@@ -35,15 +38,16 @@ const KNOWN_BOTS = [
   'sourcelibrary-mcp', // our own MCP server — always allow
 ];
 
-// MCP server should never be gated
+// Our hosted MCP server. Its name is honoured only with proof (isTrustedBot):
+// an in-process call, or the x-sl-mcp-proof header on its HTTP self-calls.
 const ALWAYS_ALLOW = ['sourcelibrary-mcp'];
 
 // Search-index crawlers we deliberately allow FULL read access. Discovery and
 // citability serve the mission, so these bypass the page gate; training/bulk
 // crawlers do NOT (they stay gated and must license bulk/training use). Matches
-// the robots.ts search-allow list and the /licensing policy. A claim that can be
-// proven is proven before it is honoured (isTrustedBot, #8098); the others are UA-
-// based (honor system), like the rest of this gate.
+// the robots.ts search-allow list and the /licensing policy. The page wall honours
+// a name only with proof of it (isTrustedBot, #8098, #4357); a name with no proof
+// available reads under the free sample like any signed-out visitor.
 // NB: ccbot/bytespider appear in KNOWN_BOTS above but are hard-403'd at the
 // edge (proxy.ts BLOCKED_BOT_RE), so their entries here are unreachable
 // defense-in-depth — kept deliberately in case the edge rule changes (#4366).
@@ -118,16 +122,34 @@ export function isTrustedByUserAgent(request: Request): boolean {
 
 /**
  * Check if the request is trusted (bypasses the page gate) — our own MCP, a
- * search-index crawler, or a valid API key (Bearer sl_data_...).
+ * search-index crawler, an assistant reading for a person, or a valid API key
+ * (Bearer sl_data_...).
  *
- * Naming a provable crawler is not enough: an address that provably is not that
- * crawler falls through to the key check. An inconclusive lookup keeps the name's
- * trust, so a resolver failing never costs a real crawler the index (#8098).
+ * Every name needs proof (#4357): reverse DNS for Googlebot, Bingbot and
+ * Applebot (#8098); the operator's published address list for Claude-User,
+ * ChatGPT-User, Perplexity-User, Claude-SearchBot and OAI-SearchBot
+ * (assistant-fetchers.ts); an in-process call or the proof header for our
+ * hosted MCP (mcp-self-proof.ts). Names with no published proof (DuckDuckBot,
+ * NotebookLM, Grok and the other small fetchers) are not trusted.
  */
 export async function isTrustedBot(request: Request): Promise<boolean> {
   if (isTrustedByUserAgent(request)) {
-    const claim = provableClaimIn(request.headers.get('user-agent') || '');
-    if (!claim || (await verifyCrawlerClaim(claim, getClientIp(request))) !== 'forged') return true;
+    const ua = request.headers.get('user-agent') || '';
+    const lower = ua.toLowerCase();
+    // A name is honoured only with proof of it (#4357): anyone can write
+    // "Claude-User" or "SourceLibrary-MCP" in a header. A name we have no way
+    // to prove earns nothing here and falls through to the key check, so that
+    // client reads under the same free sample as any signed-out visitor.
+    if (ALWAYS_ALLOW.some((bot) => lower.includes(bot))) {
+      if (inProcessCaller(request) !== undefined || hasMcpProof(request)) return true;
+    } else if (namesListedClient(ua)) {
+      if (provenByPublishedList(ua, getClientIp(request))) return true;
+    } else {
+      const claim = provableClaimIn(ua);
+      // Reverse DNS: an inconclusive lookup keeps the name's trust, so a resolver
+      // failing never costs a real crawler the index (#8098).
+      if (claim && (await verifyCrawlerClaim(claim, getClientIp(request))) !== 'forged') return true;
+    }
   }
 
   // Check for API key — holders bypass bot gating on all endpoints

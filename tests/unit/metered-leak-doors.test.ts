@@ -100,6 +100,7 @@ const DEEP = 'p50';
 
 beforeEach(() => {
   process.env.METERED_READER = '1';
+  process.env.AUTH_SECRET ??= 'test-secret';
   session.user = null;
   store.books = [BOOK, BPH_BOOK];
   store.pages = [page(2), page(20), page(21), page(50), page(60, { seo_indexable: true }),
@@ -113,10 +114,10 @@ beforeEach(() => {
 afterEach(() => { delete process.env.METERED_READER; });
 
 const ANON_CHROME = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
-const req = (url: string, init: { ua?: string; method?: string; body?: string } = {}) =>
+const req = (url: string, init: { ua?: string; method?: string; body?: string; headers?: Record<string, string> } = {}) =>
   new NextRequest(`https://sourcelibrary.org${url}`, {
     method: init.method || 'GET',
-    headers: { 'user-agent': init.ua ?? ANON_CHROME },
+    headers: { 'user-agent': init.ua ?? ANON_CHROME, ...(init.headers || {}) },
     ...(init.body ? { body: init.body } : {}),
   });
 const params = <T extends Doc>(p: T) => ({ params: Promise.resolve(p) });
@@ -128,7 +129,11 @@ describe('pageGateForRequest — the one-page wrapper over gatePagesForRequest',
     expect(await pageGateForRequest(fakeDb as never, req('/x'), p(DEEP))).toMatchObject({ free_pages: 20, pages_count: 100 });
     expect(await pageGateForRequest(fakeDb as never, req('/x'), p(FREE))).toBeNull();
     expect(await pageGateForRequest(fakeDb as never, req('/x'), p('p60'))).toBeNull();
-    expect(await pageGateForRequest(fakeDb as never, req('/x', { ua: 'SourceLibrary-MCP/4.3' }), p(DEEP))).toBeNull();
+    // Our MCP server's NAME alone is walled (anyone can write it, #4357); its proof header is not.
+    expect(await pageGateForRequest(fakeDb as never, req('/x', { ua: 'SourceLibrary-MCP/4.3' }), p(DEEP))).not.toBeNull();
+    const { MCP_PROOF_HEADER, mintMcpProof } = await import('@/lib/mcp-self-proof');
+    const proven = req('/x', { ua: 'SourceLibrary-MCP/4.3', headers: { [MCP_PROOF_HEADER]: mintMcpProof()! } });
+    expect(await pageGateForRequest(fakeDb as never, proven, p(DEEP))).toBeNull();
     session.user = { id: 'u1' };
     expect(await pageGateForRequest(fakeDb as never, req('/x'), p(DEEP))).toBeNull();
   });
@@ -243,10 +248,13 @@ describe('whole-book walks: book-run, translation-check shift, ocr-diff', () => 
     expect(diff.status).toBe(401);
   });
 
-  it('our MCP server (a trusted caller) is not walled', async () => {
-    const r = req('/api/research/ocr-diff?work_id=w1', { ua: 'SourceLibrary-MCP/4.3' });
-    const diff = await (await import('@/app/api/research/ocr-diff/route')).GET(r);
-    expect(diff.status).not.toBe(401); // 400: the fixture has no editions of w1
+  it('our MCP server (a proven caller) is not walled; its name alone is', async () => {
+    const { MCP_PROOF_HEADER, mintMcpProof } = await import('@/lib/mcp-self-proof');
+    const { GET } = await import('@/app/api/research/ocr-diff/route');
+    const proven = req('/api/research/ocr-diff?work_id=w1', { ua: 'SourceLibrary-MCP/4.3', headers: { [MCP_PROOF_HEADER]: mintMcpProof()! } });
+    expect((await GET(proven)).status).not.toBe(401); // 400: the fixture has no editions of w1
+    const forged = req('/api/research/ocr-diff?work_id=w1', { ua: 'SourceLibrary-MCP/4.3' });
+    expect((await GET(forged)).status).toBe(401);
   });
 });
 
