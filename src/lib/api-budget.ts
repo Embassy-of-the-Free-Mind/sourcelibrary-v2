@@ -55,7 +55,7 @@ export function pickLimit(identity: ApiIdentity): { limit: number; tier: BudgetC
   // API keys honour their TIER's published daily page cap on /text — not a blanket
   // pass. Paid tiers (language/domain/full/enterprise) carry pagesPerDay: 0 =
   // unlimited, so they're unaffected. The free Explorer tier keeps its published
-  // 100 pages/day here too; without this a free key was an uncapped bulk-extraction
+  // daily cap here too (DATASET_TIERS.explorer.pagesPerDay, 2,000 since #4366); without this a free key was an uncapped bulk-extraction
   // token (the /text budget treated every valid key as unlimited), letting explorer
   // keys pull ~2M pages for free — exactly the bulk use the paid tiers exist to price.
   // An unknown/absent tier is treated as Explorer (the safe floor), never unlimited.
@@ -111,7 +111,7 @@ export function bulkBudgetExceededBody(check: BudgetCheck, readOnSite?: string) 
   const next = check.tier === 'apikey'
     ? `Your free Explorer key is capped at ${check.limit} pages/day on /text. Upgrade for uncapped access (see https://sourcelibrary.org/licensing), or bulk-export at https://sourcelibrary.org/api/dataset/v1/pages.`
     : check.tier === 'session'
-    ? 'Generate a free API key at https://sourcelibrary.org/developers (no daily cap on /text).'
+    ? `Generate a free API key at https://sourcelibrary.org/developers (${DATASET_TIERS.explorer.pagesPerDay.toLocaleString('en-US')} pages/day on /text).`
     : 'Sign in (free) at https://sourcelibrary.org/auth/signin for a higher limit, or grab an API key at https://sourcelibrary.org/developers.';
   return {
     error: `Daily page budget reached (${check.used}/${check.limit} pages in the last 24h). ${readOnSite ? `You can still read this on the site, and that does not count: ${readOnSite} . ` : ''}${next}`,
