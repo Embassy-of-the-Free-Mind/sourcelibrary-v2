@@ -69,7 +69,7 @@
     "epub-gen-memory": "^1.1.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.560.0",
-    "mongodb": "^6.21.0",
+    "mongodb": "^7.8.0",
     "next": "^16.4.5",
     "next-auth": "^5.0.0-beta.32",
     "nodemailer": "^10.3.1",
