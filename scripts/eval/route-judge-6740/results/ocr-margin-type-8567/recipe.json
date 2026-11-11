@@ -1,0 +1,38 @@
+{
+  "question": "prompt",
+  "issue": 8567,
+  "stage": "ocr",
+  "languages": [
+    "la",
+    "en",
+    "grc",
+    "zh",
+    "de",
+    "it",
+    "sa"
+  ],
+  "baseline": "live-v19.1",
+  "arms": [
+    "live-v19.1",
+    "cand-v19.2-margin"
+  ],
+  "batch": {
+    "pages_per_call": 1,
+    "tested": null
+  },
+  "noise_floor": {
+    "repeat_kind": "repeat",
+    "from": null
+  },
+  "feeds": "prompt",
+  "router_evidence": "none \u2014 a prompt-version test on the live OCR route (agy gemini-3.8-flash-low), not a route comparison; the prompt is shared by every OCR lane",
+  "waive": {
+    "R1": "the brief fixed the pages: Burton (4), Burnet (3), and two pages each of Zhuangzi, Clement, CSEL, Bekker, Thibaut are the pages the member report named; intervals are by book (clusterCI) and per-book counts are reported"
+  },
+  "pass_bar": {
+    "margin_type_right": ">= 0.85 of B's margin notes",
+    "footnote_in_footnote_tag": ">= 0.80 of footnotes/apparatus",
+    "body_defect_pages": "B <= A (a one-page difference is noise at this n)"
+  },
+  "judge": "Opus via claude -p, one PAGE per call: the image and the two arms' reads as X/Y in a seeded random order (the brief's paired design); each side gets its own accept/fidelity/defects row, so the key has one row per arm per page"
+}

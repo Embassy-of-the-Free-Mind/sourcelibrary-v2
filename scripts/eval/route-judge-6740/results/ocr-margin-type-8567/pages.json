@@ -1,0 +1,258 @@
+[
+ {
+  "stratum": "printed",
+  "book_id": "6990656f3dc2ed39a49f101f",
+  "label": "Burton, Anatomy of Melancholy 1621",
+  "page_number": 210,
+  "page_id": "6990656f3dc2ed39a49f10f1",
+  "image_url": "https://images.sourcelibrary.org/archived/6990656f3dc2ed39a49f101f/210.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "6990656f3dc2ed39a49f101f",
+  "label": "Burton, Anatomy of Melancholy 1621",
+  "page_number": 211,
+  "page_id": "6990656f3dc2ed39a49f10f2",
+  "image_url": "https://images.sourcelibrary.org/archived/6990656f3dc2ed39a49f101f/211.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "6990656f3dc2ed39a49f101f",
+  "label": "Burton, Anatomy of Melancholy 1621",
+  "page_number": 297,
+  "page_id": "6990656f3dc2ed39a49f1148",
+  "image_url": "https://images.sourcelibrary.org/archived/6990656f3dc2ed39a49f101f/297.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "6990656f3dc2ed39a49f101f",
+  "label": "Burton, Anatomy of Melancholy 1621",
+  "page_number": 506,
+  "page_id": "6990656f3dc2ed39a49f1219",
+  "image_url": "https://images.sourcelibrary.org/archived/6990656f3dc2ed39a49f101f/506.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69b21d4addb4fa7c305b4a88",
+  "label": "Stephanus Plato 1578 vol 3",
+  "page_number": 285,
+  "page_id": "69b21d4addb4fa7c305b4ba5",
+  "image_url": "https://images.sourcelibrary.org/archived/69b21d4addb4fa7c305b4a88/285.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "6952c9ca77f38f6761bc3062",
+  "label": "Plotinus, Perna 1580",
+  "page_number": 258,
+  "page_id": "6952c9ca77f38f6761bc3164",
+  "image_url": "https://images.sourcelibrary.org/archived/6952c9ca77f38f6761bc3062/258.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "697d9ca2e930671f09614566",
+  "label": "Kepler, Harmonices mundi 1619",
+  "page_number": 385,
+  "page_id": "697e011d9e279b718ba6570e",
+  "image_url": "https://images.sourcelibrary.org/cropped/697d9ca2e930671f09614566/697e011d9e279b718ba6570e.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69c7f8b46c6f3cc53c842434",
+  "label": "Croll, Basilica chymica",
+  "page_number": 472,
+  "page_id": "69f6ecc3a26f03d5b09f74d8",
+  "image_url": "https://images.sourcelibrary.org/pages/69c7f8b46c6f3cc53c842434/sp69f6ecc3a26f03d5b09f74d8.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69e72c60a409200ea79f46f6",
+  "label": "Zhuangzi pangzhu 1699",
+  "page_number": 88,
+  "page_id": "69e72c60a409200ea79f474e",
+  "image_url": "https://images.sourcelibrary.org/archived/69e72c60a409200ea79f46f6/88.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69e72c60a409200ea79f46f6",
+  "label": "Zhuangzi pangzhu 1699",
+  "page_number": 89,
+  "page_id": "69e72c60a409200ea79f474f",
+  "image_url": "https://images.sourcelibrary.org/archived/69e72c60a409200ea79f46f6/89.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69924f1aa1a76e4d5e5ed9e2",
+  "label": "Hesiod Loeb",
+  "page_number": 60,
+  "page_id": "69924f1ba1a76e4d5e5eda1e",
+  "image_url": "https://images.sourcelibrary.org/archived/69924f1aa1a76e4d5e5ed9e2/60.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69942a51045dfc482ad766f4",
+  "label": "Clement GCS",
+  "page_number": 168,
+  "page_id": "69942a51045dfc482ad7679c",
+  "image_url": "https://images.sourcelibrary.org/archived/69942a51045dfc482ad766f4/168.jpg"
+ },
+ {
+  "stratum": "printed",
+  "book_id": "69942a51045dfc482ad766f4",
+  "label": "Clement GCS",
+  "page_number": 169,
+  "page_id": "69942a51045dfc482ad7679d",
+  "image_url": "https://images.sourcelibrary.org/archived/69942a51045dfc482ad766f4/169.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "699376d2b0a84a5763961a97",
+  "label": "Burnet Plato OCT 1902",
+  "page_number": 188,
+  "page_id": "699376d2b0a84a5763961b53",
+  "image_url": "https://images.sourcelibrary.org/archived/699376d2b0a84a5763961a97/188.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "699376d2b0a84a5763961a97",
+  "label": "Burnet Plato OCT 1902",
+  "page_number": 258,
+  "page_id": "699376d2b0a84a5763961b99",
+  "image_url": "https://images.sourcelibrary.org/archived/699376d2b0a84a5763961a97/258.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "699376d2b0a84a5763961a97",
+  "label": "Burnet Plato OCT 1902",
+  "page_number": 259,
+  "page_id": "699376d2b0a84a5763961b9a",
+  "image_url": "https://images.sourcelibrary.org/archived/699376d2b0a84a5763961a97/259.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "69af4521e9a2e38648e400aa",
+  "label": "CSEL 56",
+  "page_number": 140,
+  "page_id": "69af4521e9a2e38648e40136",
+  "image_url": "https://images.sourcelibrary.org/archived/69af4521e9a2e38648e400aa/140.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "69af4521e9a2e38648e400aa",
+  "label": "CSEL 56",
+  "page_number": 141,
+  "page_id": "69af4521e9a2e38648e40137",
+  "image_url": "https://images.sourcelibrary.org/archived/69af4521e9a2e38648e400aa/141.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "69937973b0a84a5763964d43",
+  "label": "Bekker 1831 vol II",
+  "page_number": 484,
+  "page_id": "69937973b0a84a5763964f27",
+  "image_url": "https://images.sourcelibrary.org/archived/69937973b0a84a5763964d43/484.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "69937973b0a84a5763964d43",
+  "label": "Bekker 1831 vol II",
+  "page_number": 485,
+  "page_id": "69937973b0a84a5763964f28",
+  "image_url": "https://images.sourcelibrary.org/archived/69937973b0a84a5763964d43/485.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "699246b7bc722ec0ee811bcd",
+  "label": "Thibaut SBE 34",
+  "page_number": 136,
+  "page_id": "699246b7bc722ec0ee811c56",
+  "image_url": "https://images.sourcelibrary.org/archived/699246b7bc722ec0ee811bcd/136.jpg"
+ },
+ {
+  "stratum": "footnote",
+  "book_id": "699246b7bc722ec0ee811bcd",
+  "label": "Thibaut SBE 34",
+  "page_number": 137,
+  "page_id": "699246b7bc722ec0ee811c57",
+  "image_url": "https://images.sourcelibrary.org/archived/699246b7bc722ec0ee811bcd/137.jpg"
+ },
+ {
+  "stratum": "handwritten",
+  "book_id": "69dc5574cb6f7429748b8c06",
+  "label": "Quaestiones de tribus principiis rerum naturalium. With addi",
+  "page_number": 31,
+  "page_id": "69dc5574cb6f7429748b8c25",
+  "image_url": "https://images.sourcelibrary.org/archived/69dc5574cb6f7429748b8c06/31.jpg"
+ },
+ {
+  "stratum": "handwritten",
+  "book_id": "69dbcab51040d1d5e20ae47a",
+  "label": "Speculum conscientiae et novissimorum",
+  "page_number": 10,
+  "page_id": "69dbcab51040d1d5e20ae484",
+  "image_url": "https://images.sourcelibrary.org/archived/69dbcab51040d1d5e20ae47a/10.jpg"
+ },
+ {
+  "stratum": "handwritten",
+  "book_id": "6a8b76ef313cdd0126cb79af",
+  "label": "Die Pilzthiere oder Schleimpilze, nach dem neuesten Standpun",
+  "page_number": 7,
+  "page_id": "6a8b76ef313cdd0126cb79b6",
+  "image_url": "https://images.sourcelibrary.org/pages/6a8b76ef313cdd0126cb79af/0007-full.jpg"
+ },
+ {
+  "stratum": "handwritten",
+  "book_id": "69c853c66c6f3cc53c8536f2",
+  "label": "Kirchen- oder Haus-Postill, \u00fcber die Sonntags- und f\u00fcrnehmst",
+  "page_number": 116,
+  "page_id": "69f70aedb8f2207734053a50",
+  "image_url": "https://images.sourcelibrary.org/pages/69c853c66c6f3cc53c8536f2/sp69f70aedb8f2207734053a50.jpg"
+ },
+ {
+  "stratum": "handwritten",
+  "book_id": "6a4a84da449c2c48ca6ee011",
+  "label": "Quaestionem Politicam Num In Extraneum Principem Committatur",
+  "page_number": 1,
+  "page_id": "6a4a84da449c2c48ca6ee012",
+  "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10153538_00001/full/full/0/default.jpg"
+ },
+ {
+  "stratum": "handwritten",
+  "book_id": "69dbc9291040d1d5e20a0eef",
+  "label": "Orationes. Ed: Philippus Beroaldus. Add: Janus Cardo Bononie",
+  "page_number": 227,
+  "page_id": "69dbc9291040d1d5e20a0fd2",
+  "image_url": "https://images.sourcelibrary.org/archived/69dbc9291040d1d5e20a0eef/227.jpg"
+ },
+ {
+  "stratum": "control",
+  "book_id": "6ab7a0fb0bd1885e1dedc2bc",
+  "label": "Universal Brotherhood Path, Vol. 15, No. 2 (May 1900)",
+  "page_number": 12,
+  "page_id": "6ab7a0fb0bd1885e1dedc2ca",
+  "image_url": "https://images.sourcelibrary.org/archived/6ab7a0fb0bd1885e1dedc2bc/12.jpg"
+ },
+ {
+  "stratum": "control",
+  "book_id": "6a94037ca4ad12cb35ec76d4",
+  "label": "Deliciae Hortenses. Das ist: Blumen- Artzney- Kuchen- und Ba",
+  "page_number": 333,
+  "page_id": "6a94037ca4ad12cb35ec7821",
+  "image_url": "https://images.sourcelibrary.org/archived/6a94037ca4ad12cb35ec76d4/333.jpg"
+ },
+ {
+  "stratum": "control",
+  "book_id": "69bda131f6d63c919748e9d3",
+  "label": "Lucii Apuleii ... Opera",
+  "page_number": 277,
+  "page_id": "69bda131f6d63c919748eae8",
+  "image_url": "https://images.sourcelibrary.org/archived/69bda131f6d63c919748e9d3/277.jpg"
+ },
+ {
+  "stratum": "control",
+  "book_id": "6a060d36e16c60cb2a8946c7",
+  "label": "\u0938\u0941\u0936\u094d\u0930\u0941\u0924\u0938\u0902\u0939\u093f\u0924\u093e Su\u015bruta Sa\u1e43hit\u0101 (Sanskrit, Acharya critical ed",
+  "page_number": 283,
+  "page_id": "6a060d36e16c60cb2a8947e2",
+  "image_url": "https://images.sourcelibrary.org/archived/6a060d36e16c60cb2a8946c7/283.jpg"
+ }
+]
