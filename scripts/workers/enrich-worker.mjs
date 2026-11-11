@@ -72,6 +72,8 @@ import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
 import { runEnrichAgyLane, parseJsonLoose } from './lib/enrich-agy-lane.mjs';
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import pg from 'pg';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -2392,7 +2394,16 @@ NO explanation, just the JSON array.`;
   await client.close();
 }
 
-main()
+// Imported (scripts/eval/enrich-from-page-summaries-8512.mjs reads the phase functions below), main() does not run.
+const IS_MAIN = !!process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+export {
+  LITE_MODEL, AGY_ENRICH_PROMPT_VERSION, AGY_SUMMARY_MATERIAL, emptyExtraction, planPageBatches, loadPhase6Inputs,
+  buildAgyEnrichPrompt, parseAgyEnrichResponse, buildBookSummaryRequest, buildSummaryPrompt, finishEnrichBook,
+  prepareChapterExtraction, applyChapterExtraction, revalidateBookPage, extractPageSummaries, pagesTextBlock,
+  drainBackgroundTasks,
+};
+
+if (IS_MAIN) main()
   .then(() => {
     // Exit explicitly. A finished run that merely stops doing work is indistinguishable, from the
     // scheduler's side, from a wedged one — and one such run held the enrich lock for 4d18h while
