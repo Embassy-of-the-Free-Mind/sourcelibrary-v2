@@ -30,7 +30,7 @@ function Strip({ pics, className = '' }: { pics: Pic[]; className?: string }) {
 function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   return (
     <Link id={s.home ? s.id : undefined} href={to(s)} className="group flex items-stretch bg-white border border-border-light text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
-      {!(s.bare && !s.pics[0]) && <span className="w-[58px] h-[58px] shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover" />}</span>}
+      {!(s.bare && !s.pics[0]) && <span className="relative w-[58px] min-h-[58px] self-stretch shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />}</span>}
       <span className={`min-w-0 self-center px-3.5 py-2 ${s.bare && !s.pics[0] ? 'min-h-[58px] flex flex-col justify-center' : ''}`}><span>{s.label}</span>{s.note && <span className="block text-[12.5px] text-muted">{s.note}</span>}{also && <span className="block text-[12.5px] text-muted">Also called {also}</span>}</span>
     </Link>
   );
