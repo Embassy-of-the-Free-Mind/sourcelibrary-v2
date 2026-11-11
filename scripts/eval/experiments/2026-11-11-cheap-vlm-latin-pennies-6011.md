@@ -9,6 +9,8 @@ n_pages: 145
 verdict: "No. GLM-5.3-Flash (0.926) and Qwen3.7-Flash (0.917) both read Latin print worse than Gemini 3 Flash (0.947 [0.937, 0.955]); neither comes within Flash's interval. The cheapest GLM endpoint invents text on 31 of 145 pages."
 status: informational
 decision: "None: a measurement, no routing change and no chart change (#6011)"
+feeds: none
+defect_rates: "none — CER against typed references only; nothing was judged for defects (an engine screen, no route compared)"
 superseded_by: null
 issue: 6011
 ---
