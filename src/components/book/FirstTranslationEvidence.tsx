@@ -44,7 +44,7 @@ import {
   type ScreenedBook,
 } from '@/lib/first-translation/candidate';
 import type { PriorTranslationCredit } from '@/lib/types/book';
-import { displayablePriorPicks } from '@/lib/ft-prior-guard';
+import { normalizePriors, type NormalizedPrior } from '@/lib/first-translation/public-status';
 import {
   hasPublishablePriorTranslation,
   priorLinkLabel,
@@ -94,14 +94,6 @@ interface EvidenceBook {
   } | null;
 }
 
-interface NormalizedPrior {
-  title?: string;
-  translator?: string;
-  pub_year?: string;
-  completeness?: string;
-  url?: string;
-}
-
 function fmtDate(d?: string | Date): string {
   if (!d) return '';
   try {
@@ -109,23 +101,6 @@ function fmtDate(d?: string | Date): string {
   } catch {
     return '';
   }
-}
-
-// A study that quotes the work (#4639), or an unanchored audit substitute
-// (#4634), is not an earlier translation of it.
-function normalizePriors(
-  book: Pick<EvidenceBook, 'title' | 'author'>,
-  attempt: FirstTranslationAttempt | null,
-  legacy?: LegacyPrior[],
-): NormalizedPrior[] {
-  if (attempt?.priors?.length) {
-    return displayablePriorPicks(book, attempt.priors)
-      .filter((p) => p.english_title)
-      .map((p) => ({ title: p.english_title, translator: p.translator, pub_year: p.pub_year, completeness: p.completeness, url: p.source_url }));
-  }
-  return displayablePriorPicks(book, legacy)
-    .filter((p) => p.english_title)
-    .map((p) => ({ title: p.english_title, translator: p.translator, pub_year: p.pub_year, completeness: p.completeness, url: p.url }));
 }
 
 function PriorList({ priors }: { priors: NormalizedPrior[] }) {

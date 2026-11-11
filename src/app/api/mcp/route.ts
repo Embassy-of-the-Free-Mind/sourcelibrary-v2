@@ -24,6 +24,9 @@ import { applyAuthorConstraints, hasAuthorConstraints, parseAuthorConstraints } 
 import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
+import { getReadDb } from '@/lib/mongodb';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { publicFirstTranslationStatus, PUBLIC_FT_PROJECTION } from '@/lib/first-translation/public-status';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import { MCP_HEADERS, mcpApiGet, mcpApiGetText, type McpCaller } from '@/lib/mcp-inprocess';
 // The v2 SDK (#8443): it serves protocol 2026-07-28 (server/discover, the
@@ -90,6 +93,14 @@ function pageFields(env: ReturnType<typeof pageEnvelope>) {
   return rest;
 }
 
+/**
+ * How an agent should hedge the first-translation flag. No error rates here on
+ * purpose: the measured figures live in one place and move; the methodology page
+ * is that place.
+ */
+const FIRST_TRANSLATION_NOTE =
+  'The first-translation badge is a researched claim that no earlier English translation was found, not a proof: absence cannot be proven, and the catalogues searched miss some prior translations. It can be wrong, especially for multi-work volumes (see contains_works) and for books whose claim is only "candidate". State it as "Source Library flags this as a possible first English translation" and link the book page. Method and measured reliability: https://sourcelibrary.org/articles/first-translation-methodology';
+
 async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) {
   const limit = Math.min(Number(args.limit) || 10, 100);
   const offset = parseOffset(args.offset);
@@ -99,6 +110,7 @@ async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) 
   if (args.year_to) params.set('year_to', String(args.year_to));
   if (args.has_doi) params.set('has_doi', 'true');
   if (args.has_translation) params.set('has_translation', 'true');
+  if (args.first_translation) params.set('first_translation', 'true');
   if (args.sort) params.set('sort', String(args.sort));
 
   const result = await mcpApiGet('/search', params, caller) as Record<string, unknown>;
@@ -110,6 +122,8 @@ async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) 
     language: r.language,
     published: r.published,
     has_doi: r.has_doi,
+    // The stored flag the site's first-translation filter matches on (see FIRST_TRANSLATION_NOTE).
+    ...(typeof r.is_first_translation === 'boolean' ? { is_first_translation: r.is_first_translation } : {}),
     ...(r.page_number ? { page_number: r.page_number } : {}),
     ...(r.snippet ? { snippet: stripProvenanceMarks(r.snippet as string), snippet_type: r.snippet_type } : {}),
     url: r.page_number
@@ -424,7 +438,12 @@ async function listBooks(args: Record<string, unknown>) {
   const params = new URLSearchParams();
   if (args.search) params.set('search', String(args.search));
   if (args.language) params.set('language', String(args.language));
-  if (args.category) params.set('category', String(args.category));
+  // `category: "first-translation"` is what an agent tries first; the site has no such
+  // category, it has a filter. Map it rather than return an empty list.
+  const categoryArg = String(args.category ?? '').trim().toLowerCase().replace(/[\s_]+/g, '-');
+  const wantsFirst = args.first_translation === true || categoryArg === 'first-translation' || categoryArg === 'first-translations';
+  if (args.category && !(categoryArg === 'first-translation' || categoryArg === 'first-translations')) params.set('category', String(args.category));
+  if (wantsFirst) params.set('first_translation', 'true');
   // Canonical author slug — every row of every listing carries author_id, so a
   // follow-up "all books by this person" call needs no separate lookup.
   if (args.author_id) params.set('author_id', String(args.author_id));
@@ -456,6 +475,8 @@ async function listBooks(args: Record<string, unknown>) {
     published: b.published, year: b.year ?? null,
     pages_count: b.pages_count, pages_translated: b.pages_translated,
     translation_percent: b.translation_percent,
+    // The stored flag the site's first-translation filter matches on (see FIRST_TRANSLATION_NOTE).
+    is_first_translation: !!b.is_first_translation,
     // Identity ids so a follow-up call needs no per-book lookup: work_id feeds
     // list_editions, edition_key feeds edition_key= (other scans of THIS
     // printing). The key is only emitted at full quality — a lower-quality key
@@ -486,6 +507,7 @@ async function listBooks(args: Record<string, unknown>) {
       total_note: 'The match count timed out, so `total` is a lower bound, not the number of matching books. Page with offset to see more, or narrow the search.',
     } : {}),
     ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
+    ...(wantsFirst ? { first_translation_filter: true, first_translation_note: FIRST_TRANSLATION_NOTE } : {}),
     // Canonicalized author echo when filtering by author_id (null-safe: the
     // route omits it unless the filter was applied).
     ...(result.author !== undefined ? { author: result.author } : {}),
@@ -511,6 +533,22 @@ async function getBook(args: Record<string, unknown>) {
   // write-side checks existed.
   const storedChapters = Array.isArray(result.chapters) ? result.chapters as Chapter[] : null;
   const chapterReport = storedChapters?.length ? checkChapters(storedChapters) : null;
+  // What the book page shows about a first English translation: the badge, its
+  // note and the priors listed (src/lib/first-translation/public-status.ts).
+  // Hidden books present a catalog card only, so they get no status. A failed
+  // read is reported as unavailable, never as "no badge".
+  let firstTranslation: Record<string, unknown> | undefined;
+  if (result.visible !== false) {
+    try {
+      const db = await getReadDb();
+      const found = await findBookByIdOrSlug(db, String(args.book_id), PUBLIC_FT_PROJECTION);
+      if (found) {
+        firstTranslation = { ...(await publicFirstTranslationStatus(db, found.book)), note_on_reliability: FIRST_TRANSLATION_NOTE };
+      }
+    } catch {
+      firstTranslation = { unavailable: true, reason: 'The first-translation record could not be read just now. This is NOT a statement that the book has no badge; retry.' };
+    }
+  }
   return {
     id: result.id, title: resolvedTitle.display, author: result.author,
     ...(resolvedTitle.isDescriptive
@@ -544,6 +582,7 @@ async function getBook(args: Record<string, unknown>) {
       },
     } : {}),
     work_id: result.work_id,
+    ...(firstTranslation ? { first_translation: firstTranslation } : {}),
     // What the volume's own running heads say it holds, with page spans. This
     // is the answer to "which book has the Poetics?", which the catalogue title
     // could not give — four volumes advertised works their scans do not contain
@@ -1468,7 +1507,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_library',
     title: 'Search Library',
-    description: 'RETURNS A LIST OF BOOKS (works on a topic) — NOT passages. PICK THIS to discover which works exist on a subject. → For quotable text use search_translations (exact words) or search_concept (by meaning); if the user already named an author/work, call get_book directly (or list_books to find the ID) — the AI summary + chapter outline is usually the right first answer. Searches titles, authors, subjects, and (as a secondary signal) translated text. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination. To answer "do you hold X?" call check_duplicate, not this: a ranked list is not a holdings check.',
+    description: 'RETURNS A LIST OF BOOKS (works on a topic) — NOT passages. PICK THIS to discover which works exist on a subject. → For quotable text use search_translations (exact words) or search_concept (by meaning); if the user already named an author/work, call get_book directly (or list_books to find the ID) — the AI summary + chapter outline is usually the right first answer. Searches titles, authors, subjects, and (as a secondary signal) translated text. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination. FIRST ENGLISH TRANSLATIONS: pass first_translation=true to filter to books the catalogue flags as first English translations; each row carries is_first_translation. That flag is a researched claim and can be wrong (multi-work volumes especially); call get_book for the evidence and say "flagged as" rather than "is". To answer "do you hold X?" call check_duplicate, not this: a ranked list is not a holdings check.',
     annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1478,6 +1517,7 @@ const TOOLS: Tool[] = [
         year_from: { type: 'number', description: 'Publication year range start' },
         year_to: { type: 'number', description: 'Publication year range end' },
         has_translation: { type: 'boolean', description: 'Only return books with translations' },
+        first_translation: { type: 'boolean', description: 'Only books carrying the site\'s "First Translation" flag (the same filter as the website). A researched claim, not a proof; see get_book first_translation for status and hedging.' },
         sort: { type: 'string', enum: ['relevance', 'date_asc', 'date_desc', 'title'] },
         limit: { type: 'number', description: 'Max results per page (default 10, max 100)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
@@ -1556,7 +1596,7 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     title: 'List Books',
-    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning). To answer "do you hold X?" call check_duplicate: a listing that misses a title is not evidence of absence.',
+    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, translation progress, and is_first_translation (the site\'s First Translation flag; filter with first_translation=true; a researched claim that can be wrong, so say "flagged as"). → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning). To answer "do you hold X?" call check_duplicate: a listing that misses a title is not evidence of absence.',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1567,7 +1607,8 @@ const TOOLS: Tool[] = [
         work_id: { type: 'string', description: 'Every witness of one WORK, across editions, languages and centuries — pass the work_id from a result row or from get_book. Use this instead of a title search whenever you already hold the identifier: witnesses of one work are often titled differently in each language, so a title search finds only the subset that happens to share your wording. Unlike list_editions (which returns the whole set), this composes with language, year_from/year_to and sort.' },
         year_from: { type: 'number', description: 'Earliest edition year (inclusive). Matches only books with a known numeric year — ~60% of the library.' },
         year_to: { type: 'number', description: 'Latest edition year (inclusive).' },
-        language: { type: 'string' }, category: { type: 'string' },
+        language: { type: 'string' }, category: { type: 'string', description: 'Subject category. "first-translation" is accepted as an alias for first_translation=true.' },
+        first_translation: { type: 'boolean', description: 'Only books carrying the site\'s "First Translation" flag (same filter as the website). A researched claim, not a proof; get_book returns the status and evidence.' },
         has_edition: { type: 'string', description: 'ISO code — return only books READABLE in that language, e.g. "es". Different from `language`, which is the language printed on the leaves of the scan: a Latin book with a Spanish edition matches language="Latin" AND has_edition="es". Each result then also carries url_localized.' },
         sort: { type: 'string', enum: ['recent-translation', 'recent', 'title-asc', 'title-desc'] },
         limit: { type: 'number', description: 'Max results (default 100, max 200)' },
@@ -1578,7 +1619,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where the record knows they differ the response also carries `work_language` and a `translation_note`, and `text_role` (original / period-translation / modern-translation / unclassified) says what kind of witness this is — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the work\'s language is NOT RECORDED on this record. It is not a statement that the edition is in the work\'s own language (most records have never been checked; Risner\'s 1572 Latin Alhazen carries none, and the work is Arabic). Only `text_role: "original"` asserts that these are the author\'s own words in the author\'s language; `text_role: "unclassified"` means nobody has examined it, so do not infer the work\'s language from `language`, and do not conclude the library lacks a tradition because a `language` filter came back empty. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided. EDITIONS: `editions` says which languages this book can be READ in and how many pages each covers ({ en: 357 } on most books, { en: 357, es: 357 } where a localized edition exists). Pass a code as `lang` to get_quote, get_quotes, get_book_text or search_within_book to read that edition; without it you get English.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, first_translation (the site\'s First Translation badge: badge_shown, badge_label, claim confirmed|candidate|defeated|not_applicable, the note shown on the book page, any Translation Card sentence, and prior English translations listed; it is a researched claim that no earlier English translation was found, may be wrong for multi-work volumes, and is not proof, so hedge it and link the page), DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where the record knows they differ the response also carries `work_language` and a `translation_note`, and `text_role` (original / period-translation / modern-translation / unclassified) says what kind of witness this is — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the work\'s language is NOT RECORDED on this record. It is not a statement that the edition is in the work\'s own language (most records have never been checked; Risner\'s 1572 Latin Alhazen carries none, and the work is Arabic). Only `text_role: "original"` asserts that these are the author\'s own words in the author\'s language; `text_role: "unclassified"` means nobody has examined it, so do not infer the work\'s language from `language`, and do not conclude the library lacks a tradition because a `language` filter came back empty. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided. EDITIONS: `editions` says which languages this book can be READ in and how many pages each covers ({ en: 357 } on most books, { en: 357, es: 357 } where a localized edition exists). Pass a code as `lang` to get_quote, get_quotes, get_book_text or search_within_book to read that edition; without it you get English.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
