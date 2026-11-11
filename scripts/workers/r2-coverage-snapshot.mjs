@@ -114,35 +114,69 @@ async function runWithConcurrency(items, worker, concurrency) {
 }
 
 async function run() {
-  const client = new MongoClient(MONGODB_URI, { socketTimeoutMS: 1800000 });
+  // socketTimeoutMS is per command, not per script: every command below is
+  // short (a chunk of books), so a dead socket is noticed in minutes, not hours.
+  const client = new MongoClient(MONGODB_URI, { socketTimeoutMS: 300_000 });
   await client.connect();
   const db = client.db('bookstore');
   const start = Date.now();
 
   console.log(`[r2-coverage-snapshot] Starting at ${new Date().toISOString()}`);
 
-  // Single aggregation: per-book R2 state across the whole pages collection.
-  // $regexMatch is acceptable here because it's run once per book per snapshot,
-  // not on every admin page load.
-  console.log('  aggregating pages by book_id (this can take 10-20 min on Atlas)...');
-  const perBook = await db.collection('pages').aggregate([
-    { $group: {
-      _id: '$book_id',
-      total: { $sum: 1 },
-      r2: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: R2_HOST_REGEX } }, 1, 0] } },
-      failed: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: ARCHIVE_FAILED_REGEX } }, 1, 0] } },
-    }},
-  ], { allowDiskUse: true, maxTimeMS: 1800000 }).toArray();
-
-  console.log(`  per-book aggregation done: ${perBook.length} books with pages, ${((Date.now() - start)/60000).toFixed(1)} min`);
-
-  const statsByBook = new Map(perBook.map(s => [s._id, s]));
-
   // Pull book metadata in one pass — only what we need
   const books = await db.collection('books').find(
     { status: { $ne: 'deleted' }, pages_count: { $gt: 0 } },
     { projection: { id: 1, title: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.status': 1, 'pipeline_auto.error': 1 } }
   ).toArray();
+
+  // Per-book R2 state, computed in chunks of books. The old single $group over
+  // the whole pages collection ran 28-59 min as ONE blocking command (no bytes
+  // come back until it finishes), outlived the socket timeout on busy nights
+  // (backup-books and thumb-regen load Atlas at 04:00) and failed about every
+  // other night with MongoNetworkTimeoutError (#8574). A chunk uses the
+  // {book_id, page_number} index, takes seconds, and is retried on its own.
+  // Books outside `books` (deleted, pages_count 0) were never read from the old
+  // result, so the counts are unchanged.
+  // $regexMatch is acceptable here because it's run once per book per snapshot,
+  // not on every admin page load.
+  console.log(`  aggregating pages for ${books.length} books in chunks...`);
+  const CHUNK = 300;
+  const AGG_CONCURRENCY = 3;
+  const chunks = [];
+  for (let i = 0; i < books.length; i += CHUNK) chunks.push(books.slice(i, i + CHUNK).map(b => b.id));
+  const statsByBook = new Map();
+  let chunksDone = 0;
+  let lastChunkLog = Date.now();
+  await runWithConcurrency(chunks, async (ids) => {
+    let lastErr;
+    for (let attempt = 1; attempt <= 4; attempt++) {
+      try {
+        const rows = await db.collection('pages').aggregate([
+          { $match: { book_id: { $in: ids } } },
+          { $group: {
+            _id: '$book_id',
+            total: { $sum: 1 },
+            r2: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: R2_HOST_REGEX } }, 1, 0] } },
+            failed: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: ARCHIVE_FAILED_REGEX } }, 1, 0] } },
+          }},
+        ], { allowDiskUse: true, maxTimeMS: 240_000 }).toArray();
+        for (const r of rows) statsByBook.set(r._id, r);
+        break;
+      } catch (err) {
+        lastErr = err;
+        if (attempt === 4) throw lastErr;
+        console.log(`    chunk attempt ${attempt} failed (${err.name}); retrying`);
+        await new Promise(r => setTimeout(r, 2000 * attempt));
+      }
+    }
+    chunksDone += 1;
+    if (Date.now() - lastChunkLog > 60_000) {
+      console.log(`    aggregated ${chunksDone}/${chunks.length} chunks`);
+      lastChunkLog = Date.now();
+    }
+  }, AGG_CONCURRENCY);
+
+  console.log(`  per-book aggregation done: ${statsByBook.size} books with pages, ${((Date.now() - start)/60000).toFixed(1)} min`);
 
   // Bucket books by R2 coverage
   const buckets = { full: 0, partial_high: 0, partial_med: 0, partial_low: 0, none: 0 };
