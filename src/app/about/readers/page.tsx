@@ -70,7 +70,8 @@ const THEME_LABELS: Record<string, string> = {
 };
 
 const MONTH_REGIONS = ['Latin America', 'North America', 'Europe', 'Asia', 'Other'];
-const monthLabel = (m: string) => new Date(`${m}-01T00:00:00Z`).toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }) + (m === monthly.partialMonth ? ' (to date)' : '');
+const monthName = (m: string, month: 'short' | 'long') => new Date(`${m}-01T00:00:00Z`).toLocaleDateString('en-GB', { month, timeZone: 'UTC' });
+const monthLabel = (m: string) => monthName(m, 'short') + (m === monthly.partialMonth ? ' (to date)' : '');
 
 function monthlyShares() {
   const months = Object.entries(monthly.months as Record<string, Record<string, number>>);
@@ -123,7 +124,7 @@ export default async function ReadersPage() {
       <Section
         id="months"
         title="Month by month since June 2026"
-        intro={<>In June 2026 a video about the library spread on Instagram, and for several weeks most readers were in Latin America and Spain, led by Mexico: Latin America alone was {m.june}% of readers that month. The share has fallen since, to {m.latest}% so far in {monthLabel(monthly.partialMonth).replace(' (to date)', '')}, while the shares from the United States and Europe grew.</>}
+        intro={<>In June 2026 a video about the library spread on Instagram, and for several weeks most readers were in Latin America and Spain, led by Mexico: Latin America alone was {m.june}% of readers that month. The share has fallen since, to {m.latest}% so far in {monthName(monthly.partialMonth, 'long')}, while the shares from the United States and Europe grew.</>}
       >
         <Grid2>
           <Panel title="Share of readers by region" note={<>Pageviews from phones or from links on other sites, which are almost all people; the location comes from each reader&apos;s browser. Source: PostHog, extracted {monthly.extracted}.</>}>
