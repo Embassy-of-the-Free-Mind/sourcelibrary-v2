@@ -20,7 +20,10 @@ install_one() {  # $1 file in this directory, $2 target path
   local src="$here/$1" dst="$2"
   [ -f "$src" ] || { say "no $src"; return 1; }
   if cmp -s "$src" "$dst"; then [ -f "$dst.commit" ] || git -C "$here" log -1 --format=%h -- "$1" > "$dst.commit" 2>/dev/null; return 0; fi
-  bash -n "$src" || { say "REFUSED: $src does not parse"; return 1; }
+  case "$src" in
+    *.py) python3 -c 'import ast,sys; ast.parse(open(sys.argv[1]).read())' "$src" || { say "REFUSED: $src does not parse"; return 1; } ;;
+    *) bash -n "$src" || { say "REFUSED: $src does not parse"; return 1; } ;;
+  esac
   # Install only what is committed: a half-edited script in a dirty checkout must not reach live jobs.
   if [ -z "${INSTALL_UNCOMMITTED:-}" ] && [ -n "$(git -C "$here" status --porcelain -- "$1" 2>&1)" ]; then
     say "REFUSED: $src is not the committed file (INSTALL_UNCOMMITTED=1 to install it anyway)"; return 1
@@ -40,6 +43,9 @@ install_one claude-job.sh "$dst" || rc=1
 install_one box-rpc.sh "$bin/box-rpc.sh" || rc=1
 install_one box.sh "$bin/box.sh" || rc=1
 install_one job-ledger.sh "$bin/job-ledger.sh" || rc=1   # the job ledger (#8606)
+# agent-guard (#8614): project rules + a redacted log of every Claude tool call, as a PreToolUse hook in each Claude
+# config dir on the box. Shadow mode unless /etc/agent-guard.mode says enforce. `install` is idempotent.
+install_one agent-guard.py "$bin/agent-guard.py" && python3 "$bin/agent-guard.py" install || rc=1
 # Remote Control launchers (2026-11-09): the always-on server (claude-rc.sh, started by cron where wanted)
 # and phone-visible agent jobs (claude-rc-job.sh). Installing them starts nothing.
 install_one claude-rc.sh "$bin/claude-rc.sh" || rc=1

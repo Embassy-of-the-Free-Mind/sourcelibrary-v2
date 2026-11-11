@@ -69,6 +69,9 @@ export interface BlogPost {
   imagePosition?: string;
   // Only on LINKED_PAGES: the page lives at its own address, outside /articles.
   href?: string;
+  // Offline editions: the article with every page it cites (text and scan) at the back, built by
+  // scripts/articles/article-epub, in colour and for e-ink (STYLE=bw). ArticleEnd shows the links.
+  epub?: { colour: { href: string; mb: number }; eink?: { href: string; mb: number } };
 }
 
 // Articles written by a person rather than drafted by AI. Their footer note is a
