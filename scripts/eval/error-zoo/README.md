@@ -1,4 +1,35 @@
-# Error zoo and bad-page predictor — handoff (2026-11-11)
+# Error zoo and bad-page predictor
+
+## v2 (2026-11-11, later the same day): every label source, per-source numbers
+
+The v1 scripts below read ONE source (the spare audits on disk). v2 reads every page-level judgment we hold and
+reports the predictor per source. Full write-up: `scripts/eval/experiments/2026-11-11-error-zoo-v2-all-labels-6420.md`.
+Vision note and the comparison with v1: `/root/rc-jobs/error-zoo-v2.vision.md` on gex45-1.
+
+Pipeline (outputs live on gex45-1 under `/root/jobs/error-zoo-v2/`, not in git; ~150 MB):
+
+```
+node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/error-zoo/labels.mjs      /root/jobs/error-zoo-v2   # labels.jsonl, 12,344 rows
+node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/error-zoo/fetch-pages.mjs /root/jobs/error-zoo-v2   # pages.jsonl (live text, seams, book facts)
+<venv>/bin/python scripts/eval/error-zoo/features.py /root/jobs/error-zoo-v2                                                 # feats.json, 199 features
+OMP_NUM_THREADS=4 <venv>/bin/python scripts/eval/error-zoo/train.py /root/jobs/error-zoo-v2                                  # predictor-report.md, preds.jsonl
+python3 scripts/eval/error-zoo/classify-unclassed.py rules /root/jobs/error-zoo-v2                                           # legacy map + keyword rules; batches for the rest
+bash scripts/eval/error-zoo/run-batches.sh /root/jobs/error-zoo-v2/classes haiku                                             # claude -p over the batches (job quota)
+python3 scripts/eval/error-zoo/classify-unclassed.py merge /root/jobs/error-zoo-v2                                           # classes.jsonl + spotcheck.md
+python3 scripts/eval/error-zoo/zoo-all.py /root/jobs/error-zoo-v2 && cat head.html zoo.json tail.html > error-zoo.html      # the page
+```
+
+All read-only against Mongo. The venv needs `scikit-learn numpy` (no pillow: v2 has no image block). Keep the box's
+CPU light: `nice -n 10`, four threads; a full train is a few minutes.
+
+What v2 found, in one breath: 12,344 page-level labels exist (book_checks 10,118, weekly audit 1,920, lane judge 68 live,
+corrections 238), seven times v1; the pooled out-of-book AUC is 0.812 but that mostly recognises which frame a page
+came from; on the weekly audit's uniform draw (the only library-wide frame) it is 0.755, top 10% 74% serious against
+31% base, top 30% holds 56% of serious pages; lane B's own check agrees with the Opus audit on 46% of shared pages;
+and the "59% unclassed" are minor findings, 95% of serious ones were already classed. The before/after design for
+lane B is `LANE-B-BEFORE-AFTER.md`. Nothing was written to production.
+
+## v1 handoff (2026-11-11, morning)
 
 Two things built from the spare-lane convergent audits (`/root/jobs/spare-audit/spare-audit-2026111[01]-*` on gex45-1;
 19 rounds, 1,520 pages, ~12,000 graded errors, Opus as the only reader, not calibrated):

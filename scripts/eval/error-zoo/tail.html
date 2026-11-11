@@ -6,7 +6,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const fmt=n=>n.toLocaleString('en-US');
 const seen=D.classes.filter(c=>c.n>0).length;
 const ser=D.classes.reduce((a,c)=>a+(c.sev.serious||0),0);
-document.getElementById('stats').innerHTML=`<span><b>${D.classes.length}</b> classes</span><span><b>${seen}</b> seen</span><span><b>${fmt(D.meta.total-D.meta.unclassed)}</b> classed errors</span><span><b>${fmt(ser)}</b> serious</span><span><b>${fmt(D.meta.pages)}</b> pages · <b>${D.meta.runs}</b> rounds</span>`;
+document.getElementById('stats').innerHTML=`<span><b>${D.classes.length}</b> classes</span><span><b>${seen}</b> seen</span><span><b>${fmt(D.meta.total-D.meta.unclassed)}</b> classed errors</span><span><b>${fmt(ser)}</b> serious</span><span><b>${fmt(D.meta.pages)}</b> pages · <b>${fmt(D.meta.serious_pages||0)}</b> with a serious finding</span>${D.meta.sources?Object.entries(D.meta.sources).map(([k,v])=>`<span>${esc(k)} <b>${fmt(v)}</b></span>`).join(""):""}`;
 let lane='',q='',sort='code';
 const laneOrder='IOTDE';
 function spec(s){
