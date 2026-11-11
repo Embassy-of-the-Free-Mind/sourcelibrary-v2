@@ -6,6 +6,7 @@ const { MongoClient } = require('mongodb');
 const { getTranslationText } = await import(`${process.argv[2]}/scripts/lib/translation-text.mjs`);
 const c = await MongoClient.connect(process.env.MONGODB_URI);
 const db = c.db(process.env.MONGODB_DB);
+const gallery = {};
 try {
   for (const r of fs.readFileSync('refs.txt', 'utf8').trim().split('\n').filter(Boolean)) {
     const [slug, q] = r.split('?page='); const n = +q;
@@ -18,5 +19,16 @@ try {
       // For the scan: imageAccessFor(book) and pageExportImageUrl(page) in build.ts.
       book: { year: b.year, image_source: b.image_source }, pageDoc: { ...p, translation: undefined },
     }));
+    // The book's illustrations (the gallery's crops), for the pictures that open each chapter (build.ts).
+    if (!gallery[slug]) {
+      gallery[slug] = {
+        title: b.display_title || b.title, author: b.author, book: { year: b.year, image_source: b.image_source },
+        images: await db.collection('gallery_images').find(
+          { book_id: b.id, gallery_quality: { $gte: 0.6 }, extracted_url: { $ne: null }, type: { $nin: ['exlibris', 'bookplate'] } },
+          { projection: { _id: 0, page_number: 1, extracted_url: 1, description: 1, gallery_quality: 1, type: 1 } },
+        ).sort({ gallery_quality: -1 }).limit(40).toArray(),
+      };
+    }
   }
+  fs.writeFileSync('gallery.json', JSON.stringify(gallery));
 } finally { await c.close(); }

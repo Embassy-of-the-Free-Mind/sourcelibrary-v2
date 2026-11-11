@@ -4,7 +4,7 @@ set -euo pipefail
 SLUG="$1"
 HERE="$(cd "$(dirname "$0")" && pwd)"; ROOT="$(cd "$HERE/../../.." && pwd)"
 ENV="${ENV_FILE:-/root/sourcelibrary/.env.production.local}"
-WORK="$(mktemp -d)"; trap 'rm -rf "$WORK"' EXIT
+WORK="${KEEP_WORK:-$(mktemp -d)}"; mkdir -p "$WORK"; [ -n "${KEEP_WORK:-}" ] || trap 'rm -rf "$WORK"' EXIT
 OUT="${OUT:-$WORK/$SLUG.epub}"
 ESB="$ROOT/node_modules/.bin/esbuild"
 alias_args=(--alias:next/link="$HERE/mocks/Link.jsx" --alias:@/components/layout/ContentPageLayout="$HERE/mocks/Layout.jsx"
