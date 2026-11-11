@@ -9,7 +9,7 @@ import SortSelect from '@/components/search-kit/SortSelect';
 import { FIRST, TOOLBAR, TOP, filtersBtn, vbtn } from './CollectionsBrowser';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
-export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[]; /** A short line under the name, such as a count. */ note?: string; /** No picture slot when there is no picture. */ bare?: boolean }
+export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[]; /** A short line under the name, such as a count. */ note?: string; /** No picture slot when there is no picture. */ bare?: boolean; /** How many books, for sorting by size. */ size?: number }
 type Group = SubjectRow & { narrower: SubjectRow[] };
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
@@ -59,10 +59,11 @@ const SUBJECT_HOW = [
  * Built for Subjects; Periods and Languages use it too, with their own words.
  */
 export default function SubjectsBrowser({ groups, barSearch = false, noun = ['subject', 'subjects'], group = ['Broad subject', 'All broad subjects'],
-  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']], countGroups = true }: {
+  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']], countGroups = true, flat = false }: {
   groups: Group[]; barSearch?: boolean; noun?: [string, string]; group?: [string, string];
   how?: { title: string; items: ReactNode[] }; orders?: [string, string][];
   /** Subjects count their broad subjects too; periods, languages and types count only the members. */ countGroups?: boolean;
+  /** One list, no bands: every member in a single grid, sorted by size or name. */ flat?: boolean;
 }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
@@ -95,6 +96,13 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
   const total = new Set(groups.flatMap((g) => [...(countGroups ? [g.id] : []), ...g.narrower.map((s) => s.id)])).size;
   const count = new Set(shown.flatMap(({ g, narrower }) => [...(countGroups ? [g.id] : []), ...narrower.map((x) => x.s.id)])).size;
   const n = (v: number) => v.toLocaleString('en-GB');
+  // Flat: one grid of every member, sorted by size (largest or smallest first) or by name (A to Z, Z to A).
+  const flatItems = flat ? shown.flatMap((x) => x.narrower).sort((a, b) => {
+    if (order === 'size-asc') return (a.s.size ?? 0) - (b.s.size ?? 0) || a.s.label.localeCompare(b.s.label, 'en');
+    if (order === 'az') return a.s.label.localeCompare(b.s.label, 'en');
+    if (order === 'za') return b.s.label.localeCompare(a.s.label, 'en');
+    return (b.s.size ?? 0) - (a.s.size ?? 0) || a.s.label.localeCompare(b.s.label, 'en');
+  }) : [];
 
   const search = (
     <div className={`${WRAP} ${barSearch ? TOP : 'py-8 md:py-10'}`}>
@@ -112,7 +120,7 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
         </button>
         <div className={`${open ? 'flex' : 'hidden'} sm:contents order-last sm:order-none w-full`}>
-          <SortSelect label={group[0]} value={theme} onChange={setTheme} options={[['', group[1]], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />
+          {!flat && <SortSelect label={group[0]} value={theme} onChange={setTheme} options={[['', group[1]], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />}
           {view === 'bands' && <span className="sm:hidden"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
         </div>
         <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="hidden md:inline ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">{howText.title} {how ? '−' : '+'}</button>
@@ -139,7 +147,11 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
   return (
     <>
       {search}{empty}
-      {view === 'list' ? (
+      {view === 'list' && flat ? (
+        <ul className={`${WRAP} ${FIRST} pb-16 columns-1 sm:columns-2 lg:columns-4 gap-8`}>
+          {flatItems.map(({ s: x }) => <li key={x.id} className="break-inside-avoid mb-1.5"><Link href={to(x)} className="text-[15px] text-primary hover:underline underline-offset-[3px]">{x.label}</Link>{x.size != null && <span className="text-[12.5px] text-muted"> · {n(x.size)}</span>}</li>)}
+        </ul>
+      ) : view === 'list' ? (
         // List: every broad subject with its subjects under it, names only.
         <div className={`${WRAP} ${FIRST} pb-16 columns-1 sm:columns-2 lg:columns-4 gap-8`}>
           {shown.map(({ g, narrower }) => (
@@ -148,6 +160,12 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
               <ul className="space-y-1">{narrower.map(({ s: x, m }) => <li key={x.id}><Link href={to(x)} className="text-[15px] text-secondary hover:text-primary hover:underline underline-offset-[3px]">{x.label}</Link>{m.also && <span className="text-[12.5px] text-muted"> · {m.also}</span>}</li>)}</ul>
             </div>
           ))}
+        </div>
+      ) : flat ? (
+        <div className={`${WRAP} ${FIRST} pb-16`}>
+          {card === 'top'
+            ? <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">{flatItems.map(({ s, m }) => <PicCard key={s.id} s={s} also={m.also} />)}</div>
+            : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{flatItems.map(({ s, m }) => <PicBox key={s.id} s={s} also={m.also} />)}</div>}
         </div>
       ) : (
       <div className={`${FIRST} pb-16`}>

@@ -25,7 +25,7 @@ const PERIOD_BANDS: { id: string; label: string; test: (from: number) => boolean
 
 export function periodGroups(): { groups: Group[]; books: number; count: number } {
   const cs = axes().centuries.sort((a, b) => a.from - b.from);
-  const row = (c: Axes['centuries'][number]): SubjectRow => ({ id: c.slug, label: c.name, href: `/revamp/p/${c.slug}`, alt: [centuryName(c.from), c.from >= 0 ? `${c.from}s` : ''].filter(Boolean), pics: picsOf(c.slug), note: `${centuryName(c.from)} · ${n(c.total)} ${c.total === 1 ? 'book' : 'books'}`, home: true });
+  const row = (c: Axes['centuries'][number]): SubjectRow => ({ id: c.slug, label: c.name, href: `/revamp/p/${c.slug}`, alt: [centuryName(c.from), c.from >= 0 ? `${c.from}s` : ''].filter(Boolean), pics: picsOf(c.slug), note: `${centuryName(c.from)} · ${n(c.total)} ${c.total === 1 ? 'book' : 'books'}`, home: true, size: c.total });
   const groups = PERIOD_BANDS.map((b) => {
     const narrower = cs.filter((c) => b.test(c.from)).map(row);
     return { id: b.id, label: b.label, alt: [], pics: narrower.flatMap((x) => x.pics.slice(0, 3)).slice(0, 14), narrower };
@@ -55,7 +55,6 @@ fam('Uto-Aztecan', 'Nahuatl'); fam('Quechuan', 'Quechua'); fam('Niger-Congo', 'Y
 fam('Language isolate', 'Sumerian, Purépecha, Haida');
 fam('Oto-Manguean', 'Mixtec'); fam('Na-Dene', 'Navajo'); fam('Nilo-Saharan', 'Kanuri');
 
-const LANG_BANDS = ['Indo-European', 'Sino-Tibetan', 'Afro-Asiatic', 'Other language families', 'Not yet matched to a language'];
 
 export function languageGroups(): { groups: Group[]; books: number; named: number; values: number; unmatched: number } {
   const raw = dataFile<{ languages: { name: string; book_count: number }[]; total_books: number }>('snap/_languages') ?? { languages: [], total_books: 0 };
@@ -68,23 +67,20 @@ export function languageGroups(): { groups: Group[]; books: number; named: numbe
     if (name !== l.name) e.from.push(l.name);
     merged.set(name, e);
   }
-  const rows = [...merged.entries()].sort((a, b) => b[1].count - a[1].count).map(([name, e]) => {
-    const family = FAMILY[name];
-    const band = !family ? LANG_BANDS[4] : LANG_BANDS.includes(family) ? family : LANG_BANDS[3];
+  // One list, largest first. Values that are not one language ("Und", "Latin. German", sentences) are
+  // left out: their books are still in the Library, and the clean-up is Derek's language work (#5304).
+  const all = [...merged.entries()];
+  const ok = all.filter(([name]) => FAMILY[name]);
+  const rows: SubjectRow[] = ok.sort((a, b) => b[1].count - a[1].count).map(([name, e]) => {
     const slug = pages.get(name);
-    const row: SubjectRow = {
+    return {
       id: `lang-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, label: name, href: slug ? `/revamp/l/${slug}` : undefined, alt: e.from,
-      pics: slug ? picsOf(slug) : [], home: true, bare: true,
-      note: [band === LANG_BANDS[3] ? family : '', `${n(e.count)} ${e.count === 1 ? 'book' : 'books'}`, e.from.length ? `includes ${e.from.join(', ')}` : ''].filter(Boolean).join(' · '),
+      pics: slug ? picsOf(slug) : [], home: true, bare: true, size: e.count,
+      note: [`${n(e.count)} ${e.count === 1 ? 'book' : 'books'}`, e.from.length ? `includes ${e.from.join(', ')}` : ''].filter(Boolean).join(' · '),
     };
-    return { band, row };
   });
-  const groups = LANG_BANDS.map((b) => {
-    const narrower = rows.filter((r) => r.band === b).map((r) => r.row);
-    return { id: b.toLowerCase().replace(/[^a-z0-9]+/g, '-'), label: b, alt: [], pics: narrower.flatMap((x) => x.pics.slice(0, 3)).slice(0, 14), narrower };
-  }).filter((g) => g.narrower.length);
-  const unmatched = rows.filter((r) => r.band === LANG_BANDS[4]).length;
-  return { groups, books: raw.total_books, named: rows.length - unmatched, values: raw.languages.length, unmatched };
+  const groups = [{ id: 'all', label: 'Languages', alt: [], pics: [], narrower: rows }];
+  return { groups, books: raw.total_books, named: rows.length, values: raw.languages.length, unmatched: all.length - ok.length };
 }
 
 /** The week's featured period or language: one with enough pictures to fill the hero, in turn. */
@@ -94,6 +90,8 @@ export function featuredOf(slugs: string[]) {
   return ok[Math.floor(Date.now() / (7 * 24 * 3600 * 1000)) % ok.length];
 }
 export const axisSlugs = () => { const a = axes(); return { periods: a.centuries.map((c) => c.slug), languages: a.languages.map((l) => l.slug) }; };
+/** Every century in time order, for the one-list look. */
+export const centuryRows = () => periodGroups().groups.flatMap((g) => g.narrower).map((r) => ({ ...r, name: centuryName(centuryOfSlug(r.id)!.from) }));
 export const centuryOfSlug = (slug: string) => axes().centuries.find((c) => c.slug === slug);
 
 /* Types: picture types (the gallery's) and text types (the site's form tags), as pages. */
@@ -125,3 +123,23 @@ export function typeOfSlug(slug: string) {
   return null;
 }
 export const typeSlugs = () => { const t = types(); return [...t.pictures, ...t.texts].map((x) => x.slug); };
+
+/** Each language's own name for itself, in its own script, for the text hero. Only names we are sure of. */
+const ENDONYMS: Record<string, { text: string; dir?: 'rtl'; lang?: string }> = {
+  Latin: { text: 'Lingua Latina', lang: 'la' }, Chinese: { text: '中文', lang: 'zh' }, German: { text: 'Deutsch', lang: 'de' }, English: { text: 'English', lang: 'en' },
+  French: { text: 'Français', lang: 'fr' }, Tibetan: { text: 'བོད་སྐད', lang: 'bo' }, Greek: { text: 'Ἑλληνική', lang: 'grc' }, Italian: { text: 'Italiano', lang: 'it' },
+  Hebrew: { text: 'עברית', dir: 'rtl', lang: 'he' }, Dutch: { text: 'Nederlands', lang: 'nl' }, Sanskrit: { text: 'संस्कृतम्', lang: 'sa' }, Arabic: { text: 'العربية', dir: 'rtl', lang: 'ar' },
+  Spanish: { text: 'Español', lang: 'es' }, Japanese: { text: '日本語', lang: 'ja' }, Russian: { text: 'Русский', lang: 'ru' }, Korean: { text: '한국어', lang: 'ko' },
+  Persian: { text: 'فارسی', dir: 'rtl', lang: 'fa' }, Syriac: { text: 'ܣܘܪܝܝܐ', dir: 'rtl', lang: 'syc' }, 'Classical Chinese': { text: '文言', lang: 'lzh' }, Armenian: { text: 'Հայերեն', lang: 'hy' },
+  Pali: { text: 'Pāḷi', lang: 'pi' }, Nahuatl: { text: 'Nāhuatl', lang: 'nah' }, Malay: { text: 'Bahasa Melayu', lang: 'ms' }, "Ge'ez": { text: 'ግዕዝ', lang: 'gez' },
+  Portuguese: { text: 'Português', lang: 'pt' }, Tamil: { text: 'தமிழ்', lang: 'ta' }, Danish: { text: 'Dansk', lang: 'da' }, Hindi: { text: 'हिन्दी', lang: 'hi' },
+  Polish: { text: 'Polski', lang: 'pl' }, Yiddish: { text: 'ייִדיש', dir: 'rtl', lang: 'yi' }, Swedish: { text: 'Svenska', lang: 'sv' }, Czech: { text: 'Čeština', lang: 'cs' },
+  Georgian: { text: 'ქართული', lang: 'ka' }, Vietnamese: { text: 'Tiếng Việt', lang: 'vi' }, Bengali: { text: 'বাংলা', lang: 'bn' }, Urdu: { text: 'اردو', dir: 'rtl', lang: 'ur' },
+  Welsh: { text: 'Cymraeg', lang: 'cy' }, Catalan: { text: 'Català', lang: 'ca' }, Finnish: { text: 'Suomi', lang: 'fi' }, Hungarian: { text: 'Magyar', lang: 'hu' },
+  Irish: { text: 'Gaeilge', lang: 'ga' }, Icelandic: { text: 'Íslenska', lang: 'is' }, Swahili: { text: 'Kiswahili', lang: 'sw' }, Yoruba: { text: 'Yorùbá', lang: 'yo' },
+  Quechua: { text: 'Runa Simi', lang: 'qu' }, Burmese: { text: 'မြန်မာဘာသာ', lang: 'my' }, Malayalam: { text: 'മലയാളം', lang: 'ml' }, Telugu: { text: 'తెలుగు', lang: 'te' },
+};
+/** Names for the text hero, largest languages first, each sized by its books. */
+export function languageNames() {
+  return languageGroups().groups[0].narrower.filter((r) => ENDONYMS[r.label]).map((r) => ({ ...ENDONYMS[r.label], size: r.size ?? 1 }));
+}
