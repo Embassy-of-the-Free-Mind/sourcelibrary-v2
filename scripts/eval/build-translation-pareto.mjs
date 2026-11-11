@@ -242,10 +242,24 @@ const fmtDate = d => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', { da
 const dateOf = f => f.match(/(\d{4}-\d{2}-\d{2})/)[1];
 const REF_DEFAULT = 'a published English translation of the same passage';
 
+// What getTranslateModelForBook returned for each charted language when the panels were built (the committed
+// translation-pareto.json as of 2026-10-16, #6789). Frozen: see the comment in the chart builder below.
+const MEASURED_PRODUCTION = {
+  Latin: 'gemini-3.1-flash-lite', German: 'gemini-3.1-flash-lite', French: 'gemini-3.1-flash-lite', Italian: 'gemini-3.1-flash-lite',
+  Dutch: 'gemini-3.1-flash-lite', Spanish: 'gemini-3.1-flash-lite',
+  Greek: 'gemini-3-flash-preview', Hebrew: 'gemini-3-flash-preview', Aramaic: 'gemini-3-flash-preview', Arabic: 'gemini-3-flash-preview',
+  Persian: 'gemini-3-flash-preview', Sanskrit: 'gemini-3-flash-preview', Pali: 'gemini-3-flash-preview', Chinese: 'gemini-3-flash-preview',
+  Tibetan: 'gemini-3-flash-preview',
+};
+
 // ── the charts ───────────────────────────────────────────────────────────────────────────────
 const LANGS = ['Latin', 'Greek', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Hebrew', 'Aramaic', 'Arabic', 'Persian', 'Sanskrit', 'Pali', 'Chinese', 'Tibetan'];
 const charts = LANGS.map(lang => {
-  const production = getTranslateModelForBook({ language: lang });
+  // The panels are anchored on the engine production ran WHEN THEY WERE MEASURED (paired diffs, the #5695 track
+  // packets). Reading the live router here made every routing change silently reshape these charts: moving
+  // Greek/Hebrew/…/Tibetan to agy (#7075, 2026-11-11) dropped a panel per language. So the anchor is frozen
+  // per language; showing the live route beside it is a separate change (#7075 follow-up).
+  const production = MEASURED_PRODUCTION[lang] ?? getTranslateModelForBook({ language: lang });
   return { id: lang.toLowerCase(), title: lang, production_engine: production, production_label: LABEL[production], panels: [], mentions: [] };
 });
 const chartOf = id => charts.find(c => c.id === id);
