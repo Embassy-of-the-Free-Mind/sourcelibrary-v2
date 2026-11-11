@@ -17,6 +17,7 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { translateModelRefusal } from '../../scripts/lib/ocr-lite-gate.mjs';
 
 // Git SHA of the producing code, for translation provenance (#2297). Translation's
 // *input* is the page's OCR text (not an image), so there is no image source_url to
@@ -227,6 +228,11 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   // An explicit job.config.model still wins — deliberate re-translations set one on purpose.
   const modelId = job.config.model || getTranslateModelForBook(bookDoc as RoutableBook | null) || DEFAULT_MODEL;
   const startTime = Date.now();
+
+  // Only Flash-Lite may run on the paid API (#7075). Thrown inside the try: the page is reported failed with this
+  // reason (nothing billed, nothing written), never retried on another paid model.
+  const notOnApi = translateModelRefusal(modelId);
+  if (notOnApi) throw new Error(`${notOnApi.error}: ${notOnApi.message}`);
 
   // Resolve the translation prompt from DB (source of truth for prompt content + version)
   const sourceLanguage = job.config.language || 'Latin';

@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
 import { getModelForBook, getTranslateModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import { ocrTrustGate } from '../../../../../scripts/lib/ocr-trust-gate.mjs';
+import { translateModelRefusal } from '../../../../../scripts/lib/ocr-lite-gate.mjs';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { withAuth } from '@/lib/auth-helpers';
@@ -85,6 +86,9 @@ export const POST = withAuth(async (request, session) => {
     // has been re-read — a fluent translation of a misread hides the error from the reader.
     // The Lambda processor consumes whatever this route queues, so this is its gate.
     if (action === 'translation') {
+      // Only Flash-Lite may run on the paid API (#7075, as OCR since #8525); the Lambda processor runs the model queued here.
+      const notOnApi = translateModelRefusal(getTranslateModelForBook(book as RoutableBook));
+      if (notOnApi) return NextResponse.json(notOnApi, { status: 409 });
       const trust = await ocrTrustGate(db, book, { lane: 'queue-books' });
       if (!trust.ok) {
         return NextResponse.json(

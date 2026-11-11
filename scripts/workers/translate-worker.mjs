@@ -28,6 +28,7 @@ import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
+import { translateModelRefusal } from '../lib/ocr-lite-gate.mjs';
 import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
@@ -1805,6 +1806,18 @@ async function main() {
     const job = await db.collection('jobs').findOne({ id: jobId });
     if (!job || job.status === 'cancelled' || job.status === 'failed') {
       console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
+      await db.collection('books').updateOne(
+        { id: book.id, ...NOT_HELD },
+        { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
+      );
+      return zero;
+    }
+    // #7075: only Flash-Lite may run on the paid API. The job is cancelled with the reason recorded and the book goes
+    // back to ocr_complete (still owed); it waits for the CLI lane, never falls back to another paid model.
+    const notOnApi = translateModelRefusal(getModelForBook(book));
+    if (notOnApi) {
+      console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} cancelled: ${notOnApi.error}`);
+      await db.collection('jobs').updateOne({ id: jobId }, { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: `${notOnApi.error}: ${notOnApi.message}`, updated_at: new Date() } });
       await db.collection('books').updateOne(
         { id: book.id, ...NOT_HELD },
         { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },

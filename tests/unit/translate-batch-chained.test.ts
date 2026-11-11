@@ -177,8 +177,29 @@ function makeGemini({
 }
 
 function makeDeps(gemini: any, over: Doc = {}) {
-  return { gemini, logUsage: vi.fn(async () => {}), completeBatchUsage: vi.fn(async () => 'updated'), budgetAllows: vi.fn(async () => true), log: () => {}, ...over };
+  // translateModelRefusal: stubbed open so the fixtures exercise the other gates; the paid-API model gate (#7075) has its
+  // own tests (translate-model-not-on-api-7075.test.ts, and the enrol case below).
+  return { gemini, logUsage: vi.fn(async () => {}), completeBatchUsage: vi.fn(async () => 'updated'), budgetAllows: vi.fn(async () => true), log: () => {}, translateModelRefusal: () => null, ...over };
 }
+
+describe('the paid-API model gate (#7075) at enrol', () => {
+  // Since #8596 no routing row sends a book to a non-lite model on the paid API, so the gate is made to refuse here;
+  // which models it refuses is pinned in translate-model-not-on-api-7075.test.ts. This pins what enrol DOES on a refusal.
+  it('on a gate refusal sends nothing, records the reason, and does not hand the book to the realtime lane', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini, { translateModelRefusal: () => ({ error: 'translate_model_not_on_api', message: 'test: refused' }) });
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    expect(res.ok).toBe(false);
+    expect(res.reason).toMatch(/^translate_model_not_on_api/);
+    expect(gemini.submitted).toHaveLength(0);
+    expect(db.data[RUNS_COLLECTION] || []).toHaveLength(0);
+    expect((await enrolForPhase4(db, db.data.books[0], { prompts: PROMPTS, pageCount: 3, deps })).lane).toBe('skip');
+  });
+  it('negative control: a Latin (Flash-Lite) book enrols', async () => {
+    const deps = makeDeps(makeGemini(), { translateModelRefusal: undefined });
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+  });
+});
 
 async function tick(db: any, deps: any, times = 1) {
   let notes: any[] = [];

@@ -74,6 +74,7 @@ import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { ocrTrustGate, isOcrTrustRefusal } from './ocr-trust-gate.mjs';
 import { preGateBookReason, isPreGateBookRefusal } from './pre-translation-gate.mjs';
+import { translateModelRefusal, TRANSLATE_NOT_ON_API } from './ocr-lite-gate.mjs';
 import { enrolBrake } from './quality-gate.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
@@ -335,6 +336,9 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
   if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
+  // Only Flash-Lite may run on the paid Batch API (#7075): any other engine waits for the CLI lane. Never a fallback.
+  const notOnApi = (deps.translateModelRefusal ?? translateModelRefusal)(getTranslateModelForBook(book));
+  if (notOnApi) return { ok: false, reason: `${TRANSLATE_NOT_ON_API} (${notOnApi.message})`, book };
   // Fluent wrong OCR cannot be seen page by page; the strata where it was measured are refused
   // here, with the reason recorded (a dry run records nothing). `allowUntrustedOcr` is the
   // operator's override for a named pilot (re-read pages re-translated before the book as a whole
@@ -911,7 +915,8 @@ export async function enrolForPhase4(db, book, { prompts, pageCount, deps = {} }
   // An untrusted-OCR refusal is a skip, never a hand-off: the realtime lane would translate the same bad text.
   // Nor is a book the pre-translation gate refused whole (#5915): the realtime worker would refuse it too.
   // Nor is a quality-gate NO-GO (#5826): it pauses enrolment into the whole step, realtime included.
-  if (/^(book-held|open-run|realtime-lane-owns-book|enrol-paused)/.test(first.reason) || isOcrTrustRefusal(first.reason) || isPreGateBookRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
+  // Nor a model refused on the paid API (#7075): the realtime lane is the same paid API.
+  if (/^(book-held|open-run|realtime-lane-owns-book|enrol-paused|translate_model_not_on_api)/.test(first.reason) || isOcrTrustRefusal(first.reason) || isPreGateBookRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
   const ceiling = +(owed * REALTIME_USD_PER_PAGE).toFixed(4);
   if (first.estimate != null && first.estimate <= ceiling) {
     const second = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: first.estimate, submit: false });
