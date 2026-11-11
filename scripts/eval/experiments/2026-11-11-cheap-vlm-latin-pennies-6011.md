@@ -1,7 +1,7 @@
 ---
 stage: ocr
 measure: accuracy
-languages: [Latin]
+languages: [la]
 scripts: [Latn]
 canons: []
 n_books: null
