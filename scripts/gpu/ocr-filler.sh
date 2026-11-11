@@ -300,6 +300,10 @@ EOF
         *) echo "$(now) $route: unknown kind $kind, skipped"; rm -f "$tmp"; continue ;;
       esac
       /root/bin/gpu-queue.sh add "$tmp" "$name"; rm -f "$tmp"
+      # queueing is work: restart the idle clock here. A short chunk (queued :20, run :25-:27) is gone before the next
+      # filler run, so the pending/running checks never see it; without this the clock ran on through 4 chunks and
+      # started a needless rescue at "169 min idle" three minutes after the card drafted 45 pages (2026-11-11, #6871).
+      rm -f "$ST/IDLE-SINCE"
       echo "$(now) queued $name: route $route, $p pages left in $b books (VRAM ${vram} MiB, disk ${free_g}G)"
       exit 0
     done < <(routes)
