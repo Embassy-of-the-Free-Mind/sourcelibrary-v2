@@ -100,7 +100,7 @@ export function ReadersMap({ countries, history, audience = 'admin', since, titl
           })}
         </svg>
       </Panel>
-      <Panel title="Readers by region" note={pub ? 'Share of readers on the map above.' : 'Share of likely-human visitors. The raw column counts every non-bot fingerprint, fleets included, to show how much the filter removes.'}>
+      <Panel title="Readers by region" note={pub ? `Share of the ${unit} on the map.` : 'Share of likely-human visitors. The raw column counts every non-bot fingerprint, fleets included, to show how much the filter removes.'}>
         <table className="min-w-0 w-full text-sm">
           <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Region</th><th className="text-right py-1 font-medium">{pub ? unit : 'likely human'}</th><th className="text-right py-1 font-medium">share</th>{!pub && <th className="text-right py-1 font-medium">raw</th>}</tr></thead>
           <tbody>{regions.map(r => (

@@ -61,13 +61,13 @@ const PORTRAITS: { who: string; lang?: string }[] = [
 // given) is always shown last, whatever its size.
 const KIND_LABELS: Record<string, string> = {
   student: 'Students',
-  academic: 'Researchers and scholars, many independent',
+  academic: 'Scholars and researchers',
   seeker: 'Spiritual and esoteric seekers',
-  practitioner: 'Astrologers, tarot readers, Freemasons, magicians',
+  practitioner: 'Astrologers, tarot, Freemasons',
   health: 'Therapists, doctors, nurses, herbalists',
   artist: 'Artists, writers, musicians, designers',
   teacher: 'Teachers',
-  professional: 'Lawyers, translators, journalists, business people',
+  professional: 'Lawyers, journalists, business',
   tech: 'Engineers and programmers',
   retired: 'Retired',
   library: 'Librarians, archivists, museum staff',
@@ -83,7 +83,7 @@ const INTEREST_LABELS: Record<string, string> = {
   hermetic: 'Hermeticism',
   alchemy: 'Alchemy',
   astrology_tarot: 'Astrology, tarot',
-  languages: 'Old languages: Latin, Greek, Hebrew, Sanskrit, Arabic',
+  languages: 'Latin, Greek and other old languages',
   kabbalah: 'Kabbalah',
 };
 
