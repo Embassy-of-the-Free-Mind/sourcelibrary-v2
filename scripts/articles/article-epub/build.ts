@@ -63,12 +63,12 @@ let essay = rendered
   }
 }
 
-// The readings: the cited pages, in the order the essay first cites them.
-// Each reading carries its scan, as the site's continuous EPUB does: only when the book's scans may be
-// redistributed (imageAccessFor 'open'), resolved by pageExportImageUrl, recompressed to 800×1200.
-const readings: string[] = [];
-const readingIndex: { id: string; label: string }[] = [];
-let words = 0, scans = 0, withheld = 0;
+// The sources: the cited pages, grouped by book, books in the order the essay first cites them, each book's
+// pages in page order. Each page carries its scan, as the site's continuous EPUB does: only when the book's
+// scans may be redistributed (imageAccessFor 'open'), resolved by pageExportImageUrl, recompressed.
+type SourcePage = { id: string; page: number; label: string; scan: string; text: string; online: string };
+const books = new Map<string, { title: string; author: string; published: string; translated: boolean; pages: SourcePage[] }>();
+let words = 0, scans = 0, withheld = 0, readingCount = 0;
 for (const r of refs) {
   const [book, page] = r.split('?page=');
   const file = `pages/${book}-${page}.json`;
@@ -78,33 +78,56 @@ for (const r of refs) {
   const text: string = ((english && q.original) || q.translation || q.original || '').replace(LAYOUT, '');
   if (!text.trim()) continue;
   // printed_page is the fitted page-number record ({ label, numbering, … }); older rows hold a bare value.
+  // The reader sees the page number printed on the leaf; the scan number only when the leaf has none.
   const printed = q.printed_page && typeof q.printed_page === 'object' ? q.printed_page.label : q.printed_page;
-  const pp = printed && String(printed) !== String(page) ? `p. ${esc(printed)} (scan ${page})` : `p. ${page}`;
+  const label = `p. ${esc(printed || page)}`;
   words += text.split(/\s+/).length;
+  readingCount++;
   let scan = '';
   const url = q.pageDoc ? pageExportImageUrl(q.pageDoc as Page) : null;
   if (url && imageAccessFor(q.book ?? {}) === 'open') {
     const local = await picture(url, anchor(r), 'scan');
-    if (local) {
-      scan = `<figure class="scan"><img src="${local}" alt="${esc(q.title)}, ${pp}"/></figure>`;
-      scans++;
-    }
+    if (local) { scan = `<figure class="scan"><img src="${local}" alt="${esc(q.title)}, ${label}"/></figure>`; scans++; }
   } else if (url) withheld++;
-  const published = q.published && q.published !== 'Unknown' ? `, ${esc(q.published)}` : '';
-  readingIndex.push({ id: anchor(r), label: `${q.author ? `${q.author}, ` : ''}${q.title}, ${pp.replace(/&amp;/g, '&')}` });
-  readings.push(`<section id="${anchor(r)}" class="reading">
-<p class="num">READING ${readingIndex.length}</p>
-<h3>${esc(q.title)}</h3>
-<p class="meta">${esc(q.author)}${published} · ${pp}${english ? '' : ' · English translation'} · <a href="${SITE}/book/${r}">open the page</a></p>
-${scan}
-<div class="text">${markdownToHtml(text)}</div>
-</section>`);
+  if (!books.has(book)) {
+    books.set(book, {
+      title: q.title, author: q.author || '', published: q.published && q.published !== 'Unknown' ? String(q.published) : '',
+      translated: !english, pages: [],
+    });
+  }
+  books.get(book)!.pages.push({ id: anchor(r), page: +page, label, scan, text: markdownToHtml(text), online: `${SITE}/book/${r}` });
 }
+for (const b of books.values()) b.pages.sort((x, y) => x.page - y.page);
+
+/** Catalogue names as a reader says them: "Keyssler, Johann Georg" → "Johann Georg Keyssler", life dates dropped,
+ *  several people joined with "and". Names already in reading order ("Pindar (tr. …)") pass through. */
+function displayAuthor(a: string): string {
+  return a.split(/\s*;\s*/).map((part) => {
+    const p = part.replace(/,?\s*\d{3,4}\s*[-–]\s*\d{3,4}/, '').trim();
+    const m = p.match(/^([^,()]+),\s*([^,()]+)$/);
+    return m && !/\b(ed|tr|trans)\b/i.test(p) ? `${m[2]} ${m[1]}` : p;
+  }).filter(Boolean).reduce((acc, p) => !acc ? p : /^(ed|tr|trans)\b/i.test(p) ? `${acc}, ${p}` : `${acc} and ${p}`, '');
+}
+
+const sourceList = [...books.values()].map((b) =>
+  `<p class="src">${b.author ? `<span class="au">${esc(displayAuthor(b.author))}</span>, ` : ''}<i>${esc(b.title)}</i>${b.published ? ` (${esc(b.published)})` : ''}<span class="pp"> · ${b.pages.length > 1 ? 'pp.' : 'p.'} ${b.pages.map((pg) => `<a href="#${pg.id}">${pg.label.replace('p. ', '')}</a>`).join(', ')}</span></p>`,
+).join('');
+const sourceBooks = [...books.values()].map((b) => `<section class="book">
+<h2 class="booktitle"><i>${esc(b.title)}</i></h2>
+<p class="byline">${esc(displayAuthor(b.author))}${b.published ? ` · ${esc(b.published)}` : ''}</p>
+${b.translated ? '<p class="byline small">In Source Library’s English translation</p>' : ''}
+${b.pages.map((pg, i) => `<section id="${pg.id}" class="reading${i ? ' next' : ''}">
+<p class="pagelabel">${pg.label}</p>
+${pg.scan}
+<div class="text">${pg.text}</div>
+<p class="online"><a href="${pg.online}">This page online</a></p>
+</section>`).join('\n')}
+</section>`).join('\n');
 
 const css = `
 @font-face { font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; src: url(fonts/EBGaramond-latin.woff2); }
 @font-face { font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; src: url(fonts/EBGaramond-latin-italic.woff2); }
-body { font-family: "EB Garamond", Georgia, "Palatino Linotype", serif; font-size: 1.08em; line-height: 1.5; color: #1f1a14; }
+body { font-family: "EB Garamond", Georgia, "Palatino Linotype", serif; font-size: 1.08em; line-height: 1.5; color: #1f1a14; font-variant-numeric: oldstyle-nums; font-kerning: normal; }
 p { margin: 0; text-indent: 1.4em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 h1 + p, h2 + p, figure + p, blockquote + p, .chapnum + h2 + p, p.first, .noindent { text-indent: 0; }
 h1 { font-weight: 500; font-size: 1.9em; text-align: center; margin: 1.2em 0 0.8em; line-height: 1.2; color: #6e2617; }
@@ -113,8 +136,8 @@ h2::after { content: ""; display: block; width: 2.5em; margin: 0.55em auto 0; bo
 h3 { font-weight: 500; font-size: 1.2em; margin: 0 0 0.2em; line-height: 1.25; color: #6e2617; }
 .chapnum { text-align: center; text-indent: 0; font-size: 0.8em; letter-spacing: 0.3em; color: #b08a4a; margin: 1.6em 0 0.2em; }
 p.first::first-letter { float: left; font-size: 3.3em; line-height: 0.85; margin: 0.06em 0.08em 0 0; color: #6e2617; }
-p.first::first-line { font-variant: small-caps; letter-spacing: 0.04em; }
-a { color: #6e2617; text-decoration: none; border-bottom: 1px dotted #b08a4a; }
+p.first::first-line { font-variant-caps: all-small-caps; letter-spacing: 0.05em; }
+a { color: #6e2617; text-decoration: none; }
 em, i { font-style: italic; }
 blockquote { margin: 1.3em 0.4em; padding: 0.7em 0.9em; border-left: 3px solid #b08a4a; background: #f6efe1; }
 blockquote p { text-align: left; text-indent: 0; margin-bottom: 0.4em; }
@@ -126,19 +149,29 @@ figure.opener { margin: 0 0 1.4em; }
 figure.opener img { max-height: 70vh; }
 .coverpage { margin: 0; padding: 0; text-align: center; }
 .coverpage img { height: 100vh; max-width: 100%; }
-.titlepage { text-align: center; margin-top: 16%; }
+.titlepage { text-align: center; padding-top: 6%; }
 .titlepage p { text-indent: 0; text-align: center; }
-.titlepage .house { font-size: 0.8em; letter-spacing: 0.4em; color: #b08a4a; margin-bottom: 3em; }
-.titlepage h1 { font-size: 2.3em; margin: 0 0 0.5em; }
-.titlepage .subtitle { font-style: italic; font-size: 1.15em; margin-bottom: 2.5em; color: #4a3f33; }
-.titlepage .rule { width: 4em; margin: 0 auto 2.5em; border-bottom: 1px solid #b08a4a; }
-.titlepage .small { font-size: 0.85em; color: #5d5346; font-variant: small-caps; letter-spacing: 0.08em; }
+.titlepage .logo { width: 46%; margin: 0 auto 28%; }
+.titlepage h1 { font-size: 2.4em; line-height: 1.12; margin: 0 0 0.45em; }
+.titlepage .subtitle { font-style: italic; font-size: 1.15em; line-height: 1.4; margin: 0 8% 1.6em; color: #4a3f33; }
+.titlepage .orn { width: 3.5em; margin: 0 auto 1.6em; border-bottom: 1px solid #b08a4a; }
+.titlepage .small { font-size: 0.8em; color: #6b5d4b; font-variant-caps: all-small-caps; letter-spacing: 0.14em; margin-bottom: 0.3em; }
 .note p { text-indent: 0; margin-bottom: 0.7em; font-size: 0.95em; }
-.index p { text-align: left; text-indent: -2em; margin: 0 0 0.35em 2em; font-size: 0.9em; }
-.reading { page-break-before: always; }
-.reading .num { font-size: 0.75em; letter-spacing: 0.3em; color: #b08a4a; margin: 0 0 0.5em; text-indent: 0; text-align: left; }
-.reading .meta { font-size: 0.82em; font-variant: small-caps; letter-spacing: 0.03em; color: #7a6a52; text-align: left; text-indent: 0; margin-bottom: 1em; }
+.intro { text-indent: 0; text-align: center; font-style: italic; color: #4a3f33; margin: 0 6% 1.6em; }
+.sources .src { text-align: left; text-indent: -1.4em; margin: 0 0 0.55em 1.4em; line-height: 1.35; }
+.sources .au { font-variant-caps: all-small-caps; letter-spacing: 0.04em; }
+.sources .pp { color: #b08a4a; }
+.sources .pp a { color: #6e2617; }
+.book { page-break-before: always; }
+h2.booktitle { font-size: 1.5em; margin: 1.2em 0 0.35em; }
+h2.booktitle::after { display: none; }
+.byline { text-align: center; text-indent: 0; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: #6b5d4b; margin: 0 0 0.2em; }
+.byline.small { font-variant-caps: normal; letter-spacing: 0; font-style: italic; font-size: 0.85em; }
+.reading { margin-top: 1.6em; }
+.reading.next { page-break-before: always; margin-top: 0; }
+.pagelabel { text-align: center; text-indent: 0; color: #b08a4a; font-variant-caps: all-small-caps; letter-spacing: 0.2em; margin: 0 0 0.8em; }
 .reading .text p { text-indent: 0; margin-bottom: 0.6em; }
+.online { text-align: right; text-indent: 0; font-size: 0.82em; font-style: italic; margin-top: 0.6em; }
 .scan { margin: 0 0 1.2em; }
 .scan img { max-height: 92vh; }
 .colophon { margin-top: 30%; }
@@ -225,7 +258,6 @@ for (const [i, html] of parts.entries()) {
   essayChapters.push({ title, filename: `essay-${String(i).padStart(2, '0')}.xhtml`, content: body });
 }
 
-const index = readingIndex.map((x, i) => `<p>${i + 1}. <a href="#${x.id}">${esc(x.label)}</a></p>`).join('');
 
 const coverFile = `${process.cwd()}/scans/cover.jpg`;
 {
@@ -258,16 +290,16 @@ const epub = await new EPub({
   ...(fs.existsSync(coverFile) ? [{ title: 'Cover', filename: 'cover-page.xhtml', excludeFromToc: true, beforeToc: true, content: `<div class="coverpage"><img src="file://${coverFile}" alt="${esc(displayTitle)}"/></div>` }] : []),
   {
     title: 'Title page', filename: 'title.xhtml', excludeFromToc: true, beforeToc: true,
-    content: `<div class="titlepage"><p class="house">SOURCE LIBRARY</p><h1>${esc(displayTitle)}</h1>${displaySubtitle ? `<p class="subtitle">${esc(displaySubtitle)}</p>` : ''}<div class="rule"></div><p class="small">An essay with its sources</p><p class="small">${esc(post.date)}</p></div>`,
+    content: `<div class="titlepage"><img class="logo" src="file://${process.env.PUBLIC_DIR}/brand/png/logo-full--black-on-transparent--256h.png" alt="Source Library"/><h1>${esc(displayTitle)}</h1>${displaySubtitle ? `<p class="subtitle">${esc(displaySubtitle)}</p>` : ''}<div class="orn"></div><p class="small">An essay with its sources</p><p class="small">${esc(post.date)}</p></div>`,
   },
   {
     title: 'About this edition', filename: 'about.xhtml', beforeToc: true,
-    content: `<h2>About this edition</h2><div class="note"><p>This is an article from Source Library, followed by the ${readings.length} book pages it cites, so the sources can be read offline. A linked phrase in the article takes you to its page among the Readings; each reading links back to the page online.</p><p>Pages not in English are given in Source Library's AI translation, English-language books as transcribed from the scan. Both can contain errors; the scan above each reading shows what the page says.</p><p>Online: <a href="${SITE}/articles/${slug}">${SITE.replace('https://', '')}/articles/${slug}</a></p></div>`,
+    content: `<h2>About this edition</h2><div class="note"><p>This is an article from Source Library, followed by the ${readingCount} book pages it cites, so the sources can be read offline. A linked phrase in the article takes you to its page among the Sources; each reading links back to the page online.</p><p>Pages not in English are given in Source Library's AI translation, English-language books as transcribed from the scan. Both can contain errors; the scan above each reading shows what the page says.</p><p>Online: <a href="${SITE}/articles/${slug}">${SITE.replace('https://', '')}/articles/${slug}</a></p></div>`,
   },
   ...essayChapters,
   {
-    title: 'Readings', filename: 'readings.xhtml',
-    content: `<h1>Readings</h1><p class="note">The pages the article cites, in the order it first cites them.</p><div class="index">${index}</div>${readings.join('\n')}`,
+    title: 'The Sources', filename: 'readings.xhtml',
+    content: `<h1>The Sources</h1><p class="intro">The ${readingCount} pages the essay cites, book by book, each with its scan. A link in the essay opens its page here.</p><div class="sources">${sourceList}</div>${sourceBooks}`,
   },
   {
     title: 'Colophon', filename: 'colophon.xhtml',
@@ -275,4 +307,4 @@ const epub = await new EPub({
   },
 ]).genEpub();
 fs.writeFileSync(out, epub);
-console.log(`${out}: ${readings.length} readings (${scans} scans, ${withheld} withheld), ${words} words of sources, ${(epub.length / 1e6).toFixed(1)} MB`);
+console.log(`${out}: ${readingCount} readings (${scans} scans, ${withheld} withheld), ${words} words of sources, ${(epub.length / 1e6).toFixed(1)} MB`);
