@@ -11,7 +11,7 @@
  *
  *   node --env-file=.env.production.local scripts/eval/benchmark-run-api.mjs \
  *     --root=/path/bench-images --model=lite [--stratum=chinese,greek] [--concurrency=3]
- *     [--engine=<out dir name>] [--prompt=production --prompt-hash=<hash>] [--refusal-retry=1] [--slugs=<file>] [--cap=<usd>]
+ *     [--engine=<out dir name>] [--effort=minimal] [--provider=<openrouter provider>] [--prompt=production --prompt-hash=<hash>] [--refusal-retry=1] [--slugs=<file>] [--cap=<usd>]
  *
  * Resumable: a page with an existing non-empty .txt is never re-paid.
  */
@@ -44,6 +44,9 @@ const PROMPT_MODE = argOf('prompt', 'generic');
 const REFUSAL_RETRY = parseInt(argOf('refusal-retry', '0'), 10);
 const SLUGS = argOf('slugs') ? new Set(fs.readFileSync(argOf('slugs'), 'utf8').split('\n').map(x => x.trim()).filter(Boolean)) : null;
 const CAP = argOf('cap') ? parseFloat(argOf('cap')) : Infinity;
+// --effort / --provider (openrouter/<id> models, #6011): reasoning effort where it cannot be switched off, and the
+// one endpoint to pin.
+const RUN_OPTS = { maxTokens: 16000, thinkingBudget: 0, temperature: 0, ...(argOf('effort') ? { effort: argOf('effort') } : {}), ...(argOf('provider') ? { provider: argOf('provider') } : {}) };
 let PROMPT = GENERIC_PROMPT, promptInfo = { mode: 'generic' };
 if (PROMPT_MODE === 'production') {
   const { MongoClient } = await import('mongodb');
@@ -78,17 +81,17 @@ for (const stratum of strata) {
       const buf = fs.readFileSync(path.join(dir, `${slug}.jpg`));
       let res = null, err = null;
       for (let attempt = 0; attempt < 3 && !res; attempt++) {
-        try { res = await runModel(MODEL, buf, PROMPT, { maxTokens: 16000, thinkingBudget: 0, temperature: 0 }); }
+        try { res = await runModel(MODEL, buf, PROMPT, RUN_OPTS); }
         catch (e) { err = e; await new Promise(r => setTimeout(r, 3000 * (attempt + 1))); }
       }
       // Production re-asks a refused page; the first refusal is kept in the meter so it stays countable.
       for (let r = 0; r < REFUSAL_RETRY && isRefusal(res); r++) {
         fs.appendFileSync(meterPath, JSON.stringify({ slug, engine: ENGINE, attempt: `refused-${r + 1}`, finishReason: res.finishReason, inputTokens: res.inputTokens || 0, outputTokens: res.outputTokens || 0, thinkingTokens: res.thinkingTokens || 0, costUsd: res.costUsd || 0, chars: 0, at: new Date().toISOString() }) + '\n');
         spent += res.costUsd || 0; cost += res.costUsd || 0;
-        try { res = await runModel(MODEL, buf, PROMPT, { maxTokens: 16000, thinkingBudget: 0, temperature: 0 }); } catch (e) { err = e; break; }
+        try { res = await runModel(MODEL, buf, PROMPT, RUN_OPTS); } catch (e) { err = e; break; }
       }
       const text = res?.text ?? '';
-      const row = { ...(promptInfo.mode === 'production' ? { prompt: `production-v${promptInfo.version}`, prompt_hash: promptInfo.content_hash } : {}), slug, engine: ENGINE, ...(res?.route ? { route: res.route } : {}), finishReason: res?.finishReason || null, inputTokens: res?.inputTokens || 0, outputTokens: res?.outputTokens || 0, thinkingTokens: res?.thinkingTokens || 0, costUsd: res?.costUsd || 0, durationMs: res?.durationMs || null, chars: text.length, error: res ? null : (err?.message || 'unknown').slice(0, 120), at: new Date().toISOString() };
+      const row = { ...(promptInfo.mode === 'production' ? { prompt: `production-v${promptInfo.version}`, prompt_hash: promptInfo.content_hash } : {}), slug, engine: ENGINE, ...(res?.route ? { route: res.route } : {}), ...(res?.reasoning ? { reasoning: res.reasoning, temperature: res.temperature } : {}), finishReason: res?.finishReason || null, inputTokens: res?.inputTokens || 0, outputTokens: res?.outputTokens || 0, thinkingTokens: res?.thinkingTokens || 0, costUsd: res?.costUsd || 0, durationMs: res?.durationMs || null, chars: text.length, error: res ? null : (err?.message || 'unknown').slice(0, 120), at: new Date().toISOString() };
       fs.appendFileSync(meterPath, JSON.stringify(row) + '\n');
       if (!res) { failed++; console.log(`  ! ${slug}: ${row.error}`); continue; }
       // An empty transcription is a result (a blank page, a refusal): write it so the page

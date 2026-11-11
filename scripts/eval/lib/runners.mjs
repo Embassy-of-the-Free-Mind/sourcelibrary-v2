@@ -250,6 +250,43 @@ async function runClaudeOpenRouter(model, imageBuffer, prompt, opts = {}) {
   };
 }
 
+// Any other OpenRouter vision model, named `openrouter/<vendor>/<id>` (#6011 pennies test). Reasoning is asked OFF
+// (`reasoning: { enabled: false }`) unless opts.effort is given; whether the endpoint honoured that is visible in
+// thinkingTokens and in the `reasoning` field each result carries. opts.provider pins one endpoint with no fallback
+// (endpoints of one model differ in price, quantisation and image resizing); OpenRouter's billed usage.cost wins.
+export function isOpenRouterModel(model) {
+  return model.startsWith('openrouter/');
+}
+async function runOpenRouterVision(model, imageBuffer, prompt, opts = {}) {
+  const { maxTokens = 8000, temperature = 0 } = opts;
+  if (!process.env.OPENROUTER_API_KEY) throw new Error('OPENROUTER_API_KEY not set');
+  const reasoning = opts.effort ? { effort: opts.effort } : { enabled: false };
+  const start = Date.now();
+  const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}` },
+    body: JSON.stringify({
+      model: model.slice('openrouter/'.length), max_tokens: maxTokens, temperature, reasoning, usage: { include: true },
+      ...(opts.provider ? { provider: { order: [opts.provider], allow_fallbacks: false } } : {}),
+      messages: [{ role: 'user', content: [{ type: 'text', text: prompt }, { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBuffer.toString('base64')}` } }] }],
+    }),
+  });
+  if (!resp.ok) throw new Error(`OpenRouter ${resp.status}: ${(await resp.text()).slice(0, 200)}`);
+  const data = await resp.json();
+  if (data.error) throw new Error(`OpenRouter error: ${JSON.stringify(data.error).slice(0, 200)}`);
+  const ch = data.choices?.[0] || {};
+  const u = data.usage || {};
+  const native = ch.native_finish_reason || ch.finish_reason || 'unknown';
+  return {
+    text: ch.message?.content || '', model, inputTokens: u.prompt_tokens || 0, outputTokens: u.completion_tokens || 0,
+    thinkingTokens: u.completion_tokens_details?.reasoning_tokens || 0,
+    costUsd: typeof u.cost === 'number' ? u.cost : 0,
+    durationMs: Date.now() - start,
+    finishReason: native === 'refusal' || ch.finish_reason === 'content_filter' ? 'refusal' : native,
+    route: `openrouter:${data.provider || 'unknown'}`, reasoning, temperature,
+  };
+}
+
 export async function runClaude(model, imageBuffer, prompt, opts = {}) {
   const { temperature = 0, maxTokens = 8000 } = opts;
   if (process.env.CLAUDE_ROUTE === 'openrouter') return runClaudeOpenRouter(model, imageBuffer, prompt, opts);
@@ -598,6 +635,7 @@ export function isMistralModel(model) {
 export async function runModel(model, imageBuffer, prompt, opts = {}) {
   const resolved = resolveModel(model);
   if (isClaudeModel(resolved)) return runClaude(resolved, imageBuffer, prompt, opts);
+  if (isOpenRouterModel(resolved)) return runOpenRouterVision(resolved, imageBuffer, prompt, opts);
   if (isGoogleVisionModel(resolved)) return runGoogleVision(Array.isArray(imageBuffer) ? imageBuffer[0] : imageBuffer, opts);
   if (isMistralOcrModel(resolved)) return runMistralOcr(resolved, imageBuffer, prompt, opts);
   if (isMistralModel(resolved)) return runMistralChat(resolved, imageBuffer, prompt, opts);
