@@ -1,0 +1,422 @@
+<title>Source Library Error Zoo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a specimen catalogue. Reading guide, then four instruments (map, detection, circumstance, repair), then the accession cards. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#18202b; --muted:#5b6676; --line:#d5dbe3; --accent:#1f4fa3; --accent-soft:#e2e9f6;
+  --serious:#b3261e; --serious-soft:#f8e3e1; --moderate:#c47a12; --moderate-soft:#f7ecd9; --minor:#8a94a3; --minor-soft:#eceff3;
+  --good:#1d7a3e; --good-soft:#e0f1e6; --hatch:#d5dbe3;
+  --lane-I:#6b4fa3; --lane-O:#1f6f8b; --lane-T:#2f7d4a; --lane-D:#8b5a1f; --lane-E:#7a2f5a;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Literata",Georgia,"Noto Serif","Noto Serif CJK SC","Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --surface:#19202a; --ink:#e4e9f0; --muted:#97a3b4; --line:#2b3541; --accent:#8fb2f0; --accent-soft:#1f2c42;
+  --serious:#f25c5c; --serious-soft:#3a1f1e; --moderate:#e6bd52; --moderate-soft:#352914; --minor:#7f8a99; --minor-soft:#232b35;
+  --good:#6fcf8f; --good-soft:#16301f; --hatch:#2b3541;
+  --lane-I:#b39be6; --lane-O:#6fc1dc; --lane-T:#7fcf98; --lane-D:#d9a868; --lane-E:#d98fb9; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --surface:#19202a; --ink:#e4e9f0; --muted:#97a3b4; --line:#2b3541; --accent:#8fb2f0; --accent-soft:#1f2c42;
+  --serious:#f25c5c; --serious-soft:#3a1f1e; --moderate:#e6bd52; --moderate-soft:#352914; --minor:#7f8a99; --minor-soft:#232b35;
+  --good:#6fcf8f; --good-soft:#16301f; --hatch:#2b3541;
+  --lane-I:#b39be6; --lane-O:#6fc1dc; --lane-T:#7fcf98; --lane-D:#d9a868; --lane-E:#d98fb9; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-block:32px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(22px,3.4vw,28px);font-weight:700}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.lede{color:var(--muted);max-width:66ch;font-size:17px}
+.lede b{color:var(--ink);font-weight:600}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+section{display:grid;gap:16px;min-width:0}
+.sec-head{display:grid;gap:6px;max-width:70ch}
+.sec-head p{color:var(--muted)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--f-mono);font-size:13px}
+nav.toc a{color:var(--accent);text-decoration:none}
+nav.toc a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* reading guide */
+.guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.guide div{display:grid;gap:6px;min-width:0}
+.guide h3{font-size:15px}
+.guide p{font-size:14.5px;color:var(--muted)}
+.lanekey{display:flex;flex-wrap:wrap;gap:4px}
+.code{font-family:var(--f-mono);font-weight:700;font-size:13px;padding:2px 7px;border-radius:5px;color:var(--surface);display:inline-block;text-decoration:none;line-height:1.5}
+.L-I{background:var(--lane-I)}.L-O{background:var(--lane-O)}.L-T{background:var(--lane-T)}.L-D{background:var(--lane-D)}.L-E{background:var(--lane-E)}
+.sev{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.sev.serious{background:var(--serious-soft);color:var(--serious)}.sev.moderate{background:var(--moderate-soft);color:var(--moderate)}.sev.minor{background:var(--minor-soft);color:var(--muted)}
+
+/* headline figures */
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.fig{display:grid;gap:4px;padding:14px 16px;border-left:3px solid var(--line)}
+.fig b{font-family:var(--f-display);font-size:30px;font-weight:700;line-height:1}
+.fig span{font-size:14px;color:var(--muted)}
+.fig.hot{border-left-color:var(--serious)}
+
+/* controls */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-family:var(--f-mono);font-size:12.5px;border:0;background:transparent;color:var(--ink);padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.note{font-size:13.5px;color:var(--muted);max-width:72ch}
+
+/* heatmap */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.heat{display:grid;gap:3px;min-width:640px;font-family:var(--f-mono);font-size:12px}
+.heat .hd{color:var(--muted);text-align:center;font-size:11px;align-self:end;padding-bottom:2px;line-height:1.2}
+.heat .lg{color:var(--ink);font-family:var(--f-body);font-size:14px;align-self:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:6px}
+.heat .c{height:38px;border-radius:5px;border:0;padding:0;font:inherit;font-size:11.5px;font-variant-numeric:tabular-nums;cursor:default;display:grid;place-items:center}
+.heat .c.few{background:repeating-linear-gradient(135deg,var(--surface) 0 4px,var(--hatch) 4px 5px);color:var(--muted)}
+.heat .c.none{background:transparent}
+.legend2{display:grid;grid-template-columns:auto repeat(3,64px);gap:3px 4px;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.25}
+.legend2 i{display:block;height:20px;border-radius:4px}
+.legend2 .lab{text-align:center}
+.legrow{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:flex-start}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13px;box-shadow:0 6px 24px rgba(0,0,0,.18);max-width:280px;line-height:1.45}
+.tip b{font-family:var(--f-display)}
+.tip .mono{font-size:12px}
+
+/* detection chart */
+.det{display:grid;gap:2px;font-size:14px}
+.det .row{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:12px;align-items:center;min-height:30px}
+.det .lab{display:flex;gap:8px;align-items:center;min-width:0}
+.det .lab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.det .track{position:relative;height:26px;border-radius:4px;background:linear-gradient(to right,var(--line) 1px,transparent 1px) 0 0/25% 100%}
+.det .track::after{content:"";position:absolute;right:0;top:0;bottom:0;width:1px;background:var(--line)}
+.det .ref{position:absolute;top:0;bottom:0;width:0;border-left:1.5px dashed var(--muted);opacity:.7}
+.det .dot{position:absolute;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border:2px solid var(--surface);box-sizing:content-box;padding:0;cursor:pointer}
+.det .dot.serious{background:var(--serious);border-radius:50%}
+.det .dot.moderate{background:var(--moderate);transform:rotate(45deg);border-radius:2px;width:11px;height:11px;margin:-5.5px 0 0 -5.5px}
+.det .dot.minor{background:var(--surface);border:2.5px solid var(--minor);border-radius:50%;width:9px;height:9px;margin:-6.5px 0 0 -6.5px}
+.det .axis{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:12px;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.det .axis div:last-child{position:relative;height:16px}
+.det .axis span{position:absolute;transform:translateX(-50%)}
+.keyrow{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted);align-items:center}
+.keyrow i{display:inline-block;vertical-align:-2px;margin-right:6px}
+.k-s{width:12px;height:12px;border-radius:50%;background:var(--serious)}
+.k-m{width:10px;height:10px;background:var(--moderate);transform:rotate(45deg)}
+.k-n{width:9px;height:9px;border-radius:50%;border:2.5px solid var(--minor)}
+.k-r{width:14px;height:0;border-top:1.5px dashed var(--muted)}
+.callouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.callouts div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:6px;font-size:14.5px}
+.callouts h3{font-size:14px;font-family:var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+
+/* circumstance table */
+table{border-collapse:separate;border-spacing:3px;font-size:13.5px;min-width:620px}
+th{font-family:var(--f-mono);font-weight:500;font-size:11.5px;color:var(--muted);text-align:center;padding:4px 6px;line-height:1.3}
+th.rowh{text-align:left;font-family:var(--f-body);font-size:14px;color:var(--ink);font-weight:400;white-space:nowrap;max-width:15rem;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:560px){th.rowh{max-width:9.5rem}}
+td.v{text-align:center;font-family:var(--f-mono);font-variant-numeric:tabular-nums;border-radius:5px;padding:8px 4px;min-width:64px}
+
+/* repair */
+.fixgrp{display:grid;gap:10px}
+.fixgrp>h3{display:flex;gap:10px;align-items:center;font-size:16px}
+.pill{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;padding:3px 9px;border-radius:999px;white-space:nowrap;text-transform:uppercase}
+.p-running{background:var(--good-soft);color:var(--good)}
+.p-ready{background:var(--accent-soft);color:var(--accent)}
+.p-gated{background:var(--moderate-soft);color:var(--moderate)}
+.p-contain{background:var(--serious-soft);color:var(--serious)}
+.p-instrument{background:var(--minor-soft);color:var(--muted)}
+.route{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.route header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.route header h4{margin:0;font-family:var(--f-display);font-size:17px;font-weight:600;flex:1 1 220px}
+.route dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0;font-size:14.5px}
+.route dt{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.route dd{margin:0;min-width:0}
+.route .ev{font-family:var(--f-mono);font-size:12px;overflow-wrap:anywhere}
+.route .ev a{color:var(--accent)}
+@media (max-width:560px){.route dl{grid-template-columns:1fr}.route dt{padding-top:6px}}
+
+/* catalogue */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:10px;z-index:5;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.chip{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+#q,#sort{font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:0}
+#q{flex:1 1 160px}
+.list{display:grid;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.card>summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:start}
+.card>summary::-webkit-details-marker{display:none}
+.card .code{font-size:15px;min-width:46px;text-align:center;padding:3px 8px}
+.title{min-width:0}
+.title h3{font-size:17.5px;font-weight:600}
+.sub{font-size:13px;color:var(--muted);font-family:var(--f-mono);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;font-size:13px;color:var(--muted)}
+.count b{display:block;font-size:20px;color:var(--ink)}
+.bar{grid-column:2/4;display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%}
+.bar .s{background:var(--serious)}.bar .m{background:var(--moderate)}.bar .n{background:var(--minor)}
+.body{padding:14px 16px 16px;display:grid;gap:14px;border-top:1px solid var(--line)}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;font-size:14.5px;max-width:78ch}
+.facts dt{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.facts dd{margin:0;min-width:0}
+.facts dd a{color:var(--accent)}
+@media (max-width:560px){.facts{grid-template-columns:1fr}}
+.specs{display:grid;gap:12px}
+.specs>h4{margin:0;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.spec{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:8px;min-width:0}
+.spec header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;font-size:13px;color:var(--muted)}
+.spec a{color:var(--accent);text-decoration:none}.spec a:hover{text-decoration:underline}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:560px){.pair{grid-template-columns:1fr}.card>summary{grid-template-columns:auto 1fr}.count{grid-column:2;text-align:left}.count b{display:inline;margin-right:6px}.bar{grid-column:1/3}}
+.q{font-size:14.5px;padding:8px 10px;border-radius:6px;background:var(--bg);overflow-wrap:anywhere;min-width:0}
+.q small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.q.bad{border-left:3px solid var(--serious)}.q.good{border-left:3px solid var(--lane-T)}
+.empty{color:var(--muted);font-style:italic}
+footer{font-size:13px;color:var(--muted);max-width:75ch;display:grid;gap:8px}
+footer code{font-family:var(--f-mono);font-size:12px}
+@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.card:hover{border-color:var(--accent)}}
+</style>
+<div class="wrap">
+<header style="display:grid;gap:14px">
+  <span class="eyebrow">Source Library · quality</span>
+  <h1>Error Zoo</h1>
+  <p class="lede">What goes wrong on a page of Source Library, how often, where, how hard it is to spot, and what fixes it. Every number comes from reviews in which a model read the page <b>against its scan</b>. A finding is a reviewer's reading, not a verdict.</p>
+  <nav class="toc" aria-label="Sections"><a href="#how">How to read this</a><a href="#map">Where errors cluster</a><a href="#detect">Easy and hard to catch</a><a href="#where">What makes it worse</a><a href="#fix">What fixes it</a><a href="#classes">All error classes</a></nav>
+</header>
+
+<section id="how" aria-labelledby="how-h">
+  <h2 id="how-h">How to read this page</h2>
+  <div class="guide">
+    <div><h3>A class is one kind of error</h3><p>Each has a code. The letter says where the error starts: <span class="lanekey"><span class="code L-I">I</span> the page image <span class="code L-O">O</span> the transcription (OCR) <span class="code L-T">T</span> the English <span class="code L-D">D</span> the display <span class="code L-E">E</span> data derived from the text</span></p></div>
+    <div><h3>Severity is about the reader</h3><p><span class="sev serious">serious</span> the reader is misled or text is lost. <span class="sev moderate">moderate</span> confusing but recoverable. <span class="sev minor">minor</span> cosmetic. The reviewer sets it per finding.</p></div>
+    <div><h3>Findings and pages are different counts</h3><p>One page can carry several findings. "Pages" counts pages with at least one. Rates on this page are shares of <em>reviewed</em> pages.</p></div>
+    <div><h3>Which numbers to trust most</h3><p>The <b>weekly audit</b> draws one page from each of many random books, so it stands for the whole library. The other review stores were aimed at particular books, so they run hotter.</p></div>
+  </div>
+  <div class="figs" id="figs"></div>
+</section>
+
+<section id="map" aria-labelledby="map-h">
+  <div class="sec-head"><span class="eyebrow">Map</span><h2 id="map-h">Where errors cluster, by language and age</h2>
+  <p>Each square is one language in one half-century. The number and the <b>brightness</b> are the share of reviewed pages with a serious error. The <b>colour</b> says what the errors there are like: amber when most are moderate, red when most are serious. Minor findings are left out of the colour, because they turned out to carry no signal. Hover or tab to a square for its numbers.</p></div>
+  <div class="ctrl">
+    <div class="seg" role="group" aria-label="Which reviews"><button id="m-uni" aria-pressed="true">Weekly audit, random books</button><button id="m-all" aria-pressed="false">All reviews</button></div>
+  </div>
+  <p class="note" id="map-note"></p>
+  <div class="scroll"><div class="heat" id="heat" role="grid" aria-label="Serious error rate by language and period"></div></div>
+  <div class="legrow">
+    <div class="legend2" id="legend2" aria-label="Colour key"></div>
+    <p class="note">Hatched squares have fewer than <span id="minn"></span> reviewed pages, too few for a rate. Empty squares have none.</p>
+  </div>
+</section>
+
+<section id="detect" aria-labelledby="det-h">
+  <div class="sec-head"><span class="eyebrow">Detection</span><h2 id="det-h">Which errors are easy or hard to catch</h2>
+  <p>A cheap risk score ranks every page from its text and catalogue facts, without reading the scan. The score was never shown the page it ranks: it was trained on other books. Each mark is the share of pages carrying that error whose score lands in the <b>top 30%</b>. Far right means the score finds it; far left means only a reader with the scan will.</p></div>
+  <div class="keyrow"><span><i class="k-s"></i>serious</span><span><i class="k-m"></i>moderate</span><span><i class="k-n"></i>minor</span><span><i class="k-r"></i><span id="refnote"></span></span></div>
+  <div class="det" id="det" role="list"></div>
+  <div class="callouts" id="callouts"></div>
+  <p class="note"><b>How far to trust this.</b> Every label here comes from a single model reviewer. No page has yet been read by two independent reviewers on the same text, so nobody knows how often two careful readers would agree on "serious". Within the random-book audit, the score finds serious <em>transcription</em> errors well (AUC 0.85) and serious errors in general only moderately (0.76). Write-up: <code>scripts/eval/experiments/2026-11-12-is-serious-predictable-6420.md</code>.</p>
+</section>
+
+<section id="where" aria-labelledby="where-h">
+  <div class="sec-head"><span class="eyebrow">Circumstance</span><h2 id="where-h">What makes an error more likely</h2>
+  <p>Share of reviewed pages with a serious error of each class, split by how the page was made. Darker is more often. Columns with under 100 reviewed pages are left out.</p></div>
+  <div class="scroll"><table id="circ" aria-label="Serious error rate by class and circumstance"></table></div>
+  <p class="note" id="circ-note"></p>
+</section>
+
+<section id="fix" aria-labelledby="fix-h">
+  <div class="sec-head"><span class="eyebrow">Repair</span><h2 id="fix-h">What fixes it, and where</h2>
+  <p>Every repair route that has been tried and measured against the scans, grouped by where it stands. The numbers come from blind reviews in the experiment log; each route links its write-up.</p></div>
+  <div id="fixes" style="display:grid;gap:26px"></div>
+</section>
+
+<section id="classes" aria-labelledby="cls-h">
+  <div class="sec-head"><span class="eyebrow">Catalogue</span><h2 id="cls-h">All error classes</h2>
+  <p>Open a class to see what the reader meets, how it is found, how it gets fixed, and real specimens quoted from reviewed pages.</p></div>
+  <div class="stats mono note" id="stats"></div>
+  <div class="controls" role="toolbar" aria-label="Filter classes">
+    <button class="chip" data-lane="" aria-pressed="true" id="lane-all">All</button>
+    <button class="chip" data-lane="I" aria-pressed="false" id="lane-I">Image</button>
+    <button class="chip" data-lane="O" aria-pressed="false" id="lane-O">OCR</button>
+    <button class="chip" data-lane="T" aria-pressed="false" id="lane-T">Translation</button>
+    <button class="chip" data-lane="D" aria-pressed="false" id="lane-D">Display</button>
+    <button class="chip" data-lane="E" aria-pressed="false" id="lane-E">Derived</button>
+    <input id="q" type="search" placeholder="Search names, specimens, languages" aria-label="Search">
+    <select id="sort" aria-label="Sort"><option value="serious">Most serious first</option><option value="n">Most common first</option><option value="code">By code</option></select>
+  </div>
+  <div class="list" id="list"></div>
+</section>
+
+<footer id="foot"></footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script id="zoo-data" type="application/json">__DATA__</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('zoo-data').textContent);
+const Z=D.zoo,S=D.stats,F=D.fix;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>Number(n).toLocaleString('en-US');
+const pct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
+const byCode=Object.fromEntries(Z.classes.map(c=>[c.code,c]));
+const short=c=>(byCode[c]?.name||c);
+const codeChip=c=>`<a class="code L-${c[0]}" href="#${c}" title="${esc(short(c))}">${esc(c)}</a>`;
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const hex=h=>{h=h.replace('#','');if(h.length===3)h=h.split('').map(x=>x+x).join('');return[0,2,4].map(i=>parseInt(h.slice(i,i+2),16));};
+const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
+const rgb=a=>`rgb(${a.join(',')})`;
+const lum=a=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(a[0])+.7152*f(a[1])+.0722*f(a[2]);};
+const tip=document.getElementById('tip');
+function showTip(e,html){tip.innerHTML=html;tip.hidden=false;const r=(e.currentTarget||e.target).getBoundingClientRect();const tw=tip.offsetWidth,th=tip.offsetHeight;let x=r.left+r.width/2-tw/2,y=r.top-th-8;x=Math.max(8,Math.min(x,innerWidth-tw-8));if(y<8)y=r.bottom+8;tip.style.left=x+'px';tip.style.top=y+'px';}
+const hideTip=()=>{tip.hidden=true;};
+const bindTip=(el,html)=>{el.addEventListener('mouseenter',e=>showTip(e,html));el.addEventListener('focus',e=>showTip(e,html));el.addEventListener('mouseleave',hideTip);el.addEventListener('blur',hideTip);};
+
+/* headline figures */
+const uni=S.n_uniform;
+document.getElementById('figs').innerHTML=[
+ ['hot',pct(S.uniform_serious,uni),`of pages from random books carry at least one serious error (weekly audit, ${fmt(uni)} pages)`],
+ ['',fmt(Z.meta.pages),`pages reviewed against their scans, ${fmt(Z.meta.total)} findings`],
+ ['',Z.classes.filter(c=>c.n>0).length,'error classes seen, of the taxonomy\'s 44'],
+ ['',pct(S.clean_flag_rate*1000,1000),'of clean pages still land in the risk score\'s top 30%, its false-alarm rate']
+].map(([k,b,t])=>`<div class="fig ${k}"><b class="mono">${b}</b><span>${esc(t)}</span></div>`).join('');
+
+/* heatmap */
+const MINN=8; document.getElementById('minn').textContent=MINN;
+let mode='uni';
+/* colour = serious share of the serious + moderate findings in the square (minors carry no signal and are left out); grey when there are none */
+function sevColor(t){const g=hex(css('--minor')),a=hex(css('--moderate')),r=hex(css('--serious'));if(t==null)return g;t=Math.max(0,Math.min(1,t));return mix(a,r,t);}
+function cellColor(t,rate,maxR){const surf=hex(css('--surface'));const a=.12+.88*Math.min(1,rate/maxR);return mix(surf,sevColor(t),a);}
+const serShare=c=>{const s=(c.by||{}).serious||0,m=(c.by||{}).moderate||0;return s+m?s/(s+m):null;};
+function drawHeat(){
+  const H=mode==='uni'?S.heat_uniform:S.heat_all;
+  document.getElementById('map-note').textContent=mode==='uni'
+    ?`Weekly audit only: ${fmt(S.n_uniform)} pages, one page each from random visible non-English books, every severity recorded. The fairest picture of the library, but thin in places.`
+    :`All four review stores: ${fmt(S.n_pages)} pages. More coverage, but most stores were aimed at suspect books and record only serious findings, so colours run toward red and rates run high.`;
+  const cells=Object.fromEntries(H.cells.map(c=>[c.lang+'|'+c.bin,c]));
+  const rates=H.cells.filter(c=>c.pages>=MINN).map(c=>c.serious/c.pages).sort((a,b)=>a-b);
+  const maxR=Math.max(.2,rates[Math.floor(rates.length*.95)]||1);
+  const el=document.getElementById('heat');
+  el.style.gridTemplateColumns=`minmax(6.5rem,8.5rem) repeat(${H.bins.length},minmax(2.8rem,1fr))`;
+  let h='<div></div>'+H.bins.map(b=>`<div class="hd" role="columnheader">${esc(b)}</div>`).join('');
+  for(const L of H.langs){
+    h+=`<div class="lg" role="rowheader">${esc(L)}</div>`;
+    for(const b of H.bins){
+      const c=cells[L+'|'+b];
+      if(!c){h+=`<div class="c none" aria-hidden="true"></div>`;continue;}
+      if(c.pages<MINN){h+=`<button class="c few" data-k="${esc(L+'|'+b)}" aria-label="${esc(L)} ${esc(b)}: ${c.pages} pages, too few">·</button>`;continue;}
+      const r=c.serious/c.pages,col=cellColor(serShare(c),r,maxR),dark=lum(col)<.36;
+      h+=`<button class="c" data-k="${esc(L+'|'+b)}" style="background:${rgb(col)};color:${dark?'#fff':'#18202b'}" aria-label="${esc(L)} ${esc(b)}: ${Math.round(r*100)} percent of ${c.pages} pages serious">${Math.round(r*100)}</button>`;
+    }
+  }
+  el.innerHTML=h;
+  el.querySelectorAll('button.c').forEach(btn=>{const c=cells[btn.dataset.k];const [L,b]=btn.dataset.k.split('|');
+    const by=c.by||{};bindTip(btn,`<b>${esc(L)}, ${esc(b)}</b><br><span class="mono">${fmt(c.pages)} pages reviewed · ${fmt(c.serious)} with a serious error (${pct(c.serious,c.pages)})</span><br><span class="mono">findings: ${fmt(by.serious||0)} serious · ${fmt(by.moderate||0)} moderate · ${fmt(by.minor||0)} minor</span>${c.pages<MINN?'<br><em>Too few pages for a rate.</em>':''}`);});
+  const lg=document.getElementById('legend2');
+  const rows=[.8,.55,.3,.08].map(f=>f*maxR);
+  lg.innerHTML='<span></span><span class="lab">mostly<br>moderate</span><span class="lab">half<br>and half</span><span class="lab">mostly<br>serious</span>'+rows.map(r=>`<span>${Math.round(r*100)}% of pages</span>`+[0,.5,1].map(t=>`<i style="background:${rgb(cellColor(t,r,maxR))}"></i>`).join('')).join('');
+}
+document.getElementById('m-uni').onclick=()=>{mode='uni';document.getElementById('m-uni').setAttribute('aria-pressed','true');document.getElementById('m-all').setAttribute('aria-pressed','false');drawHeat();};
+document.getElementById('m-all').onclick=()=>{mode='all';document.getElementById('m-all').setAttribute('aria-pressed','true');document.getElementById('m-uni').setAttribute('aria-pressed','false');drawHeat();};
+
+/* detection */
+function drawDet(){
+  const MINP=15;
+  const rows=S.detect.map(d=>{const t=Object.values(d.sev).reduce((a,v)=>a+v.n,0);const s=d.sev.serious;return{...d,total:t,sr:s&&s.n>=MINP?s.caught/s.n:null};})
+    .filter(d=>d.total>=40&&byCode[d.code]).sort((a,b)=>(b.sr??-1)-(a.sr??-1));
+  const ref=S.clean_flag_rate;
+  document.getElementById('refnote').textContent=`clean pages flagged (${Math.round(ref*100)}%), the false-alarm floor; a random pick would sit at 30%`;
+  const el=document.getElementById('det');
+  el.innerHTML=rows.map(d=>{
+    const dots=['minor','moderate','serious'].map(s=>{const v=d.sev[s];if(!v||v.n<MINP)return'';const x=100*v.caught/v.n;
+      return `<button class="dot ${s}" style="left:${x}%" data-tip="${esc(`<b>${d.code} · ${short(d.code)}</b><br><span class='mono'>${s}: ${fmt(v.caught)} of ${fmt(v.n)} pages caught (${Math.round(x)}%)</span>`)}" aria-label="${d.code} ${s}: ${Math.round(x)} percent caught of ${v.n} pages"></button>`;}).join('');
+    return `<div class="row" role="listitem"><div class="lab">${codeChip(d.code)}<span title="${esc(short(d.code))}">${esc(short(d.code))}</span></div><div class="track"><span class="ref" style="left:${ref*100}%"></span><span class="ref" style="left:30%;opacity:.35"></span>${dots}</div></div>`;}).join('')
+    +`<div class="axis" aria-hidden="true"><div></div><div>${[0,25,50,75,100].map(v=>`<span style="left:${v}%">${v}%</span>`).join('')}</div></div>`;
+  el.querySelectorAll('.dot').forEach(b=>bindTip(b,b.dataset.tip));
+  const ser=rows.filter(d=>d.sr!=null&&d.sev.serious.n>=40);
+  const easy=ser.slice(0,4),hard=ser.slice(-4).reverse();
+  const minorAvg=(()=>{let a=0,b=0;rows.forEach(d=>{const v=d.sev.minor;if(v){a+=v.caught;b+=v.n;}});return b?a/b:0;})();
+  document.getElementById('callouts').innerHTML=
+   `<div><h3>Easy to catch</h3><p>${easy.map(d=>`${codeChip(d.code)} ${esc(short(d.code))} (${Math.round(d.sr*100)}%)`).join('<br>')}</p><p class="note">Invention and garble leave marks in the text itself: odd vocabulary, broken script, length that does not fit the page.</p></div>`+
+   `<div><h3>Hard to catch</h3><p>${hard.map(d=>`${codeChip(d.code)} ${esc(short(d.code))} (${Math.round(d.sr*100)}%)`).join('<br>')}</p><p class="note">These read as normal text. A sense flip in good English, or a whole page that belongs to the next leaf, needs the scan.</p></div>`+
+   `<div><h3>Severity and catchability</h3><p>Across classes, ${Math.round(minorAvg*100)}% of pages with a minor finding land in the top 30%, against ${Math.round(100*ser.reduce((a,d)=>a+d.sev.serious.caught,0)/Math.max(1,ser.reduce((a,d)=>a+d.sev.serious.n,0)))}% with a serious one.</p><p class="note">The score was trained to find serious errors, so this partly measures what it was taught. Within a class, compare the marks: where they sit close, the score sees the page, not the severity.</p></div>`;
+}
+
+/* circumstance */
+function drawCirc(){
+  const cols=[['by_script','printed','Printed'],['by_script','handwritten','Handwritten'],['by_ocr','Gemini Flash-Lite','Flash-Lite OCR'],['by_ocr','Gemini Flash','Flash OCR'],['by_ocr','PaddleOCR','PaddleOCR'],['by_ocr','BDRC yigdzin','Tibetan engine'],['by_ocr','e-text','Typed e-text']]
+    .filter(([k,v])=>(S[k].base[v]||0)>=100);
+  const tot=c=>cols.reduce((a,[k,v])=>a+((S[k].hit[c]||{})[v]||0),0);
+  const classes=Object.keys(S.by_ocr.hit).filter(c=>byCode[c]).sort((a,b)=>tot(b)-tot(a)).slice(0,10);
+  const all=[];classes.forEach(c=>cols.forEach(([k,v])=>all.push(((S[k].hit[c]||{})[v]||0)/S[k].base[v])));
+  const mx=Math.max(...all,.05);const surf=hex(css('--surface')),red=hex(css('--serious'));
+  let h=`<thead><tr><th></th>${cols.map(([k,v,l])=>`<th scope="col">${esc(l)}<br><span>${fmt(S[k].base[v])} pages</span></th>`).join('')}</tr></thead><tbody>`;
+  for(const c of classes){
+    h+=`<tr><th class="rowh" scope="row">${codeChip(c)} ${esc(short(c))}</th>`;
+    for(const [k,v] of cols){const n=(S[k].hit[c]||{})[v]||0,b=S[k].base[v],r=n/b,col=mix(surf,red,Math.min(1,r/mx)*.9),dark=lum(col)<.36;
+      h+=`<td class="v" style="background:${rgb(col)};color:${dark?'#fff':'#18202b'}" title="${esc(`${c} · ${v}: ${n} of ${b} pages`)}">${(r*100).toFixed(r<.1?1:0)}%</td>`;}
+    h+='</tr>';
+  }
+  document.getElementById('circ').innerHTML=h+'</tbody>';
+  const g=(k,v,c)=>((S[k].hit[c]||{})[v]||0)/(S[k].base[v]||1);
+  document.getElementById('circ-note').innerHTML=`Handwritten pages carry ${Math.round(g('by_script','handwritten','O6')/g('by_script','printed','O6'))}× the meaning-changing misreads of printed ones and ${Math.round(g('by_script','handwritten','O1')/Math.max(.001,g('by_script','printed','O1')))}× the invented text. Flash-Lite drafts drop text ${Math.round(g('by_ocr','Gemini Flash-Lite','O5')/g('by_ocr','Gemini Flash','O5'))}× as often as Flash. Script is recorded for about half the pages; the rest are left out of the first two columns. These are all review stores pooled, so the levels run high; compare across columns, not with the headline rate.`;
+}
+
+/* repair */
+function drawFix(){
+  const order=['running','ready','gated','contain','instrument'];
+  const GH='https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/';
+  document.getElementById('fixes').innerHTML=order.map(st=>{const rs=F.routes.filter(r=>r.status===st);if(!rs.length)return'';
+    return `<div class="fixgrp"><h3><span class="pill p-${st}">${esc(F.statuses[st])}</span></h3>${rs.map(r=>`<article class="route"><header><h4>${esc(r.route)}</h4><span>${r.classes.map(codeChip).join(' ')}</span></header><dl>
+      <dt>When</dt><dd>${esc(r.when)}</dd><dt>Result</dt><dd>${esc(r.result)}</dd>${r.weak?`<dt>Weak spot</dt><dd>${esc(r.weak)}</dd>`:''}${r.cost?`<dt>Cost</dt><dd>${esc(r.cost)}</dd>`:''}
+      <dt>Evidence</dt><dd class="ev">${r.evidence.map(e=>`<a href="${GH}${e.startsWith('src/')?'':'scripts/eval/experiments/'}${esc(e)}" target="_blank" rel="noopener">${esc(e)}</a>`).join('<br>')}</dd></dl></article>`).join('')}</div>`;}).join('');
+}
+
+/* catalogue */
+const fixOf=c=>F.routes.filter(r=>r.classes.includes(c));
+function spec(s){
+  const pair=(s.bad||s.good)?`<div class="pair">${s.bad?`<div class="q bad"><small>${esc(s.badlabel||'Served')}</small>${esc(s.bad)}</div>`:''}${s.good?`<div class="q good"><small>${esc(s.goodlabel||'Should be')}</small>${esc(s.good)}</div>`:''}</div>`:'';
+  return `<article class="spec"><header><span class="sev ${esc(s.sev)}">${esc(s.sev)}</span><span>${esc(s.lang)}</span><a href="${esc(s.url)}" target="_blank" rel="noopener">open page ${s.page}</a>${s.ocr_model?`<span>OCR ${esc(s.ocr_model)}</span>`:''}</header><p>${esc(s.problem)}</p>${pair}</article>`;
+}
+function card(c){
+  const n=c.n||0,s=c.sev.serious||0,m=c.sev.moderate||0,mi=c.sev.minor||0,t=Math.max(1,s+m+mi);
+  const langs=c.langs.map(([l,k])=>`${esc(l)} ${k}`).join(' · ');
+  const fx=fixOf(c.code);
+  const facts=[['Reader sees',esc(c.sees)],['Where it starts',esc(c.where)],['How we find it',esc(c.detector)],['How to fix it',esc(c.fix)],
+    ['Measured repair',fx.length?fx.map(r=>`<span class="pill p-${r.status}">${esc(F.statuses[r.status])}</span> <a href="#fix">${esc(r.route)}</a>`).join('<br>'):'']].filter(x=>x[1]);
+  return `<details class="card" id="${esc(c.code)}"><summary>
+    <span class="code L-${c.lane}">${esc(c.code)}</span>
+    <div class="title"><h3>${esc(c.name)}</h3><div class="sub"><span>${esc((c.kind||'').replace(/_/g,' '))}</span>${n?`<span>${fmt(c.pages)} pages</span><span>${langs}</span>`:'<span>not seen in these reviews</span>'}</div></div>
+    <div class="count"><b>${fmt(n)}</b>${s?`${fmt(s)} serious`:'findings'}</div>
+    ${n?`<div class="bar" role="img" aria-label="${s} serious, ${m} moderate, ${mi} minor">${s?`<i class="s" style="width:${s/t*100}%"></i>`:''}${m?`<i class="m" style="width:${m/t*100}%"></i>`:''}${mi?`<i class="n" style="width:${mi/t*100}%"></i>`:''}</div>`:''}
+  </summary><div class="body">${facts.length?`<dl class="facts">${facts.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`:''}
+  <div class="specs"><h4>Specimens</h4>${c.specimens.length?c.specimens.map(spec).join(''):'<p class="empty">No specimens yet.</p>'}</div></div></details>`;
+}
+let lane='',q='',sort='serious';
+function render(){
+  const ql=q.toLowerCase();
+  let cs=Z.classes.filter(c=>(!lane||c.lane===lane)&&(!ql||JSON.stringify(c).toLowerCase().includes(ql)));
+  if(sort==='serious')cs.sort((a,b)=>(b.sev.serious||0)-(a.sev.serious||0));
+  else if(sort==='n')cs.sort((a,b)=>b.n-a.n);
+  else cs.sort((a,b)=>'IOTDE'.indexOf(a.lane)-'IOTDE'.indexOf(b.lane)||parseInt(a.code.slice(1))-parseInt(b.code.slice(1)));
+  document.getElementById('list').innerHTML=cs.length?cs.map(card).join(''):'<p class="empty">No class matches.</p>';
+  openHash();
+}
+function openHash(){const h=location.hash.slice(1);if(!h)return;const el=document.getElementById(h);if(el&&el.tagName==='DETAILS')el.open=true;}
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{lane=b.dataset.lane;document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();}));
+document.getElementById('q').addEventListener('input',e=>{q=e.target.value;render();});
+document.getElementById('sort').addEventListener('change',e=>{sort=e.target.value;render();});
+window.addEventListener('hashchange',()=>{openHash();const el=document.getElementById(location.hash.slice(1));el&&el.scrollIntoView({block:'start'});});
+const srcs=Object.entries(Z.meta.sources||{}).map(([k,v])=>`${esc(k)} ${fmt(v)}`).join(' · ');
+document.getElementById('stats').innerHTML=`${fmt(Z.meta.total)} findings on ${fmt(Z.meta.pages)} pages · ${fmt(Z.meta.serious_pages)} pages with a serious finding · ${srcs}`;
+const cb=Z.meta.classed_by||{};
+document.getElementById('foot').innerHTML=`<p>Built ${esc(Z.meta.built)} from four review stores: QA checks recorded per book (book_checks), the weekly audit, the route judge's verdicts on served text, and applied corrections. Reviewers are models (Claude Opus, Gemini Flash) reading each page against its scan; no human read these findings.</p>
+<p>Classes: ${fmt(cb.reader||0)} findings were classed by their reviewer. The rest were classed afterwards, ${fmt(cb.legacy||0)} by mapping older labels, ${fmt(cb.rule||0)} by keyword rules and ${fmt(cb.model||0)} by a small model. A by-eye check of 30 of those found 25 right, so minor and moderate counts carry roughly one class error in six.</p>
+<p>Definitions: <code>.claude/docs/page-error-taxonomy.md</code>. Kinds: <code>scripts/lib/review-vocabulary.mjs</code>. Build: <code>scripts/eval/error-zoo/</code>. Write-up: <code>scripts/eval/experiments/2026-11-11-error-zoo-v2-all-labels-6420.md</code>.</p>`;
+
+function drawAll(){drawHeat();drawDet();drawCirc();}
+drawAll();drawFix();render();
+const mq=matchMedia('(prefers-color-scheme: dark)');mq.addEventListener&&mq.addEventListener('change',drawAll);
+new MutationObserver(drawAll).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+})();
+</script>
