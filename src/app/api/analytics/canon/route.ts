@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 import { READABLE_IN_ENGLISH_EXPR, READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 import { TRANSLATABLE_PAGES_EXPR, TRANSLATED_PAGES_CAPPED_EXPR, aggregateTranslationPercent } from '@/lib/translation-completeness';
+import { FIRST_TRANSLATION_GATE } from '@/lib/first-translation/badge-gate';
 
 export const maxDuration = 60;
 
@@ -83,7 +84,7 @@ export const GET = withAuth(async (request: NextRequest) => {
             tenantId,
             visible: true,
             pages_count: { $gt: 0 },
-            is_first_translation: true,
+            $and: [FIRST_TRANSLATION_GATE], // the badge's rule (#3687)
           },
         },
         {

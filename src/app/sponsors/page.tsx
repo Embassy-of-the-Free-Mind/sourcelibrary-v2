@@ -3,6 +3,7 @@ import OutboundLink from '@/components/analytics/OutboundLink';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
+import { withFirstTranslationGate } from '@/lib/first-translation/badge-gate';
 
 export const revalidate = 3600;
 export const maxDuration = 60;
@@ -97,7 +98,7 @@ async function fetchStats() {
     const [totalBooks, firstTranslations, agg] = await Promise.all([
       books.countDocuments(match, { maxTimeMS: 15000 }),
       books.countDocuments(
-        { ...match, is_first_translation: true, pages_translated: { $gt: 0 } },
+        withFirstTranslationGate(match), // the badge's rule (#3687)
         { maxTimeMS: 15000 }
       ),
       books

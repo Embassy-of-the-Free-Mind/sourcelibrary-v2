@@ -13,6 +13,7 @@ import { isSingleRealLanguage } from '@/lib/language-canonical';
 import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
 import { matchStems, hasWordForms, keywordVariants } from '@/lib/search/word-forms';
 import { READABLE_RUNGS, ENGLISH_ORIGINAL_READABLE_RUNGS, type TranslationRung } from '@/lib/page-counts';
+import { applyFirstTranslationGateSb } from '@/lib/first-translation/badge-gate';
 
 /**
  * PostgREST `or` expression for the named view `readable_in_english`
@@ -308,7 +309,7 @@ export async function browseBooks(opts: {
   }
   if (opts.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
   if (opts.holder) query = query.eq('contributing_library', opts.holder);
-  if (opts.firstTranslation) query = query.eq('is_first_translation', true);
+  if (opts.firstTranslation) query = applyFirstTranslationGateSb(query); // the badge's rule (#3687)
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);
   if (opts.titlePrefix) { const s = sanitizeFilterValue(opts.titlePrefix); query = query.or(`display_title.ilike.${s}%,title.ilike.${s}%`); }
@@ -429,7 +430,7 @@ export async function countBooks(filter: {
       : query.eq('image_source_provider', filter.provider);
   }
   if (filter.collection) query = query.contains('collections', [filter.collection]);
-  if (filter.firstTranslation) query = query.eq('is_first_translation', true);
+  if (filter.firstTranslation) query = applyFirstTranslationGateSb(query); // the badge's rule (#3687)
   if (filter.search) { const s = sanitizeFilterValue(filter.search); query = query.or(`title.ilike.%${s}%,display_title.ilike.%${s}%,author.ilike.%${s}%`); }
 
   const { count } = await query;
@@ -780,7 +781,7 @@ export async function searchBooksCatalog(
 
     if (opts?.language) query = query.eq('language', opts.language);
     if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
-    if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
+    if (opts?.firstTranslation) query = applyFirstTranslationGateSb(query); // the badge's rule (#3687)
     if (opts?.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
     // Publication-year range. Rows with a null year drop out of a bounded range,
     // same as listBooksCatalog — an undated edition can't satisfy "after 1600".

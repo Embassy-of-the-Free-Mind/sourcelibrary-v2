@@ -5,6 +5,7 @@ import QuickSubscribe from '@/components/donate/QuickSubscribe';
 import GiveForm from '@/components/donate/GiveForm';
 import { getReadDb } from '@/lib/mongodb';
 import { withEnglishFallback, type Locale } from '@/lib/locale-path';
+import { withFirstTranslationGate } from '@/lib/first-translation/badge-gate';
 
 // The two payment destinations, the NAF-form ambiguity, and the amount-carrying
 // URL params all live in src/lib/give-routes.ts now — this page and /give mount
@@ -35,7 +36,7 @@ export async function fetchSupportStats(): Promise<SupportStats> {
 
     const [totalBooks, firstTranslations, agg] = await Promise.all([
       books.countDocuments(match, { maxTimeMS: 15000 }),
-      books.countDocuments({ ...match, is_first_translation: true, pages_translated: { $gt: 0 } }, { maxTimeMS: 15000 }),
+      books.countDocuments(withFirstTranslationGate(match), { maxTimeMS: 15000 }),
       books.aggregate([
         { $match: match },
         { $group: { _id: null, translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } },

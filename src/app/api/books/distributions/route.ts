@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { resolveAuthorBookFilter } from '@/lib/author-thesaurus';
+import { FIRST_TRANSLATION_GATE } from '@/lib/first-translation/badge-gate';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -90,7 +91,7 @@ export async function GET(request: NextRequest) {
     if (collection) matchConditions.push({ collections: collection });
     if (workId) matchConditions.push({ work_id: workId });
     if (library) matchConditions.push({ 'image_source.provider': library });
-    if (firstTranslation) matchConditions.push({ is_first_translation: true });
+    if (firstTranslation) matchConditions.push(FIRST_TRANSLATION_GATE); // the badge's rule (#3687)
     if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
     if (hasEdition) matchConditions.push({ [`pages_translated_${hasEdition}`]: { $gt: 0 } });
     if (authorFilter) matchConditions.push(authorFilter.match);

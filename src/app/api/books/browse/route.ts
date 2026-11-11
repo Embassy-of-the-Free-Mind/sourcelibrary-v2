@@ -5,6 +5,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getReadDb } from '@/lib/mongodb';
 import { translationPercent } from '@/lib/translation-completeness';
 import { publicUrl } from '@/lib/public-origin';
+import { applyFirstTranslationGateSb } from '@/lib/first-translation/badge-gate';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,7 +70,7 @@ export async function GET(request: NextRequest) {
     if (category) query = query.contains('categories', [category]);
     if (collection) query = query.contains('collections', [collection]);
     if (library) query = query.eq('image_source_provider', library);
-    if (firstTranslation) query = query.eq('is_first_translation', true);
+    if (firstTranslation) query = applyFirstTranslationGateSb(query); // the badge's rule (#3687)
     // readable_in_english (#5288), same expression as browseBooks' hasTranslation.
     if (hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
 

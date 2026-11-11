@@ -25,6 +25,7 @@ import LibrarianSearch from '@/components/LibrarianSearch';
 import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 import CatalogueLink from '@/components/catalog/CatalogueLink';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import { withFirstTranslationGate } from '@/lib/first-translation/badge-gate';
 
 /*
  * Mycology collection page — REDESIGN. Dedicated route so the shared
@@ -121,7 +122,7 @@ async function getMycologyData() {
   const [firstRaw, sourceRaw, ftCount, total, yearAgg, bookIdDocs] = await Promise.all([
     withTimeout(books.find({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(books.find({ collections: SLUG, visible: true, pages_count: { $gt: 0 }, is_first_translation: { $ne: true } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(12).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
-    withTimeout(books.countDocuments({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { maxTimeMS: 8000 }), 8000, 0),
+    withTimeout(books.countDocuments(withFirstTranslationGate({ collections: SLUG, visible: true }), { maxTimeMS: 8000 }), 8000, 0),
     withTimeout(Promise.resolve(collection.book_count as number | undefined).then((c) => c ?? books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 })), 8000, 0),
     withTimeout(books.aggregate([{ $match: { collections: SLUG, visible: true, year: { $type: 'number', $gt: 0 } } }, { $group: { _id: null, min: { $min: '$year' }, max: { $max: '$year' } } }], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
