@@ -75,7 +75,7 @@ footer code{font-family:var(--f-mono);font-size:12px}
 <div class="wrap">
 <header style="display:grid;gap:12px">
   <h1>Error Zoo</h1>
-  <p class="lede">Every kind of thing that has gone wrong on a Source Library page, with real specimens. Classes come from the <b>page-error taxonomy</b> (44 classes, by lane: <b>I</b>mage, <b>O</b>CR, <b>T</b>ranslation, <b>D</b>isplay, d<b>E</b>rived). Specimens are errors an Opus reader quoted in the spare audits of 10–11 Nov 2026. A reader's finding is a finding, not a verdict.</p>
+  <p class="lede">Every kind of thing that has gone wrong on a Source Library page, with real specimens. Classes come from the <b>page-error taxonomy</b> (44 classes, by lane: <b>I</b>mage, <b>O</b>CR, <b>T</b>ranslation, <b>D</b>isplay, d<b>E</b>rived). Counts and specimens come from every page-level review we hold: <b>book_checks</b> (19 QA methods, image-opened model readers, Oct–Nov 2026), the <b>weekly audit</b> (Opus, 23 rounds, 10–11 Nov 2026), the lane judge's served-arm verdicts and applied corrections. A reader's finding is a finding, not a verdict.</p>
   <div class="stats" id="stats"></div>
   <div class="legend"><span><i style="background:var(--serious)"></i>serious</span><span><i style="background:var(--moderate)"></i>moderate</span><span><i style="background:var(--minor)"></i>minor</span></div>
 </header>
@@ -91,7 +91,7 @@ footer code{font-family:var(--f-mono);font-size:12px}
 </div>
 <div class="list" id="list"></div>
 <footer>
-  <p>Counts are errors found in 1,520 audited pages from 19 rounds, one reader (Opus), without the second-reader or by-eye calibration. Only errors the reader tagged with a class are shown; about 59% carry no class and are not counted here. Classes with no specimens were not seen in these rounds. Definitions: <code>.claude/docs/page-error-taxonomy.md</code>; kinds: <code>scripts/lib/review-vocabulary.mjs</code>.</p>
+  <p>Counts are findings on about 11,300 reviewed pages across four label stores (the stats line gives the exact figures). Serious findings carry the reader's own class in 95% of cases; minor and moderate findings mostly did not, and were classed afterwards by legacy-string mapping, keyword rules and a small model (agreement with the model on a 400-item calibration sample is stated in the experiment log). The weekly audit's draw is the only one uniform over the library; the other stores are picked frames (most-read books, lane queues, repairs). Classes with no specimens were not seen. Definitions: <code>.claude/docs/page-error-taxonomy.md</code>; kinds: <code>scripts/lib/review-vocabulary.mjs</code>; build: <code>scripts/eval/error-zoo/zoo-all.py</code>.</p>
 </footer>
 </div>
 <script id="zoo-data" type="application/json">

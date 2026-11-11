@@ -32,25 +32,25 @@ RULES = [
     (None, r'running[ -]head|signature mark|<sig>|page furniture|folio number|page[ -]num', 'O11'),
     ('ocr', r'footnote|marginal|margin(alia)?|side[ -]?note|apparatus|gloss(es)? (dropped|merged|lost)', 'O12'), ('translation', r'footnote|marginal|margin(alia)?|apparatus (is |are )?(dropped|stripped|lost|missing)', 'T13'),
     ('ocr', r'ditto', 'O6'),
-    (None, r'abbreviation|expanded|contraction|suspension|normali[sz]|modern(i[sz]ed)? spelling|spelling (is )?(changed|modern|regular)|long s|ſ|ligature|æ|œ|ů|umlaut|diacritic|accent', 'O8'),
+    ('ocr', r'abbreviation|expanded|expansion|contraction|suspension|normali[sz]|moderni[sz]|spelling|long[ -]s\b|ligature|umlaut|diacritic|accent|orthograph|u/v|i/j|ampersand|tironian', 'O8'),
     ('ocr', r'number|numeral|date|digit|\b1[0-9]{3}\b|folio', 'O7'),
     ('ocr', r'dropped|omitted|omission|missing|not transcribed|left out|skipped|cut off|truncat|is lost', 'O5'),
     ('ocr', r'repeated|duplicat|twice|loop', 'O4'),
     ('ocr', r'reading order|column|interleav|order of|transposed|line break|hyphen|split (word|across)|run (into|together)|merged into|broken across', 'O9'),
     ('ocr', r'table|row|cell', 'O17'),
     ('ocr', r'image[- ]desc|described|woodcut|diagram|figure|illustration|plate', 'O14'),
-    ('ocr', r'italic|bold|roman type|heading|markdown|#|\*\*|tag|<[a-z-]+>|format|capital', 'O9'),
     ('ocr', r'handwritten|manuscript note|later hand|annotation|stamp|pencil', 'O13'),
     ('ocr', r'invent|fabricat|not on the (leaf|page)|hallucin|made up|no basis', 'O1'),
     ('ocr', r'script|language tag|wrong language|<language>|<script>|page-type', 'O16'),
     ('ocr', r'misread|read as|— image|wrong (letter|word)|garbled|for ‘|for \'|instead of|mistaken|confus|should (be|read)|miss?pel|wrong name|name', 'O6'),
-    ('translation', r'previous page|next page|continues|continuation|carried over|carry-over|lookahead|repeats? (a |the )?passage|from (the )?(preceding|following)|page break', 'T5'),
+    ('translation', r'carried over|carry-over|lookahead|leak|repeats? (a |the )?passage|(text|words|sentence|lines?) (of|from) the (previous|next|preceding|following) (page|leaf)|belongs? to the (previous|next) (page|leaf)', 'T5'),
     ('translation', r'<meta>|meta (note|claims|says)|summary of|describes the page|says the page', 'T15'),
     ('translation', r'<summary>|<keywords>|raw (tag|<)|literal tag|<leaf-break|<column-break|tag (appears|stands|sits|is shown)|unrendered|markup', 'D1'),
     ('translation', r'heading|promoted|markdown|\*\*|bold|italic|# |numbering|list (format|structure)|verse|line[- ]break|stanza|form (imposed|lost)|layout|paragraph', 'T16'),
     ('translation', r'image[- ]desc|image description|woodcut|tail-?piece|decorat|ornament|photograph', 'T13'),
-    ('translation', r'note adds|<note>|gloss|commentary|interpret|scholarship|explanation|editorial|adds? (a |an )?(claim|note|explanation)|invented (heading|scholarship|note)|not on the page|adds nothing', 'T10'),
-    ('translation', r'carries the (ocr|misread)|from the ocr|ocr misread|ocr error|follows the ocr|inherits|garbage|reproduces the misread', 'T7'),
+    ('translation', r'invented (heading|scholarship|note|gloss|explanation|claim)|adds? (a |an )?(claim|explanation|interpretation)|interpretive|commentary (that|not)|scholarship|not (on|in) the (page|source|text)|adds nothing|editoriali[sz]', 'T10'),
+    ('translation', r'carries the (ocr|misread)|from the ocr|ocr misread|ocr error|follows the ocr|inherits the|reproduces the misread|built on (the|a) misread', 'O6'),
+    ('translation', r'garbage|garble|gibberish|fluent(ly)? (over|despite|render)|makes sense of|smooth(s|ed)? over', 'T7'),
     ('translation', r'untranslated|left in (latin|greek|german|french|the original)|echo|source language|not translated|same[- ]language', 'T2'),
     ('translation', r'dropped|omitted|omission|missing|left out|skipped|not rendered|is lost|cut|truncat|unfinished|stops', 'T9'),
     ('translation', r'invent|fabricat|hallucin|made up|no basis|not in the (source|text|original)|added (text|words|a sentence|a phrase)', 'T7'),
@@ -87,7 +87,7 @@ if MODE == 'rules':
         elif it['cls'] and str(it['cls']).startswith('other:'):
             c, h = None, None
         if not c:
-            text = f"{it['problem']} {it['bad']} {it['good']}".lower()
+            text = it['problem'].lower()  # the reviewer's prose only: quoted page text matched the rules by accident
             for stage, rx, cls in RULES:
                 if stage and stage != it['stage']: continue
                 if re.search(rx, text, re.I): c, h = cls, f'rule:{rx[:24]}'; break
