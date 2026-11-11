@@ -57,7 +57,7 @@ const GEMINI_SOURCES = ['ai', 'batch_api', 'batch_api_recovery', 'pipeline_previ
 export const EDITION_SOURCES = ['esukhia-derge-tengyur', 'cbeta-xml-p5', 'oraec-corpus', 'cdli-atf', 'corpus', 'wikisource', 'kanripo', 'sefaria'];
 const EDITION_MODELS = [/^cbeta-/, /^oraec-/, /^esukhia-/, /^etcsl-/, /^cdli-/, /^tla-/, /^wikisource/];
 /** Hand corrections and one-off test runs: a few hundred pages, named so none is silently dropped. */
-const OTHER_MODELS = [/^claude-/, /^manual/];
+const OTHER_MODELS = [/^claude-/, /^manual/, /^human$/];
 
 export const MODELS: PublicModel[] = [
   // ── Reading the page ────────────────────────────────────────────────────
@@ -80,7 +80,34 @@ export const MODELS: PublicModel[] = [
     match: { lane: 'ocr', models: [/^gemini-3-flash/] },
   },
   {
-    id: 'ocr-paddle', job: 'read', name: 'Open engine for Chinese manuscripts', version: 'PaddleOCR-VL-1.6',
+    id: 'ocr-agy-flash', job: 'read', name: 'Newer mid-tier general model', version: 'gemini-3.8-flash-low (also gemini-3.8-flash, -medium, gemini-3.7-flash-low)',
+    maker: 'Commercial AI service', access: 'commercial service', status: 'in use',
+    books: 'The default reader in our current routing: it reads a page alone, or corrects a draft from one of the specialist engines. It runs through the command-line tool of a subscription, not the paid per-page service.',
+    why: 'Our router picks it wherever its measured defects are no worse than the other routes’, and uses the strongest model tested only where every route of this kind fails.',
+    weakness: 'It shares the other general models’ habits: refusals on famous texts, and fluent text on scripts it cannot read. The lower-effort level, “low”, is the one that reads most pages.',
+    evidence: [{ label: 'routes', href: `${BLOB}.claude/docs/routing.md` }],
+    match: { lane: 'ocr', models: [/^gemini-3\.[78]-flash/] },
+  },
+  {
+    id: 'ocr-heavy', job: 'read', name: 'Heavier general model', version: 'gemini-4-argon-low, gemini-4-argon-high',
+    maker: 'Commercial AI service', access: 'commercial service', status: 'fallback',
+    books: 'A few thousand pages, re-read.',
+    why: 'A heavier model than the others on this page, used for re-reads.',
+    weakness: 'It is limited to a few hundred calls a day, because one large run once used up the whole shared quota. Not measured against the current models on our pages.',
+    evidence: [{ label: 'routes', href: `${BLOB}.claude/docs/routing.md` }],
+    match: { lane: 'ocr', models: [/argon/] },
+  },
+  {
+    id: 'ocr-lighton', job: 'read', name: 'Open engine for English print', version: 'lightonai/LightOnOCR-3-1B',
+    maker: 'Open-weights project (Apache-2.0 licence)', access: 'open model', status: 'in use',
+    books: 'Printed English books from 1800 onwards, and Fraktur. It reads only pages that have no text yet: never read, or refused or returned empty by the lightest general model.',
+    why: 'On 97 typed reference pages of English print from 1800 on, its median character error was 0.12% against 0.27% for the lightest general model, with no catastrophic reads against 17.',
+    weakness: 'It garbled Sanskrit, Devanagari and Chinese spans, misread the diacritics of transliterated names, and sometimes added a note about its own reading; pages with these are checked and set aside.',
+    evidence: [issue(6871, 'the lane, #6871'), { label: 'routes', href: `${BLOB}.claude/docs/routing.md` }],
+    match: { lane: 'ocr', models: [/lighton/i], sources: ['lightonocr'] },
+  },
+  {
+    id: 'ocr-paddle', job: 'read', name: 'Open engine for Chinese manuscripts', version: 'PaddleOCR-VL-1.6, PaddleOCR-VL-1.6-0.9B',
     maker: 'Open-weights project', access: 'open model', status: 'starting',
     books: 'The Siku Quanshu manuscript copies: about 7,900 Chinese books whose reading was held back for this model.',
     why: 'Checked against the Kanripo and CBETA texts on 433 of these books, it got more than half the characters wrong on 0.9% of pages, against 10.6% for the lightest general model and 3.7% for the mid-tier one.',
@@ -125,13 +152,13 @@ export const MODELS: PublicModel[] = [
     match: { lane: 'ocr', models: [/^mineru/], sources: ['mineru'] },
   },
   {
-    id: 'ocr-ia', job: 'read', name: 'Internet Archive text', version: 'ia-ocr/<version of the Archive’s OCR>',
+    id: 'ocr-ia', job: 'read', name: 'Internet Archive text', version: 'ia-ocr/<version of the Archive’s OCR>, ia-abbyy-hocr',
     maker: 'Internet Archive', access: 'existing text, no model', status: 'in use',
     books: 'Books imported from the Internet Archive, until our own reading replaces it.',
     why: 'It is free and arrives with the scan, so a new book is searchable at once.',
     weakness: 'The lightest general model read better on 57 books to 5, and the Archive’s text misreads about 1.5% of printed numbers.',
     evidence: [issue(5186, 'test, #5186')],
-    match: { lane: 'ocr', models: [/^ia-ocr\//, /^ia-legacy-ocr/], sources: ['ia_djvu', 'ia-ocr-repair'] },
+    match: { lane: 'ocr', models: [/^ia-ocr\//, /^ia-legacy-ocr/, /^ia-abbyy-/], sources: ['ia_djvu', 'ia-ocr-repair', 'internet_archive'] },
   },
   {
     id: 'ocr-editions', job: 'read', name: 'Published e-texts', version: 'Esukhia Derge Tengyur, CBETA, ORAEC, ETCSL, CDLI, TLA, Wikisource',
@@ -152,13 +179,13 @@ export const MODELS: PublicModel[] = [
     match: { lane: 'ocr', models: [/^gemini-(1|2)\./, /^gemini$/] },
   },
   {
-    id: 'ocr-other', job: 'read', name: 'Hand corrections and test runs', version: 'manual, claude-*',
+    id: 'ocr-other', job: 'read', name: 'Hand corrections and test runs', version: 'manual, human, claude-*',
     maker: 'People, and an AI model in tests', access: 'various', status: 'in use',
-    books: 'A few hundred pages typed or corrected by hand, or read by an AI model while we tested it.',
+    books: 'A few hundred pages typed or corrected by hand (including volunteers’ corrections and pages checked by eye), or read by an AI model while we tested it.',
     why: 'Corrections by people; the AI-model pages are left from tests.',
     weakness: 'Each is a small, one-off source. The record on each page says which.',
     evidence: [],
-    match: { lane: 'ocr', models: OTHER_MODELS, sources: ['manual'] },
+    match: { lane: 'ocr', models: OTHER_MODELS, sources: ['manual', 'volunteer-correction', 'by_eye'] },
   },
   {
     id: 'ocr-unrecorded', job: 'read', name: 'Not recorded', version: '—',
@@ -189,6 +216,24 @@ export const MODELS: PublicModel[] = [
     match: { lane: 'translation', models: [/^gemini-3-flash/] },
   },
   {
+    id: 'tr-agy-flash', job: 'translate', name: 'Newer mid-tier general model', version: 'gemini-3.8-flash-low (also gemini-3.8-flash)',
+    maker: 'Commercial AI service', access: 'commercial service', status: 'in use',
+    books: 'The default translator in our current routing, for the books the router sends it. It runs through the command-line tool of a subscription, not the paid per-page service.',
+    why: 'Our router picks it wherever its measured defects are no worse than the other routes’, and uses the strongest model tested only where every route of this kind fails.',
+    weakness: 'The same as the other general models: a wrong transcription becomes fluent, wrong English.',
+    evidence: [{ label: 'routes', href: `${BLOB}.claude/docs/routing.md` }],
+    match: { lane: 'translation', models: [/^gemini-3\.[78]-flash/] },
+  },
+  {
+    id: 'tr-heavy', job: 'translate', name: 'Heavier general model', version: 'gemini-4-argon-low',
+    maker: 'Commercial AI service', access: 'commercial service', status: 'fallback',
+    books: 'A few thousand pages, translated a second time.',
+    why: 'A heavier model than the others on this page, used for second translations.',
+    weakness: 'It is limited to a few hundred calls a day, because one large run once used up the whole shared quota. Not measured against the current models on our pages.',
+    evidence: [{ label: 'routes', href: `${BLOB}.claude/docs/routing.md` }],
+    match: { lane: 'translation', models: [/argon/] },
+  },
+  {
     id: 'tr-gemini-older', job: 'translate', name: 'Earlier general models', version: 'gemini-2.5-flash, gemini-2.0-flash',
     maker: 'Commercial AI service', access: 'commercial service', status: 'retired',
     books: 'Pages translated before our current general models existed. Their English stays until a page is translated again.',
@@ -208,13 +253,13 @@ export const MODELS: PublicModel[] = [
     match: { lane: 'translation', models: [/^etcsl-/, /^tla-/], sources: ['corpus'] },
   },
   {
-    id: 'tr-other', job: 'translate', name: 'Hand corrections and test runs', version: 'manual, claude-*',
+    id: 'tr-other', job: 'translate', name: 'Hand corrections and test runs', version: 'manual, human, claude-*',
     maker: 'People, and an AI model in tests', access: 'various', status: 'in use',
-    books: 'A few dozen pages translated or corrected by hand, or translated by an AI model while we tested it.',
+    books: 'A few hundred pages translated or corrected by hand (including volunteers’ corrections), or translated by an AI model while we tested it.',
     why: 'Corrections by people; the AI-model pages are left from tests.',
     weakness: 'Each is a small, one-off source. The record on each page says which.',
     evidence: [],
-    match: { lane: 'translation', models: OTHER_MODELS, sources: ['manual'] },
+    match: { lane: 'translation', models: OTHER_MODELS, sources: ['manual', 'volunteer-correction'] },
   },
   {
     id: 'tr-unrecorded', job: 'translate', name: 'Not recorded', version: '—',
