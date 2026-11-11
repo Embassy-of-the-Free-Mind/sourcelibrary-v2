@@ -172,6 +172,10 @@ export const ENRICHABLE_HOLD_REASONS = Object.freeze({
   'tibetan-translation-lane-6948': 'waiting on the Tibetan translation lane',
   'translate-cli-7075': 'waiting on cli-translate-lane',
   'kangyur-import': 'Derge Kangyur, published 2026-11-11 (#8482); translated by the #6948 queue while held',
+  // The Paddle read is written (OCR only); which engine translates is a separate decision (#6101), so the hold
+  // stays. Enrichment needs no release: an English original is summarised from its OCR (pagesForEnrichment), any
+  // other book only once every page is translated (enrichmentSkip's held-untranslated gate). #8577.
+  'paddle-print-6101': 'Paddle print OCR written; translation engine decided separately (#6101)',
 });
 
 /**
