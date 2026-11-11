@@ -143,7 +143,10 @@ const index = readingIndex.map((x, i) => `<p>${i + 1}. <a href="#${x.id}">${esc(
 
 const coverFile = `${process.cwd()}/scans/cover.jpg`;
 {
-  const src = await fetchAndCompressImage(post.image, { colour: true, width: 1600, height: 2560 });
+  // A hero kept in the repo (/articles/<slug>/x.jpg) is read from public/ (PUBLIC_DIR, set by build.sh).
+  const src = post.image.startsWith('/')
+    ? fs.readFileSync(`${process.env.PUBLIC_DIR}${post.image}`)
+    : await fetchAndCompressImage(post.image, { colour: true, width: 1600, height: 2560 });
   if (src) fs.writeFileSync(coverFile, await makeCover(src, displayTitle, displaySubtitle, 'An essay with its sources'));
 }
 const year = (post.date.match(/\d{4}/) || [''])[0];
