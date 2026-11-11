@@ -21,7 +21,7 @@ import type { DielsData } from './data';
 type Passage = [number, string, 0 | 1];
 type Edition = [string, number | null, string, string, number, number, string];
 type Work = {
-  y: number | null; wb?: 1; t: string; a: string; l: string; id: string; np: number; q: number;
+  y: number | null; wb?: 1; t: string; a: string; l: string; id: string; np: number; q: number; yr?: number | null;
   pub?: string; P: Passage[]; E: Edition[];
 };
 type Era = { key: string; name: string; label: string; from: number | null; to: number | null };
@@ -44,6 +44,52 @@ const ERAS: Era[] = [
 ];
 
 const BATCH = 30;
+
+// The catalogue sometimes holds one work under several work_ids (separate scans of the same printing, a
+// transcription entered twice). passages.json keeps one row per work_id, so those appeared as repeated cards.
+// Rows are merged when they share title and author, or share an author and the same best passage; the merged
+// row keeps the edition with a reported saying and the most pages, and the others fold into "other editions".
+const squash = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const authorKey = (a: string) => {
+  const k = squash(a).split(' ').filter(Boolean).sort().join(' ');
+  return k === 'unknown' || k === 'various' ? '' : k;
+};
+
+export function mergeSameWork(rows: Work[]): Work[] {
+  const parent = rows.map((_, i) => i);
+  const find = (i: number): number => (parent[i] === i ? i : (parent[i] = find(parent[i])));
+  const seen = new Map<string, number>();
+  const link = (key: string, i: number) => {
+    const j = seen.get(key);
+    if (j === undefined) seen.set(key, i);
+    else parent[find(i)] = find(j);
+  };
+  rows.forEach((w, i) => {
+    const a = authorKey(w.a);
+    link(`t:${squash(w.t).slice(0, 60)}|${a}`, i);
+    if (a && w.P[0]) link(`p:${a}|${squash(w.P[0][1]).slice(0, 120)}`, i);
+  });
+  const groups = new Map<number, Work[]>();
+  rows.forEach((w, i) => { const r = find(i); (groups.get(r) ?? groups.set(r, []).get(r)!).push(w); });
+  const out: Work[] = [];
+  for (const g of groups.values()) {
+    if (g.length === 1) { out.push(g[0]); continue; }
+    const ranked = [...g].sort((x, y) => (Number(y.q > 0) - Number(x.q > 0)) || (y.np - x.np));
+    const main = ranked[0];
+    const earliest = g.filter((w) => w.y != null).sort((x, y) => x.y! - y.y!)[0];
+    const editions = new Map<string, Edition>();
+    for (const w of ranked.slice(1)) {
+      editions.set(w.id, [w.id, w.yr ?? null, w.l, w.t === main.t ? '' : w.t, w.np, w.P[0][0], w.P[0][1]]);
+      for (const e of w.E) editions.set(e[0], e);
+    }
+    for (const e of main.E) editions.set(e[0], e);
+    editions.delete(main.id);
+    const merged: Work = { ...main, E: [...editions.values()] };
+    if (earliest) { merged.y = earliest.y; if (earliest.wb) merged.wb = 1; else delete merged.wb; }
+    out.push(merged);
+  }
+  return out.sort((a, b) => (a.y == null ? 1 : 0) - (b.y == null ? 1 : 0) || (a.y ?? 0) - (b.y ?? 0) || b.np - a.np);
+}
 
 const fmtYear = (y: number | null) => (y == null ? 'n.d.' : y < 0 ? `${-y} BCE` : String(y));
 const eraOf = (w: Work) =>
@@ -163,7 +209,7 @@ export default function FigureIndex({ dataUrl, namePrefix, placeholder, eraIntro
   useEffect(() => {
     fetch(dataUrl)
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((d: Work[]) => setData(d))
+      .then((d: Work[]) => setData(mergeSameWork(d)))
       .catch(() => setFailed(true));
   }, [dataUrl]);
 
