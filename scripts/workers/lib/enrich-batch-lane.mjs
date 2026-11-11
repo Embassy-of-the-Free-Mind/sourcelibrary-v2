@@ -159,8 +159,10 @@ export function gapFilter(scopeFilter = {}, { allowHeld = false } = {}) {
  *     lane hold, released by #7860 part B once translated.
  *   - translate-cli-7075: CLI_TRANSLATE_HOLD (translation-routing.mjs): the book waits for cli-translate-lane, which
  *     releases it when every untranslated page is done.
- * NOT here, on purpose: tengyur-import-5497 and kangyur-import (translation not approved: a priced decision),
- * paddle-zh-6388-ocr-only (its pages were held for invented English), scans-only-* and acquisition-wave-* (no text),
+ *   - kangyur-import: the 103 Derge Kangyur volumes (#5665). Kept out while their translation was an unapproved, priced
+ *     decision; Derek published all 103 on 2026-11-11 (#8482), translated by the #6948 queue while held. A volume
+ *     with pages that have no e-text yet (they wait on Tibetan OCR) still counts as untranslated and stays out.
+ * NOT here, on purpose: tengyur-import-5497 (translation not approved: a priced decision), paddle-zh-6388-ocr-only (its pages were held for invented English), scans-only-* and acquisition-wave-* (no text),
  * and every containment hold.
  */
 export const ENRICHABLE_HOLD_REASONS = Object.freeze({
@@ -169,6 +171,7 @@ export const ENRICHABLE_HOLD_REASONS = Object.freeze({
   'zh-histories-7546': 'Four Histories; translated by the Siku lane while held',
   'tibetan-translation-lane-6948': 'waiting on the Tibetan translation lane',
   'translate-cli-7075': 'waiting on cli-translate-lane',
+  'kangyur-import': 'Derge Kangyur, published 2026-11-11 (#8482); translated by the #6948 queue while held',
 });
 
 /**

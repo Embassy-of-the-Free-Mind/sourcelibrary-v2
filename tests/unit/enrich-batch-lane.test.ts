@@ -227,6 +227,13 @@ describe('enrichmentSkip — withheld share and lane holds', () => {
     expect((await enrichmentSkip(dbOf([], false), book({ pipeline_auto: { hold: { reason } } }), { allowHeld: false })).skip).toBe(`held:${reason}`);
   });
   it('the allowlist names no containment, rights or approval-pending hold', () => {
-    for (const r of Object.keys(ENRICHABLE_HOLD_REASONS)) expect(r).not.toMatch(/invent|wrong-leaf|contain|leak|tengyur|kangyur|unsettled|scans-only/);
+    for (const r of Object.keys(ENRICHABLE_HOLD_REASONS)) expect(r).not.toMatch(/invent|wrong-leaf|contain|leak|tengyur|unsettled|scans-only/);
+  });
+  it('kangyur-import is admitted (published 2026-11-11, #8482), but only once no page is left untranslated', async () => {
+    expect(ENRICHABLE_HOLD_REASONS['kangyur-import']).toBeTruthy();
+    const held = book({ pipeline_auto: { hold: { reason: 'kangyur-import' } } });
+    expect((await enrichmentSkip(dbOf([], false), held, opts)).skip).toBeNull();
+    expect((await enrichmentSkip(dbOf([], true), held, opts)).skip).toBe('held-untranslated:kangyur-import');
+    expect(ENRICHABLE_HOLD_REASONS['tengyur-import-5497']).toBeUndefined();
   });
 });
