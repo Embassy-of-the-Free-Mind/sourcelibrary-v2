@@ -38,7 +38,7 @@ export default function CenturyList({ rows, how, thumbs = true }: { rows: (Subje
       <ul className={`${FIRST} border-t border-border-light`}>
         {list.map((r) => (
           <li key={r.id} className="border-b border-border-light">
-            <Link href={r.href ?? '#'} className={`group grid items-center gap-3 sm:gap-5 py-2.5 hover:bg-white ${thumbs ? 'grid-cols-[44px_1fr_auto] sm:grid-cols-[44px_220px_1fr_110px]' : 'grid-cols-[1fr_auto] sm:grid-cols-[220px_1fr_110px]'}`}>
+            <Link href={r.href ?? '#'} className={`group grid items-center gap-3 sm:gap-5 py-2.5 hover:bg-white ${thumbs ? 'grid-cols-[44px_1fr_96px] sm:grid-cols-[44px_220px_1fr_110px]' : 'grid-cols-[1fr_96px] sm:grid-cols-[220px_1fr_110px]'}`}>
               {thumbs && <span className="relative w-11 h-11 overflow-hidden bg-warm">{r.pics[0] && <img src={r.pics[0].src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />}</span>}
               <span className="min-w-0">
                 <span className="block font-serif text-[18px] text-primary leading-tight group-hover:underline underline-offset-[3px]">{r.label}</span>
