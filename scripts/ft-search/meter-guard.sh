@@ -33,10 +33,13 @@ refresh_cache() {
   rmdir "$LOCK" 2>/dev/null
 }
 
+# The usage endpoint stopped returning the five-hour 'session:all' limit (absent for every account since at least
+# 2026-11-04); only the weekly limit is reported. A missing session reading counts as 0, so the weekly cap still
+# binds. A missing WEEKLY reading still prints nothing and trips the blind stop (#8482).
 read_meter() {
   if [ ! -s "$CACHE" ] || [ "$(age_of "$CACHE")" -ge "$TTL" ]; then refresh_cache; fi
   [ -s "$CACHE" ] && [ "$(age_of "$CACHE")" -lt "$MAX_AGE" ] || return 0   # too old to trust: prints nothing
-  EMAIL="$EMAIL" python3 -c "import json,os,sys;d=[a for a in json.load(open(sys.argv[1])) if a.get('email')==os.environ['EMAIL'] and a.get('ok')][0];l={x['key']:x['percent'] for x in d['limits']};print(l['session:all'],l['weekly_all:all'])" "$CACHE" 2>/dev/null
+  EMAIL="$EMAIL" python3 -c "import json,os,sys;d=[a for a in json.load(open(sys.argv[1])) if a.get('email')==os.environ['EMAIL'] and a.get('ok')][0];l={x['key']:x['percent'] for x in d['limits']};print(l.get('session:all',0),l['weekly_all:all'])" "$CACHE" 2>/dev/null
 }
 
 NTFY=${NTFY:-https://ntfy.sh/sourcelibrary-uptime}
