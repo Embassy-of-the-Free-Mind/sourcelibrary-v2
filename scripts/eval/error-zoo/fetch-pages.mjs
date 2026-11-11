@@ -42,9 +42,11 @@ const nb = new Map();
 const nkeys = [];
 for (const d of pages.values()) for (const dn of [-1, 1]) nkeys.push({ book_id: d.book_id, page_number: d.page_number + dn });
 for (let i = 0; i < nkeys.length; i += 500) {
+  // strlen-safe: every $strLenCP operand below is wrapped in $ifNull with '' so it is a string by construction
   const docs = await db.collection('pages').aggregate([
     { $match: { $or: nkeys.slice(i, i + 500) } },
     { $project: { book_id: 1, page_number: 1, ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 500] }, ocr_len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, tr_head: { $substrCP: [{ $ifNull: ['$translation.data', ''] }, 0, 400] }, tr_len: { $strLenCP: { $ifNull: ['$translation.data', ''] } },
+      // strlen-safe: operands are $ifNull'd to '' (see above)
       ocr_tail: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, { $max: [0, { $subtract: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 500] }] }, 500] },
       tr_tail: { $substrCP: [{ $ifNull: ['$translation.data', ''] }, { $max: [0, { $subtract: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 400] }] }, 400] } } },
   ]).toArray();

@@ -32,6 +32,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
 import { kindOfFinding } from '../../lib/review-vocabulary.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const args = process.argv.slice(2);
 const out = args.find((a) => !a.startsWith('--'));
@@ -52,7 +53,7 @@ const iso = (d) => (d instanceof Date ? d.toISOString() : d ? String(d) : null);
 {
   const cur = db.collection('book_checks').find({ page_findings: { $type: 'array' } }, {
     projection: { book_id: 1, method_id: 1, run_id: 1, reader: 1, pages_read: 1, exposure: 1, frame: 1, checked_at: 1, page_findings: 1, text_provenance: 1, verdict: 1, reader_warning: 1 },
-  });
+  }).batchSize(1000);
   const pageIds = new Set();
   const rows = [];
   for await (const c of cur) {
@@ -152,7 +153,8 @@ if (fs.existsSync(saDir)) {
 
 // ---- 3. lane_judge_verdicts on the served arm ---------------------------------------------------------------
 {
-  const cur = db.collection('lane_judge_verdicts').find({ $or: [{ arms: 'served' }, { route: /stored|served/ }] }, { projection: { book_id: 1, page_id: 1, page_number: 1, verdict: 1, judge: 1, judged_at: 1, run_id: 1, lane: 1, task: 1, route: 1, lang: 1 } });
+  // live verdicts only: verdictQuery() drops origin:test rows (#7263); a label of a test arm is not a label of what readers see
+  const cur = db.collection('lane_judge_verdicts').find(verdictQuery({ $or: [{ arms: 'served' }, { route: /stored|served/ }] }), { projection: { book_id: 1, page_id: 1, page_number: 1, verdict: 1, judge: 1, judged_at: 1, run_id: 1, lane: 1, task: 1, route: 1, lang: 1 } }).batchSize(1000);
   for await (const v of cur) {
     const vd = v.verdict || {};
     const serious = vd.accept === false || (typeof vd.fidelity === 'number' && vd.fidelity <= 3) || vd.wrong_text === true;
@@ -165,7 +167,7 @@ if (fs.existsSync(saDir)) {
 
 // ---- 4. applied corrections (positives only) ----------------------------------------------------------------
 {
-  const cur = db.collection('page_corrections').find({ status: { $in: ['applied', 'partially_applied'] } }, { projection: { book_id: 1, page_id: 1, page_number: 1, field: 1, note: 1, via: 1, created_at: 1, reviewed_by: 1, edits: 1 } });
+  const cur = db.collection('page_corrections').find({ status: { $in: ['applied', 'partially_applied'] } }, { projection: { book_id: 1, page_id: 1, page_number: 1, field: 1, note: 1, via: 1, created_at: 1, reviewed_by: 1, edits: 1 } }).batchSize(1000);
   for await (const pc of cur) {
     emit({ source: 'correction', method: `page_corrections:${pc.via ?? '?'}`, run_id: null, reader: `human-or-job:${pc.reviewed_by ?? '?'}`, book_id: pc.book_id, page_id: pc.page_id, page_number: pc.page_number,
       exposure: 'served', selection: 'picked', judged_at: iso(pc.created_at), serious: true, errors: [{ stage: pc.field, class: null, kind: null, severity: 'serious', problem: (pc.note ?? '').slice(0, 400), bad: (pc.edits?.[0]?.find ?? '').slice(0, 240), good: (pc.edits?.[0]?.replace ?? '').slice(0, 240) }],
