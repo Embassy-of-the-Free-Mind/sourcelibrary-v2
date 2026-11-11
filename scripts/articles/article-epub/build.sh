@@ -15,7 +15,7 @@ banner="import{createRequire}from'module';const require=createRequire('$ROOT/pac
 sed "s#__PAGE__#$ROOT/src/app/articles/$SLUG/page.tsx#" "$HERE/render.jsx" > "$WORK/render.jsx"
 NODE_PATH="$ROOT/node_modules" "$ESB" "$WORK/render.jsx" --bundle --platform=node --jsx=automatic --tsconfig="$ROOT/tsconfig.json" \
   "${alias_args[@]}" --outfile="$WORK/render.cjs" --log-level=error
-(cd "$WORK" && node render.cjs)
+(cd "$WORK" && PUBLIC_DIR="$ROOT/public" node render.cjs)
 
 grep -o -E 'sourcelibrary.org/book/[a-z0-9-]+\?page=[0-9]+' "$WORK/article.html" | sed 's#sourcelibrary.org/book/##' | awk '!s[$0]++' > "$WORK/refs.txt"
 mkdir -p "$WORK/pages"

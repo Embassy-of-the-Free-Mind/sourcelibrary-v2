@@ -336,7 +336,7 @@ export const posts: BlogPost[] = [
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg',
     imageAlt: 'Engraving after Hendrick Goltzius: the sisters of Phaethon turning into poplars by the river Eridanus',
-    epub: { href: 'https://images.sourcelibrary.org/article-epubs/hyperborea.epub', mb: 5 },
+    epub: { href: 'https://images.sourcelibrary.org/article-epubs/hyperborea.epub', mb: 8 },
   },
   {
     slug: 'shipwrecks-and-buried-treasure',
