@@ -46,8 +46,8 @@ export const PARTNERS_HTML = `
     <div>
       <p class="eyebrow">The untranslated record</p>
       <h2>Most Renaissance Latin has never been translated into English</h2>
-      <p>Some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, 11,357 books are the first English translation of their work, about half of all we have made readable in English. Half of them are Latin; the rest are from Chinese (1,946), German (1,447), Dutch, French, Greek, Tibetan and dozens of other languages.</p>
-      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record. The sample was 1,000 catalogue works drawn at random, each searched by AI agents and not yet checked by a human panel; a second model found 97% but missed some well-known translations, so we quote the lower figure. Debora Shuger estimated roughly 90%. A book here is marked a first translation only after a search for an earlier one finds none (25,007 books searched by 2 November 2026); of 55 marked books checked by a second model, 50 held, 5 were unclear and none was refuted.</p>
+      <p>Some nine in ten Latin works written in the Renaissance have never been translated into English. Of the books we have made readable in English, 11,357 are the first English translation of their work, and not only from Latin: 1,946 are from Chinese and 1,447 from German.</p>
+      <p class="cap" style="color:var(--night-muted)">Of Latin works composed and printed 1480–1620 in the Universal Short Title Catalogue, 93% (91–95%) have no English translation on record, from a random sample of 1,000 searched by AI agents. A book here is marked a first translation only after a search for an earlier one finds none. <a href="https://sourcelibrary.org/research/translation-gap" style="color:inherit">How we measured it</a></p>
     </div>
     <figure style="margin:0">
       <div class="frame"><img src="/ai-partners/img/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola"></div>
@@ -83,16 +83,14 @@ export const PARTNERS_HTML = `
   <div class="wrap pf">
     <h2 class="pword">Collected</h2>
     <div>
-      <p class="lede">Assembled from more than thirty libraries and catalogued by work, edition and author.</p>
+      <p class="lede">From more than thirty libraries, catalogued by work, edition and author.</p>
       <table class="ledger">
         <tr><td>Books held, with their page scans</td><td class="n">131,547</td></tr>
         <tr><td>Public on the site</td><td class="n">71,212</td></tr>
         <tr><td>Public and readable in English</td><td class="n">22,731</td></tr>
-        <tr><td>Page images held</td><td class="n">29.8M</td></tr>
-        <tr><td>Images held: page scans, artworks and illustrations</td><td class="n">32 TB</td></tr>
         <tr><td>Ritman Library books, found only here</td><td class="n">2,347</td></tr>
       </table>
-      <p class="note">Counted 29 October 2026, public figures 10 November; duplicates, takedowns and catalogue-only records are excluded. A further 409,000 books printed before 1850 are catalogued from partner libraries, linked to their scans, and queued to be read; they are not counted above. Storage measured 28 October.</p>
+      <p class="note">Counted 29 October 2026, public figures 10 November. Duplicates and catalogue-only records are excluded.</p>
     </div>
   </div>
 </section>
@@ -101,8 +99,7 @@ export const PARTNERS_HTML = `
   <div class="wrap pf">
     <h2 class="pword">Transcribed</h2>
     <div>
-      <p class="lede">9.6 million pages transcribed in their original language and script. Latin and classical Chinese predominate, alongside German, French, Italian, Greek, Hebrew, Arabic, Syriac, Sanskrit, Tibetan and Yucatec Maya.</p>
-      <p>Each page is indexed by the people, places and ideas it names, so an idea can be followed from book to book.</p>
+      <p class="lede">9.6 million pages in their original language and script, mostly Latin and classical Chinese, but also Greek, Hebrew, Arabic, Syriac, Sanskrit, Tibetan and Yucatec Maya. Each page is indexed by the people, places and ideas it names.</p>
     </div>
   </div>
 </section>
@@ -111,30 +108,16 @@ export const PARTNERS_HTML = `
   <div class="wrap pf">
     <h2 class="pword">Translated</h2>
     <div>
-      <p class="lede">5.7 million pages in English, each aligned with its original. Of these, 11,357 works appear in English for the first time.</p>
-      <figure style="margin:8px 0 28px">
+      <p class="lede">5.7 million pages in English, each aligned with its original.</p>
+      <figure style="margin:8px 0 0">
         <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta/page/20"><img src="/ai-partners/img/reader-sanskrit.jpg" alt="A page of Kamalākara’s Siddhānta-tattva-viveka in the reader: the scan, the Sanskrit transcription and the English translation side by side, with notes on technical terms" style="width:100%;height:auto;display:block;border:1px solid rgba(0,0,0,.08)" loading="lazy" width="1440" height="808"></a>
-        <figcaption class="cap">Scan, transcription and translation side by side: Kamalākara’s <em>Discernment of the Principles of Astronomy</em> (1658), on the lengths of the cosmic cycle. Notes explain technical terms and give the original word.</figcaption>
+        <figcaption class="cap">Kamalākara’s <em>Discernment of the Principles of Astronomy</em> (1658): scan, Sanskrit and English side by side, with notes that give the original term.</figcaption>
       </figure>
-      <h3 style="margin-top:8px">Books readable in English, by date</h3>
-      <p class="note" style="margin-bottom:18px">By the year the edition was printed, or the manuscript written, which is often later than the work was composed. The darker part of each bar is the books marked as first English translations. 4,168 books with no recorded date are not shown. Counted 2 November 2026.</p>
-      <div class="bar"><span>before 1400</span><i class="st"><b style="width:5.0%"></b><s style="width:6.0%"></s></i><span>507</span></div>
-      <div class="bar"><span>1400s</span><i class="st"><b style="width:12.8%"></b><s style="width:17.8%"></s></i><span>1,404</span></div>
-      <div class="bar"><span>1500s</span><i class="st"><b style="width:39.7%"></b><s style="width:35.0%"></s></i><span>3,422</span></div>
-      <div class="bar"><span>1600s</span><i class="st"><b style="width:72.0%"></b><s style="width:28.0%"></s></i><span>4,586</span></div>
-      <div class="bar"><span>1700s</span><i class="st"><b style="width:31.3%"></b><s style="width:18.6%"></s></i><span>2,289</span></div>
-      <div class="bar"><span>1800s</span><i class="st"><b style="width:14.5%"></b><s style="width:57.0%"></s></i><span>3,279</span></div>
-      <div class="bar"><span>1900 on</span><i class="st"><b style="width:7.6%"></b><s style="width:55.3%"></s></i><span>2,884</span></div>
-      <div class="legend" style="margin-top:14px"><span><i class="sw tr"></i>first English translation</span><span><i class="sw tc"></i>other books readable in English</span></div>
     </div>
   </div>
 </section>
 
-<section class="proof alt" id="v2-illustrated">
-  <div class="wrap pf">
-    <h2 class="pword">Illustrated</h2>
-    <div>
-      <p class="lede">235,714 illustrations cropped from the pages of about 18,700 books. Each has its position on the page, a type and a description, and links back to the page it came from. Nearly all carry subject tags.</p>
+\g<1>235,714 illustrations cropped from about 18,700 books, each with its position on the page, a type, a description, and a link to its page.\g<2>
       <div class="crops">
         <figure><a href="https://sourcelibrary.org/book/instruments-of-the-restored-astronomy-brahe/page/6952d0fa77f38f6761bc5b5a"><img src="/ai-partners/img/crop-tycho-hven.jpg" alt="Woodcut map of the island of Hven with a compass rose" width="720" height="642" loading="lazy"></a><figcaption>Map of Hven. Tycho Brahe, <i>Instruments of the Restored Astronomy</i>, 1602</figcaption></figure>
         <figure><a href="https://sourcelibrary.org/book/codex-borgia/page/69dfdfbcfc46416d01ddf48e"><img src="/ai-partners/img/crop-codex-borgia.jpg" alt="Painted manuscript page in nine panels of figures, divided by bands of day signs" width="712" height="720" loading="lazy"></a><figcaption>Nine panels and day signs. <i>Codex Borgia</i>, pre-Columbian Mexico</figcaption></figure>
@@ -148,39 +131,13 @@ export const PARTNERS_HTML = `
         <tr><td>On the public site</td><td class="n">208,422</td></tr>
         <tr><td>Offered for licence</td><td class="n">~146,000</td></tr>
       </table>
-      <h3 style="margin-top:28px">By type</h3>
-      <div class="bar"><span>Diagram</span><i style="width:100%"></i><span>82,981</span></div>
-      <div class="bar"><span>Woodcut</span><i style="width:74.1%"></i><span>61,487</span></div>
-      <div class="bar"><span>Engraving</span><i style="width:42.2%"></i><span>35,010</span></div>
-      <div class="bar"><span>Emblem</span><i style="width:15.1%"></i><span>12,492</span></div>
-      <div class="bar"><span>Portrait</span><i style="width:11.1%"></i><span>9,185</span></div>
-      <div class="bar"><span>Music</span><i style="width:10.9%"></i><span>9,052</span></div>
-      <div class="bar"><span>Decorative</span><i style="width:8.7%"></i><span>7,257</span></div>
-      <div class="bar"><span>Map</span><i style="width:7.8%"></i><span>6,464</span></div>
-      <div class="bar"><span>Frontispiece</span><i style="width:7.2%"></i><span>5,968</span></div>
-      <div class="bar"><span>Symbol</span><i style="width:6.7%"></i><span>5,574</span></div>
-      <div class="bar"><span>Bookplate</span><i style="width:1.7%"></i><span>1,425</span></div>
-      <p class="note" style="margin-top:14px">Counted 4 November 2026, against the rights tiers of 30 October. Offered: 107,017 from Tier A books, and about 39,000 from books dated before 1900 whose library states no terms for its scans. Illustrations under a library's non-commercial or own terms are held back. Types are the labels the extraction model gave, counted over all 236,918 records, including the 1,204 with no crop file. The other books in the library have not all been processed.</p>
-      <p class="note">Box accuracy of the current detector, which drew about three in five of the crops: 81.6% of boxes were tight (95% CI 68–92) and it found 95% of the pictures, on 38 pictures across 48 pages, graded by model readers with each page image open (September 2026). On 10 of those 48 pages it boxed something that was not an illustration, such as a cover label or a bookplate. The other crops have not been graded.</p>
-      <p>The public illustrations can be browsed in the <a href="https://sourcelibrary.org/gallery">gallery</a> and searched through the <code>search_images</code> tool on our <a href="https://sourcelibrary.org/developers">MCP server</a>.</p>
+      <p class="note" style="margin-top:14px">Offered: illustrations from books whose library permits commercial use of its scans, and from books dated before 1900 whose library states no terms. Counted 4 November 2026. On a graded sample of 48 pages, the current detector drew a tight box around 82% of pictures and found 95% of them; on 10 pages it also boxed something that was not an illustration.</p>
+      \1 in the <a href="https://sourcelibrary.org/gallery">gallery</a> and searched through the <code>search_images</code> tool on our <a href="https://sourcelibrary.org/developers">MCP server</a>.</p>
     </div>
   </div>
 </section>
 
-<section class="proof" id="v2-reviewed">
-  <div class="wrap pf">
-    <h2 class="pword">Checked</h2>
-    <div>
-      <p class="lede">Each language has its own scripts, abbreviations and habits, and models read some far better than others. So each one is worked out separately, and scholars who read it check the hard cases.</p>
-      <table class="ledger">
-        <tr><td>Yucatec Maya</td><td class="who">David Stuart</td></tr>
-        <tr><td>Latin and Sanskrit</td><td class="who">Peter J. Forshaw</td></tr>
-        <tr><td>Latin, and early printed books</td><td class="who">Paul Dijstelberge</td></tr>
-      </table>
-      <p>What they find goes back into how that language is read: which model, which instructions, and when a page needs a second reading. We have logged 427 experiments on reading and translation quality. Translations are tested against published human translations in fourteen languages, errors are sorted into 44 kinds, and the error rates are <a href="https://sourcelibrary.org/quality">published</a>.</p>
-      <p class="note">Latin, two-fifths of the English pages: transcriptions differ from a published text of the same printing by a median 3.7% of characters (77 pages), most of it the long s read as f, and 86% of English pages were rated 4 or 5 of 5 by a model judge against a published human translation (71 pages). Figures for each language, with their samples, are on the <a href="https://sourcelibrary.org/quality">quality page</a>; as of 26 October 2026.</p>
-      <p>The record of this work is kept with the text: several readings of the same page, how each was judged against the image, and each correction beside the reading it replaced. It shows where models fail on old books, and why. 1,535 people have offered to help, and readers report what they find.</p>
-      <div class="photos">
+\g<1>      <p>What they find changes how that language is read: which model, which instructions, and when a page needs a second reading. Every reading and correction is kept beside the text, with how it was judged against the image. Error rates by language are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</p>\g<2>
         <img src="/ai-partners/img/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam">
         <img src="/ai-partners/img/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica">
       </div>
@@ -194,18 +151,13 @@ export const PARTNERS_HTML = `
     <h2 class="pword">Rights</h2>
     <div>
       <p class="lede">The original texts are in the public domain. A book whose status is uncertain is withheld from the public site; about 300 have been withheld so far.</p>
-      <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. For a further 8,343 the library has stated no terms for its scans. A small share of pages is excluded because of the terms of the model that wrote them.</p>
-      <p>Translations, notes and indexes are original to Source Library and published under a Creative Commons share-alike licence. Search, retrieval for a user and individual use are free; training at scale is licensed directly. The terms and the rate card are on the <a href="https://sourcelibrary.org/licensing">licensing page</a>.</p>
+      <p>For a training licence: text from 28,700 books, 4.9 million pages, and images from 11,929 of them, where the holding library permits commercial use of its scans. The tiers are set out under What a licence covers, below.</p>
+      <p>Translations, notes and indexes are ours, under a Creative Commons share-alike licence. Search and use for a reader are free; training at scale is licensed. Terms and rates are on the <a href="https://sourcelibrary.org/licensing">licensing page</a>.</p>
     </div>
   </div>
 </section>
 
-<section class="proof" id="v2-provenance">
-  <div class="wrap pf">
-    <h2 class="pword">Provenance</h2>
-    <div>
-      <p class="lede">Every page can be traced to the scan it was read from and the model that read it.</p>
-      <p>Each book names the library that holds the original, with a link to its scan and, where the library gives one, its rights statement. Each transcription and translation records the model that produced it; since 28 September 2026 it also records the exact prompt, the settings, the run and the image or text it was made from, with a hash of the output. When a page is corrected or re-read, the earlier version is kept.</p>
+\g<1><p>Each book links to the holding library’s scan and rights statement. Each transcription and translation names the model that made it, and since 28 September 2026 also the prompt, settings and input, with a hash of the output. Corrections keep the earlier version.</p>
     </div>
   </div>
 </section>
@@ -214,17 +166,14 @@ export const PARTNERS_HTML = `
   <div class="wrap pf">
     <h2 class="pword">Available now</h2>
     <div>
-      <p class="lede">The public library is available now through our streaming API and <a href="https://sourcelibrary.org/developers">MCP server</a>, with a stable citation link for every passage. The whole corpus, public and held, comprises about 21 billion tokens, three times the size of English Wikipedia: 15 billion in the original languages and 6 billion of English translation, each page aligned to its scan.</p>
-      <p class="note">Measured 29 October 2026 with the o200k tokenizer over a random sample of 12,000 pages, multiplied by the exact counts of transcribed and translated pages; by the median page, about 14.5 billion. English Wikipedia’s articles hold about 5 billion words, some 6.5 billion tokens. In words the library is half as large again, 7.7 billion: Latin, Chinese and Sanskrit take more tokens per word than English.</p>
+      <p class="lede">The public library is open through our streaming API and <a href="https://sourcelibrary.org/developers">MCP server</a>, with a stable citation link for every passage. The whole corpus is about 21 billion tokens, three times English Wikipedia: 15 billion in the original languages and 6 billion in English.</p>
+      <p class="note">o200k tokenizer, sample of 12,000 pages, 29 October 2026.</p>
       <table class="ledger">
         <tr><td>Page views by readers, last 7 days</td><td class="n">103K</td></tr>
         <tr><td>Pages fetched by ChatGPT and Claude for their users, last 7 days</td><td class="n">28K</td></tr>
-        <tr><td>Library tool calls by Claude for its users through our MCP server, last 7 days</td><td class="n">35K</td></tr>
-        <tr><td>Automated requests stopped at our network edge, per day</td><td class="n">~800K</td></tr>
-        <tr><td>Bulk requests rate-limited by the site, last 30 days</td><td class="n">1.9M</td></tr>
+        <tr><td>Library tool calls by Claude through our MCP server, last 7 days</td><td class="n">35K</td></tr>
       </table>
-      <p class="note">Search engines and assistants acting for a user read freely. Training crawlers get the licence terms and a preview of each book. Counted 28 October 2026 from the site's logs; the assistant figures from Cloudflare's logs by user agent (ChatGPT-User, Claude-User), 26 October–1 November, not counting search-index crawlers such as OAI-SearchBot; the edge figure is the average of 26–27 October (blocked, or challenged and not passed), from Cloudflare.</p>
-      <p>Representative works include Robert Fludd's <a href="https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd">History of the Two Worlds</a> (1617); Athanasius Kircher's <a href="https://sourcelibrary.org/book/mundus-subterraneus-kircher">Mundus Subterraneus</a> (1678); the <a href="https://sourcelibrary.org/book/imperial-collection-of-mathematical-essentials-vol-2">Collected Essentials of Mathematics</a> commissioned by the Kangxi emperor (1723); Kamalākara's <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta">Discernment of the Principles of Astronomy</a> (1658), a Sanskrit treatise that takes issue with Bhāskara; and the <a href="https://sourcelibrary.org/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822">collected works</a> of the eighth Gyalwang Drukpa (1768–1822). A description of <a href="https://sourcelibrary.org/dataset">the dataset</a> is also available.</p>
+      <p class="note">Counted 28 October 2026 from the site's and Cloudflare's logs. Assistants acting for a user read freely; training crawlers get the licence terms.</p>
     </div>
   </div>
 </section>
