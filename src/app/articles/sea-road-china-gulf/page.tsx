@@ -673,7 +673,8 @@ export default function SeaRoadPage() {
           The charts are a long strip cut into pages, with the coast drawn along the top and bottom and the sailing
           courses as dotted lines between, labelled with compass bearings and the number of watches to sail. On one
           page off southern Vietnam, among islands with names like Overturned Cauldron Mountain and Bronze Drum
-          Mountain, a single line of text runs along the course:
+          Mountain,{' '}
+          <Link href={`/book/${WUBEI}?page=67`}>a single line of text runs along the course</Link>:
         </P>
 
         <PageFigure
@@ -693,7 +694,8 @@ export default function SeaRoadPage() {
           follow. Each shows a ship with its sails set in the middle of the page and, around it, the stars to look
           for and their height above the horizon in &ldquo;fingers&rdquo;, a unit of about a degree and a half.
           All four are for crossings in the Indian Ocean: from the coast of Arabia to Hormuz, to Ceylon, from Ceylon
-          back to Calicut, and back towards Sumatra. The first is for Hormuz:
+          back to Calicut, and back towards Sumatra.{' '}
+          <Link href={`/book/${WUBEI}?page=86`}>The first is for Hormuz</Link>:
         </P>
 
         <div className="max-w-lg mx-auto">
