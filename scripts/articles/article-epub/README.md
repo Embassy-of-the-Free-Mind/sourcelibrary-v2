@@ -2,7 +2,9 @@
 
 `bash scripts/articles/article-epub/build.sh <slug>` builds the EPUB and puts it in R2 at
 `article-epubs/<slug>.epub` (EPUBs are never committed: .gitignore), printing its URL. `UPLOAD=0`
-skips the upload; `OUT=<path>` keeps a copy. The EPUB is the article, then every library page it links to
+skips the upload; `OUT=<path>` keeps a copy. `STYLE=bw` makes every picture pure black and white
+(1-bit PNG, `BW_THRESHOLD`, default 150) for e-ink, uploaded as `article-epubs/<slug>-bw.epub`:
+Hyperborea is 3.5 MB that way against 17 MB in colour. The EPUB is the article, then every library page it links to
 (`/book/<slug>?page=N`), each as a full page of text, in the order the article first cites
 them. The article's links to those pages go to the reading in the back; each reading links
 to the page online. For a reader on a plane or a Kindle (Derek, 2026-11-11).

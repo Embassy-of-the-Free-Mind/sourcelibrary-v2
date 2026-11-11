@@ -7,8 +7,13 @@ import { posts } from '@/app/articles/posts';
 import { imageAccessFor } from '@/lib/types/image-source';
 import { fetchAndCompressImage, pageExportImageUrl } from '@/lib/export-page-images';
 import type { Page } from '@/lib/types';
+import sharp from 'sharp';
 
 const [slug, out] = process.argv.slice(2);
+// STYLE=bw: every picture as pure black and white (1-bit PNG), for e-ink. Engravings and woodcuts are line
+// art already, so a threshold keeps them faithful and crisp, at a fraction of the size. Default: colour.
+const BW = process.env.STYLE === 'bw';
+const THRESHOLD = Number(process.env.BW_THRESHOLD || 150);
 const post = posts.find((p) => p.slug === slug);
 if (!post) throw new Error(`no post ${slug} in src/app/articles/posts.ts`);
 
@@ -19,18 +24,40 @@ const esc = (s: unknown) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g,
 // Tags in the stored page text that are layout, not reading (running heads, signatures, catchwords).
 const LAYOUT = /<(page-num|sig|catch|header|footer)>[\s\S]*?<\/\1>/g;
 
+/** A picture, sized for an e-reader (800×1200), as a local file the EPUB embeds; null when it cannot be read. */
+async function picture(url: string, name: string): Promise<string | null> {
+  const buf = url.startsWith('file://')
+    ? await sharp(fs.readFileSync(url.slice(7))).resize(800, 1200, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 75, mozjpeg: true }).toBuffer()
+    : await fetchAndCompressImage(url, { colour: true, width: 800, height: 1200 });
+  if (!buf) return null;
+  const f = `${process.cwd()}/scans/${name}.${BW ? 'png' : 'jpg'}`;
+  fs.writeFileSync(f, BW
+    ? await sharp(buf).grayscale().normalize().threshold(THRESHOLD).png({ palette: true, colours: 2, compressionLevel: 9 }).toBuffer()
+    : buf);
+  return `file://${f}`;
+}
+fs.mkdirSync('scans', { recursive: true });
+
 // The essay: a link to a cited page goes to that page's reading in the back.
-const essay = fs.readFileSync('article.html', 'utf8')
+let essay = fs.readFileSync('article.html', 'utf8')
+  .replace(/<link rel="preload"[^>]*\/>/g, '') // React's image preload hints: page furniture, not content
   .replace(/<blockquote data-book="[^"]*" data-page="[^"]*" data-src="[^"]*">/g, '<blockquote>')
   .replace(/href="https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+\?page=\d+)"/g, (m, r) =>
     refs.includes(r) ? `href="readings.xhtml#${anchor(r)}"` : m);
+
+if (BW) {
+  let i = 0;
+  for (const src of [...new Set([...essay.matchAll(/<img src="([^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, '&')))]) {
+    const local = await picture(src, `figure-${i++}`);
+    if (local) essay = essay.split(`src="${src.replace(/&/g, '&amp;')}"`).join(`src="${local}"`);
+  }
+}
 
 // The readings: the cited pages, in the order the essay first cites them.
 // Each reading carries its scan, as the site's continuous EPUB does: only when the book's scans may be
 // redistributed (imageAccessFor 'open'), resolved by pageExportImageUrl, recompressed to 800×1200.
 const readings: string[] = [];
 let words = 0, scans = 0, withheld = 0;
-fs.mkdirSync('scans', { recursive: true });
 for (const r of refs) {
   const [book, page] = r.split('?page=');
   const file = `pages/${book}-${page}.json`;
@@ -44,11 +71,9 @@ for (const r of refs) {
   let scan = '';
   const url = q.pageDoc ? pageExportImageUrl(q.pageDoc as Page) : null;
   if (url && imageAccessFor(q.book ?? {}) === 'open') {
-    const buf = await fetchAndCompressImage(url, { colour: true, width: 800, height: 1200 });
-    if (buf) {
-      const f = `${process.cwd()}/scans/${anchor(r)}.jpg`;
-      fs.writeFileSync(f, buf);
-      scan = `<figure class="scan"><img src="file://${f}" alt="${esc(q.title)}, ${pp}"/></figure>`;
+    const local = await picture(url, anchor(r));
+    if (local) {
+      scan = `<figure class="scan"><img src="${local}" alt="${esc(q.title)}, ${pp}"/></figure>`;
       scans++;
     }
   } else if (url) withheld++;
