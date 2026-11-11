@@ -1,5 +1,7 @@
 # Gemini Batch API: Lessons, Pitfalls, and Playbook
 
+> **SUPERSEDED 2026-11-11 (#8283): the paid Gemini Batch API / flash-lite page-work lane described below is retired.** Page OCR and translation now run on the four routes only (agy, GPU>agy, Opus, GPU>Opus). See `.claude/docs/routing.md` and `.claude/docs/invariants/spend-controls.md`; live lane state: https://sourcelibrary.org/admin/pipeline/now. Kept for history of the Batch pipeline.
+
 > Comprehensive guide distilled from 4+ months of production use (Dec 2025 – Apr 2026).
 > 20+ incidents, ~50 commits, 3 major architecture rewrites.
 

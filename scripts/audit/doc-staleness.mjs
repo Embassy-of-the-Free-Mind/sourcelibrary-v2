@@ -41,6 +41,7 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
+import { retiredPatternsIn, hasRetiredBanner } from '../lib/lanes.mjs';
 
 const args = process.argv.slice(2);
 const asJson = args.includes('--json');
@@ -220,6 +221,26 @@ function humanTierDrift() {
   });
 }
 
+/**
+ * Docs, skills and commands that teach a retired approach (scripts/lib/lanes.mjs, #8283) without a
+ * SUPERSEDED/RETIRED banner in their first lines. ADVISORY: reported, never counted toward --fail-on-findings.
+ * Undated docs only; dated ones are snapshots, handled by the ARCHIVE section.
+ */
+function unbanneredRetired() {
+  const paths = [
+    ...lines(git('ls-files', DOCS_DIR + '/*.md')).filter((p) => !p.startsWith(ARCHIVE_DIR + '/') && !DATED_FILENAME.test(basename(p))),
+    ...lines(git('ls-files', '.claude/skills')).filter((p) => /\/(SKILL|skill)\.md$/.test(p)),
+    ...lines(git('ls-files', '.claude/commands/*.md')),
+  ];
+  const out = [];
+  for (const path of paths) {
+    const text = readFileSync(path, 'utf8');
+    const ids = retiredPatternsIn(text);
+    if (ids.length && !hasRetiredBanner(text)) out.push({ path, patterns: ids });
+  }
+  return out;
+}
+
 function main() {
   const cutoff = new Date(Date.now() - statAgeDays * 86400_000);
 
@@ -237,6 +258,7 @@ function main() {
 
   const stats = staleStats(cutoff);
   const humanTier = humanTierDrift();
+  const retiredDocs = unbanneredRetired();
   const drifted = humanTier.filter((d) => d.over || d.missing);
   const report = {
     generated_from_commit: git('rev-parse', '--short', 'HEAD').trim(),
@@ -248,6 +270,7 @@ function main() {
     archive_candidates: archiveCandidates,
     stale_stats: stats,
     human_tier: humanTier,
+    retired_without_banner: retiredDocs,
   };
 
   if (asJson) {
@@ -283,6 +306,9 @@ function main() {
       const mark = d.over ? '✗' : '✓';
       console.log(`    ${mark} ${d.path.padEnd(30)} last ${d.last} (${d.days}d)  ${String(d.drift).padStart(5)} src/ commits since`);
     }
+    console.log(`\nRETIRED WITHOUT BANNER — ${retiredDocs.length} docs/skills/commands teach a retired approach (advisory)`);
+    console.log('  Add a SUPERSEDED/RETIRED banner in the first lines naming what replaced it. Patterns: scripts/lib/lanes.mjs.\n');
+    for (const r of retiredDocs) console.log(`    ${r.path}  [${r.patterns.join(', ')}]`);
     console.log('');
   }
 
