@@ -111,17 +111,19 @@ describe('translation routing parity (TS router vs .mjs router)', () => {
     expect(translateMjs(book)).toBe(translateTs(book));
   });
 
-  it('routes BPH books to full flash regardless of language', () => {
+  // 2026-11-11 (#7075, Derek: agy is the default for all page work): bph, tibetan and flash-measured are cli rows now, so
+  // what a Batch/API caller gets for them is the default, Flash-Lite (the paid API runs no other model, 2026-10-08).
+  it('routes BPH books to the Batch fallback (lite) regardless of language; the cli row takes them in the pipeline', () => {
     for (const language of ['latin', 'tibetan', null]) {
-      expect(translateMjs({ image_source: { provider: 'bph' }, language })).toBe(MODEL_FLASH);
-      expect(translateTs({ image_source: { provider: 'bph' }, language })).toBe(MODEL_FLASH);
+      expect(translateMjs({ image_source: { provider: 'bph' }, language })).toBe(MODEL_LITE);
+      expect(translateTs({ image_source: { provider: 'bph' }, language })).toBe(MODEL_LITE);
     }
   });
 
-  it('routes Tibetan to full flash — the measured exception (#4742)', () => {
+  it('routes Tibetan to the Batch fallback (lite); its cli row (tibetan-cli-agy) takes it in the pipeline (#4742, #7075)', () => {
     for (const language of ['tibetan', 'Tibetan', '  Tibetan ', 'Tibetan (script); Tibetan; Chinese; Chinese (script)']) {
-      expect(translateMjs({ language })).toBe(MODEL_FLASH);
-      expect(translateTs({ language })).toBe(MODEL_FLASH);
+      expect(translateMjs({ language })).toBe(MODEL_LITE);
+      expect(translateTs({ language })).toBe(MODEL_LITE);
     }
     // Negative controls: a word that merely CONTAINS "tibetan" is not Tibetan.
     for (const language of ['sino-tibetan', 'latin; tibetan', 'tibetanish-unknown']) {
@@ -130,11 +132,11 @@ describe('translation routing parity (TS router vs .mjs router)', () => {
     }
   });
 
-  it('routes the #5695-measured languages to full flash, by first label', () => {
+  it('routes the #5695-measured languages to the Batch fallback (lite); the cli row takes them (#7075)', () => {
     for (const language of ['Greek', 'Ancient Greek', 'Greek-Latin', 'Hebrew and Aramaic', 'heb', 'arabic', 'Persian',
       'Sanskrit', 'Pali', 'Chinese', 'Classical Chinese', 'Chinese; Chinese (script)']) {
-      expect(translateMjs({ language })).toBe(MODEL_FLASH);
-      expect(translateTs({ language })).toBe(MODEL_FLASH);
+      expect(translateMjs({ language })).toBe(MODEL_LITE);
+      expect(translateTs({ language })).toBe(MODEL_LITE);
     }
     // Negative controls: a measured language that is not the FIRST label, and lookalikes.
     for (const language of ['Latin; Greek', 'Latin, Greek', 'Judeo-Arabic', 'paliyan', 'greekish']) {
@@ -166,11 +168,11 @@ describe('OCR and translation routing DIFFER on purpose (#4759)', () => {
     expect(translateMjs(book)).toBe(MODEL_LITE);
   });
 
-  it('a BPH book: flash for both', () => {
+  it('a BPH book: OCR on flash, Batch translation fallback on lite (its cli row translates it, #7075)', () => {
     const book = { image_source: { provider: 'bph' }, language: 'latin' };
     expect(ocrTs(book)).toBe(MODEL_FLASH);
-    expect(translateTs(book)).toBe(MODEL_FLASH);
-    expect(translateMjs(book)).toBe(MODEL_FLASH);
+    expect(translateTs(book)).toBe(MODEL_LITE);
+    expect(translateMjs(book)).toBe(MODEL_LITE);
   });
 
   it('a Latin book: lite for both', () => {
@@ -180,17 +182,14 @@ describe('OCR and translation routing DIFFER on purpose (#4759)', () => {
     expect(translateMjs(book)).toBe(MODEL_LITE);
   });
 
-  it('every unmeasured non-Latin or unknown language splits; measured ones (#4742, #5695), allowlisted languages and BPH agree', () => {
-    const MEASURED = ['tibetan', 'greek', 'hebrew', 'arabic', 'chinese', 'sanskrit'];
-    for (const language of [...NON_LATIN.filter((l) => !MEASURED.includes(l)), 'malay', null, '']) {
+  it('every non-Latin or unknown language splits (the measured ones too, since #7075 moved their Flash rows to agy); allowlisted languages agree', () => {
+    for (const language of [...NON_LATIN, 'malay', null, '']) {
       expect(translateTs({ language })).not.toBe(ocrTs({ language }));
     }
-    // Measured languages are flash on both sides — measured exceptions, not a re-sync.
-    for (const language of MEASURED) expect(translateTs({ language })).toBe(ocrTs({ language }));
     for (const language of LATIN_SCRIPT_LANGUAGES as Set<string>) {
       expect(translateTs({ language })).toBe(ocrTs({ language }));
     }
-    expect(translateTs({ image_source: { provider: 'bph' } })).toBe(ocrTs({ image_source: { provider: 'bph' } }));
+    expect(translateTs({ image_source: { provider: 'bph' } })).not.toBe(ocrTs({ image_source: { provider: 'bph' } }));
   });
 });
 
@@ -212,8 +211,8 @@ describe('OCR_LITE_ONLY (2026-09-11): every batch OCR submission is flash-lite',
     expect(OCR_LITE_ONLY).toBe(process.env.OCR_LITE_ONLY !== '0');
   });
 
-  it('does not touch translation routing (BPH translation stays on flash)', () => {
-    expect(translateMjs({ image_source: { provider: 'bph' }, language: 'latin' })).toBe(MODEL_FLASH);
+  it('does not touch translation routing (BPH translation fallback is lite)', () => {
+    expect(translateMjs({ image_source: { provider: 'bph' }, language: 'latin' })).toBe(MODEL_LITE);
   });
 });
 
