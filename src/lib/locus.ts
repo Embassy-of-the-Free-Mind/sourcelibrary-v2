@@ -557,27 +557,75 @@ export function extractAnchors(pages: LocusPageInput[], opts: ExtractOptions = {
     }
   }
 
-  const keyAt = rawKeyAt.map((k) => (k ? canonical.get(k) ?? k : null));
+  const wholeKeyAt = rawKeyAt.map((k) => (k ? canonical.get(k) ?? k : null));
+
+  // A leaf where one work ends and the next begins can head BOTH, fused into one
+  // string: Bekker vol. I leaf 478 heads `ΠΕΡΙ ΕΝΥΠΝΙΩΝ. ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ
+  // ΜΑΝΤΙΚΗΣ.` As one key it occurs once and names nothing, and De divinatione
+  // — two Bekker pages, its head standing alone on a single leaf — never reached
+  // the two-leaf floor, so `463a` was filed under De insomniis (#8503).
+  //
+  // Split on the full stop only when at least two parts name a work AND every
+  // one of them is a head that stands alone on some other leaf. A full stop
+  // alone proves nothing: a book-numeral pair (`ΠΡΟΒΛΗΜΑΤΩΝ Α. Β.`) leaves
+  // numerals, Burnet prints the section after the head (`ΠΟΛΙΤΕΙΑΣ Ε V. 450 c`),
+  // and Stephanus heads marginal topics (`DIALECTICA. METAPHYSICA.`). The
+  // length floor keeps a numeral that survives `locusWorkKey` (`III`) out.
+  //
+  // A part is often a short title — `ΠΕΡΙ ΑΙΣΘΗΣΕΩΣ.` for the leaves headed
+  // `ΠΕΡΙ ΑΙΣΘΗΣΕΩΣ ΚΑΙ ΑΙΣΘΗΤΩΝ.` — so it also matches the one standalone
+  // head it begins at a word boundary.
+  const partsOf = (header: string | null) =>
+    String(header ?? '')
+      .split(/\.\s+/)
+      .map((s) => locusWorkKey(s, opts.author))
+      .filter((k): k is string => !!k && k.length >= 5)
+      .map((k) => canonical.get(k) ?? k);
+  const standalone = new Set<string>();
+  sorted.forEach((p, i) => {
+    if (wholeKeyAt[i] && partsOf(p.header).length < 2) standalone.add(wholeKeyAt[i] as string);
+  });
+  const resolvePart = (k: string): string | null => {
+    if (standalone.has(k)) return k;
+    const longer = [...standalone].filter((w) => w.startsWith(`${k} `));
+    return longer.length === 1 ? longer[0] : null;
+  };
+  const keysAt: string[][] = sorted.map((p, i) => {
+    const parts = partsOf(p.header);
+    if (parts.length >= 2) {
+      const resolved = parts.map(resolvePart);
+      if (resolved.every((k) => k)) return resolved as string[];
+    }
+    return wholeKeyAt[i] ? [wholeKeyAt[i] as string] : [];
+  });
+  const keyAt = keysAt.map((ks) => ks[0] ?? null);
   const headCounts = new Map<string, number>();
-  for (const k of keyAt) if (k) headCounts.set(k, (headCounts.get(k) ?? 0) + 1);
+  for (const ks of keysAt) for (const k of ks) headCounts.set(k, (headCounts.get(k) ?? 0) + 1);
 
   // 2. Segment the leaves by work: each leaf inherits the last work-naming head
   //    seen at or before it. A verso head that is only the author's name
   //    ("ΠΛΑΤΩΝΟΣ" on 254 leaves of the Burnet Republic) names no work and
   //    correctly carries the previous one forward.
-  const isWorkHead = (i: number) => {
-    const k = keyAt[i];
-    return !!k && (headCounts.get(k) ?? 0) >= 2;
-  };
+  const isHeadKey = (k: string | null | undefined): k is string => !!k && (headCounts.get(k) ?? 0) >= 2;
+  const isWorkHead = (i: number) => isHeadKey(keyAt[i]);
 
+  // A fused boundary leaf is filed under the work it opens with, records the
+  // one it closes with as its alternative, and hands that one to the leaves after.
   const segmentOf: Array<string | null> = [];
   const segmentIdOf: number[] = [];
+  const boundaryAlt: Array<string | null> = new Array(sorted.length).fill(null);
   let current: string | null = null;
   let segmentId = 0;
   for (let i = 0; i < sorted.length; i++) {
     if (isWorkHead(i) && keyAt[i] !== current) { current = keyAt[i]; segmentId++; }
     segmentOf.push(current);
     segmentIdOf.push(segmentId);
+    const last = keysAt[i].length > 1 ? keysAt[i][keysAt[i].length - 1] : null;
+    if (isHeadKey(last) && last !== current) {
+      boundaryAlt[i] = last;
+      current = last;
+      segmentId++;
+    }
   }
 
   // A work's opening leaves can sit under its predecessor's head.
@@ -592,9 +640,9 @@ export function extractAnchors(pages: LocusPageInput[], opts: ExtractOptions = {
   // Rather than guess which side such a leaf belongs to, record BOTH: the
   // inherited work and the one starting within two leaves. Resolution accepts
   // either and says which leaves were matched that way.
-  const altOf: Array<string | null> = new Array(sorted.length).fill(null);
+  const altOf: Array<string | null> = [...boundaryAlt];
   for (let i = 0; i < sorted.length; i++) {
-    if (isWorkHead(i)) continue;
+    if (isWorkHead(i) || boundaryAlt[i]) continue;
     for (let j = i + 1; j <= i + 2 && j < sorted.length; j++) {
       if (!isWorkHead(j)) continue;
       if (keyAt[j] !== segmentOf[i]) altOf[i] = keyAt[j];
