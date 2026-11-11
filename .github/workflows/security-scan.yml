@@ -144,7 +144,9 @@ jobs:
             fi
             if [ "$mode" = full ]; then echo; echo "Full scan because the scanner config changed: reported, not failed."; fi
           } >> "$GITHUB_STEP_SUMMARY"
-          jq -r ".results[] | $blocking | \"::error file=\(.path),line=\(.start.line),title=\(.check_id | split(\".\") | last)::\(.extra.message | gsub(\"\n\"; \" \") | .[0:300])\"" "$RUNNER_TEMP/semgrep.json" | head -50
+          # Annotate as errors only when they fail the job; a full scan is report-only.
+          level=error; [ "$mode" = full ] && level=warning
+          jq -r --arg level "$level" ".results[] | $blocking | \"::\\(\$level) file=\(.path),line=\(.start.line),title=\(.check_id | split(\".\") | last)::\(.extra.message | gsub(\"\n\"; \" \") | .[0:300])\"" "$RUNNER_TEMP/semgrep.json" | head -50
           fail=0; [ "$mode" = diff ] && [ "$errors" -gt 0 ] && fail=1
           echo "fail=$fail" >> "$GITHUB_OUTPUT"
 
