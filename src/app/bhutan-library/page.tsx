@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
 import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
 import { getReadDb } from '@/lib/mongodb';
+import { withFirstTranslationGate } from '@/lib/first-translation/badge-gate';
 
 export const revalidate = 3600;
 export const maxDuration = 60;
@@ -75,7 +76,7 @@ async function fetchStats() {
     const match = { language: 'Tibetan', visible: true, pages_translated: { $gt: 0 } };
     const [count, firstTranslations, agg] = await Promise.all([
       books.countDocuments(match, { maxTimeMS: 15000 }),
-      books.countDocuments({ ...match, is_first_translation: true }, { maxTimeMS: 15000 }),
+      books.countDocuments(withFirstTranslationGate(match), { maxTimeMS: 15000 }),
       books
         .aggregate(
           [

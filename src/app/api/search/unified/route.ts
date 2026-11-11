@@ -27,6 +27,7 @@ import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { findNameChoices, type NameChoices } from '@/lib/search/name-chooser';
 import { rankNavMatches } from '@/lib/search/site-nav';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
+import { FIRST_TRANSLATION_GATE } from '@/lib/first-translation/badge-gate';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -210,7 +211,7 @@ export async function GET(request: NextRequest) {
     if (tenantId) canonFilter.tenantId = tenantId;
     if (language) canonFilter.language = language;
     if (category) canonFilter.categories = category;
-    if (firstTranslation) canonFilter.is_first_translation = true;
+    if (firstTranslation) canonFilter.$and = [FIRST_TRANSLATION_GATE]; // the badge's rule (#3687)
     if (hasTranslation) canonFilter.pages_translated = { $gt: 0 };
     if (library) canonFilter.$or = [{ held_by: library }, { 'image_source.provider': library }];
     if (yearRange) canonFilter.year = { ...(yearFrom !== undefined ? { $gte: yearFrom } : {}), ...(yearTo !== undefined ? { $lte: yearTo } : {}) };

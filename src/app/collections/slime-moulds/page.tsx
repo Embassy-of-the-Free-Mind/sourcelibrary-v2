@@ -25,6 +25,7 @@ import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import CuratorLauncher from '@/components/collections/CuratorLauncher';
 import { applyCuration, curationId, surfaceCuration } from '@/lib/collection-image-curation';
 import { countGalleryImages, galleryFilter, galleryHref, isLinkableScope, NO_PER_BOOK_CAP, type GalleryScope } from '@/lib/gallery-scope';
+import { withFirstTranslationGate } from '@/lib/first-translation/badge-gate';
 
 /*
  * Slime Moulds collection page. Same skeleton as collections/mycology (built per
@@ -163,7 +164,7 @@ async function getSlimeMouldData() {
     // small and the first translations are the reason it exists, so hiding them
     // from the grid left it showing two books and claiming there were seven.
     withTimeout(books.find({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(24).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
-    withTimeout(books.countDocuments({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { maxTimeMS: 8000 }), 8000, 0),
+    withTimeout(books.countDocuments(withFirstTranslationGate({ collections: SLUG, visible: true }), { maxTimeMS: 8000 }), 8000, 0),
     // Count what a reader can actually open, not collection.book_count — that
     // includes books still working through OCR and translation.
     withTimeout(books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 }), 8000, 0),

@@ -39,6 +39,7 @@ import {
 import { resolveReadingList, readingListBookIds, readingListHeader, type ReadingListDoc } from '@/lib/reading-list';
 import { ObjectId } from 'mongodb';
 import { hasEsCollectionPage } from '@/lib/es-collections';
+import { withFirstTranslationGate } from '@/lib/first-translation/badge-gate';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
@@ -768,7 +769,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       : withTimeout(
         db.collection('books')
           .find(
-            { collections: id, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true, ...(tenantId ? { tenantId } : {}) },
+            withFirstTranslationGate({ collections: id, visible: true, ...(tenantId ? { tenantId } : {}) }), // the badge's rule (#3687)
             { projection: { ...projection, 'translation_verification.disposition': 1 }, maxTimeMS: 8000 },
           )
           .sort({ year: 1, title: 1 })

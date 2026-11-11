@@ -38,6 +38,7 @@ import { NATIVE_EDITION_LANGUAGE } from '@/lib/localized';
 import { foldSimplifiedHan } from '@/lib/search/han-fold';
 import { locateQuery } from '@/lib/search/original-snippet';
 import { wordStartHits } from '@/lib/search/match-quality';
+import { FIRST_TRANSLATION_GATE } from '@/lib/first-translation/badge-gate';
 
 export const preferredRegion = 'fra1';
 
@@ -385,7 +386,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       applyYearFilter(filters);
       if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
-      if (firstTranslation === 'true') filters.is_first_translation = true;
+      // Same rule as the book page's badge (#3687), not the frozen flag alone.
+      if (firstTranslation === 'true') filters.$and = [...((filters.$and as unknown[]) ?? []), FIRST_TRANSLATION_GATE];
       if (library) filters.$or = [{ held_by: library }, { 'image_source.provider': library }];
       if (isLocalizedSearch) filters[editionCounter] = { $gt: 0 };
       return filters;

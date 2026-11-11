@@ -8,6 +8,7 @@ import { buildSortStage, type SortOption } from '@/lib/book-sort';
 import { resolveAuthorBookFilter } from '@/lib/author-thesaurus';
 import { parseWorkYear, workYearMatch } from '@/lib/work-dates';
 import { orderRecordKeys } from '@/lib/key-order-mark';
+import { FIRST_TRANSLATION_GATE } from '@/lib/first-translation/badge-gate';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -170,7 +171,7 @@ export async function GET(request: NextRequest) {
       if (collection) matchConditions.push({ collections: collection });
       if (workId) matchConditions.push({ work_id: workId });
       if (library) matchConditions.push({ 'image_source.provider': library });
-      if (firstTranslation) matchConditions.push({ is_first_translation: true });
+      if (firstTranslation) matchConditions.push(FIRST_TRANSLATION_GATE); // the badge's rule (#3687)
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
       if (hasEdition) matchConditions.push({ [`pages_translated_${hasEdition}`]: { $gt: 0 } });
       if (authorFilter) matchConditions.push(authorFilter.match);
