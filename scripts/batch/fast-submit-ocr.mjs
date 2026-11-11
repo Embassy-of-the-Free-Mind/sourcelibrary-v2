@@ -12,6 +12,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { LITE_MODEL, assertBatchRouteModel, batchRouteCallerHeaders } from '../lib/ocr-lite-gate.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const CRON_SECRET = process.env.CRON_SECRET;
@@ -30,6 +31,7 @@ const LIMIT = limIdx >= 0 ? parseInt(args[limIdx + 1], 10) : 9999;
 console.log(`[fast-submit-ocr] Concurrency: ${CONCURRENCY} | Limit: ${LIMIT} | Dry run: ${DRY_RUN}`);
 
 const headers = {
+  ...batchRouteCallerHeaders('scripts/batch/fast-submit-ocr.mjs'),
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${CRON_SECRET}`,
 };
@@ -40,7 +42,7 @@ async function submitOne(book, db) {
     const res = await fetch(`${BASE_URL}/api/books/${bookId}/batch-ocr-async`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ limit: 500, force: false }),
+      body: JSON.stringify({ limit: 500, force: false, model: assertBatchRouteModel(LITE_MODEL, 'fast-submit-ocr') }),
       signal: AbortSignal.timeout(120000), // 2 min timeout
     });
 

@@ -13,6 +13,8 @@
 // with the real token counts when results land (#3452). A row written here
 // would be a third, duplicate record of the same job.
 
+import { LITE_MODEL } from '../../scripts/lib/ocr-lite-gate.mjs';
+
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 export interface BatchRequest {
@@ -207,6 +209,18 @@ export async function uploadBatchFile(
 }
 
 /**
+ * The paid Batch API runs Flash-Lite only (Derek, 2026-10-08; every other Gemini model goes through the agy CLI).
+ * This is the line where the money is spent, so the refusal lives here, not in each route: on 2026-11-06 two routes
+ * that called Gemini without the router's guard put 1,879 pages on gemini-3-flash-preview, and four more routes
+ * (bulk-reocr, bulk-ocr-new, batch-ocr-multi x2) could do the same through this module.
+ */
+export function assertPaidBatchModel(model: string): void {
+  if (model !== LITE_MODEL) {
+    throw new Error(`gemini-batch: refusing to create a paid Batch API job on ${model}. Only ${LITE_MODEL} runs on the paid API; every other Gemini model goes through the agy CLI lane.`);
+  }
+}
+
+/**
  * Create a batch job with inline requests (for smaller batches, <20MB)
  */
 export async function createBatchJobInline(
@@ -215,6 +229,7 @@ export async function createBatchJobInline(
   displayName: string,
   overrideApiKey?: string
 ): Promise<{ name: string; state: string }> {
+  assertPaidBatchModel(model);
   const apiKey = overrideApiKey || getApiKey();
 
   // Format requests for Gemini Batch API
@@ -266,6 +281,7 @@ export async function createBatchJobFromFile(
   displayName: string,
   overrideApiKey?: string
 ): Promise<{ name: string; state: string }> {
+  assertPaidBatchModel(model);
   const apiKey = overrideApiKey || getApiKey();
 
   const response = await fetch(

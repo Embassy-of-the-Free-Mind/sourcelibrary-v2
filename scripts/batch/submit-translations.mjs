@@ -8,6 +8,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { LITE_MODEL, assertBatchRouteModel, batchRouteCallerHeaders } from '../lib/ocr-lite-gate.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -64,8 +65,8 @@ for (const book of books) {
   try {
     const res = await fetch(`${BASE_URL}/api/books/${book.id}/batch-translate-async`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({})
+      headers: { 'Content-Type': 'application/json', ...batchRouteCallerHeaders('scripts/batch/submit-translations.mjs') },
+      body: JSON.stringify({ model: assertBatchRouteModel(LITE_MODEL, 'submit-translations') })
     });
 
     if (res.ok) {
@@ -81,8 +82,8 @@ for (const book of books) {
         // Retry once
         const retry = await fetch(`${BASE_URL}/api/books/${book.id}/batch-translate-async`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({})
+          headers: { 'Content-Type': 'application/json', ...batchRouteCallerHeaders('scripts/batch/submit-translations.mjs') },
+          body: JSON.stringify({ model: LITE_MODEL })
         });
         if (retry.ok) {
           submitted++;

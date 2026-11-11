@@ -54,6 +54,8 @@ export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const triggeredBy = getTriggerSource(request);
+    // Who asked (#8548 follow-up): the session's account and the script's x-caller header, kept on the job.
+    const requestedBy = { email: session?.user?.email ?? null, caller: request.headers.get('x-caller')?.slice(0, 200) ?? null };
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -288,7 +290,7 @@ export const POST = withAuth(async (request, session, context) => {
         generationConfig: translateGenerationConfig,
         run: { code_version: codeVersion(), host: host() },
       }),
-      submitted_by: ROUTE_CALL_SITE,
+      submitted_by: ROUTE_CALL_SITE, requested_by: requestedBy,
       page_sources: pageSources,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,

@@ -39,6 +39,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { LITE_MODEL, assertBatchRouteModel, batchRouteCallerHeaders } from '../lib/ocr-lite-gate.mjs';
 
 const BASE_URL = process.env.BASE_URL || 'https://sourcelibrary.org';
 
@@ -55,7 +56,7 @@ const MAX_PAGES = parseInt(getArg('max-pages') || '500', 10);
 const DELAY_SEC = parseInt(getArg('delay') || '3', 10);
 const DRY_RUN = hasFlag('dry-run');
 const BOOK_ID = getArg('book-id');
-const MODEL = getArg('model') || 'gemini-3.1-flash-lite';
+const MODEL = assertBatchRouteModel(getArg('model') || LITE_MODEL, 'submit-spread-ocr');
 const KEY_ARG = getArg('key');
 
 const uniqueKeys = [...new Set([
@@ -115,6 +116,7 @@ async function submitBook(bookId, cronSecret, apiKeyIndex, prompt) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...batchRouteCallerHeaders('scripts/batch/submit-spread-ocr.mjs'),
       'Authorization': `Bearer ${cronSecret}`,
     },
     body: JSON.stringify(body),
