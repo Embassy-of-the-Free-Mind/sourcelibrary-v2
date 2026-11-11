@@ -13,21 +13,22 @@ const HOW = [
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ look?: string }> }) {
   // Prototype: A is the picture bands, B one list of centuries with bars, named Centuries.
-  const look = (await searchParams).look === 'b' ? 'b' : 'a';
+  const lp = (await searchParams).look;
+  const look = lp === 'b' || lp === 'c' ? lp : 'a';
   const { groups, books, count } = periodGroups();
   const f = featuredOf(axisSlugs().periods);
   // A mix: the first two pictures of every one, so the wall shows the whole range rather than one item's few pictures repeated.
   const tiles = [...new Set(groups.flatMap((g) => g.narrower.flatMap((x) => x.pics.slice(0, 2).map((p) => p.src))))].slice(0, 48);
   const how = { title: 'How we date works', items: HOW };
-  const switcher = <>Look{[['a', 'A Periods, in bands'], ['b', 'B Centuries, one list']].map(([k, l]) => <Link key={k} href={`/revamp/periods?look=${k}`} className={look === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</>;
+  const switcher = <>Look{[['a', 'A Periods, in bands'], ['b', 'B Centuries, one list'], ['c', 'C One list, no pictures']].map(([k, l]) => <Link key={k} href={`/revamp/periods?look=${k}`} className={look === k ? 'text-white underline underline-offset-2' : 'hover:text-white'}>{l}</Link>)}</>;
   return (
-    <AxisIndex switcher={switcher} title={look === 'b' ? 'Centuries' : 'Periods'} intro="Browse the library by when its works were written, century by century."
+    <AxisIndex switcher={switcher} title={look === 'a' ? 'Periods' : 'Centuries'} intro="Browse the library by when its works were written, century by century."
       counts={[`${count} centuries`, `${n(books)} books with a date`]} tiles={tiles}
       featured={f ? { name: f.name, href: `/revamp/p/${f.slug}` } : null}
-      groups={groups} noun={['century', 'centuries']} group={['Span', 'All spans']} placeholder={look === 'b' ? 'Search centuries or ask a question' : 'Search periods or ask a question'}
+      groups={groups} noun={['century', 'centuries']} group={['Span', 'All spans']} placeholder={look !== 'a' ? 'Search centuries or ask a question' : 'Search periods or ask a question'}
       orders={[['rev', 'Newest first'], ['theme', 'Oldest first']]}
       how={how}>
-      {look === 'b' ? <CenturyList rows={centuryRows()} how={how} /> : undefined}
+      {look === 'a' ? undefined : <CenturyList rows={centuryRows()} how={how} thumbs={look === 'b'} />}
     </AxisIndex>
   );
 }

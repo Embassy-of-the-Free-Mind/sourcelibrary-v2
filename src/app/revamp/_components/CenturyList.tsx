@@ -14,7 +14,7 @@ const n = (v: number) => v.toLocaleString('en-GB');
  * Centuries as one list in time order, each with a bar for how many books it holds, like the live
  * Centuries page. No groups: library date spans are plain spans.
  */
-export default function CenturyList({ rows, how }: { rows: (SubjectRow & { name: string })[]; how: { title: string; items: ReactNode[] } }) {
+export default function CenturyList({ rows, how, thumbs = true }: { rows: (SubjectRow & { name: string })[]; how: { title: string; items: ReactNode[] }; thumbs?: boolean }) {
   const [order, setOrder] = useState('new');
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -38,11 +38,13 @@ export default function CenturyList({ rows, how }: { rows: (SubjectRow & { name:
       <ul className={`${FIRST} border-t border-border-light`}>
         {list.map((r) => (
           <li key={r.id} className="border-b border-border-light">
-            <Link href={r.href ?? '#'} className="group grid grid-cols-[44px_1fr_auto] sm:grid-cols-[44px_220px_1fr_110px] items-center gap-3 sm:gap-5 py-2.5 hover:bg-white">
-              <span className="relative w-11 h-11 overflow-hidden bg-warm">{r.pics[0] && <img src={r.pics[0].src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />}</span>
+            <Link href={r.href ?? '#'} className={`group grid items-center gap-3 sm:gap-5 py-2.5 hover:bg-white ${thumbs ? 'grid-cols-[44px_1fr_auto] sm:grid-cols-[44px_220px_1fr_110px]' : 'grid-cols-[1fr_auto] sm:grid-cols-[220px_1fr_110px]'}`}>
+              {thumbs && <span className="relative w-11 h-11 overflow-hidden bg-warm">{r.pics[0] && <img src={r.pics[0].src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />}</span>}
               <span className="min-w-0">
                 <span className="block font-serif text-[18px] text-primary leading-tight group-hover:underline underline-offset-[3px]">{r.label}</span>
                 <span className="block text-[12.5px] text-muted">{r.name}</span>
+                {/* On a phone the bar sits under the name. */}
+                <span className="sm:hidden block mt-1.5 h-1.5 bg-border-light" aria-hidden><span className="block h-full bg-primary/70" style={{ width: `${Math.max(0.6, (100 * (r.size ?? 0)) / max)}%` }} /></span>
               </span>
               <span className="hidden sm:block h-2 bg-border-light" aria-hidden><span className="block h-full bg-primary/70" style={{ width: `${Math.max(0.6, (100 * (r.size ?? 0)) / max)}%` }} /></span>
               <span className="text-[13.5px] text-secondary text-right tabular-nums">{n(r.size ?? 0)} {r.size === 1 ? 'book' : 'books'}</span>
