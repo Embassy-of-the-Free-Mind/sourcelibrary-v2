@@ -56,7 +56,7 @@ def cv_pred(mask, cols, seeds=2):
     ii = np.where(mask)[0]; p = np.zeros(len(ii))
     for sd in range(seeds):
         perm = np.random.RandomState(sd).permutation(len(ii)); j = ii[perm]
-        pp = cross_val_predict(mk(), X[j][:, idx(cols)], y[j], cv=GroupKFold(5), groups=g[j], method='predict_proba')[:, 1]
+        pp = cross_val_predict(mk(), X[j][:, idx(cols)], y[j], cv=GroupKFold(min(5, len(set(g[j])))), groups=g[j], method='predict_proba')[:, 1]
         q = np.zeros(len(ii)); q[perm] = pp; p += q / seeds
     return ii, p
 
@@ -100,7 +100,7 @@ yy = y[honest]; pp = P[honest]; o = np.argsort(-pp)
 say('| top share by risk | pages | serious among them | share of all serious pages caught |')
 say('|---|---|---|---|')
 for q in (.05, .10, .20, .30, .50):
-    k = int(len(yy) * q); kk = int(yy[o[:k]].sum()); lo, hi = wilson(kk, k)
+    k = max(1, int(len(yy) * q)); kk = int(yy[o[:k]].sum()); lo, hi = wilson(kk, k)
     say(f'| {int(q*100)}% | {k} | {kk/k:.0%} [{lo:.0%}, {hi:.0%}] | {kk/max(1,yy.sum()):.0%} |')
 say(f'\nBy source inside the frame:')
 for s in sorted(set(src[honest])):
@@ -113,7 +113,7 @@ yy = y[lib]; pp = P[lib]; o = np.argsort(-pp)
 say('| top share by risk | pages | serious among them | share of all serious pages caught |')
 say('|---|---|---|---|')
 for q in (.05, .10, .20, .30, .50):
-    k = int(len(yy) * q); kk = int(yy[o[:k]].sum()); lo, hi = wilson(kk, k)
+    k = max(1, int(len(yy) * q)); kk = int(yy[o[:k]].sum()); lo, hi = wilson(kk, k)
     say(f'| {int(q*100)}% | {k} | {kk/k:.0%} [{lo:.0%}, {hi:.0%}] | {kk/max(1,yy.sum()):.0%} |')
 say()
 
