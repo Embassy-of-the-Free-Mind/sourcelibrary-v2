@@ -8,12 +8,12 @@ import { imageAccessFor } from '@/lib/types/image-source';
 import { fetchAndCompressImage, pageExportImageUrl } from '@/lib/export-page-images';
 import type { Page } from '@/lib/types';
 import sharp from 'sharp';
+import { preparePicture } from './pictures';
 
 const [slug, out] = process.argv.slice(2);
-// STYLE=bw: every picture as pure black and white (1-bit PNG), for e-ink. Engravings and woodcuts are line
-// art already, so a threshold keeps them faithful and crisp, at a fraction of the size. Default: colour.
+// STYLE=bw: pictures for e-ink (page scans 1-bit, figures grayscale: pictures.ts). Default: colour.
+// Either way every picture is cropped to its printed area.
 const BW = process.env.STYLE === 'bw';
-const THRESHOLD = Number(process.env.BW_THRESHOLD || 150);
 const post = posts.find((p) => p.slug === slug);
 if (!post) throw new Error(`no post ${slug} in src/app/articles/posts.ts`);
 
@@ -24,16 +24,16 @@ const esc = (s: unknown) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g,
 // Tags in the stored page text that are layout, not reading (running heads, signatures, catchwords).
 const LAYOUT = /<(page-num|sig|catch|header|footer)>[\s\S]*?<\/\1>/g;
 
-/** A picture, sized for an e-reader (800×1200), as a local file the EPUB embeds; null when it cannot be read. */
-async function picture(url: string, name: string): Promise<string | null> {
+/** A picture, sized for an e-reader (800×1200) and prepared by pictures.ts, as a local file the EPUB embeds;
+ *  null when it cannot be read. */
+async function picture(url: string, name: string, kind: 'scan' | 'figure'): Promise<string | null> {
   const buf = url.startsWith('file://')
     ? await sharp(fs.readFileSync(url.slice(7))).resize(800, 1200, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 75, mozjpeg: true }).toBuffer()
     : await fetchAndCompressImage(url, { colour: true, width: 800, height: 1200 });
   if (!buf) return null;
-  const f = `${process.cwd()}/scans/${name}.${BW ? 'png' : 'jpg'}`;
-  fs.writeFileSync(f, BW
-    ? await sharp(buf).grayscale().normalize().threshold(THRESHOLD).png({ palette: true, colours: 2, compressionLevel: 9 }).toBuffer()
-    : buf);
+  const { data, ext } = await preparePicture(buf, kind, BW);
+  const f = `${process.cwd()}/scans/${name}.${ext}`;
+  fs.writeFileSync(f, data);
   return `file://${f}`;
 }
 fs.mkdirSync('scans', { recursive: true });
@@ -45,10 +45,10 @@ let essay = fs.readFileSync('article.html', 'utf8')
   .replace(/href="https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+\?page=\d+)"/g, (m, r) =>
     refs.includes(r) ? `href="readings.xhtml#${anchor(r)}"` : m);
 
-if (BW) {
+{
   let i = 0;
   for (const src of [...new Set([...essay.matchAll(/<img src="([^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, '&')))]) {
-    const local = await picture(src, `figure-${i++}`);
+    const local = await picture(src, `figure-${i++}`, 'figure');
     if (local) essay = essay.split(`src="${src.replace(/&/g, '&amp;')}"`).join(`src="${local}"`);
   }
 }
@@ -71,7 +71,7 @@ for (const r of refs) {
   let scan = '';
   const url = q.pageDoc ? pageExportImageUrl(q.pageDoc as Page) : null;
   if (url && imageAccessFor(q.book ?? {}) === 'open') {
-    const local = await picture(url, anchor(r));
+    const local = await picture(url, anchor(r), 'scan');
     if (local) {
       scan = `<figure class="scan"><img src="${local}" alt="${esc(q.title)}, ${pp}"/></figure>`;
       scans++;

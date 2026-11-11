@@ -41,14 +41,20 @@ export default function ArticleEnd() {
             />
             <ShareButton variant="icon" label="Share" title={post.title} surface="article_end" />
             {post.epub && (
-              <a
-                href={post.epub.href}
-                download
-                className="text-sm text-secondary underline decoration-border-light underline-offset-2 hover:text-primary"
-                title="The article with every page it cites at the back, for an e-reader"
-              >
-                Read offline: EPUB with its sources ({post.epub.mb} MB)
-              </a>
+              <span className="text-sm text-secondary" title="The article with every page it cites, text and scan, at the back">
+                Read offline, with its sources:{' '}
+                <a href={post.epub.colour.href} className="underline decoration-border-light underline-offset-2 hover:text-primary">
+                  EPUB ({post.epub.colour.mb} MB)
+                </a>
+                {post.epub.eink && (
+                  <>
+                    {' · '}
+                    <a href={post.epub.eink.href} className="underline decoration-border-light underline-offset-2 hover:text-primary">
+                      for Kindle and e-ink ({post.epub.eink.mb} MB)
+                    </a>
+                  </>
+                )}
+              </span>
             )}
             {saved && (
               <Link href="/favorites" className="text-sm text-muted underline decoration-border-light underline-offset-2 hover:text-secondary">
