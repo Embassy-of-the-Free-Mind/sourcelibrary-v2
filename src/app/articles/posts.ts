@@ -55,6 +55,10 @@ export const posts: BlogPost[] = [
     image: '/articles/sea-road-china-gulf/ormus-kaempfer.jpg',
     imageAlt:
       'Engraved view of Hormuz from the sea with European ships and a plan of the island, from Kaempfer’s Amoenitates exoticae (1712).',
+    epub: {
+      colour: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-e53f27ee.epub', mb: 5 },
+      eink: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-bw-8595b8f2.epub', mb: 2 },
+    },
   },
   {
     slug: 'solve-et-coagula',
