@@ -65,6 +65,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from '../workers/lib
 import { isHeld } from './pipeline-hold.mjs';
 import { ocrTrustGate } from './ocr-trust-gate.mjs';
 import { applyPreTranslationGate, preGateBookReason } from './pre-translation-gate.mjs';
+import { translateModelRefusal, TRANSLATE_NOT_ON_API } from './ocr-lite-gate.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { stripAnchor } from './block-page-guard.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
@@ -531,6 +532,9 @@ export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds =
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
   if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
+  // Only Flash-Lite may run on the paid Batch API (#7075): any other engine waits for the CLI lane. Never a fallback.
+  const notOnApi = translateModelRefusal(getTranslateModelForBook(book));
+  if (notOnApi) return { ok: false, reason: `${TRANSLATE_NOT_ON_API} (${notOnApi.message})`, book };
   // #5700: a book in a stratum whose OCR was measured untrusted is not translated until re-read.
   // A bare plan is read-only; the submit path passes recordRefusal so its refusal is recorded.
   const trust = await ocrTrustGate(db, book, { lane: 'seam', record: recordRefusal });

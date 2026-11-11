@@ -55,7 +55,9 @@ function seed(pageBook: string) {
     { id: 'prev-llull', book_id: OTHER_BOOK, page_number: 22, translation: { data: 'LLULL PAGE 22' } },
     { id: 'p23', book_id: pageBook, page_number: 23, ocr: { data: '<page-type>text</page-type>\nQuarta figura habet tres circulos.' } },
   ];
-  store.jobs = [{ id: 'j1', type: 'translation', status: 'pending', book_id: JOB_BOOK, config: { page_ids: ['p23'], language: 'Greek' } }];
+  store.jobs = [{ id: 'j1', type: 'translation', status: 'pending', book_id: JOB_BOOK, config: { page_ids: ['p23'], language: 'Greek', model: 'gemini-3.1-flash-lite' } }];
+  // The model is pinned so this suite tests book scoping only: a Greek book's routed model may be one the
+  // paid-API guard refuses (#7075), which is that guard's suite's business, not this one's.
 }
 
 beforeEach(() => {

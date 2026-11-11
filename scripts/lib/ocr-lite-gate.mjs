@@ -86,3 +86,26 @@ export function assertBatchRouteModel(model, callSite = 'unknown') {
 export function batchRouteCallerHeaders(callSite) {
   return { 'x-caller': [callSite, process.env.JOB_NAME || '', process.env.USER || ''].join(' ').trim().slice(0, 200) };
 }
+/**
+ * THE PAID-API MODEL GATE for TRANSLATION (#7075, Derek 2026-10-08): the only Gemini model that may run on the paid
+ * Gemini API is `gemini-3.1-flash-lite`; every other model reads through the agy CLI on the subscriptions. OCR enforces
+ * it since #8525 (batch-ocr-async: ocr_model_not_on_api). Translation did not: three `channel: batch` rows of
+ * translation-routing-table.json name gemini-3-flash-preview (bph, tibetan, flash-measured), and pages were written
+ * with it on the paid API on 2026-11-06, 11-07 and 11-10. Every paid translation door asks this before it spends.
+ * A `cli` channel (subscription reader) is never the paid API, so it always passes. The routing-table rows are NOT
+ * changed here (that needs routing evidence, #8283): the guard makes those books wait for the CLI lane
+ * (scripts/batch/cli-translate-lane.mjs). A refused door never falls back to another paid model.
+ */
+export const TRANSLATE_NOT_ON_API = 'translate_model_not_on_api';
+export function paidApiModelAllowed(model, channel = 'api') {
+  return channel === 'cli' || model === LITE_MODEL;
+}
+/** null when the model may run on the paid API, else { error, message } for a 4xx body or a recorded skip reason. */
+export function translateModelRefusal(model, channel = 'api') {
+  if (paidApiModelAllowed(model, channel)) return null;
+  return {
+    error: TRANSLATE_NOT_ON_API,
+    message: `Only ${LITE_MODEL} may run translation on the paid Gemini API (#7075); ${model} translates through the agy CLI lane (scripts/batch/cli-translate-lane.mjs), so this book waits for it.`,
+  };
+}
+

@@ -56,6 +56,7 @@ import {
   isDegenerateSource,
 } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
+import { translateModelRefusal } from '../lib/ocr-lite-gate.mjs';
 import { translationStaleness, STALE_FIELD } from '../lib/stale-translation.mjs';
 import { codeVersion, host } from '../lib/write-provenance.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
@@ -194,6 +195,13 @@ function extractTranslationMetadata(text) {
 // --- Process one book sequentially ---
 async function processBook(book, pages, prompts, db, globalStats) {
   const model = FORCE_LITE && SINGLE_BOOK ? MODEL_LITE : getTranslateModelForBook(book);
+  // Only Flash-Lite may run on the paid API (#7075): skip the book, recorded in the stats and the log; no fallback.
+  const notOnApi = translateModelRefusal(model);
+  if (notOnApi) {
+    console.log(`\n  [skip] ${(book.title || book.id).slice(0, 50)}: ${notOnApi.error} (${model}); waits for the CLI lane`);
+    (globalStats.skipped_not_on_api ||= []).push({ book_id: book.id, model, reason: notOnApi.error });
+    return;
+  }
   let previousTranslation = null;
   let bookCompleted = 0, bookFailed = 0, bookSkipped = 0;
 
