@@ -117,7 +117,11 @@ export const PARTNERS_HTML = `
   </div>
 </section>
 
-\g<1>235,714 illustrations cropped from about 18,700 books, each with its position on the page, a type, a description, and a link to its page.\g<2>
+<section class="proof alt" id="v2-illustrated">
+  <div class="wrap pf">
+    <h2 class="pword">Illustrated</h2>
+    <div>
+      <p class="lede">235,714 illustrations cropped from about 18,700 books, each with its position on the page, a type, a description, and a link to its page.</p>
       <div class="crops">
         <figure><a href="https://sourcelibrary.org/book/instruments-of-the-restored-astronomy-brahe/page/6952d0fa77f38f6761bc5b5a"><img src="/ai-partners/img/crop-tycho-hven.jpg" alt="Woodcut map of the island of Hven with a compass rose" width="720" height="642" loading="lazy"></a><figcaption>Map of Hven. Tycho Brahe, <i>Instruments of the Restored Astronomy</i>, 1602</figcaption></figure>
         <figure><a href="https://sourcelibrary.org/book/codex-borgia/page/69dfdfbcfc46416d01ddf48e"><img src="/ai-partners/img/crop-codex-borgia.jpg" alt="Painted manuscript page in nine panels of figures, divided by bands of day signs" width="712" height="720" loading="lazy"></a><figcaption>Nine panels and day signs. <i>Codex Borgia</i>, pre-Columbian Mexico</figcaption></figure>
@@ -131,13 +135,24 @@ export const PARTNERS_HTML = `
         <tr><td>On the public site</td><td class="n">208,422</td></tr>
         <tr><td>Offered for licence</td><td class="n">~146,000</td></tr>
       </table>
-      <p class="note" style="margin-top:14px">Offered: illustrations from books whose library permits commercial use of its scans, and from books dated before 1900 whose library states no terms. Counted 4 November 2026. On a graded sample of 48 pages, the current detector drew a tight box around 82% of pictures and found 95% of them; on 10 pages it also boxed something that was not an illustration.</p>
-      \1 in the <a href="https://sourcelibrary.org/gallery">gallery</a> and searched through the <code>search_images</code> tool on our <a href="https://sourcelibrary.org/developers">MCP server</a>.</p>
+      <p class="note" style="margin-top:14px">Offered: illustrations from books whose library permits commercial use of its scans, and from books dated before 1900 whose library states no terms. Counted 4 November 2026. On a graded sample of 48 pages, 82% of the current detector’s boxes were tight and it found 95% of the pictures; on 10 pages it also boxed something that was not an illustration.</p>
+      <p>The public illustrations can be browsed in the <a href="https://sourcelibrary.org/gallery">gallery</a> and searched through the <code>search_images</code> tool on our <a href="https://sourcelibrary.org/developers">MCP server</a>.</p>
     </div>
   </div>
 </section>
 
-\g<1>      <p>What they find changes how that language is read: which model, which instructions, and when a page needs a second reading. Every reading and correction is kept beside the text, with how it was judged against the image. Error rates by language are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</p>\g<2>
+<section class="proof" id="v2-reviewed">
+  <div class="wrap pf">
+    <h2 class="pword">Checked</h2>
+    <div>
+      <p class="lede">Each language has its own scripts, abbreviations and habits, and models read some far better than others. So each one is worked out separately, and scholars who read it check the hard cases.</p>
+      <table class="ledger">
+        <tr><td>Yucatec Maya</td><td class="who">David Stuart</td></tr>
+        <tr><td>Latin and Sanskrit</td><td class="who">Peter J. Forshaw</td></tr>
+        <tr><td>Latin, and early printed books</td><td class="who">Paul Dijstelberge</td></tr>
+      </table>
+      <p>What they find changes how that language is read: which model, which instructions, and when a page needs a second reading. Every reading and correction is kept beside the text, with how it was judged against the image. Error rates by language are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</p>
+      <div class="photos">
         <img src="/ai-partners/img/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam">
         <img src="/ai-partners/img/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica">
       </div>
@@ -157,7 +172,12 @@ export const PARTNERS_HTML = `
   </div>
 </section>
 
-\g<1><p>Each book links to the holding library’s scan and rights statement. Each transcription and translation names the model that made it, and since 28 September 2026 also the prompt, settings and input, with a hash of the output. Corrections keep the earlier version.</p>
+<section class="proof" id="v2-provenance">
+  <div class="wrap pf">
+    <h2 class="pword">Provenance</h2>
+    <div>
+      <p class="lede">Every page can be traced to the scan it was read from and the model that read it.</p>
+      <p>Each book links to the holding library’s scan and rights statement. Each transcription and translation names the model that made it, and since 28 September 2026 also the prompt, settings and input, with a hash of the output. Corrections keep the earlier version.</p>
     </div>
   </div>
 </section>
