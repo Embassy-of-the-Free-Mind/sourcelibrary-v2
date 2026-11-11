@@ -5,7 +5,8 @@
  * The editorial markup splits into two families, and the whole rule turns on
  * the distinction:
  *
- *   - **Page marks** (`<margin>`, `<gloss>`, `<insert>`, `<unclear>`) mark text
+ *   - **Page marks** (`<margin>`, `<gloss>`, `<insert>`, `<unclear>`, and the
+ *     edition's `<footnote>`, #8567) mark text
  *     that is physically present on the page — a marginal note in the original,
  *     a scribal insertion, an uncertain reading. That is transcription. Notes
  *     off must never delete their content; it unwraps them, so the words stay
@@ -27,7 +28,7 @@
 import { splitInlineTermDefinitions } from '@/lib/term-definitions';
 
 /** Tags marking text physically on the page, as opposed to AI commentary. */
-export const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
+export const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear|footnote';
 
 /**
  * Handle `<term>` vocabulary chips when notes are hidden.

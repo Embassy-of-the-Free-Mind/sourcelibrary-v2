@@ -120,7 +120,7 @@ export function cleanOcrArtifacts(text) {
 /** Layout HTML out of plain page text, the words kept (#7118). Parity with the TS twin's stripLayoutHtml. */
 const LAYOUT_BLOCK_TAGS = 'p|div';
 const LAYOUT_INLINE_TAGS = 'center|foreign|italic|bold|i|b|em|strong|s|u|sup|sub|small|big|span|font';
-const KEPT_TAGS = /^(?:note|term|margin|gloss|unclear|insert|lacuna|image-desc|header|catchword|sig|page-num|folio|column-break|leaf-break)$/i;
+const KEPT_TAGS = /^(?:note|term|margin|gloss|unclear|insert|footnote|lacuna|image-desc|header|catchword|sig|page-num|folio|column-break|leaf-break)$/i;
 
 export function stripLayoutHtml(text) {
   if (!text) return text;

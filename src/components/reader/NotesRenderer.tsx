@@ -281,6 +281,13 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   return { cleanText: result, metadata };
 }
 
+/** Hover label for a `<margin>`, from its `type` attribute (#8567). */
+export function marginTitle(type: unknown): string {
+  if (type === 'printed') return 'Marginal note printed in this edition';
+  if (type === 'handwritten') return 'Handwritten note in this copy';
+  return 'Marginal note on the page';
+}
+
 /**
  * Every element ReactMarkdown may render. `unwrapDisallowed` SILENTLY strips
  * a tag not on this list while keeping its children — the text still reads
@@ -298,6 +305,8 @@ export const NOTES_ALLOWED_ELEMENTS = [
   // XML annotation elements (new syntax)
   'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc', 'interp',
   'lacuna',
+  // An edition's own footnote or critical apparatus, printed at the foot of the page (#8567).
+  'footnote',
 ];
 
 // The bracketed-paragraph and interpolation rules (#4298, #4385) live in
@@ -877,11 +886,23 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         // already stripped the tags, so these branches only run with notes on —
         // but they render children rather than null either way, so no layer can
         // delete transcription (map labels, marginalia) behind the toggle.
-        margin: ({ children }: any) => showNotes ? (
-          <span className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded mx-0.5`} title="Marginal note in original">
+        // `type` says who wrote it (#8567): "printed" is the edition's own side note, in every
+        // copy; "handwritten" is a reader's note in this one copy. Pages read before the prompt
+        // asked carry no type, and the label says only where the text stands.
+        margin: ({ children, node }: any) => showNotes ? (
+          <span className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded mx-0.5`} title={marginTitle(node?.properties?.type)}>
             {children}
           </span>
         ) : <>{children}</>,
+        // The edition's footnotes and critical apparatus: transcription, set small under the text.
+        footnote: ({ children, node }: any) => (
+          <span
+            className={`block text-sm text-muted border-t border-stone-200 pt-1 mt-2`}
+            title={node?.properties?.type === 'apparatus' ? 'Critical apparatus printed in this edition' : 'Footnote printed in this edition'}
+          >
+            {children}
+          </span>
+        ),
         gloss: ({ children }: any) => showNotes ? (
           <span className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded mx-0.5`} title="Gloss/annotation in original">
             {children}
@@ -1025,7 +1046,7 @@ export function prepareNotesMarkdown(
   // CommonMark spec: HTML blocks (type 6) end only at a blank line.
   let processedText = withLeafBreaks;
   // After closing block-level tags: ensure blank line follows
-  processedText = processedText.replace(/<\/(div|h[1-6]|margin|blockquote|table|ul|ol|li|p|pre|hr)>\s*\n(?!\n)/gi, '</$1>\n\n');
+  processedText = processedText.replace(/<\/(div|h[1-6]|margin|footnote|blockquote|table|ul|ol|li|p|pre|hr)>\s*\n(?!\n)/gi, '</$1>\n\n');
   // Before opening block-level tags: ensure blank line precedes (unless at start of text)
   processedText = processedText.replace(/([^\n])\n(<(?:div|h[1-6])\s)/gi, '$1\n\n$2');
 
