@@ -69,7 +69,7 @@ export interface BlogPost {
   imagePosition?: string;
   // Only on LINKED_PAGES: the page lives at its own address, outside /articles.
   href?: string;
-  // An offline edition: the article with every page it cites at the back, built by
+  // An offline edition: the article with every page it cites (text and scan) at the back, built by
   // scripts/articles/article-epub. ArticleEnd shows the download link.
   epub?: { href: string; mb: number };
 }
