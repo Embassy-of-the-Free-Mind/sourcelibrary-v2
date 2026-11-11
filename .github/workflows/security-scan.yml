@@ -1,8 +1,9 @@
 name: Security scan
 
 # Per-PR: gitleaks over the PR's own commits + Semgrep CE over the files the PR
-# changes (diff-aware). Weekly: gitleaks over the full history of every branch,
-# kept in one `security` issue (redacted; closed when a run comes back clean).
+# changes (diff-aware). Weekly (private repo only): gitleaks over the full
+# history of every branch, kept in one `security` issue (redacted; closed when
+# a run comes back clean).
 #
 # Cost: PRs that touch no code skip this workflow entirely (paths filter). On a
 # code PR it is one job, a shallow checkout and two pinned containers, ~2 min.
@@ -163,8 +164,11 @@ jobs:
           [ "$SG" = 0 ] || { echo "semgrep: ERROR-severity findings in changed code (see annotations)"; exit 1; }
           echo "clean"
 
+  # OFF while the repo is public: file/line/commit of old findings in a public
+  # issue (or public logs) is a map to them. Switches on by itself once the
+  # repo goes private; workflow_dispatch is under the same gate.
   history:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.event.repository.private == true
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
