@@ -734,7 +734,16 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (!correct && FIRST_READ_ONLY && page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: --first-read-only'); continue; }
   if (!correct && PRINT_ONLY) {
     const hand = (text.match(/<script>\s*(\w+)\s*<\/script>/i)?.[1] || '').toLowerCase();
-    if (hand !== 'printed') { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
+    // An empty leaf has no script, so the reader tags it none/blank. Refusing it left the page unread for good and
+    // held its book under the 90% OCR bar (#8529: 19 pages). It is written when the read says blank AND carries
+    // almost no letters outside its tags, so a text page mis-tagged blank is still refused.
+    const blankLeaf = ['none', 'blank', ''].includes(hand) && /<page-type>\s*blank\s*<\/page-type>/i.test(text)
+      && (text.replace(/<(\w[\w-]*)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/\[[^\]]*\]|_[^_]*_/g, '').match(/\p{L}/gu) || []).length < 40;
+    // `mixed` is a printed page carrying a second kind of writing: readers' notes, a shelfmark, or Greek/Hebrew/
+    // blackletter type beside roman. A by-eye sample of 8 refused `mixed` pages (#8529) found 6 printed text pages and
+    // 2 bindings, and no manuscripts. The reader prompt transcribes both layers (the print, plus <margin>/<gloss> for
+    // the hand), and both are kept (Derek, 2026-11-11). Only a page the reader calls `handwritten` stays off this route.
+    if (hand !== 'printed' && hand !== 'mixed' && !blankLeaf) { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
   }
   if (gpu) {
     // The page must still be unread (or, --over-stored, still hold the stored draft the read was made over), and the
