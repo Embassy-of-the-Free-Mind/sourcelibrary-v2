@@ -167,20 +167,34 @@ jobs:
   # OFF while the repo is public: file/line/commit of old findings in a public
   # issue (or public logs) is a map to them. Switches on by itself once the
   # repo goes private; workflow_dispatch is under the same gate.
+  # Two gates: the job-level one stops a dispatch on a public repo before a
+  # runner starts; a `schedule` payload carries no `repository` object (null,
+  # so it passes), and the first step asks the API instead.
   history:
-    if: github.event_name != 'pull_request' && github.event.repository.private == true
+    if: github.event_name != 'pull_request' && github.event.repository.private != false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: read
       issues: write
     steps:
+      - name: Only on a private repo
+        id: vis
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          private=$(gh api "repos/${{ github.repository }}" --jq .private)
+          echo "private=$private" >> "$GITHUB_OUTPUT"
+          [ "$private" = true ] || echo "Repo is public: history scan skipped."
+
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        if: steps.vis.outputs.private == 'true'
         with:
           fetch-depth: 0   # every branch and tag
           persist-credentials: false
 
       - name: Secrets (gitleaks, all history)
+        if: steps.vis.outputs.private == 'true'
         run: |
           docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
             -v "$PWD:/repo" -v "$RUNNER_TEMP:/out" "$GITLEAKS_IMAGE" \
@@ -189,6 +203,7 @@ jobs:
           jq 'length' "$RUNNER_TEMP/gitleaks.json"
 
       - name: Keep the tracking issue in sync
+        if: steps.vis.outputs.private == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
