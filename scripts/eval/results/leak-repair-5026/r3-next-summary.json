@@ -1,0 +1,91 @@
+{
+ "built_at_note": "list only, no writes; live frame refreshed at the round-3 frame build 2026-11-08",
+ "en_pairs": 1414,
+ "en_books": 512,
+ "en_pairs_books_with_readers": 571,
+ "ocr_refused_pages": 416,
+ "ocr_refused_books": 247,
+ "ocr_refused_by_ledger": {
+  "leak-repair-5026": 48,
+  "leak-slice-5026": 356,
+  "leak-repair2-5026": 12
+ },
+ "ocr_refused_by_lang": [
+  [
+   "Latin",
+   318
+  ],
+  [
+   "German",
+   66
+  ],
+  [
+   "Arabic",
+   17
+  ],
+  [
+   "Greek",
+   5
+  ],
+  [
+   "Hebrew",
+   4
+  ],
+  [
+   "Japanese",
+   3
+  ],
+  [
+   "Ge'ez",
+   1
+  ],
+  [
+   "Chinese",
+   1
+  ]
+ ],
+ "ocr_refused_by_reason": [
+  [
+   "letters outside the book's scripts",
+   186
+  ],
+  [
+   "only # of its words are in the stored read: check by eye",
+   125
+  ],
+  [
+   "reply wrapper: reply cut before <<<END>>>",
+   36
+  ],
+  [
+   "the model never opened the page image (every read_file/view_file denied): not a ",
+   23
+  ],
+  [
+   "unknown",
+   20
+  ],
+  [
+   "reader tags the page <script>handwritten</script>: --print-only",
+   14
+  ],
+  [
+   "reader tags the page <script>mixed</script>: --print-only",
+   9
+  ],
+  [
+   "reply wrapper: no <<<BEGIN>>> marker",
+   1
+  ],
+  [
+   "ocr-neighbour: the image re-read was not written (see the book run.log)",
+   1
+  ],
+  [
+   "the image re-read still holds the next page's passage (cain et abel quid eti am ",
+   1
+  ]
+ ],
+ "ocr_dirty_pairs": 70,
+ "ocr_dirty_books": 51
+}

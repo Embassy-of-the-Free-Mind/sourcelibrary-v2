@@ -68,7 +68,9 @@ def main():
     if log:
         try:
             with open(log, 'a') as f:
-                f.write(json.dumps({'tool': (payload.get('toolCall') or {}).get('name'), 'decision': out['decision']}) + '\n')
+                call = payload.get('toolCall') or {}
+                args = call.get('args') or {}
+                f.write(json.dumps({'tool': call.get('name'), 'decision': out['decision'], 'path': args.get('AbsolutePath') or args.get('Path')}) + '\n')
         except OSError:
             pass
     print(json.dumps(out))

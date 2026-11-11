@@ -19,11 +19,11 @@ Readers come for a primary source they can read and quote. A book helps them onl
    - **agy Flash** (Gemini 3.8 Flash on the Google subscriptions): first reads for visible books with no OCR, and corrections of weaker reads (`cli-ocr-lane.mjs`, #7701, #7263).
    - **The Internet Archive's own OCR**: scored and accepted page by page (`ia-ocr-nightly.mjs`). English Archive imports are held at import (#5124).
    - **Specialist engines** for single scripts, for example Kraken for Syriac.
-   - **The orchestrator line** on the paid Gemini API (Flash-Lite): `scheduler.mjs` runs every 2 min on main and spawns the orchestrator's phases (preview OCR, Batch OCR, archive OCR, `translate-worker`), all bounded by the spend dial. This was the whole pipeline until mid-2026 (`pipeline-phases.md`). It now carries a small share of the pages.
+   - **The orchestrator line** (`scheduler.mjs` phases: preview OCR, Batch OCR, archive OCR, `translate-worker`) ran on paid Flash-Lite under the spend dial. RETIRED for page work (2026-11-06: everything on agy; dial at $0, #8279); see `routing.md` and https://sourcelibrary.org/admin/pipeline/now for what runs now.
 4. **Translate.** Pages whose language is not English get an English translation:
    - **agy Flash** carries the volume. It runs the Siku Quanshu Chinese lane (`siku-translate-lane.mjs`, #5600) and reader requests (`reader-request-lane.mjs`).
    - **Opus** on the Claude subscriptions, through `claude -p`, takes the hard scripts and languages (`cli-translate-lane.mjs`).
-   - **The paid lanes** on Flash-Lite: `translate-worker` (spawned by the scheduler) and the chained Batch lane (`translate-batch-worker.mjs --chained`), both under the spend dial. The chained lane is the only one that runs the NO-GO brake, the OCR-trust gate and the pre-translation gate. Paid enrolment has been paused since the standing gate's NO-GO on 2026-10-10 (#5826).
+   - **The paid Flash-Lite lanes** (`translate-worker`, and the chained Batch lane `translate-batch-worker.mjs --chained`) are RETIRED for page work (#8283, PR #8452; cron lines retired 2026-11-08). The Siku lane (`siku-translate-lane.mjs`) has been stopped by a STOP file since the 2026-10-30 spot check. Live state: https://sourcelibrary.org/admin/pipeline/now.
 5. **Enrich.** Summaries, chapters, the index and geocoding are derived from the text (`enrich-worker.mjs`). A bad read poisons these too (`invariants/derived-metadata-lane.md`).
 6. **Readable.** `computeTranslationState` (`scripts/lib/page-counts.mjs`) sets `readable_in_english` and the stage from page COUNTS alone. No quality input feeds it yet.
 7. **Per-book check (proposed, not running).** #7759 proposes judging three pages per book by rule, stamping a draft or checked label, and feeding each read to the estimator. It waits on Derek's yes.
@@ -48,7 +48,7 @@ The router table decides (`scripts/eval/estimator/router-table/rules.json`, #674
 - **Opus for hard scripts, Flash for the bulk.** Claude runs only through the subscriptions (`claude -p`), never the API. The only Gemini model allowed on the paid API is `gemini-3.1-flash-lite`. Every other Gemini model runs through `agy` on the subscriptions.
 - **One page per leaf** before OCR or translation.
 - **Keep and reuse every paid read.** A lane applies kept reads before it buys new ones (#7469).
-- **A lane without provenance does not run.** Every writer records its source, engine and prompt (`ocr-lane-decision-tree.md`).
+- **A lane without provenance does not run.** Every writer records its source, engine and prompt (`routing.md`).
 
 ## Where quota comes from
 
@@ -65,7 +65,7 @@ The live levels of all three are on the generated page.
 | What runs right now, on which box, how many pages a day | https://sourcelibrary.org/admin/pipeline/now |
 | What work is left, by step | https://sourcelibrary.org/admin/pipeline (`pipeline-next-step-audit.mjs`) |
 | Which headless Claude jobs are running | https://sourcelibrary.org/admin/work |
-| Choosing an OCR lane for a book | `ocr-lane-decision-tree.md` |
+| Choosing an OCR or translation route for a book | `routing.md` |
 | Pipeline status fields and holds | `invariants/pipeline-status-truth.md` |
 | Spend controls | `invariants/spend-controls.md` |
 | Placing a job on a box | `scripts/workers/JOB-HOSTS.md` |

@@ -68,6 +68,8 @@ export interface AuthorThesaurusDoc {
   wikidata_description?: string;
   wikidata_birth_year?: number;
   wikidata_death_year?: number;
+  /** The person's name per language, for a heading in another script (#8035). */
+  localized?: Record<string, { name?: string }>;
 }
 
 export interface AuthorEntityEnrichment {
@@ -120,6 +122,61 @@ function buildAuthorBookOr(doc: AuthorThesaurusDoc): Record<string, unknown>[] {
   // Safety net: a doc with no variants/entities still matches by canonical_name.
   if (orClauses.length === 1) orClauses.push({ author: doc.canonical_name });
   return orClauses;
+}
+
+/** The slug's words in every other starting position, so `lynn-thorndike` gives `thorndike-lynn`. */
+export function reorderedSlugs(slug: string): string[] {
+  const words = slug.split('-');
+  if (words.length < 2 || words.length > 6) return [];
+  return words.slice(1).map((_, i) => [...words.slice(i + 1), ...words.slice(0, i + 1)].join('-'));
+}
+
+/**
+ * The canonical slug of the one author whose name is this slug's words in
+ * another order: writers compose both `charles-babbage` and `babbage-charles`.
+ * Canonical slugs only, because `variants` have matched the wrong person before
+ * (author-identity.md), and a slug that fits two people resolves to neither.
+ * For a slug nothing else resolved (#8216).
+ */
+export async function findAuthorByReorderedSlug(
+  db: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  slug: string,
+): Promise<string | null> {
+  const candidates = reorderedSlugs(slug);
+  if (candidates.length === 0) return null;
+  const docs: Array<{ _id: string; slug?: string }> = await db.collection('authors')
+    .find({ $or: [{ _id: { $in: candidates } }, { slug: { $in: candidates } }], merged_into: { $exists: false } })
+    .project({ slug: 1 })
+    .limit(2)
+    .toArray();
+  if (docs.length !== 1) return null;
+  return docs[0].slug || docs[0]._id;
+}
+
+/**
+ * Whether /author/<slug> renders, in the order the page tries: the thesaurus,
+ * the `author_slugs` cache, a title-cased author string, then a reordered name.
+ * Checked against the live route on 100 cited slugs with no disagreement
+ * (2026-11-05, #8216). Keep it in step with loadAuthorData in that page.
+ */
+export async function authorPageExists(
+  db: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  slug: string,
+): Promise<boolean> {
+  const hasBook = async (filter: Record<string, unknown>) =>
+    !!(await db.collection('books').findOne({ ...filter, visible: true }, { projection: { _id: 1 } }));
+
+  if (authorThesaurusReadpathEnabled()) {
+    const canonical = await resolveAuthorBookFilter(db, slug);
+    if (canonical && await hasBook(canonical.match)) return true;
+  }
+  const config = await db.collection('system_config').findOne(
+    { _id: 'author_slugs' },
+    { projection: { [`slugs.${slug}`]: 1 } },
+  );
+  const titled = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  if (await hasBook({ author: config?.slugs?.[slug] ?? titled })) return true;
+  return !!(await findAuthorByReorderedSlug(db, slug));
 }
 
 export interface AuthorBookFilter {
@@ -193,6 +250,19 @@ async function getCanonicalNameIndex(
   }
   canonicalNameIndex = { map, builtAt: now };
   return map;
+}
+
+/**
+ * The canonical slug of the one doc that answers to a name as written, or null
+ * when none does or two do. For a /author/ URL in Han characters, which
+ * `authorSlug` folds to nothing (#8035).
+ */
+export async function resolveAuthorSlugByName(
+  db: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  name: string,
+): Promise<string | null> {
+  const index = await getCanonicalNameIndex(db.collection('authors'));
+  return index.get(norm(name)) ?? null;
 }
 
 /**

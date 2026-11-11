@@ -16,8 +16,9 @@ import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
 import { hasBookPageForEveryBook } from '@/lib/locale-path';
+import { displayPublished } from '@/lib/publication-date';
 import { languageName } from '@/lib/book-i18n';
-import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
+import { localizedAuthor, localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { translationPercent, translationVerdict, type StoredTranslationState } from '@/lib/translation-completeness';
 import PreviewBadge from '@/components/book/PreviewBadge';
@@ -293,7 +294,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           <PlaceholderCover
             title={shownTitle}
             author={book.author}
-            year={(book.year ?? 0) > 0 ? book.year : book.published}
+            year={(book.year ?? 0) > 0 ? book.year : (displayPublished(book.published) ?? undefined)}
           />
         ) : (
           <BookCoverPlaceholder
@@ -353,12 +354,12 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           <p className="text-[11px] text-muted italic mt-0.5 line-clamp-1" lang={languageToBcp47(book.language)}>{originalLine}</p>
         )}
         <p className="text-xs text-muted mt-0.5 line-clamp-1">
-          {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
+          {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} lang={lang} /></> : (book.author ? <AuthorName author={localizedAuthor(book, lang)} lang={lang} /> : null)}
         </p>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-[11px] text-muted">
           {book.language && <span className="bg-warm px-1.5 py-0.5 text-secondary">{languageName(book.language, lang)}</span>}
-          {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
+          {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (displayPublished(book.published) ? <span>{displayPublished(book.published)}</span> : null)}
           {isArtwork
             ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)
             : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {labels.pages}</span> : null)}

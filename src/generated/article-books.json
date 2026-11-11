@@ -16,6 +16,18 @@
     "de-praestigiis-daemonum-et-incantationibus-ac-veneficiis-weyer",
     "de-la-demonomanie-des-sorciers-bodin"
   ],
+  "alchemical-process": [
+    "atalanta-fleeing-maier",
+    "summa-perfectionis-magisterii-add-liber-trium-verborum-alexa-geber",
+    "alchemia-libavius",
+    "amphitheater-of-eternal-wisdom-the-only-true-christian-kabba-khunrath-80a2a0",
+    "the-secret-tradition-in-alchemy-its-development-and-records-arthur-edw",
+    "theatrum-chemicum-britannicum-containing-severall-poeticall-ashmole-2",
+    "the-works-of-geber-1678-hayyan",
+    "collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot",
+    "the-sceptical-chymist-1661-first-edition-boyle",
+    "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3"
+  ],
   "aldine-roman": [
     "69b220f356715b0e32473bd0"
   ],
@@ -55,7 +67,6 @@
     "recherches-physiologiques-sur-la-vie-et-la-mort-bichat",
     "the-science-of-psychic-healing-atkinson",
     "vol-7-1782366595479",
-    "essence-of-taoist-canon-masters",
     "caraka-samhita-charaka",
     "opera-omnia-medica-et-physiologica-ramazzini",
     "three-books-on-life-ficino-2",
@@ -156,7 +167,7 @@
     "tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa",
     "herbarius-latinus-with-german-synonyms",
     "de-historia-stirpium-commentarii-insignes-fuchs-2",
-    "the-divine-farmers-classic-of-materia-medica",
+    "vol-22-37",
     "an-account-of-the-manners-and-customs-of-the-modern-lane",
     "the-persian-wars-ii-books-3-4-loeb-l118-herodotus",
     "les-paradis-artificiels-opium-et-haschisch-charles-baudelair"
@@ -167,14 +178,12 @@
   "chakra-tradition": [
     "description-of-the-six-chakras-purnananda",
     "tantraloka-vol-1-with-jayaratha-commentary-jayaratha",
-    "netra-tantra-with-kemarjas-udyota",
     "description-of-the-six-chakras-satchakranirupanam-yati",
     "illustrated-six-chakras-swaroop",
     "light-on-hatha-yoga-hathayogapradipika-with-commentaries-svatmarama",
     "tantraraja-tantra-woodroffe-mishra",
     "paramesvaratantra-ms-add-1049-1",
     "kularnava-tantra-traditional",
-    "kularnava-tantra-english-translation-arthur-avalon-woodroffe",
     "kriyakandakramavali-ms-add-1406",
     "vajramrtatantra-ms-or-158-1"
   ],
@@ -220,9 +229,10 @@
     "hermetica-vol-i-texts-and-translation-ed",
     "book-of-wonders-al-isfahani",
     "the-hammer-of-witches-sprenger",
-    "polygraphie-1561-french-translator",
+    "daemonologie-in-forme-of-a-dialogue-vi-i",
     "the-lesser-key-of-solomon-goetia-laurence",
-    "daemonologie-in-forme-of-a-dialogue-vi-i"
+    "fourth-book-of-occult-philosophy-pseudo-agrippa-with",
+    "polygraphie-1561-french-translator"
   ],
   "does-ai-get-religion": [
     "de-boeken-des-ouden-verbonds-old-testament-in-javanese",
@@ -487,10 +497,19 @@
     "apuleius-metamorphoses-the-golden-ass-with-asclepius-apuleius",
     "cabalistic-disputation-on-the-soul-moses"
   ],
+  "how-many-translated-into-english": [
+    "the-divine-pymander-of-hermes-mercurius-trismegistus-in-everard",
+    "the-historie-of-the-world-commonly-called-the-naturall-trans"
+  ],
+  "how-we-choose-the-cheapest-way-to-read-a-page": [
+    "furni-novi-philosophici-oder-beschreibung-einer-new-glauber",
+    "entdeckungen-uber-die-theorie-des-klanges-chladni-2",
+    "faust-ein-fragment-goethe"
+  ],
   "how-we-measure-ocr-quality": [
     "vol-64-24",
     "golden-mirror-of-medicine-vol-2-ed",
-    "untitled-27",
+    "records-of-miraculous-retribution",
     "vol-81-19"
   ],
   "hyperborea": [
@@ -545,7 +564,6 @@
     "de-aeternitate-mundi-contra-proclum-rabe",
     "phaedo-plato",
     "timaeus-greek-text-with-commentary-archer-hind",
-    "latvian-prussian-mythology-the-master-source-compendium-of-mannhardt",
     "cologny-fondation-martin-bodmer-cod-bodmer-136-plato",
     "on-the-gods-of-the-samogitians-mannhardt",
     "prussian-delights-prussian-lithuanian-religion-and-customs-pierson",
@@ -625,7 +643,7 @@
     "pratica-della-mercatura-pegolotti",
     "dialogi-decem-incl-de-avaritia-al",
     "della-mercatura-et-del-mercante-perfetto-cotrugli",
-    "summa-de-arithmetica-geometria-proportioni-et-pacioli",
+    "summa-de-arithmetica-geometria-proportioni-et-proportionalit",
     "le-istorie-fiorentine-machiavelli",
     "diario-fiorentino-dal-1450-al-1516-landucci",
     "l-arte-dei-mercanti-di-calimala-in-firenze-ed",
@@ -638,6 +656,7 @@
     "de-iustitia-et-iure-lessius",
     "l-alitinonfo-scaruffi",
     "le-opere-including-lezione-delle-monete-davanzati",
+    "a-discourse-upon-coins-davanzati",
     "tractatus-de-commerciis-et-cambio-scaccia",
     "de-iure-belli-ac-pacis-grotius",
     "de-officio-hominis-et-civis-pufendorf",
@@ -664,6 +683,29 @@
     "le-commerce-et-le-gouvernement-condillac",
     "a-treatise-on-political-economy-say",
     "harmonies-economiques-bastiat"
+  ],
+  "kircher-hieroglyphs": [
+    "obeliscus-pamphilius-kircher",
+    "magnes-sive-de-arte-magnetica-kircher",
+    "universal-music-making-musurgia-universalis-volume-i-kircher",
+    "the-great-art-of-light-and-shadow-kircher",
+    "athanasii-kircheri-e-soc-jesu-mundus-subterraneus-in-xii-kircher",
+    "kircher-china-illustrata-1667-kircher",
+    "kircher-turris-babel-1679-kircher",
+    "horou-apollonos-neiloou-hieroglyphika-eklekta-hori-horapollo",
+    "on-auguries-and-hieroglyphics-nifo",
+    "aesop-fabulae-bundled-volume-aldine-with-horapollo-horapollo",
+    "valeriano-hieroglyphica-1575-valeriano",
+    "hermes-trismegistus-translated-by-apuleius-ficino-ficino",
+    "iamblichus-de-mysteriis-aegyptiorum-lyon-1607-ficino",
+    "oedipus-aegyptiacus-tomus-iii-kircher",
+    "oedipus-aegyptiacus-volume-i-1652-kircher",
+    "oedipus-aegyptiacus-volume-ii-1653-kircher",
+    "obeliscus-aegyptiacus-kircher",
+    "lettre-a-m-dacier-relative-a-l-alphabet-des-hieroglyphes-champollion",
+    "coptic-forerunner-on-the-egyptian-language-kircher",
+    "lingua-aegyptiaca-restituta-kircher",
+    "sphinx-mystagoga-kircher"
   ],
   "man-his-own-maker": [
     "pico-della-mirandola-opera-1496-mirandola",
@@ -766,7 +808,6 @@
     "aulus-gellius-noctes-atticae-aldine-press-2nd-ed-gellius",
     "ioannis-revchlin-phorcensis-ll-doc-de-arte-cabalistica-reuchlin",
     "destructio-cabale-seu-cabalistice-perfidie-ab-ioanne-hoogstraten",
-    "the-city-of-the-sun-campanella",
     "claudiani-mamerti-opera-csel-xi-engelbrecht",
     "die-fragmente-der-vorsokratiker-diels"
   ],
@@ -830,7 +871,6 @@
     "the-zohar-sefer-ha-zohar-attributed"
   ],
   "reading-classical-chinese": [
-    "tiangong-kaiwu-exploitation-of-the-works-of-nature",
     "ben-cao-gang-mu-compendium-of-materia-medica-vol-7-shizhen",
     "wubei-zhi-treatise-on-armament-technology",
     "sancai-tuhui-illustrated-encyclopedia-of-the-three-realms",
@@ -856,7 +896,6 @@
   "shipwrecks-and-buried-treasure": [
     "69c8716b6c6f3cc53c857589",
     "6991e7ecc91ce7d733e50311",
-    "69ea06f14c15c76fe934a77a",
     "695910f9ecb01322b3068858",
     "69b525c46be6046083031e1b",
     "69e961ab2beefe2f6f72c3b6",
@@ -885,7 +924,6 @@
     "the-book-of-the-sacred-magic-of-abra-melin-the-mage-simeon",
     "6a267ec86c1f37c9c4f3cbed",
     "warhaffte-beschreibung-einer-prophecey-d-theophrasti-paracelsus",
-    "brevisima-relacion-de-la-destruccion-de-las-indias-casas",
     "historia-general-y-natural-de-las-indias-vol-1-oviedo",
     "the-history-of-the-rebellion-and-civil-wars-in-england-vol-5-edward-hy",
     "della-decima-e-di-varie-altre-gravezze-pagnini",
@@ -895,12 +933,32 @@
     "ioannis-pici-mirandulae-omnia-opera-mirandola",
     "the-little-book-of-life-after-death-fechner",
     "zend-avesta-fechner",
-    "harmonices-mundi-1619-first-edition-kepler",
     "the-harmony-of-the-world-kepler",
     "the-great-art-of-light-and-shadow-kircher",
     "platonic-theology-on-the-immortality-of-souls-1525-edition-ficino",
     "novum-organum-bacon",
     "nanna-oder-uber-das-seelenleben-der-pflanzen-fechner"
+  ],
+  "solve-et-coagula": [
+    "plotinus-enneads-i-xxvi-ficino-translation-dedicatory-copy-translator",
+    "iamblichus-de-mysteriis-1497-aldine-editio-princeps-trans",
+    "de-voluptate-ficino",
+    "the-complete-works-of-marsilio-ficino-ficino",
+    "plato-complete-works-ficino-translation-translator",
+    "philolaos-des-pythagoreers-lehren-nebst-den-bruchstucken-boeckh",
+    "corpus-hermeticum-pimander-ficino-translation-translator",
+    "history-of-both-worlds-macrocosm-fludd",
+    "atalanta-fleeing-maier",
+    "oedipus-aegyptiacus-volume-i-1652-kircher",
+    "original-writings-of-the-order-of-the-illuminati-zwack",
+    "complete-plato-thomas-taylor-trans-plato-taylor",
+    "aureum-vellus-splendor-solis-golden-fleece-trismosin",
+    "drebbel-tractatus-duo-1628-latin-laurembergius",
+    "on-the-uncertainty-and-vanity-of-the-sciences-and-arts-agrippa",
+    "occult-philosophy-agrippa",
+    "ioannis-pici-mirandulae-omnia-opera-mirandola",
+    "on-the-nobility-and-excellence-of-the-female-sex-agrippa",
+    "two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel"
   ],
   "sound-laboratory": [
     "de-institutione-musica-15th-c-ms-boethius",
@@ -927,14 +985,12 @@
     "suidae-lexicon-suidas"
   ],
   "technique-is-local": [
-    "visuddhimagga-path-of-purification-in-thai",
     "philokalia-greek-eds",
     "the-yoga-philosophy-tookaram-tatya",
     "xingming-guizhi-principles-of-joint-cultivation-of-nature-and-life"
   ],
   "techniques-of-the-body": [
     "sancai-tuhui-juan-74",
-    "essence-of-taoist-canon-masters",
     "vol-1-90",
     "baopuzi-inner-chapters-vol-2",
     "chen-dao-weng-inner-alchemy-essays-chen-zhizun",
@@ -942,7 +998,6 @@
     "bhasha-svarodaya",
     "hathayogapradipika-sanskrit-1867-svatmarama",
     "rgyas-sdebs-byed-pa-i-lde-mig-rin-chen-sgron-me-collection",
-    "abhidharmakosa-with-bhashya-vasubandhu",
     "the-yoga-philosophy-tookaram-tatya",
     "shiva-svarodaya-with-commentary-chandra",
     "the-science-of-the-five-birds-agastya",
@@ -1043,10 +1098,8 @@
     "speculum-humanae-salvationis-german-spiegel-menschlicher-beh",
     "speculum-humanae-salvationis-cum-speculo-s-mariae-virginis-l",
     "history-of-the-old-and-new-testaments",
-    "wandlungen-und-symbole-der-libido-jung",
     "book-of-wonders-al-isfahani",
     "aja-ib-al-makhluqat-ms-nn-3-74-al-qazwini",
-    "kilatbuwana-a-javanese-wayang-kulit-performance-rachmadi",
     "alchemica-german-ms-1-anonymous",
     "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
     "triple-hermetic-cloverleaf-nuysement",

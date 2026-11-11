@@ -42,6 +42,11 @@ describe('localizeDateDisplay (#7072)', () => {
     expect(localizeDateDisplay('c. 1400–1450', 'nl')).toBe('ca. 1400–1450');
     expect(localizeDateDisplay('c. 500–400 BCE', 'es')).toBe('c. 500–400 a. C.');
     expect(localizeDateDisplay('c. 200 BCE–100', 'zh')).toBe('约公元前200–100');
+    // The era covers both years; "约300–公元前100" reads as 300 CE to 100 BCE.
+    expect(localizeDateDisplay('c. 300–100 BCE', 'zh')).toBe('约公元前300–公元前100');
+    expect(localizeDateDisplay("61–5 BCE, the author's adult life", 'zh')).toBe('公元前61–公元前5，作者成年时期');
+    expect(localizeDateDisplay('139 BCE', 'zh')).toBe('公元前139');
+    expect(localizeDateDisplay('c. 300–100 BCE', 'nl')).toBe('ca. 300–100 v.Chr.');
     expect(localizeDateDisplay('15th century', 'la')).toBe('saec. XV');
     expect(localizeDateDisplay('uncertain', 'es')).toBe('incierta');
   });

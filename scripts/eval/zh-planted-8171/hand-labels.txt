@@ -1,0 +1,10 @@
+# #8171 hand labels for every planted edit, made 2026-11-04 by the author of the record BEFORE any arm ran, reading the
+# original and edited text ±8 characters around each site. One letter per edit, in sample.json order (passages sorted by
+# slug, edits by offset), 60 per line: o = grammatical, plausible, no cue in the text; c = grammatical but cued (a broken
+# parallel, a fixed phrase or count, an anachronism, a sense the next clause contradicts); b = ungrammatical or nonsense
+# (a split name, an impossible term). The secondary analysis restricts to o.
+cccccoobccccccccccocccccocccccccbcooococcccoooocccbccboccbcb
+cbococcocccccoocooccboooccboccobcocococcbocbcooocccobocccbco
+ocoooooooccccocccoccococcbccoooocobooooboccccoccooooooocccco
+coccooococccccccooocbocboocoboococcboccoocoocobbbbbocococooo
+ocooooboooooococbcbobcococcccooooooooooooocoooccoooooooc

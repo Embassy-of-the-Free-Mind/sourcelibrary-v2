@@ -39,6 +39,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 
 // --- Config ---
@@ -228,7 +229,8 @@ async function processHalf(halfBuf, bookId) {
     ? await sharp(halfBuf).resize({ width: 2000, withoutEnlargement: true }).jpeg({ quality: 88, progressive: true }).toBuffer()
     : halfBuf;
   const displayKey = `pages/${bookId}/sp${id}.jpg`;
-  const displayUrl = await uploadToR2(displayKey, displayBuf);
+  // Split scripts keep the crop's resolution as the display image; the mark goes on at that size.
+  const displayUrl = await uploadToR2(displayKey, await markDisplay(displayBuf, { bookId, pageNumber: id }));
 
   // Thumbnail (150px wide)
   const thumbBuf = await sharp(halfBuf).resize({ width: 150 }).jpeg({ quality: 60 }).toBuffer();

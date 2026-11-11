@@ -99,10 +99,22 @@ describe('freshness rule', () => {
     expect(f[0]).toMatch(/newest measured experiment record \(2026-10-14/);
   });
 
-  it('reads all five dates from the repository', () => {
+  it('flags index.json trailing the newest write-up file by more than a day (#6553); absent index date is not checked', () => {
+    expect(checkFreshness({ ...base, newestIndexed: base.newestExperiment })).toEqual([]);
+    const d1 = new Date(Date.parse(base.newestExperiment) - 86_400_000).toISOString().slice(0, 10);
+    const d2 = new Date(Date.parse(base.newestExperiment) - 2 * 86_400_000).toISOString().slice(0, 10);
+    expect(checkFreshness({ ...base, newestIndexed: d1 })).toEqual([]);
+    const f = checkFreshness({ ...base, newestIndexed: d2 });
+    expect(f).toHaveLength(1);
+    expect(f[0]).toMatch(/stopped regenerating/);
+    expect(checkFreshness({ ...base, newestIndexed: null })[0]).toMatch(/no entries/);
+  });
+
+  it('reads all six dates from the repository', () => {
     const d = readDates(process.cwd());
     for (const v of Object.values(d)) expect(v).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(d.newestMeasured! <= d.newestExperiment!).toBe(true);
+    expect(d.newestIndexed! <= d.newestExperiment!).toBe(true);
   });
 });
 

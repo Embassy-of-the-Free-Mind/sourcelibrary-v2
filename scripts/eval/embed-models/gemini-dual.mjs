@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * PRIOR ART: scripts/eval/orig-lang-recall/gemini-arm.mjs --fill-pool — the same
- * production-shaped call (gemini-embedding-2-preview, 768, plain text, 50 per
+ * production-shaped call (gemini-embedding-2, 768, plain text, 50 per
  * batchEmbedContents) over pool A; this one embeds the ORIGINAL text of pages
  * that already hold a translation vector, plus queries for gold sets B and C.
  *
@@ -25,7 +25,7 @@ const args = process.argv.slice(2);
 const arg = (k, d) => { const i = args.indexOf(k); return i === -1 ? d : args[i + 1]; };
 const DIR = arg('--dir');
 if (!DIR) { console.error('--dir required'); process.exit(1); }
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2';
 const here = path.dirname(fileURLToPath(import.meta.url));
 
 async function embedBatch(texts) {

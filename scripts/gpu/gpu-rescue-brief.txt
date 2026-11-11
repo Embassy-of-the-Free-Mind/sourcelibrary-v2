@@ -1,0 +1,46 @@
+Lands: #6871
+PR: no
+Route: none — restarts the existing ocr-filler routes, each of which carries its own router cell; this job writes no page text itself
+
+# GPU rescue: the gex45 card has done no work for a while. Get it working again.
+
+You were started by `scripts/gpu/ocr-filler.sh` (the gex45 OCR filler, cron every 10 min), because:
+  {{REASON}}
+The box state at that moment is appended below this brief.
+
+WHY: gex45's GPU is owned hardware, so an idle hour of it is wasted. Derek (2026-11-09): "if it is idle, an opus session
+is triggered to get it going again". It went idle on 2026-11-09 because the disk-steward trimmed the LightOnOCR model from
+the HF cache, and nine chunks failed with nothing in task.log but "no page drafted" (PR #8474).
+
+HOW THE QUEUE WORKS (read these before you change anything):
+- scripts/workers/gpu-queue.sh: /root/gpu-queue/{pending,running,done,failed,held}, one task at a time under /root/gpu.lock,
+  cron */5; log /var/log/sourcelibrary/gpu-queue.log; each task's output is in /root/jobs/gpu-queue/<task>/task.log.
+- scripts/gpu/ocr-filler.sh (installed copy /root/bin/ocr-filler.sh, routes /root/bin/ocr-filler-routes.tsv): queues one OCR
+  chunk when the queue is empty; log /var/log/sourcelibrary/ocr-filler.log; state /root/gpu-queue/ocr-filler/
+  (<route>.DISABLED after 3 failed chunks in a row, <route>.EMPTY when a route has no planned pages left, PAUSE, runs.jsonl).
+- An engine's real error is usually in the lane's work dir (e.g. /root/jobs/<lane>/work/<ts>/drive.log, serve-*.log),
+  not in task.log.
+
+DO, in this order:
+1. Diagnose. Name the one cause, with the log line that shows it, before you fix anything.
+2. Fix what is broken on the box: a missing model (re-download the same revision the lane recorded), a stale lock held by
+   orphaned workers (kill the process GROUP, then check `lsof -t /root/gpu.lock` is empty), a full disk (disk-steward.sh,
+   never rm a lane's plan/, drafts/ or ledger), a route disabled by failures whose cause you have fixed (rm its .DISABLED).
+3. If no route has pages left, extend an EXISTING route only: run that lane's own planner, as its routes-file row and its
+   cron line in `crontab -l` describe. Turning on a route marked `off` or `-`, or adding a new route, is a policy change:
+   do not do it. Comment the proposal on #6871 and page it instead.
+4. Verify the card is working: a chunk in /root/gpu-queue/running whose task.log shows pages drafted, or nvidia-smi
+   showing the queue's process. "Queued" is not "working".
+5. If the cause is in code (a script in the repo), fix it in a PR off main (worktree, `git commit -s`, the checks green), and
+   make the box work today with the smallest hand step, which you name in the PR.
+6. Comment on #6871: cause, fix, evidence that the card is working, and what would prevent a repeat.
+
+DO NOT:
+- Stop, kill or reconfigure anything in /root/greenroom (Krea/Chroma image servers) or any process the queue did not
+  start. They are another project, and they have priority: the filler waits for them by itself.
+- Edit /root/bin/claude-job.sh, or run a Claude or paid-API fallback for OCR. A lane's engine is its route.
+- Write page text to Mongo yourself. The lanes' own cron lines apply their reads.
+- Spend money. A step that costs money, or a decision on the hold list, goes to #6871 as one line with a default.
+
+If the card is not idle any more when you look (a chunk is running, or a guest is painting), say so in one line on #6871
+and finish.

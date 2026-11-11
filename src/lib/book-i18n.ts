@@ -32,6 +32,9 @@ export interface BookStrings {
   editedBy: string;
   scans: (n: number) => string;
   scansTooltip: string;
+  /** Reading visits by people (books.human_read_count, #5048), formatted for the locale. */
+  reads: (n: number) => string;
+  readsTooltip: string;
   /** For text editions, which have no page images at all. */
   pagesOfText: (n: number) => string;
   textEditionTooltip: string;
@@ -149,6 +152,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: 'edited by',
     scans: (n) => `${n} scans`,
     scansTooltip: 'Scanned images, including covers and blanks.',
+    reads: (n) => `${n.toLocaleString('en-US')} ${n === 1 ? 'read' : 'reads'}`,
+    readsTooltip: 'Reading visits by people since 29 July 2026; crawlers and proxy traffic excluded.',
     pagesOfText: (n) => `${n} ${n === 1 ? 'page' : 'pages'} of text`,
     textEditionTooltip: 'This is a text edition. There are no page images for this work.',
     textEditionBy: (who) => `A text edition, transcribed and edited by ${who}. There are no page images for this work.`,
@@ -246,6 +251,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: 'editado por',
     scans: (n) => `${n} escaneos`,
     scansTooltip: 'Imágenes escaneadas, incluidas cubiertas y páginas en blanco.',
+    reads: (n) => `${n.toLocaleString('es-ES')} ${n === 1 ? 'lectura' : 'lecturas'}`,
+    readsTooltip: 'Visitas de lectura de personas desde el 29 de julio de 2026; sin rastreadores ni tráfico de proxies.',
     pagesOfText: (n) => `${n} ${n === 1 ? 'página' : 'páginas'} de texto`,
     textEditionTooltip: 'Es una edición de texto. Esta obra no tiene imágenes de página.',
     textEditionBy: (who) => `Edición de texto, transcrita y editada por ${who}. Esta obra no tiene imágenes de página.`,
@@ -346,6 +353,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: 'edidit',
     scans: (n) => `${n} imagines photographicae`,
     scansTooltip: 'Imagines photographicae, tegumentis et paginis vacuis inclusis.',
+    reads: (n) => `${n.toLocaleString('en-US')} ${n === 1 ? 'lectio' : 'lectiones'}`,
+    readsTooltip: 'Lectiones hominum ab die 29 Iulii 2026; machinae et procuratores exclusi.',
     pagesOfText: (n) => `${n} ${n === 1 ? 'pagina' : 'paginae'} textus`,
     textEditionTooltip: 'Haec est editio textus. Imagines paginarum huius operis nullae sunt.',
     textEditionBy: (who) => `Editio textus, quam descripsit et edidit ${who}. Imagines paginarum huius operis nullae sunt.`,
@@ -446,6 +455,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: 'bezorgd door',
     scans: (n) => `${n} scans`,
     scansTooltip: 'Gescande afbeeldingen, inclusief omslagen en lege pagina’s.',
+    reads: (n) => `${n.toLocaleString('nl-NL')} keer gelezen`,
+    readsTooltip: 'Leesbezoeken door mensen sinds 29 juli 2026; crawlers en proxyverkeer niet meegeteld.',
     pagesOfText: (n) => `${n} ${n === 1 ? 'pagina' : 'pagina’s'} tekst`,
     textEditionTooltip: 'Dit is een tekstuitgave. Van dit werk zijn geen pagina-afbeeldingen beschikbaar.',
     textEditionBy: (who) => `Een tekstuitgave, getranscribeerd en bezorgd door ${who}. Van dit werk zijn geen pagina-afbeeldingen beschikbaar.`,
@@ -531,7 +542,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
   zh: {
     backToCollection: '中文书籍',
     read: '阅读',
-    readInSpanish: '阅读中文原文',
+    readInSpanish: '阅读原文',
     readThisBook: '阅读本书',
     originalTitle: '原书名',
     originalLanguage: '原文语言',
@@ -546,6 +557,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: '编者',
     scans: (n) => `${n} 张扫描图`,
     scansTooltip: '扫描图像，含封面和空白页。',
+    reads: (n) => `${n.toLocaleString('zh-CN')} 次阅读`,
+    readsTooltip: '自 2026 年 7 月 29 日起的真人阅读次数，不含爬虫和代理流量。',
     pagesOfText: (n) => `${n} 页文本`,
     textEditionTooltip: '这是文本版，本作品没有页面图像。',
     textEditionBy: (who) => `文本版，由${who}录入并校订。本作品没有页面图像。`,

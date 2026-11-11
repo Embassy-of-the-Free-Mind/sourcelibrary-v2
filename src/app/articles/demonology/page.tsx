@@ -353,7 +353,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/polygraphie-1561-french-translator"
+                href="/book/daemonologie-in-forme-of-a-dialogue-vi-i?page=3"
                 className="text-accent-rust hover:underline"
               >
                 Daemonologie
@@ -457,19 +457,19 @@ export default function DemonologyPage() {
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
             <p className="text-secondary italic font-body leading-relaxed mb-3">
-              &ldquo;Good Daemons do indeed perform their offices, not out of fear of punishment or
-              for the sake of reward, but out of good will and divine love&hellip; The evil daemons
-              do nothing else but hinder and obstruct the operations of good men, and make the wicked
-              their instruments.&rdquo;
+              &ldquo;The good spirits may be invocated of us divers wayes, and in sundry manners do
+              offer themselves unto us. For they do openly speak to those that watch, and do offer
+              themselves to our sight, or do inform us in dreams by oracle of those things which are
+              desired.&rdquo;
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/daemonologie-in-forme-of-a-dialogue-vi-i"
+                href="/book/fourth-book-of-occult-philosophy-pseudo-agrippa-with?page=77"
                 className="text-accent-rust hover:underline"
               >
                 Fourth Book of Occult Philosophy
               </Link>
-              , attributed to Agrippa
+              , attributed to Agrippa, English edition (London, 1665), p. 57
             </p>
           </div>
 

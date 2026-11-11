@@ -7,9 +7,9 @@ import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
-import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SHOWCASE_SLUGS, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
+import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SHELF_LEAD_IDS, NATIVE_SHOWCASE_SLUGS, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
-import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, type LocalizedCollectionMap } from '@/lib/localized';
+import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, LOCALIZED_CARD_PROJECTION, type LocalizedCollectionMap } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
 import { dedupeHomeSections } from '@/lib/home-dedupe';
@@ -41,7 +41,9 @@ const BOOK_PROJECTION = {
   translation_percent: { $ifNull: ['$translation_percent', 0] },
   // Inputs of localizedTitle and hasLocalizedEdition, so a locale homepage can
   // show the Spanish gloss and tell which books exist in Spanish (#7496).
-  localized: 1,
+  // Title and byline only: the full `localized` adds every language's
+  // summary and chapter list to the page payload.
+  ...LOCALIZED_CARD_PROJECTION,
   pages_translated_es: 1,
 };
 
@@ -100,7 +102,7 @@ async function getFeaturedCollections(preferSlugs: string[] = [], lang: HomeLang
   const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1, resource_type: 1,
     // Both inputs of hasLocalizedEdition, so a locale homepage links a book with
     // no edition in its language straight to the English page (#7076).
-    language: 1, pages_translated_es: 1, localized: 1 };
+    language: 1, pages_translated_es: 1, ...LOCALIZED_CARD_PROJECTION };
 
   // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
   const highlightedIdsBySlug = new Map<string, string[]>();
@@ -304,10 +306,13 @@ async function getCuratedShowcase(lang: HomeLang): Promise<CuratedShowcase> {
           ],
         },
       },
-      { $sample: { size: 4 } },
+      // A pinned set is a decision, so it keeps its order (the first is the large
+      // lead card); the open pool is drawn at random.
+      ...(pinned ? [] : [{ $sample: { size: 4 } }]),
       { $project: { _id: 0, slug: 1, name: 1, subtitle: 1, localized: 1, book_count: 1, artwork_count: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: ['$featured_images', 4] } } },
     ], { maxTimeMS: 5000 }).toArray(),
   ]);
+  if (pinned) docs.sort((a, b) => pinned.indexOf(a.slug as string) - pinned.indexOf(b.slug as string));
 
   const items: CuratedShowcaseItem[] = docs.map((doc) => {
     const imageCandidates = cardImageCandidates(doc.featured_images, coverOverride(doc.slug), doc.hero_image);
@@ -552,12 +557,29 @@ const NATIVE_SHELF_COUNT = 15;
  * language. Scans-only books count: a reader of Latin or Chinese reads the
  * page image, and serving those readers is why these sites exist (Derek,
  * 2026-10-22; #7176 published ~16K such books). Real covers, one card per work.
+ * `leadIds` open the shelf in the order given (NATIVE_SHELF_LEAD_IDS); one that
+ * has since been hidden simply drops out.
  */
-async function getNativeShelf(language: string): Promise<CatalogBook[]> {
-  const { books } = await browseBooks({ language, sort: 'popular', limit: 200, skipCount: true });
+async function getNativeShelf(language: string, leadIds: string[] = []): Promise<CatalogBook[]> {
+  const [{ books }, leadRows] = await Promise.all([
+    browseBooks({ language, sort: 'popular', limit: 200, skipCount: true }),
+    leadIds.length
+      ? getReadDb().then((db) => db.collection('books')
+          .find({
+            // By `id` OR `_id`: a re-minted `_id` hides a book from an `_id`-only lookup (book-deletion-and-identity.md).
+            $or: [{ id: { $in: leadIds } }, { _id: { $in: leadIds.filter((id) => ObjectId.isValid(id)).map((id) => new ObjectId(id)) } }],
+            visible: true,
+            pages_count: { $gt: 0 },
+          }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 })
+          .toArray()) as unknown as Promise<CatalogBook[]>
+      : Promise.resolve([] as CatalogBook[]),
+  ]);
+  const lead = JSON.parse(JSON.stringify(
+    leadIds.flatMap((id) => leadRows.filter((b) => b.id === id)),
+  )) as CatalogBook[];
   const seen = new Set<string>();
   const out: CatalogBook[] = [];
-  for (const b of books) {
+  for (const b of [...lead, ...books]) {
     if (!hasRenderableCover(b)) continue;
     const key = workKey(b);
     if (seen.has(key)) continue;
@@ -1109,7 +1131,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getCuratedShowcase(lang), 8000, emptyShowcase),
     lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
     localizedCountsPromise,
-    NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
+    NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!, NATIVE_SHELF_LEAD_IDS[lang]), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     Promise.all(subjectConfig.map((s) => withTimeout(getSubjectShelf(s.slug, nativeFirst!), 20000, [] as CatalogBook[]))),
     lang === 'la' ? withTimeout<UntranslatedShelf | null>(getUntranslatedShelf('Latin'), 20000, null) : Promise.resolve(null),

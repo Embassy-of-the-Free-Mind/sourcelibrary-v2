@@ -39,6 +39,7 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  neighbourGate,
   recordTruncatedTranslation,
   isEmptyTranslation,
   recordEmptyTranslation,
@@ -73,6 +74,7 @@ import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
 import { translationLayers, writePageAnnotations } from '../lib/translation-text.mjs'; // #5942
 import { dropDriftedPages } from '../lib/block-drift.mjs';
+import { structuredBlockRule, structuredReplyToTags, BLOCK_RESPONSE_SCHEMA } from '../lib/block-page-guard.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS, translateJobOutcome, blockedJobFields } from '../lib/translate-job-outcome.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 
@@ -420,14 +422,21 @@ async function translateBatch(db, pages, book, prevTranslation) {
   // the evals send the same bytes. With PAGE_BREAK_SCOPED (#5103, ON since round 4) every in-block
   // break is resolved page against page, and the block's ends against the pages adjacent to it.
   const { prevOcrText, nextOcrText } = await adjacentOcr(db, book, pages[0].page_number, pages[pages.length - 1].page_number);
-  const { prompt, promptRef } = buildBlockTranslationPrompt({
+  const built = buildBlockTranslationPrompt({
     prompts: await loadPrompts(db), book, pages, previousTranslation: prevTranslation,
     prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED,
   });
+  const { promptRef } = built;
+  // #5021: each page's section opens on an anchor copied from its own source (block-page-guard.mjs); the parser
+  // takes it off, and a page whose anchor is a neighbour's, or no page's, is re-translated single-page below.
+  // The reply is bound to a response schema (structured output, Derek 2026-11-03): one {page, anchor_first,
+  // anchor_last, translation} per page in the order sent; a count or page mismatch sends every page single-page.
+  const anchored = pages.length > 1;
+  const prompt = built.prompt + (anchored ? structuredBlockRule(pages.map((p) => p.page_number)) : '');
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
-  const generationConfig = { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } };
+  const generationConfig = { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 }, ...(anchored && { responseMimeType: 'application/json', responseSchema: BLOCK_RESPONSE_SCHEMA }) };
   // thinking-ok: `generationConfig` just above carries thinkingConfig: { thinkingBudget: 0 } — one object, sent and recorded (#4613)
   const model = ai.getGenerativeModel({
     model: selectedModel,
@@ -437,13 +446,18 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
-  const responseText = result.response.text();
+  const rawText = result.response.text();
   const usage = result.response.usageMetadata || {};
+  // The schema-bound reply, as the tag text the block parser reads; a reply that is not one object per page, in order,
+  // parses to nothing (every page single-page), never to a positional guess.
+  const structured = anchored ? structuredReplyToTags(rawText, pages.map((p) => p.page_number)) : null;
+  const responseText = anchored ? structured || '' : rawText;
+  if (anchored && !structured) console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: structured reply is not one object per page in order — re-translating all ${pages.length} pages single-page`);
 
   // Parse (translate-core parseBlockTranslations: the 15% truncation check, the positional
   // fallback, and the BLOCK-SHIFT guard — a block that came back short is discarded whole, since
   // its page labels cannot be trusted; every page then takes the missing-from-batch path below).
-  const parsed = parseBlockTranslations(responseText, pages, { lang: book?.language });
+  const parsed = anchored && !structured ? { translations: new Map(), returned: pages.length, discarded: 'structured-mismatch', truncated: [], anchors: new Map() } : parseBlockTranslations(responseText, pages, { lang: book?.language });
   const { translations } = parsed;
   if (parsed.truncated?.length) {
     console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: truncated ${parsed.truncated.map((t) => `p${t.page_number} (${t.reasons[0]})`).join(', ')} — re-translating single-page (#5055)`);
@@ -455,9 +469,11 @@ async function translateBatch(db, pages, book, prevTranslation) {
   // A clause moved across an in-block page break (#5021): the model finished page N's last
   // sentence with page N+1's opening words. Both pages drop out of the map, so the caller's
   // "missing from batch" path re-translates them single-page, in order, with continuity.
-  const { drifted } = dropDriftedPages(pages, translations);
+  // The same call also refuses, page by page, an anchor that is not the page's own, an English that holds two
+  // leaves (or none), and an English that prints only a neighbour's numbers (#5021, block-page-guard.mjs).
+  const { drifted } = dropDriftedPages(pages, translations, { anchors: anchored ? parsed.anchors : null, prevOcr: prevOcrText ?? null, nextOcr: nextOcrText ?? null });
   if (drifted.length) {
-    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: clause moved across ${drifted.map(d => `${d.prev}→${d.next}`).join(', ')} — re-translating those pages single-page`);
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: ${drifted.map(d => (d.prev === d.next ? `p${d.prev} ${d.kind}` : `${d.kind} ${d.prev}→${d.next}`)).join(', ')} — re-translating those pages single-page`);
   }
   // A leaf seam the block bridged (#5260): the page drops out of the map and takes the
   // single-page path, where translatePageGuarded retries and the write gate refuses.
@@ -524,7 +540,7 @@ function engineFor(page, book, promptRef, call) {
 // `promptRef` is the prompt reference returned by translatePage / translateBatch.
 // No constant fallback (#7499): this file stamped 'v10' on 2.15M pages whatever it sent. A label
 // the prompt reference does not give is not written (promptLabel).
-async function writePageTranslation(db, page, text, book, promptRef, call, cut = null) {
+async function writePageTranslation(db, page, text, book, promptRef, call, cut = null, neighbours = null) {
   // #5055: the write guard. `cut` is its verdict on the raw reply (translatePage: a tag left open at the tail, MAX_TOKENS).
   if (cut?.verdict === 'truncated') return refuseCut(db, page, text, book, cut);
   text = unwrapForWrite(page, text, book);
@@ -555,6 +571,9 @@ async function writePageTranslation(db, page, text, book, promptRef, call, cut =
   // #5055: the guard's length rule, after the health gate's named refusals.
   const short = checkWrittenText(text, { kind: 'translation', source: page.ocr?.data, lang: book?.language, type: page.page_type });
   if (short.verdict === 'truncated') return refuseCut(db, page, text, book, short);
+  // #5026: the page's English is not its neighbour's (stored n-1 / n+1, or the block's own pages): stamped and kept.
+  const nb = await neighbourGate(db, page, text, { neighbours, jobId: book?.job?.job_id, model: getModelForBook(book) });
+  if (nb.refused) return { written: false, reason: nb.reason };
   const engine = engineFor(page, book, promptRef, call); // throws on a missing call record — no partial provenance
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const layers = translationLayers(text, { promptVersion: promptRef?.version }); // #5942: text + annotations beside data
@@ -650,11 +669,20 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     return true;
   });
   for (const { page, text, g } of cutEntries) await refuseCut(db, page, text, book, g);
+  // #5026: no page of the block carries its neighbour's English, judged against the block's own pages where they are
+  // neighbours (the stored English otherwise).
+  const blockText = Object.fromEntries(entries.map(({ page, text }) => [page.page_number, text]));
+  const leaked = [];
+  for (const e of entries) {
+    const nb = await neighbourGate(db, e.page, e.text, { neighbours: blockText, jobId: book?.job?.job_id, model: getModelForBook(book) });
+    if (nb.refused) leaked.push(e);
+  }
+  if (leaked.length) entries = entries.filter((e) => !leaked.includes(e));
   // `refused` = pages the health gate kept out, so the caller does not count them translated (#5108).
-  if (entries.length === 0) return { refused: unhealthy.length + empty.length + cutEntries.length };
+  if (entries.length === 0) return { refused: unhealthy.length + empty.length + cutEntries.length + leaked.length };
   if (entries.length === 1) {
-    const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
-    return { refused: unhealthy.length + empty.length + cutEntries.length + (one.written ? 0 : 1) };
+    const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call, null, blockText);
+    return { refused: unhealthy.length + empty.length + cutEntries.length + leaked.length + (one.written ? 0 : 1) };
   }
   // Build every page's record BEFORE any write: a missing call record fails the whole block here
   // rather than after some pages are stored.
@@ -713,7 +741,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     },
   })));
   await seamGuardPages(db, entries.map(({ page }) => page), book);
-  return { refused: unhealthy.length + empty.length + cutEntries.length };
+  return { refused: unhealthy.length + empty.length + cutEntries.length + leaked.length };
 }
 
 // Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.

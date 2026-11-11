@@ -5,92 +5,10 @@
 // tests/blog-posts.test.ts fails if a post has no kind, or if a directory under
 // src/app/articles is neither listed here nor named in UNLISTED_PAGES.
 
-export const BLOG_KINDS = ['stories', 'tours', 'research', 'interactive', 'library'] as const;
-export type BlogKind = (typeof BLOG_KINDS)[number];
+import type { BlogPost } from './post-kinds';
 
-export const KIND_INFO: Record<BlogKind, { label: string; definition: string; lead: string }> = {
-  stories: {
-    label: 'Stories',
-    definition: 'A person, an idea or a practice followed through the books that record it.',
-    lead: 'nature-of-harmony',
-  },
-  tours: {
-    label: 'Reading tours',
-    definition: 'A walk through the library’s books on one subject, quoting the originals beside their translations.',
-    lead: 'techniques-of-the-body',
-  },
-  research: {
-    label: 'Research notes',
-    definition: 'Counting what was written and what is translated, and testing the AI that reads the pages: where it is accurate and where it invents.',
-    lead: 'the-giants-werent-translated',
-  },
-  interactive: {
-    label: 'Interactive',
-    definition: 'Instruments, charts, maps and games built from the books, to play with in the browser.',
-    lead: 'sound-laboratory',
-  },
-  library: {
-    label: 'From the library',
-    definition: 'Where Source Library came from, how it is built and run, and the people behind it.',
-    lead: 'origin-story',
-  },
-};
-
-export interface BlogPost {
-  slug: string;
-  title: string;
-  subtitle: string;
-  // The card text on /articles and the page's meta description (og and
-  // twitter too, via withArticleMeta): 155 characters at most, facts from the
-  // article only (tests/blog-posts.test.ts).
-  summary: string;
-  date: string;
-  readTime: string;
-  kind: BlogKind;
-  // Every post needs an image: any post can become a lead or the Latest card,
-  // where the title is set over the picture (tests/blog-posts.test.ts).
-  // Choosing one: the rules in .claude/skills/quote-background-image (calm area
-  // where the words land, no printed text there, nothing grim). Then check it
-  // with scripts/audit/blog-card-legibility.ts, which renders every lead crop.
-  // Where to look, in order: a plate or woodcut from a book the post is about
-  // (open the leaf: gallery records can be a leaf off); the ~24K museum works
-  // already mirrored under images.sourcelibrary.org/artwork/ (search_images);
-  // a new public-domain work brought in with scripts/import-*-artworks.mjs
-  // (Met, Rijks, AIC, Cleveland, NGA, Getty, Commons), never a hotlink.
-  // A printed text page only when the page is the post's evidence. Real works
-  // only: no generated pictures in a library of primary sources.
-  image: string;
-  imageAlt?: string;
-  // CSS object-position for the crop, e.g. 'center 30%'. Set it when the
-  // default centre crop cuts off what the picture is of.
-  imagePosition?: string;
-  // Only on LINKED_PAGES: the page lives at its own address, outside /articles.
-  href?: string;
-}
-
-// Articles written by a person rather than drafted by AI. Their footer note is a
-// byline (NoteFooter) instead of the AI disclosure. Name, role and photo as the
-// founder's letter already gives them.
-export interface ArticleAuthor {
-  name: string;
-  bio: string;
-  photo: string;
-}
-
-const DEREK_LOMAS: ArticleAuthor = {
-  name: 'Derek Lomas',
-  bio: 'Founder, Source Library · Asst. Professor of Positive AI, TU Delft',
-  photo: '/founder-derek.jpg',
-};
-
-export const AUTHORED_ARTICLES: Record<string, ArticleAuthor> = {
-  vision: DEREK_LOMAS,
-  'in-memoriam': DEREK_LOMAS,
-};
-
-export function postHref(post: BlogPost): string {
-  return post.href ?? `/articles/${post.slug}`;
-}
+// Kinds, types, bylines and postHref live in ./post-kinds (client-safe).
+export * from './post-kinds';
 
 // Pages under src/app/articles that are not posts in the list, and why.
 export const UNLISTED_PAGES: Record<string, string> = {
@@ -105,9 +23,8 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 // Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider). The Rithmomachia game stays at /rithmomachia: it is a
-// full-width game with its own guide and scenario pages, not an article; the
-// article about it is /articles/rithmomachia.
+// home slider). /rithmomachia redirects to the standalone game (#7821), which
+// is not an article; the article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
   {
     slug: 'play-rithmomachia',
@@ -125,6 +42,34 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'solve-et-coagula',
+    title: 'Solve et Coagula: Derek Lomas on Source Library',
+    subtitle:
+      'Alex of Agrippa’s Diary in conversation with Derek Lomas, at the Embassy of the Free Mind in Amsterdam. The full episode, with a transcript you can click.',
+    summary:
+      'Derek Lomas talks with Alex of Agrippa’s Diary about Ficino, Agrippa, Maier and Source Library. Watch the episode and click any word of the transcript.',
+    date: '9 November 2026',
+    readTime: 'video, 1 h 32 min',
+    kind: 'interactive',
+    image: '/articles/solve-et-coagula/episode-artwork-169.jpg',
+    imageAlt:
+      'Alexander of Agrippa’s Diary (left) and Derek Lomas (right), in the video call recorded for the Solve et Coagula podcast.',
+  },
+  {
+    slug: 'kircher-hieroglyphs',
+    title: 'Kircher and the Hieroglyphs',
+    subtitle:
+      'What Athanasius Kircher thought the Egyptian signs were, how he read whole obelisks, and the one thing he got right, in the books he printed in Rome between 1636 and 1676.',
+    summary:
+      'Athanasius Kircher read Rome’s obelisks as hymns to a hidden Hermetic theology. Oedipus Aegyptiacus and his Coptic books, quoted from the printed pages.',
+    date: '3 November 2026',
+    readTime: '13 min read',
+    kind: 'stories',
+    image: 'https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/78.jpg',
+    imageAlt:
+      'Kircher’s folding plate of the Pamphilian obelisk: its four faces of hieroglyphs drawn side by side, with the papal arms and the obelisk in Piazza Navona between them.',
+  },
   {
     slug: 'agrippa-against-himself',
     title: 'Agrippa Against Himself',
@@ -503,6 +448,21 @@ export const posts: BlogPost[] = [
     kind: 'research',
     image: 'https://images.sourcelibrary.org/archived/6990631aef12272ffdc8f4aa/324.jpg',
     imageAlt: 'Page 300 of Sachau\u2019s 1879 translation of al-B\u012br\u016bn\u012b\u2019s Chronology of Ancient Nations, which prints 5180 years twice; the Archive\u2019s text has 6180 both times.',
+  },
+  {
+    slug: 'how-we-choose-the-cheapest-way-to-read-a-page',
+    title: 'How we choose the cheapest way to read a page',
+    subtitle:
+      'Two settings decide most of what it costs to read a page. We tested them together, against typed editions, with the rule for choosing written down first.',
+    summary:
+      'Blocking, a rule written before the data, and staged tests: how we compared reading settings on 145 German and Latin books with typed editions.',
+    date: '31 October 2026',
+    readTime: '11 min read',
+    kind: 'research',
+    // Glauber, Furni Novi Philosophici (1649), reader page 25, opened by eye: a full Fraktur text page.
+    image: 'https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg',
+    imageAlt:
+      'Page 25 of Glauber’s Furni Novi Philosophici (1649), printed in Fraktur under the running head “Philosophischer Oefen”.',
   },
   {
     slug: 'how-we-measure-ocr-quality',
@@ -1110,6 +1070,30 @@ export const posts: BlogPost[] = [
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
+  },
+  {
+    slug: 'alchemical-process',
+    title: 'Is Source Library an Alchemical Process? Testing the Frame',
+    subtitle: 'Which alchemy the comparison borrows, which steps hold up against our measurements, and three places it breaks.',
+    summary:
+      'We set the steps of alchemy against what happens to a page here. Where the comparison holds, with measurements, and three places it fails.',
+    date: '4 November 2026',
+    readTime: '20 min read',
+    kind: 'research',
+    image: '/articles/alchemical-process/emblem-iii.jpg',
+    imageAlt: 'Engraving from Atalanta fugiens (1618): a woman pours steaming water from a jug into a large wooden tub, with a fire behind her and laundry on the ground.',
+  },
+  {
+    slug: 'how-many-translated-into-english',
+    title: 'How Many Old Books Have Been Translated into English?',
+    subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
+    summary:
+      'Of some 815,000 works printed in Europe before 1700, about 18,000 to 39,000 have ever been put into English. Three estimates, and why catalogues miss most.',
+    date: '2 November 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg',
+    imageAlt: 'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), translated into English by Doctor Everard, in a printed border.',
   },
   {
     slug: 'how-much-in-english',

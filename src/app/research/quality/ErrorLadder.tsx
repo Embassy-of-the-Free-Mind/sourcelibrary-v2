@@ -74,14 +74,14 @@ function Legend() {
 }
 
 function Rung({ level, title, href, children, scan, credit }: {
-  level: string; title: string; href: string; children: ReactNode; scan: Scan; credit?: { text: string; href: string };
+  level: string; title: string; href?: string; children: ReactNode; scan: Scan; credit?: { text: string; href: string };
 }) {
   const vertical = scan.crop.h > scan.crop.w;
   return (
     <div className="border-t border-light pt-5 mt-5 first:mt-0 first:border-t-0 first:pt-0">
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
         <span className="text-2xl text-primary font-semibold tabular-nums">{level}</span>
-        <a href={href} className="text-sm text-accent-rust hover:underline">{title}</a>
+        {href ? <a href={href} className="text-sm text-accent-rust hover:underline">{title}</a> : <span className="text-sm text-secondary">{title}</span>}
       </div>
       <div className={vertical ? 'grid grid-cols-[auto_1fr] gap-4' : 'grid gap-4'}>
         <div>
@@ -125,7 +125,6 @@ export default function ErrorLadder() {
             </div>
           </div>
           <p className="text-sm text-muted leading-relaxed mt-3">{r.note}</p>
-          <p className="text-sm text-primary leading-relaxed mt-2"><span className="font-semibold">What this level allows.</span> {r.allows}</p>
         </Rung>
       ))}
 
@@ -148,7 +147,6 @@ export default function ErrorLadder() {
             </div>
           </div>
           <p className="text-sm text-muted leading-relaxed mt-3"><span className="font-semibold">Judge.</span> {r.defect}</p>
-          <p className="text-sm text-primary leading-relaxed mt-2"><span className="font-semibold">What this level allows.</span> {r.allows}</p>
         </Rung>
       ))}
 

@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import { preload } from 'react-dom';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { PARTNERS_HTML } from './content';
+import EditMode from './EditMode';
+import { ISLANDS } from './Islands';
 import './ai-partners.css';
 
 const DESCRIPTION =
-  'Source Library for AI partners: 131,000 historical books from more than 30 libraries, 9.6 million pages transcribed and 5.7 million translated into English, with provenance for every page and public-domain originals.';
+  'Source Library for AI partners: 131,000 historical books from more than 30 libraries, 9.6 million pages transcribed and 5.7 million translated into English, 235,000 cropped illustrations, with provenance for every page and public-domain originals.';
 
 export const metadata: Metadata = {
   title: 'Source Library for AI Partners',
@@ -35,7 +37,17 @@ export default function AiPartnersPage() {
   return (
     <>
       <ConditionalSiteHeader variant="dark" />
-      <main className="ai-partners" dangerouslySetInnerHTML={{ __html: PARTNERS_HTML }} />
+      <main className="ai-partners">
+        {/* The HTML string, cut at its <!--island:NAME--> markers; each marker is
+            replaced by a React section from ./Islands. */}
+        {PARTNERS_HTML.split(/<!--island:(\w+)-->/).map((part, i) => {
+          if (i % 2 === 0) return <div key={i} style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: part }} />;
+          const Island = ISLANDS[part];
+          if (!Island) throw new Error(`ai-partners: no island named "${part}"`);
+          return <Island key={i} />;
+        })}
+      </main>
+      <EditMode />
     </>
   );
 }

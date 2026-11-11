@@ -46,6 +46,12 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/gpu-print-lane.mjs frame
  * Options: --dir <lane dir> (default $LANE_DIR or /root/jobs/gpu-print-6871)  --book <id>  --books <file>  --limit N
+ *   --lang en|en19|fr (default $LANE_LANG, else the lane dir's `lang` file, else en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
+ *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
+ *   --max-pages N (plan: N pages spread through each book, for a pilot)
+ * French (#6871, Derek 2026-11-07): the French 1800+ pages Flash-Lite refused, read by the GPU steward, written bare:
+ *   LANE_DIR=/root/jobs/gpu-print-fr19r-6871 (manifest.tsv, out/ and runs/ from the steward's reads)
+ *   gpu-print-lane.mjs plan --lang fr --books <ids> --from-manifest --apply; then apply --lang fr --apply
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -56,11 +62,11 @@ import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, releaseBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
-import { GPU_LANE_HOLDS } from '../batch/cli-ocr-lane.mjs';
+import { GPU_LANE_HOLDS, armcEuroSkip } from '../batch/cli-ocr-lane.mjs';
 import { keepRead, reuseHash } from '../lib/candidate-reads.mjs';
 import {
-  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, LIGHTON,
-  laneReleaseVerdict, isEnglishBook, hasNoText, pageVerdict, envelope, ocrField, writeLanePage, isHumanEdited,
+  LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, LIGHTON,
+  LANGS, laneReleaseVerdict, hasNoText, pageVerdict, envelope, ocrField, writeLanePage, isHumanEdited,
   convertRead, detectScript, translitPermille, isTransientReadError, doneKeys,
 } from '../lib/gpu-print-lane.mjs';
 
@@ -72,6 +78,17 @@ const DIR = arg('--dir', process.env.LANE_DIR || '/root/jobs/gpu-print-6871');
 const APPLY = flag('--apply');
 const BOOK = arg('--book', null);
 const LIMIT = Number(arg('--limit', 0)) || 0;
+// --lang (default en): the language profile (LANGS of scripts/lib/gpu-print-lane.mjs): which books, the ocr.pipeline
+// stamp (LN) that sweep_log, the run ids and a later correction pass key on. --cell adds a cli-ocr-lane.mjs euro cell's
+// book rule to plan (holds, year, manuscript, page records; default the profile's). --from-manifest: plan only the
+// pages already in this dir's manifest.tsv (reads the GPU made before the plan, e.g. a steward's), appending nothing.
+// the lane dir's `lang` file names its profile, so ocr-filler.sh's gpu-print task (which passes only --dir) runs it right
+const LANG_FILE = path.join(DIR, 'lang');
+const LANG = arg('--lang', process.env.LANE_LANG || (fs.existsSync(LANG_FILE) ? fs.readFileSync(LANG_FILE, 'utf8').trim() : 'en'));
+if (!LANGS[LANG]) { console.error(`--lang must be one of ${Object.keys(LANGS).join('|')}`); process.exit(2); }
+const L = LANGS[LANG];
+const LN = L.lane;
+const CELL = arg('--cell', L.cell);
 
 const F = {
   frame: path.join(DIR, 'frame-books.json'), planDir: path.join(DIR, 'plan'), outDir: path.join(DIR, 'out'),
@@ -106,11 +123,11 @@ async function frame() {
   let out = [];
   await withMongo(async (db) => {
     const books = await db.collection('books').find(
-      { visible: true, language: { $regex: '^English' }, year: { $gte: 1800, $lte: 2030 }, pages_count: { $gt: 0 } },
+      { visible: true, language: { $regex: `^${L.language}` }, year: { $gte: 1800, $lte: 2030 }, pages_count: { $gt: 0 } },
       { projection: { id: 1, title: 1, year: 1, language: 1, pages_count: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1 } }).toArray();
     const rows = [];
     for (const b of books) {
-      if (!isEnglishBook(b.language) || isUnsplitSpread(b)) continue;
+      if (!L.isBook(b.language) || isUnsplitSpread(b)) continue;
       if (isHeld(b) ? !LANE_HOLDS.has(b.pipeline_auto.hold.reason) : !flag('--free')) continue;
       const owed = await db.collection('pages').countDocuments({ book_id: b.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT, 'ocr.edited_by': { $exists: false } });
       if (!owed || (maxPages && owed > maxPages)) continue;
@@ -118,7 +135,7 @@ async function frame() {
     }
     out = rows.sort((a, b) => rank(a.bid).localeCompare(rank(b.bid)));
   }, { timeoutMs: 3 * 3600 * 1000 });
-  fs.writeFileSync(F.frame, JSON.stringify({ built_at: new Date().toISOString(), rule: `visible English 1800+, held under ${[...LANE_HOLDS].join('|')}${flag('--free') ? ' or not held' : ''}, pages with no text`, books: out }, null, 1));
+  fs.writeFileSync(F.frame, JSON.stringify({ built_at: new Date().toISOString(), rule: `visible ${L.language} 1800+, held under ${[...LANE_HOLDS].join('|')}${flag('--free') ? ' or not held' : ''}, pages with no text`, books: out }, null, 1));
   log(`FRAME ${out.length} books, ${out.reduce((s, r) => s + r.owed, 0)} pages with no text → ${F.frame}`);
 }
 
@@ -135,6 +152,10 @@ async function plan() {
   // A page this lane already turned away as another script is not English: it is never planned again (a book whose
   // plan file was removed would otherwise send the same Greek or Devanagari pages round the GPU for ever).
   const notEnglish = new Set(readJsonl(F.rejected).filter((r) => r.reason === 'other_script').map((r) => r.pid));
+  const FROM_MANIFEST = flag('--from-manifest');
+  // pid → the image url the GPU read; a page whose image source has changed since is not planned (the read is of another image)
+  const inManifest = FROM_MANIFEST ? new Map((fs.existsSync(F.manifest) ? fs.readFileSync(F.manifest, 'utf8') : '').split('\n').filter(Boolean).map((l) => { const c = l.split('\t'); return [c[2], c[3]]; })) : null;
+  if (FROM_MANIFEST && !inManifest.size) { console.error(`--from-manifest: no rows in ${F.manifest}`); process.exit(2); }
   // --limit counts books PLANNED, not books looked at: sliced before the skips, a head of books with nothing to read
   // (38 of 40 on 2026-10-31) left each chunk planning two books and the frame's tail unreachable.
   log(`${ids.length} book(s) not yet planned${LIMIT ? `, planning up to ${LIMIT}` : ''}${APPLY ? '' : '  [DRY RUN: no holds, no plan files]'}`);
@@ -145,9 +166,13 @@ async function plan() {
   await withMongo(async (db) => {
     for (const bid of ids) {
       if (LIMIT && tally.books >= LIMIT) break;
-      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, year: 1, pipeline_auto: 1, pages_count: 1, needs_splitting: 1, split_completed: 1 } });
+      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, year: 1, published: 1, image_source: 1, pages_state: 1, pipeline_auto: 1, pages_count: 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { finalSkip(bid, 'not_found'); continue; }
-      if (!isEnglishBook(book.language) || !(book.year >= 1800)) { finalSkip(bid, 'not English 1800+'); continue; }
+      if (!L.isBook(book.language) || !(book.year >= 1800)) { finalSkip(bid, `not ${L.language} 1800+`); continue; }
+      // the cell's book rule (holds, year, manuscript, page records, pipeline status) — a book this lane already
+      // holds is past it; retried next time, not final (a hold or a status changes)
+      const cellSkip = CELL && book.pipeline_auto?.hold?.reason !== HOLD_REASON ? armcEuroSkip(book, CELL) : null;
+      if (cellSkip) { tally.skipped_books.push({ bid, why: `cell ${CELL}: ${cellSkip}` }); continue; }
       if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && !LANE_HOLDS.has(book.pipeline_auto.hold.reason)) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
       const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT }, { projection: {
@@ -156,21 +181,25 @@ async function plan() {
       const rows = [];
       let noImage = 0;
       for (const p of pages) {
-        if (isHumanEdited(p.ocr) || !hasNoText(p.ocr) || notEnglish.has(p.id)) continue;
+        if (isHumanEdited(p.ocr) || !hasNoText(p.ocr) || notEnglish.has(p.id) || (inManifest && !inManifest.has(p.id))) continue;
         const src = getPageSource(p)?.replace(/\s+/g, '') || null;
         if (!src) { tally.no_image++; noImage++; continue; }
+        if (inManifest && inManifest.get(p.id) !== src) { tally.image_changed = (tally.image_changed || 0) + 1; continue; }
         rows.push({ pid: p.id, pn: p.page_number, src, why: p.ocr?.model || (p.ocr?.recitation_count ? 'refused' : 'never_read') });
       }
+      // --max-pages N (a pilot): N pages spread through the book; the rest stay unread for a later lane dir to plan
+      const cap = Number(arg('--max-pages', 0)) || 0;
+      if (cap && rows.length > cap) { const all = rows.splice(0); for (let i = 0; i < cap; i++) rows.push(all[Math.floor((i * all.length) / cap)]); }
       // every page has text or a human edit: final. Pages still waiting for an image may be archived later: retried.
       if (!rows.length) { if (noImage) tally.skipped_books.push({ bid, why: 'no_image' }); else finalSkip(bid, 'nothing_to_read'); continue; }
       if (!APPLY) { log(`${bid} would ${isHeld(book) ? "plan" : "hold and plan"} ${rows.length} pages | ${String(book.title).slice(0, 50)}`); tally.books++; tally.pages += rows.length; continue; }
       // the hold BEFORE anything else: no other lane reads these pages while the GPU does. A book already under a
       // GPU-lane hold keeps that hold (nothing else reads it); a free book (--free frame) is held for this lane.
       const h = isHeld(book) ? { outcome: 'already_held', from: book.pipeline_auto.hold.held_from_status ?? null }
-        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: LIGHTON.model, planned_pages: rows.length } });
+        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LN, detail: { engine: LIGHTON.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); continue; }
       fs.writeFileSync(planFile(book.id), JSON.stringify({ bid: book.id, title: book.title, language: book.language, year: book.year, hold: book.pipeline_auto?.hold?.reason ?? HOLD_REASON, placed_hold: h.outcome === 'held', held_from: h.from ?? null, planned_at: new Date().toISOString(), pages: rows }));
-      fs.appendFileSync(F.manifest, rows.map((r) => `${book.id}\t${r.pn}\t${r.pid}\t${r.src}`).join('\n') + '\n');
+      if (!FROM_MANIFEST) fs.appendFileSync(F.manifest, rows.map((r) => `${book.id}\t${r.pn}\t${r.pid}\t${r.src}`).join('\n') + '\n');
       tally.books++; tally.pages += rows.length;
     }
   });
@@ -217,12 +246,13 @@ async function apply() {
     log(`APPLY ${JSON.stringify(totals)}`); return totals;
   }
   const { name: runName, box } = latestRun();
-  const runId = `${LANE}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
+  const runId = `${LN}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
     for (const { bid, pl, pages } of ready) {
       const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1 } });
       if (!book) { log(`${bid} not found — skipping`); continue; }
+      if (book.pipeline_auto?.held === true) { log(`${bid} pipeline_auto.held — refusing to write`); totals.not_held++; continue; }
       if (!LANE_HOLDS.has(book.pipeline_auto?.hold?.reason)) { log(`${bid} NOT held for this lane (${[...LANE_HOLDS].join('|')}) — refusing to write`); totals.not_held++; continue; }
       const live = new Map((await P.find({ id: { $in: pages.map((p) => p.pid) } }, { projection: { id: 1, page_number: 1, book_id: 1, ocr: 1 } }).toArray()).map((p) => [p.id, p]));
       const writes = [];
@@ -244,8 +274,8 @@ async function apply() {
           }
           totals.rejected++; totals.why[v.reason] = (totals.why[v.reason] || 0) + 1; continue;
         }
-        const text = envelope(v.body);
-        const field = ocrField(text, { run: `${LANE}/${runName}`, imageUrl: pg.src, imageSha256: r.image_sha256 || null, box, why: pg.why, finish: r.finish ?? null });
+        const text = envelope(v.body, L.language);
+        const field = ocrField(text, { run: `${LN}/${runName}`, imageUrl: pg.src, imageSha256: r.image_sha256 || null, box, why: pg.why, finish: r.finish ?? null, lang: LANG });
         writes.push({ pg, p, text, field });
       }
       if (!writes.length) { log(`${bid} nothing to write`); continue; }
@@ -264,7 +294,7 @@ async function apply() {
  * the book_events row. Shared by apply and rejudge. `writes`: [{ pg, p, text, field, extra? }].
  */
 async function writeBook(db, { bid, title, planned, writes, runId, action = 'transcribed' }) {
-  await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'transcribe-started', detail: { issue: LANE_ISSUE, engine: LIGHTON.model, pages: writes.length, run: runId } });
+  await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'transcribe-started', detail: { issue: LANE_ISSUE, engine: LIGHTON.model, pages: writes.length, run: runId } });
   const now = new Date();
   let written = 0, conflicts = 0;
   for (const w of writes) {
@@ -272,11 +302,11 @@ async function writeBook(db, { bid, title, planned, writes, runId, action = 'tra
     if (r.status === 'written') { written++; append(F.applied, { bid, pn: w.pg.pn, pid: w.p.id, why: w.pg.why, chars: w.text.length, revision: r.revision_id, ...(w.extra || {}) }); }
     else { conflicts++; append(F.skipped, { bid, pn: w.pg.pn, why: `write_${r.status}` }); }
   }
-  const { after: counts } = await recountBook(db, bid, { reason: LANE, now });
-  await recordSweepAction(db, { sweep: LANE, book_id: bid, action, detail: { issue: LANE_ISSUE, engine: LIGHTON.model, pages_written: written, conflicts, run: runId } });
+  const { after: counts } = await recountBook(db, bid, { reason: LN, now });
+  await recordSweepAction(db, { sweep: LN, book_id: bid, action, detail: { issue: LANE_ISSUE, engine: LIGHTON.model, pages_written: written, conflicts, run: runId } });
   await db.collection('book_events').updateOne(
     { book_id: bid, type: BOOK_EVENT },
-    { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LANE, 'details.issue': LANE_ISSUE, 'details.engine': LIGHTON.model, 'details.repo': LIGHTON.repo },
+    { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LN, 'details.issue': LANE_ISSUE, 'details.engine': LIGHTON.model, 'details.repo': LIGHTON.repo },
       $set: { 'details.last_apply_at': now, 'details.pages_ocr_after': counts?.pages_ocr ?? null, 'details.planned': planned },
       $inc: { 'details.pages_written': written } },
     { upsert: true },
@@ -295,9 +325,9 @@ const KEEP_REASONS = new Set(['transliteration_dense', 'engine_commentary']);
 async function keepReject(row, read, src, runName) {
   const body = convertRead(read.text);
   const k = await keepRead({
-    page_id: row.pid, book_id: row.bid, page_number: row.pn, field: 'ocr', text: envelope(body), model: LIGHTON.model,
-    prompt_hash: reuseHash({ field: 'ocr', prompt: LIGHTON.prompt, input: read.image_sha256 || src, variant: LANE }),
-    job: `${LANE}/${runName}`,
+    page_id: row.pid, book_id: row.bid, page_number: row.pn, field: 'ocr', text: envelope(body, L.language), model: LIGHTON.model,
+    prompt_hash: reuseHash({ field: 'ocr', prompt: LIGHTON.prompt, input: read.image_sha256 || src, variant: LN }),
+    job: `${LN}/${runName}`,
     meta: { model: LIGHTON.model, read_site: 'scripts/workers/gpu-print-lane.mjs', outcome: `rejected:${row.reason}`, gate: row.reason, detail: row.detail ?? null,
       finish: read.finish ?? null, image_url: src, image_sha256: read.image_sha256 || null, decode: LIGHTON.decode, issue: LANE_ISSUE, finished_at: new Date().toISOString() },
   });
@@ -325,7 +355,7 @@ async function rejudge() {
   log(`rejudge ${reason}: ${rows.length} rejected reads in ${byBook.size} books${APPLY ? '' : '  [DRY RUN]'}`);
   const totals = { books: 0, pages: rows.length, would_write: 0, written: 0, conflicts: 0, still: {}, has_text_now: 0, human_edited: 0, not_lane_book: 0 };
   const { name: runName, box } = latestRun();
-  const runId = `${LANE}/${runName}/rejudge-${reason}`;
+  const runId = `${LN}/${runName}/rejudge-${reason}`;
   const out = [];
   await withMongo(async (db) => {
     for (const [bid, rs] of byBook) {
@@ -344,9 +374,9 @@ async function rejudge() {
         if (!read) continue;
         const v = pageVerdict(read.text, { finish: read.finish });
         if (v.verdict !== 'write') { const k = `${v.verdict}:${v.reason}`; totals.still[k] = (totals.still[k] || 0) + 1; if (APPLY) append(F.rejudged, { bid, pn: r.pn, from: reason, outcome: k }); continue; }
-        const text = envelope(v.body);
+        const text = envelope(v.body, L.language);
         writes.push({ pg, p, text, extra: { rejudged_from: reason, ...(v.detail || {}) },
-          field: ocrField(text, { run: runId, imageUrl: pg.src, imageSha256: read.image_sha256 || null, box, why: pg.why, finish: read.finish ?? null }) });
+          field: ocrField(text, { run: runId, imageUrl: pg.src, imageSha256: read.image_sha256 || null, box, why: pg.why, finish: read.finish ?? null, lang: LANG }) });
         out.push({ bid, pn: r.pn, pid: r.pid, note: v.detail?.note ?? null });
       }
       if (!writes.length) continue;
@@ -412,7 +442,7 @@ async function scripts() {
       if (!fresh.length) continue;
       const by = {};
       for (const p of fresh) (by[p.script] ??= []).push(p.pn);
-      await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'other-script-pages', detail: {
+      await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'other-script-pages', detail: {
         issue: LANE_ISSUE, engine: LIGHTON.model, pages: fresh.length, by_script: by,
         note: 'LightOnOCR read these pages as another script than Latin: not English print, not written by this lane; the language route for the script should read them' } });
       for (const p of fresh) append(F.otherScript, p);
@@ -466,11 +496,11 @@ async function releaseSweep(db, { abandon = false } = {}) {
     const v = laneReleaseVerdict(pl, book?.pipeline_auto?.hold, (pn) => done.has(`${bid}/${pn}`), { abandon });
     if (!v.release) { tally.why[v.why] = (tally.why[v.why] || 0) + 1; continue; }
     if (!APPLY) { log(`${bid} would release ${HOLD_REASON} (${v.why}) → ${book.pipeline_auto.hold.held_from_status ?? 'default'} | ${String(book.title || '').slice(0, 50)}`); tally.released++; continue; }
-    const r = await releaseBook(db, bid, { reason: HOLD_REASON, source: LANE, note: `gpu-print-lane.mjs release: ${v.why}${v.outstanding ? `, ${v.outstanding} planned pages outstanding` : ''} (#${LANE_ISSUE})` });
+    const r = await releaseBook(db, bid, { reason: HOLD_REASON, source: LN, note: `gpu-print-lane.mjs release: ${v.why}${v.outstanding ? `, ${v.outstanding} planned pages outstanding` : ''} (#${LANE_ISSUE})` });
     if (r.outcome !== 'released') { tally.why[`release_${r.outcome}`] = (tally.why[`release_${r.outcome}`] || 0) + 1; log(`${bid} release ${r.outcome}`); continue; }
     // an abandoned book's outstanding pages are ledgered, so a read that comes back later is not applied to a free book
     for (const p of pl.pages) if (!done.has(`${bid}/${p.pn}`)) append(F.skipped, { bid, pn: p.pn, why: 'abandoned_released' });
-    await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'hold-released', detail: { issue: LANE_ISSUE, reason: HOLD_REASON, why: v.why, outstanding: v.outstanding ?? 0, planned: pl.pages.length, to_status: r.to } });
+    await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'hold-released', detail: { issue: LANE_ISSUE, reason: HOLD_REASON, why: v.why, outstanding: v.outstanding ?? 0, planned: pl.pages.length, to_status: r.to } });
     append(F.released, { bid, why: v.why, to: r.to, outstanding: v.outstanding ?? 0 });
     tally.released++;
     log(`${bid} released ${HOLD_REASON} → ${r.to} (${v.why}) | ${String(book.title || '').slice(0, 50)}`);

@@ -263,6 +263,7 @@ async function writeback() {
   const { MongoClient } = await import('mongodb');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   try {
+    // all origins: write only ($setOnInsert by _id); these #7866 rows predate origin and are read as live.
     const col = c.db('bookstore').collection('lane_judge_verdicts');
     let n = 0; for (const r of recs) { const res = await col.updateOne({ _id: r._id }, { $setOnInsert: r }, { upsert: true }); n += res.upsertedCount; }
     console.log(`lane_judge_verdicts: ${n} inserted, ${recs.length - n} already there`);

@@ -1,0 +1,23 @@
+{
+ "issue": 7263,
+ "measured": "2026-11-07",
+ "note": "Copied from paired-score.json. The 10 judged pages were picked because the v19.2 read stood out, so these are not rates for either prompt. Words are whitespace tokens (paired-arm.mjs simple ratio), and 6 of the 10 pages are Chinese, so per-1,000-word figures run high. Blind Opus, one page a book.",
+ "study_cells": {
+  "v19.1": {
+   "route": "v19.1",
+   "pages": 10,
+   "words": 1758,
+   "misleads_per_1k": 10.24,
+   "wrong_text_per_1k": 18.2,
+   "fidelity_mean": 3.2
+  },
+  "v19.2": {
+   "route": "v19.2",
+   "pages": 10,
+   "words": 1744,
+   "misleads_per_1k": 9.17,
+   "wrong_text_per_1k": 24.08,
+   "fidelity_mean": 3
+  }
+ }
+}

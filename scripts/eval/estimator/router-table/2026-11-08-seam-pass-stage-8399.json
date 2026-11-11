@@ -1,0 +1,35 @@
+{
+ "_about": "#8399 follow-up to 2026-11-08-seam-markers-8399.json: arm A0 (production @4 with no previous-page English, PR #8410) and the seam pass as BUILT (scripts/lib/seam-pass.mjs, claude-translate.mjs --seam-pass=1), on #8407's 120 blocks / 69 books, agy gemini-3.8-flash-low. Same #7118 Opus seam judge, re-run blind over every arm in one session (judge-floor 235/236 agree, plants caught 227/230). S = broken joins at a block start per 100, T = inside a block, lane = 0.75 T + 0.25 S. Write-up: scripts/eval/experiments/2026-11-08-seam-pass-stage-8399.md; verdicts: scripts/eval/results/seam-pass-8399/report.json.",
+ "as_of": "2026-11-08",
+ "issue": 8399,
+ "routes": {
+  "A": "production: per-call=4, page tags, previous-page English (run 1)",
+  "A2": "production, run 2",
+  "A0": "production with TRANSLATE_PREVIOUS_ENGLISH unset (PR #8410)",
+  "A0+stage": "A0 + the built seam pass, edits to the page before the block allowed (seam_pass 'edit-before')",
+  "A0+stage-locked": "A0 + the built seam pass, page before the block never edited (seam_pass true)",
+  "C": "#8407's eval copy of the seam pass, on Bb",
+  "Bb+stage": "the built seam pass on Bb (the like-for-like check against C)"
+ },
+ "cells": {
+  "latin-cli-agy4": {
+   "blocks": 95,
+   "S_k_n": { "A": "34/95", "A2": "33/95", "A0": "38/95", "A0+stage": "17/95", "A0+stage-locked": "34/95", "C": "17/95", "Bb+stage": "16/95" },
+   "T_k_n": { "A": "13/95", "A2": "9/95", "A0": "10/95", "A0+stage": "10/95", "C": "7/95", "Bb+stage": "5/95" }
+  },
+  "german-cli-agy4": {
+   "blocks": 22,
+   "S_k_n": { "A": "13/22", "A2": "12/22", "A0": "14/22", "A0+stage": "3/22", "A0+stage-locked": "12/22", "C": "4/22", "Bb+stage": "3/22" },
+   "T_k_n": { "A": "5/22", "A2": "2/22", "A0": "4/22", "A0+stage": "4/22", "C": "1/22", "Bb+stage": "1/22" }
+  }
+ },
+ "pooled": {
+  "S_per_100": { "A": 40.7, "A2": 39.0, "A0": 44.9, "A0+stage": 17.8, "A0+stage-locked": 39.8, "C": 18.6, "Bb+stage": 16.9, "swing_A_A2": 1.7 },
+  "lane_per_100": { "A": 21.6, "A2": 16.7, "A0": 20.1, "A0+stage": 13.3, "A0+stage-locked": 18.9, "C": 9.7, "Bb+stage": 8.1, "swing_A_A2": 4.9 },
+  "lane_delta_vs_mean_A_A2": { "A0": [1.0, -4.0, 6.2], "A0+stage": [-5.8, -10.7, -0.6], "C": [-9.4, -14.0, -4.7], "Bb+stage": [-11.1, -15.8, -6.4] },
+  "translation_leaks_per_480_pairs": { "A": 2, "A2": 2, "A0": 0, "A0+stage": 0, "Bb+stage": 0, "C": 0 },
+  "terms_12_page_runs_16": { "distinct_renderings_per_term": { "A": 1.442, "A2": 1.417, "A0": 1.45 }, "opus_checked_inconsistent_8_runs": { "A": "18/193", "A2": "19/184", "A0": "24/190" } },
+  "usable_page_judge_image_open": { "A": "34/69", "A2": "35/69", "A0": "32/68", "A0+stage": "32/68", "Bb+stage": "35/68" }
+ },
+ "decision": "seam_pass 'edit-before' on latin-cli-agy4 and german-cli-agy4 (the built stage scores like C: lane 8.1 vs 9.7, S 16.9 vs 18.6). PR #8410 (no previous English) stays blocked: A0 S is 5.1 per 100 worse than mean(A, A2), three times the A-vs-A2 swing, and its term consistency is slightly worse on both measures; the seam pass recovers A0's block starts (17.8) but cannot touch term consistency."
+}

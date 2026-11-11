@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>This page contains a portion of the Bhaisajyaguru-vaidurya-prabhasa-raja Sutra (藥師琉璃光如來本願功德經), commonly known as the Medicine Buddha Sutra. The text is a woodblock print in traditional vertical layout, reading right-to-left.</meta>
+
+室利。有諸眾生。不識善惡。惟懷貪悋。不
+知布施。及施果報。愚癡無智。闕於信根。
+多聚財寶。勤加守護。見乞者來。其心不
+喜。設不獲已。而行施時。如割身肉。深生
+痛惜。復有無量慳貪有情。積集資財。於
+
+<column-break/>
+
+其自身。尚不受用。何況能與父母妻子
+奴婢作使。及來乞者。彼諸有情。從此命
+終。生餓鬼界。或傍生趣。由昔人間。曾得
+暫聞藥師琉璃光如來名故。今在惡趣
+暫得憶念彼如來名。即於念時。從彼處
+
+<vocab>室利, 貪悋, 布施, 果報, 慳貪, 餓鬼界, 傍生趣, 藥師琉璃光如來, 惡趣</vocab>

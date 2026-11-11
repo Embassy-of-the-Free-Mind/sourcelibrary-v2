@@ -1,4 +1,16 @@
 {
+ "/articles/alchemical-process/emblem-iii.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/306a2d17ff18-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/306a2d17ff18-1920.avif",
+    "w": 1300
+   }
+  ]
+ },
  "/articles/aliveness/fludd-microcosm.jpg": {
   "srcset": [
    {
@@ -68,6 +80,18 @@
    {
     "src": "/articles/heroes/2d4bed006808-1920.avif",
     "w": 1400
+   }
+  ]
+ },
+ "/articles/solve-et-coagula/episode-artwork-169.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d394fd600630-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d394fd600630-1920.avif",
+    "w": 1280
    }
   ]
  },
@@ -272,6 +296,18 @@
    {
     "src": "/articles/heroes/d8e633d73e55-1920.avif",
     "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/78.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/823f7e66b906-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/823f7e66b906-1920.avif",
+    "w": 1659
    }
   ]
  },
@@ -632,6 +668,30 @@
    {
     "src": "/articles/heroes/f3f087e3b91e-1920.avif",
     "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c9c0bcf14b7e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/c9c0bcf14b7e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c1ff44470321-1280.avif",
+    "w": 1075
+   },
+   {
+    "src": "/articles/heroes/c1ff44470321-1920.avif",
+    "w": 1075
    }
   ]
  },

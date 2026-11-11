@@ -1,0 +1,313 @@
+[
+ {
+  "page_id": "6988ab8c6b031f1fbcbf1304",
+  "book_id": "6988a5a077951571d9158ece",
+  "lang": "Latin",
+  "title": "Reipublicae christianopolitanae descriptio",
+  "n": 32,
+  "src": "O",
+  "from": "O1",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a4c3f7a99840f9bea54ffc5",
+  "book_id": "6a4c3f7a99840f9bea54ffb8",
+  "lang": "Latin",
+  "title": "Stemma Sueonum in Coelo Heraldico, In Alma Academia Salana, Examini publico submittunt M. Bonde Humerus, Trollorum Alumnus. & Johannes David Jacobi, Kindelbr. Thuring. ad d. XX. Maii Anni M.DC.XCI.",
+  "n": 13,
+  "src": "O",
+  "from": "O2",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b51d0c261c58d63664896a",
+  "book_id": "69b51d0c261c58d636648948",
+  "lang": "Latin",
+  "title": "Singularium Andreae Libavii pars .... 3, Continens octo libros bituminum et affinium ...",
+  "n": 34,
+  "src": "O",
+  "from": "O3",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b631a51c1c21a373809424",
+  "book_id": "69b631a51c1c21a373809403",
+  "lang": "Latin",
+  "title": "Summula confessionis",
+  "n": 33,
+  "src": "O",
+  "from": "O4",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a4ca71419ae103166960e63",
+  "book_id": "6a4ca71419ae103166960c81",
+  "lang": "Latin",
+  "title": "Specimen Censurae Regnerianae, In gratiam Studiosorum Iurisprudentiae Romano-Germanicae , Ab Henrico Petro Haberkornio",
+  "n": 13,
+  "src": "O",
+  "from": "O7",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69bda10bf6d63c919748cb78",
+  "book_id": "69bda10bf6d63c919748cb55",
+  "lang": "German",
+  "title": "Die Philosophie der Alten wiederkommend in der güldenen Zeit : worinnen von den unsichtbaren Anfängen des spiritus rectoris oder bildenden Geists in den Pflanzen ... gehandelt wird",
+  "n": 35,
+  "src": "O",
+  "from": "O9",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a26d94db93c5428e7451b35",
+  "book_id": "6a26d94db93c5428e7451b1a",
+  "lang": "German",
+  "title": "Francisci Pubitschka Priesters von der Gesellschaft Jesu Chronologische Geschichte Böhmens / 4,2/5,1 = [6] : Unter den Zwischenkönigen : dann unter dem König Johann von Lützelburg und König Karl dem IVten",
+  "n": 27,
+  "src": "O",
+  "from": "O10",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a4a3f949edae40468f90b2e",
+  "book_id": "6a4a3f949edae40468f90b16",
+  "lang": "German",
+  "title": "Das Buch Paramirum Aureoli Theophrasti Paracelsi : Darinn tractirt wirdt von kranckheiten unnd herkommen Corporis spermatis, unnd auch Corporis misericordiae",
+  "n": 24,
+  "src": "O",
+  "from": "O11",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69b99dec6ed9e04909909b29",
+  "book_id": "69b99dec6ed9e04909909b07",
+  "lang": "German",
+  "title": "Der Buddhismus und seine Geschichte in Indien",
+  "n": 34,
+  "src": "O",
+  "from": "O14",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6ac509ff4ba7223afeffc356",
+  "book_id": "6ac509fd4ba7223afeffc33c",
+  "lang": "French",
+  "title": "Légende de Domp Claude de Guyse, abbé de Cluny : contenant ses faits et gestes depuis sa nativité jusques à la mort du cardinal de Lorraine, et des moyens tenus pour faire mourir le roy Charles neufième ensemble plusieurs princes, grands seigneurs et autres, durant le dit temps ... ...",
+  "n": 24,
+  "src": "O",
+  "from": "O16",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6991e19f339ebc850994a427",
+  "book_id": "6991e19f339ebc850994a406",
+  "lang": "French",
+  "title": "Le Détail de la France",
+  "n": 33,
+  "src": "O",
+  "from": "O17",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6ac4feaf4ba7223afef8957b",
+  "book_id": "6ac4fead4ba7223afef89561",
+  "lang": "French",
+  "title": "Letres certaines daucuns grandz troubles et tumultes advenuz à Genève, avec la disputation faicte lan 1534",
+  "n": 24,
+  "src": "O",
+  "from": "O21",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6ab2409387d2180b7f5dcf63",
+  "book_id": "6ab2409387d2180b7f5dcf32",
+  "lang": "English",
+  "title": "Christianity in Ceylon : its introduction and progress under the Portuguese, the Dutch, the British, and American missions ; with an historical sketch of the Brahmanical and Buddhist superstitions",
+  "n": 49,
+  "src": "O",
+  "from": "O22",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69a552b01e2c2347112f1402",
+  "book_id": "69a552b01e2c2347112f13e0",
+  "lang": "English",
+  "title": "Conjugial Love",
+  "n": 34,
+  "src": "O",
+  "from": "O24",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69e534d1d48480a38696721c",
+  "book_id": "69e534d0d48480a3869671f9",
+  "lang": "English",
+  "title": "Meadows of Gold (Muruj al-Dhahab), Vol. 1",
+  "n": 35,
+  "src": "O",
+  "from": "O26",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a3c73be01fe4f593c1eb0df",
+  "book_id": "6a3c73be01fe4f593c1eb008",
+  "lang": "Chinese",
+  "title": "讀春秋編·卷七~卷八 (vol 7)",
+  "n": 40,
+  "src": "O",
+  "from": "O29",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a3c643539b4508b04e252ba",
+  "book_id": "6a3c643539b4508b04e2521e",
+  "lang": "Chinese",
+  "title": "御定佩文韻府·卷四十六之一 (vol 484)",
+  "n": 37,
+  "src": "O",
+  "from": "O32",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "6a3c6c95c4e8626320db96a3",
+  "book_id": "6a3c6c95c4e8626320db967a",
+  "lang": "Chinese",
+  "title": "譚苑醍醐",
+  "n": 41,
+  "src": "O",
+  "from": "O28",
+  "kind": "prose-print"
+ },
+ {
+  "page_id": "69f32f0e876dd827cbc44b8c",
+  "book_id": "69f32f0e876dd827cbc44b7c",
+  "lang": "Latin",
+  "title": "Jeremiah and Lamentations, manuscript, [13--?]",
+  "n": 16,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms1",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "699201557c226bdd25f98740",
+  "book_id": "699201557c226bdd25f9862c",
+  "lang": "Latin",
+  "title": "Liber chimico-medicus (manuscript)",
+  "n": 276,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms4",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "6a22d6e168f6a1498e2ffe7b",
+  "book_id": "6a22d6e168f6a1498e2ffe6a",
+  "lang": "German",
+  "title": "Organon der Heilkunst (Haehl Manuscript of the 6th Edition)",
+  "n": 17,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms6",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "69f32f4d876dd827cbc4525c",
+  "book_id": "69f32f4d876dd827cbc45244",
+  "lang": "French",
+  "title": "Statuta nova, [manuscript] 1326-1469, HLS MS 29",
+  "n": 24,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms7",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "69b4c0db6248be021e02011c",
+  "book_id": "69b4c0db6248be021e0200f3",
+  "lang": "English",
+  "title": "Manly Palmer Hall Box 18 Ms 102 V 05",
+  "n": 41,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms10",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "69de98941b234a773e438c96",
+  "book_id": "69de98941b234a773e438c74",
+  "lang": "Italian",
+  "title": "Trattato di Architettura (manuscript)",
+  "n": 34,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms13",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "6a267ffd88f11913ee9cb410",
+  "book_id": "6a267ffd88f11913ee9cb401",
+  "lang": "Italian",
+  "title": "Drei historische Abhandlungen, Venedig, das Herzogtum Mirandola, die Markgrafschaft Concordia und Wien betreffend (zwei handschriftliche Faszikel und ein Druck) - Mscr.Dresd.F.172.a",
+  "n": 15,
+  "src": "O",
+  "hint": "ms",
+  "from": "ms14",
+  "kind": "prose-manuscript"
+ },
+ {
+  "page_id": "69e748e049abba5e98281df0",
+  "book_id": "69e748e049abba5e98281ded",
+  "lang": "Persian",
+  "title": "خسرو و شیرین (Khosrow va Shīrīn)",
+  "n": 3,
+  "src": "O",
+  "hint": "title-page",
+  "from": "O46",
+  "kind": "title-page"
+ },
+ {
+  "page_id": "69593385b282844d7b27759e",
+  "book_id": "69593385b282844d7b277599",
+  "lang": "German",
+  "title": "Fama Fraternitatis und Confessio Fraternitatis",
+  "n": 5,
+  "src": "O",
+  "hint": "title-page",
+  "from": "O49",
+  "kind": "title-page"
+ },
+ {
+  "page_id": "69af41b8b778f128264fc5e8",
+  "book_id": "69af41b8b778f128264fc5bd",
+  "lang": "Russian",
+  "title": "Опавшие листья. Короб 1",
+  "n": 43,
+  "src": "O",
+  "hint": "illustration",
+  "from": "O44",
+  "kind": "illustration"
+ },
+ {
+  "page_id": "6a3c5f7a879008ba7e155c5a",
+  "book_id": "6a3c5f7a879008ba7e155c4b",
+  "lang": "Chinese",
+  "title": "圖書編·卷三十九 (vol 31)",
+  "n": 13,
+  "src": "O",
+  "from": "O31",
+  "kind": "map"
+ },
+ {
+  "page_id": "6aa1d4fa77169abff1621c6f",
+  "book_id": "6aa1d4f877169abff1621c4d",
+  "lang": "German",
+  "title": "Halinitro-Pyrobolia: Beschreibung Einer newen Büchsenmeisterey, nemlichen: Gründlicher Bericht, wie der Salpeter, Schwef",
+  "n": 34,
+  "src": "O",
+  "hint": "illustration",
+  "from": "O41",
+  "kind": "illustration"
+ }
+]

@@ -1,0 +1,1571 @@
+{
+ "n": 30,
+ "own_leaf": 29,
+ "usable": 29,
+ "usable_wilson": [
+  0.8332960885388428,
+  0.9940914096838022
+ ],
+ "pass": false,
+ "defects_by_kind": {
+  "ocr/other/minor": 5,
+  "translation/mistranslation/minor": 5,
+  "translation/invented/minor": 2,
+  "ocr/misread/minor": 15,
+  "translation/other/minor": 8,
+  "ocr/wrong_leaf/serious": 1,
+  "ocr/omission/serious": 1,
+  "ocr/invented/serious": 1,
+  "translation/wrong_leaf/serious": 1
+ },
+ "agy_checker": {
+  "n": 30,
+  "agree": 29,
+  "false_alarm": 1,
+  "miss": 0,
+  "leaf_agree": 30,
+  "opus_flags": 1,
+  "agy_flags": 2
+ },
+ "controls": [
+  {
+   "key": "R08",
+   "expect": "other",
+   "opus": "prev",
+   "agy": "prev"
+  },
+  {
+   "key": "R26",
+   "expect": "other",
+   "opus": "prev",
+   "agy": "prev"
+  }
+ ],
+ "unanswered_opus": [],
+ "rows": [
+  {
+   "key": "R01",
+   "book_id": "69e7491685f786e884a4d62a",
+   "n": 99,
+   "language": "Spanish",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 99 (printed page 77, 'QUIRÓN', 10 lines) word for word, including accents and punctuation.",
+    "images_opened": [
+     98,
+     99,
+     100
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The machine transcription accurately reflects the printed text on page 99 (book page 77) without any defects.",
+    "images_opened": [
+     98,
+     99,
+     100
+    ]
+   }
+  },
+  {
+   "key": "R02",
+   "book_id": "6a08f4cd50bd891addfb737e",
+   "n": 346,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Italics added to titles that are printed in roman type (Ars Poetica, Paralipomena, Opera Omnia, The Ethics, The Politics)",
+      "quote": "*Paralipomena*: \"things omitted.\""
+     }
+    ],
+    "note": "Transcription matches printed page 320 (scan 346) completely, from the end of note 19 through Chapter 47 note 1; the only difference is some formatting.",
+    "images_opened": [
+     345,
+     346,
+     347
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 346 (printed page 320) is accurately transcribed without defects.",
+    "images_opened": [
+     345,
+     346,
+     347
+    ]
+   }
+  },
+  {
+   "key": "R03",
+   "book_id": "69e72c97a409200ea79f50e9",
+   "n": 336,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches the printed page 278 word for word, with line-end hyphens rejoined; page 337 is a blank back of a plate showing through.",
+    "images_opened": [
+     335,
+     336,
+     337
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Transcription accurately matches the printed page 278 (page-336.jpg).",
+    "images_opened": [
+     335,
+     336,
+     337
+    ]
+   }
+  },
+  {
+   "key": "R04",
+   "book_id": "69cf7d616d17d9f121ccf340",
+   "n": 102,
+   "language": "Latin",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "The chapter number printed as 32 is changed to 22 in the English",
+      "quote": "On Literary Composition 22"
+     },
+     {
+      "stage": "translation",
+      "kind": "invented",
+      "severity": "minor",
+      "what": "The note expands 'immo Genethl.' with an explanation that is not printed on the page",
+      "quote": "the author of the treatise on epideictic speeches known as Genethlios"
+     }
+    ],
+    "note": "The transcription matches page 87 (sections 23–26) faithfully, and the English is complete apart from small editorial liberties.",
+    "images_opened": [
+     101,
+     102,
+     103
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Printed chapter number is 22, transcribed as 32",
+      "quote": "de comp. verb. 32"
+     }
+    ],
+    "note": "Transcription and translation represent page 102 (book page 87) faithfully with one minor citation numeral misread (22 read as 32 in Dionysius).",
+    "images_opened": [
+     101,
+     102,
+     103
+    ]
+   }
+  },
+  {
+   "key": "R05",
+   "book_id": "69ea0f5413a685002bb8dc8a",
+   "n": 418,
+   "language": "Spanish",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The print reads 'angoſta' (narrow), but the transcription drops the n",
+      "quote": "vereda mui agoſta"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The tilde is dropped: the print reads 'durmierõ'",
+      "quote": "dõde durmiero muchos"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "'todo cauañas' here means open savannas, not a road made of thatched huts",
+      "quote": "composed entirely of thatched huts"
+     },
+     {
+      "stage": "translation",
+      "kind": "invented",
+      "severity": "minor",
+      "what": "The translator added an explanatory note that is not printed on the page",
+      "quote": "that is, a puma or cougar"
+     }
+    ],
+    "note": "Both the transcription and the English render page 418 (start of chapter CLXXVIII through 'Doña Ma-'), with only minor errors.",
+    "images_opened": [
+     417,
+     418,
+     419
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Text reads 'cauaſas' instead of 'cauañas'",
+      "quote": "todo cauañas"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Text reads 'yeſtero' instead of 'y eſtero'",
+      "quote": "vn gran rio yeſtero"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Marginal note has 'Peſcado deſabrida' printed, transcribed as 'Peſcad abrida'",
+      "quote": "Peſcad abrida"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Marginal note reads 'Iguanes ſon fierpes de comer.' whereas text has 'fierpes de comer.' on next line",
+      "quote": "Iguanes ſon ſierpes de comer."
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Text has 'agoſta' where the printed text has 'angoſta'",
+      "quote": "vereda mui agoſta"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "Translated 'todo cauañas' as 'composed entirely of thatched huts' where 'cauañas' (cabañas) refers to shepherds' huts / open savanna / pastoral dwellings along the way",
+      "quote": "composed entirely of thatched huts"
+     }
+    ],
+    "note": "Transcription and translation faithfully represent page 418 (folio 201 verso, unnumbered leaf between 201 and 202).",
+    "images_opened": [
+     417,
+     418,
+     419
+    ]
+   }
+  },
+  {
+   "key": "R06",
+   "book_id": "69e786a94a6785cfd60c88a8",
+   "n": 267,
+   "language": "Arabic",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Footnote 2's Arabic variant words look misread; the print appears to read تصب / نصب",
+      "quote": "Pref. نصب de la copia á نصيب del original"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The note glosses Spanish 'hundimiento' (sinking) as Arabic takbīs 'layering', which is a loose equivalence",
+      "quote": "<term>takbīs</term> <gloss>layering</gloss>"
+     }
+    ],
+    "note": "Both columns, the Spanish and the Arabic, match the scan of printed page 191, from 'mismo al vaso' and 'بالما ويترك' through 'un dia' and 'وتعب'; the English renders both faithfully.",
+    "images_opened": [
+     266,
+     267,
+     268
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Footnote reference 2 in footnote section transcribed as Pref. نصب de la copia á نصيب del original, whereas the print reads: 'Pref. تصب de la copia á تصيب del original.'",
+      "quote": "Pref. نصب de la copia á نصيب del original."
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Third footnote numbered '1' instead of '3'",
+      "quote": "1 Léase تغب en lugar de تعب."
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Spelling error in printed transcription: 'وبترك' instead of 'ويترك'",
+      "quote": "وبترك فمه علي وجه الارض"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Spelling in printed Arabic text is 'المدارية' (or 'المداربة') rather than 'المداوية'",
+      "quote": "المداوية"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Text reads 'يسيل من الما نقطة' (no repeated 'منه')",
+      "quote": "يسيل من الما منه نقطة"
+     }
+    ],
+    "note": "Page 267 corresponds to printed page 191 of Vol. 1. Transcription and English translation faithfully render the text.",
+    "images_opened": [
+     266,
+     267,
+     268
+    ]
+   }
+  },
+  {
+   "key": "R07",
+   "book_id": "69dc270339623978967d87da",
+   "n": 31,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 31 (printed page 11) word for word, including the header, the body text, the verse quote, the 'Double Prisms' caption and the section heading; the image description is acceptable.",
+    "images_opened": [
+     30,
+     31,
+     32
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The machine transcription accurately reflects the printed text and illustration caption on page 31 (numbered 11).",
+    "images_opened": [
+     30,
+     31,
+     32
+    ]
+   }
+  },
+  {
+   "key": "R09",
+   "book_id": "69ef2b4685daccce30f2e066",
+   "n": 988,
+   "language": "Latin",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The scan reads 'nehmlich daher recitiret', but the transcription gives 'daß er' and adds a guessed bracketed prefix '[vorn-]'.",
+      "quote": "[vorn-]nehmlich daß er recitiret werden"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The summary mentions 'vocal ornamentation', which the page does not discuss.",
+      "quote": "regarding vocal ornamentation, declamation"
+     }
+    ],
+    "note": "Both the transcription and the English match page 126 (scan 988) from 'gezogen werden' through 'von niem[ands]'. Only small misreadings, which do not affect usability.",
+    "images_opened": [
+     987,
+     988,
+     989
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Period omitted after header numeral 2",
+      "quote": "### 2. Parti vel Voci Concertate:"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Typo in transcription: 'daß er' instead of 'dahero' / 'daher'",
+      "quote": "daß er recitiret werden"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Period transcribed as semicolon",
+      "quote": "Clarum recitativum nennen."
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "Translated 'daß er' (derived from misreading 'daher') instead of 'therefore/hence'",
+      "quote": "that he is recited"
+     }
+    ],
+    "note": "Page 988 (printed page 126) is transcribed and translated accurately with only minor OCR and translation nuances.",
+    "images_opened": [
+     987,
+     988,
+     989
+    ]
+   }
+  },
+  {
+   "key": "R10",
+   "book_id": "69f8c1030c0c281d4bd321fd",
+   "n": 628,
+   "language": "Spanish",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 628 is blank and shows only mirrored show-through of the index on p.627 (615). The transcription correctly marks it as blank with show-through and adds no text.",
+    "images_opened": [
+     627,
+     628,
+     629
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 628 is a blank page showing faint bleed-through from page 627, correctly identified as blank.",
+    "images_opened": [
+     627,
+     628,
+     629
+    ]
+   }
+  },
+  {
+   "key": "R11",
+   "book_id": "69aec19cdd3c98abc0da86b6",
+   "n": 293,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 273 (scan 293), from 'the fancy of the fable' to 'complexions unto his days', with the header, signature Oo and catchword 'Fourthly,'; I found no omissions, additions or meaningful misreadings, only expected spelling normalisation (long s rendered as s).",
+    "images_opened": [
+     292,
+     293,
+     294
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "page number printed as 273 (erroneous pagination in original printing for 273 vs 293/actual sequence 272-273-274)",
+      "quote": "<page-num>273</page-num>"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "misread 'cold' as 'gold'",
+      "quote": "it is in the effects of cold"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "misread semicolon as colon",
+      "quote": "Negroes:"
+     }
+    ],
+    "note": "The page corresponds directly to page 293 in the file sequence (numbered 273 in the original book's pagination error between 272 and 274); transcription is complete and highly accurate.",
+    "images_opened": [
+     292,
+     293,
+     294
+    ]
+   }
+  },
+  {
+   "key": "R12",
+   "book_id": "69aebe60c0472fef6455a8f3",
+   "n": 275,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Printed 'wieks' is normalised to 'wicks'",
+      "quote": "often ſeen wicks made of it"
+     }
+    ],
+    "note": "The transcription matches page 247 (scan 275): header, margin notes, signature R 4 and catchword 'there-' are all right, and the body text is complete with only a trivial spelling normalisation.",
+    "images_opened": [
+     274,
+     275,
+     276
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Original has 'wieks', transcribed as 'wicks'",
+      "quote": "wicks"
+     }
+    ],
+    "note": "Page 275 (printed page number 247) correctly transcribed with only a minor spelling modernisation ('wicks' for 'wieks').",
+    "images_opened": [
+     274,
+     275,
+     276
+    ]
+   }
+  },
+  {
+   "key": "R13",
+   "book_id": "69ef286185daccce30f2ca01",
+   "n": 117,
+   "language": "Spanish",
+   "has_en": true,
+   "opus": {
+    "leaf": "other",
+    "ocr_usable": false,
+    "en_leaf": "other",
+    "en_usable": false,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "wrong_leaf",
+      "severity": "serious",
+      "what": "Transcription is a Latin life of St Jerome that appears on none of the three scans. Page 117 is Spanish text on Datura (fol. 87).",
+      "quote": "VITA S. HIERONYMI."
+     },
+     {
+      "stage": "ocr",
+      "kind": "omission",
+      "severity": "serious",
+      "what": "All of page 117's printed text is missing: the Datura fruit, its names in Malabar/Arabic/Portuguese, its quality, and how 'las enamoradas' use it.",
+      "quote": "Llamase esta planta en el Malabar, Vnmata caya"
+     },
+     {
+      "stage": "ocr",
+      "kind": "invented",
+      "severity": "serious",
+      "what": "The Jerome text, header, page number XXI and signature C are not printed on this page.",
+      "quote": "Postea Romam pergens"
+     },
+     {
+      "stage": "translation",
+      "kind": "wrong_leaf",
+      "severity": "serious",
+      "what": "The English translates the unrelated Jerome text, not page 117's Datura text.",
+      "quote": "# Life of Saint Jerome"
+     }
+    ],
+    "note": "Page 117 (fol. 87, 'Dela Datura') is Spanish text on Datura; the transcription and translation give a Latin life of St Jerome found on none of the scans.",
+    "images_opened": [
+     116,
+     117,
+     118
+    ]
+   },
+   "agy": {
+    "leaf": "other",
+    "ocr_usable": false,
+    "en_leaf": "other",
+    "en_usable": false,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "wrong_leaf",
+      "severity": "serious",
+      "what": "Transcription contains a Latin text about the life of Saint Jerome ('VITA S. HIERONYMI'), completely unrelated to the Spanish treatise on Datura shown on page 117.",
+      "quote": "VITA S. HIERONYMI."
+     },
+     {
+      "stage": "translation",
+      "kind": "wrong_leaf",
+      "severity": "serious",
+      "what": "English translation translates the Latin Life of Saint Jerome rather than the Spanish text on page 117.",
+      "quote": "# Life of Saint Jerome"
+     }
+    ],
+    "note": "The transcription and English translation belong to an unrelated Latin work on Saint Jerome, whereas page 117 contains chapter 11 on Datura from the Spanish treatise.",
+    "images_opened": [
+     116,
+     117,
+     118
+    ]
+   }
+  },
+  {
+   "key": "R14",
+   "book_id": "69cf7c07878f40c5945f25bf",
+   "n": 156,
+   "language": "e",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Bracket placement in line 859 differs from the print, which reads εμ[π]ρη[σ]θεις",
+      "quote": "εμπ[ρη]σθεις"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Line 892: the superscript ε correction is not shown and the opening lacunae are rendered loosely",
+      "quote": "[.] · [..] αιθηρ [[αι]]μον"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Line 897: the bracket and dot markings around δαι[α]ν are simplified",
+      "quote": "δαϊ[α]ν [οδον"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Stray <note> markup is wrapped around parts of the translated text",
+      "quote": "<note>in anger scatter his</note>"
+     }
+    ],
+    "note": "The transcription renders page 156 (printed p.140), Frogs 855-861 and 879-902, with only small bracket differences; the English covers all lines faithfully.",
+    "images_opened": [
+     155,
+     156,
+     157
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": false,
+    "defects": [
+     {
+      "stage": "translation",
+      "kind": "invented",
+      "severity": "serious",
+      "what": "The printed page contains only the Greek text of the papyrus fragment with no English translation; the provided translation is entirely supplied from outside",
+      "quote": "855 strike and <note>in anger scatter his</note> Telephus."
+     }
+    ],
+    "note": "Page 156 (bearing book page number 140) contains only Ancient Greek text; the transcription matches page 156, but the English translation is not printed on the page.",
+    "images_opened": [
+     155,
+     156,
+     157
+    ]
+   }
+  },
+  {
+   "key": "R15",
+   "book_id": "69e80561fdad300064d9d53c",
+   "n": 87,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches printed page 69 (page 87 of the scan) from 'Almonds, blanched' to 'and bake', with the S signature and the 'it' catchword; all recipe headings and text are present and I found no misreadings that matter.",
+    "images_opened": [
+     86,
+     87,
+     88
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Transcription accurately reflects page 87 (printed page number 69).",
+    "images_opened": [
+     86,
+     87,
+     88
+    ]
+   }
+  },
+  {
+   "key": "R16",
+   "book_id": "69ef218eb3e2d3a0927f38fc",
+   "n": 35,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The village name may be printed as 'Chamda'; the scan is unclear at that spot",
+      "quote": "the village of Chanda"
+     }
+    ],
+    "note": "The transcription matches page 35 (printed page 7) in full: the end of the body text, the Mind-and-body paragraph, the four-line verse and the whole Medical Times footnote. It is faithful apart from one uncertain village name.",
+    "images_opened": [
+     34,
+     35,
+     36
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "misread 'Chanda' for 'Chamda'",
+      "quote": "Chanda"
+     }
+    ],
+    "note": "Page 35 is leaf 7 of the work. The text is very accurately transcribed with only one minor OCR typo in the footnote ('Chanda' vs printed 'Chamda').",
+    "images_opened": [
+     34,
+     35,
+     36
+    ]
+   }
+  },
+  {
+   "key": "R17",
+   "book_id": "69af2335c6df16b7172a9b0b",
+   "n": 625,
+   "language": "Latin",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Apparatus manuscript reading of M garbled: the print reads 'prouintiasse'",
+      "quote": "prountiasse M"
+     },
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Superscript V above the apparatus line is marked up as a stray term tag",
+      "quote": "(<term>V</term> supr. vers. add. m)"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "In the Aeneid 4.308 quotation, 'moritura' and 'crudelis funere' describe Dido, not Aeneas",
+      "quote": "nor does Dido hold you, cruel man, destined to die by a bitter death"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "Two different manuscript spellings, pronunciasse and prouintiasse, are both rendered with the same English",
+      "quote": "to have delivered N to have delivered M"
+     }
+    ],
+    "note": "Transcription and translation both render page 521 (scan 625), Aen. IV 311–323, covering lemmata 319–323 and the apparatus; only minor slips.",
+    "images_opened": [
+     624,
+     625,
+     626
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Wrong page number transcribed in header (521 printed on page, transcription header says 521 in page-num tag, but prompt calls it page 625)",
+      "quote": "<page-num>521</page-num>"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Missing closing parenthesis after cf. ad v. 314",
+      "quote": "cf. ad v.* 314 ∥"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Missing 'V' above 'III' in second instance of apparataus line 28",
+      "quote": "primum libros III et IIII *M*"
+     }
+    ],
+    "note": "The page is 521 in the volume (page-625.jpg in the scan sequence). Transcription and translation accurately represent the text of page 521.",
+    "images_opened": [
+     624,
+     625,
+     626
+    ]
+   }
+  },
+  {
+   "key": "R18",
+   "book_id": "69e729b4a409200ea79f1109",
+   "n": 342,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 342 (printed number 302) line for line, including the header, the illustration caption and the closing line 'With the good Ahmed Aga... fourteenth'. I found no omissions, additions or misreadings.",
+    "images_opened": [
+     341,
+     342,
+     343
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 342 (bearing book page number 302) is transcribed fully and accurately.",
+    "images_opened": [
+     341,
+     342,
+     343
+    ]
+   }
+  },
+  {
+   "key": "R19",
+   "book_id": "69af0bc0be1c789306eb8ba6",
+   "n": 678,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 622 (scan 678) line by line, from 'Whereas, if digested' to 'in the case of a male.' No lines are missing or added, and I found no misreadings.",
+    "images_opened": [
+     677,
+     678,
+     679
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription faithfully and accurately represents page 622 (file page-678.jpg) with no defects.",
+    "images_opened": [
+     677,
+     678,
+     679
+    ]
+   }
+  },
+  {
+   "key": "R20",
+   "book_id": "69e416ac3fbf94798ce25a4d",
+   "n": 39,
+   "language": "Greek",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The scan prints the bracket inside the word as ἐ[πί-, but the transcription moves it in front of the word and drops ἐ, writing [[...] ἐπί-",
+      "quote": "[[...] ἐπί-"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The English line breaks don't follow the Greek line pairs (for example, the Alexandria priest clause is moved to a different line), but no text is lost",
+      "quote": "and of the god Philometor being <note>the priest in office</note> in Alexandria"
+     }
+    ],
+    "note": "Page 39 (printed p. 21) has the heading and opening lines 1-11 of the Loan of Wheat papyrus. The transcription and translation are complete and faithful apart from minor issues.",
+    "images_opened": [
+     38,
+     39,
+     40
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [],
+    "note": "Page 39 (numbered 21) is accurately transcribed and translated.",
+    "images_opened": [
+     38,
+     39,
+     40
+    ]
+   }
+  },
+  {
+   "key": "R21",
+   "book_id": "69e9615d2beefe2f6f72b21f",
+   "n": 456,
+   "language": "Latin",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The print has 'erāt' (erant), with an abbreviation mark, but the transcription drops the mark and gives 'erat'",
+      "quote": "vitiosissimi erat"
+     },
+     {
+      "stage": "translation",
+      "kind": "mistranslation",
+      "severity": "minor",
+      "what": "'panniculos' means small cloths or linens, so 'rags' is a slightly loose rendering",
+      "quote": "wash rags"
+     }
+    ],
+    "note": "The transcription and translation both match page 456 (verso, header DESCRIPTIONIS AFRICÆ), starting at 'vulgus arcem' and ending at 'Turcas quosdam' with catchword 'fclo'. Only minor issues.",
+    "images_opened": [
+     455,
+     456,
+     457
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "f-long s misread as cl in catchword",
+      "quote": "fclo"
+     }
+    ],
+    "note": "Page 456 (numbered 210 in the book, with page 457 numbered 211) is transcribed and translated accurately.",
+    "images_opened": [
+     455,
+     456,
+     457
+    ]
+   }
+  },
+  {
+   "key": "R22",
+   "book_id": "6a1aa8a9c8638d1ea5c81931",
+   "n": 66,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches printed page 62 (scan page 66) in full, including the running-head margin note and the faint seal in the left margin; no text is missing or added.",
+    "images_opened": [
+     65,
+     66,
+     67
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription faithfully renders the printed text of page 66 (book page 62) without any errors.",
+    "images_opened": [
+     65,
+     66,
+     67
+    ]
+   }
+  },
+  {
+   "key": "R23",
+   "book_id": "69e012414e6773d06085614a",
+   "n": 227,
+   "language": "Ge'ez",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 129 (scan page 227) faithfully: the header, summary, XX.1-4 text, margin date and both footnote columns are all present and read correctly.",
+    "images_opened": [
+     226,
+     227,
+     228
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 227 (printed page number 129) is accurately transcribed with all header, summary, text, marginal date, footnotes, and signature intact.",
+    "images_opened": [
+     226,
+     227,
+     228
+    ]
+   }
+  },
+  {
+   "key": "R24",
+   "book_id": "69ee4ef36dd925d126f423f2",
+   "n": 186,
+   "language": "French",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Margin note 'Chap. XIV.' is placed after the first paragraph, not at the top of the page where it is printed",
+      "quote": "<margin>\n**Chapter**\nXIV.\n</margin>"
+     }
+    ],
+    "note": "The French transcription matches page 186 (printed p.138) closely, and the English translation is complete and faithful; the glosses are editorial notes, not invented text.",
+    "images_opened": [
+     185,
+     186,
+     187
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [],
+    "note": "Page 186 (bearing printed page number 138) is accurately transcribed and faithfully translated into English.",
+    "images_opened": [
+     185,
+     186,
+     187
+    ]
+   }
+  },
+  {
+   "key": "R25",
+   "book_id": "6a08f8d49c1b82475e1582fb",
+   "n": 375,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The superscript i in Hānzⁱ's is dropped and the macron is shown as a circumflex",
+      "quote": "Hânz's livelihood"
+     }
+    ],
+    "note": "The transcription matches page 199 (verses V.100 end–107 and notes 101, 103, 106) almost exactly, with only a trivial diacritic difference.",
+    "images_opened": [
+     374,
+     375,
+     376
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 375 matches the provided transcription accurately, including the main verse text (101-107), footnotes, and page number 199.",
+    "images_opened": [
+     374,
+     375,
+     376
+    ]
+   }
+  },
+  {
+   "key": "R27",
+   "book_id": "69f8c1170c0c281d4bd32721",
+   "n": 270,
+   "language": "Spanish / Latin",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 270 is a blank verso. Its only text is the handwritten number '0735' at the upper right, which the transcription gives correctly. The printed text visible on the page is mirror-reversed show-through from page 269 (and fainter traces of another page), and it is rightly left out.",
+    "images_opened": [
+     269,
+     270,
+     271
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Blank verso with handwritten shelfmark 0735 and show-through from page 269; accurately transcribed.",
+    "images_opened": [
+     269,
+     270,
+     271
+    ]
+   }
+  },
+  {
+   "key": "R28",
+   "book_id": "6a3e66b9629ea5110b4c94b4",
+   "n": 41,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "The transcription matches page 41 (header 'Preliminary Account', page number 9) word for word, from 'the ignorant, profane vulgar' to 'such an old age of the world as this, shall'; I found no omissions or misreadings.",
+    "images_opened": [
+     40,
+     41,
+     42
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Page 41 (bearing printed page number 9) is accurately transcribed with all text matching the image.",
+    "images_opened": [
+     40,
+     41,
+     42
+    ]
+   }
+  },
+  {
+   "key": "R29",
+   "book_id": "69dc244239623978967d852b",
+   "n": 100,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Italics run past the printed title; the scan italicises only 'Palmistry' and 'Scientific Religion;'",
+      "quote": "*Palmistry and Its Practical Uses.*"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The printed typo 'reeeipt' in the footer was silently corrected to 'receipt', while other printed typos (Alcnemy, Clath, censt, aud) were kept",
+      "quote": "on receipt of price"
+     }
+    ],
+    "note": "The transcription matches page 100's book advertisements in full. Page 99 is a different ad list and page 101 is handwritten notes. Only small formatting and normalisation differences.",
+    "images_opened": [
+     99,
+     100,
+     101
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Typo in 'Alcnemy' instead of 'Alchemy'",
+      "quote": "Alcnemy"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Typo in 'Clath' instead of 'Cloth'",
+      "quote": "Clath $3.00."
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Typo in 'censt' instead of 'cents'",
+      "quote": "40 censt."
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Typo in 'Chieoromancy' instead of 'Chieromancy'",
+      "quote": "Chieoromancy"
+     },
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "Typo in 'aud accurate?y' instead of 'and accurately'",
+      "quote": "aud accurate?y"
+     }
+    ],
+    "note": "Page 100 features a publisher's advertisement list by Occult Publishing Co., which the transcription accurately reproduces with only minor OCR typos.",
+    "images_opened": [
+     99,
+     100,
+     101
+    ]
+   }
+  },
+  {
+   "key": "R30",
+   "book_id": "69cf7bd6878f40c5945f219e",
+   "n": 280,
+   "language": "Greek",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The editor's square brackets around the supplied words are turned into a note tag, so the reader can no longer tell the words are conjectural",
+      "quote": "if they are <note>hurrying on with</note>"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The printed '(Addressed)' is rendered as a note tag instead of as text",
+      "quote": "<note>Addressed</note> Deliver to Dionysia"
+     },
+     {
+      "stage": "translation",
+      "kind": "other",
+      "severity": "minor",
+      "what": "The angle-bracket marks showing the editor's supplement in ⟨ἐπείγον⟩τες are lost; the Greek is given as a plain word with a gloss",
+      "quote": "<note>urging forward</note> <note>original: \"ἐπείγοντες\"</note>"
+     }
+    ],
+    "note": "Both the transcription and the English match page 260 as printed (end of the 1157 translation and notes, then the start of 1158, lines 1-11); only small formatting losses in the English.",
+    "images_opened": [
+     279,
+     280,
+     281
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [],
+    "note": "Page 280 is numbered 260 of the volume; both the machine transcription and the English rendering match the printed page accurately.",
+    "images_opened": [
+     279,
+     280,
+     281
+    ]
+   }
+  },
+  {
+   "key": "R31",
+   "book_id": "69bd9b5d46b01553e33be60d",
+   "n": 205,
+   "language": "English",
+   "has_en": false,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Hyphens from line breaks in the table were kept inside words that should be joined",
+      "quote": "support of the house-hold"
+     },
+     {
+      "stage": "ocr",
+      "kind": "other",
+      "severity": "minor",
+      "what": "Hyphens from line breaks in the prose were kept, along with the line break itself",
+      "quote": "abbrevia-\ntion"
+     }
+    ],
+    "note": "The transcription matches page 205 (printed p. 189): the full No. 5 table (items 1–38) and the following paragraph are present and accurate; the only problems are cosmetic hyphens left from line breaks.",
+    "images_opened": [
+     204,
+     205,
+     206
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": null,
+    "en_usable": null,
+    "defects": [],
+    "note": "Transcription accurately reflects page 205 (book page 189) with no significant defects.",
+    "images_opened": [
+     204,
+     205,
+     206
+    ]
+   }
+  },
+  {
+   "key": "R32",
+   "book_id": "69e7938b80b52390feb18721",
+   "n": 84,
+   "language": "Spanish",
+   "has_en": true,
+   "opus": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [
+     {
+      "stage": "ocr",
+      "kind": "misread",
+      "severity": "minor",
+      "what": "The tilde (abbreviation mark for 'tanto') over 'tãto' was dropped",
+      "quote": "en tato que el yua"
+     }
+    ],
+    "note": "The transcription matches page 84 line by line, catchword 'cho,' included. The English renders it faithfully, from the opening fragment 'antojasse' to the closing 'como està dicho'.",
+    "images_opened": [
+     83,
+     84,
+     85
+    ]
+   },
+   "agy": {
+    "leaf": "own",
+    "ocr_usable": true,
+    "en_leaf": "own",
+    "en_usable": true,
+    "defects": [],
+    "note": "Page 84 transcription and translation are accurate and complete.",
+    "images_opened": [
+     83,
+     84,
+     85
+    ]
+   }
+  }
+ ]
+}

@@ -28,6 +28,8 @@
  *     is not mirrored: the app has no ASN for a request.
  */
 
+import { PREFIXED_LOCALES } from './locale-path';
+
 const READER_PATH_PREFIXES = ['/book', '/work', '/api/pages', '/api/image'];
 
 // The reduced UA desktop Chrome sends since v101: the platform, then a fixed
@@ -36,8 +38,16 @@ const READER_PATH_PREFIXES = ['/book', '/work', '/api/pages', '/api/image'];
 const DESKTOP_CHROME_UA =
   /^Mozilla\/5\.0 \((?:Windows NT [^)]*|Macintosh; [^)]*|X11; Linux [^)]*)\) AppleWebKit\/537\.36 \(KHTML, like Gecko\) Chrome\/\d+\.0\.0\.0 Safari\/537\.36$/;
 
+// A translated URL (/zh/book/x) is the same reader page. Matching only the bare
+// prefix left it open: on 2026-11-04 bots sent ~315K requests a day that way.
+function withoutLocale(pathname: string): string {
+  const locale = PREFIXED_LOCALES.find((l) => pathname.startsWith(`/${l}/`));
+  return locale ? pathname.slice(locale.length + 1) : pathname;
+}
+
 export function isReaderPath(pathname: string): boolean {
-  return READER_PATH_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'));
+  const path = withoutLocale(pathname);
+  return READER_PATH_PREFIXES.some((p) => path === p || path.startsWith(p + '/'));
 }
 
 /**
@@ -49,7 +59,15 @@ export function isForgedChrome(
   pathname: string,
   headers: { get(name: string): string | null },
 ): boolean {
-  if (!isReaderPath(pathname)) return false;
+  return isReaderPath(pathname) && hasForgedChromeHints(headers);
+}
+
+/**
+ * The same test on any path, for a surface that applies it wider than the
+ * reader paths (src/lib/partner-access.ts, #8098). Real Chrome in a partner's
+ * cross-site iframe still sends these hints.
+ */
+export function hasForgedChromeHints(headers: { get(name: string): string | null }): boolean {
   const ua = headers.get('user-agent') || '';
   if (!DESKTOP_CHROME_UA.test(ua)) return false;
 

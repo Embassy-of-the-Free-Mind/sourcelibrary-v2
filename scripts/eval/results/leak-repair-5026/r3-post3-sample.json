@@ -1,0 +1,348 @@
+[
+ {
+  "book": "69b21f2d4522d8c1db3bde77",
+  "prev": 178,
+  "next": 179,
+  "checked": 178,
+  "nb": 179,
+  "page_id": "69b21f2d4522d8c1db3bdf29",
+  "lang": "Latin",
+  "key": "Q01"
+ },
+ {
+  "book": "69af21d4f98f6eff774cb8bf",
+  "prev": 294,
+  "next": 295,
+  "checked": 294,
+  "nb": 295,
+  "page_id": "69af21d4f98f6eff774cb9e5",
+  "lang": "Latin",
+  "key": "Q02"
+ },
+ {
+  "book": "69af42393fd91d3991398cca",
+  "prev": 28,
+  "next": 29,
+  "checked": 28,
+  "nb": 29,
+  "page_id": "69af42393fd91d3991398ce6",
+  "lang": "Latin",
+  "key": "Q03"
+ },
+ {
+  "book": "6a0857c249638a50931c563c",
+  "prev": 440,
+  "next": 441,
+  "checked": 440,
+  "nb": 441,
+  "page_id": "6a0857c249638a50931c57f4",
+  "lang": "Latin",
+  "key": "Q04"
+ },
+ {
+  "book": "69af2221b5227118e60e46dd",
+  "prev": 347,
+  "next": 348,
+  "checked": 348,
+  "nb": 347,
+  "page_id": "69af2221b5227118e60e4839",
+  "lang": "Latin",
+  "key": "Q05"
+ },
+ {
+  "book": "697c8e0fbaa544415f85b6bc",
+  "prev": 132,
+  "next": 133,
+  "checked": 133,
+  "nb": 132,
+  "page_id": "697cb28bda9cfa0d1b59f0a1",
+  "lang": "German",
+  "key": "Q06"
+ },
+ {
+  "book": "69dbcc3f0f8c5edf20f48658",
+  "prev": 334,
+  "next": 335,
+  "checked": 334,
+  "nb": 335,
+  "page_id": "69dbcc3f0f8c5edf20f487a6",
+  "lang": "Latin",
+  "key": "Q07"
+ },
+ {
+  "book": "6957ebe757a4c14a9879b2c0",
+  "prev": 812,
+  "next": 813,
+  "checked": 812,
+  "nb": 813,
+  "page_id": "6957ebe757a4c14a9879b5ec",
+  "lang": "Latin",
+  "key": "Q08"
+ },
+ {
+  "book": "69b30206c22956d8a0de5b11",
+  "prev": 127,
+  "next": 128,
+  "checked": 128,
+  "nb": 127,
+  "page_id": "69b30206c22956d8a0de5b91",
+  "lang": "Latin",
+  "key": "Q09"
+ },
+ {
+  "book": "6a243d3a0f0e4f405e62fc8c",
+  "prev": 39,
+  "next": 40,
+  "checked": 39,
+  "nb": 40,
+  "page_id": "6a243d3a0f0e4f405e62fcb3",
+  "lang": "Latin",
+  "key": "Q10"
+ },
+ {
+  "book": "6a097496f14f992996681e40",
+  "prev": 130,
+  "next": 131,
+  "checked": 130,
+  "nb": 131,
+  "page_id": "6a097496f14f992996681ec2",
+  "lang": "Latin",
+  "key": "Q11"
+ },
+ {
+  "book": "69a0278fdb6656a74eb33962",
+  "prev": 837,
+  "next": 838,
+  "checked": 838,
+  "nb": 837,
+  "page_id": "69a0e8e907a3a0178057d59a",
+  "lang": "Latin",
+  "key": "Q12"
+ },
+ {
+  "book": "6867c580aadfee9e955eca92",
+  "prev": 360,
+  "next": 361,
+  "checked": 360,
+  "nb": 361,
+  "page_id": "69f6bb6a55827b5bc963f17a",
+  "lang": "German",
+  "key": "Q13"
+ },
+ {
+  "book": "6952d0fa77f38f6761bc5aef",
+  "prev": 50,
+  "next": 51,
+  "checked": 51,
+  "nb": 50,
+  "page_id": "6952d0fa77f38f6761bc5b22",
+  "lang": "Latin",
+  "key": "Q14"
+ },
+ {
+  "book": "69b6312f1c1c21a373805dbb",
+  "prev": 95,
+  "next": 96,
+  "checked": 95,
+  "nb": 96,
+  "page_id": "69b6312f1c1c21a373805e1a",
+  "lang": "Latin",
+  "key": "Q15"
+ },
+ {
+  "book": "6a08588149638a50931c63cd",
+  "prev": 119,
+  "next": 120,
+  "checked": 119,
+  "nb": 120,
+  "page_id": "6a08588149638a50931c6444",
+  "lang": "Latin",
+  "key": "Q16"
+ },
+ {
+  "book": "6992d67f46b85e738a0c5ffa",
+  "prev": 201,
+  "next": 202,
+  "checked": 202,
+  "nb": 201,
+  "page_id": "6992d67f46b85e738a0c60c4",
+  "lang": "English",
+  "control": "stored-leak",
+  "spot_key": "P44",
+  "key": "Q17"
+ },
+ {
+  "book": "69b51ed9cf111105c42a4f1e",
+  "prev": 185,
+  "next": 186,
+  "checked": 185,
+  "nb": 186,
+  "page_id": "69b51ed9cf111105c42a4fd7",
+  "lang": "Latin",
+  "key": "Q18"
+ },
+ {
+  "book": "69b302e53613a84e6806812d",
+  "prev": 353,
+  "next": 354,
+  "checked": 353,
+  "nb": 354,
+  "page_id": "69b302e53613a84e6806828e",
+  "lang": "Latin",
+  "key": "Q19"
+ },
+ {
+  "book": "69c80da56c6f3cc53c846d9e",
+  "prev": 224,
+  "next": 225,
+  "checked": 224,
+  "nb": 225,
+  "page_id": "69f6e84a7e4eb09bd466ef30",
+  "lang": "German",
+  "key": "Q20"
+ },
+ {
+  "book": "69ef2ccc85daccce30f2ef0d",
+  "prev": 70,
+  "next": 71,
+  "checked": 70,
+  "nb": 71,
+  "page_id": "69ef2ccc85daccce30f2ef53",
+  "lang": "Latin",
+  "key": "Q21"
+ },
+ {
+  "book": "6a097461f14f992996680c5d",
+  "prev": 128,
+  "next": 129,
+  "checked": 128,
+  "nb": 129,
+  "page_id": "6a097461f14f992996680cdd",
+  "lang": "Latin",
+  "key": "Q22"
+ },
+ {
+  "book": "69c836d36c6f3cc53c84ecd6",
+  "prev": 926,
+  "next": 927,
+  "checked": 926,
+  "nb": 927,
+  "page_id": "69f762cfb2b698b3bb82f977",
+  "lang": "German",
+  "key": "Q23"
+ },
+ {
+  "book": "69b00f6ce485bbb15c6b29cb",
+  "prev": 501,
+  "next": 502,
+  "checked": 501,
+  "nb": 502,
+  "page_id": "69b00f6ce485bbb15c6b2bc0",
+  "lang": "Latin",
+  "key": "Q24"
+ },
+ {
+  "book": "69c1bd5a8522835be84696c6",
+  "prev": 64,
+  "next": 65,
+  "checked": 64,
+  "nb": 65,
+  "page_id": "69c1bd5a8522835be8469706",
+  "lang": "Ge'ez",
+  "control": "stored-leak",
+  "spot_key": "P15",
+  "key": "Q25"
+ },
+ {
+  "book": "69a97a2df3f3d2fb7de270de",
+  "prev": 141,
+  "next": 142,
+  "checked": 141,
+  "nb": 142,
+  "page_id": "69a97a2df3f3d2fb7de2716b",
+  "lang": "Latin",
+  "key": "Q26"
+ },
+ {
+  "book": "69c852056c6f3cc53c85329c",
+  "prev": 256,
+  "next": 257,
+  "checked": 257,
+  "nb": 256,
+  "page_id": "69f6b97f2a628490d4b4ab79",
+  "lang": "German",
+  "key": "Q27"
+ },
+ {
+  "book": "6a0853aa15c643eb1af506e0",
+  "prev": 423,
+  "next": 424,
+  "checked": 423,
+  "nb": 424,
+  "page_id": "6a0853aa15c643eb1af50887",
+  "lang": "Latin",
+  "control": "made-dup",
+  "key": "Q28"
+ },
+ {
+  "book": "69b62f771c1c21a3737f6102",
+  "prev": 337,
+  "next": 338,
+  "checked": 337,
+  "nb": 338,
+  "page_id": "69b62f771c1c21a3737f6253",
+  "lang": "Latin",
+  "key": "Q29"
+ },
+ {
+  "book": "69af21fb7c27d4b637fedf7d",
+  "prev": 713,
+  "next": 714,
+  "checked": 713,
+  "nb": 714,
+  "page_id": "69af21fb7c27d4b637fee246",
+  "lang": "Latin",
+  "key": "Q30"
+ },
+ {
+  "book": "69af135c46ef029572e0328e",
+  "prev": 342,
+  "next": 343,
+  "checked": 343,
+  "nb": 342,
+  "page_id": "69af135c46ef029572e033e5",
+  "lang": "Latin",
+  "key": "Q31"
+ },
+ {
+  "book": "69af59ba522dc3dfdf725eae",
+  "prev": 380,
+  "next": 381,
+  "checked": 380,
+  "nb": 381,
+  "page_id": "69af59ba522dc3dfdf72602a",
+  "lang": "Latin",
+  "control": "made-dup",
+  "key": "Q32"
+ },
+ {
+  "book": "69dbc85d1040d1d5e2098933",
+  "prev": 198,
+  "next": 199,
+  "checked": 199,
+  "nb": 198,
+  "page_id": "69dbc85d1040d1d5e20989fa",
+  "lang": "Latin",
+  "key": "Q33"
+ },
+ {
+  "book": "69aff9f266308428965d311c",
+  "prev": 485,
+  "next": 486,
+  "checked": 486,
+  "nb": 485,
+  "page_id": "69aff9f266308428965d3302",
+  "lang": "Latin",
+  "key": "Q34"
+ }
+]

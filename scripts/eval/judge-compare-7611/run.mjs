@@ -32,6 +32,7 @@ import { parseJson } from '../translate-cli-lane-7075/sample.mjs';
 import { scorePlant } from '../lib/plant-ocr-errors.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { wilson } from '../lib/agreement-stats.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const flag = (n) => process.argv.includes(`--${n}`);
@@ -148,7 +149,7 @@ async function frame() {
     }
     // (b3) lane_judge_verdicts: items and drafts the sampler's Opus judged; the text it saw, re-hashed.
     const L = log.lane_judge_verdicts = { records: 0, matched: 0, text_changed: 0 };
-    const recs = await db.collection('lane_judge_verdicts').find({ kind: { $in: ['item', 'draft'] }, 'verdict.accept': { $in: [true, false] } }).toArray();
+    const recs = await db.collection('lane_judge_verdicts').find(verdictQuery({ kind: { $in: ['item', 'draft'] }, 'verdict.accept': { $in: [true, false] } })).toArray();
     L.records = recs.length;
     const pages = new Map((await db.collection('pages').find({ id: { $in: [...new Set(recs.map((r) => r.page_id))] } }, { projection: { id: 1, 'ocr.data': 1, 'ocr.updated_at': 1, 'translation.data': 1 } }).toArray()).map((p) => [p.id, p]));
     const drafts = new Map((await db.collection('page_revisions').find({ id: { $in: recs.map((r) => r.write?.revision_id).filter(Boolean) } }, { projection: { id: 1, data: 1 } }).toArray()).map((r) => [r.id, r.data]));

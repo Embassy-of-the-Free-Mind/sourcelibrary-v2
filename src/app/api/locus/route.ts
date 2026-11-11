@@ -29,7 +29,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { withApiAuth } from '@/lib/api-auth';
-import { parseLocusQuery, type LocusSystem } from '@/lib/locus';
+import { parseLocusQuery, anchorsCarrying, type LocusSystem } from '@/lib/locus';
 import { findWorkByName, findWorkByHead } from '@/lib/locus-works';
 
 interface AnchorDoc {
@@ -98,23 +98,28 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     })
     .toArray();
 
-  // Matched on the PAGE only, never on the section.
-  //
-  // A leaf carries a whole Bekker page or a run of Stephanus sections, and the
-  // anchor records whichever one the printer happened to put in the margin. The
-  // Burnet leaf covering 328a–328c is anchored `328 c`; filtering on the
-  // requested section `b` returned nothing for `Republic 328b` — a leaf we hold,
-  // reported as absent. Each witness carries its own printed `reference` so the
-  // caller can see what was actually on the leaf.
-  const query: Record<string, unknown> = { ref_page: parsed.ref.page };
+  // A leaf is anchored by the reference printed at its HEAD, the first it
+  // carries, and it runs on to the next leaf's head. Burnet's Republic p. 296 is
+  // headed `519 e` and prints 520 a–c; p. 297 opens at `520 d`. Matching on the
+  // canonical page alone sent `Rep. 520c` to p. 297 and `Rep. 328b` to p. 29
+  // (`328 c`) instead of p. 28 (`327 c`) — the leaf after the one that prints
+  // it (#8466 item 5). So fetch the neighbouring pages too and let
+  // `anchorsCarrying` pick the leaf each reference falls on. Each witness still
+  // carries its own printed `reference`, so the caller sees what was on the leaf.
+  const query: Record<string, unknown> = {
+    ref_page: { $gte: parsed.ref.page - 1, $lte: parsed.ref.page + 3 },
+  };
   if (system) query.system = system;
 
-  const anchors = (await db
+  const nearby = (await db
     .collection('locus_anchors')
     .find(query, { projection: { _id: 0 } })
     .sort({ system: 1, ref_sort: 1 })
-    .limit(200)
+    .limit(1000)
     .toArray()) as unknown as AnchorDoc[];
+  const mechanismOf = new Map(editions.map((e) => [e.book_id as string, e.mechanism as string]));
+  const carrying = new Set(anchorsCarrying(nearby, parsed.ref, (id) => mechanismOf.get(id)));
+  const anchors = nearby.filter((a) => carrying.has(a));
 
   const bookById = new Map(editions.map((e) => [e.book_id as string, e]));
 
@@ -244,7 +249,7 @@ function buildNote(o: {
   }
   if (o.sectionAsked && o.sectionsFound.some((r) => !r.endsWith(o.sectionAsked as string))) {
     parts.push(
-      `Matching is by page, not section: you asked for ${o.sectionAsked} and the anchors printed on these leaves read ${o.sectionsFound.join(', ')}. A leaf carries a run of sections and the margin records only one of them, so this is the right leaf. Read the section off it.`,
+      `You asked for ${o.sectionAsked} and the anchors on these leaves read ${o.sectionsFound.join(', ')}. A leaf is anchored by the reference printed at its head, the first it carries, and runs on to the next leaf's head, so a leaf anchored at an earlier section is the one your reference falls on. Read the section off it.`,
     );
   }
   if (o.ambiguous) {

@@ -29,7 +29,7 @@ export default function ResearchPage() {
 
         {/* Overview */}
         <p className="text-xl text-secondary leading-relaxed mb-4">
-          Source Library uses Google&apos;s Gemini language models to read and translate historical texts
+          Source Library uses AI language models to read and translate historical texts
           from their original languages into English. The original language text is always preserved
           alongside the translation: every page can be viewed as the original scan, the OCR
           transcription, or the English translation.
@@ -152,7 +152,7 @@ export default function ResearchPage() {
             number="1"
             title="OCR: Reading the Original"
             color="bg-green-50 text-green-700"
-            detail="Gemini vision models read directly from page images, handling blackletter (Fraktur), early modern Latin abbreviations, ligatures, and multi-column layouts. The OCR prompt (currently Standard v6) classifies each page by type (text, illustration, title page, table of contents) and flags quality issues like fading or damage inline within the transcription."
+            detail="AI vision models read directly from page images, handling blackletter (Fraktur), early modern Latin abbreviations, ligatures, and multi-column layouts. The OCR prompt (currently Standard v6) classifies each page by type (text, illustration, title page, table of contents) and flags quality issues like fading or damage inline within the transcription."
           />
           <StageCard
             number="2"
@@ -189,7 +189,7 @@ export default function ResearchPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Models</h2>
 
         <p className="text-secondary mb-6">
-          We use two tiers of Google Gemini models, routed by source collection:
+          We use two tiers of AI models, routed by source collection:
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -200,7 +200,7 @@ export default function ResearchPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-primary">Embassy of the Free Mind</h3>
-                <p className="text-xs font-mono text-muted">gemini-3-flash-preview</p>
+                <p className="text-xs font-mono text-muted">Mid-tier model</p>
               </div>
             </div>
             <p className="text-secondary text-[15px] leading-relaxed">
@@ -215,7 +215,7 @@ export default function ResearchPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-primary">All Other Sources</h3>
-                <p className="text-xs font-mono text-muted">gemini-3.1-flash-lite</p>
+                <p className="text-xs font-mono text-muted">Lightest model</p>
               </div>
             </div>
             <p className="text-secondary text-[15px] leading-relaxed">
@@ -337,8 +337,8 @@ export default function ResearchPage() {
             </p>
             <p>
               <strong>Citation format.</strong> The translator credit reads &ldquo;Source Library AI&rdquo; rather than
-              a named human translator. For peer-reviewed citation, we recommend including the model
-              and date: &ldquo;Source Library AI (Gemini, 2026).&rdquo;
+              a named human translator. For peer-reviewed citation, we recommend including the
+              date: &ldquo;Source Library AI (2026).&rdquo;
               DOI-backed editions provide a more formal citation path.
             </p>
           </div>
@@ -351,7 +351,7 @@ export default function ResearchPage() {
           <RelatedCard href="/how-it-works" title="How Source Library Works" desc="Each step from a library’s scan to a page anyone can read and cite, followed on one real page." />
           <RelatedCard href="/about/sources" title="Source Libraries" desc="The 50+ digital libraries, archives, and repositories we draw from." />
           <RelatedCard href="/articles/first-translation-methodology" title="First Translation Methodology" desc="How we verify that a translation is the first into English." />
-          <RelatedCard href="/developers/pipeline" title="Pipeline Architecture" desc="Technical details: Lambda workers, SQS queues, Gemini routing." />
+          <RelatedCard href="/developers/pipeline" title="Pipeline Architecture" desc="Technical details: Lambda workers, SQS queues, model routing." />
           <RelatedCard href="/articles/ocr-consistency" title="OCR Consistency Study" desc="How consistent are AI OCR results across repeated runs?" />
           <RelatedCard href="/developers" title="API & MCP Server" desc="Programmatic access to the collection for researchers and AI systems." />
         </div>

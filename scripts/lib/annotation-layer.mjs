@@ -581,8 +581,8 @@ export function renderMarkup(text, annotations) {
     if (!r) { orphans.push(a); return; }
     if (a.kind === 'mark') {
       if (a.malformed) { ins.push([r.start, 1, order, `<${a.type}>`]); return; }
-      ins.push([r.start, 2, order, `<${a.type}>`]);
-      ins.push([r.end, 0, order, `</${a.type}>`]);
+      ins.push([r.start, 2, order, `<${a.type}>`, r.start, r.end]);
+      ins.push([r.end, 0, order, `</${a.type}>`, r.start, r.end]);
       return;
     }
     if (a.malformed) { ins.push([r.start, 1, order, open]); return; }
@@ -591,10 +591,17 @@ export function renderMarkup(text, annotations) {
     const space = at > 0 && !/\s/.test(text[at - 1]) && r.start !== r.end ? ' ' : '';
     // A note that stood in its own paragraph gets its paragraph back.
     const block = r.start === r.end && (at === 0 || text[at - 1] === '\n') && at < text.length ? '\n\n' : '';
-    ins.push([at, 1, order, `${space}${open.replace(/^<[\w-]+/, `<${t}`)}${a.body ?? ''}</${t}>${block}`]);
+    // `para` / `trail` (set by translation-text.mjs layerMarkup for the reader, never stored): a note the page ends
+    // on gets its paragraph back; a note between a space and a word gets the space after it back.
+    const lead = a.para ? '\n\n' : space;
+    ins.push([at, 1, order, `${lead}${open.replace(/^<[\w-]+/, `<${t}`)}${a.body ?? ''}</${t}>${a.trail && !a.para ? ' ' : ''}${block}`]);
   });
-  // Close tags first, then commentary, then open tags; page order within each.
-  ins.sort((x, y) => x[0] - y[0] || x[1] - y[1] || x[2] - y[2]);
+  // Close tags first, then commentary, then open tags; page order within each. Marks nest: at one place the mark
+  // that opened later closes first, and the one that closes later opens first, so two marks ending (or starting)
+  // together never cross (`<margin><term>…</term></margin>`, not `…</margin></term>`); two over the same words
+  // close in the reverse of the order they opened.
+  const nest = (x, y) => (x[1] === 0 && y[1] === 0 ? (y[4] - x[4]) || (y[2] - x[2]) : x[1] === 2 && y[1] === 2 ? (y[5] - x[5]) : 0);
+  ins.sort((x, y) => x[0] - y[0] || x[1] - y[1] || nest(x, y) || x[2] - y[2]);
   let out = '';
   let pos = 0;
   for (const [at, , , s] of ins) {

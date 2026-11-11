@@ -1,0 +1,9 @@
+{
+ "frozen_at": "2026-11-04",
+ "rule": "prereg §4: B plus every family whose addition lowers dev out-of-fold log loss; logit unless HGB beats it by >= 0.02 log loss",
+ "families": ["B", "T", "M", "R"],
+ "kind": "logit",
+ "dev_oof": {"auc": 0.826, "logloss": 0.4861, "slope": 1.051, "hgb_logloss": 0.5247},
+ "secondary": [["B", "T", "M"]],
+ "secondary_why": "B+T+M needs no fresh agy read (R's strongest terms are the agy ones), so it is the variant that could score all 71,228 books; labelled, never the bar model"
+}

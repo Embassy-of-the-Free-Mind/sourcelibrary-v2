@@ -1,0 +1,15 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Chinese regular script on a slip mounted on the leaf; water staining at the lower part of the slip does not affect the text.</warning>
+
+共設華筵會四景常歡聚
+[尾聲] [合] 顯皇猷開盛治共說孝男并孝女願玉燭調和聖主垂衣
+[下場詩] [生] 自居墓室已三年 [外] 今日丹書下九天
+[旦貼] 莫道名高并爵貴 [眾] 須知子孝與妻賢
+
+<image-desc size="small" type="symbol" significance="low">A red square library seal in the bottom left corner of the leaf.</image-desc>
+<insert><unclear>國立北平圖書館收藏</unclear></insert>
+
+<vocab>尾聲, 下場詩, 皇猷, 孝男, 孝女, 玉燭, 聖主, 墓室, 丹書</vocab>

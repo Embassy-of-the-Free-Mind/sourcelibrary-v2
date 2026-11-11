@@ -1,0 +1,7625 @@
+{
+ "generated_at": "2026-11-04T17:37:04.705Z",
+ "record": "scripts/eval/experiments/2026-11-04-judged-expand-7263.md",
+ "test_id": "judged-expand-7263",
+ "issue": 7263,
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, one sitting, blind. One judge; the second reader checked a 20% sample of its serious spans.",
+ "not_pooled": "Oversampled by language: never pooled into the 800-page weighted library figure (served-grades.json) without frame weights.",
+ "band_label": {
+  "fit_to_quote": "No slip, or at most two that mislead no one",
+  "fit_to_read": "Three or more slips, none of which misleads",
+  "some_errors": "Some errors that may change the meaning: 1 or 2 on the page",
+  "many_errors": "Many errors that may change the meaning: 3 or more on the page",
+  "from_elsewhere": "A span from somewhere else: invented, recited, or another leaf",
+  "mostly_wrong": "Substantially wrong or incomplete (fidelity 2)",
+  "not_this_page": "Not this page's text at all (fidelity 1)",
+  "no_text_served": "The page serves no transcription (never read, empty, or marked unreadable)",
+  "unjudged": "Not judged: the image would not fetch or the reply never parsed"
+ },
+ "opus_calls": {
+  "all": 1303,
+  "by_stage": {
+   "route": 934,
+   "second": 369
+  },
+  "list_usd": 104.25
+ },
+ "controls": {
+  "all": {
+   "n": 68,
+   "judged": 68,
+   "passed": 68,
+   "accepted": 0
+  },
+  "by_cell": {
+   "Latin|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "German|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "English|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "French|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Tibetan|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Greek|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Italian|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Latin|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Dutch|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Tibetan|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Greek|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Russian|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Arabic|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Spanish|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Hebrew|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Korean|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Persian|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Japanese|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "German|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Korean|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Arabic|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Hebrew|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Sanskrit|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "French|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "English|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Syriac|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Italian|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Persian|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Egyptian hieroglyphs|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Japanese|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Syriac|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Egyptian hieroglyphs|print": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Spanish|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   },
+   "Dutch|manuscript": {
+    "n": 2,
+    "judged": 2,
+    "passed": 2,
+    "accepted": 0
+   }
+  }
+ },
+ "second_reader": {
+  "serious_spans": 3803,
+  "sampled": 763,
+  "calls": 408,
+  "by_language": {
+   "Dutch": {
+    "sampled": 22,
+    "read": 19,
+    "upheld": 18,
+    "different_same_sense": 1,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 0.947,
+    "ci95": [
+     0.754,
+     0.991
+    ]
+   },
+   "Syriac": {
+    "sampled": 73,
+    "read": 66,
+    "upheld": 60,
+    "different_same_sense": 4,
+    "not_different": 1,
+    "cannot_tell": 1,
+    "upheld_share": 0.909,
+    "ci95": [
+     0.816,
+     0.958
+    ]
+   },
+   "Latin": {
+    "sampled": 32,
+    "read": 28,
+    "upheld": 25,
+    "different_same_sense": 0,
+    "not_different": 1,
+    "cannot_tell": 2,
+    "upheld_share": 0.893,
+    "ci95": [
+     0.728,
+     0.963
+    ]
+   },
+   "Greek": {
+    "sampled": 53,
+    "read": 52,
+    "upheld": 51,
+    "different_same_sense": 0,
+    "not_different": 1,
+    "cannot_tell": 0,
+    "upheld_share": 0.981,
+    "ci95": [
+     0.899,
+     0.997
+    ]
+   },
+   "Hebrew": {
+    "sampled": 84,
+    "read": 77,
+    "upheld": 74,
+    "different_same_sense": 2,
+    "not_different": 1,
+    "cannot_tell": 0,
+    "upheld_share": 0.961,
+    "ci95": [
+     0.892,
+     0.987
+    ]
+   },
+   "Japanese": {
+    "sampled": 70,
+    "read": 66,
+    "upheld": 59,
+    "different_same_sense": 3,
+    "not_different": 2,
+    "cannot_tell": 2,
+    "upheld_share": 0.894,
+    "ci95": [
+     0.797,
+     0.948
+    ]
+   },
+   "German": {
+    "sampled": 43,
+    "read": 39,
+    "upheld": 38,
+    "different_same_sense": 0,
+    "not_different": 0,
+    "cannot_tell": 1,
+    "upheld_share": 0.974,
+    "ci95": [
+     0.868,
+     0.995
+    ]
+   },
+   "Italian": {
+    "sampled": 42,
+    "read": 41,
+    "upheld": 37,
+    "different_same_sense": 2,
+    "not_different": 0,
+    "cannot_tell": 2,
+    "upheld_share": 0.902,
+    "ci95": [
+     0.775,
+     0.961
+    ]
+   },
+   "Arabic": {
+    "sampled": 58,
+    "read": 48,
+    "upheld": 41,
+    "different_same_sense": 4,
+    "not_different": 2,
+    "cannot_tell": 1,
+    "upheld_share": 0.854,
+    "ci95": [
+     0.728,
+     0.928
+    ]
+   },
+   "Spanish": {
+    "sampled": 14,
+    "read": 14,
+    "upheld": 11,
+    "different_same_sense": 3,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 0.786,
+    "ci95": [
+     0.524,
+     0.924
+    ]
+   },
+   "Egyptian hieroglyphs": {
+    "sampled": 29,
+    "read": 27,
+    "upheld": 21,
+    "different_same_sense": 0,
+    "not_different": 3,
+    "cannot_tell": 3,
+    "upheld_share": 0.778,
+    "ci95": [
+     0.592,
+     0.894
+    ]
+   },
+   "English": {
+    "sampled": 26,
+    "read": 23,
+    "upheld": 21,
+    "different_same_sense": 2,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 0.913,
+    "ci95": [
+     0.732,
+     0.976
+    ]
+   },
+   "Korean": {
+    "sampled": 73,
+    "read": 60,
+    "upheld": 58,
+    "different_same_sense": 2,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 0.967,
+    "ci95": [
+     0.886,
+     0.991
+    ]
+   },
+   "Tibetan": {
+    "sampled": 25,
+    "read": 24,
+    "upheld": 11,
+    "different_same_sense": 4,
+    "not_different": 1,
+    "cannot_tell": 8,
+    "upheld_share": 0.458,
+    "ci95": [
+     0.279,
+     0.649
+    ]
+   },
+   "Sanskrit": {
+    "sampled": 32,
+    "read": 28,
+    "upheld": 27,
+    "different_same_sense": 0,
+    "not_different": 0,
+    "cannot_tell": 1,
+    "upheld_share": 0.964,
+    "ci95": [
+     0.823,
+     0.994
+    ]
+   },
+   "Persian": {
+    "sampled": 47,
+    "read": 45,
+    "upheld": 44,
+    "different_same_sense": 1,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 0.978,
+    "ci95": [
+     0.884,
+     0.996
+    ]
+   },
+   "French": {
+    "sampled": 36,
+    "read": 31,
+    "upheld": 30,
+    "different_same_sense": 1,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 0.968,
+    "ci95": [
+     0.838,
+     0.994
+    ]
+   },
+   "Sumerian": {
+    "sampled": 1,
+    "read": 1,
+    "upheld": 1,
+    "different_same_sense": 0,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 1,
+    "ci95": [
+     0.207,
+     1
+    ]
+   },
+   "Russian": {
+    "sampled": 3,
+    "read": 3,
+    "upheld": 3,
+    "different_same_sense": 0,
+    "not_different": 0,
+    "cannot_tell": 0,
+    "upheld_share": 1,
+    "ci95": [
+     0.438,
+     1
+    ]
+   }
+  },
+  "all": {
+   "read": 692,
+   "upheld": 630,
+   "upheld_share": 0.91,
+   "ci95": [
+    0.887,
+    0.929
+   ]
+  }
+ },
+ "cells": [
+  {
+   "language": "Chinese",
+   "script": "manuscript",
+   "books": 57,
+   "books_new": 0,
+   "books_7866": 57,
+   "books_sevcal": 0,
+   "pages": 285,
+   "judged": 285,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 147,
+     "share": 0.516,
+     "ci95": [
+      0.435,
+      0.593
+     ]
+    },
+    "fit_to_read": {
+     "pages": 7,
+     "share": 0.025,
+     "ci95": [
+      0.007,
+      0.046
+     ]
+    },
+    "some_errors": {
+     "pages": 72,
+     "share": 0.253,
+     "ci95": [
+      0.193,
+      0.316
+     ]
+    },
+    "many_errors": {
+     "pages": 37,
+     "share": 0.13,
+     "ci95": [
+      0.081,
+      0.186
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 9,
+     "share": 0.032,
+     "ci95": [
+      0.014,
+      0.053
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 13,
+     "share": 0.046,
+     "ci95": [
+      0.021,
+      0.077
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.382,
+    "ci95": [
+     0.312,
+     0.456
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.077,
+    "ci95": [
+     0.046,
+     0.116
+    ]
+   },
+   "accepted": "181/285",
+   "unit": "Han characters",
+   "sense_errors_per_1k": {
+    "value": 7.06,
+    "ci95": [
+     5.23,
+     9.21
+    ],
+    "spans": 367,
+    "units": 51969
+   },
+   "furniture": {
+    "spans": 174,
+    "serious": 35,
+    "units": 932,
+    "pages_with_furniture": 119
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 173
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 88
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 68
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 21
+    },
+    {
+     "kind": "invented text",
+     "spans": 14
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": null
+  },
+  {
+   "language": "Sanskrit",
+   "script": "print",
+   "books": 33,
+   "books_new": 0,
+   "books_7866": 3,
+   "books_sevcal": 30,
+   "pages": 45,
+   "judged": 45,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.061,
+     "ci95": [
+      0,
+      0.152
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.03,
+     "ci95": [
+      0,
+      0.091
+     ]
+    },
+    "some_errors": {
+     "pages": 11,
+     "share": 0.236,
+     "ci95": [
+      0.103,
+      0.382
+     ]
+    },
+    "many_errors": {
+     "pages": 28,
+     "share": 0.655,
+     "ci95": [
+      0.497,
+      0.806
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 3,
+     "share": 0.018,
+     "ci95": [
+      0,
+      0.055
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.891,
+    "ci95": [
+     0.782,
+     0.982
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.018,
+    "ci95": [
+     0,
+     0.055
+    ]
+   },
+   "accepted": "11/45",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 31.89,
+    "ci95": [
+     23.98,
+     40.22
+    ],
+    "spans": 231,
+    "units": 7307
+   },
+   "furniture": {
+    "spans": 8,
+    "serious": 3,
+    "units": 104,
+    "pages_with_furniture": 39
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 152
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 43
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 20
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 9
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 7
+    }
+   ],
+   "new_draw_only": null
+  },
+  {
+   "language": "Arabic",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 28,
+   "books_7866": 2,
+   "books_sevcal": 0,
+   "pages": 38,
+   "judged": 38,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "some_errors": {
+     "pages": 3,
+     "share": 0.073,
+     "ci95": [
+      0,
+      0.173
+     ]
+    },
+    "many_errors": {
+     "pages": 22,
+     "share": 0.52,
+     "ci95": [
+      0.34,
+      0.7
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 7,
+     "share": 0.207,
+     "ci95": [
+      0.073,
+      0.367
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.593,
+    "ci95": [
+     0.427,
+     0.76
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.207,
+    "ci95": [
+     0.073,
+     0.367
+    ]
+   },
+   "accepted": "6/38",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 24.06,
+    "ci95": [
+     18.3,
+     31.01
+    ],
+    "spans": 225,
+    "units": 9297
+   },
+   "furniture": {
+    "spans": 6,
+    "serious": 3,
+    "units": 26,
+    "pages_with_furniture": 21
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 139
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 33
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 20
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 9
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 9
+    },
+    {
+     "kind": "invented text",
+     "spans": 9
+    },
+    {
+     "kind": "invented margin",
+     "spans": 6
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 1
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 28,
+    "may_change_meaning": {
+     "share": 0.571,
+     "ci95": [
+      0.393,
+      0.75
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 24.02,
+     "ci95": [
+      17.96,
+      31.44
+     ],
+     "spans": 169,
+     "units": 7037
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 3,
+     "share": 0.107,
+     "ci95": [
+      0,
+      0.25
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Arabic",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 6,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "fit_to_read": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "some_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "many_errors": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "no_text_served": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.3,
+    "ci95": [
+     0.133,
+     0.467
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.233,
+    "ci95": [
+     0.1,
+     0.4
+    ]
+   },
+   "accepted": "10/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 19.01,
+    "ci95": [
+     11.56,
+     28.23
+    ],
+    "spans": 107,
+    "units": 5628
+   },
+   "furniture": {
+    "spans": 6,
+    "serious": 2,
+    "units": 45,
+    "pages_with_furniture": 23
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 60
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 28
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 10
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 9
+    },
+    {
+     "kind": "invented text",
+     "spans": 4
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 2
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.3,
+     "ci95": [
+      0.133,
+      0.467
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 19.01,
+     "ci95": [
+      11.13,
+      28.4
+     ],
+     "spans": 107,
+     "units": 5628
+    },
+    "no_text_served": 6,
+    "fit_to_quote": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.333
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    }
+   }
+  },
+  {
+   "language": "Dutch",
+   "script": "print",
+   "books": 30,
+   "books_new": 29,
+   "books_7866": 1,
+   "books_sevcal": 0,
+   "pages": 34,
+   "judged": 34,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 8,
+     "share": 0.267,
+     "ci95": [
+      0.133,
+      0.433
+     ]
+    },
+    "fit_to_read": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "some_errors": {
+     "pages": 10,
+     "share": 0.28,
+     "ci95": [
+      0.133,
+      0.447
+     ]
+    },
+    "many_errors": {
+     "pages": 9,
+     "share": 0.247,
+     "ci95": [
+      0.1,
+      0.413
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 2,
+     "share": 0.04,
+     "ci95": [
+      0,
+      0.113
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.527,
+    "ci95": [
+     0.353,
+     0.7
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.04,
+    "ci95": [
+     0,
+     0.113
+    ]
+   },
+   "accepted": "18/34",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 4.29,
+    "ci95": [
+     2.73,
+     5.61
+    ],
+    "spans": 79,
+    "units": 15625
+   },
+   "furniture": {
+    "spans": 13,
+    "serious": 7,
+    "units": 151,
+    "pages_with_furniture": 27
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 42
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 16
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 9
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 5
+    },
+    {
+     "kind": "long s / f",
+     "spans": 3
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 3
+    },
+    {
+     "kind": "invented text",
+     "spans": 2
+    }
+   ],
+   "new_draw_only": {
+    "books": 29,
+    "may_change_meaning": {
+     "share": 0.517,
+     "ci95": [
+      0.345,
+      0.69
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 4.07,
+     "ci95": [
+      2.49,
+      5.36
+     ],
+     "spans": 56,
+     "units": 13749
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 8,
+     "share": 0.276,
+     "ci95": [
+      0.138,
+      0.448
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "English",
+   "script": "print",
+   "books": 30,
+   "books_new": 11,
+   "books_7866": 19,
+   "books_sevcal": 0,
+   "pages": 106,
+   "judged": 106,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 76,
+     "share": 0.613,
+     "ci95": [
+      0.467,
+      0.747
+     ]
+    },
+    "fit_to_read": {
+     "pages": 8,
+     "share": 0.107,
+     "ci95": [
+      0.027,
+      0.213
+     ]
+    },
+    "some_errors": {
+     "pages": 18,
+     "share": 0.2,
+     "ci95": [
+      0.093,
+      0.327
+     ]
+    },
+    "many_errors": {
+     "pages": 1,
+     "share": 0.007,
+     "ci95": [
+      0,
+      0.02
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.007,
+     "ci95": [
+      0,
+      0.02
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.207,
+    "ci95": [
+     0.1,
+     0.333
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.007,
+    "ci95": [
+     0,
+     0.02
+    ]
+   },
+   "accepted": "89/106",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 0.89,
+    "ci95": [
+     0.48,
+     1.33
+    ],
+    "spans": 25,
+    "units": 27916
+   },
+   "furniture": {
+    "spans": 10,
+    "serious": 1,
+    "units": 273,
+    "pages_with_furniture": 65
+   },
+   "kinds": [
+    {
+     "kind": "numerals / citations",
+     "spans": 20
+    },
+    {
+     "kind": "other misread word",
+     "spans": 2
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 2
+    },
+    {
+     "kind": "long s / f",
+     "spans": 2
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 11,
+    "may_change_meaning": {
+     "share": 0.273,
+     "ci95": [
+      0,
+      0.545
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 0.87,
+     "ci95": [
+      0,
+      1.68
+     ],
+     "spans": 3,
+     "units": 3441
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 4,
+     "share": 0.364,
+     "ci95": [
+      0.091,
+      0.636
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "English",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 1,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "some_errors": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "many_errors": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.333
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.4,
+    "ci95": [
+     0.233,
+     0.567
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.333,
+    "ci95": [
+     0.167,
+     0.5
+    ]
+   },
+   "accepted": "12/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 22.31,
+    "ci95": [
+     13.8,
+     34.65
+    ],
+    "spans": 122,
+    "units": 5469
+   },
+   "furniture": {
+    "spans": 2,
+    "serious": 0,
+    "units": 15,
+    "pages_with_furniture": 14
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 60
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 21
+    },
+    {
+     "kind": "invented text",
+     "spans": 15
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 9
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 6
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 3
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 2
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 2
+    },
+    {
+     "kind": "invented margin",
+     "spans": 2
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 2
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 22.31,
+     "ci95": [
+      13.99,
+      34.79
+     ],
+     "spans": 122,
+     "units": 5469
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    }
+   }
+  },
+  {
+   "language": "French",
+   "script": "print",
+   "books": 30,
+   "books_new": 27,
+   "books_7866": 3,
+   "books_sevcal": 0,
+   "pages": 42,
+   "judged": 42,
+   "no_text_served": 12,
+   "no_text_judge_accepted": 2,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 18,
+     "share": 0.36,
+     "ci95": [
+      0.2,
+      0.533
+     ]
+    },
+    "fit_to_read": {
+     "pages": 2,
+     "share": 0.04,
+     "ci95": [
+      0,
+      0.113
+     ]
+    },
+    "some_errors": {
+     "pages": 6,
+     "share": 0.147,
+     "ci95": [
+      0.033,
+      0.28
+     ]
+    },
+    "many_errors": {
+     "pages": 4,
+     "share": 0.053,
+     "ci95": [
+      0,
+      0.14
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 12,
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.2,
+    "ci95": [
+     0.08,
+     0.347
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "accepted": "25/42",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 2.7,
+    "ci95": [
+     0.89,
+     5.06
+    ],
+    "spans": 25,
+    "units": 7221
+   },
+   "furniture": {
+    "spans": 2,
+    "serious": 0,
+    "units": 110,
+    "pages_with_furniture": 26
+   },
+   "kinds": [
+    {
+     "kind": "numerals / citations",
+     "spans": 17
+    },
+    {
+     "kind": "long s / f",
+     "spans": 8
+    },
+    {
+     "kind": "other misread word",
+     "spans": 7
+    },
+    {
+     "kind": "invented margin",
+     "spans": 1
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 27,
+    "may_change_meaning": {
+     "share": 0.185,
+     "ci95": [
+      0.037,
+      0.333
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 2.3,
+     "ci95": [
+      0.45,
+      5.01
+     ],
+     "spans": 8,
+     "units": 3478
+    },
+    "no_text_served": 12,
+    "fit_to_quote": {
+     "pages": 9,
+     "share": 0.333,
+     "ci95": [
+      0.148,
+      0.519
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "French",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "fit_to_read": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "some_errors": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.333
+     ]
+    },
+    "many_errors": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 7,
+     "share": 0.233,
+     "ci95": [
+      0.1,
+      0.4
+     ]
+    },
+    "not_this_page": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.4,
+    "ci95": [
+     0.233,
+     0.567
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.367,
+    "ci95": [
+     0.2,
+     0.533
+    ]
+   },
+   "accepted": "8/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 17.05,
+    "ci95": [
+     13.18,
+     20.78
+    ],
+    "spans": 159,
+    "units": 9327
+   },
+   "furniture": {
+    "spans": 7,
+    "serious": 3,
+    "units": 27,
+    "pages_with_furniture": 18
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 101
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 21
+    },
+    {
+     "kind": "invented text",
+     "spans": 16
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 14
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 5
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    },
+    {
+     "kind": "long s / f",
+     "spans": 1
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 17.05,
+     "ci95": [
+      13.18,
+      20.73
+     ],
+     "spans": 159,
+     "units": 9327
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.2
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    }
+   }
+  },
+  {
+   "language": "German",
+   "script": "print",
+   "books": 30,
+   "books_new": 16,
+   "books_7866": 14,
+   "books_sevcal": 0,
+   "pages": 86,
+   "judged": 86,
+   "no_text_served": 5,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 27,
+     "share": 0.34,
+     "ci95": [
+      0.2,
+      0.487
+     ]
+    },
+    "fit_to_read": {
+     "pages": 16,
+     "share": 0.16,
+     "ci95": [
+      0.073,
+      0.267
+     ]
+    },
+    "some_errors": {
+     "pages": 29,
+     "share": 0.273,
+     "ci95": [
+      0.16,
+      0.393
+     ]
+    },
+    "many_errors": {
+     "pages": 8,
+     "share": 0.053,
+     "ci95": [
+      0.013,
+      0.107
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.007,
+     "ci95": [
+      0,
+      0.02
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.327,
+    "ci95": [
+     0.193,
+     0.467
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.007,
+    "ci95": [
+     0,
+     0.02
+    ]
+   },
+   "accepted": "65/86",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 3.08,
+    "ci95": [
+     1.68,
+     4.69
+    ],
+    "spans": 71,
+    "units": 18711
+   },
+   "furniture": {
+    "spans": 11,
+    "serious": 2,
+    "units": 231,
+    "pages_with_furniture": 60
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 43
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 17
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 9
+    },
+    {
+     "kind": "long s / f",
+     "spans": 2
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 2
+    },
+    {
+     "kind": "invented text",
+     "spans": 2
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 16,
+    "may_change_meaning": {
+     "share": 0.188,
+     "ci95": [
+      0,
+      0.375
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 1.45,
+     "ci95": [
+      0,
+      4.04
+     ],
+     "spans": 3,
+     "units": 2069
+    },
+    "no_text_served": 5,
+    "fit_to_quote": {
+     "pages": 6,
+     "share": 0.375,
+     "ci95": [
+      0.125,
+      0.625
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "German",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 6,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "fit_to_read": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "some_errors": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "many_errors": {
+     "pages": 8,
+     "share": 0.267,
+     "ci95": [
+      0.133,
+      0.433
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 11,
+     "share": 0.367,
+     "ci95": [
+      0.2,
+      0.533
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.3,
+    "ci95": [
+     0.133,
+     0.467
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.367,
+    "ci95": [
+     0.2,
+     0.533
+    ]
+   },
+   "accepted": "4/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 28.92,
+    "ci95": [
+     18.85,
+     45.44
+    ],
+    "spans": 195,
+    "units": 6742
+   },
+   "furniture": {
+    "spans": 6,
+    "serious": 4,
+    "units": 26,
+    "pages_with_furniture": 18
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 127
+    },
+    {
+     "kind": "invented text",
+     "spans": 25
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 25
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 8
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 6
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 3
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 3
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 2
+    },
+    {
+     "kind": "long s / f",
+     "spans": 1
+    },
+    {
+     "kind": "invented margin",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.3,
+     "ci95": [
+      0.167,
+      0.467
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 28.92,
+     "ci95": [
+      18.85,
+      45.98
+     ],
+     "spans": 195,
+     "units": 6742
+    },
+    "no_text_served": 6,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Greek",
+   "script": "print",
+   "books": 30,
+   "books_new": 26,
+   "books_7866": 4,
+   "books_sevcal": 0,
+   "pages": 46,
+   "judged": 46,
+   "no_text_served": 4,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 12,
+     "share": 0.24,
+     "ci95": [
+      0.107,
+      0.393
+     ]
+    },
+    "fit_to_read": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "some_errors": {
+     "pages": 8,
+     "share": 0.16,
+     "ci95": [
+      0.047,
+      0.293
+     ]
+    },
+    "many_errors": {
+     "pages": 15,
+     "share": 0.287,
+     "ci95": [
+      0.14,
+      0.44
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.007,
+     "ci95": [
+      0,
+      0.02
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 4,
+     "share": 0.107,
+     "ci95": [
+      0.007,
+      0.233
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.447,
+    "ci95": [
+     0.28,
+     0.613
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.113,
+    "ci95": [
+     0.013,
+     0.233
+    ]
+   },
+   "accepted": "19/46",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 7.6,
+    "ci95": [
+     5.09,
+     9.9
+    ],
+    "spans": 141,
+    "units": 16761
+   },
+   "furniture": {
+    "spans": 9,
+    "serious": 3,
+    "units": 173,
+    "pages_with_furniture": 40
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 86
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 24
+    },
+    {
+     "kind": "invented text",
+     "spans": 12
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 12
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 7
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 3
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 26,
+    "may_change_meaning": {
+     "share": 0.423,
+     "ci95": [
+      0.231,
+      0.615
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 7.25,
+     "ci95": [
+      4.44,
+      9.77
+     ],
+     "spans": 70,
+     "units": 9654
+    },
+    "no_text_served": 4,
+    "fit_to_quote": {
+     "pages": 6,
+     "share": 0.231,
+     "ci95": [
+      0.077,
+      0.423
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Greek",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 28,
+   "books_7866": 2,
+   "books_sevcal": 0,
+   "pages": 38,
+   "judged": 38,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "many_errors": {
+     "pages": 10,
+     "share": 0.227,
+     "ci95": [
+      0.093,
+      0.38
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 3,
+     "share": 0.047,
+     "ci95": [
+      0,
+      0.127
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 18,
+     "share": 0.493,
+     "ci95": [
+      0.32,
+      0.667
+     ]
+    },
+    "not_this_page": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.26,
+    "ci95": [
+     0.113,
+     0.427
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.607,
+    "ci95": [
+     0.44,
+     0.767
+    ]
+   },
+   "accepted": "2/38",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 29.88,
+    "ci95": [
+     23.79,
+     36.6
+    ],
+    "spans": 321,
+    "units": 9988
+   },
+   "furniture": {
+    "spans": 8,
+    "serious": 1,
+    "units": 24,
+    "pages_with_furniture": 19
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 167
+    },
+    {
+     "kind": "invented text",
+     "spans": 66
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 27
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 23
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 13
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 12
+    },
+    {
+     "kind": "invented margin",
+     "spans": 8
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 3
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 2
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 1
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 28,
+    "may_change_meaning": {
+     "share": 0.25,
+     "ci95": [
+      0.107,
+      0.429
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 28.99,
+     "ci95": [
+      22.84,
+      36.16
+     ],
+     "spans": 185,
+     "units": 6381
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.071,
+     "ci95": [
+      0,
+      0.179
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.036,
+     "ci95": [
+      0,
+      0.107
+     ]
+    }
+   }
+  },
+  {
+   "language": "Hebrew",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "many_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 15,
+     "share": 0.5,
+     "ci95": [
+      0.3,
+      0.667
+     ]
+    },
+    "not_this_page": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.2,
+    "ci95": [
+     0.067,
+     0.367
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.733,
+    "ci95": [
+     0.567,
+     0.9
+    ]
+   },
+   "accepted": "2/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 15.78,
+    "ci95": [
+     8.01,
+     30.29
+    ],
+    "spans": 234,
+    "units": 14826
+   },
+   "furniture": {
+    "spans": 14,
+    "serious": 8,
+    "units": 62,
+    "pages_with_furniture": 17
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 108
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 58
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 27
+    },
+    {
+     "kind": "invented text",
+     "spans": 22
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 9
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 4
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 2
+    },
+    {
+     "kind": "invented margin",
+     "spans": 2
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 2
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.333
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 15.78,
+     "ci95": [
+      8.2,
+      30.33
+     ],
+     "spans": 234,
+     "units": 14826
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    }
+   }
+  },
+  {
+   "language": "Hebrew",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "many_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 13,
+     "share": 0.433,
+     "ci95": [
+      0.267,
+      0.6
+     ]
+    },
+    "not_this_page": {
+     "pages": 12,
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.9,
+    "ci95": [
+     0.8,
+     1
+    ]
+   },
+   "accepted": "2/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 27.48,
+    "ci95": [
+     20.76,
+     37.12
+    ],
+    "spans": 174,
+    "units": 6331
+   },
+   "furniture": {
+    "spans": 4,
+    "serious": 4,
+    "units": 14,
+    "pages_with_furniture": 12
+   },
+   "kinds": [
+    {
+     "kind": "invented text",
+     "spans": 52
+    },
+    {
+     "kind": "other misread word",
+     "spans": 45
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 33
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 19
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 12
+    },
+    {
+     "kind": "invented margin",
+     "spans": 8
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 3
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 2
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 27.48,
+     "ci95": [
+      20.68,
+      38.39
+     ],
+     "spans": 174,
+     "units": 6331
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    }
+   }
+  },
+  {
+   "language": "Italian",
+   "script": "print",
+   "books": 30,
+   "books_new": 28,
+   "books_7866": 2,
+   "books_sevcal": 0,
+   "pages": 38,
+   "judged": 38,
+   "no_text_served": 6,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 13,
+     "share": 0.38,
+     "ci95": [
+      0.213,
+      0.547
+     ]
+    },
+    "fit_to_read": {
+     "pages": 4,
+     "share": 0.107,
+     "ci95": [
+      0.007,
+      0.233
+     ]
+    },
+    "some_errors": {
+     "pages": 8,
+     "share": 0.187,
+     "ci95": [
+      0.06,
+      0.333
+     ]
+    },
+    "many_errors": {
+     "pages": 7,
+     "share": 0.127,
+     "ci95": [
+      0.027,
+      0.253
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.313,
+    "ci95": [
+     0.147,
+     0.48
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "accepted": "23/38",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 2.4,
+    "ci95": [
+     1.1,
+     3.66
+    ],
+    "spans": 42,
+    "units": 14278
+   },
+   "furniture": {
+    "spans": 9,
+    "serious": 2,
+    "units": 128,
+    "pages_with_furniture": 27
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 25
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 9
+    },
+    {
+     "kind": "long s / f",
+     "spans": 9
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 4
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 28,
+    "may_change_meaning": {
+     "share": 0.286,
+     "ci95": [
+      0.143,
+      0.464
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 2.11,
+     "ci95": [
+      0.81,
+      3.53
+     ],
+     "spans": 14,
+     "units": 6620
+    },
+    "no_text_served": 6,
+    "fit_to_quote": {
+     "pages": 11,
+     "share": 0.393,
+     "ci95": [
+      0.214,
+      0.571
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Italian",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 3,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "many_errors": {
+     "pages": 13,
+     "share": 0.433,
+     "ci95": [
+      0.267,
+      0.6
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.2
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.2
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "no_text_served": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.6,
+    "ci95": [
+     0.433,
+     0.767
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.233,
+    "ci95": [
+     0.1,
+     0.4
+    ]
+   },
+   "accepted": "5/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 28.46,
+    "ci95": [
+     23.13,
+     33.84
+    ],
+    "spans": 185,
+    "units": 6500
+   },
+   "furniture": {
+    "spans": 3,
+    "serious": 2,
+    "units": 20,
+    "pages_with_furniture": 12
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 132
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 24
+    },
+    {
+     "kind": "invented text",
+     "spans": 10
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 9
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 4
+    },
+    {
+     "kind": "long s / f",
+     "spans": 4
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 3
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    },
+    {
+     "kind": "invented margin",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.6,
+     "ci95": [
+      0.433,
+      0.767
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 28.46,
+     "ci95": [
+      23.38,
+      34.31
+     ],
+     "spans": 185,
+     "units": 6500
+    },
+    "no_text_served": 3,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    }
+   }
+  },
+  {
+   "language": "Japanese",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 4,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "many_errors": {
+     "pages": 8,
+     "share": 0.267,
+     "ci95": [
+      0.133,
+      0.433
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 12,
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "no_text_served": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.267,
+    "ci95": [
+     0.133,
+     0.433
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.567,
+    "ci95": [
+     0.4,
+     0.733
+    ]
+   },
+   "accepted": "1/30",
+   "unit": "characters",
+   "sense_errors_per_1k": {
+    "value": 23.68,
+    "ci95": [
+     18.44,
+     30.67
+    ],
+    "spans": 180,
+    "units": 7602
+   },
+   "furniture": {
+    "spans": 9,
+    "serious": 7,
+    "units": 39,
+    "pages_with_furniture": 6
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 95
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 27
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 27
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 17
+    },
+    {
+     "kind": "invented text",
+     "spans": 12
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 3
+    },
+    {
+     "kind": "invented margin",
+     "spans": 2
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 2
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.267,
+     "ci95": [
+      0.1,
+      0.433
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 23.68,
+     "ci95": [
+      18.51,
+      30.52
+     ],
+     "spans": 180,
+     "units": 7602
+    },
+    "no_text_served": 4,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    }
+   }
+  },
+  {
+   "language": "Korean",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "many_errors": {
+     "pages": 8,
+     "share": 0.267,
+     "ci95": [
+      0.133,
+      0.433
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 12,
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.433,
+    "ci95": [
+     0.267,
+     0.6
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.467,
+    "ci95": [
+     0.3,
+     0.633
+    ]
+   },
+   "accepted": "2/30",
+   "unit": "Han characters",
+   "sense_errors_per_1k": {
+    "value": 20.43,
+    "ci95": [
+     12.5,
+     32.56
+    ],
+    "spans": 166,
+    "units": 8125
+   },
+   "furniture": {
+    "spans": 2,
+    "serious": 0,
+    "units": 8,
+    "pages_with_furniture": 3
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 73
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 32
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 27
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 27
+    },
+    {
+     "kind": "invented text",
+     "spans": 6
+    },
+    {
+     "kind": "invented margin",
+     "spans": 2
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.433,
+     "ci95": [
+      0.267,
+      0.6
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 20.43,
+     "ci95": [
+      12.07,
+      32.79
+     ],
+     "spans": 166,
+     "units": 8125
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    }
+   }
+  },
+  {
+   "language": "Korean",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 27,
+   "books_7866": 3,
+   "books_sevcal": 0,
+   "pages": 42,
+   "judged": 42,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 4,
+     "share": 0.08,
+     "ci95": [
+      0,
+      0.18
+     ]
+    },
+    "many_errors": {
+     "pages": 16,
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 15,
+     "share": 0.34,
+     "ci95": [
+      0.187,
+      0.507
+     ]
+    },
+    "not_this_page": {
+     "pages": 4,
+     "share": 0.08,
+     "ci95": [
+      0,
+      0.18
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.48,
+    "ci95": [
+     0.307,
+     0.66
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.453,
+    "ci95": [
+     0.287,
+     0.627
+    ]
+   },
+   "accepted": "3/42",
+   "unit": "Han characters",
+   "sense_errors_per_1k": {
+    "value": 20.13,
+    "ci95": [
+     9.69,
+     41.07
+    ],
+    "spans": 272,
+    "units": 13921
+   },
+   "furniture": {
+    "spans": 4,
+    "serious": 2,
+    "units": 4,
+    "pages_with_furniture": 2
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 117
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 40
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 36
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 35
+    },
+    {
+     "kind": "invented text",
+     "spans": 33
+    },
+    {
+     "kind": "invented margin",
+     "spans": 6
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 3
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 2
+    }
+   ],
+   "new_draw_only": {
+    "books": 27,
+    "may_change_meaning": {
+     "share": 0.481,
+     "ci95": [
+      0.296,
+      0.667
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 20.35,
+     "ci95": [
+      9.38,
+      43.21
+     ],
+     "spans": 194,
+     "units": 9534
+    },
+    "no_text_served": 0,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.074,
+     "ci95": [
+      0,
+      0.185
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    }
+   }
+  },
+  {
+   "language": "Latin",
+   "script": "print",
+   "books": 30,
+   "books_new": 6,
+   "books_7866": 24,
+   "books_sevcal": 0,
+   "pages": 126,
+   "judged": 126,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 40,
+     "share": 0.293,
+     "ci95": [
+      0.207,
+      0.393
+     ]
+    },
+    "fit_to_read": {
+     "pages": 15,
+     "share": 0.1,
+     "ci95": [
+      0.053,
+      0.16
+     ]
+    },
+    "some_errors": {
+     "pages": 38,
+     "share": 0.307,
+     "ci95": [
+      0.213,
+      0.407
+     ]
+    },
+    "many_errors": {
+     "pages": 20,
+     "share": 0.16,
+     "ci95": [
+      0.08,
+      0.26
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 3,
+     "share": 0.02,
+     "ci95": [
+      0,
+      0.04
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 2,
+     "share": 0.013,
+     "ci95": [
+      0,
+      0.033
+     ]
+    },
+    "not_this_page": {
+     "pages": 6,
+     "share": 0.04,
+     "ci95": [
+      0,
+      0.107
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.467,
+    "ci95": [
+     0.36,
+     0.587
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.073,
+    "ci95": [
+     0.02,
+     0.14
+    ]
+   },
+   "accepted": "82/126",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 5.43,
+    "ci95": [
+     3.59,
+     7.83
+    ],
+    "spans": 201,
+    "units": 37775
+   },
+   "furniture": {
+    "spans": 22,
+    "serious": 7,
+    "units": 289,
+    "pages_with_furniture": 85
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 74
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 44
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 23
+    },
+    {
+     "kind": "invented text",
+     "spans": 22
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 14
+    },
+    {
+     "kind": "long s / f",
+     "spans": 10
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 8
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 3
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 3
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 2
+    }
+   ],
+   "new_draw_only": {
+    "books": 6,
+    "may_change_meaning": {
+     "share": 0.5,
+     "ci95": [
+      0.167,
+      0.833
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 6.59,
+     "ci95": [
+      1.11,
+      18.02
+     ],
+     "spans": 6,
+     "units": 910
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.167,
+     "ci95": [
+      0,
+      0.5
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Latin",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 27,
+   "books_7866": 3,
+   "books_sevcal": 0,
+   "pages": 42,
+   "judged": 42,
+   "no_text_served": 4,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.04,
+     "ci95": [
+      0,
+      0.113
+     ]
+    },
+    "fit_to_read": {
+     "pages": 2,
+     "share": 0.04,
+     "ci95": [
+      0,
+      0.113
+     ]
+    },
+    "some_errors": {
+     "pages": 6,
+     "share": 0.147,
+     "ci95": [
+      0.033,
+      0.28
+     ]
+    },
+    "many_errors": {
+     "pages": 18,
+     "share": 0.387,
+     "ci95": [
+      0.227,
+      0.56
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.2
+     ]
+    },
+    "not_this_page": {
+     "pages": 5,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.193
+     ]
+    },
+    "no_text_served": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.533,
+    "ci95": [
+     0.367,
+     0.707
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.253,
+    "ci95": [
+     0.1,
+     0.407
+    ]
+   },
+   "accepted": "10/42",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 21.57,
+    "ci95": [
+     17.64,
+     26.06
+    ],
+    "spans": 181,
+    "units": 8688
+   },
+   "furniture": {
+    "spans": 5,
+    "serious": 2,
+    "units": 31,
+    "pages_with_furniture": 21
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 87
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 29
+    },
+    {
+     "kind": "invented text",
+     "spans": 17
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 14
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 12
+    },
+    {
+     "kind": "long s / f",
+     "spans": 9
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 9
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 4
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 3
+    },
+    {
+     "kind": "invented margin",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 27,
+    "may_change_meaning": {
+     "share": 0.519,
+     "ci95": [
+      0.333,
+      0.704
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 21.81,
+     "ci95": [
+      17.88,
+      26.36
+     ],
+     "spans": 144,
+     "units": 6603
+    },
+    "no_text_served": 4,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.074,
+     "ci95": [
+      0,
+      0.185
+     ]
+    }
+   }
+  },
+  {
+   "language": "Persian",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 18,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "many_errors": {
+     "pages": 4,
+     "share": 0.133,
+     "ci95": [
+      0.033,
+      0.267
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 6,
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.367
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "no_text_served": {
+     "pages": 18,
+     "share": 0.6,
+     "ci95": [
+      0.4,
+      0.767
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.167,
+    "ci95": [
+     0.033,
+     0.3
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.233,
+    "ci95": [
+     0.1,
+     0.4
+    ]
+   },
+   "accepted": "1/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 38.79,
+    "ci95": [
+     26.89,
+     59.85
+    ],
+    "spans": 113,
+    "units": 2913
+   },
+   "furniture": {
+    "spans": 1,
+    "serious": 1,
+    "units": 5,
+    "pages_with_furniture": 5
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 85
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 28
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 9
+    },
+    {
+     "kind": "invented text",
+     "spans": 5
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 3
+    },
+    {
+     "kind": "invented margin",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 38.79,
+     "ci95": [
+      26.54,
+      60.7
+     ],
+     "spans": 113,
+     "units": 2913
+    },
+    "no_text_served": 18,
+    "fit_to_quote": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Persian",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 16,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "many_errors": {
+     "pages": 7,
+     "share": 0.233,
+     "ci95": [
+      0.1,
+      0.4
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 16,
+     "share": 0.533,
+     "ci95": [
+      0.333,
+      0.7
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.3,
+    "ci95": [
+     0.133,
+     0.467
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.067,
+    "ci95": [
+     0,
+     0.167
+    ]
+   },
+   "accepted": "3/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 9.26,
+    "ci95": [
+     3.78,
+     25.66
+    ],
+    "spans": 83,
+    "units": 8966
+   },
+   "furniture": {
+    "spans": 7,
+    "serious": 2,
+    "units": 23,
+    "pages_with_furniture": 11
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 48
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 28
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 12
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 7
+    },
+    {
+     "kind": "invented margin",
+     "spans": 2
+    },
+    {
+     "kind": "invented text",
+     "spans": 2
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.3,
+     "ci95": [
+      0.133,
+      0.467
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 9.26,
+     "ci95": [
+      3.81,
+      26.29
+     ],
+     "spans": 83,
+     "units": 8966
+    },
+    "no_text_served": 16,
+    "fit_to_quote": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Russian",
+   "script": "print",
+   "books": 30,
+   "books_new": 27,
+   "books_7866": 3,
+   "books_sevcal": 0,
+   "pages": 42,
+   "judged": 42,
+   "no_text_served": 5,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 31,
+     "share": 0.66,
+     "ci95": [
+      0.493,
+      0.827
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 4,
+     "share": 0.107,
+     "ci95": [
+      0.007,
+      0.233
+     ]
+    },
+    "many_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "no_text_served": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.107,
+    "ci95": [
+     0.007,
+     0.233
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.067,
+    "ci95": [
+     0,
+     0.167
+    ]
+   },
+   "accepted": "32/42",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 1.18,
+    "ci95": [
+     0.31,
+     2.5
+    ],
+    "spans": 9,
+    "units": 12057
+   },
+   "furniture": {
+    "spans": 7,
+    "serious": 2,
+    "units": 104,
+    "pages_with_furniture": 37
+   },
+   "kinds": [
+    {
+     "kind": "numerals / citations",
+     "spans": 6
+    },
+    {
+     "kind": "other misread word",
+     "spans": 3
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 2
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 2
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 27,
+    "may_change_meaning": {
+     "share": 0.111,
+     "ci95": [
+      0,
+      0.259
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 1.42,
+     "ci95": [
+      0.33,
+      3.03
+     ],
+     "spans": 8,
+     "units": 5644
+    },
+    "no_text_served": 5,
+    "fit_to_quote": {
+     "pages": 17,
+     "share": 0.63,
+     "ci95": [
+      0.444,
+      0.815
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Sanskrit",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 3,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.233
+     ]
+    },
+    "many_errors": {
+     "pages": 14,
+     "share": 0.467,
+     "ci95": [
+      0.3,
+      0.633
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.067,
+      0.3
+     ]
+    },
+    "not_this_page": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.567,
+    "ci95": [
+     0.367,
+     0.733
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.267,
+    "ci95": [
+     0.133,
+     0.433
+    ]
+   },
+   "accepted": "5/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 28.51,
+    "ci95": [
+     21.22,
+     38.18
+    ],
+    "spans": 161,
+    "units": 5648
+   },
+   "furniture": {
+    "spans": 7,
+    "serious": 1,
+    "units": 21,
+    "pages_with_furniture": 13
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 93
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 43
+    },
+    {
+     "kind": "invented text",
+     "spans": 10
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 8
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 4
+    },
+    {
+     "kind": "invented margin",
+     "spans": 3
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.567,
+     "ci95": [
+      0.4,
+      0.733
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 28.51,
+     "ci95": [
+      21.25,
+      38.33
+     ],
+     "spans": 161,
+     "units": 5648
+    },
+    "no_text_served": 0,
+    "fit_to_quote": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    }
+   }
+  },
+  {
+   "language": "Spanish",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 13,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 10,
+     "share": 0.333,
+     "ci95": [
+      0.167,
+      0.5
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "some_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "many_errors": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 13,
+     "share": 0.433,
+     "ci95": [
+      0.267,
+      0.6
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.2,
+    "ci95": [
+     0.067,
+     0.367
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "accepted": "15/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 2.45,
+    "ci95": [
+     0.41,
+     5.5
+    ],
+    "spans": 14,
+    "units": 5712
+   },
+   "furniture": {
+    "spans": 4,
+    "serious": 2,
+    "units": 66,
+    "pages_with_furniture": 17
+   },
+   "kinds": [
+    {
+     "kind": "numerals / citations",
+     "spans": 14
+    },
+    {
+     "kind": "other misread word",
+     "spans": 7
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 2
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 2
+    },
+    {
+     "kind": "long s / f",
+     "spans": 1
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.2,
+     "ci95": [
+      0.067,
+      0.333
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 2.45,
+     "ci95": [
+      0.42,
+      5.43
+     ],
+     "spans": 14,
+     "units": 5712
+    },
+    "no_text_served": 13,
+    "fit_to_quote": {
+     "pages": 10,
+     "share": 0.333,
+     "ci95": [
+      0.167,
+      0.5
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Syriac",
+   "script": "print",
+   "books": 30,
+   "books_new": 30,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 30,
+   "judged": 30,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "fit_to_read": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "some_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "many_errors": {
+     "pages": 7,
+     "share": 0.233,
+     "ci95": [
+      0.1,
+      0.4
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 13,
+     "share": 0.433,
+     "ci95": [
+      0.267,
+      0.6
+     ]
+    },
+    "not_this_page": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.4,
+    "ci95": [
+     0.233,
+     0.567
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.5,
+    "ci95": [
+     0.333,
+     0.667
+    ]
+   },
+   "accepted": "3/30",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 22.16,
+    "ci95": [
+     16.51,
+     29.38
+    ],
+    "spans": 180,
+    "units": 8123
+   },
+   "furniture": {
+    "spans": 16,
+    "serious": 6,
+    "units": 41,
+    "pages_with_furniture": 7
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 68
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 51
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 21
+    },
+    {
+     "kind": "invented text",
+     "spans": 20
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 18
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 2
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 30,
+    "may_change_meaning": {
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.567
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 22.16,
+     "ci95": [
+      16.08,
+      29.29
+     ],
+     "spans": 180,
+     "units": 8123
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Tibetan",
+   "script": "manuscript",
+   "books": 30,
+   "books_new": 23,
+   "books_7866": 7,
+   "books_sevcal": 0,
+   "pages": 58,
+   "judged": 58,
+   "no_text_served": 2,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 17,
+     "share": 0.167,
+     "ci95": [
+      0.067,
+      0.287
+     ]
+    },
+    "fit_to_read": {
+     "pages": 5,
+     "share": 0.06,
+     "ci95": [
+      0.007,
+      0.14
+     ]
+    },
+    "some_errors": {
+     "pages": 13,
+     "share": 0.3,
+     "ci95": [
+      0.153,
+      0.453
+     ]
+    },
+    "many_errors": {
+     "pages": 17,
+     "share": 0.327,
+     "ci95": [
+      0.173,
+      0.48
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 4,
+     "share": 0.08,
+     "ci95": [
+      0,
+      0.18
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 2,
+     "share": 0.067,
+     "ci95": [
+      0,
+      0.167
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.627,
+    "ci95": [
+     0.46,
+     0.78
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.08,
+    "ci95": [
+     0,
+     0.18
+    ]
+   },
+   "accepted": "34/58",
+   "unit": "syllables",
+   "sense_errors_per_1k": {
+    "value": 6.61,
+    "ci95": [
+     4.66,
+     8.94
+    ],
+    "spans": 157,
+    "units": 27140
+   },
+   "furniture": {
+    "spans": 0,
+    "serious": 0,
+    "units": 0,
+    "pages_with_furniture": 0
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 68
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 35
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 23
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 20
+    },
+    {
+     "kind": "invented text",
+     "spans": 5
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 3
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 2
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 1
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    },
+    {
+     "kind": "long s / f",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 23,
+    "may_change_meaning": {
+     "share": 0.696,
+     "ci95": [
+      0.522,
+      0.87
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 7.1,
+     "ci95": [
+      4.78,
+      9.98
+     ],
+     "spans": 80,
+     "units": 11263
+    },
+    "no_text_served": 2,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.217
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Tibetan",
+   "script": "print",
+   "books": 30,
+   "books_new": 27,
+   "books_7866": 3,
+   "books_sevcal": 0,
+   "pages": 42,
+   "judged": 42,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 20,
+     "share": 0.4,
+     "ci95": [
+      0.233,
+      0.573
+     ]
+    },
+    "fit_to_read": {
+     "pages": 5,
+     "share": 0.113,
+     "ci95": [
+      0.02,
+      0.233
+     ]
+    },
+    "some_errors": {
+     "pages": 10,
+     "share": 0.253,
+     "ci95": [
+      0.113,
+      0.407
+     ]
+    },
+    "many_errors": {
+     "pages": 5,
+     "share": 0.167,
+     "ci95": [
+      0.033,
+      0.3
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.033,
+     "ci95": [
+      0,
+      0.1
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.42,
+    "ci95": [
+     0.247,
+     0.6
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.033,
+    "ci95": [
+     0,
+     0.1
+    ]
+   },
+   "accepted": "35/42",
+   "unit": "syllables",
+   "sense_errors_per_1k": {
+    "value": 3.05,
+    "ci95": [
+     1.36,
+     4.92
+    ],
+    "spans": 43,
+    "units": 18263
+   },
+   "furniture": {
+    "spans": 1,
+    "serious": 0,
+    "units": 0,
+    "pages_with_furniture": 0
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 28
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 11
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 2
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 2
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 27,
+    "may_change_meaning": {
+     "share": 0.444,
+     "ci95": [
+      0.259,
+      0.63
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 3.31,
+     "ci95": [
+      1.49,
+      5.47
+     ],
+     "spans": 40,
+     "units": 12076
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 10,
+     "share": 0.37,
+     "ci95": [
+      0.185,
+      0.556
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Egyptian hieroglyphs",
+   "script": "manuscript",
+   "books": 27,
+   "books_new": 27,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 27,
+   "judged": 27,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "some_errors": {
+     "pages": 2,
+     "share": 0.074,
+     "ci95": [
+      0,
+      0.185
+     ]
+    },
+    "many_errors": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 6,
+     "share": 0.222,
+     "ci95": [
+      0.074,
+      0.37
+     ]
+    },
+    "not_this_page": {
+     "pages": 14,
+     "share": 0.519,
+     "ci95": [
+      0.333,
+      0.704
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.111,
+    "ci95": [
+     0,
+     0.259
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.778,
+    "ci95": [
+     0.593,
+     0.926
+    ]
+   },
+   "accepted": "4/27",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 20.91,
+    "ci95": [
+     13.47,
+     35.18
+    ],
+    "spans": 114,
+    "units": 5452
+   },
+   "furniture": {
+    "spans": 1,
+    "serious": 0,
+    "units": 3,
+    "pages_with_furniture": 1
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 31
+    },
+    {
+     "kind": "invented text",
+     "spans": 30
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 21
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 14
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 12
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 3
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 2
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 27,
+    "may_change_meaning": {
+     "share": 0.111,
+     "ci95": [
+      0,
+      0.259
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 20.91,
+     "ci95": [
+      13.07,
+      35.22
+     ],
+     "spans": 114,
+     "units": 5452
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 1,
+     "share": 0.037,
+     "ci95": [
+      0,
+      0.111
+     ]
+    }
+   }
+  },
+  {
+   "language": "Syriac",
+   "script": "manuscript",
+   "books": 24,
+   "books_new": 24,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 24,
+   "judged": 24,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.042,
+     "ci95": [
+      0,
+      0.125
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "many_errors": {
+     "pages": 1,
+     "share": 0.042,
+     "ci95": [
+      0,
+      0.125
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.208
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 16,
+     "share": 0.667,
+     "ci95": [
+      0.458,
+      0.833
+     ]
+    },
+    "not_this_page": {
+     "pages": 4,
+     "share": 0.167,
+     "ci95": [
+      0.042,
+      0.333
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.042,
+    "ci95": [
+     0,
+     0.125
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.917,
+    "ci95": [
+     0.792,
+     1
+    ]
+   },
+   "accepted": "1/24",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 27.97,
+    "ci95": [
+     20.89,
+     39.06
+    ],
+    "spans": 177,
+    "units": 6329
+   },
+   "furniture": {
+    "spans": 4,
+    "serious": 1,
+    "units": 5,
+    "pages_with_furniture": 2
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 71
+    },
+    {
+     "kind": "invented text",
+     "spans": 43
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 32
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 19
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 5
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 4
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 2
+    },
+    {
+     "kind": "long s / f",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 24,
+    "may_change_meaning": {
+     "share": 0.042,
+     "ci95": [
+      0,
+      0.125
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 27.97,
+     "ci95": [
+      20.59,
+      38.19
+     ],
+     "spans": 177,
+     "units": 6329
+    },
+    "no_text_served": 0,
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.042,
+     "ci95": [
+      0,
+      0.125
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.208
+     ]
+    }
+   }
+  },
+  {
+   "language": "Japanese",
+   "script": "manuscript",
+   "books": 23,
+   "books_new": 23,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 23,
+   "judged": 23,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.217
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.043,
+     "ci95": [
+      0,
+      0.13
+     ]
+    },
+    "some_errors": {
+     "pages": 2,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.217
+     ]
+    },
+    "many_errors": {
+     "pages": 8,
+     "share": 0.348,
+     "ci95": [
+      0.174,
+      0.565
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.217
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 8,
+     "share": 0.348,
+     "ci95": [
+      0.174,
+      0.522
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.435,
+    "ci95": [
+     0.261,
+     0.652
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.435,
+    "ci95": [
+     0.217,
+     0.652
+    ]
+   },
+   "accepted": "3/23",
+   "unit": "characters",
+   "sense_errors_per_1k": {
+    "value": 26.43,
+    "ci95": [
+     19.19,
+     34.87
+    ],
+    "spans": 159,
+    "units": 6016
+   },
+   "furniture": {
+    "spans": 1,
+    "serious": 1,
+    "units": 4,
+    "pages_with_furniture": 1
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 94
+    },
+    {
+     "kind": "invented text",
+     "spans": 23
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 19
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 14
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 6
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 2
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 23,
+    "may_change_meaning": {
+     "share": 0.435,
+     "ci95": [
+      0.217,
+      0.652
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 26.43,
+     "ci95": [
+      19.4,
+      35.58
+     ],
+     "spans": 159,
+     "units": 6016
+    },
+    "no_text_served": 0,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.217
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 2,
+     "share": 0.087,
+     "ci95": [
+      0,
+      0.217
+     ]
+    }
+   }
+  },
+  {
+   "language": "Egyptian hieroglyphs",
+   "script": "print",
+   "books": 14,
+   "books_new": 14,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 14,
+   "judged": 14,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 5,
+     "share": 0.357,
+     "ci95": [
+      0.143,
+      0.643
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 1,
+     "share": 0.071,
+     "ci95": [
+      0,
+      0.214
+     ]
+    },
+    "many_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 3,
+     "share": 0.214,
+     "ci95": [
+      0,
+      0.429
+     ]
+    },
+    "not_this_page": {
+     "pages": 4,
+     "share": 0.286,
+     "ci95": [
+      0.071,
+      0.5
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.071,
+     "ci95": [
+      0,
+      0.214
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.071,
+    "ci95": [
+     0,
+     0.214
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.5,
+    "ci95": [
+     0.214,
+     0.786
+    ]
+   },
+   "accepted": "6/14",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 2.93,
+    "ci95": [
+     1.65,
+     8.51
+    ],
+    "spans": 27,
+    "units": 9229
+   },
+   "furniture": {
+    "spans": 1,
+    "serious": 0,
+    "units": 47,
+    "pages_with_furniture": 9
+   },
+   "kinds": [
+    {
+     "kind": "numerals / citations",
+     "spans": 9
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 7
+    },
+    {
+     "kind": "other misread word",
+     "spans": 5
+    },
+    {
+     "kind": "invented text",
+     "spans": 4
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 2
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 14,
+    "may_change_meaning": {
+     "share": 0.071,
+     "ci95": [
+      0,
+      0.214
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 2.93,
+     "ci95": [
+      1.66,
+      8.11
+     ],
+     "spans": 27,
+     "units": 9229
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 5,
+     "share": 0.357,
+     "ci95": [
+      0.143,
+      0.643
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Dutch",
+   "script": "manuscript",
+   "books": 12,
+   "books_new": 12,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 12,
+   "judged": 12,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.167,
+     "ci95": [
+      0,
+      0.417
+     ]
+    },
+    "fit_to_read": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "some_errors": {
+     "pages": 3,
+     "share": 0.25,
+     "ci95": [
+      0,
+      0.5
+     ]
+    },
+    "many_errors": {
+     "pages": 4,
+     "share": 0.333,
+     "ci95": [
+      0.083,
+      0.583
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 1,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.25
+     ]
+    },
+    "not_this_page": {
+     "pages": 1,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.25
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.25
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.583,
+    "ci95": [
+     0.333,
+     0.833
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.167,
+    "ci95": [
+     0,
+     0.417
+    ]
+   },
+   "accepted": "4/12",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 32.69,
+    "ci95": [
+     18.62,
+     51.78
+    ],
+    "spans": 49,
+    "units": 1499
+   },
+   "furniture": {
+    "spans": 2,
+    "serious": 1,
+    "units": 7,
+    "pages_with_furniture": 6
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 33
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 6
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 3
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 2
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 2
+    },
+    {
+     "kind": "invented margin",
+     "spans": 1
+    },
+    {
+     "kind": "facing page read into this one",
+     "spans": 1
+    },
+    {
+     "kind": "invented text",
+     "spans": 1
+    },
+    {
+     "kind": "abbreviation expanded wrongly",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 12,
+    "may_change_meaning": {
+     "share": 0.583,
+     "ci95": [
+      0.333,
+      0.833
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 32.69,
+     "ci95": [
+      18.92,
+      51.83
+     ],
+     "spans": 49,
+     "units": 1499
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.167,
+     "ci95": [
+      0,
+      0.417
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Spanish",
+   "script": "manuscript",
+   "books": 12,
+   "books_new": 12,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 12,
+   "judged": 12,
+   "no_text_served": 1,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.167,
+     "ci95": [
+      0,
+      0.417
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.25
+     ]
+    },
+    "some_errors": {
+     "pages": 3,
+     "share": 0.25,
+     "ci95": [
+      0,
+      0.5
+     ]
+    },
+    "many_errors": {
+     "pages": 3,
+     "share": 0.25,
+     "ci95": [
+      0,
+      0.5
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 2,
+     "share": 0.167,
+     "ci95": [
+      0,
+      0.417
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 1,
+     "share": 0.083,
+     "ci95": [
+      0,
+      0.25
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.5,
+    "ci95": [
+     0.25,
+     0.75
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.167,
+    "ci95": [
+     0,
+     0.417
+    ]
+   },
+   "accepted": "4/12",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 15.7,
+    "ci95": [
+     6.09,
+     28.83
+    ],
+    "spans": 38,
+    "units": 2420
+   },
+   "furniture": {
+    "spans": 0,
+    "serious": 0,
+    "units": 5,
+    "pages_with_furniture": 5
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 20
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 6
+    },
+    {
+     "kind": "invented text",
+     "spans": 5
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 4
+    },
+    {
+     "kind": "strip of several openings: described or invented, not read",
+     "spans": 2
+    },
+    {
+     "kind": "normalised toward the expected",
+     "spans": 1
+    },
+    {
+     "kind": "wrong leaf",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 12,
+    "may_change_meaning": {
+     "share": 0.5,
+     "ci95": [
+      0.25,
+      0.75
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 15.7,
+     "ci95": [
+      6.66,
+      28.1
+     ],
+     "spans": 38,
+     "units": 2420
+    },
+    "no_text_served": 1,
+    "fit_to_quote": {
+     "pages": 2,
+     "share": 0.167,
+     "ci95": [
+      0,
+      0.417
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "language": "Chinese",
+   "script": "print",
+   "books": 2,
+   "books_new": 0,
+   "books_7866": 2,
+   "books_sevcal": 0,
+   "pages": 10,
+   "judged": 10,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 1,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.2
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.1,
+     "ci95": [
+      0,
+      0.2
+     ]
+    },
+    "some_errors": {
+     "pages": 4,
+     "share": 0.4,
+     "ci95": [
+      0.2,
+      0.6
+     ]
+    },
+    "many_errors": {
+     "pages": 2,
+     "share": 0.2,
+     "ci95": [
+      0,
+      0.4
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 2,
+     "share": 0.2,
+     "ci95": [
+      0,
+      0.4
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.6,
+    "ci95": [
+     0.6,
+     0.6
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0.2,
+    "ci95": [
+     0,
+     0.4
+    ]
+   },
+   "accepted": "3/10",
+   "unit": "Han characters",
+   "sense_errors_per_1k": {
+    "value": 20.64,
+    "ci95": [
+     6.96,
+     22.5
+    ],
+    "spans": 74,
+    "units": 3586
+   },
+   "furniture": {
+    "spans": 6,
+    "serious": 1,
+    "units": 67,
+    "pages_with_furniture": 5
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 57
+    },
+    {
+     "kind": "dropped line or phrase",
+     "spans": 10
+    },
+    {
+     "kind": "margin mishandled",
+     "spans": 4
+    },
+    {
+     "kind": "numerals / citations",
+     "spans": 3
+    }
+   ],
+   "new_draw_only": null
+  },
+  {
+   "language": "Sumerian",
+   "script": "print",
+   "books": 2,
+   "books_new": 2,
+   "books_7866": 0,
+   "books_sevcal": 0,
+   "pages": 2,
+   "judged": 2,
+   "no_text_served": 0,
+   "no_text_judge_accepted": 0,
+   "bands": {
+    "fit_to_quote": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "fit_to_read": {
+     "pages": 1,
+     "share": 0.5,
+     "ci95": [
+      0,
+      1
+     ]
+    },
+    "some_errors": {
+     "pages": 1,
+     "share": 0.5,
+     "ci95": [
+      0,
+      1
+     ]
+    },
+    "many_errors": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "mostly_wrong": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "not_this_page": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "no_text_served": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "unjudged": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   },
+   "may_change_meaning": {
+    "share": 0.5,
+    "ci95": [
+     0,
+     1
+    ]
+   },
+   "not_on_the_page": {
+    "bands": [
+     "from_elsewhere",
+     "mostly_wrong",
+     "not_this_page"
+    ],
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "accepted": "2/2",
+   "unit": "words",
+   "sense_errors_per_1k": {
+    "value": 9.01,
+    "ci95": [
+     0,
+     83.33
+    ],
+    "spans": 1,
+    "units": 111
+   },
+   "furniture": {
+    "spans": 1,
+    "serious": 0,
+    "units": 4,
+    "pages_with_furniture": 2
+   },
+   "kinds": [
+    {
+     "kind": "other misread word",
+     "spans": 1
+    }
+   ],
+   "new_draw_only": {
+    "books": 2,
+    "may_change_meaning": {
+     "share": 0.5,
+     "ci95": [
+      0,
+      1
+     ]
+    },
+    "sense_errors_per_1k": {
+     "value": 9.01,
+     "ci95": [
+      0,
+      83.33
+     ],
+     "spans": 1,
+     "units": 111
+    },
+    "no_text_served": 0,
+    "fit_to_quote": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "from_elsewhere": {
+     "pages": 0,
+     "share": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  }
+ ],
+ "containment": {
+  "pages": 197,
+  "by_cell": {
+   "Greek|print": 2,
+   "Latin|manuscript": 7,
+   "Dutch|print": 1,
+   "Greek|manuscript": 14,
+   "Russian|print": 2,
+   "Arabic|manuscript": 4,
+   "Hebrew|print": 15,
+   "Korean|print": 5,
+   "Persian|manuscript": 2,
+   "Japanese|print": 10,
+   "German|manuscript": 9,
+   "Korean|manuscript": 8,
+   "Arabic|print": 4,
+   "Hebrew|manuscript": 26,
+   "Sanskrit|manuscript": 5,
+   "French|manuscript": 7,
+   "English|manuscript": 8,
+   "Syriac|print": 8,
+   "Italian|manuscript": 5,
+   "Persian|print": 1,
+   "Egyptian hieroglyphs|manuscript": 17,
+   "Japanese|manuscript": 8,
+   "Syriac|manuscript": 20,
+   "Egyptian hieroglyphs|print": 6,
+   "Spanish|manuscript": 2,
+   "Dutch|manuscript": 1
+  },
+  "list": "on the box: $JOB_SCRATCH/judged-expand-7263/containment.json; not in the repo"
+ }
+}

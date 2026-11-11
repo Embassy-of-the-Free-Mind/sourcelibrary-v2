@@ -3,6 +3,7 @@ import { storagePut, pagePaths } from '@/lib/storage';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
+import { markDisplay } from '../../../../../../scripts/workers/lib/display-image.mjs';
 import { withAuth } from '@/lib/auth-helpers';
 import sharp from 'sharp';
 // Which source hosts we will fetch from — ONE list, shared with the watchdog and
@@ -183,7 +184,7 @@ export const POST = withAuth(async (request, session, context) => {
             // never created. Every book archived by this route rendered a broken
             // cover on its book page as a result.
             try {
-              const displayBuffer = await compress_photo(buffer, 1200, 78);
+              const displayBuffer = await markDisplay(await compress_photo(buffer, 1200, 78), { bookId, pageNumber: page.page_number });
               await storagePut(paths.display, displayBuffer, {
                 access: 'public',
                 contentType: 'image/jpeg',

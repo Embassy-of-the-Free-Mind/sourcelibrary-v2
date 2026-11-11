@@ -848,9 +848,9 @@ export const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'bool
 export const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** Opus with the image in its workspace and Read as its only tool (replicate-6547/run-claude-arm.py's call). */
-export function opusCall(prompt, cwd) {
+export function opusCall(prompt, cwd, model = 'opus') {
   return new Promise((resolve) => {
-    const child = spawn('claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     const timer = setTimeout(() => child.kill('SIGKILL'), 900e3);
     child.stdout.on('data', (d) => { out += d; }); child.stderr.on('data', (d) => { err += d; });
@@ -893,9 +893,13 @@ async function judge() {
     calls++;
     const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-opus-'));
     try {
-      const res = await fetch(it.image_url);
-      if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ id: it.id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
-      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      // image_file: the image the packet drew, on disk (a library that refuses this box, #6871 manifest-only sample)
+      if (it.image_file) fs.copyFileSync(it.image_file, path.join(ws, 'page.jpg'));
+      else {
+        const res = await fetch(it.image_url);
+        if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ id: it.id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
+        fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      }
       const t0 = Date.now();
       const r = await opusCall(judgePrompt(it, 'the file ./page.jpg in your working directory (open it with Read before you answer)'), ws);
       if (r.cls === 'quota') { limits.noteLimitHit('claude', { reason: r.text.slice(0, 200) }); stop = { until: limits.claudeUsage()?.sessionReset ?? null, reason: 'quota reply' }; return; }

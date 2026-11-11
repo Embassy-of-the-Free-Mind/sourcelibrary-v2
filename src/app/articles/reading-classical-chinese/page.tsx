@@ -61,7 +61,7 @@ export default function ReadingClassicalChinesePage() {
         <figure className="my-12">
           <ArticleImage src={HERO} alt="Woodcut of laborers forging a large iron anchor, from the Tiangong Kaiwu" />
           <figcaption className="text-sm text-muted mt-2 text-center">
-            Forging iron, from Song Yingxing&rsquo;s <em>Tiangong Kaiwu</em> (&ldquo;The Exploitation of the Works of Nature,&rdquo; 1637), an encyclopedia of pre-modern Chinese technology. <a href="/book/tiangong-kaiwu-exploitation-of-the-works-of-nature" className="text-accent-rust hover:underline">View this book</a>.
+            Forging iron, from Song Yingxing&rsquo;s <em>Tiangong Kaiwu</em> (&ldquo;The Exploitation of the Works of Nature,&rdquo; 1637), an encyclopedia of pre-modern Chinese technology.
           </figcaption>
         </figure>
 
@@ -75,7 +75,6 @@ export default function ReadingClassicalChinesePage() {
         <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-2">
           <li>Li Shizhen&rsquo;s <a href="/book/ben-cao-gang-mu-compendium-of-materia-medica-vol-7-shizhen" className="text-accent-rust hover:underline"><em>Bencao Gangmu</em></a> (Compendium of Materia Medica, 1596): the great pharmacopoeia of the Ming.</li>
           <li>Mao Yuanyi&rsquo;s <a href="/book/wubei-zhi-treatise-on-armament-technology" className="text-accent-rust hover:underline"><em>Wubei Zhi</em></a> (Treatise on Armament Technology, 1621): a vast military-technology compendium.</li>
-          <li>Song Yingxing&rsquo;s <a href="/book/tiangong-kaiwu-exploitation-of-the-works-of-nature" className="text-accent-rust hover:underline"><em>Tiangong Kaiwu</em></a> (1637): the encyclopedia of crafts and industry pictured above.</li>
           <li>The <a href="/book/sancai-tuhui-illustrated-encyclopedia-of-the-three-realms" className="text-accent-rust hover:underline"><em>Sancai Tuhui</em></a> (Illustrated Encyclopedia of the Three Realms, 1609).</li>
         </ul>
 

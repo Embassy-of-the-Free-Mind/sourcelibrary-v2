@@ -3,17 +3,38 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
-import byLanguage from '@/data/quality-by-language.json';
-import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
+import byLanguageData from '@/data/quality-by-language.json';
+import ocrEvidenceData from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
-import ocrRouting from '../../../../scripts/lib/ocr-routing-table.json';
+import ocrRoutingData from '../../../../scripts/lib/ocr-routing-table.json';
 import servedDraw from '../../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../../scripts/eval/confidence-7866/results/served-grades.json';
+/* The English on the #7866 pages (#7968). scripts/eval/results/ is not deployed (.vercelignore), so the figures
+   used here are copied from scripts/eval/results/translation-on-7866-draw/summary.json (generated 2026-11-02);
+   update them with that file. */
+const englishOn7866 = {
+  translator: {
+    fidelity_ge4_weighted: { pages: 481, books: 102 },
+    major_page_share_weighted: { share: 0.1532, ci95: [0.1109, 0.198] },
+    major_per_1k_english_words_weighted: { value: 0.52 },
+  },
+  end_to_end: { e2e_wrong_weighted: { share: 0.3438, ci95: [0.2885, 0.4008] } },
+  inherited: {
+    risk_ratio_weighted: { value: 2.0686 },
+    attributable_fraction_of_major_pages_weighted: { value: 0.3707, ci95: [0.1305, 0.6076] },
+  },
+} as const;
 import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../../research/quality/open/issues';
 import { GRADES, LEARNED, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from '../content';
 import ParetoCharts, { RosterLine, TRANSLATION } from '../ParetoCharts';
+import { plainEngineData } from '@/lib/plain-engine-words';
+
+// The data files keep their real names for the code and tests that read them; this page says roles (#7263).
+const byLanguage = plainEngineData(byLanguageData);
+const ocrEvidence = { translation_fidelity: plainEngineData(ocrEvidenceData.translation_fidelity) };
+const ocrRouting = plainEngineData(ocrRoutingData);
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -91,7 +112,7 @@ const defects = allIssues.filter(i => i.status === 'defect');
 const running = allIssues.filter(i => i.status === 'running');
 const planned = allIssues.filter(i => i.status === 'planned');
 
-const experiments = listExperiments();
+const experiments = plainEngineData(listExperiments());
 const STATUS_LABEL = {
   adopted: 'in use',
   rejected: 'not adopted',
@@ -114,31 +135,27 @@ const servedWeakBooks = Math.round(servedDraw.corpus.bad_books_est / 100) * 100;
 /** "8/8 rejected at fidelity <= 2" → "8 of 8". */
 const kOfN = (v: string) => v.match(/^(\d+)\/(\d+)/)?.slice(1).join(' of ') ?? v;
 
-/* The grade ladder (#7933): the SAME 800 verdicts as the record above, re-graded on the rubric's four grades
+/* The grade ladder (#7933, bands #7263): the SAME 800 verdicts as the record above, re-graded on the rubric's five grades
    (.claude/docs/quality-rubric-and-sampling.md §5) and cut by language, writing system and reading method, by
    scripts/eval/confidence-7866/regrade.mjs. A distribution, not one pass/fail share at an unstated bar. */
 const grades = servedGrades as typeof servedGrades & {
-  grade_label: Record<string, string>;
-  grades: Record<string, { pages: number; share: number; ci95: [number, number] }>;
+  band_label: Record<string, string>;
+  bands: Record<string, { pages: number; share: number; ci95: [number, number] }>;
 };
-/** The reader-facing order, worst last, each row saying what a reader can do with such a page. */
-const LADDER: { key: string; can: string }[] = [
-  { key: 'fit_to_quote', can: 'Quote it without opening the scan' },
-  { key: 'fit_to_read', can: 'Read it; check the scan before quoting' },
-  { key: 'search_only', can: 'Find the page by it, but do not trust the reading' },
-  { key: 'wrong_span', can: 'Do not rely on it: a word or number is not the page’s' },
-  { key: 'from_elsewhere', can: 'Do not rely on it: part is from somewhere else' },
-  { key: 'mostly_wrong', can: 'Do not rely on it: most of the page is wrong or missing' },
-  { key: 'not_this_page', can: 'Do not rely on it: it is another page’s text' },
-];
+/**
+ * The bands in reader-facing order, worst last. The table states what was found, never what a reader may do with
+ * the page. The middle two count errors rather than sort them by kind (#7263): a second reading moved 17 of 40
+ * "changes the sense" flags to "not on the page", so the kind is the unstable part and the count is not.
+ */
+const LADDER = ['fit_to_quote', 'fit_to_read', 'some_errors', 'many_errors', 'from_elsewhere', 'mostly_wrong', 'not_this_page'];
 /** Plain names for the reading methods the draw happened to catch; a route not here shows its own id. */
 const READER_NAME: Record<string, string> = {
-  lite: 'Gemini Flash-Lite', '3flash': 'Gemini 3 Flash', paddle: 'PaddleOCR-VL', yigdzin: 'Yig-dzin (Tibetan)',
-  'yigdzin>agy-flash-low': 'Yig-dzin, then Gemini Flash', 'lite>agy-flash-low': 'Flash-Lite, then Gemini Flash',
-  'pero>agy-flash-low': 'PERO, then Gemini Flash', 'lighton-written': 'LightOnOCR (our GPU)',
+  lite: 'Our lightest model', '3flash': 'The mid-tier model', paddle: 'Open engine A', yigdzin: 'A Tibetan model',
+  'yigdzin>agy-flash-low': 'A Tibetan model, then the current reading model', 'lite>agy-flash-low': 'Our lightest model, then the current reading model',
+  'pero>agy-flash-low': 'Open engine L, then the current reading model', 'lighton-written': 'Open engine B (our GPU)',
   'import:ia_djvu': 'the Internet Archive’s own OCR', 'import:corpus': 'a typed edition',
-  'pipeline:derge-tengyur-import-5497': 'a typed edition (Esukhia)', 'model:claude-opus-5-5': 'Claude Opus',
-  'model:gemini-2.5-flash': 'Gemini 2.5 Flash', 'model:none': 'no engine recorded',
+  'pipeline:derge-tengyur-import-5497': 'a typed edition (Esukhia)', 'model:claude-opus-5-5': 'The strongest model tested',
+  'model:gemini-2.5-flash': 'An earlier mid-tier model', 'model:none': 'no engine recorded',
 };
 /** Languages with at least three books in the draw: fewer is one or two books, not a language. */
 const gradeLanguages = grades.by_language.filter(r => r.books >= 3);
@@ -176,7 +193,7 @@ const eraRoute = (era: string, route: string) =>
   (grades.by_era_route_alphabetic as Record<string, Cut>)[`${era} · ${route}`];
 
 /** Invented or recited text, another leaf, another page entirely, or a page never read: the failures readers fear most. */
-const notFromThisPage = grades.grades.from_elsewhere.share + grades.grades.not_this_page.share;
+const notFromThisPage = grades.bands.from_elsewhere.share + grades.bands.not_this_page.share;
 const topClasses = grades.defect_classes.filter(c => c.total >= 25);
 /**
  * Three worked examples from served-grades.json: a misread that changes a name, a dropped unit, and
@@ -383,14 +400,15 @@ export default function QualityCenterPage() {
         <Section id="stands" title="Where quality stands">
           <div className="max-w-3xl mb-6">
             <p className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-3">
-              About half the pages you read here say exactly what the scan says. Most of the rest have a word or a phrase
-              wrong: a misread that changes the sense, or a word garbled or dropped. Text that is invented, belongs to
-              another page, or was never read at all is rare: {pct(notFromThisPage, 1)} of pages.
+              About half the pages you read here say exactly what the scan says. Most of the rest have errors that may
+              change the meaning, such as a misread word or a word garbled or dropped: 1 or 2 on{' '}
+              {pct(grades.bands.some_errors.share)} of pages, 3 or more on {pct(grades.bands.many_errors.share)}. Text that
+              is invented, belongs to another page, or was never read at all is rare: {pct(notFromThisPage, 1)} of pages.
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
               On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books from the {n(servedFrame)} live books that
               have a transcription — in four groups, by how much confidence our own records gave us in each, then weighted
-              back to the library — took five pages spread through each, and had an AI reviewer (Claude Opus) read each of
+              back to the library — took five pages spread through each, and had an AI reviewer read each of
               the {n(grades.pages)} pages against the photograph of the page. It marked every defect it found with a kind
               and one of three weights: a slip that misleads nobody, a reading that changes the sense, or text the page
               does not carry. Those weights give each page a grade, and this is how the {n(grades.pages)} pages fell.
@@ -402,19 +420,17 @@ export default function QualityCenterPage() {
               <caption className="sr-only">Share of pages in each grade, weighted back to the library, with 95% intervals</caption>
               <thead>
                 <tr>
-                  <th className={th}>What a reader can do with the page</th>
                   <th className={th}>What the reviewer found</th>
                   <th className={th}>Pages</th>
                   <th className={th}>Share of the library (95% interval)</th>
                 </tr>
               </thead>
               <tbody>
-                {LADDER.map(({ key, can }) => {
-                  const g = grades.grades[key];
+                {LADDER.map((key) => {
+                  const g = grades.bands[key];
                   return (
                     <tr key={key}>
-                      <td className={`${td} font-semibold text-stone-900 w-[26%]`}>{can}</td>
-                      <td className={`${td} w-[36%]`}>{grades.grade_label[key]}</td>
+                      <td className={`${td} font-semibold text-stone-900 w-[50%]`}>{grades.band_label[key]}</td>
                       <td className={td}>{g.pages}</td>
                       <td className={td}>
                         <b className="text-stone-900">{pct(g.share, g.share < 0.05 ? 1 : 0)}</b>{' '}
@@ -431,10 +447,12 @@ export default function QualityCenterPage() {
           <Source>
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, re-graded from the same{' '}
             {n(servedDraw.books.pages_judged)} verdicts as <A href={`${BLOB}${SERVED_RECORD}`}>the record</A> (
-            <IssueLink num={7866} />, <IssueLink num={7933} />). The four grades are{' '}
+            <IssueLink num={7866} />, <IssueLink num={7933} />, <IssueLink num={7263} />). The five grades are{' '}
             <a href="#the-grades" className={LINK}>our own published rubric</a>; the last three rows split what it calls{' '}
-            <i>not usable</i>, because
-            a wrong word and another book&rsquo;s page are not the same failure. Books were drawn in four groups and
+            <i>not the page&rsquo;s text</i>, because
+            a wrong word and another book&rsquo;s page are not the same failure. An error that may change the meaning is
+            one the reviewer weighed as changing the sense or as not on the page; the two middle rows count them, because
+            a second reading often moved an error from one kind to the other. Books were drawn in four groups and
             weighted back to the library; the interval is a bootstrap over books. The reviewer turned down{' '}
             {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text, and caught{' '}
             {kOfN(servedDraw.instrument.planted)} errors we planted.
@@ -508,10 +526,10 @@ export default function QualityCenterPage() {
               of books (95% interval {pct(servedDraw.corpus.bad_share_ci95[0])}–{pct(servedDraw.corpus.bad_share_ci95[1])}),
               about {n(servedWeakBooks)} books, had two or more of five pages with an error. Of the{' '}
               {n(grades.pages)} pages, {n(grades.bad_7866.pages)} counted against their book under that rule, and the rule
-              weighed them all the same: {n(grades.bad_7866.by_grade.search_only.counted_bad)} whose worst fault changes
-              the sense of a word, {n(grades.bad_7866.by_grade.wrong_span.counted_bad + grades.bad_7866.by_grade.from_elsewhere.counted_bad)}{' '}
-              carrying a span the page does not have, and{' '}
-              {n(grades.bad_7866.by_grade.not_this_page.counted_bad + grades.bad_7866.by_grade.mostly_wrong.counted_bad)}{' '}
+              weighed them all the same: {n(grades.bad_7866.by_band.some_errors.counted_bad)} with 1 or 2 errors that may
+              change the meaning, {n(grades.bad_7866.by_band.many_errors.counted_bad)} with 3 or more,{' '}
+              {n(grades.bad_7866.by_band.from_elsewhere.counted_bad)} carrying text from somewhere else, and{' '}
+              {n(grades.bad_7866.by_band.not_this_page.counted_bad + grades.bad_7866.by_band.mostly_wrong.counted_bad)}{' '}
               substantially wrong or not this page at all.
             </Source>
           </div>
@@ -541,8 +559,9 @@ export default function QualityCenterPage() {
                   <th className={th}>Pages</th>
                   <th className={th}>One meaning-changing error in about</th>
                   <th className={th}>Pages with no such error</th>
-                  <th className={th}>Pages whose worst error changes the sense of a word</th>
-                  <th className={th}>Pages with a word or phrase garbled, dropped or added</th>
+                  <th className={th}>Some errors that may change the meaning (1 or 2)</th>
+                  <th className={th}>Many errors that may change the meaning (3 or more)</th>
+                  <th className={th}>Mostly wrong, or another page&rsquo;s text</th>
                 </tr>
               </thead>
               <tbody>
@@ -565,8 +584,9 @@ export default function QualityCenterPage() {
                       )}
                     </td>
                     <td className={td}>{pct(r.says_what_the_page_says)}</td>
-                    <td className={td}>{pct(r.misleads_somewhere)}</td>
-                    <td className={td}>{pct(r.text_not_on_the_page)}</td>
+                    <td className={td}>{pct(r.bands.some_errors.share)}</td>
+                    <td className={td}>{pct(r.bands.many_errors.share)}</td>
+                    <td className={td}>{pct(Math.max(0, 1 - r.says_what_the_page_says - r.bands.some_errors.share - r.bands.many_errors.share))}</td>
                   </tr>
                 ))}
               </tbody>
@@ -584,13 +604,14 @@ export default function QualityCenterPage() {
 
           <div className="max-w-3xl mt-6">
             <p className="text-stone-700 leading-relaxed mb-3">
-              <b className="text-stone-900">Within Latin, the age of the book matters more than anything else.</b> Of the
-              Latin books in the draw, the 11 that are manuscripts or were printed before 1501 carry about 10 meaning-changing
-              errors per 1,000 words, and only 19% of their pages are clean. The 12 printed in 1501 or later carry about
-              2 per 1,000, with 60% of pages clean. That is close to what we measured on print against a typed scholarly
-              edition, where the edition itself carries about 1.5. The reading engine changes the rate by about a fifth;
-              the age of the book changes it four- to fivefold. The early books fail on gothic letter-forms and on the
-              abbreviations scribes and early printers used, which the engine expands into the wrong whole word. In a
+              <b className="text-stone-900">Within Latin, handwriting matters more than age.</b> In this draw, the 11 Latin
+              books that are manuscripts or were printed before 1501 carry about 10 meaning-changing errors per 1,000
+              words, against about 2 for the 12 printed later; but that group mixes the two, and a third of the draw&rsquo;s
+              Latin books had no record of whether they are handwritten. A larger study that drew 109 Latin books by era
+              and by form, and checked the form of each on its image, separates them: manuscripts carry about four times
+              the errors of print in every era, and books printed before 1501 are only a little worse than later print
+              (<IssueLink num={7947} />). The failures are abbreviations, which scribes used far more than printers, read
+              as the wrong whole word. In a
               herbal printed in 1484, <i>ſauine</i> (savin, a herb) became <i>semine</i> (seed), and <i>an. m. j</i>{' '}
               (one handful) became <i>unciam i.</i> (one ounce), so the recipe changed. In a manuscript of Hierocles,{' '}
               <i>agitari</i> became <i>aquari</i> twice. We opened both pages against the photograph.
@@ -605,7 +626,7 @@ export default function QualityCenterPage() {
           <div className="max-w-3xl">
             <p className="text-stone-700 leading-relaxed mb-3">
               A table of engines alone would mislead, because each engine was given different books: Greek and Sanskrit
-              went to Gemini 3 Flash, Korean to Flash-Lite, Chinese manuscripts to PaddleOCR. So this compares engines only
+              went to the mid-tier model, Korean to our lightest model, Chinese manuscripts to Open engine A. So this compares engines only
               within one language, and only where an engine read at least three books in the draw. The counts are pages,
               not shares of the library, and many cells are a handful of books.
             </p>
@@ -648,30 +669,45 @@ export default function QualityCenterPage() {
           </div>
           <Source>
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_language_route</code>, unweighted. In Chinese
-            the engines read different material: PaddleOCR the manuscripts, the Gemini models printed books, so those
-            rows are not a contest. The full list, including engines that read one or two books, is in the file.
+            the engines read different material: Open engine A the manuscripts, the lightest and mid-tier models printed books, so those
+            rows are not a contest. The full list, including engines that read one or two books, is in the file. The
+            library&rsquo;s own mix of engines: <A href={`${BLOB}scripts/eval/experiments/2026-11-02-stock-by-engine-7933.md`}>the
+            census</A>.
           </Source>
           <div className="max-w-3xl mt-6">
             <p className="text-stone-700 leading-relaxed mb-3">
-              Three things stand out. Gemini 3 Flash beats Flash-Lite where both read the same language: about 2 errors per
+              Three things stand out. The mid-tier model beats the lightest model where both read the same language: about 2 errors per
               1,000 words against 6 in German, and 5 against 13 in Latin. In English both are good. Engines built or chosen
-              for one kind of page do best: LightOnOCR, on our own GPU, found no meaning-changing error in ten English pages,
+              for one kind of page do best: Open engine B, on our own GPU, found no meaning-changing error in ten English pages,
               and the Tibetan pages taken from Esukhia&rsquo;s typed edition have about one error in 2,000 syllables. The
-              Internet Archive&rsquo;s own OCR, which we import for some English books, is worse than either Gemini model
+              Internet Archive&rsquo;s own OCR, which we import for some English books, is worse than either model
               on English. And general-purpose models are poor on Greek, Sanskrit and Korean, at one error in every 50 to 60
               words or characters. Those pages wait for an engine that has been tested on their script.
+            </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              <b className="text-stone-900">These are the reads already in the library, not the ones we make now.</b> In a
+              random sample of 28,053 live pages, the lightest model wrote 47% of the transcriptions and the mid-tier model 22%; the
+              current reading model, which reads pages now, has written 1.5%. Latin is 72% the lightest model, and Latin printed before 1501 is
+              90%. The English follows the same pattern: lightest model 52%, mid-tier 44%, current reading model 2%. Where the current reading model has re-read pages
+              the lightest model read, it cut the Latin pages a reviewer called misleading from 41% to 8% (250 pages,{' '}
+              <IssueLink num={5924} />). The draw also leans toward the mid-tier model in Latin (80% of its Latin pages,
+              against 28% of the library&rsquo;s), so the Latin rate above is probably lower than the library&rsquo;s as
+              it stands.
             </p>
           </div>
 
           <Sub>By the age and hand of the book</Sub>
           <div className="max-w-3xl">
             <p className="text-stone-700 leading-relaxed mb-3">
-              Alphabetic scripts only, so every rate is per 1,000 words. Manuscripts and books printed before 1501 are hard
-              for every engine we use; print from after 1700 is much cleaner. The book&rsquo;s age matters more than the
-              engine. Before 1501, Gemini 3 Flash and Flash-Lite make the same number of errors
-              ({eraRoute('before 1501', '3flash')?.severe_per_1k} and {eraRoute('before 1501', 'lite')?.severe_per_1k} per
-              1,000); the gap between them opens only on later print. Languages are mixed in each row, so a row with more
-              Greek in it looks worse for that reason.
+              Alphabetic scripts only, so every rate is per 1,000 words. The dates and the manuscript label come from our
+              records, which are often missing or wrong, so the early rows here likely hold manuscripts filed as print.
+              In Latin, where each book&rsquo;s form was checked on its image, the difference is handwriting, not date
+              (<IssueLink num={7947} />). In this draw the early books read by the mid-tier
+              model and by the lightest model come out alike ({eraRoute('before 1501', '3flash')?.severe_per_1k} and{' '}
+              {eraRoute('before 1501', 'lite')?.severe_per_1k} per 1,000), but those are different books, five or so each.
+              Where both engines read the same gothic pages, readers preferred the mid-tier reading on 14 of 15
+              (<IssueLink num={6375} />), so the engine still matters on early print. Languages are mixed in each row, so a
+              row with more Greek in it looks worse for that reason.
             </p>
           </div>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
@@ -705,6 +741,41 @@ export default function QualityCenterPage() {
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_era_alphabetic</code> and{' '}
             <code>by_era_route_alphabetic</code>, unweighted. The date is the catalogue&rsquo;s; a manuscript is a book whose
             pages our records mark as handwritten, whatever its date.
+          </Source>
+
+          <Sub>The English on the same pages</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              Readers mostly read the English. On the {n(englishOn7866.translator.fidelity_ge4_weighted.pages)} pages of
+              this draw that carry an English translation ({n(englishOn7866.translator.fidelity_ge4_weighted.books)} books),
+              An AI reviewer read each translation against its transcription and the photograph. Measured against the
+              transcription it was made from, {pct(englishOn7866.translator.major_page_share_weighted.share)} of pages carry a
+              major error in the English ({pct(englishOn7866.translator.major_page_share_weighted.ci95[0])}–
+              {pct(englishOn7866.translator.major_page_share_weighted.ci95[1])}), about{' '}
+              {englishOn7866.translator.major_per_1k_english_words_weighted.value} per 1,000 English words. Counting a
+              misread transcription too, so asking whether the English tells a reader what the page says,{' '}
+              <b className="text-stone-900">{pct(englishOn7866.end_to_end.e2e_wrong_weighted.share)}</b> of pages are
+              wrong somewhere ({pct(englishOn7866.end_to_end.e2e_wrong_weighted.ci95[0])}–
+              {pct(englishOn7866.end_to_end.e2e_wrong_weighted.ci95[1])}).
+            </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              A bad transcription makes a major English error about{' '}
+              {englishOn7866.inherited.risk_ratio_weighted.value.toFixed(1)} times as likely, but it accounts for only about{' '}
+              {pct(englishOn7866.inherited.attributable_fraction_of_major_pages_weighted.value)} of the pages with one
+              ({pct(englishOn7866.inherited.attributable_fraction_of_major_pages_weighted.ci95[0])}–
+              {pct(englishOn7866.inherited.attributable_fraction_of_major_pages_weighted.ci95[1])}). The rest are the
+              translator&rsquo;s own. So reading the page again fixes some of the English, and translating it again fixes
+              more; on manuscripts and on Sanskrit and Korean, where the transcription is poor, nearly every major English
+              error sits on a bad transcription and both are needed.
+            </p>
+          </div>
+          <Source>
+            <A href={`${BLOB}scripts/eval/experiments/2026-11-02-translation-on-7866-draw-7968.md`}>The English on the
+            draw</A> (<IssueLink num={7968} />): {n(englishOn7866.translator.fidelity_ge4_weighted.pages)} of the{' '}
+            {n(servedGrades.pages)} pages carry English; the rest had none to judge. Weighted back to the library with the
+            draw&rsquo;s book weights. The judge passed its planted controls (swap, drop and repeat, 15 of 15 each). The
+            share a bad transcription accounts for is observational: books with poor transcriptions also differ in
+            language and hand.
           </Source>
 
           <Sub>What is actually wrong</Sub>
@@ -942,7 +1013,7 @@ export default function QualityCenterPage() {
             {twSource && (
               <>
                 Three-ways column: <A href={`${BLOB}${twSource}`}>{twSource.split('/').pop()}</A>, Wikisource and EEBO-TCP pages
-                of the same scan or edition, the current engine (flash-lite) on a plain transcription prompt; &ldquo;other&rdquo;
+                of the same scan or edition, the current engine (our lightest model) on a plain transcription prompt; &ldquo;other&rdquo;
                 is mostly marginal notes placed differently, and misreads.{' '}
               </>
             )}
@@ -1037,7 +1108,7 @@ export default function QualityCenterPage() {
             <Sub>Checked against the page image, {longDate(pageCheck.date)}</Sub>
           </div>
           <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
-            For four kinds of page we drew 30 pages for each way of reading them, and had Claude Opus, an AI reviewer,
+            For four kinds of page we drew 30 pages for each way of reading them, and had an AI reviewer
             read every text against the photograph of its page. A page is accepted when it could be published as that page&rsquo;s text: every line, in
             order, with the right words, names and numbers. A page has wrong text when it says something the page does not:
             words left out or added, another page&rsquo;s text, or a misread that changes the sense. Ways of reading we
@@ -1257,11 +1328,9 @@ export default function QualityCenterPage() {
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            The records below are working notes, and use three words of ours. A <i>route</i> is a way of reading a page: the
-            engine that reads it first, and any engine that then corrects it, joined by &gt;, as in{' '}
-            <i>lite&gt;opus</i>. A <i>cell</i> is a kind of page, a language with print or manuscript, as in{' '}
-            <i>latin-lite/print</i>. <i>agy</i> is Google&rsquo;s Antigravity command-line tool, through which we run Gemini
-            models on a subscription.
+            The records below are working notes, and use two words of ours. A <i>route</i> is a way of reading a page: the
+            engine that reads it first, and any engine that then corrects it, joined by &gt;. A <i>cell</i> is a kind of
+            page, a language with print or manuscript, as in <i>latin-lite/print</i>.
           </p>
 
           {MONTH_NOTE && (
@@ -1293,7 +1362,7 @@ export default function QualityCenterPage() {
             <Source>
               Generated from the benchmark results by{' '}
               <A href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`}>scripts/eval/build-ocr-pareto.mjs</A> whenever
-              the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the Gemini meter</A> and{' '}
+              the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the model-cost meter</A> and{' '}
               <A href={`${GH}blob/main/scripts/eval/ocr-engine-gpu-costs.json`}>each self-hosted run&rsquo;s record</A>.
               What we can run: <A href={`${GH}blob/main/scripts/eval/build-model-roster.mjs`}>scripts/eval/build-model-roster.mjs</A>.
               Testing the engines not yet tried is separate, priced work (<IssueLink num={5983} />).
@@ -1354,7 +1423,7 @@ export default function QualityCenterPage() {
               On {longDate(audit.date)} we checked whether the pages behind both sets of charts suit the measure. A script
               checked all {n(audit.checked.translation)} translation page slots and {n(audit.checked.ocr)} OCR pages.{' '}
               {audit.eye.pages} of them, one page per book, were read against the page image by {audit.eye.readers} AI
-              reviewers (Claude Opus). No scholar has read them yet.
+              reviewers. No scholar has read them yet.
             </p>
             <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed max-w-3xl">
               <li>
@@ -1385,7 +1454,7 @@ export default function QualityCenterPage() {
               </li>
               <li>
                 <b>Famous texts.</b> Some pages come from texts whose published English is widely reproduced, so a model may
-                recall it rather than translate. Share of such pages in each language&rsquo;s chart of Gemini models:{' '}
+                recall it rather than translate. Share of such pages in each language&rsquo;s chart of general models:{' '}
                 {audit.famous.map((f, i) => (
                   <span key={f.language}>
                     {i > 0 && ', '}

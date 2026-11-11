@@ -35,6 +35,16 @@ describe('isTrustedByUserAgent', () => {
     expect(isTrustedByUserAgent(req('Mozilla/5.0 (compatible; ChatGPT-User/1.0)'))).toBe(true);
     expect(isTrustedByUserAgent(req(GPTBOT))).toBe(false);
   });
+
+  it('trusts the other assistants seen fetching for a person (2026-11-10), exact strings from api_usage', () => {
+    for (const ua of ['grok-cli/1.0.46', 'GitHubCopilotRuntime-WebFetch', 'Google-NotebookLM',
+      'DuckAssistBot/1.2; (+http://duckduckgo.com/duckassistbot.html)']) {
+      expect(isTrustedByUserAgent(req(ua))).toBe(true);
+    }
+    // Training crawlers from the same operators stay untrusted.
+    expect(isTrustedByUserAgent(req('Mozilla/5.0 (compatible; meta-externalagent/1.1)'))).toBe(false);
+    expect(isTrustedByUserAgent(req('Mozilla/5.0 (compatible; Google-Extended)'))).toBe(false);
+  });
 });
 
 describe('botReadUpdate', () => {

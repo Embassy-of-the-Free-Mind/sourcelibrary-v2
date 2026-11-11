@@ -4,7 +4,10 @@
  * pacing is quotaFloor's (tests/unit/cli-ocr-lane.test.ts).
  */
 import { describe, it, expect } from 'vitest';
-import { weeklyReserve, LANE_RESERVES, RESERVE_DROP_HOURS } from '../../scripts/lib/agy-pools.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { weeklyReserve, LANE_RESERVES, RESERVE_DROP_HOURS, quotaError, noteAuthLoss, AUTH_PAGE_EVERY_MS } from '../../scripts/lib/agy-pools.mjs';
 import { quotaFloor } from '../../scripts/batch/cli-ocr-lane.mjs';
 
 const H = 3600e3;
@@ -54,5 +57,39 @@ describe('quotaFloor on the reserve (#7911)', () => {
   });
   it('a pilot\'s weeklyFloor still replaces the reserve', () => {
     expect(quotaFloor(b(0.3), { now: at(10), weeklyFloor: 0.4 }).ok).toBe(false);
+  });
+});
+
+// ── a lost login is not an empty pool (2026-11-08: milo expired on gex45, its lanes skipped silently) ──
+describe('quotaError', () => {
+  it('reads the CLI\'s auth failures as auth, in both shapes it prints', () => {
+    expect(quotaError('Error: authentication required. Run \'agy\' to log in, then retry.')).toBe('auth');
+    expect(quotaError('{"conversation_id":"","status":"ERROR","response":"","error":"authentication failed or timed out"}')).toBe('auth');
+  });
+  it('twin: another ERROR is error, a good reply is null', () => {
+    expect(quotaError('{"status":"ERROR","error":"deadline exceeded"}')).toBe('error');
+    expect(quotaError('{"status":"SUCCESS","command":{"data":{"groups":[]}}}')).toBeNull();
+    expect(quotaError('')).toBeNull();
+  });
+});
+
+describe('noteAuthLoss pages once per window per pool', () => {
+  const dir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'agy-auth-'));
+  const t0 = Date.parse('2026-11-08T11:00:00Z');
+  it('pages the first time, not again inside the window, and again after it', () => {
+    const d = dir(), sent: string[] = [], send = (t: string) => { sent.push(t); };
+    expect(noteAuthLoss('/root/.agy-milo', { now: t0, stampDir: d, send, host: 'gex45-1' }).paged).toBe(true);
+    expect(sent[0]).toBe('agy NOT LOGGED IN: .agy-milo on gex45-1');
+    expect(noteAuthLoss('/root/.agy-milo', { now: t0 + 60e3, stampDir: d, send, host: 'gex45-1' }).paged).toBe(false);
+    const old = new Date(t0 - AUTH_PAGE_EVERY_MS - 1);
+    fs.utimesSync(path.join(d, '.agy-milo.stamp'), old, old);
+    expect(noteAuthLoss('/root/.agy-milo', { now: t0 + 60e3, stampDir: d, send, host: 'gex45-1' }).paged).toBe(true);
+    expect(sent).toHaveLength(2);
+  });
+  it('twin: a second pool on the same box has its own window', () => {
+    const d = dir(), sent: string[] = [], send = (t: string) => { sent.push(t); };
+    noteAuthLoss('/root/.agy-milo', { now: t0, stampDir: d, send, host: 'h' });
+    expect(noteAuthLoss(null, { now: t0, stampDir: d, send, host: 'h' }).paged).toBe(true);
+    expect(sent).toEqual(['agy NOT LOGGED IN: .agy-milo on h', 'agy NOT LOGGED IN: default on h']);
   });
 });

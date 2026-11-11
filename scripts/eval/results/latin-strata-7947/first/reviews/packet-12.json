@@ -1,0 +1,733 @@
+[
+  {
+    "book_id": "69f33932876dd827cbc5487b",
+    "slot": 32,
+    "title": "Pontifical of the Abbey of Montier-en-Der",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An illuminated 16th-century liturgical manuscript in Latin (folio index of the abbot's offices, a notated Preface). Fits a Latin liturgical shelf; no tradition or collection is set.",
+    "rights_flag": null,
+    "structure_note": "Only 4 images for a manuscript of 150+ folios: pages 1-2 are the index of offices and page 3 is folio 'iiii.xx.ii' (82). This is a selection of leaves, not the whole book, and the record does not say so.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "De sancto iohanne baptista Ad vesperas f. l.",
+            "image": "Ad vesp. f. c. l.",
+            "problem": "the 'c' is dropped, so folio 150 becomes folio 50. The same slip recurs in 'Ad vesperas f. l.' (image 'Adv̄s f. c. l.')",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "In die xxviii.",
+            "image": "Indie xxviiii",
+            "problem": "folio 29 read as 28",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Missa f. iiii. xx. xiii. … Missa f. iiii. xx. xv. … Missa de die iiii. xx. xvii.",
+            "english": "The Mass is on folio 83. … the Mass is on folio 85. The Mass of the day is on folio 87.",
+            "problem": "In vigesimal notation iiii.xx.xiii is 4×20+13 = 93 (and 95, 97). Every one of these folio references is off by ten, and page 3 of this book ('iiii.xx.ii' = 82) shows the notation in use.",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "In die missa f. iiii",
+            "english": "On the day of the Mass, folio 4.",
+            "problem": "should read 'On the day [of the Ascension], Mass, folio 4'",
+            "severity": "moderate"
+          },
+          {
+            "source": "Ad vesperas laudes terciam folio xlviii",
+            "english": "see folio 48",
+            "problem": "image 'f. c. xlviii' = 148; the dropped 'c' carries into the English",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the image description is rendered as a <note> and a <meta> ('An illuminated drop cap 'D' begins the following line') sits inline in the reader text",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Adventus in vigilia·f·ci … Adventus·f·clii … Adventus·f·cliii (throughout)",
+            "image": "Adv̄s (= ad vesperas)",
+            "problem": "'Adv̄s' is the abbreviation for 'ad vesperas', which page 1 expands correctly. Here it is expanded every time as 'Adventus', and the English then lists 'Advent' as a feast under every saint.",
+            "severity": "serious",
+            "class": "O9"
+          },
+          {
+            "ocr": "cobo·f·ii",
+            "image": "cobo · f · c · ii",
+            "problem": "folio 102 read as 2",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Adventus in vigilia·f·ci",
+            "image": "Adv̄s in vigi^a f · c · li",
+            "problem": "folio 151 read as 101",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "In vigilia beati Eucharii",
+            "image": "In vigilia b̄ti ƀchari (Bercharii)",
+            "problem": "St Bercharius, founder of Montier-en-Der, is read as 'Eucharius'",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Adventus in vigilia·f·ci",
+            "english": "On the vigil of the Advent, folio 101.",
+            "problem": "the source means vespers of the vigil of St James, f.151; the English invents an Advent vigil",
+            "severity": "serious",
+            "class": "O9"
+          },
+          {
+            "source": "In natiuitate beatae Mariae·Adventus·f·clii",
+            "english": "In the Nativity of the Blessed Mary, Advent, folio 152.",
+            "problem": "'Advent' on a Marian feast is nonsense to a reader; the source says vespers",
+            "severity": "serious",
+            "class": "O9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "chant notation is not transcribed, only mentioned in the warning; acceptable",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A beautiful manuscript, but its folio index is wrong in the reader text. 'Ad vesperas' is expanded as 'Advent' on page 2, and the folio numbers are wrong (dropped 'c' hundreds, and vigesimal 93/95/97 given as 83/85/87). An expert would catch this at once."
+  },
+  {
+    "book_id": "69f33ac2876dd827cbc58229",
+    "slot": 46,
+    "title": "[Composite manuscript relating to Federico Borromeo]",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Nothing on the pages confirms the content: the images are microfilm contact strips too small to read, so the Borromeo attribution and the 'Latin' label cannot be checked from the scans.",
+    "rights_flag": null,
+    "structure_note": "Each 'page' image is a 2001×219 px strip holding 5–6 microfilm openings in a row, so no single leaf is a page unit and nothing is legible (I5/I7). The 13 pages are 13 strips. The OCR invented text for them.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "\"Si deve avvertire che in questo modo di sonare si richiede una grande attenzione alla posizione delle dita…\" plus a 3-row 'String | Position' table",
+            "image": "a strip of five microfilm openings of notation and cursive text, illegible at 219 px high",
+            "problem": "The quotation and the table are invented. The model itself says the image is 'a composite of multiple manuscript openings', and the 'lute tablature' reading is not supported by what is visible (staves with notes).",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Si deve avvertire che…",
+            "english": "One must be warned that in this way of playing…",
+            "problem": "a faithful translation of invented text: nothing here is a translation of this page",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented headings '# Musical Tablature and Commentary' / '## Transcription of Representative Section' and a description of the manuscript in place of a transcription",
+            "severity": "serious",
+            "class": "O14"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 8,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "*Sopra il medesimo soggetto si può fare un altro contrapunto* … *Nota che in questo passaggio si deve osservare la regola del contrapunto…*",
+            "image": "a strip of six microfilm openings (staves, cursive text, blank leaves), illegible",
+            "problem": "Four Italian sentences about counterpoint are invented as a 'representative transcription'. The strip also includes blank openings and a Latin-looking text block that the OCR does not mention.",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Si può ancora far questo contrapunto…",
+            "english": "One can also make this counterpoint, which is very artful…",
+            "problem": "translation of invented text",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "Model chat sits in the OCR: 'This request involves the transcription of a multi-page musical manuscript… I will provide a representative transcription' and '**Note to user:** The provided image is a composite…'",
+            "severity": "serious",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Ad eundem</margin> Quod ad me attinet, Illustrissime ac Reverendissime Domine… in hoc negotio, quod ad Bibliothecam Ambrosianam spectat…",
+            "image": "a strip of six microfilm openings of dense cursive, illegible at this size",
+            "problem": "A whole fluent Latin letter to Borromeo about the Ambrosiana is invented, plainly built from the catalogue title.",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "in hoc negotio, quod ad Bibliothecam Ambrosianam spectat",
+            "english": "in this matter regarding the Ambrosian Library",
+            "problem": "translation of invented text; a reader would cite this letter as a source",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "the OCR opens with model narration: 'This transcription covers the final visible page of the provided manuscript sequence'",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Don't show it. The scans are contact-sheet strips nobody can read, and the text on all three pages is invented (tablature notes, counterpoint maxims, an Ambrosiana letter), with model chat to the user stored in the OCR. Contain these pages and re-image the book."
+  },
+  {
+    "book_id": "69c899d56c6f3cc53c85cfb2",
+    "slot": 44,
+    "title": "Sermonum ... ad populum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Strassburg c.1525 edition of Hus. The sampled pages come from his tract on the abomination of priests and monks ('De … carnalium abominatione', 'De Sacerdotum & Monachorum…'), presumably bound in the same volume. Fits an early-Reformation Latin shelf.",
+    "rights_flag": null,
+    "structure_note": "163 pages, 162 OCR'd, 159 translated; printed leaf numbers (xiiii, liiii) and signatures look consistent. The running header shows that the sampled text is a different tract from the 'Sermones' of the title, probably a composite edition (worth a catalogue note, not a defect).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>rum carnalium abominatione. xiii</header>",
+            "image": "xiiii",
+            "problem": "leaf number misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "sibi contrarios et corripientes",
+            "image": "sibi contrarios & se corripientes",
+            "problem": "'se' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "possit dominus crucifixus, et ipsius agni mites…",
+            "english": "so that the crucified Lord and the mild and innocent lambs … might be possible",
+            "problem": "an awkward rendering of a fragment carried over from the previous page",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page: granting them lying papal bulls</meta> is continuity meta shown in the reader",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Caput xxii.",
+            "image": "Caput xxiij.",
+            "problem": "chapter 23 read as 22, and carried into the English as 'Chapter 22'",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Ante Reges & Præsides domini propter nomen meum",
+            "image": "Ante Reges & Præsides ducemini",
+            "problem": "'ducemini' misread (the English supplies the right sense from the Gospel)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "omne ulciscendi obedientia",
+            "image": "omnē ulcisci inobedientiā",
+            "problem": "garbled, though the English gets 'disobedience' right",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Hoc caput in exemplari apparet truncatum.",
+            "image": "apparebat truncatum",
+            "problem": "tense changed",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "quia in tolerantia spiritussancti in ipsis",
+            "image": "quia ob intolerantiā spiritussancti in ipsis",
+            "problem": "'ob intolerantiam' is read as 'in tolerantia', which reverses the clause",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<page-num>liii</page-num>",
+            "image": "liiij",
+            "problem": "leaf number misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Psa. cxxiii",
+            "image": "Psa. cxxij",
+            "problem": "psalm reference misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "quia in tolerantia spiritussancti in ipsis … desolatur a spiritusancto",
+            "english": "Because the tolerance of the Holy Spirit in them … is made desolate of the Holy Spirit",
+            "problem": "The source says they are desolated because of the Holy Spirit's intolerance toward them. The English speaks of His 'tolerance', and the sentence loses its sense.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the running header 'rum carnalium abominatione' is promoted to a heading '### On the abomination of carnal things'",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, readable print with solid OCR and a faithful translation. The only slips are a chapter number, a few leaf numerals and one 'ob intolerantiam' misread. Showable."
+  },
+  {
+    "book_id": "69b3f763a107e55a0ee1d27a",
+    "slot": 101,
+    "title": "Commentary on Aristotle's De interpretatione / Boethius (BPL 25)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Boethius' commentary on Aristotle's De interpretatione in Caroline minuscule (Leiden BPL 25). Belongs on a Latin philosophy shelf.",
+    "rights_flag": null,
+    "structure_note": "Each image is a full opening (two leaves) at only 1000 px wide, read as one page in two 'columns' (I3). At this resolution a heavily abbreviated 10th-century hand cannot be transcribed reliably, and the OCR shows it. 46 of 50 pages are OCR'd and 43 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Et r'e septem ut quae de altero praedicant nota … **S**epimque ubi ea significat",
+            "image": "Et est semper eorum quae de altero praedicantur nota … Semper…",
+            "problem": "Aristotle's lemma ('and it is always a sign of things predicated of something else') is garbled into 'r'e septem' ('seven')",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Aer ubi q' d'o quenda significat … hoc ubi ubi ubi significat … ual uocibus uoce uerba",
+            "image": "dense abbreviated Caroline text",
+            "problem": "Long stretches of word-salad and repeated tokens: in large parts the text is not what the leaf says.",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Omnem quoniam verbum significat … At uero ubi passio sit in subiecto; numquid?",
+            "image": "Omne enim uerbum significat … Actio uero et passio …",
+            "problem": "the opening of the Boethius exposition is misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Aer ubi q' d'o quenda significat",
+            "english": "Air where [q' d'o] something signifies.",
+            "problem": "garbled source rendered word by word as nonsense, with no uncertainty flag at passage level",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Et r'e septem ut quae de altero praedicant",
+            "english": "And r'e seven as those which are predicated of another",
+            "problem": "the lemma is lost and 'seven' invented",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 24,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<term>Philos[ophus]</term>",
+            "image": "historia / hyst (the manuscript's lemma marker, which page 37 keeps as 'hyst')",
+            "problem": "The scribe's lemma label is normalised to 'Philosophus', and the English attributes lines to 'the Philosopher'. The convention also flips between pages.",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "quod nihil omnino homines opinantur consiliari",
+            "image": "oporteat consiliari",
+            "problem": "verb misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Longi lusum est … Est autem heptagonon hoc modo",
+            "image": "Longum hyperbaton est … Est autem hyperbaton",
+            "problem": "'hyperbaton' misread twice, once as 'heptagon'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<note>Likely referring to Aristotle, often called \"Philosophus\" in scholastic commentaries.</note>",
+            "image": "—",
+            "problem": "model commentary inside the OCR",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Longi lusum est",
+            "english": "It has been played with at length",
+            "problem": "a translation of a misread ('hyperbaton' → 'lusum')",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Quare foventur: si praedicantur vere",
+            "english": "Wherefore they are fostered: if they are predicted truly",
+            "problem": "fluent English over a garbled source",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "| Negans | Contradicens | Affirmans | Contraria affir. | (a 4-cell row in a 3-column table)",
+            "image": "the boxed modal diagrams at the head of each leaf",
+            "problem": "the structure of the modal-opposition diagram is broken and its cells misaligned",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "Haec autem descriptio ne melius patebit",
+            "image": "hoc descriptione melius patebit (approx.)",
+            "problem": "garbled; the English renders 'clearer to me'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Negans omnino affirmans contraria affirmans.",
+            "english": "Denying altogether, affirming, contrary, affirming.",
+            "problem": "diagram labels flattened into a meaningless sentence",
+            "severity": "moderate",
+            "class": "O17"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "An important early manuscript scanned too small (1000-px openings) for its abbreviated hand. The OCR drifts into word-salad on page 12 and normalises the scribe's 'historia' markers. The English renders that garble as confident nonsense. Re-image at full resolution before it is shown."
+  },
+  {
+    "book_id": "69b419052b0edf3eaa2de888",
+    "slot": 68,
+    "title": "Liber Experimentorum: Johannes Trithemius (PH206)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 17th-century Latin manuscript of 'experiments' (recipes, charms, natural magic) attributed to Trithemius, which belongs on a BPH occult/natural-magic shelf.",
+    "rights_flag": null,
+    "structure_note": "160 images, all OCR'd, 140 translated. The written pagination runs four behind the image number (33/37, 69/73, 104/108) and is consistent. Page 108 ends with FINIS, so the remaining ~50 images are presumably another section or blanks; worth checking.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "absque bove eius in fuit ab eo, existimando esse daemonium",
+            "image": "usq[ue] uxor eius fugit ab eo, existimans eum esse daemoniacum",
+            "problem": "'until his wife fled from him, thinking him possessed' becomes 'without his ox'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "in lacte uentris multo",
+            "image": "in lacte recenter mulsito",
+            "problem": "'freshly drawn milk' read as 'milk of the womb', an invented ingredient",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Oleo balsamum et roreum Columbiana ℥ ii. … soluet maleficum in brega spei",
+            "image": "Oleum sesamini et cerebrum Columbi ana ʒ ii … soluit maleficium in utroque sexu",
+            "problem": "ingredients wrong (sesame oil and pigeon's brain become balsam and 'rosemary'), and 'in both sexes' becomes 'in the member'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Recipe moschi ℈ i. et eda et misce",
+            "image": "℞ moschi gr. ii zibeth… et misce",
+            "problem": "the civet ingredient is read as 'eda', which the English renders as 'eat it'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "eura domestica … appetitibus roborandi et brega copitat",
+            "image": "Eruca domestica … appetitum coeundi et virgam excitat",
+            "problem": "'eruca' (rocket) misread; the English calls it 'savory'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "potenter ueritatem uirilem roborandi",
+            "image": "potenter excitat viros coeundi (approx.)",
+            "problem": "misread, leading to 'strengthening the male truth'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "absque bove eius in fuit ab eo",
+            "english": "even without his ox being in it, thinking it to be a demon",
+            "problem": "invented sense over a misread, carried fluently",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "in lacte uentris multo",
+            "english": "in much milk of the womb",
+            "problem": "invented ingredient in a recipe",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation shows broken markup: an empty '<margin></margin>' followed by a stray '</margin>' (twice), and the 'Aliud' rubrics are tagged as <note>",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 73,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "quo nato, mox secundam deponat ab ipsa",
+            "image": "quo nato, mox schedula deponatur ab ipsa",
+            "problem": "The charm-slip (schedula) to be removed is normalised to 'secundam', and the English says the afterbirth. The instruction changes.",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "de ista pulchra matre tua … Infans bene faciat",
+            "image": "de ista vulva matris tuae … Infans veni foras",
+            "problem": "the charm's words misread: 'beautiful mother', and 'let the infant do well' instead of 'infant, come out'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "et tunc di nostient au fatuo sit matuent au non",
+            "image": "partuiendi, nesciens an fetus sit mortuus an non",
+            "problem": "'not knowing whether the fetus is dead' is garbled, and the English leaves gaps",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "et materno sine dubio impraegnabit",
+            "image": "et mas erit sine dubio, impregnabitur",
+            "problem": "'it will certainly be a boy' is lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Si mulier ante foeda voluerit matrice pregata, potaverit semen…",
+            "english": "If a woman... wishes to have a purged womb, she should drink parsnip seed",
+            "problem": "the source is 'if before the hour of coitus, her womb purged, she drinks…'; the condition is invented",
+            "severity": "moderate"
+          },
+          {
+            "source": "Recipe os folia teria pyrola",
+            "english": "Take the leaves of the herb Pyrola",
+            "problem": "'three leaves, in the mouth' dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<margin>190</margin> is placed at the top of the page, but no 190 is visible on this leaf",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 108,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Si pulveres de spulmeo S. Voldavici quonda[m] Ang. Ep.",
+            "image": "de sepulchro S. Udalrici quondam Aug. Ep.",
+            "problem": "St Ulrich, bishop of Augsburg, is misread, and the English makes him 'Saint Walpurga, formerly the English Bishop'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "arbor illa non durat fenestra … arbores, fenetela, arundines",
+            "image": "arbor illa non producet fructum … arbores, frutecta(?), arundines",
+            "problem": "misreads give 'does not last as a window' and 'windows' among plants",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "pone 8. lot. pulveris pulverizati",
+            "image": "pone 8. lot. sulphuris pulverizati",
+            "problem": "the ingredient (sulphur) is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi",
+            "image": "cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus argenti vivi",
+            "problem": "the recipe's proportions and its sulphur and quicksilver are garbled away",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "S. Voldavici quonda[m] Ang. Ep.",
+            "english": "Saint Walpurga <note>original: \"S. Voldavici\"</note>, formerly the English Bishop",
+            "problem": "wrong saint and an invented 'English' bishop, on a cult object a reader may cite",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "arbor illa non durat fenestra",
+            "english": "that tree does not last as a window <note>likely meaning the tree ceases to provide shade or a view</note>",
+            "problem": "a gloss invented to rationalise a misread",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Septi sumbus die dirimunt.",
+            "english": "They are set apart on the seventh day.",
+            "problem": "invented sense over a garbled line ('Expertum tamen…')",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the arrow markup '->To put to flight shrews and all mice.<-' and '->THE END<-' shows in the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A good scan of a hard 17th-century hand, but the OCR misreads ingredients and names on every page. The English carries them fluently: an ox, 'milk of the womb', St Walpurga the 'English Bishop'. A reader of the recipes is misled. Caveat at best; re-read with a stronger engine."
+  }
+]

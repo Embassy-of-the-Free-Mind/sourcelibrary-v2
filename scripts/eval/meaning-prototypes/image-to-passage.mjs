@@ -42,7 +42,7 @@ import { createClient } from '@supabase/supabase-js';
 import { arg, normalise, embedAll } from '../embed-granularity/lib.mjs';
 import { logUsage } from '../../workers/lib/supabase-usage-logger.mjs';
 
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2';
 const DIMS = 768;
 const ENDPOINT = 'eval/meaning-prototypes';
 // Google lists image input for this model at $0.45 per 1M tokens; an image is

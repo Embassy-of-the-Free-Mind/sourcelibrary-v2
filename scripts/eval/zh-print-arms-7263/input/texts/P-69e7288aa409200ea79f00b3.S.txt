@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>聖空五星新詞卷之八</header>
+<warning>Contains red ink punctuation and tonal markers (circles and semi-circles) interspersed throughout the text block.</warning>
+
+郎來。三日。而去。至夜焚香坐。伺。婦果攜女至。態度嫺婉。
+曠世無匹。婦謂女曰。畢郎與有宿分。郎須留止。明且早
+歸。勿貪睡也。畢與。握手入帷。款戀備至。事畢。笑曰。肥郎
+癡重。使人不堪。未明。即去。既夕。自來。曰。姊妹輩將為我
+賀新郎。明日。郎屈同去。問何所。曰。大姊作筵。去此不
+遠也。畢果。候之。良久不至。身漸倦慵。纔伏案頭。女忽入。
+曰。勞君久伺矣。乃握手而行。奄至一處。有大院落。直上
+中堂。則見燈燭熒熒。燦若星點。俄而。主人出。年近三旬。
+淡妝。絕美。斂衽。稱賀。已。將踐席。婢入。曰。二娘子至。見一
+
+<vocab>畢郎, 宿分, 嫺婉, 倦慵, 熒熒, 斂衽, 踐席</vocab>

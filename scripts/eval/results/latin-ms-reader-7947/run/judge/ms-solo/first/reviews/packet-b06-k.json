@@ -1,0 +1,51 @@
+[
+  {
+    "book_id": "b06-k", "slot": 1, "title": "Actus et consecratio crismatis in cena domini", "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "No tradition or collection is given. The pages are a late-Gothic illuminated missal: the Maundy Thursday chrism-mass introit 'Nos autem gloriari', then Kyrie and Gloria, the Canon 'Te igitur', and the noted Pater noster. Liturgy sits at the edge of the library's traditions, and without a collection it cannot be placed. The catalogue title is just the red rubric on the first leaf ('Actus et consecratio crismatis in cena domini'), not the name of the book. That is a mild I7 catalogue-identity issue.",
+    "rights_flag": null,
+    "structure_note": "structure counts are null. The three 'consecutive' pages are not consecutive leaves. Page 1 has the folio number '2' at lower right and ends at 'Quoniam'. Page 2 opens 'Te igitur', so the rest of the Gloria and everything up to the Canon is missing in between. Page 3 has the pencil foliation '12v' and opens 'Per omnia secula seculorum', and its text does not follow on from page 2's 'quorum tibi fides co'. The images look like a selected set of photographs or slides of Houghton fMS Typ 309, not a full run of leaves. No page is translated (translation is null on all three).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation on this page (translation is null); a reader gets only the Latin.", "severity": "minor", "class": "other:untranslated" },
+          { "note": "The shelfmark slip 'fMS Typ 309' is transcribed as <insert>, as though it were part of the text.", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation on this page (translation is null).", "severity": "minor", "class": "other:untranslated" },
+          { "note": "The shelfmark slip 'fMS Typ 309' is transcribed as <insert>.", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation on this page (translation is null).", "severity": "minor", "class": "other:untranslated" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is accurate on all three leaves. Abbreviations are expanded correctly ('ihu xpe' → 'ihesu christe', 'Quo' → 'Quoniam'), and the descriptions of the initials, borders and seven staves match the images. Nothing is translated, the pages jump from f.2 to the Canon to f.12v, and the title is the first rubric rather than the work's name. These are catalogue and coverage gaps, not errors a reader would be misled by."
+  }
+]

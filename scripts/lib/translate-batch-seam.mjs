@@ -66,6 +66,7 @@ import { isHeld } from './pipeline-hold.mjs';
 import { ocrTrustGate } from './ocr-trust-gate.mjs';
 import { applyPreTranslationGate, preGateBookReason } from './pre-translation-gate.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
+import { stripAnchor } from './block-page-guard.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { parseFolioMarkedText } from './folio-markers.mjs';
@@ -103,9 +104,11 @@ const DEAD_STATES = new Set(['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STA
 /**
  * Partition pages (already in page order) into blocks exactly as the realtime worker
  * does: up to BLOCK_SIZE pages, ended early by a page under MIN_OCR_CHARS_FOR_BLOCK or by
- * the block passing MAX_BLOCK_OCR_CHARS; a short first page is a block of one.
+ * the block passing MAX_BLOCK_OCR_CHARS; a short first page is a block of one. `maxChars` is the source-character
+ * budget of one call (#8399: the marked per-call lane sizes its blocks by page density, so dense pages go 1–2 a call
+ * and light pages up to blockSize); a first page over the budget is still a block of one.
  */
-export function planBlocks(pages, { blockSize = BLOCK_SIZE } = {}) {
+export function planBlocks(pages, { blockSize = BLOCK_SIZE, maxChars = MAX_BLOCK_OCR_CHARS } = {}) {
   const blocks = [];
   let i = 0;
   while (i < pages.length) {
@@ -117,7 +120,7 @@ export function planBlocks(pages, { blockSize = BLOCK_SIZE } = {}) {
         const len = (rest[j].ocr?.data || '').length;
         if (len < MIN_OCR_CHARS_FOR_BLOCK) break;
         chars += len;
-        if (chars > MAX_BLOCK_OCR_CHARS) break;
+        if (chars > maxChars) break;
         size++;
       }
     }
@@ -207,9 +210,11 @@ export function parseBlockResponse(responseText, pages, { onDrift, onTruncated, 
   let m;
   while ((m = re.exec(responseText)) !== null) {
     const n = parseInt(m[1], 10);
-    const text = sanitizeTranslationTags(m[2].trim());
+    // An anchor line (#5021 block-page-guard.mjs) is never English: off before the tags are sanitised.
+    const raw = stripAnchor(m[2]).text;
+    const text = sanitizeTranslationTags(raw);
     if (tooShort(pages.find(p => p.page_number === n), text)) continue;
-    if (cut(pages.find(p => p.page_number === n), m[2].trim())) continue;
+    if (cut(pages.find(p => p.page_number === n), raw)) continue;
     out.set(n, text);
     entries.push(text);
   }

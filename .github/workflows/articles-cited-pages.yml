@@ -1,0 +1,43 @@
+name: Open pages our articles cite
+
+# The metered reader (#4357) shows signed-out readers the first 20% of a book
+# plus pages flagged seo_indexable. A page an article or letter cites beyond
+# that showed a scan with no English: 265 of 456 article citations on
+# 2026-11-11. This flags every cited page when the writing that cites it lands
+# on main (scripts/lib/cited-pages.mjs lists the sources).
+#
+# Additive only: --cited-only never unsets a flag. Cloudflare is not purged from
+# here (no token in Actions), so a page whose signed-out render was already
+# cached opens within 24 h; a new citation is usually not cached yet.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/app/articles/**'
+      - 'src/app/es/articles/**'
+      - 'src/content/**'
+      - 'scripts/email/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: articles-cited-pages
+  cancel-in-progress: false
+
+jobs:
+  flag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Flag cited pages
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: node scripts/seo/flag-indexable-pages.mjs --cited-only

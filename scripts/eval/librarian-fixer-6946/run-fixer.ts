@@ -46,7 +46,7 @@ function callModel(prompt: string, logFile: string): Promise<{ reply: string; ms
       const t0 = Date.now();
       const env = { ...process.env };
       delete env.ANTHROPIC_API_KEY; // the subscription, never the API
-      const child = execFile(CLAUDE, ['-p', '--model', MODEL, '--allowedTools', ''], { cwd: os.tmpdir(), env, timeout: 20 * 60e3, maxBuffer: 16 << 20 }, (err, stdout, stderr) => {
+      const child = execFile(CLAUDE, ['-p', '--model', MODEL, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence'], { cwd: os.tmpdir(), env, timeout: 20 * 60e3, maxBuffer: 16 << 20 }, (err, stdout, stderr) => {
         const out = String(stdout ?? '');
         fs.writeFileSync(logFile, `${out}\n--- stderr ---\n${String(stderr ?? '')}\n${err ? String(err) : ''}`);
         if (parseFixerReply(out)) return resolve({ reply: out, ms: Date.now() - t0 });

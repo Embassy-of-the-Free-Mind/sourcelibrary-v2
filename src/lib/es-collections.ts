@@ -120,9 +120,9 @@ function hasEsEdition(b: { pages_translated_es?: number; language?: string }): b
   return (b.pages_translated_es ?? 0) > 0 || isNativeEdition(b as unknown as Record<string, unknown>, 'es');
 }
 
-type FeaturedImage = { thumbnail_url?: string; extracted_url?: string; image_url?: string } | string;
+export type FeaturedImage = { thumbnail_url?: string; extracted_url?: string; image_url?: string } | string;
 
-function imageCandidates(images: FeaturedImage[] | undefined, slug: string, heroImage?: string): string[] {
+export function imageCandidates(images: FeaturedImage[] | undefined, slug: string, heroImage?: string): string[] {
   const urls: string[] = [];
   const add = (u: string | undefined | null) => {
     const s = sanitizeThumbnail(u);

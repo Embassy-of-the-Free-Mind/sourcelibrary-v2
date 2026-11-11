@@ -57,11 +57,7 @@ export default function TechniqueIsLocalPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           Here is the fifth-century <em>Visuddhimagga</em>, the great Theravada practice manual,
-          which we hold in a{' '}
-          <Link href="/book/visuddhimagga-path-of-purification-in-thai" className="text-accent-rust hover:text-accent-rust underline">
-            1,282-page edition, translated nearly in full
-          </Link>
-          , specifying the middle stages of breath meditation. It does not say &ldquo;watch your
+          specifying the middle stages of breath meditation. It does not say &ldquo;watch your
           breath.&rdquo; It prescribes a sequence that deliberately generates rapture, then regulates it:
         </p>
 

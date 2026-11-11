@@ -3,8 +3,8 @@ import { after } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId, type Db } from 'mongodb';
-import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
-import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
+import { streamAgenticResponse, type LibrarianStep, type SourceCard, type ToolCallRecord } from '@/lib/embassy/librarian';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, applyLinkRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { isBareGreeting, greetingReply, isKeepalivePing, pingReply, duplicateReply, sameMessage } from '@/lib/embassy/greeting';
 import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/lib/embassy/replay-cache';
@@ -40,6 +40,8 @@ const ANON_DAILY_CEILING = Number(process.env.LIBRARIAN_ANON_DAILY_CEILING) || 5
  *                    apply these rewrites to the streamed text
  *   image_removals — fabricated image embeds; clients strip them from the
  *                    streamed text
+ *   link_removals — dead author, artwork and collection links; clients unlink
+ *                    them in the streamed text and keep the words
  *   grounding_edits — span rewrites from the grounding pass (#5904): dropped
  *                    unsupported sentences, unquoted paraphrases, attached
  *                    page citations, corrected captions. Sent BEFORE
@@ -241,18 +243,26 @@ export async function POST(request: NextRequest) {
   let fullText = '';
   let allSources: SourceCard[] = [];
   let turnUsage: LibrarianStep['usage'] | null = null;
+  // What the turn searched (#8151). Kept apart from `usage`, which arrives last
+  // and so is missing from exactly the turns that die part way through.
+  const toolCalls: ToolCallRecord[] = [];
   // Link repairs from the post-response citation check. Applied to the
   // persisted message (and the non-stream JSON reply); streaming clients get
   // the same fixes as a `citation_fixes` event and apply them on-screen.
   let citationFixes: CitationFix[] = [];
   // Fabricated image embeds to strip, same round trip as citationFixes.
   let imageRemovals: string[] = [];
+  // Dead non-book links to unlink, same round trip again.
+  let linkRemovals: string[] = [];
   // Grounding edits (#5904), computed on the raw streamed text — applied first.
   let groundingEdits: Array<{ find: string; replace: string; at?: number }> = [];
 
   /** The text as the reader should see it: grounded, links repaired, dead images dropped. */
   const finalizeText = (text: string) =>
-    applyImageRemovals(applyCitationFixes(applyGroundingEdits(text, groundingEdits), citationFixes), imageRemovals);
+    applyLinkRemovals(
+      applyImageRemovals(applyCitationFixes(applyGroundingEdits(text, groundingEdits), citationFixes), imageRemovals),
+      linkRemovals,
+    );
 
   /** One canned step in place of the agentic loop — greeting, ping, or duplicate. */
   const cannedText: string | null = bareGreeting
@@ -298,6 +308,7 @@ export async function POST(request: NextRequest) {
           inCollection: s.inCollection,
         })),
         usage: turnUsage,
+        ...(toolCalls.length > 0 ? { toolCalls } : {}),
         // Provenance of a replayed answer; also stops a replay being replayed.
         ...(replay ? { cachedFrom: replay.messageId, cachedFromThread: replay.threadId } : {}),
         ...(shortCircuit ? { shortCircuit } : {}),
@@ -316,6 +327,7 @@ export async function POST(request: NextRequest) {
   if (!stream) {
     try {
       for await (const step of agentSteps()) {
+        if (step.toolCall) toolCalls.push(step.toolCall);
         if (step.type === 'text') {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
@@ -324,6 +336,8 @@ export async function POST(request: NextRequest) {
           citationFixes = step.fixes || [];
         } else if (step.type === 'image_removals') {
           imageRemovals = step.removeUrls || [];
+        } else if (step.type === 'link_removals') {
+          linkRemovals = step.removeLinks || [];
         } else if (step.type === 'grounding_edits') {
           groundingEdits = step.edits || [];
         } else if (step.type === 'usage') {
@@ -338,6 +352,7 @@ export async function POST(request: NextRequest) {
           threadId: activeThreadId,
           message: message.slice(0, 500),
           error: (err instanceof Error ? `${err.message}\n${err.stack}` : String(err)).slice(0, 5000),
+          toolCalls,
           createdAt: new Date(),
         });
       } catch { /* best effort */ }
@@ -388,6 +403,7 @@ export async function POST(request: NextRequest) {
         threadId: activeThreadId,
         message: message.slice(0, 500),
         error: `Approaching maxDuration (${maxDuration}s). Last step: ${lastStepType}. Tool calls so far: ${toolCallCount}. Elapsed: ${Math.round((Date.now() - startedAt) / 1000)}s.`,
+        toolCalls,
         createdAt: new Date(),
       });
     } catch { /* best effort */ }
@@ -403,6 +419,7 @@ export async function POST(request: NextRequest) {
 
       for await (const step of agentSteps()) {
         lastStepType = step.type;
+        if (step.toolCall) toolCalls.push(step.toolCall);
         switch (step.type) {
           case 'thinking':
             await send({ type: 'thinking', text: step.text });
@@ -447,6 +464,11 @@ export async function POST(request: NextRequest) {
             await send({ type: 'image_removals', removeUrls: step.removeUrls });
             break;
 
+          case 'link_removals':
+            linkRemovals = step.removeLinks || [];
+            await send({ type: 'link_removals', removeLinks: step.removeLinks });
+            break;
+
           case 'grounding_edits':
             // The report is server-side accounting; only the edits go out.
             groundingEdits = step.edits || [];
@@ -486,6 +508,7 @@ export async function POST(request: NextRequest) {
           error: errMsg.slice(0, 5000),
           lastStepType,
           toolCallCount,
+          toolCalls,
           elapsedMs: Date.now() - startedAt,
           createdAt: new Date(),
         });

@@ -11,11 +11,16 @@
  *   node scripts/email/render-newsletter-preview.mjs \
  *     scripts/email/feedback-newsletter-2026-08.body.html \
  *     "How to tell us we got it wrong" \
- *     /tmp/preview.html
+ *     /tmp/preview.html [campaign-id]
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { tagEmailLinks, campaignSlug } from '../../src/lib/email-utm.ts';
 
-const [, , bodyPath, subject, outPath] = process.argv;
+// Optional 4th argument: the campaign id for utm tags on sourcelibrary.org links.
+// Defaults to the body file's name ("solve-et-coagula-2026-11.a"), so clicks from
+// a letter are countable in analytics_pageviews.utm without anyone remembering to tag.
+const [, , bodyPath, subject, outPath, campaignArg] = process.argv;
 if (!bodyPath || !subject || !outPath) {
   console.error('Usage: render-newsletter-preview.mjs <body.html> <subject> <out.html>');
   process.exit(1);
@@ -34,6 +39,7 @@ if (!shell.includes('${bodyHtml}') || !shell.includes('${subject}')) {
 }
 
 // Strip the HTML comment block the body files carry for their editors.
+const campaign = campaignArg || path.basename(bodyPath).replace(/\.body\.html$|\.html$/, '');
 const body = readFileSync(bodyPath, 'utf8').replace(/^\s*<!--[\s\S]*?-->\s*/, '');
 
 const html = shell
@@ -43,5 +49,6 @@ const html = shell
   // to expand. Point it somewhere harmless instead of leaving raw handlebars.
   .replaceAll('{{{RESEND_UNSUBSCRIBE_URL}}}', '#unsubscribe');
 
-writeFileSync(outPath, html);
-console.log(`Wrote ${outPath} (${html.length} bytes, body ${body.length})`);
+const tagged = tagEmailLinks(html, campaign);
+writeFileSync(outPath, tagged);
+console.log(`Wrote ${outPath} (${tagged.length} bytes, body ${body.length}, links tagged utm_campaign=${campaignSlug(campaign)})`);

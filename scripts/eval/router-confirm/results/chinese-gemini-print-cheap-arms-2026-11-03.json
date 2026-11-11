@@ -1,0 +1,3965 @@
+{
+ "at": "2026-11-03T15:02:48.549Z",
+ "cell": "chinese-gemini/print",
+ "issue": 7263,
+ "rule": {
+  "within": 0.08,
+  "wrong_text_max": 0.04,
+  "source": "rules.json switch"
+ },
+ "comparator": "served",
+ "frame": {
+  "books_in_frame": 10985,
+  "print_books": 202,
+  "print_pages": 27812,
+  "books_tried": 57,
+  "skipped": {
+   "no interior print body page of 100+ Han": 6,
+   "book in evidence": 3
+  },
+  "unit": "one page a book, books with probability proportional to print frame pages",
+  "repair_holds_left_out": "/contain|invented|wrong-leaf|scrambled|unsettled|served-audit|qa-/i"
+ },
+ "n": 30,
+ "by_stored_model": {
+  "lite": {
+   "n": 11,
+   "served": {
+    "accepted": "0/11",
+    "wrong_text_pages": 10,
+    "severe_per_1k": 30.72
+   },
+   "P": {
+    "accepted": "0/11",
+    "wrong_text_pages": 10,
+    "severe_per_1k": 30.72
+   },
+   "O": {
+    "accepted": "9/11",
+    "wrong_text_pages": 1,
+    "severe_per_1k": 0.95
+   },
+   "Pu": {
+    "accepted": "1/11",
+    "wrong_text_pages": 8,
+    "severe_per_1k": 11.43
+   },
+   "PFL": {
+    "accepted": "5/11",
+    "wrong_text_pages": 5,
+    "severe_per_1k": 6.67
+   },
+   "PFM": {
+    "accepted": "5/11",
+    "wrong_text_pages": 4,
+    "severe_per_1k": 6.67
+   },
+   "SFL": {
+    "accepted": "2/11",
+    "wrong_text_pages": 9,
+    "severe_per_1k": 18.34
+   },
+   "PSN": {
+    "accepted": "6/11",
+    "wrong_text_pages": 2,
+    "severe_per_1k": 4.52
+   },
+   "SSN": {
+    "accepted": "2/11",
+    "wrong_text_pages": 8,
+    "severe_per_1k": 11.67
+   }
+  },
+  "3flash": {
+   "n": 19,
+   "served": {
+    "accepted": "3/19",
+    "wrong_text_pages": 12,
+    "severe_per_1k": 13.15
+   },
+   "P": {
+    "accepted": "6/19",
+    "wrong_text_pages": 11,
+    "severe_per_1k": 7.98
+   },
+   "O": {
+    "accepted": "17/19",
+    "wrong_text_pages": 1,
+    "severe_per_1k": 1.4
+   },
+   "Pu": {
+    "accepted": "6/19",
+    "wrong_text_pages": 12,
+    "severe_per_1k": 8.95
+   },
+   "PFL": {
+    "accepted": "13/19",
+    "wrong_text_pages": 4,
+    "severe_per_1k": 5.04
+   },
+   "PFM": {
+    "accepted": "16/19",
+    "wrong_text_pages": 2,
+    "severe_per_1k": 2.1
+   },
+   "SFL": {
+    "accepted": "6/19",
+    "wrong_text_pages": 10,
+    "severe_per_1k": 8.81
+   },
+   "PSN": {
+    "accepted": "12/19",
+    "wrong_text_pages": 5,
+    "severe_per_1k": 3.08
+   },
+   "SSN": {
+    "accepted": "10/19",
+    "wrong_text_pages": 6,
+    "severe_per_1k": 6.72
+   }
+  }
+ },
+ "controls": [
+  {
+   "accept": false,
+   "fidelity": 1
+  },
+  {
+   "accept": false,
+   "fidelity": 1
+  }
+ ],
+ "arms": {
+  "served": {
+   "route": "gemini-stored",
+   "accepted": "3/30",
+   "wrong_text_pages": 22,
+   "fidelity_mean": 3.03,
+   "classes": {
+    "O5": 15,
+    "O6": 24,
+    "O16": 4,
+    "O12": 7,
+    "O7": 5,
+    "O1": 6,
+    "I6": 4,
+    "O10": 1,
+    "O11": 2,
+    "O8": 2,
+    "O4": 3,
+    "E2": 1,
+    "I1": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 223,
+    "severe_per_1k": 19.65,
+    "severe_per_1k_ci95": [
+     14.79,
+     24.84
+    ],
+    "wrong_text_defects": 126,
+    "wrong_text_per_1k": 11.11,
+    "wrong_text_per_1k_ci95": [
+     8.15,
+     13.69
+    ]
+   },
+   "served_outcomes": {
+    "stored text": 30
+   }
+  },
+  "P": {
+   "route": "paddle-print-read",
+   "accepted": "6/30",
+   "wrong_text_pages": 21,
+   "fidelity_mean": 3.23,
+   "classes": {
+    "O5": 12,
+    "O6": 22,
+    "O16": 3,
+    "O12": 8,
+    "O1": 5,
+    "O7": 2,
+    "O11": 2,
+    "O4": 4,
+    "O8": 1,
+    "I6": 1,
+    "E2": 1,
+    "O10": 1,
+    "I1": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 186,
+    "severe_per_1k": 16.39,
+    "severe_per_1k_ci95": [
+     10.43,
+     22.4
+    ],
+    "wrong_text_defects": 99,
+    "wrong_text_per_1k": 8.73,
+    "wrong_text_per_1k_ci95": [
+     5.34,
+     11.71
+    ]
+   },
+   "served_outcomes": {
+    "shorter_than_lite": 2,
+    "written": 17,
+    "lite_lines_missing": 10,
+    "faint_leaf": 1
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.100 >= -0.08; wrong text 21/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.1,
+    "d_ci95": [
+     -0.033,
+     0.233
+    ],
+    "gained": 4,
+    "lost": 1,
+    "sign_test_p": 0.375,
+    "wrong": "21 vs 22",
+    "made_wrong": 3,
+    "cleared_wrong": 4,
+    "severe_delta_per_1k": -3.26
+   }
+  },
+  "O": {
+   "route": "gemini>opus",
+   "accepted": "26/30",
+   "wrong_text_pages": 2,
+   "fidelity_mean": 4.5,
+   "classes": {
+    "O6": 5,
+    "O12": 1,
+    "I6": 1,
+    "O5": 1,
+    "I1": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 14,
+    "severe_per_1k": 1.23,
+    "severe_per_1k_ci95": [
+     0.28,
+     2.5
+    ],
+    "wrong_text_defects": 2,
+    "wrong_text_per_1k": 0.18,
+    "wrong_text_per_1k_ci95": [
+     0,
+     0.44
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 28,
+    "unchanged": 1,
+    "contain": 1
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.767 >= -0.08; wrong text 2/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.767,
+    "d_ci95": [
+     0.6,
+     0.9
+    ],
+    "gained": 23,
+    "lost": 0,
+    "sign_test_p": 0,
+    "wrong": "2 vs 22",
+    "made_wrong": 0,
+    "cleared_wrong": 20,
+    "severe_delta_per_1k": -18.42
+   }
+  },
+  "Pu": {
+   "route": "paddle-print-read-noguard",
+   "accepted": "7/30",
+   "wrong_text_pages": 20,
+   "fidelity_mean": 3.43,
+   "classes": {
+    "O5": 10,
+    "E2": 5,
+    "O6": 20,
+    "O10": 2,
+    "O1": 2,
+    "O4": 4,
+    "O12": 6,
+    "O8": 1,
+    "O7": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 112,
+    "severe_per_1k": 9.87,
+    "severe_per_1k_ci95": [
+     6.27,
+     14.08
+    ],
+    "wrong_text_defects": 61,
+    "wrong_text_per_1k": 5.38,
+    "wrong_text_per_1k_ci95": [
+     3.18,
+     7.65
+    ]
+   },
+   "served_outcomes": {
+    "noguard": 30
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.133 >= -0.08; wrong text 20/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.133,
+    "d_ci95": [
+     0,
+     0.3
+    ],
+    "gained": 5,
+    "lost": 1,
+    "sign_test_p": 0.2188,
+    "wrong": "20 vs 22",
+    "made_wrong": 5,
+    "cleared_wrong": 7,
+    "severe_delta_per_1k": -9.78
+   }
+  },
+  "PFL": {
+   "route": "paddle>agy-flash-low",
+   "accepted": "18/30",
+   "wrong_text_pages": 9,
+   "fidelity_mean": 3.9,
+   "classes": {
+    "O6": 13,
+    "O14": 1,
+    "O11": 3,
+    "O7": 5,
+    "O4": 2,
+    "O5": 5,
+    "O1": 2,
+    "O12": 5,
+    "O8": 2,
+    "O10": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 64,
+    "severe_per_1k": 5.64,
+    "severe_per_1k_ci95": [
+     3.55,
+     7.82
+    ],
+    "wrong_text_defects": 23,
+    "wrong_text_per_1k": 2.03,
+    "wrong_text_per_1k_ci95": [
+     0.95,
+     3.09
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 29,
+    "unchanged": 1
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.500 >= -0.08; wrong text 9/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.5,
+    "d_ci95": [
+     0.333,
+     0.667
+    ],
+    "gained": 15,
+    "lost": 0,
+    "sign_test_p": 0.0001,
+    "wrong": "9 vs 22",
+    "made_wrong": 0,
+    "cleared_wrong": 13,
+    "severe_delta_per_1k": -14.01
+   }
+  },
+  "PFM": {
+   "route": "paddle>agy-flash-medium",
+   "accepted": "21/30",
+   "wrong_text_pages": 6,
+   "fidelity_mean": 4.13,
+   "classes": {
+    "O1": 1,
+    "O6": 10,
+    "O5": 4,
+    "O8": 1,
+    "O7": 2,
+    "O12": 3,
+    "O13": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 43,
+    "severe_per_1k": 3.79,
+    "severe_per_1k_ci95": [
+     1.9,
+     5.76
+    ],
+    "wrong_text_defects": 13,
+    "wrong_text_per_1k": 1.15,
+    "wrong_text_per_1k_ci95": [
+     0.35,
+     2.13
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 26,
+    "unchanged": 4
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.600 >= -0.08; wrong text 6/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.6,
+    "d_ci95": [
+     0.433,
+     0.767
+    ],
+    "gained": 18,
+    "lost": 0,
+    "sign_test_p": 0,
+    "wrong": "6 vs 22",
+    "made_wrong": 0,
+    "cleared_wrong": 16,
+    "severe_delta_per_1k": -15.86
+   }
+  },
+  "SFL": {
+   "route": "gemini>agy-flash-low",
+   "accepted": "8/30",
+   "wrong_text_pages": 19,
+   "fidelity_mean": 3.27,
+   "classes": {
+    "O6": 20,
+    "O5": 8,
+    "O11": 2,
+    "O14": 1,
+    "O12": 9,
+    "O1": 4,
+    "O8": 2,
+    "O7": 3,
+    "I6": 2,
+    "O4": 2,
+    "O15": 1,
+    "E2": 1,
+    "I1": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 140,
+    "severe_per_1k": 12.34,
+    "severe_per_1k_ci95": [
+     8.7,
+     15.89
+    ],
+    "wrong_text_defects": 82,
+    "wrong_text_per_1k": 7.23,
+    "wrong_text_per_1k_ci95": [
+     4.79,
+     9.38
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 29,
+    "no-answer": 1
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.167 >= -0.08; wrong text 19/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.167,
+    "d_ci95": [
+     0.033,
+     0.3
+    ],
+    "gained": 5,
+    "lost": 0,
+    "sign_test_p": 0.0625,
+    "wrong": "19 vs 22",
+    "made_wrong": 0,
+    "cleared_wrong": 3,
+    "severe_delta_per_1k": -7.32
+   }
+  },
+  "PSN": {
+   "route": "paddle>sonnet",
+   "accepted": "18/30",
+   "wrong_text_pages": 7,
+   "fidelity_mean": 4.1,
+   "classes": {
+    "O6": 14,
+    "E2": 2,
+    "O12": 3,
+    "O5": 5,
+    "O1": 1,
+    "O7": 1,
+    "O4": 1,
+    "O11": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 41,
+    "severe_per_1k": 3.61,
+    "severe_per_1k_ci95": [
+     2.26,
+     5.21
+    ],
+    "wrong_text_defects": 13,
+    "wrong_text_per_1k": 1.15,
+    "wrong_text_per_1k_ci95": [
+     0.42,
+     1.88
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 24,
+    "unchanged": 6
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.500 >= -0.08; wrong text 7/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.5,
+    "d_ci95": [
+     0.3,
+     0.7
+    ],
+    "gained": 16,
+    "lost": 1,
+    "sign_test_p": 0.0003,
+    "wrong": "7 vs 22",
+    "made_wrong": 1,
+    "cleared_wrong": 16,
+    "severe_delta_per_1k": -16.04
+   }
+  },
+  "SSN": {
+   "route": "gemini>sonnet",
+   "accepted": "12/30",
+   "wrong_text_pages": 14,
+   "fidelity_mean": 3.6,
+   "classes": {
+    "O6": 18,
+    "O14": 1,
+    "O12": 6,
+    "I6": 4,
+    "O11": 2,
+    "O5": 5,
+    "E2": 4,
+    "O4": 2,
+    "O8": 2,
+    "O7": 1,
+    "I1": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 11346,
+    "severe": 97,
+    "severe_per_1k": 8.55,
+    "severe_per_1k_ci95": [
+     5.08,
+     12.88
+    ],
+    "wrong_text_defects": 39,
+    "wrong_text_per_1k": 3.44,
+    "wrong_text_per_1k_ci95": [
+     1.66,
+     5.58
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 26,
+    "unchanged": 3,
+    "contain": 1
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.300 >= -0.08; wrong text 14/30 within 0.04 of 22/30",
+    "n": 30,
+    "d": 0.3,
+    "d_ci95": [
+     0.133,
+     0.467
+    ],
+    "gained": 9,
+    "lost": 0,
+    "sign_test_p": 0.0039,
+    "wrong": "14 vs 22",
+    "made_wrong": 0,
+    "cleared_wrong": 8,
+    "severe_delta_per_1k": -11.11
+   }
+  }
+ },
+ "between": {
+  "O_vs_P": {
+   "verdict": "PASS",
+   "why": "d 0.667 >= -0.08; wrong text 2/30 within 0.04 of 21/30",
+   "n": 30,
+   "d": 0.667,
+   "d_ci95": [
+    0.5,
+    0.833
+   ],
+   "gained": 20,
+   "lost": 0,
+   "sign_test_p": 0,
+   "wrong": "2 vs 21",
+   "made_wrong": 0,
+   "cleared_wrong": 19,
+   "severe_delta_per_1k": -15.16
+  },
+  "PFL_vs_O": {
+   "verdict": "FAIL",
+   "why": "d -0.267 < -0.08; wrong text 9/30 over 2/30 + 0.04",
+   "n": 30,
+   "d": -0.267,
+   "d_ci95": [
+    -0.467,
+    -0.067
+   ],
+   "gained": 2,
+   "lost": 10,
+   "sign_test_p": 0.0386,
+   "wrong": "9 vs 2",
+   "made_wrong": 8,
+   "cleared_wrong": 1,
+   "severe_delta_per_1k": 4.41
+  },
+  "PFL_vs_O_retest": {
+   "verdict": "FAIL",
+   "why": "d -0.267 < -0.08; wrong text 9/30 over 1/30 + 0.04",
+   "n": 30,
+   "d": -0.267,
+   "d_ci95": [
+    -0.467,
+    -0.067
+   ],
+   "gained": 2,
+   "lost": 10,
+   "sign_test_p": 0.0386,
+   "wrong": "9 vs 1",
+   "made_wrong": 9,
+   "cleared_wrong": 1,
+   "severe_delta_per_1k": 4.67
+  },
+  "PFM_vs_O": {
+   "verdict": "FAIL",
+   "why": "d -0.167 < -0.08; wrong text 6/30 over 2/30 + 0.04",
+   "n": 30,
+   "d": -0.167,
+   "d_ci95": [
+    -0.367,
+    0.033
+   ],
+   "gained": 2,
+   "lost": 7,
+   "sign_test_p": 0.1797,
+   "wrong": "6 vs 2",
+   "made_wrong": 5,
+   "cleared_wrong": 1,
+   "severe_delta_per_1k": 2.56
+  },
+  "PFM_vs_O_retest": {
+   "verdict": "FAIL",
+   "why": "d -0.167 < -0.08; wrong text 6/30 over 1/30 + 0.04",
+   "n": 30,
+   "d": -0.167,
+   "d_ci95": [
+    -0.367,
+    0.033
+   ],
+   "gained": 2,
+   "lost": 7,
+   "sign_test_p": 0.1797,
+   "wrong": "6 vs 1",
+   "made_wrong": 6,
+   "cleared_wrong": 1,
+   "severe_delta_per_1k": 2.82
+  },
+  "SFL_vs_O": {
+   "verdict": "FAIL",
+   "why": "d -0.600 < -0.08; wrong text 19/30 over 2/30 + 0.04",
+   "n": 30,
+   "d": -0.6,
+   "d_ci95": [
+    -0.8,
+    -0.4
+   ],
+   "gained": 1,
+   "lost": 19,
+   "sign_test_p": 0,
+   "wrong": "19 vs 2",
+   "made_wrong": 17,
+   "cleared_wrong": 0,
+   "severe_delta_per_1k": 11.11
+  },
+  "SFL_vs_O_retest": {
+   "verdict": "FAIL",
+   "why": "d -0.600 < -0.08; wrong text 19/30 over 1/30 + 0.04",
+   "n": 30,
+   "d": -0.6,
+   "d_ci95": [
+    -0.8,
+    -0.4
+   ],
+   "gained": 1,
+   "lost": 19,
+   "sign_test_p": 0,
+   "wrong": "19 vs 1",
+   "made_wrong": 18,
+   "cleared_wrong": 0,
+   "severe_delta_per_1k": 11.37
+  },
+  "PSN_vs_O": {
+   "verdict": "FAIL",
+   "why": "d -0.267 < -0.08; wrong text 7/30 over 2/30 + 0.04",
+   "n": 30,
+   "d": -0.267,
+   "d_ci95": [
+    -0.467,
+    -0.067
+   ],
+   "gained": 2,
+   "lost": 10,
+   "sign_test_p": 0.0386,
+   "wrong": "7 vs 2",
+   "made_wrong": 6,
+   "cleared_wrong": 1,
+   "severe_delta_per_1k": 2.38
+  },
+  "PSN_vs_O_retest": {
+   "verdict": "FAIL",
+   "why": "d -0.267 < -0.08; wrong text 7/30 over 1/30 + 0.04",
+   "n": 30,
+   "d": -0.267,
+   "d_ci95": [
+    -0.467,
+    -0.067
+   ],
+   "gained": 2,
+   "lost": 10,
+   "sign_test_p": 0.0386,
+   "wrong": "7 vs 1",
+   "made_wrong": 7,
+   "cleared_wrong": 1,
+   "severe_delta_per_1k": 2.64
+  },
+  "SSN_vs_O": {
+   "verdict": "FAIL",
+   "why": "d -0.467 < -0.08; wrong text 14/30 over 2/30 + 0.04",
+   "n": 30,
+   "d": -0.467,
+   "d_ci95": [
+    -0.633,
+    -0.3
+   ],
+   "gained": 0,
+   "lost": 14,
+   "sign_test_p": 0.0001,
+   "wrong": "14 vs 2",
+   "made_wrong": 12,
+   "cleared_wrong": 0,
+   "severe_delta_per_1k": 7.32
+  },
+  "SSN_vs_O_retest": {
+   "verdict": "FAIL",
+   "why": "d -0.467 < -0.08; wrong text 14/30 over 1/30 + 0.04",
+   "n": 30,
+   "d": -0.467,
+   "d_ci95": [
+    -0.633,
+    -0.3
+   ],
+   "gained": 0,
+   "lost": 14,
+   "sign_test_p": 0.0001,
+   "wrong": "14 vs 1",
+   "made_wrong": 13,
+   "cleared_wrong": 0,
+   "severe_delta_per_1k": 7.58
+  },
+  "O_vs_Pu": {
+   "verdict": "PASS",
+   "why": "d 0.633 >= -0.08; wrong text 2/30 within 0.04 of 20/30",
+   "n": 30,
+   "d": 0.633,
+   "d_ci95": [
+    0.433,
+    0.833
+   ],
+   "gained": 20,
+   "lost": 1,
+   "sign_test_p": 0,
+   "wrong": "2 vs 20",
+   "made_wrong": 1,
+   "cleared_wrong": 19,
+   "severe_delta_per_1k": -8.64
+  }
+ },
+ "per_page": [
+  {
+   "book_id": "6a05f0bf6a888f57ebd77426",
+   "page_id": "6a05f0bf6a888f57ebd77686",
+   "page_number": 608,
+   "title": "正統道藏 Zhengtong Daozang vol. 5 (Ming imperial Daoist canon, with 黃庭經 Huangting ji",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 828,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 21,
+    "classes": [
+     "O5",
+     "O6",
+     "O16"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 21,
+    "classes": [
+     "O5",
+     "O6",
+     "O16"
+    ],
+    "why": "shorter_than_lite"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 6,
+    "classes": [
+     "O5",
+     "E2",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O6",
+     "O14",
+     "O11",
+     "O7"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O1",
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 14,
+    "classes": [
+     "O6",
+     "O5",
+     "O11",
+     "O14"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O6",
+     "O14"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6992f3d4dc69844b023ff228",
+   "page_id": "6992f3d4dc69844b023ff2a7",
+   "page_number": 127,
+   "title": "釋氏源流應化事蹟 (Shishi Yuanliu: Illustrated Life of the Buddha)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 311,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   }
+  },
+  {
+   "book_id": "69e8b25c2ff2a8dc09e7773b",
+   "page_id": "69e8b25c2ff2a8dc09e77805",
+   "page_number": 202,
+   "title": "道德經 (Dào Dé Jīng)",
+   "stored_model": "gemini-3.1-flash-lite-preview",
+   "han": 100,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O12"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O12"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O12"
+    ],
+    "why": "unchanged"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 3,
+    "classes": [
+     "E2",
+     "O10",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "E2",
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O12"
+    ],
+    "why": "unchanged"
+   }
+  },
+  {
+   "book_id": "6a09f79aec7a5a72f8daafe5",
+   "page_id": "6a09f79aec7a5a72f8dab192",
+   "page_number": 429,
+   "title": "史記 (Shiji, 130 juan): Qing 1884 photolithograph, vols. 1-6",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 301,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O12",
+     "O7"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O7"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6992f3d9dc69844b023ff452",
+   "page_id": "6992f3d9dc69844b023ff4b3",
+   "page_number": 97,
+   "title": "圖像本草蒙筌 (Tuxiang Bencao Mengquan: Illustrated Herbal Primer)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 504,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 14,
+    "classes": [
+     "O1",
+     "I6",
+     "O6",
+     "O5",
+     "O10"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "I6",
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6",
+     "O4"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O1",
+     "O6",
+     "O8"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "I6",
+     "O11",
+     "O6",
+     "O5"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69f33c10876dd827cbc597ed",
+   "page_id": "69f33c10876dd827cbc599eb",
+   "page_number": 510,
+   "title": "Liu yi liu bie, 20 juan",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 413,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O6",
+     "O5"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "unchanged"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69e7287aa409200ea79efea0",
+   "page_id": "69e7287aa409200ea79efed3",
+   "page_number": 51,
+   "title": "聊齋志異 Vol. 5",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 261,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 16,
+    "classes": [
+     "O1",
+     "O5",
+     "O6",
+     "O7",
+     "O11"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 16,
+    "classes": [
+     "O1",
+     "O5",
+     "O6",
+     "O7",
+     "O11"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 10,
+    "classes": [
+     "O5",
+     "O6",
+     "O1"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6",
+     "O5"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 7,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 14,
+    "classes": [
+     "O6",
+     "O5",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 12,
+    "classes": [
+     "E2",
+     "O5",
+     "O6",
+     "O4"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6992cbd8018b80967354ba40",
+   "page_id": "6992cbd8018b80967354bc2d",
+   "page_number": 492,
+   "title": "農政全書 (Nongzheng Quanshu: Complete Treatise on Agricultural Administration)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 841,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 20,
+    "classes": [
+     "O1",
+     "O5",
+     "O6",
+     "O7",
+     "O16"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 26,
+    "classes": [
+     "O4",
+     "O5",
+     "O6",
+     "O1"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 4,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 26,
+    "classes": [
+     "O4",
+     "O5",
+     "O6",
+     "O1"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 14,
+    "classes": [
+     "O6",
+     "O5",
+     "O1",
+     "O7"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "O5",
+     "O6",
+     "O8",
+     "O7"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 18,
+    "classes": [
+     "O6",
+     "O1",
+     "O12",
+     "O5",
+     "O7"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 8,
+    "classes": [
+     "O5",
+     "O1",
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 16,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a1d81b45afc14a085e6d8a2",
+   "page_id": "6a1d81b45afc14a085e6da5d",
+   "page_number": 443,
+   "title": "道宗六書 (6種36卷, incl. 譚子化書): Daozong liushu (Six Books of the Daoist Lineage)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 351,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O7",
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O5"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "unchanged"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "unchanged"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69e9616b2beefe2f6f72b6f1",
+   "page_id": "69e9616b2beefe2f6f72b7b2",
+   "page_number": 193,
+   "title": "佛國記 (Fo Guo Ji / Record of Buddhist Kingdoms)",
+   "stored_model": "gemini-3.1-flash-lite-preview",
+   "han": 357,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 15,
+    "classes": [
+     "O6",
+     "O5",
+     "O8",
+     "O12",
+     "O16"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 15,
+    "classes": [
+     "O6",
+     "O5",
+     "O8",
+     "O12",
+     "O16"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O12",
+     "O6",
+     "O8"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O6",
+     "O12",
+     "O8"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 4,
+    "classes": [
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 7,
+    "classes": [
+     "O5",
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O7"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O8"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69aec2c85bf9e9de6b166906",
+   "page_id": "69aec2c85bf9e9de6b166a03",
+   "page_number": 253,
+   "title": "淮南鴻烈解 Huainan hong lie jie",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 376,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 18,
+    "classes": [
+     "I6",
+     "O5",
+     "O6",
+     "O12",
+     "O1",
+     "O11",
+     "O16"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 18,
+    "classes": [
+     "I6",
+     "O5",
+     "O6",
+     "O12",
+     "O1",
+     "O11",
+     "O16"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O12"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O7",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O13"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 12,
+    "classes": [
+     "I6",
+     "O6",
+     "O12",
+     "O7",
+     "O11"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "I6",
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6992cb50d4d545ae73feee35",
+   "page_id": "6992cb50d4d545ae73feee94",
+   "page_number": 95,
+   "title": "八十四相大悲咒 (Illustrated Great Compassion Mantra in 84 Aspects)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 170,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "E2"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a087eaab2a99026ccf6fd01",
+   "page_id": "6a087eaab2a99026ccf6fe99",
+   "page_number": 408,
+   "title": "The Chinese Classics, Vol. 4, Part 2: The She King",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 363,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 9,
+    "classes": [
+     "O5",
+     "E2",
+     "O4",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "unchanged"
+   }
+  },
+  {
+   "book_id": "6992cbd6018b80967354b4da",
+   "page_id": "6992cbd7018b80967354b609",
+   "page_number": 303,
+   "title": "格致鏡原 (Gezhi Jingyuan: Mirror of Scientific Origins) 100 Volumes",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 468,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "unchanged"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69e792f880b52390feb17389",
+   "page_id": "69e792f880b52390feb176c8",
+   "page_number": 831,
+   "title": "紅樓夢 (Hónglóumèng / Dream of the Red Chamber)",
+   "stored_model": "gemini-3.1-flash-lite-preview",
+   "han": 122,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "faint_leaf"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "699df078ec13f7d17590a0df",
+   "page_id": "699df079ec13f7d17590a136",
+   "page_number": 87,
+   "title": "陽明按索 (Yangming Stellar Astrology Charts)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 315,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69af12630092756351e449f9",
+   "page_id": "69af12630092756351e44a55",
+   "page_number": 92,
+   "title": "墨子 (Mozi)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 504,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "I6",
+     "O6",
+     "O8"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O5",
+     "O12"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O5",
+     "O12"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6",
+     "O8"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "I6",
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69935b6f2c63944063134103",
+   "page_id": "69935b6f2c6394406313423d",
+   "page_number": 314,
+   "title": "Qiu sheng ge dao zong si jing (Four Daoist Classics incl. Daodejing)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 337,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "I6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "I6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69e72c65a409200ea79f47bd",
+   "page_id": "69e72c65a409200ea79f47d3",
+   "page_number": 22,
+   "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 2",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 147,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69e75e35cc48e59ad74ec2bd",
+   "page_id": "69e75e35cc48e59ad74ec2d5",
+   "page_number": 24,
+   "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 4",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 201,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 7,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O8"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69bd0b0bb01b17638a098903",
+   "page_id": "69bd0b0bb01b17638a0989f2",
+   "page_number": 239,
+   "title": "楞嚴經要解 (Shurangama Sutra with Essential Commentary)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 251,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O4"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O4"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O11"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a087e8cb2a99026ccf6f4fd",
+   "page_id": "6a087e8cb2a99026ccf6f6fb",
+   "page_number": 510,
+   "title": "The Chinese Classics, Vol. 2: The Works of Mencius",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 105,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 4,
+    "classes": [
+     "E2",
+     "O10",
+     "O12",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 4,
+    "classes": [
+     "E2",
+     "O10",
+     "O12",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69f1343c365e3fcae574dff3",
+   "page_id": "69f1343c365e3fcae574e038",
+   "page_number": 69,
+   "title": "Fo mu da kong que ming wang zhou jing. 2",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 138,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 13,
+    "classes": [
+     "O5",
+     "O4",
+     "O7",
+     "O6",
+     "O1"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 13,
+    "classes": [
+     "O5",
+     "O4",
+     "O7",
+     "O6",
+     "O1"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "unchanged"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O7",
+     "O4",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "unchanged"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 11,
+    "classes": [
+     "E2",
+     "O8",
+     "O6",
+     "O7",
+     "O12",
+     "O5"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a0acab14d80f9c1594971ea",
+   "page_id": "6a0acab24d80f9c1594973ca",
+   "page_number": 480,
+   "title": "Resshi 列子: Japanese kanbun edition of the Liezi with Zhang Zhan commentary (cont",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 674,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O12",
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O12",
+     "O6",
+     "O5"
+    ],
+    "why": "shorter_than_lite"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O5",
+     "E2",
+     "O12"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O5",
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O12",
+     "O5",
+     "O15"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O5",
+     "O4",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "E2",
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69aebb3439a4307877772f55",
+   "page_id": "69aebb3439a43078777730f1",
+   "page_number": 412,
+   "title": "四書集注 (Four Books with Collected Annotations)",
+   "stored_model": "gemini-3.1-flash-lite-preview",
+   "han": 269,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "O6",
+     "O5",
+     "O12"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "O6",
+     "O5",
+     "O12"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69b99f786ed9e0490990abcf",
+   "page_id": "69b99f786ed9e0490990ad3e",
+   "page_number": 367,
+   "title": "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 1390,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 28,
+    "classes": [
+     "O6",
+     "O4",
+     "O5",
+     "O1",
+     "O12"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 28,
+    "classes": [
+     "O6",
+     "O4",
+     "O5",
+     "O1",
+     "O12"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 15,
+    "classes": [
+     "O5",
+     "O6",
+     "O12",
+     "O7"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 9,
+    "classes": [
+     "O4",
+     "O1",
+     "O5",
+     "O6",
+     "O7",
+     "O12",
+     "O10",
+     "O11"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 7,
+    "classes": [
+     "O5",
+     "O6",
+     "O7",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 20,
+    "classes": [
+     "O1",
+     "O4",
+     "O5",
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O5",
+     "O6",
+     "O12",
+     "O11"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O5",
+     "O12",
+     "O11"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "695924fe1cac2ce31a4a8b6b",
+   "page_id": "695924fe1cac2ce31a4a8d11",
+   "page_number": 422,
+   "title": "道藏精华 (Daozang Jinghua - Essence of Taoist Canon)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 528,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "E2",
+     "O4",
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O6",
+     "O1",
+     "E2"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 2,
+    "classes": [
+     "E2",
+     "O4"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69af123e0092756351e44874",
+   "page_id": "69af123e0092756351e4490d",
+   "page_number": 153,
+   "title": "新鐫節義鴛鴦塚嬌紅記 (The Story of Jiaoniang and Feihong)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 363,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6",
+     "O5",
+     "O12"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6",
+     "O12"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69bcebf9ae27b5d80618b7ce",
+   "page_id": "69bcec02ae27b5d80618b7f6",
+   "page_number": 79,
+   "title": "三才圖會（九十二）",
+   "stored_model": "gemini-3.1-flash-lite-preview",
+   "han": 144,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O6"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "Pu": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O4",
+     "O6"
+    ],
+    "why": null
+   },
+   "PFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O6",
+     "I6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a1d81af5afc14a085e6d7e6",
+   "page_id": "6a23f362cf679bf73b474eaa",
+   "page_number": 333,
+   "title": "性命雙修萬神圭旨: Xingming guizhi (Principles of Joint Cultivation of Nature and Life)",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 214,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "severe": 1,
+    "classes": [
+     "I1"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "severe": 1,
+    "classes": [
+     "I1"
+    ],
+    "why": "lite_lines_missing"
+   },
+   "O": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "severe": 1,
+    "classes": [
+     "I1"
+    ],
+    "why": "contain"
+   },
+   "Pu": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": null
+   },
+   "PFL": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "PFM": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   },
+   "SFL": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "severe": 1,
+    "classes": [
+     "I1"
+    ],
+    "why": "no-answer"
+   },
+   "PSN": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   },
+   "SSN": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "severe": 1,
+    "classes": [
+     "I1"
+    ],
+    "why": "contain"
+   }
+  }
+ ],
+ "retest_O": {
+  "n": 30,
+  "accepted_first": 26,
+  "accepted_retest": 26,
+  "accept_agree": 30,
+  "wrong_first": 2,
+  "wrong_retest": 1
+ },
+ "retest_controls": [
+  {
+   "accept": false,
+   "fidelity": 1
+  },
+  {
+   "accept": false,
+   "fidelity": 1
+  }
+ ],
+ "study_cells": {
+  "chinese-gemini/print gemini-stored": {
+   "route": "gemini-stored",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 3.03,
+   "misleads_per_1k": 8.55,
+   "wrong_text_per_1k": 11.11,
+   "severe_per_1k": 19.65,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print paddle-print-read": {
+   "route": "paddle-print-read",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 3.23,
+   "misleads_per_1k": 7.67,
+   "wrong_text_per_1k": 8.73,
+   "severe_per_1k": 16.39,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print gemini>opus": {
+   "route": "gemini>opus",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 4.5,
+   "misleads_per_1k": 1.06,
+   "wrong_text_per_1k": 0.18,
+   "severe_per_1k": 1.23,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print paddle-print-read-noguard": {
+   "route": "paddle-print-read-noguard",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 3.43,
+   "misleads_per_1k": 4.49,
+   "wrong_text_per_1k": 5.38,
+   "severe_per_1k": 9.87,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print paddle>agy-flash-low": {
+   "route": "paddle>agy-flash-low",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 3.9,
+   "misleads_per_1k": 3.61,
+   "wrong_text_per_1k": 2.03,
+   "severe_per_1k": 5.64,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print paddle>agy-flash-medium": {
+   "route": "paddle>agy-flash-medium",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 4.13,
+   "misleads_per_1k": 2.64,
+   "wrong_text_per_1k": 1.15,
+   "severe_per_1k": 3.79,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print gemini>agy-flash-low": {
+   "route": "gemini>agy-flash-low",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 3.27,
+   "misleads_per_1k": 5.11,
+   "wrong_text_per_1k": 7.23,
+   "severe_per_1k": 12.34,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print paddle>sonnet": {
+   "route": "paddle>sonnet",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 4.1,
+   "misleads_per_1k": 2.47,
+   "wrong_text_per_1k": 1.15,
+   "severe_per_1k": 3.61,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/print gemini>sonnet": {
+   "route": "gemini>sonnet",
+   "pages": 30,
+   "words": 11346,
+   "fidelity_mean": 3.6,
+   "misleads_per_1k": 5.11,
+   "wrong_text_per_1k": 3.44,
+   "severe_per_1k": 8.55,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  }
+ },
+ "contain_candidates": [
+  {
+   "book_id": "6992f3d9dc69844b023ff452",
+   "page_id": "6992f3d9dc69844b023ff4b3",
+   "page_number": 97,
+   "title": "圖像本草蒙筌 (Tuxiang Bencao Mengquan: Illustrated Herbal Primer)",
+   "opus": null,
+   "judge": [
+    "O1: The margins read 圖像本草蒙筌 卷二, so the book title and volume number are invented",
+    "O1: The page has 家園栽種。類蛇床子。色褐輕虛; 'resembles 蛇床子' is replaced by invented wording"
+   ]
+  },
+  {
+   "book_id": "69e7287aa409200ea79efea0",
+   "page_id": "69e7287aa409200ea79efed3",
+   "page_number": 51,
+   "title": "聊齋志異 Vol. 5",
+   "opus": null,
+   "judge": [
+    "O1: Scrambled reading with text not on the page (莊子疑, 漢書, 張); the leaf has 踊屣-type headword, 前漢雋不疑傳, 迎注履不著跟曰"
+   ]
+  },
+  {
+   "book_id": "6992cbd8018b80967354ba40",
+   "page_id": "6992cbd8018b80967354bc2d",
+   "page_number": 492,
+   "title": "農政全書 (Nongzheng Quanshu: Complete Treatise on Agricultural Administration)",
+   "opus": null,
+   "judge": [
+    "O1: Page has 得崔寔曰正月糞疇疇麻田也; 繼以七月 is not on the page and the attribution to Cui Shi is lost",
+    "O1: Page has 麥黃種麻麻黃種麥亦良候也 諺曰夏至後不沒狗或答曰但雨多沒橐駝 又諺曰五月及澤父子不相借; 李氏 is invented and the proverbs are garbled",
+    "O1: Invented and repeated wording; page's note says rain-water soaking sprouts fast, well water slowly (取雨水浸之生芽疾用井水則生遲)",
+    "O1: Page has 刈拔各隨鄉法 未勃者收皮不成",
+    "O1: Page has only 放勃不收即驪 or similar; 即曬 and 不收即腐 are not on the page"
+   ]
+  },
+  {
+   "book_id": "69aec2c85bf9e9de6b166906",
+   "page_id": "69aec2c85bf9e9de6b166a03",
+   "page_number": 253,
+   "title": "淮南鴻烈解 Huainan hong lie jie",
+   "opus": null,
+   "judge": [
+    "O1: The note reads roughly 北人無擇古隱士非舜非其德之衰; 無擇 is dropped and the ending 之慕也 is not on the page."
+   ]
+  },
+  {
+   "book_id": "69b99f786ed9e0490990abcf",
+   "page_id": "69b99f786ed9e0490990ad3e",
+   "page_number": 367,
+   "title": "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+   "opus": null,
+   "judge": [
+    "O1: 成就 is not on the page, which reads 三菩提時",
+    "O1: garbled; drops 應如是問 and 菩薩摩訶薩但應觀空但應觀無相無作無起無生無所有",
+    "O1: page reads 當知是菩薩摩訶薩已習學菩薩道入薄地",
+    "O1: page reads 天龍鬼神緊那羅等說法"
+   ]
+  },
+  {
+   "book_id": "6a1d81af5afc14a085e6d7e6",
+   "page_id": "6a23f362cf679bf73b474eaa",
+   "page_number": 333,
+   "title": "性命雙修萬神圭旨: Xingming guizhi (Principles of Joint Cultivation of Nature and Life)",
+   "opus": "The draft is another page's text: it begins \"府鰲宮欲去而頂中鶴舞\" and ends \"大羅天上顯神通\", while this leaf begins \"出者有衝頂門而出者所以玄奧集云塞斷黃\" and ends \"聖之筵適意則鸞輿前引登雲則龍駕前迎紫\", and none of the draft's lines appear on it.",
+   "judge": [
+    "I1: The whole candidate is not on this leaf. The image begins 出者有衝頂門而出者所以玄奧集云塞斷黃 and ends 則龍駕前迎紫. The candidate appears to b"
+   ]
+  }
+ ]
+}

@@ -7,7 +7,8 @@ canons: []
 n_books: 68
 n_pages: 68
 verdict: "Three results. (1) The prior's calibration (logit acceptance = 1.12 + 0.38 x logit of the v1/v2 mean) fits in sample, but it LOSES held out: leaving one cell out, the log likelihood is -205.3 calibrated against -202.1 uncalibrated (on the final split table, -165.0 against -155.2). The slope comes from one route, Latin Flash-Lite's draft (v1 0.035 against 0.65 judged). The uncalibrated prior stays in force, and the calibrated decision is a sensitivity column; it differs on 2 cells. (2) Print and manuscript are now separate cells. Every evidence source was re-cut page by page (92 source pairs reconciled exactly), and waiting pages were split by a measured share. 49 of 86 split rows decide differently from their unsplit cell. Nearly all of them are manuscript or unknown-script variants that now say UNTESTED or HOLD instead of inheriting print numbers. (3) The tests ran on WAITING print pages, one per book, read-weighted. Latin Flash-Lite, a fresh agy Flash-low read: 22 of 34 accepted (8 replies cut, so not delivered; 22/26 of the delivered). Latin 3 Flash, an agy Flash-low correction: 28/34, wrong text 4/34. Neither clears the Opus bar, and both cells stay HOLD. The Chinese Paddle flash-high test did not run: its pool was under the floor. 33 library pages were rewritten."
-status: undecided
+status: adopted
+landed: "scripts/eval/estimator/router-table/rules.json"
 decision: "Proposal only (ocr-routing-table.json untouched). rules.json: prior.calibration in_force false; switch.bar_scope = print (Opus is a candidate in manuscript cells, Derek 12:06Z); script_split on, with Greek manuscripts planned on Opus. Router table 2026-10-28-router-next (split) and -unsplit (the same evidence pooled), before = 2026-10-28-agy-gpu-7263. zh-paddle-dice-lt090 paddle>agy-flash-high is deferred until the default agy pool is above its pace line (sample drawn, refs aligned)."
 superseded_by: null
 issue: [7263, 7611, 6740]

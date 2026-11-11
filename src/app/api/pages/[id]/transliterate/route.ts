@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
+import { pageGateForRequest, meteredSignInResponse } from '@/lib/metered-gate';
 import { performTransliteration } from '@/lib/ai';
 const TRANSLITERATION_MODEL = 'gemini-3-flash-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -66,6 +67,10 @@ export async function POST(
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+    // A transliteration is the page's text in another script: past the metered
+    // reader's free sample it asks an anonymous caller to sign in (#4357).
+    const meterGate = await pageGateForRequest(db, request, page);
+    if (meterGate) return meteredSignInResponse(meterGate);
 
     // Check if OCR exists
     if (!page.ocr?.data) {
@@ -181,6 +186,10 @@ export async function GET(
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+    // A transliteration is the page's text in another script: past the metered
+    // reader's free sample it asks an anonymous caller to sign in (#4357).
+    const meterGate = await pageGateForRequest(db, request, page);
+    if (meterGate) return meteredSignInResponse(meterGate);
 
     if (!page.transliteration?.data) {
       return NextResponse.json({

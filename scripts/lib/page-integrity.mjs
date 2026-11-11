@@ -665,6 +665,17 @@ export const TRANSLATION_LEAK_PREFILTER = new RegExp([
   "(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|the provided (?:text|ocr|transcription|input)",
   'ready to translate',
   "here(?:'s| is) (?:the |a |my |your )?(?:[\\w-]+ ){0,3}translation",
+  // summary-placeholder (#6117, found on #7968): a bracket or parenthesis that speaks of the text continuing
+  // or being left out, and the two narrow ways the model describes a page instead of translating it.
+  '[\\[(][^\\])\\n]{0,80}(?:continu|omit|truncat|as per|abbreviat|brevity|elided|remaining|rest of|remainder|and so (?:on|forth))[^\\])\\n]{0,120}[\\])]',
+  '(?:content|text|page) (?:seems|appears) to (?:be a continuation|continue)',
+  'the text continues (?:from|on|as)',
+  // #8465: TRANSLATION_REQUEST_ECHO — a refusal, an answer to the request, the prompt's input labels
+  '(?:missing|absent|omitted) (?:from|in) (?:your|the) (?:request|message|prompt|input)',
+  'not (?:been )?(?:provided|included|given|present|supplied) in (?:your|the) (?:request|message|prompt)',
+  "^\\W{0,4}(?:i apologi[sz]e|i(?:'m| am) sorry|i(?:'m| am) unable to|i cannot|i can't)",
+  'previous page [^\\n]{0,30}for (?:continuity|context|reference)',
+  '\\*\\*text to translate',
 ].join('|'), 'i');
 /** The phrases that are the model talking to itself about the job, read off the corpus walk's candidates
  *  (2026-10-06). Each names the prompt, the user, the OCR as an input, a tag as a tag, or is a markdown
@@ -692,9 +703,86 @@ const TRANSLATION_LEAK_RULE = new RegExp([
  *  provided Latin text, preserving formatting and paragraph breaks:"), anywhere on the page. The bare line ("Here is
  *  the translation:") is NOT refused: the 2026-10-11 corpus walk found it in real book text (a study quoting a
  *  prayer, Huygens's notes, "here is a free translation:"), where it cannot be told from a reply by wording. */
-const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |a |my |your )?(?:[\w-]+ ){0,3}translation\b(?=[^\n]{0,200}:[ \t]*(?:\n|$))(?=[^\n]*\b(?:provided|preserv\w*|formatting|instructions?|contract|continuity|paragraph breaks|adher\w*|requested|accessible English|software|tagging|style rules|from the image)\b)/i;
+const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:[\w-]+ ){0,2}(?:text|ocr|transcription|source|latin|page)\b|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |a |my |your )?(?:[\w-]+ ){0,3}translation\b(?=[^\n]{0,200}:[ \t]*(?:\n|$))(?=[^\n]*\b(?:provided|preserv\w*|formatting|instructions?|contract|continuity|paragraph breaks|adher\w*|requested|accessible English|software|tagging|style rules|from the image)\b)/i;
+/**
+ * The model refusing, or answering the REQUEST rather than the page, and the prompt's own scaffolding copied into the
+ * English (#8465: Plotinus, Perna 1580, 14 pages — "The Greek text to be translated is missing from your request…",
+ * "I apologize, but the Greek text … is not provided in your request", and a page that opens on the prompt's
+ * "**Previous page text for continuity:**" block). Counted as 'assistant-reply', so the write gates refuse it.
+ *   - something "missing from / not provided in your request|prompt|message": no book addresses "your request" so;
+ *   - an apology or "unable to translate" that OPENS the page and speaks of the text or the request (a sermon may say
+ *     "I am sorry" mid-page, never as its first words about "the text");
+ *   - the labels the translation prompts put around their inputs (translate-core.mjs, src/lib/ai.ts): "Previous page
+ *     (translation|transcription|summary|text) for continuity|context", "**Text to translate:**".
+ */
+const TRANSLATION_REQUEST_ECHO = new RegExp([
+  '\\b(?:missing|absent|omitted) (?:from|in) (?:your|the) (?:request|message|prompt|input)\\b',
+  '\\bnot (?:been )?(?:provided|included|given|present|supplied) in (?:your|the) (?:request|message|prompt)\\b',
+  'previous page (?:\\([\\w ]+\\) |(?:text|translation|transcription|summary|ocr) )for (?:continuity|context|reference)',
+  '\\*\\*text to translate:?\\*\\*',
+].join('|'), 'i');
+/** The refusal that opens the stored text, asked of the RAW text so the walk's anchored prefilter stays a superset. */
+const TRANSLATION_REFUSAL_HEAD = /^\W{0,4}(?:i apologi[sz]e|i(?:'m| am) sorry|i(?:'m| am) unable to|i cannot|i can't)\b[^\n]{0,240}\b(?:your request|you(?:'ve| have)? (?:provided|sent|given|shared|supplied)|(?:not|been|was|is) provided|as requested)\b/i;
 /** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
 const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
+/**
+ * A placeholder where the translation should be (#6117, found on #7968: Marcellus p.84 stored
+ * "...[text continues as per original structure]..." and nothing else). A bracket or parenthesis in which
+ * the text, the list, the translation "continues with / to describe / as per …", or "the rest of the text is
+ * omitted for brevity", or "this page is a continuation of the previous translation". What it does not touch:
+ * an editor's lacuna ("[…]", "[illegible]", "[sic]"), a damaged source ("[remaining text illegible]",
+ * "[rest of the page torn away]"), a catchword ("[continued on next page]", "(Table I. continued)"), a stage
+ * direction ("[*Alarums continued.*]"), a speaker in a dialogue ("(he continues)"), a rubric ("[Continue with] the
+ * Shema"), and any bracket inside a <note> or a metadata-panel block.
+ */
+const SUMMARY_SUBJECT = '(?:the )?(?:[\\w-]+ ){0,2}(?:text|translation|transcription|list|listing|entry|entries|passage|section|catalog(?:ue)?|content|discussion|narrative|enumeration|series|remainder|rest|page|lines?|verses?|chapter|commentary|treatise|argument|account|description|recipes?|remedies)';
+/** An omission that is not of the page's own prose: a parallel text in another language, a table, figures, notation. */
+const SUMMARY_NOT_PROSE = '(?![^\\])\\n]{0,80}\\b(?:original|parallel|facing|latin|greek|hebrew|syriac|arabic|aramaic|coptic|armenian|ethiopic|irish|gaelic|welsh|german|french|italian|spanish|dutch|sanskrit|tibetan|chinese|japanese|persian|turkish|cuneiform|transliteration|hieroglyph(?:s|ic)?|table|tables|tabular|notation|numbers|numerals|figures|diagrams?|cross-references|references|index|repeats|duplicates?|convention)\\b)';
+/** A damaged or unreadable source, described as such: not a placeholder for a translation. */
+const SUMMARY_DAMAGE = '(?![^\\])\\n]{0,120}\\b(?:illegible|unreadable|damaged|obscured|fragment(?:ary|ed|s)?|faded|torn|lost|missing|cut off|effaced)\\b)';
+/**
+ * "[The text continues with a series of …]", "(list continues repeating similar collation notes)", "[text continues as per original
+ * structure]". Not one ending in a colon ("[The text continues with a prose commentary:]"): that introduces the English after it.
+ * Counted only where it is the whole column or sits between English on both sides: at the head or foot of a column,
+ * with English on the other side, it is a bridge over the sentence carried across the page break ("Chapter I.
+ * [The text continues, discussing how worms] sometimes are born"), and nothing on the leaf is left out.
+ */
+const SUMMARY_CONTINUES = new RegExp(`[\\[(]${SUMMARY_NOT_PROSE}${SUMMARY_DAMAGE} ?(?:\\.{3}|…)? ?${SUMMARY_SUBJECT} continues?,? (?:with|to (?:describe|discuss|list|enumerate|explain|detail|give)|regarding|describing|discussing|listing|enumerating|detailing|concerning|repeating|in (?:the )?(?:same|similar)|similarly|as (?:per|in the|before|above|on the previous)|along (?:the )?same)\\b[^\\])\\n]{0,90}(?<![:：]\\s?)[\\])](?!\\s?[:：])`, 'gi');
+const SUMMARY_PLACEHOLDER_RULE = new RegExp([
+  // "[The rest of the text is omitted for brevity]", "[remaining entries follow the same pattern]"
+  `[\\[(]${SUMMARY_NOT_PROSE} ?(?:\\.{3}|…)? ?(?:the )?(?:remaining|rest of (?:the )?|remainder of (?:the )?)(?:[\\w-]+ ){0,2}(?:text|translation|page|entries|list|content|section|passage|lines|verses|chapter|items|recipes|remedies)\\b(?![^\\])\\n]{0,60}\\b(?:illegible|unreadable|damaged|lost|missing|torn|cut off|faded|blank|obscured|worn|effaced|cropped|not visible|(?:on|onto|to) (?:the )?(?:next|following|facing) (?:page|leaf|folio|column))\\b)[^\\])\\n]{0,40}\\b(?:omitted|truncated|abbreviated|elided|not translated|untranslated|follows? (?:the )?(?:same|similar)|continues|as per|same (?:pattern|format|structure)|for brevity)\\b[^\\])\\n]{0,30}[\\])]`,
+  // "[remainder of the passage omitted for brevity]": the page's own prose, left out
+  `[\\[(]${SUMMARY_NOT_PROSE}(?![^\\])\\n]{0,40}\\b(?:my|mine|our|i)\\b)[^\\])\\n]{0,40}\\b(?:text|passage|section|content|chapter|commentary|discussion|narrative|entries|recipes|remedies|argument|account) (?:is |has been |was )?(?:omitted|truncated|abbreviated|elided) (?:here )?(?:for brevity|to save space|for (?:the sake of )?(?:space|length|brevity))\\b[^\\])\\n]{0,90}[\\])]`,
+  // "[This page is a continuation of the previous translation; see page 12 for …]"
+  `[\\[(] ?(?:this|the) (?:page|content|text) (?:is|seems to be|appears to be) a continuation of the previous translation\\b[^\\])\\n]{0,80}[\\])]`,
+].join('|'), 'i');
+/** The model describing the page, which counts only when the page body holds nothing else: no translation. */
+// Not "The text continues from the previous page: …" — after the colon the model quotes the page's English, in a note.
+const SUMMARY_DESCRIBE = /(?:(?:content|text|page) (?:seems|appears) to (?:be a continuation|continue)|\bthe text continues (?:from|on|as))\b(?![^.\n:]{0,60}:)/i;
+const SUMMARY_UNREADABLE = /\b(?:illegible|unreadable|blurr\w*|faded|fading|degrad\w*|image quality|poor quality|low contrast|fragment(?:ary|ed)|cannot be (?:read|recovered|deciphered)|impossible to (?:read|distinguish))\b|<unclear>/i;
+/** Letters a reader meets as the page's English once the panel blocks, notes, tags, brackets and headings are gone. */
+function residualProseLetters(body) {
+  // A note under ~400 characters is the translator's aside; a longer one is where the model put the page's English
+  // ("<note>The text continues from the previous page: …</note>" holding the whole translation), so it counts.
+  const x = body.replace(/<note\b[^>]*>([\s\S]*?)<\/note>/gi, (all, inner) => (inner.length < 400 ? ' ' : inner))
+    .replace(/<(margin|header|footer|pagenum|catchword|sig|warning|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<\/?[a-zA-Z][\w-]*(?:\s[^<>\n]*)?\/?>/g, ' ').replace(/\[[^\]\n]*\]|\([^)\n]*\)/g, ' ').replace(/^#.*$/gm, ' ');
+  return (x.match(/\p{L}/gu) || []).length;
+}
+/** Is this "continues" bracket an elision (the whole column, or English on both sides) rather than a bridge at a column's edge? */
+function continuesElision(body) {
+  for (const m of body.matchAll(SUMMARY_CONTINUES)) {
+    const before = body.slice(0, m.index).split(/<column-break\s*\/?>|<page-break\s*\/?>|^-{3,}\s*$/m).at(-1);
+    const after = body.slice(m.index + m[0].length).split(/<column-break\s*\/?>|<page-break\s*\/?>|^-{3,}\s*$/m)[0];
+    const b = residualProseLetters(before) >= SUMMARY_EDGE_LETTERS, a = residualProseLetters(after) >= SUMMARY_EDGE_LETTERS;
+    if (a === b) return m;
+  }
+  return null;
+}
+/** English on one side of a "continues" bracket, under this many letters, is a heading or a carried word, not text. */
+const SUMMARY_EDGE_LETTERS = 30;
+/** Below this many letters of English outside notes and brackets, a page that describes itself has no translation. */
+const SUMMARY_MAX_RESIDUAL = 40;
 /** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
 const TRANSLATION_PANEL_BLOCKS = /<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi;
 const TRANSLATION_PIPELINE_TALK = /the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))|<(?:meta|note|vocab|term|gloss|summary|keywords|margin)> tags?\b/i;
@@ -705,6 +793,9 @@ const TRANSLATION_PIPELINE_TALK = /the ocr (?:has|says|reads|shows|provides|list
  *   'reasoning'        the scratchpad: one of TRANSLATION_LEAK_RULE's phrases
  *   'assistant-reply'  a chat reply to the requester ("Please provide the OCR transcription you would like…")
  *   'thought-token'    the page opens with the bare word "thought" on its own line (the thinking channel's label)
+ *   'summary-placeholder'  a placeholder or a description where the translation should be: "[text continues as per
+ *                      original structure]", "[The text continues to describe the Guelph and Ghibelline conflicts]", or
+ *                      "The text continues from the previous page" with no English beside it (#6117, found on #7968)
  *   'input-talk'       "the provided OCR/transcription/text is …": the model naming its input
  * readerVisible: the phrase is in the page body, not only inside a block the reader keeps in its metadata panel.
  */
@@ -715,9 +806,19 @@ export function translationReasoningLeak(text) {
   let m;
   if ((m = body.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, true);
   if ((m = body.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, true);
+  if ((m = body.match(TRANSLATION_REQUEST_ECHO))) return hit('assistant-reply', m, true);
+  if ((m = t.match(TRANSLATION_REFUSAL_HEAD))) return hit('assistant-reply', m, true);
+  // A bracket inside a <note> is the translator talking about the page ("from the previous page: [continues regarding …]"),
+  // beside a translation; the placeholder that stands FOR the translation sits in the body.
+  const bodyNoNotes = body.replace(/<note\b[^>]*>[\s\S]*?<\/note>/gi, ' ');
+  if ((m = bodyNoNotes.match(SUMMARY_PLACEHOLDER_RULE) || continuesElision(bodyNoNotes))) return hit('summary-placeholder', m, true);
+  // Not on a page the model says it could not read: "the text appears to be a continuation" of an illegible leaf is honest.
+  if ((m = body.match(SUMMARY_DESCRIBE)) && !SUMMARY_UNREADABLE.test(body) && residualProseLetters(body) < SUMMARY_MAX_RESIDUAL) return hit('summary-placeholder', m, true);
   if (/^thought[ \t]*\n/.test(t)) return { kind: 'thought-token', phrase: 'thought', readerVisible: true };
   if ((m = t.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, false);
   if ((m = t.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, false);
+  if ((m = t.match(TRANSLATION_REQUEST_ECHO))) return hit('assistant-reply', m, false);
+
   if ((m = body.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, true);
   if ((m = t.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, false);
   return null;

@@ -216,7 +216,7 @@ export default function IdentifyPage() {
     const timers: ReturnType<typeof setTimeout>[] = [];
     const clearTimers = () => { timers.forEach(clearTimeout); timers.length = 0; };
     setStageMessage('Reading the image…');
-    timers.push(setTimeout(() => setStageMessage('Comparing against 152,000 illustrations…'), 6000));
+    timers.push(setTimeout(() => setStageMessage('Comparing against the library’s pictures…'), 6000));
     timers.push(setTimeout(() => setStageMessage('Confirming the match…'), 14000));
 
     // Compress large images client-side (phone cameras produce 5-10MB files).

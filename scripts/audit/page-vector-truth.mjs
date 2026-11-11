@@ -11,7 +11,7 @@
  * names? (#6175)
  *
  * WHY. Search, the Librarian and the MCP trust that `page_translations.embedding` is the
- * gemini-embedding-2-preview vector of the page's text. When it is not, the page silently cannot
+ * gemini-embedding-2 vector of the page's text. When it is not, the page silently cannot
  * be found: an unreachable page and a page nothing matches return the same empty list. Found
  * 2026-10-07: e5-base vectors under a Gemini label (14 of 389 books in one sample), and a large
  * band of rows whose vector was made from text the row no longer holds.

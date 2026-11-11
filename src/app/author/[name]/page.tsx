@@ -13,7 +13,7 @@ import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
-import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
+import { authorThesaurusReadpathEnabled, findAuthorByReorderedSlug, resolveAuthorSlugByName, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
 import { isPublishedEntity, type EntityPublishFields } from '@/lib/entity-publish';
 import { isArtworkRecord } from '@/lib/artwork-record';
@@ -257,6 +257,7 @@ async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // esli
   artworks: Book[];
   canonicalSlug: string;
   nonPerson: NonPersonAuthor | null;
+  hanName: string | null;
 } | null> {
   const resolved = await resolveCanonicalAuthor(db, slug, BOOK_PROJECTION);
   if (!resolved || resolved.books.length === 0) return null;
@@ -270,6 +271,7 @@ async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // esli
     // Only the thesaurus knows a heading is not a person; the legacy string
     // path below has no such record, so it renders as before.
     nonPerson: classifyNonPersonAuthor(resolved.doc),
+    hanName: resolved.doc.localized?.zh?.name ?? null,
   };
 }
 
@@ -306,7 +308,12 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
   // Redirect old %20-style URLs to hyphenated slugs
   if (decoded !== name) {
-    redirect(`/author/${authorSlug(decoded)}`);
+    const slug = authorSlug(decoded);
+    if (slug) redirect(`/author/${slug}`);
+    // Han characters slug to nothing: find the person by name, never send them to the index.
+    const person = await resolveAuthorSlugByName(await getReadDb(), decoded);
+    if (person) redirect(`/author/${person}`);
+    notFound();
   }
 
   const db = await getReadDb();
@@ -319,6 +326,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // the thesaurus, so this stays null on the legacy path — which is correct:
   // without a thesaurus doc there is no evidence the heading is not a person.
   let nonPerson: NonPersonAuthor | null = null;
+  // /author/ has no /zh twin, so the page carries both names for every reader (#8035).
+  let hanName: string | null = null;
   if (authorThesaurusReadpathEnabled()) {
     const canonical = await loadCanonicalAuthorData(db, name);
     if (canonical) {
@@ -327,10 +336,15 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       }
       data = canonical;
       nonPerson = canonical.nonPerson;
+      hanName = canonical.hanName;
     }
   }
   if (!data) data = await loadAuthorData(db, name);
-  if (!data) notFound();
+  if (!data) {
+    const reordered = await findAuthorByReorderedSlug(db, name);
+    if (reordered) redirect(`/author/${reordered}`);
+    notFound();
+  }
 
   const { authorName, entity, works, artworks } = data;
 
@@ -392,15 +406,15 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     .filter(a => a && a !== authorName && !nameVariants.some(v => v.toLowerCase() === a.toLowerCase()));
   const allVariants = [...nameVariants, ...bookVariants].slice(0, 8);
 
-  // Artist-page link surfaces whenever there are visual works. Tracks the
-  // /artist/[slug] route's own definition (resource_type-based) so the link
-  // doesn't dangle on records that haven't been backfilled to content_type.
+  // Artist-page link surfaces only when /artist/[slug] will actually render:
+  // that route (loadArtistData) requires a visible record whose `author` is
+  // exactly this name AND whose resource_type is in VISUAL_RESOURCE_TYPES.
+  // Any looser test dangles: an `|| artworks.length > 0` fallback sent readers
+  // from /author/marsilio-ficino (emblems, illuminations) to a 404 (2026-11-09).
   // "Artist page" reads the heading as a person who made pictures, so it is
   // suppressed for a non-person even when visual records are present.
-  const hasVisualWorks = !nonPerson && (
-    artworks.some(b => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type))
-    || artworks.length > 0
-  );
+  const hasVisualWorks = !nonPerson && artworks.some(b =>
+    b.author === authorName && !!b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type));
 
   // Language breakdown — texts only; artworks rarely carry a language and
   // the count would dilute the signal in the stats row.
@@ -451,6 +465,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           <div className="flex-1 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-display font-bold">
             {authorName}
+            {hanName && !authorName.includes(hanName) && <> <span lang="zh-Hant">{hanName}</span></>}
           </h1>
           {nonPerson && (
             <p className="text-stone-400 mt-2 text-sm">

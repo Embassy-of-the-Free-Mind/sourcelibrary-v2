@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import type { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import { classifyRequest } from '@/lib/analytics-ingest';
+import { clientCountry } from '@/lib/client-ip';
 
 /**
  * The single writer for `analytics_events` `search_query` documents.
@@ -72,8 +73,7 @@ const MAX_FILTER_STR = 100;
 /** Country from the edge headers — same source the pageview log uses. */
 function edgeCountry(request: NextRequest): string {
   return (
-    request.headers.get('x-vercel-ip-country') ||
-    request.headers.get('cf-ipcountry') ||
+    clientCountry(request.headers) ||
     'Unknown'
   );
 }

@@ -275,7 +275,7 @@ export function createJourneyScene(
   });
   const beamGlow = new THREE.Mesh(geo(new THREE.PlaneGeometry(PW + .8, .7)), basic({ map: beamGlowTex, transparent: true, depthWrite: false, fog: false }));
   beam.add(beamGlow, beamCore);
-  const ocrLabel = labelSprite(d.readByModel ? `${d.readBy} reads the page` : 'The text of the page', { size: .26 }); scene.add(ocrLabel);
+  const ocrLabel = labelSprite(d.readByModel ? `${d.readBy.charAt(0).toUpperCase()}${d.readBy.slice(1)} reads the page` : 'The text of the page', { size: .26 }); scene.add(ocrLabel);
   const TRANS_AT = V(120, 3.2, 0);
   const transLabel = labelSprite(`${d.language} into English`, { size: .28, color: LAPIS });
   transLabel.position.set(TRANS_AT.x - .6, TRANS_AT.y + 2.35, 0); scene.add(transLabel);

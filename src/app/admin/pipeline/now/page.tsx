@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
-  agoText, ageMin, untilText, getPipelineNow, laneTable, linesByStage, weeklyPct,
+  agoText, ageMin, untilText, getPipelineNow, laneTable, linesByStage, redLines, weeklyPct,
   BOX_STALE_MIN, CORPUS_STALE_MIN, STAGE_LABEL,
   type BoxDoc, type CronLine, type DayRow, type PipelineNow,
 } from '@/lib/pipeline-now';
@@ -12,7 +12,7 @@ import {
  * per-day page counts by lane nightly (scripts/maintenance/pipeline-now-push.mjs). The intent behind it lives in
  * .claude/docs/book-process.md, which points here for every number.
  *
- * Top to bottom: pages written per lane (what actually happened), the quota that feeds the lanes (agy pools,
+ * Top to bottom: the red cron lines (#8283), pages written per lane (what actually happened), the quota that feeds the lanes (agy pools,
  * Claude accounts), the spend dial and quality gates, then each box's lanes by stage. Each source shows its age
  * and turns red when stale. Gate: the admin layout's requireAdmin(); refused on partner hosts (tenant-global-paths).
  */
@@ -110,6 +110,32 @@ function Quota({ data, now }: { data: PipelineNow; now: Date }) {
   );
 }
 
+/** The cron lines the registry marks red (#8283), first on the page: what should not be running, or is unaccounted for. */
+function RedLines({ data }: { data: PipelineNow }) {
+  const red = redLines(data.boxes);
+  return (
+    <Section title="Red cron lines" meta={red.length ? `${red.length} line${red.length === 1 ? '' : 's'}` : undefined}>
+      {red.length === 0 ? <p className="text-sm text-stone-500">None. Every live page-work line is registered, in review and writing.</p> : (
+        <ul className="grid rounded border border-red-300 bg-white divide-y divide-stone-100 text-sm">
+          {red.map(({ box, line }, i) => (
+            <li key={`${box}-${line.script}-${line.schedule}-${i}`} className="px-3 py-2 grid gap-0.5 min-w-0">
+              <div className="flex flex-wrap items-baseline gap-x-2 min-w-0">
+                <span className="text-stone-500">{box}</span>
+                <span className="font-medium break-all">{line.script?.split('/').pop() ?? '(inline command)'}{line.mode ? ` ${line.mode}` : ''}</span>
+                <span className="text-red-700 font-medium">{[...new Set(line.red!.map(r => r.flag))].join(' · ')}</span>
+                <span className="text-xs text-stone-500 ml-auto whitespace-nowrap font-mono">{line.schedule}</span>
+              </div>
+              {line.red!.map(r => <p key={r.flag + r.why} className="text-xs text-stone-600 break-words">{r.flag}: {r.why}</p>)}
+              {line.registry ? <p className="text-xs text-stone-500">row {line.registry.id}{line.registry.issue ? ` · #${line.registry.issue}` : ''}{line.registry.route ? ` · ${line.registry.route}` : ''}</p> : null}
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="text-xs text-stone-500">Judged hourly on each box against the cron-row registry, <code>scripts/lib/lanes.mjs</code> CRON_ROWS. To clear a row: register the line, retire it (comment it out, set the row <code>retired</code>), or move its <code>review_by</code> with a reason. Mondays, ntfy names these lines.</p>
+    </Section>
+  );
+}
+
 function Line({ l, now }: { l: CronLine; now: Date }) {
   const off = l.disabled || l.one_shot;
   const logAge = ageMin(l.log_at, now);
@@ -119,6 +145,7 @@ function Line({ l, now }: { l: CronLine; now: Date }) {
         <span className="font-medium break-all">{l.script?.split('/').pop() ?? '(inline command)'}{l.mode ? ` ${l.mode}` : ''}</span>
         {l.disabled ? <span className="text-xs text-amber-700">off{l.disabled_tag ? ` (${l.disabled_tag})` : ''}</span> : null}
         {l.one_shot ? <span className="text-xs text-stone-500">one-shot edit</span> : null}
+        {l.red?.length ? <span className="text-xs text-red-700 font-medium">{[...new Set(l.red.map(r => r.flag))].join(' · ')}</span> : null}
         <span className="text-xs text-stone-500 ml-auto whitespace-nowrap font-mono">{l.schedule}</span>
       </div>
       {l.flags.length || l.env.length ? <p className="text-xs text-stone-600 font-mono break-all">{[...l.env, ...l.flags].join(' ')}</p> : null}
@@ -179,6 +206,16 @@ export default async function PipelineNowPage() {
       </header>
       {error || !data ? <p className="text-sm text-red-700">Could not read ops_reports: {error}</p> : (
         <>
+          <RedLines data={data} />
+          {data.corpus?.stalls?.some(x => x.stalled) ? (
+            <Section title="Stalled hand-offs">
+              <ul className="grid rounded border border-red-200 bg-white divide-y divide-stone-100 text-sm">
+                {data.corpus.stalls.filter(x => x.stalled).map(x => (
+                  <li key={x.edge} className="px-3 py-2 text-red-700"><b>{x.edge}</b>: {x.label}. Upstream {x.upstream_prev72h ?? '–'} in the 72 h before, downstream 0 in the last 24 h{x.last_paged_at ? ` · paged ${x.last_paged_at.slice(0, 16).replace('T', ' ')}Z` : ''}</li>
+                ))}
+              </ul>
+            </Section>
+          ) : null}
           <LaneTable title="Translated pages per day" rows={data.corpus?.translated_per_day ?? null} now={now} generated={data.corpus?.generated_at ?? null} />
           <LaneTable title="OCR pages per day" rows={data.corpus?.ocr_per_day ?? null} now={now} generated={data.corpus?.generated_at ?? null} />
           <Quota data={data} now={now} />

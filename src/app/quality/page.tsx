@@ -37,7 +37,7 @@ const longDate = (iso: string) =>
 /* ── data ── */
 
 type Grade = { pages: number; share: number; ci95: number[] };
-const g = servedGrades.grades as Record<string, Grade>;
+const g = servedGrades.bands as Record<string, Grade>;
 const frameBooks = Object.values(servedDraw.corpus.frame_books).reduce((a, x) => a + x, 0);
 const drawDate = servedDraw.generated_at.slice(0, 10);
 
@@ -74,14 +74,18 @@ const scholarly = { ours: armOf(twSets.A, 'ours'), human: armOf(twSets.A, 'human
 const wikisource = { ours: armOf(twSets.B, 'ours'), human: armOf(twSets.B, 'human') };
 const twDate = threeWay.generated_at.slice(0, 10);
 
-/** Five bands, each describing the page; the reader's advice is the second line. */
+/**
+ * Five bands, each describing what was found on the page. They state findings, not advice (quality-statements.md).
+ * The middle two are split by how many errors there are, not by their kind (#7263): a second reading moved many
+ * errors from one kind to the other, so "may" is the honest word.
+ */
 const serious = ['from_elsewhere', 'mostly_wrong', 'not_this_page'].reduce((a, k) => a + g[k].share, 0);
 const BANDS = [
-  { key: 'clean', label: 'Clean', what: 'No error, or one or two slips that change nothing. Quote it.', share: g.fit_to_quote.share, color: 'bg-stone-800' },
+  { key: 'clean', label: 'Clean', what: 'No error found, or one or two slips that change nothing.', share: g.fit_to_quote.share, color: 'bg-stone-800' },
   { key: 'slips', label: 'Small slips only', what: 'Several slips, such as a running head out of place; none changes the sense.', share: g.fit_to_read.share, color: 'bg-stone-400' },
-  { key: 'word', label: 'A word that changes the sense', what: 'Usually one misread word in an otherwise sound page. Check the scan before quoting.', share: g.search_only.share, color: 'bg-amber-300' },
-  { key: 'span', label: 'A word, number or line differs from the page', what: 'Something dropped or not on the page. Check the scan before quoting.', share: g.wrong_span.share, color: 'bg-amber-600' },
-  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'Do not rely on these pages; we withhold them as we find them.', share: serious, color: 'bg-amber-900' },
+  { key: 'some', label: 'Some errors that may change the meaning', what: '1 or 2 on the page: a misread word, a wrong number, a phrase dropped.', share: g.some_errors.share, color: 'bg-amber-300' },
+  { key: 'many', label: 'Many errors that may change the meaning', what: '3 or more on the page.', share: g.many_errors.share, color: 'bg-amber-600' },
+  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'We withhold these pages as we find them.', share: serious, color: 'bg-amber-900' },
 ];
 
 /** Languages with at least three books in the draw, fewest errors first. */
@@ -93,8 +97,8 @@ const WORD_LANGS = LANGS.filter(r => r.unit === 'words');
 const OTHER_LANGS = LANGS.filter(r => r.unit !== 'words');
 const RATE_MAX = Math.ceil(Math.max(...LANGS.map(r => r.severe_per_1k)) / 5) * 5;
 
-/** Page shares for a cut of the draw: nothing that changes the sense / a word that does / something not on the page. */
-type Shares = { says_what_the_page_says: number; misleads_somewhere: number; text_not_on_the_page: number; severe_per_1k?: number };
+/** Page shares for a cut of the draw: nothing that changes the sense / 1 or 2 errors that may / 3 or more / the rest. */
+type Shares = { says_what_the_page_says: number; some_errors: number; many_errors: number; severe_per_1k?: number };
 const periods = (servedGrades as unknown as { by_period: Record<string, Shares & { books: number }> }).by_period;
 const PERIOD_ORDER = ['before 1500', '1500–1599', '1600–1699', '1700–1799', '1800–1899', '1900 and later'];
 const PERIOD_ROWS = PERIOD_ORDER.filter(k => periods[k]).map(k => ({ key: k, ...periods[k] }));
@@ -294,12 +298,16 @@ function RateChart({ rows, max, reference }: { rows: { label: string; sub: strin
   );
 }
 
-type ShareKey = 'says_what_the_page_says' | 'misleads_somewhere' | 'text_not_on_the_page';
+type ShareKey = 'says_what_the_page_says' | 'some_errors' | 'many_errors' | 'rest';
 const SHARE_PARTS: { key: ShareKey; label: string; color: string }[] = [
   { key: 'says_what_the_page_says', label: 'Nothing that changes the sense', color: 'bg-stone-800' },
-  { key: 'misleads_somewhere', label: 'A word that changes the sense', color: 'bg-amber-300' },
-  { key: 'text_not_on_the_page', label: 'Something not on the page', color: 'bg-amber-700' },
+  { key: 'some_errors', label: 'Some errors that may change the meaning', color: 'bg-amber-300' },
+  { key: 'many_errors', label: 'Many errors that may change the meaning', color: 'bg-amber-600' },
+  { key: 'rest', label: 'Mostly wrong, or another page’s text', color: 'bg-amber-900' },
 ];
+/** The fourth part is what the other three leave: from elsewhere, mostly wrong, or not this page. */
+const part = (r: Shares, k: ShareKey) =>
+  k === 'rest' ? Math.max(0, 1 - r.says_what_the_page_says - r.some_errors - r.many_errors) : r[k];
 
 function ShareLegend() {
   return (
@@ -320,8 +328,8 @@ function ShareRow({ label, sub, r }: { label: string; sub: string; r: Shares }) 
         <span className="block text-xs text-stone-500">{sub}</span>
       </span>
       <div className="flex h-6 gap-[2px]">
-        {SHARE_PARTS.map(p => r[p.key] > 0 && (
-          <div key={p.key} className={`${p.color} first:rounded-l-[3px] last:rounded-r-[3px]`} style={{ width: `${r[p.key] * 100}%` }} title={`${label}: ${p.label}, ${pct(r[p.key])}`} />
+        {SHARE_PARTS.map(p => part(r, p.key) > 0.0001 && (
+          <div key={p.key} className={`${p.color} first:rounded-l-[3px] last:rounded-r-[3px]`} style={{ width: `${part(r, p.key) * 100}%` }} title={`${label}: ${p.label}, ${pct(part(r, p.key))}`} />
         ))}
       </div>
       <span className="text-right tabular-nums text-sm font-semibold text-stone-900" title="Pages with nothing that changes the sense">{pct(r.says_what_the_page_says)}</span>
@@ -556,7 +564,7 @@ export default function QualityCenterPage() {
           </p>
           <div className="flex h-10 w-full overflow-hidden rounded-sm mb-4" role="img" aria-label={BANDS.map(x => `${x.label}: ${pct(x.share)}`).join('; ')}>
             {BANDS.map(x => (
-              <div key={x.key} className={`${x.color} flex items-center justify-center text-sm font-semibold ${x.key === 'word' || x.key === 'slips' ? 'text-stone-900' : 'text-white'}`} style={{ width: `${x.share * 100}%` }}>
+              <div key={x.key} className={`${x.color} flex items-center justify-center text-sm font-semibold ${x.key === 'some' || x.key === 'slips' ? 'text-stone-900' : 'text-white'}`} style={{ width: `${x.share * 100}%` }}>
                 {x.share >= 0.07 ? pct(x.share) : ''}
               </div>
             ))}
@@ -575,9 +583,9 @@ export default function QualityCenterPage() {
           </ul>
           <p className="text-sm text-stone-600">
             On {longDate(drawDate)} we drew {n(servedGrades.books)} books at random from the {n(frameBooks)} with a
-            transcription, took five pages from each, and had an AI reviewer (Claude Opus) compare each of the{' '}
+            transcription, took five pages from each, and had an AI reviewer compare each of the{' '}
             {n(servedGrades.pages)} pages with its photograph. Shares are weighted back to the whole library; intervals are
-            in <A href={RECORD}>the full record</A>. This measures the transcription, not the English translation.
+            in <A href={RECORD}>the full record</A>. This measures the transcription. On the same pages, 15% of translated pages carry a major error in the English itself, and about a third of pages are wrong somewhere once a misread transcription is counted too (<A href={`${RECORD}`}>the record</A>).
           </p>
         </Section>
 
@@ -608,7 +616,7 @@ export default function QualityCenterPage() {
           <ChartTitle>Share of pages, by what the reviewer found (the number is the first, dark share)</ChartTitle>
           <ShareLegend />
           <ul className="space-y-2 mb-2">
-            {[...LANGS].sort((x, y) => y.says_what_the_page_says - x.says_what_the_page_says).map(r => <ShareRow key={r.language} label={r.language} sub={`${r.books} books`} r={r} />)}
+            {[...LANGS].sort((x, y) => y.says_what_the_page_says - x.says_what_the_page_says).map(r => <ShareRow key={r.language} label={r.language} sub={`${r.books} books`} r={{ ...r, some_errors: r.bands.some_errors.share, many_errors: r.bands.many_errors.share }} />)}
           </ul>
         </Section>
 
@@ -616,7 +624,9 @@ export default function QualityCenterPage() {
           <p className="mb-5">
             Books printed after 1600 come out alike, with about half to two thirds of pages clean. The earliest books are
             the hardest: on the {PERIOD_ROWS[0]?.books ?? 0} books from before 1500 in the draw, in Greek, Latin, Arabic and
-            Chinese, most pages carry something the page does not have.
+            Chinese, most pages carry three or more errors that may change the meaning, or are mostly wrong. Part of that is handwriting rather than date: in
+            Latin, where a larger study checked each book&rsquo;s form on its image, manuscripts carried about four times
+            the errors of print in every century, and books printed before 1501 were only a little worse than later ones.
           </p>
           <ShareLegend />
           <ul className="space-y-2 mb-3">
@@ -695,6 +705,11 @@ export default function QualityCenterPage() {
 
         <Section id="doing" title="What we are doing">
           <ul className="list-disc pl-5 space-y-2">
+            <li>
+              Most of the text measured here was read by earlier, cheaper models: our lightest model wrote nearly half of the
+              transcriptions you see. The current reading model has re-read about 2% so far. Where it
+              has, the Latin pages a reviewer called misleading fell from 41% to 8%.
+            </li>
             <li>A second model now re-reads transcriptions against the page image, starting with German and French.</li>
             <li>Greek, Sanskrit, Korean and Arabic are next, with readers chosen for each script.</li>
             <li>Pages that are mostly wrong or carry another page&rsquo;s text are withheld as we find them.</li>

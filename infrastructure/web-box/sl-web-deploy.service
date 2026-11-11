@@ -1,0 +1,8 @@
+# Build and roll out the commit the `release` branch points at (#8384). Started by the timer.
+[Unit]
+Description=Source Library reader origin: deploy origin/release if it moved
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sl-web-deploy
+TimeoutStartSec=45min

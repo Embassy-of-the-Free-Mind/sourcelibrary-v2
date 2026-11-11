@@ -1,0 +1,714 @@
+{
+ "print": {
+  "totals": {
+   "opus_deleted_chars": 712,
+   "opus_inserted_chars": 1002,
+   "paddle_with_opus": 54,
+   "no_paddle_char": 29,
+   "chars_S": 10042,
+   "inserted_runs4": 35,
+   "inserted_chars_in_runs4": 902,
+   "inserted_chars_paddle_has": 847,
+   "paddle_with_stored": 13,
+   "pages_skipped": 3,
+   "paddle_third_reading": 11
+  },
+  "pages": [
+   {
+    "key": "V4-6a05f0bf6a888f57ebd77686",
+    "opus_deleted_chars": 3,
+    "opus_inserted_chars": 11,
+    "paddle_with_opus": 3,
+    "no_paddle_char": 3,
+    "unconfirmed_inserts": [],
+    "chars_S": 808,
+    "chars_O": 811,
+    "chars_P": 685
+   },
+   {
+    "key": "V4-6992f3d4dc69844b023ff2a7",
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 292,
+    "chars_O": 292,
+    "chars_P": 292
+   },
+   {
+    "key": "V4-69e8b25c2ff2a8dc09e77805",
+    "opus_inserted_chars": 5,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 5,
+    "inserted_chars_paddle_has": 5,
+    "no_paddle_char": 1,
+    "opus_deleted_chars": 5,
+    "unconfirmed_inserts": [],
+    "chars_S": 100,
+    "chars_O": 100,
+    "chars_P": 100
+   },
+   {
+    "key": "V4-6a09f79aec7a5a72f8dab192",
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 277,
+    "chars_O": 277,
+    "chars_P": 277
+   },
+   {
+    "key": "V4-6992f3d9dc69844b023ff4b3",
+    "opus_inserted_chars": 286,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 283,
+    "inserted_chars_paddle_has": 283,
+    "paddle_with_opus": 4,
+    "paddle_with_stored": 1,
+    "opus_deleted_chars": 274,
+    "unconfirmed_inserts": [],
+    "chars_S": 449,
+    "chars_O": 461,
+    "chars_P": 463
+   },
+   {
+    "key": "V4-69f33c10876dd827cbc599eb",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-69e7287aa409200ea79efed3",
+    "opus_inserted_chars": 73,
+    "inserted_runs4": 4,
+    "inserted_chars_in_runs4": 36,
+    "opus_deleted_chars": 18,
+    "paddle_with_stored": 2,
+    "paddle_with_opus": 5,
+    "inserted_chars_paddle_has": 25,
+    "no_paddle_char": 2,
+    "unconfirmed_inserts": [
+     {
+      "key": "a79efed3",
+      "run": "如晉云吳片平云辛十四娘",
+      "len": 11,
+      "bigram_hit": 0.1
+     }
+    ],
+    "chars_S": 238,
+    "chars_O": 316,
+    "chars_P": 286
+   },
+   {
+    "key": "V4-6992cbd8018b80967354bc2d",
+    "opus_inserted_chars": 9,
+    "opus_deleted_chars": 5,
+    "paddle_third_reading": 4,
+    "paddle_with_opus": 2,
+    "paddle_with_stored": 3,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 5,
+    "inserted_chars_paddle_has": 5,
+    "unconfirmed_inserts": [],
+    "chars_S": 813,
+    "chars_O": 819,
+    "chars_P": 855
+   },
+   {
+    "key": "V4-6a1d81b45afc14a085e6da5d",
+    "unconfirmed_inserts": [],
+    "chars_S": 335,
+    "chars_O": 334,
+    "chars_P": 333
+   },
+   {
+    "key": "V4-69e9616b2beefe2f6f72b7b2",
+    "opus_deleted_chars": 19,
+    "opus_inserted_chars": 23,
+    "paddle_with_opus": 4,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 13,
+    "inserted_chars_paddle_has": 13,
+    "no_paddle_char": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 336,
+    "chars_O": 340,
+    "chars_P": 335
+   },
+   {
+    "key": "V4-69aec2c85bf9e9de6b166a03",
+    "no_paddle_char": 5,
+    "opus_inserted_chars": 47,
+    "inserted_runs4": 4,
+    "inserted_chars_in_runs4": 39,
+    "inserted_chars_paddle_has": 39,
+    "opus_deleted_chars": 13,
+    "paddle_with_stored": 1,
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 356,
+    "chars_O": 403,
+    "chars_P": 383
+   },
+   {
+    "key": "V4-6992cb50d4d545ae73feee94",
+    "opus_inserted_chars": 2,
+    "opus_deleted_chars": 2,
+    "paddle_with_opus": 1,
+    "no_paddle_char": 1,
+    "paddle_with_stored": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 139,
+    "chars_O": 139,
+    "chars_P": 139
+   },
+   {
+    "key": "V4-6a087eaab2a99026ccf6fe99",
+    "opus_inserted_chars": 2,
+    "paddle_with_stored": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 357,
+    "chars_O": 359,
+    "chars_P": 363
+   },
+   {
+    "key": "V4-6992cbd7018b80967354b609",
+    "paddle_with_opus": 1,
+    "opus_deleted_chars": 11,
+    "unconfirmed_inserts": [],
+    "chars_S": 418,
+    "chars_O": 407,
+    "chars_P": 426
+   },
+   {
+    "key": "V4-69e792f880b52390feb176c8",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-699df079ec13f7d17590a136",
+    "paddle_with_opus": 3,
+    "paddle_third_reading": 2,
+    "unconfirmed_inserts": [],
+    "chars_S": 290,
+    "chars_O": 290,
+    "chars_P": 300
+   },
+   {
+    "key": "V4-69af12630092756351e44a55",
+    "opus_inserted_chars": 243,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 243,
+    "inserted_chars_paddle_has": 243,
+    "no_paddle_char": 2,
+    "opus_deleted_chars": 243,
+    "unconfirmed_inserts": [],
+    "chars_S": 487,
+    "chars_O": 487,
+    "chars_P": 463
+   },
+   {
+    "key": "V4-69935b6f2c6394406313423d",
+    "no_paddle_char": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 324,
+    "chars_O": 324,
+    "chars_P": 324
+   },
+   {
+    "key": "V4-69e72c65a409200ea79f47d3",
+    "opus_deleted_chars": 11,
+    "opus_inserted_chars": 11,
+    "no_paddle_char": 1,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 8,
+    "inserted_chars_paddle_has": 8,
+    "unconfirmed_inserts": [],
+    "chars_S": 127,
+    "chars_O": 127,
+    "chars_P": 127
+   },
+   {
+    "key": "V4-69e75e35cc48e59ad74ec2d5",
+    "paddle_with_opus": 4,
+    "paddle_with_stored": 2,
+    "paddle_third_reading": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 181,
+    "chars_O": 181,
+    "chars_P": 180
+   },
+   {
+    "key": "V4-69bd0b0bb01b17638a0989f2",
+    "paddle_with_opus": 1,
+    "opus_inserted_chars": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 235,
+    "chars_O": 236,
+    "chars_P": 238
+   },
+   {
+    "key": "V4-6a087e8cb2a99026ccf6f6fb",
+    "unconfirmed_inserts": [],
+    "chars_S": 101,
+    "chars_O": 103,
+    "chars_P": 96
+   },
+   {
+    "key": "V4-69f1343c365e3fcae574e038",
+    "paddle_with_opus": 4,
+    "opus_inserted_chars": 33,
+    "no_paddle_char": 3,
+    "inserted_runs4": 3,
+    "inserted_chars_in_runs4": 29,
+    "inserted_chars_paddle_has": 23,
+    "opus_deleted_chars": 3,
+    "unconfirmed_inserts": [
+     {
+      "key": "e574e038",
+      "run": "引二合賀引一",
+      "len": 6,
+      "bigram_hit": 0.4
+     }
+    ],
+    "chars_S": 138,
+    "chars_O": 174,
+    "chars_P": 187
+   },
+   {
+    "key": "V4-6a0acab24d80f9c1594973ca",
+    "opus_inserted_chars": 55,
+    "inserted_runs4": 4,
+    "inserted_chars_in_runs4": 55,
+    "opus_deleted_chars": 56,
+    "inserted_chars_paddle_has": 23,
+    "unconfirmed_inserts": [
+     {
+      "key": "594973ca",
+      "run": "十註曹公曰擇便利而行也張預曰知九地之變然後可以擇利而行軍故次九變",
+      "len": 32,
+      "bigram_hit": 0.32
+     }
+    ],
+    "chars_S": 662,
+    "chars_O": 661,
+    "chars_P": 544
+   },
+   {
+    "key": "V4-69aebb3439a43078777730f1",
+    "paddle_with_opus": 2,
+    "opus_inserted_chars": 14,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 10,
+    "inserted_chars_paddle_has": 10,
+    "unconfirmed_inserts": [],
+    "chars_S": 249,
+    "chars_O": 263,
+    "chars_P": 262
+   },
+   {
+    "key": "V4-69b99f786ed9e0490990ad3e",
+    "opus_inserted_chars": 159,
+    "inserted_runs4": 9,
+    "inserted_chars_in_runs4": 149,
+    "inserted_chars_paddle_has": 143,
+    "paddle_with_opus": 3,
+    "opus_deleted_chars": 13,
+    "no_paddle_char": 9,
+    "unconfirmed_inserts": [
+     {
+      "key": "0990ad3e",
+      "run": "三宮夢宋菩宋",
+      "len": 6,
+      "bigram_hit": 0.0
+     }
+    ],
+    "chars_S": 1354,
+    "chars_O": 1524,
+    "chars_P": 1345
+   },
+   {
+    "key": "V4-695924fe1cac2ce31a4a8d11",
+    "opus_deleted_chars": 36,
+    "paddle_with_opus": 2,
+    "opus_inserted_chars": 28,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 27,
+    "inserted_chars_paddle_has": 27,
+    "paddle_third_reading": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 502,
+    "chars_O": 494,
+    "chars_P": 494
+   },
+   {
+    "key": "V4-69af123e0092756351e4490d",
+    "paddle_with_stored": 2,
+    "paddle_with_opus": 6,
+    "unconfirmed_inserts": [],
+    "chars_S": 351,
+    "chars_O": 351,
+    "chars_P": 352
+   },
+   {
+    "key": "V4-69bcec02ae27b5d80618b7f6",
+    "paddle_with_opus": 6,
+    "paddle_third_reading": 3,
+    "unconfirmed_inserts": [],
+    "chars_S": 123,
+    "chars_O": 123,
+    "chars_P": 126
+   },
+   {
+    "key": "V4-6a23f362cf679bf73b474eaa",
+    "skip": "O or Paddle equals S"
+   }
+  ]
+ },
+ "siku": {
+  "totals": {
+   "chars_S": 6204,
+   "pages_skipped": 5,
+   "opus_inserted_chars": 750,
+   "opus_deleted_chars": 552,
+   "paddle_with_opus": 25,
+   "inserted_runs4": 27,
+   "inserted_chars_in_runs4": 681,
+   "inserted_chars_paddle_has": 634,
+   "no_paddle_char": 36,
+   "paddle_with_stored": 4,
+   "paddle_third_reading": 4
+  },
+  "pages": [
+   {
+    "key": "V4-6a3ced944701a906f10e19af",
+    "unconfirmed_inserts": [],
+    "chars_S": 141,
+    "chars_O": 140,
+    "chars_P": 144
+   },
+   {
+    "key": "V4-6a3cee384701a906f10e743a",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-6a3cc2f3af74b230c690afbd",
+    "opus_inserted_chars": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 300,
+    "chars_O": 301,
+    "chars_P": 300
+   },
+   {
+    "key": "V4-6a3c5f8340c88a541d8e7211",
+    "opus_deleted_chars": 4,
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 165,
+    "chars_O": 161,
+    "chars_P": 163
+   },
+   {
+    "key": "V4-6a3c800d01fe4f593c21f417",
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 145,
+    "chars_O": 145,
+    "chars_P": 145
+   },
+   {
+    "key": "V4-6a3cec288642f0445b15a0b2",
+    "opus_deleted_chars": 6,
+    "unconfirmed_inserts": [],
+    "chars_S": 131,
+    "chars_O": 125,
+    "chars_P": 131
+   },
+   {
+    "key": "V4-6992cd7643713c66ea636a7d",
+    "opus_inserted_chars": 57,
+    "inserted_runs4": 5,
+    "inserted_chars_in_runs4": 50,
+    "inserted_chars_paddle_has": 41,
+    "no_paddle_char": 6,
+    "opus_deleted_chars": 50,
+    "unconfirmed_inserts": [
+     {
+      "key": "ea636a7d",
+      "run": "綠豆槐花心穀生果生",
+      "len": 9,
+      "bigram_hit": 0.25
+     }
+    ],
+    "chars_S": 204,
+    "chars_O": 225,
+    "chars_P": 226
+   },
+   {
+    "key": "V4-6a3c62e140c88a541d8f6ecc",
+    "opus_deleted_chars": 159,
+    "opus_inserted_chars": 302,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 301,
+    "inserted_chars_paddle_has": 301,
+    "unconfirmed_inserts": [],
+    "chars_S": 185,
+    "chars_O": 326,
+    "chars_P": 326
+   },
+   {
+    "key": "V4-6a3c604c40c88a541d8e7d09",
+    "opus_inserted_chars": 6,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 6,
+    "paddle_with_opus": 2,
+    "paddle_with_stored": 1,
+    "unconfirmed_inserts": [
+     {
+      "key": "1d8e7d09",
+      "run": "甲已并子夏編",
+      "len": 6,
+      "bigram_hit": 0.2
+     }
+    ],
+    "chars_S": 189,
+    "chars_O": 195,
+    "chars_P": 221
+   },
+   {
+    "key": "V4-6a0a4e9f7cd8e1e3d0f49716",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-6a3cbbcd87ee3d48c89d14ad",
+    "opus_inserted_chars": 42,
+    "paddle_with_opus": 3,
+    "opus_deleted_chars": 1,
+    "inserted_runs4": 3,
+    "inserted_chars_in_runs4": 39,
+    "inserted_chars_paddle_has": 39,
+    "unconfirmed_inserts": [],
+    "chars_S": 271,
+    "chars_O": 312,
+    "chars_P": 289
+   },
+   {
+    "key": "V4-6a0a4eec7cd8e1e3d0f49d29",
+    "opus_inserted_chars": 19,
+    "inserted_runs4": 3,
+    "inserted_chars_in_runs4": 19,
+    "paddle_with_opus": 1,
+    "opus_deleted_chars": 39,
+    "inserted_chars_paddle_has": 4,
+    "unconfirmed_inserts": [
+     {
+      "key": "d0f49d29",
+      "run": "欽定四庫全書皇極經世書",
+      "len": 11,
+      "bigram_hit": 0.0
+     },
+     {
+      "key": "d0f49d29",
+      "run": "口口口口",
+      "len": 4,
+      "bigram_hit": 0.0
+     }
+    ],
+    "chars_S": 105,
+    "chars_O": 87,
+    "chars_P": 60
+   },
+   {
+    "key": "V4-6a3cc320af74b230c690cb5a",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-6a3cec278642f0445b159fea",
+    "paddle_third_reading": 2,
+    "unconfirmed_inserts": [],
+    "chars_S": 139,
+    "chars_O": 139,
+    "chars_P": 139
+   },
+   {
+    "key": "V4-69c6616a01a26ccff09f5256",
+    "opus_inserted_chars": 21,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 21,
+    "inserted_chars_paddle_has": 21,
+    "paddle_with_opus": 4,
+    "unconfirmed_inserts": [],
+    "chars_S": 147,
+    "chars_O": 168,
+    "chars_P": 176
+   },
+   {
+    "key": "V4-6a3cef0d8642f0445b160362",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-6a3cc010f9474f825c16da57",
+    "paddle_with_opus": 3,
+    "paddle_with_stored": 2,
+    "unconfirmed_inserts": [],
+    "chars_S": 159,
+    "chars_O": 159,
+    "chars_P": 165
+   },
+   {
+    "key": "V4-6a3c5e9e40c88a541d8e402c",
+    "opus_inserted_chars": 16,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 15,
+    "inserted_chars_paddle_has": 15,
+    "paddle_third_reading": 1,
+    "opus_deleted_chars": 11,
+    "no_paddle_char": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 352,
+    "chars_O": 358,
+    "chars_P": 358
+   },
+   {
+    "key": "V4-6a3ce7950a0011cb4bc0a144",
+    "no_paddle_char": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 106,
+    "chars_O": 106,
+    "chars_P": 105
+   },
+   {
+    "key": "V4-6a3c6fff01fe4f593c1cfa25",
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 101,
+    "chars_O": 101,
+    "chars_P": 101
+   },
+   {
+    "key": "V4-6a3cc13fec254ff6cae0aafb",
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 230,
+    "chars_O": 230,
+    "chars_P": 230
+   },
+   {
+    "key": "V4-6a3c63700339d4df9abcbb23",
+    "no_paddle_char": 23,
+    "paddle_with_opus": 1,
+    "opus_inserted_chars": 6,
+    "opus_deleted_chars": 2,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 5,
+    "unconfirmed_inserts": [
+     {
+      "key": "9abcbb23",
+      "run": "巾帶刀擐丨",
+      "len": 5,
+      "bigram_hit": 0.0
+     }
+    ],
+    "chars_S": 377,
+    "chars_O": 378,
+    "chars_P": 358
+   },
+   {
+    "key": "V4-6a3cf0098642f0445b161e87",
+    "opus_inserted_chars": 23,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 23,
+    "inserted_chars_paddle_has": 23,
+    "opus_deleted_chars": 10,
+    "unconfirmed_inserts": [],
+    "chars_S": 180,
+    "chars_O": 193,
+    "chars_P": 202
+   },
+   {
+    "key": "V4-6a3c6b6139b4508b04e436af",
+    "skip": "O or Paddle equals S"
+   },
+   {
+    "key": "V4-6992cd9743713c66ea637712",
+    "opus_deleted_chars": 212,
+    "opus_inserted_chars": 146,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 146,
+    "inserted_chars_paddle_has": 146,
+    "unconfirmed_inserts": [],
+    "chars_S": 304,
+    "chars_O": 302,
+    "chars_P": 301
+   },
+   {
+    "key": "V4-6a3c7a8501fe4f593c217fa4",
+    "paddle_third_reading": 1,
+    "paddle_with_opus": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 168,
+    "chars_O": 168,
+    "chars_P": 176
+   },
+   {
+    "key": "V4-6a3c655539b4508b04e2df19",
+    "opus_deleted_chars": 11,
+    "opus_inserted_chars": 22,
+    "paddle_with_opus": 2,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 16,
+    "inserted_chars_paddle_has": 16,
+    "no_paddle_char": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 302,
+    "chars_O": 314,
+    "chars_P": 299
+   },
+   {
+    "key": "V4-6a3cee024701a906f10e55e7",
+    "opus_inserted_chars": 17,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 17,
+    "inserted_chars_paddle_has": 17,
+    "paddle_with_stored": 1,
+    "unconfirmed_inserts": [],
+    "chars_S": 222,
+    "chars_O": 239,
+    "chars_P": 245
+   },
+   {
+    "key": "V4-6992cea877d26f93217775f2",
+    "opus_inserted_chars": 51,
+    "inserted_runs4": 1,
+    "inserted_chars_in_runs4": 4,
+    "opus_deleted_chars": 47,
+    "no_paddle_char": 1,
+    "paddle_with_opus": 4,
+    "unconfirmed_inserts": [
+     {
+      "key": "217775f2",
+      "run": "卷五之四",
+      "len": 4,
+      "bigram_hit": 0.0
+     }
+    ],
+    "chars_S": 1305,
+    "chars_O": 1309,
+    "chars_P": 1455
+   },
+   {
+    "key": "V4-6a3c6552af3c49b59c5cb775",
+    "opus_inserted_chars": 21,
+    "inserted_runs4": 2,
+    "inserted_chars_in_runs4": 19,
+    "inserted_chars_paddle_has": 11,
+    "no_paddle_char": 3,
+    "unconfirmed_inserts": [
+     {
+      "key": "9c5cb775",
+      "run": "黃散猶躬胥徒之役",
+      "len": 8,
+      "bigram_hit": 0.0
+     }
+    ],
+    "chars_S": 276,
+    "chars_O": 308,
+    "chars_P": 30
+   }
+  ]
+ }
+}

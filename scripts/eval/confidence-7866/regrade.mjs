@@ -21,7 +21,9 @@
  * Read-only everywhere else: no page, book or router write.
  *
  * Three figures, in this order, because they answer different questions:
- *   1. `grades` / `buckets` — the judge's verdicts as they stand.
+ *   1. `grades` / `buckets` — the judge's verdicts as they stand. `bands` (#7263) is the reader-facing
+ *      ladder: `grades` with its two middle grades merged and split by count (bandOf), with the
+ *      count-vs-rate sensitivity in `band_sensitivity`.
  *   2. `reread` — the same pages after every misleads / wrong_text tag is resampled from #6740's
  *      blind re-read of 80 such tags on the quote and the leaf alone
  *      (`2026-10-30-defect-rate-router-6740.md`): a fifth of wrong_text and a third of misleads tags
@@ -34,12 +36,14 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { MongoClient, ObjectId } from 'mongodb';
 import { words } from '../route-judge-6740/defect-rate.mjs';
 import { HERE, RESULTS, SEED } from './lib.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
-const LANE = 'confidence-7866';
-const RUN = 'confidence-validation-7866';
+export const LANE = 'confidence-7866';
+export const RUN = 'confidence-validation-7866';
 
 /** The taxonomy's own one-line names (`.claude/docs/page-error-taxonomy.md` headings). */
 const CLASS_NAME = {
@@ -94,20 +98,45 @@ export function gradeOf(v) {
   if (n('cosmetic') > 2) return 'fit_to_read';
   return 'fit_to_quote';
 }
+/**
+ * The reader-facing band (#7263, Derek 2026-11-04): the two middle grades merged, then split by how
+ * many there are. A re-read moved 17 of 40 misleads tags to wrong_text (#6740), so the line between
+ * `search_only` and `wrong_span` is the unstable one; the count of serious spans on the page is not.
+ * Derived from gradeOf(), never in place of it (#7947 and others import its keys). The other grades
+ * pass through unchanged.
+ */
+export const BANDS = ['fit_to_quote', 'fit_to_read', 'some_errors', 'many_errors', 'from_elsewhere', 'mostly_wrong', 'not_this_page'];
+export const MANY_ERRORS_AT = 3;
+export const BAND_LABEL = {
+  fit_to_quote: GRADE_LABEL.fit_to_quote,
+  fit_to_read: GRADE_LABEL.fit_to_read,
+  some_errors: 'Some errors that may change the meaning: 1 or 2 on the page',
+  many_errors: 'Many errors that may change the meaning: 3 or more on the page',
+  from_elsewhere: GRADE_LABEL.from_elsewhere,
+  mostly_wrong: GRADE_LABEL.mostly_wrong,
+  not_this_page: GRADE_LABEL.not_this_page,
+};
+/** Spans the judge weighed misleads or wrong_text: the count the middle band is split on. */
+export const seriousSpans = (v) => (v.defects || []).filter((d) => d.severity === 'misleads' || d.severity === 'wrong_text').length;
+export function bandOf(v, grade = gradeOf(v)) {
+  if (grade !== 'search_only' && grade !== 'wrong_span') return grade;
+  return seriousSpans(v) >= MANY_ERRORS_AT ? 'many_errors' : 'some_errors';
+}
+
 export const bucketOf = (grade) =>
   (['fit_to_quote', 'fit_to_read'].includes(grade) ? 'says_what_the_page_says'
     : grade === 'search_only' ? 'misleads_somewhere' : 'text_not_on_the_page');
 
 /** The word unit of a language's script: rates are comparable within a script, never across. */
 /** The book's age band, from `books.published` (free text: the first four-digit run is the year). */
-const eraOf = (published) => {
+export const eraOf = (published) => {
   const y = Number(String(published ?? '').match(/\d{4}/)?.[0]);
   if (!y) return 'no date';
   return y <= 1500 ? 'before 1501' : y <= 1700 ? '1501–1700' : y <= 1900 ? '1701–1900' : 'after 1900';
 };
 /** Han characters and Tibetan syllables are not words: rates in those units never pool with alphabetic ones. */
-const isAlphabetic = (lang) => !/Chinese|Japanese|Korean|Tibetan/.test(lang);
-const unitOf = (lang) => (/Chinese|Japanese|Korean/.test(lang) ? 'Han characters' : /Tibetan/.test(lang) ? 'syllables' : 'words');
+export const isAlphabetic = (lang) => !/Chinese|Japanese|Korean|Tibetan/.test(lang);
+export const unitOf = (lang) => (/Chinese|Japanese|Korean/.test(lang) ? 'Han characters' : /Tibetan/.test(lang) ? 'syllables' : 'words');
 
 const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 const pctl = (a, p) => { const s = [...a].sort((x, y) => x - y); return s[Math.max(0, Math.min(s.length - 1, Math.floor(p * s.length)))]; };
@@ -121,7 +150,7 @@ async function load() {
   await c.connect();
   const db = c.db('bookstore');
   const recs = (await db.collection('lane_judge_verdicts')
-    .find({ lane: LANE, run_id: RUN, kind: 'item' }).toArray()).filter((r) => r.verdict);
+    .find(verdictQuery({ lane: LANE, run_id: RUN, kind: 'item' })).toArray()).filter((r) => r.verdict);
   // Word counts from the stored text. A page whose _id was re-minted is found by (book, page number).
   const texts = new Map();
   for (let i = 0; i < recs.length; i += 100) {
@@ -161,7 +190,7 @@ function pageRows({ recs, texts, titles }) {
       book: r.book_id, page: r.page_number, title: titles.get(r.book_id)?.title ?? null,
       lang, unit: unitOf(lang), period: periodOf(titles.get(r.book_id)), era: eraOf(titles.get(r.book_id)?.published), script: r.script_type ?? 'unknown', route: r.route, cell: r.cell_real,
       stratum: r.draw?.stratum ?? 'unmeasured', weight: r.draw?.weight ?? 1,
-      fidelity: Number(v.fidelity), accept: !!v.accept, grade: gradeOf(v),
+      fidelity: Number(v.fidelity), accept: !!v.accept, grade: gradeOf(v), band: bandOf(v), serious: seriousSpans(v),
       bad_7866: !v.accept || n('wrong_text') > 0,
       cosmetic: n('cosmetic'), misleads: n('misleads'), wrong_text: n('wrong_text'),
       words: words(texts.get(`${r.book_id}:${r.page_number}`) ?? ''),
@@ -173,13 +202,13 @@ function pageRows({ recs, texts, titles }) {
 
 /* ── weighted shares, stratified book-cluster bootstrap ── */
 
-const STRATA = ['high', 'middle', 'low', 'unmeasured'];
-function shares(books, keyOf, keys) {
+export const STRATA = ['high', 'middle', 'low', 'unmeasured'];
+export function shares(books, keyOf, keys) {
   let W = 0; const num = Object.fromEntries(keys.map((k) => [k, 0]));
   for (const b of books) for (const p of b.pages) { W += b.weight; const k = keyOf(p); if (k in num) num[k] += b.weight; }
   return { W, share: Object.fromEntries(keys.map((k) => [k, W ? num[k] / W : null])) };
 }
-function bootstrap(books, keyOf, keys, seed, B = 4000) {
+export function bootstrap(books, keyOf, keys, seed, B = 4000) {
   const rng = mulberry32(seed);
   const groups = STRATA.map((s) => books.filter((b) => b.stratum === s)).filter((g) => g.length);
   const draws = Object.fromEntries(keys.map((k) => [k, []]));
@@ -254,6 +283,15 @@ function build(rows) {
   const gS = shares(books, (p) => p.grade, GRADES), gCi = bootstrap(books, (p) => p.grade, GRADES, SEED.bootstrap + 10);
   const bS = shares(books, (p) => bucketOf(p.grade), BUCKETS), bCi = bootstrap(books, (p) => bucketOf(p.grade), BUCKETS, SEED.bootstrap + 11);
 
+  const MID = ['some_errors', 'many_errors'];
+  const nS = shares(books, (p) => p.band, BANDS), nCi = bootstrap(books, (p) => p.band, BANDS, SEED.bootstrap + 13);
+  const bandsOf = (ps, bks, seed) => {
+    const s = shares(bks, (p) => p.band, MID).share, ci = bootstrap(bks, (p) => p.band, MID, seed);
+    return Object.fromEntries(MID.map((k) => [k, { pages: ps.filter((r) => r.band === k).length, share: r4(s[k]), ci95: ci[k] }]));
+  };
+
+  // A seed per language from its name, so a language's interval does not move when another is added.
+  const seedOf = (L) => [...L].reduce((a, ch) => (Math.imul(a, 31) + ch.codePointAt(0)) | 0, SEED.bootstrap + 100);
   const langRows = [...new Set(rows.map((r) => r.lang))].map((L) => {
     const ps = rows.filter((r) => r.lang === L), bks = books.filter((b) => b.lang === L);
     const w = total(ps, (r) => r.words);
@@ -267,6 +305,9 @@ function build(rows) {
       severe_per_1k: w ? r2(((total(ps, (r) => r.misleads) + total(ps, (r) => r.wrong_text)) / w) * 1000) : null,
       wrong_text_per_1k: w ? r2((total(ps, (r) => r.wrong_text) / w) * 1000) : null,
       bad_7866_books: bks.filter((b) => b.pages.filter((p) => p.bad_7866).length >= 2).length,
+      // Weighted within the language, bootstrap over its books (#7263). A language of one or two books
+      // gives an interval as wide as the scale: read it as that.
+      bands: bandsOf(ps, bks, seedOf(L)),
     };
   }).sort((a, b) => b.pages - a.pages);
 
@@ -291,6 +332,8 @@ function build(rows) {
       misleads_somewhere: r4(ps.filter((r) => bucketOf(r.grade) === 'misleads_somewhere').length / ps.length),
       text_not_on_the_page: r4(ps.filter((r) => bucketOf(r.grade) === 'text_not_on_the_page').length / ps.length),
       fit_to_quote: r4(ps.filter((r) => r.grade === 'fit_to_quote').length / ps.length),
+      some_errors: r4(ps.filter((r) => r.band === 'some_errors').length / ps.length),
+      many_errors: r4(ps.filter((r) => r.band === 'many_errors').length / ps.length),
       severe_per_1k: w ? r2(((total(ps, (r) => r.misleads) + total(ps, (r) => r.wrong_text)) / w) * 1000) : null,
       ...rates(ps),
     }];
@@ -317,6 +360,41 @@ function build(rows) {
     t.examples.push({ severity: d.s, language: d.lang, quote: d.quote, what: d.what, book: d.book, page: d.page, title: d.title });
   }
 
+  /*
+   * The split's sensitivity (#7263 step 3): "3 or more on the page" beside "10 or more per 1,000
+   * units", on the same middle pages. The two agree at 300 units; they part on long pages with 3+
+   * (the rate says some) and on short pages with 1–2 (the rate says many). Kept beside the rule,
+   * not in place of it.
+   */
+  const PER_1K_AT = 10;
+  const mid = rows.filter((r) => MID.includes(r.band));
+  const byRate = (r) => (!r.words || (r.serious / r.words) * 1000 >= PER_1K_AT ? 'many_errors' : 'some_errors');
+  const rateS = shares(books.map((b) => ({ ...b, pages: b.pages.map((p) => ({ ...p, alt: MID.includes(p.band) ? byRate(p) : p.band })) })), (p) => p.alt, MID);
+  const LEN = [[0, 100], [100, 200], [200, 300], [300, 500], [500, Infinity]];
+  const lenOf = (w) => { const [a, b] = LEN.find(([x, y]) => w >= x && w < y); return b === Infinity ? `${a}+` : `${a}–${b - 1}`; };
+  const sensitivity = {
+    rule: `${MANY_ERRORS_AT} or more misleads / wrong_text spans on the page`,
+    alternative: `${PER_1K_AT} or more such spans per 1,000 units (words; Han characters; Tibetan syllables)`,
+    middle_pages: mid.length,
+    alternative_shares: Object.fromEntries(MID.map((k) => [k, { pages: mid.filter((r) => byRate(r) === k).length, share: r4(rateS.share[k]) }])),
+    disagree: mid.filter((r) => byRate(r) !== r.band).length,
+    by_length: LEN.map(([a]) => lenOf(a)).map((L) => {
+      const ps = mid.filter((r) => lenOf(r.words) === L);
+      return {
+        units: L, pages: ps.length,
+        some_by_count: ps.filter((r) => r.band === 'some_errors').length,
+        many_by_count: ps.filter((r) => r.band === 'many_errors').length,
+        count_some_rate_many: ps.filter((r) => r.band === 'some_errors' && byRate(r) === 'many_errors').length,
+        count_many_rate_some: ps.filter((r) => r.band === 'many_errors' && byRate(r) === 'some_errors').length,
+      };
+    }),
+    // Every page the two rules disagree on, shortest first, so a reader can open the short ones.
+    pages_disagreeing: mid.filter((r) => byRate(r) !== r.band).sort((a, b) => a.words - b.words).map((r) => ({
+      book: r.book, page: r.page, lang: r.lang, units: r.words, serious: r.serious,
+      per_1k: r.words ? r2((r.serious / r.words) * 1000) : null, by_count: r.band, by_rate: byRate(r),
+    })),
+  };
+
   const bookBucket = (b) => {
     const nOff = b.pages.filter((p) => bucketOf(p.grade) === 'text_not_on_the_page').length;
     if (b.pages.some((p) => ['not_this_page', 'mostly_wrong'].includes(p.grade))) return 'a_page_wholly_wrong';
@@ -332,12 +410,19 @@ function build(rows) {
     generated_at: new Date().toISOString(),
     source: { lane: LANE, run_id: RUN, record: 'scripts/eval/experiments/2026-10-31-confidence-validation-7866.md', issue: 7866 },
     judge: 'claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image. One judge, no person has checked these verdicts.',
-    ladder: 'the four grades of .claude/docs/quality-rubric-and-sampling.md §5, from the judge\'s own severities and fidelity',
+    ladder: 'the five grades of .claude/docs/quality-rubric-and-sampling.md §5, from the judge\'s own severities and fidelity (`bands`; `grades` keeps the earlier split by kind)',
     books: books.length, pages: rows.length, words: rows.reduce((a, r) => a + r.words, 0),
     grade_label: GRADE_LABEL,
     grades: Object.fromEntries(GRADES.map((g) => [g, {
       pages: rows.filter((r) => r.grade === g).length, share: r4(gS.share[g]), ci95: gCi[g],
     }])),
+    band_label: BAND_LABEL,
+    // The reader-facing ladder (#7263): `grades` with search_only + wrong_span merged and split on
+    // the count of misleads / wrong_text spans. /quality and /quality/record read this one.
+    bands: Object.fromEntries(BANDS.map((k) => [k, {
+      pages: rows.filter((r) => r.band === k).length, share: r4(nS.share[k]), ci95: nCi[k],
+    }])),
+    band_sensitivity: sensitivity,
     buckets: Object.fromEntries(BUCKETS.map((k) => [k, {
       pages: rows.filter((r) => bucketOf(r.grade) === k).length, share: r4(bS.share[k]), ci95: bCi[k],
     }])),
@@ -348,6 +433,10 @@ function build(rows) {
       by_grade: Object.fromEntries(GRADES.map((g) => {
         const ps = rows.filter((r) => r.grade === g);
         return [g, { pages: ps.length, counted_bad: ps.filter((r) => r.bad_7866).length }];
+      })),
+      by_band: Object.fromEntries(BANDS.map((k) => {
+        const ps = rows.filter((r) => r.band === k);
+        return [k, { pages: ps.length, counted_bad: ps.filter((r) => r.bad_7866).length }];
       })),
     },
     by_language: langRows,
@@ -373,11 +462,14 @@ function build(rows) {
   };
 }
 
-const rows = pageRows(await load());
-const out = build(rows);
-const file = path.join(RESULTS, 'served-grades.json');
-fs.mkdirSync(RESULTS, { recursive: true });
-fs.writeFileSync(file, `${JSON.stringify(out, null, 1)}\n`);
-console.log(`${path.relative(path.resolve(HERE, '../../..'), file)}: ${out.pages} pages, ${out.books} books, ${out.words.toLocaleString('en-US')} words`);
-for (const k of BUCKETS) console.log(`  ${k}: ${out.buckets[k].pages} pages, ${(out.buckets[k].share * 100).toFixed(1)}% weighted (${out.buckets[k].ci95.map((x) => (x * 100).toFixed(0)).join('-')}%)`);
-console.log(`  after #6740's blind re-read of the tags: says what the page says ${(out.reread.says_what_the_page_says.share * 100).toFixed(1)}%`);
+// Run only as a script: #7947 imports gradeOf() without loading Mongo or rewriting served-grades.json.
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const rows = pageRows(await load());
+  const out = build(rows);
+  const file = path.join(RESULTS, 'served-grades.json');
+  fs.mkdirSync(RESULTS, { recursive: true });
+  fs.writeFileSync(file, `${JSON.stringify(out, null, 1)}\n`);
+  console.log(`${path.relative(path.resolve(HERE, '../../..'), file)}: ${out.pages} pages, ${out.books} books, ${out.words.toLocaleString('en-US')} words`);
+  for (const k of BUCKETS) console.log(`  ${k}: ${out.buckets[k].pages} pages, ${(out.buckets[k].share * 100).toFixed(1)}% weighted (${out.buckets[k].ci95.map((x) => (x * 100).toFixed(0)).join('-')}%)`);
+  console.log(`  after #6740's blind re-read of the tags: says what the page says ${(out.reread.says_what_the_page_says.share * 100).toFixed(1)}%`);
+}

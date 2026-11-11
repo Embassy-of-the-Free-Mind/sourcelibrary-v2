@@ -12,7 +12,9 @@ name: Release to production
 # When it runs:
 #   - 07:00, 13:00, 19:00 UTC (GitHub may drop a scheduled run under load, #5276;
 #     scripts/audit/vercel-prod-watch.mjs pages when production trails main by > 13 h)
-#   - on demand:  gh workflow run release.yml
+#   - by hand, for a reader-facing breakage or a failed scheduled release (#8372):
+#       gh workflow run release.yml -f reason="what breaks for readers until the next window"
+#     A wish to see a change sooner is what a preview is for.
 #   - on a push to main whose SUBJECT line (a squash merge: the PR title) carries [deploy-now] (a hand merge; merges by
 #     auto-merge.yml use GITHUB_TOKEN and never trigger push workflows)
 #
@@ -33,6 +35,10 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      reason:
+        description: 'What breaks for readers until the next scheduled release, or which scheduled release failed'
+        type: string
+        required: true
       force:
         description: 'Release and build even if no build input changed since the last release'
         type: boolean
@@ -58,7 +64,16 @@ jobs:
         env:
           EVENT: ${{ github.event_name }}
           MESSAGE: ${{ github.event.head_commit.message }}
+          REASON: ${{ inputs.reason }}
         run: |
+          # A build empties the page cache, so a hand release has to say why it cannot wait (#8372).
+          if [ "$EVENT" = workflow_dispatch ]; then
+            if [ -z "${REASON//[[:space:]]/}" ]; then
+              echo "::error::A hand release needs -f reason=\"...\". Otherwise it ships at the next 07:00, 13:00 or 19:00 UTC; a preview shows it sooner."
+              exit 1
+            fi
+            echo "Hand release: $REASON"
+          fi
           SUBJECT="${MESSAGE%%$'\n'*}"
           if [ "$EVENT" != push ] || [[ "$SUBJECT" == *"[deploy-now]"* ]]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "go=false" >> "$GITHUB_OUTPUT"; fi
 
@@ -130,7 +145,24 @@ jobs:
         if: steps.diff.outputs.build == 'yes'
         env:
           SHA: ${{ steps.diff.outputs.sha }}
-        run: git push origin "$SHA:refs/heads/release"
+        # Retries a GitHub server error only (#8120: on 2026-11-04 three releases died on a 500
+        # and waited for a hand re-dispatch). The push is a fast-forward, so a failed attempt
+        # changes nothing and a retry is safe. A rejection (non-fast-forward, protected ref) is
+        # not retried: it fails at once, and the last failure pages through "Page on failure".
+        run: |
+          for wait in 15 30 60 0; do
+            if out=$(git push origin "$SHA:refs/heads/release" 2>&1); then echo "$out"; exit 0; fi
+            echo "$out"
+            if ! grep -qiE 'error: 5[0-9][0-9]|HTTP 5[0-9][0-9]|internal server error|bad gateway|service unavailable|gateway time-?out|RPC failed' <<<"$out"; then
+              echo "::error::push to release refused (not a server error); not retrying."
+              exit 1
+            fi
+            [ "$wait" = 0 ] && break
+            echo "::warning::GitHub server error on push; retrying in ${wait}s"
+            sleep "$wait"
+          done
+          echo "::error::push to release failed with a server error 4 times."
+          exit 1
 
       - name: Warm after the build
         if: steps.diff.outputs.build == 'yes'

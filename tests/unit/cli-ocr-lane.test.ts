@@ -3,6 +3,9 @@
  * read with the plain prompt, the queue order, the routed → CLI model map, and the reader's quota stop.
  */
 import { describe, it, expect } from 'vitest';
+import { rereadTier, byRereadPriority, latinRereadSkip, untaggedPagesAllowed, parseRereadLanguages, parseRereadTiers, loadLatinByEye, latinFirstSteps } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { staleLanePages, laneWithPerCall, readerArgs } from '../../scripts/batch/cli-translate-lane.mjs';
+import { servedByCrontab } from '../../scripts/maintenance/router-board-push.mjs';
 import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -313,5 +316,59 @@ describe('the first-read cohort (#7701)', () => {
     const cli = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
     expect(cli).toMatch(/FIRST_READ_ONLY && page\.ocr\?\.data\?\.trim\(\)/);
     expect(cli).toMatch(/!correct && LANE && \{ pipeline: LANE \}/);
+  });
+});
+
+describe('Latin re-read (#7263)', () => {
+  const byEye = { print: new Set(['eye-print']), manuscript: new Set(['eye-ms']) };
+  const latin = (o = {}) => ({ id: 'b', language: 'Latin', title: 'De natura', image_source: { provider: 'mdz' }, ...o });
+  it('tiers: readers, then 1501-1700 by year or published, then the rest', () => {
+    expect(rereadTier({ human_read_count: 1, year: 1900 })).toBe('readers');
+    expect(rereadTier({ year: 1501 })).toBe('period');
+    expect(rereadTier({ published: 'Venice, 1700' })).toBe('period');
+    expect(rereadTier({ year: 1500 })).toBe('rest');
+    expect(rereadTier({})).toBe('rest');
+    const sorted = [{ id: 'r', year: 1900 }, { id: 'p2', year: 1600 }, { id: 'p1', year: 1600, pages_translated: 9 }, { id: 'a', human_read_count: 2 }, { id: 'b', human_read_count: 7 }].sort(byRereadPriority);
+    expect(sorted.map((b) => b.id)).toEqual(['b', 'a', 'p1', 'p2', 'r']);
+  });
+  it('a manuscript or a book off the Latin translation row stays out, and the row is what it is for', () => {
+    expect(latinRereadSkip(latin(), byEye)).toBeNull();
+    expect(latinRereadSkip(latin({ title: 'Codex Vindobonensis' }), byEye)).toMatch(/manuscript/);
+    expect(latinRereadSkip(latin({ id: 'eye-ms' }), byEye)).toMatch(/by eye/);
+    expect(latinRereadSkip(latin({ published: '1420' }), byEye)).toMatch(/before print/);
+    expect(latinRereadSkip(latin({ image_source: { provider: 'bph' } }), byEye)).toMatch(/not latin-cli-agy4/);
+  });
+  it('an untagged page: from 1550 on, or by eye; an early or undated book needs the verdict', () => {
+    expect(untaggedPagesAllowed({ id: 'x', year: 1550 }, byEye)).toBe(true);
+    expect(untaggedPagesAllowed({ id: 'x', year: 1549 }, byEye)).toBe(false);
+    expect(untaggedPagesAllowed({ id: 'x' }, byEye)).toBe(false);
+    expect(untaggedPagesAllowed({ id: 'eye-print', year: 1480 }, byEye)).toBe(true);
+  });
+  it('flags: bad names refuse; a by-eye file that does not parse fails the run, not the frame', () => {
+    expect(parseRereadLanguages('Latin')).toEqual(['Latin']);
+    expect(() => parseRereadLanguages('Greek')).toThrow();
+    expect(parseRereadTiers('readers,period')).toEqual(['readers', 'period']);
+    expect(() => parseRereadTiers('nope')).toThrow();
+    expect(loadLatinByEye().print).toBeInstanceOf(Set);
+  });
+  it('latin-first runs the finishing steps (#8482), then the priority tiers, the correction and the rest, on one pool', () => {
+    const s = latinFirstSteps({ home: '/root/.agy-milo', root: '/r', date: '2026-11-03', maxPages: 3000, concurrency: 6, apply: true }).slice(2);
+    expect(s.map((x) => x.step)).toEqual(['latin-priority', 'german-french-correct', 'latin-rest']);
+    expect(s[0].args).toEqual(expect.arrayContaining(['--reread-per-call=4', '--reread-languages=Latin', '--reread-tiers=readers,period', '--out=/r/cli-ocr-reread/2026-11-03', '--agy-home=/root/.agy-milo', '--apply']));
+    expect(s[1].args).toEqual(expect.arrayContaining(['correct', '--out=/r/cli-ocr-correct/2026-11-03', '--max-pages=3000']));
+    expect(s[1].args.some((a) => a.startsWith('--reread'))).toBe(false);
+    expect(s[2].args).toContain('--reread-tiers=rest');
+  });
+  it('the crontab audit reads a latin-first line as the Latin re-read and the correction', () => {
+    const served = servedByCrontab('35 * * * * f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; node $f latin-first --agy-home=/root/.agy-milo --max-pages=3000 --apply');
+    expect(served).toContainEqual({ lane: 'reread', cell: 'latin-lite/print', route: 'agy-flash-low@4-read' });
+    expect(served.some((x) => x.lane === 'correct' && x.cell === 'german-lite/print')).toBe(true);
+  });
+  it('stale selects the lane\'s pages with a stale flag, never a human edit, and the reader takes the run\'s per-call', () => {
+    const q = staleLanePages('b', 'agy-reread-lite-7853');
+    expect([q['ocr.pipeline'], q['translation_stale.reason'], q['translation.edited_by']]).toEqual(['agy-reread-lite-7853', { $exists: true }, { $exists: false }]);
+    expect(q.translation_withheld).toEqual({ $ne: true });
+    const lane = { engine: 'gemini-3.8-flash+agy-cli', model: 'gemini-3.8-flash-low', reader: 'scripts/batch/cli-translate.mjs', row: { id: 'latin-cli-agy4', per_call: 4 } };
+    expect(readerArgs(laneWithPerCall(lane, 1), { ids: 'i', dir: 'd', job: 'j' })).toContain('--per-call=1');
   });
 });

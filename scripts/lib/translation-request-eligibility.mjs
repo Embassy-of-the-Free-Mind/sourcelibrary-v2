@@ -27,10 +27,23 @@
  * for scripts/batch/reader-request-lane.mjs (#7599), which honours `auto` on the subscription
  * CLIs ($0 API) with its own, larger ceiling: Derek's call on 2026-10-28 ("finish whichever
  * books they request"). The lane passes the two options below; every other gate is unchanged.
+ * For a book held for the Siku lane it also allows the hold, and the verdict only moves that book
+ * up a queue already approved to translate it (siku-translate-lane.mjs, #7690).
  */
 import { legacyPublication } from './publication.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { isTranslatablePage } from './translate-core.mjs';
+
+/** The site's translation-request prompt (TranslationEditor), the only message shape this lane acts on. */
+export const REQUEST_MESSAGE = /Translation requested for/;
+
+/** { bookRef, pageId } from a request's page URL, or null. */
+export function parseRequestUrl(url) {
+  const m = String(url || '').match(/\/book\/([^/?#]+)\/page\/([^/?#]+)/);
+  if (!m) return null;
+  // `page` is a public write and a bad escape throws: one such row must not stop this lane or the Siku lane.
+  try { return { bookRef: decodeURIComponent(m[1]), pageId: decodeURIComponent(m[2]) }; } catch { return null; }
+}
 
 /** Default ceiling: a request whose book tail exceeds this queues for a person. */
 export const DEFAULT_PAGE_CEILING = 25;

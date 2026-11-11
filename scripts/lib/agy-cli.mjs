@@ -27,12 +27,16 @@ export const GUARD_CONFIG_REFUSAL = /agy-guard: quota reached \(refused \(config
 // short enough to BE an error message. A transcription is long and can say "429" (a year, a folio): on 2026-10-12
 // one Latin page matched `\b429\b`, was taken for a quota stop 39 times, and held the whole read run for 6.5 h.
 const QUOTA_REPLY_MAX = 400;
+// #5309 (2026-11-08): a short answer is not only an error message. A leaf-identity screen replies in one line of JSON
+// ("Page 429 is numbered 331 …"), matched a bare 429, and locked flash-medium on the box for an hour. In a reply, 429
+// counts only beside error words.
+const QUOTA_IN_REPLY = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b[^\n]{0,80}(?:too many|rate.?limit|error)|(?:too many|rate.?limit|error)[^\n]{0,80}\b429\b/i;
 export function isQuotaError({ out = '', err = '', j = {}, text = '' }) {
   // The envelope's counters are numbers, not errors: a page whose usage.input_tokens was 429 matched `\b429\b` on
   // every retry and stopped its whole read (#6559, 2026-10-18).
   const envelope = j && Object.keys(j).length ? JSON.stringify({ ...j, response: undefined, usage: undefined, duration_seconds: undefined, num_turns: undefined, conversation_id: undefined }) : out;
   if (QUOTA.test(err) || QUOTA.test(envelope)) return true;
-  return text.length > 0 && text.length <= QUOTA_REPLY_MAX && QUOTA.test(text);
+  return text.length > 0 && text.length <= QUOTA_REPLY_MAX && QUOTA_IN_REPLY.test(text);
 }
 // #6523: 300 s, not 120: at high thinking 3.8 Flash takes 70–240 s on a dense page, and at the limit agy returns a cut reply.
 export const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '300s', '--output-format', 'json'];
@@ -90,13 +94,69 @@ export function installToolGate(dir, { task = 'ocr' } = {}) {
   fs.writeFileSync(path.join(dir, '.agents', 'hooks.json'), JSON.stringify({ [`${task}-tool-gate`]: { PreToolUse: [{ matcher: '*', hooks: [{ type: 'command', command, timeout: 10 }] }] } }));
   return log;
 }
+/**
+ * #8330: by default agy sends about 60 tool definitions with every turn (7.8K input tokens on a one-word prompt, agy
+ * 1.5.3), and each turn of a call re-sends them. A custom agent in the call's workspace narrows that list: 2.9K with
+ * no tools, 3.1K with read_file alone. A tool that is not listed cannot be asked for, so there is no denied-shell turn
+ * either. This does not replace installToolGate: the gate is the safety layer and stays on every call; the agent only
+ * decides what is offered. Returns the arguments that select it.
+ */
+const NARROW_AGENTS = {
+  // The open-once line matters: without it 6 of 14 calls opened their images twice, a whole extra turn each (#8330).
+  ocr: { name: 'page-reader', tools: ['read_file'], does: 'Reads the page images it is pointed at.', body: 'Open each named file once with read_file, in one step if you can. Do not open a file twice. Then answer.' },
+  translate: { name: 'page-translator', tools: [], does: 'Works on the text in the prompt. No tools.', body: 'Follow the instructions in the request exactly.' },
+};
+export function installNarrowAgent(dir, task = 'ocr') {
+  const a = NARROW_AGENTS[task];
+  if (!a) throw new Error(`no narrow agent for task ${task}`);
+  fs.mkdirSync(path.join(dir, '.agents', 'agents'), { recursive: true });
+  fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\n${a.body}\n`);
+  return ['--agent', a.name];
+}
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
+
+/**
+ * #5274: an agy read that never opened its image. The model sees a page only through its own allowed read_file /
+ * view_file turn (#7558). When every such turn was denied (seen 2026-11-04: the model asked for books/<page_id>/…
+ * where the file was books/<book_id>/…), it still answered: a blank-page stub, or a whole invented page (a Latin
+ * legal treatise on a Dào Dé Jīng leaf), and the reply passed every text guard. A read recorded with the gate's
+ * `tool_calls` and no allowed read is that case. A read with no `tool_calls` field (before the gate, or another CLI)
+ * is not judged here.
+ */
+// #8110: the exit a read's meta records. agyCall ends a CLI that printed a whole SUCCESS reply and then never exited
+// (#7503) with SIGKILL, so its code is null, but it returns that reply as the call's result (`hung_after_reply`, no
+// error class). That is a delivered reply: exit 0. A kill with no complete reply stays -9 (agyCall classes it 'timeout').
+export const cliExitCode = (r) => (r.code === null ? (r.hung_after_reply ? 0 : -9) : r.code);
+
+export function imageNeverOpened(meta) {
+  if (!meta || meta.cli !== 'agy' || !Array.isArray(meta.tool_calls)) return false;
+  return !meta.tool_calls.some((t) => t === 'read_file' || t === 'view_file');
+}
+
+/**
+ * #5309: the model asked for the page image under a path the gate refused, after (or instead of) the one it was given.
+ * On the 2026-11-08 offleaf pilot, 14 written reads had this shape (`read_file`, then `read_file:deny` on an invented
+ * absolute path): 13 of them were another book's page entirely (a Latin life of St Jerome on a Spanish herbal page), read
+ * blind by Opus against the image. Of the 315 without one, 289 agreed with an earlier read of their leaf and the 26 that
+ * did not were all read as their own leaf by Opus.
+ */
+export function imageReadDenied(meta) {
+  if (!meta || meta.cli !== 'agy' || !Array.isArray(meta.tool_calls)) return false;
+  return meta.tool_calls.some((t) => t === 'read_file:deny' || t === 'view_file:deny');
+}
+
+/** The paths the gate let the model read, from the same log. */
+export const gateReads = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.decision === 'allow' && r.path).map((r) => r.path); } catch { return []; } };
 
 /** The answer inside the markers, and why the reply is not a clean one (null when it is). */
 export function unwrapRead(raw) {
   const u = unwrapSentinels(raw);
   if (u.inside == null) return { text: String(raw || '').trim(), problem: String(raw || '').trim() ? 'no <<<BEGIN>>> marker' : null };
-  const problem = u.outside ? 'text outside the markers' : !u.closed ? 'reply cut before <<<END>>>' : null;
+  // #6871: a reply that opens a second <<<BEGIN>>> inside the block (seen: a correction that stops mid-page, then
+  // "<<<BEGIN>>>\nUNCHANGED") is neither the transcription nor the one-word answer; unwrapped, it stored the cut page
+  // with the marker in it, and every guard passed it. Never clean: re-read once, then refused at apply.
+  const problem = u.outside ? 'text outside the markers' : !u.closed ? 'reply cut before <<<END>>>'
+    : /<<<\s*(?:BEGIN|END)\s*>>>/.test(u.inside) ? 'a second marker inside the block' : null;
   return { text: u.inside, problem };
 }
 
@@ -339,7 +399,11 @@ export function agyCall(args, cwd, { killAfterMs = 360_000, exitGraceMs = EXIT_G
   });
 }
 
-/** agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none. */
+/**
+ * agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none.
+ * On agy 1.5.3 `input` leaves out `cache_read`: a page's tokens are the two added (#8330; the same prompt read 6.5K + 4K
+ * cached and 10.7K + 0). Comparing `input` alone flatters an arm that hits the cache.
+ */
 export function agyUsage(u) {
   if (!u) return null;
   return { input: u.input_tokens ?? null, output: u.output_tokens ?? null, thinking: u.thinking_tokens ?? null, cache_read: u.cache_read_tokens ?? null, total: u.total_tokens ?? null };
@@ -361,10 +425,12 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
   while (calls < attempts) {
     const ws = fs.mkdtempSync(path.join(tmp, `agy-${task}-`));
     const log = installToolGate(ws, { task });
+    // #8330: a translation needs no tool at all. AGY_ALL_TOOLS=1 sends the full list (the A/B's control arm).
+    const agentArgs = task === 'translate' && !process.env.AGY_ALL_TOOLS ? installNarrowAgent(ws, task) : [];
     // stdin: the prompt goes in as a stream-json message (stdinArgs), for a prompt past the 128 KB argv cap.
     r = stdin
-      ? await agyCall([...stdinArgs(printTimeoutS), '--model', model], ws, { input: messages.map(stdinMessage).join(''), turns: messages.length, killAfterMs: (printTimeoutS + 60) * 1000 })
-      : await agyCall(['-p', sent, '--model', model, ...CLI_SAFE_ARGS], ws); calls++;
+      ? await agyCall([...stdinArgs(printTimeoutS), '--model', model, ...agentArgs], ws, { input: messages.map(stdinMessage).join(''), turns: messages.length, killAfterMs: (printTimeoutS + 60) * 1000 })
+      : await agyCall(['-p', sent, '--model', model, ...agentArgs, ...CLI_SAFE_ARGS], ws); calls++;
     requests += stdin ? messages.length : 1;
     tools = tools.concat(gateCalls(log));
     fs.rmSync(ws, { recursive: true, force: true });
@@ -372,7 +438,7 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
     if (!r.cls || r.cls === 'quota') break;
   }
   const { text: answer, problem } = unwrapRead(r.text);
-  return { ...r, calls, requests, tool_calls: tools, answer, problem };
+  return { ...r, calls, requests, tool_calls: tools, answer, problem, ...(process.env.AGY_ALL_TOOLS || task !== 'translate' ? {} : { agent: NARROW_AGENTS.translate.name }) };
 }
 
 /**

@@ -4,7 +4,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { driftReport, driftMarkdown } from '../../scripts/audit/router-table-drift.mjs';
+import { driftReport, driftMarkdown } from '../../scripts/maintenance/router-board-push.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { v4Verdict, routeRunner, currentRoute, frameFor } from '../../scripts/eval/router-confirm/confirm.mjs';
@@ -28,6 +28,14 @@ describe('driftReport: has each decided cell shipped?', () => {
 
   it('gives every keep / switch cell one status; UNTESTED keeps and HOLDs are not decisions', () => {
     expect(by).toEqual({ 'german-lite/unknown': 'served', 'french-lite/print': 'mismatch', 'latin-lite/print': 'unshipped', 'russian-lite/unknown': 'idle' });
+  });
+  it('a keep of the stored text (a stage none route) owes no lane: stored, not unshipped (#7913)', () => {
+    const keep = { ...row('sanskrit-lite/print', 'keep', 'lite', 36624), routes: [{ id: 'lite', k: 9, n: 10, stage: 'none' }] };
+    const s = driftReport({ table: table([keep, row('latin-lite/print', 'keep', 'lite>opus', 5000)]), crontabs: {}, routingTables: {}, today: '2026-11-01' });
+    expect(Object.fromEntries(s.cells.map((c: { cell: string; status: string }) => [c.cell, c.status]))).toEqual({ 'sanskrit-lite/print': 'stored', 'latin-lite/print': 'unshipped' });
+    expect(s.tally.stored).toEqual({ cells: 1, pages_waiting: 36624 });
+    expect(s.signature).toBe('latin-lite/print:unshipped:lite>opus');
+    expect(driftMarkdown(s)).toContain('Keeps the stored text (decided route is the served draft or English, no lane owed): sanskrit-lite/print (36,624)');
   });
   it('counts the pages a decision without a lane leaves waiting, and dates the routing tables against the pointer', () => {
     expect(r.tally.unshipped).toEqual({ cells: 1, pages_waiting: 5000 });

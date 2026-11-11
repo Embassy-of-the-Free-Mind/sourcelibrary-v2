@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { resolveApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { apiTermsRequiredBody } from '@/lib/api-terms-version';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
 import { getClientIp } from '@/lib/rate-limit';
 import { DatasetPageRecord } from '@/lib/dataset/types';
 import { markForExport } from '@/lib/provenance';
 import { keyRef } from '@/lib/bot-attribution';
+import { traceRefFor } from '@/lib/trace-ref';
 
 export const maxDuration = 30;
 
@@ -52,7 +54,8 @@ function parseCursor(after: string | null): Record<string, unknown> | null {
  */
 export async function GET(request: NextRequest) {
   // Authenticate
-  const apiKey = await validateApiKey(request.headers.get('authorization'));
+  const { doc: apiKey, termsRequired } = await resolveApiKey(request.headers.get('authorization'));
+  if (termsRequired) return NextResponse.json(apiTermsRequiredBody(), { status: 403 });
   if (!apiKey) {
     return NextResponse.json(
       { error: 'Invalid or missing API key. Get one at https://sourcelibrary.org/dataset' },
@@ -192,7 +195,8 @@ export async function GET(request: NextRequest) {
   // passage. Invisible, deliberately strippable (attribution, not DRM); a
   // negotiated bit-clean corpus is delivered offline, never through this
   // endpoint.
-  const ref = keyRef(String(apiKey._id));
+  // Opaque SLA- ref instead when traced copies are on (#8150 slice 8, dark by default).
+  const ref = traceRefFor({ apiKeyId: String(apiKey._id) }) ?? keyRef(String(apiKey._id));
   const markText = (text: string | undefined, bookId: string) =>
     text ? markForExport(text, bookId, { ref }) : null;
 

@@ -11,7 +11,7 @@ import path from 'node:path';
 import { checkBinding, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { servedByCrontab } from '../../scripts/audit/router-binding.mjs';
+import { servedByCrontab } from '../../scripts/maintenance/router-board-push.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { FIRST_READ_PER_CALL_LANGUAGES, FIRST_READ_PER_CALL_BY_LANGUAGE, firstReadPerCall } from '../../scripts/batch/cli-ocr-lane.mjs';
@@ -129,7 +129,9 @@ describe('the committed pointer', () => {
     const f = checkBinding(loadCurrentTable(), servedByReread({ languages: ['German', 'French'], perCall: 4 }), { today: '2026-11-01' });
     expect(f.map((x: { cell: string; status: string }) => [x.cell, x.status])).toEqual([['german-lite/print', 'waived'], ['french-lite/print', 'ok']]);
     expect(f[0].waiver).toMatchObject({ lane: 'reread', until: '2026-11-14' });
-    expect(f[1]).toMatchObject({ decided: 'agy-flash-low@4-read', table: '2026-11-01-reread-7853' });
+    // the build the pointer resolves for the cell, not a dated name: a nightly bind (#8283) moves `table` without changing the decision
+    const ptr = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/current.json'), 'utf8'));
+    expect(f[1]).toMatchObject({ decided: 'agy-flash-low@4-read', table: ptr.cells?.['french-lite/print']?.table ?? ptr.table });
     // the waiver is the reread lane's: after its date the German cell is a mismatch again, and pages
     expect(checkBinding(loadCurrentTable(), servedByReread({ languages: ['German'], perCall: 4 }), { today: '2026-11-15' })[0].status).toBe('mismatch');
   });
@@ -152,6 +154,12 @@ describe('the defect rule decides, k/n is the fallback (#6740)', () => {
     expect(by['german-lite/print'].defects_rule.gates['lite>agy-flash-low'].wrong_text).toBe(false);
     // Latin Flash-Lite: the live Opus route has 9 books of defect verdicts (< 10): k/n decides, labelled
     expect([by['latin-lite/print'].rule, by['latin-lite/print'].decision]).toEqual(['k/n', 'keep (k/n: the live route lite>opus has no defect verdicts (9 books))']);
+  });
+  it('latin-lite/print is a person\'s decision (#7263): it binds the re-read at 4 a call, and the row keeps the rule\'s own pick', () => {
+    const table = loadCurrentTable(RT);
+    const [f] = checkBinding(table, servedByReread({ languages: ['Latin'], perCall: 4 }), { today: '2026-11-03' });
+    expect([f.cell, f.status, f.decided]).toEqual(['latin-lite/print', 'ok', 'agy-flash-low@4-read']);
+    expect(table.rows.get('latin-lite/print').rule_alone).toMatch(/agy-flash-low-read$/);
   });
   const py = spawnSync('python3', ['--version']);
   it.skipIf(py.status !== 0)('build.py decide_defects: switch, gates, the weight HOLD and every fallback (test_pick.py DefectRule)', () => {

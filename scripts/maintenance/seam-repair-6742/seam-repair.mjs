@@ -396,10 +396,11 @@ async function applyStage(out, arms, doApply) {
  * either way. `callSite` names the writer in the engine block; the revision reason stays TAG so `undo` finds it.
  */
 export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude', model = 'claude-opus-5-5', promptName = 'seam-repair-6742 label+minimal edge repair (opus-reference PROMPT, packed)',
-  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders', allowHidden = false, throwOnStop = false, callSite = TAG } = {}) {
+  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders', allowHidden = false, throwOnStop = false, callSite = TAG, runId: givenRunId = null } = {}) {
   const stop = (code, msg) => { if (throwOnStop) throw new Error(msg); console.error(msg); process.exit(code); };
   const manifest = path.join(out, 'manifest.jsonl'), refusals = path.join(out, 'apply-refusals.jsonl');
-  const runId = `${TAG}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+  // `runId`: a caller writing its joins one call at a time (claude-translate's seam pass, #8399) keeps them in one run.
+  const runId = givenRunId || `${TAG}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
   const bin = cli === 'claude' ? CLI : cli;
   const cliVersion = String(cli !== 'claude' || fs.existsSync(CLI) ? (await new Promise(res => { const c = spawn(bin, ['--version']); let o = ''; c.stdout.on('data', d => { o += d; }); c.on('error', () => res('unknown')); c.on('close', () => res(o.trim().split(' ')[0] || 'unknown')); })) : 'unknown');
   const cv = await codeVersion();

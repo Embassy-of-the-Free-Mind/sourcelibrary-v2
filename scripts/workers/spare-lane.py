@@ -40,6 +40,11 @@ Gates, all from the box's own climits poll (/root/.claude-limits/latest.json):
   start (last 48 h)     weekly < 90%, session < 70%   — use it or lose it
   stop running jobs     weekly >= 92% or session >= 85%, so the account is never run dry
                         for interactive use or pushed into extra usage
+  drain (last 6 h)      start while weekly < 99% and session < 70%, stop at 99%: what is left then
+                        expires unused, and an unused point costs the same fee as a used one. No start
+                        in the final hour, when a job would spill into the new week. It passes the job
+                        wrapper's 90% refusal (JOB_IGNORE_LIMIT). Extra usage is off on every account.
+                        The work is always an Opus QA round (the fallback below), never an issue.
   box                   load1 < cores, at most MAX_JOBS lane jobs (1 on the shared guest boxes),
                         poll data < 15 min old on main, < 45 min old from Mongo on a guest
 """
@@ -71,6 +76,9 @@ OPPORTUNITY_EVERY = 4  # every 4th start ignores the maps and takes label order
 SKIP_LABELS = {"epic", "spare-skip", "spare-lane", "blocked", "hold", "tier:hold"}
 WEEK_S = 7 * 86400
 LAST_STRETCH_S = 2 * 86400
+DRAIN_S = 6 * 3600
+DRAIN_LAST_START_S = 3600
+DRAIN_STOP_PCT = 99
 
 DRY = "--dry-run" in sys.argv
 AS = sys.argv[sys.argv.index("--account") + 1].lower() if DRY and "--account" in sys.argv[:-1] else None
@@ -137,12 +145,27 @@ def account_limits() -> tuple[str, dict] | None:
     return email, {l["key"].split(":")[0]: l for l in acct["limits"] if l["key"] in ("session:all", "weekly_all:all")}
 
 
+def draining(limits: dict) -> bool:
+    """In the final hours of the week, when what is left would expire unused."""
+    reset = parse_iso((limits.get("weekly_all") or {}).get("resets_at"))
+    return bool(reset) and 0 < (reset - NOW).total_seconds() <= DRAIN_S
+
+
 def decide(limits: dict) -> tuple[str, str]:
     """('start'|'stop'|'idle', reason)."""
     week, sess = limits.get("weekly_all"), limits.get("session")
     if not week:
         return "idle", "no weekly limit reported"
     w, s = week["percent"] or 0, (sess or {}).get("percent") or 0
+    if draining(limits):
+        left_h = (parse_iso(week["resets_at"]) - NOW).total_seconds() / 3600
+        if w >= DRAIN_STOP_PCT or s >= 85:
+            return "stop", f"draining, weekly {w}% / session {s}%"
+        if left_h * 3600 <= DRAIN_LAST_START_S:
+            return "idle", f"draining, but {left_h:.1f} h left is too late to start a job"
+        if s < 70:
+            return "start", f"last {left_h:.1f} h of the week at {w}% — drain what would expire"
+        return "idle", f"draining, but session {s}%"
     if w >= 92 or s >= 85:
         return "stop", f"weekly {w}% / session {s}% — leave the rest for interactive use"
     reset = parse_iso(week.get("resets_at"))
@@ -349,6 +372,8 @@ def main():
     email, limits = got
     action, why = decide(limits)
     running = lane_jobs()
+    if draining(limits):
+        os.environ["JOB_IGNORE_LIMIT"] = "1"  # the wrapper refuses a start at 90%, which is where a drain begins
 
     if action == "stop":
         for name in running:
@@ -371,6 +396,12 @@ def main():
         return
 
     state = load_state()
+    if draining(limits):
+        # Derek, 2026-11-05: an Opus QA check is always good. A round also fits the time left, where an issue
+        # job has a two-hour budget and may be stopped at 99% half done. Claude reviews here and writes no page
+        # text; translation stays on agy.
+        start_fallback_audit(email, limits, why, state)
+        return
     tried = {int(k) for k in state["tried"]}
     starts = state.get("starts", 0)
     picked = None if starts % OPPORTUNITY_EVERY == OPPORTUNITY_EVERY - 1 else pick_from_needs(tried, state.get("area", 0))

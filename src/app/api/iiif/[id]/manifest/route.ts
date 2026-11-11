@@ -359,7 +359,7 @@ export async function GET(
       label: { en: ['License'] },
       value: {
         en: [
-          'Original texts: public domain. OCR, translations and annotations: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, attribution: Source Library (https://sourcelibrary.org).',
+          'Original texts: public domain. OCR, translations and annotations: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>, attribution: Source Library (https://sourcelibrary.org).',
         ],
       },
     });
@@ -381,7 +381,7 @@ export async function GET(
     // Rights. Books without a stored license value default to the Public
     // Domain Mark: everything served here is a publicly readable facsimile of
     // a pre-1900 original (copyright-held books are hidden and 404 above).
-    // The CC BY-SA claim on our OCR/translation layer lives in the License
+    // The CC BY-NC-SA claim on our OCR/translation layer lives in the License
     // metadata row — IIIF `rights` takes exactly one URI, and the facsimile
     // images are the manifest's primary content.
     // The holding library's own statement wins when we have read one (#7771): a

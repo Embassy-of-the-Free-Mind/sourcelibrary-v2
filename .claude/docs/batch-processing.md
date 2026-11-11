@@ -1,5 +1,7 @@
 # Batch Processing (Gemini Batch API)
 
+> **SUPERSEDED 2026-11-11 (#8283): the paid Gemini Batch API / flash-lite page-work lane described below is retired.** Page OCR and translation now run on the four routes only (agy, GPU>agy, Opus, GPU>Opus). See `.claude/docs/routing.md` and `.claude/docs/invariants/spend-controls.md`; live lane state: https://sourcelibrary.org/admin/pipeline/now. Kept for history of the Batch pipeline.
+
 ## Overview
 
 The Gemini Batch API provides 50% cost savings over realtime processing. Jobs complete within 24 hours (usually faster) with built-in retries and no rate limiting. Used for OCR and translation of large books.

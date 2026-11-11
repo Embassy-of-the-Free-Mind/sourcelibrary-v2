@@ -395,7 +395,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
             <Download className="w-3.5 h-3.5" />
             CSV
           </a>
-          <Link href="/catalog" className="text-xs text-muted hover:text-accent-rust transition-colors">
+          <Link href="/library" className="text-xs text-muted hover:text-accent-rust transition-colors">
             Grid view
           </Link>
         </div>

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
-import { validateApiKey } from '@/lib/dataset/api-keys';
+import { resolveApiKey } from '@/lib/dataset/api-keys';
+import { apiTermsRequiredBody } from '@/lib/api-terms-version';
 
 /**
  * GET /api/dataset/v1/usage — a key holder's own usage, from the same ledger
@@ -17,7 +18,8 @@ export async function GET(request: NextRequest) {
   const db = await getDb();
 
   let keyIds: string[] = [];
-  const keyDoc = await validateApiKey(request.headers.get('authorization'));
+  const { doc: keyDoc, termsRequired } = await resolveApiKey(request.headers.get('authorization'));
+  if (termsRequired) return NextResponse.json(apiTermsRequiredBody(), { status: 403 });
   if (keyDoc) {
     keyIds = [String(keyDoc._id)];
   } else {

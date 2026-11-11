@@ -1,0 +1,147 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "prompt",
+  "issue": 7263,
+  "stage": "ocr",
+  "languages": [
+   "Latin"
+  ],
+  "baseline": "v19.1",
+  "arms": [
+   "v19.1",
+   "v19.2"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "prompt",
+  "router_evidence": "none — a prompt test on Latin print chosen by eye, not a route's accept rate on a cell's draw; no router cell changes",
+  "waive": {
+   "R4": "Repeats are staged by the posted rule, so fewer than five may run. The first v19.2 run measured this judge on this kind of page: the same output judged twice flipped accept on 2/7 pages (#8379, results/ocr-prompt-v19-2-7263).",
+   "R1": "By design: the posted rule judges the two v19.1 reads of one page, so a rejected v19.2 read brings two v19.1 rows from that book. Every page is from a different book."
+  }
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "v192-latin": {
+     "routes": {
+      "v19.2": {
+       "n": 5,
+       "books": 5,
+       "unjudged": 0,
+       "accept": "3/5",
+       "accept_wilson": [
+        0.231,
+        0.882
+       ],
+       "accept_by_book": [
+        0.2,
+        1
+       ],
+       "wrong_text_pages": "2/5",
+       "wrong_text_wilson": [
+        0.118,
+        0.769
+       ],
+       "fidelity_mean": 4,
+       "counts": true,
+       "words": 2513,
+       "misleads_per_1k": 2.39,
+       "wrong_text_per_1k": 1.59
+      },
+      "v19.1": {
+       "n": 4,
+       "books": 2,
+       "unjudged": 0,
+       "accept": "2/4",
+       "accept_wilson": [
+        0.15,
+        0.85
+       ],
+       "accept_by_book": [
+        0,
+        1
+       ],
+       "wrong_text_pages": "2/4",
+       "wrong_text_wilson": [
+        0.15,
+        0.85
+       ],
+       "fidelity_mean": 3.5,
+       "counts": true,
+       "words": 2892,
+       "misleads_per_1k": 5.53,
+       "wrong_text_per_1k": 2.07
+      }
+     },
+     "controls": {
+      "v19.2": {
+       "n": 1,
+       "passed": true
+      },
+      "v19.1": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 2,
+      "accept_flips": "0/2",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0
+     },
+     "against_baseline": {
+      "v19.1 -> v19.2": {
+       "shared_pages": 4,
+       "better": "0/4",
+       "worse": "2/4",
+       "accept_gained": 0,
+       "accept_lost": 2,
+       "accept_sign_test_p": 0.5,
+       "fidelity_diff": -0.5
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "WAIVED: By design: the posted rule judges the two v19.1 reads of one page, so a rejected v19.2 read brings two v19.1 rows from that book. Every page is from a different book. (v192-latin/v19.1: 2 book(s) with more than one page (69b65de4b3f4fc044151d918×2, 69af0d04067c0c26ee26d0cf×2))",
+   "waived": true
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 2 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "WAIVED: Repeats are staged by the posted rule, so fewer than five may run. The first v19.2 run measured this judge on this kind of page: the same output judged twice flipped accept on 2/7 pages (#8379, results/ocr-prompt-v19-2-7263). (no noise floor: 2 'repeat' rows (need >= 5) and no recipe.noise_floor.from)",
+   "waived": true
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

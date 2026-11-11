@@ -1,0 +1,667 @@
+[
+  {
+    "book_id": "69f32dfb876dd827cbc43551",
+    "slot": 96,
+    "title": "Quaestiones super secundo libro magistri sententarium",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned. It is a 13th/14th-c. scholastic commentary on Book II of Lombard's Sentences (angels, illumination, the Fall), which belongs among medieval theology sources.",
+    "rights_flag": null,
+    "structure_note": "438 pages, 415 with OCR, 394 translated. All three leaves sit in sequence (folio numbers x.xxij, x.xxxvj on the image), and the page-level coverage gap is plausible for blanks and flyleaves. The OCR's own <page-num> misreads the folio (X.XXV. vs x.xxij on p.225; f. xxxij vs x.xxxvj on p.329).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 118,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Sed sicut in prima / luce dicitur secundum me a philosophis meo dicitur glossa",
+            "image": "Sicut super [Ps.] … manus tuae … fecerunt me et plasmaverunt me (abbrev. 'manu tue. f. me. et plas. me')",
+            "problem": "Psalm citation replaced by invented philosophical phrasing",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "propria angelica natura est tanta claritas et potestas",
+            "image": "Quintum tamen est ponere … (new paragraph with blue initial)",
+            "problem": "Paragraph opening misread. Through most of both columns the transcription is fluent Latin that tracks only the anchor words (angelo, illuminat, medium, Io. 1 'erat lux vera', Augustinus) and confabulates the rest",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "quo ad supernam praesentiam angeli non potest nuntiare",
+            "image": "quo ad supremam partem angelus non potest illuminare",
+            "problem": "'illuminare' read repeatedly as 'nuntiare', which changes the thesis being argued",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>purgat</margin>",
+            "image": "parat (running word above col. b)",
+            "problem": "head word misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Etiam si angelo nuntiatur alia res illuminata in immenso et lumen primum aut secundum nomen",
+            "english": "Even if another illuminated thing is announced to an angel in the immense [depths] and the first light or the second name",
+            "problem": "The garbled transcription is rendered as confident English with bracketed fillers. The reader gets no sign that the passage does not construe and does not match the leaf",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 225,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "loquendo tamen Augustinus dicit quod magis punita fuit Eva ad inviam descendens",
+            "image": "loquendo tamen magnum est quod magis punita fuit, ita ad infernum descendens",
+            "problem": "invents an attribution to Augustine and inserts 'Eva'. 'infernum' is misread as 'inviam'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "utrum sit aliquod peccatum praeter peccatum aut ex ignorantia",
+            "image": "utrum peccatum quod est poena peccati sit ex ignorantia",
+            "problem": "The question as stated (sin that is the punishment of sin) is lost",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Tertio utrum sit culpa excusata",
+            "image": "Tertio utrum sit culpae excusativa",
+            "problem": "The question becomes whether ignorance is an excused fault instead of whether it excuses fault",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Magister refert in littera peccatum Evae gravius fuisse in parte",
+            "image": "Magister refert in littera peccatum in primo parente … (abbrev.)",
+            "problem": "'Evae' supplied, not on the leaf",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<page-num>X.XXV.</page-num>",
+            "image": "x. xxij",
+            "problem": "folio numeral misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "loquendo tamen Augustinus dicit quod magis punita fuit Eva",
+            "english": "(carried into the English as an Augustine attribution)",
+            "problem": "The invented Augustine citation reaches the reader as fact",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Magister refert",
+            "english": "the Master <note>referring to Peter Lombard's *Sentences*</note>",
+            "problem": "editorial note in the reader text (correct, but apparatus)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 329,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "cum dicit quod maior est et cetera. Ad illud quod dicitur magis et maior sic solvitur. Tenent aliqui dicentes quod aqua non intenditur secundum id quod est carne sed in alio",
+            "image": "cum dicit quod maior est … magis quod maior sic redditur in carne quam cum ducitur. Aqua intenditur quantum ad carnem sed in aliis …",
+            "problem": "Opening lines only loosely track the hand; negation 'non intenditur' and the solution formula are not on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<page-num>f. xxxij.</page-num>",
+            "image": "x. xxxvj (written twice in top margin)",
+            "problem": "folio numeral misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "(garbled Latin throughout)",
+            "english": "fluent English throughout",
+            "problem": "fluent translation over a transcription that does not construe",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation carries a page description as a note: 'A small decorative flourish marks the end of the text column.'",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "A heavily abbreviated scholastic hand that the OCR approximates rather than reads. Anchor words and citations are right, but much of each page is plausible invented Latin, including a fabricated Augustine attribution. The fluent translation hides this. Not citable as it stands."
+  },
+  {
+    "book_id": "69f33a73876dd827cbc57e4d",
+    "slot": 47,
+    "title": "De bello Turcico",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned. It is a 1572 neo-Latin epic on Lepanto, early modern Latin literature and not core esoteric material, but nothing makes it wrong for the library.",
+    "rights_flag": null,
+    "structure_note": "45 images, all OCR'd and translated. Each image is a two-page opening (running head LIBER | PRIMVS split across the spread), and the OCR handles it as two columns, so no text is lost. The script is tagged 'handwritten', but this is the calligraphic italic of the edition, which may be engraved or written; it does no harm.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "ætherci",
+            "image": "æthereï",
+            "problem": "one-letter slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Ecce autem in somnis uisa est … Christiadum, placido dum laxat membra sopore, / Assultu superesse fero cita classis Alæo",
+            "english": "The fleet of the Christians seemed to persist with a fierce / Assault upon the swift Alaeus, while he was loosening his limbs",
+            "problem": "'cita' (swift) is attached to Alaeus and 'superesse' is rendered 'persist'. The dream image survives but the construction is garbled",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "ad usque triremes",
+            "image": "ad usque triremeis",
+            "problem": "spelling normalised",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Bis termille licet procul agmen ab agmine cedat",
+            "english": "Even if the army retreats three thousand paces far from the army",
+            "problem": "'bis ter mille' is six thousand, not three thousand",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Tum conferre manus",
+            "english": "Then let them attempt to join hands",
+            "problem": "idiom for 'engage in combat' rendered literally",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 34,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "A dextro cornu summi florentia passa est / Pontificis",
+            "english": "On the right wing, the flourishing ship of the supreme Pontiff suffered",
+            "problem": "'Florentia' is the papal galley Fiorenza (badly mauled at Lepanto), not 'flourishing'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "et hostis / Incidit unanimeis in quattuor una carinas",
+            "english": "and the enemy / Fell in unison upon four ships at once",
+            "problem": "Reversed: the Florence alone fell among four enemy ships acting together",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "primum Austriacæ cum regia Alæi / Pugnanti auxilio subijt",
+            "english": "First, when the royal ship of Alaeus <gloss>Ali Pasha</gloss> Of the Austrian fleet came to help in the fighting",
+            "problem": "Bazán went to help Don John's (Austrian) flagship fighting Ali Pasha's. The English puts Ali Pasha's ship in the Austrian fleet as the helper",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "tribus ecce triremibus una / Hæc petitur",
+            "english": "behold, this one is sought by one galley",
+            "problem": "'attacked by three galleys' becomes 'by one galley'",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Diuus Ioannes",
+            "english": "<gloss>St. John, likely referring to a galley of the Knights of Malta</gloss>",
+            "problem": "speculative gloss. The San Giovanni here is listed with the papal squadron, not Malta",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this clean calligraphic edition is excellent. The translation is serviceable on the logistics pages but scrambles the battle narrative on p.34: who attacked whom, who helped whom, and three ships turned into one. A reader following Lepanto would be misled."
+  },
+  {
+    "book_id": "69f32cac34076d2bddeb3877",
+    "slot": 98,
+    "title": "Bible in Latin with the prefaces of Jerome",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition assigned. It is a 13th-c. Vulgate, a core primary source.",
+    "rights_flag": null,
+    "structure_note": "Only 21 images of a full Bible: the leaves carry manuscript page numbers 156, 205 and 255 and open Chronicles, Judith and Proverbs. The record is a selection of decorated openings, not a whole book. The title should say so.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "et pacet tecum uideo quitamino deneme ndum. i publico restaret. legem et i angul. id est a turatoroz.",
+            "image": "Sed pace veterum loquor et obtrectatoribus meis tantum respondeo qui canino dente me rodunt in publico detrahentes, legentes in angulis, iidem et accusatores et defensores",
+            "problem": "Jerome's preface to Chronicles rendered as letter-salad",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Ex Incipit. sed e. Liber geneseos in hebreo habet enoch. matula lamech.",
+            "image": "Explicit prologus. Incipit Liber Paralipomenon. Adam. Seth. Enos. Cainan. Malaleel. Iared. Enoch. Mathusale. Lamech",
+            "problem": "The rubric is invented as 'Liber geneseos' (the book is Chronicles), and Adam–Iared are dropped from the genealogy's first line",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<image-desc …>Large historiated initial 'E'</image-desc>",
+            "image": "historiated initial A (Adam)",
+            "problem": "initial misidentified",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Liber geneseos in hebreo habet",
+            "english": "Book of Genesis in Hebrew has",
+            "problem": "reader told this is Genesis, not 1 Chronicles",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "(garbled preface)",
+            "english": "…they speak from both. And they leave behind examples of wisdom. And peace be with you, I see…",
+            "problem": "fragments of the garble translated as if Jerome said them",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Model commentary in the translation: '<note>The manuscript becomes highly repetitive and fragmented, likely due to scribe fatigue or loss of source coherence.</note>'. This blames the scribe for the OCR's own failure",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "note": "Each name of the genealogy is wrapped in its own <insert> tag in both panes, so the reader sees a one-word-per-line column of markup",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "In hoza aut mortis sue inuocauit nepotes suos et pcepit illis ut in seruibiam filii suir et vi menes filios",
+            "image": "In hora autem mortis suae vocavit ad se Tobiam filium suum et septem iuvenes filios eius nepotes suos",
+            "problem": "end of Tobit 14 garbled. Tobias and the 'seven' grandsons are lost",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "nunc no eni gaudio uerbi dei: q̃ in die qui dylu lune a im det uiuentur",
+            "image": "non enim excidit verbum Domini, et fratres nostri qui dispersi sunt a terra Israel revertentur ad eam",
+            "problem": "prophecy of return replaced by nonsense",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "aplexau pte librv uage uox me uith. rog iudith iudiau multas gemet",
+            "image": "Arphaxad itaque rex Medorum subiugaverat multas gentes imperio suo",
+            "problem": "opening of Judith garbled. Rubric 'Incipit liber Iudith' merged into the text",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "nunc no eni gaudio uerbi dei: q̃ in die qui dylu lune … uiuentur",
+            "english": "so that in the joy of the word of God, they might live in the day of the moon. May the Lord, who conquers all, fill and modify there the hearts of all, Amen.",
+            "problem": "invented scripture produced from garble",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation opens with a <meta> 'continues from previous page: …in the book of Moses; and likewise for the oxen. And they roasted the Passover with fire…', which is 2 Chronicles 35 text. That text is not on this leaf, and the previous image in this record is a different book",
+            "severity": "serious",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "immo caritas non dividat",
+            "image": "immo carta non dividat",
+            "problem": "normalised to an expected word; changes the sense of Jerome's play on letter/paper",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "(omitted)",
+            "image": "red rubric at top of col. a: 'Liber Salomonis id est parabole … secundum hebraicam veritatem translatae ab eusebio iheronimo petente chromatio et heliodoro'",
+            "problem": "rubric dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Iungat epistola quos iungit sacerdotium",
+            "english": "May the priesthood unite those whom the epistle unites",
+            "problem": "subject and object reversed in the famous opening line (a letter should join those whom the priesthood joins)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "panaretos Ihesu filii Syrach liber",
+            "english": "the book of the All-Virtuous, the son of Sirach",
+            "problem": "'Jesus' dropped from the name",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The decorative-border description from the OCR appears at the top of the translation as a <note>",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Of the three openings, two have letter-salad prefaces with invented rubrics: Chronicles is labelled Genesis, and invented Tobit verses are translated as scripture. One page carries a foreign-book continuity meta and model commentary blaming the scribe. Only the Proverbs preface, which the model knows by heart, reads well."
+  },
+  {
+    "book_id": "699065ab3dc2ed39a49f2311",
+    "slot": 3,
+    "title": "Alchemical Texts annotated by John Dee (Trinity College O.2.47)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-c. alchemical miscellany (Latin and Middle English) with Dee provenance, squarely on the alchemy shelf.",
+    "rights_flag": null,
+    "structure_note": "116 images, all with OCR, 104 translated. The book language is Latin, but p.30 is Middle English (tagged correctly at page level), so this is a mixed-language miscellany. The leaf numerals 25 and 39 on the images fit the sequence.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "of hem is made a smoke the whiche with modir of metallys",
+            "image": "of hem is made a smooke the whyche is ye modir of metallys",
+            "problem": "'is the mother' read as 'with mother', so the vapour is no longer identified as the mother of metals",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "be þe minys=trynge þer of draw forth ayre from bodies",
+            "image": "be þe mynys=trynge þer of. Gebar seyth ayre from bodies",
+            "problem": "The boxed authority 'Gebar seyth' (Geber says) is dropped and the citation lost",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "is seyde Aqua p[ur]a & tinctura",
+            "image": "is seyde aqua vite(?) & tynctura",
+            "problem": "reading uncertain; may be aqua vite",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "the whiche with modir of metallys",
+            "english": "a vapor which, with the \"mother of metals\"",
+            "problem": "inherits the misread",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 59,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "sed semper melior resolutio fit cum melle sicut hic",
+            "image": "sed semper melior resolucio fit cum merc(urio) sicut hic",
+            "problem": "mercury ('mer'' abbreviation) read as 'melle' (honey). The same error recurs through the amalgamation recipe ('amalgacione melle', 'boni mel sit super', 'mel super')",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Accipe partem 1 ♂ tunc 2. v. pro ut sit dy in Martem",
+            "image": "Accipe partem j lune et v. partes vel .vj. martis",
+            "problem": "first proportion destroyed: 1 part silver to 5–6 parts Mars becomes '1 part Mars … 2'",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "uno modo de quolibet corde tractabo",
+            "image": "uno modo de quolibet corpore tractabo",
+            "problem": "'corpore' (each metal) read as 'corde' (heart)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "cum melle … decoq boni mel sit super",
+            "english": "a better resolution is always made with honey … let good honey be on top",
+            "problem": "The recipe tells the reader to use honey where the source says mercury, and the summary repeats 'stabilized with honey'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "de quolibet corde",
+            "english": "each \"heart\" <note>likely referring to the core or essential part of the metal.</note>",
+            "problem": "gloss invented to explain the misread",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 87,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Quaelibet fixa habet tres una imbibitionem etc.</margin>",
+            "image": "Nota quaelibet fixacio habet nisi unam imbibicionem",
+            "problem": "'nisi' (only) read as 'tres', so 'only one imbibition' becomes 'three'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ita de modo in(?) ex(?) scito de cor(?) quidam",
+            "image": "de crudo merc(urio), et ita de cetero …",
+            "problem": "one line garbled, losing 'raw mercury'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "### Sufficit pro istorum una",
+            "image": "Sufficit fixationi una",
+            "problem": "head note misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Quaelibet fixa habet tres una imbibitionem",
+            "english": "Any fixed substance has three parts: one imbibition, etc.",
+            "problem": "inherits the misread margin",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The Middle English and the later recipe page read reasonably well. The Latin amalgamation page swaps mercury for honey throughout and loses the first proportion. That is the kind of error an alchemy reader will notice and repeat."
+  },
+  {
+    "book_id": "6a4a600c3f0b4659d1bc3283",
+    "slot": 58,
+    "title": "Theologica theoremata … sub praeside Petro Stevartio … respondebit … Wolfgangus Katzmair",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1597 Ingolstadt disputation on 1 Cor 3. It is Counter-Reformation theology, legitimate early modern Latin with no shelf assigned.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Sanctissimae Trinitatis",
+            "image": "SS. Trinitatis",
+            "problem": "abbreviation expanded silently",
+            "severity": "minor"
+          },
+          {
+            "ocr": "penetrauit",
+            "image": "penetrarit",
+            "problem": "mood changed",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Tridentina Synodus",
+            "image": "Tridentina Sydonus (printer's error)",
+            "problem": "silently corrected",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "qui sanam et basi ab Apostolis positae conformem doctrinam superstruerent",
+            "english": "so that they might build upon the sound doctrine that conforms to the base",
+            "problem": "object/structure slightly shifted (they build sound doctrine upon the base)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page</meta>' and the signature 'A 3' sit in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "admiratione digna est Sectariorum caecitas",
+            "english": "the blindness of the Sectarians … is worthy of admiration",
+            "problem": "'admiratio' here means astonishment. In modern English 'admiration' reads as praise and inverts the polemic's tone",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ignis poena mulctandos aperte insinuat Paulus",
+            "english": "He clearly implies … Paul implies",
+            "problem": "Paul's role as subject is split into two clauses",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Centring arrows '->XXIII.<-' show in both panes",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean print. Transcription is near-perfect and the translation is faithful, apart from 'worthy of admiration' for 'admiratione digna' and minor markup (centring arrows, a continuity meta) in the reader text. Showable."
+  }
+]

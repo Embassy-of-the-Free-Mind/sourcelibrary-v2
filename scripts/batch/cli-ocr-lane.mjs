@@ -55,7 +55,10 @@
  *
  *   ... cli-ocr-lane.mjs correct-count
  *   ... cli-ocr-lane.mjs correct --out=DIR [--max-pages=N] [--concurrency=N] [--book-chunk=40] [--deadline-min=M]
- *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--reread-per-call=4] [--apply | --dry-run]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--reread-per-call=4] [--book=ID]
+ *        [--first=PAGE_ID,PAGE_ID] [--apply | --dry-run]
+ *
+ * `--first` reads those pages of a book before its others (reader-request-lane.mjs: the pages a reader asked for, #8395).
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
  * French book, idle in the pipeline and not held (or held for the CLI translation lane, whose OCR-first gate waits on this
@@ -81,6 +84,31 @@
  * correction left (UNCHANGED, CONTAIN, the 25% cap) is re-read once. Claims DIR/../claims-reread/. The quota floor and
  * pools are the correction lane's; there is no Claude fallback (the fallback serves Latin, which this mode does not).
  * Router: the cells german-lite/print and french-lite/print, route agy-flash-low@4-read (servedByReread).
+ *
+ * LATIN RE-READ (#7263, Derek 2026-11-03 "prioritize the queue of the flash 3.8 re-read and retranslate"; V4, PR #8000:
+ * 20/30 accepted against the served 9/30). `correct --reread-per-call=4 --reread-languages=Latin [--reread-tiers=readers,period]`
+ * is the re-read above with every guard, on visible Latin books, with these additions:
+ *   - PRINT ONLY, in three layers. A book that manuscriptReason names, or that the by-eye file marks manuscript
+ *     (LATIN_BY_EYE), is out: manuscripts go to the Opus reader (#7947). A page whose stored read is tagged handwritten,
+ *     mixed or none, or whose script_type says so, is out. A page with no tag and no printed script_type ("unknown") is
+ *     read only in a book dated 1550 or later, or one the by-eye file marks print. The reader's own tag then decides the
+ *     write (--print-only).
+ *   - English it can be re-translated into: only a book routed to latin-cli-agy4. BPH's Latin books have their own row,
+ *     and a stale flag on those would queue the paid translate worker (mark-stale-translations.mjs ACTUATION).
+ *   - ORDER: `readers` (human_read_count > 0, most-read first), `period` (1501-1700), `rest` (rereadTier); inside a tier, books
+ *     with the most English first. --reread-tiers restricts a run. The `rest` tier runs only while no first read waits
+ *     for a book readers opened or requested (REST YIELDS, #8519; readerFirstReadsWaiting). The stale English it leaves is drained by
+ *     cli-translate-lane.mjs stale, in the same order.
+ *
+ * LATIN FIRST (#7263). `latin-first --agy-home=P --max-pages=N --concurrency=C --deadline-min=M [--root=/root/jobs] [--apply]`
+ * is one pool's cron run, in order (latinFirstSteps): FINISH FIRST (#8482), the Latin re-read and then the German/French
+ * correction with `--finish-first` (books closest to done and books the CLI translation lane holds, finishFirstBook /
+ * byFinishFirst; only their UNTRANSLATED Flash-Lite pages, so the OCR-first gate of the translation lanes clears and no
+ * English is marked stale); then the quality steps with `--yield-to-finish` (they keep FINISH_RESERVE while the finishing
+ * lanes have work, agy-pools.mjs FINISH FIRST): the Latin re-read of the readers and period tiers; with the time left,
+ * the German/French correction; then the rest of Latin. Each step is its own `correct` run with its own folder
+ * and ledger, and stops at the pool's floor, so a step that finds the floor shut costs one /quota call. The reserves
+ * (LANE_RESERVES) hold in every step. Every correct run ends with the books that crossed into readable or complete.
  *
  * QUOTA FLOOR (drain by reset, #7911). Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini
  * weekly remaining fraction is below the weekly RESERVE (scripts/lib/agy-pools.mjs weeklyReserve: the declared needs
@@ -180,6 +208,24 @@
  *   `--frame=translate-held` (#7263): the Latin books the CLI translation lane waits on (ARMC_TRANSLATE_LANGS and the
  *        comment above it): idle or held for that lane, routed to a cli translation row; untranslated Flash-Lite pages
  *        anywhere in the book. Same read, guards, stamp and ledger shape; its own lane dir (/root/jobs/armc-translate-7263).
+ *   `--frame=campaign --campaign=ID` (#8049): the hidden books an acquisition campaign holds under its own reason
+ *        (ARMC_CAMPAIGNS: the languages whose cell test passed, their draft engines, the tiers file); UNREAD pages of
+ *        tier A books (whole) then tier B (the content screen's hit pages); written as the first-read frame writes
+ *        (unread only, --diff-guard=gpu-draft, printed only), stamped ARMC_CAMPAIGN_LANE; the campaign hold stays.
+ *   `--frame=euro --cell=es19|fr19|en19|fr19r` (#6871): 1800-1929 Spanish, French or English print with page records,
+ *        unheld or held scans-only only (ARMC_EURO_CELLS, armcEuroSkip); UNREAD pages; written as the first-read frame
+ *        writes, stamped ARMC_EURO_LANE or the cell's own `lane`; holds stay. One lane dir a cell (/root/jobs/euro-<cell>-6871;
+ *        en19 /root/jobs/en19-6871). en19 leaves out the books gpu-print-en planned.
+ *        A book not read yet is probed with ARMC_EURO_PROBE pages; one the corrector tags half or more handwritten or
+ *        mixed goes to <lane>/armc-books-skipped.jsonl and is planned and read no more (armcHandSkip). fr19r is planned only by
+ *   ... armc-import --frame=euro --cell=fr19r --lane-dir=L --from=DIR [--min-free-g=G]
+ *        GPU reads already on disk in the gpu-print format (DIR/manifest.tsv, DIR/out/<bid>/<pn>.json): a read the gpu-print
+ *        guards pass (pageVerdict 'write'), whose book and page are in the cell's frame now, and whose image still hashes to
+ *        the sha the GPU read (fetched to drafts/<bid>/img) becomes a plan row and a draft; armc then corrects and writes it.
+ *   Disk guards (#6871; any frame, on the cron lines of the euro frame): --min-free-g=G (plan, fetch and armc refuse to
+ *        start under G GB free on the root disk), armc-fetch --max-lane-gb=G (stage no more images than keep the lane dir
+ *        under G GB), and the euro frame drops a book's img/ once every page planned for it is ledgered.
+ *        armc --after-lane=DIR corrects nothing while DIR has drafted pages waiting (French ranked after Spanish).
  *
  * CLAUDE FALLBACK (#7545). When the run's pool (--agy-home; `auto` never picks an empty pool, so name it) has an EMPTY Gemini weekly bucket, the lane does not
  * stop on the floor: if agyClaudeGate opens (the Claude group's weekly and 5-hour buckets both at 10% or more, the
@@ -196,8 +242,9 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { MongoClient } from 'mongodb';
-import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH } from '../lib/ocr-routing.mjs';
+import { MongoClient, ObjectId } from 'mongodb';
+import { REQUEST_MESSAGE, parseRequestUrl } from '../lib/translation-request-eligibility.mjs';
+import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH, OCR_MODEL_AGY } from '../lib/ocr-routing.mjs';
 import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
 import { translateLaneForBook } from '../lib/translate-core.mjs';
@@ -219,7 +266,13 @@ export function spreadReason(book, pages) {
 }
 
 /** The CLI model that reads in place of each routed model agy does not offer (see WHICH MODEL above). */
-export const CLI_MODEL_FOR = Object.freeze({ 'gemini-3-flash-preview': 'gemini-3.8-flash-low' });
+// flash-lite: since 2026-11-06 no OCR model runs on the paid API (API_OCR_MODELS is empty, Derek "everything on agy"),
+// so a book the router labels lite is held for this lane and read by 3.8 Flash-low, 4 pages a call (#7522, #7701).
+export const CLI_MODEL_FOR = Object.freeze({
+  'gemini-3-flash-preview': 'gemini-3.8-flash-low',
+  'gemini-3.1-flash-lite': 'gemini-3.8-flash-low',
+  [OCR_MODEL_AGY]: OCR_MODEL_AGY,   // the router table names the reader itself (#8283)
+});
 
 /** The pages this lane reads: the orchestrator's Phase 2 filter (submitOcrForBook), without the per-model block. */
 export const UNREAD = Object.freeze({
@@ -275,7 +328,7 @@ async function heldBooks(db) {
 // ── correct (#7558) ──
 export const CORRECT_LANE = 'agy-correct-lite-7558';
 export const CORRECT_MODEL = 'gemini-3.8-flash-low';
-/** The cells the route passed (#7520): German and French. Latin was not measured. */
+/** The cells the correction passed (#7520): German and French. Latin is re-read, not corrected (#7263: REREAD_LANGUAGE_NAMES). */
 export const CORRECT_LANGUAGES = /^(German|French)/;
 /** The Claude fallback (#7545, header): Latin lite>opus, where lite>agy-opus accepted 15/15 against claude -p's 15/15. */
 export const FALLBACK = Object.freeze({ model: 'claude-opus-5-5-low', languages: /^(Latin)/, lane: 'agy-opus-correct-lite-7545',
@@ -284,7 +337,7 @@ export const FALLBACK = Object.freeze({ model: 'claude-opus-5-5-low', languages:
  * Which correction this run makes: the Gemini lane, the Claude fallback, or none. `quota` is readQuota()'s Gemini
  * buckets (undefined = read them); `gate` is agyClaudeGate.
  */
-export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AGY_HOME || ''), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now() } = {}) {
+export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AGY_HOME || ''), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now(), yieldToFinish = false } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly');
   // Empty as agyClaudeGate counts it: a spent pool keeps a residue (0.00028 on 2026-10-30) and never reads exactly 0.
   if (weekly && typeof weekly.remaining_fraction === 'number' && weekly.remaining_fraction < AGY_GEMINI_EMPTY) {
@@ -292,7 +345,7 @@ export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AG
     return g.ok ? { mode: 'fallback', model: FALLBACK.model, lane: FALLBACK.lane, languages: FALLBACK.languages, why: g.reason }
       : { mode: null, why: `Gemini weekly empty and the Claude fallback is closed: ${g.reason}` };
   }
-  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
+  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil, yieldToFinish });
   return q.ok ? { mode: 'gemini', model: CORRECT_MODEL, lane: CORRECT_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
 }
 // ── re-read (#7853, header: RE-READ) ──
@@ -308,9 +361,125 @@ export function parseRereadPerCall(v) {
 /** The router's id for the route a re-read run serves: agy-flash-low@4-read at 4 a call, agy-flash-low-read at 1. */
 export const rereadRoute = (perCall) => (perCall > 1 ? `agy-flash-low@${perCall}-read` : 'agy-flash-low-read');
 /** Which run this is: the re-read when the Gemini floor is open, else none (no Claude fallback: it serves Latin only). */
-export function rereadMode({ buckets, floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now() } = {}) {
-  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
-  return q.ok ? { mode: 'reread', model: CORRECT_MODEL, lane: REREAD_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
+export function rereadMode({ buckets, floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now(), languages = CORRECT_LANGUAGES, yieldToFinish = false } = {}) {
+  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil, yieldToFinish });
+  return q.ok ? { mode: 'reread', model: CORRECT_MODEL, lane: REREAD_LANE, languages, q } : { mode: null, why: `quota floor: ${q.why}` };
+}
+// ── Latin re-read (#7263, header: LATIN RE-READ) ──
+export const REREAD_LANGUAGE_NAMES = Object.freeze(['Latin', 'German', 'French']);
+/** `--reread-languages=Latin[,German]` → names, or null when absent. Throws on a language the route has no cell for. */
+export function parseRereadLanguages(v) {
+  if (v == null) return null;
+  const names = String(v).split(',').filter(Boolean);
+  for (const n of names) if (!REREAD_LANGUAGE_NAMES.includes(n)) throw new Error(`--reread-languages: ${n} is not one of ${REREAD_LANGUAGE_NAMES.join(', ')}`);
+  if (!names.length) throw new Error('--reread-languages: name a language');
+  return names;
+}
+export const REREAD_TIERS = Object.freeze(['readers', 'period', 'rest']);
+/** `--reread-tiers=readers,period` → names, or null when absent. Throws on an unknown tier. */
+export function parseRereadTiers(v) {
+  if (v == null) return null;
+  const tiers = String(v).split(',').filter(Boolean);
+  for (const t of tiers) if (!REREAD_TIERS.includes(t)) throw new Error(`--reread-tiers: ${t} is not one of ${REREAD_TIERS.join(', ')}`);
+  return tiers;
+}
+/** A book's year: `year`, else the first four digits of `published`; null when it has neither. */
+export function bookYear(book) {
+  const y = Number(book?.year);
+  if (Number.isInteger(y) && y > 0) return y;
+  const m = /\b(\d{4})\b/.exec(String(book?.published || ''));
+  return m ? Number(m[1]) : null;
+}
+export function rereadTier(book) {
+  if ((book?.human_read_count ?? 0) > 0) return 'readers';
+  const y = bookYear(book);
+  return y != null && y >= 1501 && y <= 1700 ? 'period' : 'rest';
+}
+/** Tier, then most-read, then most English (the pages a reader sees the fix in twice), then id. */
+export const byRereadPriority = (a, b) => REREAD_TIERS.indexOf(rereadTier(a)) - REREAD_TIERS.indexOf(rereadTier(b))
+  || (b.human_read_count ?? 0) - (a.human_read_count ?? 0) || (b.pages_translated ?? 0) - (a.pages_translated ?? 0) || String(a.id).localeCompare(String(b.id));
+/**
+ * REST YIELDS (#8519, Derek 2026-11-11). The `rest` tier re-reads pages that already have a read, in books nobody has
+ * opened; its quota is better spent on books readers want and cannot read at all. So a re-read whose frame holds the
+ * rest tier checks once at start for FIRST reads waiting: a book readers opened (human_read_count > 0) or requested (an
+ * open "Translation requested" feedback row, reader-request-lane.mjs), in a scheduled agy first-read frame
+ * (visible-unread or finish, firstReadSkip / finishReadSkip, in REST_YIELD_LANGUAGES), with an UNREAD page. While any
+ * wait, the rest tier's books leave the frame; `readers` and `period` keep their place.
+ */
+export const REST_YIELD_LANGUAGES = Object.freeze(['lat', 'deu', 'fra']);   // the first-read cron lines' languages (gex45)
+/** Is this a book readers opened or requested that a first-read frame would read? `requested`: Set of book ids/_ids. */
+export function readerFirstReadBook(book, { requested = new Set() } = {}) {
+  if (!((book?.human_read_count ?? 0) > 0 || requested.has(book?.id) || (book?._id && requested.has(String(book._id))))) return false;
+  return !firstReadSkip(book, { languages: REST_YIELD_LANGUAGES }) || !finishReadSkip(book, { languages: REST_YIELD_LANGUAGES });
+}
+/** { open, why }: may the rest tier run, given the waiting first reads ({ first, books, pages_est })? */
+export function restTierOpen(waiting) {
+  return waiting.first
+    ? { open: false, why: `first reads wait for books readers opened or requested (${waiting.first} first; ~${waiting.pages_est} pages in ${waiting.books} candidate books)` }
+    : { open: true, why: 'no first reads wait for books readers opened or requested' };
+}
+/**
+ * The first reads the rest tier yields to: { first, books, pages_est }. `first` is the first candidate (most-read
+ * first) with an UNREAD page, found page by page; the search stops there (a full page count took 127 s, 2026-11-10).
+ * `books` and `pages_est` (pages_count - pages_ocr) size the candidates for the log.
+ */
+export async function readerFirstReadsWaiting(db) {
+  const rows = await db.collection('feedback').find({ addressed: { $ne: true }, message: REQUEST_MESSAGE }, { projection: { page: 1 } }).toArray();
+  const requested = new Set(rows.map((r) => parseRequestUrl(r.page)?.bookRef).filter(Boolean));
+  const oids = [...requested].filter((r) => /^[0-9a-f]{24}$/i.test(r)).map((r) => ObjectId.createFromHexString(r));
+  const projection = { ...FIRST_READ_PROJECTION, year: 1, human_read_count: 1 };
+  const candidates = await db.collection('books').find({
+    $and: [{ $or: [FIRST_READ_BOOKS, FINISH_READ_BOOKS] }, { $or: [{ human_read_count: { $gt: 0 } }, { id: { $in: [...requested] } }, { _id: { $in: oids } }] }],
+  }, { projection }).toArray();
+  const want = candidates.filter((b) => readerFirstReadBook(b, { requested })).sort(byReaders);
+  let first = null;
+  for (const b of want) if (await db.collection('pages').findOne({ book_id: b.id, ...UNREAD }, { projection: { _id: 1 } })) { first = b.id; break; }
+  return { first, books: want.length, pages_est: want.reduce((s, b) => s + Math.max(0, (b.pages_count ?? 0) - (b.pages_ocr ?? 0)), 0) };
+}
+/** The translation row a re-read Latin book's stale English goes to (scripts/lib/translation-routing-table.json). */
+export const LATIN_TRANSLATE_ROW = 'latin-cli-agy4';
+/** Year from which a page with no script tag is read on the reader's own tag; earlier or undated books need a by-eye verdict. */
+export const UNKNOWN_SCRIPT_FROM_YEAR = 1550;
+const LATIN_BY_EYE_FILE = path.join(HERE, 'latin-reread-script-by-eye.json');
+/** The by-eye verdicts on early books with untagged pages: { print: Set, manuscript: Set } of book ids. */
+export function loadLatinByEye(file = LATIN_BY_EYE_FILE) {
+  const j = JSON.parse(fs.readFileSync(file, 'utf8'));
+  return { print: new Set(Object.keys(j.print || {})), manuscript: new Set(Object.keys(j.manuscript || {})) };
+}
+/** Why the Latin re-read leaves this book, or null. */
+export function latinRereadSkip(book, byEye = { manuscript: new Set() }) {
+  const ms = manuscriptReason(book);
+  if (ms) return ms;
+  if (byEye.manuscript.has(book.id)) return 'manuscript by eye';
+  const row = translateLaneForBook(book).row?.id;
+  return row === LATIN_TRANSLATE_ROW ? null : `translation row ${row ?? 'batch'}, not ${LATIN_TRANSLATE_ROW}`;
+}
+/** May a page with no script tag in this book be read? From UNKNOWN_SCRIPT_FROM_YEAR on, or with a by-eye print verdict. */
+export function untaggedPagesAllowed(book, byEye = { print: new Set() }) {
+  const y = bookYear(book);
+  return (y != null && y >= UNKNOWN_SCRIPT_FROM_YEAR) || byEye.print.has(book.id);
+}
+/** One pool's `latin-first` run (header: LATIN FIRST): [{ step, args, minMinutes }], each a `correct` run of this file. */
+/** latin-first's default --root, and the re-read's day folder under it: its ledger and claims sit in the folder above. */
+export const LATIN_FIRST_ROOT = '/root/jobs';
+export const rereadOutDir = (root, date) => `${root}/cli-ocr-reread/${date}`;
+/** `--first=ID,ID`: those pages first, the rest in their order (reader-request-lane.mjs puts a reader's pages first). */
+export const firstPagesFirst = (pages, first) => (first?.size ? [...pages.filter((p) => first.has(p.id)), ...pages.filter((p) => !first.has(p.id))] : pages);
+export function latinFirstSteps({ home, root, date, maxPages, latinMaxPages = 8000, concurrency, chunk = 40, apply }) {
+  const common = [`--concurrency=${concurrency}`, `--book-chunk=${chunk}`, `--agy-home=${home}`, ...(apply ? ['--apply'] : [])];
+  const latinBase = ['correct', '--reread-per-call=4', '--reread-languages=Latin', `--out=${rereadOutDir(root, date)}`, `--max-pages=${latinMaxPages}`];
+  const latin = (tiers) => [...latinBase, `--reread-tiers=${tiers}`, '--yield-to-finish', ...common];
+  const deFr = ['correct', `--out=${root}/cli-ocr-correct/${date}`, `--max-pages=${maxPages}`];
+  return [
+    // FINISH FIRST (#8482): the untranslated Flash-Lite pages a translation waits on (the OCR-first gate), books
+    // closest to done first; same route, ledger and claims as the steps below, so no page is read twice.
+    { step: 'finish-latin', args: [...latinBase, '--finish-first', ...common] },
+    { step: 'finish-german-french', args: [...deFr, '--finish-first', ...common] },
+    // Quality re-reads of pages that have text: only with what the finishing lanes leave (agy-pools.mjs FINISH FIRST).
+    { step: 'latin-priority', args: latin('readers,period') },
+    { step: 'german-french-correct', args: [...deFr, '--yield-to-finish', ...common] },
+    { step: 'latin-rest', args: latin('rest') },
+  ];
 }
 /** The re-read's reader: the plain read (live first-read prompt, no draft), N pages a call, kept reads reused (no --fresh). */
 export function rereadReadArgs({ cli, ids, dir, model = CORRECT_MODEL, job, perCall }) {
@@ -322,6 +491,56 @@ export function rereadApplyArgs({ cli, ids, dir, reason, apply }) {
 }
 export const LITE_MODELS = Object.freeze(['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview']);
 export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'failed', 'parked', 'ocr_complete']);
+
+// ── finish books first (#8482, agy-pools.mjs FINISH FIRST) ──
+/** A book at or over this share of its translatable pages translated is a FINISH book (tier 1). */
+export const FINISH_MIN_SHARE = 0.8;
+/** Share of translatable pages translated, from the stored translation_state (page-counts.mjs); 0 when unknown. */
+export function translatedShare(book) {
+  const s = book?.translation_state;
+  return s && s.translatable > 0 ? Math.min(1, (s.translated ?? 0) / s.translatable) : 0;
+}
+/** Pages a book still lacks for `complete` (translation_state counters), or Infinity when unknown. */
+export const pagesToComplete = (book) => {
+  const s = book?.translation_state;
+  return s && s.translatable > 0 ? Math.max(0, s.translatable - (s.translated ?? 0)) : Infinity;
+};
+/** A finish book: >= FINISH_MIN_SHARE translated and not complete. */
+export const isFinishBook = (book) => translatedShare(book) >= FINISH_MIN_SHARE && book?.translation_state?.rung !== 'complete';
+/** --finish-first's frame: a finish book, or one the CLI translation lane holds (its OCR-first gate waits on this lane). */
+export const finishFirstBook = (book) => isFinishBook(book)
+  || (book?.pipeline_auto?.status === HOLD_STATUS && book?.pipeline_auto?.hold?.reason === CLI_TRANSLATE_HOLD.reason);
+/** Closest to done first: finish books, then the share translated (high first), then fewest pages left, then id. */
+export const byFinishFirst = (a, b) => isFinishBook(b) - isFinishBook(a) || translatedShare(b) - translatedShare(a)
+  || pagesToComplete(a) - pagesToComplete(b) || String(a.id).localeCompare(String(b.id));
+
+/**
+ * Books FINISHED by a run (#8482): the stored translation_state rung (restamped by the writers' recountBook) before a
+ * book's first chunk and after its last one; a book that crossed into `readable` or `complete` is counted. One line a
+ * run (summary()), so a lane's throughput reads in books, not pages.
+ */
+export function rungTracker(db) {
+  const before = new Map(), after = new Map();
+  const rung = async (id) => (await db.collection('books').findOne({ id }, { projection: { _id: 0, 'translation_state.rung': 1 } }))?.translation_state?.rung ?? null;
+  return {
+    async before(id) { if (!before.has(id)) before.set(id, await rung(id)); },
+    async after(id) { after.set(id, await rung(id)); },
+    tally() { return finishedTally(before, after); },
+    summary(lane) { const t = finishedTally(before, after); return `books finished this run (${lane}): ${t.finished} (readable ${t.readable}, complete ${t.complete}) of ${t.touched} book(s) touched`; },
+  };
+}
+/** Pure: before/after Maps of book id → rung → { touched, finished, readable, complete } (crossings into each rung). */
+export function finishedTally(before, after) {
+  const R = ['readable', 'complete'];
+  const t = { touched: before.size, finished: 0, readable: 0, complete: 0 };
+  for (const [id, b] of before) {
+    const a = after.get(id);
+    if (a === b || !R.includes(a)) continue;
+    if (a === 'complete' && b !== 'complete') { t.complete++; t.finished++; }
+    else if (a === 'readable' && !R.includes(b)) { t.readable++; t.finished++; }
+  }
+  return t;
+}
 /**
  * The router test drew interior pages only (scripts/eval/ground-truth-5935/lib.mjs isInterior). The second argument is
  * the book's LAST page_number, not `pages_count`: a hidden repeat capture (#5056) keeps its number but leaves the count,
@@ -335,16 +554,18 @@ export async function lastPageNumber(db, bookId) {
 }
 /**
  * The quota floor (header: QUOTA FLOOR). `buckets`: agy /quota's Gemini buckets {id, remaining_fraction, reset_time};
- * `lane`: the caller's key in LANE_RESERVES, if it has one (its own reserve is not kept from it). Returns
+ * `lane`: the caller's key in LANE_RESERVES, if it has one (its own reserve is not kept from it); `yieldToFinish`: a
+ * quality lane, which also keeps FINISH_RESERVE while the finish queue is open (agy-pools.mjs FINISH FIRST). Returns
  * { ok, why, weekly, line, five_h } (`line` = the weekly floor in force): not ok when the weekly bucket is under the
  * reserve (or --weekly-end, or a pilot's weeklyFloor), the 5-hour bucket is under `floor5h`, or either bucket is missing.
  */
-export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, weeklyFloor = null, lane = null } = {}) {
+export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, weeklyFloor = null, lane = null, yieldToFinish = false, finishOpen = null } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly'), five = buckets?.find((b) => b.id === 'gemini-5h');
   if (!weekly || typeof weekly.remaining_fraction !== 'number' || !weekly.reset_time) return { ok: false, why: 'no Gemini weekly bucket in /quota' };
   // --pace-off-until: no reserve until then (Derek 2026-10-29 "spend it out"); the 5-hour floor still holds
   const paceOff = paceOffUntil != null && now < paceOffUntil;
-  const reserve = paceOff ? 0 : weeklyReserve({ resetTime: weekly.reset_time, now, lane });
+  // yieldToFinish (#8482, a quality lane): FINISH_RESERVE is kept too while a finishing lane has work (agy-pools.mjs)
+  const reserve = paceOff ? 0 : weeklyReserve({ resetTime: weekly.reset_time, now, lane, yieldToFinish, finishOpen });
   // weeklyFloor (a hand-run pilot, armc --weekly-floor=F, #7567): a fixed floor in place of the reserve, as E2/E5 ran (0.40)
   const line = weeklyFloor != null ? weeklyFloor : Math.max(weeklyEnd, reserve);
   const r = { weekly: weekly.remaining_fraction, line, five_h: five?.remaining_fraction ?? null };
@@ -430,21 +651,25 @@ function ledgerTail(file, set, state) {
  * The Mongo match of the correctable pages of one book (see CORRECT in the header), shared by correct and the re-read.
  * A page the re-read wrote carries ocr.pipeline = REREAD_LANE (and a Flash model): never selected again.
  */
-export const correctablePageMatch = (bookId, skipPageTypes) => ({
+export const correctablePageMatch = (bookId, skipPageTypes, { untranslatedOnly = false } = {}) => ({
   book_id: bookId, ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.pipeline': { $ne: REREAD_LANE }, 'ocr.edited_by': { $exists: false },
   'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: skipPageTypes }, 'ocr.data': { $type: 'string' },
+  // --finish-first (#8482): only the pages a translation waits on, so the re-read marks no English stale
+  ...(untranslatedOnly && { 'translation.data': { $in: [null, ''] } }),
 });
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
-async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
+async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES, printOnly = null, untranslatedOnly = false }) {
   const rows = await db.collection('pages').aggregate([
     // strlen-safe: correctablePageMatch carries 'ocr.data': { $type: 'string' }, the stage before
-    { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES) },
-    { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
+    { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES, { untranslatedOnly }) },
+    { $project: { _id: 0, id: 1, page_number: 1, script_type: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: printOnly ? '<script>\\s*(handwrit|manuscript|mixed|none|n/a)' : '<script>\\s*handwritten', options: 'i' } }, printed: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*print', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
   const last = await lastPageNumber(db, book.id);
-  return rows.filter((p) => isInterior(p.page_number, last));
+  // printOnly (the Latin re-read, header): scriptClass's order, the tag and then the field; an unknown page only where allowed
+  const script = (p) => (p.printed ? 'print' : p.script_type === 'printed' ? 'print' : p.script_type ? 'other' : 'unknown');
+  return rows.filter((p) => isInterior(p.page_number, last) && (!printOnly || script(p) === 'print' || (script(p) === 'unknown' && printOnly.untagged)));
 }
 
 /**
@@ -472,7 +697,15 @@ async function correctMain(mode, arg) {
   try { REREAD = parseRereadPerCall(arg('reread-per-call')); } catch (e) { console.error(e.message); process.exit(2); }
   const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), REREAD ? 'reread-ledger.jsonl' : 'correct-ledger.jsonl') : null);
   const CLAIMS = OUT ? path.join(path.dirname(OUT), 'correct-contain-claims.jsonl') : null;
-  const LANGUAGE_NAMES = CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
+  let REREAD_NAMES, TIERS;
+  try { REREAD_NAMES = parseRereadLanguages(arg('reread-languages')); TIERS = parseRereadTiers(arg('reread-tiers')); } catch (e) { console.error(e.message); process.exit(2); }
+  if ((REREAD_NAMES || TIERS) && !REREAD) { console.error('--reread-languages and --reread-tiers go with --reread-per-call'); process.exit(2); }
+  const LANGUAGE_NAMES = REREAD_NAMES ?? CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
+  const REREAD_LANGUAGES = new RegExp(`^(${LANGUAGE_NAMES.join('|')})`);
+  // The Latin re-read's book and page rules and its order (header: LATIN RE-READ); German and French keep theirs.
+  const LATIN = !!REREAD_NAMES?.includes('Latin');
+  if (LATIN && REREAD_NAMES.length > 1) { console.error('--reread-languages: Latin runs alone (its own frame and order)'); process.exit(2); }
+  const BY_EYE = LATIN ? loadLatinByEye() : null;
   if (mode === 'correct') await routeCheck(REREAD ? servedByReread({ languages: LANGUAGE_NAMES, perCall: REREAD }) : servedByCorrect({ languages: LANGUAGE_NAMES }), arg);
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../lib/translate-core.mjs');
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -487,13 +720,17 @@ async function correctMain(mode, arg) {
   if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
   const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
   if (PACE_OFF_UNTIL !== null && !Number.isFinite(PACE_OFF_UNTIL)) { console.error('--pace-off-until must be an ISO time'); process.exit(2); }
+  // FINISH FIRST (#8482, agy-pools.mjs): --yield-to-finish marks a quality run (it keeps FINISH_RESERVE while the finish
+  // queue is open); --finish-first takes only the books a translation waits on, and only their untranslated pages.
+  const YIELD = process.argv.includes('--yield-to-finish'), FINISH = process.argv.includes('--finish-first');
+  if (YIELD && FINISH) { console.error('--yield-to-finish and --finish-first together'); process.exit(2); }
   const want = parseAgyHome(arg('agy-home'));
   let HOME = want.home ?? null;
   if (want.auto) {
     const pools = readPools();
     for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL }); return { open: q.ok, why: q.why }; });
+    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL, yieldToFinish: YIELD }); return { open: q.ok, why: q.why }; });
     if (!pick) { console.log('correct: no pool has its floor open; nothing read'); await client.close(); return; }
     HOME = pick.home;
   } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); await client.close(); process.exit(2); }
@@ -504,24 +741,35 @@ async function correctMain(mode, arg) {
   const held = new Set();
   process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
   // The run's mode (header: CLAUDE FALLBACK; RE-READ has none). correct-count counts the Gemini lane's frame unless --fallback.
-  const gate = () => (REREAD ? rereadMode : correctMode)({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
-  const M = mode === 'correct-count' ? (REREAD ? { mode: 'reread', languages: CORRECT_LANGUAGES, lane: REREAD_LANE } : process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
+  const gate = () => (REREAD ? rereadMode : correctMode)({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL, languages: REREAD_LANGUAGES, yieldToFinish: YIELD });
+  const M = mode === 'correct-count' ? (REREAD ? { mode: 'reread', languages: REREAD_LANGUAGES, lane: REREAD_LANE } : process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
     : gate();
   if (!M.mode) { console.log(`correct: not run: ${M.why}`); await client.close(); return; }
   // A book held for the CLI translation lane (CLI_TRANSLATE_HOLD, #7263) is in the frame too: that lane's OCR-first gate
   // skips a book whose OCR is mostly a Flash-Lite draft, so this lane is the one that can unblock it. Without this, the
   // German and French cli rows of translation-routing-table.json would take those books out of the correction frame.
+  // REST YIELDS (#8519): a quality re-read whose frame holds the rest tier drops it while first reads wait for books
+  // readers want. Not for --finish-first (finishing work) or --book (a named book: reader-request-lane.mjs re-reads one).
+  // A check that fails shuts the rest tier only (fail closed), so readers and period still run.
+  const REST = LATIN && !FINISH && !arg('book') && (!TIERS || TIERS.includes('rest'))
+    ? await readerFirstReadsWaiting(db).then(restTierOpen, (e) => ({ open: false, why: `the first-read check failed (${e.message})` }))
+    : { open: true };
+  if (!REST.open) console.log(`correct: the rest tier yields: ${REST.why}`);
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },
       $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] },
-    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
-  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
-    .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
+    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1, ...(LATIN && { year: 1, published: 1, publisher: 1, image_source: 1, human_read_count: 1, pages_translated: 1 }) } },
+  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k)
+      && (!LATIN || (!latinRereadSkip(b, BY_EYE) && (!TIERS || TIERS.includes(rereadTier(b))) && (REST.open || rereadTier(b) !== 'rest')))
+      && (!FINISH || finishFirstBook(b)))
+    .sort(FINISH ? byFinishFirst : LATIN ? byRereadPriority : (a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
+  // A Latin page's print rule (header: LATIN RE-READ); undefined elsewhere, as before. --finish-first: untranslated pages only.
+  const pageRule = (b) => ({ ...(LATIN && { printOnly: { untagged: untaggedPagesAllowed(b, BY_EYE) } }), ...(FINISH && { untranslatedOnly: true }) });
   if (mode === 'correct-count') {
     const t = {};
     for (const b of books) {
-      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
-      const k = String(b.language).match(M.languages)[1];
+      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id));
+      const k = LATIN ? rereadTier(b) : String(b.language).match(M.languages)[1];
       t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
       t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
     }
@@ -529,6 +777,7 @@ async function correctMain(mode, arg) {
     await client.close(); return;
   }
   const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40);
+  const FIRST = arg('first') ? new Set(arg('first').split(',').filter(Boolean)) : null;
   const CONCURRENCY = Number(arg('concurrency') || 1);
   // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
@@ -544,9 +793,10 @@ async function correctMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}${REREAD ? `; route ${ROUTE}, run ${LANE_RUN}${APPLY ? '' : ', DRY RUN'}` : ''}): pool ${POOL}${WEEKLY_END ? ` (weekly floor ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct${FINISH ? ' --finish-first' : YIELD ? ' (yields to the finishing lanes)' : ''} (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}${REREAD ? `; route ${ROUTE}, run ${LANE_RUN}${APPLY ? '' : ', DRY RUN'}` : ''}): pool ${POOL}${WEEKLY_END ? ` (weekly floor ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
+  const rungs = rungTracker(db);
   const dryWhy = {};   // a dry run's would-write / skip reasons (nothing is ledgered)
   const nextChunk = async () => {
     while (bi < books.length) {
@@ -555,7 +805,7 @@ async function correctMain(mode, arg) {
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
       ledgerTail(LEDGER, ledger, tailState);
-      const open = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
+      const open = firstPagesFirst((await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id)), FIRST);
       if (open.length) return { book: b, open };
       releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
     }
@@ -582,13 +832,15 @@ async function correctMain(mode, arg) {
       fs.mkdirSync(dir, { recursive: true });
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
+      await rungs.before(book.id);
       console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} ${q ? `weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%` : now.why}`);
       const CLI = path.join(HERE, 'cli-ocr.mjs');
       const read = await run(REREAD ? rereadReadArgs({ cli: CLI, ids, dir, model: M.model, job, perCall: REREAD })
         : [CLI, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = REREAD ? `#7853 re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-01: re-read, not correct; read@4 accepted 0.82 German / 0.91 French against the correction's 0.72 / 0.78); lane run ${LANE_RUN}`
+      const reason = LATIN ? `#7263 Latin re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-03; V4, PR #8000: 20/30 accepted against the served 9/30); lane run ${LANE_RUN}`
+        : REREAD ? `#7853 re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-01: re-read, not correct; read@4 accepted 0.82 German / 0.91 French against the correction's 0.72 / 0.78); lane run ${LANE_RUN}`
         : M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
         : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
       const t0 = Date.now();
@@ -606,6 +858,7 @@ async function correctMain(mode, arg) {
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
       const written = new Set(sum.written_page_ids || []);
+      await rungs.after(book.id);
       for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: M.lane }) + '\n');
       for (const p of take) {
         const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
@@ -625,7 +878,23 @@ async function correctMain(mode, arg) {
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   console.log(`\n${REREAD ? 're-read' : 'correct'} run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${APPLY ? JSON.stringify(tally) : `dry run: ${JSON.stringify(dryWhy)}`}`);
+  console.log(rungs.summary(`${M.lane}${FINISH ? ' --finish-first' : ''}`));
   await client.close();
+}
+
+/** One pool's cron run: latinFirstSteps in order, each with the minutes left (header: LATIN FIRST). */
+async function latinFirstMain(arg) {
+  const home = arg('agy-home'), maxPages = Number(arg('max-pages')), concurrency = Number(arg('concurrency')), minutes = Number(arg('deadline-min'));
+  if (!home || !(maxPages > 0) || !(concurrency > 0) || !(minutes > 0)) { console.error('latin-first needs --agy-home --max-pages --concurrency --deadline-min'); process.exit(2); }
+  const end = Date.now() + minutes * 60_000;
+  const steps = latinFirstSteps({ home, root: arg('root') || LATIN_FIRST_ROOT, date: new Date().toISOString().slice(0, 10), maxPages, concurrency, apply: process.argv.includes('--apply') });
+  for (const { step, args } of steps) {
+    const left = Math.floor((end - Date.now()) / 60_000);
+    if (left < 5) { console.log(`latin-first: ${left} min left: stop before ${step}`); break; }
+    console.log(`\nlatin-first: ${step}, ${left} min left`);
+    const code = await run([fileURLToPath(import.meta.url), ...args, `--deadline-min=${left}`]);
+    console.log(`latin-first: ${step} exited ${code}`);
+  }
 }
 
 // ── gpu-correct (#7263, route C) ──
@@ -846,7 +1115,7 @@ export function armcDraftText(t) {
   return t.trim();
 }
 /** The lane dir's files (see ARMC in the header). */
-export const armcPaths = (L) => ({ plan: path.join(L, 'plan'), drafts: path.join(L, 'drafts'), stage: path.join(L, 'stage'), ledger: path.join(L, 'armc-ledger.jsonl'), claims: path.join(L, 'claims-armc'), contain: path.join(L, 'armc-contain-claims.jsonl'), runs: path.join(L, 'armc-runs.jsonl') });
+export const armcPaths = (L) => ({ plan: path.join(L, 'plan'), drafts: path.join(L, 'drafts'), stage: path.join(L, 'stage'), ledger: path.join(L, 'armc-ledger.jsonl'), claims: path.join(L, 'claims-armc'), contain: path.join(L, 'armc-contain-claims.jsonl'), runs: path.join(L, 'armc-runs.jsonl'), booksSkipped: path.join(L, 'armc-books-skipped.jsonl') });
 const readJson = (f, d = null) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
 /** Planned pages with no draft file yet (what the GPU chunk drafts; what ocr-filler.sh counts as pages left). */
 export function armcUndrafted(L) {
@@ -904,7 +1173,7 @@ export const ARMC_FIRST_READ_LANGS = Object.freeze(['la']);
  * corrected page carries the corrector's model and the gate no longer counts it.
  */
 export const ARMC_TRANSLATE_LANGS = Object.freeze(['la']);
-const ARMC_FRAMES = ['correct', 'first-read', 'translate-held'];
+const ARMC_FRAMES = ['correct', 'first-read', 'translate-held', 'campaign', 'euro'];
 /** Is this book in the translate-held frame's book rule (its query, plus the routing table's cli row)? */
 export function armcTranslateBookOk(book) {
   const st = book.pipeline_auto?.status, hold = book.pipeline_auto?.hold;
@@ -915,10 +1184,152 @@ export function armcTranslateBookOk(book) {
 const armcTranslateBookFilter = (langs) => ({ visible: true, pages_count: { $gt: 0 }, year: { $gte: ARMC_YEARS[0], $lte: ARMC_YEARS[1] }, $or: langs.map((l) => ({ language: { $regex: ARMC_ENGINES[l].language } })), 'pipeline_auto.held': { $ne: true }, needs_splitting: { $ne: true },
   $and: [{ $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] }] });
 const ARMC_TRANSLATE_PROJECTION = { id: 1, title: 1, language: 1, year: 1, pages_count: 1, human_read_count: 1, processing_priority: 1, visible: 1, needs_splitting: 1, publisher: 1, image_source: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1 };
+/**
+ * `--frame=campaign --campaign=ID` (#8049, Derek 2026-11-04: "these are print, so use the GPU"; GPU draft then agy Flash
+ * low with the image, never a bare GPU read): the books an acquisition campaign imported hidden and holds under its own
+ * reason (`acquisition_campaign: ID`, pipeline_auto.hold.reason ID), read for the first time by the first-read frame's
+ * plan / GPU draft / agy correction. ARMC_CAMPAIGNS fixes, per campaign, the languages whose cell test passed (each with
+ * its draft engine and its evidence) and the tiers file (default `<lane-dir>/tiers.jsonl`, one row a book: {book_id,
+ * tier, ocr_idx}: tier A every page, tier B the pages at ocr_idx in page order (the content screen's hit pages and two
+ * either side), tier C none). Books: tier A before B, then processing_priority, not needs_splitting; planned only once
+ * archive_status is archive_complete (the images come from R2, not a second box on archive.org beside the archive lane,
+ * and a page's failed fetch would ledger it); a possible unsplit spread waits (spreadReason, so run
+ * backfill-split-check.mjs --campaign=ID first). Pages: UNREAD only. The read and the
+ * write are the first-read frame's (no --over-stored; apply --diff-guard=gpu-draft --print-only), stamped
+ * ARMC_CAMPAIGN_LANE. The book keeps its campaign hold: nothing here releases it, so translation does not start. A
+ * page the route does not write is ledgered like every page tried; what reads it next is the campaign's business.
+ */
+export const ARMC_CAMPAIGN_LANE = 'gpu-agy-campaign-first-read';
+export const ARMC_CAMPAIGN_REASON = 'campaign first-read arm-c lane';
+const LO_ROUTE = 'lighton>agy-flash-low';
+export const ARMC_CAMPAIGNS = Object.freeze({
+  'jcb-1600-8049': {
+    issue: 8049,
+    // filled from the #8049 cell test (scripts/eval/route-judge-6740/jcb-1600-8049, RULE.md): a language is here only if it passed
+    // 2026-11-04, two draws pooled a language, one page a book, blind Opus judge: Latin 60 pages, 30 written, 29/30
+    // accepted, 0 wrong text, P(acc>=0.8) 0.99 (unwritten half ledgered, waits); French 60 pages, 55 written, 51/55
+    // accepted, 2 wrong text (3.6%), P 0.99. HELD (one draw): es 15/18, it 23/27, de 13/19, en 19/25, nl 15/22, pt 26/29
+    // (wrong text over 4% or P under 0.9; Portuguese has no unsampled A/B book left for a second draw).
+    langs: {
+      la: { language: /^Latin/, engine: 'pero', route: 'pero>agy-flash-low', evidence: '#8049 cell test, two draws pooled: 29/30 written accepted, 0 wrong text' },
+      fr: { language: /^French/, engine: 'lightonocr', route: LO_ROUTE, evidence: '#8049 cell test, two draws pooled: 51/55 written accepted, 2 wrong text' },
+    },
+  },
+});
+/** The campaign's language key for a book's language, or null (not a language the campaign's cell test passed). */
+export const campaignLang = (campaign, language) => Object.entries(ARMC_CAMPAIGNS[campaign]?.langs ?? {}).find(([, v]) => v.language.test(String(language || '')))?.[0] ?? null;
+/** The campaign's tiers file: book id → {tier, ocr_idx}. */
+export function campaignTiers(file) {
+  const m = new Map();
+  for (const l of fs.readFileSync(file, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); m.set(r.book_id, { tier: r.tier, ocr_idx: r.ocr_idx ?? null }); }
+  return m;
+}
+/** Is this book in the campaign frame's book rule? */
+export const armcCampaignBookOk = (book, campaign, tier) => !!(book && book.acquisition_campaign === campaign && book.pipeline_auto?.status === HOLD_STATUS
+  && book.pipeline_auto?.hold?.reason === campaign && !book.needs_splitting && (tier?.tier === 'A' || tier?.tier === 'B') && campaignLang(campaign, book.language));
+/** The campaign frame's pages of a book: tier A all, tier B the ocr_idx pages, in page order; UNREAD only; [] for a possible unsplit spread. */
+async function armcCampaignPages(db, book, tier, ids = null) {
+  const all = await db.collection('pages').find({ book_id: book.id }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
+  if (!ids && spreadReason(book, all)) return [];
+  const pick = tier.tier === 'A' ? all : (tier.ocr_idx ?? []).map((i) => all[i]).filter(Boolean);
+  const want = new Set(pick.map((p) => p.id).filter((id) => !ids || ids.includes(id)));
+  if (!want.size) return [];
+  const unread = new Set((await db.collection('pages').find({ book_id: book.id, id: { $in: [...want] }, ...UNREAD }, { projection: { _id: 0, id: 1 } }).toArray()).map((p) => p.id));
+  return pick.filter((p) => want.has(p.id) && unread.has(p.id));
+}
+const ARMC_CAMPAIGN_PROJECTION = { id: 1, title: 1, language: 1, year: 1, pages_count: 1, processing_priority: 1, acquisition_campaign: 1, needs_splitting: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.split_checked': 1 };
+const byCampaignOrder = (tiers) => (a, b) => String(tiers.get(a.id)?.tier).localeCompare(String(tiers.get(b.id)?.tier)) || (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || String(a.id).localeCompare(String(b.id));
 /** The unread pages of a first-read book, in page order (the frame's own page rule), or [] when it may be an unsplit spread. */
 async function armcFirstReadPages(db, book, ids = null) {
   const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD, ...(ids && { id: { $in: ids } }) }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
   return ids || !spreadReason(book, pages) ? pages : [];
+}
+/**
+ * `--frame=euro --cell=es19|fr19` (#6871, Derek 2026-11-07 "go": Spanish first, then French if its check holds): the
+ * books of a #6871 cell test (scripts/eval/route-judge-6740/jcb-1600-8049/run.mjs --study=euro-6871, drawEuro), read
+ * for the first time by the first-read frame's plan / GPU draft (LightOnOCR-3-1B) / agy Flash-low correction with the
+ * image. Books: the book's first language is the cell's, a parsed `year` inside the cell (no year, no book), page
+ * records exist (pages_state not manifest_only: a lazy book is never materialized here), not an unsplit spread, not a
+ * manuscript (manuscriptReason), not pipeline_auto.held, and not held, or held only scans-only-publish-7270. Every
+ * other hold (a containment such as wrong-leaf or recitation, a lane, a campaign, a person's decision) keeps the book
+ * out; nothing here releases a hold. French also leaves out the books the gex45 `run --cohort=visible-unread
+ * --languages=deu,fra` cron reads (firstReadSkip null for fra: visible, held scans-only), so no page is paid for twice.
+ * Pages: UNREAD with no human edit. The read and the write are the first-read frame's (no --over-stored; apply
+ * --diff-guard=gpu-draft --print-only), stamped ARMC_EURO_LANE, the cell test's own stamp.
+ */
+export const ARMC_EURO_LANE = 'gpu-agy-first-read-euro-6871';
+export const ARMC_EURO_REASON = '#6871 euro first-read arm-c lane';
+export const ARMC_EURO_HOLDS = Object.freeze(['scans-only-publish-7270']);
+export const ARMC_EURO_CELLS = Object.freeze({
+  // the cell test (scripts/eval/experiments/2026-11-07-euro-gpu-agy-cells-6871.md), with the #8296 marker refusal
+  es19: { lang: 'es', language: 'Spanish', code: 'spa', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test: 23/23 written accepted with #8296, 0 wrong text, P 0.995; gate on new pages 28/30, 1 wrong text, P 0.962' },
+  fr19: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test, two draws: 28/30 written accepted with #8296, 0 wrong text, P 0.962; gate on new pages 29/30, 0 wrong text, P 0.992', skipFirstRead: true },
+  // English 1800-1929 beyond the gpu-print-en frame (#6871, Derek 2026-11-07): GPU draft > agy, not a bare GPU read. The
+  // books gpu-print-en planned are its own (their unread pages are its rejects): skipPlannedIn keeps them out. statuses:
+  // only books the pipeline has finished with (a free book `archiving` or `archive_complete` is about to be read by the
+  // pipeline's own OCR, and this lane places no hold), or held scans-only.
+  en19: { lang: 'en', language: 'English', code: 'eng', years: [1800, 1929], route: LO_ROUTE, lane: 'gpu-agy-first-read-en-6871', skipPlannedIn: '/root/jobs/gpu-print-6871/plan', statuses: ['complete', 'ocr_complete', 'needs_attention', 'parked', 'failed', HOLD_STATUS], evidence: '#6871 2026-10-29 print1800 engine lanes (LightOnOCR drafts for agy Flash, use c) and the en19 pilot gate (scripts/eval/experiments/2026-11-07-en1800-gpu-agy-widen-6871.md)' },
+  // The French 1800+ pages Flash-Lite refused, already read on the GPU (job gpu-steward-20261106, gpu-print-read.py):
+  // planned only by armc-import from those reads (importOnly), corrected and written as the other cells are. The
+  // visible-unread lane is the one that refused them, so no skipFirstRead.
+  fr19r: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, lane: 'gpu-agy-first-read-fr-refusal-6871', importOnly: true, evidence: '#6871 2026-11-06 French lite refusals: 770 GPU reads, 627 past the guards, 10/10 usable by eye; fr19 cell test 28/30 with #8296' },
+});
+/** The ocr.pipeline stamp a cell writes under. */
+export const armcEuroLane = (cell) => ARMC_EURO_CELLS[cell]?.lane ?? ARMC_EURO_LANE;
+const ARMC_EURO_PROJECTION = { id: 1, title: 1, language: 1, year: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, human_read_count: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pages_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
+const armcEuroBookFilter = (C) => ({ language: { $regex: `^${C.language}` }, year: { $gte: C.years[0], $lte: C.years[1] }, pages_count: { $gt: 0 }, 'pages_state.state': { $nin: ['manifest_only', 'materializing'] },
+  'pipeline_auto.held': { $ne: true }, ...NOT_UNSPLIT_SPREAD, $or: [{ 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.hold.reason': { $in: ARMC_EURO_HOLDS } }], $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] } });
+/** Why this book is not in the euro cell's book rule (a short key), or null. */
+export function armcEuroSkip(book, cell, { skipPlannedIn = null } = {}) {
+  const C = ARMC_EURO_CELLS[cell];
+  if (!C) return 'no such cell';
+  if (!book || !(book.pages_count > 0)) return 'no pages';
+  if (firstReadLanguage(book) !== C.code) return 'other first language';
+  if (!(book.year >= C.years[0] && book.year <= C.years[1])) return 'year outside the cell';
+  if (['manifest_only', 'materializing'].includes(book.pages_state?.state)) return 'no page records (manifest only)';
+  if (book.pipeline_auto?.held === true) return 'pipeline_auto.held';
+  const hold = book.pipeline_auto?.hold;
+  if (hold && !ARMC_EURO_HOLDS.includes(hold.reason)) return `other hold (${hold.reason})`;
+  if (isUnsplitSpread(book)) return 'unsplit spread (needs_splitting)';
+  if (manuscriptReason(book)) return 'manuscript';
+  if (C.skipFirstRead && !firstReadSkip(book, { languages: [C.code] })) return 'read by the visible-unread first-read lane';
+  if (C.statuses && !C.statuses.includes(book.pipeline_auto?.status)) return `pipeline status ${book.pipeline_auto?.status ?? 'none'} (the pipeline reads it)`;
+  const planned = skipPlannedIn ?? C.skipPlannedIn;
+  if (planned && fs.existsSync(path.join(planned, `${book.id}.json`))) return 'planned by gpu-print-en';
+  return null;
+}
+/** The euro frame's pages of a book: UNREAD, no human edit, in page order; [] for a possible unsplit spread. */
+export async function armcEuroPages(db, book, ids = null) {
+  const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false }, 'ocr.source': { $ne: 'manual' }, ...(ids && { id: { $in: ids } }) }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
+  return ids || !spreadReason(book, pages) ? pages : [];
+}
+
+// #6871: a catalogue's "French print" can be a bound manuscript (the euro pilot: 41 of 210 French pages tagged
+// handwritten, 14 books with none written). A book the euro frame has not read yet is probed with ARMC_EURO_PROBE pages;
+// if the corrector tags half or more of a chunk handwritten or mixed, the book is skipped from then on (planned and read
+// no more), as the gpu-correct and first-read lanes skip theirs. Rows carry page_id = the book id, as theirs do.
+export const ARMC_EURO_PROBE = 4;
+/** Why a book should be skipped after a chunk's ledger rows (a sentence), or null. */
+export function armcHandSkip(rows) {
+  const hand = rows.filter((r) => /<script>\s*(handwrit|mixed)/i.test(String(r.why ?? ''))).length;
+  return rows.length >= ARMC_EURO_PROBE && hand * 2 >= rows.length ? `corrector tagged ${hand}/${rows.length} pages handwritten or mixed` : null;
+}
+/** Root disk free, in GB (the disk guard: a lane dir's images fill the box's root, #6223). */
+export const rootFreeGb = (dir = '/') => { const s = fs.statfsSync(dir); return (s.bavail * s.bsize) / 1e9; };
+/** Bytes under a dir (the lane cap). */
+export function dirBytes(d) {
+  let n = 0;
+  let ents; try { ents = fs.readdirSync(d, { withFileTypes: true }); } catch { return 0; }
+  for (const e of ents) { const f = path.join(d, e.name); if (e.isDirectory()) n += dirBytes(f); else if (e.isFile()) { try { n += fs.statSync(f).size; } catch { /* gone */ } } }
+  return n;
+}
+/** Drop a book's staged images once every page planned for it is ledgered, or the book is skipped (drafts, ledger and results stay). */
+export function dropBookImagesIfDone(P, pl, ledger, { skipped = false } = {}) {
+  if (!pl?.pages?.length || (!skipped && !pl.pages.every((pg) => ledger.has(pg.id)))) return false;
+  const img = path.join(P.drafts, pl.bid, 'img');
+  if (!fs.existsSync(img)) return false;
+  fs.rmSync(img, { recursive: true, force: true });
+  return true;
 }
 
 async function armcMain(mode, arg) {
@@ -929,7 +1340,28 @@ async function armcMain(mode, arg) {
   const FRAME = arg('frame') || 'correct';
   if (!ARMC_FRAMES.includes(FRAME)) { console.error(`--frame must be ${ARMC_FRAMES.join(' or ')}`); process.exit(2); }
   // first-read: only the languages the router picked arm c for on unread pages (Latin, #7701)
-  const LANGS = (arg('langs') || 'la,it').split(',').filter((l) => ARMC_ENGINES[l] && (FRAME !== 'first-read' || ARMC_FIRST_READ_LANGS.includes(l)) && (FRAME !== 'translate-held' || ARMC_TRANSLATE_LANGS.includes(l)));
+  const CAMPAIGN = FRAME === 'campaign' ? arg('campaign') : null;
+  if (FRAME === 'campaign' && !ARMC_CAMPAIGNS[CAMPAIGN]) { console.error(`--frame=campaign needs --campaign=${Object.keys(ARMC_CAMPAIGNS).join('|')}`); process.exit(2); }
+  const CELL = FRAME === 'euro' ? arg('cell') : null;
+  if (FRAME === 'euro' && !ARMC_EURO_CELLS[CELL]) { console.error(`--frame=euro needs --cell=${Object.keys(ARMC_EURO_CELLS).join('|')}`); process.exit(2); }
+  if (mode === 'armc-import' && !ARMC_EURO_CELLS[CELL]?.importOnly) { console.error(`armc-import needs --frame=euro and an import cell (${Object.keys(ARMC_EURO_CELLS).filter((c) => ARMC_EURO_CELLS[c].importOnly).join('|')})`); process.exit(2); }
+  // --min-free-g=G (#6871 disk guard): plan, fetch and correct refuse to start while the root disk has under G GB free
+  const MIN_FREE = Number(arg('min-free-g') || 0);
+  if (MIN_FREE && ['armc-plan', 'armc-fetch', 'armc', 'armc-import'].includes(mode)) {
+    const free = rootFreeGb();
+    if (free < MIN_FREE) { console.log(`${mode}: root disk ${free.toFixed(1)} GB free < --min-free-g=${MIN_FREE}: not starting`); if (mode === 'armc') fs.appendFileSync(P.runs, JSON.stringify({ at: new Date().toISOString(), stop: `root disk ${free.toFixed(1)} GB free < ${MIN_FREE}`, taken: 0 }) + '\n'); return; }
+  }
+  // --after-lane=DIR (#6871 ranking): correct nothing while that lane dir still has drafted pages waiting for a correction
+  if (mode === 'armc' && arg('after-lane')) {
+    const A = armcPaths(path.resolve(arg('after-lane'))), seen = new Set();
+    ledgerTail(A.ledger, seen, { offset: 0 });
+    const waiting = fs.existsSync(A.plan) ? fs.readdirSync(A.plan).filter((f) => f.endsWith('.json')).map((f) => readJson(path.join(A.plan, f))).filter(Boolean)
+      .reduce((n, pl) => n + pl.pages.filter((pg) => !seen.has(pg.id) && fs.existsSync(path.join(A.drafts, pl.bid, `${pg.id}.json`))).length, 0) : 0;
+    if (waiting) { console.log(`armc: ranked after ${arg('after-lane')}, which has ${waiting} drafted pages waiting: nothing read`); return; }
+  }
+  const LANGS = CELL ? [ARMC_EURO_CELLS[CELL].lang] : CAMPAIGN ? (arg('langs')?.split(',') ?? Object.keys(ARMC_CAMPAIGNS[CAMPAIGN].langs)).filter((l) => ARMC_CAMPAIGNS[CAMPAIGN].langs[l])
+    : (arg('langs') || 'la,it').split(',').filter((l) => ARMC_ENGINES[l] && (FRAME !== 'first-read' || ARMC_FIRST_READ_LANGS.includes(l)) && (FRAME !== 'translate-held' || ARMC_TRANSLATE_LANGS.includes(l)));
+  if (CAMPAIGN && !LANGS.length) { console.log(`armc campaign ${CAMPAIGN}: no language has passed its cell test; nothing to do`); return; }
   if (mode === 'armc' && FRAME === 'first-read') await routeCheck(servedByArmcFirstRead({ langs: LANGS }), arg);
   const ledger = new Set(), tailState = { offset: 0 };
   ledgerTail(P.ledger, ledger, tailState);
@@ -968,7 +1400,9 @@ async function armcMain(mode, arg) {
   const db = client.db('bookstore');
   const { SKIP_TRANSLATION_PAGE_TYPES: SKIP } = await import('../lib/translate-core.mjs');
   try {
-    if (mode === 'armc-plan') return await armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME);
+    if (mode === 'armc-plan' && CELL && ARMC_EURO_CELLS[CELL].importOnly) { console.log(`armc-plan: cell ${CELL} is planned by armc-import only`); return; }
+    if (mode === 'armc-plan') return await armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME, CAMPAIGN, CELL);
+    if (mode === 'armc-import') return await armcImport(db, P, arg, ledger, CELL);
     if (mode === 'armc-fetch') return await armcFetch(db, P, arg, LANGS, ledger);
     if (mode === 'armc-count') {
       const u = armcUndrafted(L).filter((p) => !ledger.has(p.id));
@@ -979,7 +1413,7 @@ async function armcMain(mode, arg) {
       console.log(`arm-c lane (${ARMC_LANE}): ${JSON.stringify(t)}; drafted, waiting for a correction: ${drafted.length}; planned, no draft yet: ${u.length}`);
       return;
     }
-    return await armcRun(db, P, arg, ledger, tailState, SKIP, FRAME);
+    return await armcRun(db, P, arg, ledger, tailState, SKIP, FRAME, CAMPAIGN, CELL);
   } finally { await client.close(); }
 }
 
@@ -987,9 +1421,9 @@ async function armcMain(mode, arg) {
  * armc-plan: tops the plan up to the drafting horizon (--ahead=N pages planned and not yet ledgered; default the pages the
  * lane ledgered in the last 48 h, at least --ahead-min=600), so the GPU never drafts more than ~2 days ahead of the
  * correction. Books most-read first; a book is planned whole (every page in frame), unless --per-book=N (a pilot: N
- * pages spread evenly) with --books-per-lang=M.
+ * pages spread evenly) with --books-per-lang=M. --skip-books=ID,ID leaves books out (a gate pilot on books not judged before).
  */
-async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
+async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMPAIGN = null, CELL = null) {
   const planned = new Map(fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => { const pl = readJson(path.join(P.plan, f)); return [pl.bid, pl]; }));
   const open = [...planned.values()].reduce((n, pl) => n + pl.pages.filter((pg) => !ledger.has(pg.id)).length, 0);
   const since = Date.now() - 48 * 3600_000;
@@ -997,33 +1431,40 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
   const AHEAD = Number(arg('ahead') || Math.max(Number(arg('ahead-min') || 600), recent));
   const PER_BOOK = Number(arg('per-book') || 0), PER_LANG = Number(arg('books-per-lang') || Infinity);
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  const NOT = new Set([...(arg('skip-books') || '').split(',').filter(Boolean), ...(CELL ? readLedger(P.booksSkipped) : [])]);
   let room = AHEAD - open;
   console.log(`armc-plan: ${open} pages planned and not ledgered, horizon ${AHEAD} (${recent} ledgered in 48 h): room for ${Math.max(0, room)}`);
   if (room <= 0) return;
   const FR = FRAME === 'first-read', TH = FRAME === 'translate-held', frLangs = LANGS.map((l) => toLanguageCodes(l).codes[0] ?? l);
-  const books = (FR
+  const tiers = CAMPAIGN ? campaignTiers(arg('tiers') || path.join(path.dirname(P.plan), 'tiers.jsonl')) : null;
+  const books = (CELL
+    ? (await db.collection('books').find(armcEuroBookFilter(ARMC_EURO_CELLS[CELL]), { projection: ARMC_EURO_PROJECTION }).toArray()).filter((b) => !armcEuroSkip(b, CELL))
+    : CAMPAIGN
+    ? (await db.collection('books').find({ acquisition_campaign: CAMPAIGN, pages_count: { $gt: 0 }, 'pipeline_auto.hold.reason': CAMPAIGN, archive_status: 'archive_complete' }, { projection: ARMC_CAMPAIGN_PROJECTION }).toArray())
+      .filter((b) => armcCampaignBookOk(b, CAMPAIGN, tiers.get(b.id)) && LANGS.includes(campaignLang(CAMPAIGN, b.language)))
+    : FR
     ? (await db.collection('books').find(FIRST_READ_BOOKS, { projection: { ...FIRST_READ_PROJECTION, year: 1, human_read_count: 1 } }).toArray()).filter((b) => !firstReadSkip(b, { languages: frLangs }))
     : TH ? (await db.collection('books').find(armcTranslateBookFilter(LANGS), { projection: ARMC_TRANSLATE_PROJECTION }).toArray()).filter(armcTranslateBookOk)
     : await db.collection('books').find(armcBookFilter(LANGS), { projection: { id: 1, title: 1, language: 1, year: 1, pages_count: 1, human_read_count: 1, processing_priority: 1 } }).toArray())
-    .filter((b) => (!ONLY || ONLY.has(b.id)) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(FR ? byFirstReadOrder : byReaders);
+    .filter((b) => (!ONLY || ONLY.has(b.id)) && !NOT.has(b.id) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(CAMPAIGN ? byCampaignOrder(tiers) : FR ? byFirstReadOrder : byReaders);
   const perLang = {};
   let added = 0;
   for (const b of books) {
     if (room <= 0) break;
-    const lang = armcLang(b.language);
+    const lang = CELL ? ARMC_EURO_CELLS[CELL].lang : CAMPAIGN ? campaignLang(CAMPAIGN, b.language) : armcLang(b.language);
     if (!lang || (perLang[lang] ?? 0) >= PER_LANG) continue;
     const prev = planned.get(b.id);
     const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
-    let rows = (FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, SKIP, null, { whole: TH })).filter((p) => !ledger.has(p.id) && !have.has(p.id));
+    let rows = (CELL ? await armcEuroPages(db, b) : CAMPAIGN ? await armcCampaignPages(db, b, tiers.get(b.id)) : FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, SKIP, null, { whole: TH })).filter((p) => !ledger.has(p.id) && !have.has(p.id));
     if (PER_BOOK) { if (rows.length < PER_BOOK) continue; rows = Array.from({ length: PER_BOOK }, (_, i) => rows[Math.floor((i + 0.5) * rows.length / PER_BOOK)]); }
     const whole = !PER_BOOK && rows.length <= room;
     rows = rows.slice(0, room);
     if (!rows.length) { if (!PER_BOOK) fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ ...(prev ?? { bid: b.id, lang, title: b.title, year: b.year, pages: [] }), whole: true })); continue; }
     fs.mkdirSync(path.join(P.drafts, b.id), { recursive: true });
-    fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ bid: b.id, lang, title: b.title, year: b.year, language: b.language, whole, planned_at: new Date().toISOString(), pages: [...(prev?.pages ?? []), ...rows.map((p) => ({ id: p.id, pn: p.page_number }))] }));
+    fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ bid: b.id, lang, title: b.title, year: b.year, language: b.language, ...(CAMPAIGN && { campaign: CAMPAIGN, tier: tiers.get(b.id).tier }), ...(CELL && { cell: CELL }), whole, planned_at: new Date().toISOString(), pages: [...(prev?.pages ?? []), ...rows.map((p) => ({ id: p.id, pn: p.page_number }))] }));
     perLang[lang] = (perLang[lang] ?? 0) + 1;
     room -= rows.length; added += rows.length;
-    console.log(`  ${b.id} ${String(b.title || '').slice(0, 50)} (${lang}, ${b.year}, ${b.human_read_count ?? 0} readers): ${rows.length} pages${whole ? '' : ' (part)'}`);
+    console.log(`  ${b.id} ${String(b.title || '').slice(0, 50)} (${lang}, ${b.year}, ${CAMPAIGN ? `tier ${tiers.get(b.id).tier}` : `${b.human_read_count ?? 0} readers`}): ${rows.length} pages${whole ? '' : ' (part)'}`);
   }
   console.log(`armc-plan: ${added} pages added (${JSON.stringify(perLang)} books)`);
 }
@@ -1031,8 +1472,15 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
 /** armc-fetch: the page images of undrafted planned pages, to drafts/<book>/img, and a stage folder per language for the engines. */
 async function armcFetch(db, P, arg, LANGS, ledger) {
   const { getPageSource } = await import('../lib/page-image-url.mjs');
-  const MAX = Number(arg('max-pages') || 2000);
-  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && LANGS.includes(p.lang)).slice(0, MAX);
+  let MAX = Number(arg('max-pages') || 2000);
+  // --max-lane-gb=G (#6871 disk guard): stage no more pages than keep the whole lane dir under G GB (~1.2 MB an image)
+  if (arg('max-lane-gb')) {
+    const used = dirBytes(path.dirname(P.plan)), cap = Number(arg('max-lane-gb')) * 1e9, room = Math.max(0, Math.floor((cap - used) / 1.5e6));
+    if (room < MAX) console.log(`armc-fetch: lane dir ${(used / 1e9).toFixed(2)} GB of --max-lane-gb=${arg('max-lane-gb')}: room for ${room} images`);
+    MAX = Math.min(MAX, room);
+  }
+  // A planned page is in frame by its plan. The draft task passes no --frame, so LANGS is the `correct` default (la,it) there: narrow only on an explicit --langs, or a campaign's French would never be staged (#8049).
+  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && (!arg('langs') || LANGS.includes(p.lang))).slice(0, MAX);
   const docs = new Map();
   for (let i = 0; i < todo.length; i += 500) for (const d of await db.collection('pages').find({ id: { $in: todo.slice(i, i + 500).map((p) => p.id) } }, { projection: GPU_PAGE_PROJECTION }).toArray()) docs.set(d.id, d);
   const t = {}; let failed = 0;
@@ -1054,9 +1502,66 @@ async function armcFetch(db, P, arg, LANGS, ledger) {
   console.log(`armc-fetch: ${JSON.stringify(t)} staged, ${failed} with no image`);
 }
 
+/**
+ * armc-import (#6871): GPU reads already on disk in the gpu-print lane's format (--from=DIR: manifest.tsv rows
+ * <bid>\t<pn>\t<pid>\t<url>, out/<bid>/<pn>.json from scripts/gpu/gpu-print-read.py) into this lane's plan and drafts,
+ * so armc corrects them instead of reading the page again. A read is imported only when the gpu-print guards pass
+ * (pageVerdict 'write': no loop, other script, engine note or transliteration-dense text, 30+ word characters), the
+ * book is in the cell's book rule and the page in its page rule NOW (unread, no human edit), and the image fetched today
+ * hashes to the image_sha256 the GPU read (the draft and the image the corrector sees are one leaf). Tally → import.json.
+ */
+async function armcImport(db, P, arg, ledger, CELL) {
+  const { pageVerdict } = await import('../lib/gpu-print-lane.mjs');
+  const FROM = arg('from') && path.resolve(arg('from'));
+  if (!FROM || !fs.existsSync(path.join(FROM, 'manifest.tsv'))) { console.error('armc-import needs --from=DIR with manifest.tsv and out/'); process.exit(2); }
+  const C = ARMC_EURO_CELLS[CELL];
+  const rows = fs.readFileSync(path.join(FROM, 'manifest.tsv'), 'utf8').split('\n').filter(Boolean).map((l) => { const [bid, pn, pid, url] = l.split('\t'); return { bid, pn: Number(pn), pid, url }; });
+  const runFile = fs.existsSync(path.join(FROM, 'runs')) ? fs.readdirSync(path.join(FROM, 'runs')).filter((f) => /^lo-.*\.json$/.test(f)).sort().pop() : null;
+  const engine = { name: 'lightonocr', model: 'lightonai/LightOnOCR-3-1B', read: 'scripts/gpu/gpu-print-read.py (the gpu-print-en reader, fp8 vLLM)', from: FROM, ...(runFile && { run: readJson(path.join(FROM, 'runs', runFile)) }) };
+  const byBook = new Map();
+  for (const r of rows) { if (!byBook.has(r.bid)) byBook.set(r.bid, []); byBook.get(r.bid).push(r); }
+  const books = new Map((await db.collection('books').find({ id: { $in: [...byBook.keys()] } }, { projection: ARMC_EURO_PROJECTION }).toArray()).map((b) => [b.id, b]));
+  const t = { reads: rows.length, imported: 0, already: 0, no_read: 0, guard: {}, book: {}, page_left_frame: 0, image_changed: 0, no_image: 0 };
+  const sha = (b) => createHash('sha256').update(b).digest('hex');
+  for (const [bid, list] of byBook) {
+    const book = books.get(bid);
+    const skip = book ? armcEuroSkip(book, CELL) : 'book not found';
+    if (skip) { t.book[skip] = (t.book[skip] ?? 0) + list.length; continue; }
+    const inFrame = new Set((await armcEuroPages(db, book, list.map((r) => r.pid))).map((p) => p.id));
+    const planFile = path.join(P.plan, `${bid}.json`), prev = readJson(planFile, null);
+    const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
+    const add = [];
+    for (const r of list) {
+      if (have.has(r.pid) || ledger.has(r.pid)) { t.already++; continue; }
+      const read = readJson(path.join(FROM, 'out', bid, `${r.pn}.json`), null);
+      if (!read || read.page_id !== r.pid) { t.no_read++; continue; }
+      const v = pageVerdict(read.text, { finish: read.finish ?? null });
+      if (v.verdict !== 'write') { const k = `${v.verdict}:${v.reason}`; t.guard[k] = (t.guard[k] ?? 0) + 1; continue; }
+      if (!inFrame.has(r.pid)) { t.page_left_frame++; continue; }
+      let buf = null;
+      for (let a = 0; a < 2 && !buf; a++) { try { const res = await fetch(r.url); if (res.ok) { const b = Buffer.from(await res.arrayBuffer()); if (b.length > 2000) buf = b; } } catch { /* retry once */ } }
+      if (!buf) { t.no_image++; continue; }
+      if (read.image_sha256 && sha(buf) !== read.image_sha256) { t.image_changed++; continue; }
+      fs.mkdirSync(path.join(P.drafts, bid, 'img'), { recursive: true });
+      fs.writeFileSync(path.join(P.drafts, bid, 'img', `${r.pid}.jpg`), buf);
+      fs.writeFileSync(path.join(P.drafts, bid, `${r.pid}.json`), JSON.stringify({ text: armcDraftText(v.body), image_sha256: read.image_sha256 ?? sha(buf), engine, ...(read.finish && { finish: read.finish }), imported_from: path.join(FROM, 'out', bid, `${r.pn}.json`), at: new Date().toISOString() }));
+      add.push({ id: r.pid, pn: r.pn });
+    }
+    if (!add.length) continue;
+    const pages = [...(prev?.pages ?? []), ...add].sort((a, b) => a.pn - b.pn);
+    fs.writeFileSync(planFile, JSON.stringify({ bid, lang: C.lang, title: book.title, year: book.year, language: book.language, cell: CELL, whole: false, imported: true, planned_at: prev?.planned_at ?? new Date().toISOString(), pages }));
+    t.imported += add.length;
+    console.log(`  ${bid} ${String(book.title || '').slice(0, 50)} (${book.year}${book.pipeline_auto?.hold ? `, held ${book.pipeline_auto.hold.reason}` : ''}): ${add.length} drafts`);
+  }
+  fs.writeFileSync(path.join(path.dirname(P.plan), 'import.json'), JSON.stringify({ at: new Date().toISOString(), from: FROM, cell: CELL, tally: t }, null, 1));
+  console.log(`armc-import ${CELL}: ${JSON.stringify(t)}`);
+}
+
 /** armc: the agy correction of drafted pages, guarded, written; every page tried ledgered. */
-async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
-  const FR = FRAME === 'first-read', LANE_ID = FR ? ARMC_FIRST_READ_LANE : ARMC_LANE;
+async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct', CAMPAIGN = null, CELL = null) {
+  // the campaign and euro frames read and write as the first-read frame does (unread pages, no --over-stored, the draft put-back)
+  const CF = FRAME === 'campaign', FR = FRAME === 'first-read', EU = FRAME === 'euro', FIRST = FR || CF || EU, LANE_ID = EU ? armcEuroLane(CELL) : CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE;
+  const tiers = CF ? campaignTiers(arg('tiers') || path.join(path.dirname(P.plan), 'tiers.jsonl')) : null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
   if (!OUT) { console.error('armc needs --out=DIR'); process.exit(2); }
@@ -1094,8 +1599,8 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
   const plans = fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => readJson(path.join(P.plan, f))).filter((pl) => pl && (!ONLY || ONLY.has(pl.bid)));
   const TH = FRAME === 'translate-held';
-  const books = new Map((await db.collection('books').find({ id: { $in: plans.map((pl) => pl.bid) } }, { projection: { ...(FR && FIRST_READ_PROJECTION), ...ARMC_TRANSLATE_PROJECTION } }).toArray()).map((b) => [b.id, b]));
-  const order = plans.filter((pl) => books.has(pl.bid)).sort((a, b) => byReaders(books.get(a.bid), books.get(b.bid)));
+  const books = new Map((await db.collection('books').find({ id: { $in: plans.map((pl) => pl.bid) } }, { projection: { ...(FR && FIRST_READ_PROJECTION), ...ARMC_TRANSLATE_PROJECTION, ...(CF && ARMC_CAMPAIGN_PROJECTION), ...(EU && ARMC_EURO_PROJECTION) } }).toArray()).map((b) => [b.id, b]));
+  const order = plans.filter((pl) => books.has(pl.bid)).sort((a, b) => (CF ? byCampaignOrder(tiers) : byReaders)(books.get(a.bid), books.get(b.bid)));
   const job = `cli-ocr-armc-${new Date().toISOString().slice(0, 10)}`;
   fs.mkdirSync(OUT, { recursive: true });
   const TPL = path.join(OUT, `gpu-correct-prompt-${GPU_TEMPLATE.hash}.txt`);
@@ -1107,10 +1612,11 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, put_back_all: 0, put_back_unsafe: 0, no_draft: 0, out_of_frame: 0, other: 0, agy_calls: 0, pages_flagged: 0, put_back: 0, books: 0 };
   const ledgerRow = (r) => { fs.appendFileSync(P.ledger, JSON.stringify({ ...r, at: new Date().toISOString() }) + '\n'); ledger.add(r.page_id); };
+  const skippedBooks = EU ? readLedger(P.booksSkipped) : new Set();   // rows carry page_id = the book id
   const nextChunk = async () => {
     while (bi < order.length) {
       const pl = order[bi++], b = books.get(pl.bid);
-      if (!claimBook(P.claims, b.id, ME)) continue;
+      if (skippedBooks.has(b.id) || !claimBook(P.claims, b.id, ME)) continue;
       held.add(b.id);
       ledgerTail(P.ledger, ledger, tailState);
       const drafted = pl.pages.filter((pg) => !ledger.has(pg.id) && fs.existsSync(path.join(P.drafts, b.id, `${pg.id}.json`)));
@@ -1136,7 +1642,9 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
       const env = CHILD_ENV, pool = POOL;
       const release = () => { releaseBookClaim(P.claims, book.id); held.delete(book.id); };
       if (budget <= 0) { release(); stop ??= 'page budget spent'; break; }
-      const take = c.drafted.slice(0, Math.min(CHUNK, budget));
+      // euro: a book with nothing ledgered yet is probed first (ARMC_EURO_PROBE pages), so a manuscript costs a few calls
+      const probe = EU && !plan.pages.some((pg) => ledger.has(pg.id));
+      const take = c.drafted.slice(0, Math.min(probe ? ARMC_EURO_PROBE : CHUNK, budget));
       budget -= take.length;
       tally.books++;
       const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
@@ -1144,10 +1652,12 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
       fs.mkdirSync(dir, { recursive: true });
       console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${plan.lang}): ${take.length} of ${c.drafted.length} drafted pages; pool ${pool} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
       // The book and the page must still be in frame now: a page re-read, edited or withheld since the plan is not this lane's.
-      const bookOk = FR ? !firstReadSkip(book, { languages: ARMC_FIRST_READ_LANGS.map((l) => toLanguageCodes(l).codes[0]) })
+      const bookOk = EU ? !armcEuroSkip(book, CELL) && plan.cell === CELL
+        : CF ? armcCampaignBookOk(book, CAMPAIGN, tiers.get(book.id)) && plan.campaign === CAMPAIGN
+        : FR ? !firstReadSkip(book, { languages: ARMC_FIRST_READ_LANGS.map((l) => toLanguageCodes(l).codes[0]) })
         : TH ? armcTranslateBookOk(book)
         : book.visible && !book.needs_splitting && IDLE_STATUSES.includes(book.pipeline_auto?.status) && !book.pipeline_auto?.hold && !book.pipeline_auto?.held;
-      const inFrame = new Set(bookOk ? (FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, SKIP, take.map((p) => p.id), { whole: TH })).map((p) => p.id) : []);
+      const inFrame = new Set(bookOk ? (EU ? await armcEuroPages(db, book, take.map((p) => p.id)) : CF ? await armcCampaignPages(db, book, tiers.get(book.id), take.map((p) => p.id)) : FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, SKIP, take.map((p) => p.id), { whole: TH })).map((p) => p.id) : []);
       const drafts = { _engine: null };
       const unsent = new Map();
       for (const p of take) {
@@ -1165,12 +1675,14 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
         const draftFile = path.join(dir, `drafts-${t0}.json`), ids = path.join(dir, `page-ids-${t0}.json`);
         fs.writeFileSync(draftFile, JSON.stringify(drafts));
         fs.writeFileSync(ids, JSON.stringify(send.map((p) => p.id)));
-        const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${LANE_ID}`, `--gpu-draft=${draftFile}`, `--image-dir=${imgDir}`, ...(FR ? [] : ['--over-stored']), `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
+        const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${LANE_ID}`, `--gpu-draft=${draftFile}`, `--image-dir=${imgDir}`, ...(FIRST ? [] : ['--over-stored']), `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
         if (read === 3) { release(); budget += take.length; stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
         if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-        const reason = FR ? `${ARMC_FIRST_READ_REASON}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, a page with no OCR in a book published as scans; the hold stays) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route pero>agy-flash-low: #7701 cheap-routes cell test 18/18 written, 0 wrong text)`
+        const reason = EU ? `${ARMC_EURO_REASON} (${CELL}): ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, ${book.year}, a page with no OCR${book.pipeline_auto?.hold ? `; the ${book.pipeline_auto.hold.reason} hold stays` : ''}) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route ${ARMC_EURO_CELLS[CELL].route}: ${ARMC_EURO_CELLS[CELL].evidence})`
+          : CF ? `#${ARMC_CAMPAIGNS[CAMPAIGN].issue} ${ARMC_CAMPAIGN_REASON} (${CAMPAIGN}, tier ${plan.tier}): ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, a page with no OCR in a hidden book the campaign holds; the hold stays) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route ${ARMC_CAMPAIGNS[CAMPAIGN].langs[plan.lang].route}: ${ARMC_CAMPAIGNS[CAMPAIGN].langs[plan.lang].evidence})`
+          : FR ? `${ARMC_FIRST_READ_REASON}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, a page with no OCR in a book published as scans; the hold stays) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route pero>agy-flash-low: #7701 cheap-routes cell test 18/18 written, 0 wrong text)`
           : `${ARMC_REASON}${TH ? ' (translate-held frame, #7263: a book the CLI translation lane waits on)' : ''}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}, replacing the stored Flash-Lite draft; E3 diff guard put back every flagged number, negation and expansion (route ${ARMC_ENGINES[plan.lang].route}: #7567 E5 misleading la 23→4, it 8→2 against lite→Flash; Derek 2026-10-29)`;
-        const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, ...(FR ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`]), ...(APPLY ? ['--apply'] : [])], tag, env);
+        const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, ...(FIRST ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`]), ...(APPLY ? ['--apply'] : [])], tag, env);
         for (const p of send) { try { tally.agy_calls += JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')).calls ?? 0; } catch { /* not read */ } }
         if (!APPLY || applied !== 0) { release(); continue; }
         const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
@@ -1179,15 +1691,20 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
         tally.pages_flagged += sum.diff_guard?.pages_flagged ?? 0; tally.put_back += sum.diff_guard?.put_back ?? 0;
       } else if (!APPLY) { release(); continue; }
       const written = new Set(sum.written_page_ids || []);
+      const chunkRows = [];
       for (const p of take) {
         const pre = unsent.get(p.id);
         const why = pre ? pre[1] : written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
         const k = pre ? pre[0] : why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /put back by the diff guard/.test(why) ? 'put_back_all' : /put-back cannot be spliced|put-back changed/.test(why) ? 'put_back_unsafe' : 'other';
         tally[k]++;
         ledgerRow({ page_id: p.id, book_id: book.id, page_number: p.pn, lang: plan.lang, outcome: k, why, run: sum.run ?? null });
+        chunkRows.push({ why });
       }
       // ledgered: the images and the read workspaces are not needed again (the draft json stays, a few KB a page)
       for (const p of take) { fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true }); fs.rmSync(path.join(imgDir, `${p.id}.jpg`), { force: true }); }
+      if (EU) dropBookImagesIfDone(P, plan, ledger);
+      const hand = EU && armcHandSkip(chunkRows);
+      if (hand) { skippedBooks.add(book.id); fs.appendFileSync(P.booksSkipped, JSON.stringify({ page_id: book.id, why: hand, at: new Date().toISOString() }) + '\n'); dropBookImagesIfDone(P, plan, ledger, { skipped: true }); console.log(`${tag}  book skipped from now on: ${hand}`); }
       release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
@@ -1205,10 +1722,15 @@ export const FIRST_READ_MODEL = 'gemini-3.8-flash-low';
 export const FIRST_READ_CORRECT_LANE = 'agy-first-read-correct-7701';
 export const FIRST_READ_REASON = '#7701 first-read lane';
 export const FIRST_READ_CORRECT_REASON = '#7701 first-read lane correction';
-/** The holds that mean "published as scans, OCR not read yet" (the brief's four; GPU_LANE_HOLDS less the wave-b hold). */
-export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270']);
+/**
+ * #8181: a book the pipeline marked `complete` on its 25-page sample before the #4719 guard. Nothing revisits those, and
+ * without a hold this lane skips them as "the pipeline owns it". Holding one here is how a wave reaches this lane.
+ */
+export const PREVIEW_STUB_FIRST_READ_HOLD = 'preview-stub-first-read-8181';
+/** The holds that mean "published as scans, OCR not read yet" (the brief's four, less the wave-b hold, plus the stubs above). */
+export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270', PREVIEW_STUB_FIRST_READ_HOLD]);
 /** The routed models that mean a print route: flash-lite (Latin-script print) and Flash (print in the flash families). */
-export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH]);
+export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH, OCR_MODEL_AGY]);
 /** Languages read 4 pages a call (#7522 held quality on German and Latin print; French by the #7701 cheap-routes cell test,
  * 2026-10-29: read@4 24/24 written, 0 wrong text, against read@1's 20/21, 1 wrong text); every other language reads 1. */
 export const FIRST_READ_PER_CALL_LANGUAGES = Object.freeze(['lat', 'deu', 'fra']);
@@ -1271,7 +1793,34 @@ export const FIRST_READ_BOOKS = Object.freeze({
   visible: true, pages_count: { $gt: 0 }, 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': { $in: FIRST_READ_HOLDS },
   'pipeline_auto.held': { $ne: true }, ...NOT_UNSPLIT_SPREAD, $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] },
 });
-const FIRST_READ_PROJECTION = { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
+/**
+ * FINISH COHORT (#8482): `run --cohort=finish` is the first read above on the books closest to done: visible, not an
+ * English original, >= FINISH_MIN_SHARE of their translatable pages translated and not complete (isFinishBook), idle
+ * and unheld or held for the CLI translation lane, never pipeline_auto.held, with unread pages. finishReadSkip's book
+ * rules are firstReadSkip's without the hold rule. Order byFinishFirst. Same reader, writer (--first-read-only
+ * --print-only), lane stamp and guards; its own --out (ledger, claims). A finish book is not held, so nothing here
+ * changes a hold; the CLI translation lane (cli-translate-lane.mjs finish) translates what this writes.
+ */
+export const FINISH_READ_COHORT = 'finish';
+export const FINISH_READ_BOOKS = Object.freeze({
+  visible: true, pages_count: { $gt: 0 }, 'translation_state.english_original': { $ne: true },
+  'translation_state.rung': { $in: ['transcribing', 'translating', 'readable'] }, 'pipeline_auto.held': { $ne: true }, ...NOT_UNSPLIT_SPREAD,
+  $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] },
+  $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }],
+});
+/** Why the finish cohort does not read this book, or null (firstReadSkip without its hold rule). */
+export function finishReadSkip(book, { languages = null } = {}) {
+  if (!book?.visible || !(book.pages_count > 0)) return 'not visible';
+  if (book.pipeline_auto?.held === true) return 'pipeline_auto.held';
+  if (!isFinishBook(book)) return `under ${100 * FINISH_MIN_SHARE}% translated, or complete`;
+  if (isUnsplitSpread(book)) return 'unsplit spread (needs_splitting)';
+  if (manuscriptReason(book)) return 'manuscript';
+  const { model } = ocrLaneForBook(book);
+  if (!PRINT_ROUTE_MODELS.includes(model)) return `route ${model}: not a print route`;
+  if (languages && !languages.includes(firstReadLanguage(book))) return 'language not in --languages';
+  return null;
+}
+const FIRST_READ_PROJECTION = { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
 
 /** The quota flags every agy lane here shares (QUOTA FLOOR and POOL in the header), validated; exits 2 on a bad one. */
 function quotaFlags(arg) {
@@ -1293,6 +1842,7 @@ async function firstReadMain(mode, arg) {
   const CORRECT_LANGS = arg('correct') ? arg('correct').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : [];
   if (mode === 'run') await routeCheck(servedByFirstRead({ languages: LANGS, correct: CORRECT_LANGS, perCall: Number(arg('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }), arg);
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  const COHORT = arg('cohort'), FINISH = COHORT === FINISH_READ_COHORT;
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   const db = client.db('bookstore');
@@ -1301,6 +1851,18 @@ async function firstReadMain(mode, arg) {
   const skippedBooks = readLedger(BOOKS_SKIPPED);   // rows carry page_id = the book id
   const unreadPages = (b) => db.collection('pages').find({ book_id: b.id, ...UNREAD }, { projection: { id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
 
+  if (mode === 'count' && FINISH) {
+    // The finish cohort, by the reason a book is left out (book rules only; pages estimated from the counters).
+    const t = {};
+    for (const b of (await db.collection('books').find(FINISH_READ_BOOKS, { projection: FIRST_READ_PROJECTION }).toArray()).filter((x) => !ONLY || ONLY.has(x.id))) {
+      const k = finishReadSkip(b, { languages: LANGS }) ?? (skippedBooks.has(b.id) ? 'skipped: reader tagged it handwritten' : 'read');
+      t[k] ??= { books: 0, pages_est: 0 };
+      t[k].books++; t[k].pages_est += Math.max(0, b.pages_count - (b.pages_ocr ?? 0));
+    }
+    console.log(`finish cohort (${FIRST_READ_LANE}, #8482)${LANGS ? `; --languages=${LANGS.join(',')}` : ''}; ${ledger.size} page(s) ledgered`);
+    for (const [k, v] of Object.entries(t).sort((a, b) => b[1].pages_est - a[1].pages_est)) console.log(`  ${k.padEnd(60)} ${String(v.books).padStart(6)} books ${String(v.pages_est).padStart(8)} pages`);
+    await client.close(); return;
+  }
   if (mode === 'count') {
     // Every visible book with unread pages that is held or has no OCR at all, by the reason the lane skips it; pages
     // are estimated from the counters (pages_count - pages_ocr), so the count is a few queries, not one per book.
@@ -1334,8 +1896,9 @@ async function firstReadMain(mode, arg) {
     await client.close(); return;
   }
 
-  const books = (await db.collection('books').find(FIRST_READ_BOOKS, { projection: FIRST_READ_PROJECTION }).toArray())
-    .filter((b) => (!ONLY || ONLY.has(b.id)) && !skippedBooks.has(b.id) && !firstReadSkip(b, { languages: LANGS })).sort(byFirstReadOrder);
+  const books = (await db.collection('books').find(FINISH ? FINISH_READ_BOOKS : FIRST_READ_BOOKS, { projection: FIRST_READ_PROJECTION }).toArray())
+    .filter((b) => (!ONLY || ONLY.has(b.id)) && !skippedBooks.has(b.id) && !(FINISH ? finishReadSkip : firstReadSkip)(b, { languages: LANGS }))
+    .sort(FINISH ? byFinishFirst : byFirstReadOrder);
   const MAX = Number(arg('max-pages') || 400), MAX_BOOKS = Number(arg('max-books') || Infinity), CHUNK = Number(arg('book-chunk') || 40);
   const QF = quotaFlags(arg);
   const int = (name, dflt, hi) => { const v = Number(arg(name) || dflt); if (!(Number.isInteger(v) && v >= 1 && v <= hi)) { console.error(`--${name} must be 1 to ${hi}`); process.exit(2); } return v; };
@@ -1363,9 +1926,10 @@ async function firstReadMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`run --cohort=${FIRST_READ_COHORT}: pool ${POOL}; ${books.length} books in frame${LANGS ? ` (${LANGS.join(',')})` : ''}, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk, ${FIRST_READ_PER_CALL_LANGUAGES.map((l) => `${l} ${firstReadPerCall(l, PER_CALL)}`).join(', ')} a call${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`run --cohort=${COHORT}: pool ${POOL}; ${books.length} books in frame${LANGS ? ` (${LANGS.join(',')})` : ''}, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk, ${FIRST_READ_PER_CALL_LANGUAGES.map((l) => `${l} ${firstReadPerCall(l, PER_CALL)}`).join(', ')} a call${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0, booksTaken = 0;
   const tally = { written: 0, handwritten: 0, has_ocr_now: 0, failed: 0, other: 0, books: 0, books_skipped_handwritten: 0, spread_wait: 0, corrected: 0, correct_unchanged: 0, correct_other: 0 };
+  const rungs = rungTracker(db);
   const nextChunk = async () => {
     while (bi < books.length) {
       if (booksTaken >= MAX_BOOKS) return null;
@@ -1403,18 +1967,20 @@ async function firstReadMain(mode, arg) {
       fs.mkdirSync(dir, { recursive: true });
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
-      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${book.pages_ocr ?? 0}/${book.pages_count} read, hold ${book.pipeline_auto.hold.reason}): ${take.length} of ${c.open.length} pages, ${perCall}/call; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
+      await rungs.before(book.id);
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${book.pages_ocr ?? 0}/${book.pages_count} read, ${FINISH ? `${Math.floor(100 * translatedShare(book))}% translated` : `hold ${book.pipeline_auto.hold.reason}`}): ${take.length} of ${c.open.length} pages, ${perCall}/call; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
       const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${FIRST_READ_MODEL}`, `--job=${job}`, '--stop-on-quota',
         ...(perCall > 1 ? [`--per-call=${perCall}`] : [])], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = `${FIRST_READ_REASON}: visible book held ${book.pipeline_auto.hold.reason} (the hold stays), routed ${routed}, first read by ${FIRST_READ_MODEL} through agy${perCall > 1 ? `, ${perCall} pages a call (#7522)` : ''}`;
+      const reason = `${FIRST_READ_REASON}: ${FINISH ? `finish cohort (#8482): visible book ${Math.floor(100 * translatedShare(book))}% translated` : `visible book held ${book.pipeline_auto.hold.reason} (the hold stays)`}, routed ${routed}, first read by ${FIRST_READ_MODEL} through agy${perCall > 1 ? `, ${perCall} pages a call (#7522)` : ''}`;
       const t0 = Date.now();
       const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only', ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
       if (!APPLY || applied !== 0) { release(); continue; }
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
       const written = new Set(sum.written_page_ids || []);
+      await rungs.after(book.id);
       let hand = 0;
       for (const p of take) {
         const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
@@ -1448,12 +2014,16 @@ async function firstReadMain(mode, arg) {
       }
       // Ledgered: the page images are not needed again (apply checked the image hash; provenance keeps the prompt). #6223.
       for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      // A block read (--per-call > 1) keeps its images in one ws-call-<id> folder a call; this run holds the book's claim, so all
+      // are this chunk's. Left behind, they took 50 GB of gex45's root in six days (2026-11-04).
+      for (const w of fs.readdirSync(dir).filter((f) => f.startsWith('ws-call-'))) fs.rmSync(path.join(dir, w), { recursive: true, force: true });
       release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   console.log(`\nfirst-read run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  console.log(rungs.summary(`${FIRST_READ_LANE} --cohort=${COHORT}`));
   fs.appendFileSync(path.join(path.dirname(LEDGER), 'first-read-runs.jsonl'), JSON.stringify({ at: new Date().toISOString(), pool: POOL, apply: APPLY, stop: stop ?? 'done', taken: MAX - budget, ...tally }) + '\n');
   await client.close();
 }
@@ -1463,11 +2033,12 @@ async function main() {
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (mode === 'correct' || mode === 'correct-count') return correctMain(mode, arg);
   if (mode === 'gpu-correct' || mode === 'gpu-count') return gpuMain(mode, arg);
-  if (/^armc(-(plan|fetch|collect|count|left))?$/.test(mode)) return armcMain(mode, arg);
+  if (/^armc(-(plan|fetch|collect|count|left|import))?$/.test(mode)) return armcMain(mode, arg);
   if ((mode === 'run' || mode === 'count') && arg('cohort')) {
-    if (arg('cohort') !== FIRST_READ_COHORT) { console.error(`--cohort: the only cohort is ${FIRST_READ_COHORT}`); process.exit(2); }
+    if (![FIRST_READ_COHORT, FINISH_READ_COHORT].includes(arg('cohort'))) { console.error(`--cohort: ${FIRST_READ_COHORT} or ${FINISH_READ_COHORT}`); process.exit(2); }
     return firstReadMain(mode, arg);
   }
+  if (mode === 'latin-first') { await latinFirstMain(arg); return; }
   if (!['count', 'run'].includes(mode)) { console.error('usage: cli-ocr-lane.mjs count | run --out=DIR [--max-pages=120] [--book=ID] [--apply] | count --cohort=visible-unread | run --cohort=visible-unread --out=DIR [--apply] | correct-count | correct --out=DIR [--apply]'); process.exit(2); }
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));

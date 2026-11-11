@@ -30,14 +30,16 @@ import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { stripAnchor } from './block-page-guard.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
+import { checkNeighbours } from './neighbour-guard.mjs';
 import { guardTranslationText } from './translation-write-guard.mjs';
 import { checkWrittenText, writeGuardReason } from './write-text-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { createRequire } from 'node:module';
-import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
+import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, cliBookFilter, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
 
 export { CLI_TRANSLATE_HOLD };
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
@@ -156,6 +158,9 @@ export function translateLaneForBook(book) {
   return laneFromTable(TRANSLATION_ROUTING_TABLE, book);
 }
 
+/** The Mongo filter for the books translateLaneForBook sends to a cli lane (cliBookFilter over the table, #7263). */
+export const CLI_TRANSLATE_BOOK_FILTER = cliBookFilter(TRANSLATION_ROUTING_TABLE);
+
 /**
  * Languages where flash measurably beats lite at TRANSLATION, judged blind
  * against published human translations (#5695, 2026-10-03; two Opus judges,
@@ -164,7 +169,7 @@ export function translateLaneForBook(book) {
  * OCR is the problem), Hebrew/Aramaic/Arabic/Persian +0.53 (52), Sanskrit/
  * Pali/classical Chinese +0.40 (64; reversed statements 15 → 6 per 100 pages).
  * Latin (+0.22) and the Latin-script vernaculars (+0.21) also gained, but
- * stay on lite pending Derek's cost call (scripts/eval/DECISIONS.md).
+ * stayed on lite then (routes are now the router table, .claude/docs/routing.md).
  * Matches the book's FIRST language label, so "Greek-Latin" and
  * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
  */
@@ -476,9 +481,14 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
   if (applied && r.notes.length) prompt += `\n\n**At the page break:** ${r.notes.join(' ')}`;
   if (applied && r.lookahead) prompt += `\n\n**The next page opens (source, for context only; do NOT translate it, the next page carries it):**\n${r.lookahead}`;
 
-  prompt += continuityContext(previousTranslation, { english });
+  // #5274: a nearly empty leaf (a plate, a caption, a title) does not get the leaf before's English. With it, the
+  // model rendered that English as this leaf's: on 695 Feb-Mar 2026 leaves written 0-10 min after n-1, 470 carried
+  // n-1's text (2/22 written before n-1); the own-leaf repair passed 28/30 by blind Opus. The same line as isRecited.
+  // A short page whose break device fired (a word split across the leaves) is running text: it keeps the context.
+  const nearlyEmpty = sourceWeight(ocrText) < RECITED_SOURCE_MAX && !(applied && r.fired);
+  if (!nearlyEmpty) prompt += continuityContext(previousTranslation, { english });
 
-  return { prompt, promptRef, isEnglish: english, pageBreak: r ? { ...r.meta, fired: r.fired, applied } : null };
+  return { prompt, promptRef, isEnglish: english, context_dropped: nearlyEmpty && !!previousTranslation, pageBreak: r ? { ...r.meta, fired: r.fired, applied } : null };
 }
 
 /**
@@ -531,7 +541,9 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   const applied = !!pageBreak && (!pageBreak.scoped || per.some((r) => r.fired));
 
   let prompt = header;
-  prompt += continuityContext(previousTranslation, { english: isEnglish });
+  // #5274: a one-page call on a nearly empty leaf gets no previous English, as in buildTranslationPrompt
+  const oneEmpty = pages.length === 1 && sourceWeight(ocrOf(pages[0])) < RECITED_SOURCE_MAX && !(applied && per[0]?.fired);
+  if (!oneEmpty) prompt += continuityContext(previousTranslation, { english: isEnglish });
   if (applied && pageBreak.rule && (!pageBreak.scoped || per.some((r) => r.deviceFired))) prompt += `\n\n${PAGE_BREAK_RULE}`;
   if (applied && per.some((r) => r.meta.leafSeams)) prompt += `\n\n${LEAF_BREAK_RULE}`;
 
@@ -795,8 +807,17 @@ export const COLLAPSE_ABS_CAP = 800;
  * marker clause never fired on anything the current prompt produces (#5363).
  */
 export const CONTINUITY_MARKER_RE = /continue[sd]?\s+from\s+(?:the\s+)?previous\s+page/i;
+/**
+ * The `<detected-images>` block is the picture detector's JSON (bboxes, gallery scores, a museum
+ * rationale), not words printed on the leaf. Counted as source it made a marbled endpaper's OCR
+ * "446 characters", so a correct one-note English read as a collapse, and it lifted picture leaves
+ * over RECITED_SOURCE_MAX so a plate carrying its neighbour's English was not seen as recited
+ * (#5274: the context-bleed pages are mostly such leaves).
+ */
+const DETECTED_IMAGES_RE = /<detected-images\b[^>]*>[\s\S]*?<\/detected-images>/gi;
+export const withoutDetectedImages = (ocr) => String(ocr || '').replace(DETECTED_IMAGES_RE, ' ');
 export const isCollapsed = (ocr, tr) => {
-  const ob = bodyLen(ocr), tb = bodyLen(tr);
+  const ob = bodyLen(withoutDetectedImages(ocr)), tb = bodyLen(tr);
   if (ob < 400) return false;
   if (tb >= COLLAPSE_ABS_CAP) return false;
   return tb / ob < 0.3 || (CONTINUITY_MARKER_RE.test(tr || '') && tb < 60);
@@ -841,8 +862,8 @@ export const isExcess = (ocr, tr) => {
  * flags every heading.
  *
  * So the source is measured generously and the English strictly. `sourceWeight` keeps everything
- * the transcription holds — metadata blocks, picture descriptions, vocab — and only removes the
- * tags themselves, so a page whose `bodyLen` is 0 because of a mis-closed tag, or whose words are
+ * the transcription holds — metadata blocks, picture descriptions, vocab — except the picture
+ * detector's `<detected-images>` JSON (#5274), and only removes the tags themselves, so a page whose `bodyLen` is 0 because of a mis-closed tag, or whose words are
  * a described picture, is not read as empty; a Han, kana or Hangul character counts 16, the
  * CJK_EXCESS_RATIO over the alphabetic one. The English is `bodyLen`: notes, summaries and keywords
  * are not counted, so a title with a paragraph of apparatus is not a recitation (11 of the 14
@@ -856,7 +877,7 @@ export const RECITED_SOURCE_MAX = 300;
 export const RECITED_BODY_FLOOR = 600;
 export const RECITED_RATIO = 3;
 export function sourceWeight(ocr) {
-  const t = String(ocr || '').replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
+  const t = withoutDetectedImages(ocr).replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
     .replace(WS_ENTITY, ' ').replace(LEADER_RUN, ' ').replace(/\s+/g, ' ').trim();
   return t.length + (CJK_EXCESS_RATIO - 1) * (t.match(HAN_CHAR) || []).length;
 }
@@ -981,10 +1002,16 @@ export function parseBlockTranslations(responseText, pages, { lang } = {}) {
   };
   const entries = []; // in order, for the positional fallback
   const raws = [];
+  // #5021: a block prompt that carried block-page-guard.mjs anchorRule gets an anchor at the head of each section;
+  // it is taken off here, before sanitizeTranslationTags would unwrap it into the English, and returned.
+  const anchors = new Map();
+  const anchorList = [];
   let match;
   while ((match = regex.exec(responseText || '')) !== null) {
     const pageNum = parseInt(match[1], 10);
-    const raw = match[2].trim();
+    const { text: raw, anchor } = stripAnchor(match[2]);
+    anchors.set(pageNum, anchor);
+    anchorList.push(anchor);
     const text = sanitizeTranslationTags(raw);
     entries.push(text);
     raws.push(raw);
@@ -1001,8 +1028,10 @@ export function parseBlockTranslations(responseText, pages, { lang } = {}) {
     translations.clear();
     truncated.length = 0;
     pages.forEach((p, i) => { if (!tooShort(p, entries[i]) && !cut(p, raws[i])) translations.set(p.page_number, entries[i]); });
+    anchors.clear();
+    pages.forEach((p, i) => anchors.set(p.page_number, anchorList[i]));
   }
-  return { translations, returned: entries.length, discarded: null, truncated };
+  return { translations, returned: entries.length, discarded: null, truncated, anchors };
 }
 
 // Refused output is stored truncated — a 350K-char loop is evidence of a loop,
@@ -1206,6 +1235,31 @@ export async function strayScriptGate(db, page, text, { ocr, language, jobId, mo
   return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
 }
 
+/**
+ * The neighbour gate (#5026), for every writer of model translation text, the door included: refuses (stamp +
+ * evidence, via `recordRefusedTranslation`) a page's English that is its neighbour's — 'neighbour-leak' or
+ * 'absorbs-neighbour' (scripts/lib/neighbour-guard.mjs). Reads the page's number, type and OCR when `page` lacks them,
+ * then n-1, n+1 and the book's K. `neighbours` (page_number → English) are the other pages of the same reply when a
+ * block is written together: they stand in for the stored English, so a block is judged against itself. Fail-open.
+ * @returns {Promise<{ refused: boolean, reason?: string, detail?: string, page_number?: number }>} `page_number` (when
+ *   read) lets a collector keep the job's accepted English for the next page's `neighbours`.
+ */
+export async function neighbourGate(db, page, text, { ocr, neighbours = null, jobId, model, dryRun = false } = {}) {
+  if (!text || !page?.id) return { refused: false };
+  let p = page;
+  if (p.page_number == null || p.book_id == null || (ocr ?? p.ocr?.data) == null) {
+    try {
+      const doc = await db.collection('pages').findOne({ id: p.id }, { projection: { _id: 0, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } });
+      if (doc) p = { ...doc, ...Object.fromEntries(Object.entries(p).filter(([, v]) => v != null)) };
+    } catch { return { refused: false }; }
+  }
+  const v = await checkNeighbours(db, { page: p, text, ocr: ocr ?? p.ocr?.data ?? '', bookId: p.book_id, neighbours });
+  if (!v.refuse) return { refused: false, page_number: p.page_number };
+  console.warn(`[neighbour-guard] ${p.id} p${p.page_number}: ${v.reason} — ${v.detail}${dryRun ? ' (dry run)' : ''}`);
+  if (!dryRun) await recordRefusedTranslation(db, { id: p.id, book_id: p.book_id }, text, v.reason, { jobId, model });
+  return { refused: true, reason: v.reason, detail: v.detail };
+}
+
 /** The reason value stamped on `translation.health_blocked` for a looping source. */
 export const SOURCE_LOOP_REASON = 'source_loop';
 
@@ -1310,11 +1364,15 @@ export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.S
  *   An empty or whitespace-only `text` is never stored either (#4685): the page is stamped
  *   `translation.fail_reason: 'empty_response'` (recordEmptyTranslation) and the result carries
  *   {written:false, emptyResponse:true, reason:'empty_response'}, `text` = the existing translation.
+ *   Nor a page that carries its neighbour's English (#5026, neighbour-guard.mjs): reasons 'neighbour-leak' and
+ *   'absorbs-neighbour', judged against the stored English of n-1 and n+1, stamped and kept like 'hidden-meta'.
+ * @param {Object<number,string>} [args.neighbours] page_number → English, for pages of the same reply written
+ *   together: overrides the stored English of n-1 / n+1 in the neighbour check.
  * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, emptyResponse?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true, neighbours = null }) {
   // What produced this text (#4613) — required, one of:
   //   call:   { call_site, api?, model?, promptText, generationConfig, run?, context?, response?,
   //             prompt_sent_hash?, prompt_sent_chars? } — the door builds the engine block here,
@@ -1380,7 +1438,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
@@ -1417,6 +1475,15 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   if (stray.refuse) {
     await recordRefusedTranslation(db, page, clean, STRAY_SCRIPT_REASON, { jobId, model: resolvedModel });
     return { written: false, protected: false, unhealthy: true, reason: STRAY_SCRIPT_REASON, text: clean };
+  }
+
+  // Always on too (#5026): a page's English that is its neighbour's (a shared run with the stored English of n-1 or
+  // n+1 the sources do not share, or a length that is this page's source plus a neighbour's) is refused, stamped and
+  // kept. Not on a restore (writeGuard: false, or a notRecorded engine), whose text is not this run's.
+  if (writeGuard && !isNotRecorded(engineBlock)) {
+    const at = { id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, page_number: page.page_number ?? current?.page_number, page_type: page.page_type ?? current?.page_type };
+    const nb = await neighbourGate(db, at, clean, { ocr: page?.ocr?.data ?? current?.ocr?.data ?? '', neighbours, jobId, model: resolvedModel });
+    if (nb.refused) return { written: false, protected: false, unhealthy: true, reason: nb.reason, text: clean };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

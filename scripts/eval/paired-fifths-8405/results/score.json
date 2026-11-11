@@ -1,0 +1,85 @@
+{
+ "generated_at": "2026-11-08T17:14:00.823Z",
+ "issue": 8405,
+ "prereg": "scripts/eval/experiments/2026-11-08-paired-fifths-prereg-8405.md",
+ "controls": {
+  "carry_over": {
+   "judged": 10,
+   "caught": 10
+  },
+  "wrong_leaf": {
+   "judged": 10,
+   "caught": 10
+  },
+  "valid": true,
+  "rule": ">= 8 judged and >= 0.80 caught in each kind"
+ },
+ "books_complete": 160,
+ "books_framed": 160,
+ "anchor_bad": 67,
+ "paired_bad": 84,
+ "flips_good_to_bad": 24,
+ "flips_by_join_only": 18,
+ "flips_by_partner_pages_only": 4,
+ "flips_bad_to_good": 6,
+ "flip_share": 0.15,
+ "breaks": {
+  "random": 760,
+  "failed": 72,
+  "by_kind": {
+   "call_boundary": {
+    "breaks": 7,
+    "failed": 1
+   },
+   "in_call": {
+    "breaks": 0,
+    "failed": 0
+   },
+   "unknown": {
+    "breaks": 753,
+    "failed": 71
+   }
+  },
+  "direction_of_failed": {
+   "A": 26,
+   "B": 31,
+   "both": 15
+  }
+ },
+ "reliability": {
+  "split_half_r_anchor_vs_partner": 0.686,
+  "spearman_brown_10_pages": 0.814,
+  "books": 159
+ },
+ "census": {
+  "flagged_in_frame": 0,
+  "judged": 40,
+  "judged_defect": 23,
+  "precision": 0.575,
+  "by_break_kind": {
+   "call_boundary": {
+    "judged": 1,
+    "judged_defect": 0,
+    "precision": 0
+   },
+   "unknown": {
+    "judged": 37,
+    "judged_defect": 23,
+    "precision": 0.622
+   },
+   "in_call": {
+    "judged": 2,
+    "judged_defect": 0,
+    "precision": 0
+   }
+  },
+  "by_source_unknown": {
+   "source_checked": {
+    "judged": 40,
+    "judged_defect": 23,
+    "precision": 0.575
+   }
+  }
+ },
+ "decision": "pairs for the standing Opus QA"
+}

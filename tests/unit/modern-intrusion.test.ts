@@ -6,7 +6,7 @@
  */
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs helper, no types
-import { findModernIntrusions, screenBookPages, bookYear, intrusionBody } from '../../scripts/lib/modern-intrusion.mjs';
+import { findModernIntrusions, screenBookPages, screenImprint, findImprintMarks, bookYear, intrusionBody } from '../../scripts/lib/modern-intrusion.mjs';
 
 const KIRCHER_P170 = `We are pleased to present the first issue of the Journal of the American Society of Nephrology (JASN) for 2011. This issue contains a diverse collection of original research articles, reviews, and commentaries covering a wide range of topics in nephrology.
 
@@ -93,5 +93,35 @@ describe('bookYear', () => {
     expect(bookYear(1927)).toBe(1927);
     expect(bookYear('s.d.')).toBeNull();
     expect(bookYear(undefined)).toBeNull();
+  });
+});
+
+describe('the imprint screen', () => {
+  // The shape of the stored OCR that started it, with the names changed. `published` said 1533.
+  const IMPRINT_PAGE = '<meta>Copyright and imprint page from 2010 publication</meta> ->ISBN 978-3-16-148410-0<- ->e-ISBN 978-3-16-148411-7<- © 2010 Example Verlag GmbH, Berlin';
+
+  it('fires on the page that started it', () => {
+    expect(findImprintMarks(IMPRINT_PAGE).map((h: { marker: string }) => h.marker)).toEqual(['isbn', 'dated copyright']);
+    expect(screenImprint([{ page_number: 6, ocr: { data: IMPRINT_PAGE } }])).toHaveLength(1);
+  });
+
+  it('fires on a dated notice with no ISBN', () => {
+    expect(findImprintMarks('Copyright 1964 by the Trustees of the Museum')).toHaveLength(1);
+    expect(findImprintMarks('© 1988 by the President and Fellows')).toHaveLength(1);
+  });
+
+  it('stays silent on marks that do not date the book', () => {
+    expect(findImprintMarks('ALL RIGHTS RESERVED.')).toEqual([]);
+    expect(findImprintMarks('ALL RIGHTS RESERVED © Example Library')).toEqual([]);
+    expect(findImprintMarks('Anno Domini 1533')).toEqual([]);
+  });
+
+  it('does not read the model\'s own description of the page', () => {
+    expect(findImprintMarks('<meta>the page shows ISBN 978-3-16-148410-0 and © 2010</meta> Liber primus')).toEqual([]);
+  });
+
+  it('looks only at the front of the book', () => {
+    expect(screenImprint([{ page_number: 15, ocr: { data: IMPRINT_PAGE } }])).toEqual([]);
+    expect(screenImprint([{ page_number: 6 }, null])).toEqual([]);
   });
 });

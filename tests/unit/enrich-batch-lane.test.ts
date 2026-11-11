@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — .mjs worker lib, no types
-import { gapFilter, REALTIME_LANE_STATUSES, enrichPauseMode, READABLE_ENOUGH_TO_ENRICH, hasWithheldPages } from '../../scripts/workers/lib/enrich-batch-lane.mjs';
+import { gapFilter, REALTIME_LANE_STATUSES, enrichPauseMode, READABLE_ENOUGH_TO_ENRICH, hasWithheldPages, enrichmentSkip, ENRICHABLE_HOLD_REASONS, WITHHELD_MAX_SHARE } from '../../scripts/workers/lib/enrich-batch-lane.mjs';
 
 /**
  * A tiny matcher for the handful of Mongo operators these filters use, so the assertions below EXERCISE the predicate
@@ -191,5 +191,42 @@ describe('hasWithheldPages — the archive is not the state', () => {
 
   it('scopes to the book: another book\'s withheld page is not ours', async () => {
     expect(await hasWithheldPages(dbOf([{ ...withheld, book_id: 'other' }]), 'b')).toBe(false);
+  });
+});
+
+/** #8482 part B: a small withheld share and an allowlisted lane hold no longer keep a translated book out. */
+describe('enrichmentSkip — withheld share and lane holds', () => {
+  const dbOf = (withheldIds: string[], untranslated: boolean) => ({
+    collection: () => ({
+      find: () => ({ toArray: async () => withheldIds.map((id) => ({ id })) }),
+      findOne: async () => (untranslated ? { _id: 1 } : null),
+    }),
+  });
+  const book = (over: Record<string, unknown> = {}) => ({ id: 'b', pages_translatable: 100, pages_count: 100, ...over });
+  const opts = { allowHeld: true, tolerateWithheld: true };
+
+  it('admits a book with withheld pages at or under the share and returns their ids to leave out', async () => {
+    expect(WITHHELD_MAX_SHARE).toBe(0.02);
+    expect(await enrichmentSkip(dbOf(['p1', 'p2'], false), book(), opts)).toEqual({ skip: null, withheldIds: ['p1', 'p2'] });
+  });
+  it('skips a book over the share', async () => {
+    expect((await enrichmentSkip(dbOf(['p1', 'p2', 'p3'], false), book(), opts)).skip).toBe('withheld>2%');
+  });
+  it('without tolerance any withheld page skips (the batch lane)', async () => {
+    expect((await enrichmentSkip(dbOf(['p1'], false), book(), { allowHeld: false })).skip).toBe('withheld>2%');
+  });
+  it('an allowlisted hold is admitted only when nothing is left untranslated', async () => {
+    const reason = Object.keys(ENRICHABLE_HOLD_REASONS)[0];
+    const held = book({ pipeline_auto: { hold: { reason } } });
+    expect((await enrichmentSkip(dbOf([], false), held, opts)).skip).toBeNull();
+    expect((await enrichmentSkip(dbOf([], true), held, opts)).skip).toBe(`held-untranslated:${reason}`);
+  });
+  it('an unknown or containment hold stays out, and so does every hold when allowHeld is off', async () => {
+    expect((await enrichmentSkip(dbOf([], false), book({ pipeline_auto: { hold: { reason: 'invented-page-7991' } } }), opts)).skip).toBe('held:invented-page-7991');
+    const reason = Object.keys(ENRICHABLE_HOLD_REASONS)[0];
+    expect((await enrichmentSkip(dbOf([], false), book({ pipeline_auto: { hold: { reason } } }), { allowHeld: false })).skip).toBe(`held:${reason}`);
+  });
+  it('the allowlist names no containment, rights or approval-pending hold', () => {
+    for (const r of Object.keys(ENRICHABLE_HOLD_REASONS)) expect(r).not.toMatch(/invent|wrong-leaf|contain|leak|tengyur|kangyur|unsettled|scans-only/);
   });
 });
