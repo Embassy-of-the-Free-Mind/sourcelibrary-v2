@@ -19,3 +19,25 @@ export function decodeShortlinkCode(code) {
   const pageNumber = (bytes[12] << 8) | bytes[13];
   return pageNumber >= 1 ? { bookId, pageNumber } : null;
 }
+
+/**
+ * A `u…` /q/ code (the UUID scheme of #3940: `u` + 25 base62 chars for 16 bytes of id + 2 bytes of page)
+ * → { bookId (dashed UUID), pageNumber }, or null. Kept apart from decodeShortlinkCode, whose callers rely on it
+ * refusing UUID codes.
+ */
+export function decodeUuidShortlinkCode(code) {
+  if (typeof code !== 'string' || code.length !== 26 || !code.startsWith('u')) return null;
+  let num = 0n;
+  for (const ch of code.slice(1)) {
+    const i = BASE62.indexOf(ch);
+    if (i < 0) return null;
+    num = num * 62n + BigInt(i);
+  }
+  if (num >> 144n) return null;
+  const bytes = [];
+  for (let i = 0; i < 18; i++) { bytes.unshift(Number(num & 0xffn)); num >>= 8n; }
+  const hex = bytes.slice(0, 16).map((b) => b.toString(16).padStart(2, '0')).join('');
+  const bookId = [hex.slice(0, 8), hex.slice(8, 12), hex.slice(12, 16), hex.slice(16, 20), hex.slice(20)].join('-');
+  const pageNumber = (bytes[16] << 8) | bytes[17];
+  return pageNumber >= 1 ? { bookId, pageNumber } : null;
+}
