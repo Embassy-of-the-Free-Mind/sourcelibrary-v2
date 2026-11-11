@@ -11,6 +11,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { supabaseAdmin } from '@/lib/supabase';
 import { contentHash } from '@/lib/write-provenance';
 import { PAIRED_FIFTHS_VERSION, PAIRED_SKIP_PAGE_TYPES, pairedFifths, pairedReadingOrder, type PagePair } from '@/lib/paired-fifths';
+import { isMeteredAnonRequest, meteredSignInResponse } from '@/lib/metered-gate';
 
 export const maxDuration = 15;
 
@@ -168,6 +169,10 @@ async function servedTranslation(volunteerId: string, page: Document, bookId: st
  * returned: the reviewer judges the text, not its maker.
  */
 export async function GET(request: NextRequest) {
+  // A run walks a whole book, page by page, with both texts: under the metered
+  // reader (#4357) that is for signed-in readers and for shifts run through our
+  // MCP server (a trusted caller), never an anonymous walk round the free sample.
+  if (await isMeteredAnonRequest(request)) return meteredSignInResponse();
   const params = request.nextUrl.searchParams;
   const given = params.get('volunteer_id')?.trim() || '';
   if (given && !isValidVolunteerId(given)) {

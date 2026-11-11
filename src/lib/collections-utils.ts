@@ -189,8 +189,17 @@ export interface CardImageSource {
  *  3. each featured image, preferring the 600px gallery `-card.jpg` (sharp on
  *     retina), then the 300px thumb, then the extracted/original.
  *  The card renders these with a fallback chain so a single dead/slow source
- *  doesn't leave a broken thumbnail. Shared by /collections and the homepage. */
+ *  doesn't leave a broken thumbnail. Shared by /collections and the homepage.
+ *  Capped at MAX_CARD_CANDIDATES: the list is serialised into the page for
+ *  every card, and uncapped it averaged 19 URLs a card (119 KB on /collections,
+ *  2026-11-10). A card only ever needs the next one that loads. */
+export const MAX_CARD_CANDIDATES = 8;
+
 export function cardImageCandidates(images: (CardImageSource | string)[] | undefined, override?: string, heroImage?: string): string[] {
+  return collectCardImageCandidates(images, override, heroImage).slice(0, MAX_CARD_CANDIDATES);
+}
+
+function collectCardImageCandidates(images: (CardImageSource | string)[] | undefined, override?: string, heroImage?: string): string[] {
   const urls: string[] = [];
   const add = (u: string | undefined | null) => {
     // A card never needs the -full.jpg original (#6092: 22MB into a 336px tile).

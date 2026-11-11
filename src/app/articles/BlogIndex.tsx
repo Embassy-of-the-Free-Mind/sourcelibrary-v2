@@ -4,8 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { BLOG_KINDS, KIND_INFO, postHref, type BlogKind, type BlogPost } from './posts';
-import { PAGE_SIZE, isKind, listingHref } from './listing';
+import { BLOG_KINDS, KIND_INFO, postHref, PAGE_SIZE, isKind, listingHref, type BlogKind, type BlogPost } from './post-kinds';
 
 type Filter = BlogKind | 'all';
 type Sort = 'newest' | 'oldest' | 'title';

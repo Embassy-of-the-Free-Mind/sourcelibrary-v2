@@ -146,4 +146,25 @@ describe('blog post list', () => {
     expect(stored, 'run node scripts/maintenance/generate-article-heroes.mjs').toEqual(buildArticleHeroes());
     expect(posts.filter((p) => !stored[p.slug]).map((p) => p.slug)).toEqual([]);
   });
+
+  // A 'use client' file that imports ./posts or ./listing at runtime ships the
+  // whole article list (~90 KB) to that page's readers. The homepage did, via
+  // ArticleCard, until 2026-11-10. Client code imports from post-kinds.ts.
+  // The two article-page footers need the real list and are allowed.
+  it('keeps the article list out of client bundles', () => {
+    const ALLOWED = new Set(['src/app/articles/ArticleExtras.tsx', 'src/app/articles/ArticleEnd.tsx']);
+    const root = path.join(__dirname, '..');
+    const walk = (dir: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+        const full = path.join(dir, e.name);
+        if (e.isDirectory()) return e.name === 'node_modules' ? [] : walk(full);
+        return /\.(tsx?|jsx?)$/.test(e.name) ? [full] : [];
+      });
+    const offenders = walk(path.join(root, 'src'))
+      .map((f) => ({ rel: path.relative(root, f), text: readFileSync(f, 'utf8') }))
+      .filter(({ rel, text }) => !ALLOWED.has(rel) && /^['"]use client['"]/m.test(text.slice(0, 200)))
+      .filter(({ text }) => /^import (?!type )[^;]*from ['"](?:@\/app\/articles|\.{1,2})\/(?:posts|listing)['"]/m.test(text))
+      .map(({ rel }) => rel);
+    expect(offenders).toEqual([]);
+  });
 });

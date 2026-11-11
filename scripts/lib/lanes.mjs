@@ -309,6 +309,7 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/rehost-walled-covers.mjs', reason: 'display: cover URLs moved from walled hosts to the R2 copy of the same page (#5448)' },
   { file: 'scripts/maintenance/seam-repair-6742/lean.mjs', reason: 'repair: minimal edge edits to served page translations at broken page joins, through writePageTranslation with a revision per page and an undo (#6742); no step work, skips held books; nightly cron, stops at the account\'s 60% weekly' },
   { file: 'scripts/maintenance/cover-frame-backfill.mjs', reason: 'display: books.thumbnail_frame (card crop), no step work (#6010); weekly cron' },
+  { file: 'scripts/maintenance/backfill-cover-cards.mjs', reason: 'display: books.image_card, the 500px AVIF cover written to R2 beside the scan, no step work (#4342, #6920); daily cron' },
   { file: 'scripts/maintenance/mark-stale-translations.mjs', reason: 'marker: pages.translation_stale (#4927). Not a lane, but it is ACTUATION — the paid translate lanes read it' },
   { file: 'scripts/maintenance/withhold-stale-translations.mjs', reason: 'marker: withholds a stale page translation from readers' },
   { file: 'scripts/migration/backfill-display-images.mjs', reason: 'display: display image fields' },
@@ -459,6 +460,30 @@ export const RETIRED_PATTERNS = [
   { id: 'single-page-qa', test: /lane-judge-sampler\.mjs[^#]*\bnightly\b|translation-corpus-audit\/monthly-draw|page-integrity-draw\.mjs|convergent-audit-weekly/,
     why: 'QA that never sees a page break: every QA or book check reads paired fifths (#8405, PR #8411)' },
 ];
+
+/**
+ * What SESSIONS READ (docs, skills, commands), as opposed to what RUNS (#8283). RETIRED_PATTERNS are cron-line
+ * shapes; a doc rarely quotes one verbatim, so DOC_RETIRED_EXTRA adds the phrases a doc uses to teach the same
+ * retired approach. A doc matching either list must carry a SUPERSEDED/RETIRED banner near its top.
+ */
+export const DOC_RETIRED_EXTRA = [
+  { id: 'gemini-batch-default', test: /Gemini Batch API|batch-(?:ocr|translate)-async|gemini-3\.1-flash-lite-preview/i,
+    why: 'the paid Gemini Batch API / flash-lite-preview is no longer a route: agy, GPU>agy, Opus, GPU>Opus (docs/routing.md)' },
+];
+
+export const BANNER_WINDOW_LINES = 15;
+const BANNER_RE = /\b(SUPERSEDED|RETIRED)\b/;
+
+/** Ids of the retired patterns a doc's text matches. */
+export function retiredPatternsIn(text) {
+  const t = String(text);
+  return [...RETIRED_PATTERNS, ...DOC_RETIRED_EXTRA].filter((p) => p.test.test(t)).map((p) => p.id);
+}
+
+/** True when a SUPERSEDED/RETIRED banner sits in the first BANNER_WINDOW_LINES lines. */
+export function hasRetiredBanner(text) {
+  return String(text).split('\n').slice(0, BANNER_WINDOW_LINES).some((l) => BANNER_RE.test(l));
+}
 
 const basename = (p) => (p ? String(p).split('/').pop() : null);
 

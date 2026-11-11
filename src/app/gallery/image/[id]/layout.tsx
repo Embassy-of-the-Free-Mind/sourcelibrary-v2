@@ -239,8 +239,10 @@ export async function generateMetadata({
   return {
     title,
     description: `${description.replace(/[.\s]+$/, '')}. From "${attribution}".`,
+    // The image's book is canonical (#3755), the same as reader pages, so
+    // search value goes to the book. A book-less image keeps its own URL.
     alternates: {
-      canonical: `/gallery/image/${urlSafeId}`,
+      canonical: page.book?.slug ? `/book/${page.book.slug}` : `/gallery/image/${urlSafeId}`,
     },
     other: {
       'pinterest-rich-pin': 'true',

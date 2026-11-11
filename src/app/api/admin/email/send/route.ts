@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
+import { tagEmailLinks } from '@/lib/email-utm';
 
 const RESEND_AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
 
@@ -42,7 +43,8 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
       audienceId: RESEND_AUDIENCE_ID,
       from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
       subject: draft.subject,
-      html: draft.html,
+      // Tag our own links so this letter's clicks are countable (src/lib/email-utm.ts).
+      html: tagEmailLinks(draft.html, draft.subject),
     });
 
     if (!broadcast.data?.id) {

@@ -37,6 +37,20 @@ export interface LocalizedCollectionFields {
 }
 
 export type LocalizedBookMap = Partial<Record<Exclude<Locale, 'en'>, LocalizedBookFields>>;
+
+/**
+ * Mongo projection for the part of `books.localized` a book CARD reads:
+ * the title (localizedTitle) and byline (localizedAuthor) in every locale.
+ * Project this, not `localized: 1`, wherever the books are serialised to a
+ * client component. The full object also holds each language's summary and
+ * whole chapter list, which made up 45 KB of the homepage payload (2026-11-10).
+ */
+export const LOCALIZED_CARD_PROJECTION: Record<string, 1> = Object.fromEntries(
+  (['es', 'la', 'nl', 'zh'] satisfies Exclude<Locale, 'en'>[]).flatMap((l) => [
+    [`localized.${l}.title`, 1],
+    [`localized.${l}.author`, 1],
+  ]),
+);
 export type LocalizedCollectionMap = Partial<Record<Exclude<Locale, 'en'>, LocalizedCollectionFields>>;
 
 type BookLike = { title?: string | null; display_title?: string | null; localized?: LocalizedBookMap | null };

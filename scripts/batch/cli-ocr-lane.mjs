@@ -96,7 +96,8 @@
  *   - English it can be re-translated into: only a book routed to latin-cli-agy4. BPH's Latin books have their own row,
  *     and a stale flag on those would queue the paid translate worker (mark-stale-translations.mjs ACTUATION).
  *   - ORDER: `readers` (human_read_count > 0, most-read first), `period` (1501-1700), `rest` (rereadTier); inside a tier, books
- *     with the most English first. --reread-tiers restricts a run. The stale English it leaves is drained by
+ *     with the most English first. --reread-tiers restricts a run. The `rest` tier runs only while no first read waits
+ *     for a book readers opened or requested (REST YIELDS, #8519; readerFirstReadsWaiting). The stale English it leaves is drained by
  *     cli-translate-lane.mjs stale, in the same order.
  *
  * LATIN FIRST (#7263). `latin-first --agy-home=P --max-pages=N --concurrency=C --deadline-min=M [--root=/root/jobs] [--apply]`
@@ -241,7 +242,8 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
+import { REQUEST_MESSAGE, parseRequestUrl } from '../lib/translation-request-eligibility.mjs';
 import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH, OCR_MODEL_AGY } from '../lib/ocr-routing.mjs';
 import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
@@ -396,6 +398,44 @@ export function rereadTier(book) {
 /** Tier, then most-read, then most English (the pages a reader sees the fix in twice), then id. */
 export const byRereadPriority = (a, b) => REREAD_TIERS.indexOf(rereadTier(a)) - REREAD_TIERS.indexOf(rereadTier(b))
   || (b.human_read_count ?? 0) - (a.human_read_count ?? 0) || (b.pages_translated ?? 0) - (a.pages_translated ?? 0) || String(a.id).localeCompare(String(b.id));
+/**
+ * REST YIELDS (#8519, Derek 2026-11-11). The `rest` tier re-reads pages that already have a read, in books nobody has
+ * opened; its quota is better spent on books readers want and cannot read at all. So a re-read whose frame holds the
+ * rest tier checks once at start for FIRST reads waiting: a book readers opened (human_read_count > 0) or requested (an
+ * open "Translation requested" feedback row, reader-request-lane.mjs), in a scheduled agy first-read frame
+ * (visible-unread or finish, firstReadSkip / finishReadSkip, in REST_YIELD_LANGUAGES), with an UNREAD page. While any
+ * wait, the rest tier's books leave the frame; `readers` and `period` keep their place.
+ */
+export const REST_YIELD_LANGUAGES = Object.freeze(['lat', 'deu', 'fra']);   // the first-read cron lines' languages (gex45)
+/** Is this a book readers opened or requested that a first-read frame would read? `requested`: Set of book ids/_ids. */
+export function readerFirstReadBook(book, { requested = new Set() } = {}) {
+  if (!((book?.human_read_count ?? 0) > 0 || requested.has(book?.id) || (book?._id && requested.has(String(book._id))))) return false;
+  return !firstReadSkip(book, { languages: REST_YIELD_LANGUAGES }) || !finishReadSkip(book, { languages: REST_YIELD_LANGUAGES });
+}
+/** { open, why }: may the rest tier run, given the waiting first reads ({ first, books, pages_est })? */
+export function restTierOpen(waiting) {
+  return waiting.first
+    ? { open: false, why: `first reads wait for books readers opened or requested (${waiting.first} first; ~${waiting.pages_est} pages in ${waiting.books} candidate books)` }
+    : { open: true, why: 'no first reads wait for books readers opened or requested' };
+}
+/**
+ * The first reads the rest tier yields to: { first, books, pages_est }. `first` is the first candidate (most-read
+ * first) with an UNREAD page, found page by page; the search stops there (a full page count took 127 s, 2026-11-10).
+ * `books` and `pages_est` (pages_count - pages_ocr) size the candidates for the log.
+ */
+export async function readerFirstReadsWaiting(db) {
+  const rows = await db.collection('feedback').find({ addressed: { $ne: true }, message: REQUEST_MESSAGE }, { projection: { page: 1 } }).toArray();
+  const requested = new Set(rows.map((r) => parseRequestUrl(r.page)?.bookRef).filter(Boolean));
+  const oids = [...requested].filter((r) => /^[0-9a-f]{24}$/i.test(r)).map((r) => ObjectId.createFromHexString(r));
+  const projection = { ...FIRST_READ_PROJECTION, year: 1, human_read_count: 1 };
+  const candidates = await db.collection('books').find({
+    $and: [{ $or: [FIRST_READ_BOOKS, FINISH_READ_BOOKS] }, { $or: [{ human_read_count: { $gt: 0 } }, { id: { $in: [...requested] } }, { _id: { $in: oids } }] }],
+  }, { projection }).toArray();
+  const want = candidates.filter((b) => readerFirstReadBook(b, { requested })).sort(byReaders);
+  let first = null;
+  for (const b of want) if (await db.collection('pages').findOne({ book_id: b.id, ...UNREAD }, { projection: { _id: 1 } })) { first = b.id; break; }
+  return { first, books: want.length, pages_est: want.reduce((s, b) => s + Math.max(0, (b.pages_count ?? 0) - (b.pages_ocr ?? 0)), 0) };
+}
 /** The translation row a re-read Latin book's stale English goes to (scripts/lib/translation-routing-table.json). */
 export const LATIN_TRANSLATE_ROW = 'latin-cli-agy4';
 /** Year from which a page with no script tag is read on the reader's own tag; earlier or undated books need a by-eye verdict. */
@@ -708,12 +748,19 @@ async function correctMain(mode, arg) {
   // A book held for the CLI translation lane (CLI_TRANSLATE_HOLD, #7263) is in the frame too: that lane's OCR-first gate
   // skips a book whose OCR is mostly a Flash-Lite draft, so this lane is the one that can unblock it. Without this, the
   // German and French cli rows of translation-routing-table.json would take those books out of the correction frame.
+  // REST YIELDS (#8519): a quality re-read whose frame holds the rest tier drops it while first reads wait for books
+  // readers want. Not for --finish-first (finishing work) or --book (a named book: reader-request-lane.mjs re-reads one).
+  // A check that fails shuts the rest tier only (fail closed), so readers and period still run.
+  const REST = LATIN && !FINISH && !arg('book') && (!TIERS || TIERS.includes('rest'))
+    ? await readerFirstReadsWaiting(db).then(restTierOpen, (e) => ({ open: false, why: `the first-read check failed (${e.message})` }))
+    : { open: true };
+  if (!REST.open) console.log(`correct: the rest tier yields: ${REST.why}`);
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },
       $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] },
     { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1, ...(LATIN && { year: 1, published: 1, publisher: 1, image_source: 1, human_read_count: 1, pages_translated: 1 }) } },
   ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k)
-      && (!LATIN || (!latinRereadSkip(b, BY_EYE) && (!TIERS || TIERS.includes(rereadTier(b)))))
+      && (!LATIN || (!latinRereadSkip(b, BY_EYE) && (!TIERS || TIERS.includes(rereadTier(b))) && (REST.open || rereadTier(b) !== 'rest')))
       && (!FINISH || finishFirstBook(b)))
     .sort(FINISH ? byFinishFirst : LATIN ? byRereadPriority : (a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
   // A Latin page's print rule (header: LATIN RE-READ); undefined elsewhere, as before. --finish-first: untranslated pages only.
