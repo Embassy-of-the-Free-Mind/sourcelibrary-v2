@@ -171,3 +171,16 @@ export function languagePages() {
   for (let i = 0; i < 4; i++) for (const l of lists) if (l[i]) out.push(l[i]);
   return out;
 }
+
+/** Title pages with text, per saved language, checked by eye (_data/language-hero-pages.json). */
+export function languageHeroPages(): Record<string, string[]> {
+  return dataFile<{ pages: Record<string, string[]> }>('language-hero-pages')?.pages ?? {};
+}
+/** The week's featured language: one with at least ten checked text pages for the hero, in turn. */
+export function featuredLanguage() {
+  const pages = languageHeroPages();
+  const ok = axes().languages.filter((l) => (pages[l.slug]?.length ?? 0) >= 10).sort((a, b) => a.slug.localeCompare(b.slug));
+  if (!ok.length) return null;
+  const l = ok[Math.floor(Date.now() / (7 * 24 * 3600 * 1000)) % ok.length];
+  return { ...l, pages: pages[l.slug] };
+}

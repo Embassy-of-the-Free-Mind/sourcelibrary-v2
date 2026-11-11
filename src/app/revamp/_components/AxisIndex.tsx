@@ -9,10 +9,10 @@ const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
 /** An index page in the Subjects design: plate hero with counts and the featured one, the bar, then picture bands. */
-export default function AxisIndex({ title, intro, counts, tiles, featured, groups, noun, group, how, orders, placeholder, flat = false, switcher, children, wall }: {
+export default function AxisIndex({ title, intro, counts, tiles, featured, groups, noun, group, how, orders, placeholder, flat = false, listOnly = false, switcher, children, wall }: {
   title: string; intro: string; counts: string[]; tiles: string[]; featured: { name: string; href: string } | null;
   groups: (SubjectRow & { narrower: SubjectRow[] })[]; noun: [string, string]; group: [string, string];
-  how: { title: string; items: ReactNode[] }; orders: [string, string][]; placeholder: string; flat?: boolean;
+  how: { title: string; items: ReactNode[] }; orders: [string, string][]; placeholder: string; flat?: boolean; /** Names only: no cards, no view switch. */ listOnly?: boolean;
   /** Prototype: links to compare looks, top right of the hero. */ switcher?: ReactNode; /** Replaces the bands below the hero. */ children?: ReactNode; /** Replaces the picture wall behind the hero. */ wall?: ReactNode;
 }) {
   const total = groups.reduce((s, g) => s + g.narrower.length, 0);
@@ -37,7 +37,7 @@ export default function AxisIndex({ title, intro, counts, tiles, featured, group
         </div>
         <CollectionBars strip live works={total} placeholder={placeholder} scope={`all ${total} ${noun[1]}`} />
       </section>
-      {children ?? <SubjectsBrowser groups={groups} barSearch noun={noun} group={group} how={how} orders={orders} countGroups={false} flat={flat} />}
+      {children ?? <SubjectsBrowser groups={groups} barSearch noun={noun} group={group} how={how} orders={orders} countGroups={false} flat={flat} listOnly={listOnly} />}
     </div>
   );
 }

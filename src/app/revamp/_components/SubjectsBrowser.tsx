@@ -59,17 +59,19 @@ const SUBJECT_HOW = [
  * Built for Subjects; Periods and Languages use it too, with their own words.
  */
 export default function SubjectsBrowser({ groups, barSearch = false, noun = ['subject', 'subjects'], group = ['Broad subject', 'All broad subjects'],
-  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']], countGroups = true, flat = false }: {
+  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']], countGroups = true, flat = false, listOnly = false }: {
   groups: Group[]; barSearch?: boolean; noun?: [string, string]; group?: [string, string];
   how?: { title: string; items: ReactNode[] }; orders?: [string, string][];
   /** Subjects count their broad subjects too; periods, languages and types count only the members. */ countGroups?: boolean;
   /** One list, no bands: every member in a single grid, sorted by size or name. */ flat?: boolean;
+  /** Names only: the list view, with no cards and no view switch. */ listOnly?: boolean;
 }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
   const [order, setOrder] = useState(orders[0][0]);
   const [theme, setTheme] = useState('');
-  const [view, setView] = useState<'bands' | 'list'>('bands');
+  const [viewPick, setView] = useState<'bands' | 'list'>('bands');
+  const view = listOnly ? 'list' : viewPick;
   const [card, setCard] = useState<'side' | 'top'>('side');
   const [open, setOpen] = useState(false); // phone: the menu behind Filters
   // The hero bar sends its words here while typing.
@@ -115,10 +117,10 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
       {/* One toolbar, as on All collections: the count, a menu, then order and view on the right. */}
       <div className={`${TOOLBAR} ${barSearch ? '' : 'mt-6'}`}>
         <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? noun[0] : noun[1]}</span>
-<button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`sm:hidden ${filtersBtn(open)}`}>
+{!(flat && view === 'list') && <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`sm:hidden ${filtersBtn(open)}`}>
           Filters{theme && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">1</span>}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
-        </button>
+        </button>}
         <div className={`${open ? 'flex' : 'hidden'} sm:contents order-last sm:order-none w-full`}>
           {!flat && <SortSelect label={group[0]} value={theme} onChange={setTheme} options={[['', group[1]], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />}
           {view === 'bands' && <span className="sm:hidden"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
@@ -127,10 +129,10 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
           {view === 'bands' && <span className="hidden sm:inline-flex"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
           <SortSelect label="Order" value={order} onChange={setOrder} options={orders} />
-          <div className="flex border border-border-medium" role="group" aria-label="View">
+          {!listOnly && <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={vbtn(view === 'list')}><List className="w-4 h-4" /></button>
-          </div>
+          </div>}
         </div>
       </div>
       <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="md:hidden mt-3 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px]">{howText.title} {how ? '−' : '+'}</button>
