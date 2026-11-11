@@ -73,6 +73,9 @@
  * `engine.input.lane_gate`. `read --instruction-file=F` appends F's text to the prompt; it is kept as
  * prompt-extra.txt and is part of the prompt hashed. (Tried on #6769 with a Hebrew right-column-first rule: G4L then
  * read the left column first on 15/23 two-column pages, against 6/23 without it. Measure an instruction before using it.)
+ * `read --prompt-file=F` (#8567) sends F instead of the live default prompt (same slot filling, same image sentence); the
+ * read dir's prompt-ref.json names the file, with `hash` the md5 a `prompts` row's content_hash would have, so apply's
+ * provenance cites the candidate. It is for testing a prompt version; refused with --correct-prompt or --instruction-file.
  *
  * FIRST READS (#7701, cli-ocr-lane.mjs run --cohort): `apply --lane=ID --first-read-only --print-only` stamps a plain
  * read's `ocr.pipeline` with the lane, writes it only while the page still has no OCR, and only when the read's own
@@ -148,7 +151,7 @@ import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAg
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { strandedLift, STRANDED_WINDOW } from '../lib/stranded-leaf-gate.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
-import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
+import { liveOcrPrompt, fileOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
 import { checkWrittenText, writeGuardReason, correctionHeaderProblem } from '../lib/write-text-guard.mjs';
 import { ocrBlockRefusals } from '../lib/block-page-guard.mjs';
@@ -172,6 +175,11 @@ const LANE = arg('lane');
 const INSTRUCTION_FILE = arg('instruction-file');
 const LANE_GATE_FILE = arg('lane-gate');
 if (STAGE === 'read' && INSTRUCTION_FILE && CORRECT_PROMPT) { console.error('--instruction-file is for a plain read, not --correct-prompt'); process.exit(2); }
+// --prompt-file=F (#8567): F REPLACES the live default prompt for a plain read (a candidate prompt version under test);
+// it is recorded as the prompt, hashed as a `prompts` row is. Not with a correction template or an appended instruction.
+const PROMPT_FILE = arg('prompt-file');
+if (STAGE === 'read' && PROMPT_FILE && CORRECT_PROMPT) { console.error('--prompt-file replaces the live prompt for a plain read; --correct-prompt sends its own file'); process.exit(2); }
+if (STAGE === 'read' && PROMPT_FILE && INSTRUCTION_FILE) { console.error('--prompt-file and --instruction-file: put the instruction in the prompt file'); process.exit(2); }
 if (STAGE === 'apply' && LANE_GATE_FILE && !LANE) { console.error('--lane-gate needs --lane=<id>: the lane the gate was made for and the pages are stamped with'); process.exit(2); }
 const DRAFT_FILE = arg('draft-file');
 if (STAGE === 'read' && DRAFT_FILE && !CORRECT_PROMPT) { console.error('--draft-file is for --correct-prompt'); process.exit(2); }
@@ -269,7 +277,7 @@ if (STAGE === 'read') {
     ref = { id: `correct:${path.basename(CORRECT_PROMPT)}`, name: `correction prompt ${path.basename(CORRECT_PROMPT)}`, version: contentHash(base), lane: LANE };
     fs.writeFileSync(path.join(OUT, 'correct-prompt-template.txt'), base);
   } else {
-    ({ base, ref } = await liveOcrPrompt(db));
+    ({ base, ref } = PROMPT_FILE ? fileOcrPrompt(fs.readFileSync(PROMPT_FILE, 'utf8'), PROMPT_FILE) : await liveOcrPrompt(db));
     fs.writeFileSync(path.join(OUT, 'prompt-base.txt'), base);
   }
   // --instruction-file: text appended after the live prompt (e.g. #6769's right-column-first rule for Hebrew).

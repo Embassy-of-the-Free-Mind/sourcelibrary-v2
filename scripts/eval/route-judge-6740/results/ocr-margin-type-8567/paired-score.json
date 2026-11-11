@@ -1,0 +1,152 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "prompt",
+  "issue": 8567,
+  "stage": "ocr",
+  "languages": [
+   "la",
+   "en",
+   "grc",
+   "zh",
+   "de",
+   "it",
+   "sa"
+  ],
+  "baseline": "live-v19.1",
+  "arms": [
+   "live-v19.1",
+   "cand-v19.2-margin"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "prompt",
+  "router_evidence": "none — a prompt-version test on the live OCR route (agy gemini-3.8-flash-low), not a route comparison; the prompt is shared by every OCR lane",
+  "waive": {
+   "R1": "the brief fixed the pages: Burton (4), Burnet (3), and two pages each of Zhuangzi, Clement, CSEL, Bekker, Thibaut are the pages the member report named; intervals are by book (clusterCI) and per-book counts are reported"
+  },
+  "pass_bar": {
+   "margin_type_right": ">= 0.85 of B's margin notes",
+   "footnote_in_footnote_tag": ">= 0.80 of footnotes/apparatus",
+   "body_defect_pages": "B <= A (a one-page difference is noise at this n)"
+  },
+  "judge": "Opus via claude -p, one PAGE per call: the image and the two arms' reads as X/Y in a seeded random order (the brief's paired design); each side gets its own accept/fidelity/defects row, so the key has one row per arm per page"
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "ocr": {
+     "routes": {
+      "cand-v19.2-margin": {
+       "n": 32,
+       "books": 22,
+       "unjudged": 0,
+       "accept": "26/32",
+       "accept_wilson": [
+        0.647,
+        0.911
+       ],
+       "accept_by_book": [
+        0.656,
+        0.964
+       ],
+       "wrong_text_pages": "11/32",
+       "wrong_text_wilson": [
+        0.204,
+        0.517
+       ],
+       "fidelity_mean": 4.03,
+       "counts": true
+      },
+      "live-v19.1": {
+       "n": 32,
+       "books": 22,
+       "unjudged": 0,
+       "accept": "27/32",
+       "accept_wilson": [
+        0.682,
+        0.931
+       ],
+       "accept_by_book": [
+        0.724,
+        0.944
+       ],
+       "wrong_text_pages": "9/32",
+       "wrong_text_wilson": [
+        0.156,
+        0.454
+       ],
+       "fidelity_mean": 4.06,
+       "counts": true
+      }
+     },
+     "controls": {
+      "cand-v19.2-margin": {
+       "n": 2,
+       "passed": true
+      },
+      "live-v19.1": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 10,
+      "accept_flips": "1/10",
+      "flip_rate": 0.1,
+      "fidelity_abs_diff": 0.1
+     },
+     "against_baseline": {
+      "live-v19.1 -> cand-v19.2-margin": {
+       "shared_pages": 32,
+       "better": "9/32",
+       "worse": "7/32",
+       "accept_gained": 1,
+       "accept_lost": 2,
+       "accept_sign_test_p": 1,
+       "fidelity_diff": -0.03
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "WAIVED: the brief fixed the pages: Burton (4), Burnet (3), and two pages each of Zhuangzi, Clement, CSEL, Bekker, Thibaut are the pages the member report named; intervals are by book (clusterCI) and per-book counts are reported (ocr/cand-v19.2-margin: 7 book(s) with more than one page (6990656f3dc2ed39a49f101f×4, 69e72c60a409200ea79f46f6×2, 69942a51045dfc482ad766f4×2); ocr/live-v19.1: 7 book(s) with more than one page (6990656f3dc2ed39a49f101f×4, 69e72c60a409200ea79f46f6×2, 69942a51045dfc482ad766f4×2))",
+   "waived": true
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque (no packet.json kept; ids only)",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 2 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "10 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}
