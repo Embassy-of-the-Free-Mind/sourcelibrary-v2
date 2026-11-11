@@ -1095,7 +1095,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const titles = [book.title, book.display_title].filter((t): t is string => !!t && t.length >= 8);
     const startsWithTitle = titles.some(t => text.toLowerCase().startsWith(t.toLowerCase().slice(0, Math.min(t.length, 40))));
     if (!startsWithTitle) return text;
-    const m = text.slice(0, 320).match(/\b(?:is|was|are|were|remains|represents|provides|serves|contains|documents|comprises|constitutes)\b\s+/i);
+    // Look for the verb outside brackets and quotes: a translated title in the
+    // gloss ("(Method by which all detected lichens are described)") has verbs
+    // of its own, and cutting at those left "Described) is a ..." as the text.
+    // Masking keeps every index the same, so the cut lands in `text`.
+    const head = text.slice(0, 320).replace(/\([^)]*\)|"[^"]*"|\u201c[^\u201d]*\u201d/g, (g) => ' '.repeat(g.length));
+    const m = head.match(/\b(?:is|was|are|were|remains|represents|provides|serves|contains|documents|comprises|constitutes)\b\s+/i);
     if (!m || m.index === undefined) return text;
     const rest = text.slice(m.index + m[0].length).replace(/^["'“(\s]+/, '');
     if (rest.length < 24) return text;
