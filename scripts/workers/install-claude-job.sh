@@ -39,6 +39,7 @@ dst="${1:-/root/bin/claude-job.sh}"; bin=$(dirname "$dst"); rc=0
 install_one claude-job.sh "$dst" || rc=1
 install_one box-rpc.sh "$bin/box-rpc.sh" || rc=1
 install_one box.sh "$bin/box.sh" || rc=1
+install_one job-ledger.sh "$bin/job-ledger.sh" || rc=1   # the job ledger (#8606)
 # Remote Control launchers (2026-11-09): the always-on server (claude-rc.sh, started by cron where wanted)
 # and phone-visible agent jobs (claude-rc-job.sh). Installing them starts nothing.
 install_one claude-rc.sh "$bin/claude-rc.sh" || rc=1

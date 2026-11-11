@@ -18,6 +18,8 @@
 #   decisions | taken | landings   the last 300 lines of that job ledger
 #   usage                     "USAGE <email> <json>" per Claude login here, read with its own token, never refreshed
 #   put-limits  (stdin)       the climits meter's latest.json, ≤ 64 KB, must parse with an accounts list
+#   brief <name>              that job's brief here (≤ 200 lines): what it was told, its Route/Lands/Dispatched-by lines
+#   ledger                    the last 300 job-ledger records here (job-ledger.sh, #8606): start/done/stopped, who launched it
 #   start <name> (stdin)      start a job from the brief on stdin (≤ 200 KB, with Lands:/PR: header lines).
 #                             Refuses a name already used here, and more than $MESH_MAX_STARTS_PER_HOUR remote starts an hour.
 # Exit codes: 0 ok, 2 bad request, 3 refused, 4 failed.
@@ -41,6 +43,12 @@ case "$verb" in
     log "$verb"; exec "$CJ" "$verb" ;;
   decisions|taken|landings)
     log "$verb"; f="$JD/$verb.txt"; [ -f "$f" ] && tail -n 300 "$f"; exit 0 ;;
+  brief)
+    [[ "$arg" =~ ^[a-z0-9][a-z0-9-]{2,62}$ ]] || die 2 bad "job name must be lowercase letters, digits and dashes"
+    [ -f "$JD/$arg.brief.txt" ] || die 3 refused "no job named $arg here"
+    log "brief $arg"; head -n 200 "$JD/$arg.brief.txt"; exit 0 ;;
+  ledger)
+    log ledger; [ -f "$JD/ledger.jsonl" ] && tail -n 300 "$JD/ledger.jsonl"; exit 0 ;;
   usage)
     # Each Claude login on this box (/root, and every JOB_CLAUDE_HOME dir /root/.claude-*), read with that login's
     # own access token as it stands. Prints "USAGE <email> <usage json>" per login, never a token. Never refreshes:
@@ -95,5 +103,5 @@ PY
     echo "$out"
     if [ $rc -eq 0 ]; then log "start $arg ok"; else log "start $arg failed rc=$rc"; exit 4; fi ;;
   *)
-    die 2 bad "unknown verb '${verb}' (ping where status decisions taken landings usage put-limits start)" ;;
+    die 2 bad "unknown verb '${verb}' (ping where status decisions taken landings brief ledger usage put-limits start)" ;;
 esac

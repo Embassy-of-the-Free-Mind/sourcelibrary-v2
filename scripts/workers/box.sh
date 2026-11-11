@@ -28,6 +28,12 @@ call() {  # $1 box, rest = verb [arg]; stdin passes through
   meshed "$1" || { echo "box.sh: $1 is not in the mesh yet (run scripts/workers/mesh-setup.sh install from the laptop)" >&2; return 3; }
   shift
   if [ ! -t 0 ]; then in=$(mktemp); cat > "$in"; fi
+  # A start carries who sent it (#8606): ssh does not pass the caller's environment, so the job ledger on the far
+  # box could otherwise say only "box-rpc from <box>", never which session or job dispatched it, or why.
+  if [ "${1%% *}" = start ] && [ -n "$in" ]; then
+    printf '\nDispatched-by: %s%s%s at %s\n' "$(self 2>/dev/null || hostname)" "${CLAUDE_CODE_SESSION_ID:+ session $CLAUDE_CODE_SESSION_ID}" \
+      "${JOB_NAME:+ job $JOB_NAME}" "$(date -u +%FT%TZ)" >> "$in"
+  fi
   for try in 1 2 3; do
     ssh -i "$KEY" -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=8 -o ServerAliveInterval=15 \
         -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$KH" \

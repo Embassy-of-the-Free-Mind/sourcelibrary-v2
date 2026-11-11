@@ -631,6 +631,7 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
     land=$(landing_check "$name"); echo "[claude-job] landing: $land" >> "$log"
     # One line per finished job, for the morning digest: ntfy.sh keeps only ~12 h of the topic.
     echo "$(date -u +%FT%TZ) | $HOST | $name | $land" >> "$JD/landings.txt"
+    ledger record done "$name" "$JD/$name.brief.txt"
     case "$land" in
       ok*) ntfy_job low white_check_mark "Job done + landed: $name ($HOST)" "${land#ok }" ;;
       AT-RISK:*) ntfy_job high warning "Job finished, work at risk on the box: $name ($HOST)" "${land#AT-RISK:} — commit and push it from the worktree, or \`claude-job.sh resume $name\`" ;;
@@ -709,6 +710,13 @@ job_state() {
   fi
 }
 
+# The job ledger (#8606): one record per start / done / stop, with who launched it and why, pushed to the ops repo
+# so any box or the phone can answer "where did this job come from?". Best effort: it never fails or delays a job.
+ledger() {
+  local jl; jl="$(dirname "$0")/job-ledger.sh"; [ -f "$jl" ] || jl="$SL/scripts/workers/job-ledger.sh"
+  [ -f "$jl" ] && bash "$jl" "$@" >/dev/null 2>&1; return 0
+}
+
 [ -n "${CLAUDE_JOB_LIB:-}" ] && return 0 2>/dev/null
 case "${1:-status}" in
   start)
@@ -760,6 +768,7 @@ case "${1:-status}" in
     sleep 20  # a job that dies at launch must say so here, not look blank in `status` (#5709)
     if tmux has-session -t "=job-$name" 2>/dev/null || [ -f "$JD/$name.done" ]; then
       echo "started job-$name (tmux) → $LOGD/$name.log"
+      ledger record start "$name" "$JD/$name.brief.txt"
     else echo "job-$name DIED within 20 s:"; tail -5 "$LOGD/$name.log"; exit 4; fi ;;
   resume)
     name="$2"
@@ -786,6 +795,7 @@ case "${1:-status}" in
     rm -f "/tmp/cj-status.$$"
     [ -s "$JD/decisions.txt" ] && { echo "-- decisions for Derek (last 5; all in $JD/decisions.txt):"; tail -5 "$JD/decisions.txt" | cut -c1-200; } ;;
   sweep)  # cron: resume jobs that DIED (heartbeat era only: needs a .hb file), at most twice each
+    ledger flush &   # ledger records a GitHub outage left spooled (#8606)
     for hb in "$JD"/*.hb; do [ -f "$hb" ] || continue; n=$(basename "$hb" .hb)
       tmux has-session -t "=job-$n" 2>/dev/null && continue
       [ -f "$JD/$n.done" ] || [ -f "$JD/$n.stopped" ] && { rm -f "$hb"; continue; }
@@ -816,6 +826,7 @@ case "${1:-status}" in
     printf '[%s] %s\n' "$(date -u +%FT%TZ)" "$3" >> "$JD/$2.inbox"
     if tmux has-session -t "=job-$2" 2>/dev/null; then echo "noted for job-$2 (live)"; else echo "noted for job-$2 (not running; read on resume)"; fi ;;
   stop) touch "$JD/$2.stopped"; tmux kill-session -t "=job-$2" && echo "stopped job-$2"
+    ledger record stopped "$2" "$JD/$2.brief.txt"
     cp=$(checkpoint "$2" stopped); [ -n "$cp" ] && echo "work checkpointed to $cp" ;;
   _reap) reap_if_clean "$2"; tail -1 "$LOGD/$2.log" ;;  # test/one-off: apply the reap rule to one job
   _land) landing_check "$2" ;;  # test/one-off: would this job count as landed?

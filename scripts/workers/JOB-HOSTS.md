@@ -58,6 +58,16 @@ Each box is logged into a different Claude account (main: milolomas200921@gmail.
 
 An account with no box of its own (milolomas200921@gmail.com, added 2026-10-26) can share gex45. It gets its own config dir, logged in once by hand with `CLAUDE_CONFIG_DIR=/root/.claude-milo claude`. To start a job on that login, run `JOB_CLAUDE_HOME=/root/.claude-milo claude-job.sh start <name> <brief>`. The dir is recorded in `<name>.claude-home` beside the brief, so `resume` and `sweep` keep the job on the same login. The weekly-limit check reads that login's account too. Jobs started without it use the box's own login, as before. The spare lane is not affected.
 
+## The job ledger: who launched what, and why (#8606)
+
+Every `claude-job.sh` start, DONE and stop writes one record: the job, its box, Lands, Route, the brief's `WHY:` and hash, and who launched it. The launcher is `via` (box-rpc, ssh or local), `from_box` and the dispatching session. Records go to the private ops repo, `jobs/ledger/YYYY-MM/<ts>_<box>_<job>_<event>.json`, one file each so two boxes never conflict. A record waits in `$JD/ledger-spool` until its push lands, and `sweep` retries. GitHub is the store every box and the phone can reach with the laptop off.
+
+- `job-ledger.sh show [days]`: every box's records, newest first.
+- `job-ledger.sh why <job>`: one job's start, with its launcher, route and why.
+- `box.sh <box> ledger` / `box.sh <box> brief <job>`: that box's local records, and what the job was told.
+
+ssh does not carry the caller's environment, so `box.sh … start` appends a `Dispatched-by: <box> session <id> job <name>` line to the brief. **Start jobs on another box through `box.sh <box> start`, never a root ssh.** A root ssh is logged only as `ssh from <box>`, with no session.
+
 ## Placing a job: ask before you start
 
 ```
@@ -95,6 +105,8 @@ Route: none — eval only, no production writes
 ```
 
 `start` refuses such a brief with exit 8 when the line is missing, or when it is a bare model name. The check is `scripts/workers/brief-route-check.sh <brief>`, and you can run it on a draft brief. Why it is a check: on 10-28 and again on 10-29 an OCR job was dispatched on a model picked by habit. Both times Derek asked "is the router being used?"
+
+**A translation Route must match the live router (#8606).** The router-table files are dated evals. `scripts/lib/translation-routing-table.json` is what the pipeline routes by today. When a translation Route names one engine (Claude, agy or Flash-Lite) and the live table's row for that language names another, `start` refuses. On 2026-11-11, `kangyur-finish-8482` cited the 10-27 Tibetan table and ran Opus, while #8596 had moved Tibetan to agy that same day. To differ on purpose, say why on the Route line: `… → opus-cli 27/30 (override: <why>)`. A Route that defers to the table per book is not checked.
 
 **A fourth line for a job that reads pages against their images: `Checks:` (#8069).** It says where the verdicts go, so they outlive the job's scratch folder: a method id whose rows reach `book_checks` (`recordPageVerdicts()` in `scripts/lib/book-checks.mjs`, one method file in `scripts/eval/methods/`), or `none` with a reason. `start` prints a warning when it is missing and never refuses.
 
