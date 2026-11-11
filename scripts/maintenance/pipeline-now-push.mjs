@@ -40,7 +40,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { redact } from './work-board-push.mjs';
-import { cronRowFor, judgeCronLine } from '../lib/lanes.mjs';
+import { cronRowFor, judgeCronLine, judgeStops, STOP_ROWS } from '../lib/lanes.mjs';
 import { windowOf, ocrStageWindows, GPU_DRAFT_LANE_RE, ARMC_LANE, evaluateStalls, edgesToPage, recordPaged, pageText, WINDOW_HOURS } from '../lib/hand-off-stalls.mjs';
 
 export const COLLECTION = 'ops_reports';
@@ -322,7 +322,121 @@ export async function collectBox({ box, now = new Date(), laneTotals = null }) {
   return {
     _id: `${TYPE}:${box}`, type: TYPE, box, host: os.hostname(), generated_at: now.toISOString(),
     lines, lanes: laneStates(), gpu_queue: gpuQueue(), agy_pools: await agyPools(),
+    stops: collectBoxStops(box, now),
   };
+}
+
+// ───────────────────────────────────────────── stops (#8283, Phase 1 item 1 of #5302): discovery is read-only
+
+/**
+ * Where a lane or job parks a STOP* file. Explicit and small on purpose: a filesystem-wide find would also report
+ * every STOP that is a program's own state. Add a root when a lane gets a STOP switch. `*` is one path segment.
+ */
+export const STOP_GLOBS = Object.freeze([
+  '/mnt/HC_Volume_105839809/*/STOP*',
+  '/root/*/STOP*',
+  '/root/ft-batches/*/STOP*',
+  '/root/gpu-backlog-*/*/STOP*',
+]);
+export const ROUTES_TSV = '/root/bin/ocr-filler-routes.tsv';
+
+/** Expand a glob whose only wildcard is `*` within a segment. `fsApi` is injectable for tests. */
+export function expandGlob(pattern, fsApi = fs) {
+  let paths = ['/'];
+  for (const seg of pattern.split('/').filter(Boolean)) {
+    const next = [];
+    for (const base of paths) {
+      if (!seg.includes('*')) { next.push(path.join(base, seg)); continue; }
+      const re = new RegExp(`^${seg.split('*').map((x) => x.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*')}$`);
+      let names = [];
+      try { names = fsApi.readdirSync(base); } catch { /* unreadable root: nothing there */ }
+      for (const n of names) if (re.test(n)) next.push(path.join(base, n));
+    }
+    paths = next;
+  }
+  return paths.filter((p) => { try { return fsApi.statSync(p).isFile(); } catch { return false; } });
+}
+
+/** The STOP files that exist under STOP_GLOBS, deduplicated by real path (a symlinked job dir is one stop). */
+export function discoverStopFiles(box, { globs = STOP_GLOBS, fsApi = fs } = {}) {
+  const seen = new Map();
+  for (const g of globs) for (const p of expandGlob(g, fsApi)) {
+    let real = p;
+    try { real = fsApi.realpathSync(p); } catch { /* keep the given path */ }
+    if (seen.has(real)) continue;
+    let detail = '', at = null;
+    try {
+      detail = redact(String(fsApi.readFileSync(real, 'utf8')).trim().split('\n')[0] ?? '', 140);
+      at = fsApi.statSync(real).mtime.toISOString().slice(0, 10);
+    } catch { /* unreadable: keep the path */ }
+    seen.set(real, { kind: 'stop-file', box, key: p, detail: detail || '(empty file)', set_at: at, scope: null });
+  }
+  return [...seen.values()];
+}
+
+/** Routes switched off in ocr-filler-routes.tsv: a first column of `off` or `-`. Comment lines are not routes. */
+export function parseRoutesOff(text, box) {
+  const out = [];
+  for (const line of String(text).split('\n')) {
+    if (!line.trim() || line.startsWith('#')) continue;
+    const [on, route, kind, issue] = line.split('\t');
+    if (!route || !['off', '-'].includes(on.trim())) continue;
+    out.push({ kind: 'route-off', box, key: route.trim(), detail: `${kind ?? 'route'} · issue ${issue ?? '?'}`, set_at: null, scope: null });
+  }
+  return out;
+}
+
+/** The directory a stop-file row lives in (up to the first `*`), to tell "stop gone" from "volume not mounted". */
+const rowRoot = (r) => (r.match.path ? r.match.path.split('*')[0].replace(/\/[^/]*$/, '') : null);
+
+/** Rows this box can judge STALE: stop-file rows whose directory is readable, route-off rows when the tsv was read. */
+export function readableRows(rows, { fsApi = fs, routesRead = false } = {}) {
+  return rows.filter((r) => (r.kind === 'stop-file' ? !!rowRoot(r) && fsApi.existsSync(rowRoot(r)) : r.kind === 'route-off' && routesRead));
+}
+
+/** Hold reasons from the newest pipeline_next_daily report's `held` array, one per reason (books and pages summed). */
+export function holdStops(report) {
+  const by = new Map();
+  for (const h of report?.held ?? []) {
+    const e = by.get(h.reason) ?? { kind: 'hold-reason', box: 'corpus', key: h.reason, detail: `issue ${h.issue ?? 'none'}`, set_at: null, scope: { books: 0, pages: 0 } };
+    e.scope.books += h.all?.books ?? 0;
+    e.scope.pages += h.all?.pages ?? 0;
+    by.set(h.reason, e);
+  }
+  return [...by.values()];
+}
+
+/** Quality gates whose verdict is NO-GO. */
+export const noGoGates = (gates) => (gates ?? []).filter((g) => (g.verdict ?? g.decision) === 'NO-GO')
+  .map((g) => {
+    const id = g.id ?? String(g._id);
+    const at = g.created_at ?? g.at ?? gateTime(id);
+    const books = g.window?.books ?? g.books ?? null;
+    return { kind: 'quality-gate', box: 'corpus', key: id, detail: `${g.step ?? '?'} step`, set_at: at ? String(at instanceof Date ? at.toISOString() : at).slice(0, 10) : null, scope: books != null ? { books, pages: null } : null };
+  });
+
+/** Stops of one box, judged. Reads only; a box without the tsv or the mounted volume does not call its rows stale. */
+export function collectBoxStops(box, now = new Date()) {
+  let routes = [], routesRead = false;
+  try { routes = parseRoutesOff(fs.readFileSync(ROUTES_TSV, 'utf8'), box); routesRead = true; } catch { /* not a GPU box */ }
+  const found = [...discoverStopFiles(box), ...routes];
+  return judgeStops(found, { box, judged: ['stop-file', 'route-off'], now, rows: readableRows(STOP_ROWS, { routesRead }) });
+}
+
+/** Corpus stops: every hold reason and NO-GO gate. A source that could not be read judges nothing (unknown, not clear). */
+export function collectCorpusStops(report, gates, now = new Date()) {
+  const judged = [];
+  if (report) judged.push('hold-reason');
+  if (gates) judged.push('quality-gate');
+  return judgeStops([...(report ? holdStops(report) : []), ...(gates ? noGoGates(gates) : [])], { box: 'corpus', judged, now });
+}
+
+/** Flagged stops across docs, unowned first, for the digest line. */
+export function flaggedStops(docs) {
+  const all = [];
+  for (const d of docs) for (const s of d.stops ?? []) if (s.flags?.length) all.push({ ...s, doc: d.box });
+  const rank = (s) => (s.flags.some((f) => f.flag === 'NO OWNER') ? 0 : 1);
+  return all.sort((a, b) => rank(a) - rank(b));
 }
 
 // ───────────────────────────────────────────── corpus (main)
@@ -445,6 +559,9 @@ export async function collectCorpus(db, now = new Date()) {
   dropStages(!ocrWin, 'gpu_draft', 'armc_correct');
   dropStages(!bookRows, 'translate', 'enrich');
   dropStages(!ft, 'ft_search', 'ft_ingest');
+  // Holds: reuse the newest daily report's `held` array (reason, issue, books, pages); no book rescan.
+  const nextReport = await safe('pipeline_next_daily', () => db.collection('ops_reports').find({ type: 'pipeline_next_daily' }, { projection: { held: 1 } }).sort({ _id: -1 }).limit(1).next());
+  const stops = collectCorpusStops(nextReport?.held ? nextReport : null, gates, now);
   const previous = (await db.collection(COLLECTION).findOne({ _id: `${TYPE}:corpus` }, { projection: { stalls: 1 } }).catch(() => null))?.stalls ?? [];
   const stalls = recordPaged(evaluateStalls(counts.windows), previous, [], now);
   return {
@@ -456,6 +573,7 @@ export async function collectCorpus(db, now = new Date()) {
     handoffs_per_day: counts?.per_day ?? null,
     handoff_windows: counts?.windows ?? null,
     stalls,
+    stops,
     errors,
   };
 }

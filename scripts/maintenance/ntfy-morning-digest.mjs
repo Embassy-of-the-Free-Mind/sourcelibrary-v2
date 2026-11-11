@@ -176,6 +176,13 @@ export function formatDigest(d) {
   if (h?.error) L.push(un('tier:hold PRs', h.error));
   else L.push(`tier:hold PRs waiting: ${h.length} ${GH}/pulls?q=is%3Aopen+label%3Atier%3Ahold`);
 
+  // Stops (#8283, STOP_ROWS): omitted when the caller has no `stops` key; an unreadable read says so.
+  if (d.stops?.error) L.push(un('Stops', d.stops.error));
+  else if (d.stops) {
+    const s = d.stops;
+    L.push(s.length ? `Stops: ${s.length} past review / unowned: ${list(s.map((x) => `${x.key.split('/').slice(-2).join('/')}${x.issue ? ` #${x.issue}` : ' NO OWNER'}`), 3)} https://sourcelibrary.org/admin/pipeline/now` : 'Stops: every stop has an owner and is in date');
+  }
+
   if (L.length > MAX_BODY_LINES) return [...L.slice(0, MAX_BODY_LINES - 1), '…(cut at 15 lines)'].join('\n');
   return L.join('\n');
 }
@@ -246,6 +253,15 @@ function readWaiters() {
     .map((a) => path.basename(a.split(/\s+/)[1]));
 }
 
+/** Stops the pipeline-now reports flag (unregistered / unowned / past review / stale), stop-files and gates before holds. */
+async function readStops(db) {
+  if (!db) throw new Error('no db');
+  const docs = await db.collection('ops_reports').find({ type: 'pipeline-now' }, { projection: { stops: 1 } }).toArray();
+  const bad = new Set(['UNREGISTERED', 'NO OWNER', 'PAST REVIEW', 'STALE ROW']);
+  const flagged = docs.flatMap((x) => x.stops ?? []).filter((s) => s.flags?.some((f) => bad.has(f.flag)));
+  return flagged.sort((a, b) => Number(a.kind === 'hold-reason') - Number(b.kind === 'hold-reason'));
+}
+
 function readHolds() {
   return JSON.parse(sh('gh', ['pr', 'list', '--repo', REPO, '--label', 'tier:hold', '--state', 'open', '--limit', '200', '--json', 'number']));
 }
@@ -281,6 +297,7 @@ async function main() {
     stuck: await settle(readStuck),
     waiters: await settle(readWaiters),
     holds: await settle(readHolds),
+    stops: await settle(() => readStops(db)),
   };
   if (client) await client.close().catch(() => {});
 

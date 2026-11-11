@@ -31,6 +31,13 @@ export interface CronLine {
   registry?: { id: string; status: string; issue: number | null; route: string | null; review_by: string | null; open: string | null } | null;
   red?: { flag: string; why: string }[];
 }
+/** One stop judged against STOP_ROWS (scripts/lib/lanes.mjs judgeStops, #8283). */
+export interface StopItem {
+  id: string; kind: 'stop-file' | 'route-off' | 'hold-reason' | 'quality-gate'; box: string; key: string;
+  issue: number | null; why: string | null; set_at: string | null; review_by: string | null;
+  scope: { books: number | null; pages: number | null } | null; detail: string | null;
+  flags: { flag: string; why: string }[];
+}
 export interface AgyPool { pool: string; busy: boolean; weekly: number | null; weekly_reset: string | null; five_hour: number | null; five_hour_reset: string | null }
 export interface LaneState {
   lane: string; stopped: boolean; state_at: string | null; written_total?: number | null; spot_at?: number | null;
@@ -40,6 +47,8 @@ export interface BoxDoc {
   _id: string; box: string; generated_at: string; lines: CronLine[]; lanes: LaneState[];
   gpu_queue: { pending: number; next: string[]; held: number; lock: string | null } | null;
   agy_pools: AgyPool[] | null;
+  /** Absent on a box running an older pusher. */
+  stops?: StopItem[];
 }
 export interface DayRow { day: string; lane: string; model: string; pages: number }
 export interface CorpusDoc {
@@ -47,6 +56,7 @@ export interface CorpusDoc {
   dial: { paused: boolean | null; daily_budget_usd: number | null } | null;
   quality_gates: { id: string; step: string | null; verdict: string | null; window: string | null; books: number | null; at: string | null }[];
   translated_per_day: DayRow[] | null; ocr_per_day: DayRow[] | null; errors: string[];
+  stops?: StopItem[];
   /** Hand-off stalls (#8482 part C); absent on a document pushed before it existed. */
   stalls?: { edge: string; label: string; stalled: boolean; unknown: boolean; upstream_prev72h: number | null; downstream_last24h: number | null; queue: number | null; last_paged_at: string | null }[];
   handoffs_per_day?: { day: string; gpu_draft: number; armc_correct: number; translated_pages: number; translate_books: number; enrich_books: number; ft_search: number; ft_ingest: number }[] | null;
@@ -113,6 +123,20 @@ export function linesByStage(lines: CronLine[]): { stage: Stage; lines: CronLine
 /** Every red cron line across the boxes (#8283), boxes in page order. */
 export function redLines(boxes: PipelineNow['boxes']): { box: string; line: CronLine }[] {
   return boxes.flatMap(({ box, doc }) => (doc?.lines ?? []).filter(l => l.red?.length).map(line => ({ box, line })));
+}
+
+/**
+ * Every stop the box and corpus documents report (#8283, STOP_ROWS), flagged ones first and unowned before the rest,
+ * then by review date. Hold reasons are many and mostly in date: the page lists only the flagged ones plus every
+ * stop-file, route-off and gate, and counts the clean holds.
+ */
+export function allStops(data: PipelineNow): { shown: StopItem[]; cleanHolds: number } {
+  const docs: { stops?: StopItem[] }[] = [...data.boxes.map(b => b.doc ?? {}), data.corpus ?? {}];
+  const all = docs.flatMap(d => d.stops ?? []);
+  const rank = (s: StopItem) => (s.flags.some(f => f.flag === 'NO OWNER') ? 0 : s.flags.length ? 1 : 2);
+  const shown = all.filter(s => s.kind !== 'hold-reason' || s.flags.length)
+    .sort((a, b) => rank(a) - rank(b) || (a.review_by ?? '').localeCompare(b.review_by ?? ''));
+  return { shown, cleanHolds: all.filter(s => s.kind === 'hold-reason' && !s.flags.length).length };
 }
 
 /** Pages per lane × model over the window: total and one count per UTC day (oldest first; the last day is partial). */
