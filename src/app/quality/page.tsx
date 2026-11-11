@@ -4,6 +4,7 @@ import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
 import servedDraw from '../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../scripts/eval/confidence-7866/results/served-grades.json';
+import bookGradesData from '../../../scripts/eval/confidence-7866/results/book-grades.json';
 import judgeCal from '../../../scripts/eval/judge-cal-7866bar-7263/results/score.json';
 import threeWay from '../../../scripts/eval/judge-cal-7866bar-7263/results/three-way.json';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
 };
 
 const RECORD = '/quality/record';
+const BLOB = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/';
+const BOOK_GRADES_FILE = 'scripts/eval/confidence-7866/results/book-grades.json';
 const pct = (v: number) => `${Math.round(v * 100)}%`;
 const n = (v: number) => v.toLocaleString('en-US');
 const one = (v: number) => v.toFixed(1);
@@ -125,12 +128,110 @@ const examples = EXAMPLE_PICKS.map(([k, prefix]) => {
   return c?.examples.find(x => x.quote.startsWith(prefix)) ?? null;
 }).filter((e): e is NonNullable<typeof e> => e != null);
 
+/** The blind re-read of the reviewer's `misleads` flags: how many were read again, and how many were not errors. */
+const misleadsRow = (servedGrades.reread.note as unknown as { misleads: Record<string, number> }).misleads;
+const misleadsReread = { total: Object.values(misleadsRow).reduce((a, x) => a + x, 0), none: misleadsRow.none };
+
+/* ── book grades (#7933) ──
+   The same 800 verdicts, five pages a book, graded by meaning-changing errors per 1,000 words rather than by each
+   page's worst fault, and cut by print or manuscript, language and date (scripts/eval/confidence-7866/book-grades.mjs).
+   Cells with fewer than three books are left out of that file. */
+
+type GradeKey = 'A' | 'B' | 'C' | 'D';
+type GradeShare = { books: number; share: number; ci95: [number, number] };
+type GradeCell = { books: number } & Record<GradeKey, GradeShare>;
+const bookGrades = bookGradesData as unknown as {
+  books: number;
+  pages: number;
+  form_sources: Record<string, number>;
+  rule: Record<GradeKey, string>;
+  overall: GradeCell;
+  by_form: (GradeCell & { form: string })[];
+  by_language_form: (GradeCell & { language: string; form: string })[];
+  by_year_form: (GradeCell & { years: string; form: string })[];
+  book_list: { language: string; form: string; year: number | null }[];
+};
+const GRADE_KEYS: GradeKey[] = ['A', 'B', 'C', 'D'];
+/** What a reader can do with a book of each grade. */
+const BOOK_CAN: Record<GradeKey, string> = {
+  A: 'Read it and quote it. Check the scan for a line your argument rests on.',
+  B: 'Read it for the sense. Check the scan before you quote a line.',
+  C: 'Use it to find what the book says and where. Read the scan for the wording.',
+  D: 'Read it beside the scan: at least one of the pages we checked carries text from elsewhere or misses most of the page.',
+};
+const FORM_COLS = ['print', 'manuscript'] as const;
+type FormCol = (typeof FORM_COLS)[number];
+const formCell = (form: string) => bookGrades.by_form.find(r => r.form === form);
+/** Grade A or B: at most five meaning-changing errors per 1,000 words, every page the right page. */
+const goodShare = (c: GradeCell | undefined) => (c ? c.A.share + c.B.share : 0);
+/** Languages with a print or a manuscript cell, most books first. */
+const bookLanguages = [...new Set(bookGrades.by_language_form.map(r => r.language))]
+  .map(language => ({
+    language,
+    cells: Object.fromEntries(
+      FORM_COLS.map(f => [f, bookGrades.by_language_form.find(r => r.language === language && r.form === f)]),
+    ) as Record<FormCol, GradeCell | undefined>,
+  }))
+  .sort((a, b) => FORM_COLS.reduce((t, f) => t + (b.cells[f]?.books ?? 0) - (a.cells[f]?.books ?? 0), 0));
+const YEAR_ROWS: [string, string][] = [
+  ['before 1501', 'Before 1501'],
+  ['1501–1600', '1501–1600'],
+  ['1601–1800', '1601–1800'],
+  ['after 1800', 'After 1800'],
+  ['unknown', 'Date not recorded'],
+];
+const yearCell = (years: string, form: string) => bookGrades.by_year_form.find(r => r.years === years && r.form === form);
+const booksWhere = (f: (b: (typeof bookGrades.book_list)[number]) => boolean) => bookGrades.book_list.filter(f).length;
+const msBooks = formCell('manuscript')?.books ?? 0;
+const msChinese = booksWhere(b => b.form === 'manuscript' && b.language === 'Chinese');
+const msUndated = booksWhere(b => b.form === 'manuscript' && b.year == null);
+
 /* ── bits ── */
 
 const LINK = 'text-amber-800 hover:underline underline-offset-2';
 
 function A({ href, children }: { href: string; children: ReactNode }) {
   return <a href={href} className={LINK}>{children}</a>;
+}
+
+const th = 'text-left font-semibold text-stone-500 text-xs uppercase tracking-wider px-3 py-2 border-b border-stone-300 align-bottom';
+const td = 'px-3 py-2 border-b border-stone-200 align-top tabular-nums';
+
+function Sub({ children }: { children: ReactNode }) {
+  return <h3 className="font-serif text-xl text-stone-900 mt-8 mb-3">{children}</h3>;
+}
+
+function Source({ children }: { children: ReactNode }) {
+  return <p className="text-xs text-stone-500 mt-2 mb-4">{children}</p>;
+}
+
+/** A weighted share with its 95% interval, as the grade table prints it. */
+function ShareCI({ s }: { s: { share: number; ci95: [number, number] } }) {
+  const p = (v: number) => (v > 0 && v < 0.05 ? `${(v * 100).toFixed(1)}%` : pct(v));
+  return (
+    <>
+      <b className="text-stone-900">{p(s.share)}</b>{' '}
+      <span className="text-stone-500 text-xs whitespace-nowrap">({p(s.ci95[0])}–{p(s.ci95[1])})</span>
+    </>
+  );
+}
+
+/** One cell's four book grades on a line, with its number of books; a cell under three books says so. */
+function GradeLine({ c }: { c: GradeCell | undefined }) {
+  if (!c) return <span className="text-stone-400">fewer than 3 books</span>;
+  return (
+    <>
+      {GRADE_KEYS.map((k, i) => (
+        <span key={k} className="whitespace-nowrap">
+          {i > 0 && ' · '}
+          {k} <b className="text-stone-900">{pct(c[k].share)}</b>
+        </span>
+      ))}
+      <span className="block text-xs text-stone-500 mt-1">
+        {c.books} books · A or B {pct(goodShare(c))}
+      </span>
+    </>
+  );
 }
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -277,6 +378,132 @@ export default function QualityCenterPage() {
   return (
     <ContentPageLayout header={<><SiteHeader variant="light" /><Header /></>} bg="bg-cream">
       <article className="max-w-3xl font-body text-stone-700 leading-relaxed">
+        <Section id="books" title="Book by book">
+          <p className="mb-4">
+            {pct(goodShare(bookGrades.overall))} of the transcribed books here have at most five errors that change the
+            sense in every 1,000 words, and {pct(bookGrades.overall.A.share)} have at most one. Printed books do better than
+            manuscripts: {pct(goodShare(formCell('print')))} against {pct(goodShare(formCell('manuscript')))}.
+          </p>
+          <p className="mb-4">
+            The grade is for the whole book, from the five pages we checked in it: the reviewer&rsquo;s errors that change
+            the sense, counted per 1,000 words (for Chinese and Korean, one and a half characters to a word; for Tibetan,
+            syllables). A book is D when any of its five pages is another page&rsquo;s text or mostly wrong. The reviewer
+            errs both ways (see <a href="#trust" className={LINK}>how far to trust these figures</a>), so a book can sit a
+            grade too low or a grade too high.
+          </p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 mb-1">
+            <table className="min-w-[760px] w-full text-sm text-stone-700">
+              <caption className="sr-only">Share of books in each grade, weighted back to the library, with 95% intervals</caption>
+              <thead>
+                <tr>
+                  <th className={th}>Grade: what you can do with the book</th>
+                  <th className={th}>What the reviewer found on its five pages</th>
+                  <th className={th}>All books ({bookGrades.overall.books})</th>
+                  {FORM_COLS.map(f => (
+                    <th key={f} className={th}>{f === 'print' ? 'Print' : 'Manuscript'} ({formCell(f)?.books ?? 0})</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {GRADE_KEYS.map(k => (
+                  <tr key={k}>
+                    <td className={`${td} w-[32%]`}>
+                      <b className="font-serif text-lg text-stone-900 mr-2">{k}</b>
+                      <span className="text-stone-900">{BOOK_CAN[k]}</span>
+                    </td>
+                    <td className={`${td} w-[26%]`}>{bookGrades.rule[k].charAt(0).toUpperCase()}{bookGrades.rule[k].slice(1)}</td>
+                    <td className={td}><ShareCI s={bookGrades.overall[k]} /></td>
+                    {FORM_COLS.map(f => {
+                      const c = formCell(f);
+                      return <td key={f} className={td}>{c ? <ShareCI s={c[k]} /> : '–'}</td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <A href={`${BLOB}${BOOK_GRADES_FILE}`}>book-grades.json</A>, built by{' '}
+            <A href={`${BLOB}scripts/eval/confidence-7866/book-grades.mjs`}>book-grades.mjs</A> from the same{' '}
+            {n(bookGrades.pages)} verdicts as <A href={RECORD}>the record</A>. Shares are weighted back to the library; the
+            interval is a bootstrap over books. Print or manuscript is the reviewer&rsquo;s record of each page&rsquo;s
+            script, and, for the {bookGrades.form_sources['by eye']} books it did not record, our reading of one page image (
+            <A href={`${BLOB}scripts/eval/confidence-7866/forms-by-eye.json`}>forms-by-eye.json</A>).
+          </Source>
+
+          <Sub>Books by language, print and manuscript</Sub>
+          <p className="mb-3">
+            The same {bookGrades.books} books, by language and by whether the book is printed or written by hand. Most of
+            the manuscripts in the draw are Chinese ({msChinese} of {msBooks}), so the manuscript column is largely a
+            reading of Chinese manuscripts. A cell is shown when it holds at least three books; with three, one book is a
+            third of the cell, so read those as a few books, not as a language.
+          </p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[640px] w-full text-sm text-stone-700">
+              <caption className="sr-only">Share of books in each grade by language, for printed books and manuscripts</caption>
+              <thead>
+                <tr>
+                  <th className={th}>Language</th>
+                  <th className={th}>Print</th>
+                  <th className={th}>Manuscript</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookLanguages.map(r => (
+                  <tr key={r.language}>
+                    <td className={`${td} font-semibold text-stone-900 w-[20%]`}>{r.language}</td>
+                    {FORM_COLS.map(f => (
+                      <td key={f} className={td}><GradeLine c={r.cells[f]} /></td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <code>by_language_form</code> in book-grades.json, with a 95% interval for every share. Languages with fewer
+            than three books in both columns are left out here and counted in every figure above. The draw was stratified
+            by our confidence in each book, not by language or form.
+          </Source>
+
+          <Sub>Books by date</Sub>
+          <p className="mb-3">
+            Among printed books the grade rises with the date. Grade A or B: {pct(goodShare(yearCell('before 1501', 'print')))}{' '}
+            of books printed before 1501, {pct(goodShare(yearCell('1501–1600', 'print')))} of those printed 1501–1600,{' '}
+            {pct(goodShare(yearCell('1601–1800', 'print')))} for 1601–1800 and {pct(goodShare(yearCell('after 1800', 'print')))}{' '}
+            after 1800. Our catalogue records no date for {msUndated} of the {msBooks} manuscripts, and {msChinese} of them
+            are Chinese, so the manuscripts cannot yet be cut by date or read as more than a reading of Chinese
+            manuscripts.
+          </p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[640px] w-full text-sm text-stone-700">
+              <caption className="sr-only">Share of books in each grade by date, for printed books and manuscripts</caption>
+              <thead>
+                <tr>
+                  <th className={th}>Date</th>
+                  <th className={th}>Print</th>
+                  <th className={th}>Manuscript</th>
+                </tr>
+              </thead>
+              <tbody>
+                {YEAR_ROWS.filter(([k]) => FORM_COLS.some(f => yearCell(k, f))).map(([k, label]) => (
+                  <tr key={k}>
+                    <td className={`${td} font-semibold text-stone-900 w-[20%]`}>{label}</td>
+                    {FORM_COLS.map(f => (
+                      <td key={f} className={td}><GradeLine c={yearCell(k, f)} /></td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <code>by_year_form</code> in book-grades.json. The date is the first year in the book&rsquo;s catalogue entry.
+            The early printed books fail mostly on gothic letter-forms and the abbreviations early printers used, which the
+            reading expands into the wrong whole word; <A href={RECORD}>the record</A> has the instances.
+          </Source>
+        </Section>
+
         <Section id="archive" title="Beside the Internet Archive’s OCR">
           <p className="mb-4">
             Many of our books come from the Internet Archive, which publishes its own machine reading with every scan.
@@ -329,10 +556,11 @@ export default function QualityCenterPage() {
           </p>
         </Section>
 
-        <Section id="stands" title="Page by page">
+        <Section id="stands" title="Page by page: the worst fault on each page">
           <p className="mb-4">
-            A page is counted clean only if nothing on it changes the sense, so a single misread word on a page of 300
-            words moves it down a band. Measured that strictly, this is how the library&rsquo;s pages fall:
+            The book grades above are built from page verdicts. A page on its own is counted clean only if nothing on it
+            changes the sense, so a single misread word on a page of 300 words moves it down a band. Measured that
+            strictly, this is how the library&rsquo;s pages fall:
           </p>
           <div className="flex h-10 w-full overflow-hidden rounded-sm mb-4" role="img" aria-label={BANDS.map(x => `${x.label}: ${pct(x.share)}`).join('; ')}>
             {BANDS.map(x => (
@@ -361,7 +589,7 @@ export default function QualityCenterPage() {
           </p>
         </Section>
 
-        <Section id="by-language" title="By language">
+        <Section id="by-language" title="Page by page: by language">
           <p className="mb-5">
             The script matters more than anything else. English and Russian print come out below the typed-edition rate
             ({one(humanPer1k.per_1k)} per 1,000 words, on easier pages). Latin, German, French, Chinese and Tibetan sit in between. Greek, Sanskrit and Korean have the
@@ -392,7 +620,7 @@ export default function QualityCenterPage() {
           </ul>
         </Section>
 
-        <Section id="by-period" title="By period of printing">
+        <Section id="by-period" title="Page by page: by period of printing">
           <p className="mb-5">
             Books printed after 1600 come out alike, with about half to two thirds of pages clean. The earliest books are
             the hardest: on the {PERIOD_ROWS[0]?.books ?? 0} books from before 1500 in the draw, in Greek, Latin, Arabic and
@@ -460,7 +688,9 @@ export default function QualityCenterPage() {
               <b className="text-stone-900">It over-flags.</b> When a second reviewer re-read its flags, enough fell away to
               raise the share of pages with nothing that changes the sense from{' '}
               {pct(servedGrades.buckets.says_what_the_page_says.share)} to{' '}
-              {pct(servedGrades.reread.says_what_the_page_says.share)}.
+              {pct(servedGrades.reread.says_what_the_page_says.share)}. In a blind re-read of {misleadsReread.total} of its &ldquo;changes the
+              sense&rdquo; flags, {misleadsReread.none} were not errors. The book grades take its flags as they stand, so a book can sit a
+              grade too low.
             </li>
             <li>
               <b className="text-stone-900">It also misses.</b> Against typed editions it caught fewer than half the pages
