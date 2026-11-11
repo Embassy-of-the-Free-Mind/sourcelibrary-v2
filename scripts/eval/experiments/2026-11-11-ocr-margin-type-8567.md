@@ -59,7 +59,7 @@ Leaving out the three pages whose reads cli-ocr refuses to write (Burton 116 and
 
 ### Per-page verdicts
 
-`serious` = defects of severity misleads or wrong_text, not counting O12 (margin tagging, scored separately). Raw judge replies: `scripts/eval/route-judge-6740/results/ocr-margin-type-8567/judge-raw.jsonl.gz`. Tallies: `scripts/eval/route-judge-6740/results/ocr-margin-type-8567/tally.json`. Reads: `scripts/eval/route-judge-6740/results/ocr-margin-type-8567/reads/`.
+`serious` = defects of severity misleads or wrong_text, not counting O12 (margin tagging, scored separately). Raw judge replies: `scripts/eval/route-judge-6740/results/ocr-margin-type-8567/judge-raw.jsonl.gz`. Tallies: `scripts/eval/route-judge-6740/results/ocr-margin-type-8567/tally.json`. Reads: `scripts/eval/route-judge-6740/results/ocr-margin-type-8567/reads.tar.gz` (both arms and the variance re-reads, `.txt` + `.meta.json` + `prompt-ref.json`; untar to apply).
 
 | call | stratum | page id | items | judge prefers | A accept/fid/serious | B accept/fid/serious | B tagging |
 |---|---|---|---|---|---|---|---|
