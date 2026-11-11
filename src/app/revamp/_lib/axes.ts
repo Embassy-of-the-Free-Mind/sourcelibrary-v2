@@ -144,3 +144,30 @@ const ENDONYMS: Record<string, { text: string; dir?: 'rtl'; lang?: string }> = {
 export function languageNames() {
   return languageGroups().groups[0].narrower.filter((r) => ENDONYMS[r.label]).map((r) => ({ ...ENDONYMS[r.label], size: r.size ?? 1 }));
 }
+
+/** Real book titles in each saved language, for the titles hero: the title as catalogued, without our English glosses. */
+export function languageTitles(per = 5) {
+  const clean = (t: string) => t
+    .replace(/^\[(Greek|Hebrew|Arabic)[^\]]*?:\s*([^\]]+)\]?.*$/i, '$2')   // "[Hebrew: Sefer Yetzirah]" -> "Sefer Yetzirah"
+    .replace(/^\[(Greek|Hebrew|Arabic)\]:?\s*/i, '')
+    .replace(/\s*\([^)]*\)/g, '').replace(/\s+-\s+.*$/, '').replace(/[:.;,]\s.*$/, '')
+    .trim();
+  const lists = axes().languages.map((l) => {
+    const m = collectionModel(l.slug);
+    const seen = new Set<string>();
+    const titles = (m?.all ?? []).map((b) => clean(b.title || '')).filter((t) => t.length >= 4 && t.length <= 40 && !/illustration|vol\b/i.test(t) && !seen.has(t) && (seen.add(t), true)).slice(0, per);
+    const e = ENDONYMS[l.name];
+    return titles.map((text) => ({ text, size: l.total, lang: e?.lang, dir: e?.dir }));
+  });
+  // Interleave, so neighbouring cells are in different languages.
+  const out = [];
+  for (let i = 0; i < per; i++) for (const l of lists) if (l[i]) out.push(l[i]);
+  return out;
+}
+/** Title pages of real books, one or two per language, for the pages hero. */
+export function languagePages() {
+  const lists = axes().languages.map((l) => (collectionModel(l.slug)?.all ?? []).map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean).slice(0, 4) as string[]);
+  const out: string[] = [];
+  for (let i = 0; i < 4; i++) for (const l of lists) if (l[i]) out.push(l[i]);
+  return out;
+}

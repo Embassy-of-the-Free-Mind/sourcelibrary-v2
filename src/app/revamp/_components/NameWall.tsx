@@ -4,9 +4,10 @@ import { TINT } from './PlateWall';
  * A hero background of words instead of pictures: each language's own name for itself, in its own
  * script, in rows of cells like the plate wall. Bigger languages get bigger type.
  */
-export default function NameWall({ names, rows = 4 }: { names: { text: string; size: number; lang?: string; dir?: 'rtl' }[]; rows?: number }) {
+export default function NameWall({ names, rows = 4, fontScale = 1 }: { names: { text: string; size: number; lang?: string; dir?: 'rtl' }[]; rows?: number; fontScale?: number }) {
   const max = Math.max(...names.map((x) => x.size));
-  const scale = (v: number) => 0.55 + 0.45 * (Math.log(v + 1) / Math.log(max + 1)); // 0.55 to 1
+  // 0.55 to 1 by size, and smaller when there are more rows, so the words still fit their cells.
+  const scale = (v: number) => (0.55 + 0.45 * (Math.log(v + 1) / Math.log(max + 1))) * (4 / rows) * fontScale;
   const lanes = Array.from({ length: rows }, (_, r) => names.filter((_x, i) => i % rows === r));
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden select-none" style={{ background: '#14100c' }}>
