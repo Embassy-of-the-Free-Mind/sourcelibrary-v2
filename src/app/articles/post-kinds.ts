@@ -69,6 +69,9 @@ export interface BlogPost {
   imagePosition?: string;
   // Only on LINKED_PAGES: the page lives at its own address, outside /articles.
   href?: string;
+  // An offline edition: the article with every page it cites at the back, built by
+  // scripts/articles/article-epub. ArticleEnd shows the download link.
+  epub?: { href: string; mb: number };
 }
 
 // Articles written by a person rather than drafted by AI. Their footer note is a

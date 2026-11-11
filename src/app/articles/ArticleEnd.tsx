@@ -40,6 +40,16 @@ export default function ArticleEnd() {
               onLikedChange={setSaved}
             />
             <ShareButton variant="icon" label="Share" title={post.title} surface="article_end" />
+            {post.epub && (
+              <a
+                href={post.epub.href}
+                download
+                className="text-sm text-secondary underline decoration-border-light underline-offset-2 hover:text-primary"
+                title="The article with every page it cites at the back, for an e-reader"
+              >
+                Read offline: EPUB with its sources ({post.epub.mb} MB)
+              </a>
+            )}
             {saved && (
               <Link href="/favorites" className="text-sm text-muted underline decoration-border-light underline-offset-2 hover:text-secondary">
                 See your favorites
