@@ -60,7 +60,8 @@ const keywordsOf = (t) => (String(t || '').match(/<keywords>([\s\S]*?)<\/keyword
 // were held as untranslated), so the other 6 are already enriched and are judged, not written.
 async function pageStats(db, id) {
   const [r] = await db.collection('pages').aggregate([
-    { $match: { book_id: id, 'translation.data': { $exists: true, $ne: '' } } },
+    { $match: { book_id: id, 'translation.data': { $type: 'string', $ne: '' } } },
+    // strlen-safe: the $match above admits only string translation.data
     { $project: { n: { $strLenCP: '$translation.data' }, s: { $cond: [{ $regexMatch: { input: '$translation.data', regex: /<summary>[\s\S]*?<\/summary>|\[\[summary:/i } }, 1, 0] } } },
     { $group: { _id: null, translated: { $sum: 1 }, chars: { $sum: '$n' }, withSum: { $sum: '$s' } } },
   ]).toArray();

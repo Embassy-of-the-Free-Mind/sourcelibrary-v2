@@ -9,6 +9,7 @@ n_pages: 2042
 verdict: "A book summary + chapters built from the stored per-page <summary>/<keywords> blocks (arm B) costs about a fifth of the live full-text lane (arm A): 11 agy requests against 24, 324K input tokens against 1.66M, 217 s against 870 s for 10 books. It is not as accurate. Blind Opus judge: 15 unsupported or wrong claims in B's summaries against 12 in A's (the rule allowed 13). Preference A 5, B 3, tie 2. Specificity 43 against 47 (sum of 1-5 scores), chapter completeness 39 against 40. One book did most of the damage: Hermetic Rosary, A 2 / B 6 (B misplaced who said what and moved details between chapters). On the 4 gap books (3 Siku Chinese, 1 Latin) B did better: 2 claims against 5, and the judge preferred B on 2 of them."
 status: rejected
 decision: "Keep full-text input for enrichment's summary + chapters step (enrich-worker.mjs --agy). The page summaries stay unused by enrichment."
+feeds: [route, cost]
 superseded_by: null
 issue: [8512, 7628]
 ---
