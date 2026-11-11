@@ -160,7 +160,16 @@ async function main() {
     : {
         visible: true,
         pages_count: { $gt: 0 },
-        image_display: { $type: 'string' },
+        // Any cover field resolveSource() reads, not only image_display: 15,782
+        // live books carry their cover in `thumbnail` alone (measured 2026-11-11),
+        // and getBookCardUrl validates their card against that same field. An
+        // image_display-only filter never selected them, so the homepage's newest
+        // shelves kept serving 0.5–1 MB scans (#7057).
+        $or: [
+          { image_display: { $type: 'string' } },
+          { thumbnail: { $type: 'string' } },
+          { thumbnail_blob: { $type: 'string' } },
+        ],
         // "has no usable card" is `not a string`, NOT `$exists: false`. A cover
         // write CLEARS the pointer by setting it to null (buildCoverUpdate), and
         // a null field still EXISTS — so `$exists: false` silently skipped every
