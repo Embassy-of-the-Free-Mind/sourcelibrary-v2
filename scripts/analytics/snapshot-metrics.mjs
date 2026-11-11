@@ -149,10 +149,50 @@ await withMongo(async (db) => {
   ], { allowDiskUse: true }).toArray())
     .map((r) => ({ country: r._id, all: r.all, likely: r.likely, referred: r.referred }))
     .sort((a, b) => b.likely - a.likely);
-  const geo30 = await geoByCountry(d30);
-  const geo1 = await geoByCountry(d1);
-  const geo = { windowDays: 30, method: 'likely-human-v1', countries: geo30 };
-  const geoLikely = Object.fromEntries(geo1.filter((r) => r.likely > 0).map((r) => [r.country, r.likely]));
+  // Before the #8532 release `country` was the Cloudflare EDGE's location, not the
+  // reader's: Mexican readers ride US edges and were stored as US (#8531). Those
+  // rows cannot be repaired, so the map counts only rows written after the fix.
+  // The window grows to 30 days by itself. If the release slipped, move this date.
+  const GEO_RELIABLE_FROM = new Date('2026-11-12T00:00:00Z');
+  const geoFrom = new Date(Math.max(+d30, +GEO_RELIABLE_FROM));
+  const geo30 = await geoByCountry(geoFrom);
+  const geo = {
+    windowDays: 30, since: geoFrom.toISOString(), method: 'likely-human-v1',
+    countries: geo30,
+  };
+  // A day that started before the fix would mix edge and reader countries: skip it.
+  const geoLikely = +d1 >= +GEO_RELIABLE_FROM
+    ? Object.fromEntries((await geoByCountry(d1)).filter((r) => r.likely > 0).map((r) => [r.country, r.likely]))
+    : undefined;
+
+  // ─── WHO READERS SAY THEY ARE: /welcome introductions (#8541) ─────────────
+  // Free text in users.profile.aboutYou. Only TALLIES leave this script: the
+  // public /about/readers page shows how many introductions mention each theme,
+  // never a word of what anyone wrote. A keyword match is crude (one reader can
+  // match several themes, a typo matches none), so the page says "mention".
+  const INTRO_THEMES = {
+    student: /\b(student|estudiante|estudio|studying|phd|doctorado|tesis|thesis|universi|alumn)/i,
+    researcher: /\b(research|investigad|investigaci|scholar|academ|historian|historiador)/i,
+    teacher: /\b(teacher|profesor|professor|docente|maestr[oa]|lecturer)/i,
+    artist_writer: /\b(artist|artista|painter|pintor|writer|escritor|poet|poeta|novel|ilustrad|illustrat|musician|músic|designer|diseñ)/i,
+    healer: /\b(therap|terapeut|psycholog|psicólog|psicolog|healer|sanador|reiki|herbalist|herbolari|nurse|enfermer|physician|médico)/i,
+    astrology_tarot: /\b(astrolog|tarot)/i,
+    esoteric: /esot[eé]r|occult|ocult|magic|magia|mágic|mystic|místic|mistic|gnos/i,
+    alchemy: /alqu?im|alchem/i,
+    hermetic: /herm[eé]t/i,
+    philosophy: /philosoph|filosof/i,
+    history: /\bhistor/i,
+    religion: /theolog|teolog|religi|\bbibl(e|ia)|spiritual|espiritual|buddh|budis/i,
+    science_medicine: /scien|cienc|medic|médic|botan|astronom|chemi|quím/i,
+  };
+  const intros = await users.find(
+    { 'profile.aboutYou': { $exists: true, $nin: ['', null] } },
+    { projection: { 'profile.aboutYou': 1 } },
+  ).toArray();
+  const introductions = {
+    n: intros.length,
+    themes: Object.fromEntries(Object.entries(INTRO_THEMES).map(([k, re]) => [k, intros.filter((u) => re.test(u.profile.aboutYou)).length])),
+  };
 
   // Dwell: per-session (ip+ua, 30-min idle gap) duration, last 7d, multi-hit only.
   const rows = await pv.find({ timestamp: { $gt: d7 }, ...notPool }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
@@ -368,6 +408,7 @@ await withMongo(async (db) => {
     missionActions,
     traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, topCountries },
     geo,
+    introductions,
     search,
     social,
     ai,
@@ -391,7 +432,7 @@ await withMongo(async (db) => {
     dwellMedianSec: dwellMedian, dwellMeanSec: dwellMean,
     uniqVisitors, returningVisitors: multiDay, returningTotal: totalFp,
     humanPvs7: pvLast7,
-    geoLikely, // likely-human visitors per country, last 24h (#8522)
+    ...(geoLikely ? { geoLikely } : {}), // likely-human visitors per country, last 24h (#8522)
   };
   // The two headline corpus counts, copied from homepage_stats (recomputed 05:00
   // by prewarm-browse) so "books made readable per day" can be read off history
