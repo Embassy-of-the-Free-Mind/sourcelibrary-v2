@@ -39,11 +39,8 @@ export default function AxisPage({ m, crumb, sub, counts, scope, pictures = fals
         </>} />
       </section>
       <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope={scope === 'type' ? 'subject' : scope} name={m.name} />
-      {/* Prototype only: the saved sample, not the whole list. */}
-      <div className={`${WRAP} pt-8`}>
-        <p className="border border-dashed border-border-medium bg-white px-4 py-3 text-[13px] text-muted">Prototype: the first {n(shown)} of {n(total)} {pictures ? 'pictures, as the Gallery lists them' : 'books, as the Library lists them'}{pictures || !m.plates.length ? '' : ', and pictures from the first few'}. Live, this lists them all.</p>
-      </div>
-      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.plates.length} byBook={m.byBook} curated={false} />
+      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.plates.length} byBook={m.byBook} curated={false}
+        protoNote={`The first ${n(shown)} of ${n(total)} ${pictures ? 'pictures, as the Gallery lists them' : 'books, as the Library lists them'}${pictures || !m.plates.length ? '' : ', and pictures from the first few'}. Live, this lists them all.`} />
     </div>
   );
 }

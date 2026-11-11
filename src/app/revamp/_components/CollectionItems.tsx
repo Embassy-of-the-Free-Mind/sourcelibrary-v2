@@ -49,6 +49,8 @@ export interface ItemsProps {
   byBook: Record<string, RPlate[]>;
   /** False on a subject page: nobody makes a subject, so there is no maker's version to load or edit. */
   curated?: boolean;
+  /** Prototype only: a line in the prototype box, such as how much of the list is saved. */
+  protoNote?: string;
 }
 
 /**
@@ -57,7 +59,7 @@ export interface ItemsProps {
  * their notes; over 60, filters too. What the maker sets (order, sections, notes, default order) comes
  * from the collection document, edited in CollectionEditor.
  */
-export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true }: ItemsProps) {
+export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true, protoNote }: ItemsProps) {
   const original = initialDoc(books, notes);
   const [saved, setSaved] = useState<CollectionDoc | null>(null);
   const [editing, setEditing] = useState(false);
@@ -252,11 +254,20 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
 
   const done = (d: CollectionDoc) => { setSaved(d); localStorage.setItem(docKey(slug), JSON.stringify(d)); setEditing(false); setSort(null); setPage(1); };
 
+  // A page of pictures only (a picture type): no works, so just the pictures and their filters.
+  if (n === 0 && !curated && imagesHere) return (
+    <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-12" id="works">
+      {protoNote && <p className="border border-dashed border-border-medium bg-white px-4 py-3 mb-10 text-[13px] text-muted">Prototype only. {protoNote}</p>}
+      <h2 className={`${H2} mb-5`}>Pictures</h2>
+      {images}
+    </div>
+  );
+
   return (
     <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-12">
       {/* Prototype only: not part of the page. */}
       <div className="border border-dashed border-border-medium bg-white px-4 py-3 mb-10 flex flex-wrap items-center gap-2 text-[13px]">
-        <span className="text-muted mr-1">Prototype only.</span>
+        <span className="text-muted mr-1">Prototype only.{protoNote && ` ${protoNote}`}</span>
         {curated && <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>}
         {saved && <span className="text-muted ml-1">Your edits are kept in this browser.</span>}
         {imagesHere && <>

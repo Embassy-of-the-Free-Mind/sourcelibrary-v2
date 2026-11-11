@@ -35,7 +35,7 @@ export default function AxisIndex({ title, intro, counts, tiles, featured, group
         </div>
         <CollectionBars strip live works={total} placeholder={placeholder} scope={`all ${total} ${noun[1]}`} />
       </section>
-      <SubjectsBrowser groups={groups} barSearch noun={noun} group={group} how={how} orders={orders} />
+      <SubjectsBrowser groups={groups} barSearch noun={noun} group={group} how={how} orders={orders} countGroups={false} />
     </div>
   );
 }

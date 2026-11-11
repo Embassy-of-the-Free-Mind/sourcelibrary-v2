@@ -7,7 +7,8 @@ const n = (v: number) => v.toLocaleString('en-GB');
 export default function Page() {
   const { groups, books, count } = periodGroups();
   const f = featuredOf(axisSlugs().periods);
-  const tiles = f ? f.heroTiles : groups.flatMap((g) => g.pics.map((p) => p.src)).slice(0, 40);
+  // A mix: the first two pictures of every one, so the wall shows the whole range rather than one item's few pictures repeated.
+  const tiles = [...new Set(groups.flatMap((g) => g.narrower.flatMap((x) => x.pics.slice(0, 2).map((p) => p.src))))].slice(0, 48);
   return (
     <AxisIndex title="Periods" intro="Browse the library by when its works were written, century by century."
       counts={[`${count} centuries`, `${n(books)} books with a date`]} tiles={tiles}

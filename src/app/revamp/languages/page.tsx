@@ -7,7 +7,8 @@ const n = (v: number) => v.toLocaleString('en-GB');
 export default function Page() {
   const { groups, books, named, values, unmatched } = languageGroups();
   const f = featuredOf(axisSlugs().languages);
-  const tiles = f ? f.heroTiles : groups.flatMap((g) => g.pics.map((p) => p.src)).slice(0, 40);
+  // A mix: the first two pictures of every one, so the wall shows the whole range rather than one item's few pictures repeated.
+  const tiles = [...new Set(groups.flatMap((g) => g.narrower.flatMap((x) => x.pics.slice(0, 2).map((p) => p.src))))].slice(0, 48);
   return (
     <AxisIndex title="Languages" intro="Browse the library by the language its books are written in."
       counts={[`${named} languages`, `${n(books)} books`]} tiles={tiles}

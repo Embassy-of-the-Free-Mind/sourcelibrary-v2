@@ -18,7 +18,7 @@ for (const t of ['engraving', 'woodcut', 'diagram', 'emblem', 'portrait', 'front
   const g = await get(`https://sourcelibrary.org/api/gallery?type=${t}&limit=60&maxPerBook=3`);
   if (!g) continue;
   const slug = `type-picture-${t}`;
-  fs.writeFileSync(new URL(`${slug}.json`, SNAP), JSON.stringify({ c: { collection: { slug, name: t }, books: [], total: 0 }, g: { items: g.items, total: g.total } }));
+  fs.writeFileSync(new URL(`${slug}.json`, SNAP), JSON.stringify({ c: { collection: { slug, name: t, plates_only: true }, books: [], total: 0 }, g: { items: g.items, total: g.total } }));
   out.pictures.push({ id: t, slug, total: g.total });
   console.log(slug, g.total);
 }

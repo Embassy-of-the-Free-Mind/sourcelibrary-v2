@@ -59,9 +59,10 @@ const SUBJECT_HOW = [
  * Built for Subjects; Periods and Languages use it too, with their own words.
  */
 export default function SubjectsBrowser({ groups, barSearch = false, noun = ['subject', 'subjects'], group = ['Broad subject', 'All broad subjects'],
-  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']] }: {
+  how: howText = { title: 'How we choose subjects', items: SUBJECT_HOW }, orders = [['theme', 'By theme'], ['az', 'A to Z']], countGroups = true }: {
   groups: Group[]; barSearch?: boolean; noun?: [string, string]; group?: [string, string];
   how?: { title: string; items: ReactNode[] }; orders?: [string, string][];
+  /** Subjects count their broad subjects too; periods, languages and types count only the members. */ countGroups?: boolean;
 }) {
   const [q, setQ] = useState('');
   const [how, setHow] = useState(false);
@@ -91,8 +92,8 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
     const narrower = g.narrower.map((s) => ({ s, m: match(s) })).filter((x) => (!t ? true : x.m.ok));
     return { g, self, narrower };
   }).filter((x) => !t || x.self.ok || x.narrower.length);
-  const total = new Set(groups.flatMap((g) => [g.id, ...g.narrower.map((s) => s.id)])).size;
-  const count = new Set(shown.flatMap(({ g, narrower }) => [g.id, ...narrower.map((x) => x.s.id)])).size;
+  const total = new Set(groups.flatMap((g) => [...(countGroups ? [g.id] : []), ...g.narrower.map((s) => s.id)])).size;
+  const count = new Set(shown.flatMap(({ g, narrower }) => [...(countGroups ? [g.id] : []), ...narrower.map((x) => x.s.id)])).size;
   const n = (v: number) => v.toLocaleString('en-GB');
 
   const search = (

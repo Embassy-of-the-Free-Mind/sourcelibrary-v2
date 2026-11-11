@@ -110,7 +110,8 @@ export function collectionModel(slug: string): CollectionModel | null {
   const featured = fb && a
     ? { book: fb, title: a.featuredTitle!, byline: a.featuredBy!, text: a.featuredText! }
     : nb ? { book: nb, title: nb.display_title || nb.title, byline: [nb.author, nb.year].filter(Boolean).join(' · '), text: [noted!.note!] } : null;
-  const artworks = !books.length || (Number(col.artwork_count) > 50 && total <= 1);
+  // A picture type has pictures and no works, but its pictures are gallery plates, not artworks.
+  const artworks = !col.plates_only && (!books.length || (Number(col.artwork_count) > 50 && total <= 1));
   const description = (col.description as string) || '';
   const heroTiles = plates.slice(0, 40).map((p) => p.src);
   const artTiles = artworks ? ((col.featured_images as (string | Rec)[]) || []).map((x) => (typeof x === 'string' ? x : (x.url as string))).filter(Boolean) : [];

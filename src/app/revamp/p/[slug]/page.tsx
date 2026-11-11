@@ -10,6 +10,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const c = centuryOfSlug(slug);
   const m = c && collectionModel(slug);
   if (!c || !m) notFound();
-  return <AxisPage m={m} scope="period" crumb={{ label: 'Periods', href: '/revamp/periods' }} sub={`Works written in the ${centuryName(c.from)}.`}
+  return <AxisPage m={m} scope="period" crumb={{ label: 'Periods', href: '/revamp/periods' }}
     counts={[`${n(c.total)} ${c.total === 1 ? 'book' : 'books'}`, centuryName(c.from)]} />;
 }
