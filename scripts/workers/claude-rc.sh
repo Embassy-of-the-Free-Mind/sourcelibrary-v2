@@ -33,7 +33,11 @@ case "$(hostname -s)" in clawdbot) NAME=hetzner ;; gex45-1) NAME=gex45 ;; *) NAM
 accounts() { [ -f "$ACCTS" ] && grep -v -E '^\s*(#|$)' "$ACCTS" | awk '{print $1, $2}'; }
 dir_of()   { accounts | awk -v s="$1" '$1==s {print $2}'; }
 sess()     { echo "claude-rc-$1"; }
-env_for()  { [ "$1" = "-" ] && echo "" || echo "CLAUDE_CONFIG_DIR=$1 "; }
+# IS_SANDBOX=1: these boxes run everything as root, and Claude Code refuses bypassPermissions as root
+# unless told it is in a dedicated sandbox. Without it the server shows "Ready" but every session
+# started from the phone dies at birth ("--dangerously-skip-permissions cannot be used with root/sudo
+# privileges"); found 2026-11-11, every session on both boxes since 2026-11-09 had failed this way.
+env_for()  { [ "$1" = "-" ] && echo "IS_SANDBOX=1 " || echo "IS_SANDBOX=1 CLAUDE_CONFIG_DIR=$1 "; }
 # Up = the pane's child process is claude (after an exit the pane holds `sleep`, so the session alone proves nothing).
 alive() {
   local p; p=$(tmux list-panes -t "$(sess "$1")" -F '#{pane_pid}' 2>/dev/null | head -1)
