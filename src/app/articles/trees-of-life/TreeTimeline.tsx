@@ -86,7 +86,6 @@ export const TREE_ROWS: Row[] = [
       { year: 1436, when: '1436', what: 'Miʿrājnāma, Herat, the gardens of paradise' },
     ],
   },
-  { id: 'java', label: 'Java', items: [{ year: 1984, when: '1984', what: 'Kilatbuwana, the kayon' }] },
   {
     id: 'alchemy',
     label: 'Alchemy',

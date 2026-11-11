@@ -152,6 +152,27 @@ describe('quotes', () => {
     const kept = 'Monconys wrote:\n\n> "which is two feet square, in which with 6 sous of local coal one bakes 280 pounds of bread in 24 hours"\n> — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51)';
     expect(ground(kept).out).toBe(kept);
   });
+  it('keeps a requested rewrite, unquoted, instead of removing it (2026-11-08 Chemical Wedding)', () => {
+    // The live shape: the reader pasted the bird song and asked for it in modern English;
+    // the model's version is on no page, so the old pass deleted it three turns running.
+    const poem = '> Rejoice, dear little bird,\n> And praise your Creator on high;\n> Lift up your voice, clear and bright.\n> — [Page 18](https://sourcelibrary.org/book/chymische-hochzeit?page=18)';
+    const text = `### Modern English\n\n${poem}\n\n### The message`;
+    const asked = ground(text, { question: 'Turn this poem into modern English. It is hard to read.' });
+    expect(asked.report.blockquotesRemoved).toBe(0);
+    expect(asked.report.blockquotesUnquoted).toBe(1);
+    expect(asked.out).toContain('Rejoice, dear little bird,\nAnd praise your Creator on high;');
+    expect(asked.out).not.toMatch(/^>/m);
+    for (const q of ['Just give me the adapted version of the poem', 'Can you paraphrase this?', 'Translate this passage for me', 'Rewrite it in plain English']) {
+      expect(ground(text, { question: q }).report.blockquotesUnquoted).toBe(1);
+    }
+    // Negative twin: the same unsupported blockquote, no rewrite asked for — still removed.
+    for (const q of ["Who translated Ficino's Plato?", 'Was the play an adaptation of the novel?', 'Is this an adapted text?']) {
+      expect(ground(text, { question: q }).report.blockquotesRemoved).toBe(1);
+    }
+    const notAsked = ground(text, { question: 'What does the bird song mean?' });
+    expect(notAsked.report.blockquotesRemoved).toBe(1);
+    expect(notAsked.out).not.toContain('Rejoice');
+  });
   it('keeps a blockquote that is on the page', () => {
     const text = '> "which is two feet square, in which with 6 sous of local coal one bakes 280 pounds of bread in 24 hours"\n> — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51)';
     expect(ground(text).report.blockquotesRemoved).toBe(0);

@@ -15,6 +15,9 @@
 //
 //   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/import-atlas-maps.mjs \
 //     --atlas /path/to/sourcelibrary-atlas [--theme consciousness,ritual] [--dry-run]
+//   ... --recheck --theme consciousness,harmony,magic [--dry-run]
+// --recheck re-checks the maps already in public/data/maps/ against `books` with no atlas checkout: editions hidden
+// since the last import lose their link (#4809: 28 editions hidden on rights review still linked to a 404).
 // --theme names the maps to import; `ritual` is the survey document. The default is ritual,consciousness. summary.json
 // keeps the figures of every map not imported this run (#7129: importing one map must not drop the others' cards).
 import fs from 'node:fs';
@@ -28,7 +31,9 @@ const ATLAS = argv('--atlas');
 const THEMES = (argv('--theme', 'ritual,consciousness')).split(',').filter((t) => t !== 'ritual');
 const RITUAL = (argv('--theme', 'ritual,consciousness')).split(',').includes('ritual');
 const DRY = process.argv.includes('--dry-run');
-if (!ATLAS) { console.error('usage: import-atlas-maps.mjs --atlas <sourcelibrary-atlas checkout> [--theme a,b] [--dry-run]'); process.exit(1); }
+const RECHECK = process.argv.includes('--recheck');
+if (RECHECK && RITUAL) { console.error('--recheck covers the timeline maps only; drop ritual from --theme'); process.exit(1); }
+if (!ATLAS && !RECHECK) { console.error('usage: import-atlas-maps.mjs --atlas <sourcelibrary-atlas checkout> [--theme a,b] [--dry-run]'); process.exit(1); }
 const REPO = path.resolve(new URL('../..', import.meta.url).pathname);
 const today = new Date().toISOString().slice(0, 10);
 const fmt = (n) => n.toLocaleString('en-US');
@@ -121,7 +126,7 @@ const SUMMARY = path.join(REPO, 'src/app/explore/maps/summary.json');
 const summary = fs.existsSync(SUMMARY) ? JSON.parse(fs.readFileSync(SUMMARY, 'utf8')) : {};
 async function theme(db, slug) {
   const destDir = path.join(REPO, 'public/data/maps');
-  const d = JSON.parse(fs.readFileSync(path.join(ATLAS, `public/data/${slug}.json`), 'utf8'));
+  const d = JSON.parse(fs.readFileSync(RECHECK ? path.join(destDir, `${slug}.json`) : path.join(ATLAS, `public/data/${slug}.json`), 'utf8'));
   const ids = [...new Set(d.works.flatMap((w) => w.eds.map((e) => e.id)))];
   const by = await lookup(db, ids);
   // Only one direction is applied: an edition the artifact calls public that is no longer public loses its
@@ -138,6 +143,7 @@ async function theme(db, slug) {
   if (DRY) return;
   fs.mkdirSync(destDir, { recursive: true });
   fs.writeFileSync(path.join(destDir, `${slug}.json`), JSON.stringify(d));
+  if (RECHECK) return;
   for (const [from, to] of [[`public/data/${slug}-l2.json`, `${slug}-l2.json`], [`public/data/graph/lens-${slug}.json`, `lens-${slug}.json`], [`public/data/${slug}-layers.json`, `${slug}-layers.json`]]) {
     const p = path.join(ATLAS, from);
     if (!fs.existsSync(p)) { console.log('  (no', from + ')'); continue; }

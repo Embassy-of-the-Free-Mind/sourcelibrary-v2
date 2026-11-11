@@ -11,7 +11,7 @@ import { ocrTrustGate } from '../../../../../../scripts/lib/ocr-trust-gate.mjs';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
-import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate, reasoningLeakGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { withAuth } from '@/lib/auth-helpers';
 import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
@@ -435,6 +435,11 @@ export const GET = withAuth(async (request, session, context) => {
           // A script in the English that is in neither the source nor the book's language (#5734):
           // the Korean 그-for-"that" is repaired; anything else is refused, stamped and kept.
           if (text) {
+            // The model's scratchpad, a refusal, or a reply to the request (#6117, #8465): refused, stamped and kept.
+            if (await reasoningLeakGate(db, { id: pageId, book_id: bookId }, text, { jobId: jobName, model: jobDoc.model })) {
+              failCount++;
+              continue;
+            }
             const stray = await strayScriptGate(db, { id: pageId, book_id: bookId }, text, { language: jobDoc.source_language, targetLanguage: jobDoc.target_language, jobId: jobName, model: jobDoc.model });
             if (stray.refused) {
               console.warn(`[batch-translate] STRAY SCRIPT: refusing page ${pageId}`);
@@ -442,6 +447,13 @@ export const GET = withAuth(async (request, session, context) => {
               continue;
             }
             text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+            // A page's English that is its neighbour's (#5026): refused, stamped and kept the same way.
+            const nb = await neighbourGate(db, { id: pageId, book_id: bookId }, text, { jobId: jobName, model: jobDoc.model });
+            if (nb.refused) {
+              console.warn(`[batch-translate] NEIGHBOUR: refusing page ${pageId} (${nb.reason})`);
+              failCount++;
+              continue;
+            }
           }
 
           if (text) {

@@ -11,6 +11,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { notFound, permanentRedirect } from 'next/navigation';
 import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
+import RecentlyTranslatedLinks from '@/components/home/RecentlyTranslatedLinks';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import CollectionFurtherReading from '@/components/collections/CollectionFurtherReading';
 import CollectionReadingList from '@/components/collections/CollectionReadingList';
@@ -1156,6 +1157,16 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
     ? (books as BookItem[]).filter(b => !b.resource_type).slice(0, 8)
     : [];
 
+  // ExhibitionLayout is a client component, so whatever it is handed is
+  // serialised into the page. galleryImages are whole gallery_images rows
+  // (dhash, bbox, metadata, rationale, tenantId...); send only the fields its
+  // GalleryImage type reads. On /collections/alchemy the full rows were 116 KB.
+  const EXHIBITION_IMAGE_FIELDS = ['id', 'book_id', 'page_id', 'book_title', 'type', 'museum_description', 'extracted_url', 'thumbnail_url', 'image_url'] as const;
+  const exhibitionImages = exhibition?.layout
+    ? galleryImages.map((img: Record<string, unknown>) =>
+      Object.fromEntries(EXHIBITION_IMAGE_FIELDS.filter((k) => img[k] !== undefined).map((k) => [k, img[k]]))) as unknown as React.ComponentProps<typeof ExhibitionLayout>['images']
+    : [];
+
   // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
   const imagePool: typeof galleryImages = [];
   const bookImageCounts = new Map<string, number>();
@@ -1725,7 +1736,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             <ExhibitionLayout
               layout={exhibition.layout}
               books={exhibitionBooks as any[]}
-              images={galleryImages}
+              images={exhibitionImages}
               collectionSlug={id}
               mentions={exhibitionMentions}
             />
@@ -2007,6 +2018,18 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </p>
         )}
       </div>
+
+      {/* Server-rendered plain links to this collection's newest English-readable
+          books not already on the page (#3755). Apex only, like the catalog link:
+          partner subdomains are curated rooms. */}
+      {!tenantSlug && !isArtCollection && total > 0 && (
+        <RecentlyTranslatedLinks
+          collection={id}
+          limit={24}
+          excludeIds={[...books, ...curatedHighlightsData, ...firstTranslations].map((b) => b.id)}
+          className="px-6 md:px-12 max-w-[1500px] mx-auto pb-12"
+        />
+      )}
 
       {/* Further reading — adjacent works we hold, and the ones we don't. Sits
           AFTER the works grid on purpose: it is a handoff, not a member list,

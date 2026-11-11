@@ -328,7 +328,7 @@ export default function NakedPhilosophersPage() {
         <section className="mt-14 pt-8 border-t border-border-light">
           <p className="text-xs text-muted mt-4 italic">
             Every quotation above is verbatim from Source Library&rsquo;s translation of the named edition, linked to
-            its exact page. Translations CC-BY-SA-4.0.
+            its exact page. Translations CC BY-NC-SA 4.0.
           </p>
         </section>
 

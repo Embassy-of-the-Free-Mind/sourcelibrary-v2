@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import HorizontalSlider from '@/components/HorizontalSlider';
 import { ArticleCard } from '@/app/articles/BlogIndex';
-import type { BlogPost } from '@/app/articles/posts';
+import type { BlogPost } from '@/app/articles/post-kinds';
 
 /**
  * The homepage Articles section's slider: the newest articles in the same card

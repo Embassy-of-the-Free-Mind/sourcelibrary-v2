@@ -17,6 +17,11 @@
  *                   of >= LEAK_MIN_CHARS after editorial blocks and tags are stripped. A pair
  *                   whose SOURCE pages share such a run too is counted apart (the book
  *                   repeats itself — a refrain, a repeated table).
+ *   ECHO  (#8399)   page N+1 OPENS with words already in page N's English (neighbour-guard
+ *                   openingEcho: first 40 visible words, 6-word shingles, share >= 0.3) — the
+ *                   one-sentence repeat under LEAK_MIN_CHARS that LEAK and the write door miss.
+ *                   A pair whose sources open the same way, or whose two pages are in different
+ *                   languages (a facing-page edition), is counted apart.
  *
  * Block position is RECONSTRUCTED with translate-batch-seam planBlocks over each book's
  * translated pages in order — the partition a first full translation run would have used.
@@ -35,7 +40,9 @@ import os from 'os';
 import { detectBlockDrift, MIN_ABSORBED_SHARE } from '../lib/block-drift.mjs';
 
 const MIN_OCR_CHARS_FOR_BLOCK = 200, BLOCK_SIZE = 8, MAX_BLOCK_OCR_CHARS = 20000; // translate-batch-seam mirrors
-export const LEAK_MIN_CHARS = 200;
+// sharedRun and LEAK_MIN_CHARS live in the write door's guard now (#5026), so the door does not load this script.
+import { sharedRun, LEAK_MIN_CHARS, openingEcho, ECHO_MIN_SHARE } from '../lib/neighbour-guard.mjs';
+export { sharedRun, LEAK_MIN_CHARS };
 // --min-absorbed=x lowers the drift floor to record near-misses (each flag carries its score).
 const MIN_ABSORBED = Number(process.argv.find(a => a.startsWith('--min-absorbed='))?.split('=')[1] ?? MIN_ABSORBED_SHARE);
 const NON_PROSE = new Set(['index', 'toc', 'title-page', 'illustration', 'blank', 'errata', 'diagram', 'frontispiece',
@@ -69,22 +76,6 @@ const normTr = (t) => String(t || '')
   .replace(/<(meta|summary|keywords|vocab|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
   .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-/** Longest run a and b share, found through 40-char shingles of b then extended (dupscan). */
-export function sharedRun(a, b, min = LEAK_MIN_CHARS) {
-  if (a.length < min || b.length < min) return { len: 0, text: '' };
-  const K = 40, idx = new Map();
-  for (let i = 0; i + K <= b.length; i += 8) { const s = b.slice(i, i + K); if (!idx.has(s)) idx.set(s, i); }
-  let best = 0, bestA = -1;
-  for (let i = 0; i + K <= a.length; i++) {
-    const j = idx.get(a.slice(i, i + K)); if (j == null) continue;
-    let back = 0; while (i - back > 0 && j - back > 0 && a[i - back - 1] === b[j - back - 1]) back++;
-    let L = K; while (i + L < a.length && j + L < b.length && a[i + L] === b[j + L]) L++;
-    if (L + back > best) { best = L + back; bestA = i - back; }
-    i += Math.max(0, L - K); // skip what this match already covered
-  }
-  return { len: best, text: bestA >= 0 ? a.slice(bestA, bestA + Math.min(best, 200)) : '' };
-}
-
 function main() {
   const dir = arg('dir', path.join(os.homedir(), 'sl-corpus/books'));
   const out = arg('out', 'scripts/output/page-boundaries');
@@ -106,7 +97,7 @@ function main() {
     .filter((f, i) => (only ? only.has(f.slice(0, -6)) : i % n === k));
   const flagged = fs.createWriteStream(path.join(out, `shard-${k}.jsonl`));
   const summary = { books: 0, booksTranslated: 0, byLang: {}, perBook: {} };
-  const bucket = (l) => (summary.byLang[l] ||= { pairs: 0, inBlock: 0, blockStart: 0, eligible: 0, driftInBlock: 0, driftBlockStart: 0, leak: 0, leakSourceRepeat: 0, books: 0 });
+  const bucket = (l) => (summary.byLang[l] ||= { pairs: 0, inBlock: 0, blockStart: 0, eligible: 0, driftInBlock: 0, driftBlockStart: 0, leak: 0, leakSourceRepeat: 0, echo: 0, echoBlockStart: 0, echoSourceRepeat: 0, echoParallel: 0, books: 0 });
 
   let done = 0;
   for (const f of files) {
@@ -124,7 +115,7 @@ function main() {
     const l = lang.get(id) || 'unknown';
     const b = bucket(l); b.books++;
     const starts = blockStarts(tr);
-    const pb = { pairs: 0, inBlock: 0, drift: 0, leak: 0 };
+    const pb = { pairs: 0, inBlock: 0, drift: 0, leak: 0, echo: 0 };
     for (let i = 0; i + 1 < tr.length; i++) {
       const A = tr[i], B = tr[i + 1];
       if (B.p !== A.p + 1) continue;
@@ -139,6 +130,13 @@ function main() {
         const sourceRepeats = src.len >= LEAK_MIN_CHARS;
         if (sourceRepeats) b.leakSourceRepeat++; else { b.leak++; pb.leak++; }
         flagged.write(JSON.stringify({ kind: 'leak', book: id, lang: l, prev: A.p, next: B.p, inBlock, len: leak.len, share: +(leak.len / Math.max(1, normTr(B.tr).length)).toFixed(3), sourceRepeats, text: leak.text }) + '\n');
+      }
+
+      // ECHO — every consecutive pair; counted whether or not LEAK fired (a whole-page leak also opens with the copy)
+      const e = openingEcho({ tr: B.tr, prevTr: A.tr, ocr: B.ocr, prevOcr: A.ocr });
+      if (e.share >= ECHO_MIN_SHARE) {
+        if (e.parallel) b.echoParallel++; else if (e.sourceRepeats) b.echoSourceRepeat++; else { b.echo++; pb.echo++; if (!inBlock) b.echoBlockStart++; }
+        flagged.write(JSON.stringify({ kind: 'echo', book: id, lang: l, prev: A.p, next: B.p, inBlock, share: e.share, sourceShare: e.sourceShare, sourceRepeats: e.sourceRepeats, parallel: e.parallel }) + '\n');
       }
 
       // DRIFT — prose pages only

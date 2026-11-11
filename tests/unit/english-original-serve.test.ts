@@ -1,5 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
+import { setInProcessCaller } from '@/lib/inprocess-caller';
+
+/** get_book_text reaches /text in-process (src/lib/mcp-inprocess.ts); mark the request the same way (#8235). */
+function asMcpCall(req: NextRequest): NextRequest {
+  setInProcessCaller(req, { kind: 'anon' });
+  return req;
+}
 
 /**
  * An English edition's English leaf serves its TRANSCRIPTION from every door (#7100).
@@ -190,7 +197,7 @@ describe('quote — /api/books/[id]/quote and the Librarian (resolveQuoteText)',
 describe('/api/books/[id]/text — get_book_text', () => {
   it('serves the OCR and no translation, and says why', async () => {
     const { GET } = await import('@/app/api/books/[id]/text/route');
-    const res = await GET(new NextRequest(`https://sourcelibrary.org/api/books/${HALL_BOOK.id}/text`), { params: Promise.resolve({ id: HALL_BOOK.id }) });
+    const res = await GET(asMcpCall(new NextRequest(`https://sourcelibrary.org/api/books/${HALL_BOOK.id}/text`)), { params: Promise.resolve({ id: HALL_BOOK.id }) });
     const body = await res.json();
     expect(res.status).toBe(200);
     expect(body.english_edition_note).toBeTruthy();
@@ -202,7 +209,7 @@ describe('/api/books/[id]/text — get_book_text', () => {
 
   it('content=translation does not hand back the rewording', async () => {
     const { GET } = await import('@/app/api/books/[id]/text/route');
-    const res = await GET(new NextRequest(`https://sourcelibrary.org/api/books/${HALL_BOOK.id}/text?content=translation&format=plain`), { params: Promise.resolve({ id: HALL_BOOK.id }) });
+    const res = await GET(asMcpCall(new NextRequest(`https://sourcelibrary.org/api/books/${HALL_BOOK.id}/text?content=translation&format=plain`)), { params: Promise.resolve({ id: HALL_BOOK.id }) });
     expect(stripMarks(await res.text())).not.toContain(HALL_REWORDING);
   });
 });

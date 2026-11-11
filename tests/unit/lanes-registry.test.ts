@@ -22,7 +22,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — scripts-side module, no types
-import { LANES, EXEMPT, PAUSE_KEYS, DEAD_PAUSE_NAMES, HOLD_MARKER_TEST, LANE_STEPS, registeredFiles, CRONTAB_SNAPSHOTS, OFF_REPO_CRON, QUOTA_METERS } from '../../scripts/lib/lanes.mjs';
+import { LANES, EXEMPT, PAUSE_KEYS, DEAD_PAUSE_NAMES, HOLD_MARKER_TEST, LANE_STEPS, registeredFiles, CRONTAB_SNAPSHOTS, OFF_REPO_CRON, QUOTA_METERS, CRON_ROWS, RETIRED_PATTERNS, judgeCronLine } from '../../scripts/lib/lanes.mjs';
 
 type Lane = {
   name: string; serves: string; files: string[]; budget: string; respectsHold: string | false; pause: string | null; reason?: string;
@@ -263,5 +263,37 @@ describe('lane registry — claims match the source', () => {
     const admin = (LANES as Lane[]).find((l) => l.name === 'admin-api')!;
     const missing = admin.files.filter((f) => f.startsWith('src/app/') && !read(f).includes('assertLaneGuards('));
     expect(missing).toEqual([]);
+  });
+});
+
+describe('cron-row registry (CRON_ROWS, #8283)', () => {
+  type Row = { id: string; box: string; match: { script?: string; mode?: string; has?: string[] }; lane?: string; status: string; review_by: string; issue?: number; route?: string; owner?: string; allow?: Record<string, string> };
+  const rows = CRON_ROWS as Row[];
+  it('every row has a unique id, a known box and status, an owner, a route, an issue and a review_by date', () => {
+    expect(new Set(rows.map((r) => r.id)).size).toBe(rows.length);
+    for (const r of rows) {
+      expect(['main', 'gex45', 'l7a', 'cloudlayer'], r.id).toContain(r.box);
+      expect(['current', 'paused', 'retired'], r.id).toContain(r.status);
+      expect(r.review_by, r.id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(r.owner && r.route && r.issue, r.id).toBeTruthy();
+      expect(Object.keys(r.match).length, r.id).toBeGreaterThan(0);
+    }
+  });
+  it('a row\'s lane is a registered lane, and an allow names a retired pattern', () => {
+    const names = new Set((LANES as Lane[]).map((l) => l.name));
+    const ids = new Set((RETIRED_PATTERNS as { id: string }[]).map((p) => p.id));
+    for (const r of rows) {
+      if (r.lane) expect(names.has(r.lane), `${r.id}: lane ${r.lane}`).toBe(true);
+      for (const k of Object.keys(r.allow ?? {})) expect(ids.has(k), `${r.id}: allow ${k}`).toBe(true);
+    }
+  });
+  it('single-page QA is red unless allowed; paid flash-lite within a dial is allowed on enrich --batch', () => {
+    const now = new Date('2026-11-09T00:00:00Z');
+    const judge = (box: string, cmd: string, script: string, mode: string | null, stage: string) =>
+      (judgeCronLine(box, { cmd, script, mode, stage, disabled: false, one_shot: false }, { now }) as { flag: string }[]).map((r) => r.flag);
+    expect(judge('l7a', 'node scripts/eval/lane-judge-sampler.mjs nightly --out=/x', 'scripts/eval/lane-judge-sampler.mjs', 'nightly', 'qc')).toEqual(['MATCHES A RETIRED PATTERN']);
+    expect(judge('hetzner', 'node scripts/workers/enrich-worker.mjs --batch --limit=0', 'scripts/workers/enrich-worker.mjs', null, 'enrich')).toEqual([]);
+    expect(judge('gex45', 'node scripts/workers/enrich-worker.mjs --batch', 'scripts/workers/enrich-worker.mjs', null, 'enrich')).toEqual(['UNREGISTERED', 'MATCHES A RETIRED PATTERN']);
+    expect(judge('l7a', 'node scripts/audit/search-probe.mjs', 'scripts/audit/search-probe.mjs', null, 'qc')).toEqual([]);
   });
 });

@@ -1,0 +1,17 @@
+[
+  {
+    "manifest_url": "https://digitalcollections.universiteitleiden.nl/iiif_manifest/item:1570668/manifest",
+    "title": "Hikayat Hang Tuah (Leiden, Or. 1762)",
+    "author": "Anonymous",
+    "year": 1758,
+    "language": "Malay",
+    "provider": "leiden",
+    "provider_name": "Leiden University Library",
+    "source_url": "https://hdl.handle.net/1887.1/item:1570668",
+    "source_id": "item:1570668",
+    "license": "publicdomain",
+    "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "contributing_library": "Leiden University Libraries",
+    "note": "Alternative to the withdrawn 2010 Pusat Bahasa edition, vols. I and II (#4809; ops_reports colophon-alternatives-4809 rows 69e792d980b52390feb16d3b and 69e792de80b52390feb16e5e, one import for both). Jawi manuscript, Tanah Kuala: Mir Abdul-Latif, 1172 H. [1758]; 263 images, two-page openings."
+  }
+]

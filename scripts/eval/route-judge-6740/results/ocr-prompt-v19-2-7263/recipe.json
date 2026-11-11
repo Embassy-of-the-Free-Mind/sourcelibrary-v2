@@ -1,0 +1,27 @@
+{
+ "question": "prompt",
+ "issue": 7263,
+ "stage": "ocr",
+ "languages": [
+  "la",
+  "lzh",
+  "fr",
+  "en"
+ ],
+ "baseline": "v19.1",
+ "arms": [
+  "v19.1",
+  "v19.2"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": "none — a prompt test on the pages that moved, not a route's accept rate on a cell's draw; no router cell changes",
+ "waive": {}
+}

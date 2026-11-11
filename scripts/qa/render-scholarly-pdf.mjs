@@ -73,6 +73,7 @@ const options = {
   methodology: edition?.front_matter?.methodology,
   doi: edition?.doi,
   version: edition?.version,
+  license: edition?.license,
   frontispiece: await fetchFrontispiece(book),
   credits: editionCredits(book),
   // --dedication "text" previews wording without writing it anywhere

@@ -1,0 +1,311 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "prompt",
+  "issue": 8399,
+  "stage": "translation",
+  "languages": [
+   "la",
+   "de"
+  ],
+  "baseline": "A",
+  "arms": [
+   "A",
+   "A2",
+   "B4",
+   "Bb"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": [
+   "latin-cli-agy4",
+   "german-cli-agy4"
+  ],
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "latin-cli-agy4": {
+     "routes": {
+      "A0": {
+       "n": 54,
+       "books": 54,
+       "unjudged": 0,
+       "accept": "23/54",
+       "accept_wilson": [
+        0.303,
+        0.558
+       ],
+       "accept_by_book": [
+        0.296,
+        0.556
+       ],
+       "wrong_text_pages": "28/54",
+       "wrong_text_wilson": [
+        0.389,
+        0.646
+       ],
+       "fidelity_mean": 3.44,
+       "counts": true,
+       "words": 34382,
+       "misleads_per_1k": 2.04,
+       "wrong_text_per_1k": 1.66
+      },
+      "BbS": {
+       "n": 16,
+       "books": 16,
+       "unjudged": 0,
+       "accept": "7/16",
+       "accept_wilson": [
+        0.231,
+        0.668
+       ],
+       "accept_by_book": [
+        0.188,
+        0.688
+       ],
+       "wrong_text_pages": "8/16",
+       "wrong_text_wilson": [
+        0.28,
+        0.72
+       ],
+       "fidelity_mean": 3.5,
+       "counts": false,
+       "words": 13944,
+       "misleads_per_1k": 2.65,
+       "wrong_text_per_1k": 1.51
+      },
+      "A0S": {
+       "n": 2,
+       "books": 2,
+       "unjudged": 0,
+       "accept": "0/2",
+       "accept_wilson": [
+        0,
+        0.658
+       ],
+       "accept_by_book": [
+        0,
+        0
+       ],
+       "wrong_text_pages": "2/2",
+       "wrong_text_wilson": [
+        0.342,
+        1
+       ],
+       "fidelity_mean": 2.5,
+       "counts": false,
+       "words": 1607,
+       "misleads_per_1k": 3.73,
+       "wrong_text_per_1k": 3.73
+      },
+      "A0L": {
+       "n": 1,
+       "books": 1,
+       "unjudged": 0,
+       "accept": "0/1",
+       "accept_wilson": [
+        0,
+        0.793
+       ],
+       "accept_by_book": [
+        0,
+        0
+       ],
+       "wrong_text_pages": "1/1",
+       "wrong_text_wilson": [
+        0.207,
+        1
+       ],
+       "fidelity_mean": 3,
+       "counts": false,
+       "words": 1022,
+       "misleads_per_1k": 5.87,
+       "wrong_text_per_1k": 1.96
+      }
+     },
+     "controls": {
+      "A0": {
+       "n": 3,
+       "passed": true
+      },
+      "BbS": {
+       "n": 0,
+       "passed": false
+      },
+      "A0S": {
+       "n": 0,
+       "passed": false
+      },
+      "A0L": {
+       "n": 0,
+       "passed": false
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    },
+    "german-cli-agy4": {
+     "routes": {
+      "A0": {
+       "n": 14,
+       "books": 14,
+       "unjudged": 0,
+       "accept": "9/14",
+       "accept_wilson": [
+        0.388,
+        0.837
+       ],
+       "accept_by_book": [
+        0.357,
+        0.857
+       ],
+       "wrong_text_pages": "3/14",
+       "wrong_text_wilson": [
+        0.076,
+        0.476
+       ],
+       "fidelity_mean": 4.07,
+       "counts": true,
+       "words": 6365,
+       "misleads_per_1k": 2.36,
+       "wrong_text_per_1k": 0.47
+      },
+      "BbS": {
+       "n": 3,
+       "books": 3,
+       "unjudged": 0,
+       "accept": "3/3",
+       "accept_wilson": [
+        0.439,
+        1
+       ],
+       "accept_by_book": [
+        1,
+        1
+       ],
+       "wrong_text_pages": "0/3",
+       "wrong_text_wilson": [
+        0,
+        0.561
+       ],
+       "fidelity_mean": 4,
+       "counts": false,
+       "words": 1658,
+       "misleads_per_1k": 3.62,
+       "wrong_text_per_1k": 0
+      },
+      "A0S": {
+       "n": 1,
+       "books": 1,
+       "unjudged": 0,
+       "accept": "1/1",
+       "accept_wilson": [
+        0.207,
+        1
+       ],
+       "accept_by_book": [
+        1,
+        1
+       ],
+       "wrong_text_pages": "0/1",
+       "wrong_text_wilson": [
+        0,
+        0.793
+       ],
+       "fidelity_mean": 4,
+       "counts": false,
+       "words": 475,
+       "misleads_per_1k": 4.21,
+       "wrong_text_per_1k": 0
+      },
+      "A0L": {
+       "n": 1,
+       "books": 1,
+       "unjudged": 0,
+       "accept": "1/1",
+       "accept_wilson": [
+        0.207,
+        1
+       ],
+       "accept_by_book": [
+        1,
+        1
+       ],
+       "wrong_text_pages": "0/1",
+       "wrong_text_wilson": [
+        0,
+        0.793
+       ],
+       "fidelity_mean": 4,
+       "counts": false,
+       "words": 475,
+       "misleads_per_1k": 4.21,
+       "wrong_text_per_1k": 0
+      }
+     },
+     "controls": {
+      "A0": {
+       "n": 2,
+       "passed": true
+      },
+      "BbS": {
+       "n": 0,
+       "passed": false
+      },
+      "A0S": {
+       "n": 0,
+       "passed": false
+      },
+      "A0L": {
+       "n": 0,
+       "passed": false
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "8 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": false,
+   "detail": "no wrong_page control for latin-cli-agy4/BbS, latin-cli-agy4/A0S, german-cli-agy4/BbS, german-cli-agy4/A0S, german-cli-agy4/A0L, latin-cli-agy4/A0L",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "6 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

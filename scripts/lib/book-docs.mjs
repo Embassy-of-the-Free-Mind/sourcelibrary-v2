@@ -79,6 +79,9 @@ export const BOOK_FIELDS = Object.freeze([
   'notes', 'scholarly_notes',
   'normalized_title', 'normalized_author',
   'is_translation', 'text_role', 'text_source', 'translation_status',
+  // Already written by the /api/import/* routes and pdf-direct.ts (applyTextRole stamps text_role_source);
+  // listed so pdf-direct.ts can insert through insertBookIfNew (#4809). Not new fields: books-known-fields.json has all three.
+  'text_role_source', 'curation_status', 'acquisition_batch',
   // #8321: a facing-page edition whose English leaves are the PUBLISHED translation (a Loeb) —
   // { source: 'published', series, translator?, year, pairing, detected_at, detector, pairs }.
   // Written by scripts/maintenance/loeb-facing-census.mjs; read by src/lib/facing-translation.ts.

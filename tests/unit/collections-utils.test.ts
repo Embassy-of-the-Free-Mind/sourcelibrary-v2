@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeThumbnail, bookTitle, PINNED_COLLECTION_SLUGS, sortCollections, isHighlightMember } from '@/lib/collections-utils';
+import { sanitizeThumbnail, bookTitle, PINNED_COLLECTION_SLUGS, sortCollections, isHighlightMember, cardImageCandidates, MAX_CARD_CANDIDATES } from '@/lib/collections-utils';
 
 describe('sanitizeThumbnail', () => {
   it('passes through https URLs', () => {
@@ -114,5 +114,25 @@ describe('isHighlightMember (#6899)', () => {
   it('rejects a missing book and a book whose collections were projected away', () => {
     expect(isHighlightMember(undefined, 'maya')).toBe(false);
     expect(isHighlightMember({ pages_count: 300 }, 'maya')).toBe(false);
+  });
+});
+
+describe('cardImageCandidates', () => {
+  const img = (n: number) => ({
+    thumbnail_url: `https://images.sourcelibrary.org/gallery/b/${n}-thumb.jpg`,
+    extracted_url: `https://images.sourcelibrary.org/gallery/b/${n}.jpg`,
+    image_url: `https://images.sourcelibrary.org/archived/b/${n}.jpg`,
+  });
+
+  it('keeps the curated cover and hero first', () => {
+    const out = cardImageCandidates([img(1)], 'https://images.sourcelibrary.org/cover.jpg', 'https://images.sourcelibrary.org/hero.jpg');
+    expect(out.slice(0, 2)).toEqual(['https://images.sourcelibrary.org/cover.jpg', 'https://images.sourcelibrary.org/hero.jpg']);
+  });
+
+  // Every card's list is serialised into the page; 60 cards x ~19 URLs was 119 KB on /collections.
+  it('caps the fallback chain', () => {
+    const out = cardImageCandidates(Array.from({ length: 10 }, (_, i) => img(i)));
+    expect(out).toHaveLength(MAX_CARD_CANDIDATES);
+    expect(new Set(out).size).toBe(out.length);
   });
 });

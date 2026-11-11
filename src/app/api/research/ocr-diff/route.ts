@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { isMeteredAnonRequest, meteredSignInResponse } from '@/lib/metered-gate';
 
 export const maxDuration = 30;
 
@@ -42,6 +43,11 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ clusters });
   }
+
+  // The pairs are both editions' whole transcriptions: under the metered reader
+  // (#4357) an anonymous caller signs in first. The cluster list above is
+  // catalogue data and stays open.
+  if (await isMeteredAnonRequest(request)) return meteredSignInResponse();
 
   // Get aligned pages for a specific work_id
   const books = await db

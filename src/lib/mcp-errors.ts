@@ -38,6 +38,19 @@ export interface McpErrorPayload {
   recovery: string;
   /** Present when the page exists in the original language but not in translation. */
   has_original?: boolean;
+  /** The page's own language, to pass back as `lang` on get_quote (#7458, #8466). */
+  original_lang?: string;
+  /** A book hidden as a duplicate: the edition we kept, to call again with (#8235). */
+  kept_edition?: { id: string; url?: string };
+  /** A blank (or defaulted) page: the next page that has text (#8235). */
+  next_text_page?: number;
+}
+
+/** The JSON body inside `API 404: {...}`, or null. */
+function apiJson(raw: string): Record<string, unknown> | null {
+  const json = raw.match(/\{[\s\S]*\}/)?.[0];
+  if (!json) return null;
+  try { return JSON.parse(json) as Record<string, unknown>; } catch { return null; }
 }
 
 /**
@@ -102,12 +115,43 @@ export function classifyApiError(err: unknown): McpErrorPayload {
     };
   }
 
+  // The REST routes now say these two things (#8235); a flat "No such book or page"
+  // threw them away, and the agent had nowhere to go.
+  const body = status === 404 ? apiJson(raw) : null;
+  const kept = body?.kept_edition as { id?: unknown; url?: unknown } | undefined;
+  if (kept && typeof kept.id === 'string') {
+    return {
+      error: 'not_found',
+      message: 'This copy was hidden as a duplicate of an edition the library kept. The text exists under the kept edition.',
+      kept_edition: { id: kept.id, url: typeof kept.url === 'string' ? kept.url : undefined },
+      recovery: `Call the same tool again with book_id "${kept.id}". Do NOT tell the user the book is missing.`,
+    };
+  }
+  if (lower.includes('page is blank')) {
+    const next = typeof body?.next_text_page === 'number' ? body.next_text_page : undefined;
+    return {
+      error: 'not_found',
+      message: 'This page is a blank leaf: there is no text on it to return. The book itself is fine.',
+      ...(next ? { next_text_page: next } : {}),
+      recovery: next ? `Ask for page ${next}, the next page with text.` : 'Ask for a later page; get_book lists the book\'s pages.',
+    };
+  }
+
+  // The quote route names the page's language (`original_lang`), and the
+  // recovery below tells the caller to use it. Dropping it here left a member
+  // reading Zhang Zai with a refusal that pointed at a field it did not carry,
+  // so no locator, text or scan reached the reader (#8466 item 6).
   if (lower.includes('no translation available')) {
+    const lang = typeof body?.original_lang === 'string' && /^[a-z]{2,3}(-[A-Za-z0-9]+)?$/.test(body.original_lang)
+      ? body.original_lang : null;
     return {
       error: 'no_translation',
       message: 'This page exists and has been transcribed, but has no translation yet. The text on it is in a language other than English — an English-original leaf is served as a quote instead, with text_source: "ocr_original" (#3939), so this answer means the source really is foreign.',
       has_original: true,
-      recovery: 'To quote the page in its own language, call get_quote again with lang set to that language (the API names it as original_lang, e.g. "de"); the transcription comes back as `original`. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.',
+      ...(lang ? { original_lang: lang } : {}),
+      recovery: lang
+        ? `To quote the page in its own language, call get_quote again with the same arguments plus lang: "${lang}"; the transcription comes back as \`original\` with its citation link and, with include_image, the scan. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.`
+        : 'To quote the page in its own language, call get_quote again with lang set to that language (an ISO code, e.g. "de"; get_book gives the book\'s language); the transcription comes back as `original`. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.',
     };
   }
 

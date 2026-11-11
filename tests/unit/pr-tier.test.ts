@@ -212,5 +212,14 @@ describe('pr-tier: a very large PR is held for a human read (#8353)', () => {
       expect(run(f, 9000).tier, f).toBe('AUTO');
     }
   });
+
+  it('a dated router-table build is generated data; the pointer and the rule code still count (#8283)', () => {
+    for (const f of ['scripts/eval/estimator/router-table/2026-11-10-nightly.json', 'scripts/eval/estimator/router-table/2026-11-10-nightly.md']) {
+      expect(run(f, 43000).tier, f).toBe('AUTO');
+    }
+    for (const f of ['scripts/eval/estimator/router-table/current.json', 'scripts/lib/router-binding.mjs']) {
+      expect(run(f, 4001).tier, f).toBe('HOLD');
+    }
+  });
 });
 

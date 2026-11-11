@@ -1,7 +1,7 @@
 import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import { Readable } from 'stream';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
@@ -280,7 +280,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     // returned immediately and filled asynchronously, so the response starts
     // flowing without waiting on the image fetch. Only one image is ever in
     // flight here, so no bounded-concurrency machinery is needed.
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
 
     (async () => {
       try {

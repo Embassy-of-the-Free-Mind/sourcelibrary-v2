@@ -1,0 +1,37 @@
+{
+ "built_at": "2026-11-08T19:09:26.803Z",
+ "cut": {
+  "flagged_pairs": 16589,
+  "in_frame": 8481,
+  "not_english_tibetan_pali": 7953,
+  "book_la_de_not_en": 5799,
+  "book_print": 4664,
+  "pair_pages_print": 4607,
+  "repair_page_la_de": 4586,
+  "ocr_screen_dirty_pairs": 70,
+  "ocr_screen_clean": 4516,
+  "pages": 5489,
+  "pages_taken_before": 15,
+  "pages_left": 5474,
+  "books": 1795,
+  "pages_in_books_with_readers": 1141,
+  "by_lang": {
+   "Latin": 4691,
+   "lat": 3,
+   "German": 761,
+   "de": 2,
+   "la": 5,
+   "Latin-German": 8,
+   "German, Latin": 1,
+   "Latin, German": 1,
+   "Latin-Dutch": 2
+  },
+  "by_dir": {
+   "leak5026-leak-N1": 759,
+   "leak5026-ident-N": 892,
+   "leak5026-forward-N": 1862,
+   "leak5026-unclear-N": 990,
+   "leak5026-unclear-N1": 990
+  }
+ }
+}

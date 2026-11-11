@@ -23,9 +23,9 @@
   ],
   "_diffIgnoreDoc": "diffPatterns fire only on added lines that can execute. Lines in these files are prose, fixtures or results, never run against data; comment-only lines are skipped too. The path globs above are NOT affected: a file under scripts/migrations/ still holds whatever it contains. src/generated/** is generated data (ustc-year-counts.json keys its counts by language code): regenerating it neither runs nor publishes anything, and the blog copy there still holds by its path glob.",
   "diffIgnoreGlobs": ["**/*.md", "**/*.txt", "tests/**", "scripts/eval/results/**", "scripts/eval/experiments/**", ".claude/docs/**", "docs/**", "src/generated/**"],
-  "_sizeDoc": "#8353 item 4. A PR adding more than maxAddedLines lines of CODE is held for a human read: green CI passed two bugs on 2026-11-07 and #8327 (1,500 lines) was auto on its paths alone. Threshold from the last 100 merged PRs (2026-11-07), counting lines outside diffIgnoreGlobs and sizeIgnoreGlobs: p50 57, p75 269, p90 1443, p95 4098, max 53674. 4000 holds the largest ~5% (6 of 100). Lower it to ~1400 to hold the largest ~10%.",
+  "_sizeDoc": "#8353 item 4. A PR adding more than maxAddedLines lines of CODE is held for a human read: green CI passed two bugs on 2026-11-07 and #8327 (1,500 lines) was auto on its paths alone. Threshold from the last 100 merged PRs (2026-11-07), counting lines outside diffIgnoreGlobs and sizeIgnoreGlobs: p50 57, p75 269, p90 1443, p95 4098, max 53674. 4000 holds the largest ~5% (6 of 100). Lower it to ~1400 to hold the largest ~10%. Dated router-table builds (router-table/20NN-*.json|.md) are generated data, not code: a nightly bind (#8283) adds ~43K of them and was held every night; build.py, router-binding.mjs and current.json still count.",
   "maxAddedLines": 4000,
-  "sizeIgnoreGlobs": ["package-lock.json", "**/package-lock.json", "**/*.lock", "**/pnpm-lock.yaml", "src/data/**", "**/fixtures/**", "scripts/eval/results/**", "**/EXPERIMENTS.md"],
+  "sizeIgnoreGlobs": ["package-lock.json", "**/package-lock.json", "**/*.lock", "**/pnpm-lock.yaml", "src/data/**", "**/fixtures/**", "scripts/eval/results/**", "**/EXPERIMENTS.md", "scripts/eval/estimator/router-table/20*.json", "scripts/eval/estimator/router-table/20*.md"],
   "diffIgnoreCommentLines": true,
   "dependabotMajorHolds": true
 }

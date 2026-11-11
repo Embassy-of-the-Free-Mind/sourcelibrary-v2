@@ -27,6 +27,9 @@
  * A cli row naming gemini-3.8-flash+agy-cli may carry `per_call` (1-4): its books are read in blocks of that many pages
  * a call by scripts/batch/claude-translate.mjs --cli=agy, the configuration its adoption sample measured (#7263:
  * agy-flash-low@4), instead of cli-translate.mjs read (one page, or a folio-marked pair, a call).
+ * A per_call row may also carry `seam_pass` (#8399): true runs claude-translate.mjs --seam-pass=1 after the reads (one
+ * agy call per page turn between two calls, edge spans only; scripts/lib/seam-pass.mjs), 'edit-before' adds
+ * --seam-edit-before=1 (the pass may also edit the stored English of the page before a run).
  * The Greek cli row skips Loebs this way (#7075, 2026-10-26): the facing page is printed English, and on Plutarch
  * Loeb 99 p.94 the 3.8 Flash read reproduced that English word for word instead of translating the Greek.
  * validateTranslationTable throws on a row the routers cannot run, so a bad edit fails the tests and the import
@@ -160,6 +163,8 @@ export function validateTranslationTable(table, engines) {
       if (!row.adoption?.sample || !row.adoption?.replaces) throw new Error(`translation-routing-table: cli row ${row.id} needs adoption.sample and adoption.replaces (the blind sample against the old reader)`);
     }
     if (row.per_call != null && (channel !== 'cli' || row.engine !== 'gemini-3.8-flash+agy-cli' || !Number.isInteger(row.per_call) || row.per_call < 1 || row.per_call > 4)) throw new Error(`translation-routing-table: row ${row.id} has per_call ${row.per_call}; per_call is an integer 1-4 on a cli row naming gemini-3.8-flash+agy-cli (claude-translate.mjs --cli=agy caps a call at 4 pages)`);
+    // #8399: `seam_pass` (true, or 'edit-before') runs claude-translate.mjs --seam-pass=1 after a per_call row's reads.
+    if (row.seam_pass != null && (row.per_call == null || ![true, 'edit-before'].includes(row.seam_pass))) throw new Error(`translation-routing-table: row ${row.id} has seam_pass ${JSON.stringify(row.seam_pass)}; seam_pass is true or 'edit-before', on a per_call row (the pass runs in claude-translate.mjs --cli=agy)`);
     const kinds = ['provider', 'language_prefix', 'any'].filter((k) => row.match?.[k] != null);
     if (kinds.length !== 1) throw new Error(`translation-routing-table: row ${row.id} needs exactly one of match.provider / match.language_prefix / match.any`);
     // match.any (2026-11-06, Derek "everything on agy"): a catch-all, so only a cli row may carry it, and it must be the

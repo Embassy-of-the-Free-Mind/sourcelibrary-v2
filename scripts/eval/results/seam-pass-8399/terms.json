@@ -1,0 +1,2960 @@
+{
+ "runs": 16,
+ "complete": 16,
+ "agg": {
+  "A": {
+   "terms": 120,
+   "renderings": 173,
+   "inconsistent": 36,
+   "perTerm": 1.442,
+   "inconsistentPct": 30
+  },
+  "A2": {
+   "terms": 115,
+   "renderings": 163,
+   "inconsistent": 33,
+   "perTerm": 1.417,
+   "inconsistentPct": 28.7
+  },
+  "A0": {
+   "terms": 120,
+   "renderings": 174,
+   "inconsistent": 35,
+   "perTerm": 1.45,
+   "inconsistentPct": 29.2
+  }
+ },
+ "paired": {
+  "A0vsA": {
+   "better": 7,
+   "worse": 6
+  },
+  "A0vsA2": {
+   "better": 5,
+   "worse": 6
+  },
+  "A2vsA": {
+   "better": 6,
+   "worse": 3
+  }
+ },
+ "perRun": [
+  {
+   "book": "6a4f225a8afd506469a564bb",
+   "language": "Latin",
+   "terms": 12,
+   "byArm": {
+    "A": {
+     "terms": 12,
+     "renderings": 21,
+     "inconsistent": 8
+    },
+    "A2": {
+     "terms": 12,
+     "renderings": 21,
+     "inconsistent": 8
+    },
+    "A0": {
+     "terms": 12,
+     "renderings": 21,
+     "inconsistent": 8
+    }
+   },
+   "detail": {
+    "calui": {
+     "pages": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      15,
+      16,
+      18,
+      19,
+      20
+     ],
+     "per": {
+      "A": {
+       "caluin": 14,
+       "caluinists": 1
+      },
+      "A2": {
+       "caluin": 14,
+       "caluinists": 1
+      },
+      "A0": {
+       "caluin": 15,
+       "caluinists": 1
+      }
+     }
+    },
+    "chris": {
+     "pages": [
+      9,
+      10,
+      16,
+      17,
+      18,
+      19,
+      20
+     ],
+     "per": {
+      "A": {
+       "christ": 11,
+       "christianity": 1,
+       "christian": 1
+      },
+      "A2": {
+       "christ": 10,
+       "christianity": 1,
+       "christian": 1
+      },
+      "A0": {
+       "christ": 11,
+       "christianity": 1,
+       "christian": 1
+      }
+     }
+    },
+    "luthe": {
+     "pages": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      19,
+      20
+     ],
+     "per": {
+      "A": {
+       "luther": 10
+      },
+      "A2": {
+       "luther": 10
+      },
+      "A0": {
+       "luther": 10
+      }
+     }
+    },
+    "mercu": {
+     "pages": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      20
+     ],
+     "per": {
+      "A": {
+       "mercury": 9
+      },
+      "A2": {
+       "mercury": 9
+      },
+      "A0": {
+       "mercury": 9
+      }
+     }
+    },
+    "charo": {
+     "pages": [
+      9,
+      11,
+      12,
+      13,
+      20
+     ],
+     "per": {
+      "A": {
+       "charybdis": 1,
+       "charon": 5
+      },
+      "A2": {
+       "charybdis": 1,
+       "charon": 5
+      },
+      "A0": {
+       "charybdis": 1,
+       "charon": 5
+      }
+     }
+    },
+    "orcum": {
+     "pages": [
+      10,
+      15,
+      17,
+      20
+     ],
+     "per": {
+      "A": {
+       "orcus": 5
+      },
+      "A2": {
+       "orcus": 6
+      },
+      "A0": {
+       "orcus": 3
+      }
+     }
+    },
+    "picar": {
+     "pages": [
+      11,
+      12,
+      15
+     ],
+     "per": {
+      "A": {
+       "picardy": 1,
+       "picard": 2
+      },
+      "A2": {
+       "picardy": 1,
+       "picard": 2
+      },
+      "A0": {
+       "picardy": 1,
+       "picard": 1
+      }
+     }
+    },
+    "cerbe": {
+     "pages": [
+      11,
+      12,
+      20
+     ],
+     "per": {
+      "A": {
+       "cerberus": 5,
+       "cerberean": 1
+      },
+      "A2": {
+       "cerberus": 5,
+       "cerberean": 1
+      },
+      "A0": {
+       "cerberus": 5,
+       "cerberean": 1
+      }
+     }
+    },
+    "marti": {
+     "pages": [
+      11,
+      14,
+      15,
+      17
+     ],
+     "per": {
+      "A": {
+       "martin": 5,
+       "martel": 1
+      },
+      "A2": {
+       "martin": 5,
+       "martel": 1
+      },
+      "A0": {
+       "martin": 5,
+       "martel": 1
+      }
+     }
+    },
+    "roman": {
+     "pages": [
+      15,
+      16,
+      17
+     ],
+     "per": {
+      "A": {
+       "roman": 4
+      },
+      "A2": {
+       "roman": 3
+      },
+      "A0": {
+       "roman": 3
+      }
+     }
+    },
+    "iouin": {
+     "pages": [
+      16,
+      17,
+      20
+     ],
+     "per": {
+      "A": {
+       "iouinianists": 3,
+       "iouinian": 1
+      },
+      "A2": {
+       "iouinianists": 3,
+       "iouinian": 1
+      },
+      "A0": {
+       "iouinianists": 3,
+       "iouinian": 2
+      }
+     }
+    },
+    "simon": {
+     "pages": [
+      16,
+      17,
+      20
+     ],
+     "per": {
+      "A": {
+       "simon": 4,
+       "simonians": 1
+      },
+      "A2": {
+       "simon": 4,
+       "simonians": 1
+      },
+      "A0": {
+       "simon": 4,
+       "simonians": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "6a0ac153ccff0aaf8df94dc7",
+   "language": "Latin",
+   "terms": 20,
+   "byArm": {
+    "A": {
+     "terms": 20,
+     "renderings": 30,
+     "inconsistent": 7
+    },
+    "A2": {
+     "terms": 19,
+     "renderings": 29,
+     "inconsistent": 7
+    },
+    "A0": {
+     "terms": 16,
+     "renderings": 23,
+     "inconsistent": 5
+    }
+   },
+   "detail": {
+    "uirtu": {
+     "pages": [
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      181
+     ],
+     "per": {
+      "A": {
+       "uirtues": 10,
+       "uirtue": 12
+      },
+      "A2": {
+       "uirtues": 11,
+       "uirtue": 12
+      },
+      "A0": {
+       "uirtue": 5,
+       "uirtues": 6
+      }
+     }
+    },
+    "iusti": {
+     "pages": [
+      173,
+      175,
+      177,
+      182,
+      183
+     ],
+     "per": {
+      "A": {
+       "iustice": 5
+      },
+      "A2": {
+       "iustice": 5
+      },
+      "A0": {
+       "iustice": 3
+      }
+     }
+    },
+    "infin": {
+     "pages": [
+      173,
+      174,
+      176
+     ],
+     "per": {
+      "A": {
+       "infinity": 4
+      },
+      "A2": {
+       "infinity": 4
+      },
+      "A0": {}
+     }
+    },
+    "chris": {
+     "pages": [
+      173,
+      174,
+      175,
+      176
+     ],
+     "per": {
+      "A": {
+       "christ": 1
+      },
+      "A2": {
+       "christ": 1
+      },
+      "A0": {
+       "christ": 15
+      }
+     }
+    },
+    "magni": {
+     "pages": [
+      173,
+      182,
+      183,
+      184
+     ],
+     "per": {
+      "A": {
+       "magnitude": 1
+      },
+      "A2": {
+       "magnitude": 1
+      },
+      "A0": {}
+     }
+    },
+    "sanct": {
+     "pages": [
+      173,
+      174,
+      175,
+      177,
+      180
+     ],
+     "per": {
+      "A": {
+       "sanctity": 1
+      },
+      "A2": {},
+      "A0": {}
+     }
+    },
+    "humil": {
+     "pages": [
+      173,
+      174,
+      178,
+      179
+     ],
+     "per": {
+      "A": {
+       "humility": 4
+      },
+      "A2": {
+       "humility": 4
+      },
+      "A0": {
+       "humility": 2
+      }
+     }
+    },
+    "patie": {
+     "pages": [
+      173,
+      174,
+      177,
+      178,
+      179
+     ],
+     "per": {
+      "A": {
+       "patience": 13
+      },
+      "A2": {
+       "patience": 13
+      },
+      "A0": {
+       "patience": 9
+      }
+     }
+    },
+    "perse": {
+     "pages": [
+      173,
+      174,
+      178,
+      181
+     ],
+     "per": {
+      "A": {
+       "perseuerance": 6,
+       "person": 1,
+       "persons": 1
+      },
+      "A2": {
+       "perseuerance": 6,
+       "person": 1,
+       "persons": 1
+      },
+      "A0": {
+       "perseuerance": 1,
+       "person": 1,
+       "persons": 1
+      }
+     }
+    },
+    "spiri": {
+     "pages": [
+      174,
+      175,
+      177
+     ],
+     "per": {
+      "A": {
+       "spirit": 3
+      },
+      "A2": {
+       "spiration": 1,
+       "spirit": 3
+      },
+      "A0": {
+       "spirit": 3
+      }
+     }
+    },
+    "natur": {
+     "pages": [
+      174,
+      175,
+      177,
+      181
+     ],
+     "per": {
+      "A": {
+       "natures": 1,
+       "nature": 9
+      },
+      "A2": {
+       "natures": 1,
+       "nature": 9
+      },
+      "A0": {
+       "nature": 1
+      }
+     }
+    },
+    "perso": {
+     "pages": [
+      174,
+      175,
+      177
+     ],
+     "per": {
+      "A": {
+       "perseuerance": 4,
+       "person": 14,
+       "persons": 2
+      },
+      "A2": {
+       "perseuerance": 4,
+       "person": 14,
+       "persons": 2
+      },
+      "A0": {
+       "person": 14,
+       "persons": 2
+      }
+     }
+    },
+    "human": {
+     "pages": [
+      174,
+      175,
+      176
+     ],
+     "per": {
+      "A": {
+       "humanity": 5
+      },
+      "A2": {
+       "humanity": 5
+      },
+      "A0": {}
+     }
+    },
+    "conco": {
+     "pages": [
+      174,
+      176,
+      183
+     ],
+     "per": {
+      "A": {
+       "concordance": 4
+      },
+      "A2": {
+       "concordance": 4
+      },
+      "A0": {
+       "concordance": 2
+      }
+     }
+    },
+    "nobil": {
+     "pages": [
+      174,
+      178,
+      179
+     ],
+     "per": {
+      "A": {
+       "nobility": 10
+      },
+      "A2": {
+       "nobility": 11
+      },
+      "A0": {
+       "nobility": 11
+      }
+     }
+    },
+    "diuin": {
+     "pages": [
+      175,
+      177,
+      178
+     ],
+     "per": {
+      "A": {
+       "diuine": 6
+      },
+      "A2": {
+       "diuine": 7
+      },
+      "A0": {
+       "diuine": 1
+      }
+     }
+    },
+    "passi": {
+     "pages": [
+      175,
+      177,
+      179
+     ],
+     "per": {
+      "A": {
+       "passion": 3,
+       "passiue": 1
+      },
+      "A2": {
+       "passion": 4
+      },
+      "A0": {
+       "passion": 3,
+       "passiuity": 1
+      }
+     }
+    },
+    "princ": {
+     "pages": [
+      175,
+      177,
+      178,
+      181,
+      183
+     ],
+     "per": {
+      "A": {
+       "prince": 3,
+       "principle": 7
+      },
+      "A2": {
+       "prince": 3,
+       "principle": 7
+      },
+      "A0": {
+       "principle": 7
+      }
+     }
+    },
+    "chari": {
+     "pages": [
+      175,
+      179,
+      182
+     ],
+     "per": {
+      "A": {
+       "charity": 3
+      },
+      "A2": {
+       "charity": 3
+      },
+      "A0": {
+       "charity": 2
+      }
+     }
+    },
+    "intel": {
+     "pages": [
+      179,
+      180,
+      184
+     ],
+     "per": {
+      "A": {
+       "intention": 15,
+       "intentions": 2,
+       "intellect": 1
+      },
+      "A2": {
+       "intention": 15,
+       "intentions": 2,
+       "intellect": 1
+      },
+      "A0": {
+       "intention": 15,
+       "intentions": 2,
+       "intellect": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "6a26c413aad44c98627cd57e",
+   "language": "German",
+   "terms": 12,
+   "byArm": {
+    "A": {
+     "terms": 12,
+     "renderings": 19,
+     "inconsistent": 3
+    },
+    "A2": {
+     "terms": 12,
+     "renderings": 17,
+     "inconsistent": 2
+    },
+    "A0": {
+     "terms": 12,
+     "renderings": 17,
+     "inconsistent": 2
+    }
+   },
+   "detail": {
+    "ianua": {
+     "pages": [
+      14,
+      15,
+      21,
+      22,
+      24,
+      25
+     ],
+     "per": {
+      "A": {
+       "ianuary": 9
+      },
+      "A2": {
+       "ianuary": 9
+      },
+      "A0": {
+       "ianuary": 9
+      }
+     }
+    },
+    "winte": {
+     "pages": [
+      14,
+      15,
+      20,
+      21
+     ],
+     "per": {
+      "A": {
+       "winter": 3
+      },
+      "A2": {
+       "winter": 3
+      },
+      "A0": {
+       "winter": 2
+      }
+     }
+    },
+    "anatr": {
+     "pages": [
+      15,
+      16,
+      20
+     ],
+     "per": {
+      "A": {
+       "anatrarchia": 2,
+       "anatrachia": 1
+      },
+      "A2": {
+       "anatrarchia": 1
+      },
+      "A0": {
+       "anatrarchia": 1
+      }
+     }
+    },
+    "alcha": {
+     "pages": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      21
+     ],
+     "per": {
+      "A": {
+       "alcharph": 2,
+       "alchaya": 2,
+       "alchatan": 1,
+       "alcharga": 1,
+       "alchil": 1,
+       "alcharan": 1
+      },
+      "A2": {
+       "alcharga": 1,
+       "alcharph": 1,
+       "alchil": 1,
+       "alchaya": 1,
+       "alcharan": 1
+      },
+      "A0": {
+       "alcharga": 1,
+       "alcharph": 1,
+       "alchil": 1,
+       "alchaya": 1,
+       "alcharan": 1
+      }
+     }
+    },
+    "febru": {
+     "pages": [
+      15,
+      24,
+      25
+     ],
+     "per": {
+      "A": {
+       "february": 10
+      },
+      "A2": {
+       "february": 10
+      },
+      "A0": {
+       "february": 10
+      }
+     }
+    },
+    "athor": {
+     "pages": [
+      15,
+      16,
+      20
+     ],
+     "per": {
+      "A": {
+       "athoraye": 3
+      },
+      "A2": {
+       "athoraye": 1
+      },
+      "A0": {
+       "athoraye": 1
+      }
+     }
+    },
+    "alpha": {
+     "pages": [
+      15,
+      19,
+      21
+     ],
+     "per": {
+      "A": {
+       "alpharg": 3
+      },
+      "A2": {
+       "alpharg": 2
+      },
+      "A0": {
+       "alpharg": 2
+      }
+     }
+    },
+    "quart": {
+     "pages": [
+      16,
+      19,
+      23
+     ],
+     "per": {
+      "A": {
+       "quarter": 1
+      },
+      "A2": {
+       "quarter": 1
+      },
+      "A0": {
+       "quarter": 1
+      }
+     }
+    },
+    "alhay": {
+     "pages": [
+      16,
+      20,
+      21
+     ],
+     "per": {
+      "A": {
+       "alhayre": 2,
+       "alhayra": 1
+      },
+      "A2": {
+       "alhayre": 1,
+       "alhayra": 1
+      },
+      "A0": {
+       "alhayre": 1,
+       "alhayra": 1
+      }
+     }
+    },
+    "april": {
+     "pages": [
+      16,
+      24,
+      25
+     ],
+     "per": {
+      "A": {
+       "april": 11
+      },
+      "A2": {
+       "april": 11
+      },
+      "A0": {
+       "april": 11
+      }
+     }
+    },
+    "augus": {
+     "pages": [
+      18,
+      19,
+      22,
+      24
+     ],
+     "per": {
+      "A": {
+       "august": 8
+      },
+      "A2": {
+       "august": 8
+      },
+      "A0": {
+       "august": 8
+      }
+     }
+    },
+    "scorp": {
+     "pages": [
+      20,
+      23,
+      24
+     ],
+     "per": {
+      "A": {
+       "scorpio": 5
+      },
+      "A2": {
+       "scorpio": 5
+      },
+      "A0": {
+       "scorpio": 5
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69bd9ad746b01553e33bd100",
+   "language": "German",
+   "terms": 8,
+   "byArm": {
+    "A": {
+     "terms": 7,
+     "renderings": 10,
+     "inconsistent": 1
+    },
+    "A2": {
+     "terms": 4,
+     "renderings": 4,
+     "inconsistent": 0
+    },
+    "A0": {
+     "terms": 8,
+     "renderings": 13,
+     "inconsistent": 2
+    }
+   },
+   "detail": {
+    "schri": {
+     "pages": [
+      96,
+      97,
+      101,
+      105
+     ],
+     "per": {
+      "A": {
+       "schreber": 2
+      },
+      "A2": {},
+      "A0": {
+       "schreber": 2
+      }
+     }
+    },
+    "weise": {
+     "pages": [
+      96,
+      101,
+      102
+     ],
+     "per": {
+      "A": {},
+      "A2": {},
+      "A0": {
+       "weiskorn": 1
+      }
+     }
+    },
+    "psych": {
+     "pages": [
+      96,
+      97,
+      99,
+      101,
+      102,
+      103,
+      105,
+      106
+     ],
+     "per": {
+      "A": {
+       "psychologie": 1,
+       "psychology": 1,
+       "psychiatrisch": 2,
+       "psychiatric": 2
+      },
+      "A2": {
+       "psychiatr": 1
+      },
+      "A0": {
+       "psychiatrisch": 2,
+       "psychoses": 1,
+       "psychologie": 1,
+       "psychiatrie": 2,
+       "psychiatry": 2
+      }
+     }
+    },
+    "hyste": {
+     "pages": [
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      105,
+      106,
+      107
+     ],
+     "per": {
+      "A": {
+       "hysteria": 6
+      },
+      "A2": {
+       "hysteria": 6
+      },
+      "A0": {
+       "hysteria": 6
+      }
+     }
+    },
+    "schre": {
+     "pages": [
+      96,
+      97,
+      107
+     ],
+     "per": {
+      "A": {
+       "schreber": 2
+      },
+      "A2": {},
+      "A0": {
+       "schreber": 2
+      }
+     }
+    },
+    "ianet": {
+     "pages": [
+      96,
+      100,
+      106,
+      107
+     ],
+     "per": {
+      "A": {
+       "ianet": 8
+      },
+      "A2": {
+       "ianet": 8
+      },
+      "A0": {
+       "ianet": 8
+      }
+     }
+    },
+    "woche": {
+     "pages": [
+      99,
+      101,
+      102
+     ],
+     "per": {
+      "A": {
+       "wochenschrift": 2
+      },
+      "A2": {},
+      "A0": {
+       "wochenschrift": 4
+      }
+     }
+    },
+    "freud": {
+     "pages": [
+      101,
+      102,
+      103
+     ],
+     "per": {
+      "A": {
+       "freud": 2
+      },
+      "A2": {
+       "freud": 2
+      },
+      "A0": {
+       "freud": 1,
+       "freudian": 3
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69b300005545150b61b4b45a",
+   "language": "Latin",
+   "terms": 15,
+   "byArm": {
+    "A": {
+     "terms": 11,
+     "renderings": 16,
+     "inconsistent": 2
+    },
+    "A2": {
+     "terms": 13,
+     "renderings": 18,
+     "inconsistent": 2
+    },
+    "A0": {
+     "terms": 14,
+     "renderings": 20,
+     "inconsistent": 3
+    }
+   },
+   "detail": {
+    "malco": {
+     "pages": [
+      478,
+      485,
+      488
+     ],
+     "per": {
+      "A": {
+       "malcolm": 3
+      },
+      "A2": {
+       "malcolm": 4
+      },
+      "A0": {
+       "malcolm": 3
+      }
+     }
+    },
+    "dauid": {
+     "pages": [
+      478,
+      485,
+      486
+     ],
+     "per": {
+      "A": {
+       "dauid": 7
+      },
+      "A2": {
+       "dauid": 7
+      },
+      "A0": {
+       "dauid": 7
+      }
+     }
+    },
+    "scoto": {
+     "pages": [
+      478,
+      479,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488
+     ],
+     "per": {
+      "A": {
+       "scots": 21,
+       "scottish": 6,
+       "scotland": 15
+      },
+      "A2": {
+       "scots": 21,
+       "scottish": 5,
+       "scotland": 15
+      },
+      "A0": {
+       "scots": 22,
+       "scottish": 9,
+       "scotland": 16
+      }
+     }
+    },
+    "imper": {
+     "pages": [
+      478,
+      486,
+      487
+     ],
+     "per": {
+      "A": {
+       "imperial": 1
+      },
+      "A2": {
+       "imperial": 1
+      },
+      "A0": {
+       "imperial": 1
+      }
+     }
+    },
+    "henri": {
+     "pages": [
+      478,
+      482,
+      486
+     ],
+     "per": {
+      "A": {
+       "henry": 6
+      },
+      "A2": {
+       "henry": 6
+      },
+      "A0": {
+       "henry": 6
+      }
+     }
+    },
+    "scoti": {
+     "pages": [
+      478,
+      479,
+      480,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488
+     ],
+     "per": {
+      "A": {
+       "scots": 23,
+       "scottish": 6,
+       "scotland": 19,
+       "scotus": 1
+      },
+      "A2": {
+       "scots": 24,
+       "scottish": 5,
+       "scotland": 19,
+       "scotus": 1
+      },
+      "A0": {
+       "scots": 24,
+       "scottish": 10,
+       "scotland": 19,
+       "scotus": 1
+      }
+     }
+    },
+    "domin": {
+     "pages": [
+      478,
+      479,
+      482,
+      483
+     ],
+     "per": {
+      "A": {},
+      "A2": {
+       "dominion": 1
+      },
+      "A0": {}
+     }
+    },
+    "ciuil": {
+     "pages": [
+      479,
+      486,
+      487,
+      488,
+      489
+     ],
+     "per": {
+      "A": {
+       "ciuil": 17
+      },
+      "A2": {
+       "ciuil": 18
+      },
+      "A0": {
+       "ciuil": 17
+      }
+     }
+    },
+    "angli": {
+     "pages": [
+      479,
+      480,
+      481,
+      484,
+      485,
+      486,
+      488
+     ],
+     "per": {
+      "A": {},
+      "A2": {},
+      "A0": {
+       "anglo": 1
+      }
+     }
+    },
+    "roman": {
+     "pages": [
+      480,
+      485,
+      486,
+      487,
+      488,
+      489
+     ],
+     "per": {
+      "A": {
+       "roman": 13
+      },
+      "A2": {
+       "roman": 13
+      },
+      "A0": {
+       "roman": 12,
+       "romans": 1
+      }
+     }
+    },
+    "bucha": {
+     "pages": [
+      480,
+      481,
+      486
+     ],
+     "per": {
+      "A": {
+       "buchanan": 4
+      },
+      "A2": {
+       "buchanan": 3
+      },
+      "A0": {
+       "buchanan": 4
+      }
+     }
+    },
+    "anglo": {
+     "pages": [
+      480,
+      481,
+      482,
+      488
+     ],
+     "per": {
+      "A": {},
+      "A2": {},
+      "A0": {
+       "anglo": 1
+      }
+     }
+    },
+    "brita": {
+     "pages": [
+      480,
+      481,
+      488,
+      489
+     ],
+     "per": {
+      "A": {
+       "britain": 10
+      },
+      "A2": {
+       "britain": 10
+      },
+      "A0": {
+       "britain": 8
+      }
+     }
+    },
+    "regia": {
+     "pages": [
+      482,
+      485,
+      486
+     ],
+     "per": {
+      "A": {
+       "regiam": 2
+      },
+      "A2": {
+       "regiam": 2
+      },
+      "A0": {
+       "regiam": 5
+      }
+     }
+    },
+    "munic": {
+     "pages": [
+      485,
+      486,
+      488
+     ],
+     "per": {
+      "A": {},
+      "A2": {
+       "municipal": 1
+      },
+      "A0": {
+       "municipal": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "6984e8498a2f054f912420c3",
+   "language": "Latin",
+   "terms": 1,
+   "byArm": {
+    "A": {
+     "terms": 1,
+     "renderings": 2,
+     "inconsistent": 1
+    },
+    "A2": {
+     "terms": 1,
+     "renderings": 2,
+     "inconsistent": 1
+    },
+    "A0": {
+     "terms": 1,
+     "renderings": 2,
+     "inconsistent": 1
+    }
+   },
+   "detail": {
+    "helmo": {
+     "pages": [
+      736,
+      738,
+      741
+     ],
+     "per": {
+      "A": {
+       "helmontian": 2,
+       "helmont": 1
+      },
+      "A2": {
+       "helmontian": 2,
+       "helmont": 1
+      },
+      "A0": {
+       "helmontian": 2,
+       "helmont": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69b2feee65b9d6bf89925558",
+   "language": "Latin",
+   "terms": 9,
+   "byArm": {
+    "A": {
+     "terms": 9,
+     "renderings": 16,
+     "inconsistent": 5
+    },
+    "A2": {
+     "terms": 8,
+     "renderings": 15,
+     "inconsistent": 5
+    },
+    "A0": {
+     "terms": 9,
+     "renderings": 16,
+     "inconsistent": 5
+    }
+   },
+   "detail": {
+    "arist": {
+     "pages": [
+      496,
+      498,
+      500,
+      501
+     ],
+     "per": {
+      "A": {
+       "aristotle": 5
+      },
+      "A2": {
+       "aristotle": 5
+      },
+      "A0": {
+       "aristotle": 5
+      }
+     }
+    },
+    "homer": {
+     "pages": [
+      496,
+      497,
+      501
+     ],
+     "per": {
+      "A": {
+       "homer": 3,
+       "homeric": 1
+      },
+      "A2": {
+       "homer": 3,
+       "homeric": 1
+      },
+      "A0": {
+       "homer": 3,
+       "homeric": 1
+      }
+     }
+    },
+    "dioge": {
+     "pages": [
+      496,
+      499,
+      505
+     ],
+     "per": {
+      "A": {
+       "diogenianus": 1,
+       "diogenes": 4
+      },
+      "A2": {
+       "diogenianus": 1,
+       "diogenes": 4
+      },
+      "A0": {
+       "diogenianus": 1,
+       "diogenes": 4
+      }
+     }
+    },
+    "zenod": {
+     "pages": [
+      496,
+      497,
+      507
+     ],
+     "per": {
+      "A": {
+       "zenodotus": 5
+      },
+      "A2": {
+       "zenodotus": 5
+      },
+      "A0": {
+       "zenodotus": 5
+      }
+     }
+    },
+    "silen": {
+     "pages": [
+      499,
+      500,
+      501,
+      506,
+      507
+     ],
+     "per": {
+      "A": {
+       "sileni": 11,
+       "silenus": 13
+      },
+      "A2": {
+       "sileni": 11,
+       "silenus": 13
+      },
+      "A0": {
+       "sileni": 10,
+       "silenus": 13
+      }
+     }
+    },
+    "chris": {
+     "pages": [
+      500,
+      501,
+      502,
+      503,
+      504
+     ],
+     "per": {
+      "A": {
+       "christ": 19,
+       "christian": 9,
+       "christians": 5,
+       "christopher": 1
+      },
+      "A2": {
+       "christian": 10,
+       "christ": 19,
+       "christians": 5,
+       "christopher": 1
+      },
+      "A0": {
+       "christian": 10,
+       "christ": 19,
+       "christians": 5,
+       "christopher": 1
+      }
+     }
+    },
+    "euang": {
+     "pages": [
+      501,
+      503,
+      506
+     ],
+     "per": {
+      "A": {
+       "euangelical": 3
+      },
+      "A2": {},
+      "A0": {
+       "euangelical": 3
+      }
+     }
+    },
+    "chrif": {
+     "pages": [
+      501,
+      505,
+      506
+     ],
+     "per": {
+      "A": {
+       "christ": 11,
+       "christian": 7
+      },
+      "A2": {
+       "christ": 11,
+       "christian": 8
+      },
+      "A0": {
+       "christ": 10,
+       "christian": 8
+      }
+     }
+    },
+    "paulu": {
+     "pages": [
+      502,
+      503,
+      504,
+      505,
+      506
+     ],
+     "per": {
+      "A": {
+       "paul": 8
+      },
+      "A2": {
+       "paul": 8
+      },
+      "A0": {
+       "paul": 8
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69af0bdafd75e3c62284c4ce",
+   "language": "Latin",
+   "terms": 10,
+   "byArm": {
+    "A": {
+     "terms": 9,
+     "renderings": 9,
+     "inconsistent": 0
+    },
+    "A2": {
+     "terms": 9,
+     "renderings": 9,
+     "inconsistent": 0
+    },
+    "A0": {
+     "terms": 10,
+     "renderings": 11,
+     "inconsistent": 1
+    }
+   },
+   "detail": {
+    "zodia": {
+     "pages": [
+      387,
+      388,
+      389,
+      390,
+      391
+     ],
+     "per": {
+      "A": {
+       "zodiac": 22
+      },
+      "A2": {
+       "zodiac": 22
+      },
+      "A0": {
+       "zodiac": 22
+      }
+     }
+    },
+    "ariet": {
+     "pages": [
+      387,
+      388,
+      389,
+      390
+     ],
+     "per": {
+      "A": {
+       "aries": 22
+      },
+      "A2": {
+       "aries": 22
+      },
+      "A0": {
+       "aries": 22
+      }
+     }
+    },
+    "libræ": {
+     "pages": [
+      387,
+      388,
+      389
+     ],
+     "per": {
+      "A": {
+       "libra": 11
+      },
+      "A2": {
+       "libra": 11
+      },
+      "A0": {
+       "libra": 11
+      }
+     }
+    },
+    "pisci": {
+     "pages": [
+      387,
+      388,
+      390
+     ],
+     "per": {
+      "A": {
+       "pisces": 7
+      },
+      "A2": {
+       "pisces": 7
+      },
+      "A0": {
+       "pisces": 7
+      }
+     }
+    },
+    "eclip": {
+     "pages": [
+      387,
+      390,
+      391,
+      392
+     ],
+     "per": {
+      "A": {
+       "ecliptic": 20
+      },
+      "A2": {
+       "ecliptic": 20
+      },
+      "A0": {
+       "ecliptic": 20
+      }
+     }
+    },
+    "quadr": {
+     "pages": [
+      387,
+      391,
+      392
+     ],
+     "per": {
+      "A": {},
+      "A2": {},
+      "A0": {
+       "quadrant": 4,
+       "quadrants": 1
+      }
+     }
+    },
+    "regio": {
+     "pages": [
+      389,
+      390,
+      392
+     ],
+     "per": {
+      "A": {
+       "regiomontanus": 5
+      },
+      "A2": {
+       "regiomontanus": 5
+      },
+      "A0": {
+       "regiomontanus": 5
+      }
+     }
+    },
+    "epito": {
+     "pages": [
+      389,
+      390,
+      392
+     ],
+     "per": {
+      "A": {
+       "epitome": 4
+      },
+      "A2": {
+       "epitome": 3
+      },
+      "A0": {
+       "epitome": 3
+      }
+     }
+    },
+    "ascen": {
+     "pages": [
+      390,
+      391,
+      395
+     ],
+     "per": {
+      "A": {
+       "ascensional": 1
+      },
+      "A2": {
+       "ascensional": 1
+      },
+      "A0": {
+       "ascensional": 1
+      }
+     }
+    },
+    "diffe": {
+     "pages": [
+      394,
+      395,
+      396,
+      397,
+      398
+     ],
+     "per": {
+      "A": {
+       "differences": 3
+      },
+      "A2": {
+       "differences": 3
+      },
+      "A0": {
+       "differences": 3
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "6ab5a6856122fe9080c03856",
+   "language": "Latin",
+   "terms": 0,
+   "byArm": {
+    "A": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    },
+    "A2": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    },
+    "A0": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    }
+   },
+   "detail": {}
+  },
+  {
+   "book": "69b631bf1c1c21a37380a556",
+   "language": "Latin",
+   "terms": 5,
+   "byArm": {
+    "A": {
+     "terms": 5,
+     "renderings": 6,
+     "inconsistent": 1
+    },
+    "A2": {
+     "terms": 5,
+     "renderings": 6,
+     "inconsistent": 1
+    },
+    "A0": {
+     "terms": 5,
+     "renderings": 6,
+     "inconsistent": 1
+    }
+   },
+   "detail": {
+    "augus": {
+     "pages": [
+      326,
+      327,
+      328,
+      337
+     ],
+     "per": {
+      "A": {
+       "augustine": 6
+      },
+      "A2": {
+       "augustine": 6
+      },
+      "A0": {
+       "augustine": 6
+      }
+     }
+    },
+    "chris": {
+     "pages": [
+      326,
+      327,
+      328,
+      329,
+      330
+     ],
+     "per": {
+      "A": {
+       "christ": 18,
+       "christian": 1
+      },
+      "A2": {
+       "christ": 18,
+       "christian": 1
+      },
+      "A0": {
+       "christ": 18,
+       "christian": 1
+      }
+     }
+    },
+    "thoma": {
+     "pages": [
+      327,
+      331,
+      335
+     ],
+     "per": {
+      "A": {
+       "thomas": 6
+      },
+      "A2": {
+       "thomas": 6
+      },
+      "A0": {
+       "thomas": 6
+      }
+     }
+    },
+    "chrys": {
+     "pages": [
+      330,
+      331,
+      336,
+      337
+     ],
+     "per": {
+      "A": {
+       "chrysostom": 5
+      },
+      "A2": {
+       "chrysostom": 5
+      },
+      "A0": {
+       "chrysostom": 5
+      }
+     }
+    },
+    "matth": {
+     "pages": [
+      330,
+      331,
+      332,
+      335
+     ],
+     "per": {
+      "A": {
+       "matthew": 4
+      },
+      "A2": {
+       "matthew": 5
+      },
+      "A0": {
+       "matthew": 5
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69b630dc1c1c21a3738049a3",
+   "language": "Latin",
+   "terms": 0,
+   "byArm": {
+    "A": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    },
+    "A2": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    },
+    "A0": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    }
+   },
+   "detail": {}
+  },
+  {
+   "book": "69b4ccead5b6c3815e1a29dd",
+   "language": "Latin",
+   "terms": 5,
+   "byArm": {
+    "A": {
+     "terms": 5,
+     "renderings": 6,
+     "inconsistent": 1
+    },
+    "A2": {
+     "terms": 5,
+     "renderings": 6,
+     "inconsistent": 1
+    },
+    "A0": {
+     "terms": 5,
+     "renderings": 6,
+     "inconsistent": 1
+    }
+   },
+   "detail": {
+    "paulu": {
+     "pages": [
+      131,
+      134,
+      138
+     ],
+     "per": {
+      "A": {
+       "paul": 2,
+       "pauline": 1
+      },
+      "A2": {
+       "paul": 2,
+       "pauline": 1
+      },
+      "A0": {
+       "paul": 4,
+       "pauline": 1
+      }
+     }
+    },
+    "ambro": {
+     "pages": [
+      131,
+      139,
+      141,
+      142
+     ],
+     "per": {
+      "A": {
+       "ambrose": 3
+      },
+      "A2": {
+       "ambrose": 3
+      },
+      "A0": {
+       "ambrose": 3
+      }
+     }
+    },
+    "augus": {
+     "pages": [
+      131,
+      135,
+      142
+     ],
+     "per": {
+      "A": {
+       "augustine": 3
+      },
+      "A2": {
+       "augustine": 3
+      },
+      "A0": {
+       "augustine": 2
+      }
+     }
+    },
+    "chris": {
+     "pages": [
+      131,
+      137,
+      138,
+      140,
+      142
+     ],
+     "per": {
+      "A": {
+       "christ": 13
+      },
+      "A2": {
+       "christ": 12
+      },
+      "A0": {
+       "christ": 13
+      }
+     }
+    },
+    "colet": {
+     "pages": [
+      132,
+      133,
+      134,
+      135,
+      136,
+      138,
+      139,
+      141
+     ],
+     "per": {
+      "A": {
+       "colet": 14
+      },
+      "A2": {
+       "colet": 14
+      },
+      "A0": {
+       "colet": 14
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69b630791c1c21a3738028ac",
+   "language": "Latin",
+   "terms": 8,
+   "byArm": {
+    "A": {
+     "terms": 8,
+     "renderings": 12,
+     "inconsistent": 3
+    },
+    "A2": {
+     "terms": 7,
+     "renderings": 11,
+     "inconsistent": 3
+    },
+    "A0": {
+     "terms": 7,
+     "renderings": 10,
+     "inconsistent": 2
+    }
+   },
+   "detail": {
+    "synod": {
+     "pages": [
+      60,
+      64,
+      66
+     ],
+     "per": {
+      "A": {
+       "synodal": 1
+      },
+      "A2": {},
+      "A0": {}
+     }
+    },
+    "elect": {
+     "pages": [
+      61,
+      67,
+      68
+     ],
+     "per": {
+      "A": {
+       "electors": 1,
+       "election": 2
+      },
+      "A2": {
+       "election": 2
+      },
+      "A0": {
+       "election": 2
+      }
+     }
+    },
+    "spiri": {
+     "pages": [
+      61,
+      62,
+      63
+     ],
+     "per": {
+      "A": {
+       "spirit": 9
+      },
+      "A2": {
+       "spiritus": 1,
+       "spirit": 9
+      },
+      "A0": {
+       "spirit": 9
+      }
+     }
+    },
+    "chris": {
+     "pages": [
+      62,
+      63,
+      64,
+      65,
+      66,
+      71
+     ],
+     "per": {
+      "A": {
+       "christ": 10,
+       "christian": 1
+      },
+      "A2": {
+       "christ": 10,
+       "christian": 1
+      },
+      "A0": {
+       "christ": 10,
+       "christian": 1
+      }
+     }
+    },
+    "uirgi": {
+     "pages": [
+      63,
+      65,
+      67,
+      68
+     ],
+     "per": {
+      "A": {
+       "uirgin": 4
+      },
+      "A2": {
+       "uirgin": 3
+      },
+      "A0": {
+       "uirgin": 3
+      }
+     }
+    },
+    "catho": {
+     "pages": [
+      63,
+      64,
+      65,
+      66
+     ],
+     "per": {
+      "A": {
+       "catholic": 5
+      },
+      "A2": {
+       "catholic": 5
+      },
+      "A0": {
+       "catholic": 5
+      }
+     }
+    },
+    "apost": {
+     "pages": [
+      63,
+      66,
+      67,
+      68
+     ],
+     "per": {
+      "A": {
+       "apostolic": 2,
+       "apostles": 3,
+       "apostle": 1
+      },
+      "A2": {
+       "apostolic": 2,
+       "apostles": 3,
+       "apostle": 1
+      },
+      "A0": {
+       "apostolic": 2,
+       "apostles": 3,
+       "apostle": 1
+      }
+     }
+    },
+    "confi": {
+     "pages": [
+      63,
+      64,
+      71
+     ],
+     "per": {
+      "A": {
+       "confirmation": 2
+      },
+      "A2": {
+       "confirmation": 2
+      },
+      "A0": {
+       "confirmation": 2
+      }
+     }
+    }
+   }
+  },
+  {
+   "book": "69b51e949a81ef7feb3d7864",
+   "language": "German",
+   "terms": 5,
+   "byArm": {
+    "A": {
+     "terms": 5,
+     "renderings": 7,
+     "inconsistent": 1
+    },
+    "A2": {
+     "terms": 4,
+     "renderings": 6,
+     "inconsistent": 1
+    },
+    "A0": {
+     "terms": 4,
+     "renderings": 8,
+     "inconsistent": 1
+    }
+   },
+   "detail": {
+    "gorli": {
+     "pages": [
+      17,
+      19,
+      20
+     ],
+     "per": {
+      "A": {
+       "gorlitz": 3
+      },
+      "A2": {
+       "gorlitz": 3
+      },
+      "A0": {
+       "gorlitz": 3
+      }
+     }
+    },
+    "chris": {
+     "pages": [
+      17,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+     ],
+     "per": {
+      "A": {
+       "christ": 42,
+       "christians": 2,
+       "christian": 4
+      },
+      "A2": {
+       "christ": 42,
+       "christians": 2,
+       "christian": 4
+      },
+      "A0": {
+       "christ": 42,
+       "christo": 3,
+       "christians": 1,
+       "christian": 5,
+       "christi": 1
+      }
+     }
+    },
+    "gelas": {
+     "pages": [
+      19,
+      21,
+      26
+     ],
+     "per": {
+      "A": {
+       "gelassenheit": 1
+      },
+      "A2": {
+       "gelassenheit": 1
+      },
+      "A0": {
+       "gelassenheit": 2
+      }
+     }
+    },
+    "richt": {
+     "pages": [
+      19,
+      20,
+      22,
+      23
+     ],
+     "per": {
+      "A": {
+       "richter": 2
+      },
+      "A2": {
+       "richter": 3
+      },
+      "A0": {
+       "richter": 2
+      }
+     }
+    },
+    "prima": {
+     "pages": [
+      20,
+      23,
+      24,
+      26,
+      27,
+      28
+     ],
+     "per": {
+      "A": {
+       "primarius": 1
+      },
+      "A2": {},
+      "A0": {}
+     }
+    }
+   }
+  },
+  {
+   "book": "69dbcc181040d1d5e20bd032",
+   "language": "German",
+   "terms": 0,
+   "byArm": {
+    "A": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    },
+    "A2": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    },
+    "A0": {
+     "terms": 0,
+     "renderings": 0,
+     "inconsistent": 0
+    }
+   },
+   "detail": {}
+  },
+  {
+   "book": "6955da57646474023271beb0",
+   "language": "Latin",
+   "terms": 17,
+   "byArm": {
+    "A": {
+     "terms": 16,
+     "renderings": 19,
+     "inconsistent": 3
+    },
+    "A2": {
+     "terms": 16,
+     "renderings": 19,
+     "inconsistent": 2
+    },
+    "A0": {
+     "terms": 17,
+     "renderings": 21,
+     "inconsistent": 3
+    }
+   },
+   "detail": {
+    "serui": {
+     "pages": [
+      49,
+      50,
+      53,
+      54
+     ],
+     "per": {
+      "A": {
+       "seruius": 1,
+       "seruitudes": 1
+      },
+      "A2": {
+       "seruius": 1
+      },
+      "A0": {
+       "seruius": 2
+      }
+     }
+    },
+    "horat": {
+     "pages": [
+      49,
+      59,
+      60
+     ],
+     "per": {
+      "A": {
+       "horace": 3
+      },
+      "A2": {
+       "horace": 3
+      },
+      "A0": {
+       "horace": 3
+      }
+     }
+    },
+    "buttu": {
+     "pages": [
+      49,
+      52,
+      55
+     ],
+     "per": {
+      "A": {
+       "buttubatta": 4
+      },
+      "A2": {
+       "buttubatta": 3
+      },
+      "A0": {
+       "buttubatta": 2,
+       "buttuhata": 1
+      }
+     }
+    },
+    "augus": {
+     "pages": [
+      49,
+      57,
+      60
+     ],
+     "per": {
+      "A": {
+       "augustine": 2,
+       "augustus": 2
+      },
+      "A2": {
+       "augustine": 2,
+       "augustus": 2
+      },
+      "A0": {
+       "augustine": 2,
+       "augustus": 2
+      }
+     }
+    },
+    "plaut": {
+     "pages": [
+      50,
+      53,
+      54,
+      56,
+      57,
+      59
+     ],
+     "per": {
+      "A": {
+       "plautus": 5
+      },
+      "A2": {
+       "plautus": 5
+      },
+      "A0": {
+       "plautus": 5
+      }
+     }
+    },
+    "donat": {
+     "pages": [
+      50,
+      52,
+      55,
+      57,
+      58
+     ],
+     "per": {
+      "A": {
+       "donatus": 2
+      },
+      "A2": {
+       "donatus": 2
+      },
+      "A0": {
+       "donatus": 2
+      }
+     }
+    },
+    "plini": {
+     "pages": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      59
+     ],
+     "per": {
+      "A": {
+       "pliny": 6
+      },
+      "A2": {
+       "pliny": 6
+      },
+      "A0": {
+       "pliny": 6
+      }
+     }
+    },
+    "apule": {
+     "pages": [
+      51,
+      55,
+      56
+     ],
+     "per": {
+      "A": {
+       "apuleius": 2
+      },
+      "A2": {
+       "apuleius": 2
+      },
+      "A0": {
+       "apuleius": 2
+      }
+     }
+    },
+    "cicer": {
+     "pages": [
+      51,
+      52,
+      55
+     ],
+     "per": {
+      "A": {
+       "cicero": 6
+      },
+      "A2": {
+       "cicero": 5
+      },
+      "A0": {
+       "cicero": 5
+      }
+     }
+    },
+    "uarro": {
+     "pages": [
+      51,
+      52,
+      57,
+      59
+     ],
+     "per": {
+      "A": {
+       "uarro": 4
+      },
+      "A2": {
+       "uarro": 4
+      },
+      "A0": {
+       "uarro": 4
+      }
+     }
+    },
+    "arist": {
+     "pages": [
+      51,
+      55,
+      60
+     ],
+     "per": {
+      "A": {
+       "aristophorus": 1,
+       "aristotle": 1
+      },
+      "A2": {
+       "aristoxenus": 1,
+       "aristophorus": 1,
+       "aristotle": 1
+      },
+      "A0": {
+       "aristoxenus": 1,
+       "aristophorus": 1,
+       "aristotle": 1
+      }
+     }
+    },
+    "gelli": {
+     "pages": [
+      51,
+      55,
+      58
+     ],
+     "per": {
+      "A": {
+       "gellius": 3
+      },
+      "A2": {
+       "gellius": 3
+      },
+      "A0": {
+       "gellius": 3
+      }
+     }
+    },
+    "teren": {
+     "pages": [
+      51,
+      53,
+      59
+     ],
+     "per": {
+      "A": {
+       "terence": 1
+      },
+      "A2": {
+       "terence": 2
+      },
+      "A0": {
+       "terence": 1
+      }
+     }
+    },
+    "poeta": {
+     "pages": [
+      51,
+      57,
+      58
+     ],
+     "per": {
+      "A": {},
+      "A2": {},
+      "A0": {
+       "poet": 1
+      }
+     }
+    },
+    "pompo": {
+     "pages": [
+      52,
+      54,
+      56
+     ],
+     "per": {
+      "A": {
+       "pomponius": 2
+      },
+      "A2": {
+       "pomponius": 2
+      },
+      "A0": {
+       "pomponius": 2
+      }
+     }
+    },
+    "prisc": {
+     "pages": [
+      53,
+      57,
+      58
+     ],
+     "per": {
+      "A": {
+       "priscian": 5
+      },
+      "A2": {
+       "priscian": 6
+      },
+      "A0": {
+       "priscian": 1
+      }
+     }
+    },
+    "neron": {
+     "pages": [
+      54,
+      55,
+      59
+     ],
+     "per": {
+      "A": {
+       "nero": 3
+      },
+      "A2": {
+       "nero": 3
+      },
+      "A0": {
+       "nero": 3
+      }
+     }
+    }
+   }
+  }
+ ]
+}

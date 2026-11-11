@@ -39,6 +39,7 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  neighbourGate,
   recordTruncatedTranslation,
   isEmptyTranslation,
   recordEmptyTranslation,
@@ -539,7 +540,7 @@ function engineFor(page, book, promptRef, call) {
 // `promptRef` is the prompt reference returned by translatePage / translateBatch.
 // No constant fallback (#7499): this file stamped 'v10' on 2.15M pages whatever it sent. A label
 // the prompt reference does not give is not written (promptLabel).
-async function writePageTranslation(db, page, text, book, promptRef, call, cut = null) {
+async function writePageTranslation(db, page, text, book, promptRef, call, cut = null, neighbours = null) {
   // #5055: the write guard. `cut` is its verdict on the raw reply (translatePage: a tag left open at the tail, MAX_TOKENS).
   if (cut?.verdict === 'truncated') return refuseCut(db, page, text, book, cut);
   text = unwrapForWrite(page, text, book);
@@ -570,6 +571,9 @@ async function writePageTranslation(db, page, text, book, promptRef, call, cut =
   // #5055: the guard's length rule, after the health gate's named refusals.
   const short = checkWrittenText(text, { kind: 'translation', source: page.ocr?.data, lang: book?.language, type: page.page_type });
   if (short.verdict === 'truncated') return refuseCut(db, page, text, book, short);
+  // #5026: the page's English is not its neighbour's (stored n-1 / n+1, or the block's own pages): stamped and kept.
+  const nb = await neighbourGate(db, page, text, { neighbours, jobId: book?.job?.job_id, model: getModelForBook(book) });
+  if (nb.refused) return { written: false, reason: nb.reason };
   const engine = engineFor(page, book, promptRef, call); // throws on a missing call record — no partial provenance
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const layers = translationLayers(text, { promptVersion: promptRef?.version }); // #5942: text + annotations beside data
@@ -665,11 +669,20 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     return true;
   });
   for (const { page, text, g } of cutEntries) await refuseCut(db, page, text, book, g);
+  // #5026: no page of the block carries its neighbour's English, judged against the block's own pages where they are
+  // neighbours (the stored English otherwise).
+  const blockText = Object.fromEntries(entries.map(({ page, text }) => [page.page_number, text]));
+  const leaked = [];
+  for (const e of entries) {
+    const nb = await neighbourGate(db, e.page, e.text, { neighbours: blockText, jobId: book?.job?.job_id, model: getModelForBook(book) });
+    if (nb.refused) leaked.push(e);
+  }
+  if (leaked.length) entries = entries.filter((e) => !leaked.includes(e));
   // `refused` = pages the health gate kept out, so the caller does not count them translated (#5108).
-  if (entries.length === 0) return { refused: unhealthy.length + empty.length + cutEntries.length };
+  if (entries.length === 0) return { refused: unhealthy.length + empty.length + cutEntries.length + leaked.length };
   if (entries.length === 1) {
-    const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
-    return { refused: unhealthy.length + empty.length + cutEntries.length + (one.written ? 0 : 1) };
+    const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call, null, blockText);
+    return { refused: unhealthy.length + empty.length + cutEntries.length + leaked.length + (one.written ? 0 : 1) };
   }
   // Build every page's record BEFORE any write: a missing call record fails the whole block here
   // rather than after some pages are stored.
@@ -728,7 +741,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     },
   })));
   await seamGuardPages(db, entries.map(({ page }) => page), book);
-  return { refused: unhealthy.length + empty.length + cutEntries.length };
+  return { refused: unhealthy.length + empty.length + cutEntries.length + leaked.length };
 }
 
 // Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.

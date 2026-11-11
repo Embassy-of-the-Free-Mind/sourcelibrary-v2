@@ -1,0 +1,145 @@
+{
+ "wave1": {
+  "pages": 2004,
+  "in_ledger": 2004,
+  "states": {
+   "ocr-refused": 141,
+   "apply-refused": 59,
+   "retranslated": 1793,
+   "skip-changed": 1,
+   "not-translatable": 10
+  },
+  "not_reached": 0,
+  "books_retranslated": 404,
+  "skip_reasons": {
+   "ocr: letters outside the book's scripts": 47,
+   "ocr: only # of its words are in the stored read: check by eye": 40,
+   "tr: refused by the door: absorbs-neighbour": 28,
+   "ocr: reply wrapper: reply cut before <<<END>>>": 12,
+   "ocr: the model never opened the page image (every read_file/view_file denied): not a read of th": 6,
+   "ocr: reader tags the page <script>mixed</script>: --print-only": 3,
+   "tr: refused by the door: collapsed": 2,
+   "tr: refused by the door: echo": 2,
+   "tr: reply wrapper: reply cut before <<<END>>>": 1,
+   "tr: reply wrapper: a second marker inside the block": 1
+  }
+ },
+ "wave1b": {
+  "pages": 2004,
+  "in_ledger": 2004,
+  "states": {
+   "ocr-refused": 141,
+   "apply-refused": 59,
+   "retranslated": 1793,
+   "skip-changed": 1,
+   "not-translatable": 10
+  },
+  "not_reached": 0,
+  "books_retranslated": 404,
+  "skip_reasons": {
+   "ocr: letters outside the book's scripts": 15,
+   "tr: refused by the door: absorbs-neighbour": 10,
+   "ocr: reply wrapper: reply cut before <<<END>>>": 8,
+   "ocr: only # of its words are in the stored read: check by eye": 5,
+   "tr: refused by the door: runaway": 5,
+   "ocr: the model never opened the page image (every read_file/view_file denied): not a read of th": 2,
+   "tr: reply wrapper: reply cut before <<<END>>>": 2,
+   "tr: copies the English printed on the page": 2,
+   "tr: reply wrapper: a second marker inside the block": 1,
+   "tr: refused by the door: collapsed": 1
+  }
+ },
+ "wave2": {
+  "pages": 2001,
+  "in_ledger": 2001,
+  "states": {
+   "retranslated": 1804,
+   "apply-refused": 44,
+   "ocr-refused": 139,
+   "skip-changed": 1,
+   "not-translatable": 13
+  },
+  "not_reached": 0,
+  "books_retranslated": 498,
+  "skip_reasons": {
+   "ocr: letters outside the book's scripts": 71,
+   "ocr: only # of its words are in the stored read: check by eye": 48,
+   "tr: refused by the door: absorbs-neighbour": 28,
+   "ocr: the model never opened the page image (every read_file/view_file denied): not a read of th": 10,
+   "tr: copies the English printed on the page": 10,
+   "ocr: reply wrapper: reply cut before <<<END>>>": 8,
+   "tr: reply wrapper: a second marker inside the block": 2,
+   "tr: reply wrapper: reply cut before <<<END>>>": 2,
+   "tr: refused by the door: neighbour-leak": 1,
+   "ocr: reader tags the page <script>mixed</script>: --print-only": 1,
+   "tr: refused by the door: stray-script": 1,
+   "tr: refused by the door: collapsed": 1,
+   "ocr: reply wrapper: no <<<BEGIN>>> marker": 1
+  }
+ },
+ "wave3": {
+  "pages": 722,
+  "in_ledger": 722,
+  "states": {
+   "retranslated": 640,
+   "ocr-refused": 68,
+   "apply-refused": 12,
+   "not-translatable": 2
+  },
+  "not_reached": 0,
+  "books_retranslated": 506,
+  "skip_reasons": {
+   "ocr: letters outside the book's scripts": 40,
+   "ocr: only # of its words are in the stored read: check by eye": 21,
+   "tr: refused by the door: absorbs-neighbour": 7,
+   "ocr: reply wrapper: reply cut before <<<END>>>": 5,
+   "tr: reply wrapper: a second marker inside the block": 2,
+   "ocr: the model never opened the page image (every read_file/view_file denied): not a read of th": 1,
+   "ocr: reader tags the page <script>mixed</script>: --print-only": 1,
+   "tr: copies the English printed on the page": 1,
+   "tr: refused by the door: collapsed": 1,
+   "tr: refused by the door: neighbour-leak": 1
+  }
+ },
+ "detector": {
+  "before-wave1": {
+   "label": "before-wave1",
+   "pairs": 4524,
+   "flagged_500": 4433,
+   "flagged_200": 4434
+  },
+  "after-wave1": {
+   "label": "after-wave1",
+   "pairs": 4524,
+   "flagged_500": 2930,
+   "flagged_200": 2934
+  },
+  "after-wave2": {
+   "label": "after-wave2",
+   "pairs": 4524,
+   "flagged_500": 1472,
+   "flagged_200": 1477
+  },
+  "after-wave3": {
+   "label": "after-wave3",
+   "pairs": 4524,
+   "flagged_500": 913,
+   "flagged_200": 918
+  }
+ },
+ "progress": {
+  "at": "2026-11-09T03:38:28.939Z",
+  "queued": 5446,
+  "by_state": {
+   "served:ocr-refused": 356,
+   "served:retranslated": 4315,
+   "served:apply-refused": 117,
+   "served:queued": 631,
+   "served:skip-changed": 2,
+   "served:not-translatable": 25
+  },
+  "running": false,
+  "finished_at": "2026-11-09T03:38:28.863Z"
+ },
+ "note": "tally-wave1 and tally-wave1b both cover the wave-1 ids (final states identical; skip_reasons per run). wave1b re-ran 715 pages whose child processes failed with ERR_MODULE_NOT_FOUND during a shared node_modules reinstall ~21:00-21:23Z."
+}

@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-11-08T01:09:29.751Z",
+  "recall": {
+    "whole book descending": {
+      "books": 26,
+      "held": 26
+    },
+    "one part descending": {
+      "books": 17,
+      "held": 16
+    },
+    "pair-swapped": {
+      "books": 6,
+      "held": 0
+    },
+    "isolated swap": {
+      "books": 1,
+      "held": 0
+    },
+    "whole book descending (missed by v5)": {
+      "books": 1,
+      "held": 0
+    }
+  },
+  "recall_total": {
+    "books": 51,
+    "held": 42
+  },
+  "recall_with_10_markers": {
+    "books": 47,
+    "held": 40
+  },
+  "false_positives_5699": {
+    "books": 10,
+    "held": 0
+  },
+  "draw": {
+    "books": 598,
+    "with_10_markers": 69,
+    "held": 0
+  },
+  "missed": [
+    "69ae9cd3591c8449ffb83443 one part descending P=0 S=0 Horae Semiticae VIII: Codex Climaci Rescriptus",
+    "6976db51097b3607ee4be2f9 pair-swapped P=135 S=0 [Hebrew: Avodat ha-kodesh]",
+    "69943c7813c9a0dce2757b20 pair-swapped P=193 S=0 De Perfectione Religiosa",
+    "69a5ed4896d6dd816a56a0b4 pair-swapped P=191 S=0 Liber Superiorum seu Historia Monastica",
+    "69e7518610ee9075bcdcde12 pair-swapped P=79 S=0 ספר תהלים (Sepher Tehillim / Psalms)",
+    "6a9fb207732b9e75e96ba46f pair-swapped P=51 S=139 El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āt",
+    "6a9fb1ff732b9e75e96ba39d pair-swapped P=54 S=284 El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āt",
+    "69e8b29f2ff2a8dc09e78458 isolated swap P=165 S=0 مقدمة ابن خلدون (Muqaddimah)",
+    "69af0cf0ca8f47eb1206ae5c whole book descending (missed by v5) P=0 S=0 Kitab Manafi al-Aghdhiyah"
+  ],
+  "draw_held": []
+}

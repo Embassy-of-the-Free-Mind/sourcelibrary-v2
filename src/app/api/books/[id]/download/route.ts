@@ -15,7 +15,7 @@ import { partnerTermsRefusal } from '@/lib/partner-terms';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import sharp, { type CreateText, type TextAlign } from 'sharp';
 import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
@@ -591,7 +591,7 @@ async function generateLoebEpubDownload(
   // Build the EPUB as a ZIP archive
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
 
     archive.on('data', (chunk: Buffer) => chunks.push(chunk));
     archive.on('end', () => resolve(Buffer.concat(chunks)));
@@ -939,7 +939,7 @@ async function generateFacsimileEpubDownload(
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
 
     archive.on('data', (chunk: Buffer) => chunks.push(chunk));
     archive.on('end', () => resolve(Buffer.concat(chunks)));
@@ -1200,7 +1200,7 @@ async function generateImagesOnlyEpubDownload(
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
 
     archive.on('data', (chunk: Buffer) => chunks.push(chunk));
     archive.on('end', () => resolve(Buffer.concat(chunks)));
@@ -1853,7 +1853,7 @@ async function generateScholarlyEpubDownload(
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
 
     archive.on('data', (chunk: Buffer) => chunks.push(chunk));
     archive.on('end', () => resolve(Buffer.concat(chunks)));
@@ -2122,7 +2122,7 @@ async function generateScholarlyEpubDownload(
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
     <p>English translation prepared by Source Library</p>
     <p>&#160;</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'}${(edition?.license || 'CC-BY-NC-SA-4.0') === 'CC-BY-NC-SA-4.0' ? ' (Creative Commons Attribution-NonCommercial-ShareAlike)' : ''}</p>
     <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit and distribute under the same license.</p>
     ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&#160;</p>

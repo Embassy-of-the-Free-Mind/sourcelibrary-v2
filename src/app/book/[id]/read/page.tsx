@@ -57,6 +57,7 @@ import { isBot, isTrustedBot } from '@/lib/bot-gate';
 import { NextRequest } from 'next/server';
 import { logBotRead } from '@/lib/bot-reads';
 import { checkReadBudget, chargeRead } from '@/lib/read-budget';
+import { API_LIMITS } from '@/lib/api-limits';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { freeMaxPage } from '@/lib/free-preview';
 import { markForExport } from '@/lib/provenance';
@@ -124,6 +125,9 @@ const PAGE_PROJECTION = {
   _id: 0, id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1, translation_withheld: 1,
   'printed_page.label': 1,
 };
+
+/** The page list without text: what the part count, part ranges and links read. */
+const PAGE_LIST_PROJECTION = { _id: 0, id: 1, page_number: 1, page_type: 1 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -229,16 +233,34 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     : await checkReadBudget(new NextRequest(request.url, { headers: h }));
   const clampAt = untrustedBot || meteredAnon || meter?.overBudget ? freeMaxPage(pagesCount) : undefined;
 
-  const pagesRaw = await db.collection('pages')
-    .find(readerPageListFilter(bookId), { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
-    .sort({ page_number: 1 })
-    .toArray() as unknown as PageDoc[];
   // The same page set the reader walks — no digitiser inserts, no unsplit spreads.
+  // Listed WITHOUT text: the part count, the part ranges and the page links need
+  // only numbers. Text is then loaded for the pages this response actually shows
+  // (this part, up to the free sample), not the whole book on every fetch. A
+  // facing-page edition pairs its leaves by their text across the whole book
+  // (isFacingPair), so it keeps the one full read.
+  const listed = (await db.collection('pages')
+    .find(readerPageListFilter(bookId), { projection: facingFlag ? PAGE_PROJECTION : PAGE_LIST_PROJECTION, maxTimeMS: 15000 })
+    .sort({ page_number: 1 })
+    .toArray() as unknown as PageDoc[])
+    .filter(isReaderListedPage);
+  let pagesRaw = listed;
+  if (!facingFlag) {
+    const shownIds = listed
+      .slice((part - 1) * PART_SIZE, part * PART_SIZE)
+      .filter(p => clampAt === undefined || p.page_number <= clampAt)
+      .map(p => p.id);
+    if (shownIds.length > 0) {
+      const withText = await db.collection('pages')
+        .find({ book_id: bookId, id: { $in: shownIds } }, { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
+        .toArray() as unknown as PageDoc[];
+      const textById = new Map(withText.map(p => [p.id, p]));
+      pagesRaw = listed.map(p => textById.get(p.id) ?? p);
+    }
+  }
   // English edition, English leaf: the transcription is the text; the stored
   // English-to-English rewording is never shown as a translation (#7100).
-  const pages = pagesRaw
-    .filter(isReaderListedPage)
-    .map(p => serveEnglishOriginalPage(p, book, { modernized: false }));
+  const pages = pagesRaw.map(p => serveEnglishOriginalPage(p, book, { modernized: false }));
   if (pages.length === 0) notFound();
 
   // The pairs, by the original leaf's page number (#8321). Empty on any other book.
@@ -675,7 +697,19 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           if (carried.length) out.push(<div key="carried-tail" className="mt-10">{carriedHeads(carried)}</div>);
           return out;
         })()}
-        {gateFrom !== null && (
+        {gateFrom !== null && meter?.identity.kind === 'session' && (
+          // A signed-in reader past the daily whole-book budget: telling them to sign in
+          // would ask for what they have done. The page-by-page reader is not counted.
+          <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
+            <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">You have reached today&rsquo;s limit for this view</Heading>
+            <p className="mt-2">
+              The whole-book view serves up to {API_LIMITS.session.pagesPerDay.toLocaleString('en-US')} pages a day to each reader. The page-by-page reader has no
+              such limit: <Link href={`/book/${bookPath}/page-number/${gateFrom}`} className="underline underline-offset-2 hover:text-accent-rust">continue
+              at page {gateFrom}</Link>. This view opens in full again within a day.
+            </p>
+          </section>
+        )}
+        {gateFrom !== null && meter?.identity.kind !== 'session' && (
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
             <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>
             <p className="mt-2">

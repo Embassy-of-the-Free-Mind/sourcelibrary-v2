@@ -205,6 +205,17 @@ describe('planBlocks mirrors the realtime worker partition', () => {
     const big = Array.from({ length: 8 }, (_, i) => ({ id: `b${i}`, page_number: i + 1, ocr: { data: 'x'.repeat(6000) } }));
     expect(planBlocks(big).map((b: any[]) => b.length)).toEqual([3, 3, 2]);
   });
+  it('sizes blocks by a source-character budget (#8399): dense pages fewer a call, light pages up to blockSize', () => {
+    const pg = (i: number, n: number) => ({ id: `p${i}`, page_number: i + 1, ocr: { data: 'x'.repeat(n) } });
+    const light = Array.from({ length: 8 }, (_, i) => pg(i, 1800));
+    expect(planBlocks(light, { blockSize: 4, maxChars: 8000 }).map((b: any[]) => b.length)).toEqual([4, 4]);
+    const dense = Array.from({ length: 4 }, (_, i) => pg(i, 3500));
+    expect(planBlocks(dense, { blockSize: 4, maxChars: 8000 }).map((b: any[]) => b.length)).toEqual([2, 2]);
+    const heavy = Array.from({ length: 3 }, (_, i) => pg(i, 9000));
+    expect(planBlocks(heavy, { blockSize: 4, maxChars: 8000 }).map((b: any[]) => b.length)).toEqual([1, 1, 1]);
+    // the default is the worker's 20,000
+    expect(planBlocks(dense, { blockSize: 4 }).map((b: any[]) => b.length)).toEqual([4]);
+  });
 });
 
 describe('parseBlockResponse mirrors the worker parse', () => {

@@ -1,0 +1,202 @@
+{
+ "judged": 30,
+ "dup_gone": 29,
+ "usable": 25,
+ "usable_ci95": [
+  0.66,
+  0.93
+ ],
+ "own_leaf": 30,
+ "defects": {
+  "mistranslated/minor": 34,
+  "other/minor": 7,
+  "invented/minor": 4,
+  "omitted/minor": 3,
+  "mistranslated/major": 5,
+  "invented/major": 2
+ },
+ "pass": false,
+ "controls": [
+  {
+   "key": "Q17",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q25",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q28",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q32",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  }
+ ],
+ "fails": [
+  {
+   "key": "Q07",
+   "book": "69dbcc3f0f8c5edf20f48658",
+   "page": 334,
+   "nb": 335,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "Art. 4 respondeo: the Latin says material things always remain at least in their matter, which is incorruptible as the subject of generation and corruption ('remanent semper secundum materiam quae incorruptibilis est, utpote subiectum existens generationis et corruptionis'). The English says the forms remain incorruptible, which reverses the argument."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "Art. 4 ad 2: the Latin says a creature's power to be is only receptive, and the active power belongs to God, from whom being flows. The English has a garbled 'receptive... only according to an active power from itself or from that source'."
+    },
+    {
+     "type": "omitted",
+     "severity": "minor",
+     "note": "Art. 4 ad 2: the concession that things without a contrary endure forever even though their power is finite is left out."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "Art. 3 ad 1: 'non ens non habet causam per se' (non-being has no essential cause) is rendered as 'it is not evident to us that non-being has an essential cause'."
+    },
+    {
+     "type": "invented",
+     "severity": "minor",
+     "note": "The note 'cited in the text as Jerome' is added. The page prints 'Hie.x.', an abbreviation for Jeremiah 10, not Jerome."
+    }
+   ]
+  },
+  {
+   "key": "Q09",
+   "book": "69b30206c22956d8a0de5b11",
+   "page": 128,
+   "nb": 127,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The added note names the 'Emperor's Commander' (Praefectum Caesaris) as Hendrik van den Bergh. The Latin keeps them apart: the Imperial commander (Montecuccoli) presses forward, while Bergh ('Bergium') resists him. The note therefore misleads the reader about who is who."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "'flenti in os ingessisse' means they forced the limbs into the mouth of the weeping one, i.e. the infant. The English says 'into her weeping mouth', so it is the mother's mouth, although she has already died."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'quid post arma expectandum' is rendered 'when war had passed'. It means what to expect after the fighting or conquest. The loose wording slightly shifts the sense."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'cura diligens tuendi singula ac mora' is rendered 'avoiding haste'. 'mora' means delay as a deliberate tactic, so the sense is inverted to a passive rather than an active strategy, though it stays close."
+    }
+   ]
+  },
+  {
+   "key": "Q15",
+   "book": "69b6312f1c1c21a373805dbb",
+   "page": 95,
+   "nb": 96,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "The answer to the second question is reversed. The page reads 'po[tes]t dici q[uod] sic, sicut et po[tes]t remittere debitum pecunie', meaning the prelate CAN remit, just as he can remit a money debt. The English says 'just as he cannot remit a monetary debt', which follows the transcription's erroneous 'non potest'."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'satisfactionem faciendam subdito suo pro offensa sibi facta' is the satisfaction owed by the subordinate to the prelate for an offence against the prelate. The English says 'satisfaction that ought to be made to his subordinate', which reverses who owes whom."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "'nisi forte quod factum fuit in secreto publicat non fuisse' means 'unless perhaps he publicly declares that what was done in secret did not happen'. The English gives 'unless perhaps he publicly reveals what was done in secret'."
+    }
+   ]
+  },
+  {
+   "key": "Q20",
+   "book": "69c80da56c6f3cc53c846d9e",
+   "page": 224,
+   "nb": 225,
+   "lang": "German",
+   "dup": "yes",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The added 'margin' block is not a marginal note on page 196. It translates the clipped left edge of page 197 (page 225) that shows at the right of the scan, so about 29 broken lines of the next page's quotation are added as if they belonged to this page."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "Within the added block, 'draws attention to himself' renders '[Zuver]sicht an sich ziehe' ('draws your confidence to himself'), and 'All his ey<es>' renders 'Alle seine V[orsorge]' ('all his providence'); the second error comes from a misread of the clipped text."
+    },
+    {
+     "type": "other",
+     "severity": "minor",
+     "note": "Within the added block, the verse is given as 'Psalm 62:8' with a versification note, but the print reads 'Ps. 62, 9'."
+    }
+   ]
+  },
+  {
+   "key": "Q29",
+   "book": "69b62f771c1c21a3737f6102",
+   "page": 337,
+   "nb": 338,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "'Cur itaque non iuvabis nos peccatores' (Why then will you not help us sinners) is rendered 'Shall then oaths not profit us sinners'. The translation follows a misreading ('Iura')."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "major",
+     "note": "'si pro tui solius exaltatione et utilitate mater dei facta fuisses: sed utique deus et homo assumpsit ex tua castissima carne, hoc fecit pro tua et nostri omnium salute' means God took flesh from Mary for her salvation and ours. The English instead says 'made greater by God' and 'both God and human beings acknowledge... he made blessed', which changes the theological sense."
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "The rhetorical question 'An ideo ut pereamus amplius non curabis?' (Will you then not care that we perish?) becomes 'Or is it that we should perish? Far be it; you will not neglect us.'"
+    },
+    {
+     "type": "mistranslated",
+     "severity": "minor",
+     "note": "The rubric 'ad Helinandum avunculum suum de [conversione] ad statum perfectionis vite exhortatoria epistola' is rendered 'a letter of exhortation against backsliding'. The English drops that it is addressed to Helinand as his relative and invents 'against backsliding'."
+    }
+   ]
+  }
+ ]
+}

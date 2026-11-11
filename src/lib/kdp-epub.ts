@@ -1,4 +1,4 @@
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import { translationCorpus } from '@/lib/text-provenance';
 import sharp from 'sharp';
 import type { Db } from 'mongodb';
@@ -367,7 +367,7 @@ export async function generateKdpEpub(
 
   return new Promise<Buffer>((resolve, reject) => {
     const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
     archive.on('data', (c: Buffer) => chunks.push(c));
     archive.on('end', () => resolve(Buffer.concat(chunks)));
     archive.on('error', reject);
@@ -435,7 +435,7 @@ export async function generateKdpEpub(
     ${book.title !== bookTitle ? `<p>Original title: <em>${escapeXml(book.title)}</em></p>` : ''}
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${escapeXml(book.published)})` : ''}.</p>
     <p>English translation prepared by Source Library.</p>
-    <p><strong>License:</strong> ${escapeXml(license)} (Creative Commons Attribution-ShareAlike). You are free to share and adapt this material, provided you give appropriate credit and distribute under the same license.</p>
+    <p><strong>License:</strong> ${escapeXml(license)}${license === 'CC-BY-NC-SA-4.0' ? ' (Creative Commons Attribution-NonCommercial-ShareAlike). You are free to share and adapt this material for non-commercial purposes, provided you give appropriate credit and distribute under the same license.' : ''}</p>
     ${options?.methodology ? `<h2>Translation Methodology</h2>${frontMatterToHtml(options.methodology)}` : ''}
     <div class="disclosure"><p>${escapeXml(disclosure)}</p></div>
     <p style="margin-top:1.5em;">Produced by SourceLibrary.org in Amsterdam, ${new Date().getFullYear()}.</p>

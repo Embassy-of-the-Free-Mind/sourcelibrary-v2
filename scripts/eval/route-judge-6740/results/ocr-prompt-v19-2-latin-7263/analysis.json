@@ -1,0 +1,815 @@
+{
+ "n": 20,
+ "median_share": {
+  "a": 0,
+  "b": 0,
+  "c": 0
+ },
+ "median_max_share_ab": 0.006,
+ "median_d": {
+  "ab": 0.079,
+  "ac": 0.066,
+  "bc": 0.079
+ },
+ "longs_worse": [
+  "6a26bba74045b346e6ad3074",
+  "6a0b355eb8a02dd156f1dcdc",
+  "69c833d16e5b7bc664632e66"
+ ],
+ "placebo": {
+  "a": [],
+  "b": [
+   "69bd9d966120d54bd0377c10",
+   "69b51e72ff09e4fe943af128"
+  ]
+ },
+ "judge_queue": [
+  "69b65de4b3f4fc044151d947",
+  "69af0d04067c0c26ee26d102",
+  "69b630501c1c21a373800a42",
+  "6a26bba74045b346e6ad3074",
+  "695435231479a63c1108b05f"
+ ],
+ "pages": [
+  {
+   "page_id": "69a5b9a1d76b98f272fcee1e",
+   "book_id": "69a5b9a1d76b98f272fcedeb",
+   "year": 1589,
+   "face": "roman",
+   "title": "Mechanicorum liber",
+   "n": 51,
+   "a": {
+    "longS": 0,
+    "f": 2,
+    "F": 0,
+    "S": 83,
+    "share": 0,
+    "chars": 2382
+   },
+   "b": {
+    "longS": 0,
+    "f": 2,
+    "F": 0,
+    "S": 84,
+    "share": 0,
+    "chars": 2366
+   },
+   "c": {
+    "longS": 0,
+    "f": 2,
+    "F": 0,
+    "S": 84,
+    "share": 0,
+    "chars": 2366
+   },
+   "ab": 0.022,
+   "ac": 0.015,
+   "bc": 0.012,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69aeabda67e6731bc1366f8d",
+   "book_id": "69aeabda67e6731bc1366f62",
+   "year": 1538,
+   "face": "roman",
+   "title": "Institutionum Grammaticarum Libri Quatuor",
+   "n": 43,
+   "a": {
+    "longS": 0,
+    "f": 10,
+    "F": 0,
+    "S": 35,
+    "share": 0,
+    "chars": 2005
+   },
+   "b": {
+    "longS": 0,
+    "f": 10,
+    "F": 0,
+    "S": 35,
+    "share": 0,
+    "chars": 1886
+   },
+   "c": {
+    "longS": 0,
+    "f": 10,
+    "F": 0,
+    "S": 34,
+    "share": 0,
+    "chars": 1931
+   },
+   "ab": 0.08,
+   "ac": 0.102,
+   "bc": 0.075,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69af135f93903bf8119f39ac",
+   "book_id": "69af135f93903bf8119f397d",
+   "year": 1519,
+   "face": "gothic",
+   "title": "Articella Nuperrime Impressa",
+   "n": 47,
+   "a": {
+    "longS": 0,
+    "f": 31,
+    "F": 2,
+    "S": 105,
+    "share": 0.019,
+    "chars": 2666
+   },
+   "b": {
+    "longS": 0,
+    "f": 31,
+    "F": 2,
+    "S": 105,
+    "share": 0.019,
+    "chars": 3005
+   },
+   "c": {
+    "longS": 0,
+    "f": 31,
+    "F": 2,
+    "S": 105,
+    "share": 0.019,
+    "chars": 2654
+   },
+   "ab": 0.16,
+   "ac": 0.027,
+   "bc": 0.168,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69b630501c1c21a373800a42",
+   "book_id": "69b630501c1c21a373800a10",
+   "year": 1594,
+   "face": "roman+italic",
+   "title": "In librum Danielis prophetae, Roberti Rolloci Scoti, Ministri Jesu Christi in Ecclesia Edinburgensi, commentarius. Accessit doctrinarum, quae in commentario explicantur, utilis index.",
+   "n": 50,
+   "a": {
+    "longS": 0,
+    "f": 97,
+    "F": 71,
+    "S": 0,
+    "share": 1,
+    "chars": 2752
+   },
+   "b": {
+    "longS": 0,
+    "f": 97,
+    "F": 71,
+    "S": 0,
+    "share": 1,
+    "chars": 2765
+   },
+   "c": {
+    "longS": 82,
+    "f": 14,
+    "F": 0,
+    "S": 1,
+    "share": 0,
+    "chars": 2797
+   },
+   "ab": 0.026,
+   "ac": 0.072,
+   "bc": 0.069,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": true
+  },
+  {
+   "page_id": "69b65de4b3f4fc044151d947",
+   "book_id": "69b65de4b3f4fc044151d918",
+   "year": 1582,
+   "face": "roman",
+   "title": "Commentarii D. Andreae Hyperii, doctissimi ac clarissimi theologi, in omnes D. Pauli Apostoli epistolas, atque etiam in epistolam D. Iudae / Commentarii D. Andreae Hyperii, doctissimi ac clarissimi theologi, in epistolas D. Pauli ad Galatas & Ephesios. ...",
+   "n": 47,
+   "a": {
+    "longS": 0,
+    "f": 36,
+    "F": 0,
+    "S": 134,
+    "share": 0,
+    "chars": 4137
+   },
+   "b": {
+    "longS": 0,
+    "f": 36,
+    "F": 0,
+    "S": 133,
+    "share": 0,
+    "chars": 4152
+   },
+   "c": {
+    "longS": 130,
+    "f": 36,
+    "F": 0,
+    "S": 4,
+    "share": 0,
+    "chars": 4145
+   },
+   "ab": 0.076,
+   "ac": 0.145,
+   "bc": 0.144,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": true
+  },
+  {
+   "page_id": "6a26bba74045b346e6ad3074",
+   "book_id": "6a26bba74045b346e6ad3064",
+   "year": 1553,
+   "face": "roman",
+   "title": "Labyrinthus Medicorum Errantium, D. Theophrasti Paracelsi : Cum Adiunctis",
+   "n": 16,
+   "a": {
+    "longS": 0,
+    "f": 16,
+    "F": 0,
+    "S": 61,
+    "share": 0,
+    "chars": 2336
+   },
+   "b": {
+    "longS": 0,
+    "f": 16,
+    "F": 0,
+    "S": 61,
+    "share": 0,
+    "chars": 2339
+   },
+   "c": {
+    "longS": 0,
+    "f": 74,
+    "F": 49,
+    "S": 1,
+    "share": 0.98,
+    "chars": 2359
+   },
+   "ab": 0.019,
+   "ac": 0.046,
+   "bc": 0.05,
+   "longs_worse": true,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": true
+  },
+  {
+   "page_id": "69b222ce56715b0e324754cb",
+   "book_id": "69b222ce56715b0e32475495",
+   "year": 1521,
+   "face": "italic",
+   "title": "Apuleius, Metamorphoses: The Golden Ass, with Asclepius Trismegistus (Aldine Press)",
+   "n": 54,
+   "a": {
+    "longS": 0,
+    "f": 8,
+    "F": 0,
+    "S": 53,
+    "share": 0,
+    "chars": 1767
+   },
+   "b": {
+    "longS": 0,
+    "f": 8,
+    "F": 0,
+    "S": 53,
+    "share": 0,
+    "chars": 1834
+   },
+   "c": {
+    "longS": 0,
+    "f": 8,
+    "F": 0,
+    "S": 53,
+    "share": 0,
+    "chars": 1786
+   },
+   "ab": 0.04,
+   "ac": 0.026,
+   "bc": 0.043,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69af0d04067c0c26ee26d102",
+   "book_id": "69af0d04067c0c26ee26d0cf",
+   "year": 1613,
+   "face": "roman+italic",
+   "title": "Syntagma Selectorum Arcanorum Chymicorum",
+   "n": 51,
+   "a": {
+    "longS": 0,
+    "f": 34,
+    "F": 3,
+    "S": 217,
+    "share": 0.014,
+    "chars": 6632
+   },
+   "b": {
+    "longS": 0,
+    "f": 33,
+    "F": 2,
+    "S": 218,
+    "share": 0.009,
+    "chars": 6526
+   },
+   "c": {
+    "longS": 0,
+    "f": 32,
+    "F": 1,
+    "S": 217,
+    "share": 0.005,
+    "chars": 6380
+   },
+   "ab": 0.078,
+   "ac": 0.09,
+   "bc": 0.085,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": true
+  },
+  {
+   "page_id": "69b51ddacf111105c4291e31",
+   "book_id": "69b51ddacf111105c4291de3",
+   "year": 1689,
+   "face": "roman",
+   "title": "Joh. Joachimi Becheri Spirensis Medicinae Doctoris, Tripus Hermeticus Fatidicus : pandens oracula chymica, seu I. Laboratorium portatile ... Accessit pro praxi & exemplo II. Magnorum duorum Productorum ... adjunctum est III. Alphabetum minerale ...exaratum in Cornubia ad extrema Anglia ora inter ipsa mineralia experimenta & autopsiam",
+   "n": 78,
+   "a": {
+    "longS": 0,
+    "f": 11,
+    "F": 1,
+    "S": 50,
+    "share": 0.02,
+    "chars": 1977
+   },
+   "b": {
+    "longS": 0,
+    "f": 10,
+    "F": 0,
+    "S": 50,
+    "share": 0,
+    "chars": 2041
+   },
+   "c": {
+    "longS": 0,
+    "f": 10,
+    "F": 0,
+    "S": 50,
+    "share": 0,
+    "chars": 2060
+   },
+   "ab": 0.048,
+   "ac": 0.057,
+   "bc": 0.047,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "6a0b355eb8a02dd156f1dcdc",
+   "book_id": "6a0b355eb8a02dd156f1dca8",
+   "year": 1601,
+   "face": "roman",
+   "title": "Elementorum curvilineorum libri tres",
+   "n": 52,
+   "a": {
+    "longS": 0,
+    "f": 12,
+    "F": 1,
+    "S": 28,
+    "share": 0.034,
+    "chars": 2023
+   },
+   "b": {
+    "longS": 29,
+    "f": 11,
+    "F": 0,
+    "S": 0,
+    "share": 0,
+    "chars": 1873
+   },
+   "c": {
+    "longS": 10,
+    "f": 30,
+    "F": 17,
+    "S": 0,
+    "share": 0.63,
+    "chars": 1933
+   },
+   "ab": 0.227,
+   "ac": 0.212,
+   "bc": 0.208,
+   "longs_worse": true,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69b51dbbff09e4fe943a8397",
+   "book_id": "69b51dbbff09e4fe943a8366",
+   "year": 1623,
+   "face": "roman",
+   "title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia : In duo Volumina secundum Cosmi differentiam divisa. [2,2,]1,3, De Anatomia Triplici : In partes tres divisa ...",
+   "n": 49,
+   "a": {
+    "longS": 0,
+    "f": 41,
+    "F": 2,
+    "S": 156,
+    "share": 0.013,
+    "chars": 4987
+   },
+   "b": {
+    "longS": 0,
+    "f": 42,
+    "F": 3,
+    "S": 154,
+    "share": 0.019,
+    "chars": 4866
+   },
+   "c": {
+    "longS": 0,
+    "f": 41,
+    "F": 2,
+    "S": 156,
+    "share": 0.013,
+    "chars": 4937
+   },
+   "ab": 0.029,
+   "ac": 0.027,
+   "bc": 0.022,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "695207e5ab34727b1f043d26",
+   "book_id": "695207e4ab34727b1f043cf6",
+   "year": 1609,
+   "face": "roman",
+   "title": "Artis auriferae quam chemiam vocant",
+   "n": 48,
+   "a": {
+    "longS": 0,
+    "f": 15,
+    "F": 1,
+    "S": 79,
+    "share": 0.013,
+    "chars": 2483
+   },
+   "b": {
+    "longS": 0,
+    "f": 15,
+    "F": 1,
+    "S": 79,
+    "share": 0.013,
+    "chars": 2492
+   },
+   "c": {
+    "longS": 0,
+    "f": 15,
+    "F": 1,
+    "S": 79,
+    "share": 0.013,
+    "chars": 2386
+   },
+   "ab": 0.091,
+   "ac": 0.066,
+   "bc": 0.068,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69b699a7080b19f98fcfb5a3",
+   "book_id": "69b699a7080b19f98fcfb56c",
+   "year": 1643,
+   "face": "roman+italic",
+   "title": "Athanasii Kircheri... Magnes sive de arte magnetica : opus tripartitum quo praeterquam quod universa magnetis natura, eiusque in omnibus artibus & scientiis usus nova methodo explicetur, e viribus quoque & prodigiosis effectibus magneticarum, aliarumque abditarum naturae motionum in elementis, lapidibus, plantis & animalibus elucescentium, multa hucusque incognita naturae arcana per physica, medica, chymica & mathematica omnis generis experimenta recluduntur",
+   "n": 55,
+   "a": {
+    "longS": 0,
+    "f": 21,
+    "F": 0,
+    "S": 76,
+    "share": 0,
+    "chars": 2881
+   },
+   "b": {
+    "longS": 0,
+    "f": 19,
+    "F": 0,
+    "S": 79,
+    "share": 0,
+    "chars": 3004
+   },
+   "c": {
+    "longS": 0,
+    "f": 19,
+    "F": 0,
+    "S": 78,
+    "share": 0,
+    "chars": 2810
+   },
+   "ab": 0.134,
+   "ac": 0.069,
+   "bc": 0.138,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69bd9d966120d54bd0377c10",
+   "book_id": "69bd9d966120d54bd0377bd4",
+   "year": 1600,
+   "face": "roman",
+   "title": "Magistri Ioannis Isaaci Hollandi ... Opera mineralia, sive de lapide philosophico philosophico, omnia duobus libris comprehensa : nunquam antehac edita, ac nunc primum ex optimis manu-scriptis Teutonicis exemplaribus fidelissime in Latinum sermonem translata ...",
+   "n": 60,
+   "a": {
+    "longS": 0,
+    "f": 13,
+    "F": 0,
+    "S": 52,
+    "share": 0,
+    "chars": 1800
+   },
+   "b": {
+    "longS": 0,
+    "f": 61,
+    "F": 13,
+    "S": 3,
+    "share": 0.813,
+    "chars": 1760
+   },
+   "c": {
+    "longS": 0,
+    "f": 13,
+    "F": 0,
+    "S": 50,
+    "share": 0,
+    "chars": 1912
+   },
+   "ab": 0.299,
+   "ac": 0.082,
+   "bc": 0.337,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": true,
+   "beyond": false
+  },
+  {
+   "page_id": "69b51e999a81ef7feb3d7e09",
+   "book_id": "69b51e999a81ef7feb3d7d8c",
+   "year": 1729,
+   "face": "roman+italic",
+   "title": "Opera Poetica omnia. 7",
+   "n": 125,
+   "a": {
+    "longS": 0,
+    "f": 20,
+    "F": 0,
+    "S": 40,
+    "share": 0,
+    "chars": 1589
+   },
+   "b": {
+    "longS": 0,
+    "f": 20,
+    "F": 0,
+    "S": 39,
+    "share": 0,
+    "chars": 1556
+   },
+   "c": {
+    "longS": 0,
+    "f": 20,
+    "F": 0,
+    "S": 40,
+    "share": 0,
+    "chars": 1611
+   },
+   "ab": 0.155,
+   "ac": 0.166,
+   "bc": 0.083,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "6a267d316c1f37c9c4f38eb0",
+   "book_id": "6a267d316c1f37c9c4f38e92",
+   "year": 1736,
+   "face": "roman+italic",
+   "title": "Dissertatio Academica De Praecavenda Polyporum Generatione",
+   "n": 30,
+   "a": {
+    "longS": 0,
+    "f": 13,
+    "F": 0,
+    "S": 57,
+    "share": 0,
+    "chars": 1984
+   },
+   "b": {
+    "longS": 0,
+    "f": 13,
+    "F": 0,
+    "S": 57,
+    "share": 0,
+    "chars": 1875
+   },
+   "c": {
+    "longS": 0,
+    "f": 13,
+    "F": 0,
+    "S": 57,
+    "share": 0,
+    "chars": 2006
+   },
+   "ab": 0.104,
+   "ac": 0.094,
+   "bc": 0.121,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "69b51e72ff09e4fe943af128",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "year": 1782,
+   "face": "roman+italic",
+   "title": "Brevis Notitia De Phantasmate Jansenismi, Pro Minus Rerum Gnaris",
+   "n": 51,
+   "a": {
+    "longS": 0,
+    "f": 14,
+    "F": 0,
+    "S": 56,
+    "share": 0,
+    "chars": 1742
+   },
+   "b": {
+    "longS": 0,
+    "f": 69,
+    "F": 43,
+    "S": 1,
+    "share": 0.977,
+    "chars": 1771
+   },
+   "c": {
+    "longS": 0,
+    "f": 14,
+    "F": 0,
+    "S": 56,
+    "share": 0,
+    "chars": 1721
+   },
+   "ab": 0.109,
+   "ac": 0.052,
+   "bc": 0.134,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": true,
+   "beyond": false
+  },
+  {
+   "page_id": "69c833d16e5b7bc664632e66",
+   "book_id": "69c80ecb6c6f3cc53c8470b8",
+   "year": 1712,
+   "face": "roman+italic",
+   "title": "Apologia pro Jul. Caesare Vanino",
+   "n": 54,
+   "a": {
+    "longS": 0,
+    "f": 8,
+    "F": 2,
+    "S": 33,
+    "share": 0.057,
+    "chars": 1567
+   },
+   "b": {
+    "longS": 0,
+    "f": 6,
+    "F": 0,
+    "S": 35,
+    "share": 0,
+    "chars": 1501
+   },
+   "c": {
+    "longS": 0,
+    "f": 41,
+    "F": 31,
+    "S": 0,
+    "share": 1,
+    "chars": 1550
+   },
+   "ab": 0.149,
+   "ac": 0.043,
+   "bc": 0.155,
+   "longs_worse": true,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  },
+  {
+   "page_id": "695435231479a63c1108b05f",
+   "book_id": "695435231479a63c1108b019",
+   "year": 1736,
+   "face": "roman+italic",
+   "title": "Philosophia prima sive Ontologia",
+   "n": 70,
+   "a": {
+    "longS": 0,
+    "f": 9,
+    "F": 0,
+    "S": 76,
+    "share": 0,
+    "chars": 2577
+   },
+   "b": {
+    "longS": 0,
+    "f": 9,
+    "F": 0,
+    "S": 76,
+    "share": 0,
+    "chars": 2551
+   },
+   "c": {
+    "longS": 0,
+    "f": 9,
+    "F": 0,
+    "S": 76,
+    "share": 0,
+    "chars": 2546
+   },
+   "ab": 0.021,
+   "ac": 0.031,
+   "bc": 0.03,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": true
+  },
+  {
+   "page_id": "695594f97bd6d2cd1d61e6b4",
+   "book_id": "695594f97bd6d2cd1d61e685",
+   "year": 1750,
+   "face": "roman",
+   "title": "Swedenborg Arcana Caelestia Vol. IV (1750)",
+   "n": 47,
+   "a": {
+    "longS": 0,
+    "f": 33,
+    "F": 0,
+    "S": 137,
+    "share": 0,
+    "chars": 3698
+   },
+   "b": {
+    "longS": 0,
+    "f": 33,
+    "F": 0,
+    "S": 137,
+    "share": 0,
+    "chars": 3611
+   },
+   "c": {
+    "longS": 0,
+    "f": 33,
+    "F": 0,
+    "S": 137,
+    "share": 0,
+    "chars": 3531
+   },
+   "ab": 0.057,
+   "ac": 0.065,
+   "bc": 0.036,
+   "longs_worse": false,
+   "placebo_a": false,
+   "placebo_b": false,
+   "beyond": false
+  }
+ ]
+}

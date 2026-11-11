@@ -5,7 +5,9 @@ import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
 import { logBotRead } from '@/lib/bot-reads';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
-import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { withApiAuth, isSiteBrowserRequest, type ApiIdentity } from '@/lib/api-auth';
+import { inProcessCaller } from '@/lib/inprocess-caller';
+import { resolveKeptEdition } from '@/lib/kept-edition';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
 import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
@@ -118,6 +120,38 @@ export const GET = withApiAuth(async (
       return NextResponse.json({ error: 'content must be ocr, translation, or both' }, { status: 400 });
     }
 
+    // Whole-book text needs an identity (#8235, Derek 2026-11-08): a free key or a
+    // signed-in session, both of which carry an email and the terms. Search, quotes
+    // and single pages stay open to anyone. Exempt: the site's own pages (the
+    // compare view fetches ranges from the browser), our cron, verified crawlers.
+    // The MCP connector's get_book_text runs this handler in-process (#4307) and
+    // is exempt by that marker, which no client can forge: a claude.ai connector
+    // cannot send a key, so it keeps its own page budget in src/app/api/mcp/route.ts.
+    // An assistant reading for a person, PROVEN by name and published address
+    // (identity.assistantFetcher, #8161), is exempt too: it reads a partner book a
+    // window at a time (#8098). A bare "Claude-User" name proves nothing and is refused.
+    if (identity.kind === 'anon' && !identity.assistantFetcher && !inProcessCaller(request)
+      && !hasCronAuth(request) && !isSiteBrowserRequest(request)) {
+      return NextResponse.json(
+        {
+          error: 'key_required',
+          message: 'Whole-book text needs a free API key (an email and a minute) or a signed-in session. '
+            + 'Get a key at https://sourcelibrary.org/developers#get-key and send it as "Authorization: Bearer sl_data_...". '
+            + `Search, quotes and single pages need no key, and the book reads free at https://sourcelibrary.org/book/${encodeURIComponent(bookId)}.`,
+          get_key: 'https://sourcelibrary.org/developers#get-key',
+          terms_url: 'https://sourcelibrary.org/terms#api-terms',
+        },
+        {
+          status: 401,
+          headers: {
+            'WWW-Authenticate': 'Bearer realm="sourcelibrary.org", get_key="https://sourcelibrary.org/developers#get-key"',
+            // Who-is-asking decides this answer, so no shared cache may keep it.
+            'Cache-Control': 'private, no-store',
+          },
+        },
+      );
+    }
+
     // Bulk-page budget: defends the paid-tier business model. Key holders pass
     // through; everyone else has a rolling 24h cap on /text page-equivalents.
     // Honors API_AUTH_ENFORCE so log-only mode doesn't break anything yet.
@@ -135,7 +169,7 @@ export const GET = withApiAuth(async (
     // Find book by id or _id. `translation_state.english_original`: on an
     // English edition an English leaf serves its transcription, never a stored
     // English-to-English rewording (#7100).
-    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, tenantId: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
+    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, tenantId: 1, hidden_reason: 1, duplicate_of: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
     let book = await db.collection('books').findOne(
       { id: bookId },
       { projection: TEXT_BOOK_PROJECTION }
@@ -153,7 +187,15 @@ export const GET = withApiAuth(async (
     // Hidden (visible:false) books are not public — 404 unless editor session
     // or CRON_SECRET (pipeline / Claude Code).
     if (!(await isBookReadable(book, request))) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      // A copy hidden as a duplicate of an edition we kept: name the kept copy, so a
+      // client holding the old id can switch instead of retrying a bare 404 (#8235).
+      const kept = (book.hidden_reason === 'same_edition_duplicate' || book.hidden_reason === 'duplicate') && book.duplicate_of ? await resolveKeptEdition(db, book.duplicate_of) : null;
+      return NextResponse.json(
+        kept
+          ? { error: 'Book not found', reason: 'duplicate_edition', message: `This copy was hidden as a duplicate of an edition we kept. Read that one instead: ${kept.text_api}`, kept_edition: kept }
+          : { error: 'Book not found' },
+        { status: 404 },
+      );
     }
 
     const resolvedBookId = book.id || bookId;

@@ -1,5 +1,7 @@
 # Worker Architecture
 
+> **PARTLY SUPERSEDED 2026-11-11 (#8283): the Gemini Batch API / flash-lite-preview paths named below are RETIRED for page work.** Current routes (agy, GPU>agy, Opus, GPU>Opus): `.claude/docs/routing.md`. Treat Batch-API rows here as history.
+
 ## Overview
 
 The pipeline uses two execution environments for page processing:

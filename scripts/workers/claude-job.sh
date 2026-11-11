@@ -116,7 +116,8 @@ $HOST_RULES
   lines in six days, half of them this kind.)
 - A real decision: end your FINAL message with one line each:
   \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
-  $JD/decisions.txt for the morning digest; they do not page.
+  $JD/decisions.txt for the morning digest and posts each on the issue it names; they do not page. Ask each
+  question once, end the line with the issue it belongs to, and read that issue first: it may already be answered (#8551).
 - INBOX: Derek's sessions can steer you mid-run with \`claude-job.sh note $1 "<message>"\`, which appends to
   $JD/$1.inbox. Run \`cat $JD/$1.inbox 2>/dev/null\` at the start of each new step, before each report you
   post, and before the done file. A note overrides the brief where they conflict. Name the notes you acted
@@ -655,14 +656,37 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
 
 # DECISION: lines from the job's output -> one shared file + a page (#5709 follow-up, 2026-10-04).
 collect_decisions() {
-  local name="$1" log="$LOGD/$1.log" n
-  grep -oE 'DECISION: .*' "$log" 2>/dev/null | sed 's/\\n.*//; s/[`"]*$//' | sort -u | while read -r l; do
-    grep -qF "$name | $l" "$JD/decisions.txt" 2>/dev/null || echo "$(date -u +%F) | $name | $l" >> "$JD/decisions.txt"
-  done
+  local name="$1" log="$LOGD/$1.log" new
+  new=$(grep -oE 'DECISION: .*' "$log" 2>/dev/null | sed 's/\\n.*//; s/[`"]*$//' | sort -u | while read -r l; do
+    grep -qF "$name | $l" "$JD/decisions.txt" 2>/dev/null || { echo "$(date -u +%F) | $name | $l" >> "$JD/decisions.txt"; echo "$l"; }
+  done)
+  [ -n "$new" ] && post_decisions "$name" "$new"
   # Decisions reach Derek through the morning digest, which reads decisions.txt, never one page each
   # (#6360 fix 3). TAKEN lines are the record of what a job decided alone, for the weekly measure.
   grep -oE 'TAKEN: .*' "$log" 2>/dev/null | sed 's/\\n.*//; s/[`"]*$//' | sort -u | while read -r l; do
     grep -qF "$name | $l" "$JD/taken.txt" 2>/dev/null || echo "$(date -u +%F) | $name | $l" >> "$JD/taken.txt"
+  done
+  return 0
+}
+# Each NEW DECISION line also goes to the issue it names, one comment per issue (#8551). In
+# decisions.txt alone, 127 lines piled up in a week (2026-11-04..11) where no owner of the work saw them,
+# so the same question was asked two or three times. The issue is the line's last #NNNN, else the brief's
+# Lands issue. DECISION_COMMENTS=0 turns this off. A failed post never fails the job.
+post_decisions() {  # $1 name, $2 the new DECISION lines, one per line
+  [ "${DECISION_COMMENTS:-1}" = 0 ] && return 0
+  local fallback tagged n body
+  landing_contract "$1" "$JD/$1.brief.txt"; fallback=$LC_ISSUE; [ "$fallback" = none ] && fallback=""
+  tagged=$(printf '%s\n' "$2" | while IFS= read -r l; do
+    n=$(printf '%s' "$l" | grep -oE '#[0-9]{3,5}' | tail -1 | tr -d '#'); n=${n:-$fallback}
+    [ -n "$n" ] && printf '%s\t%s\n' "$n" "$l"
+  done)
+  for n in $(printf '%s\n' "$tagged" | cut -f1 | sort -u); do
+    body="claude-job: job \`$1\` on **$HOST** ended with a decision for this issue:
+
+$(printf '%s\n' "$tagged" | awk -F'\t' -v n="$n" '$1 == n { print "- " substr($0, index($0, "\t") + 1) }')
+
+Answer it here. The line is also in \`$JD/decisions.txt\`; the morning digest counts the lines nobody has marked (#8551)."
+    gh issue comment "$n" --repo "$REPO" --body "$body" >/dev/null 2>&1 || true
   done
   return 0
 }

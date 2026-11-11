@@ -56,7 +56,15 @@ const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbo
 // so name it here to ungate it. Matches the /licensing policy ("reading on a
 // user's behalf is welcome"). The training/crawler variants (GPTBot, ClaudeBot)
 // are NOT here and stay gated.
-const USER_FETCH_AGENTS = ['claude-user', 'chatgpt-user', 'perplexity-user'];
+// 2026-11-10: the assistants seen fetching for a person in our own api_usage log
+// over 30 days (grok-cli 56, GitHubCopilotRuntime-WebFetch 16, Google-NotebookLM 3,
+// DuckAssistBot 1), plus the two user-fetch names Meta and Mistral publish. Derek:
+// readers reaching us through Grok, Gemini, Copilot etc. get what Claude/ChatGPT users get.
+const USER_FETCH_AGENTS = [
+  'claude-user', 'chatgpt-user', 'perplexity-user',
+  'grok-cli', 'githubcopilotruntime-webfetch', 'google-notebooklm', 'duckassistbot',
+  'meta-externalfetcher', 'mistralai-user',
+];
 
 /**
  * Does the User-Agent name an assistant reading for a person? A label for routing

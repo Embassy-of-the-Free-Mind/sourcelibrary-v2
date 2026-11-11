@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { gateLeafText, meteredReaderEnabled } from '@/lib/free-preview';
 import { displayPublished } from '@/lib/publication-date';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
 // (reader) group layout's visibility gate all read it, so one round trip
@@ -50,7 +51,13 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // Then drop the remaining inline tags (<note>, <term>, <sig>, …) but keep
   // their words: they are body text, and a snippet is plain text — Google was
   // showing the literal "<note>original: …" markup.
-  const textContent = stripEditorialWrappers(page.translation?.data || page.ocr?.data || '')
+  // Metered reader (#4357): a page past the free sample carries no excerpt of
+  // its text — 200 characters a page, over every page, is a scrape of the
+  // book's opening lines. Those pages are noindex, so no search snippet is
+  // lost. Reading rooms are exempt, as on the page itself.
+  const excerptPage = gateLeafText(page, (book as { pages_count?: number }).pages_count,
+    meteredReaderEnabled() && !(ctx?.id || ctx?.isEmbedded));
+  const textContent = stripEditorialWrappers(excerptPage.translation?.data || excerptPage.ocr?.data || '')
     .replace(/<\/?[a-z][a-z-]*(?:\s[^>]*)?>/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim();
@@ -68,14 +75,13 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   const bookPath = (book as unknown as { slug?: string }).slug || id;
   const pageUrl = `/book/${bookPath}/page/${pageId}`;
 
-  // Reader pages are noindex by default (they outnumber book URLs ~100:1 and
-  // are thin on their own). Demand-proven pages — read >=5 in the rolling 90d
-  // window, or translated first-translations — are opened to indexing by
-  // scripts/seo/flag-indexable-pages.mjs (issue #2688), which sets
-  // `seo_indexable` on the page doc. Canonical is already self-referential, so
-  // an opened page indexes on its own URL. See robots.ts (crawling stays open
-  // for all; this gate controls *indexing*).
-  const indexable = (page as unknown as { seo_indexable?: boolean }).seo_indexable === true;
+  // A reader page names its book's front page as canonical (#3755): Google
+  // crawls ~150-250 HTML pages a day here, and ~380K reader URLs were splitting
+  // that between thin pages instead of the books. Crawling stays open, so links
+  // and text on the page still count toward the book. No noindex: combined with
+  // a canonical elsewhere it sends mixed signals. `seo_indexable` no longer
+  // affects metadata.
+  const bookUrl = `/book/${bookPath}`;
 
   // Reference managers read these to save a page with its book, author and page
   // (#8161). Same rules as the book page's scholarMeta: a holder or issuer is no
@@ -97,10 +103,10 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   return {
     title: `${title} - Source Library`,
     description,
-    robots: { index: indexable, follow: true },
+    robots: { index: true, follow: true },
     other: scholarMeta,
     alternates: {
-      canonical: pageUrl,
+      canonical: bookUrl,
     },
     openGraph: {
       title,

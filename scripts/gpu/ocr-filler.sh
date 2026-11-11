@@ -15,8 +15,11 @@
 #   ocr-filler.sh status   pages and books left per route
 #
 # It adds nothing when: $ST/PAUSE exists; anything is pending or running; /root/gpu.lock is held (a job outside the
-# queue that does take the lock, so a chunk queued now would cut in between its arms); the card already holds > 1 GB with nothing
-# running (an out-of-queue job, which takes no /root/gpu.lock: the 10-27 Four Histories run died of exactly that);
+# queue that does take the lock, so a chunk queued now would cut in between its arms); a process outside the queue holds
+# more than GUEST_IDLE_MIB (1500) of the card with nothing running (an out-of-queue job, which takes no /root/gpu.lock: the
+# 10-27 Four Histories run died of exactly that). A guest's idle CUDA context does not count: the /root/greenroom image
+# servers unload their model after 10 idle minutes and keep about 0.3-1 GB, so OCR resumes about 15 minutes after the last
+# painting, by itself (Derek 2026-11-09: "when those jobs stop, the gpu automatically starts processing again");
 # the root disk has < 10 G (OCR text is small: 24,602 Paddle pages ≈ 100 MB; page images are deleted as read). A route is skipped when $ST/<route>.DISABLED exists, which the filler writes (and pages)
 # after 3 chunks in a row fail. A chunk that finds the card busy waits up to an hour, then exits 75 with
 # OCR-FILLER-SKIP in its log: a recorded skip, not a failure. Every chunk appends a row to $ST/runs.jsonl.
@@ -31,6 +34,11 @@
 # switch, /root/jobs/siglip2-6871/full/PAUSE, still stops it (its queuer writes PAUSE itself after 5 failed tries).
 # IDLE CHECK: if the card has had nothing queued or running for 2 h, page ntfy (at most once every 12 h), so an empty
 # queue is never silent again (10-28 15:09Z → 10-29: 8 h idle, no page).
+# RESCUE (Derek 2026-11-09: "if it is idle, an opus session is triggered to get it going again"): at the same moment
+# (2 h with no work: nothing queued or running and no guest using the card), or when a task has sat in pending/ for 2 h
+# with nothing running, the filler starts an Opus job on this box, `claude-job.sh start gpu-rescue-<ts>`, with
+# gpu-rescue-brief.txt (beside this file) plus the box state. At most one every RESCUE_EVERY_H (12) hours, and never
+# while the last one is still running. Off: `touch $ST/RESCUE-OFF`. The page says which job is on it.
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROUTES=${OCR_FILLER_ROUTES:-$HERE/ocr-filler-routes.tsv}
@@ -40,6 +48,62 @@ TOPIC=${NTFY_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}
 mkdir -p "$ST"
 now() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 page() { curl -fsS -m 15 -H "Title: $1" -H "Priority: ${3:-high}" -H "Tags: gpu" -d "$2" "$TOPIC" >/dev/null 2>&1 || true; }
+GUEST_IDLE_MIB=${GUEST_IDLE_MIB:-1500}
+JOBS=${CLAUDE_JOBS_DIR:-/root/claude-jobs}; CLAUDE_JOB=${CLAUDE_JOB:-/root/bin/claude-job.sh}
+RESCUE_BRIEF=${RESCUE_BRIEF:-$HERE/gpu-rescue-brief.txt}; [ -f "$RESCUE_BRIEF" ] || RESCUE_BRIEF=$CODE/scripts/gpu/gpu-rescue-brief.txt
+RESCUE_EVERY_H=${RESCUE_EVERY_H:-12}
+
+# guests: processes on the card holding more than GUEST_IDLE_MIB, as "pid MiB cmd" lines (an idle CUDA context is not use)
+guests() {
+  nvidia-smi --query-compute-apps=pid,used_memory --format=csv,noheader,nounits 2>/dev/null | tr -d ' ' |
+    while IFS=, read -r pid mib; do
+      [ "${mib:-0}" -gt "$GUEST_IDLE_MIB" ] 2>/dev/null && echo "$pid ${mib}MiB $(ps -o args= -p "$pid" 2>/dev/null | cut -c1-80)"
+    done
+}
+
+# rescue <reason>: start one Opus job on this box to get the card working again (see RESCUE above). Prints what it did.
+rescue() {
+  [ -e "$ST/RESCUE-OFF" ] && { echo "rescue off ($ST/RESCUE-OFF)"; return; }
+  [ -x "$CLAUDE_JOB" ] && [ -f "$RESCUE_BRIEF" ] || { echo "no rescue: $CLAUDE_JOB or $RESCUE_BRIEF missing"; return; }
+  local last age name brief
+  last=$(cat "$ST/RESCUE-LAST" 2>/dev/null)
+  if [ -n "$last" ]; then
+    age=$(( $(date +%s) - $(stat -c %Y "$ST/RESCUE-LAST") ))
+    [ -e "$JOBS/$last.done" ] || [ -e "$JOBS/$last.failed" ] || [ "$age" -ge 86400 ] || { echo "rescue $last still running"; return; }
+    [ "$age" -lt $(( RESCUE_EVERY_H * 3600 )) ] && { echo "rescue $last ran < ${RESCUE_EVERY_H} h ago"; return; }
+  fi
+  name=gpu-rescue-$(date -u +%m%d-%H%M); brief=$(mktemp "/tmp/$name.XXXX.txt")
+  { sed "s|{{REASON}}|$1|" "$RESCUE_BRIEF"
+    echo; echo "## Box state at $(now)"
+    echo '$ ocr-filler.sh status'; "$0" status 2>&1
+    echo; echo '$ ls /root/gpu-queue/{pending,running}; ls -t /root/gpu-queue/failed | head -5'
+    ls "$Q"/pending "$Q"/running 2>&1; ls -t "$Q"/failed 2>/dev/null | head -5
+    echo; echo '$ ls /root/gpu-queue/ocr-filler'; ls "$ST"
+    echo; echo '$ tail -15 /var/log/sourcelibrary/ocr-filler.log'; tail -15 /var/log/sourcelibrary/ocr-filler.log 2>&1
+    echo; echo '$ tail -10 /var/log/sourcelibrary/gpu-queue.log'; tail -10 /var/log/sourcelibrary/gpu-queue.log 2>&1
+    echo; echo '$ nvidia-smi (used, total, util; compute apps)'; nvidia-smi --query-gpu=memory.used,memory.total,utilization.gpu --format=csv,noheader
+    nvidia-smi --query-compute-apps=pid,used_memory,process_name --format=csv,noheader
+    echo; echo '$ df -h /'; df -h / | tail -1
+  } > "$brief" 2>&1
+  echo "$name" > "$ST/RESCUE-LAST"
+  # start returns once the job's tmux session is up (its login preflight takes ~10 s); do not hold the filler's lock on it
+  nohup timeout 600 "$CLAUDE_JOB" start "$name" "$brief" >> "$ST/rescue.log" 2>&1 < /dev/null &
+  echo "started Opus job $name (gex45:$JOBS/$name.*; start log $ST/rescue.log)"
+}
+
+# idle_check <why nothing was queued>: the card has nothing queued or running. Page after 2 h and start a rescue.
+idle_check() {
+  [ -e "$ST/IDLE-SINCE" ] || date +%s > "$ST/IDLE-SINCE"
+  local idle_m last r
+  idle_m=$(( ( $(date +%s) - $(cat "$ST/IDLE-SINCE") ) / 60 ))
+  last=$(cat "$ST/IDLE-PAGED" 2>/dev/null || echo 0)
+  if [ "$idle_m" -ge 120 ] && [ $(( $(date +%s) - last )) -ge 43200 ]; then
+    r=$(rescue "the card has had nothing queued or running for $idle_m min: $1")
+    echo "$(now) idle $idle_m min: $r"
+    page "gex45 GPU idle ${idle_m} min (#6871)" "$1. $r. ocr-filler.sh status shows the routes."
+    date +%s > "$ST/IDLE-PAGED"
+  fi
+}
 
 # left <kind> <lane_dir>  →  "<pages> <books>" still to read
 left() {
@@ -89,6 +153,16 @@ case "${1:-run}" in
     exec 9>/tmp/ocr-filler.lock; flock -n 9 || exit 0
     [ -e "$ST/PAUSE" ] && exit 0
     [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -gt 0 ] && rm -f "$ST/IDLE-SINCE"
+    # a task that sits in pending/ for 2 h with nothing running: the queue itself is stuck (a held lock, a dead cron)
+    if [ "$(ls -1 "$Q"/running 2>/dev/null | grep -c '\.sh$')" -eq 0 ]; then
+      stuck=$(find "$Q"/pending -maxdepth 1 -name '*.sh' -mmin +120 2>/dev/null | head -1)
+      if [ -n "$stuck" ] && { [ ! -e "$ST/STUCK-PAGED" ] || [ -n "$(find "$ST/STUCK-PAGED" -mmin +720 2>/dev/null)" ]; }; then
+        r=$(rescue "$(basename "$stuck") has waited in pending/ over 2 h with nothing running: the queue is not starting tasks")
+        echo "$(now) queue stuck on $(basename "$stuck"): $r"
+        page "gex45 GPU queue stuck (#6871)" "$(basename "$stuck") pending > 2 h, nothing running. $r"
+        touch "$ST/STUCK-PAGED"
+      fi
+    fi
     # backfill chunks (zz-siglip2-*) do not block OCR: an OCR chunk sorts ahead of them
     [ "$(ls -1 "$Q"/pending | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
     [ "$(ls -1 "$Q"/running | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
@@ -96,15 +170,25 @@ case "${1:-run}" in
     # a job outside the queue that takes the lock (e.g. an eval's drafting arms) owns the card until it lets go
     # (a running backfill chunk holds the lock through gpu-queue.sh; it yields to whatever is queued, so it does not count)
     if [ "$backfill_running" -eq 0 ]; then
-      flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
+      if ! flock -n /root/gpu.lock true; then
+        echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"
+        # a holder that uses no card is either between an eval's arms or orphaned workers keeping the fd (10-29): after 2 h, rescue
+        [ -z "$(guests)" ] && idle_check "/root/gpu.lock is held by pid(s) $(lsof -t /root/gpu.lock 2>/dev/null | tr '\n' ' ')outside the queue, and no process uses the card"
+        exit 0
+      fi
     fi
     vram=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1)
     case "$vram" in ''|*[!0-9]*) echo "$(now) nvidia-smi unreadable: queueing nothing"; exit 0 ;; esac
-    if [ "$vram" -gt 1000 ] && [ "$backfill_running" -eq 0 ]; then
-      echo "$(now) card holds ${vram} MiB with nothing running in the queue (an out-of-queue job): queueing nothing"; exit 0
+    if [ "$backfill_running" -eq 0 ]; then
+      busy=$(guests)
+      if [ -n "$busy" ]; then
+        # a guest using the card is work, not idleness: the idle clock restarts when it lets go
+        rm -f "$ST/IDLE-SINCE"
+        echo "$(now) card in use outside the queue (${vram} MiB): $(echo "$busy" | tr '\n' ';') queueing nothing"; exit 0
+      fi
     fi
     free_g=$(df -BG --output=avail / | tail -1 | tr -dc 0-9)
-    [ "${free_g:-0}" -lt 10 ] && { echo "$(now) root disk ${free_g}G free < 10G: queueing nothing"; exit 0; }
+    [ "${free_g:-0}" -lt 10 ] && { echo "$(now) root disk ${free_g}G free < 10G: queueing nothing"; idle_check "root disk ${free_g}G free < 10G"; exit 0; }
     while IFS=$'\t' read -r on route kind issue lane hold dl down; do
       [ -e "$ST/$route.DISABLED" ] && continue
       [ -d "$lane/plan" ] || { echo "$(now) $route: no plan dir at $lane/plan, skipped"; continue; }
@@ -115,15 +199,19 @@ case "${1:-run}" in
         continue
       fi
       # 3 failed chunks in a row (skips excluded) stop the route
-      fails=0
+      # (a disable records the newest failure it counted in <route>.FAILS-COUNTED, so removing .DISABLED gives the route
+      # three fresh tries; without it the same three old failures disabled the route again on the next tick, 2026-11-09)
+      fails=0; counted=$(cat "$ST/$route.FAILS-COUNTED" 2>/dev/null)
       for t in $(ls -1 "$Q"/done "$Q"/failed 2>/dev/null | grep "^zy-ocr-$route-c[0-9]*\.sh$" | sort -r); do   # newest chunk first
         [ -e "$Q/done/$t" ] && break
+        [ "$t" = "$counted" ] && break
         grep -q OCR-FILLER-SKIP "$OUT/${t%.sh}/task.log" 2>/dev/null && continue
         fails=$((fails + 1))
       done
       if [ "$fails" -ge 3 ]; then
         echo "$(now) $route: $fails chunks failed in a row: route disabled (rm $ST/$route.DISABLED to retry)"
         touch "$ST/$route.DISABLED"
+        ls -1 "$Q"/failed | grep "^zy-ocr-$route-c[0-9]*\.sh$" | sort -r | head -1 > "$ST/$route.FAILS-COUNTED"
         page "OCR filler: route $route disabled (#6871)" "$fails chunks in a row failed; logs gex45:$OUT/zy-ocr-$route-c*/task.log"
         continue
       fi
@@ -212,6 +300,10 @@ EOF
         *) echo "$(now) $route: unknown kind $kind, skipped"; rm -f "$tmp"; continue ;;
       esac
       /root/bin/gpu-queue.sh add "$tmp" "$name"; rm -f "$tmp"
+      # queueing is work: restart the idle clock here. A short chunk (queued :20, run :25-:27) is gone before the next
+      # filler run, so the pending/running checks never see it; without this the clock ran on through 4 chunks and
+      # started a needless rescue at "169 min idle" three minutes after the card drafted 45 pages (2026-11-11, #6871).
+      rm -f "$ST/IDLE-SINCE"
       echo "$(now) queued $name: route $route, $p pages left in $b books (VRAM ${vram} MiB, disk ${free_g}G)"
       exit 0
     done < <(routes)
@@ -222,13 +314,8 @@ EOF
     fi
     # idle check: nothing queued or running → note when it started; page after 2 h, then at most every 12 h
     if [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -eq 0 ]; then
-      [ -e "$ST/IDLE-SINCE" ] || date +%s > "$ST/IDLE-SINCE"
-      idle_m=$(( ( $(date +%s) - $(cat "$ST/IDLE-SINCE") ) / 60 ))
-      last=$(cat "$ST/IDLE-PAGED" 2>/dev/null || echo 0)
-      if [ "$idle_m" -ge 120 ] && [ $(( $(date +%s) - last )) -ge 43200 ]; then
-        page "gex45 GPU idle ${idle_m} min (#6871)" "No OCR route has pages and the backfill queued nothing (off, paused, or done). Add a route to ocr-filler-routes.tsv or queue a task; ocr-filler.sh status shows the routes."
-        date +%s > "$ST/IDLE-PAGED"
-      fi
+      dis=$(cd "$ST" && ls *.DISABLED 2>/dev/null | sed 's/\.DISABLED$//' | tr '\n' ' ')
+      idle_check "no enabled OCR route has pages left${dis:+ (disabled after failures: $dis)} and the backfill queued nothing"
     else
       rm -f "$ST/IDLE-SINCE"
     fi ;;

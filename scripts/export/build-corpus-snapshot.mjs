@@ -72,8 +72,8 @@ const EDITION_LANGS = (arg('--editions', 'es') || '')
 // Mirrors src/lib/license-info.ts CONTENT_LICENSE (scripts can't import TS —
 // same twin situation as strip-editorial-wrappers). Change both together.
 const CONTENT_LICENSE = {
-  spdx: 'CC-BY-SA-4.0',
-  url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  spdx: 'CC-BY-NC-SA-4.0',
+  url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
   attribution: 'Source Library (https://sourcelibrary.org)',
   terms: 'https://sourcelibrary.org/terms',
   original_texts: 'public-domain',

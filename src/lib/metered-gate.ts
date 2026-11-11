@@ -21,7 +21,8 @@ import { getClientIp } from '@/lib/rate-limit';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 import { hasCronAuth } from '@/lib/book-access';
 import { isTrustedBot } from '@/lib/bot-gate';
-import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
+import { meteredReaderEnabled, isPageFree, stripGatedPage, type GateInfo } from '@/lib/free-preview';
+import { clientCountry } from '@/lib/client-ip';
 
 /**
  * One row per walled request in analytics_events (same shape as
@@ -30,7 +31,7 @@ import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-pre
  */
 function logGateHit(request: Request, pagesGated: number): void {
   try {
-    const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
+    const country = clientCountry(request.headers) || 'Unknown';
     const ip = anonymizeIp(getClientIp(request) || 'unknown');
     Promise.race([
       (async () => {
@@ -114,4 +115,42 @@ export async function gatePagesForRequest<T extends PageDoc>(
 
   if (gatedCount > 0) logGateHit(request, gatedCount);
   return result;
+}
+
+/**
+ * For a route that serves ONE page's text in its own shape (revisions, word
+ * alignment, transliteration, an edition's text): the gate info when this
+ * caller may not read this page's text, else null. A thin wrapper over
+ * gatePagesForRequest, so the exemption ladder, the free-sample math and the
+ * gate_hit row are the same ones every other door uses.
+ *
+ * The page needs `book_id`, `page_number` and `seo_indexable` (project them).
+ */
+export async function pageGateForRequest(
+  db: Db,
+  request: Request,
+  page: PageDoc,
+  opts: { exempt?: boolean } = {},
+): Promise<GateInfo | null> {
+  const [out] = await gatePagesForRequest(db, request, [page], opts);
+  const gated = out as PageDoc & { gated?: boolean; gate?: GateInfo };
+  return gated?.gated ? (gated.gate ?? null) : null;
+}
+
+/**
+ * The 401 a text route returns to an anonymous caller past the free sample.
+ * Same `requires_signin` key the download routes use, plus the gate info the
+ * reader's sign-in pane reads. Never cached: a signed-in reader asking the
+ * same URL must not be served this.
+ */
+export function meteredSignInResponse(gate?: GateInfo | null): Response {
+  return Response.json(
+    {
+      error: 'Sign in to read the rest of this book. It is free.',
+      requires_signin: true,
+      gated: true,
+      ...(gate ? { gate } : { sign_in_url: '/auth/signin' }),
+    },
+    { status: 401, headers: { 'Cache-Control': 'private, no-store' } },
+  );
 }

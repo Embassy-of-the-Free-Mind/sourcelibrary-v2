@@ -169,6 +169,9 @@ describe('Translation: both routers read translation-routing-table.json', () => 
       expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id, per_call: 4 } });
       expect(translateEngineFor(t, { language })).toBe(MODEL_LITE);
     }
+    // #8399: the seam pass (with edits to the page before the block) is on for the two cells it was measured on, not the others
+    for (const id of ['latin-cli-agy4', 'german-cli-agy4']) expect(t.rows.find(r => r.id === id)?.seam_pass).toBe('edit-before');
+    for (const id of ['italian-cli-agy4', 'french-cli-agy4']) expect(t.rows.find(r => r.id === id)?.seam_pass).toBeUndefined();
     // BPH skips the language rows (their `unless`) and, since 2026-11-06, reaches agy by the catch-all; its Batch row
     // is still what a Batch caller would get.
     for (const language of ['Latin', 'German', 'Latin. French. English']) {
@@ -187,6 +190,11 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect(v(cliRow({ unless: { providers: [] } }))).toThrow(/providers/);
     expect(v(cliRow({ unless: { providers: ['bph'] } }))).not.toThrow();
     expect(v(cliRow({ ...agy, per_call: 4 }))).not.toThrow();
+    // #8399: seam_pass rides on a per_call row only, as true or 'edit-before'
+    expect(v(cliRow({ ...agy, per_call: 4, seam_pass: true }))).not.toThrow();
+    expect(v(cliRow({ ...agy, per_call: 4, seam_pass: 'edit-before' }))).not.toThrow();
+    expect(v(cliRow({ ...agy, per_call: 4, seam_pass: 'yes' }))).toThrow(/seam_pass/);
+    expect(v(cliRow({ ...agy, seam_pass: true }))).toThrow(/seam_pass/);
     expect(v(cliRow({ ...agy, per_call: 5 }))).toThrow(/per_call/);
     expect(v(cliRow({ ...agy, per_call: 2.5 }))).toThrow(/per_call/);
     expect(v(cliRow({ per_call: 4 }))).toThrow(/per_call/);   // an Opus row: claude-translate has its own --per-call

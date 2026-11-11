@@ -9,9 +9,15 @@ name: PR tier
 # copy, doctrine) is where a human's eyes matter; everything else was a delay.
 #
 # A hand-applied `tier:hold` or `blocked` label is never downgraded by this job.
+#
+# Trigger is `pull_request`, not `pull_request_target`: GitHub blocks the latter
+# in public repos from 2026-12-02 (brownouts 2026-11-09 and 11-16, 16:00-18:00
+# UTC, when every run here ended in startup_failure). A branch in this repo gets
+# the write token below; a fork PR gets a read-only one, cannot be labelled, and
+# so is never auto-merged (auto-merge.yml merges only `tier:auto`): fails closed.
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
 
 permissions:
@@ -28,8 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      # Checkout MAIN, not the PR head: pull_request_target runs with a write
-      # token, and the classifier + rules must come from trusted code.
+      # Checkout MAIN, not the PR head: the classifier and its rules come from
+      # reviewed code, so a PR cannot reclassify itself by editing them.
       - uses: actions/checkout@v4
         with:
           ref: main

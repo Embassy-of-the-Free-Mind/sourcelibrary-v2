@@ -6,9 +6,14 @@ import { pageStatusSources } from './src/lib/page-status';
 import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
 import { waitForTurbopackRelease } from './src/lib/wait-for-turbopack-release';
 import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
+import { assetPrefixFromEnv, withAssetOrigin } from './src/lib/asset-prefix';
+
+// Unset on Vercel. Set only on the reader-origin box (#8384, trap 1).
+const ASSETS = assetPrefixFromEnv(process.env.SL_ASSET_PREFIX);
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  ...(ASSETS.assetPrefix ? { assetPrefix: ASSETS.assetPrefix } : {}),
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   // The type check runs in CI, not in the Vercel build. `next build` type-checks after compiling, in the same 8 GB
@@ -152,7 +157,7 @@ const nextConfig: NextConfig = {
             value: [
               // Next.js requires 'unsafe-inline' for styles and 'unsafe-eval' for dev; in prod we need 'unsafe-inline' for React inline styles
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com https://www.youtube.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               // Images: self + all configured remote image sources + data URIs for base64 thumbnails.
@@ -165,12 +170,14 @@ const nextConfig: NextConfig = {
               // (with the R2 bucket's missing CORS header, #4630).
               "connect-src 'self' https://images.sourcelibrary.org https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
-              "frame-src 'self' https://translate.google.com",
+              // YouTube: the IFrame API script and its player, for the podcast read-along
+              // (/articles/solve-et-coagula), which falls back to our own MP4 when they fail.
+              "frame-src 'self' https://translate.google.com https://www.youtube.com",
               "worker-src 'self' blob: data:",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-            ].join('; '),
+            ].map((d) => withAssetOrigin(d, ASSETS.cspOrigin)).join('; '),
           },
           {
             key: 'Strict-Transport-Security',
@@ -242,6 +249,16 @@ const nextConfig: NextConfig = {
         source: '/:path*',
         has: [{ type: 'host', value: '.*\\.vercel\\.app' }],
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      // A search results URL is an empty shell to a crawler: the results come from
+      // /api/search, which robots.txt disallows, so Google reports it as a Soft 404.
+      // A header because the page is a client component and cannot read the query
+      // in its metadata. `/search` itself stays indexable. Not robots.txt: Google
+      // only sees a noindex on a page it may fetch (#8368).
+      {
+        source: '/:locale(es|la|zh)?/search',
+        has: [{ type: 'query', key: 'q' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
       },
       // The private spend report (#5225) is behind a named allow-list, but a
       // sign-in redirect is still a URL a crawler can record. Belt and braces

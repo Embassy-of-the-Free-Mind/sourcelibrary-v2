@@ -252,6 +252,9 @@ async function main() {
       methodology: edition.front_matter?.methodology,
       version: bumpMinor(edition.version),
       doi: edition.doi,
+      // Every edition on Zenodo was minted under CC BY-SA 4.0 before 2026-11-05;
+      // a new version of one keeps the licence its DOI record states (#8488).
+      license: edition.license || 'CC-BY-SA-4.0',
       frontispiece: await fetchFrontispiece(book),
       credits: editionCredits(book),
       dedication: resolveDedication(book, collections),

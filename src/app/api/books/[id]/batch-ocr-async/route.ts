@@ -11,8 +11,11 @@ import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
+import { notBlockedForModel } from '@/lib/page-counts';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
+import { liteReadAllowed, batchOcrStamps, LITE_MODEL as OCR_MODEL_LITE } from '../../../../../../scripts/lib/ocr-lite-gate.mjs';
+import OCR_ROUTING_TABLE from '../../../../../../scripts/lib/ocr-routing-table.json';
 
 /** Provenance identity of this route (#4613): it both submits and collects. */
 const ROUTE_CALL_SITE = 'src/app/api/books/[id]/batch-ocr-async/route.ts';
@@ -178,6 +181,26 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // The router decides who reads this book (#8519, #7075). Only Flash-Lite may run on the paid API, and only in a
+    // cell whose bound route IS Flash-Lite; anywhere else a Flash-Lite read is rework the cell's lane (agy, Opus, a
+    // GPU draft) has to redo. 6,298 such pages came through this route on 2026-11-06/08. Refuse, write nothing, and
+    // leave the book for the bound lane.
+    if (model !== OCR_MODEL_LITE) {
+      return NextResponse.json({
+        error: 'ocr_model_not_on_api',
+        message: `Only ${OCR_MODEL_LITE} may run OCR on the paid Gemini API (#7075); ${model} reads through the agy CLI lane (scripts/batch/cli-ocr.mjs).`,
+      }, { status: 409 });
+    }
+    const liteGate = liteReadAllowed(book, OCR_ROUTING_TABLE);
+    if (!liteGate.ok) {
+      return NextResponse.json({
+        error: 'router_refuses_lite',
+        message: `Refusing a Flash-Lite read of this book: ${liteGate.why}`,
+        cell: liteGate.cell,
+        bound_route: liteGate.route,
+      }, { status: 409 });
+    }
+
     // Double-submit guard (#3749, archaeology I68): a pending OCR batch for
     // this book means submitting again pays Gemini twice for the same pages.
     // 409 with the existing job; pass resubmit: true to bypass.
@@ -203,6 +226,10 @@ export const POST = withAuth(async (request, session, context) => {
     const ocrFilter = force
       ? hasImageFilter
       : {
+          // Skip pages batch-collector has given up on (N=3 RECITATION, or
+          // N=3 other failures for this model), as the orchestrator does.
+          // Without this, every manual round re-sent the same refused pages (#8320).
+          'ocr.recitation_blocked': { $ne: true },
           $and: [
             hasImageFilter,
             {
@@ -211,7 +238,8 @@ export const POST = withAuth(async (request, session, context) => {
                 { 'ocr.data': null },
                 { 'ocr.data': '' }
               ]
-            }
+            },
+            notBlockedForModel(model),
           ]
         };
 
@@ -800,6 +828,7 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.prompt_hash': jobDoc.prompt_hash,
                   'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
                   'ocr.batch_job_id': jobDoc.job_name,
+                  ...batchOcrStamps(jobDoc), // ocr.lane + ocr.pipeline (#8519)
                   ...(jobDoc.pages_per_request > 1 && { 'ocr.pages_per_request': jobDoc.pages_per_request }),
                   ...tags, // page_type, columns, script_type — whichever parsed
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),

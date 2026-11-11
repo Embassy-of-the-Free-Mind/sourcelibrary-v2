@@ -5,6 +5,7 @@
 
 import { createHmac, randomBytes } from 'crypto';
 import { isAcceptableRedirect } from '@/lib/oauth/redirects';
+import { BOOK_CORPUS_STATS, IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 
 const SECRET = process.env.OAUTH_SECRET || process.env.NEXTAUTH_SECRET || 'source-library-mcp-oauth-2026';
 
@@ -81,9 +82,9 @@ export async function GET(req: Request) {
     <div class="perms">
       <h3>This will allow</h3>
       <ul>
-        <li>Search 10,000+ rare historical texts</li>
+        <li>Search ${BOOK_CORPUS_STATS.books} rare historical books</li>
         <li>Read full book translations</li>
-        <li>Browse 90,000+ historical illustrations</li>
+        <li>Browse ${IMAGE_CORPUS_STATS.illustrations} historical illustrations</li>
         <li>Get page citations with DOIs</li>
       </ul>
     </div>

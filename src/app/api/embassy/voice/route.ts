@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { logAiUsage } from '@/lib/log-ai-usage';
+import { clientCountry } from '@/lib/client-ip';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,7 +60,7 @@ export async function GET(request: Request) {
     logAiUsage({
       feature: 'voice',
       ok: true,
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null,
+      country: clientCountry(request.headers) || null,
     });
     return NextResponse.json({ signedUrl: data.signed_url });
   } catch (err) {

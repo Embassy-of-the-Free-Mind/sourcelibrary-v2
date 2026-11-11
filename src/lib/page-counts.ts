@@ -385,3 +385,17 @@ export function isReadableInEnglish(
   return READABLE_RUNGS.includes(state.rung) ||
     (state.english_original === true && ENGLISH_ORIGINAL_READABLE_RUNGS.includes(state.rung));
 }
+
+/**
+ * Mongo clause: pages this MODEL has not permanently given up on (#4674).
+ * TS twin of notBlockedForModel() in scripts/lib/page-counts.mjs; the block is
+ * scoped to the model that failed the page, so a new model reopens it.
+ */
+export function notBlockedForModel(model: string): Document {
+  return {
+    $or: [
+      { 'ocr.fail_blocked': { $ne: true } },
+      { 'ocr.fail_blocked_model': { $nin: [null, model] } },
+    ],
+  };
+}

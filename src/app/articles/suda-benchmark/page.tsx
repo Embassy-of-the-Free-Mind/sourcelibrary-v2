@@ -318,7 +318,7 @@ export default function SudaBenchmarkPage() {
           ancient Greek with vetted ground truth essentially do not exist at this scale, and we
           would like the next pipeline to be graded harder than ours was. The Suda On Line&rsquo;s
           translations are CC BY-NC-SA, and the dataset will honor that: a full aligned version
-          under their terms, and an our-columns-only version under CC BY-SA that anyone can rejoin.
+          under their terms, and an our-columns-only version under our CC BY-NC-SA that anyone can rejoin.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">

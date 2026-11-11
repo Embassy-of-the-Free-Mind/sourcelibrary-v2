@@ -88,7 +88,7 @@ async function run() {
 
     // dc_rights
     if (!dc.dc_rights) {
-      updates['dublin_core.dc_rights'] = 'CC BY-SA 4.0';
+      updates['dublin_core.dc_rights'] = 'CC BY-NC-SA 4.0'; // our text's licence since 2026-11-05 (#8488)
     }
 
     // dc_identifier: add USTC and DOI if missing

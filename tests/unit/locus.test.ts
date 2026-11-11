@@ -14,6 +14,7 @@ import {
   formatRef,
   locusWorkKey,
   extractAnchors,
+  anchorsCarrying,
   type LocusPageInput,
 } from '@/lib/locus';
 import { findWorkByName, findWorkByHead, LOCUS_WORKS } from '@/lib/locus-works';
@@ -316,5 +317,71 @@ describe('locus work names', () => {
   it('has no duplicate slugs', () => {
     const slugs = LOCUS_WORKS.map((w) => w.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
+  });
+});
+
+describe('anchorsCarrying (#8466 item 5)', () => {
+  // Real anchors, Burnet's Republic (OCT 1902, 699376d2…). Each leaf's
+  // <page-num> is the section running at its head; p. 296 prints 520 a–d in its
+  // margin and p. 297 opens at 520d.
+  const B = 'burnet';
+  const burnet = [
+    [28, 327, 'c'], [29, 328, 'c'], [30, 329, 'b'],
+    [295, 519, 'b'], [296, 519, 'e'], [297, 520, 'd'], [297, 521, 'c'], [298, 521, 'c'], [298, 522, null],
+    [73, 358, 'd'], [73, 359, 'c'], [74, 359, 'c'], [74, 360, 'b'], [76, 361, null], [77, 361, 'd'],
+  ].map(([page_number, ref_page, ref_section]) => ({
+    book_id: B, work_header: 'ΠΟΛΙΤΕΙΑ', page_number: page_number as number, ref_page: ref_page as number, ref_section: ref_section as string | null,
+  }));
+  const marginal = () => 'marginal';
+  const leaves = (page: number, section: string | null) =>
+    anchorsCarrying(burnet, { page, section }, marginal).map((a) => a.page_number).sort((x, y) => x - y);
+
+  it('sends a section to the leaf it is printed on, not the next one', () => {
+    // The member's report: Rep. 520c came back as p. 297, whose head reads 520d.
+    expect(leaves(520, 'c')).toEqual([296]);
+    // And the case the route's own comment cited, which was off the same way.
+    expect(leaves(328, 'b')).toEqual([28]);
+  });
+
+  it('returns the leaf before a head that names the section, where it began', () => {
+    expect(leaves(520, 'd')).toEqual([296, 297]);
+  });
+
+  it('keeps only the later leaf when a range ends where the next leaf begins', () => {
+    // p. 297 is `520 d - 521 c` and p. 298 opens at `521 c`: 521d is on p. 298.
+    expect(leaves(521, 'd')).toEqual([298]);
+  });
+
+  it('a bare page returns the leaf it opens on and every leaf opening inside it', () => {
+    expect(leaves(520, null)).toEqual([296, 297]);
+  });
+
+  it('does not reach across a leaf whose number was never read', () => {
+    // p. 75 carries no anchor (its <page-num> reads "4"); 360c is on it. p. 74
+    // ends at 360b, so answering p. 74 would be the off-by-one again.
+    expect(leaves(360, 'c')).toEqual([]);
+  });
+
+  it('leaves a pagination edition exactly as a page match', () => {
+    const stephanus = [
+      { book_id: 'st', work_header: 'DE REPVBL', page_number: 531, ref_page: 519, ref_section: null },
+      { book_id: 'st', work_header: 'DE REPVBL', page_number: 532, ref_page: 520, ref_section: null },
+      { book_id: 'st', work_header: 'DE REPVBL', page_number: 533, ref_page: 521, ref_section: null },
+    ];
+    const pagination = () => 'pagination';
+    for (const section of [null, 'a', 'c', 'e']) {
+      expect(anchorsCarrying(stephanus, { page: 520, section }, pagination).map((a) => a.page_number)).toEqual([532]);
+    }
+  });
+
+  it('does not compare anchors across works sharing a volume', () => {
+    // Burnet vol. 4 runs Clitopho 406–410 before the Republic reaches 406.
+    const mixed = [
+      { book_id: B, work_header: 'ΚΛΕΙΤΟΦΩΝ', page_number: 20, ref_page: 407, ref_section: 'a' },
+      { book_id: B, work_header: 'ΠΟΛΙΤΕΙΑ', page_number: 140, ref_page: 406, ref_section: 'e' },
+      { book_id: B, work_header: 'ΠΟΛΙΤΕΙΑ', page_number: 141, ref_page: 407, ref_section: 'c' },
+    ];
+    const got = anchorsCarrying(mixed, { page: 407, section: 'b' }, marginal).map((a) => `${a.work_header}:${a.page_number}`);
+    expect(got.sort()).toEqual(['ΚΛΕΙΤΟΦΩΝ:20', 'ΠΟΛΙΤΕΙΑ:140']);
   });
 });

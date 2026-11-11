@@ -43,6 +43,7 @@
 import { MongoClient } from 'mongodb';
 import blockedAsnPrefixes from '../../src/lib/blocked-asn-prefixes.json' with { type: 'json' };
 import { ntfyPost } from '../lib/ntfy-send.mjs';
+import { resolveTxt } from 'node:dns/promises';
 
 // Same topic as uptime-monitor.mjs and daily-health-snapshot.mjs — the channel
 // Derek actually reads daily. Deliberately NOT email: `sync_worker_missing`
@@ -335,6 +336,62 @@ export function looksLikeDesktopSurge({ desktop, phone, desktopBase, phoneBase }
   return desktop >= desktopBase * DESKTOP_SURGE_RATIO && phone < Math.max(phoneBase, 1) * PHONE_FLAT_RATIO;
 }
 
+// ── Who owns a network? ─────────────────────────────────────────────────────
+// Every network alarm used to end with "run whois yourself", and the spray
+// alarm's advice (block or don't) depended entirely on that answer. On
+// 2026-11-08 it fired for two days calling a DigitalOcean fleet a "residential
+// proxy pool" because nobody ran the whois. So the detector asks Team Cymru's
+// DNS service itself and puts the owner in the message.
+//
+// HOSTING_ASNS: rented-server networks we already treat as non-readers on
+// /book (Cloudflare rules 62774895 / 5330bd83 / cb7dfe4b, crawl register),
+// plus the operators in blocked-asn-prefixes.json. Not AWS (our Vercel
+// functions) and not Hetzner (our job boxes) — those are never "safe to block".
+export const HOSTING_ASNS = new Map([
+  [14061, 'DigitalOcean'], [16276, 'OVH'], [8075, 'Microsoft Azure'], [9009, 'M247'],
+  [20473, 'Vultr'], [51167, 'Contabo'], [60781, 'Leaseweb NL'], [63949, 'Akamai/Linode'],
+  [212238, 'Datacamp'], [394380, 'Leaseweb US'], [396982, 'Google Cloud'],
+  [45102, 'Alibaba Cloud'], [396986, 'Bytedance'],
+  ...blockedAsnPrefixes.groups.map((g) => [g.asn, g.name]),
+]);
+
+/** "137.184.x.x" → { asn, name } via origin.asn.cymru.com; null when the lookup fails. */
+export async function lookupPrefixOwner(prefix) {
+  const [a, b] = String(prefix).split('.');
+  if (!/^\d+$/.test(a) || !/^\d+$/.test(b)) return null;
+  try {
+    const [origin] = await resolveTxt(`1.1.${b}.${a}.origin.asn.cymru.com`);
+    const asn = Number(String(origin.join('')).split('|')[0].trim().split(' ')[0]);
+    if (!asn) return null;
+    let name = HOSTING_ASNS.get(asn) || '';
+    if (!name) {
+      const [desc] = await resolveTxt(`AS${asn}.asn.cymru.com`).catch(() => [['']]);
+      name = String(desc.join('')).split('|').pop().trim().split(' - ')[0].slice(0, 40);
+    }
+    return { asn, name, hosting: HOSTING_ASNS.has(asn) };
+  } catch {
+    return null;
+  }
+}
+
+/** One line naming the owners of the top prefixes and what that means for the lever. */
+export async function describeOwners(prefixes) {
+  const owners = await Promise.all(prefixes.map(lookupPrefixOwner));
+  const known = owners.filter(Boolean);
+  if (!known.length) return 'Owner lookup failed (Team Cymru DNS); resolve by hand: whois -h whois.cymru.com " -v A.B.1.1".';
+  const byAsn = new Map();
+  for (const o of known) byAsn.set(o.asn, o);
+  const list = [...byAsn.values()].map((o) => `AS${o.asn} ${o.name}${o.hosting ? ' (hosting)' : ''}`).join(', ');
+  const allHosting = known.every((o) => o.hosting) && known.length === prefixes.length;
+  const noneHosting = known.every((o) => !o.hosting);
+  const verdict = allHosting
+    ? 'Every top network is a RENTED-SERVER network: no readers live there, so this is not a residential pool. Block it at the edge on reader paths (extend the hosting-ASN clause of Cloudflare rule cb7dfe4b), then re-run scripts/workers/attack-canary.mjs.'
+    : noneHosting
+      ? 'None of the top networks is a hosting network: this is consumer/mobile space where real readers live. Do NOT block the networks; the lever is a managed challenge or the breadth cap (#5995), a decision for a human.'
+      : 'Mixed hosting and consumer networks: block only the hosting ASNs at the edge; leave the consumer ones to a challenge.';
+  return `Owners: ${list}. ${verdict}`;
+}
+
 export function looksLikeSpray(reads, nets) {
   if (!nets || nets < SPRAY_MIN_NETS) return false;
   return reads / nets <= SPRAY_MAX_READS_PER_NET;
@@ -601,10 +658,11 @@ async function run() {
   const sprayShare = classifiedCount ? sprayReads / classifiedCount : 0;
 
   if (sprayed.length && sprayReads >= SPRAY_MIN_READS && sprayShare >= SPRAY_MIN_SHARE) {
+    const sprayOwners = await describeOwners(sprayed.slice(0, 6).map((v) => v.p));
     alerts.push({
       level: 'critical',
       check: 'distributed_proxy_pool',
-      message: `${sprayReads.toLocaleString()} reads in ${HOURS}h (${(sprayShare * 100).toFixed(1)}% of classified traffic) arrived as a SPRAY: ${sprayed.length} /16 networks, ${sprayNets.toLocaleString()} distinct /24s, averaging ${(sprayReads / sprayNets).toFixed(2)} reads per /24. This shape says only that the reads were spread too thin for any per-IP, per-/24 or per-/16 threshold to see; it does not say who sent them. Resolve the owners of the top networks first: whois -h whois.cymru.com " -v A.B.1.1". It has been both: consumer mobile space on 2026-08-06 (China Mobile provincial ASNs) and mostly DigitalOcean on 2026-11-07. **If the owner is a consumer ISP or mobile carrier, do NOT add it to blocked-networks.ts**: real readers live there and an app-layer block would refuse them too. The lever that fits is a Cloudflare managed challenge scoped to the offending ASNs (real browsers pass, headless clients mostly do not), a decision with a real blast radius, so it wants a human. Top: ${sprayed.slice(0, 6).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
+      message: `${sprayReads.toLocaleString()} reads in ${HOURS}h (${(sprayShare * 100).toFixed(1)}% of classified traffic) arrived as a SPRAY: ${sprayed.length} /16 networks, ${sprayNets.toLocaleString()} distinct /24s, averaging ${(sprayReads / sprayNets).toFixed(2)} reads per /24. This shape says only that the reads were spread too thin for any per-IP, per-/24 or per-/16 threshold to see; it does not say who sent them. ${sprayOwners} It has been both: consumer mobile space on 2026-08-06 (China Mobile provincial ASNs) and mostly DigitalOcean on 2026-11-07. **If the owner is a consumer ISP or mobile carrier, do NOT add it to blocked-networks.ts**: real readers live there and an app-layer block would refuse them too. The lever that fits is a Cloudflare managed challenge scoped to the offending ASNs (real browsers pass, headless clients mostly do not), a decision with a real blast radius, so it wants a human. Top: ${sprayed.slice(0, 6).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
     });
   }
 
