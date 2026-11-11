@@ -33,12 +33,25 @@ refresh_cache() {
   rmdir "$LOCK" 2>/dev/null
 }
 
+# The usage endpoint stopped returning the five-hour 'session:all' limit (absent for every account since at least
+# 2026-11-04); only the weekly limit is reported. A missing session reading counts as 0, so the weekly cap still
+# binds. A missing WEEKLY reading still prints nothing and trips the blind stop (#8482).
 read_meter() {
   if [ ! -s "$CACHE" ] || [ "$(age_of "$CACHE")" -ge "$TTL" ]; then refresh_cache; fi
   [ -s "$CACHE" ] && [ "$(age_of "$CACHE")" -lt "$MAX_AGE" ] || return 0   # too old to trust: prints nothing
-  EMAIL="$EMAIL" python3 -c "import json,os,sys;d=[a for a in json.load(open(sys.argv[1])) if a.get('email')==os.environ['EMAIL'] and a.get('ok')][0];l={x['key']:x['percent'] for x in d['limits']};print(l['session:all'],l['weekly_all:all'])" "$CACHE" 2>/dev/null
+  EMAIL="$EMAIL" python3 -c "import json,os,sys;d=[a for a in json.load(open(sys.argv[1])) if a.get('email')==os.environ['EMAIL'] and a.get('ok')][0];l={x['key']:x['percent'] for x in d['limits']};print(l.get('session:all',0),l['weekly_all:all'])" "$CACHE" 2>/dev/null
 }
 
+NTFY=${NTFY:-https://ntfy.sh/sourcelibrary-uptime}
+NAME=$(basename "$DIR")
+page() { curl -s -m 10 -H "Title: $1" -d "$2" "$NTFY" >/dev/null || true; }
+# A blind meter still stops the batch (never search with an unread meter), but it is loud: STOP carries the reason
+# and ntfy is paged. A silent stop locked ~6,400 unsearched ids for ten days (#8482).
+blind_stop() {
+  echo "meter blind $(date -u +%Y-%m-%dT%H:%M:%SZ): $1" > STOP; echo "$1" >> meter.log
+  page "ft-search meter BLIND: $NAME" "$1. Batch stopped; searched verdicts stay on disk ($DIR). Re-login: climits add $EMAIL (#8482)"
+  pkill -f "run-batch.sh $DIR"; pkill -f "search-one.sh"; exit 1
+}
 stop() { touch STOP; echo "$1" >> meter.log; pkill -f "run-batch.sh $DIR"; pkill -f "search-one.sh"; exit "$2"; }
 blind=0
 while true; do
@@ -47,7 +60,7 @@ while true; do
   echo "$(date -u +%H:%M:%S) 5h=${m% *} week=${m#* } done=$n" >> meter.log
   if [ -z "$m" ]; then
     # A blank reading happens; BLIND_MAX (default 5, ten minutes) in a row means the meter is gone.
-    blind=$((blind + 1)); [ "$blind" -ge "${BLIND_MAX:-5}" ] && stop "METER BLIND $(date -u +%H:%M:%S): re-login with climits add $EMAIL" 1
+    blind=$((blind + 1)); [ "$blind" -ge "${BLIND_MAX:-5}" ] && blind_stop "METER BLIND $(date -u +%H:%M:%S) after $blind empty readings"
   else
     blind=0; s=${m% *}; w=${m#* }
     if [ "$s" -ge "$CAP5" ] || [ "$w" -ge "$CAPW" ]; then stop "STOPPED 5h=$s week=$w" 0; fi

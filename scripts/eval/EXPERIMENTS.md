@@ -160,6 +160,315 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-10 · English one leaf ahead across untranscribed leaves (#8464)
+
+PRIOR ART: `scripts/audit/translation-leaf-shift.mjs` and `scripts/lib/leaf-shift.mjs` (#5021). The classifier is
+changed here, not rebuilt. The repair reuses `scripts/maintenance/wrong-leaf-fix-5021.mjs enqueue` + `run`.
+
+**Who it is for.** A member reading Cicero on p.56 got fluent English for p.59. Nothing on screen said so.
+
+### Cause (book 6a06d4e89a48d513999643b4)
+
+- No OCR was ever written for pp.51-52, 57-58 and 61-63 (no `ocr` revision rows). They are not blank leaves: the
+  printed page numbers jump (p.60 = printed 25, p.64 = printed 27). The book was translated on 2026-06-06 by the
+  block lane (prompt v11, gemini-3.1-flash-lite), and the translator saw only the leaves with text.
+- In the block written at 08:51:40 the English slipped one slot from p.55 on: EN(55) = OCR(56), EN(56) = OCR(59),
+  EN(59) = OCR(60), EN(60) = OCR(64), EN(64) = OCR(65). OCR(55) had no English anywhere. Counted in page numbers
+  that is +1, +3, +1, +4: the issue's "three pages ahead".
+- `page_revisions` for the book, by source: `ai` translation 2026-11-03 (p.54, already re-translated under #5021),
+  cleanups (`cleanup-a2-5700`, `cleanup-markup-5700`, `longs-pass-5924`, `strip-proquest-6056`), and one `reocr_cli`.
+  None of them moved text. The page order was not shuffled and nothing was split after translation. This is the
+  #5021 block slip.
+- The same shape, with no OCR gaps, sits in two more blocks of the same volume: pp.311-315 (De legibus I: 311 carries
+  its own leaf and 312's; 312-314 carry their successors) and pp.342-348 (342 carries its own and 343's; 343-347
+  carry their successors). The old name signal had already reported 343-347. pp.166/167 show a boundary drift (p.166's
+  English runs into p.167's leaf).
+
+### Why the detector missed it
+
+`classifyBook` voted a page's English against `byPn.get(page_number ± 1)`. For p.56 that is p.57, an empty page, so
+OCR(59)'s names could never vote `next`, and the empty rows broke runs as well. Now pages with neither OCR nor English
+are dropped before classification. Neighbours are the adjacent remaining rows (`pos`), and strict, gappy and
+absorption adjacency read `pos`. A page that has OCR but no English is still a neighbour. Unit case:
+`tests/unit/leaf-shift-gappy-runs.test.ts` "#8464".
+
+- Cicero, before: no run near p.56. After: a name run `next` 56-64 (3 voting pages), beside the 343-347 run already
+  known.
+- **Rate, seeded draw of 600 of 25,013 live translated books (seed 8464), old vs new classifier on identical text:**
+  number runs 17 vs 17 books (tier A 4 vs 4), zero runs lost. Name runs outside number runs: 13 vs 13 books, one run
+  added. The added run is Claudian, *Complete Works* vol.1 (Loeb, 69aec132b87be1eef391d487) pp.94-95: p.96 is empty,
+  and EN(95) = OCR(97) word for word. Read in the text, not opened in a scan. It is not repaired here.
+- Coverage is the same as #5021: Latin prose prints few body numbers, so this book is found by names alone, and a
+  name run is reported, not flagged. No flag still means NOT checked, not aligned.
+
+### Repair
+
+17 pages (55, 56, 59, 60, 64, 166, 167, 311-314, 342-347) were re-translated one page per call from their own OCR,
+through `wrong-leaf-fix-5021.mjs` (`JOB_NAME=fix-8464`; book route latin-cli-agy4 → agy gemini-3.8-flash-low). The
+old English was snapshotted to `page_revisions` by translate-core. Before the apply, every new read was checked
+against its own OCR (opening and closing words, names: own > neighbours on all 17). After the apply, the slot scan
+and the classifier find no run in the book. Ledger: `$JOB_SCRATCH/fix8464/ledger.jsonl` (spare-8464).
+
+Not done: the other books in the report (Plato *Laws* p56, Nagarjuna scan 264, Cicero *De legibus* p42) were not
+identified from titles alone. A library-wide re-run of the audit under the new neighbour rule was not done either.
+
+## 2026-11-10 · Can the book summary + chapters come from the stored page summaries? (#8512)
+
+**Why.** Every translation call ends with one `<summary>` and one `<keywords>` for its pages, and these are stored in
+`translation.data`. Enrichment strips them and reads the whole English text again. The page summaries are 1-11% of
+the text's size, so if a summary built from them were as good, the summary + chapters step would cost a fraction of
+what it does now.
+
+**Arms.**
+- **A (live):** `enrich-worker.mjs --agy --compare-out=DIR --book-ids-file=…`, nothing written. agy 3.8 Flash-low,
+  pool `/root/.agy-milo`, one conversation a book in ≤150K-character messages (Diophantus, read from OCR at 891K
+  characters, went in 2 parts).
+- **B (summaries):** one agy 3.8 Flash-low request per book (two for one book). Input: the page summaries + keywords
+  in page order, with page numbers, plus the chapter headings found by the lane's own heading detector. Same JSON schema
+  for summary/reading_summary and chapters, the same style check at the end, parsed by the lane's own parse functions.
+  Same pool and quota floor.
+
+**Selection (seed 8512).** Books ranked by `sha256(seed:id)` inside a length band. A book is taken when ≥70% of its
+translated pages carry a `<summary>`, its English is ≤600K characters, ≥50% of its pages are translated,
+`enrichmentSkip` passes with no withheld page, it has no row in the batch lane's state collection, and its language is
+under the cap. Bands: 5 short (100-199 pages) and 5 long (400-600, then 250-399).
+Stage 1 draws from the agy lane's own gap (`gapFilter`, language cap 3). **Only 4 gap books passed**: 63 of the 298 gap
+books looked at had ≥70% summaries, and 40 of those were held as untranslated. No long gap book was ≤600K. Stage 2
+filled the other 6 from live, unheld books that are already enriched (language cap 2). These 6 were judged and never
+written.
+
+**Judge.** One blind Opus Agent call per book, with X/Y order set by the seed. It got both outputs and the book's
+English text with the wrappers stripped. Per summary it listed the unsupported or wrong claims with the pages it
+checked, and scored specificity 1-5 and chapter completeness 1-5 against the headings. Then a preference.
+**Instrument check:** 2 false claims planted in one output each for 2 books. Coclico Y: "dedicated to Charles V /
+Vienna" and "appendix of twelve Senfl motets". Herder X: "dedicated to Mendelssohn" and "Theophron quotes Kant's CPR at
+length". **Caught 4/4.** One caveat: on the planted Coclico run the judge listed only the 2 planted claims. It missed
+the real one it had found in the clean run (*musica reservata*), so its recall of real errors varies from run to run.
+Read the claim counts as ±1-2 a book.
+
+**Cap override.** The `enrich-agy` daily ledger, which the cron shares, was already at 1,295 of its 600 calls when
+arm A ran. Arm A ran with `--max-calls-day` raised to 1400/1500 for its 24 requests (logs `a.log`, `a2.log`).
+
+## Results
+
+| book | lang | pages | chars | req A/B | input tok A/B | s A/B | unsupported A/B | spec A/B | chapters A/B | pref |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Classic and Commentary of Ancient Music j.1 *(gap)* | zho | 100 | 192K | 1/1 | 30K/15K | 26/12 | 1/1 | 4/4 | 4/4 | tie |
+| Fourfold Examinations of the Mountain Hall j.53-54 *(gap)* | zho | 100 | 178K | 1/1 | 35K/26K | 30/19 | 0/0 | 4/5 | 4/5 | B |
+| Shijing Baishu j.4 *(gap)* | zho | 101 | 255K | 2/1 | 82K/18K | 36/15 | 2/0 | 5/5 | 4/3 | B |
+| Coclico, Compendium musices *(gap)* | lat | 126 | 152K | 1/1 | 32K/28K | 39/17 | 2/1 | 5/4 | 4/3 | A |
+| Hermetic Rosary | deu | 121 | 342K | 2/1 | 119K/26K | 112/32 | 2/6 | 5/4 | 5/4 | A |
+| Diophantus of Alexandria (Heath) | eng | 404 | 891K | 7/1 | 702K/50K | 84/21 | 2/2 | 5/5 | 3/4 | B |
+| Herder, God: Some Conversations | deu | 280 | 590K | 2/1 | 101K/32K | 38/13 | 0/0 | 5/5 | 5/5 | tie |
+| God is the Purest Love | nld | 282 | 572K | 3/2 | 202K/74K | 406/57 | 0/2 | 5/4 | 4/4 | A |
+| Steiner, The Way of Initiation | deu/eng | 260 | 565K | 2/1 | 141K/31K | 58/17 | 1/1 | 5/4 | 5/5 | A |
+| Tuḥfat al-ʻIrāqayn | fas | 268 | 488K | 3/1 | 216K/25K | 41/14 | 2/2 | 4/3 | 2/2 | A |
+| **total** | | **2,042** | **4.23M** | **24/11** | **1.66M/324K** | **870/217** | **12/15** | **47/43** | **40/39** | **A 5 · B 3 · tie 2** |
+
+Output tokens: A 139K, B 40K.
+
+**Rule (#8512).** Switch if B has no more unsupported claims than A over the 10 books (+1 allowed) and the judge does not
+prefer A on ≥7/10. The preference half passes (A 5). **The claim half fails: B 15 > 13.** Without Hermetic Rosary it
+would be B 9 against A 10, so one book decides the result, and the judge's run-to-run variance (above) is about the
+same size as the margin. The rule was set in advance and is applied as written: keep the full text.
+
+**What went wrong in B.** Most of B's errors are about where something is. An author or detail is placed in the wrong
+part of the book (Basilius in the "preface" when he is in the verse before it; the Emerald Tablet given "in Latin"
+inside Ch. XXI; Tuḥfat's coin and spider images placed "at the opening"). Some are adjectives a page summary added
+("gentle Fire of the Nuts" for an *inextinguishable* one; a toad "allegory" that Hortulanus tells as an experiment he
+saw). This is the known risk in #8512: a block summary that paraphrases or slips to a neighbouring page carries its
+error straight into the book summary, and B never sees the text that would correct it. A's errors are more often
+wrong counts and framings made from the whole text (Coclico's seven requirements counted wrong; "double-choir";
+seasons of the work invented in both arms on Hermetic Rosary). Both arms said "43 problems" in Diophantus Book I, which
+has 39.
+
+**Unsupported claims (judge's wording, shortened).**
+- Ancient Music — B: Master Dou called a Han-dynasty musician (p.7: Marquis Wen of Wei's musician, received by the Han). A: "music was not originally an entertainment for rulers" (p.12 does not say this).
+- Shijing Baishu — A: the Mao text collated against Qi, Lu and Han readings (only Han readings are collated); A: the ox-shaped vessels called "Shang presentation vessels" (p.28 says neither Shang nor Zhou).
+- Coclico — A: the seven requirements enumerated wrongly (text expression and syllable quantity are both the 6th; the 7th is imitation); A: "double-choir polyphony" (p.120 is an 8-voice canon). B: a source "for the term *musica reservata*" (the term is not in the book).
+- Hermetic Rosary — A: winter grinding and spring luting (only a "Work of Autumn", p.99-100); A: Bernard says the work takes a year (not in the text). B: Basilius and the list of authorities placed in the preface (they are in the H.R.C. verse, p.7); B: Winter and Spring phases; B: the Emerald Tablet in Latin inside Ch. XXI (it is in German and under its own heading, p.90); B: the "marital union of mercury and arsenic in one day" (gold and silver dissolved in one day; the union on p.80 is body and spirit); B: the toad as allegory; B: the "gentle" Fire of the Nuts.
+- Diophantus — A and B: Book I has "43 problems" (39); B: Book II opens with dividing a square into two squares (that is II.8); A: Euler's "redundant indeterminate equations".
+- God is the Purest Love — B: earlier French *and Dutch* printings (French only); B: a seed analogy (it is a worm that wakes as a "summer bird").
+- Way of Initiation — A: the articles "first appeared" in *The Theosophist* (first published in German); B: Steiner's youth "in Upper Austria" (the text: a town on the Hungarian border).
+- Tuḥfat — A and B: a priority claim ("earliest surviving Persian masnavi / verse travelogue") the text does not make; A: "a voyage down the Tigris" (not narrated); B: the coin and spider images placed at the opening (pp.111, 142).
+
+## Writes (the 4 gap books only)
+
+The judged-better summary + chapters went through the lane's own write path (`finishEnrichBook` /
+`applyChapterExtraction`) with an engine provenance block (`summary.engine`, `field_provenance.chapters` source
+`enrich-8512-arm-A|B`). The index came from arm A's extractions, which the lane would have written anyway. Embeddings and
+entities were synced by `finishEnrichBook`. Verified after the write: summary engine, chapter provenance, and the state
+row set to `done`.
+
+| book | written from | chapters |
+|---|---|---:|
+| `6a3cb95d3d799518cd71d6cc` Ancient Music j.1 | A (tie → live arm) | 4 |
+| `6a3c680caf3c49b59c5d5e71` Mountain Hall j.53-54 | B | 16 |
+| `6a3c6dfd01fe4f593c1beb42` Shijing Baishu j.4 | B | 15 |
+| `6a4dfcb83deb696ae98430ac` Coclico | A | 32 |
+
+The 6 fill books kept their existing enrichment.
+
+**Out of scope / not tried.** A hybrid that sends page summaries as a map and full text for verification. Using page
+summaries only for books whose full text is over the lane's 600K cap; the cost case there is strongest (Diophantus:
+702K against 50K input tokens, the same 2 claims each), but n=1 here. The index step. Re-judging to measure the judge's
+variance. The 4 gap books are 3 Siku Chinese volumes and one Latin treatise, so "B is better on the gap" is not
+evidence about the gap as a whole.
+
+## 2026-11-10 · Long books in one-message parts (#7628)
+
+**Why.** agy cuts one message at ~190K characters, so a 600K part went as four 150K messages, and every turn re-reads
+the conversation: 150 + 300 + 450 + 600 = 1.5M characters read for 600K of text. A 471K-character book took 242K input
+tokens, about twice its text. A book over 600K is already summarized from its parts' extractions (the reduce prompt),
+so a smaller part changes only how much neighbouring text the model sees while it extracts.
+
+**How.** `enrich-worker.mjs --agy --compare-out` (nothing written) on 8 long books already enriched by the old lane, one
+per language, plus 2 the lane had failed. Old figures are each book's stored `enrich_batch_books.agy` row. Scratch on
+the main box: `/data/scratch/sl/enrich-eff-compare/` (`new/*.json`, `analyze.mjs`, `side.md`).
+
+| book | lang | parts old/new | req old/new | input K old/new | ratio | quotes on page |
+|---|---|---|---|---|---|---|
+| 4e73ce | Chinese | 2/7 | 5/8 | 253/167 | 0.66 | 204/222 |
+| 0bb837 | Latin | 3/17 | 11/18 | 823/374 | 0.45 | 112/130 |
+| 67e76b | English | 2/11 | 8/12 | 859/368 | 0.43 | 71/88 |
+| f4516a | Greek | 2/7 | 6/8 | 368/170 | 0.46 | 45/56 |
+| 9ef3ae | Sanskrit | 2/8 | 7/9 | 488/211 | 0.43 | 49/62 |
+| 518062 | German | 4/20 | 12/22 | 854/502 | 0.59 | 128/149 |
+| 6f2ef8 | Italian | 3/18 | 13/19 | 1383/449 | 0.33 | 119/140 |
+| 281b25 | Persian | 2/8 | 6/9 | 566/210 | 0.37 | 42/57 |
+| 4794e7 | English (failed before) | 6/33 | 17/34 | 1681/887 | 0.53 | 234/275 |
+| f7d8fd | English (failed before) | 2/11 | 7/12 | 725/365 | 0.50 | 70/85 |
+
+**Limits.** The 6x output weight is the 2026-11-07 assumption, not a measured pool rate; at 10x the saving is still
+~36%. Requests rise ~64% on long books, so the daily request cap (#8508, 4,000) binds sooner for them; the pool floors
+are unchanged. One German part needed 2 messages (page markers pushed it past 150K). Quality was read on three books'
+summaries, not judged blind; the index counts against the stored rows are not comparable (the stored read is sliced).
+
+## 2026-11-09 · Book check call shape: 10 pages in one call, or one call per pair, against the 15-call reference. Results (#8478)
+
+Preregistration: `2026-11-09-callshape-prereg-8478.md`, §1–6 plus §7 (quota rule, OCR vs translation; Derek's 19:07Z and 19:14Z comments, written before any result was read) and §8 (page_defect matcher fix, after 3 of 10 page_defect units). No other rule changed.
+Code: `scripts/eval/callshape-8478/run.mjs`. Output: `scripts/eval/callshape-8478/results/{score.json,books.json,frame-summary.json,eye-report.md}`. Verdicts are in `$JOB_SCRATCH/callshape-8478/` on the job host. Nothing was written to `book_checks` or to page text.
+
+### Run
+- **Frame:** 160 #8405 books → 130 eligible (23 without five complete pairs, 7 whose served text hash changed since #8405, after the #8425 repairs). Seeded draw: 80 study books, 30 control books (10 per kind; page_defect plants: 6 numeral, 3 negation removed, 1 negation added).
+- **Complete:** 79 of 80 study books in all four arms and V (≥ 40, so the decision stands). 110 units framed.
+- **Calls:** 1,195 `claude -p` calls (subscription, team@, concurrency 3; 7 of them failed), under the 2,000 cap. The pace guard was not bypassed.
+- **Quota:** team@ weekly went from 50% (19:15Z) to 76% (23:52Z), **Δ26% of a week**, for 48.4M price-weighted tokens (0.537% of a week per M weighted tokens). Other team@ use in that window inflates the delta. The token shares between arms hold regardless.
+
+### Controls
+| arm | carry_over | wrong_leaf | page_defect (§8) | page_defect strict | valid |
+|---|---|---|---|---|---|
+| B10-opus | 10/10 | 10/10 | **8/10** | 7/10 | no |
+| B10-sonnet | **7/10** | 10/10 | **8/10** | 7/10 | no |
+| P5-opus | 10/10 | 10/10 | **8/10** | 7/10 | no |
+| P5-sonnet | **8/10** | 10/10 | **7/10** | 6/10 | no |
+| R (#8405) | 10/10 | 10/10 | n/a (reads no English) | n/a | yes |
+| V | confirmed 149/150 planted findings raised | | | | yes |
+
+Both Opus page_defect misses are the same two plants, and all four arms missed them. In one (Latin, `69dbc99f…`) the removed "not" translates a "non" in the source, so the plant was a real defect and every arm missed it. In the other (Greek, `69a5e3d7…`) the plant inserted "not" into a sentence whose source "ἆρά γε" has no negation to lose. That made a defect, but a subtle one. Dropping the Greek plant as unfair gives 8/9 = 0.89, still under 0.9, so the decision does not change. Sonnet's carry-over misses are on Sanskrit (`69dea5f8`), Latin (`6970e375`) and Tibetan (`6abedf77`, B10-sonnet only).
+
+### Results (79 books; per book, V-confirmed, counted once per `same_as` cluster)
+| arm | calls/bk | serious OCR/bk [95% CI] | OCR recall vs union | OCR precision | books per 1% week | **serious OCR per 1% week** | serious translation/bk | translation per 1% week |
+|---|---|---|---|---|---|---|---|---|
+| R | 15 | **11.11** [7.94, 14.84] | 0.712 | 0.916 | 8.9 | 99.0 | 0 (by design) | 0 |
+| P5-opus | 5 | 10.08 [7.32, 13.32] | 0.705 | **0.963** | 14.1 | **142.5** | **11.87** | 167.9 |
+| P5-sonnet | 5 | 5.19 [3.66, 6.91] | 0.382 | 0.909 | 26.7 | 138.4 | 7.68 | 204.9 |
+| B10-opus | 1 | 7.34 [5.44, 9.48] | 0.539 | 0.957 | 18.4 | 135.2 | 9.71 | 178.8 |
+| B10-sonnet | 1 | 3.76 [2.72, 5.04] | 0.280 | 0.924 | 29.9 | 112.5 | 4.70 | 140.6 |
+
+Union of all arms: 14.3 serious OCR and 13.8 serious translation findings a book. Weighted tokens a book: R 209K, P5-opus 132K, B10-opus 101K, P5-sonnet 70K, B10-sonnet 62K, and V 103K. No arm's OCR precision is more than 10 points below R's, so none needs V under rule 2. Book verdict agreement with R (paired rule): B10-opus 0.67, B10-sonnet 0.79, P5-opus 0.66, P5-sonnet 0.65. R calls 43 of 79 books bad, while P5-opus calls 58 and B10-opus 61. The batched arms read the English, so they find more English-layer defects that sink a book.
+
+**Frontier (serious OCR per book vs books per 1% of a week):** R (11.1, 8.9), P5-opus (10.1, 14.1), B10-opus (7.3, 18.4), P5-sonnet (5.2, 26.7), B10-sonnet (3.8, 29.9). Every arm is on it. Above P5-opus the extra recall costs a lot: R buys one more serious OCR finding a book for 59% more quota. Sonnet doubles throughput but loses half the recall and the carry-over control.
+
+### Decision per the preregistered rule (§7)
+1. Eligible (≥ 9/10 every control kind): **none of the batched arms.**
+2. –
+3. –
+4. **R stays.** The §6 per-book rule, reported for comparison, also gives R stays.
+
+**Sensitivity (not the rule).** page_defect plants an error in the English. R's page judge never reads the English, so R would score 0/10 on it. The §7 amendment moved English findings out of the decision and into a separate translation measure, but it left this control in the validity gate. Read in the spirit of §7, the control belongs on the translation side. Then the Opus arms are valid (carry_over and wrong_leaf 10/10), and **P5-opus wins on serious OCR per 1% of a week (142.5 vs 99.0, +44%)**. It does so at about the same recall (0.705 vs 0.712 of the union; per book 10.1 vs 11.1, CIs overlapping), with higher precision (0.963 vs 0.916), and it adds 11.9 serious translation findings a book that R does not look for. B10-opus is valid in that reading too but finds 34% fewer serious OCR findings a book than R. That choice is a judgment call about the gate, so it goes to Derek and is not taken here.
+
+### By eye (Opus reader with both scans open; `results/eye-report.md`)
+- **10 V-confirmed findings raised only by a batched arm:** all 10 true (3 serious, 4 moderate, 3 minor). By arm: P5-opus 4, B10-opus 3, P5-sonnet 2, B10-sonnet 1.
+- **10 V-rejected findings:** V right 6, wrong 3, half-right 1. The three V got wrong: B10-sonnet's Greek OCR misreads with an invented opening; R's Latin "Hec" for "Aue" (English "This Mary"); R's German blank leaf whose transcription warns of "~40 lines of faded script". V therefore under-confirms a little, which makes the confirmed counts above conservative for every arm alike.
+- Also seen: a real 訝→訶 misread on a Chinese page nobody flagged, and about 10 missing leaves between pp. 9/10 (f.362v → f.372r) of a Latin book.
+
+### Containment (`containment-on-finding.md`, #8494, label `contained`)
+- Greek `699383b350654cbbe29181eb` p. 60: the opening OCR lines are not on the leaf, and the English translates them. Withheld under hold `invented-text-by-eye-8478`.
+- Chinese `6a3c634a4daf85677d170c3e` p. 86: the English opens with an entry ("Broken Joy (突悅)", "The book is incomplete") that is not on the leaf. p. 85: the English is built on a spine-label misread (御定佩文韻府 → 甲定風文類存). Both withheld under the same hold.
+- German `6a49137aac0c339f55337966` p. 2: a blank endpaper whose transcription carries an invented warning. Noted in #8494 and not contained, because it has no English. The re-read and re-translate repairs are owed in #8494.
+
+### What this means for the standing check
+The real question this test answers is whether the check should read the English. R cannot see a mid-page mistranslation at all, and the union holds as many serious translation findings (13.8 a book) as OCR ones (14.3). P5-opus gives close to R's OCR recall for 63% of its quota and covers the translation too. B10 loses too much OCR recall, and Sonnet loses recall and the carry-over control in both shapes. A v2 of `paired-fifths-check` on P5-opus needs a translation-side control set (the page_defect plants, with the two unfair ones replaced) and a follow-up PR to the method doc. Neither is made here.
+
+## 2026-11-09 · Book check call shape: 10 pages in one call, or one call per pair, against the 15-call reference. Preregistration (#8478)
+
+PRIOR ART:
+- `2026-11-08-paired-fifths-prereg-8405.md` / `-results-8405.md`: the 15-call paired check (10 page calls + 5 join calls, Opus) on the #7866 books. Its verdicts are the reference arm R here, unchanged. They were copied off l7a to R2 (`cold/l7a/eval-8478/paired-fifths-8405.tar.zst`) for this run.
+- `scripts/eval/methods/paired-fifths-check.md`: the standing method v1 this test may change (a follow-up PR, not here).
+- `scripts/eval/paired-fifths-8405/run.mjs`: `joinPrompt`, `plantCarry`, `imageFor`, the wrong-leaf donor rule and the controls are imported, not restated.
+
+### 1. Question
+Derek (2026-11-09): "why not 10 pages on sonnet and opus as a test in one call? I think we want to surface more issues... can then have a second call to review? ... at least one call for each of the 2 pages, like so 5 calls". Does a judge that sees a whole pair, or all ten pages, find more true issues per book than the 15-call reference, and at what cost?
+
+### 2. Frame
+The #8405 frame (`frame.json`, 160 books, pairs from the #7866 anchors by `pairsFromAnchors`). Eligible: books whose 5 pairs are all complete (137) and that are complete in R. A book is dropped when any of its 10 pages' served text (OCR `data` or translation `data`) differs from the text #8405 saved at frame time (the #8425 containment and realign repairs), compared by content hash. Seeded order (`SEED.books = 84781`): the first 80 surviving books are the study books. Control books are drawn from the remaining eligible books (`SEED.controls = 84782`).
+
+### 3. Arms (same books, same 10 pages, same 5 breaks)
+- **R**: the #8405 verdicts. Pages: the #7866 page judge (transcription only, one image), anchors from `book_checks`, partners and stale anchors from `verdicts.jsonl`. Breaks: join judge v1.
+- **B10-opus / B10-sonnet**: one `claude -p` call per book with all 10 images (`p01.jpg` … `p10.jpg` in reading order), every transcription and English, judging every page and the 5 breaks.
+- **P5-opus / P5-sonnet**: one call per pair (5 a book), both images and both texts, judging both pages and the break.
+- **V**: one Opus call per book with the 10 images and texts and the union of every arm's findings for that book (R's included), shuffled, with no arm named. It marks each finding `confirmed` / `rejected`, `serious` true/false, and `same_as` (an earlier finding id describing the same defect), so that findings are counted once across arms.
+
+**Prompts.** The batched prompts are built from the existing ones, not restated: the page questions and taxonomy are cut from route-judge `judgePrompt` (its "Questions" block), the break rules from `joinPrompt` v1 (its "Judge the BREAK" block; v1 because R used v1). They ask for the same fields: per page `accept`, `fidelity` (both about the transcription, as the page judge), `defects` (`class`, `quote`, `severity`, `what`, plus `layer`), `reader_note`, and `en_accept`; per break `join` and `defects` (`kind`, `layer`, `page`, `quote`, `material`). The batched arms read the English of every page, which R's page judge does not. V's standard is the join judge v2 rule of the standing method: a sentence finished across the break with nothing lost and nothing repeated is not a defect.
+
+**Calls.** `claude -p` through `opusCall` (route-judge-6740/judge.mjs) with `--model opus` or `--model sonnet`, subscription (team@), concurrency 3, `usage` tokens recorded per call. Units run in seeded order, a study book's V only after its four arms, so a partial run is whole books. Cap 2,000 calls. No new unit starts when team@ is at weekly ≥ 95% or 5-hour ≥ 85% (the brief's thresholds, read through the lane-judge meter; a hit limit stops at once).
+
+### 4. Controls (every arm)
+30 control books, 10 per kind, each with ONE planted defect at a seeded pair, judged by all four arms (B10: the whole book, P5: the planted pair) and by V:
+- **carry_over**: `plantCarry` (#8405): the last sentence of A's English prepended to B's English. Caught: a material `carry_over` or `duplicated` defect at that break.
+- **wrong_leaf**: page B's transcription and English replaced by a donor page's (another book, same language when one exists; the #8405 donor rule), image unchanged. Caught: `wrong_leaf` on B at the break, or a page-B defect of class `I1`, or page B at fidelity 1.
+- **page_defect**: one English page with a numeral changed (a seeded number on the page, +7) or, with no numeral, a negation flipped (`not`/`never` removed, else `not` inserted after the first `is`/`was`/`are`/`were`). Caught: a defect on that page with layer `english` and severity `misleads` or `wrong_text` whose quote or note contains the planted token.
+An arm is **invalid below 9/10 on any control kind**. R was not re-run: its #8405 controls (10/10 carry-over, 10/10 wrong-leaf, join judge) stand, and R has no page_defect control (its page judge does not read the English). V's catch is reported as the share of raised planted findings it confirms.
+
+### 5. Measures, per arm
+- Control catch per kind.
+- **Findings** a book: page defects of severity `misleads` or `wrong_text`, and material break defects (any kind). Cosmetic defects are not findings.
+- **Confirmed** findings a book (V `confirmed`), **confirmed serious** (V `confirmed` and `serious`), counted as distinct defects (by `same_as` clusters).
+- **Confirmed recall vs the union**: the arm's confirmed clusters / all confirmed clusters in the book.
+- **Precision**: confirmed / raised.
+- **Book verdict agreement with R**: the #8405 paired rule (`pairedPagesBad` on the transcription accept/fidelity/`wrong_text` page rule, or any `joinFails`), arm vs R.
+- **Cost**: calls a book, `usage` tokens (input incl. cache, output), climits weekly delta over the run.
+- **By eye** (the runner, both scans opened): 10 V-confirmed findings raised only by a batched arm, 10 V-rejected findings.
+
+### 6. Decision rule
+Cost order, cheapest first: B10-sonnet, B10-opus, P5-sonnet, P5-opus (calls a book, then Sonnet before Opus), then R (15 Opus).
+1. **Adopt the cheapest arm that is valid on controls AND finds at least as many V-confirmed serious findings per book as R, with precision no worse than R's by more than 10 points.**
+2. Else, if a valid batched arm finds at least as many V-confirmed serious findings per book as R but its precision is more than 10 points below R's, **the standing check becomes the cheapest such arm + V**.
+3. Otherwise **R stays**.
+Too few books (under 40 study books complete in all arms and V) or V invalid on its own controls (it confirms under 9/10 of the planted defects raised) → no decision. The point estimates decide; book-bootstrap 95% intervals are reported beside them.
+
+Nothing is written to `book_checks` or to pages. Pages found invented or off-leaf with the image open are contained per `containment-on-finding.md`.
+
+### 7. Amendment (2026-11-09 ~19:25Z, before any result was read; 1 of 110 units judged, a control smoke unit)
+Two corrections from Derek on #8478 (comments 19:07Z and 19:14Z) reached the job after §1–6 were committed. They replace §6 and narrow §5. No prompt, arm, control or frame changes: the runner already records `layer` per finding and `usage` per call, so both are scoring changes.
+
+**Scope (like-for-like).** R's page judge reads the transcription only and the English only at breaks. So the decision is taken on **OCR findings**: page defects with layer `transcription`, and material break defects (any layer). **Translation findings** (page defects with layer `english`: mistranslation, omission, added text mid-page) are reported beside it as their own V-confirmed measure, with their own rate per quota; R has none by construction. Translation yield may justify a shape on its own, but it does not enter rule 1–3.
+
+**Primary measure: V-confirmed serious OCR findings per unit of quota**, not per book. Quota per arm = the run's climits weekly delta (team@, % of a week) × the arm's share of the run's price-weighted tokens (input 1×, cache creation 1.25×, cache read 0.1×, output 5× input; Sonnet weighted 0.6× Opus, the list-price ratio). R's quota is priced the same way from its #8405 `usage` rows. Reported per arm: confirmed serious OCR findings per book (recall), books per 1% of a week, and their product; and each arm's point on the recall-per-book vs books-per-week frontier. Other team@ use during the run inflates the delta; it is reported, and the token shares stand regardless.
+
+**Decision rule (replaces §6).**
+1. An arm is eligible if valid on controls (≥ 9/10 every kind).
+2. Precision floor: an eligible arm whose precision on OCR findings is more than 10 points below R's must be paired with V, and V's per-book cost is added to its quota.
+3. **Adopt the eligible arm (with V if rule 2 requires) with the most V-confirmed serious OCR findings per 1% of a week**, provided it beats R on that measure. A cheap arm that finds 70% of R's findings per book at a fifth of the quota wins.
+4. Otherwise R stays.
+The §6 "no decision" conditions stand (under 40 complete study books, or V confirming under 9/10 of the planted defects raised). The per-book rule of §6 is reported beside it for comparison, not used.
+
+Checks: none. This is a test; nothing is written to `book_checks`.
+
+### 8. Correction to the page_defect catch matcher (2026-11-09 ~20:45Z, after 3 of 10 page_defect units were judged)
+For a removed negation the runner stored as "token" the next three whitespace words, which can run past the sentence ("speak. He is"). In control unit `6abe9f2c6a920ffd924da190` all four arms flagged the planted sentence ("meaning the one who does speak", "the negation is inverted") and the strict substring test missed it. The site token for `negation_removed` is now the first word after the removed negation, punctuation stripped ("speak"). Numeral and added-negation plants are unchanged. Both counts are reported: strict (as first written, `--strict-plant`) and corrected. Validity uses the corrected count.
+
 ## 2026-11-08 · Continuity: can we drop the previous page's English (A0), and does the seam pass work as a production stage? (#8399)
 <!-- PRIOR ART: 2026-11-08-seam-markers-4-per-call-8399.md (#8407: the sample, the #7118 seam judge, the page judge and
 the controls are reused unchanged; arm C there is the eval copy this stage productionises); seam-repair-6742/seam-repair.mjs
@@ -496,6 +805,97 @@ About 800 partner pages, 800 joins, the stale anchors (3 of 20 in a 4-book frame
 
 ### Amendment 1 (2026-11-08, before any census break was judged)
 The frame's own census (breaks inside the 160 #7866 books) flagged 0 breaks, because #8409 was not yet merged when the frame ran. Those books are also older translations: 753 of 789 pair breaks carry no `read_call`. The defect #8399 measures sits in recent agy output, so the census stratum is drawn from there instead: `run.mjs census --census-file=<flagged.jsonl>` takes `scripts/audit/translation-page-boundaries.mjs`'s `kind:"echo"` lines and drops `parallel: true` (facing-language editions, the top false positive per #8399) and `sourceRepeats: true` (the source text itself repeats across the break); `sourceRepeats: null` (no-space scripts, source side unknown) is kept and tagged. It draws with seed 84054, at most 3 breaks a book and 40 in all. The breaks are judged by the same join judge. Census precision is reported for #8399 and stays outside every book-level number, as before. Nothing in §4–§5 changes.
+
+## 2026-11-08 · Can the printed page numbers hold a back-to-front book before it is translated? (#8068)
+
+<!-- PRIOR ART: 2026-10-08-which-flagged-books-are-stored-in-the-wrong-page-order-5699 judged the detector's flags by image, in the books' order on that day; the books have since been renumbered, so this reconstructs the order they arrived in. -->
+
+- **Question.** If `scripts/eval/page-marker-order.mjs` gated Phase 4, which known back-to-front books would it hold, and how often would it hold a book that is in order?
+- **Design.** `scripts/eval/page-order-gate-recall-8068.mjs`, read-only, no model calls. **Recall set:** the 50 books confirmed by image in #5699 plus Kitab Manafi al-Aghdhiyah, each read in the order it ARRIVED in: the renumber's `sweep_log` moves (`renumber-page-order-5699`, 44 rows) are inverted page by page. **Hard negatives:** the 10 books the detector flagged in #5699 and the image showed in order. **Draw:** `$sample` of 600 books with `pages_ocr >= 10` and a language other than English (598 after removing known books), current order. The gate reads the same OCR head and tail as the detector, never `<page-num>`.
+- **Result (threshold).** With the detector's own minimum (a DESC run of 4 markers), 6 of the 10 hard negatives would be held. Every one of those six has a longest run of exactly 4 (verse numbers, folio counters), and every held descending book has a run of 5 or more. **The gate needs 5.**
+- **Result (recall, at 5).** Whole book descending: **26/26**. One part descending: **16/17**. Together **42/43** (Wilson 95% 88–99.6%). The miss, Horae Semiticae VIII (Codex Climaci Rescriptus), has no markers at all. Kitab Manafi (whole book descending, missed in #5699) is missed again: 0 markers. With it, 42/44. Pair-swapped (0/6) and the isolated swap (0/1) are not held: a swap is a SWAP finding, which the gate does not act on.
+- **Result (false holds, at 5).** Hard negatives **0/10**. Random draw **0/598** (Wilson upper bound 0.64%); among the 69 draw books that carry 10+ markers, 0/69 (upper bound 5.3%). Dry run on the live queue (2,097 non-English books at `ocr_complete`, 2026-11-08): 0 would be held, about 50 ms per book.
+- **What it cannot see.** Only 69 of 598 draw books (11.5%, Wilson 9–14%) carry 10+ running-head markers; of the 12 right-to-left books in the draw, 3. Recent OCR keeps the printed number in `<page-num>`, which #5699 showed is invented on exactly these books, and leaves the head bare. A book with no head numbers (Kitab Manafi, Codex Climaci) passes the gate, and so does a pair-swapped book.
+- **Caveats.** The recall set is mostly books this detector found in the first place (only Kitab came from elsewhere), so 42/43 is recall on books it can see, not on all reversals. The draw's 0 holds is a false-hold bound only if no unknown reversal is in it; none was flagged, so the bound holds either way.
+- **Release path.** A held book carries `pipeline_auto.hold.reason = page-order-descending-8068` with the flagged runs in `detail`. Check the run against the images; if reversed, renumber with `scripts/maintenance/renumber-page-order.mjs`; then `scripts/maintenance/hold-pipeline-books.mjs --release-held --reason page-order-descending-8068 --book <id> --apply`. A released book is never held by the gate again.
+- *Replicated?* No. Per-book records: `scripts/eval/results/page-order-gate-8068/`.
+
+## 2026-11-08 · Can the stranded-leaf residual on Internet Archive books be repaired on agy at $0? (#5309)
+
+PRIOR ART: `scripts/audit/stranded-image-repair-text.mjs` (the frame), `scripts/batch/cli-ocr.mjs` /
+`cli-translate.mjs` (the writers, guards on), `scripts/lib/stranded-leaf-gate.mjs` (stands in for the 40%
+shared-words floor on a page whose stored text is another leaf's), `2026-11-04-stranded-run-repoint-5803.md`
+(re-pointed whole runs at $0; this run reads the pages no shift could place).
+
+**Who it is for.** A reader on an Internet Archive book who sees the right scan beside the previous
+page's text. The 2026-10-02 repair deferred this residual only because paid flash would have overrun its envelope.
+
+**Frame (2026-11-08 audit).** 11,455 stranded pages in 322 books (11,169 live in 299). Of the 6,111
+deferred on 10-02, 5,225 were still stranded (110 books). Withheld English never remade: 26,554 pages in
+English books (modernisation is reader-triggered since #4958, so not this job's), 3,485 live non-English.
+Positive controls in the issue: 12/12 still read their own leaf.
+
+**Pre (precision of the audit).** 30 stranded pages, one per book, blind Opus with scans n-3…n+3:
+28/30 another leaf = 93% (Wilson 79–98%); offsets -1×25, -3×2, +1×1.
+
+**Screen (Derek's inbox note, 06:13Z).** agy gemini-3.8-flash-medium, given the stored text and scans
+n-1…n+1: own / prev / next / other. On the 30 pre pages: 30/30 agreement with Opus (binary and exact),
+4/4 planted controls, 0 false alarms, 0 misses (only 2 own-leaf items, so own-leaf recall was thin there).
+In production, Opus read every page agy did not call off-leaf (own capped at 5–15 per book from p3, since an
+unconfirmed own call is never written) and 30 sampled off-leaf calls per wave:
+
+| wave | screened (books) | agy off | Opus on agy own | Opus on 30 agy off |
+|---|---|---|---|---|
+| p2 | 600 (33) | 580 | 20/20 (all not-off calls) | 30/30 |
+| p3 | 2,000 (40) | 1,423 | 42/42 | 30/30 |
+| p4 | 2,000 (89) | 1,536 | 95/96 (1 cannot tell) | 30/30 |
+| p5 | 1,651 (76) | 1,511 | 19/19 | 30/30 |
+
+The screen also removed false positives the audit cannot see. Lingua Aegyptiaca Restituta (523 pages,
+diagnose "undecided") was own leaf on 522; Opus agreed on the 15 it read.
+
+**Repair and post checks.** For each confirmed off-leaf page: a cli-ocr read on agy flash-low (the live
+prompt, one page a call), then apply with every guard on. Non-English pages were then translated
+through cli-translate with `--no-previous-translation`. A post check takes one repaired page per book (30 a wave)
+plus 2 planted wrong-leaf controls, judged blind by Opus with scans n-1…n+1 and by agy flash-low as a second checker.
+
+| wave | written | not written (guards) | own leaf | usable | agy checker vs Opus | controls (Opus / agy) |
+|---|---|---|---|---|---|---|
+| p1+p1b | 329 | 211 | 29/30 FAIL | 29/30 | 29/30, 1 FA | 2/2, 2/2 |
+| p2 | 325 | 255 | 30/30 | 30/30 | 30/30 | 2/2, 1/2 |
+| p3 | 638 | 785 | 30/30 | 30/30 | 30/30 | 2/2, 2/2 |
+| p4 | 723 | 802 | 30/30 | 30/30 | 27/30, 3 FA, 0 miss | 2/2, 2/2 |
+| p5 | 1,006 | 505 | 29/30 FAIL | 29/30 | 28/30, 2 FA, 0 miss | 2/2, 2/2 |
+
+Every other defect Opus found was minor: misreads and the odd added word, never a passage.
+
+**The two failures.** p1: page 117 of 69ef286185daccce30f2ca01 had invented Jerome text. A corroboration audit
+found 13 invented reads, all with the agy read_file allow→deny shape. They were reverted
+(revert-run, offleaf-5309-p1-ocr/-p1-tr), re-read (p1fix), and two guards were added: the gate now needs
+corroboration, and a denied image read is refused. p5: R06, Florus p.748, is a blank verso.
+The read transcribed the faint ghost of another index page as print. The agy checker flagged it too. It was
+contained in the same run: the book was held, the page was re-read fresh and came back `blank`, the read was checked by eye
+against the image and applied (`offleaf-5309-fix748-ocr`), and the hold was released. To see whether this was a class, Opus
+then read every written page whose read carries a show-through/offset/mirror warning (53 pages, all waves):
+53/53 own leaf and usable. The brief's stop rule was followed: p6 was not run.
+
+**What the guards refused (2,558 pages).** The largest share is agy answering with a summary of the page
+("Would you like a more detailed summary…") instead of a transcription, on 19th–20th-century English
+books (p3: 164 of 376 refusals in the first five books). Next come cut replies, a second marker,
+denied image reads, and no neighbour corroborating the read. They stay stranded, and none was written.
+
+**Harness bugs found.** `isQuotaError` read a short reply "Page 429 …" as an HTTP 429 and locked the model
+for an hour; fixed, with a unit test. The post-judge prompt clipped the stored text at 6,000 chars, and Opus
+called the clip an omission; the clip is now 30,000 and the two affected verdicts were re-judged.
+
+**Not done.** p6: three books of 465–688 pages (1,683; Buddhism in Translations is likely the djvu
+artifact #5803 found aligned). 43 held books (2,981 pages) are skipped by design. A retry pass over the 2,558 refused pages
+was not run, and English modernisation of the 26,554 withheld English-book pages is #4958's lane.
+
+**Replicated?** The screen held across four production waves (296/297 Opus confirmations). Post checks: 5 waves, 3 passes.
+
+Artifacts: `scripts/eval/results/offleaf-5309-2026-11-08/` (pre, screen-p2…p5, post1…post5, showthru,
+ledger.jsonl.gz). Revert run ids: offleaf-5309-{p1,p1b,p1fix,p2,p3,p4,p5}-{ocr,tr}, offleaf-5309-fix748-ocr.
 
 ## 2026-11-08 · Can a write-time check refuse a page holding its neighbour's English without refusing correct pages? (#5026)
 

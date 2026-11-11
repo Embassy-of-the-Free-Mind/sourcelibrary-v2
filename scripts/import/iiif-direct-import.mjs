@@ -32,6 +32,10 @@
  * Options: --dry-run  --limit=N  --delay=<ms,default 1500>  --start-from=N  --concurrency=N(default 1)
  *          --sweep=<name>  record each import as a `sweep_log` row (the wave tag;
  *                          a row, never a new field — field-sprawl.md)
+ *          --hold=<reason> --release-when=<issue:N|decision:..|test:..|date:..> [--hold-release=<text>]
+ *                          insert the book already held (pipeline-hold.mjs), as
+ *                          ia-manifest-direct.mjs does, so no lane picks it up
+ *                          between the insert and a later holdBook()
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
@@ -39,6 +43,7 @@ import fs from 'fs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -52,6 +57,17 @@ const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.spl
 const DATA_FILE = args.find(a => a.startsWith('--data='))?.split('=')[1];
 const LOG_FILE = args.find(a => a.startsWith('--log='))?.split('=')[1] || '/root/iiif-direct-import.log';
 const SWEEP = args.find(a => a.startsWith('--sweep='))?.split('=')[1] || null;
+const argVal = (name) => { const a = args.find(x => x.startsWith(`--${name}=`)); return a ? a.slice(name.length + 3) : null; };
+const HOLD_REASON = argVal('hold');
+const HOLD = HOLD_REASON ? {
+  reason: HOLD_REASON,
+  release: argVal('hold-release') || `Held at import by iiif-direct-import.mjs (--hold=${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  release_when: parseReleaseWhen(argVal('release-when')),
+  source: 'script:iiif-direct-import',
+} : null;
+if (HOLD?.release_when?.kind === 'issue') HOLD.issue = Number(HOLD.release_when.ref) || null;
+// Refuse before the first insert: a hold that throws after insertBookIfNew leaves the book imported and unheld (#7860).
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --release-when=issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 
 if (!DATA_FILE || !fs.existsSync(DATA_FILE)) { console.error(`--data=<file> required and must exist (got: ${DATA_FILE})`); process.exit(1); }
 const entries = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
@@ -149,6 +165,7 @@ async function processEntry(db, entry, idx) {
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
     const slug = await ensureUniqueSlug(db, generateSlug(entry.title, entry.author));
+    const now = new Date();
     const acquired = await insertBookIfNew(db, {
       _id: bookId, id: bookIdStr, slug,
       title: entry.title || 'Unknown', author: entry.author || 'Unknown',
@@ -167,10 +184,22 @@ async function processEntry(db, entry, idx) {
         access_date: new Date(),
       },
       status: 'draft', hidden: true, visible: false,
-      created_at: new Date(), updated_at: new Date(),
+      ...(HOLD ? { pipeline_auto: { status: HOLD_STATUS, hold: makeHoldMarker({ ...HOLD, detail: null }, { from: null, now }), last_updated: now } } : {}),
+      created_at: now, updated_at: now,
     }, { importer: 'script:iiif-direct-import', sourceIdentifier: entry.source_id || null, sourceUrl: manifestUrl });
     // The gate declined this candidate; the reason is a row in `dedup_skips`.
     if (!acquired.inserted) { log(`${prefix} SKIP — ${acquired.message}`); skipped++; return; }
+    if (HOLD) {
+      // The hold went in with the insert; record it the way holdBook() does, and confirm it is there.
+      await db.collection('book_events').insertOne({ book_id: bookIdStr, type: HOLD_EVENT, at: now, source: HOLD.source,
+        details: { reason: HOLD.reason, issue: HOLD.issue ?? null, from_status: null, release: HOLD.release, release_when: makeHoldMarker(HOLD).release_when, at_insert: true } });
+      const back = await db.collection('books').findOne({ id: bookIdStr }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+      if (back?.pipeline_auto?.hold?.reason !== HOLD.reason) {
+        const h = await holdBook(db, bookIdStr, HOLD);
+        log(`${prefix} WARN — hold not found after insert; holdBook: ${h.outcome}`);
+        if (h.outcome !== 'held') { log(`${prefix} ERROR — book inserted but NOT held; no pages written`); errors++; return; }
+      }
+    }
     for (let start = 0; start < pages.length; start += 500) {
       const chunk = pages.slice(start, start + 500).map((p, j) => {
         const pageId = new ObjectId();

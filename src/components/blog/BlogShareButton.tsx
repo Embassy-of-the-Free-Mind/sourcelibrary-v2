@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { BLOG_KINDS } from '@/app/articles/posts';
+import { BLOG_KINDS } from '@/app/articles/post-kinds';
 import ShareButton from '@/components/ui/ShareButton';
 
 /**

@@ -38,6 +38,13 @@ interface SearchParams {
   page?: string;
 }
 
+// supabase-js builders are thenables that send a fresh request each time they
+// are awaited, so re-running the factory retries the query.
+async function retryOnce<T extends { error: unknown }>(run: () => PromiseLike<T>): Promise<T> {
+  const first = await run();
+  return first.error ? await run() : first;
+}
+
 // No outer try/catch: letting a fetch failure throw here keeps ISR serving
 // the last good page instead of caching an all-empty results page. supabase-js
 // RETURNS errors rather than throwing them, so the throw below is what makes
@@ -79,12 +86,18 @@ async function getEntitiesRaw(searchParams: SearchParams) {
   if (query) statsQuery = statsQuery.ilike('name', `%${query}%`);
   if (letter && !query) statsQuery = statsQuery.ilike('name', `${letter}%`);
 
-  // Run queries in parallel
+  // Run queries in parallel. On a cold Postgres cache an exact count over
+  // `entities` can run past the anon role's ~3s statement timeout (57014; a
+  // HEAD count reports it as a bare 500 with no code). The same query a moment
+  // later takes ~0.5s, so each one gets a single retry before the throw below
+  // turns the page into a 500 (#8419).
+  const typeCount = (t: string) =>
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', t);
   const [entitiesResult, personResult, placeResult, conceptResult] = await Promise.all([
-    baseQuery,
-    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'person'),
-    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'place'),
-    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'concept'),
+    retryOnce(() => baseQuery),
+    retryOnce(() => typeCount('person')),
+    retryOnce(() => typeCount('place')),
+    retryOnce(() => typeCount('concept')),
   ]);
 
   const failed = [entitiesResult, personResult, placeResult, conceptResult].find((r) => r.error);

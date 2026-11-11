@@ -11,9 +11,9 @@ import { LISTS, type ReadAlongLink } from '@/app/articles/solve-et-coagula/extra
 const TITLE = 'Solve et Coagula: Derek Lomas habla de Source Library';
 const DESCRIPTION =
   'Derek Lomas conversa con Alex, de Agrippa’s Diary, sobre Ficino, Agripa, Maier y Source Library. El episodio, con una transcripción en español sincronizada.';
-const HERO = '/articles/solve-et-coagula/episode-hero.jpg';
+const HERO = '/articles/solve-et-coagula/episode-artwork-169.jpg';
 const HERO_ALT =
-  'Alexander, de Agrippa’s Diary (izquierda), y Derek Lomas (derecha), en la videollamada grabada para el podcast Solve et Coagula.';
+  'Derek Lomas (izquierda) y Alexander, de Agrippa’s Diary (derecha), a ambos lados de un león verde que devora el sol: la imagen del episodio, de Agrippa’s Diary.';
 
 export const metadata: Metadata = {
   title: `${TITLE} - Source Library`,

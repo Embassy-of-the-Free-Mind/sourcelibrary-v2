@@ -2,6 +2,7 @@
 name: batch-translate
 description: Batch process books through the complete pipeline - generate cropped images for split pages, OCR all pages, then translate with context. Use when asked to process, OCR, translate, or batch process one or more books.
 ---
+> **SUPERSEDED 2026-11-11 (#8283): the paid Gemini Batch API / flash-lite page-work lane described below is retired.** Page OCR and translation now run on the four routes only (agy, GPU>agy, Opus, GPU>Opus). See `.claude/docs/routing.md` and `.claude/docs/invariants/spend-controls.md`; live lane state: https://sourcelibrary.org/admin/pipeline/now. Kept for history of the Batch pipeline.
 
 # Batch Book Translation Workflow
 

@@ -21,7 +21,7 @@ function createInitialPipelineState(config: Partial<PipelineConfig>): PipelineSt
     config: {
       model: config.model || DEFAULT_MODEL,
       language: config.language || 'Latin',
-      license: config.license || 'CC0-1.0',
+      license: config.license || 'CC-BY-NC-SA-4.0',
     },
   };
 }

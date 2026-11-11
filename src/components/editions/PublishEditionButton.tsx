@@ -43,7 +43,7 @@ export default function PublishEditionButton({
 
   // Form state
   const [versionLabel, setVersionLabel] = useState('');
-  const [license, setLicense] = useState('CC-BY-4.0');
+  const [license, setLicense] = useState('CC-BY-NC-SA-4.0');
   const [changelog, setChangelog] = useState('');
   const [contributors, setContributors] = useState<Contributor[]>([]);
 

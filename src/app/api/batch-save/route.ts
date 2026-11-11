@@ -10,7 +10,7 @@ import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance }
 
 /** Provenance identity of this route (#4613). */
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
-import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate, reasoningLeakGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { endBatchJob } from '../../../../scripts/lib/end-batch-job.mjs';
 
@@ -166,6 +166,11 @@ export const POST = withAuth(async (request, session) => {
               continue;
             }
             // A script in the English that is in neither the source nor the book's language (#5734).
+            // The model's scratchpad, a refusal, or a reply to the request (#6117, #8465).
+            if (await reasoningLeakGate(db, { id: pageId!, book_id: job.book_id }, text, { jobId: job.id, model: job.model })) {
+              failed++;
+              continue;
+            }
             const stray = await strayScriptGate(db, { id: pageId!, book_id: job.book_id }, text, { language: job.language, jobId: job.id, model: job.model });
             if (stray.refused) {
               console.warn(`[batch-save] STRAY SCRIPT: refusing page ${pageId}`);

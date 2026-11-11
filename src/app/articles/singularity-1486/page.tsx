@@ -265,7 +265,7 @@ export default function Singularity1486Page() {
             &ldquo;The Earth sings MI FA MI so that even from these syllables it can be seen that in this our domicile, Misery and Famine hold sway.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21690" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 290 &rarr;</Link>
+            <Link href="/book/the-harmony-of-the-world-kepler?page=336" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em> (1619) &rarr;</Link>
           </p>
         </blockquote>
 

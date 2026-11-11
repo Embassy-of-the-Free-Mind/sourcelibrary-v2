@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
-import { posts, LINKED_PAGES, BLOG_KINDS, KIND_INFO, type BlogKind, type BlogPost } from './posts';
+import { posts, LINKED_PAGES, KIND_INFO, type BlogPost } from './posts';
+import { PAGE_SIZE, listingHref, type Listing } from './post-kinds';
+
+export { PAGE_SIZE, listingHref, isKind, type Listing } from './post-kinds';
 
 // What the /articles index and its category and page routes list, and their
 // metadata. The client list (BlogIndex) pages the same way, so page N of a
 // route here is the page N a reader sees before searching or sorting.
-
-export const PAGE_SIZE = 30;
-
-export type Listing = BlogKind | 'all';
 
 export const ALL_ARTICLES: BlogPost[] = [...posts, ...LINKED_PAGES];
 
@@ -19,15 +18,6 @@ export function listed(kind: Listing): BlogPost[] {
 
 export function pageCount(kind: Listing): number {
   return Math.max(1, Math.ceil(listed(kind).length / PAGE_SIZE));
-}
-
-export function listingHref(kind: Listing, page = 1): string {
-  const base = kind === 'all' ? '/articles' : `/articles/${kind}`;
-  return page > 1 ? `${base}/page/${page}` : base;
-}
-
-export function isKind(value: string): value is BlogKind {
-  return (BLOG_KINDS as readonly string[]).includes(value);
 }
 
 const DESCRIPTIONS: Record<Listing, string> = {

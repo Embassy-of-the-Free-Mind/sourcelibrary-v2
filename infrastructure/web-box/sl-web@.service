@@ -1,0 +1,32 @@
+# One `next start` process per port (#8384). Instances: sl-web@3101 … sl-web@3104.
+#
+# -H localhost, not 127.0.0.1: with 127.0.0.1 every proxy rewrite became an HTTP proxy from
+# the server to itself (#8374), which broke the tenant rewrite and /book/<id>.
+[Unit]
+Description=Source Library reader origin, next start on port %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=slweb
+Group=slweb
+Slice=sl-web.slice
+WorkingDirectory=/srv/sl-web/current
+EnvironmentFile=/etc/sl-web/env
+Environment=PORT=%i
+# The write guard is preloaded from NODE_OPTIONS in /etc/sl-web/env until the scoped
+# Mongo user exists (README, "needs Derek").
+ExecStart=/srv/sl-web/current/node_modules/.bin/next start -p %i -H localhost
+Restart=always
+RestartSec=3
+MemoryMax=5G
+StandardOutput=append:/srv/sl-web/log/next-%i.log
+StandardError=append:/srv/sl-web/log/next-%i.log
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/srv/sl-web
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

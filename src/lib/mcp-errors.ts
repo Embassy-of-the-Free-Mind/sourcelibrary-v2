@@ -38,6 +38,8 @@ export interface McpErrorPayload {
   recovery: string;
   /** Present when the page exists in the original language but not in translation. */
   has_original?: boolean;
+  /** The page's own language, to pass back as `lang` on get_quote (#7458, #8466). */
+  original_lang?: string;
   /** A book hidden as a duplicate: the edition we kept, to call again with (#8235). */
   kept_edition?: { id: string; url?: string };
   /** A blank (or defaulted) page: the next page that has text (#8235). */
@@ -135,12 +137,21 @@ export function classifyApiError(err: unknown): McpErrorPayload {
     };
   }
 
+  // The quote route names the page's language (`original_lang`), and the
+  // recovery below tells the caller to use it. Dropping it here left a member
+  // reading Zhang Zai with a refusal that pointed at a field it did not carry,
+  // so no locator, text or scan reached the reader (#8466 item 6).
   if (lower.includes('no translation available')) {
+    const lang = typeof body?.original_lang === 'string' && /^[a-z]{2,3}(-[A-Za-z0-9]+)?$/.test(body.original_lang)
+      ? body.original_lang : null;
     return {
       error: 'no_translation',
       message: 'This page exists and has been transcribed, but has no translation yet. The text on it is in a language other than English — an English-original leaf is served as a quote instead, with text_source: "ocr_original" (#3939), so this answer means the source really is foreign.',
       has_original: true,
-      recovery: 'To quote the page in its own language, call get_quote again with lang set to that language (the API names it as original_lang, e.g. "de"); the transcription comes back as `original`. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.',
+      ...(lang ? { original_lang: lang } : {}),
+      recovery: lang
+        ? `To quote the page in its own language, call get_quote again with the same arguments plus lang: "${lang}"; the transcription comes back as \`original\` with its citation link and, with include_image, the scan. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.`
+        : 'To quote the page in its own language, call get_quote again with lang set to that language (an ISO code, e.g. "de"; get_book gives the book\'s language); the transcription comes back as `original`. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.',
     };
   }
 

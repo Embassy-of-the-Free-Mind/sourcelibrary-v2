@@ -1,0 +1,5 @@
+# All Next processes of the reader-origin box (#8384). 4 × ~1–1.5 GB measured in #8374;
+# the cap keeps a leak from taking the box (and Caddy) with it.
+[Slice]
+MemoryMax=24G
+CPUQuota=1400%

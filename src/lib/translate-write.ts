@@ -33,6 +33,7 @@ import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type Gem
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
 import { guardTranslationText } from './translation-write-guard';
 import { checkNeighbours } from '../../scripts/lib/neighbour-guard.mjs'; // #5026: the page is not its neighbour's English
+import { refusableReasoningLeak } from '../../scripts/lib/page-integrity.mjs'; // #6117/#8465: the model's scratchpad, refusal or chat reply
 import { translationLayers, writePageAnnotations } from './translation-text'; // #5942: text + annotations beside data
 
 /**
@@ -128,6 +129,8 @@ export function hasNoTranslatableBody(ocrText: string | null | undefined): boole
  * short body is the whole translation (sizing: HIDDEN_META_MIN_WORDS in the .mjs).
  */
 export const HIDDEN_META_REASON = 'hidden-meta';
+/** Same string as page-integrity.mjs REASONING_LEAK_REASON (#6117); stamped on `translation.health_blocked`. */
+export const REASONING_LEAK_REASON = 'reasoning-leak';
 export const HIDDEN_META_MIN_WORDS = 40;
 const META_WHOLE_PAGE_SHARE = 0.8;
 const CONT_MARKER = /^[\s.…]*continue[sd]?\s+from\s+(?:the\s+)?previous\s+page\b/i;
@@ -384,6 +387,25 @@ export async function neighbourGate(
   return { refused: true, reason: v.reason, detail: v.detail };
 }
 
+/**
+ * The reasoning-leak gate (#6117, #8465) for the writers that do not go through `writePageTranslation` (the
+ * translation worker, batch-save, the batch-translate-async collectors): true when `text` is the model's
+ * scratchpad, a refusal or a reply to the request, in which case the refusal is stamped on the page and the
+ * text kept (recordRefusedTranslation). The caller writes nothing and counts the page as failed.
+ */
+export async function reasoningLeakGate(
+  db: Db,
+  page: { id: string; book_id?: string },
+  text: string,
+  opts: { jobId?: string; model?: string } = {},
+): Promise<boolean> {
+  const v = refusableReasoningLeak(text);
+  if (!v) return false;
+  console.warn(`[reasoning-leak] ${page.id}: refusing (${v.kind}: "${String(v.phrase).slice(0, 80)}")`);
+  await recordRefusedTranslation(db, page, text, REASONING_LEAK_REASON, opts);
+  return true;
+}
+
 export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
@@ -444,6 +466,13 @@ export async function writePageTranslation(
   if (GEMINI_SOURCES.has(source) && hidesPageInMeta(text)) {
     await recordRefusedTranslation(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, HIDDEN_META_REASON, { jobId, model });
     return { written: false, protected: false, refused: HIDDEN_META_REASON, text };
+  }
+
+  // The model's scratchpad, a refusal, or a reply to the request ("…is missing from your request", the prompt's
+  // "Previous page text for continuity" block) is never stored as the page's English (#6117, #8465) — the same
+  // predicate the scripts door (translate-core.mjs) and the corpus audit use. Refused and kept like the hidden page.
+  if (GEMINI_SOURCES.has(source) && await reasoningLeakGate(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, { jobId, model })) {
+    return { written: false, protected: false, refused: REASONING_LEAK_REASON, text };
   }
 
   // A script in the English that is in neither the source nor the book's language (#5734): the

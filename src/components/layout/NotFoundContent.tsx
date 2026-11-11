@@ -39,7 +39,7 @@ const QUOTES = [
   {
     text: 'It is a most certain truth that what is above is nothing other than that which is below, and vice versa.',
     source: 'Sendivogius, New Chemical Light',
-    href: '/book/new-chemical-light-sendivogius?page=37',
+    href: '/book/novum-lumen-chymicum-sendivogius-restored-from-1713?page=37',
   },
   {
     text: 'I compare the whole of philosophy, astrology, and theology to a precious tree that grows in a beautiful paradise.',

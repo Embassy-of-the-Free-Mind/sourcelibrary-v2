@@ -90,10 +90,7 @@ export const TRIAGE: TriageRow[] = [
 
 // Every hard-coded library count that should read from the live stats instead.
 export const NUMBERS: NumberRow[] = [
-  ['Claude connect consent screen', 'src/app/oauth/authorize/route.ts:86', '"90,000+ historical illustrations"', ''],
-  ['Identify loading message', 'src/app/identify/page.tsx:219', '"Comparing against 152,000 illustrations"', ''],
   ['Site search and MCP feature list', 'src/lib/site-features.json:53, 136', '"10,000+ books", "19,000+ texts in 200+ languages"', 'Feeds site search and the AI tools.'],
-  ['/connect', 'src/app/connect/page.tsx:33, 40, 96, 213', '15,000 books, 200,000 illustrations', ''],
   ['/developers', 'src/app/developers/page.tsx:47, 59', '15,000+ texts', ''],
   ['/developers/pipeline', 'src/app/developers/pipeline/page.tsx:11, 158', '10,000+ books', ''],
   ['/for-researchers', 'src/app/for-researchers/page.tsx:8, 50, 58', '17,000 books', ''],

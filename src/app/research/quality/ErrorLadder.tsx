@@ -74,14 +74,14 @@ function Legend() {
 }
 
 function Rung({ level, title, href, children, scan, credit }: {
-  level: string; title: string; href: string; children: ReactNode; scan: Scan; credit?: { text: string; href: string };
+  level: string; title: string; href?: string; children: ReactNode; scan: Scan; credit?: { text: string; href: string };
 }) {
   const vertical = scan.crop.h > scan.crop.w;
   return (
     <div className="border-t border-light pt-5 mt-5 first:mt-0 first:border-t-0 first:pt-0">
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
         <span className="text-2xl text-primary font-semibold tabular-nums">{level}</span>
-        <a href={href} className="text-sm text-accent-rust hover:underline">{title}</a>
+        {href ? <a href={href} className="text-sm text-accent-rust hover:underline">{title}</a> : <span className="text-sm text-secondary">{title}</span>}
       </div>
       <div className={vertical ? 'grid grid-cols-[auto_1fr] gap-4' : 'grid gap-4'}>
         <div>

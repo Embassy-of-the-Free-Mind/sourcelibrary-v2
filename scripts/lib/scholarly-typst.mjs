@@ -624,10 +624,28 @@ export function translationLine(language) {
   return `An English translation from the ${lang}`;
 }
 
+// The licence an edition is published under, by the SPDX id stored on the
+// edition. New editions are CC BY-NC-SA 4.0 (/terms since 2026-11-05, #8488);
+// editions minted before then are CC BY-SA 4.0, and a rebuild of one passes
+// its stored id so its new version says what its DOI record says.
+export const EDITION_LICENSES = {
+  'CC-BY-NC-SA-4.0': { short: 'CC BY-NC-SA 4.0', long: 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International' },
+  'CC-BY-SA-4.0': { short: 'CC BY-SA 4.0', long: 'Creative Commons Attribution-ShareAlike 4.0 International' },
+  'CC-BY-NC-4.0': { short: 'CC BY-NC 4.0', long: 'Creative Commons Attribution-NonCommercial 4.0 International' },
+  'CC-BY-4.0': { short: 'CC BY 4.0', long: 'Creative Commons Attribution 4.0 International' },
+  'CC0-1.0': { short: 'CC0 1.0', long: 'Creative Commons CC0 1.0 Universal' },
+};
+export const DEFAULT_EDITION_LICENSE = 'CC-BY-NC-SA-4.0';
+
+export function editionLicense(id) {
+  return EDITION_LICENSES[id] || EDITION_LICENSES[DEFAULT_EDITION_LICENSE];
+}
+
 export function generateTypstSource(book, pages, options = {}) {
   // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
   // it there); absent, the cover falls back to the Source Library mark
-  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book) } = options;
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book), license = DEFAULT_EDITION_LICENSE } = options;
+  const lic = editionLicense(license);
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -849,7 +867,7 @@ ${TYPST_PREAMBLE}
 
   To cite a passage, give the page number printed in the margin, e.g. "p. ${translatedPages[Math.min(10, translatedPages.length - 1)]?.page_number ?? 1}".
 
-  Published by Source Library, a project of the Embassy of the Free Mind, Amsterdam, under a Creative Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0).${publicDomain ? ' The source images are in the public domain.' : ''}
+  Published by Source Library, a project of the Embassy of the Free Mind, Amsterdam, under a ${lic.long} licence (${lic.short}).${publicDomain ? ' The source images are in the public domain.' : ''}
 
   ${creditLines}
 
@@ -897,7 +915,7 @@ The translation follows the source page by page. A number in the margin marks wh
 
 ${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
 
-This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+This work is licensed under ${lic.long} (${lic.short}).
 `);
 
   // ── Introduction ──
@@ -1086,7 +1104,7 @@ This digital edition of _${escapeTypst(bookTitle)}_ was produced by Source Libra
   ${version ? `[#text(fill: muted)[Version]], [${escapeTypst(version)}],` : ''}
   ${doi ? `[#text(fill: muted)[DOI]], [#link(${typstString(persistentUrl)})[${escapeTypst(doi)}]],` : ''}
   [#text(fill: muted)[Generated]], [${now}],
-  [#text(fill: muted)[License]], [CC BY-SA 4.0],
+  [#text(fill: muted)[License]], [${lic.short}],
 )
 
 #v(1em)

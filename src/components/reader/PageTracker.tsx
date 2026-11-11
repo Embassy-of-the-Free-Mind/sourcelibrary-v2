@@ -20,6 +20,8 @@ export default function PageTracker() {
             path: pathname,
             referrer: document.referrer,
             userAgent: navigator.userAgent,
+            // Campaign tags (utm_*) from newsletter links; /api/track keeps only those keys.
+            ...(window.location.search.includes('utm_') ? { search: window.location.search } : {}),
           },
         })], { type: 'application/json' });
         navigator.sendBeacon('/api/track', blob);

@@ -70,8 +70,10 @@ import { pagesForEnrichment, isEnglishEdition } from '../lib/english-original-te
 import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
-import { runEnrichAgyLane } from './lib/enrich-agy-lane.mjs';
+import { runEnrichAgyLane, parseJsonLoose } from './lib/enrich-agy-lane.mjs';
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import pg from 'pg';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -917,9 +919,8 @@ function parseAgyEnrichResponse(answer, { want, ranges = [] }, usage) {
   const m = String(answer || '').match(/\{[\s\S]*\}/);
   if (!m) throw new Error('no JSON object in the reply');
   let obj;
-  try { obj = JSON.parse(m[0]); } catch (e) {
-    try { obj = JSON.parse(m[0].replace(/,\s*([}\]])/g, '$1').replace(/[\x00-\x1f]/g, ' ')); } catch { throw new Error(`JSON parse failed: ${e.message}`); }
-  }
+  // Trailing commas, raw control characters and unescaped quotes inside strings are repaired (parseJsonLoose).
+  try { obj = parseJsonLoose(m[0]); } catch (e) { throw new Error(`JSON parse failed: ${e.message}`); }
   const out = { raw: obj };
   // Flash sometimes names a quote's words "quote" instead of the schema's "text" (pilot, a Siku dictionary: 75 of 75).
   // Grounding reads `text`, so an unrenamed quote is silently dropped.
@@ -2393,7 +2394,16 @@ NO explanation, just the JSON array.`;
   await client.close();
 }
 
-main()
+// Imported (scripts/eval/enrich-from-page-summaries-8512.mjs reads the phase functions below), main() does not run.
+const IS_MAIN = !!process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+export {
+  LITE_MODEL, AGY_ENRICH_PROMPT_VERSION, AGY_SUMMARY_MATERIAL, emptyExtraction, planPageBatches, loadPhase6Inputs,
+  buildAgyEnrichPrompt, parseAgyEnrichResponse, buildBookSummaryRequest, buildSummaryPrompt, finishEnrichBook,
+  prepareChapterExtraction, applyChapterExtraction, revalidateBookPage, extractPageSummaries, pagesTextBlock,
+  drainBackgroundTasks,
+};
+
+if (IS_MAIN) main()
   .then(() => {
     // Exit explicitly. A finished run that merely stops doing work is indistinguishable, from the
     // scheduler's side, from a wedged one — and one such run held the enrich lock for 4d18h while

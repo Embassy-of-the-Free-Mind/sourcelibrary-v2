@@ -95,14 +95,14 @@
    }
   ]
  },
- "/articles/solve-et-coagula/episode-hero.jpg": {
+ "/articles/solve-et-coagula/episode-artwork-169.jpg": {
   "srcset": [
    {
-    "src": "/articles/heroes/40e037bd39ae-1280.avif",
+    "src": "/articles/heroes/d394fd600630-1280.avif",
     "w": 1280
    },
    {
-    "src": "/articles/heroes/40e037bd39ae-1920.avif",
+    "src": "/articles/heroes/d394fd600630-1920.avif",
     "w": 1280
    }
   ]
@@ -692,6 +692,18 @@
    {
     "src": "/articles/heroes/c9c0bcf14b7e-1920.avif",
     "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c1ff44470321-1280.avif",
+    "w": 1075
+   },
+   {
+    "src": "/articles/heroes/c1ff44470321-1920.avif",
+    "w": 1075
    }
   ]
  },

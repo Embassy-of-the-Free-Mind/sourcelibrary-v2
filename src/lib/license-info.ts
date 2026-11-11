@@ -23,6 +23,25 @@ export const CONTENT_LICENSE = {
 
 export type ContentLicense = typeof CONTENT_LICENSE;
 
+/** Human-readable name of CONTENT_LICENSE, for Dublin Core and plain-text lines. */
+export const CONTENT_LICENSE_NAME = 'CC BY-NC-SA 4.0';
+
+/**
+ * The Dublin Core rights statement for a book: its stored `dublin_core.dc_rights`,
+ * or our own licence when there is none.
+ *
+ * `scripts/migration/backfill-dublin-core.mjs` wrote our licence of the day,
+ * the exact string 'CC BY-SA 4.0', into dc_rights on ~9K books (7,777 visible,
+ * measured 2026-11-09; their source licences live in image_source.license). That
+ * value states OUR text's licence, which is CC BY-NC-SA since 2026-11-05, so it
+ * is read as the current one here rather than rewritten in Mongo (#8488). Any
+ * other stored value (a holding library's statement) is passed through as said.
+ */
+export function dcRightsForBook(stored: string | null | undefined): string {
+  if (!stored || stored === 'CC BY-SA 4.0') return CONTENT_LICENSE_NAME;
+  return stored;
+}
+
 /**
  * One-line form of the reservation for plain-text exports (.txt, downloads, PDF
  * colophon). A file saved to disk loses our headers, so it carries the

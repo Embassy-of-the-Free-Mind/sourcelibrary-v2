@@ -201,7 +201,7 @@ export const LANES = [
     reason: 'Runs named page lists, often of books held FOR it (the hold is the router\'s queue). A locked model is never called (agy-cli.mjs → model-limits.mjs agyBlocked): the run sleeps to the quoted reset, it never falls to the API. No pause check: a person or a job is the switch.', gap: true },
   { name: 'agy-flash-translate', serves: 'translate', files: ['scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/batch/siku-translate-lane.mjs', 'scripts/batch/reader-request-lane.mjs', 'scripts/lib/agy-cli.mjs'],
     selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming gemini-3.8-flash+agy-cli), the held Siku Quanshu cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660, kept held, siku-translate-lane.mjs, #5600; a book with an open reader request goes first, #7690), books a reader asked for (open translation-request feedback rows passing translation-request-eligibility.mjs; reader-request-lane.mjs OCRs their missing pages first and emails the reader, #7599), and page lists by hand',
-    trigger: 'cron on gex45 hourly: cli-translate-lane.mjs stale (#7263: re-translation after the Latin re-read). cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); reader-request-lane.mjs every 2 h on the second agy pool (#7599); one-off claude-job runs (book list recorded per job until R6)',
+    trigger: 'cron on gex45 hourly: cli-translate-lane.mjs finish (#8482: idle visible books closest to done first) and cli-translate-lane.mjs stale (#7263: re-translation after the Latin re-read, yields to finish). cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); reader-request-lane.mjs every 2 h on the second agy pool (#7599); one-off claude-job runs (book list recorded per job until R6)',
     budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
     stamps: [{ field: 'translation', call_site: 'scripts/batch/cli-translate.mjs', engine: 'gemini' }],
     routes: { hold: 'translate-cli-7075', engines: ['gemini-3.8-flash+agy-cli'] },
@@ -309,6 +309,7 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/rehost-walled-covers.mjs', reason: 'display: cover URLs moved from walled hosts to the R2 copy of the same page (#5448)' },
   { file: 'scripts/maintenance/seam-repair-6742/lean.mjs', reason: 'repair: minimal edge edits to served page translations at broken page joins, through writePageTranslation with a revision per page and an undo (#6742); no step work, skips held books; nightly cron, stops at the account\'s 60% weekly' },
   { file: 'scripts/maintenance/cover-frame-backfill.mjs', reason: 'display: books.thumbnail_frame (card crop), no step work (#6010); weekly cron' },
+  { file: 'scripts/maintenance/backfill-cover-cards.mjs', reason: 'display: books.image_card, the 500px AVIF cover written to R2 beside the scan, no step work (#4342, #6920); daily cron' },
   { file: 'scripts/maintenance/mark-stale-translations.mjs', reason: 'marker: pages.translation_stale (#4927). Not a lane, but it is ACTUATION — the paid translate lanes read it' },
   { file: 'scripts/maintenance/withhold-stale-translations.mjs', reason: 'marker: withholds a stale page translation from readers' },
   { file: 'scripts/migration/backfill-display-images.mjs', reason: 'display: display image fields' },
@@ -362,6 +363,160 @@ export const OFF_REPO_CRON = [
   { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
   { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
 ];
+
+/**
+ * CRON ROWS (#8283): one row per page-work cron LINE on every box, so an old line cannot linger unseen. LANES says
+ * what a code path may do; this says which scheduled line runs it, why (issue), on which route, who answers for it,
+ * and when someone must look again. Seeded from the lane-audit-8283 inventory (2026-11-08,
+ * https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/8283#issuecomment-6726714864).
+ *
+ * pipeline-now-push.mjs judges every live line of each box against these rows hourly (judgeCronLine below) and
+ * /admin/pipeline/now shows the red ones at the top; a weekly ntfy names them. Red is one of:
+ *   UNREGISTERED   a live line of a page-work stage (JUDGED_STAGES) that no row matches;
+ *   RETIRED BUT LIVE  a live line matching a `retired` row;
+ *   PAST REVIEW    today is after the row's `review_by`;
+ *   IDLE 7 DAYS    the row names the page stamp it writes (`writes`: pages.ocr.lane / translation.lane, else
+ *                  .source) and the corpus wrote 0 pages under it in 7 days. Lane-level: rows sharing a stamp
+ *                  are idle together. `paused` rows are not judged idle;
+ *   MATCHES A RETIRED PATTERN  RETIRED_PATTERNS, unless the row lists the pattern id in `allow` with a reason.
+ *
+ * match:     { script?: basename of the executed script, mode?: its subcommand, has?: substrings of the raw line }.
+ *            Every key given must hold. First matching row wins, so the narrower row comes first.
+ * status:    'current' | 'paused' (stopped for cause, stays stopped: a STOP file or a #PAUSED tag) | 'retired'.
+ * route:     agy | GPU>agy | Opus | GPU>Opus (routing.md), or what else it is (none, Kraken, IA djvu, paid API).
+ * owner:     who answers for the line. Derek, unless a named job does.
+ * open:      an unanswered policy question (the audit's UNKNOWN rows); such rows get a short review_by.
+ * Adding a cron line that does page work: add its row here in the same PR. Retiring one: set `retired`, keep the row.
+ */
+export const JUDGED_STAGES = ['ocr', 'translate', 'enrich', 'embed', 'orchestrator'];
+export const BOX_ALIASES = { hetzner: 'main' };
+
+const QUARTER = '2027-02-01';
+const SOON = '2026-11-22';
+export const CRON_ROWS = [
+  // ── main ───────────────────────────────────────────────────────────────────────────────────────────
+  { id: 'main-chained-tick', box: 'main', match: { script: 'translate-batch-worker.mjs', has: ['--tick'] }, issue: 8279, route: 'paid API (flash-lite Batch)', owner: 'Derek', review_by: QUARTER, status: 'retired', note: 'retired 2026-11-08 (#8283, PR #8452): 46 runs dial-closed every tick, 0 written' },
+  { id: 'main-chained-enrol', box: 'main', match: { script: 'translate-batch-worker.mjs', has: ['--enrol-auto'] }, issue: 8279, route: 'paid API (flash-lite Batch)', owner: 'Derek', review_by: QUARTER, status: 'retired', note: 'retired 2026-11-08 (#8283, PR #8452): enrolment paused by NO-GO since 10-10' },
+  { id: 'main-preview-stubs', box: 'main', match: { has: ['/root/preview-stubs-4719/driver.mjs'] }, issue: 4719, route: 'paid API (chained lane)', owner: 'Derek', review_by: QUARTER, status: 'retired', note: 'retired 2026-11-08 (#8283, PR #8452)' },
+  { id: 'main-routing-drift', box: 'main', match: { script: 'routing-drift.mjs' }, issue: 8331, route: 'none', owner: 'Derek', review_by: QUARTER, status: 'retired', note: 'retired 2026-11-08: script deleted by #8331' },
+  { id: 'main-leaf-break-4523', box: 'main', match: { has: ['/root/leaf-break/fullrun-4523-watchdog.sh'] }, issue: 4523, route: 'Yigdzin (specialist)', owner: 'Derek', review_by: QUARTER, status: 'retired', note: 'retired 2026-11-08: DONE-4523' },
+  { id: 'main-cli-translate-opus', box: 'main', match: { script: 'cli-translate-lane.mjs', has: ['--engine=claude-opus-5-5'] }, lane: 'claude-opus-translate', writes: 'claude-opus-translate', issue: 7075, route: 'Opus', owner: 'Derek', review_by: SOON, status: 'current', open: 'Claude quota goes to Opus QA, not translation writes: keep only the router cells bound to Opus? (#8283 decision 3)' },
+  { id: 'main-reader-request', box: 'main', match: { script: 'reader-request-lane.mjs' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 7599, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-siku-translate', box: 'main', match: { script: 'siku-translate-lane.mjs' }, lane: 'agy-flash-translate', issue: 5600, route: 'agy', owner: 'Derek', review_by: '2026-12-08', status: 'paused', note: 'STOP file since the 2026-10-30 spot check (invented / wrong-leaf); stays stopped' },
+  { id: 'main-cli-ocr-run', box: 'main', match: { script: 'cli-ocr-lane.mjs', mode: 'run' }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7089, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-cli-ocr-correct', box: 'main', match: { script: 'cli-ocr-lane.mjs', mode: 'correct' }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7558, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'retired', note: 'retired 2026-10-28 (#7263, PR #7594): the correction lane runs on gex45' },
+  { id: 'main-ia-ocr-nightly', box: 'main', match: { script: 'ia-ocr-nightly.mjs' }, writes: 'ia_djvu', issue: 8283, route: 'IA djvu (agreement-gated)', owner: 'Derek', review_by: SOON, status: 'current', open: 'Archive text is not one of the four routes: name it in routing.md, or retire? (#8283 decision 5)' },
+  { id: 'main-pre-ocr-dupe', box: 'main', match: { script: 'pre-ocr-dupe-screen-nightly.sh' }, issue: 8283, route: 'none (holds duplicate printings)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-syriac-kraken', box: 'main', match: { script: 'syriac-kraken-relaunch.sh' }, lane: 'kraken-syriac', writes: 'kraken-syriac', issue: 4883, route: 'Kraken (named exception)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-paddle-fleet', box: 'main', match: { has: ['/root/paddle-zh-5600/fleet-cron.sh'] }, lane: 'paddle-zh', issue: 5600, route: 'GPU', owner: 'Derek', review_by: SOON, status: 'current', note: 'fleet-state done: a self-guarded no-op. Retire with the paddle-zh `cron` entry above at the next fleet run.' },
+  { id: 'main-runpod-watchdog', box: 'main', match: { has: ['runpod-pod-watchdog.mjs'] }, lane: 'paddle-zh', issue: 5600, route: 'GPU (watchdog)', owner: 'Derek', review_by: SOON, status: 'current', note: 'goes with main-paddle-fleet' },
+  { id: 'main-tengyur-6361', box: 'main', match: { has: ['/root/tengyur-cli-6361/watchdog.sh'] }, issue: 6361, route: 'agy', owner: 'Derek', review_by: SOON, status: 'paused', open: 'STOP by hand since 10-10: finish or retire? (#8283)' },
+  { id: 'main-enrich-batch', box: 'main', match: { script: 'enrich-worker.mjs', has: ['--batch'] }, lane: 'enrich-worker-batch', issue: 2141, route: 'paid API (flash-lite Batch, --max-usd)', owner: 'Derek', review_by: QUARTER, status: 'current', allow: { 'paid-flash-lite': 'paid flash-lite within a dial is allowed (Derek, #8279); scoped to an open envelope' } },
+  { id: 'main-enrich-agy', box: 'main', match: { script: 'enrich-worker.mjs', has: ['--agy'] }, lane: 'agy-flash-enrich', issue: 7628, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-enrich-metadata', box: 'main', match: { has: ['backfill-printed-page-4291.mjs'] }, issue: 4291, route: 'none (printed page numbers)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-hires-gallery', box: 'main', match: { script: 'backfill-hires-gallery.mjs' }, issue: 8283, route: 'none (display fields)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-author-geo', box: 'main', match: { script: 'backfill-thesaurus-author-locations.mjs' }, issue: 8283, route: 'none (metadata)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-place-geo', box: 'main', match: { script: 'geocode-publication-places.mjs' }, issue: 8283, route: 'none (metadata)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-enrichment-snapshot', box: 'main', match: { script: 'enrichment-snapshot.mjs' }, issue: 8283, route: 'none (read-only snapshot)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-embed-gemini', box: 'main', match: { script: 'embed-gemini.mjs' }, issue: 8283, route: 'paid API (Gemini embeddings)', owner: 'Derek', review_by: SOON, status: 'current', open: 'paid embeddings: inside the doctrine? name them in spend-controls.md (#8283 decision 5)' },
+  { id: 'main-embed-site', box: 'main', match: { script: 'embed-site-pages.mjs' }, issue: 8283, route: 'embeddings (site pages)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-embed-images', box: 'main', match: { script: 'image-embeddings-cron.mjs' }, issue: 8283, route: 'embeddings (images)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-scheduler', box: 'main', match: { script: 'scheduler.mjs' }, issue: 8283, route: 'router (orchestrator, translate-worker, enrich-worker: dial closed)', owner: 'Derek', review_by: SOON, status: 'current', open: 'scheduler translate-worker / enrich-worker are idle API lanes: drop them from WORKERS? (#8283)' },
+  { id: 'main-orchestrator-finalize', box: 'main', match: { script: 'pipeline-orchestrator.mjs' }, issue: 8283, route: 'none (Phase 9 finalize)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  // QA / flags on main (qc is judged only when a row or a pattern matches)
+  { id: 'main-mark-stale', box: 'main', match: { script: 'mark-stale-translations.mjs' }, issue: 4927, route: 'none (staleness flags)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-leak-check', box: 'main', match: { script: 'new-translation-leaks.mjs' }, issue: 8414, route: 'none (neighbour-leak detector, sees page breaks)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'main-corpus-audit-draw', box: 'main', match: { script: 'monthly-draw.sh' }, issue: 5301, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one interior page per book: move to paired-fifths (#8405)?' },
+  { id: 'main-convergent-audit', box: 'main', match: { script: 'convergent-audit-weekly.sh' }, issue: 6420, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one page per call: move to paired-fifths (#8405)?' },
+
+  // ── gex45 ──────────────────────────────────────────────────────────────────────────────────────────
+  { id: 'gex45-cli-translate', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'run' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 7075, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-cli-translate-stale', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'stale' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 7263, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-cli-translate-finish', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'finish' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 8482, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'finish books first (Derek 2026-11-10): idle visible books, >= 80% translated first' },
+  { id: 'gex45-latin-first', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'latin-first' }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7263, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'one line a pool (default, james, milo)' },
+  { id: 'gex45-first-reads', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'run', has: ['--cohort=visible-unread'] }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7701, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-finish-first-reads', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'run', has: ['--cohort=finish'] }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 8482, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'unread pages of books >= 80% translated, German and French' },
+  { id: 'gex45-armc-first-read', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'armc-plan', has: ['--frame=first-read'] }, lane: 'agy-flash-ocr', issue: 7701, route: 'GPU>agy', owner: 'Derek', review_by: '2026-12-08', status: 'paused', note: 'paused 2026-11-04 at 19% yield; stays paused' },
+  { id: 'gex45-armc-campaign', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'armc-plan', has: ['--frame=campaign'] }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 8049, route: 'GPU>agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: '62% of taken pages written (2026-11-08); not the first-read cause' },
+  { id: 'gex45-armc-euro', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'armc-plan', has: ['--frame=euro'] }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 6871, route: 'GPU>agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'es19 / fr19: 82% written (2026-11-08)' },
+  { id: 'gex45-gpu-queue', box: 'gex45', match: { has: ['/root/bin/gpu-queue.sh'] }, issue: 6871, route: 'GPU drafts (PERO / LightOn / Paddle)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-ocr-filler', box: 'gex45', match: { has: ['/root/bin/ocr-filler.sh'] }, issue: 6871, route: 'GPU drafts', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-withhold-stale', box: 'gex45', match: { script: 'withhold-stale-translations.mjs' }, issue: 4927, route: 'none (withholding)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-page-integrity-draw', box: 'gex45', match: { script: 'page-integrity-draw.mjs' }, issue: 8040, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one served page per book: move to paired-fifths (#8405)?' },
+
+  // ── l7a ────────────────────────────────────────────────────────────────────────────────────────────
+  { id: 'l7a-refused-pages', box: 'l7a', match: { script: 'refused-pages.mjs' }, lane: 'claude-opus-ocr', writes: 'claude-opus-ocr', issue: 7170, route: 'Opus (or Sonnet)', owner: 'Derek', review_by: SOON, status: 'current', open: 'Sonnet is off the four routes: Opus only? (#8283 decision 4)' },
+  { id: 'l7a-lane-judge-nightly', box: 'l7a', match: { script: 'lane-judge-sampler.mjs', mode: 'nightly' }, issue: 7611, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one page per book: move to paired-fifths (#8405)?' },
+  { id: 'l7a-lane-judge-weekly', box: 'l7a', match: { script: 'lane-judge-sampler.mjs', mode: 'weekly-pr' }, issue: 7611, route: 'none (weekly report)', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  // cloudlayer: no page-text lines in its snapshot (2026-11-08; its live crontab could not be read).
+];
+
+/**
+ * Shapes doctrine has retired (#8283). A live line matching one is red unless its row `allow`s the id with a reason.
+ */
+export const RETIRED_PATTERNS = [
+  { id: 'paid-flash-lite', test: /translate-batch-worker\.mjs[^#]*--chained|batch-(?:ocr|translate)-async|enrich-worker\.mjs[^#]*--batch/,
+    why: 'paid flash-lite lane: everything on agy; paid flash-lite only within a dial (Derek, PR #8279)' },
+  { id: 'single-page-qa', test: /lane-judge-sampler\.mjs[^#]*\bnightly\b|translation-corpus-audit\/monthly-draw|page-integrity-draw\.mjs|convergent-audit-weekly/,
+    why: 'QA that never sees a page break: every QA or book check reads paired fifths (#8405, PR #8411)' },
+];
+
+/**
+ * What SESSIONS READ (docs, skills, commands), as opposed to what RUNS (#8283). RETIRED_PATTERNS are cron-line
+ * shapes; a doc rarely quotes one verbatim, so DOC_RETIRED_EXTRA adds the phrases a doc uses to teach the same
+ * retired approach. A doc matching either list must carry a SUPERSEDED/RETIRED banner near its top.
+ */
+export const DOC_RETIRED_EXTRA = [
+  { id: 'gemini-batch-default', test: /Gemini Batch API|batch-(?:ocr|translate)-async|gemini-3\.1-flash-lite-preview/i,
+    why: 'the paid Gemini Batch API / flash-lite-preview is no longer a route: agy, GPU>agy, Opus, GPU>Opus (docs/routing.md)' },
+];
+
+export const BANNER_WINDOW_LINES = 15;
+const BANNER_RE = /\b(SUPERSEDED|RETIRED)\b/;
+
+/** Ids of the retired patterns a doc's text matches. */
+export function retiredPatternsIn(text) {
+  const t = String(text);
+  return [...RETIRED_PATTERNS, ...DOC_RETIRED_EXTRA].filter((p) => p.test.test(t)).map((p) => p.id);
+}
+
+/** True when a SUPERSEDED/RETIRED banner sits in the first BANNER_WINDOW_LINES lines. */
+export function hasRetiredBanner(text) {
+  return String(text).split('\n').slice(0, BANNER_WINDOW_LINES).some((l) => BANNER_RE.test(l));
+}
+
+const basename = (p) => (p ? String(p).split('/').pop() : null);
+
+/** The CRON_ROWS row a live line belongs to, or null. `line` carries { cmd, script, mode }; `box` may be an alias. */
+export function cronRowFor(box, line) {
+  const b = BOX_ALIASES[box] ?? box;
+  return CRON_ROWS.find((r) => r.box === b
+    && (!r.match.script || basename(line.script) === r.match.script)
+    && (!r.match.mode || line.mode === r.match.mode)
+    && (r.match.has ?? []).every((s) => String(line.cmd).includes(s))) ?? null;
+}
+
+/**
+ * The red verdicts for one live cron line (#8283): [{ flag, why }], empty when the line is fine or switched off.
+ * `laneTotals` is pages written per stamp over the last 7 days ({ 'agy-flash-ocr': 280474, … }), or null when
+ * unknown (then IDLE is not judged). A disabled or one-shot line is never red.
+ */
+export function judgeCronLine(box, line, { now = new Date(), laneTotals = null } = {}) {
+  if (line.disabled || line.one_shot) return [];
+  const row = cronRowFor(box, line);
+  const red = [];
+  if (!row) {
+    if (JUDGED_STAGES.includes(line.stage)) red.push({ flag: 'UNREGISTERED', why: 'no CRON_ROWS row in scripts/lib/lanes.mjs matches this line' });
+  } else {
+    if (row.status === 'retired') red.push({ flag: 'RETIRED BUT LIVE', why: row.note ?? `row ${row.id} is retired` });
+    if (row.review_by && now.toISOString().slice(0, 10) > row.review_by) red.push({ flag: 'PAST REVIEW', why: `review_by ${row.review_by}${row.open ? `: ${row.open}` : ''}` });
+    if (row.status === 'current' && row.writes && laneTotals && !(laneTotals[row.writes] > 0)) red.push({ flag: 'IDLE 7 DAYS', why: `0 pages stamped ${row.writes} in 7 days` });
+  }
+  for (const p of RETIRED_PATTERNS) {
+    if (p.test.test(String(line.cmd)) && !row?.allow?.[p.id]) red.push({ flag: 'MATCHES A RETIRED PATTERN', why: `${p.id}: ${p.why}` });
+  }
+  return red;
+}
 
 /**
  * The lane a page write belongs to, from the registry (#7301 item 3): the name of the lane whose `stamps` names

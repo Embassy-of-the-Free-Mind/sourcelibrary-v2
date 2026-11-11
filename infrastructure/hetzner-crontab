@@ -271,3 +271,5 @@
 # October 2026 was 7.3 TB = $655 and nobody saw it until the invoice). Counting only: it never drops a packet.
 @reboot f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f ensure
 5 0 * * * f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f report
+# Hourly attribution sample (#5189, 2026-11-09): ~55 min of per-process socket bytes, read by the 00:05 report.
+1 * * * * f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f sample

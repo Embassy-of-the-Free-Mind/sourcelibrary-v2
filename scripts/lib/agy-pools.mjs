@@ -179,12 +179,56 @@ export const LANE_RESERVES = Object.freeze({
 });
 export const RESERVE_DROP_HOURS = 36;
 
+// ── finish books first (#8482, Derek 2026-11-10) ──
 /**
- * The weekly fraction a lane must leave in a pool now: the sum of LANE_RESERVES other than `lane`'s own, or 0 within
- * RESERVE_DROP_HOURS of `resetTime`. An unreadable reset keeps the reserve (the drop needs a known reset).
+ * FINISH FIRST. The order the agy pools are spent in: (1) the pages that finish a book already 80% or more translated
+ * (their first reads, then their translations), (2) untranslated pages of other visible books, (3) quality re-reads and
+ * re-translations of pages that already have text (the Latin re-read, the German/French correction, the stale Latin
+ * re-translation). Measured 3-9 Nov 2026 on gex45: ~96K re-reads and ~63K re-translations against 0 pages from the
+ * book-finishing translation lane.
+ *
+ * A QUALITY lane (one that passes `yieldToFinish`) keeps FINISH_RESERVE in every pool on top of LANE_RESERVES while a
+ * finishing lane on this box reports work waiting (finishQueueOpen: a stamp under FINISH_QUEUE_DIR, written by
+ * cli-translate-lane.mjs finish each run, younger than FINISH_QUEUE_MAX_AGE_H, with pages > 0). The finishing lanes do
+ * not keep it. No fresh stamp (an empty queue, or a box that runs no finishing lane) means no extra reserve, so a quality
+ * lane never idles a pool the finishing lanes cannot use. The 36-hour drop still takes every reserve to 0.
  */
-export function weeklyReserve({ resetTime, now = Date.now(), lane = null, reserves = LANE_RESERVES } = {}) {
+export const FINISH_RESERVE = 0.25;
+export const FINISH_QUEUE_MAX_AGE_H = 6;
+export const FINISH_QUEUE_DIR = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/finish-queue' : path.join(os.tmpdir(), 'agy-finish-queue'));
+
+/** Record a finishing lane's waiting work: { books, pages } (pages it could still write). Never throws. */
+export function writeFinishQueue(lane, { books, pages }, { dir = FINISH_QUEUE_DIR(), now = Date.now() } = {}) {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, `${lane}.json`), JSON.stringify({ lane, books, pages, at: new Date(now).toISOString() }) + '\n');
+  } catch { /* a stamp never fails the lane */ }
+}
+
+/** Is any finishing lane's stamp fresh with pages waiting? { open, lanes: [{ lane, books, pages, at }] }. */
+export function finishQueueOpen({ dir = FINISH_QUEUE_DIR(), now = Date.now(), maxAgeH = FINISH_QUEUE_MAX_AGE_H } = {}) {
+  let files = [];
+  try { files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')); } catch { return { open: false, lanes: [] }; }
+  const lanes = [];
+  for (const f of files) {
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      if (j.pages > 0 && now - Date.parse(j.at) <= maxAgeH * 3600e3) lanes.push(j);
+    } catch { /* unreadable stamp: not open */ }
+  }
+  return { open: lanes.length > 0, lanes };
+}
+
+/**
+ * The weekly fraction a lane must leave in a pool now: the sum of LANE_RESERVES other than `lane`'s own, plus
+ * FINISH_RESERVE for a quality lane (`yieldToFinish`) while the finish queue is open (`finishOpen`, read from the stamps
+ * when not given), or 0 within RESERVE_DROP_HOURS of `resetTime`. An unreadable reset keeps the reserve (the drop needs
+ * a known reset).
+ */
+export function weeklyReserve({ resetTime, now = Date.now(), lane = null, reserves = LANE_RESERVES, yieldToFinish = false, finishOpen = null } = {}) {
   const reset = Date.parse(resetTime ?? '');
   if (Number.isFinite(reset) && reset - now <= RESERVE_DROP_HOURS * 3600e3) return 0;
-  return Object.entries(reserves).reduce((s, [k, v]) => (k === lane ? s : s + v), 0);
+  const base = Object.entries(reserves).reduce((s, [k, v]) => (k === lane ? s : s + v), 0);
+  if (!yieldToFinish) return base;
+  return base + ((finishOpen ?? finishQueueOpen({ now }).open) ? FINISH_RESERVE : 0);
 }

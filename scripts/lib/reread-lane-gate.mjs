@@ -23,7 +23,7 @@
  * script that is neither Latin, nor the book's language's, nor a real share (>= 2%) of the stored text, is refused.
  */
 import { createHash } from 'node:crypto';
-import { scriptOf, scriptsOfLanguage } from './stray-script.mjs';
+import { scriptOf, scriptsOfLanguage, GUARD_EXEMPT_SCRIPTS } from './stray-script.mjs';
 
 export const GATE_SCHEMA = 'reread-lane-gate/1';
 export const GATE_RULE = Object.freeze({ sample: 30, controls: 5, max_worse: 0, min_sample: 10 });
@@ -52,13 +52,21 @@ export function scriptLetterCounts(text) {
 const letterCount = (text) => (String(text || '').match(/\p{L}/gu) || []).length;
 
 /**
- * The scripts a read of this page may carry: the book's language labels' scripts, and any script that is at least
- * 2% of the stored text's letters. Latin is always allowed (headers, sigla, page-format tags).
+ * The scripts a read of this page may carry: the book's language labels' scripts, Greek and Hebrew for a book whose
+ * languages are all Latin-script, and any script that is at least 2% of the stored text's letters. Latin is always
+ * allowed (headers, sigla, page-format tags).
  * @param {{ languages?: string[], served?: string }} ctx
  */
 export function expectedScripts({ languages = [], served = '' } = {}) {
   const out = new Set();
   for (const l of languages) for (const s of scriptsOfLanguage(l)) out.add(s);
+  // A book in a Latin-script language (Latin, German, French...) quotes Greek and Hebrew as a matter
+  // of course, and a FIRST read has no stored text to learn that from. Without this, one printed
+  // Greek word (βοτανόφιλον in a 1680s Latin botany thesis, read correctly) refused the whole page:
+  // 594 refusals in #8529's first reads, all Greek. GUARD_EXEMPT_SCRIPTS is the same pair the
+  // translation guard already exempts (#5734). Books in a non-Latin script keep the strict rule, so
+  // Kannada in a Tibetan read (#6560) is still refused.
+  if (out.size === 0) for (const s of GUARD_EXEMPT_SCRIPTS) out.add(s);
   const n = letterCount(served);
   for (const [s, k] of Object.entries(scriptLetterCounts(served))) if (n && k / n >= 0.02) out.add(s);
   return out;
