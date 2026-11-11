@@ -510,10 +510,19 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
     return () => { live = false; };
   }, [status, reloadMine]);
 
-  // Auto-scroll
+  // Auto-scroll follows NEW replies only. A conversation restored from
+  // ?thread= lands here before the reader has sent anything; the old
+  // "near bottom?" test passed on the still-empty container, so a restored
+  // thread opened scrolled to the END of the last answer (Feedback-ID
+  // 6af441aaa18cbcd71d12873f). Restored threads open at the top instead.
+  const hasSentRef = useRef(false);
   useEffect(() => {
     const container = chatContainerRef.current;
     if (!container) return;
+    if (!hasSentRef.current) {
+      container.scrollTop = 0;
+      return;
+    }
     const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
     if (isNearBottom) container.scrollTop = container.scrollHeight;
   }, [messages]);
@@ -542,6 +551,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
     if (!trimmed || sending) return;
 
     if (listening) stopDictation();
+    hasSentRef.current = true;
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setInput('');
     setSending(true);
