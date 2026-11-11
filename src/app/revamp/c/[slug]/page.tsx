@@ -9,6 +9,7 @@ import { HAND_MADE } from '../../_data/maker-demo';
 export default async function Page({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ v?: string; tone?: string; hero?: string; maker?: string }> }) {
   const { slug } = await params;
   const { v, tone, hero, maker } = await searchParams;
+  if (/^(period|language|type)-/.test(slug)) notFound(); // saved like collections, but they have their own pages
   const demo = demoModel(slug);
   const m = demo ?? collectionModel(slug);
   if (!m) notFound();

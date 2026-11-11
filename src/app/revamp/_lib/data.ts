@@ -20,7 +20,8 @@ export function overview(slug: string): Overview | null {
 }
 
 export function snapshotSlugs(): string[] {
-  try { return fs.readdirSync(SNAP).filter((f) => f.endsWith('.json') && !f.startsWith('_')).map((f) => f.replace(/\.json$/, '')); } catch { return []; }
+  // Collections only: periods, languages and types are saved in the same shape but are not collections.
+  try { return fs.readdirSync(SNAP).filter((f) => f.endsWith('.json') && !f.startsWith('_') && !/^(period|language|type)-/.test(f)).map((f) => f.replace(/\.json$/, '')); } catch { return []; }
 }
 export function indexRecords(): Rec[] {
   const v = read<Rec[] | { collections: Rec[] }>('_index');
