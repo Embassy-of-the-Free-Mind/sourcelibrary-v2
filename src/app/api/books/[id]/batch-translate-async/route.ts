@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { LITE_MODEL as API_TRANSLATE_MODEL } from '../../../../../../scripts/lib/ocr-lite-gate.mjs';
 import { assertLaneGuards } from '@/lib/lane-guards';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { GoogleGenAI } from '@google/genai';
@@ -76,6 +77,15 @@ export const POST = withAuth(async (request, session, context) => {
     // Translation routing, not OCR routing and not a hardcoded flash (#6122): a caller
     // that omits `model` gets what every pipeline lane would pick for this book.
     const model: string = requestedModel || getTranslateModelForBook(book as RoutableBook);
+    // The paid Batch API runs Flash-Lite only (Derek, 2026-10-08); every other Gemini model
+    // translates through the agy CLI lane. OCR got this refusal in #8525; this route had none,
+    // and on 2026-11-06 it sent 810 pages to gemini-3-flash-preview on the paid API.
+    if (model !== API_TRANSLATE_MODEL) {
+      return NextResponse.json({
+        error: 'api_model_refused',
+        message: `Only ${API_TRANSLATE_MODEL} may translate on the paid Gemini API; ${model} translates through the agy CLI lane.`,
+      }, { status: 409 });
+    }
 
     // #5700: a book in a stratum whose OCR was measured untrusted is not translated until it
     // has been re-read — the same gate as /api/jobs/queue-books. This route is a translation
