@@ -118,6 +118,11 @@ $HOST_RULES
   \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
   $JD/decisions.txt for the morning digest and posts each on the issue it names; they do not page. Ask each
   question once, end the line with the issue it belongs to, and read that issue first: it may already be answered (#8551).
+- A STEP THAT MUST RUN ON ANOTHER BOX (restart a process there, read its files): you cannot ssh there, but you
+  can start a job there. Write a short brief (Lands:/PR: header lines, the exact commands, how to verify) and run
+  \`/root/bin/box.sh <main|cloudlayer|l7a|gex45> start <job-name> < brief.txt\`; name that job in your report.
+  Never leave such a step as instructions in a comment: nobody owns them (#5942: a restart written up on
+  2026-11-03 waited 8 days while the process it named hung).
 - INBOX: Derek's sessions can steer you mid-run with \`claude-job.sh note $1 "<message>"\`, which appends to
   $JD/$1.inbox. Run \`cat $JD/$1.inbox 2>/dev/null\` at the start of each new step, before each report you
   post, and before the done file. A note overrides the brief where they conflict. Name the notes you acted
