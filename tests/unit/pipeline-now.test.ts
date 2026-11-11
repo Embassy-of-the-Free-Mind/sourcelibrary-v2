@@ -4,8 +4,10 @@
  */
 import { describe, it, expect } from 'vitest';
 import {
-  flagsOf, gateTime, isOneShot, laneTotalsOf, logPathOf, modeOf, parseCrontab, pipelineLines, redSummary, scriptsOf, stageOf, trailingComment,
+  collectCorpusStops, discoverStopFiles, expandGlob, flagsOf, flaggedStops, gateTime, isOneShot, laneTotalsOf, logPathOf, modeOf, parseCrontab,
+  parseRoutesOff, pipelineLines, readableRows, redSummary, scriptsOf, stageOf, trailingComment,
 } from '../../scripts/maintenance/pipeline-now-push.mjs';
+import { judgeStops, STOP_ROWS, stopRowFor } from '../../scripts/lib/lanes.mjs';
 import { laneTable, linesByStage, redLines, untilText, type CronLine } from '@/lib/pipeline-now';
 
 const CHAINED = `*/5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-chained.log 2>&1`;
@@ -144,5 +146,105 @@ describe('red cron lines (#8283)', () => {
       'hetzner: syriac-kraken-relaunch.sh (IDLE 7 DAYS)',
     ]);
     expect(redLines([{ box: 'hetzner', doc: { lines: rows } as never }]).length).toBe(3);
+  });
+});
+
+describe('stops (STOP_ROWS, #8283)', () => {
+  const NOW = new Date('2026-11-11T12:00:00Z');
+  // An in-memory filesystem: path -> text, with an optional symlink target.
+  const fakeFs = (files: Record<string, { text: string; real?: string }>) => ({
+    readdirSync: (d: string) => {
+      const p = `${d.replace(/\/$/, '')}/`;
+      return [...new Set(Object.keys(files).filter(f => f.startsWith(p)).map(f => f.slice(p.length).split('/')[0]))];
+    },
+    statSync: (f: string) => { if (!files[f]) throw new Error('ENOENT'); return { isFile: () => true, mtime: new Date('2026-10-30T14:06:00Z') }; },
+    realpathSync: (f: string) => files[f]?.real ?? f,
+    readFileSync: (f: string) => files[f]?.text ?? '',
+    existsSync: (f: string) => Object.keys(files).some(k => k.startsWith(f)),
+  });
+  const row = (over: object) => ({ id: 'r1', kind: 'stop-file', box: 'main', match: { path: '/root/x/STOP' }, issue: 1234, why: 'w', set_at: '2026-11-01', review_by: '2026-12-01', ...over });
+
+  it('positive control: a planted stop with no row is UNREGISTERED', () => {
+    const fs = fakeFs({ '/root/planted-lane/STOP': { text: 'planted by the test' } });
+    const found = discoverStopFiles('hetzner', { fsApi: fs as never });
+    expect(found.map(f => f.key)).toEqual(['/root/planted-lane/STOP']);
+    const out = judgeStops(found, { box: 'hetzner', judged: ['stop-file'], now: NOW, rows: [] });
+    expect(out.map(s => s.flags.map(f => f.flag))).toEqual([['UNREGISTERED']]);
+  });
+  it('positive control: a row past review_by is PAST REVIEW; a row without issue is NO OWNER', () => {
+    const rows = [row({ review_by: '2026-11-10' }), row({ id: 'r2', match: { path: '/root/y/STOP' }, issue: null })];
+    const found = [{ kind: 'stop-file', box: 'main', key: '/root/x/STOP' }, { kind: 'stop-file', box: 'main', key: '/root/y/STOP' }];
+    const out = judgeStops(found, { box: 'main', judged: ['stop-file'], now: NOW, rows });
+    expect(out[0].flags.map(f => f.flag)).toEqual(['PAST REVIEW']);
+    expect(out[1].flags.map(f => f.flag)).toEqual(['NO OWNER']);
+  });
+  it('negative control: a registered, in-date, owned stop is clean', () => {
+    const out = judgeStops([{ kind: 'stop-file', box: 'main', key: '/root/x/STOP' }], { box: 'main', judged: ['stop-file'], now: NOW, rows: [row({})] });
+    expect(out).toHaveLength(1);
+    expect(out[0].flags).toEqual([]);
+    expect(out[0].issue).toBe(1234);
+  });
+  it('a row whose stop is gone is a STALE ROW, but only for kinds this report read and its own box', () => {
+    const rows = [row({}), row({ id: 'g', kind: 'quality-gate', box: 'corpus', match: { gate: 'qg_1' } })];
+    const flagsFor = (judged: string[], box: string) => judgeStops([], { box, judged, now: NOW, rows }).map(s => `${s.id}:${s.flags[0].flag}`);
+    expect(flagsFor(['stop-file'], 'hetzner')).toEqual(['r1:STALE ROW']);
+    expect(flagsFor([], 'hetzner')).toEqual([]);
+    expect(flagsFor(['quality-gate'], 'corpus')).toEqual(['g:STALE ROW']);
+  });
+  it('a symlinked job dir is one stop (first path found wins), and STOP* globs match STOP-IMPORT and STOP.reason', () => {
+    const fs = fakeFs({
+      '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP': { text: 'by-eye gate\nsecond line' },
+      '/root/tengyur-cli-6361/STOP': { text: 'by-eye gate\nsecond line', real: '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP' },
+      '/root/acq-wave/STOP-IMPORT': { text: 'cap' },
+      '/root/ft-batches/2026-11-11-nightly-0130/STOP.meter-blind-pr8540': { text: 'meter blind' },
+    });
+    const found = discoverStopFiles('hetzner', { fsApi: fs as never });
+    expect(found.map(f => f.key).sort()).toEqual([
+      '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP', '/root/acq-wave/STOP-IMPORT', '/root/ft-batches/2026-11-11-nightly-0130/STOP.meter-blind-pr8540',
+    ]);
+    expect(found.find(f => f.key.includes('tengyur'))!.detail).toBe('by-eye gate');
+    expect(expandGlob('/root/ft-batches/*/STOP*', fs as never)).toHaveLength(1);
+  });
+  it('the shipped rows cover every stop on the hetzner listing of 2026-11-11', () => {
+    for (const key of ['/mnt/HC_Volume_105839809/siku-lane-5600/STOP', '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP', '/root/acq-wave/STOP-IMPORT',
+      '/root/ft-batches/2026-10-29-05/STOP', '/root/ft-batches/2026-11-11-nightly-0130/STOP.meter-blind-pr8540', '/root/gpu-backlog-5660/zh/STOP']) {
+      expect(stopRowFor({ kind: 'stop-file', box: 'hetzner', key }), key).not.toBeNull();
+    }
+    expect(stopRowFor({ kind: 'route-off', box: 'gex45', key: 'la-first-read-armc-7701' })).not.toBeNull();
+    expect(stopRowFor({ kind: 'route-off', box: 'hetzner', key: 'la-first-read-armc-7701' })).toBeNull();
+  });
+  it('parses only disabled routes from the tsv and skips comment lines', () => {
+    const tsv = '# off\tcommented\tx\t1\non\tzh\tpaddle-zh\t7546\noff\tla-first\teuro-draft\t7701\t/root/jobs/x\n-\tdash\tx\t5\n#off\thidden\tx\t6';
+    expect(parseRoutesOff(tsv, 'gex45').map(r => r.key)).toEqual(['la-first', 'dash']);
+  });
+  it('stale-row judgement waits for a readable directory or tsv (a missing volume is unknown, not lifted)', () => {
+    const rows = (STOP_ROWS as { kind: string; id: string }[]).filter(r => ['stop-file', 'route-off'].includes(r.kind));
+    expect(readableRows(rows as never, { fsApi: fakeFs({}) as never, routesRead: false })).toEqual([]);
+    const ok = readableRows(rows as never, { fsApi: fakeFs({ '/root/acq-wave/x': { text: '' } }) as never, routesRead: true }) as { id: string }[];
+    expect(ok.map(r => r.id)).toContain('route-la-first-read-armc-7701');
+    expect(ok.map(r => r.id)).not.toContain('siku-translate-stop');
+  });
+  it('corpus: holds and NO-GO gates are judged; an unread source judges nothing', () => {
+    const report = { held: [{ reason: 'zh-x-1', issue: 1, all: { books: 2, pages: 20 } }, { reason: 'zh-x-1', issue: 1, all: { books: 3, pages: 30 } }, { reason: 'mystery', issue: null, all: { books: 1, pages: 5 } }] };
+    const gates = [{ id: 'qg_translate_202610101657_1rqt', step: 'translate', verdict: 'NO-GO', window: { books: 40 }, created_at: new Date('2026-10-10T16:57:00Z') }, { id: 'qg_ok', verdict: 'GO' }];
+    const out = collectCorpusStops(report, gates, NOW) as { key: string; kind: string; scope: unknown; set_at: string; flags: { flag: string }[] }[];
+    const hold = out.find(s => s.key === 'zh-x-1')!;
+    expect(hold.scope).toEqual({ books: 5, pages: 50 });
+    expect(hold.flags[0].flag).toBe('UNREGISTERED');
+    expect(out.find(s => s.key === 'qg_ok')).toBeUndefined();
+    const gate = out.find(s => s.key.startsWith('qg_translate'))!;
+    expect(gate.set_at).toBe('2026-10-10');
+    expect(gate.flags).toEqual([]);
+    expect((collectCorpusStops(null, gates, NOW) as { kind: string }[]).some(s => s.kind === 'hold-reason')).toBe(false);
+    expect(flaggedStops([{ box: 'corpus', stops: out }])[0].flags.length).toBeGreaterThan(0);
+  });
+  it('every shipped row has a unique id, a review date, and an issue or an explicit owner-unknown why', () => {
+    const ids = new Set<string>();
+    for (const r of STOP_ROWS as { id: string; issue: number | null; why: string; review_by: string }[]) {
+      expect(ids.has(r.id), `duplicate ${r.id}`).toBe(false);
+      ids.add(r.id);
+      expect(r.review_by).toMatch(/^\d{4}-\d\d-\d\d$/);
+      if (!r.issue) expect(r.why).toMatch(/owner unknown/);
+    }
   });
 });

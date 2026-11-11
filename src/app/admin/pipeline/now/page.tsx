@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
-  agoText, ageMin, untilText, getPipelineNow, laneTable, linesByStage, redLines, weeklyPct,
+  allStops, agoText, ageMin, untilText, getPipelineNow, laneTable, linesByStage, redLines, weeklyPct,
   BOX_STALE_MIN, CORPUS_STALE_MIN, STAGE_LABEL,
   type BoxDoc, type CronLine, type DayRow, type PipelineNow,
 } from '@/lib/pipeline-now';
@@ -110,6 +110,37 @@ function Quota({ data, now }: { data: PipelineNow; now: Date }) {
   );
 }
 
+/** Stops, holds and route-offs with their owner and review date (#8283, STOP_ROWS). Red flags: no owner, past review, unregistered, stale row. */
+function Stops({ data }: { data: PipelineNow }) {
+  const { shown, cleanHolds } = allStops(data);
+  const red = shown.filter(s => s.flags.length).length;
+  return (
+    <Section title="Stops and holds" meta={`${shown.length} listed · ${red} flagged`}>
+      {shown.length === 0 ? <p className="text-sm text-stone-500">No stop reported yet. Boxes push hourly.</p> : (
+        <div className="overflow-x-auto rounded border border-stone-200 bg-white">
+          <table className="w-full text-sm">
+            <thead className="text-xs text-stone-500 text-left"><tr><th className="px-3 py-2">Stop</th><th className="px-3 py-2">Kind</th><th className="px-3 py-2">Owner</th><th className="px-3 py-2">Set</th><th className="px-3 py-2">Review by</th><th className="px-3 py-2">Blocks</th><th className="px-3 py-2">Flags</th></tr></thead>
+            <tbody className="divide-y divide-stone-100">
+              {shown.map(s => (
+                <tr key={`${s.box}-${s.id}`} className="align-top">
+                  <td className="px-3 py-2 min-w-0"><span className="text-stone-500">{s.box}</span> <span className="font-medium break-all">{s.key.split('/').slice(-3).join('/')}</span>{s.detail ? <p className="text-xs text-stone-500 break-words">{s.detail}</p> : null}</td>
+                  <td className="px-3 py-2 whitespace-nowrap">{s.kind}</td>
+                  <td className="px-3 py-2 whitespace-nowrap">{s.issue ? <a className="text-accent-rust hover:underline" href={`https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/${s.issue}`}>#{s.issue}</a> : <span className="text-red-700 font-medium">NO OWNER</span>}</td>
+                  <td className="px-3 py-2 whitespace-nowrap tabular-nums">{s.set_at ?? '–'}</td>
+                  <td className="px-3 py-2 whitespace-nowrap tabular-nums">{s.review_by ?? '–'}</td>
+                  <td className="px-3 py-2 tabular-nums">{s.scope ? [s.scope.books != null ? `${fmt(s.scope.books)} books` : null, s.scope.pages != null ? `${fmt(s.scope.pages)} pp` : null].filter(Boolean).join(' · ') : '–'}</td>
+                  <td className="px-3 py-2 text-red-700 font-medium">{[...new Set(s.flags.map(f => f.flag))].filter(f => f !== 'NO OWNER').join(' · ')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <p className="text-xs text-stone-500">Registered in <code>scripts/lib/lanes.mjs</code> STOP_ROWS; the pusher only reports, it never lifts a stop. {cleanHolds} hold reasons with an owner and in date are not listed. To clear a flag: give the row an owner issue and a new <code>review_by</code> with a reason, or lift the stop and delete its row (STALE ROW).</p>
+    </Section>
+  );
+}
+
 /** The cron lines the registry marks red (#8283), first on the page: what should not be running, or is unaccounted for. */
 function RedLines({ data }: { data: PipelineNow }) {
   const red = redLines(data.boxes);
@@ -207,6 +238,7 @@ export default async function PipelineNowPage() {
       {error || !data ? <p className="text-sm text-red-700">Could not read ops_reports: {error}</p> : (
         <>
           <RedLines data={data} />
+          <Stops data={data} />
           {data.corpus?.stalls?.some(x => x.stalled) ? (
             <Section title="Stalled hand-offs">
               <ul className="grid rounded border border-red-200 bg-white divide-y divide-stone-100 text-sm">

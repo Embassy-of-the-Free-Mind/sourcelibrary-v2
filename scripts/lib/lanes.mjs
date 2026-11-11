@@ -551,3 +551,151 @@ export function lanesByStep() {
   for (const l of LANES) out[l.serves].push(l.name);
   return out;
 }
+
+/**
+ * STOP ROWS (#8283, Phase 1 item 1 of #5302): every stop, hold and route-off gets an owner and a review date. A STOP
+ * file written for a good reason (a spot check found invented text) is correct on the day it is written and, with no
+ * owner, becomes a permanent stall beside idle capacity (the Siku STOP stood from 2026-10-30, the Latin GPU route was
+ * off from 2026-11-04, the paid translate gate sat at NO-GO from 2026-10-10). This is the CRON_ROWS idea applied to stops.
+ *
+ * OBSERVE ONLY. pipeline-now-push.mjs DISCOVERS the stops that exist (read-only), judgeStops() below matches each to a
+ * row, and /admin/pipeline/now shows the red ones. Nothing here sets or lifts a stop: lifting stays a human or
+ * measured-test decision (containment-on-finding.md). To clear a flag: give the row an `issue` and move `review_by`
+ * WITH a reason in `why`, or lift the stop and DELETE its row (a row whose stop is gone reads STALE ROW).
+ *
+ * kind:      stop-file    a STOP* file under a lane/job directory (match.path: absolute path or a glob with `*`);
+ *            route-off    a route switched off in /root/bin/ocr-filler-routes.tsv on gex45 (match.route);
+ *            hold-reason  a `pipeline_auto.hold` reason carried by books in the latest pipeline_next_daily report
+ *                         (match.reason; the report's `issue` is the hold's own owner, copied here);
+ *            quality-gate a quality_gates row with verdict NO-GO (match.gate).
+ *            (envelopes are not discovered yet: nothing the pusher already reads names one.)
+ * box:       where the stop lives: a CRON_ROWS box, or 'corpus' for hold-reason and quality-gate.
+ * issue:     the owner issue, or null = NO OWNER (red). review_by: the day someone must look again.
+ * Flags (judgeStops): UNREGISTERED (a stop with no row), NO OWNER, PAST REVIEW, STALE ROW (a row whose stop is gone).
+ */
+export const STOP_KINDS = ['stop-file', 'route-off', 'hold-reason', 'quality-gate'];
+
+const STOP_REVIEW = '2026-11-22';
+const HOLD_BASE = { kind: 'hold-reason', box: 'corpus', set_at: null, review_by: STOP_REVIEW };
+
+/**
+ * Hold reasons found in the 2026-11-11 pipeline_next_daily report, as [reason, owner issue]. The issue is the hold's
+ * own (`held[].issue` of the report; where a reason carried several, the one named in the reason). null = the report
+ * named no owner. `review_by` is the default for all of them: nobody has yet read each hold's release-when.
+ */
+const HOLD_OWNERS = [
+  ['manifest-only-lazy-pages', 7343], ['zh-shi-ji-8053', 8053], ['acquisition-wave-2026-10-images-only', 5457],
+  ['scans-only-publish-7176', 7176], ['paddle-zh-5600-ocr-only', 5600], ['scans-only-publish-7270', 7270],
+  ['acquisition-wave-2026-10b', 7343], ['gpu-backlog-5660', 5660], ['warehouse-promotion-5470', 5470],
+  ['tibetan-translation-lane-6948', 6948], ['preview-stub-first-read-8181', 8181], ['paddle-zh-6388-ocr-only', 6388],
+  ['specialist-ocr-lane-4523', 4523], ['jcb-1600-8049', 8049], ['paddle-print-6101', 6101],
+  ['title-leaf-recitation-6297', 6297], ['ia-free-text-first-4966', 4966], ['ia-wrong-leaf-4790', 4790],
+  ['same-edition-copy-unread', 4285], ['zh-histories-7546', 7546], ['leaf-shift-5021', 5021],
+  ['ocr-flash-cli-7075', 7075], ['zh-complete-sets-8053', 8053], ['ndl-koten-lane-4925', 4925],
+  ['mongol-kanjur-import-5664', 5664], ['kangyur-import', 5665], ['syriac-retranslation-awaits-derek', 4883],
+  ['paddle-zh-6388-excluded', 6388], ['maya-mss-6559', 6559], ['translate-cli-7075', 7075],
+  ['summary-placeholder-6117', 6117], ['wrong-leaf-clef-audit-5803', 5803], ['tengyur-import-5497', 5497],
+  ['ocr-unsettled-6420', 6420], ['gemini-ocr-tibetan-4523', 4523], ['submarine-imports-7721', null],
+  ['ocr-wrong-leaf-6694', 6694], ['recitation-marker-english-7100', 7100], ['magic-kb-cli-reads', null],
+  ['by-eye-off-leaf-pages', 8518], ['jabir-ocr-gate-7341', 7341], ['aliveness-kb-cli-reads', null],
+  ['by-eye-wrong-leaf-6420', 6420], ['english-page-shift-5021', 5021], ['near-blank-invented-5274', 5274],
+  ['leak-contained-5026', 5026], ['wrong-leaf-text-7949', 7949], ['served-audit-6691', 6691],
+  ['tca-wave2-contained-5274', 5274], ['sky-sources-qa-7339', 7339], ['withdrawn-alternatives-4809', 4809],
+  ['broken-text-6056', 6056], ['agy-route-8038', 8038], ['wrong-leaf-screen-7866', 7866],
+  ['latin-strata-contained-7947', 7947], ['maya-sources-7038', 7038], ['invented-page-7991', 7991],
+  ['blank-leaf-english-orphan-6420', 6420], ['tibetan-unverified-gemini-ocr-4523', 4523],
+  ['english-misaligned-7100', 7100], ['split-wave-a-6114', 6114], ['zh-flash-agy-7037', 7037],
+  ['wrong-leaf-found-route-panel-7263', 7263], ['markets-cli-reads', null], ['contained-invented-7568', 7568],
+  ['showthrough-invented-ocr-7201', 7201], ['glm-english-5660-ocr-only', 5660], ['plethon-folios-only', null],
+  ['invented-table-by-eye-7274', 7274], ['hand-read-leaves-8440', 8440], ['qa-enrich-1007', 6109],
+  ['image-shift-erara-pdf-5803', 5803], ['wrong-leaf-image-shift-7866', 7866], ['invented-spread-ocr-7605', 7605],
+  ['contained-invented-ocr-7591', 7613], ['blank-leaf-invented-6056', 6056], ['balinese-script-ocr-probe-6142', null],
+  ['contained-7968', 7968], ['cbeta-chan-translate-5566', 5566], ['ocr-scrambled-lexicon-6056', 6056],
+  ['invented-text-by-eye-8478', 8494], ['contained-by-eye-7402', 7402], ['invented-pages-by-eye-6048', 6048],
+  ['wrong-leaf-5942-spot', 7685], ['ocr-rashi-type-garble-6056', 6056], ['invented-facing-column-7567', 7567],
+  ['tattva-flash-reread-6142', 6142], ['wrong-leaf-blank-7866', 7866], ['harmony-byz-ranges', null],
+  ['fabricated-page-4960', 4960], ['wrong-leaf-text-5924', 5924], ['peiresc-awaits-derek-5811', 5811],
+  ['invented-ocr-7666', 7666], ['unreadable-strip-invented-5929', 6420], ['recited-quran-ocr-7605', 7605],
+  ['blank-leaf-invented-5826', 5826], ['broken-text-6142', 6142], ['leaked-reasoning-6117-awaits-guard', 6117],
+  ['token-run-loop-7945', 4850], ['cbeta-chan-5566', 5566], ['voynich-undeciphered-8157', 8157],
+  ['loagaeth-letter-grids-no-ocr', null], ['by-eye-invented-english-5274', 5274],
+  ['invented-ocr-blank-verso-6025', 6025], ['russian-ocr-over-german-7522', 7522], ['invented-ocr-8003', 8003],
+  ['landa-rah-7038', 7038], ['flash-lite-invented-7274', 7274], ['ocr-invention-newar-6056', 6056],
+  ['wrong-leaf-text-vs-images-7321', 7321], ['block-drift-wrong-leaf-5021', 5021],
+  ['wrong-work-and-invented-ocr-6056', 6056], ['steiner-free-ocr-6874', null], ['invented-translation-6056', 6056],
+  ['drebbel-creative-5811', null], ['malayalam-palm-leaf-lane', null], ['invented-read-4775', 4775],
+  ['nalanda-sanskrit-ocr-only', 4523], ['ocr-loop-by-eye-7075', 7075], ['bw-reread-7274', 7274],
+  ['ocr-letter-confusion-hebrew-6056', 6056], ['ocr-untrusted-5700', 5700], ['cursive-hebrew-invention-6048', 6048],
+  ['ocr-invention-arabic-ms-6056', 6056], ['invented-ocr-6056', 6056], ['etz-hayyim-wrong-leaf-7476', 7476],
+  ['ocr-wrong-leaf-6420', 6420], ['contained-7263', 7263], ['samaritan-script-ocr-fabricated', 5621],
+  ['wrong-leaf-8425', 8425], ['wrong-leaf-text-7517', 7517], ['barocci-reocr-7090', 7090],
+  ['drebbel-witnesses-5811', null], ['neighbour-strip-by-eye-6740', 6740], ['tib-flash-invented-line-6948', 6948],
+  ['ocr-leaf-offset-7567', 7567],
+];
+
+export const STOP_ROWS = [
+  { id: 'siku-translate-stop', kind: 'stop-file', box: 'main', match: { path: '/mnt/HC_Volume_105839809/siku-lane-5600/STOP' }, issue: 7914, why: 'Siku translate lane paused by the 2026-10-30 spot check (1 invented page; the next fix is in the translator), ticket #7914, lane #5600; ~1.3M pages wait', set_at: '2026-10-30', review_by: STOP_REVIEW },
+  { id: 'tengyur-cli-stop', kind: 'stop-file', box: 'main', match: { path: '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP' }, issue: 6361, why: 'stage 2 stopped at the by-eye gate; remove only on a decision to re-run stage 2', set_at: '2026-10-10', review_by: STOP_REVIEW },
+  { id: 'acq-wave-import-stop', kind: 'stop-file', box: 'main', match: { path: '/root/acq-wave/STOP-IMPORT' }, issue: 5457, why: 'acquisition wave hit its page cap (3,501,287 >= cap, acq-wave-resume-5457)', set_at: '2026-10-06', review_by: STOP_REVIEW },
+  { id: 'ft-batch-2026-10-29-05-stop', kind: 'stop-file', box: 'main', match: { path: '/root/ft-batches/2026-10-29-05/STOP' }, issue: null, why: 'owner unknown: empty STOP in an old first-translation batch dir (written 2026-10-29); nothing says why', set_at: '2026-10-29', review_by: STOP_REVIEW },
+  { id: 'ft-batch-meter-blind-stop', kind: 'stop-file', box: 'main', match: { path: '/root/ft-batches/*/STOP.meter-blind-pr8540' }, issue: 8540, why: 'FT nightly batch stopped by a blind meter (5 empty readings); PR #8540 is the meter fix', set_at: '2026-11-11', review_by: STOP_REVIEW },
+  { id: 'gpu-backlog-5660-zh-stop', kind: 'stop-file', box: 'main', match: { path: '/root/gpu-backlog-5660/zh/STOP' }, issue: 5660, why: 'empty STOP in the gpu-backlog-5660 zh dir since 2026-10-07; reason not recorded in the file', set_at: '2026-10-07', review_by: STOP_REVIEW },
+  { id: 'route-la-first-read-armc-7701', kind: 'route-off', box: 'gex45', match: { route: 'la-first-read-armc-7701' }, issue: 7701, why: 'Latin GPU first-read route switched off in ocr-filler-routes.tsv (2026-11-04); the GPU is mostly idle', set_at: '2026-11-04', review_by: STOP_REVIEW },
+  { id: 'route-euro-armc-7567', kind: 'route-off', box: 'gex45', match: { route: 'euro-armc-7567' }, issue: 7567, why: 'arm-c euro-draft GPU route switched off in ocr-filler-routes.tsv; reason and date not recorded in the tsv', set_at: null, review_by: STOP_REVIEW },
+  { id: 'gate-translate-20261010', kind: 'quality-gate', box: 'corpus', match: { gate: 'qg_translate_202610101657_1rqt' }, issue: 8279, why: 'paid translate quality gate NO-GO since 2026-10-10; the paid chained lane stays closed (#8279)', set_at: '2026-10-10', review_by: STOP_REVIEW },
+  ...HOLD_OWNERS.map(([reason, issue]) => ({
+    ...HOLD_BASE, id: `hold-${reason}`, match: { reason }, issue,
+    why: issue ? `hold ${reason}: books kept out of every lane; owner is the hold's issue, release-when is in the hold record` : 'owner unknown: the report names no issue for this hold',
+  })),
+];
+
+/** A path glob where `*` matches within one path segment; anything else is literal. */
+const globRe = (g) => new RegExp(`^${g.split('*').map((s) => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('[^/]*')}$`);
+
+/** The STOP_ROWS row for a discovered stop { kind, box, key } (key = path | route | reason | gate id), or null. */
+export function stopRowFor(stop, rows = STOP_ROWS) {
+  const b = BOX_ALIASES[stop.box] ?? stop.box;
+  return rows.find((r) => r.kind === stop.kind && (BOX_ALIASES[r.box] ?? r.box) === b && (
+    (r.match.path && globRe(r.match.path).test(stop.key))
+    || (r.match.route && r.match.route === stop.key)
+    || (r.match.reason && r.match.reason === stop.key)
+    || (r.match.gate && r.match.gate === stop.key))) ?? null;
+}
+
+const stopKey = (r) => r.match.path ?? r.match.route ?? r.match.reason ?? r.match.gate;
+
+/**
+ * Judge the stops one report found (#8283). `found` is [{ kind, box, key, detail?, set_at?, scope? }]; `judged` names
+ * the kinds this report actually READ, so an unread kind is never called STALE; `box` limits STALE ROW to rows of
+ * this document's box. Returns [{ id, kind, box, key, issue, why, set_at, review_by, scope, detail, flags: [{flag, why}] }],
+ * one per found stop plus one per STALE row. Pure.
+ */
+export function judgeStops(found, { box, judged = STOP_KINDS, now = new Date(), rows = STOP_ROWS } = {}) {
+  const today = now.toISOString().slice(0, 10);
+  const b = BOX_ALIASES[box] ?? box;
+  const out = [];
+  const seen = new Set();
+  for (const s of found) {
+    const row = stopRowFor(s, rows);
+    const flags = [];
+    if (!row) flags.push({ flag: 'UNREGISTERED', why: 'no STOP_ROWS row in scripts/lib/lanes.mjs matches this stop' });
+    else {
+      seen.add(row.id);
+      if (!row.issue) flags.push({ flag: 'NO OWNER', why: row.why });
+      if (row.review_by && today > row.review_by) flags.push({ flag: 'PAST REVIEW', why: `review_by ${row.review_by}` });
+    }
+    out.push({
+      id: row?.id ?? `unregistered:${s.kind}:${s.key}`, kind: s.kind, box: s.box ?? box, key: s.key,
+      issue: row?.issue ?? null, why: row?.why ?? null, set_at: row?.set_at ?? s.set_at ?? null, review_by: row?.review_by ?? null,
+      scope: s.scope ?? null, detail: s.detail ?? null, flags,
+    });
+  }
+  for (const r of rows) {
+    if (seen.has(r.id) || !judged.includes(r.kind) || (BOX_ALIASES[r.box] ?? r.box) !== b) continue;
+    out.push({
+      id: r.id, kind: r.kind, box: r.box, key: stopKey(r), issue: r.issue, why: r.why, set_at: r.set_at, review_by: r.review_by,
+      scope: null, detail: null, flags: [{ flag: 'STALE ROW', why: 'the stop no longer exists: delete this row from STOP_ROWS' }],
+    });
+  }
+  return out;
+}
