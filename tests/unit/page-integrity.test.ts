@@ -375,6 +375,31 @@ describe('translationReasoningLeak', () => {
       expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
     }
   });
+  // #8465: Plotinus, Perna 1580 (6952c9ca77f38f6761bc3062) pp. 811, 184, 246, as stored.
+  it('a refusal, an answer to the request, and the prompt\'s own input labels are chat replies', () => {
+    for (const t of [
+      'The Greek text to be translated is missing from your request. The string `+"+"+"+"...` appears where the Greek text should be.\n\nYou have provided a Latin text under "Previous page text for continuity". If you would like me to translate this Latin text, please let me know. Otherwise, please provide the Greek text you wish to have translated.',
+      'I apologize, but the Greek text that is supposed to be in the right column is not provided in your request. I only see the Latin text in the left column.\n\nTherefore, I am unable to translate the Greek text as requested.',
+      'Here is the translation of the Greek and Latin text to English, preserving formatting and paragraph breaks, and maintaining continuity with the previous page.\n\n**Previous page text for continuity:**\n\nfirst: wherefore it is necessary that all things after the first always exist in succession',
+      '**Previous page translation for continuity:**\nand so the stone is made.\n\n**Text to translate:**\nDe lapide',
+      '<meta>continues</meta>\nI\'m sorry, but the text you provided appears to be blank.',
+      'I cannot translate this page because the image you have provided is unreadable.',
+    ]) {
+      expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'assistant-reply', readerVisible: true });
+      expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    }
+  });
+  it('book text that apologises, cannot translate, or points at the previous page is left alone', () => {
+    for (const t of [
+      'I apologize, dear reader, for the length of this preface, which my friends have urged upon me.',
+      'I cannot translate this word into our tongue without losing its force; the Greeks call it <term>ousia</term>.',
+      'He said: "I am sorry that the letter you sent me was lost on the road to Basel."',
+      'See the previous page for the figure of the furnace.',
+      'The second part, which is missing from the manuscript, was printed at Leiden in 1612.',
+      'the conditions are not provided in the statute, and the judge must decide.',
+      'Unfortunately, the text of this chapter is corrupt in every manuscript.',
+    ]) expect(translationReasoningLeak(t), t).toBeNull();
+  });
   it('the model naming its input is the mildest kind, and usually sits in <meta>', () => {
     expect(translationReasoningLeak('<meta>Page 405 is missing from the provided transcription.</meta>\ndominion. But the daemon')).toMatchObject({ kind: 'input-talk', readerVisible: false });
     expect(translationReasoningLeak('The provided text contains no content to modernize, as it consists only of a blank page.')).toMatchObject({ kind: 'input-talk', readerVisible: true });

@@ -1,0 +1,7 @@
+{
+  'queued-not-fixed(not-translatable) -> STILL': 38,
+  'touched -> gone': 304,
+  'not-queued -> STILL': 8,
+  'queued-not-fixed(apply-refused) -> STILL': 7,
+  'queued-not-fixed(ocr-refused) -> STILL': 37
+}

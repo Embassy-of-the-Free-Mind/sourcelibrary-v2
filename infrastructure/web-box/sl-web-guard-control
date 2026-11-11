@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Run guard-control.mjs with the box env and the guard preloaded, as sl-web@.service does (#8384).
+set -euo pipefail
+while IFS= read -r kv; do case "$kv" in ''|PATH=*|HOME=*) ;; *) export "$kv" ;; esac; done < /etc/sl-web/env
+export GUARD_LOG=/srv/sl-web/log/guard-control.jsonl GUARD_APP_DIR=/srv/sl-web/current
+exec runuser -u slweb --preserve-environment -- node /etc/sl-web/guard-control.mjs

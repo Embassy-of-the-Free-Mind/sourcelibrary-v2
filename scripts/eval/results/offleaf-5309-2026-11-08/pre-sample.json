@@ -1,0 +1,536 @@
+[
+ {
+  "kind": "item",
+  "book_id": "69ea0f7013a685002bb8e200",
+  "page_id": "69ea0f7013a685002bb8e24b",
+  "n": 75,
+  "language": "English",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": 2,
+   "shared": 0.212
+  },
+  "key": "S01"
+ },
+ {
+  "kind": "ctl-old",
+  "book_id": "6a09e9ef3ca4edcd1ef01c3b",
+  "page_id": "6a09e9ef3ca4edcd1ef01c8d",
+  "n": 82,
+  "name": "Strutt",
+  "expect": "other",
+  "rev": "6d696b33bcc5",
+  "key": "S02"
+ },
+ {
+  "kind": "ctl-current",
+  "book_id": "6a09e9ef3ca4edcd1ef01c3b",
+  "page_id": "6a09e9ef3ca4edcd1ef01c8d",
+  "n": 82,
+  "name": "Strutt",
+  "expect": "own",
+  "key": "S03"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a08f62850bd891addfbabfc",
+  "page_id": "6a08f62850bd891addfbac1d",
+  "n": 33,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 1
+  },
+  "key": "S04"
+ },
+ {
+  "kind": "ctl-current",
+  "book_id": "69cf7bb9878f40c5945f1eea",
+  "page_id": "69cf7bb9878f40c5945f1fda",
+  "n": 240,
+  "name": "Oxyrhynchus V",
+  "expect": "own",
+  "key": "S05"
+ },
+ {
+  "kind": "ctl-old",
+  "book_id": "69e41fab4fc48a88423e0693",
+  "page_id": "69e41fab4fc48a88423e06ad",
+  "n": 26,
+  "name": "Rajput Painting",
+  "expect": "other",
+  "rev": "54c874c326b0",
+  "key": "S06"
+ },
+ {
+  "kind": "item",
+  "book_id": "69cf7bf2878f40c5945f245c",
+  "page_id": "69cf7bf2878f40c5945f252d",
+  "n": 209,
+  "language": "Greek",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.932
+  },
+  "key": "S07"
+ },
+ {
+  "kind": "item",
+  "book_id": "69d5ac3dd0bd3547a5655c53",
+  "page_id": "69d5ac3dd0bd3547a5655d49",
+  "n": 246,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.929
+  },
+  "key": "S08"
+ },
+ {
+  "kind": "item",
+  "book_id": "69ef254385daccce30f2b86a",
+  "page_id": "69ef254385daccce30f2b8d1",
+  "n": 103,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 1
+  },
+  "key": "S09"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a3e6e456493e2d2112984ab",
+  "page_id": "6a3e6e456493e2d211298542",
+  "n": 151,
+  "language": "English",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": null,
+   "shared": null
+  },
+  "key": "S10"
+ },
+ {
+  "kind": "item",
+  "book_id": "69ef2b4685daccce30f2e066",
+  "page_id": "69ef2b4685daccce30f2e2bd",
+  "n": 599,
+  "language": "Latin",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": 1,
+   "shared": 0.222
+  },
+  "key": "S11"
+ },
+ {
+  "kind": "item",
+  "book_id": "69af0a9068bf0754164e4558",
+  "page_id": "69af0a9068bf0754164e488c",
+  "n": 405,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.985
+  },
+  "key": "S12"
+ },
+ {
+  "kind": "item",
+  "book_id": "69ee64a07b983848aff58240",
+  "page_id": "69ee64a07b983848aff58367",
+  "n": 295,
+  "language": "English",
+  "diag": {
+   "verdict": "own_like",
+   "offset": null,
+   "ref_d": 4,
+   "shared": 0.147
+  },
+  "key": "S13"
+ },
+ {
+  "kind": "item",
+  "book_id": "69ef251c85daccce30f2b1f2",
+  "page_id": "69ef251c85daccce30f2b22c",
+  "n": 58,
+  "language": "Sanskrit",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": 8,
+   "shared": 1
+  },
+  "key": "S14"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a0e569eb8ad266ebed2362e",
+  "page_id": "6a0e569eb8ad266ebed23694",
+  "n": 102,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 1
+  },
+  "key": "S15"
+ },
+ {
+  "kind": "item",
+  "book_id": "69e41fb64fc48a88423e0847",
+  "page_id": "69e41fb64fc48a88423e08e1",
+  "n": 154,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.988
+  },
+  "key": "S16"
+ },
+ {
+  "kind": "item",
+  "book_id": "69e786a94a6785cfd60c88a8",
+  "page_id": "69e786a94a6785cfd60c8917",
+  "n": 111,
+  "language": "Arabic",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 1
+  },
+  "key": "S17"
+ },
+ {
+  "kind": "item",
+  "book_id": "69af5946522dc3dfdf725a23",
+  "page_id": "69af5946522dc3dfdf725a77",
+  "n": 84,
+  "language": "French",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": null,
+   "shared": null
+  },
+  "key": "S18"
+ },
+ {
+  "kind": "ctl-current",
+  "book_id": "6a08f9349c1b82475e159a8d",
+  "page_id": "6a08f9349c1b82475e159b26",
+  "n": 153,
+  "name": "Geronimo",
+  "expect": "own",
+  "key": "S19"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a353228c8ce407afbe04b97",
+  "page_id": "6a353228c8ce407afbe04bd4",
+  "n": 61,
+  "language": "English",
+  "diag": {
+   "verdict": "own_like",
+   "offset": null,
+   "ref_d": -6,
+   "shared": 0.16
+  },
+  "key": "S20"
+ },
+ {
+  "kind": "ctl-old",
+  "book_id": "69cf7bb9878f40c5945f1eea",
+  "page_id": "69cf7bb9878f40c5945f1fda",
+  "n": 240,
+  "name": "Oxyrhynchus V",
+  "expect": "other",
+  "rev": "5105e6637a47",
+  "key": "S21"
+ },
+ {
+  "kind": "item",
+  "book_id": "69ef284385daccce30f2c27b",
+  "page_id": "69ef284385daccce30f2c3af",
+  "n": 308,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.487
+  },
+  "key": "S22"
+ },
+ {
+  "kind": "item",
+  "book_id": "69e7928c80b52390feb16343",
+  "page_id": "69e7928c80b52390feb16361",
+  "n": 30,
+  "language": "Sanskrit",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 1
+  },
+  "key": "S23"
+ },
+ {
+  "kind": "item",
+  "book_id": "69ef287d85daccce30f2cdc2",
+  "page_id": "69ef287d85daccce30f2ce7c",
+  "n": 186,
+  "language": "Latin",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.882
+  },
+  "key": "S24"
+ },
+ {
+  "kind": "item",
+  "book_id": "69aec0eadd3c98abc0da7bfe",
+  "page_id": "69aec0eadd3c98abc0da7e17",
+  "n": 537,
+  "language": "Latin",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -3,
+   "ref_d": -3,
+   "shared": 0.986
+  },
+  "key": "S25"
+ },
+ {
+  "kind": "ctl-current",
+  "book_id": "69e7938b80b52390feb18721",
+  "page_id": "69e7938b80b52390feb1882e",
+  "n": 269,
+  "name": "Quixote",
+  "expect": "own",
+  "key": "S26"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a35c9aadf59c9f0ef280166",
+  "page_id": "6a35c9aadf59c9f0ef28019b",
+  "n": 53,
+  "language": "English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.979
+  },
+  "key": "S27"
+ },
+ {
+  "kind": "ctl-current",
+  "book_id": "69f8c1030c0c281d4bd321fd",
+  "page_id": "69f8c1030c0c281d4bd32370",
+  "n": 371,
+  "name": "Yucat\u00e1n",
+  "expect": "own",
+  "key": "S28"
+ },
+ {
+  "kind": "item",
+  "book_id": "69af5956569075d6ffc07222",
+  "page_id": "69af5956569075d6ffc07295",
+  "n": 115,
+  "language": "French",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": null,
+   "shared": null
+  },
+  "key": "S29"
+ },
+ {
+  "kind": "item",
+  "book_id": "69af21afa854057228c07c20",
+  "page_id": "69af21afa854057228c07e2b",
+  "n": 523,
+  "language": "Latin",
+  "diag": {
+   "verdict": "own_like",
+   "offset": null,
+   "ref_d": -7,
+   "shared": 0.111
+  },
+  "key": "S30"
+ },
+ {
+  "kind": "item",
+  "book_id": "69cf7d616d17d9f121ccf340",
+  "page_id": "69cf7d616d17d9f121ccf3a6",
+  "n": 102,
+  "language": "Latin",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.943
+  },
+  "key": "S31"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a3e6c858e2683a046da1cbc",
+  "page_id": "6a3e6c858e2683a046da1cf8",
+  "n": 60,
+  "language": "English",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": null,
+   "shared": null
+  },
+  "key": "S32"
+ },
+ {
+  "kind": "item",
+  "book_id": "6a357f405307b013ee584667",
+  "page_id": "6a357f405307b013ee584694",
+  "n": 45,
+  "language": "Latin",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.525
+  },
+  "key": "S33"
+ },
+ {
+  "kind": "item",
+  "book_id": "69d5ac5f4dc55b8478ddd6b5",
+  "page_id": "69d5ac5f4dc55b8478ddd920",
+  "n": 630,
+  "language": "Hebrew",
+  "diag": {
+   "verdict": "own_like",
+   "offset": null,
+   "ref_d": 5,
+   "shared": 0.01
+  },
+  "key": "S34"
+ },
+ {
+  "kind": "item",
+  "book_id": "69e759d2095c302d3fdde331",
+  "page_id": "69e759d2095c302d3fdde35e",
+  "n": 45,
+  "language": "French",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 1
+  },
+  "key": "S35"
+ },
+ {
+  "kind": "item",
+  "book_id": "69cf7b9e878f40c5945f1c42",
+  "page_id": "69cf7b9e878f40c5945f1c69",
+  "n": 39,
+  "language": "Greek",
+  "diag": {
+   "verdict": "undecided",
+   "offset": null,
+   "ref_d": 7,
+   "shared": 0.216
+  },
+  "key": "S36"
+ },
+ {
+  "kind": "item",
+  "book_id": "69b00a0ec42435fcd0cf9acb",
+  "page_id": "69b00a0fc42435fcd0cf9d36",
+  "n": 619,
+  "language": "Greek",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.429
+  },
+  "key": "S37"
+ },
+ {
+  "kind": "ctl-old",
+  "book_id": "6a08f9349c1b82475e159a8d",
+  "page_id": "6a08f9349c1b82475e159b26",
+  "n": 153,
+  "name": "Geronimo",
+  "expect": "other",
+  "rev": "7683fdff66aa",
+  "key": "S38"
+ },
+ {
+  "kind": "ctl-current",
+  "book_id": "69e41fab4fc48a88423e0693",
+  "page_id": "69e41fab4fc48a88423e06ad",
+  "n": 26,
+  "name": "Rajput Painting",
+  "expect": "own",
+  "key": "S39"
+ },
+ {
+  "kind": "ctl-old",
+  "book_id": "69e7938b80b52390feb18721",
+  "page_id": "69e7938b80b52390feb1882e",
+  "n": 269,
+  "name": "Quixote",
+  "expect": "other",
+  "rev": "d5a31cebcb8d",
+  "key": "S40"
+ },
+ {
+  "kind": "ctl-old",
+  "book_id": "69f8c1030c0c281d4bd321fd",
+  "page_id": "69f8c1030c0c281d4bd32370",
+  "n": 371,
+  "name": "Yucat\u00e1n",
+  "expect": "other",
+  "rev": "8c4293b8fc20",
+  "key": "S41"
+ },
+ {
+  "kind": "item",
+  "book_id": "69f8c1260c0c281d4bd32961",
+  "page_id": "69f8c1260c0c281d4bd329be",
+  "n": 93,
+  "language": "Cakchiquel / English",
+  "diag": {
+   "verdict": "offleaf",
+   "offset": -1,
+   "ref_d": -1,
+   "shared": 0.649
+  },
+  "key": "S42"
+ }
+]

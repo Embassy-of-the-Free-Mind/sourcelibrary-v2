@@ -14,6 +14,9 @@
 0 8 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/daily-health-snapshot.mjs" >> /var/log/sourcelibrary/daily-snapshot.log 2>&1
 0 8 * * * /root/moltbook-poster.sh
 15 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
+45 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-suggest-vocab.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/suggest-vocabulary-snapshot.mjs" >> /var/log/sourcelibrary/suggest-vocabulary.log 2>&1
+0 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-catalog-csv.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/catalog-csv-snapshot.mjs" >> /var/log/sourcelibrary/catalog-csv.log 2>&1
+5 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-cover-cards.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-cover-cards.mjs --limit=3000" >> /var/log/sourcelibrary/cover-cards.log 2>&1
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
 30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-entity-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-entities.mjs" >> /var/log/sourcelibrary/entity-sync.log 2>&1
@@ -188,16 +191,18 @@
 # the next ones in shared Batch jobs; hourly, up to 40 gap-fill books are enrolled (at most 60 open runs).
 # Every round asks the dial / scope envelopes at submit (a queue is stored spend). Both lines share one
 # lock, so a manual --loop run under `flock /tmp/sl-translate-chained.lock` pauses them.
-*/5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
-23 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -w 240 /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --enrol-auto --limit=40 --max-open=60" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
+# RETIRED 2026-11-08 (#8283): SUPERSEDED by #8279 (every translation routes to agy; paid dial $0). Ticked 46 runs as spend-dial-closed every 5 min, writing nothing. Was: */5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
+# RETIRED 2026-11-08 (#8283): SUPERSEDED by #8279; enrolled nothing since the translate NO-GO of 2026-10-10, and does not ask the router, so a GO would pull books into paid flash-lite. Was: 23 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -w 240 /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --enrol-auto --limit=40 --max-open=60" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
 @reboot sleep 60 && /root/bin/claude-rc.sh start >> /var/log/claude-rc.log 2>&1
+# Remote Control watchdog: restart the claude-rc server if it died (2026-11-09; it was found dead with no trace)
+*/10 * * * * /root/bin/claude-rc.sh ensure >> /var/log/claude-rc.log 2>&1
 # Daily digest (#5441): ONE message a day to Derek — yesterday's spend vs the dial by lane, jobs on the box,
 # DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
 # GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
 30 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/daily-digest.mjs ] && flock -n /tmp/sl-daily-digest.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/daily-digest.mjs" >> /var/log/sourcelibrary/daily-digest.log 2>&1
 # Site search index (#1180, weekly Sun 00:20) — see infrastructure/hetzner-crontab
 20 0 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs --operator" >> /var/log/sourcelibrary/site-pages.log 2>&1
-*/10 * * * * cd /root/preview-stubs-4719 && flock -n /tmp/stubs4719.lock node --env-file=/root/sourcelibrary/.env.production.local driver.mjs >> /root/preview-stubs-4719/cron.log 2>&1 # preview-stubs-4719 (remove when DONE file exists)
+# RETIRED 2026-11-08 (#8283): RETIRED-BY-DOCTRINE (#8279): enrolled 15 books into the paid chained flash-lite lane every 10 min, all refused by the 2026-10-10 NO-GO. Was: */10 * * * * cd /root/preview-stubs-4719 && flock -n /tmp/stubs4719.lock node --env-file=/root/sourcelibrary/.env.production.local driver.mjs >> /root/preview-stubs-4719/cron.log 2>&1 # preview-stubs-4719 (remove when DONE file exists)
 5 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-canon-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs /api/admin/canon" >> /var/log/sourcelibrary/canon-snapshot.log 2>&1
 15 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-timeline-overview.lock bash -c "set -a; source .env.production.local; set +a; node scripts/seed-timeline-filters.mjs" >> /var/log/sourcelibrary/timeline-overview.log 2>&1
 20 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-gallery-filters.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/refresh-gallery-filters.mjs" >> /var/log/sourcelibrary/gallery-filters.log 2>&1
@@ -219,7 +224,7 @@
 30 6 * * 1 [ -f /root/sourcelibrary/scripts/audit/spend-weekly-brief.md ] && /root/bin/claude-job.sh start waste-review-weekly-$(date -u +\%Y\%m\%d) /root/sourcelibrary/scripts/audit/spend-weekly-brief.md >> /var/log/sourcelibrary/spend-weekly.log 2>&1
 # pipeline_next daily audit + flow snapshot (#5478); read-only + one ops_reports row
 45 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-next-step-audit.mjs ] && flock -n /tmp/sl-pipeline-next-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-next-step-audit.mjs --apply" >> /var/log/sourcelibrary/pipeline-next-audit.log 2>&1
-*/10 * * * * /root/leaf-break/fullrun-4523-watchdog.sh  # #4523 driver watchdog, remove when DONE-4523 exists
+# RETIRED 2026-11-08 (#8283): #4523 driver finished (/root/leaf-break/DONE-4523 exists). Was: */10 * * * * /root/leaf-break/fullrun-4523-watchdog.sh  # #4523 driver watchdog, remove when DONE-4523 exists
 # #5600 RunPod watchdog: terminates sl-5600-* pods past the deadline in their name or with no new output for 30 min (job paddle-zh-5600c, remove when the lane is done)
 */10 * * * * flock -n /tmp/sl-runpod-watchdog.lock node --env-file=/root/sourcelibrary/.env.production.local /root/paddle-zh-5600/code/scripts/maintenance/runpod-pod-watchdog.mjs --apply >> /var/log/sourcelibrary/runpod-pod-watchdog.log 2>&1
 # #5600 Paddle fleet cycle (job paddle-zh-5600d; exits by itself when fleet-state status is done/stopped; stop: touch /root/paddle-zh-5600/STOP; remove when the lane is done)
@@ -255,7 +260,7 @@
 */15 * * * * python3 -W ignore /root/agy-quota/meter.py >> /root/agy-quota/meter.log 2>&1  # agy quota meter, #6331/#6375, passive, 0 calls
 # installed 2026-10-09 by cleanup-sweep: #5960 lane watchdog, #5874 routing drift
 */10 * * * * /root/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh >> /var/log/sourcelibrary/archive-lanes-revive.log 2>&1
-40 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/routing-drift.mjs ] && flock -n /tmp/sl-routing-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/routing-drift.mjs --apply" >> /var/log/sourcelibrary/routing-drift.log 2>&1
+# RETIRED 2026-11-08 (#8283): SUPERSEDED by tests/unit/router-bound-table.test.ts (#8323, #8331 deleted the script; this line was a no-op). Was: 40 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/routing-drift.mjs ] && flock -n /tmp/sl-routing-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/routing-drift.mjs --apply" >> /var/log/sourcelibrary/routing-drift.log 2>&1
 # installed 2026-10-09 by cleanup-sweep: #6047 Parquet mirror (#5189)
 0-59/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-mirror-changelog.lock node --max-old-space-size=512 --env-file=.env.production.local scripts/workers/mirror-changelog.mjs >> /var/log/sourcelibrary/mirror-changelog.log 2>&1
 40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-export-mirror.lock node --max-old-space-size=1536 --env-file=.env.production.local scripts/maintenance/export-mirror.mjs >> /var/log/sourcelibrary/export-mirror.log 2>&1
@@ -326,12 +331,12 @@
 5 1-23/2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/reader-request-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/reader-request-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/reader-request-lane/$(date +\%F-\%H) --max-pages=200 --apply >> /var/log/sourcelibrary/reader-request-lane.log 2>&1  # #7599
 # agy CLI enrichment (#7628): the same summary + index + chapters on Gemini 3.8 Flash through the subscription, one
 # conversation per book, $0 API. Each book is claimed in enrich_batch_books before its call, so the batch lane above
-# skips it; a book that fails here is handed back to the batch lane (the fallback). Stops at 600 model requests a day
-# (job ledger AGY_JOB=enrich-agy; a request is one message of up to 150K characters, which the pilot measured at
-# ~10 ordinary agy calls of /quota each, so 600 a day is about a quarter of one pool's week, the share Derek allowed),
-# when the chosen pool's weekly bucket is under the straight line to its reset or its 5-hour bucket under 25%, and at
-# the first quota reply. Guarded on the lane module so the line is inert until it is on main.
-35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=600 --deadline-min=110 --concurrency=2" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
+# skips it; a book that fails here is handed back to the batch lane (the fallback). Stops at 4,000 model requests a day
+# (job ledger AGY_JOB=enrich-agy; a request is one message of up to 150K characters; raised from 600 on 2026-11-10 at
+# Derek's ask, when 600 a day finished ~40 books and the pools stood at 13-35% of their week), when the chosen pool's
+# weekly bucket is under the other lanes' reserve (agy-pools.mjs LANE_RESERVES, #7911) or its 5-hour bucket under 25%,
+# and at the first quota reply. The pool floors, not the request cap, are what protect the other lanes. Guarded on the lane module so the line is inert until it is on main.
+35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=4000 --deadline-min=110 --concurrency=3" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
 # Claude transcripts -> restic (Hetzner Object Storage), never pruned; sourcelibrary #7673 (2026-10-29)
 30 3 * * * /root/restic-transcripts.sh
 # ft-search nightly (#7598): one batch per account per day; applies itself, pages ntfy
@@ -341,6 +346,8 @@
 # Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
 7 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box hetzner >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
 50 2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-corpus.lock timeout 20m node --no-warnings --env-file=.env.production.local $f --corpus >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
+# Mondays: one ntfy line naming the red cron lines of every box (UNREGISTERED / RETIRED BUT LIVE / PAST REVIEW / IDLE 7 DAYS / retired pattern), from scripts/lib/lanes.mjs CRON_ROWS (#8283)
+15 8 * * 1 export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-red.lock timeout 5m node --no-warnings --env-file=.env.production.local $f --red-ntfy >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now red lines (#8283)
 # #6223 PR #7683 merged 2026-10-30: hourly steward
 25 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /root/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # hourly: HF cache trim to 50 GB + idle folders archived to R2 while a disk is above 75% + merged worktrees reaped + agy WAL (#6223)
 # Weekly: point covers stored on hosts browsers cannot load (gallica, SBB, Harvard) at our R2 copy of the same page (#5448, Derek 2026-11-01)
@@ -350,6 +357,8 @@
 # Atlas egress meter (#5189, PR #7898): daily bytes from Atlas, ntfy HIGH over 40 GB/box/day. Counting only.
 @reboot f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f ensure
 5 0 * * * f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f report
+# Hourly attribution sample (#5189, 2026-11-09): ~55 min of per-process socket bytes, read by the 00:05 report.
+1 * * * * f=/root/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f sample
 
 # Partner frame check (#8054): book pages on the Embassy's real page must fit their frame. Pages ntfy on a failure or if it cannot run; silent when clean.
 20 6 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; cd /root/sourcelibrary && flock -n /tmp/sl-embed-frame.lock timeout 20m node scripts/audit/embed-frame-height.mjs --alert --shots /var/log/sourcelibrary/embed-frame >> /var/log/sourcelibrary/embed-frame-height.log 2>&1
@@ -361,3 +370,7 @@
 17 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/router-board-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-router-board.lock timeout 5m node --no-warnings --env-file=.env.production.local $f >> /var/log/sourcelibrary/router-board.log 2>&1  # /admin/router (#7913)
 # weekly text hash snapshot with a public timestamp (#8150, #8209): reads Sunday's restic dump, no Atlas read
 30 1 * * 1 flock -n /tmp/sl-hash-snapshot.lock /root/sourcelibrary/scripts/workers/hash-snapshot-weekly.sh
+# New-translation leak check (#5026, PR #8414): no-op until merged ([ -f ] guard). Daily 03:20 UTC.
+20 3 * * * cd /root/sourcelibrary && [ -f scripts/audit/new-translation-leaks.mjs ] && flock -n /tmp/sl-new-translation-leaks.lock bash -c "set -a; source .env.production.local; set +a; timeout 1800 node scripts/audit/new-translation-leaks.mjs" >> /var/log/sourcelibrary/new-translation-leaks.log 2>&1
+# Remote Control watchdog: restart the claude-rc server if it died (2026-11-09; it was found dead with no trace)
+*/10 * * * * /root/bin/claude-rc.sh ensure >> /var/log/claude-rc.log 2>&1

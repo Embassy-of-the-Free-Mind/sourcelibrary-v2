@@ -19,6 +19,9 @@
 #   2. CACHE: trims the Hugging Face hub cache to HF_CACHE_CAP_GB, least recently accessed revision first
 #      (huggingface_hub's scan-cache / delete-revisions). Models are re-downloadable. A revision with a blob
 #      open by any process, or read in the last HF_KEEP_RECENT_H hours, is never touched. Runs every time.
+#      Nor is a repo in HF_PIN_REPOS: the engines a scheduled lane serves with HF_HUB_OFFLINE=1, which
+#      cannot re-download what was trimmed. On 2026-11-08 the cap trimmed LightOnOCR-3-1B after the GPU queue
+#      sat idle a day while image models filled the cache, and every euro/JCB/gpu-print chunk failed after it.
 #   3. COLD ARCHIVE, only while a disk is above BAND% (default 75), oldest-idle first, stopping at <= BAND%
 #      (idle = IDLE_DAYS, or PRESSURE_IDLE_DAYS while the folder's disk is at PRESSURE_PCT or more):
 #      an idle folder is tarred with zstd and streamed to R2 (private bucket sl-corpus-snapshots,
@@ -62,6 +65,9 @@ PRESSURE_IDLE_DAYS=${DISK_STEWARD_PRESSURE_IDLE_DAYS:-3}
 BAND=${DISK_STEWARD_BAND:-75}
 HF_CAP_GB=${HF_CACHE_CAP_GB:-50}
 HF_KEEP_RECENT_H=${HF_KEEP_RECENT_H:-24}
+# Space-separated repo ids never trimmed: the GPU OCR filler's vLLM engine (scripts/gpu/gpu-print-gpu.sh,
+# scripts/eval/euro-gpu-correct-7567/drive.sh LO). Add an engine here when a scheduled lane starts serving it.
+HF_PIN_REPOS=${HF_PIN_REPOS:-lightonai/LightOnOCR-3-1B}
 HF_HUB=${HF_HUB_CACHE:-${HF_HOME:-$ROOT/.cache/huggingface}/hub}
 STATE=${DISK_STEWARD_STATE:-/var/lib/sourcelibrary/disk-steward.state}
 ENVF=${DISK_STEWARD_ENV:-$SL/.env.production.local}
@@ -173,10 +179,11 @@ done
 if [ ! -d "$HF_HUB" ]; then :
 elif [ -z "$HF_PY" ]; then echo "  HF cache $(du -sh "$HF_HUB" 2>/dev/null | cut -f1): no python with huggingface_hub here, not trimmed (set HF_PYTHON)"
 else
-  "$HF_PY" - "$HF_HUB" "$HF_CAP_GB" "$HF_KEEP_RECENT_H" "${APPLY:-0}" "$OPEN" <<'PY'
+  "$HF_PY" - "$HF_HUB" "$HF_CAP_GB" "$HF_KEEP_RECENT_H" "${APPLY:-0}" "$OPEN" "$HF_PIN_REPOS" <<'PY'
 import sys, time
 from huggingface_hub import scan_cache_dir
 hub, cap, keep_h, apply, open_list = sys.argv[1], float(sys.argv[2]) * 1e9, float(sys.argv[3]), sys.argv[4] == '1', sys.argv[5]
+pinned = set(sys.argv[6].split())
 opened = set(l.rstrip('\n') for l in open(open_list))
 info = scan_cache_dir(hub)
 total = info.size_on_disk
@@ -193,6 +200,7 @@ chosen, freed, held = [], 0, []
 for last, rid, rev, busy in revs:
     if total - freed <= cap: break
     age_h = (time.time() - last) / 3600
+    if rid in pinned: held.append(f'{rid} (pinned)'); continue
     if busy: held.append(f'{rid} (open by a process)'); continue
     if age_h < keep_h: held.append(f'{rid} (read {age_h:.0f} h ago)'); continue
     chosen.append((rid, rev, age_h))

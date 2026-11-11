@@ -1,0 +1,14 @@
+{
+  "campaign": "withdrawn-alternatives-4809",
+  "issue": 4809,
+  "hold_release": "Imported as a public-domain alternative to a book withdrawn on rights review (#4809, ops_reports colophon-alternatives-4809). The router picks the lane; release with hold-pipeline-books.mjs --release-held --reason withdrawn-alternatives-4809 --to queued.",
+  "collections": [],
+  "BOOKS": [
+    { "id": "vril-or-vital-magnetism", "title": "Vril, or Vital Magnetism", "author": "William Walker Atkinson", "year": 1911, "lang": "English", "note": "Alternative to withdrawn 6991bd01879c23a0fef51f2c (#4809). Leaf: Copyright 1911 by The Library Shelf; Chicago, A. C. McClurg; printer W. F. Hall." },
+    { "id": "umwh_tantric-texts-series-05-kularnava-tantra-taranatha-vaidyaratna-1917-calcutta-aga", "title": "Kulārṇava Tantra (Tantrik Texts, vol. V)", "author": "Arthur Avalon (ed.); Tārānātha Vidyāratna", "year": 1917, "lang": "Sanskrit", "note": "Alternative to withdrawn 6953e30577f38f6761beb59f (#4809). London, Luzac; printed Calcutta, Mahamaya Yantra, 1917." },
+    { "id": "1908-atkinson-reincarnation-and-the-law-of-karma", "title": "Reincarnation and the Law of Karma", "author": "William Walker Atkinson", "year": 1908, "lang": "English", "note": "Alternative to withdrawn 69a55376bab4924e15759d0a (#4809). Chicago, Yogi Publication Society, copyright 1908.", "allow_duplicate": "the matched record 69a55376bab4924e15759d0a is the Cosimo 2007 reprint catalogued as 1908, withdrawn on rights review; this scan is the 1908 Yogi Publication Society printing" },
+    { "id": "divannedi00nediuoft", "title": "Nedîm Dîvânı", "author": "Nedîm; ed. Halil Nihad", "year": 1919, "lang": "Ottoman Turkish", "note": "Alternative to withdrawn 6a08e2de50bd891addfb53a5 (#4809). Istanbul, Ikdam Matbaasi, 1338-1340 H/R; title page read at leaf n379 (scan runs back to front)." },
+    { "id": "AAlexandrina-128200", "title": "Kitāb Tahāfut al-falāsifa", "author": "al-Ghazālī", "year": 1884, "lang": "Arabic", "note": "Alternative to withdrawn 69906543726f64800c10abfe (#4809). No title page in the scan; colophon on leaf n93 read 2026-11-10: printed at al-Matbaa al-Ilamiya, Cairo, 1302 H (1884/5)." },
+    { "id": "AAlexandrina-142397", "title": "Sharḥ al-Muʿallaqāt al-sabʿ", "author": "Various; commentary", "year": 1823, "lang": "Arabic", "note": "Alternative to withdrawn 69e748fb85f786e884a4ce41 (#4809). No printed title page; colophon on leaf n290 read 2026-11-10: Calcutta, press of Hidayat Allah, 1238 H / 1823, under Lord Amherst." }
+  ]
+}

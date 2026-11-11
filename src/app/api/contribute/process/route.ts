@@ -18,7 +18,7 @@ import type { GenerationConfig } from '@google/generative-ai';
 // this spends a CONTRIBUTOR's money — reasoning tokens bill at the output rate (#4581).
 // thinkingConfig is not in @google/generative-ai 0.24.x types; it passes through verbatim.
 const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as GenerationConfig;
-import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, neighbourGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { getPageSource, type PageImageFields } from '@/lib/page-image-url';
@@ -301,7 +301,11 @@ export async function POST(request: NextRequest) {
               // neither the source nor the book's language is refused the same way.
               const stray = strayScriptVerdict(result.text, { ocr: ocrText, language: book.original_language || book.language });
               result.text = guardTranslationText(stray.text); // #5902: term definitions → <note>
-              const refusedReason = hidesPageInMeta(result.text) ? HIDDEN_META_REASON : stray.refuse ? STRAY_SCRIPT_REASON : null;
+              // #5026: and a page's English that is its neighbour's (the previous page's, handed in as context).
+              const neighbourReason = page.id && !hidesPageInMeta(result.text) && !stray.refuse
+                ? (await neighbourGate(db, { id: page.id, book_id: bookId }, result.text, { ocr: ocrText, dryRun: true })).reason ?? null
+                : null;
+              const refusedReason = hidesPageInMeta(result.text) ? HIDDEN_META_REASON : stray.refuse ? STRAY_SCRIPT_REASON : neighbourReason;
               const refused = !!refusedReason;
               if (refusedReason) {
                 if (page.id) await recordRefusedTranslation(db, { id: page.id, book_id: bookId }, result.text, refusedReason, { jobId: `contribute-${bookId}`, model: DEFAULT_MODEL });

@@ -1,0 +1,29 @@
+{
+ "_about": "#8399: a SEAM/LEAK term for the per-call translation cells. The page-acceptance judge reads one page at a time and cannot see a defect between two pages; these rates are the #7118 Opus seam judge's, per 100 page joins (0.75 x in-block T + 0.25 x block-start S), and the leaks the translation call itself made (Amendment 2 classes). Same 120 blocks for every arm, agy gemini-3.8-flash-low. Write-up: scripts/eval/experiments/2026-11-08-seam-markers-4-per-call-8399.md; verdicts: scripts/eval/results/seam-markers-8399/report.json.",
+ "as_of": "2026-11-08",
+ "issue": 8399,
+ "routes": {
+  "agy-flash-low@4": "production: claude-translate.mjs --cli=agy --per-call=4, page tags, previous-page English (arms A, A2)",
+  "agy-flash-low@4-marked": "one marked text per 4 pages, no previous English (B4)",
+  "agy-flash-low@4-marked-8000": "marked, source budget 8,000 characters a call (Bb)",
+  "agy-flash-low@4-marked-8000+seam": "Bb + one agy seam call per call boundary (C)"
+ },
+ "cells": {
+  "latin-cli-agy4": {
+   "blocks": 97, "books": 55,
+   "seam_per_100": { "agy-flash-low@4": [16.5, 15.7], "agy-flash-low@4-marked": 18.6, "agy-flash-low@4-marked-8000": 26.3, "agy-flash-low@4-marked-8000+seam": 9.0 },
+   "accept": { "agy-flash-low@4": ["26/55", "25/55"], "agy-flash-low@4-marked-8000": "25/55", "agy-flash-low@4-marked": "12/30 (dense books)" }
+  },
+  "german-cli-agy4": {
+   "blocks": 23, "books": 14,
+   "seam_per_100": { "agy-flash-low@4": [28.3, 17.4], "agy-flash-low@4-marked": 25.0, "agy-flash-low@4-marked-8000": 29.3, "agy-flash-low@4-marked-8000+seam": 7.6 },
+   "accept": { "agy-flash-low@4": ["8/14", "10/14"], "agy-flash-low@4-marked-8000": "11/14", "agy-flash-low@4-marked": "6/9 (dense books)" }
+  }
+ },
+ "pooled": {
+  "seam_per_100": { "agy-flash-low@4": { "A": 18.8, "A2": 16.0, "mean": 17.4, "ci_mean": [13.5, 21.6] }, "agy-flash-low@4-marked": { "rate": 19.8, "delta": 2.4, "ci_delta": [-2.2, 7.3] }, "agy-flash-low@4-marked-8000": { "rate": 26.9, "delta": 9.5, "ci_delta": [2.9, 16.4] }, "agy-flash-low@4-marked-8000+seam": { "rate": 8.8, "delta": -8.6, "ci_delta": [-13.1, -4.2] } },
+  "translation_leaks_per_480_pairs": { "agy-flash-low@4": [2, 2], "agy-flash-low@4-marked": 0, "agy-flash-low@4-marked-8000": 0, "agy-flash-low@4-marked-8000+seam": 0 },
+  "served_text_leaks_per_480_pairs": 36
+ },
+ "decision": "keep agy-flash-low@4 on both cells (the registered rule: Bb fails the seam clause, B4 the dense usable clause; only the seam pass passes, which the preregistration routes to a follow-up)"
+}

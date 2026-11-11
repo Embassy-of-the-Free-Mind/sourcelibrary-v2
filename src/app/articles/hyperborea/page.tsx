@@ -954,9 +954,7 @@ export default function HyperboreaPage() {
           folklorist Wilhelm Mannhardt (1831–1880), whose collected study of Baltic religion was published in 1936,
           took the story apart source by source. Grunau had found in Erasmus Stella
           that{' '}
-          <Link href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt?page=220">
-            &ldquo;the Borussian peoples, who according to Ptolemy had their seats at the Rhipaean mountains,&rdquo;
-          </Link>{' '}
+          &ldquo;the Borussian peoples, who according to Ptolemy had their seats at the Rhipaean mountains,&rdquo;{' '}
           had entered Prussia, and he placed the Rhipaean mountains in Norway. These were the mountains beyond which
           Pliny and Mela had put the Hyperboreans. So the Prussians&apos; own founding story began, by way of a
           misread geography, on the threshold of Hyperborea.
@@ -976,10 +974,8 @@ export default function HyperboreaPage() {
           Hartknoch engraved Grunau&apos;s scenes, including the war banner of Widewuto with the three gods: Patollo,
           old and grey-bearded, god of the dead; Perkuno, the thunder god, with a face like fire; and young Potrimpo,
           crowned with ears of grain. Mannhardt&apos;s verdict was that{' '}
-          <Link href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt?page=235">
-            &ldquo;like the entire triad, the image of the gods on the war flag of Widewut with the enigmatic
-            inscription and the coat of arms of the first king are inventions.&rdquo;
-          </Link>{' '}
+          &ldquo;like the entire triad, the image of the gods on the war flag of Widewut with the enigmatic
+            inscription and the coat of arms of the first king are inventions.&rdquo;{' '}
           The forger gave himself away with the horses: heraldic animals holding up a shield came into use only in
           the fourteenth century. Perkūnas, at least, is real. The thunder god appears across Lithuanian, Latvian and
           Prussian sources and in Lithuanian and Latvian folk song.
@@ -1271,9 +1267,7 @@ export default function HyperboreaPage() {
                 <em>Preussische Chronik</em>
               </Link>
               , ed. Perlbach; Wilhelm Mannhardt,{' '}
-              <Link href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt">
-                <em>Letto-preussische Götterlehre</em>
-              </Link>{' '}
+              <em>Letto-preussische Götterlehre</em>{' '}
               (1936).
             </li>
             <li>

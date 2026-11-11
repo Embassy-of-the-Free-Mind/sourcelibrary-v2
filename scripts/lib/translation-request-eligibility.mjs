@@ -34,6 +34,17 @@ import { legacyPublication } from './publication.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { isTranslatablePage } from './translate-core.mjs';
 
+/** The site's translation-request prompt (TranslationEditor), the only message shape this lane acts on. */
+export const REQUEST_MESSAGE = /Translation requested for/;
+
+/** { bookRef, pageId } from a request's page URL, or null. */
+export function parseRequestUrl(url) {
+  const m = String(url || '').match(/\/book\/([^/?#]+)\/page\/([^/?#]+)/);
+  if (!m) return null;
+  // `page` is a public write and a bad escape throws: one such row must not stop this lane or the Siku lane.
+  try { return { bookRef: decodeURIComponent(m[1]), pageId: decodeURIComponent(m[2]) }; } catch { return null; }
+}
+
 /** Default ceiling: a request whose book tail exceeds this queues for a person. */
 export const DEFAULT_PAGE_CEILING = 25;
 /** Default per-requester cap: open requests beyond this from one person are flagged. */

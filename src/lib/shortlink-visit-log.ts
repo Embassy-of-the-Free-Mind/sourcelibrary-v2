@@ -1,6 +1,7 @@
 import { after, type NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { classifyRequest } from '@/lib/analytics-ingest';
+import { clientCountry } from '@/lib/client-ip';
 
 /**
  * The single writer for `analytics_events` `shortlink_visit` documents (#2047).
@@ -103,8 +104,7 @@ export function logShortlinkVisit(input: ShortlinkVisitInput): void {
       tenantId: input.request.headers.get('x-tenant-id') || null,
       referrer: referrerDomain(input.request),
       country:
-        input.request.headers.get('x-vercel-ip-country') ||
-        input.request.headers.get('cf-ipcountry') ||
+        clientCountry(input.request.headers) ||
         'Unknown',
       ip,
       user_agent: userAgent,

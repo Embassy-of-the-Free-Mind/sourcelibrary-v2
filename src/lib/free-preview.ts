@@ -96,3 +96,15 @@ export function stripGatedPage<T extends Record<string, unknown>>(
     },
   };
 }
+
+/**
+ * One leaf as a render may embed it: unchanged when metering does not apply
+ * to this render or the leaf is in the free sample, else stripped. Each leaf
+ * is judged on its OWN page number — a facing leaf beside a free page can
+ * still be past the sample (page 20 of 100 is free, page 21 is not).
+ */
+export function gateLeafText<T>(page: T, pagesCount: number | undefined, meteringApplies: boolean): T {
+  if (!meteringApplies) return page;
+  if (isPageFree(page as unknown as { page_number?: number | null; seo_indexable?: boolean }, pagesCount)) return page;
+  return stripGatedPage(page as unknown as Record<string, unknown>, pagesCount || 0) as unknown as T;
+}

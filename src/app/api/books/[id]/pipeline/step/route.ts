@@ -245,7 +245,7 @@ async function executeEdition(
     id: editionId,
     version,
     status: 'draft',
-    license: config.license || 'CC0-1.0',
+    license: config.license || 'CC-BY-NC-SA-4.0',
     created_at: new Date(),
     pages_count: translatedCount,
   };

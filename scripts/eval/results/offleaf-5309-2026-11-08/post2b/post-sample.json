@@ -1,0 +1,35 @@
+[
+ {
+  "kind": "item",
+  "book_id": "69e729b4a409200ea79f1109",
+  "page_id": "69e729b4a409200ea79f1257",
+  "n": 334,
+  "language": "English",
+  "ocr": "<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>TURKISH FAIRY TALES</header>\n<page-num>294</page-num>\n\n<image-desc size=\"large\" type=\"engraving\" significance=\"high\">A central illustration flanked by text. At the top hangs an",
+  "en": null,
+  "ocr_model": "gemini-3.8-flash-low",
+  "key": "R01"
+ },
+ {
+  "kind": "ctl-old",
+  "expect": "other",
+  "book_id": "69e80561fdad300064d9d53c",
+  "page_id": "69e80561fdad300064d9d58c",
+  "n": 80,
+  "language": "English",
+  "ocr": "<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>59</page-num>\n<header>The Art of Cookery, made Plain and Easy.</header>\n<sig>Q</sig>\n<meta>catchword: Another</meta>\n\n### To Toss up Cold Veal White.\n\nCUT the Veal into littl",
+  "en": null,
+  "key": "R02"
+ },
+ {
+  "kind": "ctl-old",
+  "expect": "other",
+  "book_id": "6a090a3144b481aa5a37d735",
+  "page_id": "6a090a3144b481aa5a37d78e",
+  "n": 89,
+  "language": "English",
+  "ocr": "<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>74</page-num>\n<header>Revelations of S. Mechtild.</header>\n\nothers, and administer well the office committed unto them, and who watch day and night for the gain of souls, the",
+  "en": null,
+  "key": "R03"
+ }
+]

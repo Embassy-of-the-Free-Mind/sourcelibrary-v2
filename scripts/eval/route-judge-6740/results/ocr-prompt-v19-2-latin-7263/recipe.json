@@ -1,0 +1,27 @@
+{
+ "question": "prompt",
+ "issue": 7263,
+ "stage": "ocr",
+ "languages": [
+  "Latin"
+ ],
+ "baseline": "v19.1",
+ "arms": [
+  "v19.1",
+  "v19.2"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "prompt",
+ "router_evidence": "none — a prompt test on Latin print chosen by eye, not a route's accept rate on a cell's draw; no router cell changes",
+ "waive": {
+  "R4": "Repeats are staged by the posted rule, so fewer than five may run. The first v19.2 run measured this judge on this kind of page: the same output judged twice flipped accept on 2/7 pages (#8379, results/ocr-prompt-v19-2-7263).",
+  "R1": "By design: the posted rule judges the two v19.1 reads of one page, so a rejected v19.2 read brings two v19.1 rows from that book. Every page is from a different book."
+ }
+}

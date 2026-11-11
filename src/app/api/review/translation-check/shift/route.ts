@@ -7,6 +7,7 @@ import { isValidVolunteerId } from '@/lib/review-queue';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { contentHash } from '@/lib/write-provenance';
+import { isMeteredAnonRequest, meteredSignInResponse } from '@/lib/metered-gate';
 
 export const maxDuration = 15;
 
@@ -36,6 +37,10 @@ const MAX_TEXT = 6000;
  * volunteer keeps to avoid being shown pages they already judged.
  */
 export async function GET(request: NextRequest) {
+  // Each item carries a page's scan, transcription and English. Under the
+  // metered reader (#4357) shifts run through our MCP server (a trusted caller)
+  // or a signed-in session; an anonymous direct call signs in first.
+  if (await isMeteredAnonRequest(request)) return meteredSignInResponse();
   const params = request.nextUrl.searchParams;
   const given = params.get('volunteer_id')?.trim() || '';
   if (given && !isValidVolunteerId(given)) {

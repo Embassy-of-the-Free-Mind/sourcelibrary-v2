@@ -182,6 +182,112 @@ export function formatRef(ref: LocusRef): string {
   return `${ref.page}${ref.section ?? ''}${ref.line ? `.${ref.line}` : ''}`;
 }
 
+// ── Which leaves carry a reference ─────────────────────────────────
+
+/** The fields of a stored anchor that resolution needs. */
+export interface CarryAnchor {
+  book_id: string;
+  work_header: string | null;
+  ref_page: number;
+  ref_section: string | null;
+  page_number: number;
+}
+
+/**
+ * The anchors whose leaves carry `ref`, out of anchors that may span several
+ * editions (#8466 item 5).
+ *
+ * A marginal edition's anchor is the reference printed at the TOP of the leaf —
+ * `<page-num>` is a running head, so a leaf anchored `519e` runs on to the next
+ * leaf's anchor. Burnet's Republic p. 296 is headed `519 e` and prints 520 a, b
+ * and c in its margin; p. 297 opens at `520 d`. Matching anchors on the Stephanus
+ * page alone returned p. 297 for `Rep. 520c`, the leaf after the one that prints
+ * it, and p. 29 (`328 c`) for `Rep. 328b`, which is on p. 28 (`327 c`).
+ *
+ * So a reference resolves to the leaf with the greatest anchor at or before it
+ * (the leaf it falls on) — and, where that anchor IS the reference, the leaf
+ * before as well, because a head names the section running at the top of a leaf
+ * and that section usually began at the foot of the previous one — plus, for a
+ * bare page with no section, every leaf that opens inside that page. The carried leaf is accepted only where it is
+ * evidently adjacent: in a pagination edition a leaf IS one canonical page, so
+ * it must be that page; in a marginal one it must open no earlier than the
+ * previous canonical page, and the next anchor must sit on the following leaf,
+ * so a leaf whose number was never read is not skipped over silently.
+ *
+ * Anchors are compared within one edition and one running-head work only:
+ * Stephanus numbers restart between works in one volume (Burnet vol. 4 runs
+ * Clitopho 406–410 before Republic 327–621).
+ */
+export function anchorsCarrying<T extends CarryAnchor>(
+  anchors: T[],
+  ref: { page: number; section: string | null },
+  mechanismOf: (bookId: string) => string | undefined,
+): T[] {
+  // A sectionless anchor is the page's opening: it sorts with `a`.
+  const key = (page: number, section: string | null) =>
+    page * 100 + (section ? section.charCodeAt(0) - 96 : 1);
+  const start = key(ref.page, ref.section);
+  const end = ref.section ? start : key(ref.page, 'z');
+
+  const groups = new Map<string, T[]>();
+  for (const a of anchors) {
+    const g = `${a.book_id}\u0000${a.work_header ?? ''}`;
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g)!.push(a);
+  }
+
+  const out: T[] = [];
+  for (const group of groups.values()) {
+    const k = (a: T) => key(a.ref_page, a.ref_section);
+    group.sort((a, b) => k(a) - k(b) || a.page_number - b.page_number);
+    const picked: T[] = [];
+
+    const before = group.filter((a) => k(a) <= start);
+    if (before.length) {
+      const top = k(before[before.length - 1]);
+      let carry = before.filter((a) => k(a) === top);
+      // Strictly before the reference, a tie is one leaf ending where the next
+      // begins (`520 d - 521 c`, then `521 c`): only the later leaf runs on.
+      if (top < start) {
+        const last = Math.max(...carry.map((a) => a.page_number));
+        carry = carry.filter((a) => a.page_number === last);
+      }
+      const leaf = Math.max(...carry.map((a) => a.page_number));
+      const next = group.find((a) => k(a) > start);
+      const pagination = mechanismOf(carry[0].book_id) === 'pagination';
+      const ok = pagination
+        ? carry[0].ref_page === ref.page
+        : top === start || (carry[0].ref_page >= ref.page - 1 && (!next || next.page_number <= leaf + 1));
+      if (ok) {
+        // A head names the section RUNNING at the top of the leaf, which mostly
+        // began at the foot of the leaf before: Burnet p. 297 is headed `520 d`
+        // and 520d opens on p. 296; the Oxford Physics heads p. 19 `184b` and
+        // prints `184ᵇ` in the margin of p. 18. So an exact match also returns
+        // the leaf before it, when that leaf is the adjacent one.
+        if (!pagination && top === start) {
+          const first = Math.min(...carry.map((a) => a.page_number));
+          const prev = before.filter((a) => k(a) < start).pop();
+          if (prev && prev.page_number === first - 1) picked.push(prev);
+        }
+        picked.push(...carry);
+      }
+    } else {
+      // Nothing in this work opens before the reference: it is the work's first
+      // leaf, or before it. Keep what a page match finds rather than nothing.
+      picked.push(...group.filter((a) => a.ref_page === ref.page && k(a) > start).slice(0, 1));
+    }
+    picked.push(...group.filter((a) => k(a) > start && k(a) <= end));
+
+    const seen = new Set<number>();
+    for (const a of picked) {
+      if (seen.has(a.page_number)) continue;
+      seen.add(a.page_number);
+      out.push(a);
+    }
+  }
+  return out;
+}
+
 // ── Query parsing ──────────────────────────────────────────────────
 
 export interface LocusQuery {

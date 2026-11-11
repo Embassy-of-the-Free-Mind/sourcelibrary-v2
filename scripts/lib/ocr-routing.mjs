@@ -28,6 +28,7 @@
 import { createRequire } from 'node:module';
 import { LATIN_SCRIPT_LANGUAGES, MODEL_FLASH, MODEL_LITE } from './translate-core.mjs';
 import { toLanguageCodes, codeFamily } from './language-normalize.mjs';
+import { FIRST_READ_CELL, liteReadAllowed as liteReadAllowedIn, batchOcrStamps, BATCH_OCR_LANE } from './ocr-lite-gate.mjs';
 
 // Re-exported under OCR-phase names so call sites read honestly. There is one
 // pair of models, not two — these ARE translate-core's constants.
@@ -161,13 +162,7 @@ export const OCR_MODEL_AGY = 'gemini-3.8-flash-low';
 export const OCR_MODEL_OPUS = 'claude-opus-5-5';
 const READER_MODEL = Object.freeze({ agy: OCR_MODEL_AGY, opus: OCR_MODEL_OPUS });
 
-/** The router cell of a book's first language with a fresh read to give (a book's unread pages have nothing stored to correct). */
-export const FIRST_READ_CELL = Object.freeze({
-  lat: 'latin-blank', deu: 'german-blank', fra: 'french-blank', eng: 'english-blank-pre1800', ita: 'italian-lite', spa: 'spanish-lite',
-  grc: 'greek-lite', san: 'sanskrit-lite', ara: 'arabic-lite', zho: 'zh-lite', kor: 'korean-lite', rus: 'russian-lite',
-  por: 'portuguese-lite', dan: 'danish-lite', hin: 'hindi-lite', enm: 'middle-english-lite', gmh: 'mhg-lite', fro: 'old-french-lite',
-  ota: 'ottoman-lite', tam: 'tamil-lite', tur: 'turkish-lite',
-});
+export { FIRST_READ_CELL };
 
 /**
  * THE route for OCR (#8283): the book's cell in the bound router table (`router_cells`, generated from current.json), the way a
@@ -186,6 +181,11 @@ export function ocrRouteForBook(book, table = OCR_ROUTING_TABLE) {
   }
   return { cell: null, route: null, model: OCR_MODEL_AGY, draft: null, per_call: 1 };
 }
+
+/** The Flash-Lite gate and the Batch lane stamps (#8519) live in ocr-lite-gate.mjs, which the Next routes import without this
+ * module's translate-core chain; this default reads the bundled table. */
+export const liteReadAllowed = (book, table = OCR_ROUTING_TABLE) => liteReadAllowedIn(book, table);
+export { batchOcrStamps, BATCH_OCR_LANE };
 
 /**
  * THE model for OCR: ocrRouteForBook's. With { liteOnly } it answers the LEGACY LABEL, the lite/flash tier the probes read

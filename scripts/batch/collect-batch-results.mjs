@@ -16,7 +16,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, jobPromptVersion, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
@@ -245,6 +245,11 @@ async function processOneJob(db, job) {
 
     // Second pass: save results
     const bulkOps = [];
+    // #5026: the job's own replies by page number, so a translated page is judged against the English written beside
+    // it, not the stored English this job is replacing (one read per job; OCR jobs skip it).
+    const pageNos = job.type === 'ocr' || !pageResults.length ? new Map()
+      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { _id: 0, id: 1, page_number: 1 } }).toArray()).map((p) => [p.id, p.page_number]));
+    const jobEnglish = Object.fromEntries(pageResults.filter((r) => pageNos.get(r.pageId) != null && r.text).map((r) => [pageNos.get(r.pageId), r.text]));
     for (const { pageId, text: resultText, usage } of pageResults) {
       let text = resultText;
       if (humanEditedIds.has(pageId)) {
@@ -332,6 +337,9 @@ async function processOneJob(db, job) {
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { console.warn(`  STRAY SCRIPT: refusing page ${pageId}`); failCount++; continue; }
         text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+        // #5026: the page's English is not its neighbour's — same gate as batch-collector.mjs.
+        const nb = await neighbourGate(db, { id: pageId, book_id: job.book_id, page_number: pageNos.get(pageId) }, text, { neighbours: jobEnglish, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
+        if (nb.refused) { console.warn(`  NEIGHBOUR: refusing page ${pageId} (${nb.reason})`); failCount++; continue; }
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },

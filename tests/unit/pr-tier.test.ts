@@ -79,6 +79,11 @@ describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashi
   const view = JSON.stringify({ number: 5991, title: 'eval: big results drop', author: { login: 'JDerekLomas' }, labels: [], files: [{ path: 'scripts/eval/results/x.json' }], comments: [] });
   const fakeGh = (diff: () => string) => (cmd: string) => (cmd.startsWith('gh pr view') ? view : diff());
 
+  it('every box crontab snapshot holds, not only hetzner (#7618 auto-merged a new cloudlayer cron)', () => {
+    for (const f of ['infrastructure/hetzner-crontab', 'infrastructure/gex45-crontab', 'infrastructure/l7a-crontab', 'infrastructure/cloudlayer-crontab'])
+      expect(classifyPaths([f]).reasons.map((r: { reason: string }) => r.reason).join(' ')).toMatch(/crons/);
+  });
+
   it('a readable diff of harmless paths is AUTO', () => {
     expect(classifyPR(5991, fakeGh(() => '')).result.tier).toBe('AUTO');
   });
@@ -205,6 +210,15 @@ describe('pr-tier: a very large PR is held for a human read (#8353)', () => {
   it('a huge PR that is all data, results or lockfile stays auto (negative control)', () => {
     for (const f of ['src/data/big.json', 'scripts/eval/results/x/out.json', 'package-lock.json', 'tests/fixtures/x.json', 'scripts/eval/experiments/x.md']) {
       expect(run(f, 9000).tier, f).toBe('AUTO');
+    }
+  });
+
+  it('a dated router-table build is generated data; the pointer and the rule code still count (#8283)', () => {
+    for (const f of ['scripts/eval/estimator/router-table/2026-11-10-nightly.json', 'scripts/eval/estimator/router-table/2026-11-10-nightly.md']) {
+      expect(run(f, 43000).tier, f).toBe('AUTO');
+    }
+    for (const f of ['scripts/eval/estimator/router-table/current.json', 'scripts/lib/router-binding.mjs']) {
+      expect(run(f, 4001).tier, f).toBe('HOLD');
     }
   });
 });

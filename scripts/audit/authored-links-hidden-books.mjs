@@ -20,10 +20,17 @@
  *   - Mongo `collections` (visible ones): `description`, `expanded_description`
  *     inline links, and `mentioned_books[].book_id`
  *
+ *   - theme maps (public/data/maps/<theme>.json and <theme>-l2.json, #4809): the
+ *     map names an edition flagged not public (v:false) without a link, so two
+ *     things fail the run: an edition flagged v:true whose book is not visible,
+ *     and a level-2 key term or passage citing a book that is neither visible nor
+ *     flagged v:false in its map. Fix the first with
+ *     scripts/maintenance/import-atlas-maps.mjs --recheck --theme <themes>.
+ *
  * A ref that resolves to no book is reported but does not fail the run: that is
  * a dead link, which the HTTP checker already owns.
  *
- * Exit 0 = clean, 1 = at least one hidden book linked, 2 = Mongo unreachable
+ * Exit 0 = clean, 1 = at least one hidden book linked (or a map check failed), 2 = Mongo unreachable
  * (never a silent "clean").
  *
  * Usage:
@@ -140,6 +147,32 @@ if (misses.length) {
 }
 const resolve = (r) => bySlug.get(r) || byId.get(r) || byOid.get(r.toLowerCase()) || byAlias.get(r) || null;
 
+// Theme maps: the flag the map reads (v) must agree with Mongo, and every level-2 citation must be visible or flagged.
+const MAP_DIR = 'public/data/maps';
+const themes = (() => { try { return readdirSync(MAP_DIR); } catch { return []; } })()
+  .map((f) => f.match(/^([a-z0-9-]+)-l2\.json$/)?.[1]).filter(Boolean)
+  .filter((t) => { try { statSync(join(MAP_DIR, `${t}.json`)); return true; } catch { return false; } });
+const mapStale = [];    // edition v:true, book not visible
+const mapL2 = [];       // level-2 citation of a book neither visible nor flagged
+for (const t of themes) {
+  const map = JSON.parse(readFileSync(join(MAP_DIR, `${t}.json`), 'utf8'));
+  const l2 = JSON.parse(readFileSync(join(MAP_DIR, `${t}-l2.json`), 'utf8'));
+  const flag = new Map();
+  for (const w of map.works || []) for (const e of w.eds || []) if (e.id) flag.set(e.id, flag.get(e.id) === false ? false : !!e.v);
+  const cited = new Map(); // book id -> first "work: k|q" label
+  for (const [wk, x] of Object.entries(l2.works || {})) {
+    for (const k of x.k || []) if (k.b && !cited.has(k.b)) cited.set(k.b, `${wk.split('|||')[0]} (key term)`);
+    for (const q of x.q || []) if (q.b && !cited.has(q.b)) cited.set(q.b, `${wk.split('|||')[0]} (passage)`);
+  }
+  const ids = [...new Set([...flag.keys(), ...cited.keys()])];
+  const vis = new Map();
+  for (const b of await books.find({ id: { $in: ids } }).project({ id: 1, visible: 1 }).toArray()) vis.set(b.id, b.visible === true);
+  const rest = ids.filter((id) => !vis.has(id) && /^[0-9a-f]{24}$/i.test(id));
+  for (const b of rest.length ? await books.find({ _id: { $in: rest.map((id) => new ObjectId(id)) } }).project({ visible: 1 }).toArray() : []) vis.set(String(b._id), b.visible === true);
+  for (const [id, v] of flag) if (v && vis.get(id) !== true) mapStale.push({ theme: t, id, in_mongo: vis.has(id) });
+  for (const [id, where] of cited) if (vis.get(id) !== true && flag.get(id) !== false) mapL2.push({ theme: t, id, where, in_mongo: vis.has(id) });
+}
+
 const hidden = [];
 const unresolved = [];
 for (const [ref, where] of refs) {
@@ -162,7 +195,8 @@ await client.close();
 
 hidden.sort((a, b) => a.where[0].localeCompare(b.where[0]));
 if (JSON_OUT) {
-  console.log(JSON.stringify({ files: files.length, collections: cols.length, refs: refs.size, hidden, unresolved }, null, 2));
+  console.log(JSON.stringify({ files: files.length, collections: cols.length, refs: refs.size, hidden, unresolved,
+    maps: { themes, stale_public_flag: mapStale, l2_unflagged: mapL2 } }, null, 2));
 } else {
   console.log(`Scanned ${files.length} files and ${cols.length} visible collections: ${refs.size} unique /book/ refs.`);
   console.log(`Unresolved (no such book; the HTTP link checker owns these): ${unresolved.length}`);
@@ -174,10 +208,16 @@ if (JSON_OUT) {
     if (h.visible_keeper) console.log(`    visible keeper: /book/${h.visible_keeper}`);
     for (const w of h.where) console.log(`    in ${w}`);
   }
+  console.log(`\nTheme maps (${themes.join(', ')}): editions flagged public but not visible: ${mapStale.length}`);
+  for (const m of mapStale) console.log(`  ${m.theme}.json  ${m.id}${m.in_mongo ? '' : ' (no such book)'}`);
+  console.log(`Level-2 citations of a book neither visible nor flagged: ${mapL2.length}`);
+  for (const m of mapL2) console.log(`  ${m.theme}-l2.json  ${m.id}  ${m.where}${m.in_mongo ? '' : ' (no such book)'}`);
 }
 
-if (hidden.length > 0) {
-  if (!JSON_OUT) console.error('\nFAIL: authored prose links hidden books. Relink to a visible edition, or unlink (keep the title as plain text).');
+if (hidden.length > 0 || mapStale.length > 0 || mapL2.length > 0) {
+  if (!JSON_OUT && hidden.length) console.error('\nFAIL: authored prose links hidden books. Relink to a visible edition, or unlink (keep the title as plain text).');
+  if (!JSON_OUT && mapStale.length) console.error('FAIL: map editions flagged public are hidden. Run scripts/maintenance/import-atlas-maps.mjs --recheck --theme <themes>.');
+  if (!JSON_OUT && mapL2.length) console.error('FAIL: level-2 map panels cite books readers cannot open and the map does not flag. Flag the edition v:false in <theme>.json or drop the citation.');
   process.exit(1);
 }
 if (!JSON_OUT) console.log('\nClean.');

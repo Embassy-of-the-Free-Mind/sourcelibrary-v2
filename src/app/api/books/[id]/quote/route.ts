@@ -59,7 +59,7 @@ const QUOTE_BOOK_PROJECTION = {
  * ?include_image=true: the image-field family below; citation: id, printed_page.
  */
 const QUOTE_PAGE_PROJECTION = {
-  _id: 0, id: 1, page_number: 1, printed_page: 1,
+  _id: 0, id: 1, page_number: 1, printed_page: 1, page_type: 1,
   'ocr.data': 1, 'translation.data': 1, translations: 1, translation_es: 1, transliteration: 1,
   photo: 1, photo_original: 1, archived_photo: 1, display_photo: 1, cropped_photo: 1, enhanced_photo: 1,
   thumbnail: 1, thumbnail_blob: 1, image_thumb: 1, crop: 1, split_from_spread: 1,
@@ -275,15 +275,31 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       // The way back in for a transcribed foreign page (#7458): ask for it in its
       // own language. Named here because the caller cannot guess the code.
       const originalLang = hasOriginal ? toBcp47(languageCode(book.language)) : null;
+      // A blank leaf is a third fact (#8235): one key asked Philo vol. 2 for a quote
+      // 532 times with no page, landed on blank page 1, and was told "No translation
+      // available". Say it is blank, say when page 1 was a default, and name the next
+      // page that has text so the caller can move on.
+      const blank = page.page_type === 'blank';
+      const pageDefaulted = !searchParams.get('page');
+      const nextText = blank || pageDefaulted
+        ? await db.collection('pages').findOne(
+          { book_id: resolvedBookId, page_number: { $gt: pageNumber }, page_type: { $nin: ['blank', 'cover', 'flyleaf'] }, 'ocr.data': { $exists: true, $ne: '' } },
+          { projection: { _id: 0, page_number: 1 }, sort: { page_number: 1 }, maxTimeMS: 3000 },
+        ).catch(() => null)
+        : null;
       return NextResponse.json({
         // Two different facts, and they need different sentences: an
         // untranscribed leaf holds no text at all, while "no translation" now
         // implies a foreign source (an English one is served as a quote —
         // #3939). Conflating them told callers an un-OCR'd page was foreign.
-        error: hasOriginal
+        error: blank
+          ? 'This page is blank: the leaf carries no text to quote'
+          : hasOriginal
           ? 'No translation available for this page'
           : 'No text available for this page: the scan has not been transcribed',
         page_number: pageNumber,
+        ...(pageDefaulted ? { page_defaulted: true, note: 'No page was given, so page 1 was used. Pass ?page=N.' } : {}),
+        ...(nextText ? { next_text_page: nextText.page_number } : {}),
         // Lets the caller fall back to the original language instead of reading
         // this as "the page is missing" (see src/lib/mcp-errors.ts).
         has_original: hasOriginal,

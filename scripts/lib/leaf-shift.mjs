@@ -7,6 +7,7 @@
  * The method, its controls and its limits are documented in scripts/audit/translation-leaf-shift.mjs.
  */
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { classifyLanguageContent } from './language-content-classify.mjs';
 
 export const MIN_VALUE = 10;
 export const BRACKET_MIN = 100;
@@ -175,10 +176,16 @@ const votes = (eng, own, a, b) => [...eng].filter(n => own.has(n) && !a.has(n) &
  *   length), updated (translation.updated_at, ISO) and page_type.
  */
 export function classifyBook(pages, { rule = 'strict', names = false, absorb = false } = {}) {
-  const rows = pages.map(p => {
+  // A page with neither a transcription nor an English (a leaf OCR never reached) is not a leaf the
+  // translator saw, so it is not a neighbour: n-1 and n+1 are the nearest pages that carry text, and
+  // runs are adjacent by `pos`, not page_number. Cicero, De natura deorum 1546 (#8464): pp.57-58 and
+  // 61-63 had no OCR, a block slipped one slot over the rest, and p.56's English was p.59's leaf, which
+  // a page_number neighbour (an empty p.57) could never vote for.
+  const rows = pages.filter(p => String(p.ocr || '').trim() || String(p.tr || '').trim()).map((p, pos) => {
     const o = splitLayer(p.ocr);
     const t = splitLayer(p.tr);
     return {
+      pos,
       page_number: p.page_number,
       pv: p.pv ?? null,
       translated: !!(p.tr && p.tr.trim()),
@@ -190,10 +197,9 @@ export function classifyBook(pages, { rule = 'strict', names = false, absorb = f
       ...(absorb ? { enLen: p.enChars ?? String(p.tr || '').length, srcLen: String(p.ocr || '').length, upd: p.updated ?? null, ptype: p.page_type ?? null } : {}),
     };
   });
-  const byPn = new Map(rows.map(r => [r.page_number, r]));
   for (const r of rows) {
-    const P = byPn.get(r.page_number - 1);
-    const N = byPn.get(r.page_number + 1);
+    const P = rows[r.pos - 1];
+    const N = rows[r.pos + 1];
     const cls = (eng, own, prev, next, drop = EMPTY) => {
       const e = new Set([...eng].filter(n => !drop.has(n)));
       const v = { own: votes(e, own, prev, next), next: votes(e, next, own, prev), prev: votes(e, prev, own, next) };
@@ -259,10 +265,9 @@ function absorptionsOf(rows) {
   const ratios = rows.filter(textLike).map(r => Math.log(r.enLen / r.srcLen)).sort((a, b) => a - b);
   if (ratios.length < 5) return [];
   const k = ratios[Math.floor(ratios.length / 2)];
-  const byPn = new Map(rows.map(r => [r.page_number, r]));
   const out = [];
   for (const r of rows) {
-    const N = byPn.get(r.page_number + 1);
+    const N = rows[r.pos + 1];
     if (!textLike(r) || !N || !N.translated || !r.upd || !N.upd || Math.abs(Date.parse(r.upd) - Date.parse(N.upd)) > ABSORB_SAME_BLOCK_MS) continue;
     const own = Math.log(r.enLen) - k - Math.log(r.srcLen);
     const two = Math.log(r.enLen) - k - Math.log(r.srcLen + N.srcLen);
@@ -270,7 +275,7 @@ function absorptionsOf(rows) {
     const corroborated = [];
     // n itself counts when it votes next: an absorbing page prints its successor's numbers (Corpus p.82).
     for (let d = 0; d <= ABSORB_LOOKAHEAD; d++) {
-      const q = byPn.get(r.page_number + d);
+      const q = rows[r.pos + d];
       let c = q && (q.cls === 'next' || q.cls === 'prev' ? q.cls : q.nameCls === 'next' || q.nameCls === 'prev' ? q.nameCls : null);
       if (d === 0 && c !== 'next') c = null;
       if (c) corroborated.push({ p: q.page_number, c, by: q.cls === c ? 'numbers' : 'names' });
@@ -290,7 +295,7 @@ function strictRuns(rows) {
       run = [];
     };
     for (const r of rows) {
-      if (r.cls === dir && (!run.length || run[run.length - 1].page_number === r.page_number - 1)) run.push(r);
+      if (r.cls === dir && (!run.length || run[run.length - 1].pos === r.pos - 1)) run.push(r);
       else {
         flush();
         if (r.cls === dir) run.push(r);
@@ -324,7 +329,7 @@ function gappyRuns(rows, cls = 'cls') {
         const voters = run;
         const all = tail ? [...voters, tail] : voters;
         let strict = false;
-        for (let i = 1; i < voters.length; i++) if (voters[i].page_number === voters[i - 1].page_number + 1) strict = true;
+        for (let i = 1; i < voters.length; i++) if (voters[i].pos === voters[i - 1].pos + 1) strict = true;
         runs.push({
           dir, start: voters[0].page_number, end: all[all.length - 1].page_number, length: all[all.length - 1].page_number - voters[0].page_number + 1,
           voting: voters.length, ...(tail ? { tail: tail.page_number } : {}), strict,
@@ -337,11 +342,11 @@ function gappyRuns(rows, cls = 'cls') {
       run = [];
       tail = null;
     };
-    const near = r => run.length && r.page_number - run[run.length - 1].page_number - 1 <= MAX_GAP;
+    const near = r => run.length && r.pos - run[run.length - 1].pos - 1 <= MAX_GAP;
     for (const r of rows) {
       const c = r[cls];
       if (c === 'none') {
-        if (run.length && r.page_number - run[run.length - 1].page_number > MAX_GAP) flush();
+        if (run.length && r.pos - run[run.length - 1].pos > MAX_GAP) flush();
         continue;
       }
       if (c === dir) {
@@ -375,4 +380,24 @@ function gappyRuns(rows, cls = 'cls') {
 export function blockLeafShiftRuns(pages, translations) {
   const rows = pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data || '', tr: translations.get(p.page_number) || '' }));
   return classifyBook(rows).runs;
+}
+
+// ── the language of one transcription (moved from scripts/audit/leaf-shift-screen-5021.mjs for #8399) ──
+
+const SCRIPTS = Object.entries({ Latin: /\p{Script=Latin}/gu, Greek: /\p{Script=Greek}/gu, Cyrillic: /\p{Script=Cyrillic}/gu, Han: /\p{Script=Han}/gu, Kana: /[\p{Script=Hiragana}\p{Script=Katakana}]/gu,
+  Hangul: /\p{Script=Hangul}/gu, Tibetan: /\p{Script=Tibetan}/gu, Devanagari: /\p{Script=Devanagari}/gu, Arabic: /\p{Script=Arabic}/gu, Hebrew: /\p{Script=Hebrew}/gu, Syriac: /\p{Script=Syriac}/gu,
+  Coptic: /\p{Script=Coptic}/gu, Armenian: /\p{Script=Armenian}/gu, Georgian: /\p{Script=Georgian}/gu, Ethiopic: /\p{Script=Ethiopic}/gu, Myanmar: /\p{Script=Myanmar}/gu, Thai: /\p{Script=Thai}/gu });
+/**
+ * The language of one transcription, $0: its dominant script, and for Latin script the stopword language
+ * (scripts/lib/language-content-classify.mjs) when it reaches 5% of 40+ words, else 'latin-script-other'.
+ * null when the page has too little text to say.
+ */
+export function windowLang(text) {
+  const t = splitLayer(text).body;
+  const counts = SCRIPTS.map(([k, re]) => [k, (t.match(re) || []).length]).sort((a, b) => b[1] - a[1]);
+  if (counts[0][1] < 60) return null;
+  if (counts[0][0] === 'Kana' || (counts[0][0] === 'Han' && counts.find(([k]) => k === 'Kana')[1] > counts[0][1] * 0.15)) return 'Japanese';
+  if (counts[0][0] !== 'Latin') return counts[0][0];
+  const c = classifyLanguageContent(t);
+  return c.words >= 40 && c.score >= 0.05 ? c.dominant : 'latin-script-other';
 }

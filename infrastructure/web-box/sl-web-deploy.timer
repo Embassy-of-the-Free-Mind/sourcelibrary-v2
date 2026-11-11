@@ -1,0 +1,13 @@
+# Poll origin/release every 5 minutes, so the box builds the same commit as each
+# production release (release.yml runs 07:00, 13:00, 19:00 UTC and by hand). A box page
+# must never reference a build Vercel serves, or the reverse (trap 1, #8384).
+[Unit]
+Description=Poll origin/release for the reader-origin box
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

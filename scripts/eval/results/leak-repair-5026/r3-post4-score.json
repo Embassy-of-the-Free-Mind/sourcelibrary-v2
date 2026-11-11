@@ -1,0 +1,68 @@
+{
+ "judged": 30,
+ "dup_gone": 30,
+ "usable": 29,
+ "usable_ci95": [
+  0.83,
+  0.99
+ ],
+ "own_leaf": 30,
+ "defects": {
+  "mistranslated/minor": 24,
+  "other/minor": 7,
+  "invented/minor": 6,
+  "omitted/minor": 4,
+  "invented/major": 1
+ },
+ "pass": true,
+ "controls": [
+  {
+   "key": "Q01",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q06",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q19",
+   "control": "stored-leak",
+   "dup": "yes",
+   "caught": true
+  },
+  {
+   "key": "Q29",
+   "control": "made-dup",
+   "dup": "yes",
+   "caught": true
+  }
+ ],
+ "fails": [
+  {
+   "key": "Q09",
+   "book": "69b51e2bcf111105c4297c38",
+   "page": 43,
+   "nb": 44,
+   "lang": "Latin",
+   "dup": "no",
+   "leaf": "own",
+   "usable": "no",
+   "defects": [
+    {
+     "type": "invented",
+     "severity": "major",
+     "note": "The translator's note says the chronogram 'anno-fas ftIrpes pan ChreftVs Lege MeDetVr' gives the date 1714. The page states no date. Adding up the capital numeral letters (I+C+V+L+M+D+V) gives 1661, the year of the Lisbon first edition. The invented date is wrong and misleads the reader about when the book was printed."
+    },
+    {
+     "type": "other",
+     "severity": "minor",
+     "note": "The page number (33), signature F and catchword 'quo' were dropped from the English apparatus."
+    }
+   ]
+  }
+ ]
+}

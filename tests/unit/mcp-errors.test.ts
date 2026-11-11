@@ -30,6 +30,22 @@ describe('classifyApiError', () => {
     expect(r.error).not.toBe('not_found');
   });
 
+  // Observed live 2026-11-10 on Zhang Zai, 張子全書 vol 7 p. 20 (#8466 item 6): the
+  // route named the language and the MCP answer dropped it, so the recovery
+  // pointed at a field the caller never received.
+  it('passes the page language through so one retry recovers the quote', () => {
+    const r = classifyApiError(new Error('API 404: {"error":"No translation available for this page","page_number":20,"has_original":true,"original_lang":"zh","hint":"Retry with lang=zh"}'));
+    expect(r.error).toBe('no_translation');
+    expect(r.original_lang).toBe('zh');
+    expect(r.recovery).toContain('lang: "zh"');
+  });
+
+  it('does not invent a language the route did not name', () => {
+    const r = classifyApiError(new Error('API 404: {"error":"No translation available for this page","page_number":25}'));
+    expect(r.original_lang).toBeUndefined();
+    expect(r.recovery).not.toMatch(/lang: "/);
+  });
+
   // Observed live on production 2026-08-14, p. 40 of *News from Nowhere* (25 of
   // 296 pages transcribed). Since #3939 an English leaf comes back as a quote,
   // so `no_translation` asserts a foreign source — which is a false statement

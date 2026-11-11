@@ -80,7 +80,58 @@ export function homeBusy(home) {
 export function readQuotaStdout(home, { model = null, env = {} } = {}) {
   const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json', ...(model ? ['--model', model] : [])],
     { encoding: 'utf8', env: agyEnv(home, process.env, env), timeout: 120e3, cwd: os.tmpdir() });
+  if (quotaError(`${r.stdout || ''}\n${r.stderr || ''}`) === 'auth') noteAuthLoss(home);
   return r.stdout || '';
+}
+
+// ── a lost login is not an empty pool (2026-11-08) ──
+/**
+ * Why a /quota reply has no buckets: 'auth' when the login is gone ("authentication required", "authentication failed
+ * or timed out"), 'error' for any other ERROR reply, null for a good reply or one this cannot read. Every lane reads a
+ * missing bucket as "no quota" and skips quietly (cli-ocr-lane: "no Gemini weekly bucket in /quota"), so on
+ * 2026-11-08 the milo login on gex45 had expired and its lanes made 11 calls in an hour, with 77% of its week left and
+ * no page. noteAuthLoss() turns that case into a page.
+ */
+export function quotaError(text) {
+  const s = String(text || '');
+  if (/authentication (required|failed)/i.test(s)) return 'auth';
+  try {
+    const j = JSON.parse(s.trim().split('\n').filter((l) => l.startsWith('{')).pop());
+    if (j?.status === 'ERROR') return /auth/i.test(j.error || '') ? 'auth' : 'error';
+  } catch { /* not JSON */ }
+  return null;
+}
+
+export const AUTH_PAGE_EVERY_MS = 6 * 3600e3;
+const HERE = path.dirname(new URL(import.meta.url).pathname);
+const NTFY_SH = path.join(HERE, '../workers/ntfy-send.sh');
+const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
+const defaultStampDir = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/auth-lost' : path.join(os.tmpdir(), 'agy-auth-lost'));
+
+/**
+ * Record and page a lost agy login, at most once per AUTH_PAGE_EVERY_MS per pool on this box (a stamp file per pool).
+ * Synchronous on purpose: readQuotaStdout is, and a lane may exit right after. AGY_AUTH_PAGE=0 records without paging.
+ * Returns { paged, stamp }.
+ */
+export function noteAuthLoss(home, { now = Date.now(), stampDir = defaultStampDir(), send = sendPage, host = os.hostname() } = {}) {
+  const pool = home ? path.basename(home) : 'default';
+  const stamp = path.join(stampDir, `${pool}.stamp`);
+  console.error(`agy-pools: pool ${pool} on ${host} is NOT LOGGED IN (agy /quota: authentication); its lanes skip until it is restored`);
+  try {
+    const last = fs.existsSync(stamp) ? fs.statSync(stamp).mtimeMs : 0;
+    if (now - last < AUTH_PAGE_EVERY_MS) return { paged: false, stamp };
+    fs.mkdirSync(stampDir, { recursive: true });
+    fs.writeFileSync(stamp, new Date(now).toISOString() + '\n');
+  } catch { return { paged: false, stamp }; }
+  if (process.env.AGY_AUTH_PAGE === '0') return { paged: false, stamp };
+  send(`agy NOT LOGGED IN: ${pool} on ${host}`,
+    `The ${pool} agy login on ${host} fails /quota with an authentication error, so every lane on that pool skips. `
+    + `Fix (scripts/workers/JOB-HOSTS.md): copy antigravity-oauth-token from main's ${home ? `${home}/` : '/root/'}.gemini/antigravity-cli/ to this box; do not log in again here.`);
+  return { paged: true, stamp };
+}
+
+function sendPage(title, msg) {
+  try { spawnSync('bash', [NTFY_SH, NTFY_TOPIC, title, 'high', 'key', msg], { env: { ...process.env, NTFY_SRC: 'agy-pools.mjs' }, timeout: 20e3 }); } catch { /* a page never fails the lane */ }
 }
 
 /** One pool's reading (parseQuota), tried twice, or null. */
@@ -128,12 +179,56 @@ export const LANE_RESERVES = Object.freeze({
 });
 export const RESERVE_DROP_HOURS = 36;
 
+// ── finish books first (#8482, Derek 2026-11-10) ──
 /**
- * The weekly fraction a lane must leave in a pool now: the sum of LANE_RESERVES other than `lane`'s own, or 0 within
- * RESERVE_DROP_HOURS of `resetTime`. An unreadable reset keeps the reserve (the drop needs a known reset).
+ * FINISH FIRST. The order the agy pools are spent in: (1) the pages that finish a book already 80% or more translated
+ * (their first reads, then their translations), (2) untranslated pages of other visible books, (3) quality re-reads and
+ * re-translations of pages that already have text (the Latin re-read, the German/French correction, the stale Latin
+ * re-translation). Measured 3-9 Nov 2026 on gex45: ~96K re-reads and ~63K re-translations against 0 pages from the
+ * book-finishing translation lane.
+ *
+ * A QUALITY lane (one that passes `yieldToFinish`) keeps FINISH_RESERVE in every pool on top of LANE_RESERVES while a
+ * finishing lane on this box reports work waiting (finishQueueOpen: a stamp under FINISH_QUEUE_DIR, written by
+ * cli-translate-lane.mjs finish each run, younger than FINISH_QUEUE_MAX_AGE_H, with pages > 0). The finishing lanes do
+ * not keep it. No fresh stamp (an empty queue, or a box that runs no finishing lane) means no extra reserve, so a quality
+ * lane never idles a pool the finishing lanes cannot use. The 36-hour drop still takes every reserve to 0.
  */
-export function weeklyReserve({ resetTime, now = Date.now(), lane = null, reserves = LANE_RESERVES } = {}) {
+export const FINISH_RESERVE = 0.25;
+export const FINISH_QUEUE_MAX_AGE_H = 6;
+export const FINISH_QUEUE_DIR = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/finish-queue' : path.join(os.tmpdir(), 'agy-finish-queue'));
+
+/** Record a finishing lane's waiting work: { books, pages } (pages it could still write). Never throws. */
+export function writeFinishQueue(lane, { books, pages }, { dir = FINISH_QUEUE_DIR(), now = Date.now() } = {}) {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, `${lane}.json`), JSON.stringify({ lane, books, pages, at: new Date(now).toISOString() }) + '\n');
+  } catch { /* a stamp never fails the lane */ }
+}
+
+/** Is any finishing lane's stamp fresh with pages waiting? { open, lanes: [{ lane, books, pages, at }] }. */
+export function finishQueueOpen({ dir = FINISH_QUEUE_DIR(), now = Date.now(), maxAgeH = FINISH_QUEUE_MAX_AGE_H } = {}) {
+  let files = [];
+  try { files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')); } catch { return { open: false, lanes: [] }; }
+  const lanes = [];
+  for (const f of files) {
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      if (j.pages > 0 && now - Date.parse(j.at) <= maxAgeH * 3600e3) lanes.push(j);
+    } catch { /* unreadable stamp: not open */ }
+  }
+  return { open: lanes.length > 0, lanes };
+}
+
+/**
+ * The weekly fraction a lane must leave in a pool now: the sum of LANE_RESERVES other than `lane`'s own, plus
+ * FINISH_RESERVE for a quality lane (`yieldToFinish`) while the finish queue is open (`finishOpen`, read from the stamps
+ * when not given), or 0 within RESERVE_DROP_HOURS of `resetTime`. An unreadable reset keeps the reserve (the drop needs
+ * a known reset).
+ */
+export function weeklyReserve({ resetTime, now = Date.now(), lane = null, reserves = LANE_RESERVES, yieldToFinish = false, finishOpen = null } = {}) {
   const reset = Date.parse(resetTime ?? '');
   if (Number.isFinite(reset) && reset - now <= RESERVE_DROP_HOURS * 3600e3) return 0;
-  return Object.entries(reserves).reduce((s, [k, v]) => (k === lane ? s : s + v), 0);
+  const base = Object.entries(reserves).reduce((s, [k, v]) => (k === lane ? s : s + v), 0);
+  if (!yieldToFinish) return base;
+  return base + ((finishOpen ?? finishQueueOpen({ now }).open) ? FINISH_RESERVE : 0);
 }

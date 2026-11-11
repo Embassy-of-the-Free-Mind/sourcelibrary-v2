@@ -73,6 +73,8 @@ async function call(id: string, query: string, headers: Record<string, string>, 
 }
 const numbers = (b: { pages?: Array<{ page_number: number }> }) => (b.pages ?? []).map((p) => p.page_number);
 const browser = { 'user-agent': CHROME, 'sec-fetch-mode': 'cors', 'sec-fetch-site': 'same-origin' };
+/** An assistant reading for a person, proven by name and published address (api-auth sets this). */
+const ASSISTANT: ApiIdentity = { kind: 'anon', assistantFetcher: 'anthropic' };
 
 describe('/text: nothing enters a shared cache', () => {
   it.each([
@@ -111,35 +113,56 @@ describe('/text: a protected partner book', () => {
     expect(numbers((await call('b', '', browser)).body).length).toBe(100);
   });
 
-  it('is the first 20% for a script, wherever it asks to start', async () => {
-    const whole = await call('b', '', { 'user-agent': 'python-requests/2.32' });
+  it('is the first 20% for a crawler that names itself, wherever it asks to start', async () => {
+    // A key-less script is refused before the book is read (see below); a declared
+    // crawler with a verified identity is not anon, so it still meets the 20% clamp.
+    const crawler = { 'user-agent': 'GPTBot/1.2' };
+    const whole = await call('b', '', crawler, { kind: 'bot', bot: 'gptbot' });
     expect(Math.max(...numbers(whole.body))).toBe(20);
     expect(whole.body.bot_access).toBeTruthy();
-    expect(numbers((await call('b', 'from=50&to=90', { 'user-agent': 'curl/8' })).body)).toEqual([]);
+    expect(numbers((await call('b', 'from=50&to=90', crawler, { kind: 'bot', bot: 'gptbot' })).body)).toEqual([]);
   });
 
   it('gets no whole book by asking for its one chapter', async () => {
-    const { body } = await call('b', 'chapter=0', { 'user-agent': 'python-requests/2.32' });
+    const { body } = await call('b', 'chapter=0', { 'user-agent': 'GPTBot/1.2' }, { kind: 'bot', bot: 'gptbot' });
     expect(Math.max(...numbers(body))).toBe(20);
   });
 
-  it('comes a window at a time to a client reading for a person, which is told where to go next', async () => {
-    const { body } = await call('b', 'from=30', { 'user-agent': 'Claude-User/1.0' });
+  it('comes a window at a time to a proven assistant reading for a person, which is told where to go next', async () => {
+    const { body } = await call('b', 'from=30', { 'user-agent': 'Claude-User/1.0' }, ASSISTANT);
     expect(Math.min(...numbers(body))).toBe(30);
     expect(Math.max(...numbers(body))).toBe(54);
     expect(body.reading_window?.next_from).toBe(55);
-    expect((await call('b', 'from=90', { 'user-agent': 'Claude-User/1.0' })).body.reading_window).toBeUndefined();
+    expect((await call('b', 'from=90', { 'user-agent': 'Claude-User/1.0' }, ASSISTANT)).body.reading_window).toBeUndefined();
   });
 
   it('is whole for a key, and the switch puts every caller back on the site rules', async () => {
     const script = { 'user-agent': 'python-requests/2.32' };
     expect(numbers((await call('b', '', script, { kind: 'apikey', apiKeyId: 'k' })).body).length).toBe(100);
     vi.stubEnv('BPH_BOT_GATE_ENFORCE', '0');
-    expect(numbers((await call('b', '', script)).body).length).toBe(100);
+    expect(numbers((await call('b', '', { 'user-agent': 'Claude-User/1.0' }, ASSISTANT)).body).length).toBe(100);
   });
 
-  it('leaves a library book whole for a script and for an assistant', async () => {
-    expect(numbers((await call('g', '', { 'user-agent': 'curl/8' })).body).length).toBe(100);
-    expect(numbers((await call('g', '', { 'user-agent': 'Claude-User/1.0' })).body).length).toBe(100);
+  it('leaves a library book whole for a key and for a proven assistant', async () => {
+    expect(numbers((await call('g', '', { 'user-agent': 'curl/8' }, { kind: 'apikey', apiKeyId: 'k' })).body).length).toBe(100);
+    expect(numbers((await call('g', '', { 'user-agent': 'Claude-User/1.0' }, ASSISTANT)).body).length).toBe(100);
+  });
+});
+
+describe('/text: whole-book text needs a key or a session (#8235)', () => {
+  it('refuses a key-less script, and says how to get a key', async () => {
+    const { res, body } = await call('g', '', { 'user-agent': 'python-requests/2.32' });
+    expect(res.status).toBe(401);
+    expect((body as { error?: string }).error).toBe('key_required');
+    expect(res.headers.get('www-authenticate')).toContain('get_key=');
+  });
+
+  it('refuses a client that only CLAIMS to be an assistant', async () => {
+    expect((await call('g', '', { 'user-agent': 'Claude-User/1.0' })).res.status).toBe(401);
+  });
+
+  it('serves the site’s own browser pages and a signed-in reader', async () => {
+    expect((await call('g', '', browser)).res.status).toBe(200);
+    expect((await call('g', '', { 'user-agent': CHROME }, { kind: 'session', userId: 'u' })).res.status).toBe(200);
   });
 });

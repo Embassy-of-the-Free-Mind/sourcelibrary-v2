@@ -184,7 +184,7 @@ async function loadHelpers() {
     shouldRefuseOcrWrite: blank.shouldRefuseOcrWrite, blankGuardEnabled: blank.guardEnabled,
     repairTexGreek: tex.repairTexGreek, texGreekRepairEnabled: tex.texGreekRepairEnabled,
     LONG_S_GLYPH_VARIANT: longS.LONG_S_GLYPH_VARIANT, foldLongS: longS.foldLongS,
-    hidesPageInMeta: tc.hidesPageInMeta, strayScriptGate: tc.strayScriptGate, guardTranslationText: tc.guardTranslationText,
+    hidesPageInMeta: tc.hidesPageInMeta, strayScriptGate: tc.strayScriptGate, neighbourGate: tc.neighbourGate, guardTranslationText: tc.guardTranslationText,
     refusableReasoningLeak: integ.refusableReasoningLeak, getPageSource: img.getPageSource, ...prov };
 }
 
@@ -200,7 +200,11 @@ async function finalText(db, h, job, page, text) {
   if (h.refusableReasoningLeak(t)) return { bad: 'reasoning-leak' };
   const stray = await h.strayScriptGate(db, page, t, { language: job.language, dryRun: true });
   if (stray.refused) return { bad: 'stray-script' };
-  return { text: h.guardTranslationText(stray.text) };
+  const g = h.guardTranslationText(stray.text);
+  // #5026: a page's English that is its neighbour's is not recovered either (judged against the stored neighbours).
+  const nb = page ? await h.neighbourGate(db, page, g, { dryRun: true }) : { refused: false };
+  if (nb.refused) return { bad: nb.reason };
+  return { text: g };
 }
 
 /**

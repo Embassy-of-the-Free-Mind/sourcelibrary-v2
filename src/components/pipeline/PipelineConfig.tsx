@@ -37,7 +37,7 @@ export default function PipelineConfigForm({
 }: PipelineConfigFormProps) {
   const [model, setModel] = useState(DEFAULT_MODEL);
   const [language, setLanguage] = useState(initialLanguage);
-  const [license, setLicense] = useState('CC0-1.0');
+  const [license, setLicense] = useState('CC-BY-NC-SA-4.0');
   const [useBatchApi, setUseBatchApi] = useState(true); // Default to batch for 50% savings
 
   const handleSubmit = (e: React.FormEvent) => {

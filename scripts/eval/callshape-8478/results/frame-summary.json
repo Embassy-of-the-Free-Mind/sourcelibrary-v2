@@ -1,0 +1,22 @@
+{
+ "r_books": 160,
+ "eligible": 130,
+ "dropped": {
+  "not_five_pairs": 23,
+  "r_incomplete": 0,
+  "text_changed": 7,
+  "no_r_text": 0
+ },
+ "study": 80,
+ "controls": 30,
+ "control_kinds": {
+  "carry_over": 10,
+  "wrong_leaf": 10,
+  "page_defect": 10
+ },
+ "page_defect_plants": {
+  "numeral": 6,
+  "negation_removed": 3,
+  "negation_added": 1
+ }
+}

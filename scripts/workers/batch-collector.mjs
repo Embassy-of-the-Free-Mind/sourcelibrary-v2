@@ -25,7 +25,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET, recordTruncatedTranslation } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, neighbourGate, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET, recordTruncatedTranslation } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, jobPromptVersion, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 import { translationLayers, writePageAnnotations } from '../lib/translation-text.mjs'; // #5942
@@ -48,6 +48,7 @@ import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERR
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { LONG_S_GLYPH_VARIANT, foldLongS } from '../lib/ocr-long-s-retry.mjs';
 import { collectableBatchJobsFilter } from '../lib/batch-job-filters.mjs';
+import { batchOcrStamps } from '../lib/ocr-routing.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -567,7 +568,10 @@ async function processOneJob(db, job) {
 
     // #5055: the write guard needs each translated page's OCR (the length rule); one read per job.
     const guardSource = job.type === 'ocr' || job.type === 'image_extraction' || !pageResults.length ? new Map()
-      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { id: 1, book_id: 1, page_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+    // #5026: the job's own replies by page number, so a page is judged against the English written beside it, not
+    // the stored English this job is replacing.
+    const jobEnglish = Object.fromEntries(pageResults.filter((r) => guardSource.get(r.pageId)?.page_number != null && r.text).map((r) => [guardSource.get(r.pageId).page_number, r.text]));
     let writeGuardRepaired = 0;
 
     for (const { pageId, text: resultText, usage } of pageResults) {
@@ -661,6 +665,7 @@ async function processOneJob(db, job) {
           'ocr.batch_job_id': jobIdStr,
           'ocr.input_tokens': inputTokens,
           'ocr.output_tokens': outputTokens,
+          ...batchOcrStamps(job), // ocr.lane + ocr.pipeline (#8519)
           updated_at: now,
         };
         // Provenance (#2297) — only stamp when present, so older jobs without
@@ -827,6 +832,9 @@ async function processOneJob(db, job) {
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason);
           continue;
         }
+        // #5026: the page's English is not its neighbour's (the job's own replies, the stored English otherwise).
+        const nb = await neighbourGate(db, { id: pageId, book_id: src?.book_id ?? job.book_id, page_number: src?.page_number, page_type: src?.page_type }, text, { ocr: src?.ocr?.data, neighbours: jobEnglish, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
+        if (nb.refused) { failCount++; noteFail(nb.reason); failedPageIds.set(pageId, nb.reason); continue; }
         const layers = translationLayers(text, { promptVersion: jobPromptVersion(job) }); // #5942: text + annotations beside data
         annotationItems.push({ page_id: pageId, book_id: guardSource.get(pageId)?.book_id ?? job.book_id, run_id: jobIdStr, layers });
         bulkOps.push({

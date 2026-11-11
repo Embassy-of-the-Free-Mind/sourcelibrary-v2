@@ -1,0 +1,23 @@
+{
+ "issue": 7263,
+ "measured": "2026-11-07",
+ "note": "Computed from key.json, packet.json and the verdicts. Judged pages are the ones whose v19.2 read stood out, and a v19.1 read was judged only when v19.2 was rejected, so these are not rates for either prompt. Words are whitespace tokens. Blind Opus.",
+ "study_cells": {
+  "v19.1": {
+   "route": "v19.1",
+   "pages": 4,
+   "words": 2892,
+   "misleads_per_1k": 5.53,
+   "wrong_text_per_1k": 2.07,
+   "fidelity_mean": 3.5
+  },
+  "v19.2": {
+   "route": "v19.2",
+   "pages": 5,
+   "words": 2513,
+   "misleads_per_1k": 2.39,
+   "wrong_text_per_1k": 1.59,
+   "fidelity_mean": 4
+  }
+ }
+}

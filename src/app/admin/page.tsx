@@ -10,6 +10,7 @@ import {
   type Ladder, type LibraryDashboard, type Rung,
 } from '@/lib/library-dashboard';
 import { Bars, HBars, Legend, LineChart, Panel, PipelineCumulative } from './DashboardCharts';
+import { ReadersMap } from './ReadersMap';
 import { Grid2, Section, Tiles } from './dashboard-layout';
 import { RAMP, SERIES, dayLabel, fmtFull, fmtK, fmtUsd, monthLabel } from './dashboard-format';
 
@@ -226,6 +227,7 @@ export default async function AdminDashboard() {
             { l: 'Downloads, 30 days', v: fmtFull(metrics.missionActions.download), n: `${metrics.missionActions.share} shares · ${metrics.missionActions.cite} citations${metrics.social.likes != null ? ` · ${fmtFull(metrics.social.likes)} likes` : ''}` },
           ]} />
           <Grid2>
+            {metrics.geo?.countries?.length ? <ReadersMap countries={metrics.geo.countries} history={history} /> : null}
             {history.length > 1 && (
               <Panel title="Monthly and daily readers" note="Unique visitor fingerprints (IP and browser), humans only, recorded daily.">
                 <Legend names={['Monthly active (30-day unique)', 'Daily active (14-day average)']} colors={[SERIES[0], SERIES[2]]} />

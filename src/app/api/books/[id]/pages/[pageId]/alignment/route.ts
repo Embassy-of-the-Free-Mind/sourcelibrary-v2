@@ -5,6 +5,7 @@ import { isBookReadable } from '@/lib/book-access';
 import { anonActionGate } from '@/lib/anon-gate';
 import { getOrCreateWordAlignment } from '@/lib/word-alignment';
 import type { Book } from '@/lib/types';
+import { pageGateForRequest, meteredSignInResponse } from '@/lib/metered-gate';
 
 /**
  * GET /api/books/[id]/pages/[pageId]/alignment — span-level OCR↔translation
@@ -41,11 +42,16 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     const page = await db.collection('pages').findOne(
       { id: pageId, book_id: book.id },
-      { projection: { id: 1, 'ocr.data': 1, 'translation.data': 1, 'transliteration.data': 1, word_alignment: 1 } },
+      { projection: { id: 1, book_id: 1, page_number: 1, seo_indexable: 1, 'ocr.data': 1, 'translation.data': 1, 'transliteration.data': 1, word_alignment: 1 } },
     );
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+    // The pairs are the page's own words, original and English: past the
+    // metered reader's free sample an anonymous caller signs in first (#4357).
+    // Ahead of generation, so a walled caller never buys a Gemini call either.
+    const meterGate = await pageGateForRequest(db, request, page);
+    if (meterGate) return meteredSignInResponse(meterGate);
 
     // First pass without generation: a cache hit costs nothing and needs no gate.
     let result = await getOrCreateWordAlignment(db, page as never, book.language || 'the original language', {

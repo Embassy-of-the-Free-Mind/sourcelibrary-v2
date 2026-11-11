@@ -103,6 +103,7 @@ export function isCloudflareEdge(ip: string | null | undefined): boolean {
  * production.
  */
 export function trustedClientIp(headers: Headers): string {
+  if (onReaderOriginBox()) return headers.get('cf-connecting-ip')?.trim() || 'unknown';
   const peer =
     headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     headers.get('x-real-ip')?.trim() ||
@@ -111,4 +112,41 @@ export function trustedClientIp(headers: Headers): string {
   if (!peer) return viaCdn || 'unknown';
   if (isCloudflareEdge(peer)) return viaCdn || peer;
   return peer;
+}
+
+/**
+ * The reader-origin box (#8384, trap 2). On Vercel the `x-vercel-*` headers and the
+ * peer address are set by the platform. On a self-hosted box nothing sets them: they are
+ * empty, or written by whoever connects. There the only trusted identity is
+ * `cf-connecting-ip` / `cf-ipcountry`, which the box's Caddy sets from the Worker's own
+ * headers after checking the Worker's shared secret, and strips from everything else
+ * (infrastructure/web-box/Caddyfile). Next listens on loopback only, so nothing reaches it
+ * without passing Caddy.
+ *
+ * Set `SL_BOX_CLIENT_IDENTITY=cloudflare` on the box only. Unset (every Vercel
+ * deployment), every function in this file behaves exactly as before.
+ */
+export function onReaderOriginBox(): boolean {
+  return process.env.SL_BOX_CLIENT_IDENTITY === 'cloudflare';
+}
+
+/**
+ * The caller's country code, or null.
+ *
+ * Behind the CDN, Vercel geolocates the address that connected to it, which is
+ * a Cloudflare edge node, not the reader. Readers in Mexico are mostly served
+ * from US edges, so `x-vercel-ip-country` recorded them as US: Mongo pageviews
+ * showed 4-74 MX a week from September while PostHog (which geolocates the
+ * browser itself) had Mexico second among phone readers (#8531). So when the
+ * peer is a Cloudflare edge, `cf-ipcountry` is the reader's country (Cloudflare
+ * overwrites a client-supplied one). Off the CDN (*.vercel.app) the peer is the
+ * caller and `x-vercel-ip-country` is right, while `cf-ipcountry` would be
+ * client-written. On the box: `cf-ipcountry` only, as before.
+ */
+export function clientCountry(headers: Headers): string | null {
+  if (onReaderOriginBox()) return headers.get('cf-ipcountry') || null;
+  const peer = headers.get('x-forwarded-for')?.split(',')[0]?.trim() || headers.get('x-real-ip')?.trim() || '';
+  const cf = headers.get('cf-ipcountry');
+  if (isCloudflareEdge(peer) && cf && cf !== 'XX' && cf !== 'T1') return cf;
+  return headers.get('x-vercel-ip-country') || cf || null;
 }
