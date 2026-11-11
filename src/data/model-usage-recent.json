@@ -1,275 +1,359 @@
 {
   "_comment": "Written by scripts/audit/model-usage-snapshot.mjs --write-recent. Every (lane, model, source) that wrote pages in the 30 days before generated_at; tests/unit/public-models.test.ts fails if one has no entry in src/data/public-models.ts.",
-  "generated_at": "2026-10-02",
+  "generated_at": "2026-11-11",
   "rows": [
+    {
+      "lane": "translation",
+      "model": "gemini-3-flash-preview",
+      "source": "ai",
+      "pages_last_30d": 5300
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3-flash-preview",
+      "source": "batch_api",
+      "pages_last_30d": 3582
+    },
     {
       "lane": "translation",
       "model": "gemini-3.1-flash-lite-preview",
       "source": "ai",
-      "pages_last_30d": 8
+      "pages_last_30d": 4253
     },
     {
       "lane": "ocr",
       "model": "gemini-3-flash-preview",
       "source": "ai",
-      "pages_last_30d": 2789
+      "pages_last_30d": 20
     },
     {
       "lane": "ocr",
-      "model": "gemini-3-flash-preview",
+      "model": "PaddleOCR-VL-1.6-0.9B",
+      "source": "paddle",
+      "pages_last_30d": 117746
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.1-flash-lite-preview",
       "source": "batch_api",
-      "pages_last_30d": 25049
-    },
-    {
-      "lane": "translation",
-      "model": "gemini-3-flash-preview",
-      "source": "ai",
-      "pages_last_30d": 32814
+      "pages_last_30d": 1430
     },
     {
       "lane": "translation",
       "model": "gemini-3.1-flash-lite",
       "source": "ai",
-      "pages_last_30d": 326050
+      "pages_last_30d": 7143
     },
     {
       "lane": "ocr",
       "model": "gemini-3.1-flash-lite",
       "source": "batch_api",
-      "pages_last_30d": 469604
+      "pages_last_30d": 70521
     },
     {
       "lane": "ocr",
       "model": "bdrc-yigdzin-v1",
       "source": "bdrc",
-      "pages_last_30d": 190095
+      "pages_last_30d": 83887
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.8-flash-low",
+      "source": "ai",
+      "pages_last_30d": 507161
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3.8-flash-low",
+      "source": "ai",
+      "pages_last_30d": 350610
     },
     {
       "lane": "ocr",
       "model": "gemini-3.1-flash-lite",
       "source": "pipeline_preview",
-      "pages_last_30d": 76065
+      "pages_last_30d": 1787
     },
     {
       "lane": "ocr",
-      "model": null,
-      "source": "esukhia-derge-tengyur",
-      "pages_last_30d": 128369
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/0.0.14",
-      "source": "ia_djvu",
-      "pages_last_30d": 99517
-    },
-    {
-      "lane": "translation",
-      "model": "gemini-3-flash-preview",
-      "source": "batch_api",
-      "pages_last_30d": 5615
+      "model": "lightonai/LightOnOCR-3-1B",
+      "source": "lightonocr",
+      "pages_last_30d": 145693
     },
     {
       "lane": "ocr",
       "model": "ia-ocr/0.0.21",
       "source": "ia_djvu",
-      "pages_last_30d": 59595
+      "pages_last_30d": 64667
     },
     {
       "lane": "ocr",
-      "model": "kraken/omnisyr",
-      "source": "kraken",
-      "pages_last_30d": 26982
+      "model": "ia-ocr/0.0.14",
+      "source": "ia_djvu",
+      "pages_last_30d": 16754
     },
     {
-      "lane": "ocr",
+      "lane": "translation",
+      "model": null,
+      "source": "system",
+      "pages_last_30d": 28
+    },
+    {
+      "lane": "translation",
       "model": "gemini-3-flash-preview",
-      "source": "pipeline_preview",
-      "pages_last_30d": 16638
+      "source": "batch_api",
+      "pages_last_30d": 810
+    },
+    {
+      "lane": "ocr",
+      "model": "claude-opus-5-5",
+      "source": "ai",
+      "pages_last_30d": 59223
+    },
+    {
+      "lane": "translation",
+      "model": "claude-opus-5-5",
+      "source": "ai",
+      "pages_last_30d": 52682
     },
     {
       "lane": "ocr",
       "model": "gemini-3.1-flash-lite",
       "source": "ai",
-      "pages_last_30d": 12404
-    },
-    {
-      "lane": "translation",
-      "model": null,
-      "source": "same-language",
-      "pages_last_30d": 12208
-    },
-    {
-      "lane": "translation",
-      "model": "gemini-3.1-flash-lite",
-      "source": "batch_api",
-      "pages_last_30d": 11177
-    },
-    {
-      "lane": "ocr",
-      "model": "kraken/sophro-mhiro",
-      "source": "kraken",
-      "pages_last_30d": 11247
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/0.0.18",
-      "source": "ia_djvu",
-      "pages_last_30d": 10883
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/unknown",
-      "source": "ia_djvu",
-      "pages_last_30d": 10479
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/0.0.20",
-      "source": "ia_djvu",
-      "pages_last_30d": 9940
+      "pages_last_30d": 1262
     },
     {
       "lane": "ocr",
       "model": "ia-ocr/ABBYY FineReader 8.0",
       "source": "ia_djvu",
-      "pages_last_30d": 8947
+      "pages_last_30d": 5628
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3.1-flash-lite",
+      "source": "batch_api",
+      "pages_last_30d": 3634
     },
     {
       "lane": "ocr",
-      "model": "ndl-koten/v3",
-      "source": "ndl-koten",
-      "pages_last_30d": 7133
-    },
-    {
-      "lane": "ocr",
-      "model": "cbeta-xml-p5@dbdea41071",
-      "source": "cbeta-xml-p5",
-      "pages_last_30d": 4983
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/0.0.15",
+      "model": "ia-ocr/0.0.18",
       "source": "ia_djvu",
-      "pages_last_30d": 3185
+      "pages_last_30d": 1885
     },
     {
       "lane": "ocr",
-      "model": "ia-ocr/0.0.16",
+      "model": "ia-ocr/unknown",
       "source": "ia_djvu",
-      "pages_last_30d": 2948
+      "pages_last_30d": 1571
     },
     {
       "lane": "ocr",
-      "model": "mineru-pipeline",
-      "source": "mineru",
-      "pages_last_30d": 45
+      "model": "ia-ocr/0.0.20",
+      "source": "ia_djvu",
+      "pages_last_30d": 378
     },
     {
       "lane": "ocr",
-      "model": "bdrc-woodblock-easter2",
-      "source": "bdrc",
-      "pages_last_30d": 1802
+      "model": "gemini-2.5-flash",
+      "source": "batch_api",
+      "pages_last_30d": 20
+    },
+    {
+      "lane": "translation",
+      "model": "etcsl-corpus",
+      "source": "corpus",
+      "pages_last_30d": 78
+    },
+    {
+      "lane": "ocr",
+      "model": "etcsl-corpus",
+      "source": "corpus",
+      "pages_last_30d": 78
     },
     {
       "lane": "ocr",
       "model": "ia-ocr/0.0.13",
       "source": "ia_djvu",
-      "pages_last_30d": 1782
+      "pages_last_30d": 3108
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.15",
+      "source": "ia_djvu",
+      "pages_last_30d": 1219
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-4-argon-low",
+      "source": "ai",
+      "pages_last_30d": 3835
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.16",
+      "source": "ia_djvu",
+      "pages_last_30d": 564
     },
     {
       "lane": "ocr",
       "model": "ia-ocr/0.0.12",
       "source": "ia_djvu",
-      "pages_last_30d": 1477
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/0.0.17",
-      "source": "ia_djvu",
-      "pages_last_30d": 1327
-    },
-    {
-      "lane": "ocr",
-      "model": "gemini-3.1-flash-lite",
-      "source": "ia_reference",
-      "pages_last_30d": 821
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/ABBYY FineReader 11.0",
-      "source": "ia_djvu",
-      "pages_last_30d": 814
-    },
-    {
-      "lane": "ocr",
-      "model": "ia-ocr/0.0.6",
-      "source": "ia_djvu",
-      "pages_last_30d": 710
-    },
-    {
-      "lane": "ocr",
-      "model": "bdrc-woodblock-easter2",
-      "source": "ai",
-      "pages_last_30d": 441
-    },
-    {
-      "lane": "translation",
-      "model": null,
-      "source": "skip",
-      "pages_last_30d": 82
-    },
-    {
-      "lane": "ocr",
-      "model": "oraec-corpus",
-      "source": null,
-      "pages_last_30d": 1
+      "pages_last_30d": 1437
     },
     {
       "lane": "ocr",
       "model": "ia-ocr/0.0.11",
       "source": "ia_djvu",
-      "pages_last_30d": 150
+      "pages_last_30d": 2413
     },
     {
       "lane": "ocr",
-      "model": "ABBYY FineReader 8.0",
+      "model": "ia-ocr/0.0.17",
       "source": "ia_djvu",
-      "pages_last_30d": 69
+      "pages_last_30d": 1120
     },
     {
       "lane": "ocr",
-      "model": "ia-ocr/ABBYY FineReader 9.0",
-      "source": "ia_djvu",
-      "pages_last_30d": 54
+      "model": "gemini-4-argon-high",
+      "source": "ai",
+      "pages_last_30d": 2027
     },
     {
       "lane": "ocr",
-      "model": "ABBYY FineReader 11.0 (Extended OCR)",
+      "model": "ia-ocr/ABBYY FineReader 11.0",
       "source": "ia_djvu",
-      "pages_last_30d": 12
+      "pages_last_30d": 704
     },
     {
       "lane": "ocr",
       "model": "ia-ocr/ABBYY FineReader 11.0 (Extended OCR)",
       "source": "ia_djvu",
-      "pages_last_30d": 6
+      "pages_last_30d": 1165
     },
     {
       "lane": "ocr",
-      "model": "tesseract 5.3.0",
+      "model": "gemini-3.1-flash-lite",
+      "source": "ia_reference",
+      "pages_last_30d": 239
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.6",
       "source": "ia_djvu",
-      "pages_last_30d": 6
+      "pages_last_30d": 4
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/ABBYY FineReader 9.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 319
+    },
+    {
+      "lane": "ocr",
+      "model": "claude-opus-5-5-low",
+      "source": "ai",
+      "pages_last_30d": 360
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-4-argon-low",
+      "source": "ai",
+      "pages_last_30d": 354
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-2.5-flash",
+      "source": "ai",
+      "pages_last_30d": 252
+    },
+    {
+      "lane": "ocr",
+      "model": "claude-sonnet-5-5",
+      "source": "ai",
+      "pages_last_30d": 208
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.19",
+      "source": "ia_djvu",
+      "pages_last_30d": 158
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.10",
+      "source": "ia_djvu",
+      "pages_last_30d": 119
+    },
+    {
+      "lane": "translation",
+      "model": "human",
+      "source": "volunteer-correction",
+      "pages_last_30d": 110
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.7-flash-low",
+      "source": "ai",
+      "pages_last_30d": 2
+    },
+    {
+      "lane": "ocr",
+      "model": "ABBYY FineReader 8.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 2
+    },
+    {
+      "lane": "ocr",
+      "model": "human",
+      "source": "volunteer-correction",
+      "pages_last_30d": 49
+    },
+    {
+      "lane": "ocr",
+      "model": "claude-fable-5-1",
+      "source": "ai",
+      "pages_last_30d": 48
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-abbyy-hocr",
+      "source": "internet_archive",
+      "pages_last_30d": 46
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3.8-flash",
+      "source": "ai",
+      "pages_last_30d": 35
     },
     {
       "lane": "ocr",
       "model": null,
-      "source": "cdli-atf",
-      "pages_last_30d": 2
+      "source": "by_eye",
+      "pages_last_30d": 5
+    },
+    {
+      "lane": "ocr",
+      "model": "claude-fable-5-1+claude-opus-5-5",
+      "source": "ai",
+      "pages_last_30d": 5
     },
     {
       "lane": "translation",
-      "model": "gemini-3.1-flash-lite",
-      "source": null,
+      "model": "gemini-3.1-flash-lite-preview",
+      "source": "leaf-shift-repair-6672",
+      "pages_last_30d": 1
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.8-flash",
+      "source": "ai",
+      "pages_last_30d": 1
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.8-flash-medium",
+      "source": "ai",
       "pages_last_30d": 1
     }
   ]
