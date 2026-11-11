@@ -130,10 +130,15 @@ export const SOURCE_COLUMN_PROVENANCE = 'source-column';
  * `<margin>` is a real page mark, not an editorial wrapper — its content stays
  * in quotable text (quote-and-snippet-integrity.md) in two forms: the tag the
  * OCR prompts emit, and the `[[margin: …]]` bracket form NotesRenderer also
- * normalizes. A marginal note is COPY-SPECIFIC evidence: it exists in exactly
- * one physical copy, so a quote drawn from it needs the copy clause
- * (citation.copy, #4360) and must say it is marginal — a citation that treats
- * a reader's annotation as the printed body text misattributes the words.
+ * normalizes. The tag does NOT say who wrote the note. The OCR prompts
+ * (src/lib/types/prompt.ts) use it for everything in the margin: an edition's
+ * printed side notes, chapter summaries, critical apparatus and line or
+ * section numbers, as well as a reader's handwritten annotations. Only the
+ * handwritten kind is copy-specific (it exists in one physical copy and needs
+ * the copy clause, citation.copy, #4360); printed marginalia belong to the
+ * edition and are in every copy. Telling callers that every <margin> is a
+ * reader's note made a researcher's assistant report Burton's printed notes
+ * and Burnet's apparatus as copy annotations (member report, 2026-11-07).
  */
 export function containsMarginalia(text: string): boolean {
   return /<margin[\s>]/.test(text) || /\[\[margin:/.test(text);
@@ -144,12 +149,14 @@ export function containsMarginalia(text: string): boolean {
  * Spelled out because agents act on these sentences.
  */
 export const MARGINALIA_NOTE =
-  'This page carries marginal text (marked <margin>…</margin> or [[margin: …]]). Marginalia are '
-  + 'COPY-SPECIFIC: a marginal note exists only in the one physical copy that was scanned, unlike '
-  + 'the printed body text, which any copy of the edition carries. When quoting from a marginal '
-  + 'note, say so ("marginal annotation"), and cite the holding library named in citation.copy when '
-  + 'present — without the copy, the note cannot be located by a reader. Marginal text may be in a '
-  + 'different hand, language, or century than the printed text.';
+  'This page carries marginal text (marked <margin>…</margin> or [[margin: …]]). The mark records '
+  + 'only WHERE the text stands, not who wrote it. In printed books it is usually part of the edition: '
+  + 'printed side notes, chapter summaries, critical apparatus, line or section numbers. Those are in '
+  + 'every copy and are cited like the body text, as the edition\'s marginal note. Only a handwritten '
+  + 'note is COPY-SPECIFIC: it exists in the one physical copy that was scanned, may be in a different '
+  + 'hand, language or century, and should be called a "marginal annotation" and cited with the holding '
+  + 'library named in citation.copy when present. Before calling a note handwritten or printed, look at '
+  + 'the page image; if you cannot see it, say which you could not tell.';
 
 /**
  * The quotable text of a page, or null when the page holds nothing citable.

@@ -896,7 +896,7 @@ async function getQuote(args: Record<string, unknown>, caller?: McpCaller) {
   if (holdingCopy?.statement) {
     tips.push(
       `The scanned images reproduce one physical copy: "${holdingCopy.statement}". ` +
-        'When citing copy-specific evidence (marginalia, provenance marks, hand-coloring), include that clause in the citation.',
+        'When citing copy-specific evidence (handwritten marginalia, provenance marks, hand-coloring), include that clause in the citation. Printed side notes and apparatus belong to the edition, not the copy.',
     );
   }
 

@@ -110,9 +110,10 @@ interface QuoteResponse {
       note: string;
     };
     /**
-     * The page carries marginal text (#4362) — copy-specific by nature: it
-     * exists only in the one physical copy that was scanned. Set together
-     * with `marginalia_note`, which says how to cite it.
+     * The page carries marginal text (#4362): printed side notes or apparatus
+     * of the edition, or a handwritten note of this copy (the tag does not
+     * say which). Set together with `marginalia_note`, which says how to tell
+     * them apart and how to cite each.
      */
     contains_marginalia?: boolean;
     marginalia_note?: string;
