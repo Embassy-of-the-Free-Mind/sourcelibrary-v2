@@ -32,8 +32,9 @@ RULES = [
     (None, r'running[ -]head|signature mark|<sig>|page furniture|folio number|page[ -]num', 'O11'),
     ('ocr', r'footnote|marginal|margin(alia)?|side[ -]?note|apparatus|gloss(es)? (dropped|merged|lost)', 'O12'), ('translation', r'footnote|marginal|margin(alia)?|apparatus (is |are )?(dropped|stripped|lost|missing)', 'T13'),
     ('ocr', r'ditto', 'O6'),
-    ('ocr', r'abbreviation|expanded|expansion|contraction|suspension|normali[sz]|moderni[sz]|spelling|long[ -]s\b|ligature|umlaut|diacritic|accent|orthograph|u/v|i/j|ampersand|tironian', 'O8'),
     ('ocr', r'number|numeral|date|digit|\b1[0-9]{3}\b|folio', 'O7'),
+    ('ocr', r'misread|read as|— image|taken for|mistaken for', 'O6'),  # before O8: "long s read as f" is a misread, not a normalisation (spot check #1, #4)
+    ('ocr', r'abbreviation|expanded|expansion|contraction|suspension|normali[sz]|moderni[sz]|spelling|ligature|umlaut|diacritic|accent|orthograph|u/v|i/j|ampersand|tironian', 'O8'),
     ('ocr', r'dropped|omitted|omission|missing|not transcribed|left out|skipped|cut off|truncat|is lost', 'O5'),
     ('ocr', r'repeated|duplicat|twice|loop', 'O4'),
     ('ocr', r'reading order|column|interleav|order of|transposed|line break|hyphen|split (word|across)|run (into|together)|merged into|broken across', 'O9'),
@@ -95,10 +96,20 @@ if MODE == 'rules':
         else: rest.append(it)
     out.close()
     print('unclassed items', len(items), 'classed by', dict(how), 'remaining for model', len(rest))
-    for f in os.listdir(f'{CD}/batches'): os.remove(f'{CD}/batches/{f}')
-    B = 40
+    # keep every model answer already on disk (merge reads them by id); re-batch only what is still unanswered
+    answered = set()
+    for f in os.listdir(f'{CD}/batches'):
+        if f.endswith('.out.json'):
+            m = re.search(r'\[.*\]', open(f'{CD}/batches/{f}').read(), re.S)
+            if m:
+                try: answered |= {j.get('id') for j in json.loads(m.group(0))}
+                except Exception: pass
+        elif f.endswith('.json') and not os.path.exists(f'{CD}/batches/{f[:-5]}.out.json'): os.remove(f'{CD}/batches/{f}')
+    rest = [it for it in rest if it['id'] not in answered]
+    print('already answered by the model', len(answered & {it["id"] for it in items}), '; to batch', len(rest))
+    B = 40; tag = __import__('time').strftime('%H%M%S')
     for i in range(0, len(rest), B):
-        json.dump([{k: it[k] for k in ('id', 'stage', 'severity', 'problem', 'bad', 'good')} for it in rest[i:i+B]], open(f'{CD}/batches/{i//B:04d}.json', 'w'), ensure_ascii=False)
+        json.dump([{k: it[k] for k in ('id', 'stage', 'severity', 'problem', 'bad', 'good')} for it in rest[i:i+B]], open(f'{CD}/batches/{tag}-{i//B:04d}.json', 'w'), ensure_ascii=False)
     prompt = ['You classify quality findings about pages of old books into a fixed taxonomy. Each finding is a reviewer\'s note about one defect, with its stage (ocr = the transcription against the page image; translation = the English against the transcription or image; other = display, tags, catalogue) and severity.',
               'Classes (code: name). Pick the single best code for WHERE the defect arose, as the taxonomy defines it. Use the stage as a strong hint: ocr findings are usually O-codes (or I-codes for page-unit problems), translation findings T-codes, other findings D1/T16/T15/T10/I7/O16.', '']
     for code, name in DEFS.items(): prompt.append(f'{code}: {name}')
