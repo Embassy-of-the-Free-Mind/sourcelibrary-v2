@@ -1,0 +1,42 @@
+</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('zoo-data').textContent);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>n.toLocaleString('en-US');
+const seen=D.classes.filter(c=>c.n>0).length;
+const ser=D.classes.reduce((a,c)=>a+(c.sev.serious||0),0);
+document.getElementById('stats').innerHTML=`<span><b>${D.classes.length}</b> classes</span><span><b>${seen}</b> seen</span><span><b>${fmt(D.meta.total-D.meta.unclassed)}</b> classed errors</span><span><b>${fmt(ser)}</b> serious</span><span><b>${fmt(D.meta.pages)}</b> pages · <b>${D.meta.runs}</b> rounds</span>`;
+let lane='',q='',sort='code';
+const laneOrder='IOTDE';
+function spec(s){
+  const pair=(s.bad||s.good)?`<div class="pair">${s.bad?`<div class="q bad"><small>${esc(s.badlabel||'Served')}</small>${esc(s.bad)}</div>`:''}${s.good?`<div class="q good"><small>${esc(s.goodlabel||'Should be')}</small>${esc(s.good)}</div>`:''}</div>`:'';
+  return `<article class="spec"><header><span class="sev ${esc(s.sev)}">${esc(s.sev)}</span><span>${esc(s.lang)}</span><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)} · p.${s.page}</a><span>${esc(s.ocr_model)}</span></header><p>${esc(s.problem)}</p>${pair}</article>`;
+}
+function card(c){
+  const n=c.n||0,s=c.sev.serious||0,m=c.sev.moderate||0,mi=c.sev.minor||0,t=Math.max(1,s+m+mi);
+  const langs=c.langs.map(([l,k])=>`${esc(l)} ${k}`).join(' · ');
+  return `<details class="card" id="${esc(c.code)}"><summary>
+    <span class="code L-${c.lane}">${esc(c.code)}</span>
+    <div class="title"><h3>${esc(c.name)}</h3><div class="sub"><span>${esc(c.kind||'')}</span>${n?`<span>${c.pages} pages</span><span>${langs}</span>`:'<span>not seen in these rounds</span>'}</div></div>
+    <div class="count"><b>${fmt(n)}</b>${s?`${fmt(s)} serious`:'errors'}</div>
+    ${n?`<div class="bar" aria-label="${s} serious, ${m} moderate, ${mi} minor"><i class="s" style="width:${s/t*100}%"></i><i class="m" style="width:${m/t*100}%"></i><i class="n" style="width:${mi/t*100}%"></i></div>`:''}
+  </summary><div class="body">${c.sees?`<p class="sees">${esc(c.sees)}</p>`:''}<div class="specs">${c.specimens.length?c.specimens.map(spec).join(''):'<p class="empty">No specimens yet.</p>'}</div></div></details>`;
+}
+function render(){
+  const ql=q.toLowerCase();
+  let cs=D.classes.filter(c=>(!lane||c.lane===lane)&&(!ql||JSON.stringify(c).toLowerCase().includes(ql)));
+  if(sort==='serious')cs.sort((a,b)=>(b.sev.serious||0)-(a.sev.serious||0));
+  else if(sort==='n')cs.sort((a,b)=>b.n-a.n);
+  else cs.sort((a,b)=>laneOrder.indexOf(a.lane)-laneOrder.indexOf(b.lane)||parseInt(a.code.slice(1))-parseInt(b.code.slice(1)));
+  document.getElementById('list').innerHTML=cs.length?cs.map(card).join(''):'<p class="empty">No class matches.</p>';
+  openHash();
+}
+function openHash(){const h=location.hash.slice(1);if(!h)return;const el=document.getElementById(h);if(el&&el.tagName==='DETAILS'){el.open=true;}}
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{lane=b.dataset.lane;document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();}));
+document.getElementById('q').addEventListener('input',e=>{q=e.target.value;render();});
+document.getElementById('sort').addEventListener('change',e=>{sort=e.target.value;render();});
+window.addEventListener('hashchange',()=>{openHash();const el=document.getElementById(location.hash.slice(1));el&&el.scrollIntoView({block:'start'});});
+render();
+})();
+</script>
