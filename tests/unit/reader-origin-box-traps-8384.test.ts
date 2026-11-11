@@ -84,6 +84,26 @@ describe('trap 2: client identity', () => {
   });
 });
 
+describe('country behind the CDN (#8531)', () => {
+  it('through a Cloudflare edge: the reader country from cf-ipcountry, not the edge location', () => {
+    // A reader in Mexico served from a US edge: Vercel geolocates the edge.
+    const h = new Headers({ 'x-forwarded-for': '172.64.0.9', 'x-vercel-ip-country': 'US', 'cf-ipcountry': 'MX' });
+    expect(clientCountry(h)).toBe('MX');
+  });
+
+  it('off the CDN: a client-written cf-ipcountry is ignored', () => {
+    const h = new Headers({ 'x-forwarded-for': '203.0.113.9', 'x-vercel-ip-country': 'NL', 'cf-ipcountry': 'KP' });
+    expect(clientCountry(h)).toBe('NL');
+  });
+
+  it('through a Cloudflare edge with an unknown or Tor country: falls back to Vercel', () => {
+    for (const cf of ['XX', 'T1']) {
+      const h = new Headers({ 'x-forwarded-for': '2606:4700::1', 'x-vercel-ip-country': 'DE', 'cf-ipcountry': cf });
+      expect(clientCountry(h)).toBe('DE');
+    }
+  });
+});
+
 describe('trap 1: asset prefix', () => {
   it('unset or blank: no prefix, no CSP origin', () => {
     expect(assetPrefixFromEnv(undefined)).toEqual({ assetPrefix: undefined, cspOrigin: null });
