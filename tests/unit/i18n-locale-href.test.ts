@@ -193,6 +193,13 @@ describe('the Latin locale has its own, smaller set of twins', () => {
     expect(localeHref('la', '/search')).toBe('/la/search');
   });
 
+  it('has a Librarian twin on /es and /zh, not /la or /nl (#8576)', () => {
+    expect(localePath('/librarian', 'zh')).toBe('/zh/librarian');
+    expect(localeHref('zh', '/librarian')).toBe('/zh/librarian');
+    expect(localePath('/librarian', 'es')).toBe('/es/librarian');
+    expect(localePath('/librarian', 'la')).toBe('/librarian');
+  });
+
   it('switches language to the twin, or to that locale\'s front page', () => {
     expect(localeHref('la', '/book/x')).toBe('/la/book/x');
     expect(localeHref('la', '/es/book/x')).toBe('/la/book/x');

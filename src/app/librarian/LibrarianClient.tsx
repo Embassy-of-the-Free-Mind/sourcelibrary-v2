@@ -331,7 +331,7 @@ function looksLikeGoodQuestion(q: string): boolean {
 
 export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en' }: LibrarianClientProps) {
   const t = LIBRARIAN_STRINGS[lang];
-  const books = (Math.floor(bookCount / 1000) * 1000).toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
+  const books = (Math.floor(bookCount / 1000) * 1000).toLocaleString(t.dateLocale);
   const href = (path: string) => localePath(path, lang);
   const { data: session, status } = useSession();
   const params = useParams<{ tenant: string }>();

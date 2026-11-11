@@ -61,11 +61,11 @@ export interface PageLink {
   url: string;
   slug: string;
   page: number;
-  /** `/es` or ''. */
+  /** `/es`, `/zh` or ''. */
   locale: string;
 }
 
-const PAGE_LINK = /\[((?:[^[\]\\\n]|\\.)*)\]\((https:\/\/sourcelibrary\.org(\/es)?\/book\/([a-z0-9-]+)(?:\/page-number\/|\?page=)(\d+))\)/g;
+const PAGE_LINK = /\[((?:[^[\]\\\n]|\\.)*)\]\((https:\/\/sourcelibrary\.org(\/(?:es|zh))?\/book\/([a-z0-9-]+)(?:\/page-number\/|\?page=)(\d+))\)/g;
 
 /** Markdown links to a specific book page (`/page-number/N` or `?page=N`). */
 export function findPageLinks(text: string): PageLink[] {
