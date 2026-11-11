@@ -1,0 +1,1783 @@
+{
+ "unchanged_since": null,
+ "snapshot_pages": 719,
+ "reported": 184,
+ "controls": 535,
+ "detectors": [
+  "parallel",
+  "long-s",
+  "negation",
+  "seam",
+  "hedged-notes",
+  "model-reply",
+  "english-source",
+  "clef-zoo",
+  "clef-plain"
+ ],
+ "classes": {
+  "D1": {
+   "parallel": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.531,
+    "lo": 0.42,
+    "hi": 0.62
+   },
+   "long-s": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.543,
+    "lo": 0.3,
+    "hi": 0.69
+   },
+   "negation": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.652,
+    "lo": 0.52,
+    "hi": 0.75
+   },
+   "seam": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.594,
+    "lo": 0.47,
+    "hi": 0.81
+   },
+   "hedged-notes": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.453,
+    "lo": 0.36,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 11,
+    "auc": 0.485,
+    "lo": 0.15,
+    "hi": 1
+   },
+   "clef-plain": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 32,
+    "auc": 0.727,
+    "lo": 0.45,
+    "hi": 0.82
+   }
+  },
+  "O1": {
+   "parallel": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "long-s": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 0.429,
+    "lo": 0.43,
+    "hi": 0.43
+   },
+   "negation": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 0.762,
+    "lo": 0.76,
+    "hi": 0.76
+   },
+   "seam": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 0.381,
+    "lo": 0.38,
+    "hi": 0.38
+   },
+   "hedged-notes": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 0.476,
+    "lo": 0.48,
+    "hi": 0.48
+   },
+   "english-source": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": null,
+   "clef-plain": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 18,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   }
+  },
+  "O11": {
+   "parallel": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.481,
+    "lo": 0.44,
+    "hi": 0.59
+   },
+   "long-s": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.475,
+    "lo": 0.45,
+    "hi": 0.68
+   },
+   "negation": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.455,
+    "lo": 0.31,
+    "hi": 0.66
+   },
+   "seam": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.49,
+    "lo": 0.46,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.471,
+    "lo": 0.43,
+    "hi": 0.49
+   },
+   "model-reply": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 52,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": null,
+   "clef-plain": {
+    "n": 7,
+    "books": 5,
+    "ctrl": 47,
+    "auc": 0.547,
+    "lo": 0.39,
+    "hi": 0.81
+   }
+  },
+  "O12": {
+   "parallel": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.473,
+    "lo": 0.43,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.466,
+    "lo": 0.42,
+    "hi": 0.52
+   },
+   "negation": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.496,
+    "lo": 0.42,
+    "hi": 0.57
+   },
+   "seam": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.49,
+    "lo": 0.46,
+    "hi": 0.52
+   },
+   "hedged-notes": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.53,
+    "lo": 0.49,
+    "hi": 0.57
+   },
+   "model-reply": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.498,
+    "lo": 0.49,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 274,
+    "auc": 0.497,
+    "lo": 0.48,
+    "hi": 0.52
+   },
+   "clef-zoo": {
+    "n": 15,
+    "books": 9,
+    "ctrl": 35,
+    "auc": 0.594,
+    "lo": 0.41,
+    "hi": 0.73
+   },
+   "clef-plain": {
+    "n": 58,
+    "books": 32,
+    "ctrl": 257,
+    "auc": 0.493,
+    "lo": 0.41,
+    "hi": 0.56
+   }
+  },
+  "O13": {
+   "parallel": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.369,
+    "lo": 0.32,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.536,
+    "lo": 0.43,
+    "hi": 0.7
+   },
+   "negation": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.346,
+    "lo": 0.27,
+    "hi": 0.66
+   },
+   "seam": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.423,
+    "lo": 0.38,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.462,
+    "lo": 0.38,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.487,
+    "lo": 0.48,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 39,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   },
+   "clef-plain": {
+    "n": 5,
+    "books": 5,
+    "ctrl": 36,
+    "auc": 0.361,
+    "lo": 0.26,
+    "hi": 0.5
+   }
+  },
+  "O15": {
+   "parallel": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.43,
+    "hi": 0.6
+   },
+   "long-s": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "negation": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.476,
+    "lo": 0.33,
+    "hi": 0.57
+   },
+   "seam": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.577,
+    "lo": 0.42,
+    "hi": 0.88
+   },
+   "hedged-notes": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.554,
+    "lo": 0.39,
+    "hi": 0.79
+   },
+   "model-reply": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": null,
+   "clef-plain": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.488,
+    "lo": 0.27,
+    "hi": 0.75
+   }
+  },
+  "O3": {
+   "parallel": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.622,
+    "lo": 0.55,
+    "hi": 1
+   },
+   "long-s": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.463,
+    "lo": 0.44,
+    "hi": 0.5
+   },
+   "negation": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.72,
+    "lo": 0.39,
+    "hi": 0.87
+   },
+   "seam": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.439,
+    "lo": 0.38,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.488,
+    "lo": 0.48,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 41,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 3,
+    "books": 2,
+    "ctrl": 8,
+    "auc": 0.125,
+    "lo": 0,
+    "hi": 0.25
+   },
+   "clef-plain": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 36,
+    "auc": 0.424,
+    "lo": 0.08,
+    "hi": 1
+   }
+  },
+  "O5": {
+   "parallel": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.409,
+    "lo": 0.38,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.601,
+    "lo": 0.48,
+    "hi": 0.76
+   },
+   "negation": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.494,
+    "lo": 0.38,
+    "hi": 0.65
+   },
+   "seam": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.567,
+    "lo": 0.48,
+    "hi": 0.69
+   },
+   "hedged-notes": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.484,
+    "lo": 0.46,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.526,
+    "lo": 0.47,
+    "hi": 0.62
+   },
+   "english-source": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 63,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 13,
+    "auc": 0.442,
+    "lo": 0.33,
+    "hi": 0.5
+   },
+   "clef-plain": {
+    "n": 12,
+    "books": 11,
+    "ctrl": 60,
+    "auc": 0.496,
+    "lo": 0.37,
+    "hi": 0.69
+   }
+  },
+  "O6": {
+   "parallel": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.519,
+    "lo": 0.47,
+    "hi": 0.56
+   },
+   "long-s": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.489,
+    "lo": 0.46,
+    "hi": 0.51
+   },
+   "negation": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.537,
+    "lo": 0.47,
+    "hi": 0.61
+   },
+   "seam": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.484,
+    "lo": 0.48,
+    "hi": 0.49
+   },
+   "hedged-notes": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.502,
+    "lo": 0.48,
+    "hi": 0.52
+   },
+   "model-reply": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.506,
+    "lo": 0.5,
+    "hi": 0.52
+   },
+   "english-source": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 272,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 22,
+    "books": 14,
+    "ctrl": 52,
+    "auc": 0.351,
+    "lo": 0.22,
+    "hi": 0.49
+   },
+   "clef-plain": {
+    "n": 60,
+    "books": 31,
+    "ctrl": 255,
+    "auc": 0.5,
+    "lo": 0.45,
+    "hi": 0.56
+   }
+  },
+  "O8": {
+   "parallel": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.506,
+    "lo": 0.5,
+    "hi": 0.54
+   },
+   "long-s": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.419,
+    "lo": 0.34,
+    "hi": 0.51
+   },
+   "negation": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.477,
+    "lo": 0.36,
+    "hi": 0.57
+   },
+   "seam": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.484,
+    "lo": 0.47,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.526,
+    "lo": 0.46,
+    "hi": 0.61
+   },
+   "model-reply": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 64,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 4,
+    "books": 3,
+    "ctrl": 12,
+    "auc": 0.625,
+    "lo": 0.5,
+    "hi": 0.88
+   },
+   "clef-plain": {
+    "n": 12,
+    "books": 9,
+    "ctrl": 62,
+    "auc": 0.45,
+    "lo": 0.39,
+    "hi": 0.56
+   }
+  },
+  "O9": {
+   "parallel": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.46,
+    "lo": 0.45,
+    "hi": 0.52
+   },
+   "long-s": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.43,
+    "lo": 0.27,
+    "hi": 0.56
+   },
+   "negation": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.453,
+    "lo": 0.27,
+    "hi": 0.69
+   },
+   "seam": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.492,
+    "lo": 0.48,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.492,
+    "lo": 0.48,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 61,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 6,
+    "books": 3,
+    "ctrl": 12,
+    "auc": 0.542,
+    "lo": 0.13,
+    "hi": 0.7
+   },
+   "clef-plain": {
+    "n": 14,
+    "books": 5,
+    "ctrl": 56,
+    "auc": 0.519,
+    "lo": 0.45,
+    "hi": 0.67
+   }
+  },
+  "T10": {
+   "parallel": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.495,
+    "lo": 0.49,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.458,
+    "lo": 0.4,
+    "hi": 0.49
+   },
+   "negation": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.54,
+    "lo": 0.45,
+    "hi": 0.67
+   },
+   "seam": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.506,
+    "lo": 0.47,
+    "hi": 0.55
+   },
+   "hedged-notes": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.531,
+    "lo": 0.47,
+    "hi": 0.58
+   },
+   "model-reply": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 108,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 40,
+    "auc": 0.522,
+    "lo": 0.32,
+    "hi": 0.69
+   },
+   "clef-plain": {
+    "n": 17,
+    "books": 11,
+    "ctrl": 99,
+    "auc": 0.592,
+    "lo": 0.45,
+    "hi": 0.7
+   }
+  },
+  "T11": {
+   "parallel": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.484,
+    "lo": 0.02,
+    "hi": 0.72
+   },
+   "long-s": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.462,
+    "lo": 0.43,
+    "hi": 0.5
+   },
+   "negation": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.481,
+    "lo": 0.33,
+    "hi": 0.61
+   },
+   "seam": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.484,
+    "lo": 0.44,
+    "hi": 0.52
+   },
+   "hedged-notes": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.487,
+    "lo": 0.44,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.55,
+    "lo": 0.5,
+    "hi": 0.61
+   },
+   "english-source": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 39,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 7,
+    "books": 4,
+    "ctrl": 16,
+    "auc": 0.286,
+    "lo": 0.07,
+    "hi": 0.45
+   },
+   "clef-plain": {
+    "n": 8,
+    "books": 4,
+    "ctrl": 36,
+    "auc": 0.424,
+    "lo": 0.3,
+    "hi": 0.61
+   }
+  },
+  "T12": {
+   "parallel": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.469,
+    "lo": 0.38,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.611,
+    "lo": 0.5,
+    "hi": 0.79
+   },
+   "negation": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.422,
+    "lo": 0.29,
+    "hi": 0.5
+   },
+   "seam": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.708,
+    "lo": 0.47,
+    "hi": 0.88
+   },
+   "hedged-notes": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.453,
+    "lo": 0.43,
+    "hi": 0.48
+   },
+   "model-reply": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 32,
+    "auc": 0.491,
+    "lo": 0.33,
+    "hi": 0.66
+   },
+   "clef-zoo": {
+    "n": 7,
+    "books": 4,
+    "ctrl": 13,
+    "auc": 0.253,
+    "lo": 0.11,
+    "hi": 0.4
+   },
+   "clef-plain": {
+    "n": 9,
+    "books": 5,
+    "ctrl": 26,
+    "auc": 0.265,
+    "lo": 0.11,
+    "hi": 0.45
+   }
+  },
+  "T15": {
+   "parallel": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.493,
+    "lo": 0.47,
+    "hi": 0.52
+   },
+   "long-s": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.462,
+    "lo": 0.42,
+    "hi": 0.51
+   },
+   "negation": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.464,
+    "lo": 0.39,
+    "hi": 0.54
+   },
+   "seam": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.475,
+    "lo": 0.45,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.511,
+    "lo": 0.48,
+    "hi": 0.55
+   },
+   "model-reply": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.498,
+    "lo": 0.49,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 47,
+    "books": 35,
+    "ctrl": 280,
+    "auc": 0.506,
+    "lo": 0.5,
+    "hi": 0.52
+   },
+   "clef-zoo": {
+    "n": 14,
+    "books": 13,
+    "ctrl": 46,
+    "auc": 0.522,
+    "lo": 0.41,
+    "hi": 0.61
+   },
+   "clef-plain": {
+    "n": 33,
+    "books": 27,
+    "ctrl": 191,
+    "auc": 0.454,
+    "lo": 0.36,
+    "hi": 0.53
+   }
+  },
+  "T17": {
+   "parallel": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.496,
+    "lo": 0.46,
+    "hi": 0.76
+   },
+   "long-s": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.462,
+    "lo": 0.43,
+    "hi": 0.5
+   },
+   "negation": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.419,
+    "lo": 0.17,
+    "hi": 0.69
+   },
+   "seam": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.573,
+    "lo": 0.44,
+    "hi": 0.86
+   },
+   "hedged-notes": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.487,
+    "lo": 0.42,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.654,
+    "lo": 0.5,
+    "hi": 0.98
+   },
+   "english-source": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 39,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 12,
+    "auc": 0.444,
+    "lo": 0,
+    "hi": 0.53
+   },
+   "clef-plain": {
+    "n": 3,
+    "books": 3,
+    "ctrl": 33,
+    "auc": 0.798,
+    "lo": 0.57,
+    "hi": 0.94
+   }
+  },
+  "T2": {
+   "parallel": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "negation": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   },
+   "seam": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   },
+   "hedged-notes": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": null,
+   "clef-plain": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   }
+  },
+  "T4": {
+   "parallel": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "negation": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.667,
+    "lo": 0.67,
+    "hi": 0.67
+   },
+   "seam": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "model-reply": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "clef-plain": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   }
+  },
+  "T5": {
+   "parallel": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.601,
+    "lo": 0.5,
+    "hi": 0.78
+   },
+   "negation": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.595,
+    "lo": 0.38,
+    "hi": 0.9
+   },
+   "seam": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.476,
+    "lo": 0.43,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.625,
+    "lo": 0.5,
+    "hi": 0.88
+   },
+   "model-reply": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 15,
+    "auc": 0.717,
+    "lo": 0.42,
+    "hi": 0.98
+   },
+   "clef-plain": {
+    "n": 4,
+    "books": 4,
+    "ctrl": 21,
+    "auc": 0.583,
+    "lo": 0.38,
+    "hi": 0.83
+   }
+  },
+  "T7": {
+   "parallel": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   },
+   "negation": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "seam": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "model-reply": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "clef-plain": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   }
+  },
+  "T8": {
+   "parallel": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.426,
+    "lo": 0.35,
+    "hi": 0.48
+   },
+   "negation": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.4,
+    "lo": 0.2,
+    "hi": 0.67
+   },
+   "seam": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.479,
+    "lo": 0.45,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.511,
+    "lo": 0.4,
+    "hi": 0.6
+   },
+   "model-reply": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 47,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 26,
+    "auc": 0.538,
+    "lo": 0.39,
+    "hi": 0.78
+   },
+   "clef-plain": {
+    "n": 9,
+    "books": 7,
+    "ctrl": 44,
+    "auc": 0.566,
+    "lo": 0.45,
+    "hi": 0.74
+   }
+  },
+  "T9": {
+   "parallel": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "long-s": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   },
+   "negation": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   },
+   "seam": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "hedged-notes": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.333,
+    "lo": 0.33,
+    "hi": 0.33
+   },
+   "model-reply": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "english-source": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 0.5,
+    "lo": 0.5,
+    "hi": 0.5
+   },
+   "clef-zoo": null,
+   "clef-plain": {
+    "n": 1,
+    "books": 1,
+    "ctrl": 3,
+    "auc": 1,
+    "lo": 1,
+    "hi": 1
+   }
+  }
+ },
+ "targets": [
+  {
+   "detector": "parallel",
+   "class": "T11",
+   "n": 8,
+   "books": 4,
+   "ctrl": 39,
+   "auc": 0.484,
+   "lo": 0.02,
+   "hi": 0.72,
+   "flagged": 72,
+   "flagged_hits": 5,
+   "nonzero": 114
+  },
+  {
+   "detector": "long-s",
+   "class": "O6",
+   "n": 60,
+   "books": 31,
+   "ctrl": 272,
+   "auc": 0.489,
+   "lo": 0.46,
+   "hi": 0.51,
+   "flagged": 71,
+   "flagged_hits": 4,
+   "nonzero": 71
+  },
+  {
+   "detector": "long-s",
+   "class": "O8",
+   "n": 12,
+   "books": 9,
+   "ctrl": 64,
+   "auc": 0.419,
+   "lo": 0.34,
+   "hi": 0.51,
+   "flagged": 71,
+   "flagged_hits": 1,
+   "nonzero": 71
+  },
+  {
+   "detector": "negation",
+   "class": "T8",
+   "n": 9,
+   "books": 7,
+   "ctrl": 47,
+   "auc": 0.4,
+   "lo": 0.2,
+   "hi": 0.67,
+   "flagged": 72,
+   "flagged_hits": 1,
+   "nonzero": 487
+  },
+  {
+   "detector": "negation",
+   "class": "O6",
+   "n": 60,
+   "books": 31,
+   "ctrl": 272,
+   "auc": 0.537,
+   "lo": 0.47,
+   "hi": 0.61,
+   "flagged": 72,
+   "flagged_hits": 9,
+   "nonzero": 487
+  },
+  {
+   "detector": "seam",
+   "class": "T5",
+   "n": 4,
+   "books": 4,
+   "ctrl": 21,
+   "auc": 0.476,
+   "lo": 0.43,
+   "hi": 0.5,
+   "flagged": 38,
+   "flagged_hits": 0,
+   "nonzero": 38
+  },
+  {
+   "detector": "seam",
+   "class": "T4",
+   "n": 1,
+   "books": 1,
+   "ctrl": 3,
+   "auc": 0.5,
+   "lo": 0.5,
+   "hi": 0.5,
+   "flagged": 38,
+   "flagged_hits": 0,
+   "nonzero": 38
+  },
+  {
+   "detector": "seam",
+   "class": "T15",
+   "n": 47,
+   "books": 35,
+   "ctrl": 280,
+   "auc": 0.475,
+   "lo": 0.45,
+   "hi": 0.5,
+   "flagged": 38,
+   "flagged_hits": 1,
+   "nonzero": 38
+  },
+  {
+   "detector": "hedged-notes",
+   "class": "T10",
+   "n": 17,
+   "books": 11,
+   "ctrl": 108,
+   "auc": 0.531,
+   "lo": 0.47,
+   "hi": 0.58,
+   "flagged": 36,
+   "flagged_hits": 2,
+   "nonzero": 36
+  },
+  {
+   "detector": "hedged-notes",
+   "class": "T7",
+   "n": 1,
+   "books": 1,
+   "ctrl": 3,
+   "auc": 1,
+   "lo": 1,
+   "hi": 1,
+   "flagged": 36,
+   "flagged_hits": 1,
+   "nonzero": 36
+  },
+  {
+   "detector": "model-reply",
+   "class": "T17",
+   "n": 3,
+   "books": 3,
+   "ctrl": 39,
+   "auc": 0.654,
+   "lo": 0.5,
+   "hi": 0.98,
+   "flagged": 3,
+   "flagged_hits": 1,
+   "nonzero": 3
+  },
+  {
+   "detector": "model-reply",
+   "class": "O15",
+   "n": 4,
+   "books": 4,
+   "ctrl": 21,
+   "auc": 0.5,
+   "lo": 0.5,
+   "hi": 0.5,
+   "flagged": 3,
+   "flagged_hits": 0,
+   "nonzero": 3
+  },
+  {
+   "detector": "english-source",
+   "class": "T12",
+   "n": 9,
+   "books": 5,
+   "ctrl": 32,
+   "auc": 0.491,
+   "lo": 0.33,
+   "hi": 0.66,
+   "flagged": 37,
+   "flagged_hits": 6,
+   "nonzero": 37
+  }
+ ]
+}
