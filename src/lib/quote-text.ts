@@ -33,6 +33,7 @@ import { getTranslation } from '@/lib/page-translations';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { declaredPageLanguage } from '@/lib/english-page-language';
 import { sameLanguage } from '@/lib/language-normalize';
+import { parseTranslationLayers, type AnnotationType } from '@/lib/translation-layers';
 
 export type QuoteTextSource = 'translation' | 'ocr_original' | 'source_column';
 
@@ -47,6 +48,46 @@ export interface QuotableText {
    * substitution makes the caller assert something it never checked (#4095).
    */
   lang: string;
+  /**
+   * The translator model's own commentary, taken OUT of `text` (#8567): explanatory
+   * `<note>`s, the definitions it wrote after a `<term>`, image descriptions, and
+   * the original-language phrases it kept in a note. None of it is the page's
+   * words in translation, so none of it belongs inside quotation marks; it is
+   * returned here, labelled, so nothing is lost. Absent when there is none.
+   */
+  editorial?: EditorialAnnotation[];
+}
+
+export interface EditorialAnnotation {
+  /** note | definition | gloss-model | image | original (translation-layers.ts). */
+  type: AnnotationType;
+  /** The words in `text` it is attached to, or null when it stood alone. */
+  anchor: string | null;
+  body: string;
+}
+
+/** Told to every caller that receives `editorial_notes`. Agents act on these sentences. */
+export const EDITORIAL_NOTES_NOTE =
+  'editorial_notes holds the translator model\'s own commentary on this page (explanations, '
+  + 'definitions of terms, descriptions of images, and original-language phrases it kept), taken out '
+  + 'of the quotable text because none of it is printed on the page. Do not put it inside quotation '
+  + 'marks or attribute it to the author. Type "original" is a phrase from the source language that the '
+  + 'translator preserved; quote it only as the original wording of the anchor phrase.';
+
+/**
+ * Split a stored translation into the words to quote and the model's commentary.
+ * Uses the same split the reader's notes toggle uses (translation-layers.ts, #5942).
+ * When that parser cannot place every annotation exactly it reports `exact: false`;
+ * then the text is served as stored, tags and all, rather than losing commentary
+ * that a caller could otherwise still see and recognise.
+ */
+function separateCommentary(text: string): { text: string; editorial?: EditorialAnnotation[] } {
+  const layers = parseTranslationLayers(text);
+  if (!layers.exact) return { text };
+  const editorial = layers.annotations.map((a) => ({ type: a.type, anchor: a.anchor.phrase, body: a.body.trim() }));
+  const words = layers.text.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  if (!words) return { text };
+  return editorial.length ? { text: words, editorial } : { text: words };
 }
 
 /**
@@ -186,7 +227,9 @@ export function resolveQuoteText(
       // the words are the leaf's own — see SOURCE_COLUMN_NOTE.
       const source: QuoteTextSource =
         localized?.source === SOURCE_COLUMN_PROVENANCE ? 'source_column' : 'translation';
-      return { text: stamp(cleaned), source, lang };
+      if (source === 'source_column') return { text: stamp(cleaned), source, lang };
+      const split = separateCommentary(cleaned);
+      return { text: stamp(split.text), source, lang, ...(split.editorial ? { editorial: split.editorial } : {}) };
     }
     // The leaf's own words, asked for in their own language (#7458). Before the
     // English fallback: a reader who asked for the German page of a German book
@@ -201,7 +244,10 @@ export function resolveQuoteText(
   const translation = page.translation?.data
     ? stripEditorialWrappers(page.translation.data).trim()
     : '';
-  if (translation) return { text: stamp(translation), source: 'translation', lang: 'en' };
+  if (translation) {
+    const split = separateCommentary(translation);
+    return { text: stamp(split.text), source: 'translation', lang: 'en', ...(split.editorial ? { editorial: split.editorial } : {}) };
+  }
 
   const ocrRaw = page.ocr?.data || '';
   const ocr = ocrRaw ? stripEditorialWrappers(ocrRaw).trim() : '';

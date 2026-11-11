@@ -7,7 +7,7 @@ import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { findFacingPartner, facingTranslationNote, facingTranslationOf, hasPublishedFacingTranslation, type FacingPartner } from '@/lib/facing-translation';
 import { stripEditorialWrappers, stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, ORIGINAL_LANGUAGE_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, EDITORIAL_NOTES_NOTE, type EditorialAnnotation, OCR_ORIGINAL_NOTE, ORIGINAL_LANGUAGE_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { languageCode, toBcp47 } from '@/lib/language-normalize';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
@@ -116,6 +116,9 @@ interface QuoteResponse {
      */
     contains_marginalia?: boolean;
     marginalia_note?: string;
+    /** The translator model's own commentary, taken out of the quotable text (#8567). */
+    editorial_notes?: EditorialAnnotation[];
+    editorial_notes_note?: string;
     /**
      * ISO code of the language the quoted text is IN — always present, so a
      * caller branches on it rather than assuming English (#4095).
@@ -362,6 +365,10 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         // authority on whether the leaf carries one (#4362).
         ...(containsMarginalia(quotable.text) || containsMarginalia(page.ocr?.data || '')
           ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
+          : {}),
+        // The translator model's commentary, moved out of the quotable text (#8567).
+        ...(quotable.editorial?.length
+          ? { editorial_notes: quotable.editorial, editorial_notes_note: EDITORIAL_NOTES_NOTE }
           : {}),
         page: pageNumber,
         ...(citation.printed_page ? { printed_page: citation.printed_page } : {}),

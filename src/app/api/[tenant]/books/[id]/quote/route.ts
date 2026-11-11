@@ -4,7 +4,7 @@ import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, EDITORIAL_NOTES_NOTE, type EditorialAnnotation, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
@@ -39,6 +39,9 @@ interface QuoteResponse {
     /** The page carries marginal text (#4362) — copy-specific by nature; see marginalia_note. */
     contains_marginalia?: boolean;
     marginalia_note?: string;
+    /** The translator model's own commentary, taken out of the quotable text (#8567). */
+    editorial_notes?: EditorialAnnotation[];
+    editorial_notes_note?: string;
     /**
      * Romanization of the original for non-Latin scripts (#3828) — AI-derived
      * apparatus, never a transcription, hence `romanized` and not
@@ -183,6 +186,10 @@ export async function GET(request: NextRequest, context: RouteContext) {
         // authority on whether the leaf carries a marginal note (#4362).
         ...(containsMarginalia(quotable.text) || containsMarginalia(page.ocr?.data || '')
           ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
+          : {}),
+        // The translator model's commentary, moved out of the quotable text (#8567).
+        ...(quotable.editorial?.length
+          ? { editorial_notes: quotable.editorial, editorial_notes_note: EDITORIAL_NOTES_NOTE }
           : {}),
         page: pageNumber,
         book_id: book.id,
