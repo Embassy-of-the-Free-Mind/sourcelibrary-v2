@@ -1,4 +1,5 @@
 import { collectionModel, dataFile } from './data';
+import { PICTURE_TYPE_MAP, TEXT_TYPE_MAP } from './standards';
 import type { SubjectRow, Pic } from '../_components/SubjectsBrowser';
 
 /*
@@ -94,3 +95,33 @@ export function featuredOf(slugs: string[]) {
 }
 export const axisSlugs = () => { const a = axes(); return { periods: a.centuries.map((c) => c.slug), languages: a.languages.map((l) => l.slug) }; };
 export const centuryOfSlug = (slug: string) => axes().centuries.find((c) => c.slug === slug);
+
+/* Types: picture types (the gallery's) and text types (the site's form tags), as pages. */
+interface Types { pictures: { id: string; slug: string; total: number }[]; texts: { id: string; slug: string; total: number }[] }
+const types = (): Types => { const t = dataFile<Types>('snap/_types') ?? { pictures: [], texts: [] }; return { pictures: t.pictures.filter((x) => x.total > 0), texts: t.texts.filter((x) => x.total > 0) }; };
+export function typeGroups(): { groups: Group[]; pictures: number; texts: number } {
+  const t = types();
+  const pic = (kind: string) => PICTURE_TYPE_MAP.filter((x) => x.kind === kind).flatMap((x) => {
+    const s = t.pictures.find((p) => p.id === x.ours);
+    return s ? [{ id: s.slug, label: x.label, href: `/revamp/t/${s.slug}`, alt: x.terms.map((y) => y.label), pics: picsOf(s.slug), note: `${n(s.total)} pictures`, home: true }] : [];
+  });
+  const textRows = TEXT_TYPE_MAP.flatMap((x) => {
+    const s = t.texts.find((p) => p.id === x.ours);
+    if (!s) return [];
+    const m = collectionModel(s.slug);
+    const covers = (m?.all ?? []).map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean).map((src) => ({ src: src as string }));
+    return [{ id: s.slug, label: x.label, href: `/revamp/t/${s.slug}`, alt: x.terms.map((y) => y.label), pics: covers, note: `${n(s.total)} books`, home: true }];
+  });
+  const band = (id: string, label: string, narrower: SubjectRow[]) => ({ id, label, alt: [], pics: narrower.flatMap((x) => x.pics.slice(0, 3)).slice(0, 14), narrower });
+  const groups = [band('technique', 'Pictures: technique', pic('technique')), band('shows', 'Pictures: what they show', pic('what it shows')), band('place', 'Pictures: place in the book', pic('place in the book')), band('texts', 'Texts', textRows)].filter((g) => g.narrower.length);
+  return { groups, pictures: t.pictures.reduce((a, b) => a + b.total, 0), texts: t.texts.reduce((a, b) => a + b.total, 0) };
+}
+export function typeOfSlug(slug: string) {
+  const t = types();
+  const p = t.pictures.find((x) => x.slug === slug);
+  if (p) return { kind: 'picture' as const, total: p.total, map: PICTURE_TYPE_MAP.find((x) => x.ours === p.id)! };
+  const x = t.texts.find((y) => y.slug === slug);
+  if (x) return { kind: 'text' as const, total: x.total, map: TEXT_TYPE_MAP.find((y) => y.ours === x.id)! };
+  return null;
+}
+export const typeSlugs = () => { const t = types(); return [...t.pictures, ...t.texts].map((x) => x.slug); };
