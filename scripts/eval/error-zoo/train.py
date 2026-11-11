@@ -106,6 +106,16 @@ say(f'\nBy source inside the frame:')
 for s in sorted(set(src[honest])):
     m = honest & (src == s); say(f'- {s}: n={m.sum()}, base {y[m].mean():.0%}, AUC {auc(y[m], P[m]):.3f}, prec@10% {at_k(y[m], P[m], .1)[0]:.0%}, prec@30% {at_k(y[m], P[m], .3)[0]:.0%}')
 say()
+say('### 2b. The library-wide frame: the weekly audit\'s uniform draw (one page per random visible non-English book, served)\n')
+lib = honest & (src == 'spare_audit')
+say(f'{lib.sum()} pages, {len(set(g[lib]))} books, serious {y[lib].mean():.0%}. The book_checks "random" rows above are random WITHIN picked frames (most-read books, lane queues); this is the only draw that is uniform over the library, so this table is the one to quote for "these N% of pages hold M% of the serious errors".\n')
+yy = y[lib]; pp = P[lib]; o = np.argsort(-pp)
+say('| top share by risk | pages | serious among them | share of all serious pages caught |')
+say('|---|---|---|---|')
+for q in (.05, .10, .20, .30, .50):
+    k = int(len(yy) * q); kk = int(yy[o[:k]].sum()); lo, hi = wilson(kk, k)
+    say(f'| {int(q*100)}% | {k} | {kk/k:.0%} [{lo:.0%}, {hi:.0%}] | {kk/max(1,yy.sum()):.0%} |')
+say()
 
 # ---- 3. per-source models and cross-instrument transfer ---------------------------------------------------------
 say('## 3. Per-source training and cross-instrument transfer\n')
