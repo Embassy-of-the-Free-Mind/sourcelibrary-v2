@@ -2,8 +2,9 @@
  * Marginalia detection on the quote path (#4362).
  *
  * A quote drawn from a `<margin>` block used to cite identically to body
- * text — but a marginal note exists in exactly ONE physical copy, so the
- * apparatus must flag it and point at the copy clause (#4360).
+ * text. A handwritten note exists in ONE physical copy and needs the copy
+ * clause (#4360); a printed side note or apparatus is in every copy. The tag
+ * covers both, so the note must not call every margin copy-specific.
  */
 import { describe, it, expect } from 'vitest';
 import { containsMarginalia, MARGINALIA_NOTE } from '@/lib/quote-text';
@@ -28,9 +29,16 @@ describe('containsMarginalia', () => {
 });
 
 describe('MARGINALIA_NOTE', () => {
-  it('says the two things that matter: copy-specific, and cite the holder', () => {
+  it('says a handwritten note is copy-specific and cites the holder', () => {
     expect(MARGINALIA_NOTE).toContain('COPY-SPECIFIC');
     expect(MARGINALIA_NOTE).toContain('citation.copy');
     expect(MARGINALIA_NOTE).toContain('marginal annotation');
+  });
+
+  it('does not call printed marginalia copy-specific (the tag covers both)', () => {
+    expect(MARGINALIA_NOTE).toMatch(/printed side notes/);
+    expect(MARGINALIA_NOTE).toMatch(/critical apparatus/);
+    expect(MARGINALIA_NOTE).toMatch(/Only a handwritten/);
+    expect(MARGINALIA_NOTE).not.toMatch(/a marginal note exists only in the one physical copy/);
   });
 });

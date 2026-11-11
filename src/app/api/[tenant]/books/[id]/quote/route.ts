@@ -36,7 +36,7 @@ interface QuoteResponse {
     text_source: QuoteTextSource;
     /** Set when text_source is `ocr_original` or `source_column` — see those notes. */
     transcription_note?: string;
-    /** The page carries marginal text (#4362) — copy-specific by nature; see marginalia_note. */
+    /** The page carries marginal text (#4362): printed or handwritten; see marginalia_note. */
     contains_marginalia?: boolean;
     marginalia_note?: string;
     /**
