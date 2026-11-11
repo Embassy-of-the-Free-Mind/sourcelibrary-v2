@@ -12,6 +12,7 @@ import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo conven
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { checkPagesApiBudget, recordPagesApi, pagesWithText, pagesApiOverBudgetBody } from '@/lib/pages-api-meter';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
@@ -93,6 +94,14 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
+    // Reader-page budget and usage row (pages-api-meter.ts). 'default' is the main library, so it is
+    // capped like the global twin; named tenants (partner reading rooms) are logged, never capped.
+    const meter = await checkPagesApiBudget(request, { exempt: tenant !== 'default' });
+    if (meter?.overBudget) {
+      recordPagesApi(request, meter, { status: 429, pagesServed: 0 });
+      return NextResponse.json(pagesApiOverBudgetBody(meter), { status: 429, headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' } });
+    }
+
     // The notes layer (#7965): read while the page still carries translation.text, which goes no further.
     // `?full=true` is untouched: the whole stored document, raw `data` included (what an editor loads).
     let layers = new Map<string, ReaderTextLayer>();
@@ -110,6 +119,7 @@ export async function GET(
     // English edition, English leaf: serve the transcription, never the stored
     // English-to-English rewording (#7100).
     [page] = await serveEnglishOriginalPages(db, [page]);
+    recordPagesApi(request, meter, { status: 200, pagesServed: pagesWithText([page]) });
 
     // Reader-path provenance: translation carries the invisible imprimatur
     // (deterministic, no ref — cache-safe). Mirrors the global twin.

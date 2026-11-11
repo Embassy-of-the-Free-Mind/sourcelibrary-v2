@@ -13,6 +13,7 @@ import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo conven
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { checkPagesApiBudget, recordPagesApi, pagesWithText, pagesApiOverBudgetBody } from '@/lib/pages-api-meter';
 import { isScriptOnPartnerPages, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { poolRefFor } from '@/lib/suspected-pool';
 import { verifyCitationToken } from '@/lib/citation-token';
@@ -97,6 +98,14 @@ export async function GET(
       return new NextResponse(SURFACE_REFUSED_RESPONSE, { status: 403, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } });
     }
 
+    // Reader-page budget and usage row (pages-api-meter.ts): every call is logged; a signed-in
+    // account past its daily reader budget gets a 429. Tenant reading rooms are logged, never capped.
+    const meter = await checkPagesApiBudget(request, { exempt: !!tenantId });
+    if (meter?.overBudget) {
+      recordPagesApi(request, meter, { status: 429, pagesServed: 0 });
+      return NextResponse.json(pagesApiOverBudgetBody(meter), { status: 429, headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' } });
+    }
+
     // The notes layer (#7965): read while the page still carries translation.text, which goes no further.
     // `?full=true` is untouched: the whole stored document, raw `data` included (what an editor loads).
     let layers = new Map<string, ReaderTextLayer>();
@@ -114,6 +123,7 @@ export async function GET(
     // English edition, English leaf: serve the transcription, never the stored
     // English-to-English rewording (#7100).
     [page] = await serveEnglishOriginalPages(db, [page]);
+    recordPagesApi(request, meter, { status: 200, pagesServed: pagesWithText([page]) });
 
     // Reader-path provenance: translation carries the invisible imprimatur.
     // Deterministic for readers; a flagged proxy pool also gets its extraction

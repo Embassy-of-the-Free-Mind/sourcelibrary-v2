@@ -6,6 +6,7 @@ import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { checkPagesApiBudget, recordPagesApi, pagesWithText, pagesApiOverBudgetBody } from '@/lib/pages-api-meter';
 import { isScriptOnPartnerPages, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 import { poolRefFor } from '@/lib/suspected-pool';
@@ -61,6 +62,14 @@ export async function POST(request: NextRequest) {
       return new NextResponse(SURFACE_REFUSED_RESPONSE, { status: 403, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } });
     }
 
+    // Reader-page budget and usage row (pages-api-meter.ts): every call is logged; a signed-in
+    // account past its daily reader budget gets a 429. Tenant reading rooms are logged, never capped.
+    const meter = await checkPagesApiBudget(request, { exempt: !!tenantId });
+    if (meter?.overBudget) {
+      recordPagesApi(request, meter, { status: 429, pagesServed: 0 });
+      return NextResponse.json(pagesApiOverBudgetBody(meter), { status: 429, headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' } });
+    }
+
     // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.
     const taken = await takeReaderTextLayers(db, pages);
     pages = taken.pages;
@@ -73,6 +82,7 @@ export async function POST(request: NextRequest) {
     // English edition, English leaf: serve the transcription, never the stored
     // English-to-English rewording (#7100).
     pages = await serveEnglishOriginalPages(db, pages);
+    recordPagesApi(request, meter, { status: 200, pagesServed: pagesWithText(pages) });
 
     // Strip MongoDB _id; weave the reader-path provenance mark into each
     // translation. Deterministic (content-keyed, no ref) for readers, so the
