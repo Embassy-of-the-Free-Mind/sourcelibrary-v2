@@ -6,7 +6,7 @@ scripts: []
 canons: []
 n_books: 79
 n_pages: 790
-verdict: "No batched shape beats the 15-call reference under the preregistered rule: every batched arm caught 8/10 or fewer planted English defects (needs 9/10). P5-opus finds 10.1 V-confirmed serious OCR findings a book against R's 11.1, at 63% of R's quota (142.5 vs 99.0 per 1% of a week), and also reads the English."
+verdict: "No batched shape beats the 15-call reference under the preregistered rule: every batched arm caught 8/10 or fewer planted English defects (needs 9/10). One call per page pair on the strongest model (P5) finds 10.1 V-confirmed serious OCR findings a book against R's 11.1, at 63% of R's quota (142.5 vs 99.0 per 1% of a week), and also reads the English."
 status: rejected
 decision: "R stays (prereg §7 rule). Sensitivity: page_defect is an English-layer control that R itself would fail (R reads no English). If it is scored as translation scope, P5-opus wins on OCR per quota (+44%) at the same recall and higher precision. Adopting P5-opus as paired-fifths-check v2 is a DECISION for Derek, not made here."
 feeds: judge

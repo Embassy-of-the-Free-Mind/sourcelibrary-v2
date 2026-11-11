@@ -11,7 +11,7 @@ import Reveal from '@/components/about/Reveal';
 import Pic from '@/components/about/Pic';
 import AboutSchema from '@/components/seo/AboutSchema';
 import { PAGES as FREETHINKERS } from '@/components/about/freethinkers-data';
-import { WonderFigure, SoulFigure } from '@/components/about/MarkedFigures';
+import { WonderFigure } from '@/components/about/MarkedFigures';
 import { getSiteStats } from '@/lib/site-stats';
 import { ABOUT_NUMBER_LOCALE, ABOUT_STRINGS, type AboutStrings } from '@/lib/about-i18n';
 import { localePath, type Locale } from '@/lib/locale-path';
@@ -27,7 +27,6 @@ const h2 = 'font-serif text-4xl md:text-6xl text-primary leading-[1.05] tracking
 const h3 = 'font-serif text-[26px] md:text-5xl text-primary leading-[1.08] tracking-tight';
 const lead = 'text-lg md:text-xl text-secondary leading-relaxed';
 const body = 'text-lg text-secondary leading-relaxed';
-const cardBody = 'text-base md:text-lg text-secondary leading-relaxed';
 
 // Links as in the articles (.claude/docs/article-rules.md): body colour, thin
 // gold underline that darkens on hover. No red text.
@@ -97,21 +96,6 @@ function StepList({ t, lang, mark = false }: { t: AboutStrings['how']; lang: Loc
   );
 }
 
-function BookPair({ t, first, second }: { t: AboutStrings['once']; first: ReactNode; second: ReactNode }) {
-  return (
-    <>
-      <Reveal className="mt-24 md:mt-32 max-w-4xl">
-        <h3 className={h3}>{t.pairFirst}</h3>
-      </Reveal>
-      <div className="mt-12 md:mt-16">{first}</div>
-      <Reveal className="mt-24 md:mt-32 max-w-4xl">
-        <h3 className={h3}>{t.pairSecond}</h3>
-      </Reveal>
-      <div className="mt-12 md:mt-16">{second}</div>
-    </>
-  );
-}
-
 function Second({ title, body }: { title: string; body: string }) {
   return (
     <>
@@ -130,18 +114,12 @@ export default async function AboutView({ lang = 'en' }: { lang?: Locale }) {
   const nf = new Intl.NumberFormat(ABOUT_NUMBER_LOCALE[lang], { useGrouping: 'always' });
   const fmt = (n: number) => nf.format(n);
 
-  // Number colours follow the site's badge colours where one fits (green =
-  // translated, yellow = first translation).
+  // Three plain figures. "Online" because totalBooks is the live filter
+  // (visible, with pages): books a reader can open, not every scan we hold.
   const headlineStats: HeroStat[] = [
-    { value: fmt(stats.totalBooks), label: t.stats.digitised, href: lp('/search'), color: '#60a5fa' },
-    // stats.languageCount is now an honest distinct-language count: compound
-    // labels are split into atomic languages and variants/junk are dropped
-    // (scripts/lib/language-count.mjs). ~105 as of 2026-06-26, so 100+ is a
-    // defensible floor.
-    { value: '100+', label: t.stats.languages, color: '#c4b5fd' },
-    { value: fmt(stats.readableInEnglish), label: t.stats.readable, href: lp('/search?has_translation=true'), color: '#4ade80' },
-    { value: fmt(stats.firstTranslationCount), label: t.stats.first, href: lp('/search?first_translation=true'), color: '#facc15' },
-    { value: fmt(stats.illustrationCount), label: t.stats.illustrations, href: lp('/gallery'), color: '#fb923c' },
+    { value: fmt(stats.totalBooks), label: t.stats.online, href: lp('/search') },
+    { value: fmt(stats.readableInEnglish), label: t.stats.readable, href: lp('/search?has_translation=true') },
+    { value: fmt(stats.firstTranslationCount), label: t.stats.first, href: lp('/search?first_translation=true') },
   ];
 
   return (
@@ -199,53 +177,23 @@ export default async function AboutView({ lang = 'en' }: { lang?: Locale }) {
               {t.once.lead}
             </p>
           </Reveal>
-          {/* The two pages, tried as pairs: what Ficino gave back, then what is still waiting. */}
-          {/* Laura, 2026-11-05: Plato (Theaetetus) to open, Ficino's Platonic Theology to close. */}
-          <BookPair t={t.once} first={<WonderFigure t={t.wonder} readEnglish={t.readEnglish} />} second={<SoulFigure t={t.soul} readEnglish={t.readEnglish} />} />
+          {/* One page: what Ficino gave back. The Platonic Theology pair was cut
+              (2026-11-11): it already had an English translation (Allen and
+              Hankins, 2001–06), so it did not show what Source Library does.
+              The books that do follow in the next section. */}
+          <Reveal className="mt-24 md:mt-32 max-w-4xl">
+            <h3 className={h3}>{t.once.pairFirst}</h3>
+          </Reveal>
+          <div className="mt-12 md:mt-16"><WonderFigure t={t.wonder} readEnglish={t.readEnglish} /></div>
         </div>
       </section>
 
-      {/* A new Renaissance: what the library is for, for people. The next
-          section is what it gives AI; the ones after come back to people. */}
-      <section className="py-28 md:py-40">
-        <div className={WIDE}>
-          <Reveal className="max-w-5xl">
-            <h2 className={h2}>{t.renaissance.title}</h2>
-          </Reveal>
-          <div className="mt-16 md:mt-24 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-6">
-            <Reveal className="bg-[var(--bg-warm)] border border-border-light p-6 md:p-10">
-              <p className="text-sm font-semibold text-muted">{t.renaissance.then}</p>
-              <p className="mt-4 font-serif text-xl md:text-4xl text-primary leading-snug md:leading-tight">{t.renaissance.thenTitle}</p>
-              <p className={`mt-3 md:mt-5 ${cardBody}`}>{t.renaissance.thenBody}</p>
-            </Reveal>
-            <Reveal delay={150} className="bg-[var(--bg-warm)] border border-border-light p-6 md:p-10">
-              <p className="text-sm font-semibold text-muted">{t.renaissance.now}</p>
-              <p className="mt-4 font-serif text-xl md:text-4xl text-primary leading-snug md:leading-tight">{t.renaissance.nowTitle}</p>
-              <p className={`mt-3 md:mt-5 ${cardBody}`}>{t.renaissance.nowBody}</p>
-            </Reveal>
-          </div>
-          <Reveal className="mt-20 md:mt-28 max-w-4xl">
-            <h3 className={h3}>{t.renaissance.audienceTitle}</h3>
-          </Reveal>
-          <ul className="mt-12 grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.renaissance.audiences.map(([name, d], i) => (
-              <li key={name} className="grid">
-                <Reveal delay={i * 100} className="bg-[var(--bg-warm)] border border-border-light p-6 md:p-10">
-                  <h4 className="font-serif text-xl md:text-2xl text-primary">{name}</h4>
-                  <p className={`mt-2 md:mt-3 ${cardBody}`}>{d}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* AI and the freethinkers */}
-            <section className="py-24 md:py-32 bg-[var(--bg-warm)]">
+      {/* What we do: books nobody had translated, all first English translations by us */}
+            <section className="py-24 md:py-32">
               <div className={WIDE}>
                 <div className="max-w-4xl">
                   <Reveal>
-                    <h2 className={h2}>{t.ai.titleStart}{' '}<br className="hidden md:inline" />{t.ai.titleEnd}</h2>
+                    <h2 className={h2}>{t.ai.title}</h2>
                   </Reveal>
                   <Reveal delay={120} className="mt-8 md:mt-10 max-w-2xl">
                     <p className={lead}>{t.ai.lead}</p>
@@ -273,8 +221,8 @@ export default async function AboutView({ lang = 'en' }: { lang?: Locale }) {
                               </div>
             </section>
 
-      {/* What we do: a real page read in front of you */}
-      <section className="py-24 md:py-32">
+      {/* How: a real page read in front of you */}
+      <section className="py-24 md:py-32 bg-[var(--bg-warm)]">
         <div className={WIDE}>
           <ReadingDemo t={t.demo}>
             <h2 className={h2}>{t.how.title}</h2>
@@ -284,7 +232,7 @@ export default async function AboutView({ lang = 'en' }: { lang?: Locale }) {
       </section>
 
       {/* Every day, another first */}
-      <section className={`${SCENE} bg-[var(--bg-warm)]`}>
+      <section className={SCENE}>
         <div className={WIDE}>
           <Reveal>
             <h3 className={`${h3} max-w-4xl text-balance`}>{t.counters.title}</h3>
@@ -301,7 +249,7 @@ export default async function AboutView({ lang = 'en' }: { lang?: Locale }) {
       </section>
 
       {/* Who */}
-      <section className="py-24 md:py-32">
+      <section className="py-24 md:py-32 bg-[var(--bg-warm)]">
         <div className={WIDE}>
           <Reveal>
             <h2 className={h2}>{t.who.title}</h2>
@@ -334,7 +282,7 @@ export default async function AboutView({ lang = 'en' }: { lang?: Locale }) {
           <div className="mt-10 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-6">
             {PARTNERS.map((pt, i) => (
               <Reveal key={pt.name} delay={(i % 2) * 120}>
-                <a href={pt.href} target="_blank" rel="noopener noreferrer" className="group flex flex-col h-full bg-[var(--bg-warm)] border border-border-light text-primary p-8 md:p-10 hover:border-border-medium transition-colors">
+                <a href={pt.href} target="_blank" rel="noopener noreferrer" className="group flex flex-col h-full bg-cream border border-border-light text-primary p-8 md:p-10 hover:border-border-medium transition-colors">
                   <div className="h-10 flex items-center">
                     {pt.logo ? (
                       // eslint-disable-next-line @next/next/no-img-element
