@@ -64,3 +64,25 @@ export function batchOcrStamps(job) {
   return { 'ocr.lane': BATCH_OCR_LANE, 'ocr.pipeline': pipeline };
 }
 
+
+/**
+ * For scripts that POST to the batch routes (src/app/api/books/[id]/batch-{ocr,translate}-async). The routes
+ * refuse every model but LITE_MODEL (#8525, #8548), but a script that sends no model, or a hardcoded Flash, used to
+ * get the route's own default: on 2026-11-06 that put 1,879 pages on gemini-3-flash-preview on the paid API. A
+ * submitter names its model and fails here first, before any request.
+ */
+export function assertBatchRouteModel(model, callSite = 'unknown') {
+  if (model !== LITE_MODEL) {
+    throw new Error(`${callSite}: refusing to submit ${model ?? '(no model)'} to a paid batch route. Only ${LITE_MODEL} runs on the paid Gemini API; `
+      + 'every other model goes through the agy CLI lane.');
+  }
+  return model;
+}
+
+/**
+ * Who is calling, for the route to record on the batch job (`requested_by.caller`): script, the claude-job name
+ * when there is one, and the OS user. (No node:os here: this module must stay bundleable by the Next routes.) Without it a job reads only "submitted by the route" (2026-11-11).
+ */
+export function batchRouteCallerHeaders(callSite) {
+  return { 'x-caller': [callSite, process.env.JOB_NAME || '', process.env.USER || ''].join(' ').trim().slice(0, 200) };
+}

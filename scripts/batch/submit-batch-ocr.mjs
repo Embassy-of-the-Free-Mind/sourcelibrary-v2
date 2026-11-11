@@ -16,6 +16,7 @@
  *   --key=auto  Round-robin across all keys
  */
 import { MongoClient } from 'mongodb';
+import { LITE_MODEL, assertBatchRouteModel, batchRouteCallerHeaders } from '../lib/ocr-lite-gate.mjs';
 
 const BASE_URL = 'https://sourcelibrary.org';
 
@@ -49,13 +50,14 @@ function getKeyIndex(bookIndex) {
 
 async function submitBatchOcr(bookId, cronSecret, apiKeyIndex) {
   const url = `${BASE_URL}/api/books/${bookId}/batch-ocr-async`;
-  const body = { limit: 500, model: 'gemini-3-flash-preview' };
+  const body = { limit: 500, model: assertBatchRouteModel(LITE_MODEL, 'submit-batch-ocr') };
   if (apiKeyIndex !== undefined) body.apiKeyIndex = apiKeyIndex;
 
   const res = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...batchRouteCallerHeaders('scripts/batch/submit-batch-ocr.mjs'),
       'Authorization': `Bearer ${cronSecret}`,
     },
     body: JSON.stringify(body),

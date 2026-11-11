@@ -160,6 +160,8 @@ export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const triggeredBy = getTriggerSource(request);
+    // Who asked (#8548 follow-up): the session's account and the script's x-caller header, kept on the job.
+    const requestedBy = { email: session?.user?.email ?? null, caller: request.headers.get('x-caller')?.slice(0, 200) ?? null };
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -460,7 +462,7 @@ Output structure:
           generationConfig: ocrGenerationConfig,
           run: { code_version: codeVersion(), host: host() },
         }),
-        submitted_by: ROUTE_CALL_SITE,
+        submitted_by: ROUTE_CALL_SITE, requested_by: requestedBy,
         page_sources: preparedPages.map((p) => ({ page_id: p.id, source_url: p.url, prompt_sent_hash: promptSentHashByPage.get(p.id)?.hash, prompt_sent_chars: promptSentHashByPage.get(p.id)?.chars })),
         ocr_generation: ocrGeneration, // #2449 generation guard
         page_ids: allPageIds,
@@ -532,7 +534,7 @@ Output structure:
       childJobIds.push(childJobId);
 
       await db.collection('batch_jobs').insertOne({
-        submitted_by: ROUTE_CALL_SITE,
+        submitted_by: ROUTE_CALL_SITE, requested_by: requestedBy,
         id: childJobId,
         parent_job_id: parentJobId,
         job_name: batchJob.name!,
@@ -556,7 +558,7 @@ Output structure:
 
     // Create parent record last (all children already exist)
     await db.collection('batch_jobs').insertOne({
-      submitted_by: ROUTE_CALL_SITE,
+      submitted_by: ROUTE_CALL_SITE, requested_by: requestedBy,
       id: parentJobId,
       book_id: bookId,
       type: 'ocr',

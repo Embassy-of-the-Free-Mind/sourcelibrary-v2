@@ -5,6 +5,7 @@
  * Usage: set -a; source .env.production.local; set +a; node scripts/submit-batch-ocr-test.mjs [--count=3] [--max-pages=200]
  */
 import { MongoClient } from 'mongodb';
+import { LITE_MODEL, assertBatchRouteModel, batchRouteCallerHeaders } from '../lib/ocr-lite-gate.mjs';
 
 const BASE_URL = 'https://sourcelibrary.org';
 
@@ -22,9 +23,10 @@ async function submitBatchOcr(bookId, cronSecret) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...batchRouteCallerHeaders('scripts/batch/submit-batch-ocr-test.mjs'),
       'Authorization': `Bearer ${cronSecret}`
     },
-    body: JSON.stringify({ limit: 500, model: 'gemini-3-flash-preview' })
+    body: JSON.stringify({ limit: 500, model: assertBatchRouteModel(LITE_MODEL, 'submit-batch-ocr-test') })
   });
   const text = await res.text();
   let data;
