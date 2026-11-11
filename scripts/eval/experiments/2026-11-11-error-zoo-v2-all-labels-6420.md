@@ -4,14 +4,14 @@ measure: [judged]
 languages: [la, grc, de, fr, it, nl, ar, he, fa, zh, lzh, bo, sa]
 scripts: [Latn, Grek, Arab, Hebr, Hani, Tibt, Deva]
 canons: []
-n_books: 3245
-n_pages: 10805
+n_books: 3179
+n_pages: 10695
 status: undecided
 feeds: [detector, figure]
 superseded_by: null
 router_evidence: "none — no route was compared; stored verdicts from six instruments were pooled to train a page-risk predictor"
 defect_rates: "none — nothing was judged for defects in this run; it reads verdicts other runs recorded"
-verdict: "Every page-level judgment we hold is 12,352 rows from four stores, seven times the first pass; the predictor trained on all of them scores AUC 0.815 out-of-book pooled, 0.76 on the weekly audit's uniform draw (0.72 trained on that draw alone, replicating the first pass without image features). On the uniform draw the top 10% by risk is 74% serious against a 31% base and the top 30% holds 59% of the serious pages; the brief's '5% hold a third' is NOT reached (5% hold 14%). Lane B's own check agrees with the independent Opus audit on 46% of 250 shared pages. The '59% unclassed' errors are minor and moderate: 95% of serious findings were already classed."
+verdict: "Every page-level judgment we hold is 12,344 rows from four stores, seven times the first pass; the predictor trained on all of them scores AUC 0.812 out-of-book pooled, 0.755 on the weekly audit's uniform draw (0.726 trained on that draw alone, replicating the first pass without image features). On the uniform draw the top 10% by risk is 74% serious against a 31% base and the top 30% holds 56% of the serious pages; the brief's '5% hold a third' is NOT reached (5% hold 14%). Lane B's own check agrees with the independent Opus audit on 46% of 250 shared pages. The '59% unclassed' errors are minor and moderate: 95% of serious findings were already classed."
 decision: "Nothing run on production. Four defaults wait on #6420: aim half the weekly audit at the top risk decile; run the paired before/after on the next lane-B batch; record audit labels into book_checks; a Flash-Lite screener or GPU second read stays off until Derek says."
 ---
 
@@ -27,7 +27,7 @@ PRIOR ART: `scripts/eval/error-zoo/README.md` (PR #8608, the first pass: 1,520 p
 
 | step | script | output |
 |---|---|---|
-| gather every page-level label | `labels.mjs` | `labels.jsonl`, 12,352 rows: book_checks 10,118 (1,171 stale: text changed since the judgment), weekly audit on disk 1,778, served-arm lane judge 218, applied corrections 238 (positives only) |
+| gather every page-level label | `labels.mjs` | `labels.jsonl`, 12,344 rows: book_checks 10,118 (1,171 stale: text changed since the judgment), weekly audit on disk 1,920 (the rounds present at the final gather), served-arm lane judge 68 (live verdicts only: `verdictQuery()` drops 150 test-origin rows a first gather had counted), applied corrections 238 (positives only) |
 | live text + neighbour seams + book facts | `fetch-pages.mjs` | `pages.jsonl`, 11,438 pages, 3,416 books |
 | features | `features.py` | 199 features: 121 difficulty (year, language, model family, prompt, script, provider, book class), 78 text (size, repetition, garbage, lexicality, script block, OCR↔English consistency, self-tags, 12 neighbour-seam) |
 | train + report | `train.py` | `predictor-report.md`, `preds.jsonl` |
@@ -40,8 +40,8 @@ PRIOR ART: `scripts/eval/error-zoo/README.md` (PR #8608, the first pass: 1,520 p
 | store | pages | serious | reader | how drawn |
 |---|---|---|---|---|
 | `book_checks.page_findings`, fresh text | 8,947 | 45% | 19 methods; Gemini Flash for `ocr-convergence` (2,933), Opus/Claude for the rest | random WITHIN picked frames (most-read books, lane queues, repairs) |
-| weekly audit (`/root/jobs/spare-audit`, 23 rounds) | 1,778 | 35% (random stratum 31%, lane-B-written 47%) | Opus, #6338 brief | uniform over visible non-English books, one page per book, plus 20 lane-B pages a round |
-| `lane_judge_verdicts`, served arm | 218 | 74% | Opus | test cells |
+| weekly audit (`/root/jobs/spare-audit`) | 1,920 | 35% (random stratum 31%, lane-B-written 47%) | Opus, #6338 brief | uniform over visible non-English books, one page per book, plus 20 lane-B pages a round |
+| `lane_judge_verdicts`, served arm, live origin | 68 | 85% | Opus | lane cells |
 | `page_corrections` applied | 238 | 100% | human or job, image read | picked |
 
 - **The same reader is consistent; different instruments are not.** The weekly audit read 128 pages twice (lane-B
@@ -61,10 +61,10 @@ PRIOR ART: `scripts/eval/error-zoo/README.md` (PR #8608, the first pass: 1,520 p
 
 | frame | n | base | AUC | prec@10% | prec@30% | catch@30% |
 |---|---|---|---|---|---|---|
-| pooled, all trainable rows | 10,805 | 44% | 0.815 | 95% | 80% | 55% |
-| book_checks | 8,819 | 45% | 0.830 | 95% | 83% | 56% |
-| weekly audit (all strata) | 1,768 | 35% | 0.715 | 73% | 60% | 51% |
-| **weekly audit, random stratum, served (the library-wide frame)** | **1,250** | **31%** | **0.764** | **74%** | **61%** | **59%** |
+| pooled, all trainable rows | 10,695 | 43% | 0.812 | 94% | 80% | 55% |
+| book_checks | 8,819 | 45% | 0.828 | 95% | 83% | 55% |
+| weekly audit (all strata) | 1,808 | 36% | 0.708 | 72% | 61% | 51% |
+| **weekly audit, random stratum, served (the library-wide frame)** | **1,250** | **31%** | **0.755** | **74%** | **59%** | **56%** |
 
 The library-wide frame, which is the only draw uniform over the library and so the only one to quote:
 
@@ -72,23 +72,23 @@ The library-wide frame, which is the only draw uniform over the library and so t
 |---|---|---|---|
 | 5% | 62 | 87% [77, 93] | 14% |
 | 10% | 125 | 74% [65, 81] | 23% |
-| 20% | 250 | 65% [59, 71] | 42% |
-| 30% | 375 | 61% [56, 66] | 59% |
-| 50% | 625 | 49% [45, 53] | 78% |
+| 20% | 250 | 66% [60, 72] | 42% |
+| 30% | 375 | 59% [54, 64] | 56% |
+| 50% | 625 | 48% [44, 52] | 77% |
 
-So: **the top 5% of pages hold 14% of the serious errors, not a third; the top 20% hold 42%, the top 30% hold 59%.**
+So: **the top 5% of pages hold 14% of the serious errors, not a third; the top 20% hold 42%, the top 30% hold 56%.**
 Aiming a reader at the top decile makes 3 of 4 pages read a hit instead of 1 in 3.
 
-- *Per-source training and transfer.* Trained on the weekly audit alone: 0.725 (the first pass's 0.72 without any
+- *Per-source training and transfer.* Trained on the weekly audit alone: 0.726 (the first pass's 0.72 without any
   image features, so the image block was not carrying anything). Trained on every other source and tested on the audit:
-  0.640. Trained on Opus-read labels, tested on Gemini-read: 0.801; the reverse 0.718. The instruments disagree enough
+  0.621. Trained on Opus-read labels, tested on Gemini-read: 0.799; the reverse 0.715. The instruments disagree enough
   that a model fit to one reader loses 0.08 to 0.1 AUC on another.
-- *Hard page or wrong text.* Difficulty block alone 0.780; text block alone 0.778; both 0.815; the 12 seam features
-  alone 0.657. Year is the single strongest feature (oldest fifth 77% serious, newest 29%). The two blocks are
+- *Hard page or wrong text.* Difficulty block alone 0.778; text block alone 0.780; both 0.812; the 12 seam features
+  alone 0.659. Year is the single strongest feature (oldest fifth 77% serious, newest 29%). The two blocks are
   nearly interchangeable, which is the first pass's "saturation" seen from the other side: most of what either block
   measures is population. The text block is the one that can move when a page is repaired, so it is the one the
   lane-B plan scores before and after.
-- *Corrections as a check.* Of 238 pages someone corrected after reading the image, 55% score in the top 30% of the
+- *Corrections as a check.* Of 238 pages someone corrected after reading the image, 48% score in the top 30% of the
   pooled scale, 19% in the top 10%: corrections come from readers of specific books, not from the risk tail.
 - *What makes the pooled 0.815 flatter than it looks.* `paired-fifths-check` (2,927 pages, 67% serious) and
   `ocr-convergence` are whole-population frames the model can recognise from provider, prompt version and quality

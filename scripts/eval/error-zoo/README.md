@@ -9,7 +9,7 @@ Vision note and the comparison with v1: `/root/rc-jobs/error-zoo-v2.vision.md` o
 Pipeline (outputs live on gex45-1 under `/root/jobs/error-zoo-v2/`, not in git; ~150 MB):
 
 ```
-node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/error-zoo/labels.mjs      /root/jobs/error-zoo-v2   # labels.jsonl, 12,352 rows
+node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/error-zoo/labels.mjs      /root/jobs/error-zoo-v2   # labels.jsonl, 12,344 rows
 node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/error-zoo/fetch-pages.mjs /root/jobs/error-zoo-v2   # pages.jsonl (live text, seams, book facts)
 <venv>/bin/python scripts/eval/error-zoo/features.py /root/jobs/error-zoo-v2                                                 # feats.json, 199 features
 OMP_NUM_THREADS=4 <venv>/bin/python scripts/eval/error-zoo/train.py /root/jobs/error-zoo-v2                                  # predictor-report.md, preds.jsonl
@@ -22,10 +22,10 @@ python3 scripts/eval/error-zoo/zoo-all.py /root/jobs/error-zoo-v2 && cat head.ht
 All read-only against Mongo. The venv needs `scikit-learn numpy` (no pillow: v2 has no image block). Keep the box's
 CPU light: `nice -n 10`, four threads; a full train is a few minutes.
 
-What v2 found, in one breath: 12,352 page-level labels exist (book_checks 10,118, weekly audit 1,778, lane judge 218,
-corrections 238), seven times v1; the pooled out-of-book AUC is 0.815 but that mostly recognises which frame a page
-came from; on the weekly audit's uniform draw (the only library-wide frame) it is 0.764, top 10% 74% serious against
-31% base, top 30% holds 59% of serious pages; lane B's own check agrees with the Opus audit on 46% of shared pages;
+What v2 found, in one breath: 12,344 page-level labels exist (book_checks 10,118, weekly audit 1,920, lane judge 68 live,
+corrections 238), seven times v1; the pooled out-of-book AUC is 0.812 but that mostly recognises which frame a page
+came from; on the weekly audit's uniform draw (the only library-wide frame) it is 0.755, top 10% 74% serious against
+31% base, top 30% holds 56% of serious pages; lane B's own check agrees with the Opus audit on 46% of shared pages;
 and the "59% unclassed" are minor findings, 95% of serious ones were already classed. The before/after design for
 lane B is `LANE-B-BEFORE-AFTER.md`. Nothing was written to production.
 
