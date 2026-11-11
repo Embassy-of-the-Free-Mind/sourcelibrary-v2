@@ -739,7 +739,11 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     // almost no letters outside its tags, so a text page mis-tagged blank is still refused.
     const blankLeaf = ['none', 'blank', ''].includes(hand) && /<page-type>\s*blank\s*<\/page-type>/i.test(text)
       && (text.replace(/<(\w[\w-]*)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/\[[^\]]*\]|_[^_]*_/g, '').match(/\p{L}/gu) || []).length < 40;
-    if (hand !== 'printed' && !blankLeaf) { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
+    // `mixed` is a printed page carrying a second kind of writing: readers' notes, a shelfmark, or Greek/Hebrew/
+    // blackletter type beside roman. A by-eye sample of 8 refused `mixed` pages (#8529) found 6 printed text pages and
+    // 2 bindings, and no manuscripts. The reader prompt transcribes both layers (the print, plus <margin>/<gloss> for
+    // the hand), and both are kept (Derek, 2026-11-11). Only a page the reader calls `handwritten` stays off this route.
+    if (hand !== 'printed' && hand !== 'mixed' && !blankLeaf) { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
   }
   if (gpu) {
     // The page must still be unread (or, --over-stored, still hold the stored draft the read was made over), and the
