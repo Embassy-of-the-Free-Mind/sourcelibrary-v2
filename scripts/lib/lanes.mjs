@@ -460,6 +460,30 @@ export const RETIRED_PATTERNS = [
     why: 'QA that never sees a page break: every QA or book check reads paired fifths (#8405, PR #8411)' },
 ];
 
+/**
+ * What SESSIONS READ (docs, skills, commands), as opposed to what RUNS (#8283). RETIRED_PATTERNS are cron-line
+ * shapes; a doc rarely quotes one verbatim, so DOC_RETIRED_EXTRA adds the phrases a doc uses to teach the same
+ * retired approach. A doc matching either list must carry a SUPERSEDED/RETIRED banner near its top.
+ */
+export const DOC_RETIRED_EXTRA = [
+  { id: 'gemini-batch-default', test: /Gemini Batch API|batch-(?:ocr|translate)-async|gemini-3\.1-flash-lite-preview/i,
+    why: 'the paid Gemini Batch API / flash-lite-preview is no longer a route: agy, GPU>agy, Opus, GPU>Opus (docs/routing.md)' },
+];
+
+export const BANNER_WINDOW_LINES = 15;
+const BANNER_RE = /\b(SUPERSEDED|RETIRED)\b/;
+
+/** Ids of the retired patterns a doc's text matches. */
+export function retiredPatternsIn(text) {
+  const t = String(text);
+  return [...RETIRED_PATTERNS, ...DOC_RETIRED_EXTRA].filter((p) => p.test.test(t)).map((p) => p.id);
+}
+
+/** True when a SUPERSEDED/RETIRED banner sits in the first BANNER_WINDOW_LINES lines. */
+export function hasRetiredBanner(text) {
+  return String(text).split('\n').slice(0, BANNER_WINDOW_LINES).some((l) => BANNER_RE.test(l));
+}
+
 const basename = (p) => (p ? String(p).split('/').pop() : null);
 
 /** The CRON_ROWS row a live line belongs to, or null. `line` carries { cmd, script, mode }; `box` may be an alias. */
