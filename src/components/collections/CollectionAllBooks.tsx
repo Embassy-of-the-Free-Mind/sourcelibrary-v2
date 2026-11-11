@@ -30,6 +30,9 @@ interface BookItem {
   thumbnail?: string;
   thumbnail_blob?: string;
   thumbnail_frame?: unknown;
+  /** The 500px AVIF cover (~43 KB), attached by browseBooks. Without it the
+   *  card falls back to the 2000px scan (~750 KB). */
+  image_card?: string | null;
   published?: string;
   read_count?: number;
   is_first_translation?: boolean;
@@ -473,6 +476,9 @@ export default function CollectionAllBooks({
                 thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                 thumbnail_blob: book.thumbnail_blob,
                 thumbnail_frame: book.thumbnail_frame,
+                // Validated by getBookCardUrl against the cover resolved above,
+                // so a stale card falls back to that cover, never a wrong one.
+                image_card: book.image_card,
                 language: book.language,
                 published: book.published,
                 pages_blank: book.pages_blank,
