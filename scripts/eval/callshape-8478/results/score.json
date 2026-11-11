@@ -1,0 +1,307 @@
+{
+ "generated_at": "2026-11-09T23:58:28.673Z",
+ "issue": 8478,
+ "prereg": "scripts/eval/experiments/2026-11-09-callshape-prereg-8478.md",
+ "study_books_complete": 79,
+ "units_framed": 110,
+ "union": {
+  "confirmed_per_book": 33.949,
+  "serious_per_book": 26.759,
+  "serious_ocr_per_book": 14.304,
+  "serious_tr_per_book": 13.848
+ },
+ "quota": {
+  "weekly_delta_pct": 26,
+  "run_wtok": 48394298,
+  "pct_week_per_mwtok": 0.5373,
+  "V_wtok_per_book": 102534
+ },
+ "arms": {
+  "B10-opus": {
+   "books": 79,
+   "controls": {
+    "carry_over": {
+     "judged": 10,
+     "caught": 10
+    },
+    "wrong_leaf": {
+     "judged": 10,
+     "caught": 10
+    },
+    "page_defect": {
+     "judged": 10,
+     "caught": 8
+    }
+   },
+   "valid": false,
+   "findings_per_book": 19.873,
+   "confirmed_per_book": 18.051,
+   "serious_per_book": 16.392,
+   "serious_per_book_ci": [
+    13.456,
+    19.696
+   ],
+   "precision": 0.962,
+   "raised": 1570,
+   "confirmed_raised": 1511,
+   "serious_ocr_per_book": 7.342,
+   "serious_ocr_per_book_ci": [
+    5.443,
+    9.481
+   ],
+   "serious_tr_per_book": 9.709,
+   "serious_tr_per_book_ci": [
+    8.38,
+    11.177
+   ],
+   "ocr_precision": 0.957,
+   "ocr_raised": 716,
+   "ocr_confirmed_raised": 685,
+   "serious_ocr_recall_vs_union": 0.539,
+   "wtok_per_book": 100985,
+   "recall_vs_union": 0.634,
+   "serious_recall_vs_union": 0.709,
+   "bad_books": 61,
+   "agreement_with_R": 0.671,
+   "calls_per_book": 1,
+   "tokens_in_per_book": 68141,
+   "tokens_out_per_book": 9324,
+   "needs_V": false,
+   "wtok_per_book_with_V": 100985,
+   "pct_week_per_book": 0.0543,
+   "books_per_pct_week": 18.416,
+   "serious_ocr_per_pct_week": 135.21,
+   "serious_tr_per_pct_week": 178.801
+  },
+  "B10-sonnet": {
+   "books": 79,
+   "controls": {
+    "carry_over": {
+     "judged": 10,
+     "caught": 7
+    },
+    "wrong_leaf": {
+     "judged": 10,
+     "caught": 10
+    },
+    "page_defect": {
+     "judged": 10,
+     "caught": 8
+    }
+   },
+   "valid": false,
+   "findings_per_book": 10.152,
+   "confirmed_per_book": 8.734,
+   "serious_per_book": 8.025,
+   "serious_per_book_ci": [
+    6.241,
+    10.063
+   ],
+   "precision": 0.921,
+   "raised": 802,
+   "confirmed_raised": 739,
+   "serious_ocr_per_book": 3.759,
+   "serious_ocr_per_book_ci": [
+    2.722,
+    5.038
+   ],
+   "serious_tr_per_book": 4.696,
+   "serious_tr_per_book_ci": [
+    3.684,
+    5.759
+   ],
+   "ocr_precision": 0.924,
+   "ocr_raised": 355,
+   "ocr_confirmed_raised": 328,
+   "serious_ocr_recall_vs_union": 0.28,
+   "wtok_per_book": 62138,
+   "recall_vs_union": 0.277,
+   "serious_recall_vs_union": 0.326,
+   "bad_books": 34,
+   "agreement_with_R": 0.785,
+   "calls_per_book": 1,
+   "tokens_in_per_book": 72794,
+   "tokens_out_per_book": 9389,
+   "needs_V": false,
+   "wtok_per_book_with_V": 62138,
+   "pct_week_per_book": 0.0334,
+   "books_per_pct_week": 29.94,
+   "serious_ocr_per_pct_week": 112.544,
+   "serious_tr_per_pct_week": 140.598
+  },
+  "P5-opus": {
+   "books": 79,
+   "controls": {
+    "carry_over": {
+     "judged": 10,
+     "caught": 10
+    },
+    "wrong_leaf": {
+     "judged": 10,
+     "caught": 10
+    },
+    "page_defect": {
+     "judged": 10,
+     "caught": 8
+    }
+   },
+   "valid": false,
+   "findings_per_book": 26.709,
+   "confirmed_per_book": 24.582,
+   "serious_per_book": 21.291,
+   "serious_per_book_ci": [
+    16.987,
+    26.57
+   ],
+   "precision": 0.966,
+   "raised": 2110,
+   "confirmed_raised": 2038,
+   "serious_ocr_per_book": 10.076,
+   "serious_ocr_per_book_ci": [
+    7.316,
+    13.316
+   ],
+   "serious_tr_per_book": 11.873,
+   "serious_tr_per_book_ci": [
+    9.962,
+    14.228
+   ],
+   "ocr_precision": 0.963,
+   "ocr_raised": 1019,
+   "ocr_confirmed_raised": 981,
+   "serious_ocr_recall_vs_union": 0.705,
+   "wtok_per_book": 131654,
+   "recall_vs_union": 0.786,
+   "serious_recall_vs_union": 0.856,
+   "bad_books": 58,
+   "agreement_with_R": 0.658,
+   "calls_per_book": 5,
+   "tokens_in_per_book": 100999,
+   "tokens_out_per_book": 12642,
+   "needs_V": false,
+   "wtok_per_book_with_V": 131654,
+   "pct_week_per_book": 0.0707,
+   "books_per_pct_week": 14.144,
+   "serious_ocr_per_pct_week": 142.515,
+   "serious_tr_per_pct_week": 167.932
+  },
+  "P5-sonnet": {
+   "books": 79,
+   "controls": {
+    "carry_over": {
+     "judged": 10,
+     "caught": 8
+    },
+    "wrong_leaf": {
+     "judged": 10,
+     "caught": 10
+    },
+    "page_defect": {
+     "judged": 10,
+     "caught": 7
+    }
+   },
+   "valid": false,
+   "findings_per_book": 16.392,
+   "confirmed_per_book": 13.949,
+   "serious_per_book": 12.367,
+   "serious_per_book_ci": [
+    10.101,
+    15.025
+   ],
+   "precision": 0.901,
+   "raised": 1295,
+   "confirmed_raised": 1167,
+   "serious_ocr_per_book": 5.19,
+   "serious_ocr_per_book_ci": [
+    3.658,
+    6.911
+   ],
+   "serious_tr_per_book": 7.684,
+   "serious_tr_per_book_ci": [
+    6.506,
+    8.987
+   ],
+   "ocr_precision": 0.909,
+   "ocr_raised": 550,
+   "ocr_confirmed_raised": 500,
+   "serious_ocr_recall_vs_union": 0.382,
+   "wtok_per_book": 69732,
+   "recall_vs_union": 0.477,
+   "serious_recall_vs_union": 0.526,
+   "bad_books": 59,
+   "agreement_with_R": 0.646,
+   "calls_per_book": 5,
+   "tokens_in_per_book": 100063,
+   "tokens_out_per_book": 9583,
+   "needs_V": false,
+   "wtok_per_book_with_V": 69732,
+   "pct_week_per_book": 0.0375,
+   "books_per_pct_week": 26.667,
+   "serious_ocr_per_pct_week": 138.402,
+   "serious_tr_per_pct_week": 204.909
+  },
+  "R": {
+   "books": 79,
+   "controls": "#8405: carry-over 10/10, wrong-leaf 10/10 (join judge); no page_defect control",
+   "valid": true,
+   "findings_per_book": 17.62,
+   "confirmed_per_book": 15.266,
+   "serious_per_book": 11.114,
+   "serious_per_book_ci": [
+    7.937,
+    14.835
+   ],
+   "precision": 0.916,
+   "raised": 1392,
+   "confirmed_raised": 1275,
+   "serious_ocr_per_book": 11.114,
+   "serious_ocr_per_book_ci": [
+    7.937,
+    14.835
+   ],
+   "serious_tr_per_book": 0,
+   "serious_tr_per_book_ci": [
+    0,
+    0
+   ],
+   "ocr_precision": 0.916,
+   "ocr_raised": 1392,
+   "ocr_confirmed_raised": 1275,
+   "serious_ocr_recall_vs_union": 0.712,
+   "wtok_per_book": 209059,
+   "recall_vs_union": 0.36,
+   "serious_recall_vs_union": 0.32,
+   "bad_books": 43,
+   "agreement_with_R": null,
+   "calls_per_book": 15,
+   "tokens_in_per_book": null,
+   "tokens_out_per_book": null,
+   "tokens_per_call_8405": {
+    "in": 16032,
+    "out": 779,
+    "calls": 1597
+   },
+   "needs_V": false,
+   "wtok_per_book_with_V": 209059,
+   "pct_week_per_book": 0.1123,
+   "books_per_pct_week": 8.905,
+   "serious_ocr_per_pct_week": 98.97,
+   "serious_tr_per_pct_week": 0
+  }
+ },
+ "V": {
+  "controls": {
+   "raised": 150,
+   "confirmed": 149
+  },
+  "valid": true,
+  "calls": 79,
+  "tokens_in_per_book": 71684,
+  "tokens_out_per_book": 8698
+ },
+ "calls_made": 1195,
+ "calls_failed": 7,
+ "decision": "R stays",
+ "decision_per_book": "R stays"
+}
