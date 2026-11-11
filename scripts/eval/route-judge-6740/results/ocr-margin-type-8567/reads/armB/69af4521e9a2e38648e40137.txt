@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>129</page-num>
+<header>Epistula CXXV 9—11</header>
+<sig>9</sig>
+
+quosdam ineptos homines daemonum obpugnantium contra se portenta confingere, ut apud inperitos et uulgi homines miraculum sui faciant et exinde sectentur lucra.
+
+<margin type="printed">5</margin>10. Uidimus nuper et planximus Croesi opes unius morte deprehensas urbisque stipes quasi in usus pauperum congregatas stirpi et posteris derelictas. tunc ferrum, quod latebat in profundo, supernatauit aquae et inter palmarum arbores Merrae amaritudo monstrata est. nec mirum: talem et socium habuit et magistrum, qui <margin type="printed">2</margin>egentium famem suas fecit esse diuitias et miseris derelicta in suam <margin type="printed">10</margin>miseriam tenuit. quorum clamor tandem peruenit ad caelum et patientissimas dei uicit aures, ut missus angelus pessimo Nabal Carmelio diceret: *stulte, hac nocte auferent animam tuam a te; quae autem praeparasti, cuius erunt?*
+
+<margin type="printed">15</margin>11. Uolo ergo te et propter causas, quas supra exposui, non habitare cum matre et praecipue, ne aut offerentem delicatos cibos rennuendo contristes aut, si acceperis, oleum igni adicias et inter frequentiam puellarum per diem uideas, quod noctibus cogites. numquam de manu et oculis tuis recedat liber, psalterium discatur ad
+
+<footnote>6 cf. IV Reg. 6, 5—7 7 cf. Ex. 15, 23. 27 11 cf. I Reg. c. 25 12 *Luc. 12,20</footnote>
+<footnote type="apparatus">1 quasdam $\eta$, *om. HNt* ob(p B)pugnantium $\eta\Psi B$ expurgationum *G* pugnantium *cet.* 2 confligere *G* ut] nec $\eta$ *et eras. B* uulgi] uiles $\eta\Psi$ faciant sui *Nt* 3 faciunt *H, Da. c.* et] ut *DCB* lucra sect. $\eta\Psi$ 4 chroesi *Nt* crisi $\eta$ *a. c. m2* crisy $\Psi$ crisici *H* opus *H* unus *C* 5 orbisque *NtB* quas $\eta\text{H}$, *om. G* usum $\eta\Psi$ styrpi *H* 6 iacebat $\eta$ profundum *H$\Psi$* fundo *G* 7 aqua $\eta$ inter palmarum] ex myrrarum aquas *H* arboris *H* merrae *G* mirrae $\Psi, B$ (*ex* mirae) murrae $\eta$ myrrae(—e) *cet.* 8 nec mirum] nimirum $\eta$ pr. et *s. l. N, om. H* et mag. habuit *C* qui *in ras. m2 B* atque *DC* 9 fames *D, $\Psi$ (ex* fame *m2)* facit *H* et diuitias $\Psi$ miseris] que miseris essent *B* del(l *eras.*)relictas *H* sua *t* 10 ten. mis. *C* reseruauit mis. $\varsigma$ uenit *Nt* 11 pessimo (*cf. I Reg.* 25, 3) $\eta\text{p. c. m2HN}t$ pessimus *cet.* 12 carmelo *G* carmelis (s *eras.*) *B* cornelo *C* aufertur a te anima tua *G* animam tuam auferant a te *H* 13 praeparastis *C* parasti *GNt* 15 uolo—18 cogites] religiosus inter mulieres habitare non debet, ne die uideat, quod nocte cogitet $\Gamma$ uolo] ut *H* exposuimus *DB* 16 et] aut *H* aut ne *C* ne *G, om. H* offerente *DCNt* rennuente *t* renuntiando $\eta$ renuendo $\varsigma$ 17 accipias *H* oleum *om. t* adicias] accipias *H* frequentia *Ht* 18 die *G* nocte $\eta$ in nocte *Nt* 19 manu tua $\eta$ tuis *om. $\eta$* recedat—*p. 130, 1* uerbum] discedat liber psalterii ad uerbum *C* liber psalterii discedat ad uerbum *D* recedat liber psalterium ad uerbum discatur ad uerbum *H* disc. psalt. $\varsigma$ psalterium *ex* psalmorum $\eta$</footnote>
+<meta>LVI. Hieron. Epist. III, Hilberg.</meta>
+<vocab>daemonum, Croesi, Merrae, Nabal Carmelio, psalterium</vocab>

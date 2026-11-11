@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>German</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>110</page-num>
+<header>Evangelium am</header>
+<meta>catchword: neu-</meta>
+
+<margin>Der Mensch wird durch Christum neu geschaffen. Der Sünden Sold ist der Tod. Nichts kömmet im Himel denn das vom Himmel kommen ist. Allhier zweene Menschen.</margin>
+dammt bliebe / sondern ein ander Fleisch und Blut hätte / daß dem Geist nicht widerstrebete / hat GOtt gesand seinen Sohn / und ihn lassen durch sein Leiden und Sterben den Menschen aufs neue schaffen zur neuen Creatur / auf daß der Mensch ganz würde mit Geist / Seele und Leibe / und also in Himmel käme / daher ist nun von nöthen die Wiedergeburth von oben herab / und wer nicht wieder gebohren wird von oben herab / der kan das Reich GOttes nicht sehen / ich schweige denn / daß er solte hineinkommen / Fleisch und Blut nach Adam mag das Reich GOttes nicht besitzen / es ist des Todes und bleibet des Todes / aber das Fleisch von oben herab aus dem Himmel / das kömmt allein in den Himmel.
+
+Nun kommen allhie zusammen zweene Männer / einer aus der Erden durch Mannes-Saamen gebohren / und der ander aus dem Himmel nicht von Mannes-Saamen oder Fleisch / sondern allein von dem heiligen Geist / Nehmlich / Nicodemus und Christus / diese unterreden sich mit einander von der neuen Creatur / von der Wiedergeburth / von der Schöpffung / und ein jeder von dem seinen. Nicodemus redet von der Erden / denn er ist irdisch / vom Blut und Fleische / aus dem Männlichen Saamen. Christus redet vom Himmel / als ein Schöpffer der neuen Creatur / des neuen Himmels / der neuen Erden / ein jeder vertheidigt das seine / und zeuget von dem / das er weiß und höret. Nicodemus kömmt aus guter Meinung / und aus Begehrung der Seeligkeit / und dencket mit seinem alten Leibe aus der Erden in Himmel zu kommen. Christus soll ihn unterweisen / wie er möchte mit Geist / Seele und Leibe in das Reich GOttes kommen / Nehmlich mit dem Leibe der alten Geburth / aus Männlichen Saamen.
+
+<margin>ἄνωθεν</margin>
+Darauf sagt Christus: Warrlich / warrlich Ich sage dir / es sey denn / daß jemand von oben herab *ἄνωθεν* gebohren werde / kan er das Reich GOttes nicht sehen / vielweniger hinein kommen / dasselbe zu besitzen / das ist / die erste Geburt aus Fleisch und Blut Ada kan nichts von Göttlichen Dingen verstehen / kan auch nicht das Reich GOttes besitzen / es muß ein jeder
+
+<vocab>Wiedergeburth, neue Creatur, Nicodemus, Christus, ἄνωθεν</vocab>

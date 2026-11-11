@@ -1,0 +1,45 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>266</page-num>
+<meta>catchword: agel-</meta>
+
+ledicto supersedisset: aut in tribus seruis multitu-
+dinem comitum Philosophi, quam paucitatem re-
+prehendere maluisset. Idem mihi etiam pauper-
+tatem obprobrauit, acceptum Philosopho crimen,
+et vltro profitendum. Enimuero paupertas olim
+Philosophiae vernacula aduersum diuitias possessa
+est, frugi, sobria, paruo potens, aemula laudis,
+habitu secura, cultu simplex, consilio bene suada:
+neminem vnquam superbia inflauit, neminem im-
+potentia deprauauit, neminem tyrannide efferauit,
+delicias ventris et inguinum neque vult vllas, ne-
+que potest. Quippe haec et alia flagitia, diui-
+tiarum alumni solent. Maxima quaeque scelera,
+si ex omni memoria hominum percenseas, nullum
+in illis pauperem reperies: vbi contra haec temere
+inter illustres viros et diuites comparent. sed
+quemcumque in aliqua laude miramur, eum pau-
+pertas ab incunabulis nutricata est. Paupertas, in-
+quam, prisca apud secula omnium ciuitatum con-
+ditrix, omnium artium repertrix, omnium pecca-
+torum inops, omnis gloriae munifica, cunctis lau-
+dibus apud omneis nationes perfuncta. Eadem
+enim est paupertas apud Graecos in Aristide iusta,
+in Phocione benigna, in Epaminonda strenua, in
+Socrate sapiens, in Homero diserta. Eadem pau-
+pertas etiam populo Rom. imperium a primordio
+fundauit, proque eo in hodiernum Diis immorta-
+libus simpulo et catino fictili sacrificat. Quod si
+modo iudices de causa ista sederent C. Fabricius,
+Cn. Scipio, Manius Curius, quorum filiae ob
+paupertatem de publico dotibus donatae ad mari-
+tos ierunt, portantes gloriam domesticam, pecu-
+niam publicam: si Publicola regum exactor, et
+Agrippa populi reconciliator, quorum funus ob
+tenueis opes a populo Romano collatis sextanti-
+bus adornatum est: si Attilius Regulus, cuius
+
+<vocab>paupertas, Philosophia, Aristides, Phocio, Epaminondas, Socrates, Homerus, C. Fabricius, Cn. Scipio, Manius Curius, Publicola, Agrippa, Attilius Regulus</vocab>

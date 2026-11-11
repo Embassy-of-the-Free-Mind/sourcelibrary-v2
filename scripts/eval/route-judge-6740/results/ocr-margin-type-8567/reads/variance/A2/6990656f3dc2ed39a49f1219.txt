@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>410</page-num>
+<header>Part. 2. Sec. 3. Cure of Melancholy. Memb 4.</header>
+<meta>catchword: and</meta>
+
+Courtiers to lust and ambition, and all slaves to our affections; who is free? Why then dost thou repine? *Satis est potens, Hierom* saith, *qui servire non cogitur.* Thou carriest no burdens, thou art no prentise, no drudge, and thousands want that liberty, those pleasures which thou hast. Thou art not sicke, & what wouldst thou have? but *nitimur in vetitum*, we must all eat of the forbidden fruit. Were wee enjoyned to goe to such and such places, we would not willingly goe: but being barred of our liberty, this alone torments our wandering soule that we may not goe. A cittezen of ours, saith <margin>*k Consol. lib. 5.*</margin> *Cardan*, was 60 yeares of age, and had never beene forth of the walls of the citty of *Millan*, the Prince hearing of it commanded him not to stirre out, being now forbidden that which all his life he had neglected, he earnestly desired, & being denied, *dolore confectus mortem obijt*, he died for griefe.
+
+<margin>l *O Generose, quid est vita nisi carcer animi.*</margin>
+<margin>m *Herbastein.*</margin>
+<margin>n *Vertomannus*</margin>
+What I have said of servitude, I say againe of imprisonment. We are all prisoners. What is our <sup>l</sup>life but a prison? We are all imprisoned in an Iland. The world it selfe to some men is a prison, our narrow seas as so many ditches, & when they have compassed the Globe of the earth, they would faine goe see what's done in the Moone. In <sup>m</sup>*Muscovy* and many other northerne parts, all over *Scandia* they are imprisoned halfe the yeare in Stoves, they dare not peepe out for cold. At <sup>n</sup>*Aden* in *Arabia* they are imprisoned all day long with that other extreame of heat, and keep their markets in the night. What is a ship but a prison? And so many citties are but as so many hives of Bees? But that which thou abhorrest many seeke. Women keepe in all winter, and most part of summer to preserve their bewties, some for love of study: *Demosthenes* shaved his beard because he would cut off all occasion of going abroad: how many Monks and Friers, Anachorites, abandon all the world? *Monachus in urbe piscis in arido.* Art' in prison? make right use of it, and mortifie thy selfe:; <margin>o *Ubi verior contemplatio quam in solitudine, ubi studium solidius quam in quiete?*</margin> <sup>o</sup>*Where may a man contemplate better then in solitarinesse, or study more then in quietnesse.* Many worthy men have beene imprisoned all their lives, and it hath been occasion of great honor
+
+<vocab>melancholy, servitude, imprisonment, Cardan, Millan, Demosthenes, Anachorites</vocab>

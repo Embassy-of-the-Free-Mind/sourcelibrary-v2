@@ -1,0 +1,49 @@
+<scan-quality>good</scan-quality>
+<language>German</language>
+<script>mixed</script>
+<page-type>title-page</page-type>
+
+<margin>
+Bot
+Thalloph
+Z
+</margin>
+
+<margin>
+I
+</margin>
+
+# Die Pilzthiere oder Schleimpilze.
+
+---
+
+### Nach dem neuesten Standpunkte bearbeitet
+
+->von<-
+
+## Dr. W. Zopf,
+->Privatdocenten an der Universität Halle a. S.<-
+
+<image-desc size="medium" type="symbol" significance="low">Embossed library stamp reading "UNIVERSITY OF TORONTO LIBRARY"</image-desc>
+
+---
+
+->Mit 52 meistens vom Verfasser selbst auf Holz gezeichneten Schnitten.<-
+
+---
+
+->Separatabdruck aus der<-
+->Encyklopaedie der Naturwissenschaften.<-
+
+<margin>
+178588.
+13.3.23.
+</margin>
+
+<image-desc size="small" type="emblem" significance="low">Publisher's printer mark/device of Eduard Trewendt showing initials ET and the year 1845 within a shield</image-desc>
+
+### BRESLAU,
+->Verlag von Eduard Trewendt.<-
+->1885.<-
+
+<vocab>Pilzthiere, Schleimpilze, Zopf, Encyklopaedie der Naturwissenschaften, Breslau, Eduard Trewendt</vocab>

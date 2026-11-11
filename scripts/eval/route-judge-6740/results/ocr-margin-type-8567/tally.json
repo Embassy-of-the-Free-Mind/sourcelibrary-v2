@@ -1,0 +1,1374 @@
+{
+ "per_page": [
+  {
+   "id": "c02",
+   "page_id": "6990656f3dc2ed39a49f10f2",
+   "stratum": "printed",
+   "items": 3,
+   "prefer": "cand-v19.2-margin",
+   "why": "The body texts are almost the same, but X tags all three printed side notes as printed, while Y leaves them untyped.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped"
+    ]
+   }
+  },
+  {
+   "id": "c03",
+   "page_id": "6990656f3dc2ed39a49f1148",
+   "stratum": "printed",
+   "items": 5,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y tags every printed marginal note as printed and keeps the split word at the end of the page as printed, while X leaves its margins untyped and joins the catchword onto the last line.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed"
+    ]
+   }
+  },
+  {
+   "id": "c01",
+   "page_id": "6990656f3dc2ed39a49f10f1",
+   "stratum": "printed",
+   "items": 3,
+   "prefer": "cand-v19.2-margin",
+   "why": "Neither can be published: both stop after 4 lines and turn into a refusal. X at least transcribes and tags the three printed margin notes, which Y drops entirely.",
+   "cand-v19.2-margin": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "O4/wrong_text: <<<BEGIN>>>\n<scan-quality>good</scan-quality>",
+     "T17/wrong_text: I cannot provide a verbatim transcription of this page due t",
+     "O14/wrong_text: Instead, here is an analytical summary and structural overvi",
+     "O5/wrong_text: which shall affect him most,",
+     "O15/wrong_text: Would you like an analysis or detailed summary of a specific",
+     "O16/misleads: <sig>H</sig>",
+     "O6/misleads: A note citing Lemnius/Rhazes regarding the pleasant contempl"
+    ],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed"
+    ]
+   },
+   "live-v19.1": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "T17/wrong_text: I am unable to provide a full verbatim transcription of this",
+     "O14/wrong_text: I can provide a general summary and analysis of the contents",
+     "O5/wrong_text: which shall affect him most,",
+     "O15/wrong_text: Would you like a summary or discussion of the adjacent secti"
+    ],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->dropped",
+     "margin:printed->dropped"
+    ]
+   }
+  },
+  {
+   "id": "c04",
+   "page_id": "6990656f3dc2ed39a49f1219",
+   "stratum": "printed",
+   "items": 5,
+   "prefer": "live-v19.1",
+   "why": "X is complete and faithful. Y is cut short, appears twice, and contains a refusal and a summary, even though Y tags its margin notes as printed and X leaves them untyped.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "O4/wrong_text: <<<BEGIN>>>\n<scan-quality>good</scan-quality>",
+     "O5/wrong_text: What is a ship but",
+     "T17/wrong_text: I am unable to transcribe the full verbatim text from this p",
+     "O14/wrong_text: ### Overview & Summary of Page 410",
+     "T10/misleads: Herberstein (*Herbastein*), Ludovico de Varthema (*Vertomann",
+     "O6/misleads: all saues to our affections",
+     "D1/misleads: <<<BEGIN>>>"
+    ],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->dropped"
+    ]
+   }
+  },
+  {
+   "id": "c05",
+   "page_id": "69b21d4addb4fa7c305b4ba5",
+   "stratum": "printed",
+   "items": 2,
+   "prefer": "cand-v19.2-margin",
+   "why": "X types both kinds of marginalia as printed and gets διαβὰς right, while Y leaves its margins untyped and misreads διαβὰς as διελθὼς; Y's Latin is more diplomatic, but that matters less.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O5/wrong_text: ἠναγκάσθαι. <term>ΦΑΙ</term>. Μήπω γε,",
+     "O6/misleads: ἠναγκάσθαι"
+    ],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O5/wrong_text: ἀναγκασθῆναι. <term>ΦΑΙ.</term> Μήπω γε,",
+     "O6/wrong_text: τοῦτον διελθὼς ἀπέρχομαι",
+     "O16/misleads: <language>Greek</language>"
+    ],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped"
+    ]
+   }
+  },
+  {
+   "id": "c07",
+   "page_id": "697e011d9e279b718ba6570e",
+   "stratum": "printed",
+   "items": 1,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y tags the printed marginal summary as printed, avoids X's two misreadings (qua, compositorias), and flags the damaged letter.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: ipse, qua accepit",
+     "O6/misleads: præcepta compositorias cantus figurati"
+    ],
+    "tags": [
+     "margin:printed->margin_untyped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed"
+    ]
+   }
+  },
+  {
+   "id": "c06",
+   "page_id": "6952c9ca77f38f6761bc3164",
+   "stratum": "printed",
+   "items": 13,
+   "prefer": "cand-v19.2-margin",
+   "why": "X tags printed and handwritten margins correctly, keeps the layout and section letters, and its Greek is less fabricated.",
+   "cand-v19.2-margin": {
+    "accept": false,
+    "fidelity": 3,
+    "serious_defects": [
+     "O10/wrong_text: πλὴν ἢ δουλὺ ἐς τὸ ἠδὺ αὐτὸς",
+     "O10/wrong_text: καλὰ ἑποῖσιν",
+     "O6/misleads: euasurum curum",
+     "O6/misleads: præstiora",
+     "O10/misleads: ἐς τοῦ το καταφρονήσειεν"
+    ],
+    "tags": [
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:printed->margin_printed",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->body"
+    ]
+   },
+   "live-v19.1": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "O1/wrong_text: αὐξῆσαι, τοῦτο τε αὐτοῖς καταλείπεται πλὴν ἢ δουλεύειν τὸ πε",
+     "O1/wrong_text: τῆς φύσεως καὶ ἐκείνων",
+     "O6/wrong_text: ἀγαθόν ἐστιν ἡγεῖσθαι",
+     "O1/wrong_text: πῶς ἂν πᾶς κακὸς καταφρονῶν;",
+     "O10/wrong_text: τὸ γὰρ φιλεῖν ὥστες ὁτιοῦν ἔχειν",
+     "O6/misleads: euasurum in cor rum"
+    ],
+    "tags": [
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->dropped"
+    ]
+   }
+  },
+  {
+   "id": "c08",
+   "page_id": "69f6ecc3a26f03d5b09f74d8",
+   "stratum": "printed",
+   "items": 7,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y's body text is accurate, while X adds 'prout'. Y also tags each printed side note separately as printed, while X puts them all in one untyped margin block.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/wrong_text: in abscondito Terræ creatorumprout"
+    ],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->body"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c11",
+   "page_id": "69924f1ba1a76e4d5e5eda1e",
+   "stratum": "printed",
+   "items": 1,
+   "prefer": "cand-v19.2-margin",
+   "why": "Both texts are equally faithful, but X correctly marks the margin line numbers as printed and its vocab list comes from the page itself.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped"
+    ]
+   }
+  },
+  {
+   "id": "c09",
+   "page_id": "69e72c60a409200ea79f474e",
+   "stratum": "printed",
+   "items": 8,
+   "prefer": "cand-v19.2-margin",
+   "why": "The two body texts are equally good, but Y reads the glosses correctly (X drops 白 and invents 閻), and Y's stray tag is harmless where X's <insert> misleads.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "D1/misleads: 黮<insert>闇</insert>"
+    ],
+    "tags": [
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:handwritten->dropped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:printed->other_tag",
+     "margin:handwritten->dropped"
+    ]
+   }
+  },
+  {
+   "id": "c10",
+   "page_id": "69e72c60a409200ea79f474f",
+   "stratum": "printed",
+   "items": 5,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y tags the notes better, but its body text drops a whole clause; X's body text is closer to the page, with two single-character slips.",
+   "cand-v19.2-margin": {
+    "accept": false,
+    "fidelity": 3,
+    "serious_defects": [
+     "O6/wrong_text: 是不是。果是也。則是",
+     "O6/misleads: 岡兩問景"
+    ],
+    "tags": [
+     "margin:handwritten->other_tag",
+     "margin:handwritten->other_tag",
+     "margin:handwritten->other_tag",
+     "margin:handwritten->other_tag",
+     "margin:handwritten->other_tag"
+    ]
+   },
+   "live-v19.1": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "O5/wrong_text: 是不是。然不然。是不是。則是",
+     "O6/misleads: 日。是不是"
+    ],
+    "tags": [
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->other_tag"
+    ]
+   }
+  },
+  {
+   "id": "c12",
+   "page_id": "69942a51045dfc482ad7679c",
+   "stratum": "printed",
+   "items": 4,
+   "prefer": "cand-v19.2-margin",
+   "why": "X tags the margins, footnotes and apparatus properly and keeps the page's lines; Y leaves the footnotes and apparatus untagged and merges lines, which outweighs X's two small misreadings.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: ὄντι ἡ θαυμασιότης"
+    ],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->margin_printed",
+     "footnote:printed->footnote",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->margin_untyped",
+     "footnote:printed->body",
+     "apparatus:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c13",
+   "page_id": "69942a51045dfc482ad7679d",
+   "stratum": "printed",
+   "items": 4,
+   "prefer": "cand-v19.2-margin",
+   "why": "Both bodies are about equally accurate, but X tags the section numbers as printed margins and both foot blocks as apparatus, while Y runs the apparatus into the body.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "E2/misleads: 21 τελευταῖον L"
+    ],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->margin_printed",
+     "apparatus:printed->footnote_apparatus",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->margin_untyped",
+     "apparatus:printed->body",
+     "apparatus:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c14",
+   "page_id": "699376d2b0a84a5763961b53",
+   "stratum": "footnote",
+   "items": 2,
+   "prefer": "cand-v19.2-margin",
+   "why": "X tags the margin numbers and apparatus correctly and puts them at the right lines; its one-letter slip (Ἔκουσα) is minor, while Y runs the apparatus into the body text and misplaces the margin numbers.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "apparatus:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c15",
+   "page_id": "699376d2b0a84a5763961b99",
+   "stratum": "footnote",
+   "items": 2,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y has one wrong word (Ἦν for Ἣν) but tags the apparatus and margins correctly; X's body text is flawless but it publishes the apparatus as untagged text and leaves the margins untyped.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "apparatus:printed->body"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/wrong_text: Ἦν τοίνυν ἔθεμεν"
+    ],
+    "tags": [
+     "margin:printed->margin_printed",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   }
+  },
+  {
+   "id": "c16",
+   "page_id": "699376d2b0a84a5763961b9a",
+   "stratum": "footnote",
+   "items": 2,
+   "prefer": "cand-v19.2-margin",
+   "why": "Both bodies are faithful, but X tags the apparatus as apparatus and types the margins, while Y puts the apparatus into the body. X's misplaced line markers are the lesser fault.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "apparatus:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c17",
+   "page_id": "69af4521e9a2e38648e40136",
+   "stratum": "footnote",
+   "items": 4,
+   "prefer": "cand-v19.2-margin",
+   "why": "The body texts are identical, and Y tags every margin and foot-of-page item correctly while X runs them into the body or drops them; Y's one apparatus misread is minor next to that.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->body",
+     "margin:printed->dropped",
+     "footnote:printed->body",
+     "apparatus:printed->body"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [
+     "O6/misleads: colluditur C"
+    ],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "footnote:printed->footnote",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   }
+  },
+  {
+   "id": "c18",
+   "page_id": "69af4521e9a2e38648e40137",
+   "stratum": "footnote",
+   "items": 4,
+   "prefer": "cand-v19.2-margin",
+   "why": "Both read the body correctly, but X tags the margins, source notes and apparatus properly, while Y leaves them untyped or in the body and misnumbers the lines.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "footnote:printed->footnote",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O11/misleads: <margin>10</margin>10. Uidimus"
+    ],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "footnote:printed->body",
+     "apparatus:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c19",
+   "page_id": "69937973b0a84a5763964f27",
+   "stratum": "footnote",
+   "items": 2,
+   "prefer": "live-v19.1",
+   "why": "X's body text is more accurate. Y tags the apparatus better, but its two wrong words in the body would mislead readers, while X's untagged apparatus is still clearly set off by a rule and is word-for-word correct.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->dropped",
+     "apparatus:printed->body"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 3,
+    "serious_defects": [
+     "O6/wrong_text: ἀπορήσειε γάρ τινες πότερον",
+     "O6/wrong_text: ταύτην ἰδίᾳ γεωργήσιν"
+    ],
+    "tags": [
+     "margin:printed->dropped",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   }
+  },
+  {
+   "id": "c20",
+   "page_id": "69937973b0a84a5763964f28",
+   "stratum": "footnote",
+   "items": 3,
+   "prefer": "cand-v19.2-margin",
+   "why": "Each has one slip in the body text, but X tags the apparatus correctly while Y runs it into the body text.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: αἶον· ἐν Κύμῃ"
+    ],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->body",
+     "apparatus:printed->footnote_apparatus"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O5/wrong_text: καὶ ἐν πάσῃ πολιτείᾳ,\nοὔ;"
+    ],
+    "tags": [
+     "margin:printed->dropped",
+     "margin:printed->body",
+     "apparatus:printed->body"
+    ]
+   }
+  },
+  {
+   "id": "c22",
+   "page_id": "699246b7bc722ec0ee811c57",
+   "stratum": "footnote",
+   "items": 5,
+   "prefer": "live-v19.1",
+   "why": "X is clean and complete with only the footnote tags missing, while Y prints every footnote twice and breaks up the body text.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "footnote:printed->body",
+     "footnote:printed->body",
+     "footnote:printed->body",
+     "footnote:printed->body",
+     "footnote:printed->body"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": false,
+    "fidelity": 3,
+    "serious_defects": [
+     "O4/wrong_text: <footnote>This is the definition of the akhyâtivâdins.</foot"
+    ],
+    "tags": [
+     "footnote:printed->body",
+     "footnote:printed->footnote",
+     "footnote:printed->footnote",
+     "footnote:printed->footnote",
+     "footnote:printed->footnote"
+    ]
+   }
+  },
+  {
+   "id": "c21",
+   "page_id": "699246b7bc722ec0ee811c56",
+   "stratum": "footnote",
+   "items": 5,
+   "prefer": "live-v19.1",
+   "why": "Neither can be published, but Y repeats the whole page and also contains a refusal, which outweighs its better footnote tagging.",
+   "live-v19.1": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "O15/wrong_text: I am unable to provide a full verbatim transcription of this",
+     "O14/wrong_text: ### Summary of the Page",
+     "O5/wrong_text: again appears before us in Mâh",
+     "E2/wrong_text: Would you like a more detailed breakdown"
+    ],
+    "tags": [
+     "footnote:printed->body",
+     "footnote:printed->body",
+     "footnote:printed->body",
+     "footnote:printed->body",
+     "footnote:printed->dropped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": false,
+    "fidelity": 2,
+    "serious_defects": [
+     "O4/wrong_text: <<<BEGIN>>>",
+     "O15/wrong_text: I am unable to provide a full verbatim transcription of this",
+     "O14/wrong_text: ### Summary of Page 4 (Vedânta-Sûtras commentary)",
+     "O5/wrong_text: These are cases of"
+    ],
+    "tags": [
+     "footnote:printed->body",
+     "footnote:printed->footnote",
+     "footnote:printed->footnote",
+     "footnote:printed->footnote",
+     "footnote:printed->dropped"
+    ]
+   }
+  },
+  {
+   "id": "c23",
+   "page_id": "69dc5574cb6f7429748b8c25",
+   "stratum": "handwritten",
+   "items": 7,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y tags all seven red-ink annotations as handwritten and has fewer sense-changing misreadings. X leaves its notes untyped, drops the reply numbers, and misreads 'non' as 'si'.",
+   "live-v19.1": {
+    "accept": false,
+    "fidelity": 3,
+    "serious_defects": [
+     "O6/wrong_text: materia et forma si sunt entitas quam componunt",
+     "O6/misleads: est euidenter fallacia sequentis",
+     "T6/misleads: ab entitate p- ... tiuum integrantium"
+    ],
+    "tags": [
+     "margin:handwritten->dropped",
+     "margin:handwritten->dropped",
+     "margin:handwritten->dropped",
+     "margin:handwritten->dropped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/wrong_text: quia entificatio non entis simpliciter"
+    ],
+    "tags": [
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten"
+    ]
+   }
+  },
+  {
+   "id": "c24",
+   "page_id": "69dbcab51040d1d5e20ae484",
+   "stratum": "handwritten",
+   "items": 1,
+   "prefer": "live-v19.1",
+   "why": "Y tags the margin note as handwritten, which is better, but X's body text is more accurate: Y has an extra misread, 'audit', that changes the sense.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: Nam recolit verita que commisit"
+    ],
+    "tags": [
+     "margin:handwritten->margin_untyped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: Nam recolit verita que commisit",
+     "O6/misleads: sed minime audit"
+    ],
+    "tags": [
+     "margin:handwritten->margin_handwritten"
+    ]
+   }
+  },
+  {
+   "id": "c25",
+   "page_id": "6a8b76ef313cdd0126cb79b6",
+   "stratum": "handwritten",
+   "items": 3,
+   "prefer": "cand-v19.2-margin",
+   "why": "Both get the text right, but X correctly marks the three pencil notes as handwritten while Y leaves them untyped, and Y adds non-standard centring markup.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped"
+    ]
+   }
+  },
+  {
+   "id": "c26",
+   "page_id": "69f70aedb8f2207734053a50",
+   "stratum": "handwritten",
+   "items": 5,
+   "prefer": "cand-v19.2-margin",
+   "why": "Y tags each printed side note separately with type=\"printed\", and its body text is closer to the page.",
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: Fleisch und Blut Ada kan"
+    ],
+    "tags": [
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped",
+     "margin:printed->margin_untyped"
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed",
+     "margin:printed->margin_printed"
+    ]
+   }
+  },
+  {
+   "id": "c27",
+   "page_id": "6a4a84da449c2c48ca6ee012",
+   "stratum": "handwritten",
+   "items": 1,
+   "prefer": "cand-v19.2-margin",
+   "why": "Both texts are faithful, but X keeps the handwritten annotation (tagged as uncertain) and the page's line breaks, while Y drops the annotation.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": [
+     "margin:handwritten->margin_handwritten"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": [
+     "margin:handwritten->dropped"
+    ]
+   }
+  },
+  {
+   "id": "c28",
+   "page_id": "69dbc9291040d1d5e20a0fd2",
+   "stratum": "handwritten",
+   "items": 6,
+   "prefer": "cand-v19.2-margin",
+   "why": "The body texts are about equally good, but X correctly tags all six reader's annotations as handwritten, while Y leaves them all untyped.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: non modo ad nostra: uerumetiam ad sempiternam memoriae tempo"
+    ],
+    "tags": [
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten",
+     "margin:handwritten->margin_handwritten"
+    ]
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O7/misleads: quadrigenti"
+    ],
+    "tags": [
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped",
+     "margin:handwritten->margin_untyped"
+    ]
+   }
+  },
+  {
+   "id": "c29",
+   "page_id": "6ab7a0fb0bd1885e1dedc2ca",
+   "stratum": "control",
+   "items": 0,
+   "prefer": "live-v19.1",
+   "why": "The page has no margin or foot material, and the two texts match the image word for word, but X leaves line-break hyphens inside words.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": []
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": []
+   }
+  },
+  {
+   "id": "c30",
+   "page_id": "6a94037ca4ad12cb35ec7821",
+   "stratum": "control",
+   "items": 0,
+   "prefer": "same",
+   "why": "Same body text and slips; the differences (header ornaments, bold scope, vocab line) are trivial.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": []
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [],
+    "tags": []
+   }
+  },
+  {
+   "id": "c31",
+   "page_id": "69bda131f6d63c919748eae8",
+   "stratum": "control",
+   "items": 0,
+   "prefer": "live-v19.1",
+   "why": "Y reads 'ledicto' correctly, keeps the page's line breaks and handles the catchword properly. X has real misreads and repeats the catchword in the body.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: ledictio supersedisset",
+     "O6/misleads: consilio benefuada"
+    ],
+    "tags": []
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 5,
+    "serious_defects": [],
+    "tags": []
+   }
+  },
+  {
+   "id": "c32",
+   "page_id": "6a060d36e16c60cb2a8947e2",
+   "stratum": "control",
+   "items": 0,
+   "prefer": "live-v19.1",
+   "why": "The page has no marginalia. Y gets several verse readings right that X garbles (लीढ्वा, कुक्षेर्द्वावंशौ, द्धृल्लास, द्धावति), so it has fewer errors that change the sense.",
+   "cand-v19.2-margin": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: पाठमनावं",
+     "O6/misleads: लीढाऽभयां वा स सुखं लभेत",
+     "O6/misleads: कुक्षेद्वौर्वंशौ",
+     "O6/misleads: विपरीतोऽस्मादुल्लासारुचिकारकः",
+     "O6/misleads: तथाशुत्वाद्भावत्यम्भसि",
+     "O6/misleads: याञाकरः",
+     "O6/wrong_text: अदाहपाकाकरः अश्लाथन्न"
+    ],
+    "tags": []
+   },
+   "live-v19.1": {
+    "accept": true,
+    "fidelity": 4,
+    "serious_defects": [
+     "O6/misleads: याञाकरः",
+     "O6/wrong_text: अक्षालन",
+     "O6/misleads: तृप्तिकारकः",
+     "O6/misleads: असन्धानोऽजीवनः, अश्लेष्मी च"
+    ],
+    "tags": []
+   }
+  }
+ ],
+ "margin": {
+  "live-v19.1": {
+   "notes": 90,
+   "type_right": 0,
+   "unsure": 0,
+   "untyped": 64,
+   "wrong_type": 0,
+   "not_margin": 26,
+   "by_hand": {
+    "printed": [
+     0,
+     59
+    ],
+    "handwritten": [
+     0,
+     31
+    ]
+   }
+  },
+  "cand-v19.2-margin": {
+   "notes": 90,
+   "type_right": 69,
+   "unsure": 0,
+   "untyped": 0,
+   "wrong_type": 0,
+   "not_margin": 21,
+   "by_hand": {
+    "printed": [
+     44,
+     59
+    ],
+    "handwritten": [
+     25,
+     31
+    ]
+   }
+  }
+ },
+ "footnote": {
+  "live-v19.1": {
+   "n": 23,
+   "in_footnote": 0,
+   "apparatus_typed": 0,
+   "as": {
+    "body": 22,
+    "dropped": 1
+   }
+  },
+  "cand-v19.2-margin": {
+   "n": 23,
+   "in_footnote": 20,
+   "apparatus_typed": 10,
+   "as": {
+    "footnote": 10,
+    "footnote_apparatus": 10,
+    "body": 2,
+    "dropped": 1
+   }
+  }
+ },
+ "body": {
+  "live-v19.1": {
+   "pages": 32,
+   "accept": 27,
+   "defect_pages": 15,
+   "wrong_text_pages": 9,
+   "defects": 35
+  },
+  "cand-v19.2-margin": {
+   "pages": 32,
+   "accept": 26,
+   "defect_pages": 18,
+   "wrong_text_pages": 11,
+   "defects": 48
+  }
+ },
+ "prefer": {
+  "live-v19.1": 8,
+  "cand-v19.2-margin": 23,
+  "same": 1
+ },
+ "controls": [
+  {
+   "id": "c39",
+   "x": {
+    "route": "live-v19.1",
+    "accept": false,
+    "fidelity": 1
+   },
+   "y": {
+    "route": "cand-v19.2-margin",
+    "accept": false,
+    "fidelity": 1
+   },
+   "passed": true
+  },
+  {
+   "id": "c38",
+   "x": {
+    "route": "live-v19.1",
+    "accept": false,
+    "fidelity": 1
+   },
+   "y": {
+    "route": "cand-v19.2-margin",
+    "accept": false,
+    "fidelity": 1
+   },
+   "passed": true
+  }
+ ],
+ "repeats": [
+  {
+   "page_id": "699246b7bc722ec0ee811c57",
+   "items": [
+    5,
+    5
+   ],
+   "prefer": [
+    "live-v19.1",
+    "live-v19.1"
+   ],
+   "live-v19.1": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     5,
+     5
+    ],
+    "serious": [
+     0,
+     0
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": [
+     false,
+     false
+    ],
+    "fidelity": [
+     3,
+     3
+    ],
+    "serious": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "page_id": "69b21d4addb4fa7c305b4ba5",
+   "items": [
+    2,
+    2
+   ],
+   "prefer": [
+    "cand-v19.2-margin",
+    "cand-v19.2-margin"
+   ],
+   "live-v19.1": {
+    "accept": [
+     true,
+     false
+    ],
+    "fidelity": [
+     4,
+     3
+    ],
+    "serious": [
+     3,
+     5
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     4,
+     4
+    ],
+    "serious": [
+     2,
+     1
+    ]
+   }
+  },
+  {
+   "page_id": "6a94037ca4ad12cb35ec7821",
+   "items": [
+    0,
+    0
+   ],
+   "prefer": [
+    "same",
+    "same"
+   ],
+   "live-v19.1": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     4,
+     4
+    ],
+    "serious": [
+     0,
+     0
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     4,
+     4
+    ],
+    "serious": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "page_id": "6990656f3dc2ed39a49f1148",
+   "items": [
+    5,
+    5
+   ],
+   "prefer": [
+    "cand-v19.2-margin",
+    "cand-v19.2-margin"
+   ],
+   "live-v19.1": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     4,
+     4
+    ],
+    "serious": [
+     0,
+     0
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     5,
+     5
+    ],
+    "serious": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "page_id": "69dbc9291040d1d5e20a0fd2",
+   "items": [
+    6,
+    6
+   ],
+   "prefer": [
+    "cand-v19.2-margin",
+    "cand-v19.2-margin"
+   ],
+   "live-v19.1": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     4,
+     4
+    ],
+    "serious": [
+     1,
+     2
+    ]
+   },
+   "cand-v19.2-margin": {
+    "accept": [
+     true,
+     true
+    ],
+    "fidelity": [
+     4,
+     4
+    ],
+    "serious": [
+     1,
+     2
+    ]
+   }
+  }
+ ],
+ "pass": {
+  "margin_type_right": {
+   "k": 69,
+   "n": 90,
+   "rate": 0.767,
+   "bar": 0.85,
+   "ok": false
+  },
+  "footnote_in_tag": {
+   "k": 20,
+   "n": 23,
+   "rate": 0.87,
+   "bar": 0.8,
+   "ok": true
+  },
+  "body_defect_pages": {
+   "a": 15,
+   "b": 18,
+   "n": 32,
+   "rule": "B <= A; a one-page difference is noise at this n",
+   "ok": false
+  },
+  "all": false
+ }
+}

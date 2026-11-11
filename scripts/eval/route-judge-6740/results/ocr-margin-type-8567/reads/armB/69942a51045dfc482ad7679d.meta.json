@@ -1,0 +1,39 @@
+{
+ "page_id": "69942a51045dfc482ad7679d",
+ "book_id": "69942a51045dfc482ad766f4",
+ "page_number": 169,
+ "cli": "agy",
+ "cli_version": "1.5.5",
+ "model": "gemini-3.8-flash-low",
+ "started_at": "2026-11-11T13:02:57.964Z",
+ "finished_at": "2026-11-11T13:03:22.969Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 3282,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "usage": [
+  {
+   "input": 14482,
+   "output": 1709,
+   "thinking": 0,
+   "cache_read": 0,
+   "total": 16191
+  }
+ ],
+ "chatter": null,
+ "write_guard": "ok",
+ "prompt_variant": "sentinels-6523",
+ "agent": "page-reader",
+ "wrapper": null,
+ "tool_calls": [
+  "read_file"
+ ],
+ "image_url": "https://images.sourcelibrary.org/archived/69942a51045dfc482ad766f4/169.jpg",
+ "image_bytes": 648817,
+ "image_sha256": "3aff8ea1b5fb31c4f284a2ad50c631465714164951015e0e751cbde267785682",
+ "prompt_sent_chars": 14091,
+ "prompt_sent_hash": "52a8e90d58bd9f0c",
+ "stderr_tail": ""
+}

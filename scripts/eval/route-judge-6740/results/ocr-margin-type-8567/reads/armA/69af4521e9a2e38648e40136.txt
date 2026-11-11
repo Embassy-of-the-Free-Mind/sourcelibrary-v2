@@ -1,0 +1,53 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>128</page-num>
+<header>Sancti Hieronymi</header>
+
+nium nec ipse te doceas et absque doctore ingrediaris uiam, quam
+numquam ingressus es, statimque in partem tibi alteram declinandum
+sit et errori pateas plusque aut minus ambules, quam necesse est,
+**2** ut currens lasseris, moram faciens obdormias. in solitudine cito sub-
+repit superbia et, si parumper ieiunauerit hominemque non uiderit,
+putat se alicuius esse momenti oblitusque sui, unde quo uenerit,
+intus corpore lingua foris uagatur. iudicat contra apostoli uolun-
+tatem alienos seruos; quod gula poposcerit, porrigit manus; dormit,
+quantum uoluerit, facit, quod uoluerit; nullum ueretur, omnes se
+inferiores putat crebriusque in urbibus quam in cellula est et inter
+**3** fratres simulat uerecundiam, qui platearum turbis conliditur. quid
+igitur? solitariam uitam reprehendimus? minime, quippe quam
+saepe laudauimus. sed de ludo monasteriorum huiusce modi uolu-
+mus egredi milites, quos rudimenta non terreant, qui specimen con-
+uersationis suae multo tempore dederint, qui omnium fuerunt mi-
+nimi, ut primi omnium fierent, quos nec esuries nec saturitas ali-
+quando superauit, qui paupertate laetantur, quorum habitus, sermo,
+uultus, incessus doctrina uirtutum est, qui nesciunt secundum
+
+7 cf. Rom. 14, 4 15 cf. Matth. 19, 30 etc.
+
+---
+
+1 doceat *C* et] ut *B* absque] caue ne sine *Γ* ductore *CB* ductorem *G*
+2 numquam — statimque] et *Γ* in part. tibi alt. *GDB* tibi in alt. part. *η* in
+part. alt. *ΓP* tibi in part. alt. *cet.* alteram (m *exp.*) *D* decl. — pateas] decli-
+nans errorem patiaris *Γ* 3 errore *Hη* plusquae *Γa.c.m2H* plus *P* non plus
+*DC* ne plus *B* ambulans *ηΨ* est *om. H* 4 ut *GH* et *ΓB* aut *Nt* ne *DC*,
+*om. ηPΨ* ne aut *ς* moramque *ηPDCB* aut moram *Γς* faciendo *η* dor-
+mias *G* subripit *H, Pp.c. Ba.c.* 5 ieiunaueris *H* que *om. H* 6 alic. esse
+mom. se putat *Nt* unde et quo *Cς* 7 corpore] corde *DC* (post corpore *suppl.*
+manens) foris lingua *DB* lingua] mente *H* foras *Ψ* uoluntatem (add. *s.l.*
+apostoli) *G* 8 quod] si ad quod *C* quo *ς* poposcit *η* uoluerit *ς* porriget *ηH*
+porrigat *C, Ba.c.* manu si *Ga.c.* manum *Gp.c. ηCΨB* 9 null. uer., facit quod
+uol. *ς* faciunt quod uoluerint *ηa.c. in mg. inf., om. GHP* inferiores se *ς* se *om. H*
+10 orbibus *η* cellulam *H* cellulis *Ψ* cella *DCB* est] demoratur *H* et *om. HP*
+11 uerecundia *Gt* turbis] turpi circuitu *G* colliditur *C* circumluditur *G*
+12 quippe *post laud. ponit Ba.c., om. P* 13 laudabimus *DB* laudamus *ηNΨt, Pa.c.*
+13 huiusmodi *H* 14 rudimenta] h(om. *C*)eremi dura rudimenta *DCB* qui] illi
+aliorum debent esse doctores, qui *Γ* spec(t *C*)iem *ΓDC* 15 tempore] desi-
+nit *P* dederint] de(di *m2*)dicerent *Γ* dedicerent *η* dederit *t* qui] et *H* min.
+fuerint *Ψ* fuerint *DCΨt* 16 fierint *Γa.c. m2HD* aliq. nec sat. *ηCΨ*
+17 superauerit *Nt* superant *C* qui in *G* quia *B* laetatur *NΨa.c.* 18 uirtu-
+tis ex uirtus *m2Γ* non sciunt *H*
+
+<vocab>solitudo, superbia, monasterium, rudimenta, uirtus</vocab>

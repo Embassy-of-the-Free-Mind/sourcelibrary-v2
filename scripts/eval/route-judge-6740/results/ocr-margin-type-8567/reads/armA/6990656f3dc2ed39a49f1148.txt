@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>201</page-num>
+<header>Part.1. Sect.2. Scoffes, calumnies, bitter Iests. Memb.4. Subſ.5.</header>
+<meta>Catchword: paniõs</meta>
+
+<margin>
+c *Lib. 8.*
+d *Boterus lib. 1. polit. cap. 4.*
+</margin>
+though they haue all things otherwiſe as they can deſire, and are in heauen to another mans opinion, what miſery and diſcontent ſhall they haue that liue in ſlauery or in priſon it ſelf? *Quod triſtius morte, in ſervitute vivendum*, as *Hermolaus* told *Alexander* in c *Curtius* worſe then death is bondage. d *Equidem ego is ſum qui ſervitutem extremum omnium malorum eſſe arbitror:* I am he ſaith d *Boterus* that accompt ſervitude the extremity of miſery. And what miſery doe they endure that liue vnder thoſe hard task-maſters, in gold-mines, tin-mines, lead-mines, ſtone-quarries, cole-pits, like ſo many mouldewarpes vnder ground, condemned to the gallies, to perpetual drudgery, hunger, thirſt, and ſtripes, without all hope of deliuery? How are theſe wome in *Turkie* affected, that moſt part of the yeare come not abroad, and thoſe *Italian* and *Spaniſh* dames that are mewed vp like hawkes, & locked vp by their jelous husbands? how tedious is it to them that liue in ſtoues and caues halfe a yeare together; as in *Iſland*, *Muſcovy*, or
+
+<margin>
+e If there be any inhabitants
+</margin>
+vnder the e Pole it ſelfe, where they haue ſix moneths perpetuall night. Nay, what miſery and diſcontent doe they endure, that are in priſon, they want all thoſe ſix non-naturall things at once, good aire, good diet, exerciſe, company, ſleep, reſt, eaſe, &c. that are bound in chaines all day long, ſuffer
+
+<margin>
+f *In Toxari. Interdiu quidem collum vinctum eſt, & manus conſtrictæ, noctu vero totum corpus vincitur, ad has miſerias accedit corporis fœtor, ſtrepitus eiulantium, ſomni brevitas, hæc omnia planè moleſta & intolerabilia.*
+</margin>
+hunger, and as f *Lucian* deſcribes it, *muſt abide that filthy ſtink and ratling of chaines, howlings, pitifull out-cryes that priſoners vſually make; theſe things are not only troubleſome, but intollerable.* They lye naſtily amongſt todes and frogs in a darke dungeon, in their own dung, in pain of body, in pain of ſoule: as *Ioſeph* did. *Pſal. 105. 18. they hurt his feet in the ſtocks, the iron entred his ſoule.* They liue ſolitary alone, ſequeſtred from all company, but heart-eating melancholy, and for want of
+
+<margin>
+g *In 9. Rhaſis.*
+</margin>
+meat, muſt prey vpon themſelues. Well might g *Arculanus* put long impriſonment for a cauſe, eſpecially to ſuch that haue liued Iovially, in all ſenſuality and luſt, and vpon a ſudden are eſtranged and debarred from all manner of pleaſures: As *Huniades* and *Richard* the ſecond, *Valerian* the Emperor, *Baiazet* the *Turke*. If it be irkſome to miſſe our ordinary cõpaniõs,
+
+<vocab>ſervitude, bondage, gallies, mouldewarpes, non-naturall things, Toxaris, Arculanus, Huniades, Baiazet</vocab>

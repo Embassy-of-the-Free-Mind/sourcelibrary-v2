@@ -1,0 +1,49 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>214</page-num>
+<header>PLOTINI ENNEAD. II.</header>
+<meta>Catchword: terrâ</meta>
+<warning>Page contains parallel Latin and Greek columns, with extensive handwritten Latin and Greek annotations in the left margin and printed notes/asterisks in the right margin.</warning>
+
+<margin>κἂν εἴ
+<unclear>τῶν</unclear> abest</margin>
+<margin>δὲ abest
+οἷς μὴ ἀρετῆς μὴ μέτεστιν</margin>
+<margin>ὅδε</margin>
+<margin>ἔτι
+προὔργου
+εἴη</margin>
+<margin>θεὸς</margin>
+<margin>XVI
+Qui dicunt nullu in corporibus mûdo numen esse bonū, peruerse existimant ordine vniuersi, &amp; sibi aditus mediatis superiora possens commodius peruenire.</margin>
+<margin>προὔργου
+καταφρονήσας
+τὰ ἄλλα
+τὸ abest
+ὁ γὰρ τὸ φιλεῖν
+ὁτιοῦν
+πατρὸς</margin>
+<margin>τὸ
+ὁτιοῦν
+καὶ abest σύμφωνον
+μόνων(?)</margin>
+atque omnem prorsus viam, qua quis virtutem consequi possit: adeò vt nihil aliud illis reliquum sit, quàm voluptatem sequi, proprijsq́ue rebus duntaxat incumbere, desertaque generis humani communione propriæ solùm vtilitati studere: nisi fortè quis suapte natura sermonibus eiusmodi sit præstantior. Nam eorum quæ apud nos bona honestaque censentur, nihil apud illos bonum existimatur, sed aliud quiddam, quodcunque illi aliquando prosequatur. Quanquam decebat eos qui iam nouerint, hinc iam profequi, sequentes autem prima hæc nostra corrigere ex diuina natura ad hæc accedentes. Illius namque naturæ duntaxat, quæ voluptatem corporis negligit, est, quid bonū honestúmque sit, intelligere. Qui autem virtutis expertes sunt omninò, nullo modo ad superna accedere poterunt. Testimonium id quoque his adhibet, quòd nullum faciūt de virtute verbum, sermonémque omnem de his quæ ad virtutem pertinent, omnino dimittunt: neque definire student, quid virtus &amp; bonum, quotve sint: &amp; omnino quæcunq́; tam præclara quàm multa priscorum disputationibus cōtinentur; neque rursus ex quibus acquirantur bona atq́; possideantur: neque quo pacto animus excolatur atque purgetur. Quod enim solent dicere, *ad deum aspice*, nihil prodest omnino: nisi quo pacto inspecturus sis, perspicuè doceant. Nam nihil prohibere quis dixerit, quin aliquis aspiciat quidem, nulla tamē abstineat voluptate, neque cohibeat iram: atque commemorans duntaxat ipsum dei nomen, succumbat interim perturbationibus omnibus, neque eas propulsare contendat. Virtus profectò per prudentiam acquisita, ad summumq́; progressa, deum nobis ostendit: si quis autem absque vera virtute pronunciat deum, nihil habet aliud præter nomen.
+
+NEMO putet ex hoc ipso bonum se euasurum in cor rum, quod despiciat mundum, deosque qui in mudo regnant, cæteraque mundi bona atque præclara. Etenim malus omnis in primis id habet, vt despiciat deos: neque prius aliquis totus est malus, quàm despiciat superos. Ac si nondū in alijs omnibus malus sit, ex hoc tamē vno in cūctis malus euadit. Proinde quòd aiunt se deos intelligibiles colere, consentaneum siue cognatum nihil habet. Qui enim aliquid amat, quicquid eius, quod amat, cognatum est, dilectione prosequitur. Nam &amp; filios diligis, quorū patrem amas. Anima verò omnis patris illius est filia. Atque animæ in mundi sphæris sunt intellectuales atq́; bonæ, cognatæq́; supernis multò magis quam nostræ. Quo.n. pacto hic mūdus ab illo segregatus esset, quóue modo et dij qui sunt in mūdo? Sed de his quidé in superioribus quoq; diximus. Nunc aut affirmandū est, eos qui superiōrum numinū cognata despiciút, neq; numina quidé illa cognoscere, sed verbis dūtaxat apprehendere. Quinetiā quod aiunt, prouidentiā ad hæc omnia, vel etiam ad aliquid quodcūq; sit, non peruenire, quomodo potest esse pium? Itē quomodo ipsis omnino consentiens? Ferunt enim hominū dūtaxat curam esse deo. Vtrum verò
+
+<column-break/>
+
+<margin>* *καθὰ*.</margin>
+<margin>* πρότερον.</margin>
+<margin>* *πατέρος*</margin>
+<margin>* τὴν πρόνοιαν.</margin>
+<margin>* ἀπείργει</margin>
+καὶ ὅλως, * καθ’ ἃ συνέδραμεν ἀνθρώπων αὐξῆσαι, τοῦτο τε αὐτοῖς καταλείπεται πλὴν ἢ δουλεύειν τὸ περὶ αὐτὰς, καὶ τὸ ᾗ κοινὸν πρὸς ἄλλους ἀνθρώπους ἢ τὸ πρὸς εἰας μόνον, εἰ μή τις τῇ φύσει τῇ αὐτῷ κρείττων εἴη τῶν λόγων τούτων. τοῦτο γὰρ οὐδὲν αὐτοῖς καλὸν ἀλλὰ ἄλλο τι, ὁπότε μεταδιώξουσι, καίτοι ἔχρην τοὺς ἤδη ἐγνωκότας εὐθὺς ἴεν διώκειν· διώκοντας δὲ, πρῶτα κατορθοῦν ταῦτα ἐκ θείας φύσεως ἠκοντας. ἐκείνης γὰρ τῆς φύσεως καὶ ἐκείνων. τὴν ἡδονὴν τοῦ σώματος ἀτιμαζούσης, οἷς δὲ ἀρετῆς μὴ μέτεστιν, οὐκ ἂν εἶεν τὸ πᾶράπαν κινηθέντες πρὸς ἐκεῖνα· μαρτυρεῖ δὲ αὐτοῖς καὶ τόδε, τὸ μηδένα λόγον περὶ ἀρετῆς πεποιῆσθαι, ἐκλελοιπέναι δὲ παντάπασι, τὸν περὶ τούτων λόγον. καὶ μήτε τί ἐστιν εἰπεῖν, μήτε πόσα, μήτε ὅτε τεθεώρηται πολλὰ καὶ καλὰ τοῖς τῶν παλαιῶν λόγοις. μὴ τε ἐξ ὧν πελεῖται, ἐκτήσεται· μή τε ὡς θεραπεύεται ψυχὴ, μή τε ὡς καθαίρεται. ἃ γὰρ δεῖ τὸ εἰπεῖν, βλέπε πρὸς θεὸν, προὔργου τί ἐργάζεται, ἐὰν μὴ πῶς τις βλέψῃ, διδάξῃ. τί γὰρ κωλύει, εἴποι τις, ἂν, βλέπειν, ἐμὴ δέ μιας ἀπέχεσθαι ἡδονῆς, ἢ ἀκρατῆ θυμοῦ εἶναι· μεμνημένον μὲν ὀνόματος τοῦ θεοῦ, συνεχόμενον δὲ ἅπασι πάθεσι, μηδὲν δὲ αὐτῶν πειρώμενον ἐξαιρεῖν; ἀρετὴ μὲν οὖν εἰς τέλος προϊοῦσα, καὶ σὺν ψυχῇ ἐγγενομένη μετὰ φρονήσεως, θεὸν δείκνυσιν· ἄνευ δὲ ἀρετῆς ἀληθινῆς θεὸς λεγόμενον, ὄνομά ἐστι.
+
+ΟΥ̓δ’ αὖ τὸ καταφρονῆσαι κόσμου καὶ θεῶν τῶν ἐν αὐτῷ καὶ τῶν ἄλλων καλῶν, ἀγαθόν ἐστιν ἡγεῖσθαι. καὶ γὰρ πᾶς κακὸς ᾗ πρῶτον καταφρονήσειεν ἂν θεῶν, καὶ μὴ * πρῶτον, πῶς ἂν πᾶς κακὸς καταφρονῶν; καὶ εἰ τἄλλα μὴ πάντα κακὸς εἴη, αὐτῷ τούτῳ ἂν γέγονὼς εἴη. καὶ γὰρ αὖ καὶ ἡ πρὸς τὰς νοητὰς θεοὺς λεγομένη αὐτοῖς τιμὴ, ἀσυμπαθὴς αὐγένοιτο· τὸ γὰρ φιλεῖν ὥστες ὁτιοῦν ἔχειν, καὶ τὸ συγγένες τῶν ἂν ᾧ φιλῇ, ἀγαπᾷ. &amp; τοὺς παῖδας, ὧν τὸν πατέρα ἀγαπᾷ. Ψυχὴ δὲ πᾶσα * πρὸς ἐκείνην. ψυχαὶ δὲ γ’ ἐν τούτοις, καὶ νοεραὶ, καὶ ἀγαθαὶ, καὶ συναφεῖς τοῖς ἐκεῖ πολὺ μᾶλλον, ἢ αἱ ἡμῶν. πῶς γὰρ ἂν ἀποτετμηθεὶς ὅδε ὁ κόσμος ἐκείνης; πῶς δὲ οἱ ἐν αὐτῷ θεοί; ἀλλὰ ταῦτα μὲν, καὶ πρότερον. νῦν δὲ, ὅτι καὶ τῶν συγγενῶν ἐκείνοις καταφρονοῦντες, ὅτι μὴ δὲ ἐκεῖνα ἴσασιν, ἀλλ’ ἢ λόγῳ. ἐπεὶ καὶ * τὸ πρόνοιαν μὴ διϊκνεῖσθαι εἰς τὰ τῇδε, ἢ * εἰς τὸ ὁτοιουῦ, πῶς * ἀσεβές; πῶς δὲ καὶ σύμφωνον ἑαυτοῖς; λέγουσι γὰρ αὐτῶν πρόνοιαν αὖ μόνον, πότερον δὲ ἐκεῖ γενομένων, ἢ καὶ ἐνθάδε ὄντων;
+hominū, dum illic sunt, solúmodo vel etiam in terrâ
+
+<vocab>Plotinus, Ennead II, virtus, providentia, animus, mundus, ἀρετή, πρόνοια, θεός, κόσμος</vocab>

@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<header>Fo.</header>
+
+sed magis confidentiam assumendo debet se purgare per vite emendationem. misericordie dei implorationem. orationum et bonorum operum suffragia per passionis christi interpositionem et sanctorum intercessionem. quia dominus misericors est et propicius ad veniam. <image-desc size="small" type="decorative" significance="low">paragraph mark</image-desc>Volenti igitur proficere expedit ut sepius super sua conversatione faciat diligentem examinationem. et recogitet peccata et negligentias in amaritudine anime sue. discutiatque vires anime quales. si habeat cogitationes et affectiones. utrum denique celestia et salubria sapiat et intendat vel caduca et nociua. Deinde examinet hominem suum exteriorem utrum verbis duris detractorijs. adulatorijs. turpibus ve excedat. si in sensibus est custoditus. humilis. patiens. pius. strennuus et fidelis. deinde in cogitatione si est humilis purus. spiritualis. et in omni actione compositus. si charitatem quantum in se est cum omnibus teneat. si aliquem verbo vel facto scandalisat Ex hijs itaque et similibus se cognoscere debet et vitam suam interiorem et exteriorem de bono in melius commutare ut deum deorum possit in syon contemplari. Et sequentes versus diligenter memorie comenda.
+
+Undique presentem dominum treme cuncta videntem
+Sis iustus semper et te teneas sapienter
+Temporibus mores sapiens sine crimine mutat
+Iniusta mala damnant. atque beant bona iustum
+
+<image-desc size="small" type="decorative" significance="low">paragraph mark in red ink</image-desc># Feria quarta de morte et circumstantijs eius. ->Capitulum tercium.<-
+
+<margin><unclear>continua meditatio mortis</unclear></margin>
+De morte dicturus. hoc in primis notum facio quod eius continua meditatio omne expellit peccatum. et potissime cuncta tollit superbiam. et reddit hominem timentem et humilem gratieque dei aptissimum. Pensandum igitur cuilibet erit cum iam peccatrix anima vinculis incipit carnis absolui quam amaro terrore concutitur quantis mordacis conscientie stimulis iugiter laceratur. Nam recolit verita que commisit. videt mandata que negligenter implere contempsit. <image-desc size="small" type="decorative" significance="low">paragraph mark</image-desc>Manere quidem satagit. sed ire compellitur. recuperare quoque vult perdita sed minime auditur. Dolet proinde indulta penitentie tempora se inaniter consumpsisse. plorat
+
+<vocab>confessio, emendatio, meditatio mortis, feria quarta, superbia, penitentia</vocab>

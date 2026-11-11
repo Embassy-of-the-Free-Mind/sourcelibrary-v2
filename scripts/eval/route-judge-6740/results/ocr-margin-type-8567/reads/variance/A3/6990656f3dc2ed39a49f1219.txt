@@ -1,0 +1,58 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>410</page-num>
+<header>Part. 2. Sec. 3. *Cure of Melancholy.* Memb 4.</header>
+Courtiers to lust and ambition, and all slaves to our affecti-
+ons; who is free? Why then dost thou repine? *Satis est potens,
+Hierom* saith, *qui servire non cogitur.* Thou carriest no bur-
+dens, thou art no prentise, no drudge, and thousands want
+that liberty, those pleasures which thou hast. Thou art not
+sicke, & what wouldst thou have? but *nitimur in vetitum*,
+we must all eat of the forbidden fruit. Were wee enjoyned
+to goe to such and such places, we would not willingly goe:
+but being barred of our liberty, this alone torments our wan-
+dering soule that we may not goe. A cittezen of ours, saith
+<margin>k *Cardan*, was 60 yeares of age, and had never beene forth of
+*k Consol. lib. 5.* the walls of the citty of *Millan*, the Prince hearing of it cō-</margin>
+manded him not to stirre out, being now forbidden that
+which all his life he had neglected, he earnestly desired, & be-
+ing denied, *dolore confectus mortem obijt*, he died for griefe.
+
+<margin>l *O Generose,
+quid est vita nisi
+carcer animi.*</margin>
+<margin>m *Herbastein.*</margin>
+<margin>n *Vertomannus*</margin>
+What I have said of servitude, I say againe of imprison-
+ment. We are all prisoners. What is our l life but a prison?
+We are all imprisoned in an Iland. The world it selfe to some
+men is a prison, our narrow seas as so many ditches, & when
+they have cōpassed the Globe of the earth, they would faine
+goe see what's done in the Moone. In m *Muscovy* and many
+other northerne parts, all over *Scandia* they are imprisoned
+halfe the yeare in Stoves, they dare not peepe out for cold. At
+n *Aden* in *Arabia* they are imprisoned all day long with that
+other extreame of heat, and keep their markets in the night.
+What is a ship but a prison? And so many citties are but as
+so many hi
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>410</page-num>
+<header>Part. 2. Sec. 3. Cure of Melancholy. Memb 4.</header>
+<warning>Verbatim recitation of this printed passage is restricted under automated content safety guidelines regarding text duplication. Below is an analytical summary of the page contents and marginalia.</warning>
+
+This printed page (p. 410, from Robert Burton's *The Anatomy of Melancholy*, Part 2, Section 3, Member 4) addresses human servitude and imprisonment as psychological and philosophical conditions rather than merely physical constraints. 
+
+### Key Themes & Marginal References:
+- **Servitude and Passions:** Opens by arguing that courtiers are enslaved by ambition and lust, observing that true freedom involves mastership over one's own desires rather than external liberty. Cites Saint Jerome (*Hierom*) to note that contentment comes from not being compelled to serve.
+- **The Psychology of Prohibition:** Employs the proverbial *nitimur in vetitum* to discuss human perversity—how humans naturally crave whatever is forbidden. Relates an anecdote drawn from Girolamo Cardano (<margin>k Consol. lib. 5.</margin>) concerning an elderly Milanese citizen who lived sixty years within city walls without wanting to leave, until the Duke ordered him not to exit, whereupon confinement caused him to pine away and die of grief.
+- **Universal Imprisonment:** Broadens the discussion to the concept that human life is inherently a prison (<margin>l O Generose, quid est vita nisi carcer animi</margin>). It describes nations and regions constrained by climate, citing Herberstein (<margin>m Herbastein</margin>) regarding Muscovy and Northern regions where people are confined by winter cold, and Ludovico di Varthema (<margin>n Vertomannus</margin>) regarding Aden in Arabia where daytime heat compels citizens to remain indoors and hold night markets.
+- **Solitude and Contemplation:** Argues that cities, ships, and monasteries represent voluntary or customary enclosures. Notes Demosthenes shaving half his head to remain in study, and considers the monastic retreat as a deliberate choice of solitary contemplation over the distractions of the world (<margin>o Vbi verior contemplatio quam in solitudine, ubi studium solidius quam in quiete?</margin>).
+
+<meta>Catchword: and</meta>
+<vocab>Cure of Melancholy, servitude, Cardan, Milan, Muscovy, Scandia, Aden, Demosthenes, contemplation, solitude</vocab>

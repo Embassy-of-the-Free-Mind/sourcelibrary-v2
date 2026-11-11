@@ -1,0 +1,125 @@
+<scan-quality>good</scan-quality>
+<language>Greek</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>242</page-num>
+<header>PLATONIS</header>
+<columns>2</columns>
+hoc flumine difcedo, priufquam ad lon-
+giorem fermonem abs te cõpellar. <term>PHAE.</term>
+Ne fanè, Socrates, antequã æſtus abceſſe-
+rit. nónne vides iam meridiem ſtare? qua
+hora certè viget calor,& in hoc quidé æſti-
+uo tépore. opportunius eſt igitur hîc diu-
+tius commorari,& in his quæ iam diximus
+edifferendis tempus impendere: vbi pri-
+mùm verò æſtus deferbuerit, tunc diſcede-
+mus. <term>SOCR.</term> In conquirendis fermonibus
+diuinus es, mi Phædre, & reuera mirabilis.
+arbitror equidé, orationũ quæ tuo tépore
+habitæ ſunt, plures te neminé cõpoſuiſſe,
+ſiue vltrò dicendo, ſiue ad eam operã alios
+cõpellendo, Simmiam Thebanũ excipio:
+at alios tu longè antecellis. & nunc etiam
+mihi in cauſa extitiſſe videris, vt qualem-
+cunque orationé hanc habuerim: nec verò
+etiã bellum modò mihi denũtias. <term>PHAE.</term>
+Sed quónam modo & vnde hæc tibi noua
+cupiditas? <term>SOCR.</term> Quum flumen tranſitu-
+rus eſſem, mi Phædre, diuinum illud quod
+mihi ſolet euenire ſignũ, mihi euenit. quod
+ſanè quoties accidit, quod facturus eram
+agere prohibet. hinc vocem audire viſus
+ſum, quæ abire hinc me vetat, antequá me
+expiauero quaſi aduerſus deũ aliquid pec-
+cauerim. Sum verò equidem vates, ſed nó
+valde peritus: ſed quemadmodum ii qui
+malè ſciunt literas, ita in hac vaticinandi
+arte hactenus ſum verſatus quantum mihi
+ſatis eſt. qua in re igitur peccauerim, ſatis
+perſpicuè intelligo. ſiquidem, mihi crede,
+animus vim aliquam habet diuinatricem.
+me enim cõmouit etiá antea, dum loque-
+bar: vt quidem vererer quodãmodo (ſicuti
+ait Ibycus) <quote>ne vbi aduerſus deos peccauerim,
+apud homines gloriam præmiúmque conſe-
+quar.</quote> Qua in re igitur peccauerim, nũc de-
+mum ſenſi. <term>PHAE.</term> Ecquid illud eſt? <term>SOC.</term>
+Grauem, ô Phædre, grauem, inquam, ſer-
+monem & tu attuliſti, eúmque me etiam
+vſurpare coegiſti. <term>PHAE.</term> Quomodo verò?
+<term>SOCR.</term> Veſanum, & penè impium: quo
+quis grauior eſſe poſſit? <term>PHAE.</term> Nullus ſa-
+nè, ſi ita eſt vt ais. <term>SOCR.</term> Quid enim? nón-
+ne arbitraris Amorem eſſe filium Veneris,
+& ipſum quidem, deum aliquem? <term>PHAE.</term>
+Ita nimirum dicitur. <term>SOCR.</term> Neque certè à
+Lyſia, neque ſermone tuo, quemadmodũ
+prolatus eſt ex ore meo à te veluti faſcina-
+to atque incãtato. Quòd ſi eſt (vt eſt certè)
+deus, aut diuinum quidpiam, Amor, ma-
+lum profectò non eſt. ſermones igitur hi à
+nobis duobus modò habiti quaſi Amor
+malum eſſet, hactenus aduerſus Amorem
+peccarunt: & valde quidem inſulſæ vi-
+dentur hæ noſtræ diſputationes (quam-
+uis vrbanitate quadam ſint aſperſæ) quòd
+nihil ſincerum verúmque cõplectãtur, &
+tamẽ præ ſe granditaté quãdã ferant, quaſi
+<column-break/>
+<margin>A</margin>
+τοῦτον διελθὼς ἀπέρχομαι, πρὶν ὑπὸ σοῦ
+ἀναγκασθῆναι. <term>ΦΑΙ.</term> Μήπω γε,
+<margin>Vel εἰς ante ᾖ, vel εἰπεῖν (aut tale aliquod verbum) ante ſive poſt ἀναγκασθῆναι videtur de-eſſe.</margin>
+ὦ Σώκρατες, πρὶν ἂν τὸ καῦμα παρέλθῃ.
+ἦ οὐχ ὁρᾷς ὡς σχεδὸν ἤδη μεσημβρία ἵσταται
+δὴ καλουμένη σταθερά; ἀλλὰ περιμείναν-
+τες, καὶ ἅμα περὶ τῶν εἰρημένων διαλε-
+χθέντες, τάχα ἐπειδὰν ἀποψύξῃ ἴωμεν.
+<term>ΣΩ.</term> Θεῖός γ' εἶ περὶ τοὺς λόγους ὦ Φαῖδρε,
+καὶ ἀτεχνῶς θαυμάσιος. οἶμαι γὰρ ἐγὼ τῶν
+ἐπὶ τοῦ σοῦ βίου γεγονότων λόγων μηδένα
+<margin>B</margin>
+πλείους ἢ σε πεποιηκέναι γεγενῆσθαι, ἤτοι
+αὐτὸν λέγοντα, ἢ ἄλλους ἑνί γε τρόπῳ προσα-
+ναγκάζοντα. Σιμμίαν Θηβαῖον ἐξαιρῶ
+λόγου· τῶν δ' ἄλλων πάμπολυ κρατεῖς· καὶ
+νῦν αὖ δοκεῖς αἴτιός μοι γεγενῆσθαι λόγῳ
+τινὶ ῥηθῆναι, οὐ πόλεμόν γε ἀγγέλλεις. <term>ΦΑΙ.</term>
+Ἀλλὰ πῶς δὴ καὶ τίνι τούτῳ; <term>ΣΩ.</term> Ἡνίκ' ἔ-
+μελλον, ὦ 'γαθέ, τὸν ποταμὸν διαβαίνειν, τὸ
+δαιμόνιόν τε καὶ τὸ εἰωθὸς σημεῖόν μοι γίγνε-
+σθαι, ἐγένετο (ἀεὶ δέ με ἐπίσχει, ὃ ἂν μέλλω
+<margin>C</margin>
+πράττειν) καί τινα φωνὴν ἔδοξα αὐτόθεν
+ἀκοῦσαι· ἥ με οὐκ ἐᾷ ἀπιέναι πρὶν ἂν ἀφο-
+σιώσωμαι, ὡς δή τι ἡμαρτηκότα εἰς τὸ θεῖον. εἰ-
+μὶ δὴ οὖν μάντις μὲν, οὐ πάνυ δὲ σπουδαῖος·
+ἀλλ' ὥσπερ οἱ τὰ γράμματα φαῦλοι, ὅσον
+ἐμαυτῷ μόνον ἱκανός. σαφῶς οὖν ἤδη μαν-
+θάνω τὸ ἁμάρτημα. ὡς δή τοι, ὦ ἑταῖρε, μαν-
+τικόν γέ τι καὶ ἡ ψυχή. ἐμὲ γὰρ ἔθραξε μέν τι καὶ
+πάλαι λέγοντα τὸν λόγον· καί πως ἐδυσω-
+πούμην, κατ' Ἴβυκον, μή τι παρὰ θεοῖς ἀμ-
+<margin>D</margin>
+πλακών, τιμὰν πρὸς ἀνθρώπων ἀμείψω·
+νῦν δ' ᾔσθημαι τὸ ἁμάρτημα. <term>ΦΑΙ.</term> Λέ-
+γεις δὲ δὴ τί; <term>ΣΩ.</term> Δεινὸν, ὦ Φαῖδρε, δεινὸν λό-
+γον αὐτός τε ἐκόμισας, ἐμέ τε ἠνάγκασας εἰ-
+πεῖν. <term>ΦΑΙ.</term> Πῶς δή; <term>ΣΩ.</term> Εὐήθη, καὶ ὑπό
+τι ἀσεβῆ· οὗ τίς ἂν εἴη δεινότερος; <term>ΦΑΙ.</term> Οὐ-
+δείς, εἴ γε σὺ ἀληθῆ λέγεις. <term>ΣΩ.</term> Τί οὖν; τὸν
+Ἔρωτα οὐκ Ἀφροδίτης, καὶ θεόν τινὰ ἡγῇ;
+<term>ΦΑΙ.</term> Λέγεταί γε δή. <term>ΣΩ.</term> Οὔτι ὑπό γε
+Λυσίου, οὐδὲ ὑπὸ τοῦ σοῦ λόγου, ὃς διὰ
+<margin>E</margin>
+τοῦ ἐμοῦ στόματος καταφαρμακευθέντος
+ὑπὸ σοῦ ἐλέχθη. εἰ δ' ἔστιν, ὥσπερ οὖν ἔστι,
+θεὸς ἤ τι θεῖον ὁ Ἔρως, οὐδὲν ἂν κακὸν εἴη·
+τὼ δὲ λόγω τὼ νῦν δὴ περὶ αὐτοῦ εἰπέτην
+ὡς τοιούτου ὄντος. Ταύτῃ τε οὖν ἡμαρτανέ-
+την περὶ τὸν Ἔρωτα· ἔτι τε ἡ εὐήθεια αὐτοῖν
+πάνυ ἀστεία, τὸ, μηδὲν ὑγιὲς λέγοντε, μηδὲ
+ἀληθὲς, σεμνύνεσθαι ὥς τι ὄντε· εἰ ἄρα
+<vocab>Socrates, Phaedrus, Simmias Thebanus, Ibycus, Lysias, Amor, Venus, Phaedrus dialogue, daimonion</vocab>

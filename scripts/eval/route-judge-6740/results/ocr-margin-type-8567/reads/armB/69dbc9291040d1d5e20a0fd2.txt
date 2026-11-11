@@ -1,0 +1,53 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<header>DE REDITV SVO.</header>
+<sig>T</sig>
+
+<margin type="handwritten">Q. metellus
+P. seruilius</margin>
+consul cum illa incredibilis multitudo Romam & pene Italia ipsa uenisset: uos
+frequentissimos in capitolium conuocauit: quo tempore quantam uim naturae
+bonitas haberet: aut uera nobilitas: intelligere potuistis. Nam. Q. Metellus &
+inimicus & frater inimici perspecta uestra uoluntate omnia priuata odia depo
+suit: quem. P. Seruilius uir cum clarissimus: tum uero optimus mihique amicissi
+mus: & auctoritatis & orationis suae diuina quadam grauitate: ad sui generis com
+munisque sanguinis facta uirtutesque reuocauit: ut haberet in consilio & fratrem
+ab inferis socium rerum mearum: & omnes Metellos praestantissimos ciues pene ex
+Acheronte excitatos: in quibus numidicum illum Metellum: cuius quondam
+de patria discessus honestis omnibus luctuosus tandem uisus est. Itaque dimitti<margin type="handwritten">hic <unclear>fuit</unclear></margin>
+tur non modo salutis defensor: qui ante hoc unum beneficium fuerat inimicus
+uerumetiam est ascriptor dignitatis meae. Quo quidem die cum quadringenti: de
+cem Senatores essetis. Magistratusque omnes abessent: dissensit unus: qui sua
+lege coniuratos etiam ab inferis excitandos putarat. Atque illo die quo rempublicam
+meis consiliis conseruatam grauissimis uerbis & plurimis iudicastis: idem con
+sul curauit: ut eadem a principibus ciuitatis in concione postero die dicerent: cum
+quidem ipse egit ornatissime causam meam: perfecitque astante atque audiente. Ita
+lia tota ut uix cuiusdam conducti atque perditi uocem acerbam atque inimicam bo
+nis possent audire. ad haec non modo adiumentum salutis: sed etiam ornamenta
+dignitatis meae reliqua uos idem addidistis: decreuistis nequis ulla ratione rem
+impediret: qui id impedisset: grauiter molesteq; laturos: illum contra rempublicam
+salutemque bonorum concordiamque ciuium facturum: & ut ad uos ea statim referen
+tur. meque etiam si diutius calumniarent: redire iussistis. Quid ut agerent gra<margin type="handwritten"><unclear>rulissis</unclear></margin>
+tiae qui e municipiis uenissent: quod ut ad illam diem res cum recidissent: rogaret:
+ut pari studio conuenirent. Quid denique illo die quem. P. Lentulus mihi fratri
+que meo: liberisque nostris natale constituit: non modo ad nostra: uerumetiam ad sem
+piternam memoriae temporis: quo die nos comitiis centuriatis quae maxime ma
+iores iusta dici haberique uoluerunt: arcessiuit in patriam: ut eaedem centuriae quae
+me consule fecerant: consulatum meum comprobarent. quo die quis ciuis fuit qui
+non nefas esse putaret quacumque aut aetate aut ualitudine esset: non se de salute
+mea sententiam ferre: quando tantam frequentiam in campo: tantum splendorem Ita
+liae totius: ordinumque omnium: quando ulla dignitate tot rogatores: diribitores cu<margin type="handwritten">illa, o Diribitores <unclear>ad martis</unclear>
+Equi
+Currus Auratus.</margin>
+stodesque uidistis? Itaque. P. Lentuli beneficio excellenti atque diuino non solum re
+ducti sumus in patriam: sicut nonnulli clarissimi uiri: sed equis insignibus: & cur
+ru aureato reportati. Possum ego satis in. Cn. Pompeium umquam gratus uideri? quod non so
+lum apud uos quod idem sentiebatis: sed etiam apud uniuersum populum salutem Po<margin type="handwritten">resp:</margin>
+<margin type="handwritten">12000</margin>puli Roma.& conseruatam per me & coniunctam esse cum mea dixerit. Qui causam
+meam prudentibus commendauit Imperitos edocuerit: eodemque tempore im
+probos auctoritate sua compresserit: bonos excitauit. Qui. Po. Roma. pro me
+tanquam pro fratre: aut pro parente non solum hortatus sit: uerumetiam obsecrauit qui
+
+<vocab>DE REDITV SVO, Q. Metellus, P. Seruilius, Metellos, Acheronte, Numidicum Metellum, Senatores, P. Lentulus, Cn. Pompeium, diribitores, comitiis centuriatis</vocab>
