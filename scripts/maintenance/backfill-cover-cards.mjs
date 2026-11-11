@@ -72,6 +72,8 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const FORCE = process.argv.includes('--force');
 const LIMIT = Number(arg('limit', 0)) || 0;
 const BOOK_ID = arg('book-id');
+// The cover field the card is cut from, but only when it is on our R2 (the hosts resolveSource accepts).
+const R2_COVER = { $regex: 'images\\.sourcelibrary\\.org/(archived|thumbnails|pages|cropped)/' };
 const CONCURRENCY = Number(arg('concurrency', 10)) || 10;
 const WIDTH = Number(arg('width', 500)) || 500;
 const QUALITY = Number(arg('quality', 55)) || 55;
@@ -165,10 +167,16 @@ async function main() {
         // and getBookCardUrl validates their card against that same field. An
         // image_display-only filter never selected them, so the homepage's newest
         // shelves kept serving 0.5–1 MB scans (#7057).
+        //
+        // Only covers on our own R2: resolveSource() skips every other host, and
+        // candidates are sorted by read_count, so without this filter --limit was
+        // spent on the same ~15,500 IIIF/archive.org covers every night and the
+        // convertible books below them were never reached (measured 2026-11-11:
+        // 15,533 of 20,000 candidates skipped as "no R2 page-scan source").
         $or: [
-          { image_display: { $type: 'string' } },
-          { thumbnail: { $type: 'string' } },
-          { thumbnail_blob: { $type: 'string' } },
+          { image_display: R2_COVER },
+          { image_display: { $not: { $type: 'string' } }, thumbnail: R2_COVER },
+          { image_display: { $not: { $type: 'string' } }, thumbnail: { $not: { $type: 'string' } }, thumbnail_blob: R2_COVER },
         ],
         // "has no usable card" is `not a string`, NOT `$exists: false`. A cover
         // write CLEARS the pointer by setting it to null (buildCoverUpdate), and
