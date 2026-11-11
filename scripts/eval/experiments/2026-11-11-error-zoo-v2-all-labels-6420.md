@@ -9,6 +9,8 @@ n_pages: 10805
 status: undecided
 feeds: [detector, figure]
 superseded_by: null
+router_evidence: "none — no route was compared; stored verdicts from six instruments were pooled to train a page-risk predictor"
+defect_rates: "none — nothing was judged for defects in this run; it reads verdicts other runs recorded"
 verdict: "Every page-level judgment we hold is 12,352 rows from four stores, seven times the first pass; the predictor trained on all of them scores AUC 0.815 out-of-book pooled, 0.76 on the weekly audit's uniform draw (0.72 trained on that draw alone, replicating the first pass without image features). On the uniform draw the top 10% by risk is 74% serious against a 31% base and the top 30% holds 59% of the serious pages; the brief's '5% hold a third' is NOT reached (5% hold 14%). Lane B's own check agrees with the independent Opus audit on 46% of 250 shared pages. The '59% unclassed' errors are minor and moderate: 95% of serious findings were already classed."
 decision: "Nothing run on production. Four defaults wait on #6420: aim half the weekly audit at the top risk decile; run the paired before/after on the next lane-B batch; record audit labels into book_checks; a Flash-Lite screener or GPU second read stays off until Derek says."
 ---
