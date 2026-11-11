@@ -14,17 +14,10 @@ import { getReadDb } from '@/lib/mongodb';
 
 const BASE_URL = 'https://sourcelibrary.org';
 const BOOKS_PER_CHUNK = 5000;
-// Indexable reader-page chunks (issue #2688) live at /sitemap/{1000+i}.xml —
-// the offset must match PAGE_CHUNK_OFFSET / PAGES_PER_CHUNK in src/app/sitemap.ts.
-// This index route (not Next's auto-index) is what robots.txt's /sitemap.xml
-// resolves to, so page chunks must be listed HERE or Google never sees them.
-const PAGES_PER_CHUNK = 5000;
-const PAGE_CHUNK_OFFSET = 1000;
-// Gallery-image and artwork chunks (#4357) — offsets/filters must match
-// src/app/sitemap.ts exactly, or the index advertises chunks that 404 (or
-// misses ones that exist).
-const GALLERY_PER_CHUNK = 5000;
-const GALLERY_CHUNK_OFFSET = 2000;
+// Reader-page (/sitemap/1000+) and gallery-image (/sitemap/2000+) chunks are
+// still served by src/app/sitemap.ts but no longer listed in either index:
+// those URLs now name their book as canonical, so a sitemap must not offer
+// them (#3755). Artwork chunks (#4357) stay; offsets must match sitemap.ts.
 const ARTWORKS_PER_CHUNK = 5000;
 const ARTWORK_CHUNK_OFFSET = 3000;
 
@@ -32,40 +25,25 @@ const ARTWORK_CHUNK_OFFSET = 3000;
 // index (/sitemap.xml) and the core index (/sitemap-core.xml) share one builder.
 
 /**
- * `core`: static + hub chunks and books only, leaving out reader pages, gallery
- * images and artworks. Google spends only ~150-250 HTML fetches a day on this
+ * `core`: static + hub chunks and books only. The full index adds the artwork
+ * chunks. Google spends only ~150-250 HTML fetches a day on this
  * host (Search Console crawl stats, Oct 2026), so the core list is submitted on
  * its own to be read first and reported separately (#3755).
  */
 export async function sitemapIndexResponse({ core }: { core: boolean }) {
   let bookCount = 0;
-  let pageCount = 0;
-  let galleryCount = 0;
   let artworkCount = 0;
   try {
     const db = await getReadDb();
     // Counts run in parallel; each failure only omits its own chunk range
     // (the chunk routes still serve, just undiscovered until the next ok
-    // revalidation). seo_indexable_id_partial keeps the pages count ~50ms.
-    [bookCount, pageCount, galleryCount, artworkCount] = await Promise.all([
+    // revalidation).
+    [bookCount, artworkCount] = await Promise.all([
       db.collection('books').countDocuments(
         { visible: true, slug: { $exists: true, $ne: null }, pages_ocr: { $gt: 0 } },
         { maxTimeMS: 10000 }
       ).catch((error) => { console.error('sitemap-index: book count failed', error); return 0; }),
-      db.collection('pages').countDocuments(
-        { seo_indexable: true },
-        { maxTimeMS: 30000 }
-      ).catch((error) => { console.error('sitemap-index: page count failed', error); return 0; }),
-      // Gallery images + artworks (#4357).
-      db.collection('gallery_images').countDocuments(
-        {
-          gallery_quality: { $gte: 0.7 },
-          book_hidden: { $ne: true },
-          book_visible: { $ne: false },
-          image_url: { $exists: true, $nin: [null, ''] },
-        },
-        { maxTimeMS: 30000 }
-      ).catch((error) => { console.error('sitemap-index: gallery count failed', error); return 0; }),
+      // Artworks (#4357).
       db.collection('books').countDocuments(
         {
           resource_type: { $exists: true, $ne: null },
@@ -82,18 +60,12 @@ export async function sitemapIndexResponse({ core }: { core: boolean }) {
   if (!bookCount) bookCount = 20000;
 
   const bookChunks = Math.max(1, Math.ceil(bookCount / BOOKS_PER_CHUNK));
-  const pageChunks = Math.ceil(pageCount / PAGES_PER_CHUNK);
-  const galleryChunks = Math.ceil(galleryCount / GALLERY_PER_CHUNK);
   const artworkChunks = Math.ceil(artworkCount / ARTWORKS_PER_CHUNK);
   const chunkIds = [
     0,
     1,
     ...Array.from({ length: bookChunks }, (_, i) => i + 2),
-    ...(core ? [] : [
-      ...Array.from({ length: pageChunks }, (_, i) => PAGE_CHUNK_OFFSET + i),
-      ...Array.from({ length: galleryChunks }, (_, i) => GALLERY_CHUNK_OFFSET + i),
-      ...Array.from({ length: artworkChunks }, (_, i) => ARTWORK_CHUNK_OFFSET + i),
-    ]),
+    ...(core ? [] : Array.from({ length: artworkChunks }, (_, i) => ARTWORK_CHUNK_OFFSET + i)),
   ];
 
   // No <lastmod> on index entries (optional in the protocol). It used to be the
