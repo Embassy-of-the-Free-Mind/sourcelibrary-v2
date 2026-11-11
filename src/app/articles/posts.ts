@@ -43,6 +43,20 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'sea-road-china-gulf',
+    title: 'The Sea Road from China to the Gulf',
+    subtitle:
+      'Guangzhou, Quanzhou, Calicut, Siraf and Hormuz in the books of the people who sailed, taxed or charted the route: Arab geographers, a Song customs inspector, Marco Polo, Ibn Battuta, Zheng He’s star charts, the Portuguese and Dutch, and Wei Yuan in 1844.',
+    summary:
+      'Siraf to Canton by sea: Arab geographers, Zhao Rugua at Quanzhou, Marco Polo, Ibn Battuta’s junks, Zheng He’s star chart to Hormuz and Wei Yuan in 1844.',
+    date: '11 November 2026',
+    readTime: '30 min read',
+    kind: 'stories',
+    image: '/articles/sea-road-china-gulf/ormus-kaempfer.jpg',
+    imageAlt:
+      'Engraved view of Hormuz from the sea with European ships and a plan of the island, from Kaempfer’s Amoenitates exoticae (1712).',
+  },
+  {
     slug: 'solve-et-coagula',
     title: 'Solve et Coagula: Derek Lomas on Source Library',
     subtitle:

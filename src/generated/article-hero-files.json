@@ -71,6 +71,18 @@
    }
   ]
  },
+ "/articles/sea-road-china-gulf/ormus-kaempfer.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/65b09a6d3728-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/65b09a6d3728-1920.avif",
+    "w": 1300
+   }
+  ]
+ },
  "/articles/shipwrecks-and-buried-treasure/baixos-de-iudia.jpg": {
   "srcset": [
    {
