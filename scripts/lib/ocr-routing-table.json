@@ -1060,7 +1060,14 @@
       },
       "k_of_n": "18/18",
       "table": "2026-10-31-correction-pass-7818",
-      "set": "2026-11-01"
+      "set": "2026-11-01",
+      "waivers": [
+        {
+          "lane": "first-read",
+          "set": "2026-11-11",
+          "until": "2026-11-25"
+        }
+      ]
     },
     {
       "cell": "latin-gpu-7263/print",

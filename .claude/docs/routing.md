@@ -53,7 +53,7 @@ Written by `node scripts/maintenance/router-routing-rows.mjs --write`; `tests/un
 
 <!-- BEGIN GENERATED route-table: scripts/maintenance/router-routing-rows.mjs writes this section from the router table. Do not edit it by hand. -->
 
-From `current.json` (`2026-11-01-validated-7263`, set 2026-11-01; 5 cells moved alone, 3 waivers). `A>agy` and `A>Opus` correct draft A. `*` = agy by default, not measured here. `†` = undecided (HOLD, held, planned, untested), showing the route the row names. `—` = no such cell.
+From `current.json` (`2026-11-01-validated-7263`, set 2026-11-01; 5 cells moved alone, 4 waivers). `A>agy` and `A>Opus` correct draft A. `*` = agy by default, not measured here. `†` = undecided (HOLD, held, planned, untested), showing the route the row names. `—` = no such cell.
 
 **OCR**
 
