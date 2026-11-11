@@ -5,6 +5,7 @@ import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { checkPagesApiBudget, recordPagesApi, pagesWithText, pagesApiOverBudgetBody } from '@/lib/pages-api-meter';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
 import { takeReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer'; // #7965: the notes layer; text/text_from stripped here
@@ -60,6 +61,14 @@ export async function POST(
     const missing = limitedIds.filter(id => !found.has(id));
     pages = pages.concat(await findUntaggedPagesOfTenantBooks(db, missing, tenantId, PAGE_API_LAYER_PROJECTION));
 
+    // Reader-page budget and usage row (pages-api-meter.ts). 'default' is the main library, so it is
+    // capped like the global twin; named tenants (partner reading rooms) are logged, never capped.
+    const meter = await checkPagesApiBudget(request, { exempt: tenant !== 'default' });
+    if (meter?.overBudget) {
+      recordPagesApi(request, meter, { status: 429, pagesServed: 0 });
+      return NextResponse.json(pagesApiOverBudgetBody(meter), { status: 429, headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' } });
+    }
+
     // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.
     const taken = await takeReaderTextLayers(db, pages);
     pages = taken.pages;
@@ -72,6 +81,7 @@ export async function POST(
     // English edition, English leaf: serve the transcription, never the stored
     // English-to-English rewording (#7100).
     pages = await serveEnglishOriginalPages(db, pages);
+    recordPagesApi(request, meter, { status: 200, pagesServed: pagesWithText(pages) });
 
     // Strip MongoDB _id; weave the reader-path provenance mark into each
     // translation (deterministic, cache-safe — mirrors the global twin).

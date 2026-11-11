@@ -63,6 +63,18 @@ export interface LogApiUsageInput {
   pagesServed?: number;
 }
 
+/** Routes whose rows form their own budget pool and never count toward /text. */
+export const SEPARATE_BUDGET_ROUTES = ['image', 'pages_api'];
+
+/**
+ * The same row as logApiUsage, as a promise, for callers that hand it to
+ * next/server `after()` so the platform finishes the write after the response
+ * (a floating promise can be frozen mid-insert on serverless; see mcp-usage.ts).
+ */
+export async function writeApiUsage(input: LogApiUsageInput): Promise<void> {
+  await writeLogEntry(input);
+}
+
 export function logApiUsage(input: LogApiUsageInput): void {
   // Fire-and-forget; never await.
   void writeLogEntry(input).catch(() => {});
@@ -134,8 +146,10 @@ export async function getPagesServedLast24h(input: {
   // Image-proxy rows are a separate budget pool: an omitted route means "all
   // TEXT surfaces" (the pre-image-gate behaviour), never text + images —
   // otherwise 500 image loads would silently zero the same caller's /text
-  // budget. Only an explicit route:'image' reads the image pool.
-  filter.route = input.route ?? { $ne: 'image' };
+  // budget. Only an explicit route:'image' reads the image pool. The reader's
+  // own page routes (route:'pages_api', src/lib/pages-api-meter.ts) are a pool
+  // of their own for the same reason: reading on the site must not drain /text.
+  filter.route = input.route ?? { $nin: SEPARATE_BUDGET_ROUTES };
   if (input.identity.apiKeyId) filter.api_key_id = input.identity.apiKeyId;
   else if (input.identity.userId) filter.user_id = input.identity.userId;
   else filter.ip_hash = hashIp(getClientIp(input.request));

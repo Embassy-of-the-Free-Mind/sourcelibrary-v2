@@ -41,6 +41,12 @@ export const API_LIMITS = {
     requestsPerHour: 1000,
     pagesPerDay: 1000,
     imagesPerDay: 1000,
+    /**
+     * Pages with text served to one account by the reader's own page routes
+     * (/api/pages/[id], /api/pages/batch): src/lib/pages-api-meter.ts. A pool of
+     * its own, so reading on the site never drains the /text budget above.
+     */
+    readerPagesPerDay: 2000,
   },
   /** Free self-serve Explorer key — derived from the tier table. */
   explorerKey: {
