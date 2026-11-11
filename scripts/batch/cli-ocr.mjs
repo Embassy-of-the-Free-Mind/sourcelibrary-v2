@@ -734,7 +734,12 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (!correct && FIRST_READ_ONLY && page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: --first-read-only'); continue; }
   if (!correct && PRINT_ONLY) {
     const hand = (text.match(/<script>\s*(\w+)\s*<\/script>/i)?.[1] || '').toLowerCase();
-    if (hand !== 'printed') { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
+    // An empty leaf has no script, so the reader tags it none/blank. Refusing it left the page unread for good and
+    // held its book under the 90% OCR bar (#8529: 19 pages). It is written when the read says blank AND carries
+    // almost no letters outside its tags, so a text page mis-tagged blank is still refused.
+    const blankLeaf = ['none', 'blank', ''].includes(hand) && /<page-type>\s*blank\s*<\/page-type>/i.test(text)
+      && (text.replace(/<(\w[\w-]*)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/\[[^\]]*\]|_[^_]*_/g, '').match(/\p{L}/gu) || []).length < 40;
+    if (hand !== 'printed' && !blankLeaf) { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
   }
   if (gpu) {
     // The page must still be unread (or, --over-stored, still hold the stored draft the read was made over), and the
