@@ -184,6 +184,35 @@ export const WALKER_COLLECTION = 'walker_observations';
 // import the TS module). Pinned equal by tests/unit/traffic-anomaly-alert.test.ts.
 export const TRIPWIRE_COLLECTION = 'tripwire_hits';
 
+// ── Per-ACCOUNT reading (2026-11-11, Derek: "can we detect users scraping?") ──
+// Every check above works per network or per fingerprint. A scraper with one free
+// account's session cookie reads from one address at a person's pace per minute and
+// was invisible to all of them. Since #8584 the reader's page routes write an
+// api_usage row per call (route 'pages_api'), as /text, /quote and /read already did,
+// so reading can be summed per account. Thresholds are against the daily reader cap
+// (API_LIMITS.session.readerPagesPerDay = 2,000, src/lib/api-limits.ts).
+export const ACCOUNT_HEAVY_PAGES = 1500;        // reader pages in the window: 75% of the cap
+export const SHARED_ADDRESS_MIN_ACCOUNTS = 3;   // accounts reading from one address
+export const SHARED_ADDRESS_MIN_PAGES = 200;    // pages each, to count as reading there
+
+/**
+ * Pure: per-account findings from api_usage rows already grouped by the caller.
+ *   accounts: [{ user_id, reader_pages, text_pages, capped_calls, addresses, agents }]
+ *   addresses: [{ ip_hash, accounts: [{ user_id, pages }] }]
+ * Returns { capped, heavy, shared } (each a list, worst first).
+ */
+export function accountFindings(accounts = [], addresses = [], {
+  heavyPages = ACCOUNT_HEAVY_PAGES, minAccounts = SHARED_ADDRESS_MIN_ACCOUNTS, minPages = SHARED_ADDRESS_MIN_PAGES,
+} = {}) {
+  const capped = accounts.filter((a) => (a.capped_calls || 0) > 0).sort((a, b) => b.reader_pages - a.reader_pages);
+  const heavy = accounts.filter((a) => !(a.capped_calls > 0) && (a.reader_pages || 0) >= heavyPages).sort((a, b) => b.reader_pages - a.reader_pages);
+  const shared = addresses
+    .map((x) => ({ ip_hash: x.ip_hash, accounts: (x.accounts || []).filter((u) => u.user_id && (u.pages || 0) >= minPages) }))
+    .filter((x) => x.accounts.length >= minAccounts)
+    .sort((a, b) => b.accounts.length - a.accounts.length);
+  return { capped, heavy, shared };
+}
+
 // Hostnames allowed to serve reader traffic. Anything else answering content
 // is either a new alias nobody scoped, or a bypass. Both want a human look.
 export const EXPECTED_HOSTS = new Set([
@@ -884,6 +913,55 @@ async function run() {
       level: 'critical',
       check: 'desktop_surge',
       message: `Desktop reads ${surge.desktop.toLocaleString()} in 24 h against a daily median of ${surge.desktopBase.toLocaleString()}, while phone reads are ${surge.phone.toLocaleString()} against ${surge.phoneBase.toLocaleString()}. An audience shows up on phones too, so treat this as a proxy pool until shown otherwise, even if a talk or video just came out. Count the real audience by referrer in analytics_pageviews, then read Cloudflare's firewall events (CLOUDFLARE_API_TOKEN_READ). #8286 is the last time this happened.`,
+    });
+  }
+
+  // ── Per-account reading (api_usage; see accountFindings) ────────────────
+  // Signed-in accounts only: an API key has its own published cap and a known holder.
+  const usageSince = new Date(Date.now() - HOURS * 3600e3);
+  const usage = db.collection('api_usage');
+  const [acctRows, addrRows] = await Promise.all([
+    usage.aggregate([
+      { $match: { ts: { $gte: usageSince }, identity_kind: 'session', user_id: { $ne: null } } },
+      { $group: {
+        _id: '$user_id',
+        reader_pages: { $sum: { $cond: [{ $eq: ['$route', 'pages_api'] }, '$pages_served', 0] } },
+        text_pages: { $sum: { $cond: [{ $in: ['$route', ['pages_api', 'image']] }, 0, '$pages_served'] } },
+        capped_calls: { $sum: { $cond: [{ $eq: ['$reason', 'reader_page_budget'] }, 1, 0] } },
+        addresses: { $addToSet: '$ip_hash' },
+        agents: { $addToSet: { $substrCP: [{ $ifNull: ['$user_agent', ''] }, 0, 60] } },
+      } },
+      { $project: { _id: 0, user_id: '$_id', reader_pages: 1, text_pages: 1, capped_calls: 1, addresses: { $size: '$addresses' }, agents: { $slice: ['$agents', 3] } } },
+    ], { allowDiskUse: true, maxTimeMS: 120000 }).toArray(),
+    usage.aggregate([
+      { $match: { ts: { $gte: usageSince }, identity_kind: 'session', user_id: { $ne: null }, pages_served: { $gt: 0 }, route: { $ne: 'image' } } },
+      { $group: { _id: { ip: '$ip_hash', u: '$user_id' }, pages: { $sum: '$pages_served' } } },
+      { $group: { _id: '$_id.ip', accounts: { $push: { user_id: '$_id.u', pages: '$pages' } } } },
+      { $match: { [`accounts.${SHARED_ADDRESS_MIN_ACCOUNTS - 1}`]: { $exists: true } } },
+      { $project: { _id: 0, ip_hash: '$_id', accounts: 1 } },
+    ], { allowDiskUse: true, maxTimeMS: 120000 }).toArray(),
+  ]).catch((err) => { console.error(`[traffic-anomaly] account check failed: ${err.message}`); return [[], []]; });
+  const acct = accountFindings(acctRows, addrRows);
+  const fmtAcct = (a) => `user ${String(a.user_id).slice(-8)}: ${a.reader_pages.toLocaleString()} reader pages + ${a.text_pages.toLocaleString()} API/read pages, ${a.addresses} address(es), "${(a.agents || []).join('" / "')}"`;
+  if (acct.capped.length) {
+    alerts.push({
+      level: 'critical',
+      check: 'reader_account_capped',
+      message: `${acct.capped.length} signed-in account(s) hit the daily reader cap (2,000 pages; src/lib/pages-api-meter.ts) in ${HOURS}h. A person does not read 2,000 pages a day: treat it as a script until shown otherwise. Read the account's rows (api_usage by user_id, newest first) before acting. The cap already stops it; suspending the account is a decision. ${acct.capped.slice(0, 5).map(fmtAcct).join(' | ')}`,
+    });
+  }
+  if (acct.heavy.length) {
+    alerts.push({
+      level: 'warning',
+      check: 'heavy_reader_accounts',
+      message: `${acct.heavy.length} signed-in account(s) read ${ACCOUNT_HEAVY_PAGES.toLocaleString()}+ pages through the reader in ${HOURS}h, under the cap. Could be one very engaged reader; read what they read before acting. ${acct.heavy.slice(0, 5).map(fmtAcct).join(' | ')}`,
+    });
+  }
+  if (acct.shared.length) {
+    alerts.push({
+      level: 'warning',
+      check: 'accounts_sharing_an_address',
+      message: `${acct.shared.length} address(es) had ${SHARED_ADDRESS_MIN_ACCOUNTS}+ signed-in accounts each reading ${SHARED_ADDRESS_MIN_PAGES}+ pages in ${HOURS}h: the shape of free accounts farmed to multiply the cap, or a library or classroom behind one address. ${acct.shared.slice(0, 5).map((x) => `${x.ip_hash}: ${x.accounts.length} accounts (${x.accounts.map((u) => u.pages).sort((a, b) => b - a).slice(0, 5).join('/')} pages)`).join(' | ')}`,
     });
   }
 
