@@ -72,3 +72,40 @@ The next rung is `glyph` (add it to `RUNGS` in `src/lib/learn-maya.ts`; the page
 - show the AI's guess as its reading, and keep its measured accuracy off the page; use it to route items to the expert queue (an item from a weak arm goes to the queue on the first learner dispute, or before any);
 - published readings (e.g. Vail & Hernández) are private answer keys only: never shown, quoted or stored in `learn_maya_items`;
 - gold for a glyph item comes from an expert verdict, not from the build.
+
+## The course (v2, #6921)
+
+Since v2 the page is a short course, not a bank of rungs: `src/app/learn/maya/course.ts` holds lessons 0-3 (intro, counting, days, Landa's key: syllables) as data, each a worked example, 6-10 items and an "in the wild" item on a real linked page; 4-6 are listed as coming. Logic (wrong-answer explanations, spaced review) is in `src/lib/learn-maya-course.ts`. A missed item opens the learner's NEXT sitting ("Last time you mixed up ba and ma"); progress lives in `localStorage` (`sl-learn-maya-v2`). Signed-in answers still go to `learn_maya_judgements`, with `item_id` the course item id, `rung` `course:<lesson>` and `verdict` null: the course never asks "is the AI right?" (that is lesson 6).
+
+The course reuses v1 crops by URL. Its own crops (Dresden page 53, Landa pp. 318 and 320) are listed in `maya-course-crops.json` and rendered by `build-maya-course-crops.mjs` (`--check=<dir>` to look at them, `--apply` to upload to `learn-maya/<book_id>/course-*`), which writes `src/app/learn/maya/course-crops.json`. Syllable drawings are Stuart's (`maya_signs`, credit on every use); the Wayeb confusable groups decide which pairs get the "easily confused" note, but Wayeb drawings are not shown.
+
+---
+
+# /learn/yucatec: the Yucatec course (#6921)
+
+**Read this when:** changing `/learn/yucatec`, `src/lib/learn-yucatec.ts`, `build-yucatec-course.mjs`, its sources file, or `learn_yucatec_proposals`.
+
+A short-daily-lesson course (units of 4–6 lessons, 8–12 exercises each) built from real lines in Berendt's *Cartilla* (1871), Ruz's *Cartilla* (1845) and Beltrán's *Declaración* (1860), glossed from Pío Pérez, the Motul and Beltrán's *Coordinación*, with one grammar note per unit from Beltrán's *Arte* (1859) and Tozzer (1921).
+
+**The course is a file, not a collection:** `src/data/learn-yucatec-course.json`, written only by
+
+```
+node --env-file=.env.production.local scripts/learn/build-yucatec-course.mjs [--write]
+```
+
+from `scripts/learn/yucatec-course-sources.json`. The builder refuses (exit 1) any sentence not found verbatim in its page's OCR, any English not in the page's translation, any Spanish not on the page, any gloss whose short English is not in the dictionary entry's own translation, and any sentence or word whose page has no entry in `page_checks` (the record that the page IMAGE was read). Dictionary entries are pulled whole (OCR line + translation line) from the `head` regex; `es_excerpt`/`en_excerpt` take a clause from a long Motul line.
+
+| sources field | meaning |
+|---|---|
+| `page_checks["key:page"]` | what was seen on the page image, and where it differs from the OCR (line-break hyphens, a barred letter) |
+| `words[]` | `{ id: yw-*, form, short, dict: { key, page, head }, attest: { key, page, text, form? }, note? (one plain line of lesson content), source_note? (spelling/source matters, shown only behind the "From …" tap), note_ref?, number?, dresden? (a learn_maya_items numeral id), keywords? }` |
+| `sentences[]` | `{ id: ys-*, key, page, maya (as transcribed), show? (hyphens joined, with show_note), es?, en, words, tiles?, rule?, fill? (word id) or fill_text? }` |
+| `notes[]` | `{ id: yn-*, title, examples: [[maya, english]], body (one plain line, ≤25 words), quotes: [{ key, page, es?, en }], table? }`. The card shows the examples and the line; quotes and table sit behind the "From …" tap. Every Maya word of an example must be a course word or on a course line |
+| `units[]` | `{ id, n, title, note, lessons: [{ id: yl-u-n, title, new, review?, sentences, glyph }] }` |
+| `lessons[].glyph` | the lesson's real glyph, resolved by the builder: `{ kind: 'numeral', value (1–19, drawn by <Numeral>), word? }`, `{ kind: 'stuart', signs: ['value:variant'], spells, word?, spelling_ref? }` (only filled, certain `maya_signs` cells with granted rights; credited "Drawing © David Stuart, used with permission"; never shown as how the Dresden Codex writes it) or `{ kind: 'day', item: <live /learn/maya study card> }` (its Dresden crop); plus `says`, the one line shown when the glyph is tapped. No Morley, nothing redrawn |
+
+**Writing (Derek, 2026-10-18).** Example first, then one plain line; one idea per card; ≤25 words of English; second person; no grammar terms or semicolons (the unit tests check the last three). Right answer: one warm line. Wrong answer: what you picked means X, the answer is Y, one line why. Sources stay one tap away, never in the lesson text.
+
+**Modern forms.** Every word carries `modern: null`. A word shows a modern form only when `modern = { form, confirmed_by, date }` is filled (set in the built file by a reviewed change after a speaker confirms; `modernForm()`). Signed-in learners propose forms on a word's card: `POST /api/learn/yucatec/proposals` → `learn_yucatec_proposals` `{ word_id, form, place, note, learner, status: 'pending', created_at }`. Untrusted text; never shown; no job reads it today.
+
+**Attempts.** Signed-in answers go to `learn_maya_judgements` with `kind: 'yucatec'` (`item_id`, `answer`, `correct`, `exercise`, `lesson_id`) or `kind: 'yucatec-lesson'` (`lesson_id`, `day`), learner = session user id. The glyph expert queue reads only `kind: 'judgement'`, so it never sees these. `GET /api/learn/yucatec/attempts` returns the learner's own log, replayed through `recordAttempt` (learn-maya) to rebuild the review queue on another device. Signed out: `localStorage` `sl-learn-yucatec-v1`, never sent.

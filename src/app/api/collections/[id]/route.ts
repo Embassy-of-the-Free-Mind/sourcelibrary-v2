@@ -74,7 +74,7 @@ export async function GET(
           .find(artFilter, {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-              language: 1, pages_count: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+              language: 1, pages_count: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, image_card: 1,
               published: 1, read_count: 1, resource_type: 1, commons_width: 1,
             },
             maxTimeMS: 15000,
@@ -125,7 +125,7 @@ export async function GET(
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
               language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_translatable: 1,
-              thumbnail: 1, thumbnail_blob: 1, thumbnail_frame: 1, published: 1, read_count: 1,
+              thumbnail: 1, thumbnail_blob: 1, thumbnail_frame: 1, image_card: 1, published: 1, read_count: 1,
               is_first_translation: 1, resource_type: 1,
             },
             maxTimeMS: 15000,
@@ -139,7 +139,7 @@ export async function GET(
           pages_count: b.pages_count, pages_ocr: b.pages_ocr,
           pages_translated: b.pages_translated, pages_blank: b.pages_blank, pages_translatable: b.pages_translatable,
           published: b.published, read_count: b.read_count,
-          thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame,
+          thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame, image_card: b.image_card,
           is_first_translation: b.is_first_translation,
           created_at: null, last_translation_at: null,
           resource_type: b.resource_type || null, medium: null, enrichment: null,
@@ -154,7 +154,7 @@ export async function GET(
         pages_count: b.pages_count, pages_ocr: b.pages_ocr,
         pages_translated: b.pages_translated, pages_blank: b.pages_blank, pages_translatable: b.pages_translatable,
         published: b.published, read_count: b.read_count,
-        thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame,
+        thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame, image_card: b.image_card,
         is_first_translation: b.is_first_translation,
         created_at: null, last_translation_at: null,
         resource_type: b.resource_type || null, medium: null, enrichment: null,
@@ -184,7 +184,7 @@ export async function GET(
       pages_count: b.pages_count, pages_ocr: b.pages_ocr,
       pages_translated: b.pages_translated, pages_blank: b.pages_blank, pages_translatable: b.pages_translatable,
       photo: b.photo, categories: b.categories,
-      thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame,
+      thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame, image_card: b.image_card,
       published: b.published, read_count: b.read_count,
       is_first_translation: b.is_first_translation,
     }));
@@ -204,7 +204,7 @@ export async function GET(
       pages_count: b.pages_count, pages_ocr: b.pages_ocr,
       pages_translated: b.pages_translated, pages_blank: b.pages_blank, pages_translatable: b.pages_translatable,
       photo: b.photo, categories: b.categories,
-      thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame,
+      thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob, thumbnail_frame: b.thumbnail_frame, image_card: b.image_card,
       published: b.published, read_count: b.read_count,
       is_first_translation: b.is_first_translation,
       quality_score: b.quality_score,
