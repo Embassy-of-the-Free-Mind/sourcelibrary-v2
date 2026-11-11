@@ -4361,6 +4361,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 {headerTitle}
               </div>
             </BackToBook>
+            {/* Feedback used to sit two taps deep (More, then Send feedback), so
+                phone readers could not find it. A labelled button in the bar
+                opens the same panel directly. */}
+            <button
+              type="button"
+              onClick={() => setLeftPanel('feedback')}
+              aria-label={t.toolbar.feedback}
+              className="h-11 px-2 shrink-0 flex items-center gap-1 text-[12px] transition-colors"
+              style={{ color: onInk(0.85) }}
+            >
+              <MessageSquare size={16} />
+              <span>{t.toolbar.feedback}</span>
+            </button>
             {/* One button rather than a bare avatar: the account, Support and
                 Feedback all live behind it, which is where a phone expects
                 them and where they stop competing with the reading controls. */}
