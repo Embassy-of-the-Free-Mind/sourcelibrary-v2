@@ -220,8 +220,81 @@ describe('extractAnchors — marginal editions', () => {
   });
 });
 
+describe('extractAnchors — fused boundary heads (#8503)', () => {
+  // Bekker vol. I (69afe65fda5fa12b664a75a2) leaves 474–484, headers as read.
+  // De divinatione (462b–464b) heads one leaf alone; on the other two its head
+  // is fused with a neighbour's, so as whole strings it occurred once and
+  // `463a` was filed under De insomniis.
+  const parvaNaturalia = (): Array<[number, string | null, string | null]> => [
+    [470, 'ΠΕΡΙ ΥΠΝΟΥ ΚΑΙ ΕΓΡΗΓΟΡΣΕΩΣ.', '454'],
+    [471, 'ΠΕΡΙ ΥΠΝΟΥ ΚΑΙ ΕΓΡΗΓΟΡΣΕΩΣ.', '455'],
+    [474, 'ΠΕΡΙ ΥΠΝΟΥ. ΠΕΡΙ ΕΝΥΠΝΙΩΝ.', '458'],
+    [475, 'ΠΕΡΙ ΕΝΥΠΝΙΩΝ.', '459'],
+    [476, 'ΠΕΡΙ ΕΝΥΠΝΙΩΝ.', '460'],
+    [477, 'ΠΕΡΙ ΕΝΥΠΝΙΩΝ.', '461'],
+    [478, 'ΠΕΡΙ ΕΝΥΠΝΙΩΝ. ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ ΜΑΝΤΙΚΗΣ.', '462'],
+    [479, 'ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ ΜΑΝΤΙΚΗΣ.', '463'],
+    [480, 'ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ ΜΑΝΤΙΚΗΣ. ΠΕΡΙ ΜΑΚΡΟΒΙΟΤΗΤΟΣ.', '464'],
+    [481, 'ΠΕΡΙ ΜΑΚΡΟΒΙΟΤΗΤΟΣ ΚΑΙ ΒΡΑΧΥΒΙΟΤΗΤΟΣ.', '465'],
+    [482, 'ΠΕΡΙ ΜΑΚΡΟΒΙΟΤΗΤΟΣ ΚΑΙ ΒΡΑΧΥΒΙΟΤΗΤΟΣ.', '466'],
+  ];
+  const at = (rows: ReturnType<typeof parvaNaturalia>, page: number) =>
+    extractAnchors(pages(rows), { author: 'Aristoteles' }).anchors.find((a) => a.ref.page === page);
+
+  it('files a two-page work under its own head', () => {
+    const rows = parvaNaturalia();
+    expect(at(rows, 463)?.work_header).toBe('ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ ΜΑΝΤΙΚΗΣ');
+    expect(at(rows, 463)?.work_header_alt).toBeNull();
+  });
+
+  it('files a boundary leaf under the work it opens with and records the next', () => {
+    const rows = parvaNaturalia();
+    expect(at(rows, 462)?.work_header).toBe('ΠΕΡΙ ΕΝΥΠΝΙΩΝ');
+    expect(at(rows, 462)?.work_header_alt).toBe('ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ ΜΑΝΤΙΚΗΣ');
+    expect(at(rows, 464)?.work_header).toBe('ΠΕΡΙ ΤΗΣ ΚΑΘ’ ΥΠΝΟΝ ΜΑΝΤΙΚΗΣ');
+  });
+
+  it('resolves a short title in a fused head to the full head it abbreviates', () => {
+    const rows = parvaNaturalia();
+    expect(at(rows, 458)?.work_header).toBe('ΠΕΡΙ ΥΠΝΟΥ ΚΑΙ ΕΓΡΗΓΟΡΣΕΩΣ');
+    expect(at(rows, 458)?.work_header_alt).toBe('ΠΕΡΙ ΕΝΥΠΝΙΩΝ');
+    expect(at(rows, 464)?.work_header_alt).toBe('ΠΕΡΙ ΜΑΚΡΟΒΙΟΤΗΤΟΣ ΚΑΙ ΒΡΑΧΥΒΙΟΤΗΤΟΣ');
+  });
+
+  it('keeps a book-numeral pair as one head', () => {
+    // Bekker vol. II leaves 82–83: `ΠΡΟΒΛΗΜΑΤΩΝ Α. Β.` is one work, two books.
+    const { anchors } = extractAnchors(
+      pages([
+        [81, 'ΠΡΟΒΛΗΜΑΤΩΝ Α.', '865'],
+        [82, 'ΠΡΟΒΛΗΜΑΤΩΝ Α. Β.', '866'],
+        [83, 'ΠΡΟΒΛΗΜΑΤΩΝ Β.', '867'],
+      ]),
+      { author: 'Aristoteles' },
+    );
+    expect(anchors.map((a) => a.work_header)).toEqual(['ΠΡΟΒΛΗΜΑΤΩΝ', 'ΠΡΟΒΛΗΜΑΤΩΝ', 'ΠΡΟΒΛΗΜΑΤΩΝ']);
+    expect(anchors.every((a) => a.work_header_alt === null)).toBe(true);
+  });
+
+  it('does not split a head whose parts never stand alone', () => {
+    // Stephanus vol. 2 leaves 115/215 head marginal topics, not works; Burnet's
+    // Republic prints the section after the head. Neither is a boundary.
+    const { anchors } = extractAnchors(
+      pages([
+        [113, 'MENO.', '101'],
+        [114, 'MENO.', '102'],
+        [115, 'DIALECTICA. METAPHYSICA.', '103'],
+        [116, 'METAPHYSICA.', '104'],
+        [117, 'POLITEIAS E V. 450 c', '105'],
+        [118, 'MENO.', '106'],
+      ]),
+      { author: 'Plato' },
+    );
+    expect(anchors.map((a) => a.work_header)).toEqual(['MENO', 'MENO', 'MENO', 'MENO', 'MENO', 'MENO']);
+  });
+});
+
 describe('extractAnchors — frame editions', () => {
-  const frameRows = (): Array<[number, string | null, string | null]> => {
+  const frameRows =(): Array<[number, string | null, string | null]> => {
     const rows: Array<[number, string | null, string | null]> = [];
     for (let scan = 10; scan <= 40; scan++) rows.push([scan, 'ΗΘΙΚΩΝ ΝΙΚΟΜΑΧΕΙΩΝ', String(scan + 784)]);
     return rows;

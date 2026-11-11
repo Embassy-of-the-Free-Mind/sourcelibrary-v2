@@ -157,7 +157,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       // Say so when the match came from the boundary candidate rather than the
       // head printed on the leaf. The caller can then check the leaf itself.
       attribution: work && w.work?.slug !== work.slug
-        ? `boundary: this leaf carries no running head of its own and sits under ${w.work?.label ?? 'the previous work'}; ${work_alt?.label ?? 'the requested work'} begins within two leaves`
+        ? `boundary: this leaf is filed under ${w.work?.label ?? 'the previous work'}; ${work_alt?.label ?? 'the requested work'} begins on it or within two leaves`
         : 'running head',
     }));
 
