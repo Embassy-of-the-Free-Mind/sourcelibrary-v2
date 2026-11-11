@@ -16,37 +16,26 @@
  * coordinates rounded to 0.01 degrees (172 KB, 54 KB gzipped). No runtime
  * topojson dependency. N. Cyprus, Somaliland and Kosovo have no code and stay grey.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { geoNaturalEarth1, geoPath } from 'd3-geo';
 import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import { Legend, LineChart, Panel } from './DashboardCharts';
 import { RAMP, SERIES, dayLabel, fmtFull } from './dashboard-format';
+import { REGION_ORDER, countryName, regionOf } from '@/lib/world-regions';
 
 export interface GeoCountry { country: string; all: number; likely: number; referred: number }
 export interface GeoHistoryRow { date: string; geoLikely?: Record<string, number> }
 
-const LATAM = 'AR BO BR CL CO CR CU DO EC SV GT HN MX NI PA PY PE PR UY VE HT BZ GY SR JM TT BS BB'.split(' ');
-const EUROPE = 'AD AL AT BA BE BG BY CH CY CZ DE DK EE ES FI FO FR GB GI GR HR HU IE IS IT LI LT LU LV MC MD ME MK MT NL NO PL PT RO RS RU SE SI SK SM UA VA XK'.split(' ');
-const NORTH_AMERICA = 'US CA GL BM'.split(' ');
-const MIDDLE_EAST = 'AE BH IL IQ IR JO KW LB OM PS QA SA SY TR YE'.split(' ');
-const OCEANIA = 'AU NZ FJ PG NC PF WS TO VU SB'.split(' ');
-const AFRICA = 'DZ AO BJ BW BF BI CM CV CF TD KM CD CG CI DJ EG GQ ER ET GA GM GH GN GW KE LS LR LY MG MW ML MR MU MA MZ NA NE NG RW ST SN SC SL SO ZA SS SD SZ TZ TG TN UG ZM ZW'.split(' ');
-const REGIONS: [string, Set<string>][] = [
-  ['North America', new Set(NORTH_AMERICA)],
-  ['Latin America', new Set(LATAM)],
-  ['Europe', new Set(EUROPE)],
-  ['Middle East', new Set(MIDDLE_EAST)],
-  ['Africa', new Set(AFRICA)],
-  ['Oceania', new Set(OCEANIA)],
-];
-/** Anything not listed above, except unknown, is Asia. */
-const regionOf = (cc: string) => cc === 'unknown' ? 'Unknown' : REGIONS.find(([, s]) => s.has(cc))?.[0] ?? 'Asia';
-const REGION_ORDER = ['North America', 'Europe', 'Latin America', 'Asia', 'Middle East', 'Oceania', 'Africa', 'Unknown'];
-
 type CountryProps = { iso: string | null; name: string };
 const W = 640, H = 330;
 
-export function ReadersMap({ countries, history }: { countries: GeoCountry[]; history: GeoHistoryRow[] }) {
+/** `audience="public"` (/about/readers) drops the fleet-comparison column and the daily trend, and words the notes for readers. */
+export function ReadersMap({ countries, history, audience = 'admin', since, title, note, unit = 'readers' }: {
+  countries: GeoCountry[]; history: GeoHistoryRow[]; audience?: 'admin' | 'public'; since?: string;
+  /** Public view only: override the map title, its note, and what one count is called. */
+  title?: string; note?: ReactNode; unit?: string;
+}) {
+  const pub = audience === 'public';
   const [shapes, setShapes] = useState<Feature<Geometry, CountryProps>[] | null>(null);
   const [hover, setHover] = useState<{ name: string; n: number; all: number } | null>(null);
 
@@ -93,9 +82,9 @@ export function ReadersMap({ countries, history }: { countries: GeoCountry[]; hi
   return (
     <>
       <Panel
-        title="Where readers are, last 30 days"
-        right={<span className="text-xs text-stone-500">{hover ? `${hover.name}: ${fmtFull(hover.n)} likely human of ${fmtFull(hover.all)} fingerprints` : `${fmtFull(total)} likely-human visitors`}</span>}
-        note={<>Likely-human visitors: a browser fingerprint that arrived from another site, read three or more pages, or used a phone. Proxy fleets do none of these; they are desktop, direct and one page deep, and they are most of the {fmtFull(totalAll)} raw fingerprints. A person on two devices counts twice. Shading is logarithmic.</>}
+        title={pub ? title ?? (since ? `Where readers are, since ${new Date(since).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}` : 'Where readers are') : 'Where readers are, last 30 days'}
+        right={<span className="text-xs text-stone-500">{hover ? (pub ? `${hover.name}: ${fmtFull(hover.n)} ${unit}` : `${hover.name}: ${fmtFull(hover.n)} likely human of ${fmtFull(hover.all)} fingerprints`) : `${fmtFull(total)} ${pub ? unit : 'likely-human visitors'}`}</span>}
+        note={pub ? note ?? <>A reader here is a browser that arrived from another site, read three or more pages, or was on a phone. Automated traffic does none of these, and it is most of what reaches the site. A person on two devices counts twice. Countries come from Cloudflare, which sees each reader&apos;s own connection. Shading is logarithmic; updated daily.</> : <>Likely-human visitors: a browser fingerprint that arrived from another site, read three or more pages, or used a phone. Proxy fleets do none of these; they are desktop, direct and one page deep, and they are most of the {fmtFull(totalAll)} raw fingerprints. A person on two devices counts twice. Shading is logarithmic.</>}
       >
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label="World map of likely-human visitors by country, last 30 days">
           <path d={path({ type: 'Sphere' }) ?? undefined} fill="#fafaf9" stroke="#e7e5e4" />
@@ -111,21 +100,21 @@ export function ReadersMap({ countries, history }: { countries: GeoCountry[]; hi
           })}
         </svg>
       </Panel>
-      <Panel title="Readers by region" note="Share of likely-human visitors. The raw column counts every non-bot fingerprint, fleets included, to show how much the filter removes.">
+      <Panel title="Readers by region" note={pub ? `Share of the ${unit} on the map.` : 'Share of likely-human visitors. The raw column counts every non-bot fingerprint, fleets included, to show how much the filter removes.'}>
         <table className="min-w-0 w-full text-sm">
-          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Region</th><th className="text-right py-1 font-medium">likely human</th><th className="text-right py-1 font-medium">share</th><th className="text-right py-1 font-medium">raw</th></tr></thead>
+          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Region</th><th className="text-right py-1 font-medium">{pub ? unit : 'likely human'}</th><th className="text-right py-1 font-medium">share</th>{!pub && <th className="text-right py-1 font-medium">raw</th>}</tr></thead>
           <tbody>{regions.map(r => (
-            <tr key={r.region} className="border-t border-stone-100"><td className="py-0.5 pr-2">{r.region}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(r.likely)}</td><td className="py-0.5 text-right tabular-nums font-medium">{pct(r.likely, total)}</td><td className="py-0.5 text-right tabular-nums text-stone-500">{fmtFull(r.all)}</td></tr>
+            <tr key={r.region} className="border-t border-stone-100"><td className="py-0.5 pr-2">{r.region}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(r.likely)}</td><td className="py-0.5 text-right tabular-nums font-medium">{pct(r.likely, total)}</td>{!pub && <td className="py-0.5 text-right tabular-nums text-stone-500">{fmtFull(r.all)}</td>}</tr>
           ))}</tbody>
         </table>
         <table className="min-w-0 w-full text-sm mt-2">
-          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Top countries</th><th className="text-right py-1 font-medium">likely human</th><th className="text-right py-1 font-medium">from another site</th></tr></thead>
+          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Top countries</th><th className="text-right py-1 font-medium">{pub ? unit : 'likely human'}</th><th className="text-right py-1 font-medium">from another site</th></tr></thead>
           <tbody>{countries.filter(c => c.country !== 'unknown').slice(0, 12).map(c => (
-            <tr key={c.country} className="border-t border-stone-100"><td className="py-0.5 pr-2">{c.country}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(c.likely)}</td><td className="py-0.5 text-right tabular-nums text-stone-500">{fmtFull(c.referred)}</td></tr>
+            <tr key={c.country} className="border-t border-stone-100"><td className="py-0.5 pr-2">{countryName(c.country)}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(c.likely)}</td><td className="py-0.5 text-right tabular-nums text-stone-500">{fmtFull(c.referred)}</td></tr>
           ))}</tbody>
         </table>
       </Panel>
-      {trend.labels.length > 1 && (
+      {!pub && trend.labels.length > 1 && (
         <Panel title="Region share over time" note="Share of each day's likely-human visitors (rolling 24 hours, recorded at 05:45 UTC).">
           <Legend names={trend.series.map(s => s.name)} colors={trend.series.map(s => s.color)} />
           <LineChart labels={trend.labels} series={trend.series} unit="pct" ariaLabel="Share of likely-human visitors by region over time" />

@@ -85,7 +85,13 @@ export interface MetricsSnapshot {
   };
   series: { signupsByDay: { date: string; n: number }[] };
   /** Likely-human visitors by country, 30 days (#8522); absent on snapshots before 2026-11-11. */
-  geo?: { windowDays: number; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
+  geo?: { windowDays: number; since?: string; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
+  /** Keyword tallies over /welcome introductions; counts only, never text (#8541). */
+  introductions?: { n: number; kinds?: Record<string, number>; interests?: Record<string, number> };
+  /** PostHog reader pageviews by country, last 30 days (browser-side geolocation, #8541). */
+  geoReaders?: { windowDays: number; source: string; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
+  /** PostHog reader pageviews by month and country since 2026-06 (#8541). */
+  readersMonthly?: { source: string; method: string; months: Record<string, Record<string, number>> };
   search: { human: number; zeroResult: number; topQueries: { query: string; count: number }[]; zeroQueries: { query: string; count: number }[] };
   missionActions: { download: number; cite: number; share: number };
   social: { feedbackUnread: number; likes?: number; likeVisitors?: number };
