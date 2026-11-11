@@ -30,6 +30,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient, ObjectId } from 'mongodb';
 import { HERE, RESULTS, SEED, mulberry32 } from './lib.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const LANE = 'confidence-7866';
 const RUN = 'confidence-validation-7866';
@@ -78,7 +79,7 @@ async function load() {
   try {
     const db = c.db('bookstore');
     const recs = (await db.collection('lane_judge_verdicts')
-      .find({ lane: LANE, run_id: RUN, kind: 'item' }).toArray()).filter((r) => r.verdict);
+      .find(verdictQuery({ lane: LANE, run_id: RUN, kind: 'item' })).toArray()).filter((r) => r.verdict);
     const texts = new Map();
     for (let i = 0; i < recs.length; i += 100) {
       const batch = recs.slice(i, i + 100);
