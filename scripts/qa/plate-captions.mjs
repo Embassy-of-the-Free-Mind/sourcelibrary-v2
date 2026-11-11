@@ -32,6 +32,7 @@ import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { gatedImageRead } from '../lib/agy-cli.mjs';
+import { getTranslationText } from '../lib/translation-text.mjs';
 import { normalizeCaptionFigure, illustrationQuery, spreadPageNumbers } from '../lib/scholarly-typst.mjs';
 
 const args = process.argv.slice(2);
@@ -113,11 +114,11 @@ try {
     const scanUrl = byPage.get(n)[0].image_url;
     // A page image key must carry its own book id (#3362)
     if (!scanUrl?.includes(bookId)) { console.warn(`p${n}: scan URL not keyed to this book, skipped`); return null; }
-    const page = await db.collection('pages').findOne({ book_id: bookId, page_number: n }, { projection: { _id: 1, 'ocr.data': 1, 'translation.data': 1 } });
+    const page = await db.collection('pages').findOne({ book_id: bookId, page_number: n }, { projection: { _id: 1, 'ocr.data': 1, translation: 1 } });
     const raw = Buffer.from(await (await fetch(scanUrl)).arrayBuffer());
     const meta = await sharp(raw).metadata();
     const image = await sharp(raw).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer();
-    const prompt = PROMPT({ ocr: page?.ocr?.data || '', translation: page?.translation?.data || '', count: isTitle(n) ? 1 : byPage.get(n).length, title: isTitle(n) });
+    const prompt = PROMPT({ ocr: page?.ocr?.data || '', translation: getTranslationText(page), count: isTitle(n) ? 1 : byPage.get(n).length, title: isTitle(n) });
     return { n, scanUrl, scanWidth: meta.width, scanHeight: meta.height, image, prompt, pageId: page?._id ? String(page._id) : undefined };
   }
   const accept = (n, { scanUrl, scanWidth, scanHeight }, text) => {

@@ -29,6 +29,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { illustrationQuery, spreadPageNumbers } from '../lib/scholarly-typst.mjs';
 import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
+import { getTranslationText } from '../lib/translation-text.mjs';
 
 const [bookId, step] = process.argv.slice(2);
 const args = process.argv.slice(4);
@@ -156,7 +157,7 @@ Source Library made this edition from photographs of a printed copy, with the he
 Corrections are welcome at sourcelibrary.org, and later versions of this edition will carry them.
 `;
     // Title pages in the book's own words: what an introduction can cite without outside help
-    const titlePages = await db.collection('pages').find({ book_id: bookId, $or: [{ page_type: 'title-page' }, { 'ocr.data': /<page-type>\s*title/i }] }, { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } }).sort({ page_number: 1 }).limit(6).toArray();
+    const titlePages = await db.collection('pages').find({ book_id: bookId, $or: [{ page_type: 'title-page' }, { 'ocr.data': /<page-type>\s*title/i }] }, { projection: { page_number: 1, 'ocr.data': 1, translation: 1 } }).sort({ page_number: 1 }).limit(6).toArray();
     const plain = s => stripMarkupTags(String(s || '').replace(/<(image-desc|lang|language|page-type|scan-quality|script|summary|keywords|vocab|meta|warning)\b[^>]*>[\s\S]*?<\/\1>/g, '')).replace(/\s+/g, ' ').trim();
     const facts = `# Facts for the introduction — ${book.display_title || book.title}
 
@@ -168,7 +169,7 @@ Every claim in introduction.md must come from this file (our own scans and recor
 - Reader: https://sourcelibrary.org/book/${bookId}
 
 ## Title pages (transcription, then translation)
-${titlePages.map(p => `\n### Source page ${p.page_number} — https://sourcelibrary.org/book/${bookId}?page=${p.page_number}\n\n${plain(p.ocr?.data).slice(0, 1500)}\n\n${plain(p.translation?.data).slice(0, 1500)}\n`).join('') || '\n(none typed as title pages — find them by eye)\n'}
+${titlePages.map(p => `\n### Source page ${p.page_number} — https://sourcelibrary.org/book/${bookId}?page=${p.page_number}\n\n${plain(p.ocr?.data).slice(0, 1500)}\n\n${plain(getTranslationText(p)).slice(0, 1500)}\n`).join('') || '\n(none typed as title pages — find them by eye)\n'}
 ## Checklist before introduction.md is used
 - [ ] author's dates and career from a named reference
 - [ ] imprint and date read from the title-page image (a bound copy can join two editions)
