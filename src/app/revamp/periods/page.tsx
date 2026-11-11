@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ l
       counts={[`${count} centuries`, `${n(books)} books with a date`]} tiles={tiles}
       featured={f ? { name: f.name, href: `/revamp/p/${f.slug}` } : null}
       groups={groups} noun={['century', 'centuries']} group={['Span', 'All spans']} placeholder={look === 'b' ? 'Search centuries or ask a question' : 'Search periods or ask a question'}
-      orders={[['theme', 'Oldest first'], ['rev', 'Newest first']]}
+      orders={[['rev', 'Newest first'], ['theme', 'Oldest first']]}
       how={how}>
       {look === 'b' ? <CenturyList rows={centuryRows()} how={how} /> : undefined}
     </AxisIndex>

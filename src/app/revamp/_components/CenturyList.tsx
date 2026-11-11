@@ -15,7 +15,7 @@ const n = (v: number) => v.toLocaleString('en-GB');
  * Centuries page. No groups: library date spans are plain spans.
  */
 export default function CenturyList({ rows, how }: { rows: (SubjectRow & { name: string })[]; how: { title: string; items: ReactNode[] } }) {
-  const [order, setOrder] = useState('old');
+  const [order, setOrder] = useState('new');
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function CenturyList({ rows, how }: { rows: (SubjectRow & { name:
       <div className={TOOLBAR}>
         <span className="text-sm text-primary font-medium mr-1">{list.length} centuries</span>
         <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className="ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">{how.title} {open ? '−' : '+'}</button>
-        <div className="ml-auto"><SortSelect label="Order" value={order} onChange={setOrder} options={[['old', 'Oldest first'], ['new', 'Newest first'], ['size', 'Most books first']]} /></div>
+        <div className="ml-auto"><SortSelect label="Order" value={order} onChange={setOrder} options={[['new', 'Newest first'], ['old', 'Oldest first'], ['size', 'Most books first']]} /></div>
       </div>
       {open && <ul className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">{how.items.map((x, i) => <li key={i}>{x}</li>)}</ul>}
       <ul className={`${FIRST} border-t border-border-light`}>
