@@ -10,6 +10,7 @@
 import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
+import Logo from '@/components/layout/Logo';
 import Image from 'next/image';
 import ProseField from '@/components/ui/ProseField';
 import {
@@ -571,6 +572,22 @@ export default function ImageDetailPage({
     setIsDragging(null);
   };
 
+  // Return to the listing the reader came from (filters, scroll) when the
+  // previous page was a gallery/collection/book listing; otherwise the
+  // link's plain /gallery href applies.
+  const goBackToListing = (e: React.MouseEvent) => {
+    try {
+      if (!document.referrer || window.history.length < 2) return;
+      const ref = new URL(document.referrer);
+      if (ref.origin !== window.location.origin) return;
+      if (ref.pathname.startsWith('/gallery/image/')) return;
+      if (/^\/(gallery|collections?|book|search|author)/.test(ref.pathname)) {
+        e.preventDefault();
+        window.history.back();
+      }
+    } catch { /* fall through to the href */ }
+  };
+
   const copyLink = async () => {
     const url = window.location.href;
     await navigator.clipboard.writeText(url);
@@ -823,9 +840,16 @@ export default function ImageDetailPage({
         <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
           <div className="px-4 py-2 flex items-center justify-between gap-2 min-w-0">
             <nav className="flex items-center gap-1.5 text-sm">
-              <Link href={`/`} className="text-stone-500 hover:text-white transition-colors">Source Library</Link>
+              <span className="text-white"><Logo white compact alwaysWordmark /></span>
               <span className="text-stone-600">/</span>
-              <Link href={`/gallery`} className="text-stone-400 hover:text-white transition-colors">Gallery</Link>
+              <Link
+                href="/gallery"
+                onClick={goBackToListing}
+                title="Back to the images you were browsing"
+                className="text-stone-400 hover:text-white transition-colors"
+              >
+                &larr; Gallery
+              </Link>
             </nav>
 
             {/* Counter */}
