@@ -106,4 +106,4 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error fetching experiment:', error);
     return NextResponse.json({ error: 'Failed to fetch experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

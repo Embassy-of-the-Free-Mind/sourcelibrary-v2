@@ -243,4 +243,4 @@ Which is more accurate? Reply: A, B, or TIE`;
     console.error('Error in random-judge:', error);
     return NextResponse.json({ error: 'Failed' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -282,7 +282,7 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * GET /api/batch-jobs/save-results
@@ -328,4 +328,4 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

@@ -342,7 +342,7 @@ export const POST = withAuth(async (request, session, context) => {
       { status: isQuotaError ? 429 : 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * GET - Check batch job status and collect results
@@ -614,4 +614,4 @@ export const GET = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

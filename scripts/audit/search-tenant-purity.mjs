@@ -118,8 +118,9 @@ function collectBookIds(node, out = []) {
 
 const BASE_HEADERS = {
   'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-  // Exempts the run from the anonymous search allowance (anon-gate.ts).
-  'X-Warm-Ping': 'search-tenant-purity',
+  // Exempts the run from the anonymous search allowance (anon-gate.ts); the
+  // header only counts when it carries CRON_SECRET.
+  ...(process.env.CRON_SECRET ? { 'X-Warm-Ping': process.env.CRON_SECRET } : {}),
 };
 const tenantHeaders = { 'x-tenant-id': tid, 'x-tenant-slug': TENANT_SLUG, 'x-tenant-source': 'subdomain', 'x-tenant-embedded': '1' };
 const ARMS = {

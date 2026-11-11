@@ -239,4 +239,4 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error fetching results:', error);
     return NextResponse.json({ error: 'Failed to fetch results' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

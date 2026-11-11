@@ -86,4 +86,4 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error fetching comparison stats:', error);
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -102,7 +102,7 @@ export const POST = withAuth(async (request, session) => {
     console.error('Error creating OCR experiment:', error);
     return NextResponse.json({ error: 'Failed to create experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // GET /api/experiments/ocr-quality - List OCR quality experiments
 export const GET = withAuth(async (request, session) => {
@@ -119,4 +119,4 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error fetching OCR experiments:', error);
     return NextResponse.json({ error: 'Failed to fetch experiments' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

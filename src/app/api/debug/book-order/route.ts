@@ -88,4 +88,4 @@ export const GET = withAuth(async (request: NextRequest) => {
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

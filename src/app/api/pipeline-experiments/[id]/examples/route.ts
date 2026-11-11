@@ -70,4 +70,4 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error fetching examples:', error);
     return NextResponse.json({ error: 'Failed to fetch examples' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

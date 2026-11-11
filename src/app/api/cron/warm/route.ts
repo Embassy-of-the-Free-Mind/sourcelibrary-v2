@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 import { selfCallHeaders } from '@/lib/self-call';
+import { warmPingHeaders } from '@/lib/warm-ping';
 
 export const maxDuration = 300;
 export const preferredRegion = 'fra1';
@@ -50,7 +51,7 @@ async function warmUrl(
   const t = Date.now();
   try {
     const res = await fetch(`${baseUrl}${path}`, {
-      headers: { 'X-Warm-Ping': '1', ...selfCallHeaders(baseUrl) },
+      headers: { ...warmPingHeaders(), ...selfCallHeaders(baseUrl) },
       signal: AbortSignal.timeout(timeout),
     });
     return { endpoint: path, status: res.status, ms: Date.now() - t };

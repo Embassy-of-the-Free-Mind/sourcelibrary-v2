@@ -123,7 +123,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * GET - Get labeling status for a book
@@ -175,4 +175,4 @@ export const GET = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

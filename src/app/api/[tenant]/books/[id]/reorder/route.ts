@@ -53,4 +53,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error reordering pages:', error);
     return NextResponse.json({ error: 'Failed to reorder pages' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

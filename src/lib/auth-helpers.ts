@@ -290,10 +290,17 @@ export async function resolveIdentity(request: NextRequest): Promise<ResolvedIde
  * Phase 1 tenant verification:
  * - If x-tenant-id is present (tenant-scoped route), verifies session tenantId matches
  * - Prevents cross-tenant data access via crafted headers
+ *
+ * The default role is `editor` (fail closed). Sign-up is open and every new
+ * account is a `reader`, so a reader-level route is one any visitor can reach
+ * after a free sign-in. Pass `{ minRole: 'reader' }` explicitly, and only for
+ * routes that touch the caller's own data (reading history, own notes).
+ * `scripts/maintenance/check-withauth-minrole.mjs` fails CI on a call that
+ * does not name a minRole.
  */
 export function withAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>,
-  { minRole = 'reader' as Role }: { minRole?: Role } = {}
+  { minRole = 'editor' as Role }: { minRole?: Role } = {}
 ): (request: NextRequest, context?: any) => Promise<NextResponse> {
   return async (request: NextRequest, context?: any) => {
     // CRON_SECRET bypass — pipeline workers call admin routes with this token
@@ -360,6 +367,16 @@ export function withAuth(
 
     return handler(request, session, context);
   };
+}
+
+/**
+ * True when the session's platform role is at least `minRole`. For handlers
+ * that let a reader act on their own records and staff act on anyone's.
+ * Platform role only: tenant membership is not consulted here.
+ */
+export function sessionHasRole(session: Session | null | undefined, minRole: Role): boolean {
+  const role = normalizeRole((session?.user as any)?.role);
+  return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL[minRole];
 }
 
 // --- Shims — keep existing callsites working during Phase 1 migration ---

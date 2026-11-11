@@ -154,7 +154,7 @@ export const GET = withAuth(async () => {
       { id: 'claude', name: 'Claude Sonnet', description: 'Higher quality, better nuance' },
     ],
   });
-});
+}, { minRole: 'editor' });
 
 /**
  * POST /api/social/generate
@@ -316,4 +316,4 @@ export const POST = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

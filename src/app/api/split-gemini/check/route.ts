@@ -105,4 +105,4 @@ Return your answer in this EXACT JSON format:
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

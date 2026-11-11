@@ -34,7 +34,7 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error fetching comparisons:', error);
     return NextResponse.json({ error: 'Failed to fetch comparisons' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // POST /api/comparisons - Record a comparison rating
 export const POST = withAuth(async (request, session) => {
@@ -113,4 +113,4 @@ export const POST = withAuth(async (request, session) => {
     console.error('Error creating comparison:', error);
     return NextResponse.json({ error: 'Failed to create comparison' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

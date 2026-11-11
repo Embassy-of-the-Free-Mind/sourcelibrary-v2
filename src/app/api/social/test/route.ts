@@ -56,4 +56,4 @@ export const GET = withAuth(async () => {
       stack: error instanceof Error ? error.stack : undefined,
     }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
