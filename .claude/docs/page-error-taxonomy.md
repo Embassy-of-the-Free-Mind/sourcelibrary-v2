@@ -486,6 +486,16 @@ Ranked by classes covered per unit of work, all read-only or write-time:
 6. **Parallel-edition and page-unit book modes** (T11, I3, I4, I5): detect once per book, route accordingly.
 7. **The source-grounded fidelity judge, on-page** (O6, O7, O8, T8, T9, T10): the only instrument that sees family 1. #5104's design, run over the pages `ocr-difficulty-taxonomy.md` flags as unstable first.
 
+## A member's report, 2026-11-11 (459 lines, tagged)
+
+A member (Emanuel Almeida, feedback 2026-11-07, 8 blocks) sent 459 one-line defects from one research project. Every line is tagged in `scripts/eval/regression/almeida-2026-11-findings.jsonl` (class, triage batch, page, evidence). Of the page-level O/T lines, the 63 that quote the wrong text give 80 rows (one per page) in `almeida-2026-11-corrections.jsonl`, in the spot-check schema. Both are built by `scripts/eval/regression-from-almeida-2026-11.mjs`. Only 51 lines say the member read the scan; 74 rest on the OCR alone. Most lines are about the tool and the catalogue, not the page.
+
+- **Counts:** O6 50 · O12 48 · I7 47 · T15 41 · T10 18 · O8 15 · O5 12 · T8 9 · T11 8 · E2 8 · T12 7 · O13 7 · O11 6 · T17 5 · O9 5 · I1 5 · T5 4 · O15 4 · D1 4 · O3 3 · I2 3 · T4, T7, T9, T2, E1, O1 1 each. Proposed: E3 37, E4 20, E5 13, O19 6, I8 5, I9 4. Outside the taxonomy (image delivery, rights marks, search and API): 59.
+- **Examples for classes that had none:** T2, Latin verses left untranslated above the English: https://sourcelibrary.org/q/BhDhcTvXES7T75fNgMA. E1, the AI summary states an opponent's objection as the work's own thesis: https://sourcelibrary.org/q/BkgYnHj3wOqt1lgm9b9. E2, a year missing from the record but present in search, and two dates for one book (8 lines): https://sourcelibrary.org/q/BgR2tRagySXkUVj2RZy.
+- **Sub-variants:** O12, printed side-notes and printed footnotes served as COPY-SPECIFIC `<margin>` or as AI-gloss `<note>` (39 lines): https://sourcelibrary.org/q/BhK44vY9sMK39RWYSE4 `[image]`. T4 at page scale, where the English runs three pages ahead of the OCR: https://sourcelibrary.org/q/BjZT0y2HWH48iVu44mB. O6 is also used here for single-word misreads where the member reports no harm to the English (long s, Greek ligatures).
+- **Proposed classes, not yet adopted:** **I8**, a leaf missing from the series or out of order, with no warning: https://sourcelibrary.org/q/BhCtuaP5daKpqLeJsWO. **I9**, a scan cropped or too coarse for small type: https://sourcelibrary.org/q/BlNGTpa8c71pLUrJ4OE. **O19**, a mid-book page with no text or no English and no flag, which is not a recorded refusal (O18): https://sourcelibrary.org/q/Bl15zn4od6wjZEVxrZo. **E3**, a locator that gives the scan number as "p. N" although the page prints its number: https://sourcelibrary.org/q/BhK4FRpUYNzCYdSTQ76 `[image]`. **E4**, a catalogue record with no holding copy or no contained works. **E5**, a BibTeX export built from empty fields (`publisher = "Source Library"`, "n.d."): https://sourcelibrary.org/q/BgTWvlZ6JVMtL4RZ7XV.
+- **State on 2026-11-11:** 52 of the 80 regression rows are on pages that already carry a volunteer correction. The wrong span is still served on 9.
+
 ## Provenance
 
 - Sample and draw: `scripts/eval/results/page-error-taxonomy-2026-09-25/` (`sample.json`, `sample-strata.mjs`, `findings/*.md`).
