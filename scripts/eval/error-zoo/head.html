@@ -1,0 +1,97 @@
+<title>Source Library Error Zoo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a specimen catalogue — one column of accession cards, filter rail on top, each card opens to its specimens. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#18202b; --muted:#5b6676; --line:#d5dbe3; --accent:#1f4fa3; --accent-soft:#e2e9f6;
+  --serious:#b3261e; --serious-soft:#f8e3e1; --moderate:#a8650a; --moderate-soft:#f7ecd9; --minor:#8a94a3; --minor-soft:#eceff3;
+  --lane-I:#6b4fa3; --lane-O:#1f6f8b; --lane-T:#2f7d4a; --lane-D:#8b5a1f; --lane-E:#7a2f5a;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Literata",Georgia,"Noto Serif","Noto Serif CJK SC","Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --surface:#19202a; --ink:#e4e9f0; --muted:#97a3b4; --line:#2b3541; --accent:#8fb2f0; --accent-soft:#1f2c42;
+  --serious:#f08b83; --serious-soft:#3a1f1e; --moderate:#e3a956; --moderate-soft:#352914; --minor:#7f8a99; --minor-soft:#232b35;
+  --lane-I:#b39be6; --lane-O:#6fc1dc; --lane-T:#7fcf98; --lane-D:#d9a868; --lane-E:#d98fb9; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --surface:#19202a; --ink:#e4e9f0; --muted:#97a3b4; --line:#2b3541; --accent:#8fb2f0; --accent-soft:#1f2c42;
+  --serious:#f08b83; --serious-soft:#3a1f1e; --moderate:#e3a956; --moderate-soft:#352914; --minor:#7f8a99; --minor-soft:#232b35;
+  --lane-I:#b39be6; --lane-O:#6fc1dc; --lane-T:#7fcf98; --lane-D:#d9a868; --lane-E:#d98fb9; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:920px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:24px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(30px,6vw,46px);font-weight:700;letter-spacing:-.01em}
+.lede{color:var(--muted);max-width:65ch;margin:0}
+.lede b{color:var(--ink);font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:8px 24px;font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stats span b{color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:10px;z-index:5;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.chip{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.chip:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#q,#sort{font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:0}
+#q{flex:1 1 160px}
+.list{display:grid;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.card>summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:start}
+.card>summary::-webkit-details-marker{display:none}
+.code{font-family:var(--f-mono);font-weight:700;font-size:15px;padding:3px 8px;border-radius:6px;color:var(--surface);min-width:44px;text-align:center}
+.L-I{background:var(--lane-I)}.L-O{background:var(--lane-O)}.L-T{background:var(--lane-T)}.L-D{background:var(--lane-D)}.L-E{background:var(--lane-E)}
+.title{min-width:0}
+.title h3{font-size:17.5px;font-weight:600}
+.sub{font-size:13px;color:var(--muted);font-family:var(--f-mono);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;font-size:13px;color:var(--muted)}
+.count b{display:block;font-size:20px;color:var(--ink)}
+.bar{grid-column:2/4;display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--minor-soft);margin-top:6px}
+.bar i{display:block;height:100%}
+.bar .s{background:var(--serious)}.bar .m{background:var(--moderate)}.bar .n{background:var(--minor)}
+.body{padding:0 16px 16px;display:grid;gap:14px;border-top:1px solid var(--line);padding-top:14px}
+.sees{margin:0;color:var(--muted);font-style:italic;max-width:70ch}
+.sees::before{content:"Reader sees: ";font-style:normal;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.specs{display:grid;gap:12px}
+.spec{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:8px;min-width:0}
+.spec header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;font-size:13px;color:var(--muted)}
+.sev{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.sev.serious{background:var(--serious-soft);color:var(--serious)}.sev.moderate{background:var(--moderate-soft);color:var(--moderate)}.sev.minor{background:var(--minor-soft);color:var(--muted)}
+.spec a{color:var(--accent);text-decoration:none}.spec a:hover{text-decoration:underline}
+.spec p{margin:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:560px){.pair{grid-template-columns:1fr}.card>summary{grid-template-columns:auto 1fr}.count{grid-column:2;text-align:left}.count b{display:inline;margin-right:6px}.bar{grid-column:1/3}}
+.q{font-size:14.5px;padding:8px 10px;border-radius:6px;background:var(--bg);overflow-wrap:anywhere;min-width:0}
+.q small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.q.bad{border-left:3px solid var(--serious)}.q.good{border-left:3px solid var(--lane-T)}
+.empty{color:var(--muted);font-style:italic;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);font-family:var(--f-mono)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+footer{font-size:13px;color:var(--muted);max-width:70ch}
+footer code{font-family:var(--f-mono);font-size:12px}
+@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.card:hover{border-color:var(--accent)}}
+</style>
+<div class="wrap">
+<header style="display:grid;gap:12px">
+  <h1>Error Zoo</h1>
+  <p class="lede">Every kind of thing that has gone wrong on a Source Library page, with real specimens. Classes come from the <b>page-error taxonomy</b> (44 classes, by lane: <b>I</b>mage, <b>O</b>CR, <b>T</b>ranslation, <b>D</b>isplay, d<b>E</b>rived). Specimens are errors an Opus reader quoted in the spare audits of 10–11 Nov 2026. A reader's finding is a finding, not a verdict.</p>
+  <div class="stats" id="stats"></div>
+  <div class="legend"><span><i style="background:var(--serious)"></i>serious</span><span><i style="background:var(--moderate)"></i>moderate</span><span><i style="background:var(--minor)"></i>minor</span></div>
+</header>
+<div class="controls" role="toolbar" aria-label="Filter classes">
+  <button class="chip" data-lane="" aria-pressed="true" id="lane-all">All</button>
+  <button class="chip" data-lane="I" aria-pressed="false" id="lane-I">Image</button>
+  <button class="chip" data-lane="O" aria-pressed="false" id="lane-O">OCR</button>
+  <button class="chip" data-lane="T" aria-pressed="false" id="lane-T">Translation</button>
+  <button class="chip" data-lane="D" aria-pressed="false" id="lane-D">Display</button>
+  <button class="chip" data-lane="E" aria-pressed="false" id="lane-E">Derived</button>
+  <input id="q" type="search" placeholder="Search names, specimens, languages" aria-label="Search">
+  <select id="sort" aria-label="Sort"><option value="code">By code</option><option value="serious">Most serious</option><option value="n">Most common</option></select>
+</div>
+<div class="list" id="list"></div>
+<footer>
+  <p>Counts are errors found in 1,520 audited pages from 19 rounds, one reader (Opus), without the second-reader or by-eye calibration. Only errors the reader tagged with a class are shown; about 59% carry no class and are not counted here. Classes with no specimens were not seen in these rounds. Definitions: <code>.claude/docs/page-error-taxonomy.md</code>; kinds: <code>scripts/lib/review-vocabulary.mjs</code>.</p>
+</footer>
+</div>
+<script id="zoo-data" type="application/json">

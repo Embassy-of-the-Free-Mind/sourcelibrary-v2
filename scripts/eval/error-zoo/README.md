@@ -1,0 +1,36 @@
+# Error zoo and bad-page predictor — handoff (2026-11-11)
+
+Two things built from the spare-lane convergent audits (`/root/jobs/spare-audit/spare-audit-2026111[01]-*` on gex45-1;
+19 rounds, 1,520 pages, ~12,000 graded errors, Opus as the only reader, not calibrated):
+
+1. **Error zoo** — every class in `.claude/docs/page-error-taxonomy.md` with counts, severity mix, top languages and
+   up to 8 quoted specimens (bad text vs what the page says). Published: https://claude.ai/artifact/5JkkHvq7mnsmkJDqaHxUPK
+2. **Bad-page predictor** — predict "page has a serious error" from cheap features. Out-of-book (GroupKFold by book) AUC:
+   book/page facts alone 0.65 · +text stats 0.71 · ~100 features 0.72 · blend with char n-grams 0.74. Top 30% flagged → ~60%
+   precision, catches ~half of serious pages (base rate 36%).
+
+## Files (run from a scratch dir; they read/write `rows.json`, `feats2.json`, `zoo.json` in cwd)
+- `agg.py` → `rows.json`: one row per audited page (lang, OCR model, tags, scores, serious, classes). Needs a second pass
+  that joins `draw.json` for `stratum`/`exposure`/`ocr_model` (done inline in the session; fold it into agg.py).
+- `model.py` — first predictor (metadata + text stats + char n-gram LR).
+- `feats2.py` → `feats2.json`: ~100 features in groups: size, repetition (zlib ratio, repeated lines/4-grams), garbage
+  rules, lexicality (leave-one-book-out vocab, char-trigram surprise), script-block consistency, OCR↔translation
+  consistency (numbers, names, untranslated words), tags, image (sharpness, contrast, bytes/px, aspect, ink, chars per ink).
+- `model2.py` — group ablations, permutation importance, quintile tables.
+- `zoo.py` (stdin: class→kind JSON from `review-vocabulary.mjs`) → `zoo.json`; `cat head.html <json> tail.html` = page.
+Needs `scikit-learn numpy pillow` in a venv.
+
+## What we learned
+- Features saturate at ~0.72: groups are redundant (they all measure "hard page"). Strongest single signals: publication year
+  (oldest fifth 51% serious vs ~30%), OCR compressibility (most repetitive fifth 53%), char-trigram surprise, text-per-ink.
+- Ceiling is likely label noise (one uncalibrated reader) + errors that look normal (sense flips, wrong names).
+- 59% of logged errors carry no taxonomy class; the zoo covers only the classed 41%.
+
+## Next (for Fable or whoever picks this up)
+1. **More/cleaner labels** — pull other audits, by-eye adjudications, page reviews from main/DB; add a second reader.
+2. **Signals that see the error**: two-OCR disagreement (Paddle on cloudlayer, or a cheap Flash read); token logprobs if
+   exposed; back-translation vs OCR; a Flash-Lite yes/no screener as one feature. (These spend GPU/API — ask Derek.)
+3. **Zoo**: classify the 59% unclassed errors (cheap model, the taxonomy as the label set); curate specimens by eye;
+   add a severity rubric (MQM-style anchored weights) to the reader prompt; keep the strata×class grid live from audits.
+4. Close the loop: route predicted/serious pages to re-OCR or withhold, and measure lane-B repairs before/after
+   (lane-B-written pages were still 47% serious).
