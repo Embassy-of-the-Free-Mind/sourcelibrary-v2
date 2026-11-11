@@ -1,0 +1,224 @@
+name: Security scan
+
+# Per-PR: gitleaks over the PR's own commits + Semgrep CE over the files the PR
+# changes (diff-aware). Weekly: gitleaks over the full history of every branch,
+# kept in one `security` issue (redacted; closed when a run comes back clean).
+#
+# Cost: PRs that touch no code skip this workflow entirely (paths filter). On a
+# code PR it is one job, a shallow checkout and two pinned containers, ~2 min.
+#
+# Not a required check and not gating in auto-merge.mjs (which gates on named
+# checks only: test, DCO, next-build, issue-link, experiments-valid). Watch it
+# for a while, then make `security-scan` required or add it to that list.
+#
+# No third-party actions and no scanner accounts: gitleaks and semgrep run from
+# their official images pinned by digest. gitleaks-action is not used (it needs
+# a paid licence for organisations).
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'workers/**'
+      - 'mcp-server/**'
+      - 'infrastructure/**'
+      - 'supabase/**'
+      - '.claude/hooks/**'
+      - '.github/**'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - '*.config.*'
+      - 'next.config.ts'
+      - 'vercel.json'
+      - '.gitleaks.toml'
+      - '**/.env*'
+  schedule:
+    - cron: '23 5 * * 0'   # Sundays 05:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-scan-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Pinned by digest; bump tag and digest together.
+  GITLEAKS_IMAGE: zricethezav/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+  SEMGREP_IMAGE: semgrep/semgrep:1.184.0@sha256:cc1b68266f267878b39739373ea9985b9a78e5d64497dd875c8de100b22695ed
+
+jobs:
+  security-scan:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # The merge commit, two deep: HEAD^1 is main, HEAD^2 is the PR head.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Fetch the PR's commits
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          COMMITS: ${{ github.event.pull_request.commits }}
+        run: |
+          depth=$(( COMMITS + 1 )); [ "$depth" -gt 300 ] && depth=300
+          # main too, so commits already on main fall outside base..head.
+          git fetch --no-tags --quiet --depth="$depth" origin "$HEAD_SHA" "$(git rev-parse HEAD^1)"
+
+      - name: Secrets (gitleaks, PR commits)
+        id: gitleaks
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          base=$(git rev-parse HEAD^1)
+          # Config from main, not from the PR, so a PR cannot allowlist itself.
+          if git show "$base:.gitleaks.toml" > "$RUNNER_TEMP/gitleaks.toml" 2>/dev/null; then
+            cfg=(--config /out/gitleaks.toml)
+          else
+            cfg=()
+          fi
+          rc=0
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+            -v "$PWD:/repo" -v "$RUNNER_TEMP:/out" "$GITLEAKS_IMAGE" \
+            git /repo "${cfg[@]}" --no-banner --redact --exit-code 42 \
+            --log-opts="--first-parent $base..$HEAD_SHA" \
+            --report-format json --report-path /out/gitleaks.json || rc=$?
+          n=$(jq 'length' "$RUNNER_TEMP/gitleaks.json" 2>/dev/null || echo 0)
+          {
+            echo "### Secrets (gitleaks): $n finding(s) in this PR's commits"
+            if [ "$n" -gt 0 ]; then
+              echo
+              echo "| rule | file | line | commit |"
+              echo "|---|---|---|---|"
+              jq -r '.[] | "| \(.RuleID) | `\(.File)` | \(.StartLine) | \(.Commit[0:8]) |"' "$RUNNER_TEMP/gitleaks.json"
+              echo
+              echo "Values are redacted. A real secret must be rotated; removing it in a later commit does not remove it from history. A public-by-design value goes in \`.gitleaks.toml\` on main."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          # 42 = leaks found; anything else non-zero = gitleaks itself failed.
+          if [ "$rc" -ne 0 ] && [ "$rc" -ne 42 ]; then echo "::error::gitleaks failed to run (exit $rc)"; exit 1; fi
+          echo "leaks=$([ "$rc" -eq 42 ] && echo 1 || echo 0)" >> "$GITHUB_OUTPUT"
+
+      - name: Code (semgrep, changed files)
+        id: semgrep
+        if: always()
+        run: |
+          base=$(git rev-parse HEAD^1)
+          # A change to the scanner config re-baselines: scan all code, report only.
+          if git diff --name-only "$base" HEAD | grep -qxE '\.github/workflows/security-scan\.yml|\.gitleaks\.toml'; then
+            mode=full; baseline=()
+          else
+            mode=diff; baseline=(--baseline-commit "$base")
+          fi
+          targets=()
+          for d in src scripts workers mcp-server infrastructure supabase; do [ -d "$d" ] && targets+=("$d"); done
+          rc=0
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e SEMGREP_SEND_METRICS=off \
+            -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0='*' \
+            -v "$PWD:/src" -v "$RUNNER_TEMP:/out" -w /src "$SEMGREP_IMAGE" \
+            semgrep scan --metrics=off --disable-version-check --quiet \
+              --config p/nextjs --config p/typescript --config p/owasp-top-ten --config p/secrets \
+              --include '*.ts' --include '*.tsx' --include '*.js' --include '*.jsx' \
+              --include '*.mjs' --include '*.cjs' --include '*.mts' --include '*.py' --include '*.sh' \
+              "${baseline[@]}" --timeout 10 --json --output /out/semgrep.json "${targets[@]}" || rc=$?
+          if [ ! -s "$RUNNER_TEMP/semgrep.json" ]; then
+            echo "::error::semgrep did not produce a report (exit $rc)"; exit 1
+          fi
+          blocking='select(.extra.severity == "ERROR" or .extra.severity == "CRITICAL" or .extra.severity == "HIGH")'
+          total=$(jq '.results | length' "$RUNNER_TEMP/semgrep.json")
+          errors=$(jq "[.results[] | $blocking] | length" "$RUNNER_TEMP/semgrep.json")
+          {
+            echo "### Code (semgrep, $mode scan): $total finding(s), $errors at ERROR"
+            if [ "$total" -gt 0 ]; then
+              echo
+              echo "| severity | rule | where |"
+              echo "|---|---|---|"
+              jq -r '.results | sort_by(.extra.severity) | .[:100][] | "| \(.extra.severity) | \(.check_id | split(".") | last) | `\(.path):\(.start.line)` |"' "$RUNNER_TEMP/semgrep.json"
+              if [ "$total" -gt 100 ]; then echo; echo "(first 100 shown)"; fi
+            fi
+            if [ "$mode" = full ]; then echo; echo "Full scan because the scanner config changed: reported, not failed."; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          jq -r ".results[] | $blocking | \"::error file=\(.path),line=\(.start.line),title=\(.check_id | split(\".\") | last)::\(.extra.message | gsub(\"\n\"; \" \") | .[0:300])\"" "$RUNNER_TEMP/semgrep.json" | head -50
+          fail=0; [ "$mode" = diff ] && [ "$errors" -gt 0 ] && fail=1
+          echo "fail=$fail" >> "$GITHUB_OUTPUT"
+
+      - name: Verdict
+        if: always()
+        env:
+          GL: ${{ steps.gitleaks.outputs.leaks }}
+          SG: ${{ steps.semgrep.outputs.fail }}
+          GL_OUTCOME: ${{ steps.gitleaks.outcome }}
+          SG_OUTCOME: ${{ steps.semgrep.outcome }}
+        run: |
+          [ "$GL_OUTCOME" = success ] && [ "$SG_OUTCOME" = success ] || { echo "a scan step failed to run"; exit 1; }
+          [ "$GL" = 0 ] || { echo "gitleaks: secrets in this PR's commits (see summary)"; exit 1; }
+          [ "$SG" = 0 ] || { echo "semgrep: ERROR-severity findings in changed code (see annotations)"; exit 1; }
+          echo "clean"
+
+  history:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0   # every branch and tag
+          persist-credentials: false
+
+      - name: Secrets (gitleaks, all history)
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+            -v "$PWD:/repo" -v "$RUNNER_TEMP:/out" "$GITLEAKS_IMAGE" \
+            git /repo --config /repo/.gitleaks.toml --no-banner --redact --exit-code 0 \
+            --log-opts="--all" --report-format json --report-path /out/gitleaks.json
+          jq 'length' "$RUNNER_TEMP/gitleaks.json"
+
+      - name: Keep the tracking issue in sync
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Secret scan: findings in git history"
+          report="$RUNNER_TEMP/gitleaks.json"
+          n=$(jq 'length' "$report")
+          issue=$(gh issue list --label security --state open --search "in:title \"$title\"" --json number,title \
+            --jq "map(select(.title == \"$title\")) | .[0].number // empty")
+          if [ "$n" -eq 0 ]; then
+            echo "clean"
+            [ -n "$issue" ] && gh issue close "$issue" --comment "Clean as of $(date -u +%F) ($RUN_URL)."
+            exit 0
+          fi
+          {
+            echo "Weekly gitleaks scan of every branch's history (\`.github/workflows/security-scan.yml\`). Values are redacted and never written here."
+            echo
+            echo "**$n finding(s)** as of $(date -u +%F) — [run]($RUN_URL)"
+            echo
+            echo "| rule | findings |"
+            echo "|---|---|"
+            jq -r 'group_by(.RuleID) | map("| \(.[0].RuleID) | \(length) |") | .[]' "$report"
+            echo
+            echo "<details><summary>Where (file, line, commit)</summary>"
+            echo
+            echo "| rule | file | line | commit | date |"
+            echo "|---|---|---|---|---|"
+            jq -r 'sort_by(.Date) | reverse | .[:200][] | "| \(.RuleID) | `\(.File)` | \(.StartLine) | \(.Commit[0:8]) | \(.Date[0:10]) |"' "$report"
+            [ "$n" -gt 200 ] && echo && echo "(newest 200 shown)"
+            echo
+            echo "</details>"
+            echo
+            echo "To resolve: rotate any real credential (history is public; deleting the line does not help), or add a public-by-design value to \`.gitleaks.toml\`. This issue closes itself when a run comes back clean."
+          } > "$RUNNER_TEMP/body.md"
+          if [ -n "$issue" ]; then
+            gh issue edit "$issue" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh issue create --title "$title" --label security --body-file "$RUNNER_TEMP/body.md"
+          fi
