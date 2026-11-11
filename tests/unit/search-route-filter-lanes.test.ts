@@ -11,12 +11,12 @@ import { NextRequest } from 'next/server';
 // ignores the filter would pass whatever the route did).
 
 const BOOKS: Array<Record<string, any>> = [
-  { id: 'bph-ft', title: 'Aurora', author: 'Boehme', language: 'German', year: 1612, published: '1612', pages_count: 100, pages_translated: 100, visible: true, held_by: 'bph', is_first_translation: true, categories: ['theosophy'], doi: '10.1/x' },
+  { id: 'bph-ft', title: 'Aurora', author: 'Boehme', language: 'German', year: 1612, published: '1612', pages_count: 100, pages_translated: 100, visible: true, held_by: 'bph', is_first_translation: true, first_translation: { verdict: 'first_no_prior' }, categories: ['theosophy'], doi: '10.1/x' },
   { id: 'bph-raw', title: 'Mysterium', author: 'Boehme', language: 'German', year: 1623, published: '1623', pages_count: 100, pages_translated: 0, visible: true, image_source: { provider: 'bph' }, categories: ['theosophy'] },
   { id: 'ia-tr', title: 'Opera', author: 'Paracelsus', language: 'Latin', year: 1603, published: '1603', pages_count: 100, pages_translated: 40, visible: true, held_by: 'internet_archive', categories: ['medicine'] },
   { id: 'ia-raw', title: 'Tractatus', author: 'Anon', language: 'Latin', year: 1650, published: '1650', pages_count: 100, pages_translated: 0, visible: true, image_source: { provider: 'internet_archive' }, categories: ['alchemy'] },
   // Not published: must never come back, with or without a filter.
-  { id: 'unlisted', title: 'Withheld', author: 'Anon', language: 'Latin', year: 1600, published: '1600', pages_count: 100, pages_translated: 100, visible: false, held_by: 'bph', is_first_translation: true, categories: ['theosophy'] },
+  { id: 'unlisted', title: 'Withheld', author: 'Anon', language: 'Latin', year: 1600, published: '1600', pages_count: 100, pages_translated: 100, visible: false, held_by: 'bph', is_first_translation: true, first_translation: { verdict: 'first_no_prior' }, categories: ['theosophy'] },
 ];
 const ALL = BOOKS.map(b => b.id);
 const LIVE = ALL.filter(id => id !== 'unlisted');
