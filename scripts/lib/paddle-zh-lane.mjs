@@ -55,6 +55,16 @@ export const BOOK_EVENT = 'paddle_zh_reocr';
 export const HOLD_REASON = process.env.PADDLE_ZH_HOLD || 'paddle-zh-5600-ocr-only';
 export const HOLD_RELEASE = process.env.PADDLE_ZH_HOLD_RELEASE || 'translation of the Paddle-read Siku Quanshu cohort is approved as its own priced decision (#5600 is OCR only); release with --to ocr_complete';
 export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: process.env.PADDLE_ZH_HOLD_DECISION || `release ${HOLD_REASON}` });
+/**
+ * Other holds the lane may read under, keeping each book's own hold (#5660 job paddle-runs-5660). The visible SKQS
+ * books carry several OCR-only GPU-lane holds (gpu-backlog-5660, paddle-zh-5600-ocr-only, paddle-zh-6388-ocr-only), each
+ * with a priced release. (paddle-zh-6388-excluded is not one: those volumes were kept out of Paddle on purpose.) Before, plan skipped a book "held for another reason" and apply refused it, so one lane dir
+ * could serve one hold, and the residue of the others had no route at all. Comma list in PADDLE_ZH_KEEP_HOLDS;
+ * a book held for one of them is planned without a new hold and written with its hold untouched.
+ */
+export const KEEP_HOLDS = new Set(String(process.env.PADDLE_ZH_KEEP_HOLDS || '').split(',').map((s) => s.trim()).filter(Boolean));
+/** The holds this lane may write under: its own, or one it keeps. */
+export const laneMayWrite = (reason) => !!reason && (reason === HOLD_REASON || KEEP_HOLDS.has(reason));
 /** Below this many Han characters a Paddle read is textless: it replaces a loop, never a reading. */
 export const MIN_HAN = 8;
 

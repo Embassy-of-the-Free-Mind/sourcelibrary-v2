@@ -227,7 +227,7 @@ case "${1:-run}" in
 # Reads up to ${dl} h, then applies. Downstream: $down
 set -uo pipefail
 ST=$ST; ROUTE=$route; LANE=$lane
-export LANE_DIR=$lane PADDLE_ZH_ISSUE=$issue PADDLE_ZH_HOLD=$hold DEADLINE_H=$dl CODE_DIR=$CODE ENV_FILE=$ENV_FILE GPU_TASK_NAME=$name
+export LANE_DIR=$lane PADDLE_ZH_ISSUE=$issue PADDLE_ZH_HOLD=${hold%%,*} PADDLE_ZH_KEEP_HOLDS=$hold DEADLINE_H=$dl CODE_DIR=$CODE ENV_FILE=$ENV_FILE GPU_TASK_NAME=$name
 row() { printf '{"at":"%s","task":"$name","route":"$route","event":"%s","rc":%s,"pages_left":%s}\n' "\$(date -u +%FT%TZ)" "\$1" "\$2" "\$3" >> "\$ST/runs.jsonl"; }
 # the genai server asks for 0.5 of the card (11.7 GB): wait up to an hour for it, else a recorded skip
 for i in \$(seq 1 60); do
