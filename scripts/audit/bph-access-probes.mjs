@@ -92,8 +92,13 @@ const ROWS = [
   { name: 'must pass: Chrome on the subdomain', url: `${SUB}/`, ua: CHROME, headers: HINTS, expect: 'pass' },
   { name: 'must pass: Safari on the subdomain', url: `${SUB}/`, ua: SAFARI, expect: 'pass' },
   { name: 'must pass: policy page for any client', url: `${APEX}/robots.txt`, ua: SCRIPT, expect: 'pass' },
-  { name: 'must pass: reader gets the whole text', url: TEXT, ua: CHROME, headers: { ...HINTS, ...FETCHED }, expect: 'whole', total: BPH.pages },
-  { name: 'must pass: assistant reads a book outside the collection whole', url: `${APEX}/api/books/${OTHER.id}/text?format=json`, ua: CLAUDE_USER, expect: 'whole', total: OTHER.pages },
+  // Since the metered reader went live (#4357, 2026-11-10) a signed-out reader's /text is the free
+  // first 20%; the whole book is behind sign-in, which this probe has no session for. The positive
+  // control is that the preview still arrives: some pages, never none.
+  { name: 'must pass: signed-out reader gets the free preview', url: TEXT, ua: CHROME, headers: { ...HINTS, ...FETCHED }, expect: 'preview', total: BPH.pages },
+  // Since #8406 (2026-11-08) whole-book text needs a free key or a session; pages and quotes stay open.
+  { name: 'must pass: assistant quotes a page of a book outside the collection', url: `${APEX}/api/books/${OTHER.id}/quote?page=3`, ua: CLAUDE_USER, expect: 'pass' },
+  { name: 'must pass: assistant asking for a whole book is told how to get a key', url: `${APEX}/api/books/${OTHER.id}/text?format=json`, ua: CLAUDE_USER, expect: 'key' },
   { name: 'must pass: reader in the frame calls the tenant API', url: `${APEX}/api/bph/books/${BPH.id}`, ua: CHROME, headers: { ...HINTS, ...FETCHED }, expect: 'pass' },
   // Straight after the reader above: refused only while the edge has not kept the reader's copy.
   { name: 'plain HTTP library, tenant API after a reader', url: `${APEX}/api/bph/books/${BPH.id}`, ua: SCRIPT, expect: 'refuse' },
@@ -144,6 +149,17 @@ async function probe(row) {
       const shared = res.headers.get('cf-cache-status') === 'HIT';
       if (shared) return answer(`${pages.length}/${row.total} from a shared cache`, false);
       return answer(`${pages.length}/${row.total}`, row.expect === 'whole' ? whole : !whole);
+    }
+    case 'preview': {
+      if (refused) return answer('refused', false);
+      const pages = await pageCount(res);
+      if (!pages) return answer(`no pages, ${res.status}`, false);
+      return answer(`${pages.length}/${row.total}`, pages.length > 0 && pages.length < row.total);
+    }
+    case 'key': {
+      if (refused) return answer('refused', false);
+      const j = await res.json().catch(() => ({}));
+      return answer(`${res.status} ${j.error || 'no error field'}`, res.status === 401 && j.error === 'key_required' && /developers/.test(j.get_key || ''));
     }
     case 'absent': {
       const pages = (await pageCount(res)) || [];
