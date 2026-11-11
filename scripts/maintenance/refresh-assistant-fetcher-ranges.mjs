@@ -29,6 +29,10 @@ const SOURCES = {
   anthropic: { url: 'https://claude.com/crawling/bots.json', extra: ['160.79.104.0/21'], min: 2 },
   openai: { url: 'https://openai.com/chatgpt-user.json', extra: [], min: 20 },
   perplexity: { url: 'https://www.perplexity.com/perplexity-user.json', extra: [], min: 2 },
+  // OAI-SearchBot has its own list. Claude-SearchBot is on Anthropic's list above.
+  // Search crawlers get no larger allowance from this: the page wall uses the list
+  // to stop believing the name alone (bot-gate.ts isTrustedBot, #4357).
+  'openai-search': { url: 'https://openai.com/searchbot.json', extra: [], min: 5 },
 };
 
 const SHORTEST_PREFIX = 16;

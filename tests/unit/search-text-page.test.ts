@@ -40,9 +40,11 @@ import { GET as robots } from '@/app/robots.txt/route';
 import { proxy } from '@/proxy';
 
 const CLAUDE = 'Mozilla/5.0 (compatible; Claude-User/1.0; +Claude-User@anthropic.com)';
+const ANTHROPIC_IP = '160.79.104.10';
 const call = (q: string | null, ua = CLAUDE) => GET(new NextRequest(
   `https://sourcelibrary.org/search/text${q === null ? '' : `?q=${encodeURIComponent(q)}`}`,
-  { headers: { 'user-agent': ua } },
+  // A real Claude-User arrives from Anthropic's published range (#4357).
+  { headers: { 'user-agent': ua, 'x-forwarded-for': ANTHROPIC_IP } },
 ));
 
 beforeEach(() => {
@@ -132,7 +134,7 @@ describe('/search/text', () => {
   });
 
   it('asks for a fixed number of results and passes no paging through', async () => {
-    await GET(new NextRequest('https://sourcelibrary.org/search/text?q=archeus&limit=500&offset=9000', { headers: { 'user-agent': CLAUDE } }));
+    await GET(new NextRequest('https://sourcelibrary.org/search/text?q=archeus&limit=500&offset=9000', { headers: { 'user-agent': CLAUDE, 'x-forwarded-for': ANTHROPIC_IP } }));
     expect(state.urls).toHaveLength(2);
     for (const url of state.urls) {
       expect(url).toContain('limit=10');
@@ -172,7 +174,8 @@ describe('/search/text', () => {
 describe('pictures', () => {
   const pictures = (q: string, ua = CLAUDE) => GET(new NextRequest(
     `https://sourcelibrary.org/search/text?q=${encodeURIComponent(q)}&pictures=1`,
-    { headers: { 'user-agent': ua } },
+    // A real Claude-User arrives from Anthropic's published range (#4357).
+  { headers: { 'user-agent': ua, 'x-forwarded-for': ANTHROPIC_IP } },
   ));
   const CHROME = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
   const fromProxy = async (url: string, ua: string) => (await proxy(new NextRequest(url, {

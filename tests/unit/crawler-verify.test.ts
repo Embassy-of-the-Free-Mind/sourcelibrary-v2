@@ -17,6 +17,7 @@ vi.mock('@/lib/rate-limit', () => ({
 
 import { clearCrawlerVerdictCache, provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
 import { isTrustedBot } from '@/lib/bot-gate';
+import RANGES from '@/lib/assistant-fetcher-ranges.json';
 
 const GOOGLEBOT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
 const err = (code: string) => Object.assign(new Error(code), { code });
@@ -97,10 +98,38 @@ describe('isTrustedBot', () => {
     expect(await isTrustedBot(req(GOOGLEBOT, '198.51.100.7'))).toBe(false);
   });
 
-  it('leaves claims it cannot prove, and assistants, as they were', async () => {
-    expect(await isTrustedBot(req('Claude-User/1.0', '198.51.100.7'))).toBe(true);
-    expect(await isTrustedBot(req('DuckDuckBot/1.1', '198.51.100.7'))).toBe(true);
+  it('trusts an assistant or AI search crawler only from its published addresses (#4357)', async () => {
+    const anthropicIp = RANGES.anthropic.prefixes[0].split('/')[0];
+    const oaiSearchIp = RANGES['openai-search'].prefixes[0].split('/')[0];
+    expect(await isTrustedBot(req('Claude-User/1.0', anthropicIp))).toBe(true);
+    expect(await isTrustedBot(req('Claude-SearchBot/1.0', anthropicIp))).toBe(true);
+    expect(await isTrustedBot(req('OAI-SearchBot/1.4', oaiSearchIp))).toBe(true);
+    // The same names from anywhere else are forgeries.
+    expect(await isTrustedBot(req('Claude-User/1.0', '198.51.100.7'))).toBe(false);
+    expect(await isTrustedBot(req('OAI-SearchBot/1.4', '198.51.100.7'))).toBe(false);
+    // One operator's name on another's list proves nothing.
+    expect(await isTrustedBot(req('OAI-SearchBot/1.4', anthropicIp))).toBe(false);
+    expect(reverse).not.toHaveBeenCalled();
+  });
+
+  it('does not trust a name it has no way to prove', async () => {
+    expect(await isTrustedBot(req('DuckDuckBot/1.1', '198.51.100.7'))).toBe(false);
+    expect(await isTrustedBot(req('Google-NotebookLM', '198.51.100.7'))).toBe(false);
     expect(await isTrustedBot(req('GPTBot/1.2', '198.51.100.7'))).toBe(false);
     expect(reverse).not.toHaveBeenCalled();
+  });
+
+  it('trusts our MCP server name only with its proof', async () => {
+    process.env.AUTH_SECRET ??= 'test-secret';
+    const { MCP_PROOF_HEADER, mintMcpProof } = await import('@/lib/mcp-self-proof');
+    expect(await isTrustedBot(req('SourceLibrary-MCP/4.3', '198.51.100.7'))).toBe(false);
+    const proven = new Request('https://sourcelibrary.org/x', {
+      headers: { 'user-agent': 'SourceLibrary-MCP/4.3', 'x-test-ip': '198.51.100.7', [MCP_PROOF_HEADER]: mintMcpProof()! },
+    });
+    expect(await isTrustedBot(proven)).toBe(true);
+    const wrong = new Request('https://sourcelibrary.org/x', {
+      headers: { 'user-agent': 'SourceLibrary-MCP/4.3', [MCP_PROOF_HEADER]: 'a'.repeat(64) },
+    });
+    expect(await isTrustedBot(wrong)).toBe(false);
   });
 });

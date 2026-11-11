@@ -20,6 +20,8 @@
 import RANGES from '@/lib/assistant-fetcher-ranges.json';
 
 export type AssistantOperator = 'anthropic' | 'openai' | 'perplexity';
+/** Every published list we hold: the three fetchers' operators plus OpenAI's search crawler. */
+type PublishedList = keyof typeof RANGES;
 
 const NAMES: ReadonlyArray<readonly [string, AssistantOperator]> = [
   ['claude-user', 'anthropic'],
@@ -39,7 +41,7 @@ function ipv4ToInt(ip: string): number | null {
 }
 
 const SPANS = Object.fromEntries(
-  (Object.keys(RANGES) as AssistantOperator[]).map((operator) => [
+  (Object.keys(RANGES) as PublishedList[]).map((operator) => [
     operator,
     RANGES[operator].prefixes.map((cidr) => {
       const [base, bits] = cidr.split('/');
@@ -47,7 +49,17 @@ const SPANS = Object.fromEntries(
       return { start, end: start + 2 ** (32 - Number(bits)) - 1 };
     }),
   ]),
-) as Record<AssistantOperator, { start: number; end: number }[]>;
+) as Record<PublishedList, { start: number; end: number }[]>;
+
+/** The address as an integer, or null for anything that is not IPv4 (incl. ::ffff:-mapped). */
+function addressOf(ip: string): number | null {
+  return ipv4ToInt(ip.trim().replace(/^::ffff:/i, ''));
+}
+
+function onList(list: PublishedList, ip: string): boolean {
+  const addr = addressOf(ip);
+  return addr !== null && SPANS[list].some((s) => addr >= s.start && addr <= s.end);
+}
 
 /**
  * The operator, when the User-Agent names its fetcher AND the address is on that
@@ -62,7 +74,36 @@ export function verifiedAssistantFetcher(
   const ua = userAgent.toLowerCase();
   const operator = NAMES.find(([name]) => ua.includes(name))?.[1];
   if (!operator) return null;
-  const addr = ipv4ToInt(ip.trim().replace(/^::ffff:/i, ''));
-  if (addr === null) return null;
-  return SPANS[operator].some((s) => addr >= s.start && addr <= s.end) ? operator : null;
+  return onList(operator, ip) ? operator : null;
+}
+
+/**
+ * Names the page wall trusts only from their operator's published addresses
+ * (#4357): the three fetchers above plus the two AI search crawlers.
+ * Claude-SearchBot uses Anthropic's list; OAI-SearchBot has its own.
+ */
+const LISTED_NAMES: ReadonlyArray<readonly [string, PublishedList]> = [
+  ...NAMES,
+  ['claude-searchbot', 'anthropic'],
+  ['oai-searchbot', 'openai-search'],
+];
+
+/** Does the User-Agent name a client this module can prove by address? */
+export function namesListedClient(userAgent: string | null | undefined): boolean {
+  const ua = (userAgent || '').toLowerCase();
+  return LISTED_NAMES.some(([name]) => ua.includes(name));
+}
+
+/**
+ * True when the User-Agent names a listed client AND the address is on that
+ * client's published list. A name alone, or an address alone, is false.
+ */
+export function provenByPublishedList(
+  userAgent: string | null | undefined,
+  ip: string | null | undefined,
+): boolean {
+  if (!userAgent || !ip) return false;
+  const ua = userAgent.toLowerCase();
+  const list = LISTED_NAMES.find(([name]) => ua.includes(name))?.[1];
+  return list ? onList(list, ip) : false;
 }
