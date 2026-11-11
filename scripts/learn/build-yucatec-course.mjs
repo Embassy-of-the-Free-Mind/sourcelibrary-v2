@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
+import { getTranslationText } from '../lib/translation-text.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, '../../src/data/learn-yucatec-course.json');
@@ -53,11 +54,11 @@ async function page(key, n) {
     if (!B[key]) throw new Error(`unknown book key ${key}`);
     const p = await db.collection('pages').findOne(
       { book_id: B[key].id, page_number: n },
-      { projection: { 'ocr.data': 1, 'translation.data': 1 } },
+      { projection: { 'ocr.data': 1, translation: 1 } },
     );
     if (!p) throw new Error(`no page ${k}`);
     const ocr = p.ocr?.data || '';
-    const tr = p.translation?.data || '';
+    const tr = getTranslationText(p);
     pageCache.set(k, {
       raw: flat(ocr),
       ocrLines: linesOf(ocr),
