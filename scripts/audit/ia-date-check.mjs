@@ -33,7 +33,7 @@ const args = process.argv.slice(2);
 const cmd = args[0];
 const opt = (k, d) => { const a = args.find((x) => x.startsWith(`--${k}=`)); return a ? a.split('=').slice(1).join('=') : d; };
 const DIR = opt('dir', 'scratch');
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact j.d.lomas@tudelft.nl; IA date check #5458)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) ia-date-check-#5458';
 const FIELDS = 'identifier,title,creator,date,year,publicdate,addeddate,publisher,imagecount,collection,language,ppi,isbn,edition,volume,scanner,sponsor,contributor,scanningcenter,subject,mediatype';
 const QUERIES = {
   arabic: 'language:(ara OR ar OR arabic) AND mediatype:texts',
@@ -81,7 +81,7 @@ async function dump() {
   await withDb(async (db) => {
     const out = fs.createWriteStream(p('targets.jsonl'));
     let n = 0;
-    for await (const d of db.collection('import_candidates').find(TARGET_FILTER, { projection: { source_id: 1, title: 1, author: 1, language: 1, date_text: 1, date_earliest: 1, 'metadata.languages': 1, 'metadata.collections': 1, 'metadata.discovery_query': 1 } })) {
+    for await (const d of db.collection('import_candidates').find(TARGET_FILTER, { projection: { source_id: 1, title: 1, author: 1, language: 1, date_text: 1, date_earliest: 1, 'metadata.languages': 1, 'metadata.collections': 1, 'metadata.discovery_query': 1 } }).batchSize(1000)) {
       out.write(JSON.stringify({ _id: String(d._id), id: d.source_id, title: d.title, author: d.author, language: d.language, date_text: d.date_text, date_earliest: d.date_earliest, langs: d.metadata?.languages, colls: d.metadata?.collections, dq: d.metadata?.discovery_query }) + '\n');
       n++;
     }
@@ -97,7 +97,7 @@ async function dumpLib() {
     const out = fs.createWriteStream(p('lib-targets.jsonl'));
     let n = 0;
     for await (const d of db.collection('books').find({ $or: [{ ia_identifier: { $exists: true, $nin: [null, ''] } }, { 'image_source.provider': 'internet_archive' }] },
-      { projection: { id: 1, title: 1, author: 1, language: 1, published: 1, ia_identifier: 1, 'image_source.identifier': 1, visible: 1, pages_count: 1 } })) {
+      { projection: { id: 1, title: 1, author: 1, language: 1, published: 1, ia_identifier: 1, 'image_source.identifier': 1, visible: 1, pages_count: 1 } }).batchSize(1000)) {
       const y = editionYear(d.published); // free text — first 3–4 digit year, never parseInt
       const ia = d.ia_identifier || d.image_source?.identifier;
       if (y === null || y >= 1800 || !ia) continue;

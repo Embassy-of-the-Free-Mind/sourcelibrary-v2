@@ -16,6 +16,7 @@ import { auth } from '@/lib/auth';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { getDb } from '@/lib/mongodb';
 import { anonymizeIp } from '@/lib/anonymize-ip';
+import { clientCountry } from '@/lib/client-ip';
 
 export const SIGNIN_URL = 'https://sourcelibrary.org/auth/signin';
 
@@ -26,7 +27,7 @@ export const SIGNIN_URL = 'https://sourcelibrary.org/auth/signin';
  */
 function logGateHit(request: Request, feature: string): void {
   try {
-    const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
+    const country = clientCountry(request.headers) || 'Unknown';
     const ip = anonymizeIp(getClientIp(request) || 'unknown');
     Promise.race([
       (async () => {

@@ -31,10 +31,10 @@
  *                      text was transcribed from a wrongly cropped image.
  *
  * Control options:
- *   --model=flash|lite Which Gemini model reads the page (default: flash, the historical
- *                      behaviour). `lite` is gemini-3.1-flash-lite — the model the batch OCR
- *                      lane already routes every book to (scripts/lib/ocr-routing.mjs). Added
- *                      for #4815: re-reading the Archive-filled front matter of 279 books.
+ *   --model=lite       Which Gemini model reads the page. Only `lite` (gemini-3.1-flash-lite)
+ *                      runs: since 2026-10-08 no other Gemini model goes to the paid API (#7075),
+ *                      so `flash` (and no --model, the old default) is refused with a pointer to
+ *                      the agy CLI lane, scripts/batch/cli-ocr.mjs. Added for #4815.
  *   --max-output-tokens=N  Output cap per page (default: 16384). A page the model
  *                      loops on runs to the cap and is then discarded as a
  *                      hallucination — at 16K that is ~3 minutes and $0.025 of
@@ -49,11 +49,11 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
+import { readPageIdsFile, ocrLabelNotIn } from '../lib/ocr-targeting.mjs';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
-import { OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { geminiEngine, imageInput, ocrProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
+import { OCR_MODEL_FLASH, OCR_MODEL_LITE, isApiOcrModel, assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { MODEL_PRICING } from '../lib/model-pricing.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
@@ -75,7 +75,8 @@ import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-res
 const PRE_OCR_STATUSES = ['archive_complete', 'ocr_submitted'];
 // TARGET_MODEL is resolved after arg parsing (--model); the constant name is kept
 // because the targeting queries and every write/meter row read it.
-const TARGET_PROMPT = 'v5.2026-02';
+// SELECTION only (#7499): labels a page may carry and not be picked by --old-ocr. The page is
+// stamped with the prompt actually sent (`ocrPrompt.ref`), never with these.
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02'];
 const SKIP_SOURCES = ['manual', 'manual-correction'];
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -105,6 +106,11 @@ if (!['flash', 'lite'].includes(MODEL_CHOICE)) {
   process.exit(1);
 }
 const TARGET_MODEL = MODEL_CHOICE === 'lite' ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
+// #7075: only flash-lite runs on the paid API. Flash reads go through the agy CLI lane.
+if (!isApiOcrModel(TARGET_MODEL)) {
+  console.error(`realtime-ocr: ${TARGET_MODEL} does not run on the paid API (#7075). Pass --model=lite, or read these pages through the agy CLI lane: scripts/batch/cli-ocr.mjs read --page-ids-file=F --out=DIR`);
+  process.exit(1);
+}
 const PRICE = MODEL_PRICING[TARGET_MODEL];
 /** Computed estimate at the standard (realtime) rate, never billed truth — see model-pricing.mjs. */
 const costUsd = (inTok, outTok) => (PRICE ? (inTok * PRICE.input + outTok * PRICE.output) / 1e6 : null);
@@ -258,7 +264,7 @@ async function getOcrPrompt(db) {
 
 // --- Gemini API call ---
 async function callGemini(imageBase64, mimeType, promptText, apiKey) {
-  const url = `${GEMINI_API_BASE}/models/${TARGET_MODEL}:generateContent?key=${apiKey}`;
+  const url = `${GEMINI_API_BASE}/models/${assertApiOcrModel(TARGET_MODEL, 'realtime-ocr')}:generateContent?key=${apiKey}`;
   // One object, sent AND recorded (#4613): the page's engine block is built from this
   // same value, so the record cannot drift from the request.
   const generationConfig = {
@@ -342,7 +348,7 @@ function isDigitizerPage(pageType, ocrText) {
  * The rule this restores: a completeness predicate is satisfied by output OR by an
  * explicit recorded skip. Never by silence.
  */
-async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model, usage }) {
+async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model, usage, promptVersion = null }) {
   // A skip is still a billed call: a RECITATION refusal pays for the image, and a
   // MAX_TOKENS loop pays for the whole output cap (#4815 measured 7% of front-matter
   // reads looping to 16K tokens — more than the successful pages cost). Record the
@@ -357,7 +363,7 @@ async function recordSkip(db, page, { reason, finishReason, chars, durationMs, m
     output_tokens: usage?.outputTokens ?? 0,
     cost_usd: usage ? costUsd(usage.inputTokens, usage.outputTokens) : null,
     duration_ms: durationMs ?? null,
-    prompt_version: TARGET_PROMPT,
+    prompt_version: promptVersion,
     endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
   }).catch(() => {});
 
@@ -405,13 +411,13 @@ async function processPage(page, ocrPrompt, db, runId) {
           : result.finishReason === 'SAFETY' ? 'safety'
             : result.finishReason === 'MAX_TOKENS' ? 'max-tokens-no-text'
               : 'empty';
-      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason, finishReason: result.finishReason, durationMs };
     }
 
     // Hallucination guard
     if (result.text.length > 25000) {
-      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
@@ -424,7 +430,7 @@ async function processPage(page, ocrPrompt, db, runId) {
         pageId: page.id, bookId: page.book_id, pageNumber: page.page_number,
         text: result.text, model: TARGET_MODEL, verdict: loop,
       });
-      await recordSkip(db, page, { reason: 'repetition-loop', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason: 'repetition-loop', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason: `repetition loop (${(loop.share * 100).toFixed(0)}% of body)`, durationMs };
     }
 
@@ -437,7 +443,7 @@ async function processPage(page, ocrPrompt, db, runId) {
     // token cap is more usefully recorded as a loop, and its text is kept.
     if (isTruncatedCandidate({ finishReason: result.finishReason })) {
       const reason = truncationFailReason({ finishReason: result.finishReason });
-      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason: `${reason} (${result.text.length} chars kept nothing)`, durationMs };
     }
 
@@ -470,7 +476,9 @@ async function processPage(page, ocrPrompt, db, runId) {
             model: TARGET_MODEL,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: TARGET_PROMPT,
+            // The prompt actually sent (#7499): this used to be the constant 'v5.2026-02'
+            // whatever the DB default was. A value not known is not written.
+            ...promptLabel(ocrPrompt.ref),
             ...ocrProvenance(result.text, engine),
           },
           ...tags, // page_type, columns, script_type — whichever parsed
@@ -493,7 +501,7 @@ async function processPage(page, ocrPrompt, db, runId) {
       cost_usd: costUsd(result.usage.inputTokens, result.usage.outputTokens),
       status: 'success',
       duration_ms: durationMs,
-      prompt_version: TARGET_PROMPT,
+      prompt_version: ocrPrompt.ref.version || null,
       endpoint: 'scripts/realtime-ocr.mjs',
       timestamp: new Date(),
     }).catch(() => {});
@@ -511,7 +519,7 @@ async function processPage(page, ocrPrompt, db, runId) {
       type: 'ocr', mode: 'realtime', model: TARGET_MODEL,
       book_id: page.book_id, page_ids: [page.id],
       status: 'error', error_message: error.message?.substring(0, 200),
-      duration_ms: durationMs, prompt_version: TARGET_PROMPT,
+      duration_ms: durationMs, prompt_version: ocrPrompt.ref.version || null,
       endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
     }).catch(() => {});
 
@@ -712,7 +720,7 @@ async function main() {
       pageFilter['ocr.source'] = { $nin: SKIP_SOURCES };
       pageFilter.$or = [
         { 'ocr.model': { $ne: TARGET_MODEL } },
-        { 'ocr.prompt_version': { $nin: ACCEPTABLE_PROMPTS } },
+        ocrLabelNotIn(ACCEPTABLE_PROMPTS),
       ];
     }
     // 'all' mode: no OCR filter — re-OCR everything

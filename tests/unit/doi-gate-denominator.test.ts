@@ -82,7 +82,7 @@ describe('the DOI gate uses that denominator', () => {
     // duplicate of this gate that still divided by pages_ocr, and it sat on main for
     // weeks while this test was green - the test only ever read scripts/batch/.
     // Deleted 2026-09-23; this assertion is what stops the next copy.
-    const files = execFileSync('git', ['ls-files', 'scripts', 'src'], { cwd: REPO, encoding: 'utf8' })
+    const files = execFileSync('git', ['ls-files', 'scripts', 'src'], { cwd: REPO, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
       .split('\n')
       .filter(f => /\.(mjs|js|ts)$/.test(f));
 

@@ -1,0 +1,234 @@
+// PRIOR ART: scripts/batch/siku-translate-lane.mjs — the pool reader and picker this is moved out of, unchanged in
+// behaviour (#5600), so cli-ocr-lane.mjs correct (#7263) can choose a pool the same way instead of writing a second
+// picker. scripts/workers/agy-guard.sh — AGY_HOME itself (second login, per-account stop files, allowed-model).
+// scripts/lib/lane-quota.mjs — the CLAUDE account's weekly gate (climits percent); it does not read agy pools, so the
+// agy weekly reserve (#7911) lives here, beside the pool reader.
+/**
+ * agy-pools — which agy login (pool) a lane spends, read from the pool itself (#5600, #7263).
+ *
+ * A box can carry more than one agy login: the default HOME and each AGY_HOME in POOL_HOMES. Every Gemini model of a
+ * login draws one weekly pool and one 5-hour bucket. `agy -p /quota --output-format json` reads both (0 tokens).
+ *
+ * BUSY. A non-default pool that another process is using (AGY_HOME in its environment) is "busy": a measurement job
+ * may own it. A lane that only SHARES a pool marks its own process and children AGY_POOL_SHARED=1 (agyEnv), and is
+ * not counted, so two lanes on one pool do not push each other off it. SIKU_LANE_CHILD=1 is the Siku lane's older mark.
+ */
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+
+/** Other agy logins this box may carry (scripts/workers/agy-guard.sh AGY_HOME, #7517). */
+export const POOL_HOMES = Object.freeze(['/root/.agy-james', '/root/.agy-milo']);
+/** Env marks of lanes that share a pool rather than own it (see BUSY). */
+export const SHARED_MARKS = Object.freeze(['AGY_POOL_SHARED=1', 'SIKU_LANE_CHILD=1']);
+
+/** Gemini buckets of `agy -p /quota --output-format json` stdout: [{ id, window, remaining_fraction, reset_time }], or null. */
+export function quotaBuckets(stdout) {
+  let j;
+  try { j = JSON.parse(String(stdout).trim().split('\n').filter((l) => l.startsWith('{')).pop()); } catch { return null; }
+  const groups = j?.command?.data?.groups;
+  if (j?.status !== 'SUCCESS' || !Array.isArray(groups)) return null;
+  return groups.filter((x) => /gemini/i.test(x.name || '')).flatMap((g) => g.buckets || []);
+}
+
+/** `agy -p /quota --output-format json` stdout → { weekly, weeklyReset, fiveHour, fiveHourReset } (fractions), or null. */
+export function parseQuota(stdout) {
+  const buckets = quotaBuckets(stdout);
+  const b = (w) => buckets?.find((x) => x.window === w);
+  const wk = b('weekly');
+  if (!wk || typeof wk.remaining_fraction !== 'number') return null;
+  return { weekly: wk.remaining_fraction, weeklyReset: wk.reset_time ?? null, fiveHour: b('5h')?.remaining_fraction ?? null, fiveHourReset: b('5h')?.reset_time ?? null, claude: claudeQuota(stdout) };
+}
+
+/**
+ * The same reply's "Claude and GPT models" group, a separate pool per login: { weekly, weeklyReset, fiveHour,
+ * fiveHourReset } or null. Read for display (/admin/pipeline/now, climits); lanes spend it only through agyClaudeGate
+ * (scripts/lib/agy-cli.mjs, #7545).
+ */
+export function claudeQuota(stdout) {
+  let j;
+  try { j = JSON.parse(String(stdout).trim().split('\n').filter((l) => l.startsWith('{')).pop()); } catch { return null; }
+  const g = j?.status === 'SUCCESS' ? j?.command?.data?.groups?.find?.((x) => /claude/i.test(x.name || '')) : null;
+  const b = (w) => g?.buckets?.find((x) => x.window === w);
+  if (typeof b('weekly')?.remaining_fraction !== 'number') return null;
+  const f = (x) => (typeof x?.remaining_fraction === 'number' ? x.remaining_fraction : null);
+  return { weekly: f(b('weekly')), weeklyReset: b('weekly')?.reset_time ?? null, fiveHour: f(b('5h')), fiveHourReset: b('5h')?.reset_time ?? null };
+}
+
+/** The env a child runs agy in: AGY_HOME set for a second login, removed for the default one; marked as sharing. */
+export function agyEnv(home, base = process.env, extra = {}) {
+  const env = { ...base, AGY_POOL_SHARED: '1', ...extra };
+  if (home) env.AGY_HOME = home; else delete env.AGY_HOME;
+  return env;
+}
+
+/** Is another process using this AGY_HOME without a shared mark (e.g. a measurement job)? Returns its pid or null. */
+export function homeBusy(home) {
+  for (const pid of fs.readdirSync('/proc').filter((d) => /^\d+$/.test(d))) {
+    if (Number(pid) === process.pid) continue;
+    let env;
+    try { env = fs.readFileSync(`/proc/${pid}/environ`, 'utf8').split('\0'); } catch { continue; }
+    if (!env.includes(`AGY_HOME=${home}`)) continue;
+    if (SHARED_MARKS.some((m) => env.includes(m))) continue;
+    return Number(pid);
+  }
+  return null;
+}
+
+/** Raw `agy -p /quota` stdout for a pool (null home = default login), or '' when the call failed. */
+export function readQuotaStdout(home, { model = null, env = {} } = {}) {
+  const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json', ...(model ? ['--model', model] : [])],
+    { encoding: 'utf8', env: agyEnv(home, process.env, env), timeout: 120e3, cwd: os.tmpdir() });
+  if (quotaError(`${r.stdout || ''}\n${r.stderr || ''}`) === 'auth') noteAuthLoss(home);
+  return r.stdout || '';
+}
+
+// ── a lost login is not an empty pool (2026-11-08) ──
+/**
+ * Why a /quota reply has no buckets: 'auth' when the login is gone ("authentication required", "authentication failed
+ * or timed out"), 'error' for any other ERROR reply, null for a good reply or one this cannot read. Every lane reads a
+ * missing bucket as "no quota" and skips quietly (cli-ocr-lane: "no Gemini weekly bucket in /quota"), so on
+ * 2026-11-08 the milo login on gex45 had expired and its lanes made 11 calls in an hour, with 77% of its week left and
+ * no page. noteAuthLoss() turns that case into a page.
+ */
+export function quotaError(text) {
+  const s = String(text || '');
+  if (/authentication (required|failed)/i.test(s)) return 'auth';
+  try {
+    const j = JSON.parse(s.trim().split('\n').filter((l) => l.startsWith('{')).pop());
+    if (j?.status === 'ERROR') return /auth/i.test(j.error || '') ? 'auth' : 'error';
+  } catch { /* not JSON */ }
+  return null;
+}
+
+export const AUTH_PAGE_EVERY_MS = 6 * 3600e3;
+const HERE = path.dirname(new URL(import.meta.url).pathname);
+const NTFY_SH = path.join(HERE, '../workers/ntfy-send.sh');
+const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
+const defaultStampDir = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/auth-lost' : path.join(os.tmpdir(), 'agy-auth-lost'));
+
+/**
+ * Record and page a lost agy login, at most once per AUTH_PAGE_EVERY_MS per pool on this box (a stamp file per pool).
+ * Synchronous on purpose: readQuotaStdout is, and a lane may exit right after. AGY_AUTH_PAGE=0 records without paging.
+ * Returns { paged, stamp }.
+ */
+export function noteAuthLoss(home, { now = Date.now(), stampDir = defaultStampDir(), send = sendPage, host = os.hostname() } = {}) {
+  const pool = home ? path.basename(home) : 'default';
+  const stamp = path.join(stampDir, `${pool}.stamp`);
+  console.error(`agy-pools: pool ${pool} on ${host} is NOT LOGGED IN (agy /quota: authentication); its lanes skip until it is restored`);
+  try {
+    const last = fs.existsSync(stamp) ? fs.statSync(stamp).mtimeMs : 0;
+    if (now - last < AUTH_PAGE_EVERY_MS) return { paged: false, stamp };
+    fs.mkdirSync(stampDir, { recursive: true });
+    fs.writeFileSync(stamp, new Date(now).toISOString() + '\n');
+  } catch { return { paged: false, stamp }; }
+  if (process.env.AGY_AUTH_PAGE === '0') return { paged: false, stamp };
+  send(`agy NOT LOGGED IN: ${pool} on ${host}`,
+    `The ${pool} agy login on ${host} fails /quota with an authentication error, so every lane on that pool skips. `
+    + `Fix (scripts/workers/JOB-HOSTS.md): copy antigravity-oauth-token from main's ${home ? `${home}/` : '/root/'}.gemini/antigravity-cli/ to this box; do not log in again here.`);
+  return { paged: true, stamp };
+}
+
+function sendPage(title, msg) {
+  try { spawnSync('bash', [NTFY_SH, NTFY_TOPIC, title, 'high', 'key', msg], { env: { ...process.env, NTFY_SRC: 'agy-pools.mjs' }, timeout: 20e3 }); } catch { /* a page never fails the lane */ }
+}
+
+/** One pool's reading (parseQuota), tried twice, or null. */
+export function readPool(home, opts) {
+  for (let i = 0; i < 2; i++) {
+    const q = parseQuota(readQuotaStdout(home, opts));
+    if (q) return q;
+  }
+  return null;
+}
+
+/** Every pool on the box: [{ home, busy, reading }], the default login first. */
+export function readPools({ homes = POOL_HOMES, ...opts } = {}) {
+  return [null, ...homes.filter((h) => fs.existsSync(h))].map((home) => ({ home, busy: home ? homeBusy(home) : null, reading: readPool(home, opts) }));
+}
+
+/** The pool to use: of the pools not busy and read, the one with most weekly remaining, if `gate(reading).open`. */
+export function choosePool(pools, gate) {
+  // Every open pool is a candidate, not just the fullest: a fuller pool under its own floor must not shut a
+  // smaller one that is above its line (2026-10-29: enrich-agy called nothing for days while the main pool was open).
+  const ok = pools.filter((p) => !p.busy && p.reading).map((p) => ({ ...p, gate: gate(p.reading) })).filter((p) => p.gate.open);
+  ok.sort((a, b) => b.reading.weekly - a.reading.weekly);
+  return ok[0] ?? null;
+}
+
+export const poolName = (p) => (p?.home ? path.basename(p.home) : 'default');
+
+// ── weekly reserve (#7911) ──
+/**
+ * DRAIN BY RESET. A lane spends a pool freely down to the weekly RESERVE; the 5-hour bucket (each lane's --floor-5h)
+ * does the pacing. The reserve is the declared weekly need of the lanes that must not starve, as a fraction of a pool,
+ * held on every pool (a lane may land on either). It replaced the even-burn pace line (remaining time / 7 days), which
+ * left every agy lane idle from 2026-11-01 ~18:00Z with 4,042 first-read books queued, each pool a few points under
+ * its line, and which reached 0 only by a hand-set --pace-off-until.
+ *
+ * A reserved lane does not keep its own reserve from itself: it spends down to the OTHER lanes' reserves. In the last
+ * RESERVE_DROP_HOURS before the pool's weekly reset the reserve is 0: what is left then is lost at the reset.
+ * These are declarations, not measurements; change a number here, never on a cron line.
+ */
+export const LANE_RESERVES = Object.freeze({
+  siku: 0.10, // scripts/batch/siku-translate-lane.mjs (#5600)
+  'cli-translate': 0.03, // scripts/batch/cli-translate-lane.mjs, agy engine
+  enrich: 0.03, // scripts/workers/lib/enrich-agy-lane.mjs (#7628)
+  'reader-requests': 0.02, // books readers asked for (#7090)
+});
+export const RESERVE_DROP_HOURS = 36;
+
+// ── finish books first (#8482, Derek 2026-11-10) ──
+/**
+ * FINISH FIRST. The order the agy pools are spent in: (1) the pages that finish a book already 80% or more translated
+ * (their first reads, then their translations), (2) untranslated pages of other visible books, (3) quality re-reads and
+ * re-translations of pages that already have text (the Latin re-read, the German/French correction, the stale Latin
+ * re-translation). Measured 3-9 Nov 2026 on gex45: ~96K re-reads and ~63K re-translations against 0 pages from the
+ * book-finishing translation lane.
+ *
+ * A QUALITY lane (one that passes `yieldToFinish`) keeps FINISH_RESERVE in every pool on top of LANE_RESERVES while a
+ * finishing lane on this box reports work waiting (finishQueueOpen: a stamp under FINISH_QUEUE_DIR, written by
+ * cli-translate-lane.mjs finish each run, younger than FINISH_QUEUE_MAX_AGE_H, with pages > 0). The finishing lanes do
+ * not keep it. No fresh stamp (an empty queue, or a box that runs no finishing lane) means no extra reserve, so a quality
+ * lane never idles a pool the finishing lanes cannot use. The 36-hour drop still takes every reserve to 0.
+ */
+export const FINISH_RESERVE = 0.25;
+export const FINISH_QUEUE_MAX_AGE_H = 6;
+export const FINISH_QUEUE_DIR = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/finish-queue' : path.join(os.tmpdir(), 'agy-finish-queue'));
+
+/** Record a finishing lane's waiting work: { books, pages } (pages it could still write). Never throws. */
+export function writeFinishQueue(lane, { books, pages }, { dir = FINISH_QUEUE_DIR(), now = Date.now() } = {}) {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, `${lane}.json`), JSON.stringify({ lane, books, pages, at: new Date(now).toISOString() }) + '\n');
+  } catch { /* a stamp never fails the lane */ }
+}
+
+/** Is any finishing lane's stamp fresh with pages waiting? { open, lanes: [{ lane, books, pages, at }] }. */
+export function finishQueueOpen({ dir = FINISH_QUEUE_DIR(), now = Date.now(), maxAgeH = FINISH_QUEUE_MAX_AGE_H } = {}) {
+  let files = [];
+  try { files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')); } catch { return { open: false, lanes: [] }; }
+  const lanes = [];
+  for (const f of files) {
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      if (j.pages > 0 && now - Date.parse(j.at) <= maxAgeH * 3600e3) lanes.push(j);
+    } catch { /* unreadable stamp: not open */ }
+  }
+  return { open: lanes.length > 0, lanes };
+}
+
+/**
+ * The weekly fraction a lane must leave in a pool now: the sum of LANE_RESERVES other than `lane`'s own, plus
+ * FINISH_RESERVE for a quality lane (`yieldToFinish`) while the finish queue is open (`finishOpen`, read from the stamps
+ * when not given), or 0 within RESERVE_DROP_HOURS of `resetTime`. An unreadable reset keeps the reserve (the drop needs
+ * a known reset).
+ */
+export function weeklyReserve({ resetTime, now = Date.now(), lane = null, reserves = LANE_RESERVES, yieldToFinish = false, finishOpen = null } = {}) {
+  const reset = Date.parse(resetTime ?? '');
+  if (Number.isFinite(reset) && reset - now <= RESERVE_DROP_HOURS * 3600e3) return 0;
+  const base = Object.entries(reserves).reduce((s, [k, v]) => (k === lane ? s : s + v), 0);
+  if (!yieldToFinish) return base;
+  return base + ((finishOpen ?? finishQueueOpen({ now }).open) ? FINISH_RESERVE : 0);
+}

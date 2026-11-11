@@ -1,0 +1,56 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. divaśśrāsḥtra eṣe ‖ pratyakṣataśśrāviṣayyāggkirūppivi ‖ ddhyābhyaḥ guṇavaiṣamyavi
+2. makṭṭinakatryaṣṭadādya [illegible] ‖ pakṣaśālḥsvanyapakṣavipakṣyaiṭṭada ‖ daṭavantyaśaktitrakāṇa
+3. vaivakalpāḻl ‖ gvāmidetakebhedātrūṣṇṭravaya ‖ yaṣṭyāsiddhiḥbuddhyai
+4. ṭadatthamaisāṣṭa ‖ ttheyāmaimāsasyacadaśamibhe ‖ yāmahābhemāhāde
+5. damitrādyāddha ‖ yāteṣāṭabhavattrāḥsarāmidraḥṣu ‖ ekādaśendriyava
+6. dhāssahābheddīvara ‖ madhnaśaktiruddyādapaṭṭaddadha ‖ ālasyuṭaipañcava
+7. tvāḻttūttvvi ‖ ttrīnāṭhṛtruāmikkāṃgame ‖ prakṛtyupādānaka
+8. calabhāgyādyāḥbo [illegible] āhyābhiddaneyāpaha [illegible] parakālpakṣānvatra ‖ tuṣṭaiyādiddhitāḥbhūu
+9. ḍaḥśaddhedyathyayanāṃddebhaggyātāstrṛyaḥddebhavatrāma ‖ ātāstraṣṣhalprāggḥ
+10. dārakṣesiddhaivāra [illegible] dīkṣeṭṭaibhaillāṃkagastuviya9 ‖ bhraṣṭinavināṭṭavai
+
+TRANSCRIPTION B
+1. ṭikhakṣāsaḥāeya ‖ pratyalabdheścāvilacatyayāśuktitayani ‖ tyākhyaḥgaṇavaiṣaḍhyavi
+2. meṭṭanarakṣyabhedāntya ‖ pakṣaśālḥtannapakhevipakṣayaṭeṭa ‖ ḥbhaventuśaktitvakkaraṇa
+3. vaikalpākaḻa ‖ ṣṭāviṃśaktibhedāiṣṭendavadhā ‖ ṣṭadhāniddhiḥathe
+4. ṭadantamasoṣṭa ‖ dhidhomāhanyācadaśavi ‖ dhāmanāmohate
+5. āmitroṣṭādaśa ‖ dhātathābhavatāindharāmissaḥntyaḥ ‖ ekādaśendriyava
+6. dhāssahabdaṭipa ‖ dhenaśaktiṣṭabhraṣṭāballadaśadha ‖ ālabbaṣṭaipaṣṭa
+7. yāktuāttini ‖ ṭināṃntatyākkikkātaññantyaḥ ‖ prakṛtyapādānaka
+8. ālabhāgyākhyāḥkho ‖ ṣṭāviṣayocarattālpaṅkaravata ‖ ityaṃyobhitatāḥṅṅāi
+9. haśabbotyayanaṃ ‖ ṭuḥkheviṣārāstuyaḥṭuḥkhevityāra ‖ ātāntyayantuhalprāntya
+10. dārañcaniṣṭayo ‖ ññonmiṭeḥṣṭeṣṭoṃkuśantavidha ‖ āḥāsthanavināṭāvai
+
+TRANSCRIPTION C
+1. diṣṭvāsḥ tthya [illegible] ‖ pratyakṣasyāgdrāviṣayyā grahitratvānvi ‖ ddhyā bhyuḥ guṇavaiṣamṛddhi
+2. makkānakatryakṣeṭadānya ‖ kṣakaśālḥ sandapakṣavipakṣayoṭṭada ‖ ṭṭavantvaśaṅkṣabakanaṇa
+3. daivakalpāl ñña ‖ ppāmibhakkideṭadātyantrannavaya ‖ yatlyayāsiddhiḥ ttheṃda
+4. ṭadaṅkamarasoāṣṭa ‖ bhirayānamānāsūcadagabhira ‖ yāmavāramānāke
+5. āmiśrāḥ ppādala ‖ yākatādadatrāndharāmitryaḥṣṭra ‖ ekādaśendriyava
+6. yānmahābheddivara ‖ rayanagakkirudrejjyāḍaṣṭvadaśaya ‖ ālabhyabhaikṣaṣṭhipatya
+7. tātmākhyatrindri ‖ ṭṭināraṃtvājyākṣikāṣātreḥ ‖ prakṛtyapādānaka
+8. ālabhāgyā ṣyāḥ ṣo ‖ āhyāmityyeyāparamāl pañcāvatya ‖ tvairabhibhitāḥ ñjaṃ i
+9. ṣṭaḥ śakyetryayantāṃ ‖ dveṣitvāntryantṛḥ dveṣindrā ‖ ātātmajñihvalprājñaḥ
+10. dānakṣesiddhako ‖ āṇṇvāsibhaktaṃpponmyaṃ kkānnaviyaḥ ‖ yaḥ jñānavināṭāva
+
+TRANSCRIPTION D
+1. dvivarjjāsthaḥtreṣā ‖ pratyakṣasyā [illegible] viṣayyā [illegible] śakti [illegible] ‖ viddhyāvyaḥguṇavaiṣamyavi
+2. meṭṭna [illegible] ṅṅadā [illegible] ‖ ṣakṣagālḥśabda [illegible] ṣakṣaviṣakṣya [illegible] ṭa ‖ ṭavantuśa [illegible] ṅkanāṇṭe
+3. vaivaka [illegible] āḻṇṭa ‖ [illegible] āmiṃbhebhi [illegible] bhedātra [illegible] vaya ‖ ya [illegible] yāsiddhiḥ [illegible] ḥ
+4. [illegible] mano [illegible] ṣṭi ‖ [illegible] yātemāna [illegible] āsantcadaśiddhai ‖ yāmahānaimāhāde
+5. [illegible] mi [illegible] ā [illegible] ādara ‖ yāteṣābhavatrū [illegible] svarāmisrūḥ [illegible] ‖ ekādaśendriyala
+6. dhāssahācedivara ‖ [illegible] śākṣi [illegible] dra [illegible] ṣṭāṣṭhadandhya ‖ ā [illegible] klavattra
+7. [illegible] ārtti [illegible] ‖ [illegible] nāṃta [illegible] kryākṣikkā [illegible] ḥ ‖ prakṛtyayādānaka
+8. calabhāgyāvyāḥco [illegible] ‖ āgrāmi [illegible] yāpa [illegible] cataulpakṣānāvatyā ‖ tya [illegible] yāniyimitāḥ [illegible]
+9. phaḥśime [illegible] rddiścyānāṃ ‖ āṃddiddhemi [illegible] nthyaḥddiddhe [illegible] ‖ ānā [illegible] māl [illegible] ḥ
+10. dānā [illegible] ddayaiā ‖ [illegible] cche [illegible] ṭaṭṭe [illegible] cchāṃka [illegible] yaḥ ‖ yaḥ [illegible] navināṭāvail
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

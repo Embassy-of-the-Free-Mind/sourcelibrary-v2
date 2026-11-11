@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣṭāyaൗtanmādaviśeṣāḥahaṅkāralpañcabhyaḥpañcabhūtāniviśeṣāḥahaṅkāralgaṇāddhāni [illegible] pañcatanmātra
+2. ātrāṇitebhyaekaikāttanavṛttyāpañcamahābhūtānyu [illegible] bhavantitatraśabdatanmātrādākāśamekagu
+3. ṇaṃśabdatanmātrapratisaṃdhitālsparśatanmātrādviguṇovāyuḥtābhyāṃpratisaṃdhitādrū
+4. patanmātrāltrigu ‖ ṇantejaḥetaiḥpratisaṃdhitādra ‖ samātrāccaturgguṇāā
+5. pañcetaiḥpratisaṃ ‖ dhitālgandhatanmātrapañcaguṇā ‖ [illegible] pṛthvī [illegible]
+6. kādayasthūlāvi ‖ śeṣāucyante [illegible] ‖ tānicaturddhaṃśari
+7. [illegible] ṇyai [illegible] ‖ [illegible] māna [illegible] pasāya [illegible] ‖ [illegible]
+8. vasāya [illegible] śarīrāyaṃ ‖ yāvalśarī [illegible] āyamiti [illegible] ‖ [illegible]
+9. [illegible] pāṇiśarīrā [illegible] ‖ ānāṃ [illegible] rmiti [illegible] ‖ [illegible]
+10. [illegible] vasāya [illegible] ‖ [illegible] camāḥ [illegible] niyamā [illegible] ‖ [illegible]
+
+TRANSCRIPTION B
+1. cvāya7tasmādapiṣoḍaśakālpañcabhyaḥpañcabhūtānitiṣoḍaśakālgaṇādyānipañcatanmātra
+2. ātrāṇitebhyaekaikottaravṛddhyāpañcamahābhūtānyulpadyanteśabdatanmātrādākāśamekagu
+3. ṇaṃśabdatanmātrapratisaṃhitālsparśatanmātrādviguṇovāyuḥtābhyāṃpratisaṃhitādrū
+4. patanmātrāltrigu ‖ ṇantejaḥetaiḥpratisaṃhitādra ‖ samātrāccaturgguṇāā
+5. paḥetaiḥpratisaṃ ‖ hitālgandhatanmātrālpañcaguṇā ‖ pṛthivītiekaika [illegible]
+6. kādayasthūlāvi ‖ śeṣāucyante [illegible] ‖ tāni [illegible]
+7. [illegible] ‖ [illegible] mahābhūtavasāyaityādiḥśa ‖ bdādi [illegible]
+8. vasāyaśa [illegible] āyaṃ ‖ yāvalśara [illegible] āya [illegible] ‖ [illegible] kṣaṇaṃ [illegible]
+9. [illegible] vāṇi [illegible] ‖ [illegible] nāṃcita [illegible] ‖ [illegible] titatra [illegible] maḥ [illegible] jñānātma
+10. [illegible] vasāya [illegible] ‖ [illegible] paṃca [illegible] ‖ [illegible] śabda [illegible] sāṃkhya [illegible]
+
+TRANSCRIPTION C
+1. ṣṭāyaduḥkhatrayādapidṛṣṭāghagakālpacedṛḥpacedrutāhimiyeṣa7ghaśakālgaṇādrāgavicayetanmṛ
+2. ākrāmitebhakṣakekātanadṛṣṭvāpacemahādbhūtānibhavatitetṛtanjñatanmātrādākṣāśakekamaga
+3. ṇaṃśabdatanmātrapratisaṃdhitālsparśatanmātrādiguṇeṇvāyuḥtābhyāṃpratisaṃdhitādrū
+4. patanmātrāltadgu ‖ ṇatajjaḥraitaḥpratisaṃdhitādra ‖ pamātrāccaturṇā [illegible]
+5. pathetajjaḥpratisaṃ ‖ dhitālgandhatanmātravaṃcaguṇā ‖ dyapṛthivikaiva [illegible]
+6. kādayasthūlāvi ‖ śeṣāeuccāteyoggātmati ‖ tānicaivataddhiṃśaki
+7. jhātibbyatekeṣāṃ ‖ ṇamāhātmyāpasāyaityarthaḥ ‖ jñāditattvāniyadya
+8. vasāyaśaraṇṭāyaṃ ‖ yāvalśarīrāyamitisūcereṭa ‖ jñānaṃtatsādayāde
+9. ṇṭidṛṣṭāmiśalkkā ‖ ānaṃcidāśaratetayotṛccatimitatṛyeyāyama ‖ dvividhayamatañjñānār
+10. kkodūvasapayaśreya ‖ yaḻḥmemāḥpaṃcapivandiyamāccayadai ‖ svāṃśukravavareto
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

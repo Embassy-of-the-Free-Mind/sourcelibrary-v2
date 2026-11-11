@@ -35,6 +35,22 @@ export function readsOriginal(lang: Locale): boolean {
 }
 
 /**
+ * Locales whose site has a book page for EVERY book (#7496): title, summary,
+ * contents and buttons in the language where we have them, the rest labelled as
+ * English, the text itself linked to the English reader. Elsewhere a book page
+ * exists only for a book with an edition in the language. Independent of
+ * readsOriginal: Chinese is both (its own books open on the original, every other
+ * book gets a Chinese page); Latin and Dutch are original-text only. A page without
+ * an edition is noindex with an English canonical, so the index still holds only
+ * real editions. Adding a language here is the whole switch, given its title
+ * glosses (scripts/batch/localize-titles-batch.mjs --lang=<iso>).
+ */
+export const EVERY_BOOK_PAGE_LOCALE_LIST: Locale[] = ['es', 'zh'];
+export function hasBookPageForEveryBook(lang: Locale): boolean {
+  return EVERY_BOOK_PAGE_LOCALE_LIST.includes(lang);
+}
+
+/**
  * The locales that own a URL prefix. English is the ROOT — `/book/x`, not
  * `/en/book/x` — because every DOI, shortlink and citation ever minted points
  * there. A new language is added here and gets its prefix for free; nothing
@@ -49,7 +65,7 @@ export const PREFIXED_LOCALES: Exclude<Locale, 'en'>[] = SUPPORTED_LOCALES.filte
  * locales read the English copy.
  *
  * Use it only where the surface cannot be reached under that locale's prefix
- * (`/support`, `/search`, `/librarian` and sign-in have no `/la` twin, #6254),
+ * (`/support`, `/librarian` and sign-in have no `/la` twin, #6254),
  * so the English is never shown under foreign chrome. A surface that IS mounted
  * on a localized route takes a full `Record<Locale, T>` literal instead, and
  * TypeScript then lists the dictionary when a language is added.
@@ -76,7 +92,8 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 // EN base paths that have a real twin route, PER LOCALE. Keep each set in sync
 // with that locale's route folders (`src/app/es/**`, `src/app/la/**`). Spanish
 // has the homepage, the acquisition funnel (`/support`, `/auth/signin`), the
-// Librarian and search; Latin (#6254) has the homepage only. On a page with no
+// Librarian and search; Latin (#6254) and Chinese have the homepage and search
+// (#7175). On a page with no
 // twin the switch link falls back to that locale's homepage as a front door
 // rather than dead-ending on a 404 — the thin-i18n bargain (deep pages rely on
 // the browser's own translate).
@@ -85,10 +102,12 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 // prefixed locale; a shared set would have sent a Latin reader to
 // `/la/support`, which no route serves.
 export const LOCALIZED_PATHS: Record<PrefixedLocale, Set<string>> = {
-  es: new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search', '/articles/techniques-of-the-body']),
-  la: new Set<string>(['/']),
-  nl: new Set<string>(['/']),
-  zh: new Set<string>(['/']),
+  es: new Set<string>(['/', '/about', '/support', '/auth/signin', '/librarian', '/search', '/articles/techniques-of-the-body', '/articles/solve-et-coagula']),
+  // `/search` on Latin and Chinese (#7175): books written in the language,
+  // quoted in it. Dutch has no search twin yet.
+  la: new Set<string>(['/', '/about', '/search']),
+  nl: new Set<string>(['/', '/about']),
+  zh: new Set<string>(['/', '/about', '/search']),
 };
 
 // Path SHAPES with a twin, per locale. One pattern per route under
@@ -108,7 +127,8 @@ const LOCALIZED_PATTERNS: Record<PrefixedLocale, RegExp[]> = {
   // and nothing is translated INTO Latin (#6254).
   la: BOOK_PATTERNS,
   nl: BOOK_PATTERNS,
-  zh: BOOK_PATTERNS,
+  // Chinese collection pages and the 四部 catalogue (#8035).
+  zh: [/^\/collections$/, /^\/collections\/[^/]+$/, /^\/sibu$/, /^\/sibu\/[^/]+$/, ...BOOK_PATTERNS],
 };
 
 function hasLocalizedPath(canonical: string, lang: PrefixedLocale): boolean {
@@ -129,9 +149,13 @@ function hasLocalizedPath(canonical: string, lang: PrefixedLocale): boolean {
 export function canonicalPath(pathname: string | null | undefined): string {
   if (!pathname) return '/';
   for (const l of PREFIXED_LOCALES) {
-    if (pathname === `/${l}`) return '/';
+    if (pathname === `/${l}` || pathname === `/${l}/index`) return '/';
     if (pathname.startsWith(`/${l}/`)) return pathname.slice(l.length + 1); // '/es/x' → '/x'
   }
+  // A prerendered homepage reports `usePathname() === '/index'` at build, and
+  // that is what ships in its HTML. Read as an ordinary English-only page, the
+  // language menu sent 中文 to `/index?lang=zh` — the English homepage (#7025).
+  if (pathname === '/index') return '/';
   return pathname;
 }
 

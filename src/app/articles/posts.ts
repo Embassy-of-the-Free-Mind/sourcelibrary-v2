@@ -5,109 +5,26 @@
 // tests/blog-posts.test.ts fails if a post has no kind, or if a directory under
 // src/app/articles is neither listed here nor named in UNLISTED_PAGES.
 
-export const BLOG_KINDS = ['stories', 'tours', 'research', 'interactive', 'library'] as const;
-export type BlogKind = (typeof BLOG_KINDS)[number];
+import type { BlogPost } from './post-kinds';
 
-export const KIND_INFO: Record<BlogKind, { label: string; definition: string; lead: string }> = {
-  stories: {
-    label: 'Stories',
-    definition: 'A person, an idea or a practice followed through the books that record it.',
-    lead: 'nature-of-harmony',
-  },
-  tours: {
-    label: 'Reading tours',
-    definition: 'A walk through the library’s books on one subject, quoting the originals beside their translations.',
-    lead: 'techniques-of-the-body',
-  },
-  research: {
-    label: 'Research notes',
-    definition: 'Counting what was written and what is translated, and testing the AI that reads the pages: where it is accurate and where it invents.',
-    lead: 'the-giants-werent-translated',
-  },
-  interactive: {
-    label: 'Interactive',
-    definition: 'Instruments, charts, maps and games built from the books, to play with in the browser.',
-    lead: 'sound-laboratory',
-  },
-  library: {
-    label: 'From the library',
-    definition: 'Where Source Library came from, how it is built and run, and the people behind it.',
-    lead: 'origin-story',
-  },
-};
-
-export interface BlogPost {
-  slug: string;
-  title: string;
-  subtitle: string;
-  // The card text on /articles and the page's meta description (og and
-  // twitter too, via withArticleMeta): 155 characters at most, facts from the
-  // article only (tests/blog-posts.test.ts).
-  summary: string;
-  date: string;
-  readTime: string;
-  kind: BlogKind;
-  // Every post needs an image: any post can become a lead or the Latest card,
-  // where the title is set over the picture (tests/blog-posts.test.ts).
-  // Choosing one: the rules in .claude/skills/quote-background-image (calm area
-  // where the words land, no printed text there, nothing grim). Then check it
-  // with scripts/audit/blog-card-legibility.ts, which renders every lead crop.
-  // Where to look, in order: a plate or woodcut from a book the post is about
-  // (open the leaf: gallery records can be a leaf off); the ~24K museum works
-  // already mirrored under images.sourcelibrary.org/artwork/ (search_images);
-  // a new public-domain work brought in with scripts/import-*-artworks.mjs
-  // (Met, Rijks, AIC, Cleveland, NGA, Getty, Commons), never a hotlink.
-  // A printed text page only when the page is the post's evidence. Real works
-  // only: no generated pictures in a library of primary sources.
-  image: string;
-  imageAlt?: string;
-  // CSS object-position for the crop, e.g. 'center 30%'. Set it when the
-  // default centre crop cuts off what the picture is of.
-  imagePosition?: string;
-  // Only on LINKED_PAGES: the page lives at its own address, outside /articles.
-  href?: string;
-}
-
-// Articles written by a person rather than drafted by AI. Their footer note is a
-// byline (NoteFooter) instead of the AI disclosure. Name, role and photo as the
-// founder's letter already gives them.
-export interface ArticleAuthor {
-  name: string;
-  bio: string;
-  photo: string;
-}
-
-const DEREK_LOMAS: ArticleAuthor = {
-  name: 'Derek Lomas',
-  bio: 'Founder, Source Library · Asst. Professor of Positive AI, TU Delft',
-  photo: '/founder-derek.jpg',
-};
-
-export const AUTHORED_ARTICLES: Record<string, ArticleAuthor> = {
-  vision: DEREK_LOMAS,
-  'in-memoriam': DEREK_LOMAS,
-};
-
-export function postHref(post: BlogPost): string {
-  return post.href ?? `/articles/${post.slug}`;
-}
+// Kinds, types, bylines and postHref live in ./post-kinds (client-safe).
+export * from './post-kinds';
 
 // Pages under src/app/articles that are not posts in the list, and why.
 export const UNLISTED_PAGES: Record<string, string> = {
   'how-these-are-made': 'About the notes rather than a note; linked from the index header.',
   'tibetan-reocr': 'Draft (DRAFT = true, noindex) until its pending numbers are filled.',
   'autonomous-agents': 'Withdrawn: needs a rewrite with proper import-session data.',
-  '2000-first-translations': 'Superseded: its March 2026 counts are out of date; see counting-first-translations.',
-  'worlds-largest-collection': 'Superseded: its March 2026 counts are out of date; see how-big-is-the-library.',
+  '2000-first-translations': 'Superseded: its March 2026 counts are out of date; redirects to counting-first-translations (next.config.ts).',
+  'worlds-largest-collection': 'Superseded: its March 2026 counts are out of date; redirects to how-big-is-the-library (next.config.ts).',
   'why-terminals-cant-edit': 'Off topic for Articles (terminal editors, not old books).',
   '[category]': 'The category pages (/articles/tours), not an article.',
 };
 
 // Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider). The Rithmomachia game stays at /rithmomachia: it is a
-// full-width game with its own guide and scenario pages, not an article; the
-// article about it is /articles/rithmomachia.
+// home slider). /rithmomachia redirects to the standalone game (#7821), which
+// is not an article; the article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
   {
     slug: 'play-rithmomachia',
@@ -125,6 +42,49 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'solve-et-coagula',
+    title: 'Solve et Coagula: Derek Lomas on Source Library',
+    subtitle:
+      'Alex of Agrippa’s Diary in conversation with Derek Lomas, at the Embassy of the Free Mind in Amsterdam. The full episode, with a transcript you can click.',
+    summary:
+      'Derek Lomas talks with Alex of Agrippa’s Diary about Ficino, Agrippa, Maier and Source Library. Watch the episode and click any word of the transcript.',
+    date: '9 November 2026',
+    readTime: 'video, 1 h 32 min',
+    kind: 'interactive',
+    image: '/articles/solve-et-coagula/episode-artwork-169.jpg',
+    imageAlt:
+      'Alexander of Agrippa’s Diary (left) and Derek Lomas (right), in the video call recorded for the Solve et Coagula podcast.',
+  },
+  {
+    slug: 'kircher-hieroglyphs',
+    title: 'Kircher and the Hieroglyphs',
+    subtitle:
+      'What Athanasius Kircher thought the Egyptian signs were, how he read whole obelisks, and the one thing he got right, in the books he printed in Rome between 1636 and 1676.',
+    summary:
+      'Athanasius Kircher read Rome’s obelisks as hymns to a hidden Hermetic theology. Oedipus Aegyptiacus and his Coptic books, quoted from the printed pages.',
+    date: '3 November 2026',
+    readTime: '13 min read',
+    kind: 'stories',
+    image: 'https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/78.jpg',
+    imageAlt:
+      'Kircher’s folding plate of the Pamphilian obelisk: its four faces of hieroglyphs drawn side by side, with the papal arms and the obelisk in Piazza Navona between them.',
+  },
+  {
+    slug: 'agrippa-against-himself',
+    title: 'Agrippa Against Himself',
+    subtitle:
+      'He wrote the textbook of Renaissance magic, then a book declaring all learning vain, magic included. Read through his own pages.',
+    summary:
+      'Cornelius Agrippa wrote the textbook of Renaissance magic, then recanted it in a book on the vanity of learning. His books, and the accused woman he saved.',
+    date: '28 October 2026',
+    readTime: '11 min read',
+    kind: 'stories',
+    // Title page of the 1533 Cologne De occulta philosophia (the C. G. Jung copy, e-rara), reader page 6, opened by eye.
+    image: 'https://images.sourcelibrary.org/archived/69bd9ca46120d54bd037001f/6.jpg',
+    imageAlt:
+      'Title page of De occulta philosophia libri tres (Cologne, 1533), with a woodcut portrait of Agrippa in a cap and fur collar.',
+  },
   {
     slug: 'aldine-roman',
     title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
@@ -146,8 +106,8 @@ export const posts: BlogPost[] = [
     date: '6 October 2026',
     readTime: '',
     kind: 'tours',
-    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
-    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
+    image: '/articles/beeckman-on-drebbel/drebbel-submarine.jpg',
+    imageAlt: 'Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving.',
   },
   {
     slug: 'search-by-meaning',
@@ -198,12 +158,12 @@ export const posts: BlogPost[] = [
     imageAlt: 'Joost R. Ritman',
   },
   {
-    slug: 'choreia',
-    title: 'Choreia: Dance in the Greek Sources',
+    slug: 'choreia-the-dance-of-the-cosmos',
+    title: 'Choreia: The Dance of the Cosmos',
     subtitle:
-      'The Greek word for choral dance, from Homer’s dancing-floor to the planets: Plato’s Laws and Timaeus, Plutarch’s three parts of a dance, Lucian, Plotinus, and the disease called chorea.',
+      'To the Greeks the planets danced, and every human chorus was a small copy of their dance: Plato’s Timaeus and Laws, Lucian, Plotinus, Homer and Plutarch, read in the original pages.',
     summary:
-      'Choreia, the Greek choral dance: Homer’s dancing-floor, Plato on rhythm and the dancing planets, Plutarch’s three parts of a dance, Lucian and Plotinus.',
+      'The Greek idea that the cosmos is a dance: Plato’s planets moving as a chorus, Lucian, Plotinus, and the human chorus that copied them.',
     date: '18 October 2026',
     readTime: '11 min read',
     kind: 'tours',
@@ -211,6 +171,53 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg',
     imageAlt:
       'Red chalk drawing of a woman dancing in a flowing robe with a cymbal in each hand, between a faun with a curved horn and a faun with pan-pipes.',
+  },
+  {
+    slug: 'aliveness',
+    title: 'What Is Alive? Ten Turning Points',
+    subtitle:
+      'Soul, breath, heat, machine, force and feeling: how the answer to what makes a thing alive changed, what people did in each age to keep it, and the first use of the word aliveness in 1898.',
+    summary:
+      'Life as soul, breath, heat, machine, force and feeling, and what each age did to keep it: Aristotle, Ibn Tufayl, Ficino, Hobbes, Bichat, Fechner.',
+    date: '26 October 2026',
+    readTime: '18 min read',
+    kind: 'stories',
+    // Robert Fludd, Utriusque cosmi historia (1617), title page (scan 1), cropped to the microcosm inside the macrocosm.
+    image: '/articles/aliveness/fludd-microcosm.jpg',
+    imageAlt:
+      'Engraved title page: a naked man stands with arms outstretched inside the circles of the heavens, ringed by clouds.',
+    imagePosition: 'center 30%',
+  },
+  {
+    slug: 'concords-not-unisons',
+    title: 'Concords, Not Unisons',
+    subtitle:
+      'Harmony as the fitting together of unlike things: a Greek armourer, a Chinese minister’s soup, Miskawayh’s silent dinar, Hume’s strings and Smith’s concords, Spinoza’s refusal of the music of the spheres, Wallace’s governor, and the sound waves of the early universe.',
+    summary:
+      'Harmony as the fitting of unlike things: Xenophon’s armourer, Yan Ying’s soup, Miskawayh’s silent dinar, Hume, Smith’s concords, Spinoza, Wallace.',
+    date: '22 October 2026',
+    readTime: '18 min read',
+    kind: 'stories',
+    // A Palace Concert, anonymous, Tang style, National Palace Museum, Taipei (public domain, via Commons).
+    image: 'https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg',
+    imageAlt:
+      'Chinese painting on silk: court women around a long table drink and play a lute, pipes and a flute while one keeps time with clappers.',
+  },
+  {
+    slug: 'harmony-map',
+    title: 'Eleven Ideas About Harmony',
+    subtitle:
+      'What harmony is, where it fails, and what it would mean for people, machines and the natural world: eleven ideas from Derek Lomas’s research, each with the primary sources it rests on, its tensions and its open questions.',
+    summary:
+      'Eleven ideas about harmony, from lock and dissonance to AI alignment, each with its sources: Philolaus, Plato, Aristotle, Iamblichus, Huygens, Rameau.',
+    date: '21 October 2026',
+    readTime: '29 min read',
+    kind: 'stories',
+    // Robert Fludd's world monochord, Utriusque cosmi historia (1617), scan p. 99.
+    image: 'https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg',
+    imageAlt:
+      'Engraving: a hand from a cloud tunes a single string that runs from the earth through the planets to the stars, with musical ratios marked beside it.',
+    imagePosition: 'center 20%',
   },
   {
     slug: 'harmonic-justice',
@@ -247,14 +254,60 @@ export const posts: BlogPost[] = [
     subtitle:
       'Bars, dots and a shell for zero; a count by twenties with one place of eighteen; and calendar cycles that meet after whole numbers of days. Try the numerals and the counts, with the codex pages and the colonial sources beside them.',
     summary:
-      'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex, Landa and Bowditch, with the Venus table and the 819-day count.',
+      'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex and Bowditch, with the Venus table, the eclipse table and the 819-day count.',
     date: '18 October 2026',
-    readTime: '13 min read',
+    readTime: '15 min read',
     kind: 'interactive',
     // A Venus page of the Dresden Codex (reader page 27), identified by eye.
     image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg',
     imageAlt:
       'A Venus page of the Dresden Codex: columns of day signs and bar-and-dot numbers beside three painted panels, the top one a seated god on a blue ground.',
+  },
+  {
+    slug: 'pythagoras-in-the-library',
+    title: 'Pythagoras in the Library',
+    subtitle:
+      'He wrote nothing that survives, and four thousand works in the library name him. Every one, in date order, with the passage and the page.',
+    summary:
+      'Every work in the library that names Pythagoras, from Aristotle and Euclid to the 20th century: beans, silence, the smiths’ hammers, each with its page.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Raphael's study for the School of Athens (public domain), mirrored in the artwork collection.
+    image:
+      'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-pythagoras-mit-seinen-schulern-studie-fur-die-schule-von-athen-stanza-della-segnat.jpg',
+    imageAlt:
+      'Raphael’s drawing for the School of Athens: a bearded Pythagoras bent over a book on his knee, students leaning in around him.',
+  },
+  {
+    slug: 'philolaus-in-the-library',
+    title: 'Philolaus in the Library',
+    subtitle:
+      'The first Pythagorean to write a book, and the name Copernicus found when he looked for someone who had moved the earth.',
+    summary:
+      'Every work in the library that names Philolaus: the moving earth Copernicus found in Plutarch, the books Plato bought, and Reuchlin’s Pythagorean.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Copernicus' diagram of the spheres, De revolutionibus (1543), reader page 34, opened by eye.
+    image: 'https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg',
+    imageAlt:
+      'Copernicus’ diagram of the universe from De revolutionibus (1543): seven nested circles around the Sun, with the Earth and the Moon’s small circle in the fifth.',
+  },
+  {
+    slug: 'archytas-in-the-library',
+    title: 'Archytas in the Library',
+    subtitle:
+      'Plato’s friend, a general seven times over, the geometer who doubled the cube, and the maker of a wooden dove that flew.',
+    summary:
+      'Every work in the library that names Archytas of Tarentum: the flying wooden dove, doubling the cube, his anger at a farm manager, and a fever cure.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Kircher, Magnes (1641), reader page 446: the plate "Columba Architae", opened by eye.
+    image: 'https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg',
+    imageAlt:
+      'Engraving from Kircher’s Magnes (1641) titled “Columba Architae”: a dove on a line flies beneath a great dial held out of the clouds, while a man on a hill holds the line.',
   },
   {
     slug: 'preserved-by-enemies',
@@ -395,6 +448,21 @@ export const posts: BlogPost[] = [
     kind: 'research',
     image: 'https://images.sourcelibrary.org/archived/6990631aef12272ffdc8f4aa/324.jpg',
     imageAlt: 'Page 300 of Sachau\u2019s 1879 translation of al-B\u012br\u016bn\u012b\u2019s Chronology of Ancient Nations, which prints 5180 years twice; the Archive\u2019s text has 6180 both times.',
+  },
+  {
+    slug: 'how-we-choose-the-cheapest-way-to-read-a-page',
+    title: 'How we choose the cheapest way to read a page',
+    subtitle:
+      'Two settings decide most of what it costs to read a page. We tested them together, against typed editions, with the rule for choosing written down first.',
+    summary:
+      'Blocking, a rule written before the data, and staged tests: how we compared reading settings on 145 German and Latin books with typed editions.',
+    date: '31 October 2026',
+    readTime: '11 min read',
+    kind: 'research',
+    // Glauber, Furni Novi Philosophici (1649), reader page 25, opened by eye: a full Fraktur text page.
+    image: 'https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg',
+    imageAlt:
+      'Page 25 of Glauber’s Furni Novi Philosophici (1649), printed in Fraktur under the running head “Philosophischer Oefen”.',
   },
   {
     slug: 'how-we-measure-ocr-quality',
@@ -1002,6 +1070,42 @@ export const posts: BlogPost[] = [
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
+  },
+  {
+    slug: 'alchemical-process',
+    title: 'Is Source Library an Alchemical Process? Testing the Frame',
+    subtitle: 'Which alchemy the comparison borrows, which steps hold up against our measurements, and three places it breaks.',
+    summary:
+      'We set the steps of alchemy against what happens to a page here. Where the comparison holds, with measurements, and three places it fails.',
+    date: '4 November 2026',
+    readTime: '20 min read',
+    kind: 'research',
+    image: '/articles/alchemical-process/emblem-iii.jpg',
+    imageAlt: 'Engraving from Atalanta fugiens (1618): a woman pours steaming water from a jug into a large wooden tub, with a fire behind her and laundry on the ground.',
+  },
+  {
+    slug: 'how-many-translated-into-english',
+    title: 'How Many Old Books Have Been Translated into English?',
+    subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
+    summary:
+      'Of some 815,000 works printed in Europe before 1700, about 18,000 to 39,000 have ever been put into English. Three estimates, and why catalogues miss most.',
+    date: '2 November 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg',
+    imageAlt: 'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), translated into English by Doctor Everard, in a printed border.',
+  },
+  {
+    slug: 'how-much-in-english',
+    title: 'How Much of the Written Past Can You Read in English?',
+    subtitle: 'What survives, what is scanned, and what has been translated, tradition by tradition, from Latin print to Tibetan and Japanese.',
+    summary:
+      'How many old books and manuscripts survive in Latin, Arabic, Sanskrit, Tibetan, Chinese and more, how many are scanned, and how few are in English.',
+    date: '30 October 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: 'Engraved frontispiece of Athanasius Kircher, Turris Babel (Amsterdam, 1679): robed figures in the foreground, the tower rising in the background under a sky of angels.',
   },
   {
     slug: 'counting-the-gap',

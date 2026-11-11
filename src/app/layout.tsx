@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { FEED_TYPES } from "@/lib/feed-links";
+import { FEED_LINKS } from "@/lib/feed-links";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
@@ -9,11 +9,14 @@ import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
 import CookieConsent from "@/components/providers/CookieConsent";
 import LocaleCarry from "@/components/providers/LocaleCarry";
+import HtmlLang from "@/components/providers/HtmlLang";
 import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
 import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
 import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
 import ScrollReveal from "@/components/layout/ScrollReveal";
+import PageStatusBar from "@/components/layout/PageStatusBar";
+import HuntConsoleNote from "@/components/providers/HuntConsoleNote";
 
 
 
@@ -71,7 +74,6 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
     canonical: '/',
-    types: FEED_TYPES,
   },
   keywords: [
     'Hermetic texts',
@@ -140,14 +142,17 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: TRANSLATION_DOM_GUARD_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: VIEW_MODE_INIT_SCRIPT }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="search"
           type="application/opensearchdescription+xml"
           title="Source Library"
           href="/opensearch.xml"
         />
+        {/* Feed autodiscovery. Here rather than in metadata.alternates.types, which any
+            route declaring its own alternates would replace wholesale (#3968). */}
+        {FEED_LINKS.map((feed) => (
+          <link key={feed.href} rel="alternate" type={feed.type} href={feed.href} title={feed.title} />
+        ))}
         {/* Analytics scripts loaded conditionally via AnalyticsScripts (consent-gated) */}
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
@@ -164,13 +169,16 @@ export default async function RootLayout({
           <ScrollReveal />
           <ConditionalFooter />
           <SiteModeIndicator />
+          <PageStatusBar />
         </Providers>
         <ClientToaster />
         <CookieConsent />
         <LocaleCarry />
+        <HtmlLang />
         <AnalyticsScripts />
         <PageTracker />
         <BrokenImageReporter />
+        <HuntConsoleNote />
       </body>
     </html>
   );

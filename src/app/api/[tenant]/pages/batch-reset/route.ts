@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { withAuth } from '@/lib/auth-helpers';
 import { resolveTenantId } from '@/lib/tenant-context';
 
@@ -55,6 +56,8 @@ export const POST = withAuth(async (request, session, context) => {
         }
       )
     ]);
+    // The deleted halves must stop being served by semantic search (#6270).
+    await withdrawPageVectors(siblingIds, { reason: 'removed', writer: 'POST /api/[tenant]/pages/batch-reset' });
 
     // Renumber all pages ONCE at the end
     const allPages = await db.collection('pages')

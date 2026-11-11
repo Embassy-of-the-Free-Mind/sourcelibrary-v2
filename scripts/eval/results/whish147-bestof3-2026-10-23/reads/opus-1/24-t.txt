@@ -1,0 +1,10 @@
+ROW 1 | വ്യക്തമൊന്നുമദ്ധ്യന്തത്വഃതന്ത്രാന്തരഃളെശ്വിദുസൎഗ്ഗാദാൽ ‖ സ്ഥാപ്രധാനാൽക്കിഞ്ചിദുപഭ
+ROW 2 | മൎക്കിയക[illegible]ജ്ജ്യെക ‖ കണ്ടെമൂലം.വൃക്ഷം.[illegible]ം.കാരണങ്ങളുള്ളുന്ന ‖ ന്നയാൽഫലാദിയൽകാമ
+ROW 3 | ണ്ടുഹരിചലിഉഴ്ക ‖ ാഒന്നവവിഫലിതമല്ലാക്കണിന്നു ‖ [illegible] മിത്രാത്ഃഇതാണിടപ
+ROW 4 | ജ്ജന്യാൽതെവൃ ‖ മിപൃക്ഷം.പ്രാരെ[illegible]ടെശികമിത്യൎഃ ‖ ദൈവം.മാനഷം.ഒ
+ROW 5 | തഷ്ഷെഗ്രാനകൊ ‖ ഒദാസിമതൎ[illegible]ത്രാവത്തമാനൽ ‖ ഖ്യാൽസപ്പ്ഗതാംവി
+ROW 6 | പരിതമപ്ലശം ‖ പ്യാമിത്യാൎ[illegible]ച്ചുപെടപാദൊണ്ണു ‖ ഭ്രജ്ജലൊകെണ്ടസ
+ROW 7 | ൾ[illegible]ാപക്കദോന ‖ ക്കൽസകിയഭിദ[illegible]ദൈകിയാസ്ഥഞ്ജു ‖ നാത്രസം.നിരാഭാമര
+ROW 8 | [illegible]പൈരെകം.നിത്വ[illegible] ‖ മാഭൈരുഷ്ണഹാദാമിനുക്കുചദൃം.തം.പ്രാക ‖ കം.ദൈവാദിസം.സെന്ദ്രി
+ROW 9 | ത്രകൾഃമിഥിക[illegible] ‖ പ്യാക്കമസം.സാദിക്കുകലലാക്കഞ്ജ ‖ ൽതമഃനാസം.സരണാപൃ
+NOTE | Low confidence. The strokes are clear in the images, but I couldn't reliably resolve many conjuncts or reph/chillu forms, so many glyphs above are guesses. A few words are fairly secure, for example "ദൈവം.മാനഷം" in row 4 and "പ്രധാനാൽ" in row 1. The rest shouldn't be relied on without checking it against the leaf.

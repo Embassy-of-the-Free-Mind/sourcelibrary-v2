@@ -1,0 +1,54 @@
+--- lexicon labels: 18341 words, 14384 shape keys
+clusters pixcore       len>=1: clusters 140  voted key-hit 0.77  voted exact-hit 0.75  distinct labels 54  median margin 0.50
+clusters pixcore       len>=4: clusters  37  voted key-hit 0.14  voted exact-hit 0.08  distinct labels 35  median margin 0.08
+single reads (members) len>=1: reads   1925  key-hit 0.61  exact-hit 0.58
+single reads (members) len>=4: reads    797  key-hit 0.09  exact-hit 0.05
+single reads (all)     len>=1: reads  53765  key-hit 0.49  exact-hit 0.36
+single reads (all)     len>=4: reads  34504  key-hit 0.24  exact-hit 0.13
+control random groups  len>=1: clusters 1000  voted key-hit 0.97  voted exact-hit 0.96  distinct labels 61  median margin 0.10
+control random groups  len>=4: clusters  32  voted key-hit 0.12  voted exact-hit 0.09  distinct labels 31  median margin 0.04
+--- lexicon labels: 18341 words, 14384 shape keys
+clusters pixcore       len>=1: clusters 169  voted key-hit 0.31  voted exact-hit 0.24  distinct labels 138  median margin 0.11
+clusters pixcore       len>=4: clusters 135  voted key-hit 0.15  voted exact-hit 0.08  distinct labels 124  median margin 0.08
+single reads (members) len>=1: reads   2550  key-hit 0.24  exact-hit 0.18
+single reads (members) len>=4: reads   2143  key-hit 0.10  exact-hit 0.06
+single reads (all)     len>=1: reads  53765  key-hit 0.49  exact-hit 0.36
+single reads (all)     len>=4: reads  34504  key-hit 0.24  exact-hit 0.13
+control random groups  len>=1: clusters 1000  voted key-hit 0.53  voted exact-hit 0.44  distinct labels 525  median margin 0.05
+control random groups  len>=4: clusters 562  voted key-hit 0.20  voted exact-hit 0.11  distinct labels 460  median margin 0.05
+--- lexicon labels: 18341 words, 14384 shape keys
+clusters pix           len>=1: clusters 186  voted key-hit 0.70  voted exact-hit 0.63  distinct labels 92  median margin 0.17
+clusters pix           len>=4: clusters  79  voted key-hit 0.38  voted exact-hit 0.30  distinct labels 59  median margin 0.07
+single reads (members) len>=1: reads   7626  key-hit 0.48  exact-hit 0.37
+single reads (members) len>=4: reads   4836  key-hit 0.22  exact-hit 0.12
+single reads (all)     len>=1: reads  53765  key-hit 0.49  exact-hit 0.36
+single reads (all)     len>=4: reads  34504  key-hit 0.24  exact-hit 0.13
+control random groups  len>=1: clusters 1000  voted key-hit 0.99  voted exact-hit 0.98  distinct labels 43  median margin 0.04
+control random groups  len>=4: clusters  15  voted key-hit 0.67  voted exact-hit 0.53  distinct labels 10  median margin 0.03
+--- lexicon mc2: 228336 words, 95698 shape keys
+clusters pixcore       len>=1: clusters 140  voted key-hit 0.81  voted exact-hit 0.66  distinct labels 54  median margin 0.50
+clusters pixcore       len>=4: clusters  37  voted key-hit 0.27  voted exact-hit 0.08  distinct labels 35  median margin 0.08
+single reads (members) len>=1: reads   1925  key-hit 0.66  exact-hit 0.58
+single reads (members) len>=4: reads    797  key-hit 0.19  exact-hit 0.07
+single reads (all)     len>=1: reads  53765  key-hit 0.60  exact-hit 0.44
+single reads (all)     len>=4: reads  34504  key-hit 0.40  exact-hit 0.22
+control random groups  len>=1: clusters 1000  voted key-hit 0.98  voted exact-hit 0.95  distinct labels 61  median margin 0.10
+control random groups  len>=4: clusters  32  voted key-hit 0.31  voted exact-hit 0.12  distinct labels 31  median margin 0.04
+--- lexicon mc2: 228336 words, 95698 shape keys
+clusters pixcore       len>=1: clusters 169  voted key-hit 0.43  voted exact-hit 0.21  distinct labels 138  median margin 0.11
+clusters pixcore       len>=4: clusters 135  voted key-hit 0.28  voted exact-hit 0.09  distinct labels 124  median margin 0.08
+single reads (members) len>=1: reads   2550  key-hit 0.33  exact-hit 0.20
+single reads (members) len>=4: reads   2143  key-hit 0.20  exact-hit 0.08
+single reads (all)     len>=1: reads  53765  key-hit 0.60  exact-hit 0.44
+single reads (all)     len>=4: reads  34504  key-hit 0.40  exact-hit 0.22
+control random groups  len>=1: clusters 1000  voted key-hit 0.62  voted exact-hit 0.50  distinct labels 525  median margin 0.05
+control random groups  len>=4: clusters 562  voted key-hit 0.35  voted exact-hit 0.18  distinct labels 460  median margin 0.05
+--- lexicon mc2: 228336 words, 95698 shape keys
+clusters pix           len>=1: clusters 186  voted key-hit 0.81  voted exact-hit 0.67  distinct labels 92  median margin 0.17
+clusters pix           len>=4: clusters  79  voted key-hit 0.58  voted exact-hit 0.38  distinct labels 59  median margin 0.07
+single reads (members) len>=1: reads   7626  key-hit 0.61  exact-hit 0.45
+single reads (members) len>=4: reads   4836  key-hit 0.39  exact-hit 0.21
+single reads (all)     len>=1: reads  53765  key-hit 0.60  exact-hit 0.44
+single reads (all)     len>=4: reads  34504  key-hit 0.40  exact-hit 0.22
+control random groups  len>=1: clusters 1000  voted key-hit 1.00  voted exact-hit 0.97  distinct labels 43  median margin 0.04
+control random groups  len>=4: clusters  15  voted key-hit 0.87  voted exact-hit 0.60  distinct labels 10  median margin 0.03

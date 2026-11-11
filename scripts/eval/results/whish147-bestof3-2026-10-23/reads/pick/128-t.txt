@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most like a real Malayalam-Sanskrit commentary on vyāpti across most rows: it has recognisable phrases such as "sāmānādhikaraṇyaṃ vyāptirityarthaḥ pakṣadharmatāsvarūpa", "pakṣe … vyāpya", "vyabhicāra" and "cārajñānattina … sahakāri". C has the same key phrases but more garbled forms, and A is mostly scattered fragments broken up by [illegible] marks.

@@ -1,0 +1,275 @@
+{
+ "note": "Opus-confirmed (scans of n-1, n, n+1, blind to direction) pages whose English renders another leaf (next/prev) or two leaves (mixed), found by job wrong-leaf-find-5021 on 2026-11-03; NOT withheld (that job was read-only). For wrong-leaf-fix-5021.",
+ "pages": [
+  {
+   "book_id": "695937043b43cb6630c91c0c",
+   "page": 257,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "French",
+   "title": "La Magie Naturelle (Secrets et Miracles de Nature)",
+   "evidence": "English 'restore a woman deflowered to her virginity, make pills' renders 'restablir vne femme defloree en sa virginit\u00e9, faites luy des pillules' (p258); p257's own text (corne de cerf, Amiantus, noix de galle) is absent"
+  },
+  {
+   "book_id": "69906a0cd69de0e69806f5cc",
+   "page": 828,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "German",
+   "title": "Bibliotheca, Acta et Scripta Magica, Vol. II",
+   "evidence": "'submits to the calm inquiry of the learned, Felix Martinus Br\u00e6hm' = 'placid\u00e6 Eruditorum disquisitioni submittit, Felix Martinus Br\u00e6hm' (p829); 'a special Inquisition court against witches' = 'ein eigenes Inquisitions-Gerichte wider die Hexen' (p829). None of p828's 'Uberhaupt mu\u00df man sich... Regul halten' appears."
+  },
+  {
+   "book_id": "6990793c7d066daf3b4a9536",
+   "page": 149,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "French",
+   "title": "Magie et Religion dans l'Afrique du Nord",
+   "evidence": "The body of the English renders page 150, not page 149: 'The theory of inoculation and that of propitiation are perhaps not contradictory' matches 'La th\u00e9orie de l'inoculation et celle de la propitiation ne sont peut-\u00eatre pas contradictoires' (p150), and 'these are the h'erz of the Arabs' matches 'ce sont les h'erz des arabes' (p150). Only the footnotes are page 149's own (Frazer, Crawley, Largeau)."
+  },
+  {
+   "book_id": "699249f1a2d53df4853c1665",
+   "page": 658,
+   "verdict": "mixed",
+   "draw": "scale-zh-shift",
+   "language": "Chinese",
+   "title": "Li Ki: M\u00e9moires sur les biens\u00e9ances et les c\u00e9r\u00e9monies",
+   "evidence": "Most of the English is the meat-dish list, which is printed on p659: 'beef broth, mutton broth... pheasants, hares, quails, and partridges' = 'le bouillon de b\u0153uf... les faisans, les li\u00e8vres, les cailles, les perdrix' (p659). The grain list 'ch\u00f2u glutinous millet, ts\u01d0... rice, large white millet' = '\u98ef\u9ecd\u7a37\u7a3b\u7cb1' / 'le ch\u00f2u (millet glutineux), le ts\u01d0' and the 'i\u00f3u signifies' note = '\u7336\u82e5\u4e5f' do come from p658. The English leaves out p658's main text about the cadet branches, the two victims and the sacrifice ('\u5177\u4e8c\u7272\u2026\u5b97\u5b50\u2026\u79c1\u796d')."
+  },
+  {
+   "book_id": "699356c58ed86e583b7b8334",
+   "page": 581,
+   "verdict": "next",
+   "draw": "scale-zh-shift",
+   "language": "Chinese",
+   "title": "Lotus Sutra (Miao fa lian hua jing) - Sixi Tripitaka Edition",
+   "evidence": "'the World-Honored One said to the great assembly of bodhisattvas, \"It is so, it is so\"' = \u723e\u6642\u4e17\u5c0a\u65bc\u83e9\u85a9\u5927\u8846\u4e2d\u800c\u4f5c\u662f\u8a00\u5982\u662f\u5982\u662f (p582). Page 581's four bodhisattvas (\u4e0a\u884c, \u7121\u908a\u884c, \u6de8\u884c, \u5b89\u7acb\u884c) are missing from the English."
+  },
+  {
+   "book_id": "6993890ece15387065946496",
+   "page": 109,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Greek",
+   "title": "Corpus Hermeticum and Plotinus, Enneads",
+   "evidence": "'Or is beauty one thing in a body, and another in something else?' renders '\u1f22 \u1f04\u03bb\u03bb\u03bf \u03bc\u1f72\u03bd \u1f10\u03bd \u03c3\u03ce\u03bc\u03b1\u03c4\u03b9 \u03c4\u1f78 \u03ba\u03ac\u03bb\u03bb\u03bf\u03c2, \u1f04\u03bb\u03bb\u03bf \u03b4\u1f72 \u1f10\u03bd \u1f04\u03bb\u03bb\u1ff3' (p110). Page 109's own text (end of the treatise on happiness and the opening '\u03a4\u1f78 \u03ba\u03b1\u03bb\u03cc\u03bd, \u1f14\u03c3\u03c4\u03b9 \u03bc\u1f72\u03bd \u1f10\u03bd \u1f44\u03c8\u03b5\u03b9 \u03c0\u03bb\u03b5\u1fd6\u03c3\u03c4\u03bf\u03bd') is not translated."
+  },
+  {
+   "book_id": "69af118e7feb16bd9d149210",
+   "page": 50,
+   "verdict": "mixed",
+   "draw": "zh-flag",
+   "language": "Chinese",
+   "title": "\u897f\u6d0b\u65b0\u6cd5\u66c6\u66f8 (New Western Calendar Treatise)",
+   "evidence": "'Shouxing Palace' and 'Celestial Gate', which the summary centres on, render \u58fd\u661f\u8fb0\u5bae and \u5929\u9580. Those labels are printed on p49, not p50, whose palace label is \u5927\u706b\u536f\u5bae. 'Battle Chariot' renders \u9663\u8eca, which is printed on p50."
+  },
+  {
+   "book_id": "69aff9e23f1fcb29634ce545",
+   "page": 575,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Autolyci De Sphaera et De Ortibus (Hultsch 1885)",
+   "evidence": "English 'Philolaus says it is necessary that all things that are be either infinite, or limiting' renders '\u03a6\u03b9\u03bb\u03cc\u03bb\u03b1\u03bf\u03c2 \u03b4\u1f72 \u1f00\u03bd\u03b1\u03b3\u03ba\u03b1\u1fd6\u03bf\u03bd \u03c4\u1f70 \u1f10\u03cc\u03bd\u03c4\u03b1 \u03c0\u03ac\u03bd\u03c4\u03b1 \u03b5\u1f36\u03bc\u03b5\u03bd \u1f24\u03c4\u03bf\u03b9 \u1f04\u03c0\u03b5\u03b9\u03c1\u03b1 \u1f22 \u03c0\u03b5\u03c1\u03b1\u03af\u03bd\u03bf\u03bd\u03c4\u03b1' (p576). Page 575's own text (\u03c0\u03c1\u03bf\u03bc\u03ae\u03ba\u03b7\u03c2 vs \u1f11\u03c4\u03b5\u03c1\u03bf\u03bc\u03ae\u03ba\u03b7\u03c2, '\u1f41 \u03db \u1f51\u03c0\u1f78 \u03c4\u03bf\u1fe6 \u03b4\u1f76\u03c2 \u03b3') is not translated at all. The English also continues past p576 into the rows of squares and heteromecic numbers that come after it."
+  },
+  {
+   "book_id": "69b43d2706b196d69f66f14f",
+   "page": 62,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Mercurii Trismegisti Pimander, Marsilio Ficino interprete",
+   "evidence": "'Oblivion itself, however, is wickedness... The clothing of the mind is the soul' renders 'Obliuio autem ipsa improbitas e[st]... Indumentum mentis a[n]i[m]a' (p63), not p62's 'Tria igitur sunt hec, Deus pater bonum, & mundus, & homo'"
+  },
+  {
+   "book_id": "69b43d3c06b196d69f66f8f7",
+   "page": 129,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Platonis Opera Marsilio Ficino interprete",
+   "evidence": "English 'Could you cut vine branches with a sword and a chisel' matches 'Posses ne gladio et scalpello et multis alijs vitis palmites amputare' on p130; the English opens with 'they do not wish to harm one another', which is p130's first line 'se inuicem ledere nolint', and leaves out p129's own text ('Ciuitatem ne aliquam affirmares iniustam esse...')"
+  },
+  {
+   "book_id": "69b43d4406b196d69f66fecb",
+   "page": 144,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Synesius De somniis, Iamblichus, Proclus, Porphyrius, Ficino interprete",
+   "evidence": "English 'powers both dissolutive and again congregative' renders 'vires et dissolutiu\u0119 et rursus congregatiu\u0119' (p145); nothing from p144 (e.g. 'mundus est unum animal') appears"
+  },
+  {
+   "book_id": "69bd9d546120d54bd0375241",
+   "page": 1277,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "German",
+   "title": "Erster [- zehender] Theil der B\u00fccher und Schrifften des edlen, hochgelehrten und bewehrten",
+   "evidence": "The English covers only the last paragraph of 1277 ('How gladly you say...' = 'Wie gern sprechen jhr...'). Everything after that renders p1278: 'Who can bring out as much mercury as you smear and smoke inside?' = 'Wer kan so viel Quecksilber herau\u00df bringen / als jhr hinein schmirben / v\u00f1 reuchen?' (p1278), running through to 'Searching for spiderwebs' = 'suchest Spinnenwep' (p1278). None of 1277's main text (Cacophrastus, Galenus, Pilatus Meer) appears."
+  },
+  {
+   "book_id": "69c4ec33a3a4a7c546ee610f",
+   "page": 92,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Monas hieroglyphica",
+   "evidence": "'With these few things, I know that I give not only such starting points' renders 'His paucis, tales me scio non \u1f00\u03c6\u03bf\u03c1\u03bc\u1f70\u03c2, solum' (p93). Page 92 itself has only 'dium ferentes. Ipsa enim qu\u00e6 in Alpha...' and the Alpha/Cross/Omega table, which this English does not translate."
+  },
+  {
+   "book_id": "69c6614901a26ccff09f5036",
+   "page": 116,
+   "verdict": "next",
+   "draw": "chinese-L-flag",
+   "language": "Chinese",
+   "title": "Yuel\u00fc Quanshu (\u6a02\u5f8b\u5168\u66f8) Vols. 4-5",
+   "evidence": "'Years have times of famine and abundance, lands have varying fertility' = \u5e74\u6709\u51f6\u8c50\u5730\u6709\u80a5\u7620 (p117); 'Huangzhong symbolizes yang... until reaching Wuyi' = \u9ec3\u937e\u8c61\u967d\u4ee5\u6b21\u800c\u77ed\u81f3\u7121\u5c04\u800c\u6975 (p117). Page 116's own text (\u53ef\u898b\u77e3\u7368\u6240\u8b02\u5f8b\u548c\u8072\u8005\u2026\u4ef0\u89c0\u4fef\u5bdf\u65bc\u79ec\u9ecd) is not rendered."
+  },
+  {
+   "book_id": "69c821446c6f3cc53c84aa06",
+   "page": 660,
+   "verdict": "prev",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Opera didactica omnia",
+   "evidence": "'A sober man... does all things soberly; you therefore strive for sobriety' renders 'tas vitium. SOBRI-us ... agit omnia -\u00e8: tu erg\u00f2 stude -etati' at the top of the right column of p659 (the English then runs through Ego, Ehem, Eleemosyna, also p659), whereas p660 opens '-econde) victualia' and covers Emere through Exemplum"
+  },
+  {
+   "book_id": "69c895676c6f3cc53c85c30d",
+   "page": -10,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "English",
+   "title": "The kabbala: or, the true science of light. An introduction to the philosophy and theosoph",
+   "evidence": "English 'the famous Ionian philosopher, Anaximander' matches 'the famous Ionian Philosopher, Anaximander' on page -9 (pp. 10\u201311), not page -10's text about the Kabbala and Infidelity"
+  },
+  {
+   "book_id": "69dbc86d1040d1d5e2099648",
+   "page": 433,
+   "verdict": "prev",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "De proprietatibus rerum",
+   "evidence": "The English 'Of the platanus, Chapter CXIX... As a plane tree I was exalted' renders 'De platano Ca. CXIX ... quasi platanus exaltata sum', which is printed on p432. Page 433 itself begins 'et odoriferum facit fumum' (pine) and continues with 'De pinea Ca. CXXII'."
+  },
+  {
+   "book_id": "69de99261b234a773e43a275",
+   "page": 35,
+   "verdict": "prev",
+   "draw": "scale-zh-shift",
+   "language": "Chinese",
+   "title": "\u97d3\u975e\u5b50 (Han Feizi)",
+   "evidence": "English 'Laws alone cannot carry themselves into practice' and 'The political theory of the Confucians is one of rule by virtue' render \u5f92\u6cd5\u4e0d\u30ec\u80fd\u4e8c\u4ee5\u81ea\u884c\u4e00 and \u5112\u5bb6\u306e\u653f\u6cbb\u8aac\u306f\u3001\u5fb3\u6cbb\u4e3b\u7fa9\u3067 on page 34. Page 35 itself is about \u58a8\u7fdf, \u8001\u8358 and \u97d3\u5b50 (\u6b64\u306e\u4e16\u3092\u5468\u306e\u9ec4\u91d1\u6642\u4ee3\u2026)."
+  },
+  {
+   "book_id": "69e7268ca409200ea79ef73b",
+   "page": 15,
+   "verdict": "next",
+   "draw": "zh-flag",
+   "language": "Chinese",
+   "title": "\u804a\u9f4b\u5fd7\u7570 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 1",
+   "evidence": "English 'eyes like lightning, and understanding that penetrates walls... the Six Classics' = \u773c\u5149\u5982\u96fb\u7246\u58c1\u7686\u901a\u2026\u5247\u516d\u7d93\u4e4b\u7fa9 (p16); 'Written by Gao Heng, the Daoist of Purple Clouds' = \u7d2b\u971e\u9053\u4eba\u9ad8\u73e9\u984c (p16). The text printed on p15 (\u6b62\u751f\u82b1\u4e14\u540c\u7149\u77f3\u2026\u840d\u5be6\u5546\u7f8a) does not appear in the English."
+  },
+  {
+   "book_id": "69e7880e4a6785cfd60ced34",
+   "page": 11,
+   "verdict": "mixed",
+   "draw": "zh-flag",
+   "language": "Chinese",
+   "title": "\u672c\u8349\u7db1\u76ee (B\u011bnc\u01ceo G\u0101ngm\u00f9), Vol. 15",
+   "evidence": "The English has two parts. The first renders the start of the centipede entry from page 10: 'Huainanzi says \"The soaring snake wanders in fog but is endangered by the Chuju\"' matches \u6dee\u5357\u5b50\u4e91\u9a30\u86c7\u904a\u9727\u800c\u6b86\u65bc\u874d\u86c6 (p10). The second renders page 11's own text: 'The Youyang Zazu says... can use their qi to suck in a lizard' matches \u9149\u967d\u96dc\u4fce\u4e91\u2026\u80fd\u4ee5\u6c23\u5438\u8734\u8725 (p11). Each part is a substantial share of the English."
+  },
+  {
+   "book_id": "69e7aabd80b52390feb19d0a",
+   "page": 93,
+   "verdict": "mixed",
+   "draw": "tibetan-L-flag",
+   "language": "Tibetan",
+   "title": "Thadrak Kanjur rGyud 'bum Nga",
+   "evidence": "The first half of the English renders the lower leaf of p93: 'by stretching the left leg, one presses down the body of Yamantaka' = \u0f62\u0f90\u0f44\u0f0b\u0f54\u0f0b\u0f42\u0f61\u0f7c\u0f53\u0f0b\u0f49\u0f72\u0f51\u0f0b\u0f56\u0f62\u0f90\u0fb1\u0f44\u0f0b\u0f56\u0f0b\u0f61\u0f72\u0f66\u0f0d \u0f0d\u0f60\u0f47\u0f72\u0f42\u0f66\u0f0b\u0f56\u0fb1\u0f7a\u0f51\u0f0b\u0f58\u0f53\u0f53\u0f0b\u0f54\u0f0b\u0f61\u0f72\u0f0b\u0f53\u0f72\u0f0b\u0f63\u0f74\u0f66 (p93). The second half renders the upper leaf of p94: 'with six arms and black in color, in union with the Iron-Chain Lady' = \u0f51\u0fb2\u0f74\u0f42\u0f0b\u0f54\u0f0b\u0f63\u0f0b\u0f41\u0f0b\u0f51\u0f7c\u0f42\u0f0b\u0f42\u0f53\u0f42 \u0f0d\u0f63\u0f95\u0f42\u0f66\u0f0b\u0f66\u0f92\u0fb2\u0f7c\u0f42\u0f0b\u0f58\u0f0b\u0f51\u0f44\u0f0b\u0f63\u0fb7\u0f53\u0f0b\u0f45\u0f72\u0f42\u0f0b\u0f66\u0fa6\u0fb1\u0f7c\u0f62 (p94). The upper leaf of p93 (flower offering verses \u0f58\u0f7a\u0f0b\u0f4f\u0f7c\u0f42\u0f0b\u0f60\u0f51\u0f72\u0f0b\u0f62\u0fa3\u0f58\u0f66\u0f0b\u0f56\u0f5f\u0f44\u0f0b\u0f5e\u0f72\u0f44\u0f0b\u0f51\u0f42\u0f7a, end of chapter 14) is not translated."
+  },
+  {
+   "book_id": "69e7ab0d5f1a22ab19a92183",
+   "page": 103,
+   "verdict": "mixed",
+   "draw": "tibetan-L-flag",
+   "language": "Tibetan",
+   "title": "Thadrak Kanjur mDo sde Sha",
+   "evidence": "The first half renders p103's own first leaf: 'liberated from fear and old age' = p103 '\u0f60\u0f47\u0f72\u0f42\u0f66\u0f0b\u0f51\u0f44\u0f0b\u0f62\u0f92\u0f0b\u0f56\u0f0b\u0f63\u0f66\u0f0b\u0f62\u0fa3\u0f58\u0f0b\u0f42\u0fb2\u0f7c\u0f63'. After the leaf break, the English renders p104's first leaf instead of p103's second leaf (which is about sounds): 'The Dharma called \"contentment\" is something to be supremely cherished' = p104 '\u0f46\u0f7c\u0f42\u0f0b\u0f64\u0f7a\u0f66\u0f0b\u0f54\u0f0b\u0f5e\u0f7a\u0f66\u0f0b\u0f56\u0fb1\u0f0b\u0f56\u0f60\u0f72\u0f0b\u0f46\u0f7c\u0f66\u0f0b\u0f53\u0f72\u0f0b\u0f58\u0f46\u0f7c\u0f42\u0f0b\u0f4f\u0f74\u0f0b\u0f42\u0f45\u0f7a\u0f66\u0f0b\u0f54\u0f62\u0f0b\u0f56\u0fb1\u0f0b\u0f56\u0f0b\u0f61\u0f72\u0f53'."
+  },
+  {
+   "book_id": "69e7ab435f1a22ab19a958f8",
+   "page": 269,
+   "verdict": "mixed",
+   "draw": "tibetan-L-flag",
+   "language": "Tibetan",
+   "title": "Thadrak Kanjur dKon brtsegs Nga",
+   "evidence": "The first half renders p269's own lower leaf: 'the cessation of suffering is called non-arising\u2026 two truths: the conventional truth and the ultimate truth' = \u0f66\u0fa1\u0f74\u0f42\u0f0b\u0f56\u0f66\u0f94\u0f63\u0f0b\u0f5f\u0f51\u0f0b\u0f54\u0f0b\u0f42\u0f44\u0f0b\u0f61\u0f72\u0f53\u0f0b\u0f54\u0f0b\u0f51\u0f7a\u0f0b\u0f53\u0f72\u0f0b\u0f58\u0f72\u0f0b\u0f66\u0f90\u0fb1\u0f7a\u0f0b\u0f56\u0f0b\u0f5e\u0f7a\u0f66\u0f0b\u0f56\u0fb1\u0f60\u0f7c\u2026 \u0f40\u0f74\u0f53\u0f0b\u0f62\u0fab\u0f7c\u0f56\u0f0b\u0f40\u0fb1\u0f72\u0f0b\u0f56\u0f51\u0f7a\u0f53\u0f0b\u0f54\u0f0b\u0f51\u0f44\u0f0b\u0f0d \u0f51\u0f7c\u0f53\u0f0b\u0f51\u0f58\u0f0b\u0f54\u0f60\u0f72\u0f0b\u0f56\u0f51\u0f7a\u0f53\u0f0b\u0f54 (p269), ending 'whatever is accompanied by formation has destruction' = \u0f42\u0f44\u0f0b\u0f58\u0f44\u0f7c\u0f53\u0f0b\u0f54\u0f62\u0f0b\u0f60\u0f51\u0f74\u0f0b\u0f56\u0fb1\u0f7a\u0f51\u0f0b\u0f54\u0f0b\u0f51\u0f44\u0f0b\u0f56\u0f45\u0f66\u0f0b\u0f54\u0f0b\u0f51\u0f7a\u0f0b\u0f63\u0f0b\u0f53\u0f72\u0f0b\u0f60\u0f47\u0f72\u0f42\u0f0b\u0f54\u0f0b\u0f61\u0f7c\u0f51\u0f0b\u0f40\u0fb1\u0f72 (p269). The second half ('it is merely expressed as a conventional designation\u2026 difficult for the lazy to realize') is not on p269. It seems to continue after p270's last words, \u0f46\u0f7c\u0f66\u0f0b\u0f50\u0f58\u0f66\u0f0b\u0f45\u0f51\u0f0b\u0f53\u0f72\u0f0b\u0f66\u0f44\u0f66\u0f0b\u0f62\u0f92\u0fb1\u0f66\u0f0b\u0f62\u0fa3\u0f58\u0f66\u0f0b\u0f40\u0fb1\u0f72\u0f0b\u0f56\u0fb1\u0f44\u0f0b\u0f45\u0f74\u0f56\u0f0b\u0f61\u0f72\u0f53\u0f0b\u0f53\u0f7c\u0f0d \u0f0d\u0f5e\u0f7a\u0f66\u0f0b\u0f56\u0fb1\u0f0b\u0f56\u0f0b\u0f61\u0f44\u0f0b (p270), so it is probably from p271. None of p269's upper leaf (\u0f58\u0f72\u0f42\u0f0b\u0f51\u0f44\u0f0b\u0f56\u0fb2\u0f63\u0f0b\u0f56\u0f0b\u0f63\u0f0b\u0f61\u0f44\u0f0b\u0f55\u0fb1\u0f7c\u0f42\u0f66\u0f0b\u0f54\u0f62\u0f0b\u0f58\u0f72\u0f0b\u0f58\u0f5b\u0f51) is translated."
+  },
+  {
+   "book_id": "69e7abf75f1a22ab19aa12e0",
+   "page": 371,
+   "verdict": "next",
+   "draw": "tibetan-L-flag",
+   "language": "Tibetan",
+   "title": "Kanjur 'Dul ba Nga",
+   "evidence": "English 'Purna was fierce, harsh, and reckless' matches the Tibetan '\u0f42\u0f44\u0f0b\u0f56\u0f0b\u0f53\u0f72\u0f0b\u0f42\u0f4f\u0f74\u0f58\u0f0b\u0f54 \u0f0d \u0f56\u0f62\u0fb3\u0f44\u0f0b\u0f56 \u0f0d \u0f42\u0f5f\u0f74\u0f0b\u0f63\u0f74\u0f58\u0f66\u0f0b\u0f45\u0f53' on page 372, and 'he graces the Brahmadatta pond' matches '\u0f5a\u0f44\u0f66\u0f0b\u0f63\u0fa1\u0f53\u0f0b\u0f42\u0fb1\u0f72\u0f0b\u0f62\u0fab\u0f72\u0f44\u0f0b\u0f42\u0f72\u0f0b\u0f62\u0f92\u0fb1\u0f53\u0f0b\u0f56\u0fb1\u0f7a\u0f51' on page 372. Page 371's own text, the swans' leader named Yul 'khor skyong and the lake Ma dros pa, is not translated."
+  },
+  {
+   "book_id": "69e80670fdad300064d9ef9d",
+   "page": 477,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Sanskrit",
+   "title": "\u091a\u0930\u0915\u0938\u0902\u0939\u093f\u0924\u093e (Caraka Sa\u1e43hit\u0101)",
+   "evidence": "'Agnivesha then asked: O venerable one, what is the root of engagement and disengagement' = '\u0905\u0925\u093e\u0917\u094d\u0928\u093f\u0935\u0947\u0936 \u0909\u0935\u093e\u091a \u0964 \u0915\u093f\u0902\u092e\u0942\u0932\u093e \u092d\u0917\u0935\u0928\u094d \u092a\u094d\u0930\u0935\u0943\u0924\u094d\u0924\u093f\u0928\u093f\u0935\u0943\u0924\u094d\u0924\u094c' (p478, \u00a77); 'I am endowed with such birth, form, wealth' = '\u091c\u093e\u0924\u093f\u0930\u0942\u092a\u0935\u093f\u0924\u094d\u0924\u092c\u0941\u0926\u094d\u0927\u093f\u0936\u0940\u0932\u2026\u0938\u092e\u094d\u092a\u0928\u094d\u0928\u094b\u093d\u0939\u092e\u093f\u0924\u094d\u092f\u0939\u0919\u094d\u0915\u093e\u0930\u0903' (p478). Page 477 itself has \u00a7\u00a74\u20135 (loka\u2013purusha correspondences, Indra = ahankara, k\u1e5btayuga = childhood), none of which appear in the English; the later part of the English runs past p478 into the following text."
+  },
+  {
+   "book_id": "69e8b2642ff2a8dc09e778a1",
+   "page": 20,
+   "verdict": "next",
+   "draw": "zh-unflagged-held",
+   "language": "Chinese",
+   "title": "\u58a8\u5b50 (M\u00f2z\u01d0)",
+   "evidence": "The English \"Mozi in Fifteen Volumes\u2026 Record of Classics in the History of Tang\u2026 Regarding the Records of the Grand Historian\" renders \u58a8\u5b50\u5341\u4e94\u5377 / \u5510\u66f8\u7d93\u7c4d\u5fd7 / \u6848\u53f2\u8a18\u58a8\u7fdf\u6216\u66f0\u7add\u5b54\u5b50\u6642, which is printed in image p21.jpg (page 21). The page 20 scan (p20.jpg) actually shows \u5b50\u6545\u52f8\u5b50\u4e5f\u9042\u4e0d\u5fa9\u6c42\u4ed5\u2026\u7518\u74dc\u82e6\u8482\u2026\u541b\u5b50\u670d\u7f8e\u5247\u76ca\u656c. Note: each image shows the text that the transcription gives for the page before it. The p19.jpg scan shows \u65b7\u6307\u4ee5\u5b58\u811b\u2026\u58a8\u5b50\u52f8\u5f1f\u5b50\u5b78."
+  },
+  {
+   "book_id": "69e96123390d3ed634590b97",
+   "page": 269,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Arabic",
+   "title": "\u0631\u062d\u0644\u0629 \u0627\u0628\u0646 \u0628\u0637\u0648\u0637\u0629 (Ri\u1e25lat Ibn Ba\u1e6d\u1e6d\u016b\u1e6da)",
+   "evidence": "The English 'the armies became intermingled and the dust rose... I stuck to the Khatun's baggage' renders '\u0627\u062e\u062a\u0644\u0637\u062a \u0627\u0644\u0639\u0633\u0627\u0643\u0631 \u0648\u0643\u062b\u0631 \u0627\u0644\u0639\u062c\u0627\u062c ... \u0641\u0644\u0632\u0645\u062a \u0623\u062b\u0642\u0627\u0644 \u0627\u0644\u062e\u0627\u062a\u0648\u0646' (p270). The English also includes 'Account of the Sultan of Constantinople... Takfur' = '\u0630\u0643\u0631 \u0633\u0644\u0637\u0627\u0646 \u0627\u0644\u0642\u0633\u0637\u0646\u0637\u064a\u0646\u064a\u0629 \u0648\u0627\u0633\u0645\u0647 \u062a\u0643\u0641\u0648\u0631' (p270). Page 269's own text, about the procession with the Khatun's brothers and the Sultan coming out ('\u0648\u062e\u0631\u062c \u0627\u0644\u0633\u0644\u0637\u0627\u0646 \u0648\u0632\u0648\u062c\u062a\u0647 \u0623\u0645 \u0647\u0630\u0647 \u0627\u0644\u062e\u0627\u062a\u0648\u0646'), is missing from the English."
+  },
+  {
+   "book_id": "69f33c10876dd827cbc597ed",
+   "page": 885,
+   "verdict": "next",
+   "draw": "chinese-L-flag",
+   "language": "Chinese",
+   "title": "Liu yi liu bie, 20 juan",
+   "evidence": "'The Han dynasty inherited the destiny of Yao to establish its imperial legacy' = \u6f22\u7d39\u582f\u904b\u4ee5\u5efa\u5e1d\u696d (p886); 'Record of Searching the Mountains' = \u5c0b\u5c71\u5fd7 (p886). Page 885's own text (\u5b5f\u5b50\u984c\u8fad continuation, \u694a\u6731\u58a8\u7fdf, \u516c\u5b6b\u4e11\u842c\u7ae0) is not rendered."
+  },
+  {
+   "book_id": "69f33c10876dd827cbc597ed",
+   "page": 886,
+   "verdict": "next",
+   "draw": "chinese-L-flag",
+   "language": "Chinese",
+   "title": "Liu yi liu bie, 20 juan",
+   "evidence": "'Record of the Yigu Valley of Mount Zhongnan \u2026 by Yu Xin of the Later Zhou' and 'I ask the fisherman for the way ahead, and he points me toward Penglai' = \u7d42\u5357\u5c71\u7fa9\u8c37\u5fd7 \u5f8c\u5468\u5ebe\u4fe1 and \u554f\u6f01\u4eba\u4ee5\u524d\u8def\u6307\u793a\u4e88\u4ee5\u84ec\u840a (p887); none of p886's text (\u6f22\u66f8 postface, \u5026\u4e16\u60c5\u4e4b\u6613\u7e5e) is rendered"
+  },
+  {
+   "book_id": "6a0a46f8ef9e0385fbdf5903",
+   "page": 20,
+   "verdict": "next",
+   "draw": "scale-readers-shift",
+   "language": "Latin",
+   "title": "Beati Raymundi Lulli Doctoris Illuminati et Martyris Opera, Tomus I (Salzinger ed., Mainz)",
+   "evidence": "'who deem this farrago of Books useless and superfluous' = 'qui inutilem censeant & superfluam (ne dicam) noxiam hanc Librorum farraginem' (p21). Page 20's own text ('Privilegium C\u00e6sareum', 'Heidelberg\u00e6') is not rendered."
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads most consistently as real Sanskrit-Malayalam commentary on recognising the phoneme "ga" (pratyabhijñā): it has readable stretches such as "pratyabhijñānabalāl", "mūlabhūta…dvāreṇa" and "nyāyuktatvāl". B gets a few phrases cleaner ("utpanno gakāro naṣṭo gakāra iti") but is garbled in rows 1, 4–5 and 7. C breaks down into nonsense syllables more often.

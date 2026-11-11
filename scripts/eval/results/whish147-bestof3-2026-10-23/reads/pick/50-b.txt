@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A has the most real Sanskrit and Malayalam phrases that fit a commentary on Sāṅkhyakārikā 47 (on viparyaya, aśakti, tuṣṭi and siddhi), such as "saṃjñābhedābhavanti", "āmaprāptirityartthaḥ" and "śaktiruṣṭisiddhyādya". C is coherent only in places (e.g. "ekāviparyyayādaśaśaktituṣṭisiddhyā"), and B is mostly strings of syllables that only look like words.

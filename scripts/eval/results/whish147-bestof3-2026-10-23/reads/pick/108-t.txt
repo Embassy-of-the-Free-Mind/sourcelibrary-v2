@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B is the only one whose legible text is real Sanskrit that fits a commentary on the siddhis (e.g., "yaduktaṃ jñānābhiplavaśuddhiḥ", "nairantaryadīrghakālasevitābhyāsaparipā[ka]", "vivekakhyātyākāre", "pramodapramuditamodamānā", "pāṭhānantaraṃ", "suhṛtprāptiriti", "dānākhye siddhi"), even with its many [illegible] gaps, while A is only partly coherent and C is mostly syllable strings that look like words.

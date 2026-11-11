@@ -303,6 +303,7 @@ async function main() {
                 reasoning: sel.reasoning,
               },
             },
+            $currentDate: { updated_at: true },
           }
         );
 

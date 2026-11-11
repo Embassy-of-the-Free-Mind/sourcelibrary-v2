@@ -1,0 +1,10 @@
+ROW 1 | ശ്രുപ്യാ॰സാഗ്രൂപ്ത്യൈകെ‖ത്രിഗുണമിത്യാ[illegible]ക്ഷിതെ[illegible]ക്രുതെയാഗുണാഃ‖ക്രിയാത്മകംഇത്യാ[illegible]।
+ROW 2 | [illegible]ത്രൂഷ്ടപ്രതികാദാ‖ഷകാരത്യാ॰ദ്വിഃത്രിത്യാദയ[illegible]ത്മാരെ‖നാക്ഷെപി॰ഗുണാനാമെ
+ROW 3 | [illegible]ത്ത്വാക്കാഃസവ‖പജ്ഞക്കമാ॰നിവൃത്തെഃയാഗുണാഃ‖ന[illegible]ത്യാത്മകംപ്ര
+ROW 4 | ചാഗ്രൂമകം॰സൂക്ഷ്മം॰‖[illegible]ത്യാത്മകം॰ദുഃഖാത്മകം॰‖നജ്ഞഃവിഷാദാത്മകം॰
+ROW 5 | മൊഹാത്മകകം‖മംഗുണാത്യാദിവിധാവാൎച‖[illegible]ണെത്യാദ്യവാദി
+ROW 6 | ആഗമിത്യമഗ‖[illegible]ക്കാദാ[illegible]കാദുഭ്യവപ്പി‖ന്യൂൽക്കിൻ[illegible]നരൊ
+ROW 7 | ഷ്ടാ॰ഭൂതജ്ഞാന‖മിത്യാകൃപ്രകാശ[illegible]‖മാൎക്കാഭിപ്രകാശ
+ROW 8 | അൎക്ക॰സങ്ക॰പ്രകാശ[illegible]‖ഷാൽപ്രവൃത്യൎക്കാരെങ്ങഃചലകാൎത്രിയമ‖ൎക്കന്മഃസ്ഥിതാത്മാൽ
+ROW 9 | തിരിഭിഗൈരുക്കാഃ॰‖[illegible]ങ്ങഗുണ്ഡസ്സപ്രൈവക്കാമിം॰വാരണിത്യാ‖ദാസ।ഒരാന്യായാദിപാത്ര
+NOTE | I could make out all 9 rows only roughly, so treat every row as low-confidence: many conjuncts, vowel signs and the exact letters at each join are uncertain. The cut edges were lined up by their overlaps (p01 | p02+p03 | p04), and none of the text was checked against or filled in from the Sāṅkhyakārikā.

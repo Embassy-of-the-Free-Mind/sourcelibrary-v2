@@ -1,0 +1,41 @@
+I read the leaf at the resolution it was given and couldn't zoom in, so several lines are only partly legible. The verse text runs straight through each line, past the string-hole and on to the right half of the leaf, which isn't in the image. The fragments below therefore break off mid-word. Brackets [ ] mark text I can't see or can't read.
+
+## Collation, line by line
+
+**Line 1, SK_5 end and SK_6 start:** "[…]āptavacanan tu । 6 sāmānyatas tu dṛ[…]"
+- The leaf writes *vacanan tu* where the edition has *vacanaṃ tu*. This is only a spelling convention for the same sound, not a real variant.
+- There is a verse number (Malayalam "6") before *sāmānyatas*.
+- The edition's footnote 3 on *tu* has nothing on the leaf to compare it with.
+
+**Line 2, SK_6 end and SK_7 start:** I can't reliably read this line. On the left I can see glyphs that might be part of *…kṣam āptāgamāt…*. On the right I possibly see *[si]ddhaṃ । 7 [ati-dūrāt sāmī…]*, but I can't confirm any of these words.
+
+**Line 3, SK_7:** "[…indr]iyaghā[…] tān mano'nava[sthānāt…]"
+- The left part is hard to read. The right part matches the edition.
+
+**Line 4, SK_7:** "[…vyavadhā]nād abhibhavāt | samānābhi[hārāc ca]"
+- The leaf has **abhibhavāt** where the edition has *sāṃsiddhikāś*. The edition looks wrong here, since *abhibhavāt* is the standard reading. The leaf's spelling looks like ന്നാദഭിഭവാൽ.
+
+**Line 5, SK_8:** "[…upa]labdhir nābhā | vāt kāryatas ta[d…]"
+- This matches the edition.
+
+**Line 6, SK_8:** "kāryaṃ [prakṛti?…] | […]rūpaṃ virūpa[ṃ ca]"
+- The leaf has **virūpaṃ**, which the edition doesn't have. The word itself is fairly clear on the leaf.
+- The leaf seems to have an extra word, possibly *prakṛti*, after *kāryaṃ*. I'm not sure of it. The usual reading of this verse is "kāryaṃ prakṛti-sarūpaṃ virūpaṃ ca", and the edition's shorter line also leaves the metre a syllable short.
+
+**Line 7, SK_9:** "[…up]ādānagrahaṇā | t sarvasaṃbhavā[bhāvāt…]"
+- This matches the edition.
+
+**Line 8, SK_9 end:** "[…śakyakaraṇā]t kāraṇabhāvā | [c]ca satkāryam ।"
+- This matches the edition.
+
+**Line 9, SK_10:** "[…ane]kam āśritaṃ liṅ[gaṃ] । sāvayavaṃ para[tantraṃ…]"
+- The leaf has **sāvayavaṃ** where the edition has *sā'vamavaṃ*. The edition's form looks like a typo.
+
+SK_3, SK_4, SK_11 and SK_12 don't appear on this half of the leaf. The parts of SK_5, SK_6 and SK_10 that are missing here would be on the right half.
+
+DIFFERENCES:
+- SK_5 | vacanaṃ (tu) | vacanan (tu) | certain (spelling convention only)
+- SK_7 | sāṃsiddhikāś | abhibhavāt | certain
+- SK_8 | (kāryam) — | prakṛti (extra word after kāryaṃ) | uncertain
+- SK_8 | (sa-rūpaṃ ca) — | virūpaṃ (extra word before ca) | certain
+- SK_10 | sā'vamavaṃ | sāvayavaṃ | certain

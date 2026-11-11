@@ -1,0 +1,10 @@
+ROW 1 | പായംബാ[illegible]ജ്ജിയതത ‖ [illegible]ങ്ങണ്ണജ്ജത്തപ്പാൽസാവയവംവ്യക്തംനിരവ ‖ യവമവ്യക്തം[illegible]ശ്ചാപി
+ROW 2 | നിരവയവംഗന്ധാദികളെ ‖ [illegible]ഷക്കത്താൽ.പരതന്ത്രംവ്യക്തംസ്വതന്ത്രമവ്യ ‖ ക്തം.ദുഃഖങ്ങളെക്കാ[illegible]സ്വതന്ത്രംക്കു
+ROW 3 | ഒക്കി[illegible]തങ്ങിനായാൽ ത്രി ‖ ത്രിയന്ത്യാ[illegible]യായാ[illegible]നെ[illegible]ക്കൊജ്ഞ്യ[illegible] ‖ [illegible]ഉണ്ടു.വ്യക്തമവ്യക്തഞ്ചേ
+ROW 4 | ഇത്ര്ണൈസ്വരൂപിംഹേ ‖ ഒരുനാരംകൊണ്ടു[illegible]ാഭാൽൽത്തിവി ‖ ലെകിവ്യക്തമവ്യക്തഞ്ചേ
+ROW 5 | മിളെവങ്ങെപ്പുക്ക ‖ [illegible]യണനയാൽ[illegible]കിമിക്കെരായാ ‖ ത്രിഗുണത്താൽവിക്രഭ
+ROW 6 | യാന്ത്രിക്കമമല്ലാകി ‖ [illegible]പൃങ്ങഷൈരനാ[illegible]ഭൂതി[illegible] ‖ ഷയൊരുപരട്ടാക്കെ
+ROW 7 | ചൽതറരെടാശ്രുതെ ‖ [illegible]മാഹാരംവൃക്കമവൃക്കങ്ങളെ[illegible] ‖ ഷാഫസാമാന്യാഃ[illegible]
+ROW 8 | ശയാൽകൂടെചേർത്തുണം.വ്യ ‖ വ്യക്കമവ്യക്കളെക്കൊണ്ടെ[illegible]ഷാഃ[illegible] ‖ ാഉളവെടനയാൽപ്രസവധ
+ROW 9 | ജ്ഞിവൃക്തമവ്യക്തങ്ങളെപുരുഷ ‖ ങ്കെക്കാർ[illegible]സവധർമ്മി[illegible]ക്കൻതുതായാൽ ‖ ഇത്യുക്തം.ത്രിഗുണമവിവെ
+NOTE | This is a low-confidence reading. I'm reasonably sure only of the layout (9 rows: rows 1–3 and 8–9 run the full width, rows 4–7 are in columns) and of a few phrases such as സാവയവംവ്യക്തംനിരവയവമവ്യക്തം, പരതന്ത്രംവ്യക്തംസ്വതന്ത്രമവ്യക്തം and വ്യക്തമവ്യക്തഞ്ചേ. Most other words, conjuncts and vowel signs, especially in the middle pieces, are uncertain guesses at the strokes and need checking against a higher-resolution image.

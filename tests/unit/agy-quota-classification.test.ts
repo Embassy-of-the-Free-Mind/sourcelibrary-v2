@@ -23,6 +23,13 @@ describe('isQuotaError', () => {
     expect(isQuotaError({ out: JSON.stringify(j), err: '', j, text: page })).toBe(false);
   });
 
+  it('a short answer that names page 429 is not a quota error (#5309)', () => {
+    const t = '```json\n{"leaf": "prev", "evidence": "Page 429 is numbered 331 and begins with \'jours, et ces infortunés\'"}\n```';
+    const j = { conversation_id: 'c3', status: 'SUCCESS', response: t };
+    expect(isQuotaError({ out: JSON.stringify(j), err: '', j, text: t })).toBe(false);
+    expect(isQuotaError({ out: '', err: '', j: {}, text: 'Error 429: Too Many Requests' })).toBe(true);
+  });
+
   it('a real quota error is still caught, in stderr, in the envelope, or as a short reply', () => {
     expect(isQuotaError({ out: '', err: 'Error: 429 RESOURCE_EXHAUSTED: Individual quota reached', j: {}, text: '' })).toBe(true);
     const j = { error: { code: 429, message: 'Individual quota reached. Resets in 2h48m' } };

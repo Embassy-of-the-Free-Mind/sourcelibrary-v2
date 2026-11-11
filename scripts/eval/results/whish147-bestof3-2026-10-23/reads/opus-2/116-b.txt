@@ -1,0 +1,9 @@
+ROW 1 | ഗ്രണാനശ്രുത്യാണതബസ്ഥിജ്ജ[illegible] ‖ ാനക്കാരണമനസ്കംഒരോയാഗാഗ്രഹണത്തിനിന്ദ്രിയങ്ങളാം ‖ ।ശരീരെന്ദ്രിയങ്ങളൊരോവിഷയ
+ROW 2 | ംഷിവബൊധസ്മാനദ്ദിവിരം[illegible] ‖ ാത്മിവശത്തിന്।ശാബ്ദവഭദ്രബം।ചാത്മിവത്തിന്ദ്രിയ ‖ യം।ഗന്ധവാന്വിഷയഃപാത്മി
+ROW 3 | വതിന്നയഇത്തല്ലൊഷ്മണാ[illegible] ‖ ാബൊദ്ധ്യം।ചാത്മിവശതിരംദശ്യതി।ശരീര ‖ നമിത്തിഇന്ദ്രിയന്ദൾയത്തിഇന്ദ്രി
+ROW 4 | ത്തമിത്തി।ഗന്ധഗ്രാഹ ‖ കമിത്തിപ്രഷയാങ്ങനകഷനം।ശ്രൊദഞ്ഞ ‖ മിത്തിസംജ്ഞകാനനാസാ[illegible]
+ROW 5 | ഗ്രത്യാക്കൃഒയാക്കികഃ ‖ ഷാവമുണ്ണാനത്രാക്കിവിതഞ്ഞയംചാ ‖ ജ്ഞയവിഷയന്ദൾയത്തി
+ROW 6 | ഇൽവാരിദ്ദാരണങ്ങിം ‖ ഷവാംപ്രഷണമനമാഹസ്ത്രതെങ്ങിഉ ‖ ൽപനന്തിനദുങ്ങളെ
+ROW 7 | ബ്ബ്രാദ്ധിവാരണദാഞ്ഞ ‖ ത്മിതങ്ങൾസമാനാവികരണഭ്രു ‖ ബാപരങ്ങൾമമെഷെര
+ROW 8 | ാൽവജ്ഞുംശിതംശിലാ ‖ തലമിത്രാദെതങ്ങളസംബെധാരണവ ‖ വഷിതങ്ങൾഭാനമിക്കനാ
+NOTE | I could make out roughly half the glyphs, and only with low confidence. The ink is faint and the writing is cursive, so many conjuncts and vowel signs are guesses. The text looks like a Malayalam gloss, not pure Sanskrit. There is a leaf number (probably ൧) in the left margin at row 6, which I left out of the rows.

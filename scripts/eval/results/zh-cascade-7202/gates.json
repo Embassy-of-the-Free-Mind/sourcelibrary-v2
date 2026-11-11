@@ -1,0 +1,4005 @@
+{
+ "band": [
+  6.764339173822232,
+  9.618501452885013
+ ],
+ "summary": {
+  "deepseek": {
+   "routed_all": "48/64",
+   "routed_t5": "18/24",
+   "routed_siku_flagged": "20/20",
+   "routed_siku_clean": "10/20",
+   "by_gate": {
+    "negation": 14,
+    "length": 28,
+    "residue": 19,
+    "kanripo": 20
+   }
+  },
+  "qwen": {
+   "routed_all": "43/64",
+   "routed_t5": "14/24",
+   "routed_siku_flagged": "20/20",
+   "routed_siku_clean": "9/20",
+   "by_gate": {
+    "length": 22,
+    "negation": 18,
+    "residue": 9,
+    "kanripo": 19,
+    "empty": 1
+   }
+  },
+  "lite": {
+   "routed_all": "41/64",
+   "routed_t5": "16/24",
+   "routed_siku_flagged": "20/20",
+   "routed_siku_clean": "5/20",
+   "by_gate": {
+    "negation": 14,
+    "length": 20,
+    "residue": 6,
+    "kanripo": 20
+   }
+  },
+  "flash2": {
+   "routed_all": "37/64",
+   "routed_t5": "11/24",
+   "routed_siku_flagged": "20/20",
+   "routed_siku_clean": "6/20",
+   "by_gate": {
+    "length": 16,
+    "negation": 8,
+    "kanripo": 20,
+    "residue": 3
+   }
+  }
+ },
+ "per": {
+  "69935b692c63944063133f67_00112": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 4445,
+     "residue": 0,
+     "ratio": 6.848998459167951,
+     "src_neg": 55,
+     "eng_neg": 27
+    },
+    "lite2": {
+     "prose_chars": 4440,
+     "residue": 0,
+     "ratio": 6.841294298921418,
+     "src_neg": 55,
+     "eng_neg": 28
+    },
+    "flash": {
+     "prose_chars": 4912,
+     "residue": 0,
+     "ratio": 7.5685670261941445,
+     "src_neg": 55,
+     "eng_neg": 27
+    },
+    "flash2": {
+     "prose_chars": 4803,
+     "residue": 0,
+     "ratio": 7.400616332819722,
+     "src_neg": 55,
+     "eng_neg": 30
+    },
+    "deepseek": {
+     "prose_chars": 4437,
+     "residue": 0,
+     "ratio": 6.836671802773497,
+     "src_neg": 55,
+     "eng_neg": 25
+    },
+    "qwen": {
+     "prose_chars": 4149,
+     "residue": 0,
+     "ratio": 6.3929121725731894,
+     "src_neg": 55,
+     "eng_neg": 18
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "negation"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [
+     "negation"
+    ],
+    "flash2": []
+   }
+  },
+  "69e72c60a409200ea79f46f6_00141": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1544,
+     "residue": 0,
+     "ratio": 6.683982683982684,
+     "src_neg": 18,
+     "eng_neg": 15
+    },
+    "lite2": {
+     "prose_chars": 1498,
+     "residue": 0,
+     "ratio": 6.484848484848484,
+     "src_neg": 18,
+     "eng_neg": 15
+    },
+    "flash": {
+     "prose_chars": 1497,
+     "residue": 0,
+     "ratio": 6.48051948051948,
+     "src_neg": 18,
+     "eng_neg": 14
+    },
+    "flash2": {
+     "prose_chars": 1551,
+     "residue": 0,
+     "ratio": 6.714285714285714,
+     "src_neg": 18,
+     "eng_neg": 15
+    },
+    "deepseek": {
+     "prose_chars": 1418,
+     "residue": 0,
+     "ratio": 6.138528138528138,
+     "src_neg": 18,
+     "eng_neg": 15
+    },
+    "qwen": {
+     "prose_chars": 1427,
+     "residue": 0,
+     "ratio": 6.177489177489178,
+     "src_neg": 18,
+     "eng_neg": 17
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [
+     "length"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "69e72c65a409200ea79f47bd_00106": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1140,
+     "residue": 0,
+     "ratio": 6.705882352941177,
+     "src_neg": 6,
+     "eng_neg": 6
+    },
+    "lite2": {
+     "prose_chars": 1229,
+     "residue": 0,
+     "ratio": 7.229411764705882,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1285,
+     "residue": 0,
+     "ratio": 7.5588235294117645,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1484,
+     "residue": 0,
+     "ratio": 8.729411764705882,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1189,
+     "residue": 0,
+     "ratio": 6.9941176470588236,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1399,
+     "residue": 0,
+     "ratio": 8.229411764705882,
+     "src_neg": 6,
+     "eng_neg": 4
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [
+     "length"
+    ],
+    "flash2": []
+   }
+  },
+  "69e72c6ba409200ea79f484e_00102": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1207,
+     "residue": 0.03571428571428571,
+     "ratio": 7.184523809523809,
+     "src_neg": 9,
+     "eng_neg": 9
+    },
+    "lite2": {
+     "prose_chars": 1202,
+     "residue": 0,
+     "ratio": 7.154761904761905,
+     "src_neg": 9,
+     "eng_neg": 9
+    },
+    "flash": {
+     "prose_chars": 1263,
+     "residue": 0,
+     "ratio": 7.517857142857143,
+     "src_neg": 9,
+     "eng_neg": 9
+    },
+    "flash2": {
+     "prose_chars": 1163,
+     "residue": 0,
+     "ratio": 6.9226190476190474,
+     "src_neg": 9,
+     "eng_neg": 9
+    },
+    "deepseek": {
+     "prose_chars": 1155,
+     "residue": 0,
+     "ratio": 6.875,
+     "src_neg": 9,
+     "eng_neg": 9
+    },
+    "qwen": {
+     "prose_chars": 1074,
+     "residue": 0,
+     "ratio": 6.392857142857143,
+     "src_neg": 9,
+     "eng_neg": 8
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "length"
+    ],
+    "lite": [
+     "residue"
+    ],
+    "flash2": []
+   }
+  },
+  "69e72c70a409200ea79f48f9_00078": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 581,
+     "residue": 0,
+     "ratio": 3.4790419161676644,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 594,
+     "residue": 0,
+     "ratio": 3.55688622754491,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 668,
+     "residue": 0,
+     "ratio": 4,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "flash2": {
+     "prose_chars": 763,
+     "residue": 0,
+     "ratio": 4.568862275449102,
+     "src_neg": 2,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 608,
+     "residue": 0,
+     "ratio": 3.6407185628742513,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 3739,
+     "residue": 0,
+     "ratio": 22.389221556886227,
+     "src_neg": 2,
+     "eng_neg": 22
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [
+     "length"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "69e72c75a409200ea79f4976_00100": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1758,
+     "residue": 0.004,
+     "ratio": 7.032,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1933,
+     "residue": 0,
+     "ratio": 7.732,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "flash": {
+     "prose_chars": 2196,
+     "residue": 0.004,
+     "ratio": 8.784,
+     "src_neg": 7,
+     "eng_neg": 6
+    },
+    "flash2": {
+     "prose_chars": 1975,
+     "residue": 0.004,
+     "ratio": 7.9,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1625,
+     "residue": 0.004,
+     "ratio": 6.5,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 2078,
+     "residue": 0,
+     "ratio": 8.312,
+     "src_neg": 7,
+     "eng_neg": 5
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "69e72c7da409200ea79f4a01_00053": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1175,
+     "residue": 0,
+     "ratio": 5.7317073170731705,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1440,
+     "residue": 0,
+     "ratio": 7.024390243902439,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1532,
+     "residue": 0,
+     "ratio": 7.4731707317073175,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1490,
+     "residue": 0,
+     "ratio": 7.2682926829268295,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 1469,
+     "residue": 0,
+     "ratio": 7.1658536585365855,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "qwen": {
+     "prose_chars": 1748,
+     "residue": 0.8731707317073171,
+     "ratio": 8.526829268292683,
+     "src_neg": 5,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "residue",
+     "negation"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": []
+   }
+  },
+  "69e7494885f786e884a4e57a_00024": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 587,
+     "residue": 0,
+     "ratio": 4.223021582733813,
+     "src_neg": 7,
+     "eng_neg": 6
+    },
+    "lite2": {
+     "prose_chars": 586,
+     "residue": 0,
+     "ratio": 4.215827338129497,
+     "src_neg": 7,
+     "eng_neg": 6
+    },
+    "flash": {
+     "prose_chars": 733,
+     "residue": 0,
+     "ratio": 5.273381294964029,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 808,
+     "residue": 0,
+     "ratio": 5.81294964028777,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 606,
+     "residue": 0.014388489208633094,
+     "ratio": 4.359712230215828,
+     "src_neg": 7,
+     "eng_neg": 6
+    },
+    "qwen": {
+     "prose_chars": 596,
+     "residue": 0,
+     "ratio": 4.287769784172662,
+     "src_neg": 7,
+     "eng_neg": 10
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [
+     "length"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "69e8b2642ff2a8dc09e778a1_00439": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1505,
+     "residue": 0,
+     "ratio": 7.099056603773585,
+     "src_neg": 6,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 1508,
+     "residue": 0,
+     "ratio": 7.113207547169812,
+     "src_neg": 6,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1582,
+     "residue": 0,
+     "ratio": 7.462264150943396,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1549,
+     "residue": 0,
+     "ratio": 7.306603773584905,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 1312,
+     "residue": 0.0047169811320754715,
+     "ratio": 6.188679245283019,
+     "src_neg": 6,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 1741,
+     "residue": 0,
+     "ratio": 8.212264150943396,
+     "src_neg": 6,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [],
+    "lite": [
+     "negation"
+    ],
+    "flash2": []
+   }
+  },
+  "69e8b26b2ff2a8dc09e77afc_00118": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 2639,
+     "residue": 0,
+     "ratio": 7.392156862745098,
+     "src_neg": 21,
+     "eng_neg": 14
+    },
+    "lite2": {
+     "prose_chars": 2208,
+     "residue": 0,
+     "ratio": 6.184873949579832,
+     "src_neg": 21,
+     "eng_neg": 11
+    },
+    "flash": {
+     "prose_chars": 2724,
+     "residue": 0,
+     "ratio": 7.630252100840337,
+     "src_neg": 21,
+     "eng_neg": 10
+    },
+    "flash2": {
+     "prose_chars": 2896,
+     "residue": 0,
+     "ratio": 8.11204481792717,
+     "src_neg": 21,
+     "eng_neg": 13
+    },
+    "deepseek": {
+     "prose_chars": 2259,
+     "residue": 0,
+     "ratio": 6.3277310924369745,
+     "src_neg": 21,
+     "eng_neg": 12
+    },
+    "qwen": {
+     "prose_chars": 2268,
+     "residue": 0,
+     "ratio": 6.352941176470588,
+     "src_neg": 21,
+     "eng_neg": 9
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c5f05879008ba7e15291d_00045": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 4897,
+     "residue": 0,
+     "ratio": 8.63668430335097,
+     "src_neg": 20,
+     "eng_neg": 14
+    },
+    "lite2": {
+     "prose_chars": 5007,
+     "residue": 0,
+     "ratio": 8.83068783068783,
+     "src_neg": 20,
+     "eng_neg": 14
+    },
+    "flash": {
+     "prose_chars": 4921,
+     "residue": 0,
+     "ratio": 8.679012345679013,
+     "src_neg": 20,
+     "eng_neg": 15
+    },
+    "flash2": {
+     "prose_chars": 4933,
+     "residue": 0,
+     "ratio": 8.700176366843033,
+     "src_neg": 20,
+     "eng_neg": 14
+    },
+    "deepseek": {
+     "prose_chars": 4638,
+     "residue": 0,
+     "ratio": 8.17989417989418,
+     "src_neg": 20,
+     "eng_neg": 17
+    },
+    "qwen": {
+     "prose_chars": 4889,
+     "residue": 0.003527336860670194,
+     "ratio": 8.62257495590829,
+     "src_neg": 20,
+     "eng_neg": 14
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c5f3b879008ba7e153836_00013": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1579,
+     "residue": 0,
+     "ratio": 5.110032362459547,
+     "src_neg": 19,
+     "eng_neg": 14
+    },
+    "lite2": {
+     "prose_chars": 1712,
+     "residue": 0,
+     "ratio": 5.540453074433657,
+     "src_neg": 19,
+     "eng_neg": 12
+    },
+    "flash": {
+     "prose_chars": 1587,
+     "residue": 0,
+     "ratio": 5.135922330097087,
+     "src_neg": 19,
+     "eng_neg": 14
+    },
+    "flash2": {
+     "prose_chars": 1503,
+     "residue": 0,
+     "ratio": 4.864077669902913,
+     "src_neg": 19,
+     "eng_neg": 14
+    },
+    "deepseek": {
+     "prose_chars": 1752,
+     "residue": 0,
+     "ratio": 5.669902912621359,
+     "src_neg": 19,
+     "eng_neg": 14
+    },
+    "qwen": {
+     "prose_chars": 1721,
+     "residue": 0,
+     "ratio": 5.56957928802589,
+     "src_neg": 19,
+     "eng_neg": 12
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [
+     "length"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "6a3c5f3c879008ba7e153862_00029": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 780,
+     "residue": 0.05555555555555555,
+     "ratio": 5.416666666666667,
+     "src_neg": 8,
+     "eng_neg": 6
+    },
+    "lite2": {
+     "prose_chars": 811,
+     "residue": 0,
+     "ratio": 5.631944444444445,
+     "src_neg": 8,
+     "eng_neg": 7
+    },
+    "flash": {
+     "prose_chars": 684,
+     "residue": 0,
+     "ratio": 4.75,
+     "src_neg": 8,
+     "eng_neg": 7
+    },
+    "flash2": {
+     "prose_chars": 634,
+     "residue": 0,
+     "ratio": 4.402777777777778,
+     "src_neg": 8,
+     "eng_neg": 6
+    },
+    "deepseek": {
+     "prose_chars": 628,
+     "residue": 0,
+     "ratio": 4.361111111111111,
+     "src_neg": 8,
+     "eng_neg": 7
+    },
+    "qwen": {
+     "prose_chars": 1025,
+     "residue": 0,
+     "ratio": 7.118055555555555,
+     "src_neg": 8,
+     "eng_neg": 7
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [],
+    "lite": [
+     "residue",
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "6a3c6191879008ba7e15f0b2_00070": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1131,
+     "residue": 0,
+     "ratio": 8.195652173913043,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1120,
+     "residue": 0,
+     "ratio": 8.115942028985508,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1026,
+     "residue": 0,
+     "ratio": 7.434782608695652,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 974,
+     "residue": 0,
+     "ratio": 7.057971014492754,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 1080,
+     "residue": 0,
+     "ratio": 7.826086956521739,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 952,
+     "residue": 0,
+     "ratio": 6.898550724637682,
+     "src_neg": 5,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "negation"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": [
+     "negation"
+    ]
+   }
+  },
+  "6a3c6192879008ba7e15f12e_00065": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1202,
+     "residue": 0,
+     "ratio": 7.856209150326797,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 1240,
+     "residue": 0,
+     "ratio": 8.104575163398692,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1169,
+     "residue": 0,
+     "ratio": 7.640522875816994,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "flash2": {
+     "prose_chars": 1146,
+     "residue": 0,
+     "ratio": 7.490196078431373,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 180,
+     "residue": 0.8954248366013072,
+     "ratio": 1.1764705882352942,
+     "src_neg": 4,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1252,
+     "residue": 0.013071895424836602,
+     "ratio": 8.183006535947712,
+     "src_neg": 4,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c61b1879008ba7e15fba1_00068": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1679,
+     "residue": 0,
+     "ratio": 7.237068965517241,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1835,
+     "residue": 0,
+     "ratio": 7.9094827586206895,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1916,
+     "residue": 0,
+     "ratio": 8.258620689655173,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "flash2": {
+     "prose_chars": 1828,
+     "residue": 0,
+     "ratio": 7.879310344827586,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 1703,
+     "residue": 0.02586206896551724,
+     "ratio": 7.3405172413793105,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 1653,
+     "residue": 0,
+     "ratio": 7.125,
+     "src_neg": 5,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue"
+    ],
+    "qwen": [
+     "negation"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c61b3879008ba7e15fc71_00112": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1075,
+     "residue": 0,
+     "ratio": 5.748663101604278,
+     "src_neg": 3,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1149,
+     "residue": 0,
+     "ratio": 6.144385026737968,
+     "src_neg": 3,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1456,
+     "residue": 0.0053475935828877,
+     "ratio": 7.786096256684492,
+     "src_neg": 3,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1212,
+     "residue": 0.0053475935828877,
+     "ratio": 6.481283422459893,
+     "src_neg": 3,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 1295,
+     "residue": 0.0748663101604278,
+     "ratio": 6.925133689839572,
+     "src_neg": 3,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 1313,
+     "residue": 0,
+     "ratio": 7.021390374331551,
+     "src_neg": 3,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue"
+    ],
+    "qwen": [],
+    "lite": [
+     "length",
+     "negation"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "6a3c61b5879008ba7e15fd28_00117": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1239,
+     "residue": 0,
+     "ratio": 6.226130653266332,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1280,
+     "residue": 0,
+     "ratio": 6.432160804020101,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "flash": {
+     "prose_chars": 1404,
+     "residue": 0,
+     "ratio": 7.055276381909548,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1452,
+     "residue": 0,
+     "ratio": 7.296482412060302,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1302,
+     "residue": 0,
+     "ratio": 6.542713567839196,
+     "src_neg": 6,
+     "eng_neg": 8
+    },
+    "qwen": {
+     "prose_chars": 1400,
+     "residue": 0,
+     "ratio": 7.035175879396985,
+     "src_neg": 6,
+     "eng_neg": 4
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [],
+    "lite": [
+     "length"
+    ],
+    "flash2": []
+   }
+  },
+  "6a3c61db40c88a541d8f091d_00083": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1234,
+     "residue": 0,
+     "ratio": 6.328205128205128,
+     "src_neg": 10,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1219,
+     "residue": 0,
+     "ratio": 6.251282051282051,
+     "src_neg": 10,
+     "eng_neg": 7
+    },
+    "flash": {
+     "prose_chars": 1166,
+     "residue": 0,
+     "ratio": 5.97948717948718,
+     "src_neg": 10,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1170,
+     "residue": 0,
+     "ratio": 6,
+     "src_neg": 10,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 266,
+     "residue": 1.1384615384615384,
+     "ratio": 1.3641025641025641,
+     "src_neg": 10,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 816,
+     "residue": 0,
+     "ratio": 4.184615384615385,
+     "src_neg": 10,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "6a3c61ec40c88a541d8f0f4a_00018": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1528,
+     "residue": 0,
+     "ratio": 6.821428571428571,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 1505,
+     "residue": 0,
+     "ratio": 6.71875,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1530,
+     "residue": 0,
+     "ratio": 6.830357142857143,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1314,
+     "residue": 0,
+     "ratio": 5.866071428571429,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 1590,
+     "residue": 0,
+     "ratio": 7.098214285714286,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 1493,
+     "residue": 0.008928571428571428,
+     "ratio": 6.665178571428571,
+     "src_neg": 5,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "negation"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [
+     "negation"
+    ],
+    "flash2": [
+     "length",
+     "negation"
+    ]
+   }
+  },
+  "69e7268ca409200ea79ef73b_00111": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1691,
+     "residue": 0,
+     "ratio": 7.075313807531381,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1717,
+     "residue": 0,
+     "ratio": 7.184100418410042,
+     "src_neg": 6,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1945,
+     "residue": 0,
+     "ratio": 8.138075313807532,
+     "src_neg": 6,
+     "eng_neg": 6
+    },
+    "flash2": {
+     "prose_chars": 1891,
+     "residue": 0,
+     "ratio": 7.912133891213389,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1640,
+     "residue": 0,
+     "ratio": 6.861924686192468,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1799,
+     "residue": 0.008368200836820083,
+     "ratio": 7.527196652719665,
+     "src_neg": 6,
+     "eng_neg": 5
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "69e72698a409200ea79ef8c3_00129": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1546,
+     "residue": 0,
+     "ratio": 7.541463414634146,
+     "src_neg": 7,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1445,
+     "residue": 0,
+     "ratio": 7.048780487804878,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1778,
+     "residue": 0,
+     "ratio": 8.673170731707318,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "flash2": {
+     "prose_chars": 1710,
+     "residue": 0,
+     "ratio": 8.341463414634147,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1433,
+     "residue": 0,
+     "ratio": 6.990243902439024,
+     "src_neg": 7,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1611,
+     "residue": 0,
+     "ratio": 7.8585365853658535,
+     "src_neg": 7,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "negation"
+    ],
+    "lite": [
+     "negation"
+    ],
+    "flash2": []
+   }
+  },
+  "69e792f880b52390feb17389_00344": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 4846,
+     "residue": 0,
+     "ratio": 5.550973654066437,
+     "src_neg": 22,
+     "eng_neg": 16
+    },
+    "lite2": {
+     "prose_chars": 4863,
+     "residue": 0,
+     "ratio": 5.570446735395189,
+     "src_neg": 22,
+     "eng_neg": 17
+    },
+    "flash": {
+     "prose_chars": 5437,
+     "residue": 0,
+     "ratio": 6.22794959908362,
+     "src_neg": 22,
+     "eng_neg": 17
+    },
+    "flash2": {
+     "prose_chars": 5507,
+     "residue": 0,
+     "ratio": 6.308132875143184,
+     "src_neg": 22,
+     "eng_neg": 20
+    },
+    "deepseek": {
+     "prose_chars": 4971,
+     "residue": 0.06071019473081329,
+     "ratio": 5.694158075601375,
+     "src_neg": 22,
+     "eng_neg": 15
+    },
+    "qwen": {
+     "prose_chars": 5027,
+     "residue": 0,
+     "ratio": 5.758304696449026,
+     "src_neg": 22,
+     "eng_neg": 14
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length"
+    ],
+    "qwen": [
+     "length"
+    ],
+    "lite": [
+     "length"
+    ],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "69e792fd80b52390feb1770f_00022": {
+   "track": "T5-zh",
+   "stratum": "T5",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 2443,
+     "residue": 0,
+     "ratio": 7,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1610,
+     "residue": 0,
+     "ratio": 4.613180515759312,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1799,
+     "residue": 0,
+     "ratio": 5.154727793696275,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1801,
+     "residue": 0,
+     "ratio": 5.160458452722063,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 1774,
+     "residue": 0.6561604584527221,
+     "ratio": 5.083094555873926,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 1768,
+     "residue": 0,
+     "ratio": 5.065902578796561,
+     "src_neg": 5,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "6a3c70cb01fe4f593c1d4e1d_00011": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1801,
+     "residue": 0,
+     "ratio": 7.933920704845815,
+     "src_neg": 9,
+     "eng_neg": 7
+    },
+    "lite2": {
+     "prose_chars": 1780,
+     "residue": 0,
+     "ratio": 7.841409691629956,
+     "src_neg": 9,
+     "eng_neg": 7
+    },
+    "flash": {
+     "prose_chars": 1929,
+     "residue": 0,
+     "ratio": 8.497797356828194,
+     "src_neg": 9,
+     "eng_neg": 5
+    },
+    "flash2": {
+     "prose_chars": 2077,
+     "residue": 0,
+     "ratio": 9.14977973568282,
+     "src_neg": 9,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 2405,
+     "residue": 0.9823788546255506,
+     "ratio": 10.594713656387665,
+     "src_neg": 9,
+     "eng_neg": 7
+    },
+    "qwen": {
+     "prose_chars": 1722,
+     "residue": 0,
+     "ratio": 7.58590308370044,
+     "src_neg": 9,
+     "eng_neg": 7
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3cbeafec254ff6cae0224d_00032": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1684,
+     "residue": 0.0055248618784530384,
+     "ratio": 9.303867403314918,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1554,
+     "residue": 0,
+     "ratio": 8.585635359116022,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1443,
+     "residue": 0.03867403314917127,
+     "ratio": 7.972375690607735,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1352,
+     "residue": 0,
+     "ratio": 7.469613259668508,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 1651,
+     "residue": 0.2154696132596685,
+     "ratio": 9.121546961325967,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 1322,
+     "residue": 0,
+     "ratio": 7.303867403314917,
+     "src_neg": 2,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c777601fe4f593c2025e0_00112": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1133,
+     "residue": 0.1590909090909091,
+     "ratio": 8.583333333333334,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "lite2": {
+     "prose_chars": 1043,
+     "residue": 0.09090909090909091,
+     "ratio": 7.901515151515151,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 952,
+     "residue": 0,
+     "ratio": 7.212121212121212,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 978,
+     "residue": 0,
+     "ratio": 7.409090909090909,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 849,
+     "residue": 0,
+     "ratio": 6.431818181818182,
+     "src_neg": 7,
+     "eng_neg": 4
+    },
+    "qwen": {
+     "prose_chars": 1617,
+     "residue": 0.25757575757575757,
+     "ratio": 12.25,
+     "src_neg": 7,
+     "eng_neg": 5
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "residue",
+     "length",
+     "kanripo"
+    ],
+    "lite": [
+     "residue",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c613840c88a541d8eeec0_00042": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1070,
+     "residue": 0,
+     "ratio": 7.697841726618705,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1157,
+     "residue": 0,
+     "ratio": 8.323741007194245,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 942,
+     "residue": 0,
+     "ratio": 6.776978417266187,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 977,
+     "residue": 0,
+     "ratio": 7.028776978417266,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 312,
+     "residue": 0,
+     "ratio": 2.2446043165467624,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1237,
+     "residue": 0.007194244604316547,
+     "ratio": 8.899280575539569,
+     "src_neg": 0,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3cb70d3dce6cfad7485fa7_00171": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1742,
+     "residue": 0.028708133971291867,
+     "ratio": 8.334928229665072,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 1832,
+     "residue": 0,
+     "ratio": 8.76555023923445,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1891,
+     "residue": 0,
+     "ratio": 9.047846889952153,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "flash2": {
+     "prose_chars": 1914,
+     "residue": 0,
+     "ratio": 9.157894736842104,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 2062,
+     "residue": 1,
+     "ratio": 9.866028708133971,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 1855,
+     "residue": 0,
+     "ratio": 8.875598086124402,
+     "src_neg": 2,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "residue",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c74cc01fe4f593c1f2713_00157": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1235,
+     "residue": 0,
+     "ratio": 11.026785714285714,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 525,
+     "residue": 0,
+     "ratio": 4.6875,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 786,
+     "residue": 0,
+     "ratio": 7.017857142857143,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 953,
+     "residue": 0,
+     "ratio": 8.508928571428571,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 614,
+     "residue": 0.008928571428571428,
+     "ratio": 5.482142857142857,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 4470,
+     "residue": 2.6785714285714284,
+     "ratio": 39.910714285714285,
+     "src_neg": 0,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "residue",
+     "length",
+     "kanripo"
+    ],
+    "lite": [
+     "length",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c63d2af3c49b59c5c8e16_00106": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1212,
+     "residue": 0.41317365269461076,
+     "ratio": 7.25748502994012,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1277,
+     "residue": 0.10778443113772455,
+     "ratio": 7.6467065868263475,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1145,
+     "residue": 0.029940119760479042,
+     "ratio": 6.8562874251497,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 941,
+     "residue": 0.16167664670658682,
+     "ratio": 5.634730538922156,
+     "src_neg": 1,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 389,
+     "residue": 0.029940119760479042,
+     "ratio": 2.3293413173652695,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1602,
+     "residue": 0.5209580838323353,
+     "ratio": 9.592814371257486,
+     "src_neg": 1,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "qwen": [
+     "residue",
+     "kanripo"
+    ],
+    "lite": [
+     "residue",
+     "kanripo"
+    ],
+    "flash2": [
+     "residue",
+     "length",
+     "kanripo"
+    ]
+   }
+  },
+  "6a3cb9aa3dce6cfad7495af1_00105": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1203,
+     "residue": 0,
+     "ratio": 7.335365853658536,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1248,
+     "residue": 0,
+     "ratio": 7.609756097560975,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1242,
+     "residue": 0,
+     "ratio": 7.573170731707317,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1426,
+     "residue": 0,
+     "ratio": 8.695121951219512,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 1320,
+     "residue": 0,
+     "ratio": 8.048780487804878,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 1510,
+     "residue": 0,
+     "ratio": 9.207317073170731,
+     "src_neg": 2,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c61a7879008ba7e15f810_00094": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 604,
+     "residue": 0,
+     "ratio": 2.835680751173709,
+     "src_neg": 4,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1594,
+     "residue": 0,
+     "ratio": 7.483568075117371,
+     "src_neg": 4,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1827,
+     "residue": 0,
+     "ratio": 8.577464788732394,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "flash2": {
+     "prose_chars": 1796,
+     "residue": 0,
+     "ratio": 8.431924882629108,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 1680,
+     "residue": 0,
+     "ratio": 7.887323943661972,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 0,
+     "residue": 0,
+     "ratio": 0,
+     "src_neg": 4,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "empty"
+    ],
+    "lite": [
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3cb9ae3dce6cfad7495cc1_00081": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1168,
+     "residue": 0,
+     "ratio": 6.712643678160919,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1274,
+     "residue": 0,
+     "ratio": 7.32183908045977,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 1592,
+     "residue": 0,
+     "ratio": 9.149425287356323,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1477,
+     "residue": 0,
+     "ratio": 8.488505747126437,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 1377,
+     "residue": 0,
+     "ratio": 7.913793103448276,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1160,
+     "residue": 0,
+     "ratio": 6.666666666666667,
+     "src_neg": 0,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "length",
+     "kanripo"
+    ],
+    "lite": [
+     "length",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6ff501fe4f593c1cf4a8_00004": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1188,
+     "residue": 0,
+     "ratio": 8.136986301369863,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1079,
+     "residue": 0,
+     "ratio": 7.390410958904109,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1422,
+     "residue": 0.0410958904109589,
+     "ratio": 9.73972602739726,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1194,
+     "residue": 0,
+     "ratio": 8.178082191780822,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1320,
+     "residue": 0,
+     "ratio": 9.04109589041096,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1454,
+     "residue": 1.0136986301369864,
+     "ratio": 9.95890410958904,
+     "src_neg": 5,
+     "eng_neg": 5
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "residue",
+     "length",
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3cbc04ec254ff6cadeceb9_00143": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1053,
+     "residue": 0,
+     "ratio": 9.75,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1078,
+     "residue": 0,
+     "ratio": 9.981481481481481,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1118,
+     "residue": 0,
+     "ratio": 10.351851851851851,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 942,
+     "residue": 0,
+     "ratio": 8.722222222222221,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 936,
+     "residue": 1,
+     "ratio": 8.666666666666666,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 1097,
+     "residue": 0,
+     "ratio": 10.157407407407407,
+     "src_neg": 1,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "kanripo"
+    ],
+    "qwen": [
+     "length",
+     "kanripo"
+    ],
+    "lite": [
+     "length",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6f0601fe4f593c1c85a6_00129": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 996,
+     "residue": 0,
+     "ratio": 9.137614678899082,
+     "src_neg": 4,
+     "eng_neg": 4
+    },
+    "lite2": {
+     "prose_chars": 1114,
+     "residue": 0,
+     "ratio": 10.220183486238533,
+     "src_neg": 4,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1020,
+     "residue": 0,
+     "ratio": 9.357798165137615,
+     "src_neg": 4,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1062,
+     "residue": 0,
+     "ratio": 9.743119266055047,
+     "src_neg": 4,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 821,
+     "residue": 0,
+     "ratio": 7.532110091743119,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 1289,
+     "residue": 0,
+     "ratio": 11.825688073394495,
+     "src_neg": 4,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "length",
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "length",
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6c9901fe4f593c1b2c94_00198": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1120,
+     "residue": 0,
+     "ratio": 6.91358024691358,
+     "src_neg": 9,
+     "eng_neg": 6
+    },
+    "lite2": {
+     "prose_chars": 1160,
+     "residue": 0,
+     "ratio": 7.160493827160494,
+     "src_neg": 9,
+     "eng_neg": 7
+    },
+    "flash": {
+     "prose_chars": 1250,
+     "residue": 0,
+     "ratio": 7.716049382716049,
+     "src_neg": 9,
+     "eng_neg": 9
+    },
+    "flash2": {
+     "prose_chars": 1102,
+     "residue": 0,
+     "ratio": 6.802469135802469,
+     "src_neg": 9,
+     "eng_neg": 6
+    },
+    "deepseek": {
+     "prose_chars": 1072,
+     "residue": 0,
+     "ratio": 6.617283950617284,
+     "src_neg": 9,
+     "eng_neg": 7
+    },
+    "qwen": {
+     "prose_chars": 1276,
+     "residue": 0.012345679012345678,
+     "ratio": 7.8765432098765435,
+     "src_neg": 9,
+     "eng_neg": 8
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c70ac39b4508b04e508d1_00050": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1047,
+     "residue": 0,
+     "ratio": 7.122448979591836,
+     "src_neg": 6,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 1165,
+     "residue": 0,
+     "ratio": 7.925170068027211,
+     "src_neg": 6,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1153,
+     "residue": 0,
+     "ratio": 7.843537414965986,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1013,
+     "residue": 0,
+     "ratio": 6.891156462585034,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 1035,
+     "residue": 0,
+     "ratio": 7.040816326530612,
+     "src_neg": 6,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 1089,
+     "residue": 0,
+     "ratio": 7.408163265306122,
+     "src_neg": 6,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "negation",
+     "kanripo"
+    ],
+    "lite": [
+     "negation",
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3cb99f3dce6cfad74954ba_00080": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1223,
+     "residue": 0,
+     "ratio": 8.86231884057971,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1259,
+     "residue": 0,
+     "ratio": 9.123188405797102,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1158,
+     "residue": 0,
+     "ratio": 8.391304347826088,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1130,
+     "residue": 0,
+     "ratio": 8.18840579710145,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 1206,
+     "residue": 0,
+     "ratio": 8.73913043478261,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1296,
+     "residue": 0,
+     "ratio": 9.391304347826088,
+     "src_neg": 5,
+     "eng_neg": 4
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6ef201fe4f593c1c79f4_00090": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 2732,
+     "residue": 0,
+     "ratio": 11.151020408163266,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 2712,
+     "residue": 0,
+     "ratio": 11.06938775510204,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1694,
+     "residue": 0,
+     "ratio": 6.914285714285715,
+     "src_neg": 2,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 2709,
+     "residue": 0.11428571428571428,
+     "ratio": 11.057142857142857,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 1509,
+     "residue": 0,
+     "ratio": 6.159183673469387,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 2551,
+     "residue": 0.2857142857142857,
+     "ratio": 10.412244897959184,
+     "src_neg": 2,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "lite": [
+     "length",
+     "kanripo"
+    ],
+    "flash2": [
+     "residue",
+     "length",
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6aefaf3c49b59c5eb80b_00052": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 549,
+     "residue": 0,
+     "ratio": 4.815789473684211,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 650,
+     "residue": 0,
+     "ratio": 5.701754385964913,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 921,
+     "residue": 0,
+     "ratio": 8.078947368421053,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 473,
+     "residue": 0,
+     "ratio": 4.149122807017544,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 325,
+     "residue": 0,
+     "ratio": 2.8508771929824563,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1312,
+     "residue": 0,
+     "ratio": 11.508771929824562,
+     "src_neg": 3,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "qwen": [
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "lite": [
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "flash2": [
+     "length",
+     "negation",
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6853af3c49b59c5d7ea7_00016": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1261,
+     "residue": 0,
+     "ratio": 8.756944444444445,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1247,
+     "residue": 0,
+     "ratio": 8.659722222222221,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 1227,
+     "residue": 0,
+     "ratio": 8.520833333333334,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1252,
+     "residue": 0,
+     "ratio": 8.694444444444445,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 948,
+     "residue": 0,
+     "ratio": 6.583333333333333,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 1181,
+     "residue": 0,
+     "ratio": 8.20138888888889,
+     "src_neg": 1,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length",
+     "kanripo"
+    ],
+    "qwen": [
+     "kanripo"
+    ],
+    "lite": [
+     "kanripo"
+    ],
+    "flash2": [
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c6a2639b4508b04e3f51a_00106": {
+   "track": "siku",
+   "stratum": "flagged",
+   "flagged": true,
+   "arms": {
+    "lite": {
+     "prose_chars": 1576,
+     "residue": 0.048507462686567165,
+     "ratio": 5.880597014925373,
+     "src_neg": 6,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1832,
+     "residue": 0,
+     "ratio": 6.835820895522388,
+     "src_neg": 6,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1897,
+     "residue": 0,
+     "ratio": 7.0783582089552235,
+     "src_neg": 6,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1831,
+     "residue": 0,
+     "ratio": 6.832089552238806,
+     "src_neg": 6,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 347,
+     "residue": 1,
+     "ratio": 1.294776119402985,
+     "src_neg": 6,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 2031,
+     "residue": 0,
+     "ratio": 7.5783582089552235,
+     "src_neg": 6,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "qwen": [
+     "negation",
+     "kanripo"
+    ],
+    "lite": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "flash2": [
+     "negation",
+     "kanripo"
+    ]
+   }
+  },
+  "6a3c71b201fe4f593c1da00d_00074": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1353,
+     "residue": 0,
+     "ratio": 7.6440677966101696,
+     "src_neg": 8,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1395,
+     "residue": 0,
+     "ratio": 7.88135593220339,
+     "src_neg": 8,
+     "eng_neg": 5
+    },
+    "flash": {
+     "prose_chars": 1356,
+     "residue": 0,
+     "ratio": 7.661016949152542,
+     "src_neg": 8,
+     "eng_neg": 5
+    },
+    "flash2": {
+     "prose_chars": 1346,
+     "residue": 0,
+     "ratio": 7.604519774011299,
+     "src_neg": 8,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 1337,
+     "residue": 0,
+     "ratio": 7.553672316384181,
+     "src_neg": 8,
+     "eng_neg": 6
+    },
+    "qwen": {
+     "prose_chars": 1486,
+     "residue": 0,
+     "ratio": 8.3954802259887,
+     "src_neg": 8,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "negation"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c6e8a01fe4f593c1c3b93_00138": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1994,
+     "residue": 0,
+     "ratio": 9.679611650485437,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 2208,
+     "residue": 0,
+     "ratio": 10.718446601941748,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1094,
+     "residue": 0,
+     "ratio": 5.310679611650485,
+     "src_neg": 5,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1093,
+     "residue": 0,
+     "ratio": 5.305825242718447,
+     "src_neg": 5,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 2382,
+     "residue": 1,
+     "ratio": 11.563106796116505,
+     "src_neg": 5,
+     "eng_neg": 2
+    },
+    "qwen": {
+     "prose_chars": 2938,
+     "residue": 0.019417475728155338,
+     "ratio": 14.262135922330097,
+     "src_neg": 5,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [
+     "length",
+     "negation"
+    ],
+    "flash2": [
+     "length",
+     "negation"
+    ]
+   }
+  },
+  "6a3c69f339b4508b04e3e620_00091": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1476,
+     "residue": 0,
+     "ratio": 9.647058823529411,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1272,
+     "residue": 0,
+     "ratio": 8.313725490196079,
+     "src_neg": 3,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1094,
+     "residue": 0,
+     "ratio": 7.150326797385621,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1268,
+     "residue": 0,
+     "ratio": 8.287581699346406,
+     "src_neg": 3,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 1154,
+     "residue": 0,
+     "ratio": 7.542483660130719,
+     "src_neg": 3,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 1579,
+     "residue": 0.006535947712418301,
+     "ratio": 10.320261437908497,
+     "src_neg": 3,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "negation"
+    ],
+    "qwen": [
+     "length",
+     "negation"
+    ],
+    "lite": [
+     "length",
+     "negation"
+    ],
+    "flash2": [
+     "negation"
+    ]
+   }
+  },
+  "6a3ce7760a0011cb4bc09b97_00118": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1249,
+     "residue": 0,
+     "ratio": 8.38255033557047,
+     "src_neg": 10,
+     "eng_neg": 7
+    },
+    "lite2": {
+     "prose_chars": 1196,
+     "residue": 0,
+     "ratio": 8.026845637583893,
+     "src_neg": 10,
+     "eng_neg": 7
+    },
+    "flash": {
+     "prose_chars": 1312,
+     "residue": 0,
+     "ratio": 8.805369127516778,
+     "src_neg": 10,
+     "eng_neg": 8
+    },
+    "flash2": {
+     "prose_chars": 1286,
+     "residue": 0,
+     "ratio": 8.630872483221477,
+     "src_neg": 10,
+     "eng_neg": 8
+    },
+    "deepseek": {
+     "prose_chars": 1158,
+     "residue": 0,
+     "ratio": 7.771812080536913,
+     "src_neg": 10,
+     "eng_neg": 9
+    },
+    "qwen": {
+     "prose_chars": 1035,
+     "residue": 0,
+     "ratio": 6.946308724832215,
+     "src_neg": 10,
+     "eng_neg": 9
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c72bc01fe4f593c1e24c0_00029": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1113,
+     "residue": 0,
+     "ratio": 8.627906976744185,
+     "src_neg": 2,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1038,
+     "residue": 0,
+     "ratio": 8.046511627906977,
+     "src_neg": 2,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1236,
+     "residue": 0,
+     "ratio": 9.581395348837209,
+     "src_neg": 2,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1181,
+     "residue": 0,
+     "ratio": 9.155038759689923,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 212,
+     "residue": 1.4031007751937985,
+     "ratio": 1.6434108527131783,
+     "src_neg": 2,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1127,
+     "residue": 0,
+     "ratio": 8.736434108527131,
+     "src_neg": 2,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3cbb5d3dce6cfad74a30b8_00080": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1728,
+     "residue": 0,
+     "ratio": 8.347826086956522,
+     "src_neg": 4,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1672,
+     "residue": 0,
+     "ratio": 8.077294685990339,
+     "src_neg": 4,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 1735,
+     "residue": 0,
+     "ratio": 8.381642512077295,
+     "src_neg": 4,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1717,
+     "residue": 0,
+     "ratio": 8.294685990338165,
+     "src_neg": 4,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 1563,
+     "residue": 0.057971014492753624,
+     "ratio": 7.550724637681159,
+     "src_neg": 4,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1638,
+     "residue": 0,
+     "ratio": 7.913043478260869,
+     "src_neg": 4,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "negation"
+    ],
+    "qwen": [
+     "negation"
+    ],
+    "lite": [
+     "negation"
+    ],
+    "flash2": [
+     "negation"
+    ]
+   }
+  },
+  "6a3cba973dce6cfad749d0bd_00138": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1212,
+     "residue": 0,
+     "ratio": 7.046511627906977,
+     "src_neg": 2,
+     "eng_neg": 2
+    },
+    "lite2": {
+     "prose_chars": 1202,
+     "residue": 0,
+     "ratio": 6.988372093023256,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1288,
+     "residue": 0,
+     "ratio": 7.488372093023256,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1366,
+     "residue": 0,
+     "ratio": 7.941860465116279,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 1424,
+     "residue": 0,
+     "ratio": 8.279069767441861,
+     "src_neg": 2,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 1230,
+     "residue": 0,
+     "ratio": 7.151162790697675,
+     "src_neg": 2,
+     "eng_neg": 2
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c678b39b4508b04e36d03_00168": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1487,
+     "residue": 0,
+     "ratio": 9.012121212121212,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1333,
+     "residue": 0,
+     "ratio": 8.078787878787878,
+     "src_neg": 6,
+     "eng_neg": 6
+    },
+    "flash": {
+     "prose_chars": 1586,
+     "residue": 0,
+     "ratio": 9.612121212121211,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "flash2": {
+     "prose_chars": 1373,
+     "residue": 0,
+     "ratio": 8.32121212121212,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "deepseek": {
+     "prose_chars": 1462,
+     "residue": 0,
+     "ratio": 8.860606060606061,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "qwen": {
+     "prose_chars": 1347,
+     "residue": 0.012121212121212121,
+     "ratio": 8.163636363636364,
+     "src_neg": 6,
+     "eng_neg": 5
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3cb8063dce6cfad748a51a_00074": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1673,
+     "residue": 0,
+     "ratio": 7.46875,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "lite2": {
+     "prose_chars": 1705,
+     "residue": 0,
+     "ratio": 7.611607142857143,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1625,
+     "residue": 0,
+     "ratio": 7.254464285714286,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "flash2": {
+     "prose_chars": 1663,
+     "residue": 0,
+     "ratio": 7.424107142857143,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 1956,
+     "residue": 1,
+     "ratio": 8.732142857142858,
+     "src_neg": 5,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 1637,
+     "residue": 0.022321428571428572,
+     "ratio": 7.308035714285714,
+     "src_neg": 5,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue"
+    ],
+    "qwen": [
+     "residue"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c776c01fe4f593c201f9c_00167": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1367,
+     "residue": 0,
+     "ratio": 8.234939759036145,
+     "src_neg": 17,
+     "eng_neg": 16
+    },
+    "lite2": {
+     "prose_chars": 1422,
+     "residue": 0,
+     "ratio": 8.566265060240964,
+     "src_neg": 17,
+     "eng_neg": 17
+    },
+    "flash": {
+     "prose_chars": 1435,
+     "residue": 0,
+     "ratio": 8.644578313253012,
+     "src_neg": 17,
+     "eng_neg": 17
+    },
+    "flash2": {
+     "prose_chars": 1375,
+     "residue": 0,
+     "ratio": 8.283132530120483,
+     "src_neg": 17,
+     "eng_neg": 15
+    },
+    "deepseek": {
+     "prose_chars": 1288,
+     "residue": 0.018072289156626505,
+     "ratio": 7.759036144578313,
+     "src_neg": 17,
+     "eng_neg": 19
+    },
+    "qwen": {
+     "prose_chars": 1407,
+     "residue": 0,
+     "ratio": 8.475903614457831,
+     "src_neg": 17,
+     "eng_neg": 15
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3cb8753d799518cd71b52a_00028": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1128,
+     "residue": 0,
+     "ratio": 8.115107913669064,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1231,
+     "residue": 0,
+     "ratio": 8.856115107913668,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 1186,
+     "residue": 0,
+     "ratio": 8.532374100719425,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1143,
+     "residue": 0,
+     "ratio": 8.223021582733812,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 1177,
+     "residue": 0,
+     "ratio": 8.467625899280575,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1160,
+     "residue": 0.10071942446043165,
+     "ratio": 8.345323741007194,
+     "src_neg": 0,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "residue"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3cb5ec3dce6cfad7484149_00056": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1414,
+     "residue": 0,
+     "ratio": 9.064102564102564,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1457,
+     "residue": 0,
+     "ratio": 9.33974358974359,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1304,
+     "residue": 0.00641025641025641,
+     "ratio": 8.35897435897436,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1308,
+     "residue": 0,
+     "ratio": 8.384615384615385,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 1299,
+     "residue": 0.08333333333333333,
+     "ratio": 8.326923076923077,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 1229,
+     "residue": 0,
+     "ratio": 7.878205128205129,
+     "src_neg": 1,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c749c39b4508b04e57a77_00141": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1838,
+     "residue": 0,
+     "ratio": 7.207843137254902,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1948,
+     "residue": 0,
+     "ratio": 7.63921568627451,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 1889,
+     "residue": 0,
+     "ratio": 7.407843137254902,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 1215,
+     "residue": 0,
+     "ratio": 4.764705882352941,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 1789,
+     "residue": 0,
+     "ratio": 7.015686274509804,
+     "src_neg": 0,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 2219,
+     "residue": 0.00392156862745098,
+     "ratio": 8.701960784313725,
+     "src_neg": 0,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": [
+     "length"
+    ]
+   }
+  },
+  "6a3c675caf3c49b59c5d2976_00126": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1151,
+     "residue": 0,
+     "ratio": 7.777027027027027,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "lite2": {
+     "prose_chars": 1153,
+     "residue": 0,
+     "ratio": 7.79054054054054,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash": {
+     "prose_chars": 1266,
+     "residue": 0,
+     "ratio": 8.554054054054054,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1331,
+     "residue": 0,
+     "ratio": 8.993243243243244,
+     "src_neg": 5,
+     "eng_neg": 4
+    },
+    "deepseek": {
+     "prose_chars": 1099,
+     "residue": 0.013513513513513514,
+     "ratio": 7.425675675675675,
+     "src_neg": 5,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1293,
+     "residue": 0,
+     "ratio": 8.736486486486486,
+     "src_neg": 5,
+     "eng_neg": 4
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c6dc939b4508b04e4a49b_00017": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1825,
+     "residue": 0,
+     "ratio": 7.799145299145299,
+     "src_neg": 4,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1810,
+     "residue": 0,
+     "ratio": 7.735042735042735,
+     "src_neg": 4,
+     "eng_neg": 3
+    },
+    "flash": {
+     "prose_chars": 1896,
+     "residue": 0,
+     "ratio": 8.102564102564102,
+     "src_neg": 4,
+     "eng_neg": 4
+    },
+    "flash2": {
+     "prose_chars": 1901,
+     "residue": 0,
+     "ratio": 8.123931623931623,
+     "src_neg": 4,
+     "eng_neg": 3
+    },
+    "deepseek": {
+     "prose_chars": 1582,
+     "residue": 0,
+     "ratio": 6.760683760683761,
+     "src_neg": 4,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 1831,
+     "residue": 0,
+     "ratio": 7.8247863247863245,
+     "src_neg": 4,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "length"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3ce7be0a0011cb4bc0ab93_00064": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1103,
+     "residue": 0,
+     "ratio": 7.304635761589404,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "lite2": {
+     "prose_chars": 1267,
+     "residue": 0,
+     "ratio": 8.390728476821192,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1281,
+     "residue": 0,
+     "ratio": 8.483443708609272,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1234,
+     "residue": 0,
+     "ratio": 8.172185430463577,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 1055,
+     "residue": 0,
+     "ratio": 6.986754966887418,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1179,
+     "residue": 0,
+     "ratio": 7.80794701986755,
+     "src_neg": 1,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "negation"
+    ],
+    "qwen": [
+     "negation"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3c71d339b4508b04e5551d_00132": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 864,
+     "residue": 0,
+     "ratio": 6.967741935483871,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 848,
+     "residue": 0,
+     "ratio": 6.838709677419355,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "flash": {
+     "prose_chars": 809,
+     "residue": 0,
+     "ratio": 6.524193548387097,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "flash2": {
+     "prose_chars": 987,
+     "residue": 0,
+     "ratio": 7.959677419354839,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "deepseek": {
+     "prose_chars": 859,
+     "residue": 0.016129032258064516,
+     "ratio": 6.92741935483871,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "qwen": {
+     "prose_chars": 963,
+     "residue": 0,
+     "ratio": 7.766129032258065,
+     "src_neg": 1,
+     "eng_neg": 0
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "negation"
+    ],
+    "lite": [
+     "negation"
+    ],
+    "flash2": [
+     "negation"
+    ]
+   }
+  },
+  "6a3c6a2239b4508b04e3f381_00047": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 2230,
+     "residue": 0,
+     "ratio": 8.168498168498168,
+     "src_neg": 3,
+     "eng_neg": 3
+    },
+    "lite2": {
+     "prose_chars": 1922,
+     "residue": 0,
+     "ratio": 7.04029304029304,
+     "src_neg": 3,
+     "eng_neg": 2
+    },
+    "flash": {
+     "prose_chars": 2569,
+     "residue": 0,
+     "ratio": 9.41025641025641,
+     "src_neg": 3,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 2257,
+     "residue": 0,
+     "ratio": 8.267399267399268,
+     "src_neg": 3,
+     "eng_neg": 2
+    },
+    "deepseek": {
+     "prose_chars": 1979,
+     "residue": 0,
+     "ratio": 7.249084249084249,
+     "src_neg": 3,
+     "eng_neg": 3
+    },
+    "qwen": {
+     "prose_chars": 2719,
+     "residue": 0.18315018315018314,
+     "ratio": 9.95970695970696,
+     "src_neg": 3,
+     "eng_neg": 3
+    }
+   },
+   "gates": {
+    "deepseek": [],
+    "qwen": [
+     "residue",
+     "length"
+    ],
+    "lite": [],
+    "flash2": []
+   }
+  },
+  "6a3cbfe8f9474f825c16c42f_00119": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 980,
+     "residue": 0,
+     "ratio": 6.853146853146853,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "lite2": {
+     "prose_chars": 1097,
+     "residue": 0,
+     "ratio": 7.671328671328672,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash": {
+     "prose_chars": 1028,
+     "residue": 0.04895104895104895,
+     "ratio": 7.188811188811189,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "flash2": {
+     "prose_chars": 1075,
+     "residue": 0.04195804195804196,
+     "ratio": 7.5174825174825175,
+     "src_neg": 1,
+     "eng_neg": 1
+    },
+    "deepseek": {
+     "prose_chars": 233,
+     "residue": 1.2937062937062938,
+     "ratio": 1.6293706293706294,
+     "src_neg": 1,
+     "eng_neg": 0
+    },
+    "qwen": {
+     "prose_chars": 1116,
+     "residue": 0,
+     "ratio": 7.804195804195804,
+     "src_neg": 1,
+     "eng_neg": 1
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "qwen": [],
+    "lite": [
+     "negation"
+    ],
+    "flash2": [
+     "residue"
+    ]
+   }
+  },
+  "6a3c75da39b4508b04e5e172_00096": {
+   "track": "siku",
+   "stratum": "clean",
+   "flagged": false,
+   "arms": {
+    "lite": {
+     "prose_chars": 1251,
+     "residue": 0,
+     "ratio": 8.809859154929578,
+     "src_neg": 6,
+     "eng_neg": 4
+    },
+    "lite2": {
+     "prose_chars": 1145,
+     "residue": 0,
+     "ratio": 8.06338028169014,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "flash": {
+     "prose_chars": 1259,
+     "residue": 0,
+     "ratio": 8.866197183098592,
+     "src_neg": 6,
+     "eng_neg": 6
+    },
+    "flash2": {
+     "prose_chars": 1197,
+     "residue": 0,
+     "ratio": 8.429577464788732,
+     "src_neg": 6,
+     "eng_neg": 6
+    },
+    "deepseek": {
+     "prose_chars": 1239,
+     "residue": 1,
+     "ratio": 8.725352112676056,
+     "src_neg": 6,
+     "eng_neg": 5
+    },
+    "qwen": {
+     "prose_chars": 1111,
+     "residue": 0,
+     "ratio": 7.823943661971831,
+     "src_neg": 6,
+     "eng_neg": 5
+    }
+   },
+   "gates": {
+    "deepseek": [
+     "residue"
+    ],
+    "qwen": [],
+    "lite": [],
+    "flash2": []
+   }
+  }
+ }
+}

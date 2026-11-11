@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most consistently as a coherent inference passage: it has dhūmavān, mahānasa, yatra dhūmaḥ, liṅga, vyāpti and the Malayalam conditional -eṅkil, which fit Tarkasaṃgraha/Dīpikā commentary. C has scattered real words but more broken strings, and A is mostly syllable salad.

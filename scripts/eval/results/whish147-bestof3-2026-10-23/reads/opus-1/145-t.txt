@@ -1,0 +1,12 @@
+ROW 1 | ഇത്യാനന്തരിത്യുച്യ।ഇത്യാപരമാ[illegible]ന്ത്രയാൻ[illegible]ത്യാകാശ്യ[illegible]വാദ[illegible]ലാഃപൃഥി[illegible]വിയാശരീര[illegible]
+ROW 2 | [illegible]വിശേഷണേട്ടാൽ।ശരീരമനു[illegible]നിനോഃ[illegible]ഇന്ദ്രിയ[illegible]ഗന്ധ[illegible]ലകം।[illegible]ഭാവ[illegible]ഗ്രവ
+ROW 3 | [illegible]।വിമ[illegible]ത്മ[illegible]ചാ[illegible]ദ്യാദ[illegible]ാ[illegible]ബ്ധ്വ[illegible]ചഃ[illegible]ദശ[illegible]ദിവിയാഃ[illegible]ത്യാ[illegible]ത്യ
+ROW 4 | ദശ।ഇത്യാഃപരമ ‖ [illegible]ത്രയാഃ[illegible]ഇത്യാഃ[illegible]കാദൃശ്യ ‖ പാഃപൃഥിവിയാഃ।
+ROW 5 | ശരീരേന്ദ്രിയവിഷ ‖ യഭേദാൽശരീരംവാ[illegible]ലാ ‖ [illegible]ഇന്ദ്രിയം[illegible]ഗ്ര
+ROW 6 | വിക്കാം[illegible]ജ്ഞ ‖ [illegible]വർഗ്ഗവിഷയ[illegible]ൽ[illegible] ‖ [illegible]ഉജ്ജ്വ[illegible]പ
+ROW 7 | [illegible]ഭഗവിദ്യം ‖ ഇത്യാദിത്യാദി[illegible]ഇത്യാംപരമാ ‖ [illegible]പം।ഇത്യാം
+ROW 8 | [illegible]ന്ദ്രിയം[illegible]ത്രിയാംശരീരേന്ദ്രിയ[illegible]വിശേഷഭേദാൽ[illegible]ശരീരമ[illegible]ത്യാ[illegible]കം।
+ROW 9 | [illegible]ഇന്ദ്രിയ[illegible]ാ[illegible]ംചക്ഷു[illegible]ഗ്രവക്ഷ്വിവിഷയശ[illegible]ഭാവ[illegible]മദ്ധ്യ[illegible]
+ROW 10 | [illegible]ആകാരജ്ഞ[illegible]ട്ടാ[illegible]ാ[illegible]ദിമംവഹ്നി[illegible]ദികം[illegible]ദ്യാഃ[illegible]ദ്യാദികം[illegible]കവരി[illegible]
+
+NOTE | I could read about a third of this leaf with any confidence, so treat the text above as tentative. Single letters, conjuncts and the joins across the overlaps are uncertain throughout. I treated rows 1–3 and 8–10 as full-width (no ‖) and rows 4–7 as three columns.

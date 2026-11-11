@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions mark every row as [illegible] and contain no readable text, so none of them can be judged more plausible than the others; the ranking is arbitrary and only fills the required format.

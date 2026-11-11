@@ -26,6 +26,8 @@ export interface LocalizedBookFields {
   summary?: string;
   /** Chapter titles in this language, aligned by index with books.chapters[]. */
   chapters?: string[];
+  /** The byline in this language, where the catalogue's differs (a romanised Chinese author on /zh). Display only. */
+  author?: string;
 }
 
 export interface LocalizedCollectionFields {
@@ -35,6 +37,20 @@ export interface LocalizedCollectionFields {
 }
 
 export type LocalizedBookMap = Partial<Record<Exclude<Locale, 'en'>, LocalizedBookFields>>;
+
+/**
+ * Mongo projection for the part of `books.localized` a book CARD reads:
+ * the title (localizedTitle) and byline (localizedAuthor) in every locale.
+ * Project this, not `localized: 1`, wherever the books are serialised to a
+ * client component. The full object also holds each language's summary and
+ * whole chapter list, which made up 45 KB of the homepage payload (2026-11-10).
+ */
+export const LOCALIZED_CARD_PROJECTION: Record<string, 1> = Object.fromEntries(
+  (['es', 'la', 'nl', 'zh'] satisfies Exclude<Locale, 'en'>[]).flatMap((l) => [
+    [`localized.${l}.title`, 1],
+    [`localized.${l}.author`, 1],
+  ]),
+);
 export type LocalizedCollectionMap = Partial<Record<Exclude<Locale, 'en'>, LocalizedCollectionFields>>;
 
 type BookLike = { title?: string | null; display_title?: string | null; localized?: LocalizedBookMap | null };
@@ -53,6 +69,15 @@ export function localizedTitle(book: BookLike, lang: Locale): string {
     return lang === 'zh' ? chineseShownTitle(original) : original;
   }
   return book.display_title || book.title || '';
+}
+
+/** The byline to SHOW for `lang`: its own form if one was written, else the catalogue's. */
+export function localizedAuthor(book: { author?: string | null; localized?: LocalizedBookMap | null }, lang: Locale): string | undefined {
+  if (lang !== 'en') {
+    const own = book.localized?.[lang]?.author;
+    if (own) return own;
+  }
+  return book.author || undefined;
 }
 
 const HAN = /[\u3400-\u9fff\uf900-\ufaff]/;
@@ -267,6 +292,12 @@ export function hasLocalizedEdition(
   if (lang === 'en') return true;
   // Written in the language: the pages already ARE it, no counter involved.
   if (isNativeEdition(book, lang)) return true;
+  // A book translated into Chinese has an edition to open on /zh (#7537, Flora
+  // Sinensis), so the reader must not 307 it to English. Deliberately NOT in
+  // TRANSLATED_COUNTER: that also feeds the shelf filters, and /zh's "books written
+  // in Chinese" shelf and counts must stay native. The field is sparse, so an absent
+  // value falls through to the native-only answer below.
+  if (lang === 'zh' && typeof book.pages_translated_zh === 'number' && book.pages_translated_zh > 0) return true;
   const field = TRANSLATED_COUNTER[lang];
   // A locale nothing is translated INTO (Latin): the native test above is the
   // whole answer, and it could only be given if `language` was projected.
@@ -288,6 +319,11 @@ type CollectionLike = {
 };
 
 /** Collection copy for `lang`, with a flag per field saying whether it fell back to English. */
+/** True when a collection carries its own name in `lang`, not the English fallback. */
+export function hasLocalizedCollectionName(doc: CollectionLike, lang: Locale): boolean {
+  return lang !== 'en' && !!doc.localized?.[lang]?.name;
+}
+
 export function localizedCollection(doc: CollectionLike, lang: Locale): {
   name: string; subtitle?: string; description?: string; descriptionIsEnglish: boolean;
 } {

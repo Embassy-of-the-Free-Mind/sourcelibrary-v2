@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { classifyRequest } from '@/lib/analytics-ingest';
 import { ALLOWED_EVENTS, ALLOWED_PROPS } from '@/lib/analytics-event-allowlist';
+import { clientCountry } from '@/lib/client-ip';
 
 /**
  * General-purpose analytics event sink for value-moment interactions that the
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
     const doc = {
       event,
       ...sanitizeProps(body?.props),
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
+      country: clientCountry(request.headers) || 'Unknown',
       ip,
       user_agent: userAgent,
       traffic_class: cls,

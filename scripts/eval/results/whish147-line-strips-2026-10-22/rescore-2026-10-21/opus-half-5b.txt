@@ -1,0 +1,30 @@
+===== PAGE p01 =====
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Malayalam script incised on a palm leaf and blackened. This crop shows only the left half of the leaf, so the lines are cut off at the right edge. The binding cord covers part of the first two lines. In the middle lines a blank space is left around the string hole, so the text runs on either side of it. Many letters are hard to read, and the readings are tentative. The book is described as Sanskrit, but chillu letters (ൻ, ൽ, ൾ) suggest that the language of this page is Malayalam.</warning>
+<meta>Palm-leaf folio, left half. A string hole with its binding cord sits in the centre. A small mark ("ര"?) appears in the left margin beside line 6.</meta>
+
+<unclear>ശ്രീഗണേശവിഘ്നെ</unclear> <unclear>[cord obscures 1–2 aksharas]</unclear> <unclear>ശ്വരായന്ത്രമാന്ത്രമ</unclear><unclear>[cut off at edge]</unclear>
+
+<unclear>ാനന്ദമിചരിതക</unclear> <unclear>[cord]</unclear> <unclear>. ചാലക്കുപ്പമാൻ</unclear><unclear>[cut off at edge]</unclear>
+
+<unclear>പ്രവൃത്തിനിയമ</unclear> <unclear>ക്ഷാദ്ദികളെറാന്ദ</unclear><unclear>[cut off]</unclear>
+
+<unclear>ഗണാദ്യോഃ സഖം</unclear> <unclear>ലച്ചപ്രകാശകമി</unclear><unclear>[cut off]</unclear>
+
+<unclear>ഹൃദു. വരികെക</unclear> <unclear>മവരമഃപ്രകീർത്തി</unclear><unclear>[cut off]</unclear>
+
+<margin><unclear>ര</unclear></margin>
+<unclear>ശമികനച്ചാദി</unclear> <unclear>സിദ്ധമെസ്വഹണ</unclear><unclear>[cut off]</unclear>
+
+<unclear>ശൌഹൃദാദിക</unclear> <unclear>ക്ഷാൽകചഞ്ചന്ദ്ര</unclear><unclear>[cut off]</unclear>
+
+<unclear>ഏാം പെരിയൊ</unclear> <unclear>ൾസമവയാശ്രി</unclear><unclear>[cut off]</unclear>
+
+<unclear>ഗാദപിദ്ധാനെക്കെദുഃഖക്കുപ്രസ്തുകാനനെ</unclear><unclear>[cut off]</unclear>
+
+<unclear>ഉദമാനാച്ചുവഴിതൊമകസ്സിലവൽപ്രതി</unclear><unclear>[cut off]</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Gaṇeśa invocation (tentative), വിഘ്നേശ്വര (tentative)</vocab>

@@ -1,0 +1,12 @@
+I couldn't reliably read this leaf. What follows is a stroke-by-stroke guess, and much of it is probably wrong.
+
+ROW 1 | ത്രി[illegible]വെട്ടൊമൊവിദ്യാമ ‖ ാപ്രത്യക്ഷഭൊഗ്യഖ്യാചാൽഖ്യ്രക്ഷംവിക്കയൊഃകെ ‖ ാഃപ്രധാനമവി.സഹമാനാം.പ്ര[illegible]
+ROW 2 | ക്കരസ്ഥ്വപ്ര[illegible]ക്ഷൊയടെ ‖ ൊഗ്യഖ്യാൎമ്മളെദ്ദാന്തിം[illegible]വിഷൽകമാപ്രധാനമവി ‖ മചതാൻവ്യക്തംസൂഷദ്ദു
+ROW 3 | ചമിരഹരണചെദ ‖ ഷകിത്രൽഃകാ[illegible]കാമാപ്രധാനമവി ‖ പ്രസവധൎമ്മിപ്രസവ
+ROW 4 | വായമെൎമ്മാസ്യാന്ത്രി[illegible] ‖ പ്രസവധൎമ്മിപ്രാ[illegible]ൻക്കമകാപ്രധാന ‖ മവിലാഭൊനവിത്രുസ
+ROW 5 | വയൎമ്മിത്വംക്രമാച ‖ പ്രയാനാദ്വഹാ[illegible]ൽമഠ[illegible]ഞാം ‖ കാരണത്രാദിഭൊഃഡ
+ROW 6 | ഭ്രഷൎമ്മാജ്ഞാദ്ദാന ‖ ധൎമ്മത്വാൽവൈ[illegible]ശ്രാവ്യക്താവ്യക്ത ‖ യൊാദൈവ്ശ്രുഷ്യാംഃസാ
+ROW 7 | ശ്രുഷ്ലകെഷമാമി ‖ ംപ്രത്യക്ഷസ്യവാ[illegible]ചാക്ഷിത്രൊഷാഃതമ്പി ‖ ചതിക്ഷ്ക്കമാചപ്രക്രാ
+ROW 8 | ജ്ഞകാത്ര്യാംതൈക ‖ ത്തിൽയമെൎമ്മ[illegible]ൎമ്മിഷക്കണൊദൃദൃശ്ചഃ ‖ [illegible]ടെത്രദ്ദൈഷ്ണ്വ.ഏതെഷുാഭാലെ
+ROW 9 | ഞ്ചെതെൾക്കതിതൈരു ‖ ദ്യ്രൎക്കംഷഡ്വതുമ[illegible]മദപ്ലാക്കംപ്രക്രഷനാ ‖ ാവ്യാവിതുമാൽത്രഷാൽ
+NOTE | There are 9 rows. I'm fairly sure of short runs like പ്രസവധൎമ്മി, പ്രധാനമവി, വ്യക്ത and ഭൊഗ്യ, but most of the rest is a low-confidence guess (perhaps 30–50% of glyphs right), especially in the left piece, at the piece joins and at the hole edges; check it against the original before using it.

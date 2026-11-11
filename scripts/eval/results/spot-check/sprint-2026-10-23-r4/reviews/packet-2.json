@@ -1,0 +1,518 @@
+[
+  {
+    "book_id": "6a0853e515c643eb1af51643",
+    "slot": 6,
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "D'Anania's 1581 demonology is a Latin early-modern treatise and sits well in a European libraries collection and in this library's occult/theological scope.",
+    "rights_flag": null,
+    "structure_note": "279 pages, all with OCR, 272 translated. 8 backsteps and 32 repeats over 232 printed numbers. The three pages here run 22, 23, 24 in sequence, so the backsteps are more likely misread numerals or front-matter and index numbering than a broken scan. The scan is Google Books ('Digitized by Google').",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 54,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "paulo postquam esset producta, manciparetur ... Verumtamen Daemones ... in hac secunda mora processere, ut ... in tertia damnarentur mora ... Hinc factum, ut hac tandem sua postrema et fune-",
+            "english": "ral fall, they were cast down. For since they did not desire the light of grace, they remained in their own darkness ... having rejected the order of divine love and replaced it with an insatiable hunger for their own exaltation.",
+            "problem": "The English is not a translation of this page. The whole Latin page (the demons' second and third 'mora', the plurality of their crimes, their progression from lesser to greater sins) is replaced by about 150 words of invented paraphrase on the fall of the angels. None of its sentences matches the transcription, which is correct.",
+            "severity": "serious",
+            "class": "other:invented-translation"
+          }
+        ],
+        "other": [
+          {
+            "note": "The reader text opens with '<meta>continues from previous page: ...fatal</meta>' and 'ral <note>original: \"fune-\"</note>': a broken catchword seam and leaked markup.",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "The <summary> describes the invented English rather than the page.",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 55,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "hac tandem sua postrema et funesta mora, ipsi daemones e Caelo ... eiecti",
+            "english": "fatal fall, they were cast down",
+            "problem": "'funesta mora' (this final, fatal delay: the third 'mora' of the argument) is rendered 'fatal fall', which loses the author's three-stage 'mora' scheme.",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "iustissima Dei trutina rem examinantes",
+            "english": "having examined the matter with the most just scales of God",
+            "problem": "The participle is attached loosely; the meaning survives.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page: fatal</meta>' and a '<sig>B 4</sig>' tag appear in the reader text.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "qui tertium duntaxat Angelorum agmen, damnatum asserunt",
+            "english": "who assert that only the third rank of Angels was damned",
+            "problem": "In context (a tenth, a ninth, a third; Rev. 12:4) this means a third of the angelic host, not the third rank or order. 'Rank' muddles the quantity argument with the orders question the author raises next.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "cum nec etiam [in]",
+            "english": "since they never even stood in conditions",
+            "problem": "The clause runs over onto the next page; 'stood in conditions' is a guessed completion.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The whole OCR body is wrapped in asterisks (*lapsu ... etiam*), markdown italics leaking into the transcription pane.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is excellent. On p.54, however, the English pane holds an invented passage that does not translate the page at all, and every page leaks <meta>/<note> markup, so an expert would flag the book on sight."
+  },
+  {
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "slot": 7,
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Zhang Jiushao's 理學類編 (Siku quanshu manuscript copy) is a Neo-Confucian compendium. It fits a general universal-library Chinese collection; its link to the library's core traditions is only loose.",
+    "rights_flag": null,
+    "structure_note": "142 pages, 141 translated. Only 4 printed numbers are captured, because the folio numbers sit in the centre fold. Nothing structural stands out. OCR tags 'handwritten', which is correct for a Siku manuscript copy.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 96,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "玉學類編",
+            "image": "理學類編",
+            "problem": "Running title in the small margin text misread (理 to 玉)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "其所得以為性者皆天地之志為氣之帥者也",
+            "english": "(absent)",
+            "problem": "A whole sentence is dropped: 'what they obtain as their nature is the will of Heaven and Earth, the commander of qi'. This is the half of Zhu Xi's gloss that explains 帥 in the Western Inscription.",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "然體有偏正之殊故其於性也不無明暗之異",
+            "english": "Because what they obtain is different, their natures do not lack differences in clarity and darkness.",
+            "problem": "The cause is wrong. The source says bodies differ as one-sided or correct, and therefore natures differ in clarity. The translation replaces this with a vague 'what they obtain is different'.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "故曰同胞則其視之也皆如己之兄弟矣",
+            "english": "Thus it is said: 'If they are my siblings,' then when one looks at them...",
+            "problem": "The quotation is mangled: '同胞' ('[all people are my] siblings') is turned into a conditional.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "而父母乎萬物者故指而言之人物並生於天地間",
+            "english": "...and are the parents of the ten thousand things. Therefore, when pointing them out, people and things are born together",
+            "problem": "The clause boundary is misread: '故指而言之' (therefore [Zhang] points to them [as father and mother]) is joined to the next sentence.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented markdown heading '# 六' and '## Imperial Approved Complete Library of the Four Treasuries, Compendium of Neo-Confucian Studies, Volume 6', built from page furniture and shown as a title.",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "note": "The whole page translation is wrapped in quotation marks with leading and trailing ellipses.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 97,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page</meta>' is glued to the first word of the reader text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR of this Siku manuscript is near perfect. The translations of pp.95 and 97 are good, but the p.96 translation drops the key sentence on 帥 and garbles two others under an invented heading."
+  },
+  {
+    "book_id": "69a5ead1d507939f0352ced7",
+    "slot": 8,
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The Venice 1883 edition of P'awstos Buzand belongs in the Robert Bedrosian Armenian library.",
+    "rights_flag": null,
+    "structure_note": "320 records, 319 with OCR. The structure counts give 314 translated against a pages_translated field of 306, a small drift in the field. The printed pages here run 276–278 in sequence. The backsteps (7) are plausibly numeral misreads.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 299,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Ասէ Յոհան. Փուշ և տատասկ բուսցի, փոխանակ զի տարապարտուց անիծանես զմեզ:",
+            "image": "Ասէ Յոհան. Փուշ և տատասկ բուսցի: Ասէ այրն. Ի մարմինդ քո բուսցի փուշ և տատասկ, փոխանակ զի տարապարտուց անիծանես զմեզ:",
+            "problem": "A clause is silently dropped (eye-skip on the repeated 'բուսցի'). The vineyard man's counter-curse ('May thorns and thistles grow in YOUR body, since you curse us without cause') is lost, and his words are merged into Yohan's speech. This is the cause of the bishop's thorn-affliction on the next page.",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Ասէ Յոհան. Փուշ և տատասկ բուսցի, փոխանակ զի տարապարտուց անիծանես զմեզ",
+            "english": "Yohan said, \"May thorns and thistles grow, because you curse us with your indebtedness.\"",
+            "problem": "It inherits the OCR omission, so the counter-curse is attributed to the bishop. 'տարապարտուց' (unjustly, in vain) is also mistranslated as 'with your indebtedness'. The story's logic (the man's curse comes true) is lost.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Ո՞չ դու երախայ էիր, և չէիր մկրտեալ",
+            "english": "Were you not a child, and were you not baptized?",
+            "problem": "The meaning is 'Weren't you an unbaptized catechumen, not yet baptized?'. The negative question in English reads as if he WAS baptized, which blurs the joke.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 300,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "միհանէսք<note>1 Ի Պատկանեան օրինակի միահանէք։</note>",
+            "image": "միհանէսք¹ ... footnote at foot of page",
+            "problem": "The footnote is pulled inline into the body text.",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "որպէս խաղալովն զանձն իւր կրթէր յագահութեան ... սակայն միհանէսք այն էին նորա",
+            "english": "By playing, he trained himself in the greed for which he thirsted and fasted with desire, yet these were his only means.",
+            "problem": "The sense is obscured: the passage says he made a jest of himself out of greed, and the rare word միհանէսք is glossed away as 'his only means'.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Եւ զայս ասացեալ՝ անդէն բժշկեցաւ եպիսկոպոսն",
+            "english": "Having said this, the bishop was immediately healed",
+            "problem": "A dangling participle makes the bishop the speaker.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 301,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>ԲՈՎԱՆԴԱԿՈՒԹԻՒՆ</header>",
+            "image": "ԲՈՒԶԱՆԴԱՐԱՆ",
+            "problem": "The running head is misread as 'Contents' and translated as 'CONTENTS'.",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "'ի թագաւորէն Հայոց",
+            "image": "'ի թագաւորացն Հայոց",
+            "problem": "singular for plural ('from the kings of Armenia')",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<header>ԲՈՎԱՆԴԱԿՈՒԹԻՒՆ</header>",
+            "english": "CONTENTS",
+            "problem": "The invented 'CONTENTS' header sits on a narrative page.",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR is mostly solid on a hard Armenian script. On p.276, however, it drops the vineyard man's counter-curse, so both panes give the curse to the bishop and the miracle story no longer makes sense."
+  },
+  {
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "slot": 9,
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Aldine 1549 letter collection fits early-european-books and europeanlibraries.",
+    "rights_flag": true,
+    "structure_note": "498 records, 291 with a printed number, 58 backsteps and 162 repeats. The scan photographs openings and is foliated (one number per leaf, recto only), so versos carry no number and the OCR invents one. Here p.389 is tagged page-num 71 and p.390 page-num 70, which manufactures a backstep. The structure counts are therefore mostly an artefact of foliation plus invented numbers, not a broken scan.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 389,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>71</page-num>",
+            "image": "(no number on this verso)",
+            "problem": "A page number is invented for an unnumbered verso.",
+            "severity": "moderate",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "che mi uuole il mè del mondo",
+            "english": "who wants me as the world",
+            "problem": "'il mè del mondo' = 'more than anything in the world' (mè = meglio); the English is nonsense.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "non haueste ogni di ad essermi adosso con lettere, & prometterui di me uolumi & bibbie",
+            "english": "...and promising me volumes and Bibles of myself",
+            "problem": "'prometterui' means 'expect for yourself [volumes from me]'; it is mistranslated as 'promising me'.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR pane carries model reasoning: '<meta>The page number 71 is visible on the facing page in the original binding, but this scan focuses on the verso side ... this is a continuation of a letter.</meta>'",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 390,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ditegli, che cosi gli è ubidiente figliuolo, come è à uoi amoreuole fratello",
+            "english": "tell him that he has as obedient a son as he has a loving brother in you",
+            "problem": "The meaning is 'tell him that [I] am as obedient a son to him as [I] am a loving brother to you'. The English garbles who is son and who is brother.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Centering arrows '->Marc'Antonio Bendidio.<-' are shown in the reader text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 391,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Giuliano Goselino",
+            "image": "Giuliano Gosellino",
+            "problem": "The signatory's name is misspelled; this is Giuliano Gosellino.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "potrò ... haverei ... vi ... et ... voglia",
+            "image": "potrò ... hauerei ... ui ... & ... uaglia",
+            "problem": "The spelling is silently modernised (u to v, & to et, uaglia to voglia) on this page only. Adjacent pages keep the source's u/&, so the convention flips between pages.",
+            "severity": "minor",
+            "class": "O9"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The OCR pane has '<meta>The text is printed in an italic typeface characteristic of the Aldine press.</meta>', and centering arrows '->D. V. S.<-' appear in the reader text.",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR and translation are good, with a few meaning slips. An expert would notice a rights-suspect mark on every image (redacted, ROUTINE.md step 7), model reasoning in the OCR of p.389, and an invented page number on the unnumbered versos."
+  },
+  {
+    "book_id": "69de98d21b234a773e439622",
+    "slot": 10,
+    "title": "De Prospectiva Pingendi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "This is Winterberg's 1899 Strassburg edition of Piero della Francesca's treatise on perspective, which includes German commentary on the frescoes. It fits Getty art-history holdings.",
+    "rights_flag": null,
+    "structure_note": "The record says language 'Latin', but these pages are Winterberg's German commentary (on the Arezzo frescoes, the Resurrection and the Baptism), not Piero's Latin text. The volume is mixed-language, and the language field misdescribes much of it (I7). The 9 backsteps out of 101 printed numbers are plausibly from plates and front matter.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The diagram description is shown as a <note> in the translation pane rather than as an image caption.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "| A = Augenpunct. | sprung des vorn liegenden Wächters rechts. |",
+            "image": "two-column legend; 'sprung des vorn liegenden Wächters rechts' continues item 6 'linker Kniescheibenvor-'",
+            "problem": "The legend's two columns are mis-paired in the markdown table, which splits item 6 across rows (the translation repairs it).",
+            "severity": "minor",
+            "class": "O17"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The translation opens with a <meta> block that repeats the last paragraph of p.39's English in full; a reader sees it twice.",
+            "severity": "moderate",
+            "class": "T5"
+          },
+          {
+            "note": "Footnote 1 appears twice in the English, once inline after 'Dreieck' and again at the end.",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "die dritte durch die letzte noch sichtbare Flusswindung",
+            "image": "die vierte durch die letzte noch sichtbare Flusswindung",
+            "problem": "The numeral word is misread (the translation silently corrects it to 'fourth').",
+            "severity": "minor",
+            "class": "O7"
+          },
+          {
+            "ocr": "gezählt bis zur Stamme des Taubenkopfes",
+            "image": "gezählt bis zur Mitte des Taubenkopfes",
+            "problem": "Measurement point misread, carried into English as 'stem of the dove's head'.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "die zweite durch den des Entkleidenden",
+            "image": "die zweite durch den des sich Entkleidenden",
+            "problem": "word dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "gezählt bis zur Stamme des Taubenkopfes (1) etwa gleich 2/3 der Gesammt-",
+            "english": "measured to the stem of the dove's head (1), is about equal to 2/3 of the total height.",
+            "problem": "It inherits the OCR misreading of 'Mitte' (the middle of the dove's head), and it completes the hyphenated word at the page break as 'height' without marking the guess.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "These are clean, careful pages of Winterberg's German commentary, with only small OCR slips and a duplicated continuation block. The main oddity is that the record calls the book Latin while these pages are German."
+  }
+]

@@ -83,7 +83,7 @@ const tagged = await db.collection('books').updateMany(
 
 // Panckow is a herbal that the paused classifier had filed under astrology.
 // Two writes: Mongo rejects $pull and $addToSet on the same path in one update.
-await db.collection('books').updateOne({ id: '6a42724628e9db2e39c131da' }, { $addToSet: { collections: 'mycology' } });
+await db.collection('books').updateOne({ id: '6a42724628e9db2e39c131da' }, { $addToSet: { collections: 'mycology' }, $currentDate: { updated_at: true } });
 const untagged = await db.collection('books').updateOne({ id: '6a42724628e9db2e39c131da' }, { $pull: { collections: 'astrology' }, $currentDate: { updated_at: true } });
 
 const count = await db.collection('books').countDocuments({ collections: SLUG });

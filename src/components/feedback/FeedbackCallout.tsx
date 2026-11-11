@@ -42,7 +42,7 @@ export default function FeedbackCallout() {
 
   return (
     <section
-      className="border-t"
+      className="border-t print:hidden"
       style={{
         background: 'var(--bg-warm, #f5f3f0)',
         borderColor: 'var(--border-light, #e8e5e0)',

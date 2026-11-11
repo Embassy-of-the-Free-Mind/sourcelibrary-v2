@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. mānasrūpamityājñānanannādeśastveṭṭākkā [illegible] āṭaṭāpālpratyaṭṭālevayartthāyartthaṃṣyonabhāvājñā
+2. jñāṭaṭālevaṣṭarvvayartthāyartthalekhānanabhalevanānā [illegible] ānaleśalanamaṭṭaceṭṭacāṃsalakṣaṇyairamālakṣaṇajña
+3. ālakhamarajñānaramavalamākṣasāyanamityājñānanā [illegible] tyaletajñāāemātrasādṛśyālḥna
+4. lamavavibhūtayābhi ‖ mṛtyulemabhinā [illegible] ātyaḥpañcāviṭṭule ‖ nandayanālerabhisā
+5. yāvannavileḻ ‖ yākṣyanānālprākkonatthe ‖ jñānāṃkarmmacodana
+6. malavraṣaleṃutta ‖ karmmāviśeṣa [illegible] kṣasāyanāttyanna ‖ olḥjñānakarmma
+7. jñeārtthaddhyaiṃ ‖ lonparityālennavibhaktikkokḻ ‖ bharmmāṇaivatthamitakṣa
+8. khajñāmānaliṃ ‖ ḻikkarmmajñāle [illegible] lestaraññasāvyale ‖ ṣannṛsyāsālpakṣavijñānaḥ
+9. laikavalyālaṃbhaledānajñattyādināle [illegible] ākammalojñānatrai [illegible] bhaprattamādavāljña
+10. ānabhyalelevakartthameṇāmākṣasāyana [illegible] āmpaṃnasākṣālta [illegible] ttūāvādāljñānamātṛ
+
+TRANSCRIPTION B
+1. mānarūpamityājñānanā ‖ śeṣatvabhedākkā [illegible] ṭāvālpratyuṭṭāvai ‖ vayarthāyarthaiścānabhāvājña
+2. ū [illegible] ṭāvaiva [illegible] yarthāyarthai ‖ ścānanabhaivananā [illegible] śalanamaṭṭaicca ‖ ccaḥsalakṣaṇairaimākṣairajña
+3. ālomarajñānaramevamo ‖ kṣasādhanamityājñānāpravṛttejña ‖ jñāhamātrasādṛśyālḥna
+4. mevaviśeṣāl ‖ muktaiścarā [illegible] ratryaḥpañcāvidyarai ‖ rañcayanādebhisā
+5. yāramanantaroḻ ‖ yāgraḥnanatalprājñainaibhyrai ‖ jñānaḥṃkṛṣṭa caiāṣara
+6. madhyāṣateubha ‖ kṣaൗrāvimokṣasādhanatvānmara ‖ bhaൗraljñānakṣrare
+7. jaivarthya [illegible] bha ‖ caivatvānainaimittikālkṣra ‖ bhaddāraṇairakṣānakṣa
+8. śājñānānarādima ‖ ṣimakṣrajñānaṃsanantasvādhyel ‖ ceṇṭabhrāsālpakkavijñānaḥ
+9. okkaivalyālemmaṭenā ‖ [illegible] ṣṭadvādvākalrusīmāndra ‖ rantapratyapādabhavāljña
+10. āndrabhāvainavakkū [illegible] ‖ ramokṣasādhyanāndhyaṃnasākṣālta ‖ ntrāvādāraljñānāmaikṣrā
+
+TRANSCRIPTION C
+1. mānasruṣṭitrājñānananānastraiduḥkhādāṭāpālpratyaṭāvaiyartthyāyartthyeyānabhāvājjña
+2. ttāṭāvevadṛṣṭvartthyāyartthyebānandabhaivananāāśalanamaṭṭaivadyatvaṃsalakṣaṇairamāeṅkepajña
+3. ālamanajñānanamelamemākṣasāyanamitrājñananādivyattettajñāemātrasādṛśyakālḥna
+4. mevavimettāl ‖ mṛjjuḻemataināma [illegible] ākraḥpañcāviṭṭatta ‖ nanayanāmelisā
+5. yaḥsānatibhaktā ‖ yāṣṭhaḥnānātvalprākhyehāndye ‖ jñānaṃkarmmacairānara
+6. madhārayukteutta ‖ karmmāvimokṣasāyanātthārttha ‖ ṟāljñānakarmma
+7. jeñārtthajñāiti ‖ cesapattāainamitraittārkka ‖ bhartthāśyairakṣitaikṣa
+8. yājñānāmānima ‖ miṅkaṣnnajjāmenasanattasāyyela ‖ traiduāntāsālvakkāvijñānaḥ
+9. kaivalyūlemāmmamena ‖ ānduḥkhaiādinādākarmmenājñānanta ‖ vyaktāvyaktapratyavādavāljña
+10. ānatthāāenavakarmme ‖ āāmokṣasāyananānaṃnasākṣālta ‖ tryāvādāntjñānāmṛ
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

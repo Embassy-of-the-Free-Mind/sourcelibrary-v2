@@ -1,0 +1,50 @@
+Leaf read. The ten visible lines all turn out to be verse text (SK_45 end through SK_51); I did not find commentary on this half. Words split by the string hole (vaikalyād a|ṣṭāviṃśati, 'ṣṭa|vidho, 'ṣṭādaśa|dhā, buddhiva|dhair, si|ddhīnām, kā|la) anchor the line-to-verse mapping. Each line continues onto the missing right half, so every reading below is a line fragment. Image resolution is modest, so I mark readings I could not resolve.
+
+**Line 1, SK_45 end + SK_46a**
+`[ta]d viparyyāsaḥ || eṣa pratyayasarggo viparyya[...]`
+The leaf doubles the consonant after r (yy), a routine scribal convention. For the edition's "sarko" the leaf shows a ga-ligature, which I read as sarggo, but the doubling is not fully resolved.
+
+**Line 2, SK_46b + SK_47a**
+`[vimar]ddāt tasya ca bhedās tu pañcāśat [mark] pañca vi[paryaya...]`
+The first words are hard to resolve. I read "pañca" at the cut edge, with no preceding a-, but with low confidence. A sign after pañcāśat may be a verse number.
+
+**Line 3, SK_47b**
+`vaikalyād a | ṣṭāviṃśatibhedā[s...]`
+Matches the edition. The ta of viṃśati is ambiguous at this resolution but I have no basis for a different reading.
+
+**Line 4, SK_48a**
+`bhedas tamaso 'ṣṭa | vidho mohasya ca da[śa...]`
+Matches. The sta ligature is cramped but readable as sta.
+
+**Line 5, SK_48b**
+`[t]āmisro 'ṣṭādaśa | dhā tathā bhavaty andha[tāmisraḥ]`
+Matches.
+
+**Line 6, SK_49a**
+`[...va]dhās saha buddhiva | dhair aśaktir uddiṣṭā`
+Leaf writes visarga sandhi as ss (dhās saha) where the edition has vadhāḥ saha.
+
+**Line 7, SK_49b end + SK_50a**
+`[... illegible ...] | ddhīnām || ādhyā[tmikāś...]`
+The left part, which should contain viparyayāt tuṣṭisi, I cannot read reliably; only ddhīnām and the following ādhyā are clear.
+
+**Line 8, SK_50**
+`[kā]la bhāgyākhyāḥ bāhyā viṣayoparamā[c...]`
+Leaf clearly reads bāhyā where the edition prints vijñāya. The pa of oparamā is slightly unclear but fits.
+
+**Line 9, SK_51a**
+`[ū]ha(ḥ) śabdo 'dhyayanaṃ duḥkhavighātās trayas suhṛt[prāptiḥ]`
+The leaf has an extra word, 'dhyayanaṃ, which the edition omits; the yanaṃ with anusvāra is distinct. The visarga of ūhaḥ may be written ś; I cannot tell. trayas with ss is likely but not certain.
+
+**Line 10, SK_51b (identification uncertain)**
+`dānañ ca siddhayo 'ṣṭau siddheḥ pūrvvo 'ṅkuśas tri[vidhaḥ]`
+I read the opening as dānañ ca, but the second half of the line is not clearly resolved, and this placement leaves little text for the right half of line 9, so treat the whole line as uncertain.
+
+DIFFERENCES:
+SK_46 | sarko | sarggo | uncertain
+SK_47 | a-pañca | pañca | uncertain
+SK_49 | vadhāḥ | vadhās | certain
+SK_50 | vijñāya | bāhyā | certain
+SK_51 | (omitted) | 'dhyayanaṃ | certain
+SK_51 | trayaḥ | trayas | uncertain
+SK_51 | dānaṃ | dānañ | uncertain

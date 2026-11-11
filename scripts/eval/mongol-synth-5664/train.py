@@ -110,9 +110,13 @@ def train(args):
     from trl import SFTTrainer, SFTConfig
     from transformers import TrainerCallback
     model, tok = load_model(args)
-    model = FastVisionModel.get_peft_model(model, finetune_vision_layers=True, finetune_language_layers=True,
-                                           finetune_attention_modules=True, finetune_mlp_modules=True,
-                                           r=args.rank, lora_alpha=args.rank, lora_dropout=0, bias='none', random_state=3407)
+    if args.init_adapter:   # continue an existing LoRA (10-mongol-real-train starts from the synthetic adapter, #5664)
+        from peft import PeftModel
+        model = PeftModel.from_pretrained(model, args.init_adapter, is_trainable=True)
+    else:
+        model = FastVisionModel.get_peft_model(model, finetune_vision_layers=True, finetune_language_layers=True,
+                                               finetune_attention_modules=True, finetune_mlp_modules=True,
+                                               r=args.rank, lora_alpha=args.rank, lora_dropout=0, bias='none', random_state=3407)
     rows = load_rows(os.path.join(args.data, 'labels.jsonl'))
     ds = lazy_dataset(rows, args.data)
     deadline = time.time() + args.hours * 3600
@@ -128,7 +132,7 @@ def train(args):
     resume = sorted(glob.glob(os.path.join(args.out, 'ckpt', 'checkpoint-*')), key=lambda p: int(p.rsplit('-', 1)[1]))
     cfg = SFTConfig(
         per_device_train_batch_size=args.batch, gradient_accumulation_steps=args.accum,
-        warmup_steps=100, max_steps=args.max_steps, learning_rate=args.lr, lr_scheduler_type='cosine',
+        warmup_steps=args.warmup, max_steps=args.max_steps, learning_rate=args.lr, lr_scheduler_type='cosine',
         logging_steps=25, optim='adamw_8bit', weight_decay=0.01, seed=3407,
         output_dir=os.path.join(args.out, 'ckpt'), save_steps=args.save_every, save_total_limit=3,
         report_to='none', bf16=True, remove_unused_columns=False, dataset_text_field='',
@@ -155,6 +159,8 @@ def main():
     ap.add_argument('--eval', required=True)
     ap.add_argument('--out', required=True)
     ap.add_argument('--adapter')
+    ap.add_argument('--init-adapter', help='train: start from this LoRA instead of a fresh one')
+    ap.add_argument('--warmup', type=int, default=100)
     ap.add_argument('--tag', default='lora')
     ap.add_argument('--rank', type=int, default=16)
     ap.add_argument('--batch', type=int, default=8)

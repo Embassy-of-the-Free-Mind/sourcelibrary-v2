@@ -1,0 +1,288 @@
+{
+ "at": "2026-10-23T06:49:14.563Z",
+ "arms": [
+  "F",
+  "S",
+  "L"
+ ],
+ "runs": {
+  "F": {
+   "mode": "glm",
+   "model": "m",
+   "pages_this_pass": 388,
+   "clients": 16,
+   "wall_secs": 2998.8,
+   "pages_per_hour": 466,
+   "errors": 0,
+   "hit_cap": 260,
+   "out_tok": 1657530,
+   "in_tok": 1820834
+  }
+ },
+ "rule": {
+  "noise_pts": 0.5,
+  "catastrophic_cer": 0.5,
+  "B": 10000,
+  "seed": 5730
+ },
+ "dropped": 0,
+ "sets": {
+  "T2": {
+   "all": {
+    "n": 307,
+    "F": {
+     "median_N": 3.123,
+     "ci_N": [
+      2.9184,
+      3.4005
+     ],
+     "median_A": 3.2551,
+     "catastrophic": 296
+    },
+    "S": {
+     "median_N": 0.304,
+     "ci_N": [
+      0.2904,
+      0.3182
+     ],
+     "median_A": 0.3605,
+     "catastrophic": 7
+    },
+    "L": {
+     "median_N": 0.3655,
+     "ci_N": [
+      0.3554,
+      0.3784
+     ],
+     "median_A": 0.4463,
+     "catastrophic": 24
+    },
+    "F-S": {
+     "median_d": 2.7607,
+     "ci": [
+      2.5748,
+      3.0603
+     ],
+     "wins": 0,
+     "losses": 307
+    },
+    "F-L": {
+     "median_d": 2.7034,
+     "ci": [
+      2.2367,
+      2.9514
+     ],
+     "wins": 8,
+     "losses": 299
+    }
+   },
+   "by_book": {
+    "Marcianus gr. 299": {
+     "n": 104,
+     "F": {
+      "median_N": 3.3011,
+      "ci_N": [
+       3.1253,
+       3.5976
+      ],
+      "median_A": 3.411,
+      "catastrophic": 104
+     },
+     "S": {
+      "median_N": 0.3323,
+      "ci_N": [
+       0.3152,
+       0.3425
+      ],
+      "median_A": 0.3792,
+      "catastrophic": 2
+     },
+     "L": {
+      "median_N": 0.3753,
+      "ci_N": [
+       0.3622,
+       0.3941
+      ],
+      "median_A": 0.4699,
+      "catastrophic": 15
+     },
+     "F-S": {
+      "median_d": 2.9749,
+      "ci": [
+       2.7602,
+       3.2281
+      ],
+      "wins": 0,
+      "losses": 104
+     },
+     "F-L": {
+      "median_d": 2.8617,
+      "ci": [
+       2.6912,
+       3.1663
+      ],
+      "wins": 7,
+      "losses": 97
+     }
+    },
+    "Ars sacra (Laurenziana)": {
+     "n": 203,
+     "F": {
+      "median_N": 1,
+      "ci_N": [
+       1,
+       3.4431
+      ],
+      "median_A": 1,
+      "catastrophic": 192
+     },
+     "S": {
+      "median_N": 0.2864,
+      "ci_N": [
+       0.2686,
+       0.3011
+      ],
+      "median_A": 0.3407,
+      "catastrophic": 5
+     },
+     "L": {
+      "median_N": 0.3565,
+      "ci_N": [
+       0.3442,
+       0.3754
+      ],
+      "median_A": 0.439,
+      "catastrophic": 9
+     },
+     "F-S": {
+      "median_d": 0.7721,
+      "ci": [
+       0.6816,
+       3.0603
+      ],
+      "wins": 0,
+      "losses": 203
+     },
+     "F-L": {
+      "median_d": 0.7025,
+      "ci": [
+       0.6168,
+       3
+      ],
+      "wins": 1,
+      "losses": 202
+     }
+    }
+   },
+   "verdict": {
+    "pass": null,
+    "why": "an arm is missing"
+   }
+  },
+  "T1": {
+   "all": {
+    "n": 81,
+    "F": {
+     "median_N": 1,
+     "ci_N": [
+      1,
+      1
+     ],
+     "median_A": 1,
+     "catastrophic": 81
+    },
+    "S": {
+     "median_N": 0.3272,
+     "ci_N": [
+      0.317,
+      0.3448
+     ],
+     "median_A": 0.3805,
+     "catastrophic": 4
+    },
+    "L": {
+     "median_N": 2.0517,
+     "ci_N": [
+      1.9376,
+      2.295
+     ],
+     "median_A": 2.1422,
+     "catastrophic": 74
+    },
+    "F-S": {
+     "median_d": 0.6695,
+     "ci": [
+      0.6445,
+      0.6811
+     ],
+     "wins": 0,
+     "losses": 81
+    },
+    "F-L": {
+     "median_d": -1.0866,
+     "ci": [
+      -1.295,
+      -0.9628
+     ],
+     "wins": 62,
+     "losses": 17
+    }
+   },
+   "by_book": {
+    "Grec 1841": {
+     "n": 81,
+     "F": {
+      "median_N": 1,
+      "ci_N": [
+       1,
+       1
+      ],
+      "median_A": 1,
+      "catastrophic": 81
+     },
+     "S": {
+      "median_N": 0.3272,
+      "ci_N": [
+       0.317,
+       0.3448
+      ],
+      "median_A": 0.3805,
+      "catastrophic": 4
+     },
+     "L": {
+      "median_N": 2.0517,
+      "ci_N": [
+       1.9376,
+       2.295
+      ],
+      "median_A": 2.1422,
+      "catastrophic": 74
+     },
+     "F-S": {
+      "median_d": 0.6695,
+      "ci": [
+       0.6445,
+       0.6811
+      ],
+      "wins": 0,
+      "losses": 81
+     },
+     "F-L": {
+      "median_d": -1.0866,
+      "ci": [
+       -1.295,
+       -0.9628
+      ],
+      "wins": 62,
+      "losses": 17
+     }
+    }
+   },
+   "verdict": {
+    "pass": null,
+    "why": "an arm is missing"
+   }
+  }
+ },
+ "overall": "INCOMPLETE"
+}

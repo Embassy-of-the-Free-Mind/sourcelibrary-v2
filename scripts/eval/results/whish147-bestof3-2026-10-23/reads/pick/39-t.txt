@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has recognizable, connected Sāṅkhya commentary on Kārikā 25 (taijasād ubhayam, ekādaśakaḥ, bhūtāder ubhayatrāpy asya sahāyatvāt, vaikṛta, buddhīndriyāṇi, ghrāṇa/rasana/nāsikā, vākpāṇipādapāyū[pa]stha, karmendriyāṇy āhuḥ) across all ten rows; B is partly sensible but gives up after row 5, and A is fluent-looking nonsense throughout.

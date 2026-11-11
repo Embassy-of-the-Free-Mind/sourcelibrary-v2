@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, D, B, A
+WHY | C's first row is a clean, correct text of Sāṅkhyakārikā 52 ("liṅgaṃ na vinā bhāvena… liṅgākhyo bhāvākhyaḥ tasmād dvividhaḥ pravartate sargaḥ"), and later rows keep real keywords ("puruṣaḥ liṅgasya", "pratipuruṣavimokṣa"); D has some commentary sense ("śabdādiviṣayaḥ", "vimokṣanimittaṃ pravṛtta"), while B and A are mostly syllable strings that only look like words.

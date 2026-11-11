@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ghaṭamastitasaiddhamama ‖ pāmanomaṃṣitavandāvayaṃrara ‖ rāmarāṇḍamakhyāvagaramma
+2. tvavaiājñārāḥbya ‖ majñātrivikrijñātrijñatvākṣāya ‖ paraṃprājñāpayaṃavida
+3. ramadevātrikriu ‖ yantādevāṇakkilndhakṣau ‖ ttaḥkātavanaḥkṣā
+4. bamāhlākharā ‖ bitraiṅṅaḥkrityanamaṅṅāltraṇa ‖ babhikitraṇvavalmmatra
+5. jaccararattanta ‖ ākkasamavānālbrimmaśyaḥka ‖ bijñetaṇanātri
+6. glāādhiḥsaiā ‖ thacidhyakkiḻiṅṅanāsākkicā ‖ ndyābhiṃkṣekampa
+7. jñaratramyara ‖ mantvaindyākkiteṅṅālsaiā ‖ mayāndāddaukhā
+8. laśamaivitrabasthatyaṅṅilglacchapai ‖ kkaddeṣṭaphādāśru ‖ tikajñyāḻibandhu
+9. jhairapānaṃcharāṣṇuaiṇḍyandragra ‖ aiṣāāaiṣadeśruda ‖ dajñaiṭānaccaratraṭaitra
+
+TRANSCRIPTION B
+1. ghyakhamastribhasomama ‖ pāmabhomāṃṣitavattovayaṃbhai ‖ bhāmmabhābdramadhyavagabhamma
+2. traivājñāraḥ [illegible] ‖ chaijñātivikijñā [illegible] ṣṭāya ‖ haṃprākṣāvaṣyaṃbhavida
+3. ramadaivādibhiu ‖ yakaidaivāṇamakṣilhaṣkuḻu ‖ bhajñābhavantaḥkṣā
+4. vamāphlājalai ‖ hamitrabhṣaḥbhiññunamajñāliṇa ‖ vabhikiiṇṭavalmmaju
+5. āccāraratstha ‖ ākkasomavānālbhimmaśyaḥka ‖ bhijñataṇabātra
+6. sa ccāḍiḥso ‖ bhaviyukkaḻḻanābābhicā ‖ ṣṭāḍaṃbhaṃkaba
+7. jjubhittammata ‖ mattyainyākitajñālbhasā ‖ mayānāṭṭukaiyā
+8. khaśamaivāubastra ‖ ṅṅattyatthilmlaccyapaikkaṭaṣṭakhaṭāṇaśra ‖ tikaḻuttādiñanajña
+9. yaikapābaṃcaka ‖ śluññuttbaśraivāmaidaśra ‖ dadajñaṭānaccabhatruṭau
+
+TRANSCRIPTION C
+1. pradhamantritaisāmama ‖ pāmolāmaṃṣitavarotāvayaṃkeśa ‖ śāmukāṇḍamadhyavaśakamu
+2. traivājñākāḥbaya ‖ bhojñātivikijñākrimpākṣāyā ‖ bhāḥ [illegible] śrāddhāvayaṃ [illegible] vida
+3. damadavātiriu ‖ yatodavārāṇamakkilnmagluu ‖ trajñātavantaḥjñā
+4. khamāṣṭhājñāraka ‖ gamitruśaḥkinnunamaṣṭālddura ‖ khaṭikiiñjavaḻmūññu
+5. jaccūtetvanma ‖ ākkasāmavānanāltraimuktaḥka ‖ bhijñūteñcanāti
+6. sa dṛākhiḥsā ‖ bhiciyukkijjanāsābhicā ‖ nmābhiṃbhiṃkivi
+7. jñātitantata ‖ mattonyākiteṣṭāllo ‖ mayānāṭṭako
+8. khaśamavaihitvanma [illegible] ‖ jñābilggaccapaikkudujñādāna [illegible] ‖ grakkikaittuāliṇanatra
+9. yākapānalaka [illegible] ‖ śrūṇaitrānagrataivāśaida [illegible] ‖ ddabhruddaḻubhaidānapratradai
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,0 +1,11 @@
+ROW 1 | ദ്വിപൎയ്യാസഃ ൪൫ ഏഷ‖പ്രത്യയസൎഗ്ഗോവിപൎയ്യയാശക്തിതുഷ്ടിസി‖ദ്ധ്യാഖ്യഃഗുണവൈഷമ്യവി
+ROW 2 | മൎദ്ദാത്തസ്യചഭേദാസ്തു‖പഞ്ചാശൽഃ ൪൬ പഞ്ചവിപൎയ്യയഭേദാ‖ഭവന്ത്യശക്തിശ്ചകരണ
+ROW 3 | വൈകല്യാൽഅ‖ഷ്ടാവിംശതിഭേദാതുഷ്ടിൎന്നവധ‖ാഷ്ടധാസിദ്ധിഃ ൪൭
+ROW 4 | ഭേദസ്തമസോഷ്ട‖വിധോമോഹസ്യചദശവിധോ‖മഹാമോഹസ്ത
+ROW 5 | ാമിസ്രോഷ്ടാദശ‖ധാതഥാഭവത്യാന്ധതാമിസ്രഃ ൪൮‖ഏകാദശേന്ദ്രിയവ
+ROW 6 | ധാസ്സഹബുദ്ധിവ‖ധൈരശക്തിരുദ്ദിഷ്ടാസപ്തദശവധ‖ാബുദ്ധേൎവ്വിപൎയ്യ
+ROW 7 | യാത്തുഷ്ടിസിദ്ധീ‖നാംആധ്യാത്മിക്യശ്ചതസ്രഃ‖പ്രകൃത്യുപാദാനക
+ROW 8 | ാലഭാഗ്യാഖ്യാഃബാഹ്യാ‖വിഷയോപരമാൽപഞ്ചനവ‖തുഷ്ടയോഭിമതാഃ ൫൦ ഊ
+ROW 9 | ഹശ്ശബ്ദോധ്യയനം‖ദുഃഖവിഘാതാസ്ത്രയഃദുഃഖവിഘാതാ‖സ്ത്രയസ്സുഹൃൽപ്രാപ്തിഃ
+ROW 10 | ദാനഞ്ചസിദ്ധയോ‖ഷ്ടൗസിദ്ധേഃപൂൎവ്വോങ്കുശസ്ത്രിവിധഃ‖ ൫൧ നവിനാഭാവൈ
+NOTE | All 10 rows read across the four pieces; the small signs after each verse end (rows 1, 2, 3, 5, 8, 10) I take to be verse numerals and they are my least certain readings, as is the apparent repetition of ദുഃഖവിഘാതാസ്ത്രയഃ in row 9; the scribe carries a final ാ to the next row or across a hole (rows 3, 5, 6, 8), and there is a single marginal sign resembling ഉ at the left edge beside row 6.

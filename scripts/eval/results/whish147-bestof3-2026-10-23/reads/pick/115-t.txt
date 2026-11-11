@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most consistent string-hole layout across rows and the most connected Sanskrit-Malayalam commentary phrasing (e.g. "vyāvarttakam enna lakṣaṇa", "ativyāptivāraṇāya", "bhinnatvabuddhi", "iti vyavahāra"); B is fluent in its first rows and then breaks down, and A breaks down most.

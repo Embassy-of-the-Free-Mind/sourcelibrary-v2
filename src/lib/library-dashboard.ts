@@ -42,7 +42,7 @@ export const RATES = { ocr: [0.00106, 0.00138], tr: [0.00058, 0.00174] } as cons
 export interface LibraryDashboard {
   generatedAt: Date | string;
   elapsedSec: number;
-  totals: { live: Totals; all: Totals; readableLive: number; readableAll: number; held: number; feedbackOpen: number; visibleCollections: number };
+  totals: { live: Totals; all: Totals; readableLive: number; readableAll: number; held: number; /** Held as not acquired (manifest-only catalogue records, #7860); absent before 2026-10-31, when `held` included them. */ notAcquired?: number; feedbackOpen: number; visibleCollections: number };
   byLanguage: LanguageRow[];
   noLanguage: number;
   byCentury: CenturyRow[];
@@ -67,6 +67,8 @@ export interface LibraryDashboard {
 export interface MetricsHistoryRow {
   date: string; mau: number; avgDau: number; signupsTotal: number; verified: number; humanPvs7: number; dwellMedianSec: number;
   storage?: { r2_bytes: number; r2_objects: number; text_bytes_est: number; pages_total: number };
+  /** Likely-human visitors per country over the 24h before the snapshot; from 2026-11-11 (#8522). */
+  geoLikely?: Record<string, number>;
 }
 
 /** The subset of system_config.metrics_snapshot the dashboard renders (full shape: scripts/analytics/snapshot-metrics.mjs). */
@@ -75,13 +77,29 @@ export interface MetricsSnapshot {
   users: { total: number; verified: number; everLoggedIn: number; new30: number; new7: number };
   engagement: { mau: number; avgDau: number; dwellMedianSec: number };
   deltas: { signups7: { now: number; prev: number }; pageviews7: { now: number; prev: number } };
-  conversion: { uniqVisitors: number; returningVisitors: number };
-  traffic: { humanPvs: number; dailyPageviews: { date: string; hits: number }[] };
+  conversion: { uniqVisitors: number; returningVisitors: number; newSignups?: number };
+  traffic: {
+    humanPvs: number; dailyPageviews: { date: string; hits: number }[];
+    topBooks?: { key: string; hits: number; title: string; author: string }[];
+    topCollections?: { slug: string; hits: number }[];
+  };
   series: { signupsByDay: { date: string; n: number }[] };
+  /** Likely-human visitors by country, 30 days (#8522); absent on snapshots before 2026-11-11. */
+  geo?: { windowDays: number; since?: string; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
+  /** Keyword tallies over /welcome introductions; counts only, never text (#8541). */
+  introductions?: { n: number; kinds?: Record<string, number>; interests?: Record<string, number> };
+  /** PostHog reader pageviews by country, last 30 days (browser-side geolocation, #8541). */
+  geoReaders?: { windowDays: number; source: string; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
+  /** PostHog reader pageviews by month and country since 2026-06 (#8541). */
+  readersMonthly?: { source: string; method: string; months: Record<string, Record<string, number>> };
   search: { human: number; zeroResult: number; topQueries: { query: string; count: number }[]; zeroQueries: { query: string; count: number }[] };
   missionActions: { download: number; cite: number; share: number };
-  social: { feedbackUnread: number };
-  readingMembers?: { users: number; sessions: number; books: number; median: number; p90: number; deep: number; veryDeep: number; multiDayUsers: number; multiBookUsers: number; top10PctPageShare: number };
+  social: { feedbackUnread: number; likes?: number; likeVisitors?: number };
+  /** Model-backed reader features (librarian, search expansion, voice, MCP), last 30 days. */
+  ai?: { feature: string; calls: number; cost: number; avgMs: number }[] | null;
+  readingMembers?: { users: number; sessions: number; books: number; median: number; p90: number; deep: number; veryDeep: number; multiDayUsers: number; multiBookUsers: number; top10PctPageShare: number;
+    /** Sessions faster than machinePacePpm pages/minute: signed-in bulk fetching, not reading. */
+    fastSessions?: number; pacedSessions?: number; fastPages?: number; totalPages?: number; machinePacePpm?: number };
 }
 
 export interface HomepageStats { totalBooks: number; translatedToEnglish: number; languageCount: number; authorCount: number; artworkCount: number; illustrationCount: number; firstTranslationCount: number; firstTranslatedWorksProvisional?: number; updatedAt?: Date | string }
@@ -109,7 +127,7 @@ export async function readHomepageStats(db: Db): Promise<HomepageStats | null> {
 /** One row per day since the register began (2026-06-28); a few hundred small docs at most. */
 export async function readMetricsHistory(db: Db): Promise<MetricsHistoryRow[]> {
   const rows = await db.collection('metrics_history')
-    .find({}, { projection: { date: 1, mau: 1, avgDau: 1, signupsTotal: 1, verified: 1, humanPvs7: 1, dwellMedianSec: 1, storage: 1 } })
+    .find({}, { projection: { date: 1, mau: 1, avgDau: 1, signupsTotal: 1, verified: 1, humanPvs7: 1, dwellMedianSec: 1, storage: 1, geoLikely: 1 } })
     .sort({ date: 1 }).limit(2000).toArray();
   return rows as unknown as MetricsHistoryRow[];
 }

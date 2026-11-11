@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. tradhi nājñāṣāsiddhāntalṣaṣṭhānapa [illegible] kkunnābījaṃprakṛti [illegible] tvaṃkālpa
+2. śvacatālpañcajñānaṅṅaḻpākyānjñānenasiddhiṃ [illegible] nantrādikārāyālprakaraṇādi [illegible]
+3. lpañcagrāhakaṃdvānamitrāderavidye [illegible] ditvādi [illegible] putrā [illegible] bhedena [illegible] jñānātthvaṃ [illegible]
+4. bhrijñenyāyatmavi ‖ jñāna [illegible] jñeyapuruṣāpārtthasaṃdavān ‖ [illegible] puruṣārttha [illegible]
+5. pañca [illegible] ikkaca ‖ [illegible] cadasvideśavijñāpadārttha ‖ [illegible] siddhīnāṃ [illegible] ttu
+6. jñānamahatve ‖ l [illegible] mā [illegible] ḻu [illegible] kammukhamanana ‖ [illegible] naṃ uṇṭātmādṛ
+7. variśeṣajñā ‖ naṭasaṃgālpākajñādivare ‖ [illegible] neyāyuruṣite
+8. bālagati [illegible] gasamudāyagrahitasvarūpi [illegible] ppeṭṭ [illegible] jñānātthasamudāyaśaktiḥ
+9. [illegible] ṣāddharadevipratyādiprasaṃgaḥubhayābhivaragatibhi [illegible] prādeśakāraṇaṅṅaḻ [illegible]
+10. nyāvākyārtthaṅṅaḻṭāsaṃṭavān [illegible] śaktimāṃ [illegible] śakti [illegible] paritasmi
+
+TRANSCRIPTION B
+1. ādinājñaṣāsiddhātalpatthānapapannagliṅṅanobījaṃprakital̤a ‖ [illegible] tiṣṭādyośrutitvaṃkālpa
+2. ścapatālpaścajñāna [illegible] pātrānjñānanimi [illegible] tyaṃvānantvādityara ‖ tā [illegible] yālprakāśanādisvanā
+3. lpaścagrāhakaṃdvānamityādaivavicehiddhātyādi [illegible] dyāhāra ‖ dyonoṇaljñānārtthaṃyā
+4. śśiññunyātmami ‖ jñānaghanajñādyudyāpāvisaṃravān ‖ bighnādyupādakal
+5. pappakkaubhikka ‖ ācariṣvāgaviṣajñadṛpadārañ ‖ dvābhikkanaśyāntu
+6. jñānanivṛtte ‖ ltryādātmaṭakammīmana ‖ bandhaṃuttaratrādya
+7. pariśuddhajñā ‖ nṛsaṃgālpākajñādivara ‖ ṣṇāggiddhisa
+8. bahulagatiddhyāga [illegible] ‖ samudāyasiddhirivatapaścājñā ‖ nābhyālsamudāyasiddhiḥ
+9. bandhabhāgadeva [illegible] ‖ praribhāgaprasaṃgaḥuttarānvitagaddhi ‖ [illegible] tthitiprādegānantanipu
+10. nyavākyārtthattāṃ [illegible] ‖ ṭānisaṃbhavālbhācyogamyabhikṣa ‖ [illegible] ddhāgadijñāddyāgatami
+
+TRANSCRIPTION C
+1. ādinā [illegible] bhākalpa [illegible] ‖ [illegible] triguṇa [illegible] vi [illegible] prakṛti [illegible] ‖ [illegible] tvaṃ [illegible] kālpa
+2. [illegible] lattālpa [illegible] jñāna [illegible] ‖ [illegible] jñāna [illegible] ‖ [illegible] yālprakaraṇā [illegible]
+3. l [illegible] grāhakaṃ [illegible] ‖ [illegible] tyādi [illegible] śabdā [illegible] ‖ [illegible] śabdajñāna [illegible]
+4. [illegible] tmami ‖ jñāna [illegible] śabdā [illegible] saṃdavān ‖ [illegible]
+5. [illegible] iti [illegible] ‖ [illegible] miti [illegible] jñā [illegible] ‖ [illegible] viśeṣa [illegible]
+6. jñāna [illegible] ‖ l [illegible] ḥ [illegible] ‖ [illegible]
+7. [illegible] jñā ‖ [illegible] prasaṃgālpa [illegible] ‖ [illegible]
+8. [illegible] śakti [illegible] ‖ samudāyaśakti [illegible] ‖ [illegible] samudāyaśaktiḥ
+9. [illegible] ‖ prayogaprasaṃgaḥ [illegible] śakti [illegible] ‖ [illegible]
+10. [illegible] vākyārtha [illegible] ‖ [illegible] saṃ [illegible] vān [illegible] śakti [illegible] ‖ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

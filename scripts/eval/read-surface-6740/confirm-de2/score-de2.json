@@ -1,0 +1,492 @@
+{
+ "scored_at": "2026-10-31T16:15:49.706Z",
+ "rule": "confirm-de2/RULE.md (relative; committed before any read)",
+ "judge": "claude-opus-5-5 (claude -p, login derek@sourcelibrary.org after this box's account was over its pace), route-judge-6740 judgePrompt, blind, shuffled",
+ "n_drawn": 48,
+ "frame_covered_share": 0.978,
+ "weights": {
+  "1700s|fraktur": {
+   "frame_share": 0.2704,
+   "sample_share": 0.2292,
+   "weight": 1.18
+  },
+  "1800+|antiqua": {
+   "frame_share": 0.015,
+   "sample_share": 0.1042,
+   "weight": 0.144
+  },
+  "pre-1600|fraktur": {
+   "frame_share": 0.544,
+   "sample_share": 0.3958,
+   "weight": 1.374
+  },
+  "1600s|fraktur": {
+   "frame_share": 0.1357,
+   "sample_share": 0.1667,
+   "weight": 0.814
+  },
+  "1800+|fraktur": {
+   "frame_share": 0.0349,
+   "sample_share": 0.1042,
+   "weight": 0.335
+  }
+ },
+ "weighted": {
+  "paired": {
+   "n": 45,
+   "books": 45,
+   "both": 38.21,
+   "o_only": 3.93,
+   "a_only": 1.37,
+   "neither": 3,
+   "wt_a": 3,
+   "wt_o": 3,
+   "inv_o": 0.81,
+   "acc_a": 39.58,
+   "acc_o": 42.14,
+   "w": 46.52
+  },
+  "p_o_within_008": 0.993,
+  "accepted_share_of_drawn": {
+   "agy-flash-low@4": 0.825,
+   "agy-flash-low@8": 0.878
+  },
+  "usd_per_1k_accepted": {
+   "agy-flash-low@4": 17.44,
+   "agy-flash-low@8": 8.84
+  },
+  "saving": 0.493,
+  "clauses": {
+   "a": true,
+   "b": false,
+   "c": true
+  },
+  "passes": false
+ },
+ "unweighted": {
+  "paired": {
+   "n": 45,
+   "books": 45,
+   "both": 38,
+   "o_only": 3,
+   "a_only": 1,
+   "neither": 3,
+   "wt_a": 3,
+   "wt_o": 3,
+   "inv_o": 1,
+   "acc_a": 39,
+   "acc_o": 41,
+   "w": 45
+  },
+  "p_o_within_008": 0.992,
+  "accepted_share_of_drawn": {
+   "agy-flash-low@4": 0.813,
+   "agy-flash-low@8": 0.854
+  },
+  "usd_per_1k_accepted": {
+   "agy-flash-low@4": 17.7,
+   "agy-flash-low@8": 9.08
+  },
+  "saving": 0.487,
+  "clauses": {
+   "a": true,
+   "b": false,
+   "c": true
+  },
+  "passes": false
+ },
+ "absolute_reported": {
+  "agy-flash-low@4": {
+   "written": "39/45",
+   "wrong_text": "3/45",
+   "invented": 0,
+   "p_acc_ge_080": 0.844,
+   "passes_absolute": false
+  },
+  "agy-flash-low@8": {
+   "written": "41/45",
+   "wrong_text": "3/45",
+   "invented": 1,
+   "p_acc_ge_080": 0.969,
+   "passes_absolute": false
+  }
+ },
+ "cost": {
+  "agy-flash-low@4": {
+   "usd": 2.7033657,
+   "calls": 72,
+   "pages_read": 188,
+   "usd_per_1k_pages": 14.379604787234042,
+   "calls_per_page": 0.3829787234042553
+  },
+  "agy-flash-low@8": {
+   "usd": 2.878100775,
+   "calls": 111,
+   "pages_read": 371,
+   "usd_per_1k_pages": 7.757684029649595,
+   "calls_per_page": 0.2991913746630728
+  }
+ },
+ "by_era": {
+  "1700s": {
+   "books": 11,
+   "both": 10,
+   "o_only": 1,
+   "a_only": 0,
+   "neither": 0,
+   "wt_a": 0,
+   "wt_o": 0,
+   "acc_a": "10/11",
+   "acc_o": "11/11",
+   "acc_a_ci": [
+    0.623,
+    0.984
+   ],
+   "acc_o_ci": [
+    0.741,
+    1
+   ],
+   "o_worse": false
+  },
+  "1800+": {
+   "books": 8,
+   "both": 8,
+   "o_only": 0,
+   "a_only": 0,
+   "neither": 0,
+   "wt_a": 0,
+   "wt_o": 0,
+   "acc_a": "8/8",
+   "acc_o": "8/8",
+   "acc_a_ci": [
+    0.676,
+    1
+   ],
+   "acc_o_ci": [
+    0.676,
+    1
+   ],
+   "o_worse": false
+  },
+  "pre-1600": {
+   "books": 19,
+   "both": 15,
+   "o_only": 2,
+   "a_only": 1,
+   "neither": 1,
+   "wt_a": 1,
+   "wt_o": 1,
+   "acc_a": "16/19",
+   "acc_o": "17/19",
+   "acc_a_ci": [
+    0.624,
+    0.945
+   ],
+   "acc_o_ci": [
+    0.686,
+    0.971
+   ],
+   "o_worse": false
+  },
+  "1600s": {
+   "books": 7,
+   "both": 5,
+   "o_only": 0,
+   "a_only": 0,
+   "neither": 2,
+   "wt_a": 2,
+   "wt_o": 2,
+   "acc_a": "5/7",
+   "acc_o": "5/7",
+   "acc_a_ci": [
+    0.359,
+    0.918
+   ],
+   "acc_o_ci": [
+    0.359,
+    0.918
+   ],
+   "o_worse": false
+  }
+ },
+ "by_face": {
+  "fraktur": {
+   "books": 40,
+   "both": 33,
+   "o_only": 3,
+   "a_only": 1,
+   "neither": 3,
+   "wt_a": 3,
+   "wt_o": 3,
+   "acc_a": "34/40",
+   "acc_o": "36/40",
+   "acc_a_ci": [
+    0.709,
+    0.929
+   ],
+   "acc_o_ci": [
+    0.769,
+    0.96
+   ],
+   "o_worse": false
+  },
+  "antiqua": {
+   "books": 5,
+   "both": 5,
+   "o_only": 0,
+   "a_only": 0,
+   "neither": 0,
+   "wt_a": 0,
+   "wt_o": 0,
+   "acc_a": "5/5",
+   "acc_o": "5/5",
+   "acc_a_ci": [
+    0.566,
+    1
+   ],
+   "acc_o_ci": [
+    0.566,
+    1
+   ],
+   "o_worse": false
+  }
+ },
+ "by_cell": {
+  "1700s|fraktur": {
+   "books": 11,
+   "both": 10,
+   "o_only": 1,
+   "a_only": 0,
+   "neither": 0,
+   "wt_a": 0,
+   "wt_o": 0,
+   "acc_a": "10/11",
+   "acc_o": "11/11",
+   "acc_a_ci": [
+    0.623,
+    0.984
+   ],
+   "acc_o_ci": [
+    0.741,
+    1
+   ],
+   "o_worse": false
+  },
+  "1800+|antiqua": {
+   "books": 5,
+   "both": 5,
+   "o_only": 0,
+   "a_only": 0,
+   "neither": 0,
+   "wt_a": 0,
+   "wt_o": 0,
+   "acc_a": "5/5",
+   "acc_o": "5/5",
+   "acc_a_ci": [
+    0.566,
+    1
+   ],
+   "acc_o_ci": [
+    0.566,
+    1
+   ],
+   "o_worse": false
+  },
+  "pre-1600|fraktur": {
+   "books": 19,
+   "both": 15,
+   "o_only": 2,
+   "a_only": 1,
+   "neither": 1,
+   "wt_a": 1,
+   "wt_o": 1,
+   "acc_a": "16/19",
+   "acc_o": "17/19",
+   "acc_a_ci": [
+    0.624,
+    0.945
+   ],
+   "acc_o_ci": [
+    0.686,
+    0.971
+   ],
+   "o_worse": false
+  },
+  "1600s|fraktur": {
+   "books": 7,
+   "both": 5,
+   "o_only": 0,
+   "a_only": 0,
+   "neither": 2,
+   "wt_a": 2,
+   "wt_o": 2,
+   "acc_a": "5/7",
+   "acc_o": "5/7",
+   "acc_a_ci": [
+    0.359,
+    0.918
+   ],
+   "acc_o_ci": [
+    0.359,
+    0.918
+   ],
+   "o_worse": false
+  },
+  "1800+|fraktur": {
+   "books": 3,
+   "both": 3,
+   "o_only": 0,
+   "a_only": 0,
+   "neither": 0,
+   "wt_a": 0,
+   "wt_o": 0,
+   "acc_a": "3/3",
+   "acc_o": "3/3",
+   "acc_a_ci": [
+    0.438,
+    1
+   ],
+   "acc_o_ci": [
+    0.438,
+    1
+   ],
+   "o_worse": false
+  }
+ },
+ "o_worse_strata": [],
+ "not_written": {
+  "agy-flash-low@4": [
+   {
+    "page_id": "6a94b14b281341c253e70a96",
+    "why": "more than one transcription header: restarted or refused read"
+   },
+   {
+    "page_id": "6a426544dfbbb4d07aa6b264",
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   {
+    "page_id": "69aebcc96059efb05d500fdf",
+    "why": "more than one transcription header: restarted or refused read"
+   }
+  ],
+  "agy-flash-low@8": [
+   {
+    "page_id": "6a94b14b281341c253e70a96",
+    "why": "more than one transcription header: restarted or refused read"
+   },
+   {
+    "page_id": "6a426544dfbbb4d07aa6b264",
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   {
+    "page_id": "69aebcc96059efb05d500fdf",
+    "why": "more than one transcription header: restarted or refused read"
+   }
+  ]
+ },
+ "wrong_text_pages": {
+  "agy-flash-low@4": [
+   {
+    "page_id": "69b69090080b19f98fcdfe2a",
+    "era": "1600s",
+    "face": "fraktur",
+    "defects": [
+     "O5: wie $\\text{BA}$, zu $\\text{AC}$, alſo das qua<lb/>drat $\\text{EF}$, zum quadrat  — the numbers printed under the letters are dropped: 16 and 12 under BA and AC, 36 and 27 under EF and FG",
+     "O5: Vnd wie $\\text{AB}$, zu $\\text{BC}$, alſo das quadrat $\\text{EF}$, zum quadrat $ — the line of numbers 16, 4, 36, 9 printed under AB, BC, EF and H is dropped"
+    ]
+   },
+   {
+    "page_id": "6ac50d984ba7223afe0217a3",
+    "era": "pre-1600",
+    "face": "fraktur",
+    "defects": [
+     "O6: Hertzlich wir werden für jm ſtehn — page reads 'Herꝛlich' (Herrlich, 'gloriously'); candidate turns it into 'Hertzlich' ('heartily'), which changes the sense"
+    ]
+   },
+   {
+    "page_id": "6a4a3fc89edae40468f93561",
+    "era": "1600s",
+    "face": "fraktur",
+    "defects": [
+     "O6: von Waldtwißmat/ leg auff ein gelben — page reads 'von Waldtwißmat gemacht/ ein gelben'; 'gemacht' dropped and an extra 'leg auff' added",
+     "O6: da dieselben deß hohe Wesens sind — page reads 'Dingē/ da die Farbē deß hohē Wesens' (the colours), not 'dieselben'"
+    ]
+   }
+  ],
+  "agy-flash-low@8": [
+   {
+    "page_id": "69b69090080b19f98fcdfe2a",
+    "era": "1600s",
+    "face": "fraktur",
+    "defects": [
+     "O5: wie BA, zu AC, alſo das qua<lb/>drat EF, zum quadrat FG, auß — The numbers printed under the line (16, 12 and 36, 27) are left out, so the working that produces √27 is missing",
+     "O5: Vnd wie AB, zu BC, alſo das quadrat EF, zum quadrat H, — The numbers printed under the line (16, 4, 36, 9) are left out"
+    ]
+   },
+   {
+    "page_id": "6a4a3fc89edae40468f93561",
+    "era": "1600s",
+    "face": "fraktur",
+    "defects": [
+     "O6: von Waldtwissmat/ leg auff ein gelben — page reads 'von Waldtwißmat gemacht/ ein gelben'; 'gemacht' dropped and 'leg auff' invented",
+     "O6: da dieselbe deß hohe Wesens sind — page reads 'da die Farbē deß hohē Wesens' (Farben), not 'dieselbe'"
+    ]
+   },
+   {
+    "page_id": "6ac4fc064ba7223afef719b2",
+    "era": "pre-1600",
+    "face": "fraktur",
+    "defects": [
+     "O7: im xv. grad — the page reads 'xx.' (20th degree), not 'xv.' (15th)",
+     "O7: dise zü­stuck — the page has the numeral 'ij.' (two pieces); the candidate turns it into the word 'zü', so the count is lost"
+    ]
+   }
+  ]
+ },
+ "controls": {
+  "planted": [
+   {
+    "route": "agy-flash-low@8",
+    "kind": "D",
+    "judged": true,
+    "accepted": false,
+    "named": true,
+    "caught": true
+   },
+   {
+    "route": "agy-flash-low@8",
+    "kind": "C",
+    "judged": true,
+    "accepted": false,
+    "named": true,
+    "caught": true
+   }
+  ],
+  "planted_caught": "2/2",
+  "wrong_page": [
+   {
+    "route": "agy-flash-low@4",
+    "refused": true
+   },
+   {
+    "route": "agy-flash-low@4",
+    "refused": true
+   },
+   {
+    "route": "agy-flash-low@8",
+    "refused": true
+   },
+   {
+    "route": "agy-flash-low@8",
+    "refused": true
+   }
+  ],
+  "wrong_page_refused": "4/4",
+  "voided": false
+ },
+ "decision": {
+  "passes": false,
+  "decided_by": "weighted (post-stratified to the frame)",
+  "unweighted_agrees": true
+ }
+}

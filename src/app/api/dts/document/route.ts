@@ -16,6 +16,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { dtsPageText } from '@/lib/dts-text';
@@ -144,6 +145,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Apply bot gating
+    if (bot) {
+      logBotRead(request, {
+        route: 'dts', book: bookId, trusted, pageFrom: startPage, pageTo: endPage,
+        maxPage: trusted ? undefined : maxPage, clamped: !trusted && endPage > maxPage,
+      });
+    }
     if (bot && !trusted && endPage > maxPage) {
       endPage = maxPage;
       if (startPage > maxPage) {

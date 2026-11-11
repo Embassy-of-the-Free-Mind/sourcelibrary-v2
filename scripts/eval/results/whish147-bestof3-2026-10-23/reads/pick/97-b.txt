@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three gives readable text; A is almost entirely illegible, but its one legible word, "kṣetra", is real Sāṅkhya vocabulary, while C has a few real words ("dhyāna", "buddhi", "grahaṇāl") buried in long runs of made-up syllables like "ddraghadrakaya", and B's "mamayaya"/"mama" looks like repeated invented syllables.

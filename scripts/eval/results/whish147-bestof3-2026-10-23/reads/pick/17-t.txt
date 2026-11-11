@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads most consistently as the Sāṅkhyakārikā commentary's discussion of the means of knowledge (vacanam eva pramāṇāntaraṃ, aitihya, pratyakṣa, saṃbhava, liṃginaḥ, pravarttayanti) and marks the string holes in every row; B has some good stretches (svapratyakṣapramāṇe siddhāntasya, pramāṇāntaratvam) but breaks up elsewhere, and C is mostly garbled syllables.

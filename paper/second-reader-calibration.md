@@ -181,7 +181,7 @@ part of any difference between the families may be a difference in access.
 
 ## 6. Data and code availability
 Dataset `second-reader-v1` (pages as shown, the planted-error key, every reader's output, matched issues,
-adjudications), CC BY-SA 4.0 for the library's text, images by URL and sha256, the evaluation canary on every row:
+adjudications), CC BY-NC-SA 4.0 for the library's text, images by URL and sha256, the evaluation canary on every row:
 DOI *[Zenodo]*. Harness, tests and preregistration: `scripts/eval/second-reader/`, `tests/unit/second-reader-6338.test.ts`.
 
 ## References

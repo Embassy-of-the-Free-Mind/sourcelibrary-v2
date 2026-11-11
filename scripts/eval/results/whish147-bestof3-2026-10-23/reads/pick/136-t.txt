@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads most consistently as the real Dīpikā passage on whether validity (prāmāṇya) is known by itself or from outside, with phrases such as "indriyapratyāsatti", "anuvyavasāyena prāmāṇyasya", "svatogrāhyatvāt", "pramāṇatvasaṃśaya" and "pramātvaniści"; A has fewer real fragments with more gaps, and C is mostly syllable strings that only look like words.

@@ -1,4 +1,40 @@
 {
+ "/articles/alchemical-process/emblem-iii.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/306a2d17ff18-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/306a2d17ff18-1920.avif",
+    "w": 1300
+   }
+  ]
+ },
+ "/articles/aliveness/fludd-microcosm.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ee2f1dd2cd16-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ee2f1dd2cd16-1920.avif",
+    "w": 1400
+   }
+  ]
+ },
+ "/articles/beeckman-on-drebbel/drebbel-submarine.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d12056654fc4-1280.avif",
+    "w": 1028
+   },
+   {
+    "src": "/articles/heroes/d12056654fc4-1920.avif",
+    "w": 1028
+   }
+  ]
+ },
  "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
   "srcset": [
    {
@@ -44,6 +80,18 @@
    {
     "src": "/articles/heroes/2d4bed006808-1920.avif",
     "w": 1400
+   }
+  ]
+ },
+ "/articles/solve-et-coagula/episode-artwork-169.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d394fd600630-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d394fd600630-1920.avif",
+    "w": 1280
    }
   ]
  },
@@ -104,6 +152,18 @@
    {
     "src": "/articles/heroes/3f7c1fdc4cdd-1920.avif",
     "w": 1920
+   }
+  ]
+ },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1280.avif",
+    "w": 1000
+   },
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1920.avif",
+    "w": 1000
    }
   ]
  },
@@ -239,6 +299,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/78.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/823f7e66b906-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/823f7e66b906-1920.avif",
+    "w": 1659
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg": {
   "srcset": [
    {
@@ -356,6 +428,18 @@
    {
     "src": "/articles/heroes/29a2c0984334-1920.avif",
     "w": 1076
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/55ddedbcdc49-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/55ddedbcdc49-1920.avif",
+    "w": 1571
    }
   ]
  },
@@ -539,6 +623,30 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/archived/69bd9ca46120d54bd037001f/6.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8dd2f60a72fb-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8dd2f60a72fb-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/6ea68f18cdb6-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/6ea68f18cdb6-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg": {
   "srcset": [
    {
@@ -560,6 +668,30 @@
    {
     "src": "/articles/heroes/f3f087e3b91e-1920.avif",
     "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c9c0bcf14b7e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/c9c0bcf14b7e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c1ff44470321-1280.avif",
+    "w": 1075
+   },
+   {
+    "src": "/articles/heroes/c1ff44470321-1920.avif",
+    "w": 1075
    }
   ]
  },
@@ -623,6 +755,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/7860e991aaf3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/7860e991aaf3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg": {
   "srcset": [
    {
@@ -679,6 +823,30 @@
    },
    {
     "src": "/articles/heroes/f33be1ffbbe5-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/b262481ab30c-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/b262481ab30c-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raffaello-pythagoras-mit-seinen-schulern-studie-fur-die-schule-von-athen-stanza-della-segnat.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c65d7956ccf2-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/c65d7956ccf2-1920.avif",
     "w": 1920
    }
   ]
@@ -824,6 +992,30 @@
    {
     "src": "/articles/heroes/089f8826e202-1920.avif",
     "w": 892
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/308b2a49e881-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/308b2a49e881-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1920.avif",
+    "w": 1920
    }
   ]
  },

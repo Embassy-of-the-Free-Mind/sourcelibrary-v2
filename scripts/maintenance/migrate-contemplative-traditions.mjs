@@ -224,7 +224,7 @@ async function main() {
     if (!DRY_RUN) {
       const result = await books.updateMany(
         { _id: { $in: objectIds } },
-        { $addToSet: { collections: { $each: [tradition.slug, PARENT_SLUG] } } }
+        { $addToSet: { collections: { $each: [tradition.slug, PARENT_SLUG] } }, $currentDate: { updated_at: true } }
       );
       console.log(
         `  Tagged ${result.modifiedCount}/${objectIds.length} books with ['${tradition.slug}', '${PARENT_SLUG}']`

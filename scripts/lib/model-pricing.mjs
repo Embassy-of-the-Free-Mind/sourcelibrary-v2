@@ -183,9 +183,30 @@ export function searchCostOf(model, queries = 0) {
  *
  * Allow-list, not deny-list: a model with no reasoning stage (2.0, 1.5, TTS, embedding,
  * image) rejects the unknown field, and pro models reject a zero budget — both are a 400.
- * Only flash text models from 2.5 on. Twin of `acceptsZeroThinking` in
+ * Only flash text models from 2.5 on, minus flash-lite from 3.5 on (level-only — use
+ * `noThinkingConfig` below, which knows the difference). Twin of `acceptsZeroThinking` in
  * src/lib/gemini-client.ts (TypeScript cannot import this file); the model lists in
  * tests/unit/gemini-client-meters.test.ts pin the behaviour of both.
  */
 export const acceptsZeroThinking = (model) =>
+  thinksAndTakesConfig(model) && !levelOnly(model);
+
+const thinksAndTakesConfig = (model) =>
   /^gemini-(2\.5|[3-9](\.\d+)?)-flash/.test(model) && !/tts|image|embedding|live|audio/.test(model);
+
+// Flash-lite from 3.5 on refuses `thinkingBudget: 0` (400 INVALID_ARGUMENT, probed
+// 2026-09-28 in #4747 and 2026-10-07 in #6182) but takes `thinkingLevel: 'minimal'`,
+// its lowest setting. 3.5–3.8 flash (not lite) took budget 0 in the #6182 arms.
+const levelOnly = (model) => /^gemini-(3\.[5-9]|[4-9](\.\d+)?)-flash-lite/.test(model);
+
+/**
+ * The `thinkingConfig` that turns a model's reasoning as far down as it goes, or null
+ * when the model takes no thinkingConfig at all (send nothing). Budget 0 where the
+ * model accepts it; `thinkingLevel: 'minimal'` where it only takes a level (#5232) —
+ * dropping the field instead would leave thinking ON and billed. Twin of
+ * `noThinkingConfig` in src/lib/gemini-client.ts.
+ */
+export const noThinkingConfig = (model) => {
+  if (!thinksAndTakesConfig(model)) return null;
+  return levelOnly(model) ? { thinkingLevel: 'minimal' } : { thinkingBudget: 0 };
+};

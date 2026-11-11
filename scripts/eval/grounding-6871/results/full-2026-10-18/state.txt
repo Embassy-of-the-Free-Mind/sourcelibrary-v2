@@ -1,0 +1,96 @@
+$ /root/bin/gpu-queue.sh list
+running:
+  05-paddle-split-6101.sh
+pending:
+  80-tib-gutter-full-c2.sh
+finished (last 10):
+  80-tib-gutter-full-c.sh
+  73-tib-gutter-r2-vllm.sh
+  72-tib-gutter-r2.sh
+  71-image-search.sh
+  70-latin-distill.sh
+  60-tib-gutter-bakeoff.sh
+  07-mongol-real-pilot.sh
+  51-zh-guarded-read-resume.sh
+  05-mongol-realgt-read.sh
+  50-grounding-6871.sh
+
+$ ls -la /root/gpu-queue/*/ | grep -i grounding
+-rwxr-xr-x 1 root root 1833 Oct 18 07:30 50-grounding-6871.sh
+
+$ ls -la /root/jobs/grounding-6871/
+total 196708
+drwxr-xr-x  4 root root     4096 Oct 18 17:32 .
+drwxr-xr-x 20 root root     4096 Oct 22 22:12 ..
+drwxr-xr-x  2 root root     4096 Oct 18 07:27 code
+-rw-r--r--  1 root root    19484 Oct 18 17:32 explore.json
+-rw-r--r--  1 root root        0 Oct 18 05:49 fetch.err
+-rw-r--r--  1 root root     1965 Oct 18 17:27 hold.log
+-rw-r--r--  1 root root       52 Oct 18 05:56 holds.out
+drwxr-xr-x  2 root root   131072 Oct 18 07:28 img
+-rw-r--r--  1 root root    13270 Oct 18 07:30 interim-clean-explore.json
+-rw-r--r--  1 root root 32674553 Oct 18 07:28 interim-clean.jsonl
+-rw-r--r--  1 root root     6404 Oct 18 07:29 interim-clean-results.json
+-rw-r--r--  1 root root    14779 Oct 18 07:23 interim-explore.json
+-rw-r--r--  1 root root 37941108 Oct 18 07:11 interim.jsonl
+-rw-r--r--  1 root root     6397 Oct 18 07:22 interim-results.json
+-rw-r--r--  1 root root 73343524 Oct 18 17:04 main.jsonl
+-rw-r--r--  1 root root 38582689 Oct 18 07:28 main.pre-split-fix.jsonl
+-rw-r--r--  1 root root        0 Oct 18 06:15 noise.out
+-rw-r--r--  1 root root   654324 Oct 18 05:53 pilot.jsonl
+-rw-r--r--  1 root root  8941111 Oct 18 17:20 rerun.jsonl
+-rw-r--r--  1 root root  8943936 Oct 18 17:27 res1200.jsonl
+-rw-r--r--  1 root root     9462 Oct 18 17:32 results.json
+-rw-r--r--  1 root root      142 Oct 18 17:27 score.log
+-rw-r--r--  1 root root    89503 Oct 18 17:27 serve.log
+
+$ wc -l /root/jobs/grounding-6871/{main,rerun,res1200}.jsonl /root/jobs/grounding-6871/code/items.jsonl
+    2219 /root/jobs/grounding-6871/main.jsonl
+     300 /root/jobs/grounding-6871/rerun.jsonl
+     300 /root/jobs/grounding-6871/res1200.jsonl
+    2219 /root/jobs/grounding-6871/code/items.jsonl
+    5038 total
+
+$ tail -40 /root/jobs/gpu-queue/50-grounding-6871/task.log
+rows: main 2219 rerun 300 res1200 300
+2 MiB
+
+$ tail -30 /root/jobs/grounding-6871/hold.log
+2026-10-18T05:51:48Z lock taken for /root/jobs/grounding-6871/pilot.jsonl --limit 20; GPU 11280 MiB
+2026-10-18T05:52:43Z server up
+2026-10-18T05:53:48Z scored for 65 s: 20 rows in /root/jobs/grounding-6871/pilot.jsonl
+2026-10-18T05:53:57Z released; GPU 2 MiB
+2026-10-18T06:00:04Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T06:00:49Z server up
+2026-10-18T06:18:49Z scored for 1080 s: 288 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T06:18:57Z released; GPU 2 MiB
+2026-10-18T06:23:50Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T06:24:30Z server up
+2026-10-18T06:42:30Z scored for 1080 s: 624 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T06:42:38Z released; GPU 2 MiB
+2026-10-18T06:47:17Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T06:47:57Z server up
+2026-10-18T07:05:57Z scored for 1080 s: 928 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T07:06:05Z released; GPU 2 MiB
+2026-10-18T07:12:35Z lock busy after 300 s — not run
+2026-10-18T07:19:05Z lock busy after 300 s — not run
+2026-10-18T15:50:01Z lock taken for /root/jobs/grounding-6871/main.jsonl ; GPU 2 MiB
+2026-10-18T15:50:51Z server up
+2026-10-18T17:04:25Z scored for 4414 s: 2219 rows in /root/jobs/grounding-6871/main.jsonl
+2026-10-18T17:04:33Z released; GPU 2 MiB
+2026-10-18T17:04:33Z lock taken for /root/jobs/grounding-6871/rerun.jsonl --only /root/jobs/grounding-6871/code/noise-ids.txt; GPU 2 MiB
+2026-10-18T17:05:13Z server up
+2026-10-18T17:20:35Z scored for 922 s: 300 rows in /root/jobs/grounding-6871/rerun.jsonl
+2026-10-18T17:20:44Z released; GPU 2 MiB
+2026-10-18T17:20:44Z lock taken for /root/jobs/grounding-6871/res1200.jsonl --only /root/jobs/grounding-6871/code/noise-ids.txt --cap 1200; GPU 2 MiB
+2026-10-18T17:21:24Z server up
+2026-10-18T17:27:36Z scored for 372 s: 300 rows in /root/jobs/grounding-6871/res1200.jsonl
+2026-10-18T17:27:44Z released; GPU 2 MiB
+
+$ nvidia-smi --query-gpu=memory.used --format=csv
+memory.used [MiB]
+21171 MiB
+
+$ df -h /root | tail -1
+/dev/md2        436G  349G   65G  85% /
+

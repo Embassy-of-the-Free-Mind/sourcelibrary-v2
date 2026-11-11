@@ -1,5 +1,6 @@
 'use client';
 
+import { sessionIsPaidMember } from '@/lib/membership-status';
 import { useState } from 'react';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
@@ -15,7 +16,7 @@ interface BookDedicationProps {
  */
 export default function BookDedication({ bookId, dedication: initialDedication }: BookDedicationProps) {
   const { data: session } = useStableSession();
-  const isMember = (session?.user as any)?.membership != null;
+  const isMember = sessionIsPaidMember(session?.user);
   const [dedication, setDedication] = useState(initialDedication);
   const [dedicating, setDedicating] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);

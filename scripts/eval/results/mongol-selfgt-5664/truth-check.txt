@@ -1,0 +1,14 @@
+true-labelled single-segment crops: 2524 from 628 columns
+LoRA word == true word (true len>=1)             n  2023  match 0.155  (vs a random true word 0.002)
+LoRA shape key == true shape key (len>=1)        n  2023  match 0.226  (vs a random true word 0.004)
+LoRA word == true word (true len>=4)             n  1394  match 0.069  (vs a random true word 0.002)
+LoRA shape key == true shape key (len>=4)        n  1394  match 0.109  (vs a random true word 0.002)
+Manchu shape key == true shape key (len>=1)      n    40  match 0.100  (vs a random true word 0.025)
+  LoRA on the same crops (len>=1)                n    34  match 0.206  (vs a random true word 0.029)
+Manchu shape key == true shape key (len>=4)      n    31  match 0.000  (vs a random true word 0.000)
+  LoRA on the same crops (len>=4)                n    27  match 0.074  (vs a random true word 0.000)
+cluster pixcore: clusters with >=2 true-labelled members 99, member pairs 177, same true shape key 0.610 (random pairs 0.028)
+   true word length in those clusters: median 6
+cluster pix: clusters with >=2 true-labelled members 660, member pairs 2374, same true shape key 0.425 (random pairs 0.007)
+   true word length in those clusters: median 5
+voted label shape key == member true shape key: 17/53

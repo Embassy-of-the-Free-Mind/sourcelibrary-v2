@@ -1,0 +1,1184 @@
+{
+ "source": "David Stuart, Maya Hieroglyph Syllabary v2 (2013)",
+ "credit": "Drawing © David Stuart, used with permission",
+ "permission": "granted by David Stuart to Derek Lomas, 2026-10-18: open use, \"a basic public resource\"",
+ "traced": "potrace from Source Library crops (106 px), 8x Lanczos upscale",
+ "signs": [
+  {
+   "value": "a",
+   "consonant": "'",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "a-1.svg"
+  },
+  {
+   "value": "a",
+   "consonant": "'",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "a-2.svg"
+  },
+  {
+   "value": "a",
+   "consonant": "'",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "a-3.svg"
+  },
+  {
+   "value": "a",
+   "consonant": "'",
+   "vowel": "a",
+   "variant": 4,
+   "uncertain": null,
+   "file": "a-4.svg"
+  },
+  {
+   "value": "b'a",
+   "consonant": "b'",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "bqa-1.svg"
+  },
+  {
+   "value": "b'a",
+   "consonant": "b'",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "bqa-2.svg"
+  },
+  {
+   "value": "b'e",
+   "consonant": "b'",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": "?",
+   "file": "bqe-1.svg"
+  },
+  {
+   "value": "b'i",
+   "consonant": "b'",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "bqi-1.svg"
+  },
+  {
+   "value": "b'i",
+   "consonant": "b'",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "bqi-2.svg"
+  },
+  {
+   "value": "b'i",
+   "consonant": "b'",
+   "vowel": "i",
+   "variant": 3,
+   "uncertain": null,
+   "file": "bqi-3.svg"
+  },
+  {
+   "value": "b'o",
+   "consonant": "b'",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "bqo-1.svg"
+  },
+  {
+   "value": "b'u",
+   "consonant": "b'",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "bqu-1.svg"
+  },
+  {
+   "value": "b'u",
+   "consonant": "b'",
+   "vowel": "u",
+   "variant": 2,
+   "uncertain": null,
+   "file": "bqu-2.svg"
+  },
+  {
+   "value": "ch'a",
+   "consonant": "ch'",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "chqa-1.svg"
+  },
+  {
+   "value": "ch'a",
+   "consonant": "ch'",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "chqa-2.svg"
+  },
+  {
+   "value": "ch'o",
+   "consonant": "ch'",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "chqo-1.svg"
+  },
+  {
+   "value": "cha",
+   "consonant": "ch",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "cha-1.svg"
+  },
+  {
+   "value": "cha",
+   "consonant": "ch",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "cha-2.svg"
+  },
+  {
+   "value": "cha",
+   "consonant": "ch",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "cha-3.svg"
+  },
+  {
+   "value": "che",
+   "consonant": "ch",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "che-1.svg"
+  },
+  {
+   "value": "chi",
+   "consonant": "ch",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "chi-1.svg"
+  },
+  {
+   "value": "chi",
+   "consonant": "ch",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "chi-2.svg"
+  },
+  {
+   "value": "cho",
+   "consonant": "ch",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": "?",
+   "file": "cho-1.svg"
+  },
+  {
+   "value": "chu",
+   "consonant": "ch",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "chu-1.svg"
+  },
+  {
+   "value": "e",
+   "consonant": "'",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "e-1.svg"
+  },
+  {
+   "value": "e",
+   "consonant": "'",
+   "vowel": "e",
+   "variant": 2,
+   "uncertain": null,
+   "file": "e-2.svg"
+  },
+  {
+   "value": "ha",
+   "consonant": "h",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ha-1.svg"
+  },
+  {
+   "value": "ha",
+   "consonant": "h",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ha-2.svg"
+  },
+  {
+   "value": "he",
+   "consonant": "h",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "he-1.svg"
+  },
+  {
+   "value": "hi",
+   "consonant": "h",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "hi-1.svg"
+  },
+  {
+   "value": "hi",
+   "consonant": "h",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "hi-2.svg"
+  },
+  {
+   "value": "hu",
+   "consonant": "h",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "hu-1.svg"
+  },
+  {
+   "value": "i",
+   "consonant": "'",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "i-1.svg"
+  },
+  {
+   "value": "i",
+   "consonant": "'",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "i-2.svg"
+  },
+  {
+   "value": "ja",
+   "consonant": "j",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ja-1.svg"
+  },
+  {
+   "value": "ja",
+   "consonant": "j",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ja-2.svg"
+  },
+  {
+   "value": "je",
+   "consonant": "j",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "je-1.svg"
+  },
+  {
+   "value": "je",
+   "consonant": "j",
+   "vowel": "e",
+   "variant": 2,
+   "uncertain": null,
+   "file": "je-2.svg"
+  },
+  {
+   "value": "ji",
+   "consonant": "j",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ji-1.svg"
+  },
+  {
+   "value": "ji",
+   "consonant": "j",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ji-2.svg"
+  },
+  {
+   "value": "ji",
+   "consonant": "j",
+   "vowel": "i",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ji-3.svg"
+  },
+  {
+   "value": "ji",
+   "consonant": "j",
+   "vowel": "i",
+   "variant": 4,
+   "uncertain": null,
+   "file": "ji-4.svg"
+  },
+  {
+   "value": "jo",
+   "consonant": "j",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "jo-1.svg"
+  },
+  {
+   "value": "ju",
+   "consonant": "j",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ju-1.svg"
+  },
+  {
+   "value": "k'a",
+   "consonant": "k'",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "kqa-1.svg"
+  },
+  {
+   "value": "k'e",
+   "consonant": "k'",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "kqe-1.svg"
+  },
+  {
+   "value": "k'i",
+   "consonant": "k'",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "kqi-1.svg"
+  },
+  {
+   "value": "k'o",
+   "consonant": "k'",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "kqo-1.svg"
+  },
+  {
+   "value": "k'u",
+   "consonant": "k'",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "kqu-1.svg"
+  },
+  {
+   "value": "ka",
+   "consonant": "k",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ka-1.svg"
+  },
+  {
+   "value": "ka",
+   "consonant": "k",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ka-2.svg"
+  },
+  {
+   "value": "ka",
+   "consonant": "k",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ka-3.svg"
+  },
+  {
+   "value": "ke",
+   "consonant": "k",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ke-1.svg"
+  },
+  {
+   "value": "ki",
+   "consonant": "k",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ki-1.svg"
+  },
+  {
+   "value": "ki",
+   "consonant": "k",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ki-2.svg"
+  },
+  {
+   "value": "ki",
+   "consonant": "k",
+   "vowel": "i",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ki-3.svg"
+  },
+  {
+   "value": "ko",
+   "consonant": "k",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ko-1.svg"
+  },
+  {
+   "value": "ku",
+   "consonant": "k",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ku-1.svg"
+  },
+  {
+   "value": "la",
+   "consonant": "l",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "la-1.svg"
+  },
+  {
+   "value": "la",
+   "consonant": "l",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "la-2.svg"
+  },
+  {
+   "value": "le",
+   "consonant": "l",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "le-1.svg"
+  },
+  {
+   "value": "le",
+   "consonant": "l",
+   "vowel": "e",
+   "variant": 2,
+   "uncertain": null,
+   "file": "le-2.svg"
+  },
+  {
+   "value": "li",
+   "consonant": "l",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "li-1.svg"
+  },
+  {
+   "value": "li",
+   "consonant": "l",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "li-2.svg"
+  },
+  {
+   "value": "lo",
+   "consonant": "l",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "lo-1.svg"
+  },
+  {
+   "value": "lu",
+   "consonant": "l",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "lu-1.svg"
+  },
+  {
+   "value": "ma",
+   "consonant": "m",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ma-1.svg"
+  },
+  {
+   "value": "ma",
+   "consonant": "m",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ma-2.svg"
+  },
+  {
+   "value": "ma",
+   "consonant": "m",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ma-3.svg"
+  },
+  {
+   "value": "ma",
+   "consonant": "m",
+   "vowel": "a",
+   "variant": 4,
+   "uncertain": null,
+   "file": "ma-4.svg"
+  },
+  {
+   "value": "me",
+   "consonant": "m",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": "??",
+   "file": "me-1.svg"
+  },
+  {
+   "value": "mi",
+   "consonant": "m",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "mi-1.svg"
+  },
+  {
+   "value": "mi",
+   "consonant": "m",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "mi-2.svg"
+  },
+  {
+   "value": "mo",
+   "consonant": "m",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "mo-1.svg"
+  },
+  {
+   "value": "mu",
+   "consonant": "m",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "mu-1.svg"
+  },
+  {
+   "value": "mu",
+   "consonant": "m",
+   "vowel": "u",
+   "variant": 2,
+   "uncertain": null,
+   "file": "mu-2.svg"
+  },
+  {
+   "value": "na",
+   "consonant": "n",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "na-1.svg"
+  },
+  {
+   "value": "na",
+   "consonant": "n",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "na-2.svg"
+  },
+  {
+   "value": "na",
+   "consonant": "n",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "na-3.svg"
+  },
+  {
+   "value": "ne",
+   "consonant": "n",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ne-1.svg"
+  },
+  {
+   "value": "ne",
+   "consonant": "n",
+   "vowel": "e",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ne-2.svg"
+  },
+  {
+   "value": "ni",
+   "consonant": "n",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ni-1.svg"
+  },
+  {
+   "value": "no",
+   "consonant": "n",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "no-1.svg"
+  },
+  {
+   "value": "nu",
+   "consonant": "n",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "nu-1.svg"
+  },
+  {
+   "value": "nu",
+   "consonant": "n",
+   "vowel": "u",
+   "variant": 2,
+   "uncertain": null,
+   "file": "nu-2.svg"
+  },
+  {
+   "value": "o",
+   "consonant": "'",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "o-1.svg"
+  },
+  {
+   "value": "o",
+   "consonant": "'",
+   "vowel": "o",
+   "variant": 2,
+   "uncertain": null,
+   "file": "o-2.svg"
+  },
+  {
+   "value": "o",
+   "consonant": "'",
+   "vowel": "o",
+   "variant": 3,
+   "uncertain": null,
+   "file": "o-3.svg"
+  },
+  {
+   "value": "pa",
+   "consonant": "p",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "pa-1.svg"
+  },
+  {
+   "value": "pa",
+   "consonant": "p",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "pa-2.svg"
+  },
+  {
+   "value": "pi",
+   "consonant": "p",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "pi-1.svg"
+  },
+  {
+   "value": "pi",
+   "consonant": "p",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "pi-2.svg"
+  },
+  {
+   "value": "po",
+   "consonant": "p",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "po-1.svg"
+  },
+  {
+   "value": "pu",
+   "consonant": "p",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "pu-1.svg"
+  },
+  {
+   "value": "sa",
+   "consonant": "s",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "sa-1.svg"
+  },
+  {
+   "value": "sa",
+   "consonant": "s",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "sa-2.svg"
+  },
+  {
+   "value": "sa",
+   "consonant": "s",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "sa-3.svg"
+  },
+  {
+   "value": "se",
+   "consonant": "s",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "se-1.svg"
+  },
+  {
+   "value": "si",
+   "consonant": "s",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "si-1.svg"
+  },
+  {
+   "value": "si",
+   "consonant": "s",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "si-2.svg"
+  },
+  {
+   "value": "su",
+   "consonant": "s",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "su-1.svg"
+  },
+  {
+   "value": "t'u",
+   "consonant": "t'",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tqu-1.svg"
+  },
+  {
+   "value": "ta",
+   "consonant": "t",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ta-1.svg"
+  },
+  {
+   "value": "ta",
+   "consonant": "t",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ta-2.svg"
+  },
+  {
+   "value": "ta",
+   "consonant": "t",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ta-3.svg"
+  },
+  {
+   "value": "te",
+   "consonant": "t",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "te-1.svg"
+  },
+  {
+   "value": "ti",
+   "consonant": "t",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ti-1.svg"
+  },
+  {
+   "value": "ti",
+   "consonant": "t",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ti-2.svg"
+  },
+  {
+   "value": "to",
+   "consonant": "t",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "to-1.svg"
+  },
+  {
+   "value": "to",
+   "consonant": "t",
+   "vowel": "o",
+   "variant": 2,
+   "uncertain": null,
+   "file": "to-2.svg"
+  },
+  {
+   "value": "tu",
+   "consonant": "t",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tu-1.svg"
+  },
+  {
+   "value": "tz'a",
+   "consonant": "tz'",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tzqa-1.svg"
+  },
+  {
+   "value": "tz'i",
+   "consonant": "tz'",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tzqi-1.svg"
+  },
+  {
+   "value": "tz'i",
+   "consonant": "tz'",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "tzqi-2.svg"
+  },
+  {
+   "value": "tz'u",
+   "consonant": "tz'",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tzqu-1.svg"
+  },
+  {
+   "value": "tza",
+   "consonant": "tz",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tza-1.svg"
+  },
+  {
+   "value": "tze",
+   "consonant": "tz",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": "?",
+   "file": "tze-1.svg"
+  },
+  {
+   "value": "tzi",
+   "consonant": "tz",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tzi-1.svg"
+  },
+  {
+   "value": "tzi",
+   "consonant": "tz",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "tzi-2.svg"
+  },
+  {
+   "value": "tzu",
+   "consonant": "tz",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "tzu-1.svg"
+  },
+  {
+   "value": "u",
+   "consonant": "'",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "u-1.svg"
+  },
+  {
+   "value": "u",
+   "consonant": "'",
+   "vowel": "u",
+   "variant": 2,
+   "uncertain": null,
+   "file": "u-2.svg"
+  },
+  {
+   "value": "u",
+   "consonant": "'",
+   "vowel": "u",
+   "variant": 3,
+   "uncertain": null,
+   "file": "u-3.svg"
+  },
+  {
+   "value": "u",
+   "consonant": "'",
+   "vowel": "u",
+   "variant": 4,
+   "uncertain": null,
+   "file": "u-4.svg"
+  },
+  {
+   "value": "u",
+   "consonant": "'",
+   "vowel": "u",
+   "variant": 5,
+   "uncertain": null,
+   "file": "u-5.svg"
+  },
+  {
+   "value": "u",
+   "consonant": "'",
+   "vowel": "u",
+   "variant": 6,
+   "uncertain": null,
+   "file": "u-6.svg"
+  },
+  {
+   "value": "wa",
+   "consonant": "w",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "wa-1.svg"
+  },
+  {
+   "value": "we",
+   "consonant": "w",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "we-1.svg"
+  },
+  {
+   "value": "wi",
+   "consonant": "w",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "wi-1.svg"
+  },
+  {
+   "value": "wi",
+   "consonant": "w",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "wi-2.svg"
+  },
+  {
+   "value": "wo",
+   "consonant": "w",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "wo-1.svg"
+  },
+  {
+   "value": "xa",
+   "consonant": "x",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "xa-1.svg"
+  },
+  {
+   "value": "xa",
+   "consonant": "x",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "xa-2.svg"
+  },
+  {
+   "value": "xi",
+   "consonant": "x",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "xi-1.svg"
+  },
+  {
+   "value": "xo",
+   "consonant": "x",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "xo-1.svg"
+  },
+  {
+   "value": "xu",
+   "consonant": "x",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": "?",
+   "file": "xu-1.svg"
+  },
+  {
+   "value": "ya",
+   "consonant": "y",
+   "vowel": "a",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ya-1.svg"
+  },
+  {
+   "value": "ya",
+   "consonant": "y",
+   "vowel": "a",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ya-2.svg"
+  },
+  {
+   "value": "ya",
+   "consonant": "y",
+   "vowel": "a",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ya-3.svg"
+  },
+  {
+   "value": "ye",
+   "consonant": "y",
+   "vowel": "e",
+   "variant": 1,
+   "uncertain": null,
+   "file": "ye-1.svg"
+  },
+  {
+   "value": "ye",
+   "consonant": "y",
+   "vowel": "e",
+   "variant": 2,
+   "uncertain": null,
+   "file": "ye-2.svg"
+  },
+  {
+   "value": "ye",
+   "consonant": "y",
+   "vowel": "e",
+   "variant": 3,
+   "uncertain": null,
+   "file": "ye-3.svg"
+  },
+  {
+   "value": "yi",
+   "consonant": "y",
+   "vowel": "i",
+   "variant": 1,
+   "uncertain": null,
+   "file": "yi-1.svg"
+  },
+  {
+   "value": "yi",
+   "consonant": "y",
+   "vowel": "i",
+   "variant": 2,
+   "uncertain": null,
+   "file": "yi-2.svg"
+  },
+  {
+   "value": "yo",
+   "consonant": "y",
+   "vowel": "o",
+   "variant": 1,
+   "uncertain": null,
+   "file": "yo-1.svg"
+  },
+  {
+   "value": "yo",
+   "consonant": "y",
+   "vowel": "o",
+   "variant": 2,
+   "uncertain": null,
+   "file": "yo-2.svg"
+  },
+  {
+   "value": "yu",
+   "consonant": "y",
+   "vowel": "u",
+   "variant": 1,
+   "uncertain": null,
+   "file": "yu-1.svg"
+  }
+ ]
+}

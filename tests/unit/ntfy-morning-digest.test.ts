@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   classifyNtfy, recentDecisions, stuckJobs, nearCap, formatDigest, issueUrl, MAX_BODY_LINES,
+  untriagedDecisions, splitBoxes,
 } from '../../scripts/maintenance/ntfy-morning-digest.mjs';
 
 /**
@@ -44,6 +45,22 @@ describe('helpers', () => {
       { tag: 'c', budget_usd: 10, spent_usd: 2 },
     ])).toEqual(['a 95% ($9.50/$10.00)']);
   });
+  it('untriagedDecisions counts unmarked rows from the marking start on, and the ones over 7 days old (#8551)', () => {
+    const text = [
+      '2026-10-10 | pre | DECISION: before marking began (#1)',
+      '[TRIAGED 2026-11-11 #8551] DEREK (card on #8551) 2026-11-01 | a | DECISION: marked (#2)',
+      '[DECIDED 2026-11-02 Derek: YES] 2026-11-01 | b | DECISION: decided (#3)',
+      '2026-11-01 | c | DECISION: old and unmarked (#4)',
+      '2026-11-10 | d | DECISION: new and unmarked (#5)',
+      '2026-11-10 | d | TAKEN: not a decision',
+    ].join('\n');
+    expect(untriagedDecisions(text, '2026-11-11')).toEqual({ total: 2, old: 1 });
+  });
+  it('splitBoxes splits `box.sh others decisions` by its == headers', () => {
+    const out = splitBoxes('== gex45\n2026-11-10 | a | DECISION: x\n== l7a\n');
+    expect(out.gex45).toContain('DECISION: x');
+    expect(out.l7a.trim()).toBe('');
+  });
   it('issueUrl turns #N into a tappable URL', () => {
     expect(issueUrl('default: yes (#5729)')).toBe('https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5729');
     expect(issueUrl('no ref')).toBeNull();
@@ -53,8 +70,8 @@ describe('helpers', () => {
 describe('formatDigest', () => {
   it('says "unreadable" for every source that failed, and still produces a digest', () => {
     const e = { error: 'boom' };
-    const body = formatDigest({ yesterday: '2026-10-06', ntfy: e, spend: e, spendDaily: e, decisions: e, stuck: e, waiters: e, holds: e });
-    for (const label of ['Jobs overnight', 'Spend 2026-10-06', 'Spend check', 'Decisions', 'Stuck', 'tier:hold PRs']) {
+    const body = formatDigest({ yesterday: '2026-10-06', ntfy: e, spend: e, spendDaily: e, decisions: e, untriaged: e, stuck: e, waiters: e, holds: e });
+    for (const label of ['Jobs overnight', 'Spend 2026-10-06', 'Spend check', 'Decisions', 'Untriaged decisions', 'Stuck', 'tier:hold PRs']) {
       expect(body).toContain(`${label}: unreadable (boom)`);
     }
   });
@@ -64,8 +81,10 @@ describe('formatDigest', () => {
       yesterday: '2026-10-06', ntfyFrom: '18:00Z',
       ntfy: { landed: ['a'], notLanded: ['b'], decisions: [{ name: 'a', n: 1 }], since: 1, total: 3 },
       spend: { usd: 12, dial: 5 }, spendDaily: { day: '2026-10-05', line: 'spend check: PASS', nearCap: ['x 95%'] },
-      decisions: { sinceDay: '2026-10-06', rows: many }, stuck: { items: ['s'] }, waiters: ['w.sh'], holds: [{ number: 1 }],
+      decisions: { sinceDay: '2026-10-06', rows: many },
+      untriaged: { boxes: { main: { total: 3, old: 1 }, l7a: { error: 'unreachable' } } }, stuck: { items: ['s'] }, waiters: ['w.sh'], holds: [{ number: 1 }],
     });
     expect(body.split('\n').length).toBeLessThanOrEqual(MAX_BODY_LINES);
+    expect(body).toContain('Untriaged decisions: 3 (1 over 7 days) · main 3, l7a ?');
   });
 });

@@ -1,0 +1,70 @@
+{
+ "queries": 60,
+ "unjudged_hits": 0,
+ "arms": {
+  "clip": {
+   "P@10": 0.21,
+   "nDCG@10": 0.2,
+   "queries_with_any_hit": 41,
+   "relevant_hits": 126,
+   "relevant_from_random_stratum": 19
+  },
+  "siglip2-base": {
+   "P@10": 0.337,
+   "nDCG@10": 0.441,
+   "queries_with_any_hit": 52,
+   "relevant_hits": 202,
+   "relevant_from_random_stratum": 28,
+   "dP@10_vs_clip": [
+    0.127,
+    [
+     0.083,
+     0.173
+    ]
+   ],
+   "dnDCG_vs_clip": [
+    0.241,
+    [
+     0.172,
+     0.315
+    ]
+   ]
+  },
+  "siglip2-so400m": {
+   "P@10": 0.457,
+   "nDCG@10": 0.636,
+   "queries_with_any_hit": 57,
+   "relevant_hits": 274,
+   "relevant_from_random_stratum": 40,
+   "dP@10_vs_clip": [
+    0.247,
+    [
+     0.188,
+     0.305
+    ]
+   ],
+   "dnDCG_vs_clip": [
+    0.436,
+    [
+     0.359,
+     0.511
+    ]
+   ]
+  }
+ },
+ "so400m_minus_base_P@10": [
+  0.12,
+  [
+   0.073,
+   0.17
+  ]
+ ],
+ "rejudge": {
+  "queries": 10,
+  "images": 250,
+  "binary_agree": 0.94,
+  "exact_agree": 0.932,
+  "positives_first_judge": 58,
+  "positives_rejudge": 53
+ }
+}

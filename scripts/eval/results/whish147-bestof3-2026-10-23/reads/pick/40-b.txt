@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A keeps recognisable Sāṅkhyakārikā commentary phrasing across most rows, such as "adhyavasāyābhimāna", "ahaṅkāramanasām", "catuṣṭayā pravṛttiḥ" and "kramaśaś"; C keeps some of these, while B breaks down into syllable strings and drops the hole marks in rows 9–10.

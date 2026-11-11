@@ -1,0 +1,727 @@
+{
+ "lang": "sa",
+ "pages": 250,
+ "books": 10,
+ "C_outcomes": {
+  "corrected": 247,
+  "unchanged": 3
+ },
+ "misleading": {
+  "L": [
+   208,
+   [
+    78.1,
+    87.3
+   ]
+  ],
+  "C": [
+   26,
+   [
+    7.2,
+    14.8
+   ]
+  ],
+  "R": [
+   125,
+   [
+    43.8,
+    56.2
+   ]
+  ]
+ },
+ "bar_a_halves": {
+  "C": true,
+  "R": false
+ },
+ "worse_than_L": {
+  "C": 0,
+  "R": 21
+ },
+ "bar_b_no_page_worse": {
+  "C": true,
+  "R": false
+ },
+ "bar_c_C_beats_R": true,
+ "prefer": {
+  "CR": {
+   "C": 214,
+   "R": 14,
+   "tie": 22,
+   "material_loss_R": 124,
+   "material_loss_C": 11
+  },
+  "CL": {
+   "C": 247,
+   "L": 0,
+   "tie": 3,
+   "material_loss_L": 208,
+   "material_loss_C": 0
+  },
+  "RL": {
+   "R": 205,
+   "L": 24,
+   "tie": 20,
+   "material_loss_L": 179,
+   "material_loss_R": 21
+  }
+ },
+ "sign_test_CR_p": 3.88e-47,
+ "route": "C: Opus correction",
+ "contains": [],
+ "R_unread": 0,
+ "R_filter_cut": 3,
+ "books_failing_25_check_L": 10,
+ "strip": {
+  "visible": 0,
+  "in_L": 0,
+  "in_C": 0,
+  "in_R": 0
+ },
+ "identical_C_L_verdict_mismatch": 0,
+ "worse_C_list": [],
+ "worse_R_list": [
+  {
+   "slug": "69ea3e6b300d991d0f1d337d-p343",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Print 1148 निगृहीता च भुक्ता च (seized and enjoyed): Y reads मुक्ता (released) and injects 'Host:'; Z garbles धनैः, मार्गितुं, तत्याज into non-words; X is faithful bar तानुरी."
+  },
+  {
+   "slug": "6a0f06c5900fb4799cef25f2-p71",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y is a model-refusal message, so the whole page is missing. X misreads कृष्णपुत्र as कृपापुत्र, पञ्चवाणा as पञ्चवर्णा, बिन्दुर्मोक्षप्रदायकः as बिन्दुशीर्ष...; Z reads all of these right."
+  },
+  {
+   "slug": "6a0f06c5900fb4799cef25f2-p83",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Print कस्मिन् हस्ते स्थितं मुण्डं and मर्दिन्या अहं सम्भूता: X reads सुखं/महिन्या, Y सूक्तं/मर्द्दित्वा and बीजमन्मथी for बीजरूपिणि. X also numbers every verse one low. Z gets all of these right."
+  },
+  {
+   "slug": "69d7e185e9e5e67989c377ec-p55",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Footnote 114 prints 'मथ्नाति तत्तद्वेद्यं'; X has 'मश्नाति तत्तद्द्वैतं' (vedya→dvaita) and 'सत्त्वानुप्रविष्टो'. Y matches; Z has spelling-level slips (मन्थाति, जाग्रदाद्य-)."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p112",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Śiva iconography: print द्व्यष्टवर्षदेशीयो (sixteen years); Z says eight, X garbles it; X invents मुक्ताकर्पूरशशिशङ्ख for मुक्तार्करश्मिसङ्काश. Y faithful."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p151",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Women's adornment: Y gives क्षालयन्त्यो (washing) for चालयन्त्यो and repeats junk 'property' text; Z reads चन्द्रसमाननाः as चन्द्रार्धमाननाः. X faithful."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p255",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Goad strokes: Y puts an English 'Titan' fragment in place of विवर्तन and reads असृक्स्रावे (bleeding) as असकृत्; X has non-word slips; Z faithful."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p282",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Wrestling holds: X stops mid-verse 33 with a Gemini error string, losing the rest of the verse and all footnotes; Y has मोक्ष्यते for मोट्यते and पञ्चयाम for पद्भ्याम्. Z faithful apart from page number."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p295",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Cock-fight omens: Z has English fragments ('Region', 'border') replacing akṣaras in six words and सृष्टिं for मुष्टिं; X reads निशानाथं as विनाशार्थं and चञ्च्वा (beak) as चक्ष्वा. Y faithful."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p308",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Quail/ram fights: X reads भ्रुवौ (brows) as ध्रुवौ; Z reads अक्षमत्वेन as अक्षयत्वेन and शतपद्या as शतपद्मा. Y faithful."
+  },
+  {
+   "slug": "69e80578fdad300064d9dcb5-p347",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Hunting drive: X stops after verse 63 with a Gemini error, losing seven verses and the footnotes; Y reads लुब्धका (hunters) as लब्धका. Z faithful."
+  },
+  {
+   "slug": "69dea5b74d19ec2e9ba76fc5-p169",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Print तद्वदवस्तुभूतः: X drops the negating अ (वस्तुभूतः); Y and Z also read अर्थः for lemma अर्यः and कृष्टाः for कृष्टजाः, Y drops अप- (तानेतान्), Z turns ना into न."
+  },
+  {
+   "slug": "6a0eb388283b678bc95b97a9-p30",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Print \"पाणिचतुष्टयेन\" (four hands): X garbles it to पाणितुष्टयेन losing the number; Y and Z read it; Y fewest slips and right page number."
+  },
+  {
+   "slug": "6a0eb388283b678bc95b97a9-p42",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y reads \"परमकलपदस्य\" for print \"परमकुलपदस्य\" in a passage that distinguishes paramakula-pada from kalā-pada; X and Z have only minor slips."
+  },
+  {
+   "slug": "69e13a960dae29249d20bb00-p30",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y reads 'पद्माश्रिता' (lotus) for 'पदमाश्रिता'; X has small misspellings; Z matches the print incl. 'कुलाद्याम्नायनिविष्टाः'."
+  },
+  {
+   "slug": "69e13a960dae29249d20bb00-p39",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X drops 'अर्थ' from 'असाधारणार्थावभास'; Y has letter slips ('नित्योधित', 'प्रतिक्रणं'); Z faithful."
+  },
+  {
+   "slug": "69e13a960dae29249d20bb00-p54",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Z reads 'खे खे' (in the sky) for 'स्वे स्वे वेद्ये' in the Kakṣyāstotra verse; X several minor slips; Y faithful with footnote 18."
+  },
+  {
+   "slug": "69e13a960dae29249d20bb00-p56",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z turns the lemma 'वाहयोः' into 'बाह्ययोः' and normalises the variant 'गत्योः'; Y puts the क. variant 'वैलक्ष्यं' into the verse; X faithful."
+  },
+  {
+   "slug": "69e13a960dae29249d20bb00-p63",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X loses the negation in 'तदस्फुरणे' (reads 'तत्स्फुरणे'); Y reads 'अपहन्ता' for 'पराहन्ता' in footnote 21; Z faithful."
+  },
+  {
+   "slug": "69ef251385daccce30f2af4f-p547",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Print हत्वैनं रावणं (having slain): X reads हृत्वैनं (having carried off). Z is close (महायुद्धं for महद्युद्धं) and has the right page number (४८९) and signature. Y has small slips such as अज्ञानमिव and द्रष्टा."
+  },
+  {
+   "slug": "69ef251385daccce30f2af4f-p620",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Print यद्वदेत् त्वयि and भरतस्य तु हृद्गतं: X has both. Y puts real but wrong words (कपि, चेष्टतं) in their place; Z has non-words (वषि, वद्धतं)."
+  }
+ ],
+ "judge2": {
+  "model": "gemini-3.8-flash-low (agy)",
+  "drawn": 30,
+  "parsed": 30,
+  "gemini_prefer": {
+   "C": 20,
+   "R": 8,
+   "tie": 2
+  },
+  "opus_prefer_same_pages": {
+   "C": 25,
+   "R": 1,
+   "tie": 4
+  },
+  "gemini_misleading": {
+   "C": 3,
+   "R": 10
+  },
+  "opus_misleading_same_pages": {
+   "C": 3,
+   "R": 13
+  },
+  "pages": [
+   {
+    "slug": "69ea3e6b300d991d0f1d337d-p77",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ea3e6b300d991d0f1d337d-p225",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a0f06c5900fb4799cef25f2-p35",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a0f06c5900fb4799cef25f2-p38",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a0f06c5900fb4799cef25f2-p46",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a0f06c5900fb4799cef25f2-p62",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a0f06c5900fb4799cef25f2-p96",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d7e185e9e5e67989c377ec-p44",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d7e185e9e5e67989c377ec-p108",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69d7e185e9e5e67989c377ec-p119",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69d7e185e9e5e67989c377ec-p142",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e80578fdad300064d9dcb5-p177",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e80578fdad300064d9dcb5-p321",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69dea5b74d19ec2e9ba76fc5-p125",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69dea5b74d19ec2e9ba76fc5-p169",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a0eb388283b678bc95b97a9-p81",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e80677fdad300064d9f438-p547",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e80677fdad300064d9f438-p620",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e80677fdad300064d9f438-p669",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e13a960dae29249d20bb00-p5",
+    "gemini": "tie",
+    "gemini_C": "sound",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69e13a960dae29249d20bb00-p28",
+    "gemini": "tie",
+    "gemini_C": "sound",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69e13a960dae29249d20bb00-p35",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98eb1b234a773e439877-p44",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69de98eb1b234a773e439877-p61",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98eb1b234a773e439877-p77",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69de98eb1b234a773e439877-p83",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98eb1b234a773e439877-p93",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98eb1b234a773e439877-p145",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ef251385daccce30f2af4f-p410",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ef251385daccce30f2af4f-p620",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   }
+  ]
+ },
+ "claude_correction_tokens": {
+  "calls": 30,
+  "input": 592,
+  "output": 650022,
+  "cache_read": 4331206,
+  "list_cost_usd": 24.35
+ },
+ "by_book": [
+  {
+   "book_id": "69ea3e6b300d991d0f1d337d",
+   "title": "राजतरङ्गिणी (Rājataraṅgiṇī), Vol. 1",
+   "n": 25,
+   "L": 23,
+   "C": 3,
+   "R": 17,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 23,
+    "R": 1,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6a0f06c5900fb4799cef25f2",
+   "title": "Tantrik Texts Vol. VI (1917)",
+   "n": 25,
+   "L": 25,
+   "C": 8,
+   "R": 16,
+   "worse_C": 0,
+   "worse_R": 2,
+   "CR": {
+    "C": 19,
+    "R": 4,
+    "tie": 2
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69d7e185e9e5e67989c377ec",
+   "title": "Shiva Sutra Vimarshini (Vasugupta/Kshemaraja, KSTS Vol 1, 1912)",
+   "n": 25,
+   "L": 18,
+   "C": 1,
+   "R": 9,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 22,
+    "R": 0,
+    "tie": 3
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69e80578fdad300064d9dcb5",
+   "title": "मानसोल्लास (Mānasollāsa)",
+   "n": 25,
+   "L": 21,
+   "C": 0,
+   "R": 14,
+   "worse_C": 0,
+   "worse_R": 7,
+   "CR": {
+    "C": 24,
+    "R": 1,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 24,
+    "unchanged": 1
+   }
+  },
+  {
+   "book_id": "69dea5b74d19ec2e9ba76fc5",
+   "title": "Taittirīya Āraṇyaka (with Sāyaṇa Commentary)",
+   "n": 25,
+   "L": 19,
+   "C": 3,
+   "R": 8,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 20,
+    "R": 0,
+    "tie": 5
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6a0eb388283b678bc95b97a9",
+   "title": "Shat Chakra Nirupana of Purnananda Yati",
+   "n": 25,
+   "L": 20,
+   "C": 4,
+   "R": 6,
+   "worse_C": 0,
+   "worse_R": 2,
+   "CR": {
+    "C": 17,
+    "R": 5,
+    "tie": 3
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69e80677fdad300064d9f438",
+   "title": "अष्टाङ्गहृदय (Aṣṭāṅgahṛdayam)",
+   "n": 25,
+   "L": 25,
+   "C": 0,
+   "R": 18,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 24,
+    "R": 0,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69e13a960dae29249d20bb00",
+   "title": "Pratyabhijñā-Hṛdayam",
+   "n": 25,
+   "L": 15,
+   "C": 1,
+   "R": 8,
+   "worse_C": 0,
+   "worse_R": 5,
+   "CR": {
+    "C": 20,
+    "R": 1,
+    "tie": 4
+   },
+   "outcomes": {
+    "unchanged": 2,
+    "corrected": 23
+   }
+  },
+  {
+   "book_id": "69de98eb1b234a773e439877",
+   "title": "Panchatantra (Kashmirian recension, Tantrakhyayika)",
+   "n": 25,
+   "L": 23,
+   "C": 5,
+   "R": 18,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 24,
+    "R": 0,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69ef251385daccce30f2af4f",
+   "title": "Ramayana: Poema Indiano di Valmici, Testo Sanscrito, Vol. 5",
+   "n": 25,
+   "L": 19,
+   "C": 1,
+   "R": 11,
+   "worse_C": 0,
+   "worse_R": 2,
+   "CR": {
+    "C": 21,
+    "R": 2,
+    "tie": 2
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  }
+ ]
+}

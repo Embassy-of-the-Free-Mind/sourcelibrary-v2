@@ -1,0 +1,10 @@
+{
+ "mode": "kraken",
+ "model": "catmus-print-fondue-large.mlmodel",
+ "pages": 99,
+ "processes": 10,
+ "threads_each": 2,
+ "wall_secs": 235,
+ "pages_per_hour": 1517,
+ "cpu_secs_per_page_median": 20.404784231
+}

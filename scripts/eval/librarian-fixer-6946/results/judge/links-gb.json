@@ -1,0 +1,777 @@
+{
+ "gauge:G:g01": [
+  {
+   "id": "L1",
+   "slug": "the-pictorial-key-to-the-tarot-being-fragments-of-a-secret-waite",
+   "page": 191,
+   "at": 492,
+   "text": "Page 191"
+  },
+  {
+   "id": "L2",
+   "slug": "yogayatra-vivritti-bhattotpala-comm",
+   "page": 118,
+   "at": 1241,
+   "text": "Yogayatra Vivritti"
+  },
+  {
+   "id": "L3",
+   "slug": "phaladeepika-light-on-astrology-mantreswara",
+   "page": 42,
+   "at": 2969,
+   "text": "Prana"
+  }
+ ],
+ "gauge:G:g02": [
+  {
+   "id": "L1",
+   "slug": "hermanni-conringii-de-hermetica-aegyptiorum-vetere-et-conring",
+   "page": 233,
+   "at": 1081,
+   "text": "Page 233"
+  },
+  {
+   "id": "L2",
+   "slug": "compendium-maleficarum-illustrated-witchcraft-manual-guazzo",
+   "page": 92,
+   "at": 1528,
+   "text": "Page 92"
+  }
+ ],
+ "gauge:G:g03": [
+  {
+   "id": "L1",
+   "slug": "le-viandier-taillevent",
+   "page": 114,
+   "at": 1244,
+   "text": "Page 114"
+  },
+  {
+   "id": "L2",
+   "slug": "le-cuisinier-francois-varenne",
+   "page": 332,
+   "at": 1941,
+   "text": "Page 332"
+  },
+  {
+   "id": "L3",
+   "slug": "le-cuisinier-francois-varenne",
+   "page": 333,
+   "at": 2119,
+   "text": "Page 333"
+  },
+  {
+   "id": "L4",
+   "slug": "le-cuisinier-francois-varenne",
+   "page": 248,
+   "at": 2353,
+   "text": "Page 248"
+  },
+  {
+   "id": "L5",
+   "slug": "la-cuisiniere-bourgeoise-menon",
+   "page": 113,
+   "at": 3169,
+   "text": "Page 113"
+  },
+  {
+   "id": "L6",
+   "slug": "colloques-ou-devis-francois-martin",
+   "page": 25,
+   "at": 3823,
+   "text": "Page 25"
+  },
+  {
+   "id": "L7",
+   "slug": "koock-boeck-oft-familieren-kevken-boeck-leerende-hoe-datmen-magirus",
+   "page": 2,
+   "at": 4225,
+   "text": "Page 2"
+  },
+  {
+   "id": "L8",
+   "slug": "opera-dell-arte-del-cucinare-scappi",
+   "page": 933,
+   "at": 4694,
+   "text": "Page 933"
+  }
+ ],
+ "gauge:G:g04": [
+  {
+   "id": "L1",
+   "slug": "polygraphia-nova-et-universalis-ex-combinatoria-arte-detecta-kircher",
+   "page": 139,
+   "at": 1346,
+   "text": "Page 139"
+  },
+  {
+   "id": "L2",
+   "slug": "de-furtivis-literarum-notis-vulgo-de-ziferis-libri-iii-della-porta",
+   "page": 123,
+   "at": 2068,
+   "text": "Page 123"
+  },
+  {
+   "id": "L3",
+   "slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-s-n-7",
+   "page": 86,
+   "at": 2598,
+   "text": "Page 86"
+  },
+  {
+   "id": "L4",
+   "slug": "an-inquiry-into-the-nature-and-causes-of-the-wealth-of-smith",
+   "page": 413,
+   "at": 3005,
+   "text": "Page 413"
+  },
+  {
+   "id": "L5",
+   "slug": "an-inquiry-into-the-nature-and-causes-of-the-wealth-of-smith",
+   "page": 414,
+   "at": 3279,
+   "text": "Page 414"
+  }
+ ],
+ "gauge:G:g05": [
+  {
+   "id": "L1",
+   "slug": "the-sarva-darsana-samgraha-review-of-the-different-systems-gough",
+   "page": 11,
+   "at": 924,
+   "text": "Page 11"
+  },
+  {
+   "id": "L2",
+   "slug": "the-thirteen-principal-upanishads-trans",
+   "page": 9,
+   "at": 1380,
+   "text": "Page 9"
+  },
+  {
+   "id": "L3",
+   "slug": "a-history-of-hindu-chemistry-vol-1-ray",
+   "page": 468,
+   "at": 2392,
+   "text": "Page 468"
+  }
+ ],
+ "gauge:G:g06": [
+  {
+   "id": "L1",
+   "slug": "de-communi-mathematica-scientia-liber-festa",
+   "page": 70,
+   "at": 1502,
+   "text": "Page 70"
+  },
+  {
+   "id": "L2",
+   "slug": "le-systeme-du-monde-histoire-des-doctrines-cosmologiques-de-duhem-2",
+   "page": 114,
+   "at": 2608,
+   "text": "Page 114"
+  }
+ ],
+ "gauge:G:g07": [
+  {
+   "id": "L1",
+   "slug": "da-qing-shi-xian-shu-qing-imperial-calendar-bureau",
+   "page": 151,
+   "at": 1706,
+   "text": "Page 151"
+  },
+  {
+   "id": "L2",
+   "slug": "study-of-celestial-star-positions-and-lunar-mansions-bureau",
+   "page": 833,
+   "at": 2269,
+   "text": "Page 833"
+  },
+  {
+   "id": "L3",
+   "slug": "le-systeme-du-monde-histoire-des-doctrines-cosmologiques-de-duhem-2",
+   "page": 313,
+   "at": 2929,
+   "text": "Page 313"
+  },
+  {
+   "id": "L4",
+   "slug": "c-iulii-hygini-augustei-liberti-fabularum-liber-et-poeticon-hyginus",
+   "page": 321,
+   "at": 3570,
+   "text": "Page 321"
+  },
+  {
+   "id": "L5",
+   "slug": "le-systeme-du-monde-histoire-des-doctrines-cosmologiques-de-duhem-2",
+   "page": 468,
+   "at": 4411,
+   "text": "Page 468"
+  },
+  {
+   "id": "L6",
+   "slug": "amicus-medicorum-ganivetus-1508",
+   "page": 35,
+   "at": 5092,
+   "text": "Page 35"
+  },
+  {
+   "id": "L7",
+   "slug": "yangming-stellar-astrology-charts-fuxin",
+   "page": 64,
+   "at": 5551,
+   "text": "Page 64"
+  }
+ ],
+ "gauge:G:g08": [
+  {
+   "id": "L1",
+   "slug": "opera-omnia-complete-works-elegantiae-declamatio-de-valla",
+   "page": 651,
+   "at": 1168,
+   "text": "Page 651"
+  },
+  {
+   "id": "L2",
+   "slug": "opera-joannis-pici-mirandule-comitis-concordie-litterar-um-pico-della-mirandola",
+   "page": 159,
+   "at": 1710,
+   "text": "Page 159"
+  },
+  {
+   "id": "L3",
+   "slug": "kritik-der-praktischen-vernunft-german-kant",
+   "page": 48,
+   "at": 2213,
+   "text": "Page 48"
+  },
+  {
+   "id": "L4",
+   "slug": "critik-der-reinen-vernunft-kant",
+   "page": 176,
+   "at": 2737,
+   "text": "Page 176"
+  },
+  {
+   "id": "L5",
+   "slug": "die-welt-als-wille-und-vorstellung-schopenhauer",
+   "page": 531,
+   "at": 3269,
+   "text": "Page 531"
+  },
+  {
+   "id": "L6",
+   "slug": "way-of-initiation-steiner",
+   "page": 30,
+   "at": 4393,
+   "text": "Page 30"
+  },
+  {
+   "id": "L7",
+   "slug": "ex-philosophia-transcendentali-theorematum-entis-infiniti-geret",
+   "page": 1,
+   "at": 4632,
+   "text": "Geret, Andreas: Ex philosophia transcendentali"
+  }
+ ],
+ "gauge:G:g09": [
+  {
+   "id": "L1",
+   "slug": "kriyakandakramavali-ms-add-1406",
+   "page": 80,
+   "at": 358,
+   "text": "Page 80"
+  },
+  {
+   "id": "L2",
+   "slug": "the-religion-of-the-samurai-a-study-of-zen-philosophy-nukariya",
+   "page": 102,
+   "at": 955,
+   "text": "Page 102"
+  },
+  {
+   "id": "L3",
+   "slug": "shishi-yuanliu-illustrated-life-of-the-buddha",
+   "page": 154,
+   "at": 1384,
+   "text": "Page 154"
+  },
+  {
+   "id": "L4",
+   "slug": "shishi-yuanliu-illustrated-life-of-the-buddha",
+   "page": 152,
+   "at": 2001,
+   "text": "Page 152"
+  },
+  {
+   "id": "L5",
+   "slug": "essays-on-the-languages-literature-and-religion-of-nepal-hodgson",
+   "page": 61,
+   "at": 2545,
+   "text": "Page 61"
+  },
+  {
+   "id": "L6",
+   "slug": "kriyakandakramavali-ms-add-1406",
+   "page": 130,
+   "at": 2950,
+   "text": "Page 130"
+  },
+  {
+   "id": "L7",
+   "slug": "dunhuang-illustrated-manuscript",
+   "page": 9,
+   "at": 3355,
+   "text": "Page 9"
+  },
+  {
+   "id": "L8",
+   "slug": "the-gods-of-northern-buddhism-getty",
+   "page": 349,
+   "at": 4058,
+   "text": "Page 349"
+  },
+  {
+   "id": "L9",
+   "slug": "buddhism-in-tibet-schlagintweit",
+   "page": 144,
+   "at": 4438,
+   "text": "Page 144"
+  },
+  {
+   "id": "L10",
+   "slug": "kriyakandakramavali-ms-add-1406",
+   "page": 80,
+   "at": 4838,
+   "text": "Page 80"
+  },
+  {
+   "id": "L11",
+   "slug": "dunhuang-illustrated-manuscript",
+   "page": 6,
+   "at": 5478,
+   "text": "Page 6"
+  },
+  {
+   "id": "L12",
+   "slug": "aashasrik-prajpramit-second-manuscript",
+   "page": 168,
+   "at": 5841,
+   "text": "Page 168"
+  },
+  {
+   "id": "L13",
+   "slug": "kriyakandakramavali-ms-add-1406",
+   "page": 81,
+   "at": 6313,
+   "text": "Page 81"
+  },
+  {
+   "id": "L14",
+   "slug": "kriyakandakramavali-ms-add-1406",
+   "page": 81,
+   "at": 6692,
+   "text": "Page 81"
+  }
+ ],
+ "gauge:G:g10": [
+  {
+   "id": "L1",
+   "slug": "bodhicaryavatara-with-prajnakaramati-s-panjika-sanskrit-santideva",
+   "page": 93,
+   "at": 1266,
+   "text": "Page 93"
+  },
+  {
+   "id": "L2",
+   "slug": "bodhicaryavatara-with-prajnakaramati-s-panjika-sanskrit-santideva",
+   "page": 93,
+   "at": 1995,
+   "text": "Page 93"
+  },
+  {
+   "id": "L3",
+   "slug": "bodhicaryavatara-with-prajnakaramati-s-panjika-sanskrit-santideva",
+   "page": 309,
+   "at": 2881,
+   "text": "Page 309"
+  },
+  {
+   "id": "L4",
+   "slug": "derge-tengyur-vol-105",
+   "page": 368,
+   "at": 4082,
+   "text": "Page 368"
+  }
+ ],
+ "gauge:G:g11": [
+  {
+   "id": "L1",
+   "slug": "haut-senegal-niger-vol-1-delafosse",
+   "page": 264,
+   "at": 1031,
+   "text": "Page 264"
+  },
+  {
+   "id": "L2",
+   "slug": "haut-senegal-niger-vol-2-delafosse",
+   "page": 274,
+   "at": 2090,
+   "text": "Page 274"
+  },
+  {
+   "id": "L3",
+   "slug": "haut-senegal-niger-vol-2-delafosse",
+   "page": 276,
+   "at": 2776,
+   "text": "Page 276"
+  },
+  {
+   "id": "L4",
+   "slug": "haut-senegal-niger-vol-2-delafosse",
+   "page": 280,
+   "at": 3168,
+   "text": "Page 280"
+  },
+  {
+   "id": "L5",
+   "slug": "haut-senegal-niger-vol-2-delafosse",
+   "page": 287,
+   "at": 4038,
+   "text": "Page 287"
+  }
+ ],
+ "gauge:G:g12": [
+  {
+   "id": "L1",
+   "slug": "the-de-la-cruz-badiano-aztec-herbal-of-1552-gates",
+   "page": 70,
+   "at": 2393,
+   "text": "Page 70"
+  },
+  {
+   "id": "L2",
+   "slug": "the-de-la-cruz-badiano-aztec-herbal-of-1552-gates",
+   "page": 70,
+   "at": 2792,
+   "text": "Page 70"
+  },
+  {
+   "id": "L3",
+   "slug": "tudela-codex-anonymous-nahua-tlacuilo",
+   "page": 129,
+   "at": 3306,
+   "text": "Page 129"
+  }
+ ],
+ "gauge:G:g13": [
+  {
+   "id": "L1",
+   "slug": "primitive-culture-researches-into-the-development-of-tylor-2",
+   "page": 457,
+   "at": 1163,
+   "text": "Page 457"
+  },
+  {
+   "id": "L2",
+   "slug": "primitive-culture-researches-into-the-development-of-tylor-2",
+   "page": 457,
+   "at": 1742,
+   "text": "Page 457"
+  },
+  {
+   "id": "L3",
+   "slug": "the-path-vol-iii-no-12-ed",
+   "page": 10,
+   "at": 2285,
+   "text": "Page 10"
+  },
+  {
+   "id": "L4",
+   "slug": "the-path-vol-iii-no-12-ed",
+   "page": 10,
+   "at": 2754,
+   "text": "Page 10"
+  }
+ ],
+ "gauge:G:g14": [
+  {
+   "id": "L1",
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 97,
+   "at": 915,
+   "text": "Page 97"
+  },
+  {
+   "id": "L2",
+   "slug": "liber-unus-de-secretis-antimonii-das-ist-von-der-grossen-suchten",
+   "page": 99,
+   "at": 1545,
+   "text": "Page 99"
+  },
+  {
+   "id": "L3",
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14,
+   "at": 2027,
+   "text": "Page 14"
+  },
+  {
+   "id": "L4",
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 99,
+   "at": 2866,
+   "text": "Page 99"
+  },
+  {
+   "id": "L5",
+   "slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+   "page": 7,
+   "at": 3132,
+   "text": "Page 7"
+  },
+  {
+   "id": "L6",
+   "slug": "tabulae-anatomicae-eustachi",
+   "page": 96,
+   "at": 3464,
+   "text": "Page 96"
+  }
+ ],
+ "gauge:G:g15": [
+  {
+   "id": "L1",
+   "slug": "babylonian-liturgies-sumerian-texts-from-the-early-period-langdon",
+   "page": 198,
+   "at": 973,
+   "text": "Page 198"
+  },
+  {
+   "id": "L2",
+   "slug": "an-adab-to-nanna-for-isme-dagan-isme-dagan-m-anonymous",
+   "page": 1,
+   "at": 1484,
+   "text": "Page 1"
+  },
+  {
+   "id": "L3",
+   "slug": "an-adab-to-nanna-for-isme-dagan-isme-dagan-m-anonymous",
+   "page": 2,
+   "at": 1888,
+   "text": "Page 2"
+  },
+  {
+   "id": "L4",
+   "slug": "essays-1625-edition-bacon",
+   "page": 74,
+   "at": 2470,
+   "text": "Page 74"
+  },
+  {
+   "id": "L5",
+   "slug": "critique-of-practical-reason-and-other-works-on-ethics-kant",
+   "page": 420,
+   "at": 2966,
+   "text": "Page 420"
+  },
+  {
+   "id": "L6",
+   "slug": "agrippa-de-occulta-philosophia-book-ii-1531-nettesheim",
+   "page": 277,
+   "at": 3435,
+   "text": "Page 277"
+  },
+  {
+   "id": "L7",
+   "slug": "bible-of-the-old-testament-biblia-veteris-testamenti",
+   "page": 9,
+   "at": 3863,
+   "text": "Page 9"
+  }
+ ],
+ "gauge:G:g16": [
+  {
+   "id": "L1",
+   "slug": "amphitheatrum-sapientiae-aeternae-solius-verae-christiano-khunrath-2",
+   "page": 8,
+   "at": 1102,
+   "text": "Page 8"
+  },
+  {
+   "id": "L2",
+   "slug": "geschichte-der-chemie-seit-dem-wiederaufleben-der-gmelin",
+   "page": 299,
+   "at": 1765,
+   "text": "Page 299"
+  }
+ ],
+ "gauge:G:g17": [
+  {
+   "id": "L1",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 433,
+   "at": 970,
+   "text": "Page 433"
+  },
+  {
+   "id": "L2",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 433,
+   "at": 1445,
+   "text": "Page 433"
+  },
+  {
+   "id": "L3",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 434,
+   "at": 1871,
+   "text": "Page 434"
+  },
+  {
+   "id": "L4",
+   "slug": "the-gospels-and-the-gospel-a-study-in-the-most-recent-results-of-the-l",
+   "page": 133,
+   "at": 2819,
+   "text": "Page 133"
+  },
+  {
+   "id": "L5",
+   "slug": "echoes-from-the-gnosis-vol-vii-the-gnostic-crucifixion-mead",
+   "page": 27,
+   "at": 3352,
+   "text": "Page 27"
+  },
+  {
+   "id": "L6",
+   "slug": "the-oxyrhynchus-papyri-part-v-hunt",
+   "page": 20,
+   "at": 4092,
+   "text": "Page 20"
+  }
+ ],
+ "gauge:G:g18": [
+  {
+   "id": "L1",
+   "slug": "a-history-of-hindu-chemistry-vol-2-ray",
+   "page": 173,
+   "at": 2157,
+   "text": "Page 173"
+  },
+  {
+   "id": "L2",
+   "slug": "a-history-of-hindu-chemistry-vol-1-ray",
+   "page": 89,
+   "at": 2620,
+   "text": "Page 89"
+  },
+  {
+   "id": "L3",
+   "slug": "a-history-of-hindu-chemistry-vol-1-ray",
+   "page": 89,
+   "at": 3095,
+   "text": "Page 89"
+  },
+  {
+   "id": "L4",
+   "slug": "reg-lat-1266-dee",
+   "page": 208,
+   "at": 3569,
+   "text": "Page 208"
+  },
+  {
+   "id": "L5",
+   "slug": "reg-lat-1266-dee",
+   "page": 208,
+   "at": 3923,
+   "text": "Page 208"
+  },
+  {
+   "id": "L6",
+   "slug": "viridarium-chymicum-das-ist-chymisches-lust-gartlein-maier",
+   "page": 46,
+   "at": 4463,
+   "text": "Page 46"
+  },
+  {
+   "id": "L7",
+   "slug": "opus-majus-of-roger-bacon-vol-ii-bridges-ed-bacon",
+   "page": 14,
+   "at": 6306,
+   "text": "Page 14"
+  },
+  {
+   "id": "L8",
+   "slug": "alchemiae-gebri-arabis-philosophi-solertissimi-libri-bacon",
+   "page": 206,
+   "at": 7464,
+   "text": "Page 206"
+  },
+  {
+   "id": "L9",
+   "slug": "theatrum-chemicum-volumen-primum-ed",
+   "page": 227,
+   "at": 8510,
+   "text": "Page 227"
+  }
+ ],
+ "gauge:G:g19": [
+  {
+   "id": "L1",
+   "slug": "haut-senegal-niger-vol-1-delafosse",
+   "page": 438,
+   "at": 1135,
+   "text": "Page 438"
+  },
+  {
+   "id": "L2",
+   "slug": "west-african-studies-kingsley",
+   "page": 333,
+   "at": 2325,
+   "text": "Page 333"
+  },
+  {
+   "id": "L3",
+   "slug": "the-yoruba-speaking-peoples-of-the-slave-coast-of-west-africa",
+   "page": 135,
+   "at": 2858,
+   "text": "Page 135"
+  }
+ ],
+ "gauge:G:g20": [
+  {
+   "id": "L1",
+   "slug": "l-tolstoy-and-dostoevsky-vol-2-religion",
+   "page": 460,
+   "at": 1196,
+   "text": "Page 460"
+  },
+  {
+   "id": "L2",
+   "slug": "-shestov-2",
+   "page": 77,
+   "at": 1974,
+   "text": "Page 77"
+  },
+  {
+   "id": "L3",
+   "slug": "l-tolstoy-and-dostoevsky-vol-2-religion",
+   "page": 460,
+   "at": 2770,
+   "text": "Page 460"
+  },
+  {
+   "id": "L4",
+   "slug": "l-tolstoy-and-dostoevsky-vol-2-religion",
+   "page": 363,
+   "at": 3264,
+   "text": "Page 363"
+  },
+  {
+   "id": "L5",
+   "slug": "l-tolstoy-and-dostoevsky-vol-2-religion",
+   "page": 363,
+   "at": 3752,
+   "text": "Page 363"
+  }
+ ]
+}

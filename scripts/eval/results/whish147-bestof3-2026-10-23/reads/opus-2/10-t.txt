@@ -1,0 +1,10 @@
+ROW 1 | കൈവല്യകാരണമെങ്കി ‖ ന്ന്യ:ഒതന്തിന്റെ[illegible]പ്രസാദേത്വഹാൽ ‖ നശ്ശ്രുപവിത്രവർക്കാം
+ROW 2 | പ്രഭൃതീഃചഗ്രത്തിപ്രത്തഷ ‖ ഷ്ടഃപ്രകാശപടമ[illegible]ത്തിക്കന്യപത്യു:ഷൈ ‖ ഷ്ട്ര:ദൂഷ്യമാരെ[illegible]വൈപക്ക്യ
+ROW 3 | തന്നൈകാമതുല്യൂമാ ‖ മതുമലമതു[illegible]ത്വഇശ്ചാനാം[illegible] ‖ യാഗൈഗവിതരയോഃ
+ROW 4 | പ്രയോജനാന ‖ ാന്ന്യസപ്ത[illegible]ന്നു:ന്ദൃക്ഷേജാ ‖ നാധിഗമാമോക്ഷി
+ROW 5 | നാമ്മക്കാണിപ്ര ‖ ാൈക്ഷിഗുരുസ്മൃതി[illegible]തിസംക്ഷാതദ[illegible] ‖ നാചക്രമുഗ്രത
+ROW 6 | നമിനപ്രാക്ഷി ‖ ശയിനന്നഭനദചരിതാത്മാ[illegible] ‖ ാൽപ്രയാണവിധി
+ROW 7 | ദൂതൈനന്ന ‖ കാമേതകാമാത്രമികാദ്ദേശം ‖ ലൈകവല്യമാങ്ങ്
+ROW 8 | മിനേന്ദ്യ:പൃഥ്വ്യാമാക ‖ ക്കാനമിടംപുറംഷിത്വാതക്കപ്ര ‖ ഇപാകിതുനനമൃത്യു
+ROW 9 | അസാമ്യാചനന്ന:ഏതേ ‖ പവിത്രമഗ്യംഇതിത്തിനാസൂമനരയാര ‖ ാരന്കംചയാപ്രദേദേശം
+NOTE | Low confidence throughout: the text is a narrow block of 9 rows with no full-width rows, and many readings are best guesses at individual letters. Only a few words seem fairly secure: കൈവല്യ in rows 1 and 7, പ്രയോ in row 4, പ്രയാണവിധി in row 6, and പവിത്ര in rows 1 and 9.

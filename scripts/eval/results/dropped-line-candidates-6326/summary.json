@@ -1,0 +1,297 @@
+{
+ "date": "2026-10-12",
+ "min_run": 5,
+ "pages_with_revision": 1112190,
+ "pairs_judged": 120577,
+ "tally": {
+  "same_engine": 352693,
+  "no_current_text": 31493,
+  "revision_not_a_read": 73510,
+  "clean": 105587,
+  "edge_only": 2559,
+  "leaf_mismatch": 23436,
+  "not_same_text": 40245,
+  "flagged": 12431,
+  "too_short": 9136,
+  "current_not_a_read": 190,
+  "unspaced_script": 460910
+ },
+ "pages_by_pair": {
+  "gemini-3-flash → claude-sonnet-4-6": {
+   "clean": 1,
+   "not_same_text": 7,
+   "edge_only": 3,
+   "flagged": 3
+  },
+  "gemini-2.5-flash → gemini-3-flash": {
+   "clean": 488,
+   "edge_only": 21,
+   "leaf_mismatch": 16,
+   "not_same_text": 13,
+   "flagged": 38,
+   "too_short": 17
+  },
+  "gemini-2.5-flash → claude-sonnet-4-6": {
+   "clean": 39,
+   "flagged": 8
+  },
+  "gemini-3-flash → gemini-2.5-flash": {
+   "clean": 1
+  },
+  "gemini-3.1-flash-lite → gemini-3-flash": {
+   "too_short": 5132,
+   "clean": 88276,
+   "flagged": 11380,
+   "edge_only": 1835,
+   "not_same_text": 9747,
+   "leaf_mismatch": 8140,
+   "unspaced_script": 219
+  },
+  "gemini-3-flash → gemini-3.1-flash-lite": {
+   "clean": 1193,
+   "edge_only": 20,
+   "too_short": 2722,
+   "flagged": 159,
+   "leaf_mismatch": 15226,
+   "not_same_text": 2282,
+   "unspaced_script": 371
+  },
+  "gemini-3.1-flash-lite → kraken/sophro-mhiro": {
+   "not_same_text": 623,
+   "too_short": 9
+  },
+  "gemini-3.1-flash-lite → paddleocr-vl-1.6-0.9b": {
+   "unspaced_script": 17661
+  },
+  "gemini-3.1-flash-lite → gemini-3.7-flash-low": {
+   "clean": 12,
+   "flagged": 6,
+   "not_same_text": 2,
+   "edge_only": 1
+  },
+  "mineru-pipeline → gemini-3-flash": {
+   "not_same_text": 1
+  },
+  "gemini-3-flash → gemini-3.7-flash-low": {
+   "clean": 29,
+   "too_short": 5,
+   "unspaced_script": 2,
+   "flagged": 7,
+   "edge_only": 1,
+   "leaf_mismatch": 1
+  },
+  "gemini-3-flash → paddleocr-vl-1.6-0.9b": {
+   "unspaced_script": 220843,
+   "too_short": 299
+  },
+  "gemini-2.5-flash → gemini-3.1-flash-lite": {
+   "not_same_text": 10,
+   "leaf_mismatch": 38,
+   "too_short": 3,
+   "clean": 1
+  },
+  "ia-ocr → gemini-3.1-flash-lite": {
+   "clean": 15150,
+   "edge_only": 580,
+   "not_same_text": 117,
+   "flagged": 769,
+   "too_short": 819
+  },
+  "ia-ocr → gemini-3-flash": {
+   "clean": 6,
+   "edge_only": 1
+  },
+  "gemini-3.1-flash-lite → kraken/omnisyr": {
+   "not_same_text": 6929,
+   "too_short": 52
+  },
+  "gemini-3-flash → kraken/omnisyr": {
+   "not_same_text": 13770,
+   "flagged": 57,
+   "clean": 377,
+   "edge_only": 89,
+   "too_short": 50
+  },
+  "gemini-3-flash → kraken/sophro-mhiro": {
+   "not_same_text": 6677,
+   "too_short": 13,
+   "clean": 8,
+   "flagged": 4,
+   "edge_only": 8
+  },
+  "mineru-pipeline → gemini-3.1-flash-lite": {
+   "not_same_text": 63,
+   "too_short": 2
+  },
+  "gemini-3.1-flash-lite → gemini-3.8-flash-low": {
+   "clean": 5,
+   "leaf_mismatch": 15,
+   "not_same_text": 4,
+   "too_short": 4
+  },
+  "gemini-3.8-flash-low → paddleocr-vl-1.6-0.9b": {
+   "unspaced_script": 160
+  },
+  "gemini-3-flash → gemini-3.8-flash-low": {
+   "unspaced_script": 242,
+   "too_short": 8
+  },
+  "paddleocr-vl-1.6-0.9b → gemini-3-flash": {
+   "unspaced_script": 6
+  },
+  "paddleocr-vl-1.6-0.9b → gemini-3.1-flash-lite": {
+   "too_short": 1
+  },
+  "gemini-2.5-flash → gemini-3.7-flash-low": {
+   "clean": 1
+  }
+ },
+ "one_page_per_book": {
+  "books": 990,
+  "flagged": 66,
+  "by_pair": {
+   "gemini-3.1-flash-lite → gemini-3-flash": {
+    "books": 564,
+    "flagged": 44,
+    "pct": 7.8
+   },
+   "ia-ocr → gemini-3.1-flash-lite": {
+    "books": 315,
+    "flagged": 11,
+    "pct": 3.5
+   },
+   "gemini-3-flash → gemini-3.1-flash-lite": {
+    "books": 38,
+    "flagged": 3,
+    "pct": 7.9
+   },
+   "gemini-3-flash → gemini-3.7-flash-low": {
+    "books": 21,
+    "flagged": 4,
+    "pct": 19
+   },
+   "gemini-3-flash → kraken/omnisyr": {
+    "books": 21,
+    "flagged": 0,
+    "pct": 0
+   },
+   "gemini-2.5-flash → gemini-3-flash": {
+    "books": 11,
+    "flagged": 1,
+    "pct": 9.1
+   },
+   "gemini-3.1-flash-lite → gemini-3.7-flash-low": {
+    "books": 7,
+    "flagged": 2,
+    "pct": 28.6
+   },
+   "ia-ocr → gemini-3-flash": {
+    "books": 4,
+    "flagged": 0,
+    "pct": 0
+   },
+   "gemini-3-flash → claude-sonnet-4-6": {
+    "books": 3,
+    "flagged": 1,
+    "pct": 33.3
+   },
+   "gemini-3-flash → kraken/sophro-mhiro": {
+    "books": 2,
+    "flagged": 0,
+    "pct": 0
+   },
+   "gemini-3-flash → gemini-2.5-flash": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   },
+   "gemini-2.5-flash → gemini-3.1-flash-lite": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   },
+   "gemini-3.1-flash-lite → gemini-3.8-flash-low": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   },
+   "gemini-2.5-flash → gemini-3.7-flash-low": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   }
+  },
+  "by_century": {
+   "19c": {
+    "books": 279,
+    "flagged": 13,
+    "pct": 4.7
+   },
+   "20c": {
+    "books": 228,
+    "flagged": 7,
+    "pct": 3.1
+   },
+   "undated": {
+    "books": 178,
+    "flagged": 11,
+    "pct": 6.2
+   },
+   "16c": {
+    "books": 149,
+    "flagged": 22,
+    "pct": 14.8
+   },
+   "17c": {
+    "books": 73,
+    "flagged": 7,
+    "pct": 9.6
+   },
+   "18c": {
+    "books": 44,
+    "flagged": 3,
+    "pct": 6.8
+   },
+   "15c": {
+    "books": 25,
+    "flagged": 3,
+    "pct": 12
+   },
+   "21c": {
+    "books": 5,
+    "flagged": 0,
+    "pct": 0
+   },
+   "11c": {
+    "books": 2,
+    "flagged": 0,
+    "pct": 0
+   },
+   "9c": {
+    "books": 2,
+    "flagged": 0,
+    "pct": 0
+   },
+   "10c": {
+    "books": 2,
+    "flagged": 0,
+    "pct": 0
+   },
+   "14c": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   },
+   "13c": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   },
+   "2c": {
+    "books": 1,
+    "flagged": 0,
+    "pct": 0
+   }
+  }
+ }
+}

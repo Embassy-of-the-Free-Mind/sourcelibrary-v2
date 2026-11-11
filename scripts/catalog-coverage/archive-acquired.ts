@@ -16,6 +16,11 @@
  * Provider mode records completion on the BOOK (there is no queue row) and is
  * idempotent: archiveIiif only fetches pages that lack `archived_photo`.
  * `--campaign <tag>` does the same keyed on `acquisition_campaign` (#5457).
+ * `--book <id[,id]>` does the same for named books, e.g. one a reader is waiting
+ * on whose provider tag no other lane selects (#6968). A named book is retried
+ * even when archive_complete, and every missing page is fetched, not just
+ * until the 99% completion bar:
+ *   npx tsx scripts/catalog-coverage/archive-acquired.ts --book 6ac4fce44ba7223afef75aa9
  *
  * Host lanes (#4397) — one process per host, each at its own polite rate, so a
  * throttled host stalls its own lane and nobody else's:
@@ -31,12 +36,23 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
+import { uploadPageVariants, displayKeyFor } from '../workers/lib/display-image.mjs';
 import {
   upgradeToFullRes, rateLimitedFetch, capDomainLimit,
-  fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS,
+  fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS, gallicaOpenApiUrl,
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
+import { assertNotQuotaPlaceholder } from '../lib/archive-failure-class.mjs';
 import { recountBook } from '../../src/lib/page-counts';
+import { ensurePages, isLazyPagesBook, LAZY_PAGES_FILTER } from '../lib/lazy-pages.mjs';
+import { archiveFromManifest } from '../lib/manifest-archive.mjs';
+import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
+import { laneSelectionTiers } from './archive-lanes.mjs';
+import { openIaZip } from '../lib/ia-zip-ledger.mjs';
+import {
+  isMissFor, isBookScopedFailure, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
+  notCoolingDown, cooldownUntil,
+} from '../lib/archive-miss.mjs';
 const execFileP = promisify(execFile);
 /**
  * Read `--name <int>`, falling back to `dflt` when it is absent or unusable.
@@ -102,6 +118,14 @@ const HOST_FILTER = !!(HOSTS || EXCLUDE_HOSTS);
 // limiter is per process: a lane on a host the hourly cron also reaches must
 // take a share of the budget, and a host whose robots.txt asks for less than the
 // table says is honoured here. Raising a rate is a DOMAIN_LIMITS change.
+// `--gallica-openapi` fetches Gallica page images from BnF's unwalled API host (#5448; the
+// gallica.bnf.fr wall 403s datacenter addresses). A lane flag, so exactly one process does it.
+const GALLICA_OPENAPI = process.argv.includes('--gallica-openapi');
+const fetchUrlOf = (u: string) => (GALLICA_OPENAPI ? gallicaOpenApiUrl(u) : u);
+// `--ia-zip`: a manifest-only IA book is archived from its item `_jp2.zip` (one request, the JP2
+// master) when its canvas → member mapping is proven; otherwise page by page (ia-zip-ledger.mjs).
+// Needs opj_decompress + unzip on the box; without them every book falls back, and says so.
+const IA_ZIP = process.argv.includes('--ia-zip');
 for (const spec of listArg('host-rate') ?? []) {
   const [h, r] = spec.split('=');
   capDomainLimit(h, Number(r));
@@ -116,6 +140,11 @@ for (const [flag, v] of [['concurrency', CONCURRENCY], ['page-concurrency', PAGE
   }
 }
 const log = (...a: any[]) => console.log(new Date().toISOString().slice(11, 19), ...a);
+// libvips keeps decoded images in a cache and spreads each operation over every core. On a 51 MP
+// IA leaf that is ~150 MB per decode, and a lane on l7a reached 4.4 GB RSS and tipped the box into
+// a global OOM (2026-10-26 00:13). An archiver touches each image once: no cache, two threads.
+sharp.cache(false);
+sharp.concurrency(2);
 
 async function main() {
   const mc = new MongoClient(process.env.MONGODB_URI!); await mc.connect();
@@ -203,6 +232,8 @@ async function main() {
   let pagesDone = 0;
   let pagesFailed = 0;
   let pagesSkipped = 0;
+  let pagesMissed = 0;     // 404/410: the host answered, the page is not there (#5448)
+  let booksAbandoned = 0;  // gave up on a book this run: its pages kept missing before any was served
   let localFailures = 0;   // failed AFTER the bytes arrived: sharp, R2 or Mongo, never the source
   let booksDone = 0;
   let workTotal = 0;
@@ -217,13 +248,38 @@ async function main() {
     lastTick = now; lastPages = pagesDone;
     const thr = [...hostThrottles.entries()].map(([h, n]) => `${h.split('.')[0]}:${n}`).join(' ');
     const paused = breaker.openHosts().map(h => h.split('.')[0]).join(' ');
-    log(`heartbeat ${mins.toFixed(1)}m | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed${pagesSkipped ? `, ${pagesSkipped} skipped` : ''} | ${recent.toFixed(2)} pages/s now | host ${currentHost}${thr ? ` | throttled ${thr}` : ''}${paused ? ` | PAUSED ${paused}` : ''}`);
+    // rss is THIS node process (decoded images, sharp buffers); opj_decompress children are extra.
+    const rss = Math.round(process.memoryUsage().rss / 1e6);
+    log(`heartbeat ${mins.toFixed(1)}m | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed${pagesSkipped ? `, ${pagesSkipped} skipped` : ''} | ${recent.toFixed(2)} pages/s now | host ${currentHost} | rss ${rss} MB${thr ? ` | throttled ${thr}` : ''}${paused ? ` | PAUSED ${paused}` : ''}`);
   }, 60_000);
   // Never let the heartbeat hold the process open past the work.
   if (typeof hb.unref === 'function') hb.unref();
 
-  async function archiveIiif(bookId: string) {
-    const ps = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1 } }).toArray();
+  // ── Page misses (#5448) ──────────────────────────────────────────────────
+  // A 404/410 used to go to the HOST breaker like any other failure, and five of
+  // them from one book of dead URLs paused the whole host. On lane-heidelberg
+  // that was 108,133 consecutive runs of "0 ok, 6 failed [404], 34373 skipped":
+  // the dead book was always first in line, so the 39 healthy books behind it
+  // were never asked for. A miss is now a fact about the page (recorded in the
+  // archive_metadata failure fields archive-ocr.mjs already keeps, keyed to the URL) and about this BOOK for this run (the guard below); the
+  // host hears about it only when whole books keep missing with nothing served.
+  const missGuard = createBookMissGuard();
+  const urlOf = (p: any) => fetchUrlOf(upgradeToFullRes(p.photo_original || p.photo));
+  /** Is a miss from this host evidence worth keeping? Only once the host has served a page this run. */
+  const missesCount = (host: string) => (breaker.stateOf(host)?.ok ?? 0) > 0;
+
+  /**
+   * @returns how many pages were actually REQUESTED, how many were skipped for a paused host,
+   * how many were eligible to ask at all, and whether the book was abandoned with nothing served.
+   */
+  async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number; eligible: number; abandoned: boolean }> {
+    const all = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1, ...MISS_PROJECTION } }).toArray();
+    // A page that has missed this exact URL MISS_LIMIT times is not asked again.
+    // A repaired URL is a different URL, so it is eligible again by construction.
+    const ps = retryMisses ? all : all.filter((p: any) => !isPermanentMiss(p, urlOf(p)));
+    let requested = 0;
+    let pausedSkips = 0;
+    let abandoned = false;
     // Pages ran in chunks of 6 behind `await Promise.all(chunk)`. That barrier
     // paces the whole chunk at its slowest member, and the slowest member of a
     // chunk is routinely a page burning 4 attempts × 30s of timeout — so five
@@ -233,15 +289,19 @@ async function main() {
     let pageBlocked: Error | null = null;
     const worker = async (): Promise<void> => {
       while (true) {
-        if (pageBlocked) return;
+        if (pageBlocked || abandoned) return;
         const p: any = ps[next++];
         if (!p) return;
-        const url = upgradeToFullRes(p.photo_original || p.photo);
+        const url = urlOf(p);
         const host = hostOf(url);
         currentHost = host;
         // A paused host is skipped without a request, and cheaply: the point is
         // to hand this worker back to the pool, not to fail faster.
-        if (!breaker.allow(host)) { breaker.skipped(host); pagesSkipped++; continue; }
+        // A page whose only copy sits at the display key is not a page to fetch: writing the variant
+        // would overwrite that copy (#4406). display-backfill gives it a sibling key instead.
+        if (displayKeyFor({ book_id: bookId, page_number: p.page_number, photo: p.photo, photo_original: p.photo_original }).canonicalHoldsMaster) { pagesSkipped++; continue; }
+        if (!breaker.allow(host)) { breaker.skipped(host); pagesSkipped++; pausedSkips++; continue; }
+        requested++;
         // Did the bytes arrive? Everything after that point is OUR machinery —
         // sharp, R2, Mongo — and a failure there says nothing about the source.
         // Charging an R2 outage to the institution's breaker would pause every
@@ -277,39 +337,82 @@ async function main() {
           } else {
             buf = await rateLimitedFetch(url);
           }
+          // BSB/MDZ answer an over-quota request with a 1×1 JPEG at 200 OK. Stored, it becomes the
+          // master and hides the page from every later run (archived_photo is the work queue), so it
+          // must fail here as a throttle — before `fetched`, so it is charged to the host as a 429.
+          await assertNotQuotaPlaceholder(buf, (b: Buffer) => sharp(b).metadata());
           fetched = true;
           // The host served us: that is the breaker's whole question, and
           // settling it here (rather than after the write) is also what releases
           // a half-open probe slot on every path out of this block.
           breaker.success(host);
+          missGuard.ok(bookId);
 
           // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
           const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
-          const padded = String(p.page_number).padStart(4, '0');
-          const blob = await storagePut(`pages/${bookId}/${padded}.jpg`, jpg, { contentType: 'image/jpeg', access: 'public' });
-          const upd: any = { $set: { archived_photo: blob.url } };
+          // The master goes under archived/, the marked 1200px variant and the thumb under pages/,
+          // through the path every other archiver uses. This lane wrote the master to the display
+          // key until #4406, and display-backfill then pointed display_photo at it: readers were
+          // served an unmarked master.
+          const urls = await uploadPageVariants(jpg, bookId, p.page_number, async (key: string, body: Buffer, contentType: string) => (await storagePut(key, body, { contentType, access: 'public' })).url);
+          const upd: any = { $set: { archived_photo: urls.archived, display_photo: urls.display, image_thumb: urls.thumb, thumbnail_blob: urls.thumb } };
+          if (urls.displayWidth) upd.$set.display_width = urls.displayWidth;
+          if (urls.displayHeight) upd.$set.display_height = urls.displayHeight;
           // Record what we actually stored, and (when we know it) what the source
           // says native is. Without this, "did we get the master?" can only be
           // answered by re-fetching from the institution — which is why the
           // MASTER tier is sampled rather than known, and why this debt went
           // uncounted for months. Stored dims are free: sharp already decoded it.
-          try {
-            const dims = await sharp(jpg).metadata();
-            if (dims.width) upd.$set.image_width = dims.width;
-            if (dims.height) upd.$set.image_height = dims.height;
-          } catch { /* dimensions are a nice-to-have; never fail an archive over them */ }
+          if (urls.width) upd.$set.image_width = urls.width;
+          if (urls.height) upd.$set.image_height = urls.height;
           if (info?.width) {
             upd.$set['iiif_info.width'] = info.width;
             upd.$set['iiif_info.height'] = info.height;
           }
           if (stitchedTiles) upd.$set.stitched_tiles = stitchedTiles;
-          try { const th = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer(); upd.$set.thumbnail_blob = (await storagePut(`pages/${bookId}/${padded}-thumb.jpg`, th, { contentType: 'image/jpeg', access: 'public' })).url; } catch {}
           await pages.updateOne({ _id: p._id }, upd);
           pagesDone++;
           hostFailures.clear(); // a success clears the streak
         } catch (e) {
           if (e instanceof HostBlocked) { pageBlocked = e; return; }
+          const code = classifyFetchError(e);
+          if (!fetched && isMissFor(url, code)) {
+            pagesMissed++;
+            breaker.pageMiss(host, code);
+            missGuard.miss(bookId);
+            // Bookkeeping only: never let a failed Mongo write turn into a thrown
+            // error that reads as the source's fault.
+            // Recorded only once the host has served something THIS run. During an outage openapi.bnf.fr
+            // answered 404 for pages that served 200 an hour later (2026-10-26 12:30–13:40: 1,268 Gallica
+            // pages took 1–2 such misses), and a third would have made real pages permanent gaps. A miss
+            // from a host that has served nothing is still counted for this run (the book guard), never kept.
+            if (missesCount(host)) {
+              try { await pages.updateOne({ _id: p._id }, { $set: missUpdate(p, url, code) }); } catch { /* next run re-records it */ }
+            }
+            if (!abandoned && missGuard.abandoned(bookId)) {
+              abandoned = true;
+              booksAbandoned++;
+              log(`book ${bookId}: ${missGuard.stateOf(bookId)?.miss} page misses [${code}] and nothing served — leaving it for a later run`);
+              // A host that has served NOTHING this run while whole books 404 is
+              // the host-wide case (a URL scheme change): let the breaker's
+              // cold-start rule see one failure per such book.
+              if ((breaker.stateOf(host)?.ok ?? 0) === 0) breaker.failure(host, `dead-book-${code}`);
+            }
+            continue;
+          }
           pagesFailed++;
+          if (!fetched && isBookScopedFailure(code) && missGuard.fresh(bookId)) {
+            // A 400/500 from a book that has served nothing yet is about the book (archive-miss.mjs).
+            missGuard.fail(bookId);
+            breaker.pageMiss(host, code); // reported per host, but neither trips nor closes it
+            if (!abandoned && missGuard.abandoned(bookId)) {
+              abandoned = true;
+              booksAbandoned++;
+              log(`book ${bookId}: ${missGuard.stateOf(bookId)?.fail} page failures [${code}] and nothing served — leaving it for a later run`);
+              if ((breaker.stateOf(host)?.ok ?? 0) === 0) breaker.failure(host, `dead-book-${code}`);
+            }
+            continue;
+          }
           if (!fetched) {
             try {
               noteFailure(url, e); // rethrows HostBlocked once the host looks blocked
@@ -329,7 +432,17 @@ async function main() {
     };
     await Promise.all(Array.from({ length: Math.min(PAGE_CONCURRENCY, ps.length) }, () => worker()));
     if (pageBlocked) throw pageBlocked;
+    return { requested, pausedSkips, eligible: ps.length, abandoned };
   }
+
+  /** Pages of a book that are permanent misses at their CURRENT url. */
+  const countPermanentMisses = async (bookId: string): Promise<number> => {
+    const cand = await pages.find(
+      { book_id: bookId, archived_photo: { $exists: false }, 'archive_metadata.failure_count': { $gte: MISS_LIMIT } },
+      { projection: { photo: 1, photo_original: 1, ...MISS_PROJECTION } },
+    ).toArray();
+    return cand.filter((p: any) => isPermanentMiss(p, urlOf(p))).length;
+  };
 
   // Work list: acquisition_queue rows by default, or hidden imports of one
   // provider when --provider is passed. Provider rows are shaped like queue
@@ -341,12 +454,36 @@ async function main() {
   // `acquisition-wave-2026-10`). The two may be combined.
   const campIdx = process.argv.indexOf('--campaign');
   const CAMPAIGN = campIdx > -1 ? process.argv[campIdx + 1] : null;
-  const BOOK_MODE = !!(PROVIDER || CAMPAIGN);
+  const BOOK_IDS = listArg('book');
+  // `--providers a,b` is provider mode over several providers at once: a host lane from the lane
+  // table (archive-lanes.json, #5448) names every provider tag its host's books carry.
+  const PROVIDERS = listArg('providers');
+  // `--lazy-only`: only manifest-only books (#7343), archived from the manifest. For a lane on a host
+  // whose materialized books another archiver already drains (IA: archive-bulk's item zips).
+  const LAZY_ONLY = process.argv.includes('--lazy-only');
+  const BOOK_MODE = !!(PROVIDER || PROVIDERS || CAMPAIGN || BOOK_IDS);
+  // The tier-A campaign (#7343) that step 5 ranks second, after live books.
+  const TIER_A_CAMPAIGN = (() => { const i = process.argv.indexOf('--tier-a-campaign'); return i > -1 ? process.argv[i + 1] : 'acquisition-wave-2026-10b'; })();
+  // Lane mode (`--providers`, the lane table) draws live → tier A → the rest (laneSelectionTiers);
+  // every other book mode keeps its single draw. A --campaign run already names its campaign.
+  const selectionTiers = (): Array<{ name: string; filter: Record<string, unknown> }> => (PROVIDERS && !CAMPAIGN && !BOOK_IDS
+    ? laneSelectionTiers({ tierACampaign: TIER_A_CAMPAIGN })
+    : [{ name: 'all', filter: {} }]);
   const bookModeFilter: Record<string, unknown> = {
     ...(PROVIDER ? { 'image_source.provider': PROVIDER } : {}),
+    ...(PROVIDERS ? { 'image_source.provider': { $in: [...PROVIDERS] } } : {}),
+    ...(LAZY_ONLY ? LAZY_PAGES_FILTER : {}),
     ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
+    ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
-    archive_status: { $ne: 'archive_complete' },
+    ...(BOOK_IDS ? {} : { archive_status: { $nin: ['archive_complete', 'archive_complete_with_gaps'] } }),
+    // A manifest-only book (#7343) IS selected: processBook archives it straight from its manifest
+    // into the book's ledger, creating no page docs (#5448 step 2). One whose ledger says nothing is
+    // left to fetch is not drawn again. A book named with --book is materialized in processBook.
+    ...(BOOK_IDS ? {} : { [`${LEDGER_FIELD}.exhausted`]: { $ne: true } }),
+    // A book the last run could not advance at all sits out for a day (archive-miss.mjs,
+    // NO_PROGRESS_COOLDOWN_MS); a book named with --book is always drawn.
+    ...(BOOK_IDS ? {} : notCoolingDown()),
   };
 
   // ── Host lanes (#4397): the host filter belongs to SELECTION ─────────────
@@ -363,35 +500,54 @@ async function main() {
   // `source` label is not the host — "iiif" rows point at MDZ, IA, Gallica and
   // e-rara alike). A book with NO un-archived page left belongs to every lane:
   // it fetches nothing and only needs its completion recorded.
-  const laneOf = async (bookId: string): Promise<string | null> => {
+  const laneOf = async (bookId: string, doc?: any): Promise<string | null> => {
+    // A manifest-only book has no pages to ask: its lane is the image host its ledger recorded,
+    // else the manifest's host (the same host on every IIIF provider measured but NB Norway, whose
+    // lane names both). Never null: null means "every lane", and a lazy book is not done.
+    if (doc && isLazyPagesBook(doc)) return doc.archive_metadata?.manifest_ledger?.host || hostOf(doc.image_source?.iiif_manifest || '');
     const p0 = await pages.findOne({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { photo: 1, photo_original: 1 } });
     return p0 ? hostOf(p0.photo_original || p0.photo || '') : null;
   };
   const inLane = (h: string | null) => h == null || ((!HOSTS || HOSTS.has(h)) && !EXCLUDE_HOSTS?.has(h));
   const SCAN_CAP = intArg('scan-cap', BATCH * 25);
   let scanned = 0;
-  const draw = async (cursor: AsyncIterable<any>, bookIdOf: (r: any) => string): Promise<any[]> => {
+  const draw = async (cursor: AsyncIterable<any>, bookIdOf: (r: any) => string, want = BATCH): Promise<any[]> => {
     const out: any[] = [];
     for await (const r of cursor) {
-      if (out.length >= BATCH || scanned >= SCAN_CAP) break;
+      if (out.length >= want || scanned >= SCAN_CAP) break;
       scanned++;
-      if (!HOST_FILTER || inLane(await laneOf(bookIdOf(r)))) out.push(r);
+      if (!HOST_FILTER || inLane(await laneOf(bookIdOf(r), r.pages_state ? r : undefined))) out.push(r);
     }
     return out;
   };
 
   let todo: any[];
   if (BOOK_MODE) {
-    // Least-recently-touched first. processBook stamps `updated_at` on every
-    // attempt, so a book that could not be finished this run goes to the back —
-    // the same rotation the queue gets from `archive_attempts`, without adding
-    // a field to `books`. Unsorted, provider mode re-drew the same head every
-    // run, which is the stall the queue-mode comment below describes.
-    const cur = books.find(bookModeFilter, { projection: { id: 1 } }).sort({ updated_at: 1 });
-    const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
-    await cur.close();
+    // Least-recently-ATTEMPTED first, so a book that could not be finished this
+    // run goes to the back — the rotation the queue gets from `archive_attempts`.
+    // This used to sort on `updated_at` alone, on the belief that every attempt
+    // stamped it; only a COMPLETION did. So a failing head stayed the head, and
+    // lane-heidelberg drew the same 40 books 108,133 times (#5448).
+    // processBook now stamps `archive_metadata.last_attempt_at` (an existing
+    // subdocument, not a new column) on every attempt that asked the source.
+    // Selection ORDER inside a lane (#5448 step 5): books readers can open now, then tier A (the
+    // #7343 wave ranked most interesting), then the rest. Each tier keeps the rotation, so a book that
+    // could not be finished goes to the back of ITS tier. Small institutions before large hosts is the
+    // lane table's job: each small host has its own lane, so it never waits behind IA or MDZ.
+    const cand: any[] = [];
+    const drawnPerTier: string[] = [];
+    for (const tier of selectionTiers()) {
+      const want = BATCH - cand.length;
+      if (want <= 0 || scanned >= SCAN_CAP) break;
+      const cur = books.find({ ...bookModeFilter, ...tier.filter }, { projection: { id: 1, pages_state: 1, 'image_source.iiif_manifest': 1, [`${LEDGER_FIELD}.host`]: 1 } }).sort(ROTATION_SORT);
+      const got = await draw(HOST_FILTER ? cur : cur.limit(want), (b: any) => b.id, want);
+      await cur.close();
+      cand.push(...got);
+      if (tier.name !== 'all') drawnPerTier.push(`${tier.name} ${got.length}`);
+    }
+    if (drawnPerTier.length) log(`selection order: ${drawnPerTier.join(', ')}`);
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
-    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, CAMPAIGN && `campaign ${CAMPAIGN}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
+    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, PROVIDERS && `providers ${[...PROVIDERS].join(',')}`, LAZY_ONLY && 'manifest-only books', GALLICA_OPENAPI && 'gallica via openapi.bnf.fr', CAMPAIGN && `campaign ${CAMPAIGN}`, BOOK_IDS && `book ${[...BOOK_IDS].join(',')}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
   } else {
     // Least-attempted first. The selection had no sort, so it returned the same
     // head of the queue every hour — and once that head was a set of books on a
@@ -407,7 +563,7 @@ async function main() {
     await cur.close();
     if (HOST_FILTER) log(`queue mode: ${todo.length} row(s) on this lane (${scanned} scanned)`);
   }
-  let ok = 0, partial = 0, stalled = 0, hostSkipped = 0;
+  let ok = 0, gapped = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0, lazyArchived = 0, manifestPages = 0, zipBooks = 0, zipRefused = 0;
   // How many runs a book may make zero progress on before it is parked out of
   // the queue. Eight hours of hourly runs is long enough to ride out a source
   // outage and short enough that a permanently-dead book stops taking a slot.
@@ -418,9 +574,57 @@ async function main() {
     if (w.sn == null) return;
     await queue.updateOne({ sn: w.sn }, { $set: set });
   };
+  /** A manifest-only book in book mode: archive it from its manifest, no page docs (#5448 step 2). */
+  async function processLazyBook(w: any, b: any) {
+    if (HOST_FILTER && !inLane(await laneOf(w.book_id, b))) { hostSkipped++; return; }
+    let block: Error | null = null;
+    const r = await archiveFromManifest(db, w.book_id, {
+      put: storagePut, breaker, missGuard, pageConcurrency: PAGE_CONCURRENCY, fetchUrl: fetchUrlOf,
+      openZip: IA_ZIP ? openIaZip : null,
+      shouldStop: () => !!(block || blocked),
+      log: (m: string) => log(m),
+      onPage: (ev: any) => {
+        currentHost = ev.host;
+        if (ev.outcome === 'ok') { pagesDone++; manifestPages++; hostFailures.clear(); }
+        else if (ev.outcome === 'miss') pagesMissed++;
+        else if (ev.outcome === 'skipped') pagesSkipped++;
+        else if (ev.outcome === 'local') { pagesFailed++; localFailures++; if (localFailures <= 5) log(`local failure after a good fetch: ${ev.error}`); }
+        else if (ev.outcome === 'failed') {
+          pagesFailed++;
+          // Same verdicts as noteFailure: 429 throttles, a 401/403 streak stops the run.
+          if (ev.code === '429') { hostThrottles.set(ev.host, (hostThrottles.get(ev.host) ?? 0) + 1); return; }
+          if (ev.code !== '401' && ev.code !== '403') return;
+          const n = (hostFailures.get(ev.host) ?? 0) + 1;
+          hostFailures.set(ev.host, n);
+          if (n >= FAIL_ABORT) block = new HostBlocked(`${ev.host}: ${n} consecutive auth/block responses (HTTP ${ev.code}). Stopping — do NOT auto-retry a 403.`);
+        }
+      },
+    });
+    if (r.requested > 0 || r.status === 'manifest_failed') {
+      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date() } }); }
+      catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
+    }
+    if (r.status === 'manifest_failed') log(`book ${w.book_id}: manifest fetch failed (${r.error})`);
+    if (r.zip?.route) { zipBooks++; log(`book ${w.book_id}: ${r.zip.pages} pages from the IA item zip (${r.zip.route} mapping, ${(r.zip.bytes / 1e6).toFixed(0)} MB)`); }
+    else if (r.zip?.refused) zipRefused++;
+    if (r.status === 'complete') { if (r.verdict === 'complete') ok++; else gapped++; }
+    else partial++;
+    lazyArchived++;
+    if (block) throw block;
+  }
+
   async function processBook(w: any) {
-    const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1 } });
+    const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1, pages_state: 1, 'image_source.iiif_manifest': 1, [`${LEDGER_FIELD}.host`]: 1 } });
     if (!b) { await markQueue(w, { archived: true, archive_note: 'no-book' }); return; }
+    if (isLazyPagesBook(b)) {
+      // A manifest-only book (#7343). Named with --book, archiving it is the
+      // decision to create its pages. In a provider/campaign sweep it is archived
+      // from its manifest without creating any (#5448). A queue row is left
+      // exactly as it is (no attempt counted): queue mode never meant lazy books.
+      if (BOOK_IDS) await ensurePages(db, w.book_id, { trigger: 'archive' });
+      else if (BOOK_MODE) return processLazyBook(w, b);
+      else { lazySkipped++; return; }
+    }
     if (HOST_FILTER && !inLane(await laneOf(w.book_id))) {
       // Selection already filtered by lane; this re-check catches a book whose
       // remaining pages moved host since it was drawn. Leave the row untouched
@@ -428,19 +632,50 @@ async function main() {
       hostSkipped++; return;
     }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
-    if (have0 < (b.pages_count || 0) * 0.99) {
-      if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
-      else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
+    // A named book (--book) retries its permanent misses too: a human asked.
+    const misses0 = BOOK_IDS ? 0 : await countPermanentMisses(w.book_id);
+    let attempted = false;
+    // Could this run not advance the book at all? Then it sits out the draw for a day.
+    let noProgressReason: string | null = null;
+    if (have0 + misses0 < (b.pages_count || 0) * (BOOK_IDS ? 1 : 0.99)) {
+      if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') {
+        const r = await archiveIiif(w.book_id, { retryMisses: !!BOOK_IDS });
+        // Skipped ONLY because the host is paused: not an attempt, keep its place.
+        attempted = r.requested > 0 || r.pausedSkips === 0;
+        if (r.abandoned) noProgressReason = 'abandoned: nothing served';
+        else if (r.eligible === 0) noProgressReason = 'no page left to ask (failed: markers or permanent misses)';
+      } else { attempted = true; try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
+    const misses = BOOK_IDS ? 0 : await countPermanentMisses(w.book_id);
     // The counters go through recountBook() (#5327), complete or partial, so
     // provider-mode runs are resumable and a later run can see how far it got.
     // `r2` stays the queue's own measure: it excludes `failed:` markers.
     await recountBook(db, w.book_id, { reason: 'archive-acquired' });
-    if (r2 >= (b.pages_count || 0) * 0.99 && r2 > 0) {
+    if (attempted) {
+      // The rotation key (see the book-mode draw). Stamped on every attempt that
+      // asked the source, success or not — that is the whole point of it.
+      // Never fatal: a failed stamp must not skip the completion write below.
+      // A run that got nothing new for a reason no rerun can change today also sets the
+      // day's cooldown (archive-miss.mjs, NO_PROGRESS_COOLDOWN_MS).
+      const cool = noProgressReason && r2 <= have0
+        ? { 'archive_metadata.cooldown_until': cooldownUntil(), 'archive_metadata.cooldown_reason': noProgressReason }
+        : {};
+      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date(), ...cool } }); }
+      catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
+    }
+    const verdict = bookVerdict({ pagesCount: b.pages_count || 0, archived: r2, misses });
+    if (verdict === 'complete') {
       await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete', updated_at: new Date() } });
       await markQueue(w, { archived: true });
       ok++;
+    } else if (verdict === 'complete_with_gaps') {
+      // Every page the source still has is on R2; the rest answered 404/410 to
+      // the same URL MISS_LIMIT times. Not "complete" — the gap count says so —
+      // and not "partial", which would keep drawing it forever (#5448).
+      await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete_with_gaps', 'archive_metadata.gaps': misses, updated_at: new Date() } });
+      await markQueue(w, { archived: true, archive_note: `gaps:${misses}/${b.pages_count}` });
+      gapped++;
     } else {
       // A book that archived NOTHING was being marked `archived: true` and
       // dropped from the queue for good, with the truth demoted to a note
@@ -511,7 +746,7 @@ async function main() {
     const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
     const runMins = (Date.now() - runStart) / 60000;
     const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    log(`archive-acquired (${reason}): complete ${ok}, with gaps ${gapped}, partial ${partial}, stalled ${stalled}${booksAbandoned ? `, abandoned this run ${booksAbandoned}` : ''} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesMissed} missed [404/410], ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${lazyArchived ? `, ${lazyArchived} manifest-only books archived from the manifest (${manifestPages} pages, #5448)` : ''}${zipBooks || zipRefused ? `, IA zips ${zipBooks} used / ${zipRefused} refused` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
     // Per-host triage. A failure count without the source's own answer beside
     // it is not a measurement — it is what made #4588 take three rounds of
     // diagnosis to reach a cause this table states outright.

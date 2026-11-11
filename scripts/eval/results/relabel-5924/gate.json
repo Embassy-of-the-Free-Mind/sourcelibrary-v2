@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-23",
+  "method": "20 flags drawn with seed 5924 from flip+mixed (9 flip, 11 mixed, proportional); for each, page image(s) from images.sourcelibrary.org read by eye against the stored OCR text. A flip is correct if the leaves are in the proposed language and not substantially Latin; a mixed is correct if both Latin and the proposed language are on the book's own leaves as text (not a single quotation).",
+  "checked": 20,
+  "correct": 20,
+  "decisions": ["flip", "mixed"],
+  "exclude": [],
+  "verdicts": [
+    ["6a90c949", "flip Italian", "correct: Italian prose (p8)"],
+    ["69f33541", "flip French", "correct: Law French statutes (p60, p173); sibling Harvard Law MSS already catalogued French"],
+    ["69aec137", "flip English", "correct: Rose's English verse translation (p151)"],
+    ["6a944809", "flip German", "correct: German Fraktur, Luther (p15)"],
+    ["69b51dc6", "flip German", "correct: German Fraktur, Trauriger Geschichten (p359)"],
+    ["69aebb94", "flip English", "correct: English translation, Lieh Tzu (p83)"],
+    ["6992017e", "flip German", "correct: Franck's German Chronica (p421)"],
+    ["6a26cbde", "flip German", "correct: German Fraktur alchemical Q&A (p24)"],
+    ["6a4f72b5", "flip Italian", "correct: Italian oration (p14)"],
+    ["69aec123", "mixed English", "correct: Loeb Silius, Latin verse with English notes/facing translation (p242, p308)"],
+    ["69b51e8d", "mixed Italian", "correct flag; Italian journal quoting Latin documents (p182 Italian, p232 Latin). Catalogued Latin stays first by the mixed rule; Italian is arguably the principal language (curatorial)"],
+    ["69e3ff96", "mixed English", "correct: English introduction + Latin block-book text (p28, p39)"],
+    ["69f33006", "mixed French", "correct: Latin writs + Law French statutes (p121, p261)"],
+    ["69f335d8", "mixed French", "correct: Law French readings + Latin (p247, p452)"],
+    ["69af2221 (vol II)", "mixed English", "correct: Loeb Bede, Latin/English facing (p324, p325)"],
+    ["6991f3de", "mixed Italian", "correct: Latin annotations + Italian documents (p97, p170)"],
+    ["6a426749", "mixed German", "correct: Latin diatribe quoting German documents at length (p23, p29)"],
+    ["69af2221 (vol I)", "mixed English", "correct: Loeb Bede (p353 English, p354 Latin)"],
+    ["6ab5ad76", "mixed English", "correct: Dee, Sloane 3191: Latin invocations + English (p79, p122)"],
+    ["6a907057", "mixed German", "correct: Latin disputation with German hymn texts (p11, p19)"]
+  ]
+}

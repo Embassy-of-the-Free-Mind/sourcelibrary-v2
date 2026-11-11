@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three reads as continuous Sanskrit or Malayalam, but A's legible parts look most like real words (for example "upamattiṅṅal", "lākramapramāṇaiya", "yathā", "virahāl"); C is complete but mostly garbled and has stray digits, and B is full of repeated "bha" filler syllables.

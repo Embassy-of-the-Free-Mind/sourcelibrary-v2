@@ -40,8 +40,10 @@ function claudeEnv() {
 }
 function opus(prompt) {
   return new Promise((resolve) => {
-    const child = spawn('/usr/bin/claude', ['-p', prompt, '--model', 'opus', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'],
-      { cwd: OUT, stdio: ['ignore', 'pipe', 'pipe'], env: claudeEnv() });
+    // the prompt goes on stdin: 5 meaning items carry up to ~75K chars of Tibetan, past the 128 KB argv limit (E2BIG)
+    const child = spawn('/usr/bin/claude', ['-p', '--model', 'opus', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'],
+      { cwd: OUT, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    child.stdin.end(prompt);
     let out = ''; let err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });

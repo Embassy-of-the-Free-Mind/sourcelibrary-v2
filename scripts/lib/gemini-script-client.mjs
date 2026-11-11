@@ -37,9 +37,10 @@
  *   });
  *
  * WHAT IT DOES BY DEFAULT
- *   - `thinkingBudget: 0` on any model that accepts the field (checked with
- *     `acceptsZeroThinking` from ./model-pricing.mjs — the same allow-list the SDK
- *     chokepoint and the standing guard use). A model that doesn't accept the field
+ *   - `thinkingBudget: 0` on any model that accepts the field, `thinkingLevel:
+ *     'minimal'` on one that only takes a level (3.5+ flash-lite, #5232) — from
+ *     `noThinkingConfig` in ./model-pricing.mjs, the same allow-list the SDK
+ *     chokepoint and the standing guard use. A model that doesn't accept the field
  *     (2.0/1.5/pro/embedding/etc) is left untouched, same reasoning as the guard.
  *   - Reasoning ON is opt-in, never accidental: pass a number for `thinkingBudget`
  *     (e.g. 8192) to request a specific budget, or `allowThinking: true` to leave the
@@ -62,7 +63,7 @@
  */
 
 import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
-import { acceptsZeroThinking } from './model-pricing.mjs';
+import { noThinkingConfig } from './model-pricing.mjs';
 
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
@@ -148,10 +149,10 @@ export async function callGemini(opts = {}) {
   const generationConfig = { temperature, maxOutputTokens };
   if (typeof thinkingBudget === 'number') {
     generationConfig.thinkingConfig = { thinkingBudget };
-  } else if (!allowThinking && acceptsZeroThinking(model)) {
+  } else if (!allowThinking && noThinkingConfig(model)) {
     // Silence means OFF (#4581, #4599) — a call site has to ask for reasoning,
-    // never get it by omission.
-    generationConfig.thinkingConfig = { thinkingBudget: 0 };
+    // never get it by omission. Level-only models get 'minimal' (#5232).
+    generationConfig.thinkingConfig = noThinkingConfig(model);
   }
 
   const start = Date.now();

@@ -60,6 +60,14 @@ const MISATTRIBUTED = [
   { id: '69b51e8f9a81ef7feb3d75e2', wrong: 'Elias Ashmole', year: 1809, why: "G. J. Manget's bookshop catalogue" },
   // ── Robert Fludd (d. 1637) ──
   { id: '69b51df6cf111105c4294244', wrong: 'Robert Fludd', year: 1765, why: 'book-auction catalogue of a rare-book collection' },
+  // ── Added 2026-10-20: the same 2026-03-14 BSB run, where the author is the bare
+  // search query ("<surname> <keyword>"), not a misread person. Found while
+  // checking holdings for Lazzarelli's Crater Hermetis; each title read by hand.
+  { id: '69b51e26efd8df28f2db1983', wrong: 'Lazarelli', year: 1726, why: 'auction catalogue of the Bacallar y Sanna library; search query "Lazarelli"' },
+  { id: '69b51e3047b06ecd5818b9dd', wrong: 'Lazarelli', year: 1816, why: 'sale catalogue of William Roscoe\'s library; search query "Lazarelli"' },
+  { id: '69b51e5aff09e4fe943acf9a', wrong: 'Reuchlin Kabbalah', year: 1789, why: 'Bolongaro-Crevenna library catalogue; search query, not a name' },
+  { id: '69b51e5b47b06ecd5818e415', wrong: 'Reuchlin Kabbalah', year: 1791, why: 'Moerl library auction catalogue; search query, not a name' },
+  { id: '69b51e26768235dc6598cf96', wrong: 'Ficino Hermetica', year: 1719, why: 'Bibliotheca Baluziana auction catalogue; search query, not a name' },
 ];
 
 // Fields that carry or derive from the wrong attribution.
@@ -129,17 +137,26 @@ if (!APPLY) {
 }
 
 // ── back up BEFORE writing, then write ───────────────────────────────────────
+// MERGE into any earlier backup, earlier `before` winning: a re-run only sees the
+// records still wearing the bad value, so overwriting would strand --revert for
+// everything an earlier run already fixed.
 mkdirSync(dirname(BACKUP), { recursive: true });
-writeFileSync(BACKUP, JSON.stringify({
-  issue: 3434,
-  created_at: new Date().toISOString(),
-  note: 'Pre-repair attribution fields. Restore with --revert.',
-  records: actionable.map(({ m, b }) => ({
+const earlier = existsSync(BACKUP) ? JSON.parse(readFileSync(BACKUP, 'utf8')).records : [];
+const merged = new Map(earlier.map((r) => [r.id, r]));
+for (const { m, b } of actionable) {
+  if (merged.has(m.id)) continue;
+  merged.set(m.id, {
     id: m.id,
     title: b.title,
     why: m.why,
     before: Object.fromEntries(ATTRIBUTION_FIELDS.filter((f) => b[f] !== undefined).map((f) => [f, b[f]])),
-  })),
+  });
+}
+writeFileSync(BACKUP, JSON.stringify({
+  issue: 3434,
+  created_at: new Date().toISOString(),
+  note: 'Pre-repair attribution fields, merged across runs. Restore with --revert. Each cleared record also keeps field_provenance.author.previous_value.',
+  records: [...merged.values()],
 }, null, 2));
 console.log(`\nBackup written: ${BACKUP}`);
 

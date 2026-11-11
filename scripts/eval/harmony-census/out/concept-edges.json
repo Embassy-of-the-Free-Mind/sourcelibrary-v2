@@ -1,0 +1,2758 @@
+{
+ "generated": "2026-10-22",
+ "issue": 7117,
+ "method": "English-translation pages that name the hub (harmony or sympathy); weight = share of those pages in the century that also name the concept. Concept-concept rows: top 12 pairs per century on pages naming either hub.",
+ "concepts": [
+  "number",
+  "music",
+  "love",
+  "concord_social",
+  "soul",
+  "temperament_health",
+  "magnet",
+  "antipathy",
+  "cosmos",
+  "god",
+  "opposites",
+  "order",
+  "body"
+ ],
+ "edges": [
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "before 1300",
+   "pages": 1280,
+   "hub_pages": 3455,
+   "weight": 0.37
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "before 1300",
+   "pages": 1062,
+   "hub_pages": 3455,
+   "weight": 0.307
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "before 1300",
+   "pages": 708,
+   "hub_pages": 3455,
+   "weight": 0.205
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "before 1300",
+   "pages": 1297,
+   "hub_pages": 3455,
+   "weight": 0.375
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "before 1300",
+   "pages": 1591,
+   "hub_pages": 3455,
+   "weight": 0.46
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "before 1300",
+   "pages": 527,
+   "hub_pages": 3455,
+   "weight": 0.153
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "before 1300",
+   "pages": 91,
+   "hub_pages": 3455,
+   "weight": 0.026
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "before 1300",
+   "pages": 271,
+   "hub_pages": 3455,
+   "weight": 0.078
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "before 1300",
+   "pages": 1085,
+   "hub_pages": 3455,
+   "weight": 0.314
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "before 1300",
+   "pages": 1453,
+   "hub_pages": 3455,
+   "weight": 0.421
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "before 1300",
+   "pages": 931,
+   "hub_pages": 3455,
+   "weight": 0.269
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "before 1300",
+   "pages": 1062,
+   "hub_pages": 3455,
+   "weight": 0.307
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "before 1300",
+   "pages": 1323,
+   "hub_pages": 3455,
+   "weight": 0.383
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "before 1300",
+   "pages": 199,
+   "hub_pages": 957,
+   "weight": 0.208
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "before 1300",
+   "pages": 205,
+   "hub_pages": 957,
+   "weight": 0.214
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "before 1300",
+   "pages": 207,
+   "hub_pages": 957,
+   "weight": 0.216
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "before 1300",
+   "pages": 302,
+   "hub_pages": 957,
+   "weight": 0.316
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "before 1300",
+   "pages": 456,
+   "hub_pages": 957,
+   "weight": 0.476
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "before 1300",
+   "pages": 263,
+   "hub_pages": 957,
+   "weight": 0.275
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "before 1300",
+   "pages": 59,
+   "hub_pages": 957,
+   "weight": 0.062
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "before 1300",
+   "pages": 116,
+   "hub_pages": 957,
+   "weight": 0.121
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "before 1300",
+   "pages": 258,
+   "hub_pages": 957,
+   "weight": 0.27
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "before 1300",
+   "pages": 357,
+   "hub_pages": 957,
+   "weight": 0.373
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "before 1300",
+   "pages": 216,
+   "hub_pages": 957,
+   "weight": 0.226
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "before 1300",
+   "pages": 204,
+   "hub_pages": 957,
+   "weight": 0.213
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "before 1300",
+   "pages": 393,
+   "hub_pages": 957,
+   "weight": 0.411
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "before 1300",
+   "pages": 1167,
+   "hub_pages": 4259,
+   "weight": 0.274
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "before 1300",
+   "pages": 1026,
+   "hub_pages": 4259,
+   "weight": 0.241
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "before 1300",
+   "pages": 888,
+   "hub_pages": 4259,
+   "weight": 0.208
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "before 1300",
+   "pages": 830,
+   "hub_pages": 4259,
+   "weight": 0.195
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "before 1300",
+   "pages": 795,
+   "hub_pages": 4259,
+   "weight": 0.187
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "before 1300",
+   "pages": 697,
+   "hub_pages": 4259,
+   "weight": 0.164
+  },
+  {
+   "source": "concord_social",
+   "target": "body",
+   "century": "before 1300",
+   "pages": 687,
+   "hub_pages": 4259,
+   "weight": 0.161
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "before 1300",
+   "pages": 665,
+   "hub_pages": 4259,
+   "weight": 0.156
+  },
+  {
+   "source": "god",
+   "target": "order",
+   "century": "before 1300",
+   "pages": 665,
+   "hub_pages": 4259,
+   "weight": 0.156
+  },
+  {
+   "source": "number",
+   "target": "music",
+   "century": "before 1300",
+   "pages": 621,
+   "hub_pages": 4259,
+   "weight": 0.146
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "before 1300",
+   "pages": 614,
+   "hub_pages": 4259,
+   "weight": 0.144
+  },
+  {
+   "source": "cosmos",
+   "target": "body",
+   "century": "before 1300",
+   "pages": 597,
+   "hub_pages": 4259,
+   "weight": 0.14
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "14th c.",
+   "pages": 661,
+   "hub_pages": 1991,
+   "weight": 0.332
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "14th c.",
+   "pages": 438,
+   "hub_pages": 1991,
+   "weight": 0.22
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "14th c.",
+   "pages": 454,
+   "hub_pages": 1991,
+   "weight": 0.228
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "14th c.",
+   "pages": 832,
+   "hub_pages": 1991,
+   "weight": 0.418
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "14th c.",
+   "pages": 1105,
+   "hub_pages": 1991,
+   "weight": 0.555
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "14th c.",
+   "pages": 300,
+   "hub_pages": 1991,
+   "weight": 0.151
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "14th c.",
+   "pages": 34,
+   "hub_pages": 1991,
+   "weight": 0.017
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "14th c.",
+   "pages": 150,
+   "hub_pages": 1991,
+   "weight": 0.075
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "14th c.",
+   "pages": 781,
+   "hub_pages": 1991,
+   "weight": 0.392
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "14th c.",
+   "pages": 1034,
+   "hub_pages": 1991,
+   "weight": 0.519
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "14th c.",
+   "pages": 590,
+   "hub_pages": 1991,
+   "weight": 0.296
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "14th c.",
+   "pages": 732,
+   "hub_pages": 1991,
+   "weight": 0.368
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "14th c.",
+   "pages": 839,
+   "hub_pages": 1991,
+   "weight": 0.421
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "14th c.",
+   "pages": 106,
+   "hub_pages": 531,
+   "weight": 0.2
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "14th c.",
+   "pages": 73,
+   "hub_pages": 531,
+   "weight": 0.137
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "14th c.",
+   "pages": 129,
+   "hub_pages": 531,
+   "weight": 0.243
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "14th c.",
+   "pages": 207,
+   "hub_pages": 531,
+   "weight": 0.39
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "14th c.",
+   "pages": 293,
+   "hub_pages": 531,
+   "weight": 0.552
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "14th c.",
+   "pages": 175,
+   "hub_pages": 531,
+   "weight": 0.33
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "14th c.",
+   "pages": 18,
+   "hub_pages": 531,
+   "weight": 0.034
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "14th c.",
+   "pages": 36,
+   "hub_pages": 531,
+   "weight": 0.068
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "14th c.",
+   "pages": 148,
+   "hub_pages": 531,
+   "weight": 0.279
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "14th c.",
+   "pages": 227,
+   "hub_pages": 531,
+   "weight": 0.427
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "14th c.",
+   "pages": 132,
+   "hub_pages": 531,
+   "weight": 0.249
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "14th c.",
+   "pages": 132,
+   "hub_pages": 531,
+   "weight": 0.249
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "14th c.",
+   "pages": 289,
+   "hub_pages": 531,
+   "weight": 0.544
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "14th c.",
+   "pages": 865,
+   "hub_pages": 2438,
+   "weight": 0.355
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "14th c.",
+   "pages": 720,
+   "hub_pages": 2438,
+   "weight": 0.295
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "14th c.",
+   "pages": 609,
+   "hub_pages": 2438,
+   "weight": 0.25
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "14th c.",
+   "pages": 582,
+   "hub_pages": 2438,
+   "weight": 0.239
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "14th c.",
+   "pages": 575,
+   "hub_pages": 2438,
+   "weight": 0.236
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "14th c.",
+   "pages": 568,
+   "hub_pages": 2438,
+   "weight": 0.233
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "14th c.",
+   "pages": 564,
+   "hub_pages": 2438,
+   "weight": 0.231
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "14th c.",
+   "pages": 547,
+   "hub_pages": 2438,
+   "weight": 0.224
+  },
+  {
+   "source": "god",
+   "target": "order",
+   "century": "14th c.",
+   "pages": 525,
+   "hub_pages": 2438,
+   "weight": 0.215
+  },
+  {
+   "source": "number",
+   "target": "soul",
+   "century": "14th c.",
+   "pages": 459,
+   "hub_pages": 2438,
+   "weight": 0.188
+  },
+  {
+   "source": "concord_social",
+   "target": "body",
+   "century": "14th c.",
+   "pages": 444,
+   "hub_pages": 2438,
+   "weight": 0.182
+  },
+  {
+   "source": "cosmos",
+   "target": "body",
+   "century": "14th c.",
+   "pages": 434,
+   "hub_pages": 2438,
+   "weight": 0.178
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "15th c.",
+   "pages": 5699,
+   "hub_pages": 14326,
+   "weight": 0.398
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "15th c.",
+   "pages": 4178,
+   "hub_pages": 14326,
+   "weight": 0.292
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "15th c.",
+   "pages": 4331,
+   "hub_pages": 14326,
+   "weight": 0.302
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "15th c.",
+   "pages": 6767,
+   "hub_pages": 14326,
+   "weight": 0.472
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "15th c.",
+   "pages": 8377,
+   "hub_pages": 14326,
+   "weight": 0.585
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "15th c.",
+   "pages": 2978,
+   "hub_pages": 14326,
+   "weight": 0.208
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "15th c.",
+   "pages": 686,
+   "hub_pages": 14326,
+   "weight": 0.048
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "15th c.",
+   "pages": 1931,
+   "hub_pages": 14326,
+   "weight": 0.135
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "15th c.",
+   "pages": 5523,
+   "hub_pages": 14326,
+   "weight": 0.386
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "15th c.",
+   "pages": 7295,
+   "hub_pages": 14326,
+   "weight": 0.509
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "15th c.",
+   "pages": 5686,
+   "hub_pages": 14326,
+   "weight": 0.397
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "15th c.",
+   "pages": 5061,
+   "hub_pages": 14326,
+   "weight": 0.353
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 6745,
+   "hub_pages": 14326,
+   "weight": 0.471
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "15th c.",
+   "pages": 743,
+   "hub_pages": 3021,
+   "weight": 0.246
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "15th c.",
+   "pages": 643,
+   "hub_pages": 3021,
+   "weight": 0.213
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "15th c.",
+   "pages": 809,
+   "hub_pages": 3021,
+   "weight": 0.268
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "15th c.",
+   "pages": 1167,
+   "hub_pages": 3021,
+   "weight": 0.386
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "15th c.",
+   "pages": 1645,
+   "hub_pages": 3021,
+   "weight": 0.545
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "15th c.",
+   "pages": 929,
+   "hub_pages": 3021,
+   "weight": 0.308
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "15th c.",
+   "pages": 323,
+   "hub_pages": 3021,
+   "weight": 0.107
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "15th c.",
+   "pages": 326,
+   "hub_pages": 3021,
+   "weight": 0.108
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "15th c.",
+   "pages": 1032,
+   "hub_pages": 3021,
+   "weight": 0.342
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "15th c.",
+   "pages": 1292,
+   "hub_pages": 3021,
+   "weight": 0.428
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "15th c.",
+   "pages": 933,
+   "hub_pages": 3021,
+   "weight": 0.309
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "15th c.",
+   "pages": 800,
+   "hub_pages": 3021,
+   "weight": 0.265
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 1471,
+   "hub_pages": 3021,
+   "weight": 0.487
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "15th c.",
+   "pages": 6100,
+   "hub_pages": 16800,
+   "weight": 0.363
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 5750,
+   "hub_pages": 16800,
+   "weight": 0.342
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "15th c.",
+   "pages": 4900,
+   "hub_pages": 16800,
+   "weight": 0.292
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 4513,
+   "hub_pages": 16800,
+   "weight": 0.269
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "15th c.",
+   "pages": 4438,
+   "hub_pages": 16800,
+   "weight": 0.264
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "15th c.",
+   "pages": 4246,
+   "hub_pages": 16800,
+   "weight": 0.253
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "15th c.",
+   "pages": 4013,
+   "hub_pages": 16800,
+   "weight": 0.239
+  },
+  {
+   "source": "cosmos",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 3768,
+   "hub_pages": 16800,
+   "weight": 0.224
+  },
+  {
+   "source": "concord_social",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 3758,
+   "hub_pages": 16800,
+   "weight": 0.224
+  },
+  {
+   "source": "soul",
+   "target": "opposites",
+   "century": "15th c.",
+   "pages": 3709,
+   "hub_pages": 16800,
+   "weight": 0.221
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "15th c.",
+   "pages": 3620,
+   "hub_pages": 16800,
+   "weight": 0.215
+  },
+  {
+   "source": "opposites",
+   "target": "body",
+   "century": "15th c.",
+   "pages": 3479,
+   "hub_pages": 16800,
+   "weight": 0.207
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "16th c.",
+   "pages": 13627,
+   "hub_pages": 37555,
+   "weight": 0.363
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "16th c.",
+   "pages": 10334,
+   "hub_pages": 37555,
+   "weight": 0.275
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "16th c.",
+   "pages": 10983,
+   "hub_pages": 37555,
+   "weight": 0.292
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "16th c.",
+   "pages": 16939,
+   "hub_pages": 37555,
+   "weight": 0.451
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "16th c.",
+   "pages": 21832,
+   "hub_pages": 37555,
+   "weight": 0.581
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "16th c.",
+   "pages": 7364,
+   "hub_pages": 37555,
+   "weight": 0.196
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "16th c.",
+   "pages": 1503,
+   "hub_pages": 37555,
+   "weight": 0.04
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "16th c.",
+   "pages": 4772,
+   "hub_pages": 37555,
+   "weight": 0.127
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "16th c.",
+   "pages": 13463,
+   "hub_pages": 37555,
+   "weight": 0.358
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "16th c.",
+   "pages": 20165,
+   "hub_pages": 37555,
+   "weight": 0.537
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "16th c.",
+   "pages": 13937,
+   "hub_pages": 37555,
+   "weight": 0.371
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "16th c.",
+   "pages": 12234,
+   "hub_pages": 37555,
+   "weight": 0.326
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "16th c.",
+   "pages": 15670,
+   "hub_pages": 37555,
+   "weight": 0.417
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "16th c.",
+   "pages": 1991,
+   "hub_pages": 9382,
+   "weight": 0.212
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "16th c.",
+   "pages": 2168,
+   "hub_pages": 9382,
+   "weight": 0.231
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "16th c.",
+   "pages": 2404,
+   "hub_pages": 9382,
+   "weight": 0.256
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "16th c.",
+   "pages": 3089,
+   "hub_pages": 9382,
+   "weight": 0.329
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "16th c.",
+   "pages": 4586,
+   "hub_pages": 9382,
+   "weight": 0.489
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "16th c.",
+   "pages": 2650,
+   "hub_pages": 9382,
+   "weight": 0.282
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "16th c.",
+   "pages": 1042,
+   "hub_pages": 9382,
+   "weight": 0.111
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "16th c.",
+   "pages": 1636,
+   "hub_pages": 9382,
+   "weight": 0.174
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "16th c.",
+   "pages": 3070,
+   "hub_pages": 9382,
+   "weight": 0.327
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "16th c.",
+   "pages": 3689,
+   "hub_pages": 9382,
+   "weight": 0.393
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "16th c.",
+   "pages": 2807,
+   "hub_pages": 9382,
+   "weight": 0.299
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "16th c.",
+   "pages": 2059,
+   "hub_pages": 9382,
+   "weight": 0.219
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "16th c.",
+   "pages": 4059,
+   "hub_pages": 9382,
+   "weight": 0.433
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "16th c.",
+   "pages": 16521,
+   "hub_pages": 45326,
+   "weight": 0.364
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "16th c.",
+   "pages": 13390,
+   "hub_pages": 45326,
+   "weight": 0.295
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "16th c.",
+   "pages": 12116,
+   "hub_pages": 45326,
+   "weight": 0.267
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "16th c.",
+   "pages": 11010,
+   "hub_pages": 45326,
+   "weight": 0.243
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "16th c.",
+   "pages": 10989,
+   "hub_pages": 45326,
+   "weight": 0.242
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "16th c.",
+   "pages": 10659,
+   "hub_pages": 45326,
+   "weight": 0.235
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "16th c.",
+   "pages": 10591,
+   "hub_pages": 45326,
+   "weight": 0.234
+  },
+  {
+   "source": "soul",
+   "target": "opposites",
+   "century": "16th c.",
+   "pages": 9743,
+   "hub_pages": 45326,
+   "weight": 0.215
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "16th c.",
+   "pages": 8808,
+   "hub_pages": 45326,
+   "weight": 0.194
+  },
+  {
+   "source": "love",
+   "target": "soul",
+   "century": "16th c.",
+   "pages": 8747,
+   "hub_pages": 45326,
+   "weight": 0.193
+  },
+  {
+   "source": "god",
+   "target": "opposites",
+   "century": "16th c.",
+   "pages": 8668,
+   "hub_pages": 45326,
+   "weight": 0.191
+  },
+  {
+   "source": "god",
+   "target": "order",
+   "century": "16th c.",
+   "pages": 8511,
+   "hub_pages": 45326,
+   "weight": 0.188
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "17th c.",
+   "pages": 14828,
+   "hub_pages": 37948,
+   "weight": 0.391
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "17th c.",
+   "pages": 12811,
+   "hub_pages": 37948,
+   "weight": 0.338
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "17th c.",
+   "pages": 8148,
+   "hub_pages": 37948,
+   "weight": 0.215
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "17th c.",
+   "pages": 14048,
+   "hub_pages": 37948,
+   "weight": 0.37
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "17th c.",
+   "pages": 19010,
+   "hub_pages": 37948,
+   "weight": 0.501
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "17th c.",
+   "pages": 7617,
+   "hub_pages": 37948,
+   "weight": 0.201
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "17th c.",
+   "pages": 2385,
+   "hub_pages": 37948,
+   "weight": 0.063
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "17th c.",
+   "pages": 3809,
+   "hub_pages": 37948,
+   "weight": 0.1
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "17th c.",
+   "pages": 13193,
+   "hub_pages": 37948,
+   "weight": 0.348
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "17th c.",
+   "pages": 18537,
+   "hub_pages": 37948,
+   "weight": 0.488
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "17th c.",
+   "pages": 13127,
+   "hub_pages": 37948,
+   "weight": 0.346
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "17th c.",
+   "pages": 10095,
+   "hub_pages": 37948,
+   "weight": 0.266
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "17th c.",
+   "pages": 14884,
+   "hub_pages": 37948,
+   "weight": 0.392
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "17th c.",
+   "pages": 3357,
+   "hub_pages": 13745,
+   "weight": 0.244
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "17th c.",
+   "pages": 2662,
+   "hub_pages": 13745,
+   "weight": 0.194
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "17th c.",
+   "pages": 2801,
+   "hub_pages": 13745,
+   "weight": 0.204
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "17th c.",
+   "pages": 3704,
+   "hub_pages": 13745,
+   "weight": 0.269
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "17th c.",
+   "pages": 7076,
+   "hub_pages": 13745,
+   "weight": 0.515
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "17th c.",
+   "pages": 5196,
+   "hub_pages": 13745,
+   "weight": 0.378
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "17th c.",
+   "pages": 3264,
+   "hub_pages": 13745,
+   "weight": 0.237
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "17th c.",
+   "pages": 3331,
+   "hub_pages": 13745,
+   "weight": 0.242
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "17th c.",
+   "pages": 4810,
+   "hub_pages": 13745,
+   "weight": 0.35
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "17th c.",
+   "pages": 5318,
+   "hub_pages": 13745,
+   "weight": 0.387
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "17th c.",
+   "pages": 4804,
+   "hub_pages": 13745,
+   "weight": 0.35
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "17th c.",
+   "pages": 2427,
+   "hub_pages": 13745,
+   "weight": 0.177
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "17th c.",
+   "pages": 7081,
+   "hub_pages": 13745,
+   "weight": 0.515
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "17th c.",
+   "pages": 15094,
+   "hub_pages": 49149,
+   "weight": 0.307
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "17th c.",
+   "pages": 12720,
+   "hub_pages": 49149,
+   "weight": 0.259
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "17th c.",
+   "pages": 10351,
+   "hub_pages": 49149,
+   "weight": 0.211
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "17th c.",
+   "pages": 10351,
+   "hub_pages": 49149,
+   "weight": 0.211
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "17th c.",
+   "pages": 9972,
+   "hub_pages": 49149,
+   "weight": 0.203
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "17th c.",
+   "pages": 9943,
+   "hub_pages": 49149,
+   "weight": 0.202
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "17th c.",
+   "pages": 9923,
+   "hub_pages": 49149,
+   "weight": 0.202
+  },
+  {
+   "source": "soul",
+   "target": "opposites",
+   "century": "17th c.",
+   "pages": 8765,
+   "hub_pages": 49149,
+   "weight": 0.178
+  },
+  {
+   "source": "cosmos",
+   "target": "body",
+   "century": "17th c.",
+   "pages": 8523,
+   "hub_pages": 49149,
+   "weight": 0.173
+  },
+  {
+   "source": "number",
+   "target": "music",
+   "century": "17th c.",
+   "pages": 8237,
+   "hub_pages": 49149,
+   "weight": 0.168
+  },
+  {
+   "source": "opposites",
+   "target": "body",
+   "century": "17th c.",
+   "pages": 8229,
+   "hub_pages": 49149,
+   "weight": 0.167
+  },
+  {
+   "source": "number",
+   "target": "soul",
+   "century": "17th c.",
+   "pages": 8089,
+   "hub_pages": 49149,
+   "weight": 0.165
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "18th c.",
+   "pages": 8035,
+   "hub_pages": 30338,
+   "weight": 0.265
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "18th c.",
+   "pages": 6630,
+   "hub_pages": 30338,
+   "weight": 0.219
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "18th c.",
+   "pages": 7518,
+   "hub_pages": 30338,
+   "weight": 0.248
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "18th c.",
+   "pages": 12557,
+   "hub_pages": 30338,
+   "weight": 0.414
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "18th c.",
+   "pages": 16357,
+   "hub_pages": 30338,
+   "weight": 0.539
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "18th c.",
+   "pages": 3928,
+   "hub_pages": 30338,
+   "weight": 0.129
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "18th c.",
+   "pages": 1367,
+   "hub_pages": 30338,
+   "weight": 0.045
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "18th c.",
+   "pages": 2659,
+   "hub_pages": 30338,
+   "weight": 0.088
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "18th c.",
+   "pages": 8187,
+   "hub_pages": 30338,
+   "weight": 0.27
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "18th c.",
+   "pages": 15173,
+   "hub_pages": 30338,
+   "weight": 0.5
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "18th c.",
+   "pages": 8415,
+   "hub_pages": 30338,
+   "weight": 0.277
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "18th c.",
+   "pages": 7547,
+   "hub_pages": 30338,
+   "weight": 0.249
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "18th c.",
+   "pages": 10892,
+   "hub_pages": 30338,
+   "weight": 0.359
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "18th c.",
+   "pages": 1672,
+   "hub_pages": 9240,
+   "weight": 0.181
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "18th c.",
+   "pages": 2036,
+   "hub_pages": 9240,
+   "weight": 0.22
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "18th c.",
+   "pages": 2144,
+   "hub_pages": 9240,
+   "weight": 0.232
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "18th c.",
+   "pages": 3451,
+   "hub_pages": 9240,
+   "weight": 0.373
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "18th c.",
+   "pages": 5225,
+   "hub_pages": 9240,
+   "weight": 0.565
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "18th c.",
+   "pages": 1850,
+   "hub_pages": 9240,
+   "weight": 0.2
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "18th c.",
+   "pages": 1323,
+   "hub_pages": 9240,
+   "weight": 0.143
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "18th c.",
+   "pages": 1431,
+   "hub_pages": 9240,
+   "weight": 0.155
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "18th c.",
+   "pages": 2763,
+   "hub_pages": 9240,
+   "weight": 0.299
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "18th c.",
+   "pages": 3779,
+   "hub_pages": 9240,
+   "weight": 0.409
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "18th c.",
+   "pages": 1824,
+   "hub_pages": 9240,
+   "weight": 0.197
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "18th c.",
+   "pages": 1431,
+   "hub_pages": 9240,
+   "weight": 0.155
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "18th c.",
+   "pages": 3982,
+   "hub_pages": 9240,
+   "weight": 0.431
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "18th c.",
+   "pages": 12785,
+   "hub_pages": 38456,
+   "weight": 0.332
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "18th c.",
+   "pages": 10406,
+   "hub_pages": 38456,
+   "weight": 0.271
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "18th c.",
+   "pages": 10064,
+   "hub_pages": 38456,
+   "weight": 0.262
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "18th c.",
+   "pages": 9004,
+   "hub_pages": 38456,
+   "weight": 0.234
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "18th c.",
+   "pages": 7588,
+   "hub_pages": 38456,
+   "weight": 0.197
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "18th c.",
+   "pages": 6832,
+   "hub_pages": 38456,
+   "weight": 0.178
+  },
+  {
+   "source": "concord_social",
+   "target": "body",
+   "century": "18th c.",
+   "pages": 6534,
+   "hub_pages": 38456,
+   "weight": 0.17
+  },
+  {
+   "source": "love",
+   "target": "soul",
+   "century": "18th c.",
+   "pages": 6515,
+   "hub_pages": 38456,
+   "weight": 0.169
+  },
+  {
+   "source": "love",
+   "target": "god",
+   "century": "18th c.",
+   "pages": 6348,
+   "hub_pages": 38456,
+   "weight": 0.165
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "18th c.",
+   "pages": 6317,
+   "hub_pages": 38456,
+   "weight": 0.164
+  },
+  {
+   "source": "soul",
+   "target": "opposites",
+   "century": "18th c.",
+   "pages": 5422,
+   "hub_pages": 38456,
+   "weight": 0.141
+  },
+  {
+   "source": "god",
+   "target": "opposites",
+   "century": "18th c.",
+   "pages": 5296,
+   "hub_pages": 38456,
+   "weight": 0.138
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "19th c.",
+   "pages": 9392,
+   "hub_pages": 31249,
+   "weight": 0.301
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "19th c.",
+   "pages": 8727,
+   "hub_pages": 31249,
+   "weight": 0.279
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "19th c.",
+   "pages": 6538,
+   "hub_pages": 31249,
+   "weight": 0.209
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "19th c.",
+   "pages": 12698,
+   "hub_pages": 31249,
+   "weight": 0.406
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "19th c.",
+   "pages": 14538,
+   "hub_pages": 31249,
+   "weight": 0.465
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "19th c.",
+   "pages": 3753,
+   "hub_pages": 31249,
+   "weight": 0.12
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "19th c.",
+   "pages": 1313,
+   "hub_pages": 31249,
+   "weight": 0.042
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "19th c.",
+   "pages": 2243,
+   "hub_pages": 31249,
+   "weight": 0.072
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "19th c.",
+   "pages": 8301,
+   "hub_pages": 31249,
+   "weight": 0.266
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "19th c.",
+   "pages": 12590,
+   "hub_pages": 31249,
+   "weight": 0.403
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "19th c.",
+   "pages": 9573,
+   "hub_pages": 31249,
+   "weight": 0.306
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "19th c.",
+   "pages": 9081,
+   "hub_pages": 31249,
+   "weight": 0.291
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "19th c.",
+   "pages": 9007,
+   "hub_pages": 31249,
+   "weight": 0.288
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "19th c.",
+   "pages": 2313,
+   "hub_pages": 12451,
+   "weight": 0.186
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "19th c.",
+   "pages": 2735,
+   "hub_pages": 12451,
+   "weight": 0.22
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "19th c.",
+   "pages": 2765,
+   "hub_pages": 12451,
+   "weight": 0.222
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "19th c.",
+   "pages": 4720,
+   "hub_pages": 12451,
+   "weight": 0.379
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "19th c.",
+   "pages": 5189,
+   "hub_pages": 12451,
+   "weight": 0.417
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "19th c.",
+   "pages": 1840,
+   "hub_pages": 12451,
+   "weight": 0.148
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "19th c.",
+   "pages": 1291,
+   "hub_pages": 12451,
+   "weight": 0.104
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "19th c.",
+   "pages": 1268,
+   "hub_pages": 12451,
+   "weight": 0.102
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "19th c.",
+   "pages": 2450,
+   "hub_pages": 12451,
+   "weight": 0.197
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "19th c.",
+   "pages": 3634,
+   "hub_pages": 12451,
+   "weight": 0.292
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "19th c.",
+   "pages": 3271,
+   "hub_pages": 12451,
+   "weight": 0.263
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "19th c.",
+   "pages": 2490,
+   "hub_pages": 12451,
+   "weight": 0.2
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "19th c.",
+   "pages": 3647,
+   "hub_pages": 12451,
+   "weight": 0.293
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "19th c.",
+   "pages": 9988,
+   "hub_pages": 41927,
+   "weight": 0.238
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "19th c.",
+   "pages": 8671,
+   "hub_pages": 41927,
+   "weight": 0.207
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "19th c.",
+   "pages": 7404,
+   "hub_pages": 41927,
+   "weight": 0.177
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "19th c.",
+   "pages": 7093,
+   "hub_pages": 41927,
+   "weight": 0.169
+  },
+  {
+   "source": "soul",
+   "target": "opposites",
+   "century": "19th c.",
+   "pages": 5880,
+   "hub_pages": 41927,
+   "weight": 0.14
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "19th c.",
+   "pages": 5830,
+   "hub_pages": 41927,
+   "weight": 0.139
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "19th c.",
+   "pages": 5623,
+   "hub_pages": 41927,
+   "weight": 0.134
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "19th c.",
+   "pages": 5529,
+   "hub_pages": 41927,
+   "weight": 0.132
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "19th c.",
+   "pages": 5411,
+   "hub_pages": 41927,
+   "weight": 0.129
+  },
+  {
+   "source": "love",
+   "target": "soul",
+   "century": "19th c.",
+   "pages": 5339,
+   "hub_pages": 41927,
+   "weight": 0.127
+  },
+  {
+   "source": "concord_social",
+   "target": "body",
+   "century": "19th c.",
+   "pages": 5205,
+   "hub_pages": 41927,
+   "weight": 0.124
+  },
+  {
+   "source": "concord_social",
+   "target": "order",
+   "century": "19th c.",
+   "pages": 5197,
+   "hub_pages": 41927,
+   "weight": 0.124
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "20th c.",
+   "pages": 3843,
+   "hub_pages": 15918,
+   "weight": 0.241
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "20th c.",
+   "pages": 3801,
+   "hub_pages": 15918,
+   "weight": 0.239
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "20th c.",
+   "pages": 3098,
+   "hub_pages": 15918,
+   "weight": 0.195
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "20th c.",
+   "pages": 6132,
+   "hub_pages": 15918,
+   "weight": 0.385
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "20th c.",
+   "pages": 7881,
+   "hub_pages": 15918,
+   "weight": 0.495
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "20th c.",
+   "pages": 1933,
+   "hub_pages": 15918,
+   "weight": 0.121
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "20th c.",
+   "pages": 426,
+   "hub_pages": 15918,
+   "weight": 0.027
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "20th c.",
+   "pages": 1137,
+   "hub_pages": 15918,
+   "weight": 0.071
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "20th c.",
+   "pages": 4150,
+   "hub_pages": 15918,
+   "weight": 0.261
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "20th c.",
+   "pages": 5621,
+   "hub_pages": 15918,
+   "weight": 0.353
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "20th c.",
+   "pages": 4491,
+   "hub_pages": 15918,
+   "weight": 0.282
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "20th c.",
+   "pages": 3790,
+   "hub_pages": 15918,
+   "weight": 0.238
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "20th c.",
+   "pages": 4963,
+   "hub_pages": 15918,
+   "weight": 0.312
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "20th c.",
+   "pages": 1261,
+   "hub_pages": 8679,
+   "weight": 0.145
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "20th c.",
+   "pages": 1592,
+   "hub_pages": 8679,
+   "weight": 0.183
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "20th c.",
+   "pages": 2075,
+   "hub_pages": 8679,
+   "weight": 0.239
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "20th c.",
+   "pages": 3163,
+   "hub_pages": 8679,
+   "weight": 0.364
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "20th c.",
+   "pages": 4223,
+   "hub_pages": 8679,
+   "weight": 0.487
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "20th c.",
+   "pages": 1191,
+   "hub_pages": 8679,
+   "weight": 0.137
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "20th c.",
+   "pages": 483,
+   "hub_pages": 8679,
+   "weight": 0.056
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "20th c.",
+   "pages": 730,
+   "hub_pages": 8679,
+   "weight": 0.084
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "20th c.",
+   "pages": 1643,
+   "hub_pages": 8679,
+   "weight": 0.189
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "20th c.",
+   "pages": 2821,
+   "hub_pages": 8679,
+   "weight": 0.325
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "20th c.",
+   "pages": 1858,
+   "hub_pages": 8679,
+   "weight": 0.214
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "20th c.",
+   "pages": 1467,
+   "hub_pages": 8679,
+   "weight": 0.169
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "20th c.",
+   "pages": 2787,
+   "hub_pages": 8679,
+   "weight": 0.321
+  },
+  {
+   "source": "soul",
+   "target": "god",
+   "century": "20th c.",
+   "pages": 5205,
+   "hub_pages": 23682,
+   "weight": 0.22
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "20th c.",
+   "pages": 4797,
+   "hub_pages": 23682,
+   "weight": 0.203
+  },
+  {
+   "source": "soul",
+   "target": "body",
+   "century": "20th c.",
+   "pages": 4703,
+   "hub_pages": 23682,
+   "weight": 0.199
+  },
+  {
+   "source": "concord_social",
+   "target": "god",
+   "century": "20th c.",
+   "pages": 3323,
+   "hub_pages": 23682,
+   "weight": 0.14
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "20th c.",
+   "pages": 3322,
+   "hub_pages": 23682,
+   "weight": 0.14
+  },
+  {
+   "source": "love",
+   "target": "soul",
+   "century": "20th c.",
+   "pages": 3053,
+   "hub_pages": 23682,
+   "weight": 0.129
+  },
+  {
+   "source": "god",
+   "target": "body",
+   "century": "20th c.",
+   "pages": 3022,
+   "hub_pages": 23682,
+   "weight": 0.128
+  },
+  {
+   "source": "soul",
+   "target": "opposites",
+   "century": "20th c.",
+   "pages": 3015,
+   "hub_pages": 23682,
+   "weight": 0.127
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "20th c.",
+   "pages": 2895,
+   "hub_pages": 23682,
+   "weight": 0.122
+  },
+  {
+   "source": "concord_social",
+   "target": "body",
+   "century": "20th c.",
+   "pages": 2893,
+   "hub_pages": 23682,
+   "weight": 0.122
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "20th c.",
+   "pages": 2670,
+   "hub_pages": 23682,
+   "weight": 0.113
+  },
+  {
+   "source": "love",
+   "target": "god",
+   "century": "20th c.",
+   "pages": 2369,
+   "hub_pages": 23682,
+   "weight": 0.1
+  },
+  {
+   "source": "harmony",
+   "target": "number",
+   "century": "undated",
+   "pages": 2595,
+   "hub_pages": 18179,
+   "weight": 0.143
+  },
+  {
+   "source": "harmony",
+   "target": "music",
+   "century": "undated",
+   "pages": 11696,
+   "hub_pages": 18179,
+   "weight": 0.643
+  },
+  {
+   "source": "harmony",
+   "target": "love",
+   "century": "undated",
+   "pages": 2554,
+   "hub_pages": 18179,
+   "weight": 0.14
+  },
+  {
+   "source": "harmony",
+   "target": "concord_social",
+   "century": "undated",
+   "pages": 9370,
+   "hub_pages": 18179,
+   "weight": 0.515
+  },
+  {
+   "source": "harmony",
+   "target": "soul",
+   "century": "undated",
+   "pages": 6678,
+   "hub_pages": 18179,
+   "weight": 0.367
+  },
+  {
+   "source": "harmony",
+   "target": "temperament_health",
+   "century": "undated",
+   "pages": 2000,
+   "hub_pages": 18179,
+   "weight": 0.11
+  },
+  {
+   "source": "harmony",
+   "target": "magnet",
+   "century": "undated",
+   "pages": 619,
+   "hub_pages": 18179,
+   "weight": 0.034
+  },
+  {
+   "source": "harmony",
+   "target": "antipathy",
+   "century": "undated",
+   "pages": 290,
+   "hub_pages": 18179,
+   "weight": 0.016
+  },
+  {
+   "source": "harmony",
+   "target": "cosmos",
+   "century": "undated",
+   "pages": 8458,
+   "hub_pages": 18179,
+   "weight": 0.465
+  },
+  {
+   "source": "harmony",
+   "target": "god",
+   "century": "undated",
+   "pages": 3654,
+   "hub_pages": 18179,
+   "weight": 0.201
+  },
+  {
+   "source": "harmony",
+   "target": "opposites",
+   "century": "undated",
+   "pages": 2824,
+   "hub_pages": 18179,
+   "weight": 0.155
+  },
+  {
+   "source": "harmony",
+   "target": "order",
+   "century": "undated",
+   "pages": 5726,
+   "hub_pages": 18179,
+   "weight": 0.315
+  },
+  {
+   "source": "harmony",
+   "target": "body",
+   "century": "undated",
+   "pages": 3290,
+   "hub_pages": 18179,
+   "weight": 0.181
+  },
+  {
+   "source": "sympathy",
+   "target": "number",
+   "century": "undated",
+   "pages": 402,
+   "hub_pages": 3085,
+   "weight": 0.13
+  },
+  {
+   "source": "sympathy",
+   "target": "music",
+   "century": "undated",
+   "pages": 2070,
+   "hub_pages": 3085,
+   "weight": 0.671
+  },
+  {
+   "source": "sympathy",
+   "target": "love",
+   "century": "undated",
+   "pages": 378,
+   "hub_pages": 3085,
+   "weight": 0.123
+  },
+  {
+   "source": "sympathy",
+   "target": "concord_social",
+   "century": "undated",
+   "pages": 1317,
+   "hub_pages": 3085,
+   "weight": 0.427
+  },
+  {
+   "source": "sympathy",
+   "target": "soul",
+   "century": "undated",
+   "pages": 1224,
+   "hub_pages": 3085,
+   "weight": 0.397
+  },
+  {
+   "source": "sympathy",
+   "target": "temperament_health",
+   "century": "undated",
+   "pages": 270,
+   "hub_pages": 3085,
+   "weight": 0.088
+  },
+  {
+   "source": "sympathy",
+   "target": "magnet",
+   "century": "undated",
+   "pages": 177,
+   "hub_pages": 3085,
+   "weight": 0.057
+  },
+  {
+   "source": "sympathy",
+   "target": "antipathy",
+   "century": "undated",
+   "pages": 60,
+   "hub_pages": 3085,
+   "weight": 0.019
+  },
+  {
+   "source": "sympathy",
+   "target": "cosmos",
+   "century": "undated",
+   "pages": 1315,
+   "hub_pages": 3085,
+   "weight": 0.426
+  },
+  {
+   "source": "sympathy",
+   "target": "god",
+   "century": "undated",
+   "pages": 713,
+   "hub_pages": 3085,
+   "weight": 0.231
+  },
+  {
+   "source": "sympathy",
+   "target": "opposites",
+   "century": "undated",
+   "pages": 466,
+   "hub_pages": 3085,
+   "weight": 0.151
+  },
+  {
+   "source": "sympathy",
+   "target": "order",
+   "century": "undated",
+   "pages": 703,
+   "hub_pages": 3085,
+   "weight": 0.228
+  },
+  {
+   "source": "sympathy",
+   "target": "body",
+   "century": "undated",
+   "pages": 538,
+   "hub_pages": 3085,
+   "weight": 0.174
+  },
+  {
+   "source": "music",
+   "target": "concord_social",
+   "century": "undated",
+   "pages": 6916,
+   "hub_pages": 20379,
+   "weight": 0.339
+  },
+  {
+   "source": "music",
+   "target": "cosmos",
+   "century": "undated",
+   "pages": 6291,
+   "hub_pages": 20379,
+   "weight": 0.309
+  },
+  {
+   "source": "concord_social",
+   "target": "cosmos",
+   "century": "undated",
+   "pages": 5071,
+   "hub_pages": 20379,
+   "weight": 0.249
+  },
+  {
+   "source": "music",
+   "target": "soul",
+   "century": "undated",
+   "pages": 4935,
+   "hub_pages": 20379,
+   "weight": 0.242
+  },
+  {
+   "source": "music",
+   "target": "order",
+   "century": "undated",
+   "pages": 4208,
+   "hub_pages": 20379,
+   "weight": 0.206
+  },
+  {
+   "source": "soul",
+   "target": "cosmos",
+   "century": "undated",
+   "pages": 3860,
+   "hub_pages": 20379,
+   "weight": 0.189
+  },
+  {
+   "source": "concord_social",
+   "target": "soul",
+   "century": "undated",
+   "pages": 3859,
+   "hub_pages": 20379,
+   "weight": 0.189
+  },
+  {
+   "source": "concord_social",
+   "target": "order",
+   "century": "undated",
+   "pages": 3574,
+   "hub_pages": 20379,
+   "weight": 0.175
+  },
+  {
+   "source": "cosmos",
+   "target": "order",
+   "century": "undated",
+   "pages": 3035,
+   "hub_pages": 20379,
+   "weight": 0.149
+  },
+  {
+   "source": "music",
+   "target": "god",
+   "century": "undated",
+   "pages": 2794,
+   "hub_pages": 20379,
+   "weight": 0.137
+  },
+  {
+   "source": "cosmos",
+   "target": "god",
+   "century": "undated",
+   "pages": 2434,
+   "hub_pages": 20379,
+   "weight": 0.119
+  },
+  {
+   "source": "soul",
+   "target": "order",
+   "century": "undated",
+   "pages": 2248,
+   "hub_pages": 20379,
+   "weight": 0.11
+  }
+ ]
+}

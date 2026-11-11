@@ -40,6 +40,7 @@
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { booksSetBlocks, topKeys } from '../lib/books-set-attribution.mjs';
+import { runImprintGate } from './imprint-field-writes.mjs';
 
 const LIST = process.argv.includes('--list');
 // --baseline <file>: a recorded set of violations that already exist. The gate
@@ -147,6 +148,10 @@ if (BASELINE) {
   if (stale.length) console.log(`\nbaseline entries no longer present (remove them): ${stale.join(', ')}`);
 }
 
+// Same CI step, second question: a KNOWN imprint field written without its provenance stamp (#6327).
+console.log('\n--- imprint fields (year, place, printer) written outside setCatalogueFields ---');
+const imprintFresh = runImprintGate({ list: LIST });
+
 const failing = BASELINE ? fresh : unknown;
 if (failing.length) {
   console.log('\nA sweep must record a ROW, not a COLUMN — see .claude/docs/invariants/field-sprawl.md.');
@@ -154,4 +159,4 @@ if (failing.length) {
   console.log('(regenerate from a full scan) and re-emit the validator.');
   console.log('If it records what a job DID, use scripts/lib/sweep-log.mjs instead.');
 }
-process.exit(failing.length ? 1 : 0);
+process.exit(failing.length || imprintFresh ? 1 : 0);

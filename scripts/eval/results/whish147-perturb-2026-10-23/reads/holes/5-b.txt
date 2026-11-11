@@ -1,0 +1,11 @@
+ROW 1 | ത്രിഗുണമവിവേകിവിഷയസ്സാമാന്യമചേതനംപ്രസവധൎമ്മിവ്യക്തന്തഥാപ്രധ
+ROW 2 | ാനന്തദ്വിപരീതസ്തഥാചപുമാൻ൧൧പ്രീത്യപ്രീതിവിഷാദാത്മകാഃപ്രകാശ
+ROW 3 | പ്രവൃത്തിനിയമാ‖ൎത്ഥാഃഅന്യോന്യാഭിഭവാശ്രയജ‖നനമിഥുനവൃത്തയശ്ച
+ROW 4 | ഗുണാഃ൧൨സത്വം‖ലഘുപ്രകാശകമിഷ്ടമുപഷ്ടംഭ‖കഞ്ചലഞ്ചരജഃ
+ROW 5 | ഗുരുവരണക‖മേവതമഃപ്രദീപവച്ചാൎത്ഥ‖തോവൃത്തിഃ൧൩
+ROW 6 | അവിവേക്യാദേ‖സ്സിദ്ധംത്രൈഗുണ്യാത്തദ്വിപൎയ്യ‖യാഭാവാൽകാ
+ROW 7 | രണഗുണാത്മക‖ത്വാൽകാൎയ്യസ്യാവ്യക്തമപി‖സിദ്ധം൧൪ഭേദാ
+ROW 8 | നാംപരിമാണാ‖ൽസമന്വയാച്ഛക്തിതഃപ്രവൃത്തേ‖ശ്ചകാരണകാൎയ്യവിഭാ
+ROW 9 | ഗാദവിഭാഗാദ്വൈശ്വരൂപ്യസ്യ൧൫കാരണമസ്ത്യവ്യക്തംപ്രവൎത്തതേത്രിഗുണതസ്സ
+ROW 10 | മുദയാച്ചപരിണാമതസ്സലിലവൽപ്രതിപ്രതിഗുണാശ്രയവിശേഷാൽസംഘ
+NOTE | All 10 rows are mostly readable. Several glyphs are uncertain: the verse numerals (൧൧–൧൫); the rows 5–6 openings and their split at the holes (ഗുരുവരണക‖മേവ, അവിവേക്യാദേ); the ends of rows 5 and 8 (ൎത്ഥ‖തോ, യാച്ഛ); the reph/ൎത്ഥ forms; and the last word of row 10. I put ‖ only on rows 3–8, where the text breaks at a hole; rows 1–2 and 9–10 run straight through. On rows 3 and 8 the second break is set where piece 3's text ends, because the text runs on with no gap at that hole.

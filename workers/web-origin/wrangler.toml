@@ -1,0 +1,34 @@
+# Reader-origin split for the staged traffic test (#8384). NOT DEPLOYED.
+#
+# Deploying this file creates the two routes below on the production zone. Do that only
+# with Derek's go for stage 0 (#8384, "What needs Derek"), from his laptop (the only
+# wrangler login that owns the zone):
+#
+#   cd workers/web-origin
+#   npx wrangler secret put BOX_SECRET     # the value in sl-web-1:/etc/sl-web/caddy.env
+#   npx wrangler secret put STAFF_TOKEN    # any long random string; staff set it as a cookie
+#   npx wrangler deploy
+#
+# Kill switch: PERCENT = "0" (the default) sends nobody but staff. Remove the routes (or
+# `npx wrangler delete`) to take the Worker out entirely.
+name = "sourcelibrary-web-origin"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+
+routes = [
+  { pattern = "sourcelibrary.org/book", zone_name = "sourcelibrary.org" },
+  { pattern = "sourcelibrary.org/book/*", zone_name = "sourcelibrary.org" },
+  { pattern = "sourcelibrary.org/_box/*", zone_name = "sourcelibrary.org" },
+]
+
+# One data point per request: outcome (box / vercel / fallback), reason, page|asset,
+# duration and status. Read with the Analytics Engine SQL API.
+[[analytics_engine_datasets]]
+binding = "METRICS"
+dataset = "sl_web_origin"
+
+[vars]
+PERCENT = "0"
+BOX_ORIGIN = "https://box1.sourcelibrary.org"
+BOX_TIMEOUT_MS = "3000"
+INCLUDE_BOTS = "0"

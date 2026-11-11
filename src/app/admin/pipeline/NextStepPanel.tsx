@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { remainingWork, type PipelineNextReport, type WorkRow } from '@/lib/pipeline-next-report';
+import { remainingWork, type PipelineNextReport, type WorkRow, type LaneJobBooks } from '@/lib/pipeline-next-report';
 // Scripts-side, pure data — the registry the coverage test checks against the workers (#5480).
 import { LANES, LANE_STEPS, DEAD_PAUSE_NAMES } from '../../../../scripts/lib/lanes.mjs';
 
@@ -11,7 +11,10 @@ import { LANES, LANE_STEPS, DEAD_PAUSE_NAMES } from '../../../../scripts/lib/lan
  * `books` on the request. Replaces the account-bound claude.ai "Remaining Pipeline Work" artifact.
  */
 
-type Lane = { name: string; serves: string; selects: string; trigger: string; budget: string; respectsHold: string | false; pause: string | null; reason?: string; gap?: boolean };
+type Lane = {
+  name: string; serves: string; selects: string; trigger: string; budget: string; respectsHold: string | false; pause: string | null; reason?: string; gap?: boolean;
+  quota?: { meter: string; share: number; paced?: boolean };
+};
 
 const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const n = (v: number) => Math.round(v).toLocaleString('en-US');
@@ -42,6 +45,18 @@ function Td({ children, right, style }: { children: ReactNode; right?: boolean; 
   return <td className={`py-1.5 px-2 align-top ${right ? 'text-right tabular-nums whitespace-nowrap' : ''}`} style={style ?? { color: 'var(--text-secondary)' }}>{children}</td>;
 }
 
+/** A subscription lane's recorded jobs (#7301 item 5): what it owns until the standing driver's queue (R6) does. */
+function LaneJobs({ jobs }: { jobs?: LaneJobBooks[] }) {
+  if (!jobs?.length) return null;
+  const books = jobs.reduce((a, j) => a + j.books, 0);
+  return (
+    <div className="text-[11px] max-w-xl" style={faint}>
+      Jobs (recorded book lists, newest first): {jobs.length} · {n(books)} books ·{' '}
+      {jobs.slice(0, 3).map((j) => `${j.job}${j.lands ? ` (#${j.lands})` : ''}: ${n(j.books)} books, ${utc(j.last_at)}`).join(' · ')}
+    </div>
+  );
+}
+
 function Sources({ r }: { r: WorkRow }) {
   return (
     <>
@@ -54,7 +69,7 @@ function Sources({ r }: { r: WorkRow }) {
   );
 }
 
-export function NextStepPanel({ report, error }: { report: PipelineNextReport | null; error?: string | null }) {
+export function NextStepPanel({ report, error, laneJobs = [] }: { report: PipelineNextReport | null; error?: string | null; laneJobs?: LaneJobBooks[] }) {
   if (!report) {
     return (
       <Card title="Work left by next step">
@@ -76,6 +91,8 @@ export function NextStepPanel({ report, error }: { report: PipelineNextReport | 
   const lanes = LANES as Lane[];
   const stepCounts = new Map(report.steps.map((s) => [s.step, s]));
   const blocked = report.step_reasons.filter((r) => r.step === 'blocked' && r.reason !== 'held');
+  const jobsByLane = new Map<string, LaneJobBooks[]>();
+  for (const j of laneJobs) jobsByLane.set(j.lane, [...(jobsByLane.get(j.lane) ?? []), j]);
 
   return (
     <div className="space-y-4">
@@ -171,7 +188,7 @@ export function NextStepPanel({ report, error }: { report: PipelineNextReport | 
 
       <Card
         title="Lanes by step"
-        sub={<>Generated from <code>scripts/lib/lanes.mjs</code>; <code>tests/unit/lanes-registry.test.ts</code> fails when a scheduled writer is missing from it or a declared check is not in its source. <span style={{ color: 'var(--accent-rust)' }}>Red</span> = a check skipped as a known gap, not by design. Pausing: the names <code>{DEAD_PAUSE_NAMES.map((d: string) => `'${d}'`).join(', ')}</code> in <code>paused_phases</code> stop nothing; use the key in the Pause column.</>}
+        sub={<>Generated from <code>scripts/lib/lanes.mjs</code>; <code>tests/unit/lanes-registry.test.ts</code> fails when a writer scheduled on any box (the main, gex45 and l7a crontab snapshots) is missing from it or a declared check is not in its source. A <code>quota-share</code> lane spends a share of a subscription&apos;s week (<code>scripts/lib/lane-quota.mjs</code>): out of quota it idles and its books wait, never the paid API. <span style={{ color: 'var(--accent-rust)' }}>Red</span> = a check skipped as a known gap, not by design. Pausing: the names <code>{DEAD_PAUSE_NAMES.map((d: string) => `'${d}'`).join(', ')}</code> in <code>paused_phases</code> stop nothing; use the key in the Pause column.</>}
       >
         <table className="w-full text-xs">
           <thead><tr style={muted}><Th>Step</Th><Th right>All</Th><Th right>Live</Th><Th>Lane</Th><Th>Trigger</Th><Th>Budget</Th><Th>Hold</Th><Th>Pause</Th></tr></thead>
@@ -188,9 +205,13 @@ export function NextStepPanel({ report, error }: { report: PipelineNextReport | 
                     <code>{l.name}</code>
                     <div className="text-[11px]" style={faint}>{l.selects}</div>
                     {l.reason && <div className="text-[11px] max-w-xl" style={l.gap ? { color: 'var(--accent-rust)' } : faint}>{l.reason}</div>}
+                    <LaneJobs jobs={jobsByLane.get(l.name)} />
                   </Td>
                   <Td>{l.trigger}</Td>
-                  <Td style={l.budget === 'none' ? { color: 'var(--accent-rust)' } : undefined}>{l.budget}</Td>
+                  <Td style={l.budget === 'none' ? { color: 'var(--accent-rust)' } : undefined}>
+                    {l.budget}
+                    {l.quota && <div className="text-[11px] whitespace-nowrap" style={faint}>{Math.round(l.quota.share * 100)}% of the week · {l.quota.meter}{l.quota.paced ? ' · paced' : ''}</div>}
+                  </Td>
                   <Td style={l.respectsHold === false ? { color: 'var(--accent-rust)' } : undefined}>{l.respectsHold === false ? 'no' : l.respectsHold}</Td>
                   <Td style={l.pause == null ? { color: 'var(--accent-rust)' } : undefined}>{l.pause ?? 'none'}</Td>
                 </tr>

@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. uḍhaṇāpraṇiṣṭrāna ‖ daggāaikatrikṣacyuktākaraiṭhākha ‖ ādaṇapalakṣyaḥvairakai
+2. ṇanapalabhūmānānās ‖ kkiṇṇakhatryavaṃokanaprakārānata ‖ ātvānaviprayānappura
+3. kṣaiyyābhitrunapala ‖ kṣmivitrāgākhaṇabhagguākkadanakha ‖ lakṣmikhatrādibhrukara
+4. khaṭhakaḻābhāvāl ‖ kkṛkṣṇakṣmakhārsaikānakhaṣvira ‖ aikhānasapalakṣmīḥ
+5. nakhabhā [illegible] tvāṃ ‖ davakāṅkādananapalakṣmībhava ‖ trayamākṣaṭantrā
+6. kṣapaṇakṣṇadrākk ‖ bhilgaṇaddakṣayaḥkṣūdratheṃ ‖ sābhaൗvālgamiv
+7. ākhakhaṅgāāaikha ‖ vāaigāmaintyutainanaṭā ‖ vālpāntyānduka
+8. nduvātrukābhāvā ‖ vāditrāhanāṭāvāditiḥcatmiya ‖ yāditvāddhyaḥyamdravāṃka
+9. mainakamkṣṇabhigantra ‖ aitaindrāhākkāl̤cakankṣṭapalamlunti ‖ niyantraprāntrāṭayaṃprakṛ
+
+TRANSCRIPTION B
+1. ukhaktāprakṣi [illegible] āna ‖ āugṛāaitryakṣe ‖ pṛktākaraidāvi ‖ ṭṭanapalakṣyaḥ [illegible]
+2. ṇanapalabhūmāṇānal ‖ ṅṅilññayatryaṃokaprakāreṇa ‖ ṇātonaviprayānappura
+3. kṣaiyātritranapala ‖ jñabitrābā [illegible] kṣtrākkabhaḍanapha ‖ lakṣibatrādiryakara
+4. khaṅkaḻbhāvāl ‖ kkūnkkukkūbār [illegible] lsaikābavvita ‖ jaiānanapalaṅkṣeḥ
+5. nabaṭākṣkṣakkepāṃ ‖ davakkaṅkuādana [illegible] napalaṅkṣmabhava ‖ trayamākṣaṭantrā
+6. kkaparaṅṅaḥprāൿ ‖ bhralgabadra [illegible] kṣyaḥkrasmrallabhyoṃ ‖ sāṭāvālgaviv
+7. ākhababhūāaikha ‖ vāaigātrantyatainanaṭā ‖ vālvantyāntraka
+8. ghṛvātrṛṅkābhāvā ‖ dratyāāganāṭākhavādratriḥcatrikṣaya ‖ āditraṅṅḥyaodravāṃka
+9. maikaokṣajñaogatrai ‖ tatrāൿḥkāśrūkaṅkaduvalarajjubikri ‖ śaddhapūḥtrābhayaṃprū
+
+TRANSCRIPTION C
+1. ṛṣaṣiprakṣiḻacceda ‖ ādaṣṭaibhikṣupyaktākera [illegible] āvi ‖ ddhanapalakṣiḥ [illegible] kaika
+2. ṇanapalatramabhāṇānaṇa ‖ kṣilñjatryayaṃ [illegible] kaṇaprakāraṇana ‖ ṇāntaraniprayānasvaka
+3. kṣayaiyānitraṇapala ‖ kṣibitrāṇabhaṇa [illegible] kkūākkadanava ‖ lakṣibitrādiprakara
+4. ṣaṇkkābhāvāl ‖ kkūnkkūbaralsakairākhvika ‖ ṣairanasapalakṣiḥ
+5. ṇakhaṭā [illegible] vāṃ ‖ davakandrādanavalakṣiṇṇabhava ‖ trayamākkaṭaṣyā
+6. kṣapakṣaṇṭaḥtrākk ‖ bhilgahvaddhakṣayaṃkastrapraṣoṃ ‖ sāṭaravālgabhiv
+7. ākhyakhyūāaikha ‖ vāgairākhyaisyananeneṭā ‖ vālpranyāsvaka
+8. sthavāntyakkābhāvā ‖ bhitrādithāṭāvāditiḥcatrakṣiya ‖ āditraṅṅaḥhadravaṃka
+9. mairakaṇakkitrarai ‖ aitatryādiḥkāṣṭakakṣakapalaikṣyanika ‖ kiṣṛpṛkṣādayaṃprakri
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

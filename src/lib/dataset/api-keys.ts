@@ -1,3 +1,4 @@
+import { API_TERMS_VERSION, keyBlockedForTerms } from '@/lib/api-terms-version';
 import { randomBytes, createHash } from 'crypto';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
@@ -32,6 +33,8 @@ export async function generateApiKey(
     stripeSubscriptionId?: string;
     /** Grant visible-mark-free image serving regardless of tier. */
     cleanImages?: boolean;
+    /** The terms version the holder agreed to when asking for this key. */
+    termsVersion?: string;
   }
 ): Promise<{ key: string; doc: ApiKeyDoc }> {
   const db = await getDb();
@@ -57,6 +60,7 @@ export async function generateApiKey(
     },
     status: 'active',
     stripe_subscription_id: options?.stripeSubscriptionId,
+    ...(options?.termsVersion ? { terms_version: options.termsVersion, terms_accepted_at: new Date() } : {}),
     created_at: new Date(),
     last_used_at: null,
     expires_at: null,
@@ -68,6 +72,22 @@ export async function generateApiKey(
 
 /** Validate an API key from the Authorization header. Returns the key doc or null. */
 export async function validateApiKey(authHeader: string | null): Promise<ApiKeyDoc | null> {
+  const { doc, termsRequired } = await resolveApiKey(authHeader);
+  return termsRequired ? null : doc;
+}
+
+/**
+ * The key behind a header, and whether it must agree to the API terms before it
+ * is served (#8235). validateApiKey answers null for such a key, so every gate
+ * that trusts a key (bot-gate, image-gate, preview) stops trusting it at the
+ * deadline; the API routes call this instead so they can say why.
+ */
+export async function resolveApiKey(authHeader: string | null): Promise<{ doc: ApiKeyDoc | null; termsRequired: boolean }> {
+  const doc = await lookupApiKey(authHeader);
+  return { doc, termsRequired: !!doc && keyBlockedForTerms(doc) };
+}
+
+async function lookupApiKey(authHeader: string | null): Promise<ApiKeyDoc | null> {
   if (!authHeader) return null;
 
   const key = authHeader.startsWith('Bearer ')
@@ -128,6 +148,20 @@ export async function listApiKeys(userId: string): Promise<ApiKeyDoc[]> {
     .toArray() as Promise<ApiKeyDoc[]>;
 }
 
+/**
+ * Record that a holder agreed to the current API terms, on every active key they
+ * own (#8235). Keys made before the terms keep their value; only the agreement
+ * is added. Returns how many keys were updated.
+ */
+export async function acceptApiTerms(userId: string): Promise<number> {
+  const db = await getDb();
+  const res = await db.collection<ApiKeyDoc>(COLLECTION).updateMany(
+    { user_id: userId, status: 'active' },
+    { $set: { terms_version: API_TERMS_VERSION, terms_accepted_at: new Date() } },
+  );
+  return res.modifiedCount;
+}
+
 /** Rotate: revoke old key, generate new one with same config */
 export async function rotateApiKey(
   keyId: string,
@@ -151,6 +185,7 @@ export async function rotateApiKey(
     clusters: old.permissions.clusters === '*' ? undefined : old.permissions.clusters,
     stripeSubscriptionId: old.stripe_subscription_id,
     cleanImages: old.permissions.clean_images === true,
+    termsVersion: old.terms_version,
   });
 }
 

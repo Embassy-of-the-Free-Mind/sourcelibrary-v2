@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { publicUrl } from '@/lib/public-origin';
 
 /**
  * Resolves /book/{non-slug-id} to /book/{slug} via 301 redirect, and
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
   const search = request.headers.get('x-redirect-search') || '';
 
   if (!bookIdOrSlug) {
-    return NextResponse.redirect(new URL('/', request.url), 302);
+    return NextResponse.redirect(publicUrl('/', request), 302);
   }
 
   const db = await getReadDb();
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
   // id→resolver rewrite when `ns` is present (so no loop), and /book/[id] renders
   // the book or calls notFound() for a real, styled 404.
   const renderInPlace = () => {
-    const url = new URL(`/book/${encodeURIComponent(bookIdOrSlug)}${tail}${search}`, request.url);
+    const url = publicUrl(`/book/${encodeURIComponent(bookIdOrSlug)}${tail}${search}`, request);
     url.searchParams.set('ns', '1');
     return NextResponse.redirect(url, 302);
   };
@@ -57,7 +58,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Redirect non-slug URL to canonical slug URL
-  const target = new URL(`/book/${slug}${tail}${search}`, request.url);
+  const target = publicUrl(`/book/${slug}${tail}${search}`, request);
   // A <Link> to the id form prefetches it as an RSC request carrying Next's
   // `_rsc` cache-busting param. A Location without that param makes the client
   // discard the response the browser fetched by following the 301 and fetch the

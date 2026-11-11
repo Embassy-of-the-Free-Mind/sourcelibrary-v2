@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has recognizable Sanskrit in most rows, such as "tatkriyāṇām iti sāmānyaṃ", "kulālādiśakti", "kāraṇakāryavibhāga", "vyaktabhāvamahā", "kāraṇasāmānya" and "ghaṭasya"; A reads cleanly only in its first few rows and is mostly [illegible] after that, while B is garbled throughout.

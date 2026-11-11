@@ -1,0 +1,584 @@
+{
+ "n": 30,
+ "decided": 30,
+ "cannot_tell": 0,
+ "another_leaf": 28,
+ "precision": 0.9333333333333333,
+ "wilson": [
+  0.7867654148312584,
+  0.9815229763754831
+ ],
+ "precision_all_answered": 0.9333333333333333,
+ "offsets": {
+  "1": 1,
+  "-1": 25,
+  "-3": 2
+ },
+ "by_diagnose": {
+  "undecided": {
+   "n": 8,
+   "other": 6,
+   "own": 2,
+   "cannot": 0,
+   "offset_agrees": 0
+  },
+  "offleaf": {
+   "n": 18,
+   "other": 18,
+   "own": 0,
+   "cannot": 0,
+   "offset_agrees": 18
+  },
+  "own_like": {
+   "n": 4,
+   "other": 4,
+   "own": 0,
+   "cannot": 0,
+   "offset_agrees": 0
+  }
+ },
+ "controls": {
+  "n": 12,
+  "ok": 12,
+  "rows": [
+   {
+    "name": "Strutt",
+    "kind": "ctl-old",
+    "expect": "other",
+    "renders": "p81",
+    "ok": true
+   },
+   {
+    "name": "Strutt",
+    "kind": "ctl-current",
+    "expect": "own",
+    "renders": "p82",
+    "ok": true
+   },
+   {
+    "name": "Oxyrhynchus V",
+    "kind": "ctl-current",
+    "expect": "own",
+    "renders": "p240",
+    "ok": true
+   },
+   {
+    "name": "Rajput Painting",
+    "kind": "ctl-old",
+    "expect": "other",
+    "renders": "p25",
+    "ok": true
+   },
+   {
+    "name": "Geronimo",
+    "kind": "ctl-current",
+    "expect": "own",
+    "renders": "p153",
+    "ok": true
+   },
+   {
+    "name": "Oxyrhynchus V",
+    "kind": "ctl-old",
+    "expect": "other",
+    "renders": "p239",
+    "ok": true
+   },
+   {
+    "name": "Quixote",
+    "kind": "ctl-current",
+    "expect": "own",
+    "renders": "p269",
+    "ok": true
+   },
+   {
+    "name": "Yucatán",
+    "kind": "ctl-current",
+    "expect": "own",
+    "renders": "p371",
+    "ok": true
+   },
+   {
+    "name": "Geronimo",
+    "kind": "ctl-old",
+    "expect": "other",
+    "renders": "p152",
+    "ok": true
+   },
+   {
+    "name": "Rajput Painting",
+    "kind": "ctl-current",
+    "expect": "own",
+    "renders": "p26",
+    "ok": true
+   },
+   {
+    "name": "Quixote",
+    "kind": "ctl-old",
+    "expect": "other",
+    "renders": "p266",
+    "ok": true
+   },
+   {
+    "name": "Yucatán",
+    "kind": "ctl-old",
+    "expect": "other",
+    "renders": "none",
+    "ok": true
+   }
+  ]
+ },
+ "unanswered": [],
+ "rows": [
+  {
+   "key": "S01",
+   "book_id": "69ea0f7013a685002bb8e200",
+   "n": 75,
+   "language": "English",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": 2,
+    "shared": 0.212
+   },
+   "renders": "p74",
+   "d": -1,
+   "evidence": "Page 74 has the header 'The Discoveries and Accidents, Lib.3.' and folio 42. Its text opens 'had even then overthrowne the businesse' and ends 'Captaine Newport (who was hired onely for our'. The side notes 'Monica an vn-frequented Isle full of Birds' and 'Their first landing' are also on this leaf. Page 75 is folio 43 and starts 'our transportation) was to returne with the ships'."
+  },
+  {
+   "key": "S04",
+   "book_id": "6a08f62850bd891addfbabfc",
+   "n": 33,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 1
+   },
+   "renders": "p32",
+   "d": -1,
+   "evidence": "The header 'Rousseau and Wilkes. [A.D. 1766' with folio 12 is at the top of the p32 leaf. The text starts 'who have served it.' and ends 'having quoted some remark', with the catchword 'made'. The p33 leaf is folio 13 ('Rousseau and Voltaire') and starts with 'made by Mr. Wilkes'."
+  },
+  {
+   "key": "S07",
+   "book_id": "69cf7bf2878f40c5945f245c",
+   "n": 209,
+   "language": "Greek",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.932
+   },
+   "renders": "p208",
+   "d": -1,
+   "evidence": "Opens with 'information regarding its provisions is incomplete. What exactly this ἀσυλία implied is uncertain' at the top of leaf 208 (folio 188) and closes with 'Εὐσεβοῦς Εὐτυχοῦς Σεβαστοῦ' at the bottom of its Greek text; leaf 209 is folio 189 and begins with 'καὶ ε (ἔτους) Ἰουλίου Αὐρηλίου Σεπτιμίου'"
+  },
+  {
+   "key": "S08",
+   "book_id": "69d5ac3dd0bd3547a5655c53",
+   "n": 246,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.929
+   },
+   "renders": "p245",
+   "d": -1,
+   "evidence": "The transcription begins 'Here the poet, after having rebutted the complaints of the tribes of Taghlib' and ends with verse 37 and 'Another reading بنات قوم = daughters of a people'. All of this appears on leaf p245, which has folio 217 at the top and signature 28 at the bottom. Leaf p246 is folio 218 and starts at verse 38."
+  },
+  {
+   "key": "S09",
+   "book_id": "69ef254385daccce30f2b86a",
+   "n": 103,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 1
+   },
+   "renders": "p102",
+   "d": -1,
+   "evidence": "The transcription's first line, 'or Madhwáchárya, Vaishṇava teachers, in the South of India', is the top line of leaf p102, under the header '80 ANALYSIS OF THE PURÁṆAS.' Its last line, 'introduced into the Dakhiṇ appa-', is the bottom line of that leaf. Leaf p103 is printed page 81 and starts with 'rently some eight or nine centuries ago.'"
+  },
+  {
+   "key": "S10",
+   "book_id": "6a3e6e456493e2d2112984ab",
+   "n": 151,
+   "language": "English",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": null,
+    "shared": null
+   },
+   "renders": "p151",
+   "d": 0,
+   "evidence": "The running head 'MEMORANDA 615' is at the top. The first column opens with 'tion—were always making one another's acquaintance on his study table', and the second column ends with 'If thou add'st aught to what is printed here.'"
+  },
+  {
+   "key": "S11",
+   "book_id": "69ef2b4685daccce30f2e066",
+   "n": 599,
+   "language": "Latin",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": 1,
+    "shared": 0.222
+   },
+   "renders": "p598",
+   "d": -1,
+   "evidence": "The transcription's 'Traversa: Querpfeiff. Querflött.', 'Cornetti: Zinchen.' and 'Bombyces, pommern. Piffari, Schallmeyen.' are the headings of sections VIII–X on leaf 598, which also has the notes 'Dise wird auch zu Disc. gebraucht / wie die Blackpfeiffe' and 'Schweitzer pfeiff'. Leaf 599 instead shows XI Fagotten and XII–XIII Sordoni/Doppioni. Leaf 598 has no printed page number, only a handwritten '598' in the corner."
+  },
+  {
+   "key": "S12",
+   "book_id": "69af0a9068bf0754164e4558",
+   "n": 405,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.985
+   },
+   "renders": "p404",
+   "d": -1,
+   "evidence": "The transcription opens with 'XXIX. Imp. Caes. Domit. Aug. Germ. Cos. xvj.' and closes with 'Pugna pro Patria. 1574. When besieged by the Spaniards. Appendix.' On leaf p404 (printed page 384, header 'Of Coyns. PART IV.'), the first line is the same and the last line at the foot of the page matches. Leaf p405 is printed page 385 and starts the Appendix."
+  },
+  {
+   "key": "S13",
+   "book_id": "69ee64a07b983848aff58240",
+   "n": 295,
+   "language": "English",
+   "diag": {
+    "verdict": "own_like",
+    "offset": null,
+    "ref_d": 4,
+    "shared": 0.147
+   },
+   "renders": "p294",
+   "d": -1,
+   "evidence": "Opens 'issue of a war he had commenced against the Wisigoths' at the top of leaf p294 (folio 272, header 'EPITOME OF GERMAN MYTHOLOGY.'), ends 'The afflicted maiden had his' at the bottom of its text block, and note 4 'Opera, edit. Ballerini, p. 20. D. M. p. 260.' is the last footnote. Leaf p295 is folio 273 and starts 'head brought to her'."
+  },
+  {
+   "key": "S14",
+   "book_id": "69ef251c85daccce30f2b1f2",
+   "n": 58,
+   "language": "Sanskrit",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": 8,
+    "shared": 1
+   },
+   "renders": "p57",
+   "d": -1,
+   "evidence": "The header '[ अ०२ श्लो०१८ ] श्रीमद्भगवद्गीता । ४७' and the opening 'म० टी०— ननु स्फुरणरूपस्य सत:' are at the top of leaf p57. Verse 18 'अन्तवन्त इमे देहा...' follows them, and the last line ends with 'नन्वेतादृशे देहिनि' at the bottom. Leaf p58 is printed folio ४८ and opens with 'किंचित्प्रमाणमवश्यं'."
+  },
+  {
+   "key": "S15",
+   "book_id": "6a0e569eb8ad266ebed2362e",
+   "n": 102,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 1
+   },
+   "renders": "p101",
+   "d": -1,
+   "evidence": "The transcription opens with 'at Paris in the years 1825 and 1829 on the history of modern philosophy' and ends with 'appears in comparison to the'. Both lines match the first and last lines of leaf p101, which has the heading 'The Methods of Man's Ascent.' and printed page number 75. Leaf p102 is printed page 76 and opens with 'abundant light and vigour of Oriental Idealism'."
+  },
+  {
+   "key": "S16",
+   "book_id": "69e41fb64fc48a88423e0847",
+   "n": 154,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.988
+   },
+   "renders": "p153",
+   "d": -1,
+   "evidence": "The transcription begins with the heading 'INDEX' and 'Abanindra Nath Tagore 58', which open the left column of leaf p153. It ends with 'Chengiz Khan 84', the last line of that leaf's right column. Leaf p153 has no printed page number; p154 is folio 112 and starts with 'China 21, 23...'."
+  },
+  {
+   "key": "S17",
+   "book_id": "69e786a94a6785cfd60c88a8",
+   "n": 111,
+   "language": "Arabic",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 1
+   },
+   "renders": "p110",
+   "d": -1,
+   "evidence": "The leaf with printed page number 34 and the running head 'PRÓLOGO DEL AUTOR.' opens with 'con su auxílio qualquier viage en ménos tiempo' at the top of the Spanish column. The same column ends with 'El capítulo XXXIV trata de las aves', and the Arabic column ends with 'الباب الرابع والثلاثون في اقتنا الحيوان الطاير'. Notes 1–5 at the foot of the leaf match the transcription, from 'Corríjase como en la nota anterior' to 'Perfiérese ... de la copia'. Leaf p111 is page 35 and opens with 'que se tienen en las casas de campo'."
+  },
+  {
+   "key": "S18",
+   "book_id": "69af5946522dc3dfdf725a23",
+   "n": 84,
+   "language": "French",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": null,
+    "shared": null
+   },
+   "renders": "p83",
+   "d": -1,
+   "evidence": "The transcription opens with 'nous voyons ici Anaximandre affirmer un double infini' and closes with 'à comparer la période de la'. Both lines match the top and bottom of the main text on leaf p83. That leaf also has the running head 'LA COSMOLOGIE DE PLATON', folio 71, and footnotes 1 (Hippolyte) and 2 (Simplicius) matching the transcription's. Leaf p84 is folio 72 and opens with 'naissance et de la mort universelle'."
+  },
+  {
+   "key": "S20",
+   "book_id": "6a353228c8ce407afbe04b97",
+   "n": 61,
+   "language": "English",
+   "diag": {
+    "verdict": "own_like",
+    "offset": null,
+    "ref_d": -6,
+    "shared": 0.16
+   },
+   "renders": "p60",
+   "d": -1,
+   "evidence": "Opens 'glory. Although the priest no longer is his counsellor' at top of leaf p60 and closes 'our own Master we find one who joined himself to those' at its bottom; header 'The Initiates of the Flame', folio 52. Leaf p61 (folio 53) instead begins 'who served, and was a true King'."
+  },
+  {
+   "key": "S22",
+   "book_id": "69ef284385daccce30f2c27b",
+   "n": 308,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.487
+   },
+   "renders": "p307",
+   "d": -1,
+   "evidence": "The transcription opens with 'of the islands farther eastward observed to me, with great simplicity' and ends with 'to venerate, almost to the point of worshipping, the'. Leaf p307 (folio 291) opens and ends with the same words. It also has the signature '2 P 2', the side note 'Veneration for the manes and tombs of their ancestors' and the footnote ending 'See Asiat. Res. Vol. IV. p. 223.' Leaf p308 is folio 292 and opens instead with 'the tombs and manes of their deceased ancestors'."
+  },
+  {
+   "key": "S23",
+   "book_id": "69e7928c80b52390feb16343",
+   "n": 30,
+   "language": "Sanskrit",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 1
+   },
+   "renders": "p29",
+   "d": -1,
+   "evidence": "The transcription's opening line, 'On his death his son Chândaghosha becomes Raja', is the first line of p29, which is printed page 21. Its closing words, 'and Manikarniká, with', are the last line of p29. The leaf labelled p30 is printed page 22 and begins 'her nurse and attendants'."
+  },
+  {
+   "key": "S24",
+   "book_id": "69ef287d85daccce30f2cdc2",
+   "n": 186,
+   "language": "Latin",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.882
+   },
+   "renders": "p185",
+   "d": -1,
+   "evidence": "Opening line 'Aquæ impregnatæ, Anethi, Thymi...' and closing line 'usui referuetur.' are at the top of p185 under the 'OLEA.' header with folio 141, followed by decorative borders around 'S 3 VNG.' The stored page 186 is a blank verso that shows only bleed-through from p185."
+  },
+  {
+   "key": "S25",
+   "book_id": "69aec0eadd3c98abc0da7bfe",
+   "n": 537,
+   "language": "Latin",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -3,
+    "ref_d": -3,
+    "shared": 0.986
+   },
+   "renders": "p534",
+   "d": -3,
+   "evidence": "The transcription starts with '“ Inachidae vosque o socio de sanguine Achivi ?' and ends with 'egistis ? potui pariter nescire, quis armis 635'. These are the first and last lines of the Latin text on p534, which carries the header STATIUS and the printed number 496. Its footnote 'Parnassus : Cirrha was really the town on the Corinthian gulf' also matches. The stored page, p537, is the English translation for lines 636-659 (printed 499)."
+  },
+  {
+   "key": "S27",
+   "book_id": "6a35c9aadf59c9f0ef280166",
+   "n": 53,
+   "language": "English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.979
+   },
+   "renders": "p52",
+   "d": -1,
+   "evidence": "The transcription begins 'nobis retulit, maiori consideratione intelligeret et gemeret' and ends 'quod a se episcopo impleri'. Leaf p52 (printed 48) begins and ends with these same lines. Between them it has the heading 'CAPUT V / Monasterium instituit' and the apparatus notes from '3 speraret] ABCDEFHJK...' to '23 eum om. BDEFHK'. Leaf p53 is the English translation on printed page 49."
+  },
+  {
+   "key": "S29",
+   "book_id": "69af5956569075d6ffc07222",
+   "n": 115,
+   "language": "French",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": null,
+    "shared": null
+   },
+   "renders": "p114",
+   "d": -1,
+   "evidence": "The transcription opens with \"de Constantin, ni ceux d'aucun physicien ; leur orgueil est tel...\", which is the top line of leaf 114, and closes with \"nous en proposons une autre raison, qui\", the last text line on that leaf. The page number 104, the header \"L'ASTRONOMIE LATINE AU MOYEN AGE\" and the footnotes \"1. Hirsaugiensis, liber I, Ignis qui æther dicitur\" and \"2. ... De stellarum inerraticarum motu et quiete\" also match leaf 114. Leaf 115 is printed page 105 and opens with \"est telle : Tout mouvement se reconnaît...\""
+  },
+  {
+   "key": "S30",
+   "book_id": "69af21afa854057228c07c20",
+   "n": 523,
+   "language": "Latin",
+   "diag": {
+    "verdict": "own_like",
+    "offset": null,
+    "ref_d": -7,
+    "shared": 0.111
+   },
+   "renders": "p520",
+   "d": -3,
+   "evidence": "The transcription opens with 'et medios sermones intercipiant et omnia tumultu' (first line of p520, under the QUINTILIAN header) and ends with 'Nam quod fideliter firmum' (last line of p520). Folio 508 sits at the bottom of the leaf. Leaf p523 is the English page 511."
+  },
+  {
+   "key": "S31",
+   "book_id": "69cf7d616d17d9f121ccf340",
+   "n": 102,
+   "language": "Latin",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.943
+   },
+   "renders": "p101",
+   "d": -1,
+   "evidence": "Header '5. EMPEDOCLES', page number 86 and opening 'scriptores antiquissimi Corax et Tisias Siculi' are at the top of leaf p101. It ends with '22. Aristot. Poet. 1. 1447b 17 ... μᾶλλον ἢ ποιητήν.' at the bottom of the same leaf. Sections 20 (Laert. Diog.) and 21 (Lucretius I 714 sqq.) appear in between."
+  },
+  {
+   "key": "S32",
+   "book_id": "6a3e6c858e2683a046da1cbc",
+   "n": 60,
+   "language": "English",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": null,
+    "shared": null
+   },
+   "renders": "p60",
+   "d": 0,
+   "evidence": "The transcription opens with \"energetic plunging she broke her way through and climbed out\" and ends with \"so as to avoid the bad places\". On leaf p60 (folio 678), the first phrase is the top of the left column and the last is the bottom of the right column. The leaf also has the captions \"THE CHIEF'S HUT, AND GROUP OF GOONENNAR NATIVES\" and \"CHILKAT GRAVEYARD, SHOWING HOUSE OF FROG NATION.\""
+  },
+  {
+   "key": "S33",
+   "book_id": "6a357f405307b013ee584667",
+   "n": 45,
+   "language": "Latin",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.525
+   },
+   "renders": "p44",
+   "d": -1,
+   "evidence": "Opens 'homine lapis: ad tale aliquam significationem', which is the first line of the left column on p44 (running head 'Liber', with marginal notes 'Exo. 4, Ge. 28, Exo. 7, Ps. 44, Phil. 2, Joh. 3, Nu. 2, Ro. 6, Exo. 4'). The heading 'Capitulum. xi.' and the closing words 'Proinde illa omnia quae patribus visa sunt cum deus illis secundum suam dispensationem temporibus' are at the bottom of the right column on p44."
+  },
+  {
+   "key": "S34",
+   "book_id": "69d5ac5f4dc55b8478ddd6b5",
+   "n": 630,
+   "language": "Hebrew",
+   "diag": {
+    "verdict": "own_like",
+    "offset": null,
+    "ref_d": 5,
+    "shared": 0.01
+   },
+   "renders": "p631",
+   "d": 1,
+   "evidence": "The transcription opens with 'תוספתא יומא פרק ראשון' and 'פרק א א למה מפרישין כהן גדול מביתו ללשכת (א) פלהדרין'. This matches the large heading and the first line of the right column on leaf 631 (folio ט). Leaf 630 is a different page, folio 16 of 'שיטת ריב\"ב'. Leaf 632 continues the Tosefta with chapter 2. After its opening, the transcription just repeats '[פרוהדרין]' over and over, so it is only reliable as far as that first line."
+  },
+  {
+   "key": "S35",
+   "book_id": "69e759d2095c302d3fdde331",
+   "n": 45,
+   "language": "French",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 1
+   },
+   "renders": "p44",
+   "d": -1,
+   "evidence": "The transcription opens with 'SCENE VII. FIGARO, CHÉRUBIN, LA COMTESSE, SUZANNE.' at the top of the left column and ends with '...il reçoit le plus rude soufflet, et s'enfuit en éclatant de rire.' at the bottom of the right column. Both match the leaf in page-44.jpg, which shows printed folio 42 and the header 'CHEFS-D'OEUVRE DU THEATRE-FRANÇAIS'. Leaf p45 shows folio 43 and opens with 'S'il s'affligeait de celui-ci!...', so it does not match."
+  },
+  {
+   "key": "S36",
+   "book_id": "69cf7b9e878f40c5945f1c42",
+   "n": 39,
+   "language": "Greek",
+   "diag": {
+    "verdict": "undecided",
+    "offset": null,
+    "ref_d": 7,
+    "shared": 0.216
+   },
+   "renders": "p38",
+   "d": -1,
+   "evidence": "'5-6. For the variation in the quantity of καλά cf. Theocr. vi. 19' opens the leaf below the running head '14 THE OXYRHYNCHUS PAPYRI'; the mid-page heading 'IX. ARISTOXENUS ΡΥΘΜΙΚΑ ΣΤΟΙΧΕΙΑ. Plate III. 22.7 × 43.5 cm.' follows, and the leaf closes with 'but the connexion of'. Leaf p39 (printed 15) begins 'this discussion with what precedes...'"
+  },
+  {
+   "key": "S37",
+   "book_id": "69b00a0ec42435fcd0cf9acb",
+   "n": 619,
+   "language": "Greek",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.429
+   },
+   "renders": "p618",
+   "d": -1,
+   "evidence": "The Greek lemma starting \"[259] Ἔπειτα ἐκ προσαγωγῆς κατὰ λόγον φαύλην δίαιταν ἄγειν\" is at the top of leaf 618, under the folio 610 header. The leaf ends with the Latin \"Antea quoque diximus quamlibet victus rationem ... φαύλην nuncupari\". Leaf 619 is folio 611 and begins \"Τὰ δὲ ὀλισθήματα\"."
+  },
+  {
+   "key": "S42",
+   "book_id": "69f8c1260c0c281d4bd32961",
+   "n": 93,
+   "language": "Cakchiquel / English",
+   "diag": {
+    "verdict": "offleaf",
+    "offset": -1,
+    "ref_d": -1,
+    "shared": 0.649
+   },
+   "renders": "p92",
+   "d": -1,
+   "evidence": "The transcription's first line, 'Jobakil, rubij, Chiyol Chiabak ru bi huyu xilitah vi', is the first line under the header on printed page 86. Its last words, 'Xecha ꝗa, ok xcaꝗaxah : Chinak ri', are the last line of that page, and section 22 sits in the middle. Leaf p93, printed page 87, has the English translation of the same passage."
+  }
+ ],
+ "stop": false
+}

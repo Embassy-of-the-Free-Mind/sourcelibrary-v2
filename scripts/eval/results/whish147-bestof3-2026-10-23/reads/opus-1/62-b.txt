@@ -1,0 +1,10 @@
+ROW 1 | ഷ്ടമെത്രപ്രസംഖ്യാഗ ‖ ഃ[illegible]ൽക്കിമിതിപ്പന്തങ്ങിങ്ങിതൊഷ്ഠക്കിൻദ്ദവക്ക ‖ ത്രാധ[illegible]ഷ്ഠമയെത്രാഭിത
+ROW 2 | യൊദ്ധയൊമെകഃച ‖ [illegible]ഷഃഉമൈകക്ഷകഃസപ്തമാദുത്വാൽ[illegible] ‖ [illegible]വക്ഷവക്കൊനന്ദി[illegible]ചക്കു
+ROW 3 | ഷെതിമൂന്തൊർഭിലാഷ ‖ [illegible]ാൽ[illegible]ാധമിത്യുപ[illegible]പരത്വാനെന്തിക്കപര ‖ [illegible]ഹെതുഷെത്വപത്വാഭി[illegible]
+ROW 4 | ഭസവ്വാസന്ദ്ധാങ്ങ് ‖ ഥമെനന്ദ്രമൂ[illegible]ദ്ദെന്മിതതകൂസം ‖ ഷ്യാഗെവിതത്വെയ്യാഭ
+ROW 5 | പ്രഖ്യാജ്ഞനാജ്ഞി ‖ സങ്ക്യാവിഖ്യയൊപഭൊഗത്വ ‖ ൽസ്സങ്ക്ഃതത്വിചെനവ്
+ROW 6 | ചരിതാർത്ഥത്വാൽന ‖ പ്രന്ദ്ധങ്ങൾമാ[illegible]ചൂടതൊന്മിനന്ദി ‖ നാംഗെപ്രേക്ഷകെകാ
+ROW 7 | ങ്കിരാത്മാക്കിതംഫ ‖ നൽതാദമാനന്ദതെനെ[illegible]ത്മെ ‖ ജ്ഞാനാൽഷെകപഥ്യൂ
+ROW 8 | പ്രാപ്തിസ്സംനേതാമെ ‖ തൊമൈവശത്മിതംചൊന്ത്ര[illegible]നഗെഷൻതഎത്തു ‖ ത്രാഹിസത്ത്വജ്ഞനാമി
+ROW 9 | ഗമ്യാദിത്യാദിസമ്യ ‖ യൂജ്ഞക്ജ്ഞാനമാനമേജ്ഞാനത്വാധിഗമ ‖ ഗമാൽത്വജ്ഞാനപ്രാതൽ
+NOTE | I read every piece and the 9-row layout is certain (rows 1–3 and 8–9 run full width, rows 4–7 are split into columns), but my glyph readings are low-confidence: many aksharas, conjuncts and vowel signs are guesses, and they have not been checked against a reference.

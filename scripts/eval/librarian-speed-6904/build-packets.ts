@@ -12,7 +12,9 @@
  *
  * Usage:
  *   npx tsx --env-file=/root/sourcelibrary/.env.production.local \
- *     scripts/eval/librarian-speed-6904/build-packets.ts --in=<main.jsonl> --dir=<judge dir>
+ *     scripts/eval/librarian-speed-6904/build-packets.ts --in=<main.jsonl> --dir=<judge dir> [--pairs=A:B,A:A2]
+ * `--pairs` names the arm pairs (left:right); the pair id is <qid>-<left[0]><right[0]>, so the
+ * default gives the -AB and -AA pairs, and B:C gives -BC (#6946 cite-by-ID).
  * Writes <dir>/packets/<pair>-<judge>.md and <dir>/key.json.
  */
 import fs from 'node:fs';
@@ -23,6 +25,7 @@ const arg = (name: string) => process.argv.find(a => a.startsWith(`--${name}=`))
 const inFile = arg('in')!;
 const dir = arg('dir')!;
 const judges = (arg('judges') ?? 'J1,J2,J3').split(',');
+const armPairs = (arg('pairs') ?? 'A:B,A:A2').split(',').map(p => p.split(':') as [string, string]);
 const MAX_PAGES = 40;
 // Whole pages. A first pass cut pages at 2,500 characters and the judges then
 // flagged real quotations as invented because they sat further down the page
@@ -57,8 +60,7 @@ async function main() {
   }
   const pairs: Array<{ pair: string; id: string; left: Row; right: Row }> = [];
   for (const [id, arms] of by) {
-    if (arms.A && arms.B) pairs.push({ pair: `${id}-AB`, id, left: arms.A, right: arms.B });
-    if (arms.A && arms.A2) pairs.push({ pair: `${id}-AA`, id, left: arms.A, right: arms.A2 });
+    for (const [l, r] of armPairs) if (arms[l] && arms[r]) pairs.push({ pair: `${id}-${l[0]}${r[0]}`, id, left: arms[l], right: arms[r] });
   }
 
   const db = await getDb();

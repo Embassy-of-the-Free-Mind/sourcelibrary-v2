@@ -1,0 +1,465 @@
+{
+ "data": {
+  "census_books": 8955,
+  "census_refused": 33197,
+  "census_attempted": 1726106,
+  "heldout_4780": 623,
+  "heldout_refused": 147,
+  "gate_lite": 122,
+  "gate_lite_refused": 17
+ },
+ "full": {
+  "fit": {
+   "divergences": 0,
+   "max_rhat": 1.01
+  },
+  "prompt": {
+   "ctx": [
+    -3.7972,
+    -2.7775,
+    -1.591
+   ],
+   "none": [
+    -2.4059,
+    -0.929,
+    0.5155
+   ]
+  },
+  "prompt_x_family": {
+   "english": [
+    -2.4991,
+    -1.4267,
+    -0.2264
+   ],
+   "latin": [
+    -0.6716,
+    0.3544,
+    1.5642
+   ],
+   "german": [
+    0.393,
+    1.4572,
+    2.7505
+   ],
+   "romance": [
+    -0.3584,
+    0.6468,
+    1.9265
+   ]
+  },
+  "tau_pf": [
+   0.7303,
+   1.2129,
+   2.0824
+  ],
+  "no_context_minus_context": {
+   "english": [
+    0.1172,
+    0.4056,
+    0.6826
+   ],
+   "latin": [
+    1.8449,
+    2.2004,
+    2.5401
+   ],
+   "german": [
+    2.8964,
+    3.2982,
+    3.68
+   ],
+   "romance": [
+    2.1374,
+    2.4913,
+    2.8446
+   ]
+  },
+  "language": {
+   "English": [
+    0.5189,
+    1.2616,
+    1.991
+   ],
+   "Latin": [
+    -0.736,
+    0.009,
+    0.7565
+   ],
+   "German": [
+    -1.1252,
+    -0.3761,
+    0.3813
+   ],
+   "French": [
+    -0.658,
+    0.108,
+    0.8425
+   ],
+   "Italian": [
+    -1.4585,
+    -0.6607,
+    0.1242
+   ]
+  },
+  "archive_text": [
+   0.0519,
+   0.1658,
+   0.2685
+  ],
+  "gutenberg": [
+   0.2442,
+   0.4308,
+   0.6168
+  ],
+  "kappa": [
+   0.8749,
+   0.932,
+   0.9904
+  ],
+  "in_sample_4780": {
+   "ALL": {
+    "n": 623,
+    "observed": 147,
+    "predicted": [
+     129,
+     152,
+     175
+    ],
+    "inside_90": true
+   },
+   "English": {
+    "n": 177,
+    "observed": 27,
+    "predicted": [
+     23,
+     34,
+     45
+    ],
+    "inside_90": true
+   },
+   "Latin": {
+    "n": 158,
+    "observed": 34,
+    "predicted": [
+     23,
+     33,
+     45
+    ],
+    "inside_90": true
+   },
+   "German": {
+    "n": 109,
+    "observed": 39,
+    "predicted": [
+     28,
+     38,
+     49
+    ],
+    "inside_90": true
+   },
+   "French": {
+    "n": 131,
+    "observed": 40,
+    "predicted": [
+     29,
+     40,
+     51
+    ],
+    "inside_90": true
+   },
+   "Italian": {
+    "n": 48,
+    "observed": 7,
+    "predicted": [
+     2,
+     6,
+     11
+    ],
+    "inside_90": true
+   }
+  }
+ },
+ "checks": {
+  "leave_one_language_out": {
+   "English": {
+    "fit": {
+     "divergences": 0,
+     "max_rhat": 1.004
+    },
+    "family_seen": false,
+    "n": 177,
+    "observed": 27,
+    "predicted": [
+     19,
+     94,
+     153
+    ],
+    "inside_90": true
+   },
+   "French": {
+    "fit": {
+     "divergences": 0,
+     "max_rhat": 1.014
+    },
+    "family_seen": true,
+    "n": 131,
+    "observed": 40,
+    "predicted": [
+     21,
+     40,
+     62
+    ],
+    "inside_90": true
+   },
+   "German": {
+    "fit": {
+     "divergences": 0,
+     "max_rhat": 1.017
+    },
+    "family_seen": false,
+    "n": 109,
+    "observed": 39,
+    "predicted": [
+     0,
+     10,
+     47
+    ],
+    "inside_90": true
+   },
+   "Italian": {
+    "fit": {
+     "divergences": 0,
+     "max_rhat": 1.007
+    },
+    "family_seen": true,
+    "n": 48,
+    "observed": 7,
+    "predicted": [
+     2,
+     6,
+     11
+    ],
+    "inside_90": true
+   },
+   "Latin": {
+    "fit": {
+     "divergences": 0,
+     "max_rhat": 1.011
+    },
+    "family_seen": false,
+    "n": 158,
+    "observed": 34,
+    "predicted": [
+     1,
+     25,
+     103
+    ],
+    "inside_90": true
+   }
+  },
+  "split_half_fit_A": {
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.007
+   },
+   "by_language": {
+    "ALL": {
+     "n": 312,
+     "observed": 72,
+     "predicted": [
+      62,
+      78,
+      94
+     ],
+     "inside_90": true
+    },
+    "English": {
+     "n": 87,
+     "observed": 13,
+     "predicted": [
+      11,
+      17,
+      24
+     ],
+     "inside_90": true
+    },
+    "Latin": {
+     "n": 80,
+     "observed": 16,
+     "predicted": [
+      10,
+      17,
+      25
+     ],
+     "inside_90": true
+    },
+    "German": {
+     "n": 56,
+     "observed": 21,
+     "predicted": [
+      12,
+      19,
+      27
+     ],
+     "inside_90": true
+    },
+    "French": {
+     "n": 62,
+     "observed": 18,
+     "predicted": [
+      13,
+      21,
+      28
+     ],
+     "inside_90": true
+    },
+    "Italian": {
+     "n": 27,
+     "observed": 4,
+     "predicted": [
+      1,
+      4,
+      7
+     ],
+     "inside_90": true
+    }
+   }
+  },
+  "split_half_fit_B": {
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.007
+   },
+   "by_language": {
+    "ALL": {
+     "n": 311,
+     "observed": 75,
+     "predicted": [
+      60,
+      76,
+      93
+     ],
+     "inside_90": true
+    },
+    "English": {
+     "n": 90,
+     "observed": 14,
+     "predicted": [
+      13,
+      20,
+      29
+     ],
+     "inside_90": true
+    },
+    "Latin": {
+     "n": 78,
+     "observed": 18,
+     "predicted": [
+      9,
+      16,
+      25
+     ],
+     "inside_90": true
+    },
+    "German": {
+     "n": 53,
+     "observed": 18,
+     "predicted": [
+      11,
+      18,
+      26
+     ],
+     "inside_90": true
+    },
+    "French": {
+     "n": 69,
+     "observed": 22,
+     "predicted": [
+      11,
+      19,
+      27
+     ],
+     "inside_90": true
+    },
+    "Italian": {
+     "n": 21,
+     "observed": 3,
+     "predicted": [
+      0,
+      2,
+      5
+     ],
+     "inside_90": true
+    }
+   }
+  },
+  "v1_structure_4780_held_out": {
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.002
+   },
+   "by_language": {
+    "ALL": {
+     "n": 623,
+     "observed": 147,
+     "predicted": [
+      51,
+      79,
+      111
+     ],
+     "inside_90": false
+    },
+    "English": {
+     "n": 177,
+     "observed": 27,
+     "predicted": [
+      32,
+      49,
+      67
+     ],
+     "inside_90": false
+    },
+    "Latin": {
+     "n": 158,
+     "observed": 34,
+     "predicted": [
+      5,
+      11,
+      19
+     ],
+     "inside_90": false
+    },
+    "German": {
+     "n": 109,
+     "observed": 39,
+     "predicted": [
+      2,
+      6,
+      11
+     ],
+     "inside_90": false
+    },
+    "French": {
+     "n": 131,
+     "observed": 40,
+     "predicted": [
+      5,
+      12,
+      20
+     ],
+     "inside_90": false
+    },
+    "Italian": {
+     "n": 48,
+     "observed": 7,
+     "predicted": [
+      0,
+      1,
+      4
+     ],
+     "inside_90": false
+    }
+   }
+  }
+ }
+}

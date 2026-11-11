@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C's legible pieces match the Sāṅkhyakārikā 1 commentary: "mṛgapakṣisarīsṛpasthāvara… bhavati tad ādhidaivikaṃ", "duḥkha", "jijñāsā", "abhighātake hetau", "prakṛti" and "pratikāra". B has fewer real words and doubtful ones like "yajñavidhena", and A is fluent-looking strings of syllables that don't form Sanskrit or Malayalam.

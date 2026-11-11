@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most continuous, coherent text for Sāṅkhyakārikā 18–19: "puruṣabahutvaṃ prasāddhya", "sākṣitvādayo ye dharmāḥ puruṣasya siddhāḥ", "prasavadharmitvād akartṛbhāva", "bhavaty udāsīnaḥ sākṣi", "kaivalyaṃ" and "draṣṭṛtva"; B has some real Sāṅkhya phrases (sātvikād ekādaśakaḥ pravartate vaikṛtād ahaṅkārāt) but breaks down elsewhere, and A is mostly fragments.

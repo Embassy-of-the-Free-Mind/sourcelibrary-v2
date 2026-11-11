@@ -1,0 +1,28 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam (Grantha-derived) script incised and inked on a palm leaf. The right edge of the leaf is cut off in the image, so every line runs on past the frame. A string passes through the binding hole and covers some characters in lines 1–2. Lines 3–7 are broken by a blank space around the hole. Readings are tentative. The language is given as Sanskrit following the project context, but parts may be Malayalam or Maṇipravāḷam.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>ഷ്ടീയമ്മെ</unclear> ാങ്കോനും വി <unclear>[string — 1 character]</unclear> ാഗമൈശ<unclear>ക്ഷ്യം</unclear> സാത്വിക
+
+<unclear>ബലിമാതനാഹം</unclear> കി <unclear>[string — 1 character]</unclear> <unclear>ണങ്ങ്ങ്ങാദിവിയഃ</unclear> പ്ര<unclear>വൃ</unclear>
+
+<unclear>ശ്രാഷ്ക്കിക്കൈക്കു</unclear> [hole] വഷ്ടു<unclear>ഃ</unclear> സാത്വിക
+
+<unclear>ഉഭാദിഹംത്രാന</unclear> [hole] <unclear>ാന്ദ്രകാദൈങ്ക</unclear>
+
+<margin>ന</margin>
+<unclear>യംഃ ഝട്ടുഃ ജ്ഞെമി</unclear> [hole] <unclear>ദിയാഭിചജ്ഞൈ</unclear>
+
+<unclear>ഗിവാക്പാഭ</unclear> [hole] <unclear>ജ്ഞപാദപാദൃപ</unclear>
+
+<unclear>ഉദ്ധ്യാമൈകാമ</unclear> [hole] <unclear>ത്തമനസ്സാംകല്ലകമി</unclear>
+
+<unclear>ഞാമതിനൈശയാമാനാനാമ്പൈ ാവൃളൈട</unclear>
+
+<unclear>നാമാലൊചനമാതൃമിണുളെവൃത്തിഃ</unclear> വ
+
+<meta>Palm-leaf folio, recto or verso not determinable. A binding string runs through a central hole. No foliation is visible on this part of the leaf. The leaf continues past the right edge of the image.</meta>
+<vocab>palm-leaf manuscript, Malayalam script, Grantha, sāttvika, manas</vocab>

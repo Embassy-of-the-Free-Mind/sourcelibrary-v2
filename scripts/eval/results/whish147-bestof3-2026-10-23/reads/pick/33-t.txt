@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A reads most consistently as Sāṅkhyakārikā commentary on the adhiṣṭhāna argument for puruṣa, with recognisable phrases like kaivalyārtthaṃ, ādhyātmikādi 3, duḥkha, dṛṣṭādṛṣṭa, śarīraṃ ihaloke and ādhiṣṭhātrā; C has some real words but many gaps, and B is mostly garbled.

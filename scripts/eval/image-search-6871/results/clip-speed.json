@@ -1,0 +1,1 @@
+{"arm": "clip", "model": "openai/clip-vit-base-patch32", "images": 14995, "secs": 39.4, "images_per_sec": 380.5, "peak_vram_mib": 487}

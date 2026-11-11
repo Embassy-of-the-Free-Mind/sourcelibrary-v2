@@ -1,4 +1,4 @@
-import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
+import { BASE_URL, imageRightsFields, type ImageRightsSource } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { institutionalByline } from '@/lib/corporate-bylines';
@@ -24,11 +24,7 @@ interface GalleryImageSchemaProps {
     author?: string;
     published?: string;
     license?: string;
-    image_source?: {
-      provider?: string;
-      license?: string;
-      attribution?: string;
-    };
+    image_source?: ImageRightsSource;
   };
 }
 
@@ -63,9 +59,6 @@ export default function GalleryImageSchema({
     symbol: 'Symbol',
     decorative: 'Decorative element',
   };
-
-  // Determine license from book or image source
-  const license = book?.image_source?.license || book?.license;
 
   const artwork = {
     '@type': ['VisualArtwork', 'ImageObject'],
@@ -109,11 +102,13 @@ export default function GalleryImageSchema({
         ? { creator: { '@type': 'Person', name: formatAuthor(book.author).name || book.author } }
         : {}),
     ...(book?.published && { dateCreated: book.published }),
-    license: license ? getLicenseUrl(license) : PUBLIC_DOMAIN_MARK_URL,
+    // The holding library's own statement wins when we have read one (#7771).
     usageInfo: `${BASE_URL}/licensing`,
-    creditText: book?.image_source?.attribution || `Digitized by ${book?.image_source?.provider || 'Internet Archive'}`,
-    copyrightNotice: `Public domain. Original published ${book?.published || 'before 1900'}.`,
-    acquireLicensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
+    ...imageRightsFields(book?.image_source, {
+      published: book?.published,
+      storedLicense: book?.license,
+      licensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
+    }),
     isPartOf: {
       '@type': 'Book',
       '@id': book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,

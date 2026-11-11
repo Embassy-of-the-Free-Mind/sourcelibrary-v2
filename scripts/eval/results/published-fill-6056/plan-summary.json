@@ -1,0 +1,2058 @@
+{
+ "run_at": "2026-10-20T06:18:21.057Z",
+ "class_n": 3982,
+ "to_write": 3691,
+ "excluded": 291,
+ "excluded_by_reason": {
+  "year-not-printed": 80,
+  "evidence-page-not-found": 1,
+  "other-year-in-evidence": 23,
+  "portrait-or-life-date": 1,
+  "hand-note": 12,
+  "cjk-script": 131,
+  "release-or-copy-date": 2,
+  "era-formula": 19,
+  "other-volume": 8,
+  "label-or-describing": 9,
+  "display-not-plain": 5
+ },
+ "excluded_rows": [
+  {
+   "id": "6a51eaf32d94f05f3e409f59",
+   "reason": "year-not-printed",
+   "edition_year": 1605,
+   "display": "1605",
+   "evidence": "CIƆ IƆ CV"
+  },
+  {
+   "id": "6a517c3c7b27c8e8d57f24e8",
+   "reason": "evidence-page-not-found",
+   "edition_year": 1502,
+   "display": "1502",
+   "evidence": "5] a lat. 6. 752 (10. Nuremb. 1502- Sub Traiano Imperatore"
+  },
+  {
+   "id": "6a5097555d2fabbae7cfaa99",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1562,
+   "display": "1562",
+   "evidence": "Iohan. Eichorn. 3. Junii 1574 Anno M. D. LXII."
+  },
+  {
+   "id": "6a503c7012003aed574fdf3b",
+   "reason": "year-not-printed",
+   "edition_year": 1611,
+   "display": "1611",
+   "evidence": "ANNO CHRISTI CIƆ IƆ CXI"
+  },
+  {
+   "id": "6a4f450d0de5c369a2509b83",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1663,
+   "display": "1663",
+   "evidence": "TUBINGÆ, TYPIS KERNERIANIS, Anno 1663. et 1664 et 1665 1 6"
+  },
+  {
+   "id": "6a4f3ad239ecc8e27dc65389",
+   "reason": "year-not-printed",
+   "edition_year": 1661,
+   "display": "1661",
+   "evidence": "ANNO M. DC. LXI. die 21. Junij"
+  },
+  {
+   "id": "6a4f363196ab344c790a2987",
+   "reason": "portrait-or-life-date",
+   "edition_year": 1659,
+   "display": "1659",
+   "evidence": "ECCLESIAE BERNAVAE FLORVIT ANNO 1659 ET AETATIS XXXIX M."
+  },
+  {
+   "id": "6a4f23903c6bc043f5f6e204",
+   "reason": "year-not-printed",
+   "edition_year": 1657,
+   "display": "1657",
+   "evidence": "Anno clɔ Iɔc LVII."
+  },
+  {
+   "id": "6a4f1d06dd60b16646ccecb1",
+   "reason": "year-not-printed",
+   "edition_year": 1656,
+   "display": "1656",
+   "evidence": "Anno Christi CIƆ IƆC LVI."
+  },
+  {
+   "id": "6a4f16b4dd60b16646cce252",
+   "reason": "year-not-printed",
+   "edition_year": 1654,
+   "display": "1654–1655",
+   "evidence": "XX. Januarii M. DC. LIV. confectam"
+  },
+  {
+   "id": "6a4f1694dd60b16646cce208",
+   "reason": "year-not-printed",
+   "edition_year": 1654,
+   "display": "1654",
+   "evidence": "Anno clɔ Iɔ CLIV. ad d. 17. Mart."
+  },
+  {
+   "id": "6a4f13c7ce720e255f3bfd13",
+   "reason": "hand-note",
+   "edition_year": 1653,
+   "display": "1653",
+   "evidence": "Christophorus Cellarius, Anno M. DC. LIII. [Faint handwritten signature:"
+  },
+  {
+   "id": "6a4f05f7b18250223e2f4842",
+   "reason": "year-not-printed",
+   "edition_year": 1649,
+   "display": "1649",
+   "evidence": "ANNO ∞ Iɔc XLIX,"
+  },
+  {
+   "id": "6a4f05cfb18250223e2f45ce",
+   "reason": "year-not-printed",
+   "edition_year": 1648,
+   "display": "1648",
+   "evidence": "CIƆ IƆ XLVIII D. VI. Januarii"
+  },
+  {
+   "id": "6a4efc401a64e53b6a0a3ab3",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1631,
+   "display": "1631",
+   "evidence": "AUTORIS EPISTOLA. ANNO DOMINI 1631. H. Conringius. 1656."
+  },
+  {
+   "id": "6a4ef7991a64e53b6a0a2f33",
+   "reason": "year-not-printed",
+   "edition_year": 1624,
+   "display": "1624",
+   "evidence": "ANNO CIƆ IƆC XXIV."
+  },
+  {
+   "id": "6a4ef3dc451d36458a838989",
+   "reason": "year-not-printed",
+   "edition_year": 1620,
+   "display": "1620",
+   "evidence": "Anno Christi CIƆ. IƆ. XX."
+  },
+  {
+   "id": "6a4ecd2ff488c4961fc2838b",
+   "reason": "year-not-printed",
+   "edition_year": 1602,
+   "display": "1602",
+   "evidence": "CIↃ. IↃ CII."
+  },
+  {
+   "id": "6a4eb55accea9baa4f496102",
+   "reason": "year-not-printed",
+   "edition_year": 1599,
+   "display": "1599",
+   "evidence": "CIↃ IↃ XCIX."
+  },
+  {
+   "id": "6a4eaa889251fb3056f6fa56",
+   "reason": "year-not-printed",
+   "edition_year": 1594,
+   "display": "1594",
+   "evidence": "Excusa per Iacobum Lucium, Anno M. D. XCIIII."
+  },
+  {
+   "id": "6a4e58c0fe517e68536cb98e",
+   "reason": "year-not-printed",
+   "edition_year": 1589,
+   "display": "1589",
+   "evidence": "Anno M. D. XXCIX."
+  },
+  {
+   "id": "6a4e56fdfe517e68536ca26a",
+   "reason": "year-not-printed",
+   "edition_year": 1596,
+   "display": "1596",
+   "evidence": "cIɔ Iɔ X C V I."
+  },
+  {
+   "id": "6a4e56f800c1250433dc20a1",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1586,
+   "display": "1586",
+   "evidence": "1585. VSQVE AD Septembrim anni 1586. ex varijs scri- ptis"
+  },
+  {
+   "id": "6a4e4972d6b40547a169f12b",
+   "reason": "year-not-printed",
+   "edition_year": 1581,
+   "display": "1581",
+   "evidence": "Anno CIƆ IƆ XXCI"
+  },
+  {
+   "id": "6a4e40de7eab4a625dd056b0",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1571,
+   "display": "1571",
+   "evidence": "datus est nobis. Dresdae: Anno 1571. Wb/67/1963 57 B"
+  },
+  {
+   "id": "6a4e39add66e9f5c751f63b8",
+   "reason": "year-not-printed",
+   "edition_year": 1568,
+   "display": "1568",
+   "evidence": "Scripta Pridie Nonas Iulii. Anno 1 5 6 8."
+  },
+  {
+   "id": "6a4e0f36be0d4a602d48ca94",
+   "reason": "year-not-printed",
+   "edition_year": 1557,
+   "display": "1557",
+   "evidence": "TALMES- SINGENSI, 1 5 5 7."
+  },
+  {
+   "id": "6a4ddd7b9d37691b80d5f57f",
+   "reason": "hand-note",
+   "edition_year": 1539,
+   "display": "1539",
+   "evidence": "Georgio Aemylio illustratae. HSB 1539 Date added by hand in"
+  },
+  {
+   "id": "6a4d59b24e92e8691bc1a77b",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1506,
+   "display": "1506",
+   "evidence": "operi L. f. 21. 1560 (! statt 1506)"
+  },
+  {
+   "id": "6a4d57044e92e8691bc19f62",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1501,
+   "display": "1501",
+   "evidence": "primo Versu quere numerum Anni. 1501. 1537"
+  },
+  {
+   "id": "6a4cd75dde7ff5e3c132b75b",
+   "reason": "hand-note",
+   "edition_year": 1672,
+   "display": "1672",
+   "evidence": "GOEBELII, Typis KOPPMAIERIANIS. Anno M. DC. LXXII. [illegible handwritten"
+  },
+  {
+   "id": "6a4cc246e11a1ca1e7c7cdaa",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1691,
+   "display": "1691",
+   "evidence": "JEGERI. 1655. Suobaci Recusa Anno 1691. sumptibus P. G. Pfotenhaueri."
+  },
+  {
+   "id": "6a4c1a840af972fc7bae822b",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1682,
+   "display": "1682",
+   "evidence": "Wittwe geboren 1617 12/8 + 12/8 1682. Stettin. Hm 4° Ee 1700"
+  },
+  {
+   "id": "6a4c19740af972fc7bae7e40",
+   "reason": "year-not-printed",
+   "edition_year": 1656,
+   "display": "1656",
+   "evidence": "Anno CIƆ IƆC LVI."
+  },
+  {
+   "id": "6a4c19210af972fc7bae7d69",
+   "reason": "year-not-printed",
+   "edition_year": 1699,
+   "display": "1699",
+   "evidence": "Anno Domini clɔ Iɔc XCIX."
+  },
+  {
+   "id": "6a4c19130af972fc7bae7c98",
+   "reason": "year-not-printed",
+   "edition_year": 1699,
+   "display": "1699",
+   "evidence": "A. C. M DC XCIX."
+  },
+  {
+   "id": "6a4c13002cba04c8d1690508",
+   "reason": "year-not-printed",
+   "edition_year": 1698,
+   "display": "1698",
+   "evidence": "DIE XV. MARTII ANNO M DC. XCIIX"
+  },
+  {
+   "id": "6a4c00e455f94b596d9b06b4",
+   "reason": "year-not-printed",
+   "edition_year": 1662,
+   "display": "1662",
+   "evidence": "ANNO CIƆ IƆC LXII."
+  },
+  {
+   "id": "6a4be2e0913003fb726ada0d",
+   "reason": "year-not-printed",
+   "edition_year": 1699,
+   "display": "1699",
+   "evidence": "AD DIEM VIII. NOVEMBR. CIƆ IƆ C"
+  },
+  {
+   "id": "6a4bd56e0f37289a3393f3fb",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1679,
+   "display": "1679",
+   "evidence": "χειρογονίας 1652. ad praesentem 1679. caecutiens WENCESLAUS"
+  },
+  {
+   "id": "6a4bc95d6a8b1dab563e0320",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1677,
+   "display": "1677",
+   "evidence": "MVLLERI Academiae Typographi. MDCLXXVII. rec. Quedlinburgi 1718."
+  },
+  {
+   "id": "6a4bc1a0241e69221d26fac6",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1698,
+   "display": "1698",
+   "evidence": "DISPUTATIONIBUS SYNODALIBUS, Anno 1698. et 1699. ventilandae"
+  },
+  {
+   "id": "6a4bab45debad28d8e8e0ba1",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1534,
+   "display": "1534",
+   "evidence": "1675º [Augsburg, Ph. Ulhart], 1534 Sammlung deutscher Drucke"
+  },
+  {
+   "id": "6a4ba73adebad28d8e8df1d2",
+   "reason": "year-not-printed",
+   "edition_year": 1603,
+   "display": "1603",
+   "evidence": "Anno DOMINI M DC IIL."
+  },
+  {
+   "id": "6a4b9d05a25898ec8788c2bd",
+   "reason": "year-not-printed",
+   "edition_year": 1636,
+   "display": "1636",
+   "evidence": "Mense Septembri Anni 1 6 3 6."
+  },
+  {
+   "id": "6a4b86540040559483143017",
+   "reason": "hand-note",
+   "edition_year": 1601,
+   "display": "1601",
+   "evidence": "HEIDELBERGAE, TYPIS VOEGELINIANIS ANNO M. D C I. Handwritten in pencil:"
+  },
+  {
+   "id": "6a4b7056998fdd30218fa2a3",
+   "reason": "year-not-printed",
+   "edition_year": 1586,
+   "display": "1586",
+   "evidence": "VVITEBERGAE Typis Clementis Schleich. 1 5 8 6."
+  },
+  {
+   "id": "6a4b6ecc66f4462393d6fc7e",
+   "reason": "hand-note",
+   "edition_year": 1557,
+   "display": "1557",
+   "evidence": "impressit. 68. Calendis Augusti anno 1557. (vid. in fine) Gottl."
+  },
+  {
+   "id": "6a4b68153029d1cf3f8e9c26",
+   "reason": "year-not-printed",
+   "edition_year": 1601,
+   "display": "1601",
+   "evidence": "ANNI SALUTIS CIƆ. IƆ CVI."
+  },
+  {
+   "id": "6a4b62593029d1cf3f8e86a5",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1566,
+   "display": "1566",
+   "evidence": "discederet. Men- se Ianuario, ANNO M. D. LXVI. P. o. lat. 1675 b INGOLSTADII"
+  },
+  {
+   "id": "6a4b60092ca154843e1aee97",
+   "reason": "year-not-printed",
+   "edition_year": 1690,
+   "display": "1690",
+   "evidence": "M. DC. XC. X. Aprilis denati"
+  },
+  {
+   "id": "6a4b48c0cd03ad2a293d0ccb",
+   "reason": "hand-note",
+   "edition_year": 1550,
+   "display": "1550",
+   "evidence": "Exemplar imprimendo sequatur. M . D . L . Handwritten annotations"
+  },
+  {
+   "id": "6a4b2438eb847f915e9d9f1b",
+   "reason": "year-not-printed",
+   "edition_year": 1647,
+   "display": "1647",
+   "evidence": "Ad diem 11. Decembris Anno Χριστογονίας clɔ Iɔc XLVII."
+  },
+  {
+   "id": "6a4b1fe67622bb5aba12c2cb",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1611,
+   "display": "1611",
+   "evidence": "Magistrum Iacobum Winter Anno 1611. Bavaricum Jus Res 1854"
+  },
+  {
+   "id": "6a4b13bd7622bb5aba1291f2",
+   "reason": "year-not-printed",
+   "edition_year": 1552,
+   "display": "1552",
+   "evidence": "Anno 1 5 5 2."
+  },
+  {
+   "id": "6a4b0f8c7622bb5aba128891",
+   "reason": "year-not-printed",
+   "edition_year": 1685,
+   "display": "1685",
+   "evidence": "Ad diem 3. Junii Anno Chri"
+  },
+  {
+   "id": "6a4b0d33e3f5ea0395c753fd",
+   "reason": "year-not-printed",
+   "edition_year": 1588,
+   "display": "1588",
+   "evidence": "CRACOVIAE TYPIS ALEXII RODECII. 1 5 8 8."
+  },
+  {
+   "id": "6a4b09cb0d1fa55f9988d82f",
+   "reason": "year-not-printed",
+   "edition_year": 1597,
+   "display": "1597",
+   "evidence": "VVITEBERGAE Typis Simonis Gronenbergii. 1 5 9 7."
+  },
+  {
+   "id": "6a4b07cde3f5ea0395c71400",
+   "reason": "hand-note",
+   "edition_year": 1590,
+   "display": "1590",
+   "evidence": "EXCUDEBAT Arnoldus Vvesthoff. 1590. Handwritten gift or"
+  },
+  {
+   "id": "6a4affd719bd0084b1bf2f02",
+   "reason": "hand-note",
+   "edition_year": 1635,
+   "display": "1635",
+   "evidence": "Descripta Typis JACOBI JEGERI, Anno 1635. Handwritten mark at"
+  },
+  {
+   "id": "6a4afbfcac252ba4d6bf2c40",
+   "reason": "year-not-printed",
+   "edition_year": 1650,
+   "display": "1650",
+   "evidence": "Anno CIƆ IƆC L."
+  },
+  {
+   "id": "6a4afab0ac252ba4d6bf27f7",
+   "reason": "year-not-printed",
+   "edition_year": 1586,
+   "display": "1586",
+   "evidence": "Anno 1 5 8 6."
+  },
+  {
+   "id": "6a4afa1bac252ba4d6bf250a",
+   "reason": "year-not-printed",
+   "edition_year": 1617,
+   "display": "1617",
+   "evidence": "CIƆ IƆ CXVII."
+  },
+  {
+   "id": "6a4ae56b9a3f4fa983d9b35e",
+   "reason": "year-not-printed",
+   "edition_year": 1568,
+   "display": "1568",
+   "evidence": "Anno. 1 5 6 8."
+  },
+  {
+   "id": "6a4ae2d19a3f4fa983d9abc1",
+   "reason": "year-not-printed",
+   "edition_year": 1629,
+   "display": "1629",
+   "evidence": "ANNO clɔ Iɔ C XXIX."
+  },
+  {
+   "id": "6a4adbc79a3f4fa983d9777a",
+   "reason": "year-not-printed",
+   "edition_year": 1681,
+   "display": "1681",
+   "evidence": "A. H. MDCLXXXI. DIE XXII. MAII."
+  },
+  {
+   "id": "6a4adb4a2f55066780cb4867",
+   "reason": "year-not-printed",
+   "edition_year": 1598,
+   "display": "1598",
+   "evidence": "die 8 Septembris Anno 1 5 9 8."
+  },
+  {
+   "id": "6a4ad97702b04f5d3def5818",
+   "reason": "year-not-printed",
+   "edition_year": 1595,
+   "display": "1595",
+   "evidence": "∞. IƆ. XVC."
+  },
+  {
+   "id": "6a4ac21eeecacd70e471383e",
+   "reason": "year-not-printed",
+   "edition_year": 1605,
+   "display": "1605",
+   "evidence": "ANNO Domini Nostri Iesu Christi, CIƆ IƆ CV."
+  },
+  {
+   "id": "6a4ab05e14a573f467719fe3",
+   "reason": "year-not-printed",
+   "edition_year": 1612,
+   "display": "1612",
+   "evidence": "Anno Christi CIƆ. IƆC. XII."
+  },
+  {
+   "id": "6a4a9a0214a573f46771383c",
+   "reason": "year-not-printed",
+   "edition_year": 1600,
+   "display": "1600",
+   "evidence": "clɔ Iɔ C."
+  },
+  {
+   "id": "6a4a8c7f0cf770dd0072220c",
+   "reason": "hand-note",
+   "edition_year": 1615,
+   "display": "1615",
+   "evidence": "Excudebat MAURITIUS SAXO. ANNO M. DC. XV. (31.) [crossed-out handwritten"
+  },
+  {
+   "id": "6a4a8c5c0cf770dd00722157",
+   "reason": "year-not-printed",
+   "edition_year": 1597,
+   "display": "1597",
+   "evidence": "Anno Christi CIƆ IƆ XCVII."
+  },
+  {
+   "id": "6a4a74ea7b720133514b43fc",
+   "reason": "hand-note",
+   "edition_year": 1612,
+   "display": "1612",
+   "evidence": "Börneri & Eliæ Rehfeld. ANNO M. DC. XII. [faded handwritten signature"
+  },
+  {
+   "id": "6a4a718b7b720133514b3765",
+   "reason": "year-not-printed",
+   "edition_year": 1585,
+   "display": "1585",
+   "evidence": "Anno salutis reparatæ 1 5 8 5."
+  },
+  {
+   "id": "6a4a6b44d1c07a59a7511355",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1616,
+   "display": "1616",
+   "evidence": "inscr.: Dissertationes theologicae 1616 - 1658."
+  },
+  {
+   "id": "6a4a5ebd4107674feb04de39",
+   "reason": "year-not-printed",
+   "edition_year": 1644,
+   "display": "1644",
+   "evidence": "Anno cIo Iɔ C XLIV."
+  },
+  {
+   "id": "6a4a562b0deff67032eb07cf",
+   "reason": "year-not-printed",
+   "edition_year": 1594,
+   "display": "1594",
+   "evidence": "excudebat Paulus Egenolphus, 15 94."
+  },
+  {
+   "id": "6a4a55f70deff67032eb0402",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1624,
+   "display": "1624",
+   "evidence": "Pedani, Academiae Typographi. Anno M. DC. XXIV. 2 2 . V 4722 1. E. 1910"
+  },
+  {
+   "id": "6a4a4e94b5dd4074593fcd58",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1560,
+   "display": "1560",
+   "evidence": "EXCVDEBAT RAPHAEL HOFFHALTER. ANNO M. D. LX. 1616 - 1641 90 A Reverendissimo"
+  },
+  {
+   "id": "6a4a4b45547be098cf67e9d3",
+   "reason": "year-not-printed",
+   "edition_year": 1587,
+   "display": "1587",
+   "evidence": "Anno 87. 6. idibus februarii."
+  },
+  {
+   "id": "6a4a4911b5dd4074593facc2",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1581,
+   "display": "1581",
+   "evidence": "1611 WITEBERGAE, ANNO CHRISTI M. D. LXXXI."
+  },
+  {
+   "id": "6a4a4060dc4eb98a88bcf9af",
+   "reason": "year-not-printed",
+   "edition_year": 1595,
+   "display": "1595",
+   "evidence": "Anno CIƆ. IƆ. XCV."
+  },
+  {
+   "id": "6a4a043e74ee818c62e2533e",
+   "reason": "year-not-printed",
+   "edition_year": 1669,
+   "display": "1669",
+   "evidence": "Anno M,DC. LXIX."
+  },
+  {
+   "id": "6a4a027747372efd8614c84d",
+   "reason": "year-not-printed",
+   "edition_year": 1620,
+   "display": "1620",
+   "evidence": "Anno CIƆ IƆ C X X."
+  },
+  {
+   "id": "6a49faaa60a0c3556c21bce4",
+   "reason": "year-not-printed",
+   "edition_year": 1599,
+   "display": "1599",
+   "evidence": "cIɔ Iɔ xcIX."
+  },
+  {
+   "id": "6a49f813521e227d522805c9",
+   "reason": "hand-note",
+   "edition_year": 1563,
+   "display": "1563",
+   "evidence": "EXCUDEBAT MICHAELUS SCHIRAT. M. D. LXIII. The handwritten number"
+  },
+  {
+   "id": "6a49f17460a0c3556c21726c",
+   "reason": "year-not-printed",
+   "edition_year": 1650,
+   "display": "1650",
+   "evidence": "prid. Eidus Febr. Anni Irenici-Jubilæi C DC. L."
+  },
+  {
+   "id": "6a49f11463091bea6249b45c",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1628,
+   "display": "1628",
+   "evidence": "CHRISTI NOSTRI CIƆ. IƆC. XXVIII. 1628 1483"
+  },
+  {
+   "id": "6a49ef8124ea5553f2944d1f",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1509,
+   "display": "1509",
+   "evidence": "1687 d £ 10-10-0 Kl. Klosz 3/ 1509 Georgius Klosz, Medicinae"
+  },
+  {
+   "id": "6a49d888126c60145c453812",
+   "reason": "year-not-printed",
+   "edition_year": 1658,
+   "display": "1658",
+   "evidence": "ANNO Salutis Humanæ cIɔ Iɔc LXIIX."
+  },
+  {
+   "id": "6a49b33954660348a49ce008",
+   "reason": "year-not-printed",
+   "edition_year": 1600,
+   "display": "1600",
+   "evidence": "Edita verò ANNO DOMINI, M. DC. MENSE FEBRVARIO."
+  },
+  {
+   "id": "6a49b281f4675e43a2aa4e97",
+   "reason": "year-not-printed",
+   "edition_year": 1595,
+   "display": "1595",
+   "evidence": "Anno Domini cIɔ. Iɔ. x x c v. Febr. x i i i."
+  },
+  {
+   "id": "6a49a0831418f9e7e1225ead",
+   "reason": "year-not-printed",
+   "edition_year": 1560,
+   "display": "1560",
+   "evidence": "Scriptum A. PETRO RENISCH Sileſio. 1 5 6 0."
+  },
+  {
+   "id": "6a49384bcc2a757713a3e0c1",
+   "reason": "year-not-printed",
+   "edition_year": 1597,
+   "display": "1597",
+   "evidence": "15 97. Excusæ Typis Friderici Hartmanni Bibliopolæ Francof. ad Oderam."
+  },
+  {
+   "id": "6a49279f1bbf4176e1e87e2e",
+   "reason": "year-not-printed",
+   "edition_year": 1592,
+   "display": "1592",
+   "evidence": "ANNO M, D, XCII,"
+  },
+  {
+   "id": "6a491d55835e7f1f9d8260b8",
+   "reason": "year-not-printed",
+   "edition_year": 1659,
+   "display": "1659",
+   "evidence": "CIƆ IƆC LIX."
+  },
+  {
+   "id": "6a491c6ca9e39181572e4361",
+   "reason": "other-year-in-evidence",
+   "edition_year": 1583,
+   "display": "1583",
+   "evidence": "hunc librum [...] [...] [...] 1583. [...] [...] 1580."
+  },
+  {
+   "id": "6a42781b28e9db2e39c1fc6f",
+   "reason": "year-not-printed",
+   "edition_year": 1598,
+   "display": "1598",
+   "evidence": "1 5 9 8."
+  },
+  {
+   "id": "6a4261a8744db9e3105aac94",
+   "reason": "year-not-printed",
+   "edition_year": 1593,
+   "display": "1593",
+   "evidence": "Apud Iacobum Chouët. CIƆ IƆ XCIII."
+  },
+  {
+   "id": "6a410c33d95727ee3e0eec7c",
+   "reason": "year-not-printed",
+   "edition_year": 1793,
+   "display": "1793",
+   "evidence": "श्रीसं वत् १८५० मार्गशीर्षशुक्लपक्षे तिथौ त्रयोदश्यां वासरे रवौ इदं पुस्तकं संपूर्णं समाप्तः"
+  },
+  {
+   "id": "6a3cf1064701a906f10f463a",
+   "reason": "cjk-script",
+   "edition_year": 1778,
+   "display": "1778–1782",
+   "evidence": "乾隆四十三年"
+  },
+  {
+   "id": "6a3cf1064701a906f10f4523",
+   "reason": "cjk-script",
+   "edition_year": 1778,
+   "display": "1778–1782",
+   "evidence": "乾隆四十三年"
+  },
+  {
+   "id": "6a3cf0f14701a906f10f42be",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0ed4701a906f10f414d",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0ec4701a906f10f4000",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0ea4701a906f10f3f7f",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e94701a906f10f3ed2",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e84701a906f10f3e1a",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e54701a906f10f3c09",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e54701a906f10f3c07",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e54701a906f10f3c08",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e44701a906f10f3b50",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0e04701a906f10f3ad2",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0de8642f0445b16829b",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0dd4701a906f10f3a1f",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0dc8642f0445b168219",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0db8642f0445b168196",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0d98642f0445b168124",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3cf0d98642f0445b168080",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "6a3ceff24701a906f10f341d",
+   "reason": "cjk-script",
+   "edition_year": 1774,
+   "display": "1774–1776",
+   "evidence": "乾隆三十九年九月恭校上"
+  },
+  {
+   "id": "6a3ceb748642f0445b1545d3",
+   "reason": "cjk-script",
+   "edition_year": 1779,
+   "display": "1779",
+   "evidence": "乾隆四十四年正月恭校上"
+  },
+  {
+   "id": "6a3ceb3695fcd4556305480e",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六年十二月恭校上"
+  },
+  {
+   "id": "6a3ceb3495fcd455630546bf",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六年六月恭校上"
+  },
+  {
+   "id": "6a3ceb3395fcd4556305461b",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六年六月恭校上"
+  },
+  {
+   "id": "6a3ceb2595fcd45563053ea6",
+   "reason": "cjk-script",
+   "edition_year": 1781,
+   "display": "1780–1790",
+   "evidence": "乾隆四十五年五 月恭校上"
+  },
+  {
+   "id": "6a3cc2dbaf74b230c6909fa4",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775",
+   "evidence": "乾隆四十年五月恭校上"
+  },
+  {
+   "id": "6a3cc27aec254ff6cae1197c",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1787",
+   "evidence": "乾隆四十六年十月恭校上"
+  },
+  {
+   "id": "6a3cc269ec254ff6cae10e54",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年四月恭校上"
+  },
+  {
+   "id": "6a3cc25bec254ff6cae105e9",
+   "reason": "cjk-script",
+   "edition_year": 1774,
+   "display": "1774",
+   "evidence": "乾隆三十九年四月恭校上"
+  },
+  {
+   "id": "6a3cc232f9474f825c17578f",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1780",
+   "evidence": "乾隆四十五年九月恭校止"
+  },
+  {
+   "id": "6a3cc1d4f9474f825c172c58",
+   "reason": "cjk-script",
+   "edition_year": 1781,
+   "display": "1781–1782",
+   "evidence": "乾隆四十六年三月恭校上"
+  },
+  {
+   "id": "6a3cc176ec254ff6cae0c7fa",
+   "reason": "cjk-script",
+   "edition_year": 1781,
+   "display": "1781–1783",
+   "evidence": "乾隆四十六年十一月恭校上"
+  },
+  {
+   "id": "6a3cc0b7f9474f825c171a9e",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1785",
+   "evidence": "乾隆四十六年"
+  },
+  {
+   "id": "6a3cba253dce6cfad7499e74",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六年十月恭校上"
+  },
+  {
+   "id": "6a3cb9d93dce6cfad7497656",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六"
+  },
+  {
+   "id": "6a3cb9d93dce6cfad7497655",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六"
+  },
+  {
+   "id": "6a3cb9d83dce6cfad749757a",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "1781–1790",
+   "evidence": "乾隆四十六"
+  },
+  {
+   "id": "6a3cb8d53dce6cfad7490b07",
+   "reason": "cjk-script",
+   "edition_year": 1778,
+   "display": "1778–1782",
+   "evidence": "乾隆四十三年三月恭校上"
+  },
+  {
+   "id": "6a3c77eb01fe4f593c2059aa",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1780–1781",
+   "evidence": "乾隆四十五年十二月恭校上"
+  },
+  {
+   "id": "6a3c77eb01fe4f593c2059ab",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1780–1781",
+   "evidence": "乾隆四十五年十二月恭校上"
+  },
+  {
+   "id": "6a3c71fa01fe4f593c1daf5d",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1785",
+   "evidence": "乾隆四十四年九月"
+  },
+  {
+   "id": "6a3c700d01fe4f593c1d01b4",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700b01fe4f593c1d0128",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700a01fe4f593c1d009c",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700901fe4f593c1d0034",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700701fe4f593c1cff0e",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700701fe4f593c1cff0f",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700701fe4f593c1cfe68",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700601fe4f593c1cfdf0",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700401fe4f593c1cfd34",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700301fe4f593c1cfca6",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700301fe4f593c1cfb7d",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c700301fe4f593c1cfb7c",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fff01fe4f593c1cfa99",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fff01fe4f593c1cfa98",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ffe01fe4f593c1cfa0c",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ffe01fe4f593c1cf964",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ffc01fe4f593c1cf8d8",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ffc01fe4f593c1cf856",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ffb01fe4f593c1cf7f4",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ffa01fe4f593c1cf768",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff801fe4f593c1cf6dc",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff701fe4f593c1cf63e",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff701fe4f593c1cf531",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff601fe4f593c1cf530",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff501fe4f593c1cf4a8",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff301fe4f593c1cf375",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff301fe4f593c1cf374",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff201fe4f593c1cf2e6",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff101fe4f593c1cf260",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6ff001fe4f593c1cf1bc",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fee01fe4f593c1cf138",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fee01fe4f593c1cf04d",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fee01fe4f593c1cf04c",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fed01fe4f593c1cefa4",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6feb01fe4f593c1cef18",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fea01fe4f593c1cee96",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe901fe4f593c1ced2e",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe901fe4f593c1ced2f",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe701fe4f593c1cec93",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe601fe4f593c1cec2a",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe601fe4f593c1cea95",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe501fe4f593c1cea94",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe301fe4f593c1cea09",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe101fe4f593c1ce950",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fe001fe4f593c1ce8cd",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fdf01fe4f593c1ce82c",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fde01fe4f593c1ce6a6",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fde01fe4f593c1ce6a5",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fdd01fe4f593c1ce624",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6fda01fe4f593c1ce522",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "1779–1784",
+   "evidence": "四十四年十一月恭校上"
+  },
+  {
+   "id": "6a3c6cd601fe4f593c1b5652",
+   "reason": "cjk-script",
+   "edition_year": 1607,
+   "display": "1607–1608",
+   "evidence": "萬曆丁未十一月寂照庵識"
+  },
+  {
+   "id": "6a3c6cd301fe4f593c1b55e9",
+   "reason": "cjk-script",
+   "edition_year": 1899,
+   "display": "1899–1900",
+   "evidence": "光緒二十五年冬十一月金陵刻經處識"
+  },
+  {
+   "id": "6a3c68bfaf3c49b59c5dc0cf",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68bfaf3c49b59c5dc0ce",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68bdaf3c49b59c5dc043",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68bcaf3c49b59c5dbfa4",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68bbaf3c49b59c5dbf1b",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68baaf3c49b59c5dbec3",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68baaf3c49b59c5dbe2e",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c68b9af3c49b59c5dbdbf",
+   "reason": "cjk-script",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "時在光緒二十一季乙未七月旣望也"
+  },
+  {
+   "id": "6a3c620540c88a541d8f1fe2",
+   "reason": "cjk-script",
+   "edition_year": 2011,
+   "display": "2011",
+   "evidence": "二〇一一年十月一日"
+  },
+  {
+   "id": "6a3c61fb40c88a541d8f17f7",
+   "reason": "cjk-script",
+   "edition_year": 2009,
+   "display": "2009",
+   "evidence": "出版日期/西元 2009 年 6 月 初版一刷"
+  },
+  {
+   "id": "6a3c61f040c88a541d8f0fc6",
+   "reason": "cjk-script",
+   "edition_year": 1774,
+   "display": "1774–1800",
+   "evidence": "乾隆甲午仲夏"
+  },
+  {
+   "id": "6a3c61d440c88a541d8f046d",
+   "reason": "release-or-copy-date",
+   "edition_year": 2008,
+   "display": "2008",
+   "evidence": "Release date: May 17, 2008"
+  },
+  {
+   "id": "6a3c61a5879008ba7e15f73d",
+   "reason": "cjk-script",
+   "edition_year": 2014,
+   "display": "2014",
+   "evidence": "公元二〇一四年元月 恭印貳仟冊"
+  },
+  {
+   "id": "6a3c61a3879008ba7e15f5dd",
+   "reason": "cjk-script",
+   "edition_year": 2014,
+   "display": "2014",
+   "evidence": "公元二〇一四年元月 恭印貳仟冊"
+  },
+  {
+   "id": "6a3c6199879008ba7e15f328",
+   "reason": "cjk-script",
+   "edition_year": 1896,
+   "display": "1896",
+   "evidence": "歲在柔兆涒灘相月新建夏敬莊序"
+  },
+  {
+   "id": "6a3c6196879008ba7e15f295",
+   "reason": "cjk-script",
+   "edition_year": 1896,
+   "display": "1896",
+   "evidence": "歲在柔兆涒灘相月新建夏敬莊序"
+  },
+  {
+   "id": "6a3c6195879008ba7e15f19c",
+   "reason": "cjk-script",
+   "edition_year": 1896,
+   "display": "1896",
+   "evidence": "歲在柔兆涒灘相月新建夏敬莊序"
+  },
+  {
+   "id": "6a3c618f879008ba7e15f063",
+   "reason": "cjk-script",
+   "edition_year": 1993,
+   "display": "1993",
+   "evidence": "中華民國八十二年七月十五日恭印"
+  },
+  {
+   "id": "6a3c5f53879008ba7e154672",
+   "reason": "cjk-script",
+   "edition_year": 1745,
+   "display": "1745",
+   "evidence": "大日本延享二年乙丑冬十一月"
+  },
+  {
+   "id": "6a3c5f52879008ba7e1542ee",
+   "reason": "cjk-script",
+   "edition_year": 1745,
+   "display": "1745",
+   "evidence": "大日本延享二年乙丑冬十一月"
+  },
+  {
+   "id": "6a3c5f4c879008ba7e15428c",
+   "reason": "cjk-script",
+   "edition_year": 1745,
+   "display": "1745",
+   "evidence": "大日本延享二年乙丑冬十一月"
+  },
+  {
+   "id": "6a3c5e6c40c88a541d8e1e89",
+   "reason": "cjk-script",
+   "edition_year": 1990,
+   "display": "1990",
+   "evidence": "中華民國七十九年六月恭印伍仟冊"
+  },
+  {
+   "id": "6a3c5e5040c88a541d8e0d55",
+   "reason": "cjk-script",
+   "edition_year": 1935,
+   "display": "1934–1936",
+   "evidence": "民國二十又三年夏"
+  },
+  {
+   "id": "6a3c5e4c40c88a541d8e0cb2",
+   "reason": "cjk-script",
+   "edition_year": 1935,
+   "display": "1934–1936",
+   "evidence": "民國二十又三年夏"
+  },
+  {
+   "id": "6a3c5e4b40c88a541d8e08d7",
+   "reason": "cjk-script",
+   "edition_year": 1935,
+   "display": "1934–1936",
+   "evidence": "民國二十又三年夏"
+  },
+  {
+   "id": "6a3c5e4440c88a541d8e0785",
+   "reason": "cjk-script",
+   "edition_year": 1901,
+   "display": "1901–1910",
+   "evidence": "光緒二十有七年歲次辛丑秋八月石埭楊文會識"
+  },
+  {
+   "id": "6a3c5e4440c88a541d8e0720",
+   "reason": "cjk-script",
+   "edition_year": 1901,
+   "display": "1901–1910",
+   "evidence": "光緒二十有七年歲次辛丑秋八月石埭楊文會識"
+  },
+  {
+   "id": "6a3c5e4340c88a541d8e06b7",
+   "reason": "cjk-script",
+   "edition_year": 1901,
+   "display": "1901–1910",
+   "evidence": "光緒二十有七年歲次辛丑秋八月石埭楊文會識"
+  },
+  {
+   "id": "6a3c5e40879008ba7e151a94",
+   "reason": "cjk-script",
+   "edition_year": 1998,
+   "display": "1998",
+   "evidence": "中華民國八十七年釋迦佛誕恭印"
+  },
+  {
+   "id": "6a20327518654bf8e1902dc2",
+   "reason": "release-or-copy-date",
+   "edition_year": 1930,
+   "display": "1930",
+   "evidence": "het afs. is vervaardigd door Mevr. P. Prawiradina- ta, Weltevreden, Jan. 1930"
+  },
+  {
+   "id": "6a14e18e311a9edd46222354",
+   "reason": "era-formula",
+   "edition_year": 1822,
+   "display": "1762–1882",
+   "evidence": "ཅེས་པ་འདི་ནི་ཆུ་རྟ་ཟླ་བ་བཞི་པའི་ཚེས་ཉིུ་བི་སྤེན་འཇཾ་པའི་ཉིན།"
+  },
+  {
+   "id": "6a14e183311a9edd46221de9",
+   "reason": "era-formula",
+   "edition_year": 1799,
+   "display": "1739–1919",
+   "evidence": "ས་མོ་ལུག་གི་ལོ་དཔྱིད་ཟླ་འབྲིང་པོའི་ཚེས་གཅིག་ལ་རྫོགས་པར་བྲིས་པའོ"
+  },
+  {
+   "id": "6a08dd92db330455085800f2",
+   "reason": "other-volume",
+   "edition_year": 1667,
+   "display": "1667",
+   "evidence": "Suivant la Copie imprimée A PARIS, M. DC. LXVII."
+  },
+  {
+   "id": "6a0854fe0ce3b2271052a2d2",
+   "reason": "other-year-in-evidence",
+   "edition_year": 2013,
+   "display": "2013",
+   "evidence": "(HPD) Ś. ŚAKE 1807. on 05 July 2013. A. C. 1886."
+  },
+  {
+   "id": "69f3262052a77bb28fdb6562",
+   "reason": "cjk-script",
+   "edition_year": 1573,
+   "display": "1573–1600",
+   "evidence": "萬曆元年，中秋生明"
+  },
+  {
+   "id": "69e78b6b4a6785cfd60d56dd",
+   "reason": "year-not-printed",
+   "edition_year": 1969,
+   "display": "1969",
+   "evidence": "རབ་བྱུང་བཅུ་གཉིས་པ་ས་མོ་བྱའི་ལོ"
+  },
+  {
+   "id": "69e78a8c4a6785cfd60d46a6",
+   "reason": "year-not-printed",
+   "edition_year": 1922,
+   "display": "1862–1982",
+   "evidence": "ཆུ་ཕོ་ཁྱི་ཡི་ལོ"
+  },
+  {
+   "id": "69e78a6d4a6785cfd60d340a",
+   "reason": "year-not-printed",
+   "edition_year": 1857,
+   "display": "1857–1917",
+   "evidence": "མེ་མོ་སྤྲུལ་གྱི་ལོ"
+  },
+  {
+   "id": "69e78a114a6785cfd60d2f57",
+   "reason": "year-not-printed",
+   "edition_year": 1894,
+   "display": "1834–1954",
+   "evidence": "གནམ་པོ་རྒྱལ་པོ་ཤིང་མོ་རྟ་ལ་འབྲིས་པོ"
+  },
+  {
+   "id": "69e788714a6785cfd60d109b",
+   "reason": "era-formula",
+   "edition_year": 1910,
+   "display": "1850–1910",
+   "evidence": "ལྕགས་ཕོ་ཁྱི་ལོའི་མཆུ་ཟླའི་དམར་ཕྱོགས་སུ"
+  },
+  {
+   "id": "69e788354a6785cfd60cfdce",
+   "reason": "era-formula",
+   "edition_year": 1848,
+   "display": "1788–1908",
+   "evidence": "ས་སྤྲེ་ཟླ་༡༠ཚེས་༡༠ལ།"
+  },
+  {
+   "id": "69e7880f4a6785cfd60cedaf",
+   "reason": "year-not-printed",
+   "edition_year": 1886,
+   "display": "1826–1946",
+   "evidence": "མེ་ཕོ་ཁྱི་ལོ"
+  },
+  {
+   "id": "69e779f90fc6fc955e35d519",
+   "reason": "year-not-printed",
+   "edition_year": 1860,
+   "display": "1800–1920",
+   "evidence": "ཞེས་ལྕགས་ཁམས་སྤྲེའུའི་བགྲང་གཞི་རྒྱལ་གྱིས་ ཀ་མི་ཚེས་དགེ་བར་བྲིས།"
+  },
+  {
+   "id": "69e7619fcc48e59ad74f0bdb",
+   "reason": "era-formula",
+   "edition_year": 1920,
+   "display": "1860–1980",
+   "evidence": "ལྕགས་ཕོ་སྤྲེལ་ལོ་སྟོན་ཟླ་ར་བ་ཡི།"
+  },
+  {
+   "id": "69e76191cc48e59ad74f06b6",
+   "reason": "era-formula",
+   "edition_year": 1906,
+   "display": "1846–1966",
+   "evidence": "མེ་ཕོ་ རྟའི་ལོ་ལ། ས་ག་ཆེན་པོའི་ཟླ་བ་ཡར་ངོའི་ཚེས་བཞི་ལ།"
+  },
+  {
+   "id": "69e72c81a409200ea79f4a6a",
+   "reason": "label-or-describing",
+   "edition_year": 1475,
+   "display": "1475",
+   "evidence": "Edition des Epîtres de Ciceron imprimée par Jenson à Venise en 1475."
+  },
+  {
+   "id": "69dbcce30f8c5edf20f4f6ca",
+   "reason": "other-volume",
+   "edition_year": 1497,
+   "display": "1496–1497",
+   "evidence": "Et hoc pro Anno domini Millesimoquadringétesimo Nonagesimoseptimo."
+  },
+  {
+   "id": "69dbcce20f8c5edf20f4f6ad",
+   "reason": "year-not-printed",
+   "edition_year": 1497,
+   "display": "1496–1497",
+   "evidence": "Et hoc pro Anno domini Millesimoquadringétesimo Nonagesimoseptimo."
+  },
+  {
+   "id": "69dbcce10f8c5edf20f4f697",
+   "reason": "year-not-printed",
+   "edition_year": 1495,
+   "display": "1494–1495",
+   "evidence": "Practica cracouiensis sup anno M.cccc.xcv."
+  },
+  {
+   "id": "6991c5763074a1745a411600",
+   "reason": "display-not-plain",
+   "edition_year": 1585,
+   "display": "1585 or soon after",
+   "evidence": "anno M D LXXXV"
+  },
+  {
+   "id": "69906d7364d44bd0a0ef534f",
+   "reason": "era-formula",
+   "edition_year": 1922,
+   "display": "Samvat 1979 (1922 CE)",
+   "evidence": "संवत् १९७९, शकाब्दाः १८४४."
+  },
+  {
+   "id": "699069472f82e0fda480618d",
+   "reason": "year-not-printed",
+   "edition_year": 1865,
+   "display": "1865",
+   "evidence": "१८६५"
+  },
+  {
+   "id": "699068ed2e4efe910676a6a3",
+   "reason": "label-or-describing",
+   "edition_year": 1900,
+   "display": "1900",
+   "evidence": "SECOND EDITION. THOROUGHLY REVISED. Madras: PRINTED AT THE ROYAL VICTORIA PRESS, BY K. KRISHNASWAMI AIYAR, B.A. 1900."
+  },
+  {
+   "id": "699068458da6face82f77c58",
+   "reason": "era-formula",
+   "edition_year": 1935,
+   "display": "1935 (Shaka 1857)",
+   "evidence": "शकाब्दाः १८५७, सन १९३५."
+  },
+  {
+   "id": "6990681a249ce014347d55cf",
+   "reason": "era-formula",
+   "edition_year": 1935,
+   "display": "1935 (Shaka 1857)",
+   "evidence": "शकाब्दाः १८५७, सन १९३५."
+  },
+  {
+   "id": "699066de249ce014347d1e4c",
+   "reason": "era-formula",
+   "edition_year": 1923,
+   "display": "1923 (VS 1980, Saka 1846)",
+   "evidence": "संवत् १९८०, शके १८४६."
+  },
+  {
+   "id": "699066c0249ce014347d18f1",
+   "reason": "era-formula",
+   "edition_year": 1885,
+   "display": "1885 (VS 1942)",
+   "evidence": "विक्रम संवत् १९४२ सन १८८५"
+  },
+  {
+   "id": "69906555726f64800c10bd15",
+   "reason": "era-formula",
+   "edition_year": 1908,
+   "display": "1908 (Saka 1830)",
+   "evidence": "शकाब्दाः १८३० खिस्ताब्दाः १९०८"
+  },
+  {
+   "id": "69906469ef12272ffdc9204a",
+   "reason": "era-formula",
+   "edition_year": 1885,
+   "display": "August 1885",
+   "evidence": "अगस्त सन् १८८५ ई०"
+  },
+  {
+   "id": "695931d8b91a6184ea9433b3",
+   "reason": "hand-note",
+   "edition_year": 1349,
+   "display": "1349 (French translation, MS.)",
+   "evidence": "The date of the MS. which appears on the Title to the second book is 1349."
+  },
+  {
+   "id": "6992c9ffd4d545ae73fed67f",
+   "reason": "cjk-script",
+   "edition_year": 1781,
+   "display": "1781",
+   "evidence": "乾隆四十六年正月恭校上"
+  },
+  {
+   "id": "6a14e17d311a9edd46221b35",
+   "reason": "era-formula",
+   "edition_year": 1708,
+   "display": "1707–1768",
+   "evidence": "མེ་མོ་ཕག་ཡོའི་ནག་པ་ཟླ་བའི་ཚེས་བཅུ་ལ"
+  },
+  {
+   "id": "6953a88877f38f6761bd18cf",
+   "reason": "display-not-plain",
+   "edition_year": 1956,
+   "display": "1956 (reprinted 1963, 1970)",
+   "evidence": "FIRST PUBLISHED 1956"
+  },
+  {
+   "id": "6992cb55d4d545ae73fef09e",
+   "reason": "cjk-script",
+   "edition_year": 1883,
+   "display": "1883 (Guangxu 9)",
+   "evidence": "光緒九年十一月望日"
+  },
+  {
+   "id": "6992cb54d4d545ae73feefd4",
+   "reason": "cjk-script",
+   "edition_year": 1780,
+   "display": "Siku quanshu manuscript copy, c. 1773–1790",
+   "evidence": "欽定四庫全書"
+  },
+  {
+   "id": "6992ca34d4d545ae73fed83b",
+   "reason": "cjk-script",
+   "edition_year": 1898,
+   "display": "1898",
+   "evidence": "光緒戊戌夏五"
+  },
+  {
+   "id": "6992c92569b777d72c76346f",
+   "reason": "cjk-script",
+   "edition_year": 1781,
+   "display": "1780 (Qianlong 45), Siku copy",
+   "evidence": "乾隆四十五年 六月恭校上"
+  },
+  {
+   "id": "6a3e781ac7e5622c3d0bd71b",
+   "reason": "other-volume",
+   "edition_year": 1888,
+   "display": "1888",
+   "evidence": "JUNE, 1888"
+  },
+  {
+   "id": "6a3e7815c7e5622c3d0bd6de",
+   "reason": "other-volume",
+   "edition_year": 1888,
+   "display": "1888",
+   "evidence": "JUNE, 1888"
+  },
+  {
+   "id": "6a3e781228fae891bf2802a6",
+   "reason": "other-volume",
+   "edition_year": 1888,
+   "display": "1888",
+   "evidence": "JUNE, 1888"
+  },
+  {
+   "id": "6a3e77d0c7e5622c3d0bcca6",
+   "reason": "other-volume",
+   "edition_year": 1888,
+   "display": "1888",
+   "evidence": "JUNE, 1888"
+  },
+  {
+   "id": "6a3e77cac7e5622c3d0bcc2c",
+   "reason": "other-volume",
+   "edition_year": 1888,
+   "display": "1888",
+   "evidence": "JUNE, 1888"
+  },
+  {
+   "id": "69c898286c6f3cc53c85ca2f",
+   "reason": "label-or-describing",
+   "edition_year": 1926,
+   "display": "1926",
+   "evidence": "PRIVATELY PRINTED. COPYRIGHT. 1926"
+  },
+  {
+   "id": "69938e38d5a98fd66f430d70",
+   "reason": "year-not-printed",
+   "edition_year": 1050,
+   "display": "11th c. manuscript",
+   "evidence": "XI s."
+  },
+  {
+   "id": "6992cc3491c64b08f7c797e6",
+   "reason": "cjk-script",
+   "edition_year": 1879,
+   "display": "1879",
+   "evidence": "光緒五年夏 四月石埭楊 氏刻於法國 巴黎都城"
+  },
+  {
+   "id": "69c8982a6c6f3cc53c85ca35",
+   "reason": "label-or-describing",
+   "edition_year": 1925,
+   "display": "1925",
+   "evidence": "PRIVATELY PRINTED. COPYRIGHT. 1925"
+  },
+  {
+   "id": "695942607d14807348773a98",
+   "reason": "year-not-printed",
+   "edition_year": 1893,
+   "display": "1893",
+   "evidence": "SECOND EDITION. THE THEOSOPHICAL PUBLISHING SOCIETY, 7, DUKE STREET, ADELPHI, LONDON, W.C"
+  },
+  {
+   "id": "69c8a2d36c6f3cc53c85e4fc",
+   "reason": "label-or-describing",
+   "edition_year": 1924,
+   "display": "1924",
+   "evidence": "PRIVATELY PRINTED. 1924. COPYRIGHT."
+  },
+  {
+   "id": "69938e35d5a98fd66f430c9c",
+   "reason": "display-not-plain",
+   "edition_year": 1905,
+   "display": "Teubner, Leipzig, Haury (vol. I 1905; De Aedificiis vol. IV ",
+   "evidence": "MCMV"
+  },
+  {
+   "id": "69937a52b0a84a5763967e2d",
+   "reason": "other-volume",
+   "edition_year": 1920,
+   "display": "1920",
+   "evidence": "MCMXX"
+  },
+  {
+   "id": "6992cf09284cdd19fef46e29",
+   "reason": "cjk-script",
+   "edition_year": 1852,
+   "display": "c. 1852 or later",
+   "evidence": "咸豐二年仲秋月朔旦晉江陳慶鏞序"
+  },
+  {
+   "id": "69937ce0c970b9f8351dd434",
+   "reason": "display-not-plain",
+   "edition_year": 1945,
+   "display": "1945 (reprint of 1919 first printing)",
+   "evidence": "MCMXLV"
+  },
+  {
+   "id": "699379ffb0a84a5763966d48",
+   "reason": "display-not-plain",
+   "edition_year": 1926,
+   "display": "1926",
+   "evidence": "NEW YORK: G. P. PUTNAM'S SONS MCMXXVI"
+  },
+  {
+   "id": "6992ce64673ee1e40e320699",
+   "reason": "cjk-script",
+   "edition_year": 1782,
+   "display": "Siku Quanshu copy, 1779 or later",
+   "evidence": "乾隆四十四年三月恭校上"
+  },
+  {
+   "id": "69906540726f64800c10a6ff",
+   "reason": "label-or-describing",
+   "edition_year": 1943,
+   "display": "1943",
+   "evidence": "THE ADYAR LIBRARY 1943"
+  },
+  {
+   "id": "6953c75f77f38f6761bdb27a",
+   "reason": "year-not-printed",
+   "edition_year": 1930,
+   "display": "1925-1940",
+   "evidence": "VOLUME III & VI CONTAINING THE TRANSLATION OF THE THIRD & FOURTH BOOKS 1925—1940"
+  },
+  {
+   "id": "6a1973c1bc198340eea932ee",
+   "reason": "year-not-printed",
+   "edition_year": 1859,
+   "display": "1858–1900",
+   "evidence": "بسم الله الرحمن الرحيم ١٢٧٥ هـ"
+  },
+  {
+   "id": "6a19737dbc198340eea932bc",
+   "reason": "year-not-printed",
+   "edition_year": 1859,
+   "display": "1858–1900",
+   "evidence": "بسم الله الرحمن الرحيم ١٢٧٥ هـ"
+  },
+  {
+   "id": "69906a861cf6ed5fbc8f5d21",
+   "reason": "era-formula",
+   "edition_year": 1907,
+   "display": "Magha Samvat 1964 (1907/08)",
+   "evidence": "माघ संवत् १९६४, शके १८२९"
+  },
+  {
+   "id": "699259218812793469fe2a44",
+   "reason": "label-or-describing",
+   "edition_year": 1917,
+   "display": "1917",
+   "evidence": "SECOND EDITION PUBLISHED BY THE PĀNINI OFFICE BHUVANESVARI ĀSRAMA, BAHADURGANJ Allahabad 1917"
+  },
+  {
+   "id": "6991d89a8c1030b12444c076",
+   "reason": "era-formula",
+   "edition_year": 1895,
+   "display": "1895",
+   "evidence": "शालीवाहनशके १८१७"
+  },
+  {
+   "id": "6991d8938c1030b12444bfdb",
+   "reason": "era-formula",
+   "edition_year": 1900,
+   "display": "1900",
+   "evidence": "संवत् १९५६ सन् १९००."
+  },
+  {
+   "id": "6991bd3c70254d38471e33b8",
+   "reason": "label-or-describing",
+   "edition_year": 2013,
+   "display": "2013",
+   "evidence": "This edition created and published by Global Grey 2013."
+  },
+  {
+   "id": "6a3cf0ec4701a906f10f4001",
+   "reason": "cjk-script",
+   "edition_year": 1775,
+   "display": "1775–1777",
+   "evidence": "乾隆四十年二月恭校上"
+  },
+  {
+   "id": "695936603b43cb6630c9171f",
+   "reason": "label-or-describing",
+   "edition_year": 1999,
+   "display": "1999",
+   "evidence": "The Grimoirium Verum PDF edition, 1999"
+  },
+  {
+   "id": "6992d66d46b85e738a0c416a",
+   "reason": "era-formula",
+   "edition_year": 1906,
+   "display": "1906 (Samvat 1963)",
+   "evidence": "श्रीसंवत १९६३ वै०, सन १९०६ ई."
+  },
+  {
+   "id": "69906717249ce014347d28b8",
+   "reason": "era-formula",
+   "edition_year": 1892,
+   "display": "Samvat 1949 (1892/93 CE)",
+   "evidence": "प्रथमसंस्करणम् । संवत् १९४९"
+  }
+ ]
+}

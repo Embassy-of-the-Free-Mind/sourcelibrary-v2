@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads as continuous Sāṅkhyakārikā verses 6–10 (sāmānyatastu dṛṣṭād…, atidūrāt sāmīpyād…, asadakaraṇād…, hetumad anityam…) with verse numbers, while B is only fluent in its first two rows and C is mostly syllable strings that don't form words.

@@ -1,0 +1,16 @@
+{
+ "arm": "L4",
+ "model": "gemini-3.1-flash-lite",
+ "temperature": 0,
+ "thinkingBudget": 1024,
+ "live_prompt_version": "19.1",
+ "live_prompt_name": "Standard OCR",
+ "live_prompt_hash": "9d8f959e053491362b2c4acec1e20c9a",
+ "prompt_sha256": "aa2c56cf8bd4fb62d64e94af96e86c8726936e79385e3bbb38a5c78a0738e8a5",
+ "examples_sha256": [],
+ "wall_secs": 120.211,
+ "in_tok": 451597,
+ "out_tok": 296289,
+ "think_tok": 213692,
+ "cost_usd": 0.5573
+}

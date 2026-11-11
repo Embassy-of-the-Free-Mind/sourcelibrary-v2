@@ -1,0 +1,10 @@
+{"_note": "By-eye row layout from labelled y-grids of each left half-leaf (full-resolution px): hole = string-hole centre x; per side first and last row centre y and row count. Rows between are spaced evenly and each centre is refined to the local ink maximum within +-12 px.",
+ "4b": {"hole": 1447, "L": [215, 1040, 9], "R": [205, 1030, 9]},
+ "5t": {"hole": 1470, "L": [226, 1063, 9], "R": [221, 1028, 9]},
+ "5b": {"hole": 1452, "L": [196, 1102, 10], "R": [201, 1093, 10]},
+ "6t": {"hole": 1457, "L": [230, 1116, 10], "R": [213, 1087, 10]},
+ "6b": {"hole": 1455, "L": [232, 1085, 9], "R": [215, 1030, 9]},
+ "7t": {"hole": 1428, "L": [213, 1029, 9], "R": [213, 1029, 9]},
+ "8t": {"hole": 1445, "L": [255, 1080, 9], "R": [255, 1080, 9]},
+ "8b": {"hole": 1460, "L": [219, 1119, 10], "R": [213, 1085, 10]},
+ "9t": {"hole": 1449, "L": [208, 1116, 10], "R": [208, 1108, 10]}}

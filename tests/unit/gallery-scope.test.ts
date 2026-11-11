@@ -31,6 +31,11 @@ describe('gallery scope', () => {
     expect(f).toMatchObject({ book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } });
   });
 
+  it('leaves owners\' bookplates out, whatever their quality score', () => {
+    // 157 rows typed exlibris sat at quality >= 0.7 on the public gallery (#5200).
+    expect(galleryFilter({ bookId: 'b1' })).toMatchObject({ type: { $nin: ['exlibris', 'bookplate'] } });
+  });
+
   it('applies the per-book cap to the count, since the gallery applies it to results', () => {
     // "View all 267 plates" opened a page capped at 3 per book, showing 9.
     expect(galleryFilter({ bookIds: ['a'] })).toMatchObject({ book_rank: { $lte: DEFAULT_MAX_PER_BOOK } });

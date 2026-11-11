@@ -95,11 +95,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/netra-tantra-with-kemarjas-udyota" className="hover:text-accent-gold-dark transition-colors">The Netra Tantra</Link>
+          The Netra Tantra
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          A Shaiva text focused on the deity Amriteshvara, the <Link href="/book/netra-tantra-with-kemarjas-udyota" className="text-accent-rust hover:text-accent-rust underline"><em>Netra Tantra</em></Link> (&ldquo;Tantra of the Eye&rdquo;) contains important material on kundalini yoga and the relationship between breath, consciousness, and the energy channels. Our edition, with K&#7779;emar&#257;ja&apos;s commentary, runs to 318 pages. Like the <em>Svacchanda Tantra</em>, it has never had a complete published English translation.
+          A Shaiva text focused on the deity Amriteshvara, the <em>Netra Tantra</em> (&ldquo;Tantra of the Eye&rdquo;) contains important material on kundalini yoga and the relationship between breath, consciousness, and the energy channels. Like the <em>Svacchanda Tantra</em>, it has never had a complete published English translation.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
@@ -168,7 +168,7 @@ export default function ChakraTraditionPage() {
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/kularnava-tantra-traditional" className="text-accent-rust hover:text-accent-rust underline"><strong>Kularnava Tantra</strong></Link>: One of the most important Kaula texts, containing teachings on guru-disciple initiation, the transformation of desire into spiritual practice, and the subtle body as a site of ritual action. Source Library also holds <Link href="/book/kularnava-tantra-english-translation-arthur-avalon-woodroffe" className="text-accent-rust hover:text-accent-rust underline">Arthur Avalon&apos;s English translation</Link> for comparison.
+              <Link href="/book/kularnava-tantra-traditional" className="text-accent-rust hover:text-accent-rust underline"><strong>Kularnava Tantra</strong></Link>: One of the most important Kaula texts, containing teachings on guru-disciple initiation, the transformation of desire into spiritual practice, and the subtle body as a site of ritual action.
             </span>
           </li>
         </ul>
@@ -217,12 +217,6 @@ export default function ChakraTraditionPage() {
               <tr>
                 <td className="py-3 pr-4">Svacchanda Tantra (Vol. I)</td>
                 <td className="py-3 pr-4">440</td>
-                <td className="py-3 pr-4">Internet Archive</td>
-                <td className="py-3">Translated</td>
-              </tr>
-              <tr>
-                <td className="py-3 pr-4"><Link href="/book/netra-tantra-with-kemarjas-udyota" className="text-accent-rust hover:text-accent-rust underline">Netra Tantra</Link></td>
-                <td className="py-3 pr-4">318</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Translated</td>
               </tr>
@@ -285,7 +279,7 @@ export default function ChakraTraditionPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          All texts are freely readable: the Sanskrit originals are public domain, and our translations are <Link href="/licensing" className="text-accent-rust hover:text-accent-rust underline">CC BY-SA 4.0</Link>. The originals are preserved alongside any translations, and every page links back to its source institution. This is a growing collection; as we process, translate, and verify these texts, their status will update on the site.
+          All texts are freely readable: the Sanskrit originals are public domain, and our translations are <Link href="/licensing" className="text-accent-rust hover:text-accent-rust underline">CC BY-NC-SA 4.0</Link>. The originals are preserved alongside any translations, and every page links back to its source institution. This is a growing collection; as we process, translate, and verify these texts, their status will update on the site.
         </p>
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">

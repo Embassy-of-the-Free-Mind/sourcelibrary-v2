@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A reads as real Sanskrit and Malayalam across most rows, with phrases like "prakaraṇādi", "samudāyaśaktiḥ" and "vākyārtthaṅṅaḻ" that fit a Dīpikā-style passage on śakti and sentence meaning; C's few fragments agree with A but most of it is illegible, and B is long but mostly broken syllables.

@@ -1,0 +1,13 @@
+ROW 1 | [illegible]ഃ[illegible]
+ROW 2 | [illegible]
+ROW 3 | [illegible]
+ROW 4 | ഭൂതഃ[illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | I could not read this leaf. It has 12 rows: rows 1–4 run the full width and rows 5–12 are split at both holes. In each row I can see aksharas, visargas and anusvaras, but at this resolution I can't tell the letters apart with any confidence. The only reliable bits are "ഭൂതഃ" at the start of row 4 and one visarga in row 1. I've left everything else as [illegible] instead of guessing or filling it in from the known text. Higher-resolution crops of each column would be needed to transcribe it properly.

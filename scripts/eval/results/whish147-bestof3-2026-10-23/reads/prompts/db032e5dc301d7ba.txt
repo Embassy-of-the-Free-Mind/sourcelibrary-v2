@@ -1,0 +1,50 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] jakhiṃ [illegible] basaḥnā [illegible] śagra [illegible] ḥ [illegible] le [illegible] ya [illegible] ṃni [illegible] śvaya [illegible] draya [illegible] yaya [illegible]
+2. hi [illegible] ra [illegible] ṭedha [illegible] ḥ [illegible] na [illegible] dra [illegible] bhai [illegible] ṇḍa [illegible] gra [illegible] drarar [illegible] ra [illegible] bhi [illegible] ṃ [illegible]
+3. [illegible] ya [illegible] ra [illegible] ṃgrayasanarama [illegible] gra [illegible] ya [illegible] ḥnara [illegible] ra [illegible] gra [illegible] yaya [illegible] bhi [illegible]
+4. [illegible] ṃsa [illegible] grana [illegible] ṃgra [illegible] ya [illegible] ra [illegible] gra [illegible] draya [illegible] ra [illegible]
+5. [illegible] dra [illegible] ‖ [illegible] dra [illegible] ra [illegible] ‖ [illegible] liṃ [illegible] ya [illegible]
+6. [illegible] dra [illegible] ṃ [illegible] ‖ [illegible] ḥ [illegible] ‖ [illegible]
+7. [illegible] ra [illegible] ‖ [illegible] ra [illegible] ‖ [illegible] gra [illegible]
+8. [illegible] ḥ [illegible] ‖ [illegible] ḥ [illegible] ‖ [illegible] gra [illegible]
+9. [illegible] ḥ [illegible] ya [illegible] ra [illegible] ra [illegible] ya [illegible] ya [illegible] ra [illegible]
+10. [illegible] gra [illegible] ya [illegible] bhi [illegible] ra [illegible] dra [illegible] gra [illegible] ya [illegible]
+11. [illegible] ḥdiya [illegible] ya [illegible] ra [illegible] ya [illegible] gra [illegible] ya [illegible]
+12. [illegible] ra [illegible] yaḥ [illegible] gra [illegible] ya [illegible] ḥ [illegible]
+
+TRANSCRIPTION B
+1. [illegible] ‖ [illegible] ‖ [illegible]
+2. [illegible] ‖ [illegible] ‖ [illegible]
+3. [illegible] ‖ [illegible] ‖ [illegible]
+4. [illegible] ‖ [illegible] ‖ [illegible] [illegible]
+5. [illegible] ‖ [illegible] ‖ [illegible]
+6. [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+10. [illegible] ‖ [illegible] ‖ [illegible]
+11. [illegible] ‖ [illegible] ‖ [illegible]
+12. [illegible] ‖ [illegible] ‖ [illegible]
+
+TRANSCRIPTION C
+1. [illegible] ‖ [illegible] ‖ [illegible]
+2. [illegible] ‖ [illegible] ‖ [illegible]
+3. [illegible] ‖ [illegible] ‖ [illegible]
+4. [illegible] ‖ [illegible] ‖ [illegible]
+5. [illegible] ‖ [illegible] ‖ [illegible]
+6. [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+10. [illegible] ‖ [illegible] ‖ [illegible]
+11. [illegible] ‖ [illegible] ‖ [illegible]
+12. [illegible] ‖ [illegible] ‖ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

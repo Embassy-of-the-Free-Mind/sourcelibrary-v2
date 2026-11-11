@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most coherent run of the svataḥ-prāmāṇya discussion, with readings such as "sādhanavāraṇā", "vyavasāyel pramāṇāgrāhaka", "udāhṛtaṃ" and "svaka-", while C is fluent only in places and A's rows mostly break down into syllable strings like "basāyana" and "ṛvasthāyatrijñalā".

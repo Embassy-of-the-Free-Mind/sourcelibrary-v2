@@ -1,23 +1,34 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getReadDb } from '@/lib/mongodb';
+import { getDb, getReadDb } from '@/lib/mongodb';
 import { verifyInviteToken } from '@/lib/review-invite-token';
 import { isValidRating } from '@/lib/review-queue';
+import {
+  isReaderCheckToken,
+  loadReaderCheck,
+  loadReaderCheckAnswers,
+  toClientItems,
+} from '@/lib/reader-check';
 import InviteCheck from '@/components/review/InviteCheck';
+import ReaderCheck from '@/components/review/ReaderCheck';
 
 /**
- * /check/<token>?v=<verdict>
+ * /check/<token>
  *
- * What an emailed invitation opens. The verdict in `?v=` is only PRESELECTED,
- * never recorded — the write needs a POST from a real click (mail scanners
- * fetch every link in a message before a human sees it).
+ * What a personal link opens. Two kinds of token, told apart by shape:
+ *  - a minted reader-check token (32 base64url characters, #7573): twenty pages,
+ *    each a scan and two versions of its text, compared blind;
+ *  - an emailed one-page invitation (`<item>.<invitee>.<mac>`), with `?v=`
+ *    only PRESELECTING a verdict. Neither records anything on a GET: the write
+ *    needs a POST from a real click (mail scanners fetch every link in a
+ *    message before a human sees it).
  *
  * Deliberately noindex: these URLs are personal capabilities, not content.
  */
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Translation check | Source Library',
+  title: 'Reader check | Source Library',
   robots: { index: false, follow: false },
 };
 
@@ -29,8 +40,27 @@ export default async function CheckPage({
   searchParams: Promise<{ v?: string }>;
 }) {
   const { token } = await params;
-  const { v } = await searchParams;
 
+  if (isReaderCheckToken(token)) {
+    // Primary, not a secondary: a reader who reloads right after answering must
+    // see their answer, not a replica that has not caught up.
+    const db = await getDb();
+    const doc = await loadReaderCheck(db, token);
+    if (!doc) notFound();
+    const answers = await loadReaderCheckAnswers(db, doc._id);
+    return (
+      <ReaderCheck
+        token={token}
+        // The packet's language, not the reader's stated one: it sets the
+        // heading and the text direction of the page being compared.
+        language={doc.packet.language}
+        items={toClientItems(doc)}
+        initialAnswers={answers}
+      />
+    );
+  }
+
+  const { v } = await searchParams;
   const payload = verifyInviteToken(token);
   if (!payload) notFound();
 

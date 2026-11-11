@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf starts ദ്ധി/ദ്വിഷംനവിനാദ്ധാവെനാലിം… and ends …ദിവിഷയഃപ്രവൃത്ത(ക)രെ. B, C and F match this opening. A, D and E start with ലിംഗംനവിനാഭാവെന, which is fluent text that is not what the leaf shows.
+
+CHECK | row 6: The leaf starts ദിവൃത്തൈക്കന്ത്യാ and ends …പ്രകൃതിഉളെതാമഹത്ഥം. F matches closely ("ദിവ്യരത്തൈക്കുന്ത്യാ … പ്രകൃതിഉളെതാമഹത്ഥം"). B gets only പ്രകൃതിഉ…; C ("ഭൃത്തെക്കന്മാ … ഷ്കുക്കളുകൊമപാദ്യ") and A, D, E do not match.
+
+CHECK | row 10: The leaf starts മാസ്ഥി/ത്രിയാന്ത്വ…; the middle piece reads …തനെവാകഃപ്ലക്ക…; the row ends …കനവിമെമാക്ഷനിമിത്തം॰പ്രവൃത്തപെക്ഷതബ…വ്യ. F matches the whole row. C matches only the start. B is weak. A, D and E have different text.
+
+PICK | F
+
+RANK | F, C, B, D, A, E
+
+WHY | F matches the strokes in every column in rows 3–10, while C and B drift from the leaf after the first row and A, D and E transcribe a different, fluent text that is not on this leaf.

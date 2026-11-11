@@ -13,17 +13,15 @@ export const metadata: Metadata = {
   description: galleryDescription,
   alternates: {
     canonical: '/gallery',
-    types: {
-      'application/atom+xml': '/api/feed/gallery',
-    },
   },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image-gallery.jpg', width: 1600, height: 840, alt: 'Illustrations from rare books in the Source Library gallery' }],
     title: galleryTitle,
     description: galleryDescription,
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['https://sourcelibrary.org/og-image-gallery.jpg'],
     title: galleryTitle,
     description: galleryDescription,
   },

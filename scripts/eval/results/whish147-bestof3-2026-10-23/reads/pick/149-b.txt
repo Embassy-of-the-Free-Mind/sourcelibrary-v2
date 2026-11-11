@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C reads most like a real Malayalam-Sanskrit commentary throughout ("…indriya-kaḻ-arkka jñānaṃ … pratyakṣapramāṇamiti", "dṛṣṭādṛṣṭa", "avyaktādi", "parārtham"), B keeps some genuine Malayalam forms (ḻ, -kk-) but breaks down in rows 5–8, and A is mostly strings of syllables that only look like words.

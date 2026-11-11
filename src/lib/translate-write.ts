@@ -32,6 +32,9 @@ import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
 import { guardTranslationText } from './translation-write-guard';
+import { checkNeighbours } from '../../scripts/lib/neighbour-guard.mjs'; // #5026: the page is not its neighbour's English
+import { refusableReasoningLeak } from '../../scripts/lib/page-integrity.mjs'; // #6117/#8465: the model's scratchpad, refusal or chat reply
+import { translationLayers, writePageAnnotations } from './translation-text'; // #5942: text + annotations beside data
 
 /**
  * `$unset` fragment every translation writer includes (#4927). `translation_stale`
@@ -126,6 +129,8 @@ export function hasNoTranslatableBody(ocrText: string | null | undefined): boole
  * short body is the whole translation (sizing: HIDDEN_META_MIN_WORDS in the .mjs).
  */
 export const HIDDEN_META_REASON = 'hidden-meta';
+/** Same string as page-integrity.mjs REASONING_LEAK_REASON (#6117); stamped on `translation.health_blocked`. */
+export const REASONING_LEAK_REASON = 'reasoning-leak';
 export const HIDDEN_META_MIN_WORDS = 40;
 const META_WHOLE_PAGE_SHARE = 0.8;
 const CONT_MARKER = /^[\s.…]*continue[sd]?\s+from\s+(?:the\s+)?previous\s+page\b/i;
@@ -198,6 +203,38 @@ export async function recordRefusedTranslation(
     });
   } catch (e) {
     console.error(`[health-gate] Failed to record refused translation for ${page.id}:`, e);
+  }
+}
+
+/** The value recorded in `translation.fail_reason` when the model answered with nothing (#4685). */
+export const EMPTY_RESPONSE_REASON = 'empty_response';
+
+/** Is this model answer empty, or only whitespace? Twin of `isEmptyTranslation` in translate-core.mjs. */
+export function isEmptyTranslation(text: unknown): boolean {
+  return typeof text !== 'string' || !/\S/.test(text);
+}
+
+/**
+ * Record an empty model answer instead of storing it (#4685). TS twin of `recordEmptyTranslation`
+ * in `scripts/lib/translate-core.mjs`: not a refusal (`health_blocked` would take the page out of
+ * every selector, and an empty answer is usually one bad call) but a failure marker in the OCR
+ * side's shape — `translation.fail_reason`, `failed_at`, `fail_count`. `translation.data` is never
+ * touched, and a page that already holds a translation is left alone. Never throws.
+ */
+export async function recordEmptyTranslation(db: Db, page: { id: string }): Promise<void> {
+  try {
+    const now = new Date();
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id, 'translation.data': { $not: /\S/ } },
+      {
+        $set: { 'translation.fail_reason': EMPTY_RESPONSE_REASON, 'translation.failed_at': now, updated_at: now },
+        $inc: { 'translation.fail_count': 1 },
+      }
+    );
+  } catch (e) {
+    console.error(`[empty-response] Failed to stamp ${page.id}:`, e);
   }
 }
 
@@ -282,6 +319,8 @@ export interface WritePageTranslationArgs {
    * 'batch_api'); a person's edit (`source: 'manual'`) carries none.
    */
   engine?: GeminiEngine | NotRecorded;
+  /** page_number → English for pages of the same reply written together: overrides the stored n-1 / n+1 in the neighbour check (#5026). */
+  neighbours?: Record<number, string> | null;
 }
 
 /**
@@ -316,11 +355,64 @@ export async function strayScriptGate(
   return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
 }
 
+/**
+ * The neighbour gate (#5026), TS twin of `neighbourGate` in scripts/lib/translate-core.mjs: every app-side writer of
+ * model translation text asks it before storing a page. Refuses — stamp + evidence, via recordRefusedTranslation — a
+ * page's English that is its neighbour's ('neighbour-leak' / 'absorbs-neighbour', scripts/lib/neighbour-guard.mjs).
+ * Reads the page's number, type and OCR when not given; `neighbours` (page_number → English) are the other pages of the
+ * same reply written together. Fail-open.
+ */
+export async function neighbourGate(
+  db: Db,
+  page: { id: string; book_id?: string | null; page_number?: number | null; page_type?: string | null },
+  text: string,
+  opts: { ocr?: string | null; neighbours?: Record<number, string> | null; jobId?: string; model?: string; dryRun?: boolean } = {}
+): Promise<{ refused: boolean; reason?: string; detail?: string; page_number?: number }> {
+  if (!text || !page?.id) return { refused: false };
+  let p: { id: string; book_id?: string | null; page_number?: number | null; page_type?: string | null } = page;
+  let ocr = opts.ocr;
+  if (p.page_number == null || p.book_id == null || ocr == null) {
+    try {
+      const doc = await db.collection('pages').findOne({ id: p.id }, { projection: { _id: 0, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1 } });
+      if (doc) {
+        p = { id: p.id, book_id: p.book_id ?? doc.book_id, page_number: p.page_number ?? doc.page_number, page_type: p.page_type ?? doc.page_type };
+        ocr = ocr ?? (doc.ocr as { data?: string } | undefined)?.data ?? null;
+      }
+    } catch { return { refused: false }; }
+  }
+  const v = await checkNeighbours(db, { page: p, text, ocr: ocr ?? '', bookId: p.book_id ?? null, neighbours: opts.neighbours ?? null });
+  if (!v.refuse) return { refused: false, page_number: p.page_number ?? undefined };
+  console.warn(`[neighbour-guard] ${p.id} p${p.page_number}: ${v.reason} — ${v.detail}${opts.dryRun ? ' (dry run)' : ''}`);
+  if (!opts.dryRun) await recordRefusedTranslation(db, { id: p.id, book_id: p.book_id ?? undefined }, text, v.reason, { jobId: opts.jobId, model: opts.model });
+  return { refused: true, reason: v.reason, detail: v.detail };
+}
+
+/**
+ * The reasoning-leak gate (#6117, #8465) for the writers that do not go through `writePageTranslation` (the
+ * translation worker, batch-save, the batch-translate-async collectors): true when `text` is the model's
+ * scratchpad, a refusal or a reply to the request, in which case the refusal is stamped on the page and the
+ * text kept (recordRefusedTranslation). The caller writes nothing and counts the page as failed.
+ */
+export async function reasoningLeakGate(
+  db: Db,
+  page: { id: string; book_id?: string },
+  text: string,
+  opts: { jobId?: string; model?: string } = {},
+): Promise<boolean> {
+  const v = refusableReasoningLeak(text);
+  if (!v) return false;
+  console.warn(`[reasoning-leak] ${page.id}: refusing (${v.kind}: "${String(v.phrase).slice(0, 80)}")`);
+  await recordRefusedTranslation(db, page, text, REASONING_LEAK_REASON, opts);
+  return true;
+}
+
 export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
-  /** Set when the text was refused (e.g. 'hidden-meta', #5376; 'stray-script', #5734): nothing was written, the reason is on the page. */
+  /** Set when the text was refused (e.g. 'hidden-meta', #5376; 'stray-script', #5734; 'neighbour-leak' / 'absorbs-neighbour', #5026): nothing was written, the reason is on the page. */
   refused?: string;
+  /** Set when the model's answer was empty (#4685): nothing was written, the page is marked `fail_reason: 'empty_response'`. */
+  emptyResponse?: boolean;
   /**
    * When protected, the EXISTING human translation (use it for previous-page
    * continuity); when written, the new text.
@@ -338,7 +430,7 @@ export async function writePageTranslation(
 ): Promise<WritePageTranslationResult> {
   const {
     pageId, text, model, source = 'ai', language = 'English',
-    promptRef, jobId, extraTranslationFields, extraSet, overwriteHuman = false, engine,
+    promptRef, jobId, extraTranslationFields, extraSet, overwriteHuman = false, engine, neighbours = null,
   } = args;
 
   // Model output must say what produced it (#4613) — refuse rather than stamp a partial record.
@@ -355,11 +447,18 @@ export async function writePageTranslation(
   // Promise 1: the human-edit guard.
   const current = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation as HumanEditableField | undefined;
   if (isHumanEditedField(existing) && !overwriteHuman) {
     return { written: false, protected: true, text: existing?.data ?? '' };
+  }
+
+  // An empty model answer is never stored (#4685): it would blank a page that has English, or
+  // make one without it look done. Recorded as a failure; `text` is the existing translation.
+  if (GEMINI_SOURCES.has(source) && isEmptyTranslation(text)) {
+    await recordEmptyTranslation(db, { id: pageId });
+    return { written: false, protected: false, emptyResponse: true, text: existing?.data ?? '' };
   }
 
   // Model output whose continuity <meta> holds the page is never stored (#5376) — the reader
@@ -369,6 +468,13 @@ export async function writePageTranslation(
     return { written: false, protected: false, refused: HIDDEN_META_REASON, text };
   }
 
+  // The model's scratchpad, a refusal, or a reply to the request ("…is missing from your request", the prompt's
+  // "Previous page text for continuity" block) is never stored as the page's English (#6117, #8465) — the same
+  // predicate the scripts door (translate-core.mjs) and the corpus audit use. Refused and kept like the hidden page.
+  if (GEMINI_SOURCES.has(source) && await reasoningLeakGate(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, { jobId, model })) {
+    return { written: false, protected: false, refused: REASONING_LEAK_REASON, text };
+  }
+
   // A script in the English that is in neither the source nor the book's language (#5734): the
   // measured Korean 그-for-"that" is repaired, anything else refused like the hidden page.
   let finalText = text;
@@ -376,6 +482,13 @@ export async function writePageTranslation(
     const stray = await strayScriptGate(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, { targetLanguage: language, jobId, model });
     if (stray.refused) return { written: false, protected: false, refused: STRAY_SCRIPT_REASON, text: stray.text };
     finalText = guardTranslationText(stray.text); // #5902: term definitions → <note>
+    // #5026: a page's English that is its neighbour's (shared run with the stored n-1 / n+1, or the length of this
+    // page's source plus a neighbour's) is refused like the hidden page. Not on a restore (notRecorded engine).
+    if (!(engine && isNotRecorded(engine))) {
+      const at = { id: pageId, book_id: current?.book_id as string | undefined, page_number: current?.page_number as number | undefined, page_type: current?.page_type as string | undefined };
+      const nb = await neighbourGate(db, at, finalText, { ocr: (current?.ocr as { data?: string } | undefined)?.data ?? '', neighbours, jobId, model });
+      if (nb.refused) return { written: false, protected: false, refused: nb.reason, text: finalText };
+    }
   }
 
   // Promise 2: snapshot existing content first (non-fatal — createRevision
@@ -384,12 +497,16 @@ export async function writePageTranslation(
 
   // Promise 3: provenance-stamped write.
   const now = new Date();
+  // #5942: the book's words and the notes, stored beside `data` (which is never rewritten for them).
+  const layers = translationLayers(finalText, { promptVersion: promptRef?.version ?? null });
   await db.collection('pages').updateOne(
     { id: pageId },
     {
       $set: {
         translation: {
           data: finalText,
+          text: layers.text,
+          text_from: layers.text_from,
           content_hash: contentHash(finalText),
           language,
           ...(model && { model }),
@@ -410,6 +527,7 @@ export async function writePageTranslation(
       $unset: CLEAR_STALE_UNSET,
     }
   );
+  await writePageAnnotations(db, [{ page_id: pageId, book_id: (current?.book_id as string | undefined) ?? null, run_id: jobId ?? null, layers }]);
   return { written: true, protected: false, text: finalText };
 }
 

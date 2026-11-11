@@ -80,7 +80,7 @@
   "nonsense_control": {
     "tool": "search_within_book",
     "expectation": "A query the book cannot answer must score BELOW one it answers verbatim, so a caller can tell 'not here' from 'found it'.",
-    "$openBug": "#3699 — currently both top out at score 1.0, because score is normalised within the result set. Marked it.fails in the test.",
+    "$fixed": "#3699 — both used to top out at score 1.0, because score was normalised within the result set. score is now absolute (raw cosine / phrase_match).",
     "$historyNote": "The original reporter's control was 'nonsense returns total 0', which held before #3680 only because the semantic leg was not firing. It now fires, which is a fix, so returning neighbours for nonsense is correct behaviour — scoring them 1.0 is not. Do not restore the total===0 assertion.",
     "cases": [
       {

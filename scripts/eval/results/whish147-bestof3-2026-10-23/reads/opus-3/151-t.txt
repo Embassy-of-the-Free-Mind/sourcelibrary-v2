@@ -1,0 +1,19 @@
+ROW 1 | ഖ്യിംയഥാഘടപടയൊഃപ്രമെയത്വാൽഘടവദിതിപ്രമെയത്വാഭിധെയത്വൈര
+
+ROW 2 | വ്യക്തൈകദ്രാക്ഷിന്ദ്രാക്ഷിംസൎവ്വപ്രമെയത്വാദുപെയത്വാദ്ധഃവ്യക്തൈകമാത്രദ്ര
+
+ROW 3 | ദക്ഷിംകൈവല്യ ‖ ത്തൈക്കി,യഥാപൂക്ഷൊദ്ദിഷ്ടീഇതരെരെദ്രൊഽഭിദ്രുതൊഗന്ധവ
+
+ROW 4 | ത്വൽ[illegible]തക്ഷൈര ‖ ദ്രൊനഭിദ്രുതൊനാത്ൽഗന്ധ ‖ വൽയഥാജ്ജലംതൈ
+
+ROW 5 | ചയ[illegible]ാകൃസ്സ്രാ ‖ ന്ദ്രുതൈഫത്തിയൽഗന്ധവത്തെ ‖ ദിതര[illegible]ഭൊഏമിത്രുപ
+
+ROW 6 | യദ്രുഷ്ടാരണ്ണാ ‖ നാക്ഷിംപുഷ്പഷീമാത്രസ്വപ ‖ [illegible]ാൽഃസന്നിശ്ശു
+
+ROW 7 | സാദൃശ്യവാൻചക്ഷുഃയഥാ[illegible]ൈവപ[illegible]തൈനഃപ്രവൃത്ത[illegible]ഹിതാസാദൃ
+
+ROW 8 | വാൽസവക്ഷെയാ[illegible]ൈനാത്മാപാമമി[illegible]ഹിനാസന്നിശ്ശൂന[illegible]സാദൃ
+
+ROW 9 | ദാവപാനിവക്ഷൊ[illegible]ാൽയഥാഭൈനൊ[illegible]ാവമധ്യെദ്ദൽന[illegible]ദ്രൂഭിചാരപിണ്ഡമസ
+
+NOTE | Row 1 and the "പ്രമെയത്വാൽഘടവദിതി" part of row 2 are fairly reliable. Rows 3–9 are low-confidence guesses at individual letters, and many conjuncts are uncertain. I put ‖ only where a hole actually breaks the line: the left hole at rows 3–6 and the right hole at rows 4–6; the other rows run straight through.

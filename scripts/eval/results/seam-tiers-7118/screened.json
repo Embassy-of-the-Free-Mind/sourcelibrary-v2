@@ -1,0 +1,92 @@
+{
+ "sonnet": {
+  "all": {
+   "passed": 300,
+   "verified": 82,
+   "yieldOf300": 0.2733,
+   "majorVerified": "31/47",
+   "realMajorVerified": "17/30"
+  },
+  "haiku-p10>=10": {
+   "passed": 126,
+   "verified": 56,
+   "yieldOf300": 0.1867,
+   "majorVerified": "21/47",
+   "realMajorVerified": "11/30"
+  },
+  "haiku-p10>=1": {
+   "passed": 257,
+   "verified": 79,
+   "yieldOf300": 0.2633,
+   "majorVerified": "28/47",
+   "realMajorVerified": "14/30"
+  },
+  "sonnet-p10>=10": {
+   "passed": 163,
+   "verified": 75,
+   "yieldOf300": 0.25,
+   "majorVerified": "30/47",
+   "realMajorVerified": "16/30"
+  }
+ },
+ "opus": {
+  "all": {
+   "passed": 300,
+   "verified": 109,
+   "yieldOf300": 0.3633,
+   "majorVerified": "38/47",
+   "realMajorVerified": "22/30"
+  },
+  "haiku-p10>=10": {
+   "passed": 126,
+   "verified": 66,
+   "yieldOf300": 0.22,
+   "majorVerified": "27/47",
+   "realMajorVerified": "16/30"
+  },
+  "haiku-p10>=1": {
+   "passed": 257,
+   "verified": 100,
+   "yieldOf300": 0.3333,
+   "majorVerified": "36/47",
+   "realMajorVerified": "20/30"
+  },
+  "sonnet-p10>=10": {
+   "passed": 163,
+   "verified": 85,
+   "yieldOf300": 0.2833,
+   "majorVerified": "35/47",
+   "realMajorVerified": "19/30"
+  }
+ },
+ "gemini": {
+  "all": {
+   "passed": 300,
+   "verified": 110,
+   "yieldOf300": 0.3667,
+   "majorVerified": "34/47",
+   "realMajorVerified": "18/30"
+  },
+  "haiku-p10>=10": {
+   "passed": 126,
+   "verified": 67,
+   "yieldOf300": 0.2233,
+   "majorVerified": "24/47",
+   "realMajorVerified": "13/30"
+  },
+  "haiku-p10>=1": {
+   "passed": 257,
+   "verified": 99,
+   "yieldOf300": 0.33,
+   "majorVerified": "31/47",
+   "realMajorVerified": "15/30"
+  },
+  "sonnet-p10>=10": {
+   "passed": 163,
+   "verified": 86,
+   "yieldOf300": 0.2867,
+   "majorVerified": "33/47",
+   "realMajorVerified": "17/30"
+  }
+ }
+}

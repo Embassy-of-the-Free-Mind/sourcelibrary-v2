@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getHomeData } from '@/lib/home-data';
 import HomeView from '@/components/home/HomeView';
-import { FEED_TYPES } from '@/lib/feed-links';
 import { siteOgImage } from '@/lib/og-locale';
 
 // Chinese edition of the homepage (#6382), the mirror of `/la` (#6254): a
@@ -14,7 +13,7 @@ export const maxDuration = 60;
 
 const TITLE = 'Source Library：历史文献图书馆';
 const DESCRIPTION =
-  'Source Library 将古籍数字化、转录并翻译。一万多种以中文写成的书籍，可在此对照原书影像阅读原文。';
+  'Source Library 将古籍数字化、转录并翻译。一万多册以中文写成的书籍，可在此对照原书影像阅读原文。';
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -31,7 +30,6 @@ export const metadata: Metadata = {
     },
     // See src/lib/feed-links.ts — declaring `languages` here replaces the
     // layout's whole `alternates`, feed links included.
-    types: FEED_TYPES,
   },
   // Both blocks, or neither: declaring `openGraph` replaces the layout's block
   // whole while its `twitter` block survives (.claude/docs/i18n.md, share card).

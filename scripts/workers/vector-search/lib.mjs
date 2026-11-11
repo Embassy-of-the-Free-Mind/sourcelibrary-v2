@@ -361,4 +361,59 @@ export class RowStore {
   }
 }
 
+/**
+ * Exact cosine of query `q` (Float32Array) against the rows `keys`, for the per-book path (#2049):
+ * the float32 shards for a key the build wrote, its int8 override for a key a delta added or
+ * re-embedded since (the shard copy is stale). Returns [{key, sim}] with sim > threshold, best first,
+ * at most k; null when a key is in neither (the caller must not serve a partial scan).
+ *
+ * `shards` = [{base, n, fh}] in base order (server.mjs). Keys are sorted and read in runs: a book's
+ * pages were pulled together, so they sit next to each other in one shard (page_id order), and one
+ * read of a few hundred rows costs what one row's read does. A run bridges gaps of up to RUN_GAP rows
+ * (read and skipped) and stops at RUN_MAX rows (3 MB); RUN_CONCURRENCY runs are in flight at once.
+ */
+const RUN_GAP = 32, RUN_MAX = 1024, RUN_CONCURRENCY = 8;
+export async function scanKeysExact(q, keys, { shards, overrides, threshold, k }) {
+  let qn = 0; for (let i = 0; i < DIM; i++) qn += q[i] * q[i]; qn = Math.sqrt(qn);
+  const cos = (v, o) => {
+    let d = 0, b = 0;
+    for (let i = 0; i < DIM; i++) { const x = v[o + i]; d += q[i] * x; b += x * x; }
+    return b > 0 ? d / (qn * Math.sqrt(b)) : 0;
+  };
+  const out = [];
+  const fromShard = [];
+  for (const key of keys) {
+    const ov = overrides?.get(key);
+    if (ov) { const s = cos(ov, 0); if (s > threshold) out.push({ key, sim: s }); } else fromShard.push(key);
+  }
+  fromShard.sort((a, b) => a - b);
+  const runs = []; let si = 0;
+  for (let i = 0; i < fromShard.length;) {
+    const key = fromShard[i];
+    while (si < shards.length && key >= shards[si].base + shards[si].n) si++;
+    const sh = shards[si];
+    if (!sh || key < sh.base) return null;
+    const run = { sh, start: key, keys: [key] }; i++;
+    while (i < fromShard.length && fromShard[i] < sh.base + sh.n && fromShard[i] - run.keys[run.keys.length - 1] <= RUN_GAP
+      && fromShard[i] - run.start < RUN_MAX) run.keys.push(fromShard[i++]);
+    runs.push(run);
+  }
+  let next = 0;
+  const worker = async () => {
+    while (next < runs.length) {
+      const r = runs[next++];
+      const rowsN = r.keys[r.keys.length - 1] - r.start + 1;
+      const buf = Buffer.allocUnsafeSlow(rowsN * DIM * 4); // not the pool: a pooled slice need not be 4-aligned
+      const { bytesRead } = await r.sh.fh.read(buf, 0, buf.length, (r.start - r.sh.base) * DIM * 4);
+      if (bytesRead !== buf.length) throw new Error(`shard short read at key ${r.start}`);
+      const v = new Float32Array(buf.buffer, buf.byteOffset, rowsN * DIM);
+      for (const key of r.keys) { const s = cos(v, (key - r.start) * DIM); if (s > threshold) out.push({ key, sim: s }); }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(RUN_CONCURRENCY, runs.length) }, worker));
+  out.sort((a, b) => b.sim - a.sim);
+  if (out.length > k) out.length = k;
+  return out;
+}
+
 export function log(...a) { console.log(new Date().toISOString(), ...a); }

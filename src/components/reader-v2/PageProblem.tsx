@@ -18,6 +18,10 @@
  *    Choosing "The English is wrong here" (`translation_error`, #6120) adds three
  *    fields — the passage as it reads, the correction, the original words — and
  *    fills the first from the reader's text selection when there is one.
+ *    Given a `measure` (the /la reader, #6278), it is preceded by one line
+ *    saying a machine made the transcription and how accurate the engine we
+ *    use measured, linked to that chart on /quality: a reader of the original
+ *    forgives a stated error rate, not a hidden one.
  *
  * Both are client-only and fetch nothing during render: the reader is an ISR
  * route, and the only network call here happens on the reader's click.
@@ -29,6 +33,8 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { pageReadCaution, transcriptionReliability } from '@/lib/transcription-reliability';
 import { PAGE_REPORT_KINDS, MAX_CORRECTION_FIELD, type PageReportKind } from '@/lib/page-report';
+import { transcriptProvenance } from '@/lib/text-provenance';
+import type { OcrMeasure } from '@/lib/ocr-measure';
 import { MAX_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import type { Book, Page } from '@/lib/types';
 
@@ -55,7 +61,21 @@ export function ReadCautionNote({ page, book }: { page: Page; book: Book }) {
 const CHIP =
   'inline-flex items-center h-8 px-2.5 border font-sans text-[12.5px] lg:text-[12px] transition-colors';
 
-export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
+// Only on a page a model read: an e-text, a corpus, the Archive's OCR or a
+// Kraken read is not what the measure measured, and those carry their own line.
+function OcrMeasureLine({ page, measure }: { page: Page; measure?: OcrMeasure | null }) {
+  const t = getReaderStrings(useLocale()).ocrMeasure;
+  if (!t || !measure || !page.ocr?.data || transcriptProvenance(page)?.kind !== 'model') return null;
+  const pct = (x: number) => Math.round(x * 100);
+  return (
+    <p data-ocr-measure="" className="text-[12px] leading-snug mb-2 max-w-[60ch]" style={{ color: 'var(--text-secondary)' }}>
+      {t.line({ percent: pct(measure.accuracy), low: pct(measure.ci95[0]), high: pct(measure.ci95[1]), pages: measure.pages, date: measure.date })}{' '}
+      <a href={measure.href} className="underline underline-offset-2">{t.link}</a>
+    </p>
+  );
+}
+
+export function PageProblemReport({ page, book, measure }: { page: Page; book: Book; measure?: OcrMeasure | null }) {
   const t = getReaderStrings(useLocale()).pageReport;
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<PageReportKind | null>(null);
@@ -122,6 +142,7 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
   if (!open) {
     return (
       <div className={wrap} style={wrapStyle}>
+        <OcrMeasureLine page={page} measure={measure} />
         <button
           type="button"
           onClick={() => { setPassage(selected()); setOpen(true); }}

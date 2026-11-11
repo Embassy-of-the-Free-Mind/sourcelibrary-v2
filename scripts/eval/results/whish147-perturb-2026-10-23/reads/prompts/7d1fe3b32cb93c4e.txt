@@ -1,0 +1,8 @@
+The files p01.jpg … p36.jpg are pieces of ONE palm leaf of a Kerala manuscript (Sanskrit in Malayalam script, Calicut 1822), cut into its 9 physical rows, and each row cut left to right into 4 pieces at the leaf's two string holes (left column | middle column | right column; the wide middle column comes as two pieces); neighbouring pieces overlap slightly, and a strip may show the edge of the row above or below. The files go row by row: p01–p04 are row 1 left to right, p05–p08 row 2, and so on. Open every file with the Read tool.
+
+Transcribe the leaf in MALAYALAM SCRIPT exactly as written: keep the scribe's dot-reph ൎ, doubled consonants, visarga sandhi and chillu letters; no normalisation, and no spaces the scribe did not leave. Give numbered physical rows, top to bottom. The top one or two rows and the bottom one or two rows run the full width; every row reads straight across both holes, so row N = left row N + middle row N + right row N, joined with ‖ at each hole (do not repeat text that appears twice in an overlap). Write [illegible] where you cannot read. Do NOT supply text from memory of the Sāṅkhyakārikā or of any commentary: if you recognise the passage, still write only what the strokes show.
+
+Answer only:
+ROW 1 | <Malayalam text, with ‖ at each hole>
+ROW 2 | ...
+NOTE | <one line: e.g. how much of the leaf you could read>

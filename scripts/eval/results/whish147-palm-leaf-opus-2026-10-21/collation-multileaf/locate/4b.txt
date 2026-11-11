@@ -1,0 +1,15 @@
+Line 1 is an opening invocation. The leaf then begins at the start of the text, SK_1. The string hole leaves a gap in lines 3–7, so for those lines the first word is read from the text left of the hole.
+
+LINE 1 | not edition text: invocation (*hariḥ śrī-gaṇapataye namaḥ avighnam astu*) | — | — | confident
+LINE 2 | SK_1 | duḥkha-trayā'bhighātāj | tad-apaghātake (only the start, "ta-", is visible) | confident
+LINE 3 | SK_1-SK_2 | a-bhāvāt (only the end, "-bhāvāt", is visible) | ānuśravikaḥ (only the start, "ānuśravi-", is visible) | unsure
+LINE 4 | SK_2 | ānuśravikaḥ (only the end, "-kaḥ", is visible; then *sa hy a-vi…*) | vyaktā'-vyakta-jña-vijñānāt (only the start, "vya-", is visible) | unsure
+LINE 5 | SK_3 | mūla-prakṛtir (the visible part starts at "prakṛtir"; "mūla" probably falls on the previous line's right half) | prakṛti-vikṛtayaḥ (only the start, "pra-", is visible), after *mahad-ādyāḥ* | unsure
+LINE 6 | SK_3 | ṣoḍaśakas (only the end, "-ḍaśakas", is visible; then *tu vi-*) | prakṛtir (only the start, "prakṛ-", is visible), after *vikāro na* | confident
+LINE 7 | SK_4 | dṛṣṭam (only the end, "-ṣṭam", is visible; then *anumānam*) | sarva-pramāṇa-siddhatvāt (only the start, "sa-", is visible), after *āpta-vacanaṃ ca* | unsure
+LINE 8 | SK_4 | tri-vidhaṃ (only the end, "-ṃ", is visible; then *pramāṇam iṣṭaṃ*) | pramāṇād (only the start, "pra-", is visible), after *prameya-siddhiḥ* | confident
+LINE 9 | SK_5 | dṛṣṭaṃ (only the end, "-ṣṭaṃ", is visible; then *tri-vidham a-*) | tal (only the start, "ta-", is visible), after *anumānam ākhyātam* | confident
+
+The figures at the bottom right (below line 9) look like a leaf or page number, not edition text.
+
+FIRST_VISIBLE_VERSE=1 LAST_VISIBLE_VERSE=5

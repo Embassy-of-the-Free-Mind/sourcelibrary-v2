@@ -151,7 +151,7 @@ for lang in ix.langs:
 ENGINES = [('gemini-3.1-flash-lite', 'api', 'Flash-Lite 3.1'), ('gemini-3-flash-preview', 'api', '3 Flash'),
            ('gemini-3.8-flash', 'cli', '3.8 Flash CLI'), ('gemini-3.1-pro-t128', 'api', '3.1 Pro t128'),
            ('gemini-3.1-pro-high', 'cli', '3.1 Pro high CLI'), ('claude-sonnet-5.5', 'api', 'Sonnet 5.5'),
-           ('claude-opus-5.5', 'api', 'Opus 5.5')]
+           ('claude-opus-5.5', 'api', 'Opus 5.5'), ('gemini-4-argon-low', 'cli', 'G4L CLI')]   # G4L: #6729, added #6871
 pages_of = {}
 for r in df.itertuples(index=False):
     pages_of.setdefault((r.language, r.model), set()).add(r.pkey)

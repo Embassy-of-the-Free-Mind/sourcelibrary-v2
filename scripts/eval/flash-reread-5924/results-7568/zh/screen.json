@@ -1,0 +1,32 @@
+{
+ "6a3c6787af3c49b59c5d43c2": {
+  "pass": false,
+  "format": "manuscript",
+  "language": "Classical Chinese",
+  "why": "Siku Quanshu (欽定四庫全書) copy: hand-brushed kaishu in ruled frame, a manuscript, not print"
+ },
+ "69e72c60a409200ea79f46f6": {
+  "pass": true,
+  "format": "woodblock",
+  "language": "Classical Chinese",
+  "why": "Woodblock Zhuangzi text with interlinear commentary and circle punctuation"
+ },
+ "69d5ae594dc55b8478de1380": {
+  "pass": false,
+  "format": "typeset",
+  "language": "Japanese (kanbun with kakikudashi and kana glosses)",
+  "why": "Typeset Japanese edition; kanbun only in top band, bulk of page is Japanese kana reading and notes"
+ },
+ "69f1347c365e3fcae574ed1c": {
+  "pass": true,
+  "format": "woodblock",
+  "language": "Classical Chinese (Buddhist)",
+  "why": "Woodblock-printed Lotus Sutra scroll, uniform Chinese text in ruled columns; faint marginal additions only"
+ },
+ "69de98851b234a773e438912": {
+  "pass": true,
+  "format": "lithograph",
+  "language": "Classical Chinese (Kunqu libretto)",
+  "why": "Lithographed Kunqu text with gongche notation beside the lyrics; Chinese text pages"
+ }
+}

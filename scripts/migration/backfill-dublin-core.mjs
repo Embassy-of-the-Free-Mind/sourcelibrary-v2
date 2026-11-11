@@ -35,7 +35,7 @@ async function run() {
   // Find books with AI enrichment but sparse dublin_core
   const cursor = db.collection('books').find({
     pages_ocr: { $gt: 0 },
-  }).project({
+  }).batchSize(1000).project({
     id: 1, title: 1, display_title: 1, author: 1, language: 1,
     year_published: 1, categories: 1, subject_keywords: 1,
     ai_metadata: 1, dublin_core: 1, image_source: 1, pages_count: 1,
@@ -88,7 +88,7 @@ async function run() {
 
     // dc_rights
     if (!dc.dc_rights) {
-      updates['dublin_core.dc_rights'] = 'CC BY-SA 4.0';
+      updates['dublin_core.dc_rights'] = 'CC BY-NC-SA 4.0'; // our text's licence since 2026-11-05 (#8488)
     }
 
     // dc_identifier: add USTC and DOI if missing

@@ -17,8 +17,9 @@ const TABLE_ROW_RE = /^[ \t]*\|(.+)\|[ \t]*$/;
 /** GFM alignment/separator row — cells are only dashes with optional colons. */
 const TABLE_SEPARATOR_RE = /^[ \t]*\|?[ \t]*:?-+:?[ \t]*(?:\|[ \t]*:?-+:?[ \t]*)+\|?[ \t]*$/;
 
+// A cell's leading "# " is a heading marker the translator typed into the cell; it is not the cell's text.
 const splitRow = (line: string): string[] =>
-  (line.match(TABLE_ROW_RE)?.[1] ?? '').split('|').map(c => c.trim());
+  (line.match(TABLE_ROW_RE)?.[1] ?? '').split('|').map(c => c.trim().replace(/^#{1,6}\s+/, ''));
 
 /**
  * Convert a block whose lines are all pipe rows into an HTML table.
@@ -56,4 +57,35 @@ export function pipeTableToHtml(block: string): string | null {
   for (const r of bodyRows) parts.push(`<tr>${r.map(c => cell(c, 'td')).join('')}</tr>`);
   parts.push('</tbody></table>');
   return parts.join('');
+}
+
+/**
+ * A block whose tables share it with ordinary lines — a caption above, a note below, a second table (no blank line
+ * between, so it is one block): every contiguous run of pipe rows that holds a separator row becomes a table, and
+ * the lines around them stay text, in order. Returns null when the block holds no such run.
+ */
+export function splitTableBlock(block: string): Array<{ text: string } | { table: string }> | null {
+  const lines = block.split('\n');
+  const isRow = (l: string) => TABLE_ROW_RE.test(l) || TABLE_SEPARATOR_RE.test(l);
+  const parts: Array<{ text: string } | { table: string }> = [];
+  let text: string[] = [];
+  let found = false;
+  for (let i = 0; i < lines.length; i++) {
+    let j = i;
+    while (isRow(lines[i]) && j + 1 < lines.length && isRow(lines[j + 1])) j++;
+    const run = lines.slice(i, j + 1);
+    const table = isRow(lines[i]) && j > i && run.some(l => TABLE_SEPARATOR_RE.test(l)) ? pipeTableToHtml(run.join('\n')) : null;
+    if (table) {
+      if (text.length) parts.push({ text: text.join('\n') });
+      parts.push({ table });
+      text = [];
+      found = true;
+    } else {
+      text.push(...run);
+    }
+    i = j;
+  }
+  if (!found) return null;
+  if (text.length) parts.push({ text: text.join('\n') });
+  return parts;
 }

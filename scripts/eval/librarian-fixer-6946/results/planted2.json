@@ -1,0 +1,782 @@
+[
+ {
+  "key": "planted:7021:C:q21",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88
+  },
+  "to": {
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89
+  }
+ },
+ {
+  "key": "planted:7021:C:q21",
+  "id": "L5",
+  "kind": "other_book",
+  "from": {
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90
+  },
+  "to": {
+   "slug": "coelvm-philosophorvm-sev-liber-de-secretis-naturae-ulsted",
+   "page": 280
+  }
+ },
+ {
+  "key": "planted:6970:A:q13",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-divine-pymander-of-hermes-mercurius-trismegistus-in-everard",
+   "page": 18
+  },
+  "to": {
+   "slug": "the-divine-pymander-of-hermes-mercurius-trismegistus-in-everard",
+   "page": 19
+  }
+ },
+ {
+  "key": "planted:6970:A:q13",
+  "id": "L3",
+  "kind": "other_book",
+  "from": {
+   "slug": "arca-noe-kircher",
+   "page": 301
+  },
+  "to": {
+   "slug": "magia-philosophica-zoroaster-et-eius-320-oracula-chaldaica-ed",
+   "page": 188
+  }
+ },
+ {
+  "key": "planted:6970:A:q39",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 251
+  },
+  "to": {
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 252
+  }
+ },
+ {
+  "key": "planted:6970:A:q39",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "ancient-chemical-work-eleazar-2",
+   "page": 130
+  },
+  "to": {
+   "slug": "the-pagan-world-and-the-origin-of-its-gods-herold",
+   "page": 810
+  }
+ },
+ {
+  "key": "planted:7021:C:q16",
+  "id": "L7",
+  "kind": "adjacent",
+  "from": {
+   "slug": "osvaldi-crollii-vett-basilica-chymica-oder-alchymistisch-croll",
+   "page": 140
+  },
+  "to": {
+   "slug": "osvaldi-crollii-vett-basilica-chymica-oder-alchymistisch-croll",
+   "page": 141
+  }
+ },
+ {
+  "key": "planted:7021:C:q16",
+  "id": "L3",
+  "kind": "other_book",
+  "from": {
+   "slug": "oswaldi-crollii-hassi-chymisch-kleynod-hiebevor-zwar-croll",
+   "page": 494
+  },
+  "to": {
+   "slug": "osvaldi-crollii-vett-basilica-chymica-oder-alchymistisch-croll",
+   "page": 139
+  }
+ },
+ {
+  "key": "planted:7021:B:q11",
+  "id": "L10",
+  "kind": "adjacent",
+  "from": {
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264
+  },
+  "to": {
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 263
+  }
+ },
+ {
+  "key": "planted:7021:B:q11",
+  "id": "L11",
+  "kind": "other_book",
+  "from": {
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264
+  },
+  "to": {
+   "slug": "universal-music-making-musurgia-universalis-volume-i-kircher",
+   "page": 536
+  }
+ },
+ {
+  "key": "planted:7021:B:q35",
+  "id": "L9",
+  "kind": "adjacent",
+  "from": {
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 200
+  },
+  "to": {
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 199
+  }
+ },
+ {
+  "key": "planted:7021:B:q35",
+  "id": "L12",
+  "kind": "other_book",
+  "from": {
+   "slug": "viridarium-chymicum-figuris-cupro-incisis-adornatum-et-stoltzius-von-2",
+   "page": 330
+  },
+  "to": {
+   "slug": "les-fables-egyptiennes-et-grecques-devoilees-amp-reduites-s-n-2",
+   "page": 382
+  }
+ },
+ {
+  "key": "planted:6970:A:q34",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "history-of-the-microcosm-volume-ii-fludd",
+   "page": 302
+  },
+  "to": {
+   "slug": "history-of-the-microcosm-volume-ii-fludd",
+   "page": 303
+  }
+ },
+ {
+  "key": "planted:6970:A:q34",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "giordano-bruno-de-umbris-idearum-1582-first-edition-bruno",
+   "page": 152
+  },
+  "to": {
+   "slug": "visuddhimagga-path-of-purification-in-thai",
+   "page": 603
+  }
+ },
+ {
+  "key": "planted:6904:B:q28",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "taoist-teachings-from-the-book-of-lieh-tzu-trans",
+   "page": 82
+  },
+  "to": {
+   "slug": "taoist-teachings-from-the-book-of-lieh-tzu-trans",
+   "page": 81
+  }
+ },
+ {
+  "key": "planted:6904:B:q28",
+  "id": "L1",
+  "kind": "other_book",
+  "from": {
+   "slug": "confessions-hippo",
+   "page": 122
+  },
+  "to": {
+   "slug": "quintilian-institutio-oratoria-vol-iv-loeb-quintilian",
+   "page": 243
+  }
+ },
+ {
+  "key": "planted:6970:A:q03",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "stirpium-historiae-pemptades-sex-dodoens",
+   "page": 495
+  },
+  "to": {
+   "slug": "stirpium-historiae-pemptades-sex-dodoens",
+   "page": 496
+  }
+ },
+ {
+  "key": "planted:6970:A:q03",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "de-historia-plantarum-libri-decem-graece-et-latine-theophrastus",
+   "page": 60
+  },
+  "to": {
+   "slug": "illustrations-of-fungi-which-grow-in-bavaria-and-the-ed",
+   "page": 180
+  }
+ },
+ {
+  "key": "planted:6970:A:q29",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "opera-omnia-vol-i-galen",
+   "page": 189
+  },
+  "to": {
+   "slug": "opera-omnia-vol-i-galen",
+   "page": 188
+  }
+ },
+ {
+  "key": "planted:6970:A:q29",
+  "id": "L4",
+  "kind": "other_book",
+  "from": {
+   "slug": "constantini-africani-opera-vol-ii-africanus",
+   "page": 375
+  },
+  "to": {
+   "slug": "liber-physiognomiae-michael-scotus-3",
+   "page": 93
+  }
+ },
+ {
+  "key": "planted:7021:A:q12",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "deutsches-theatrum-chemicum-auf-welchem-der-beruhmtesten-s-n",
+   "page": 63
+  },
+  "to": {
+   "slug": "deutsches-theatrum-chemicum-auf-welchem-der-beruhmtesten-s-n",
+   "page": 64
+  }
+ },
+ {
+  "key": "planted:7021:A:q12",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 265
+  },
+  "to": {
+   "slug": "amphitheatrum-sapientiae-aeternae-christiano-kabalisticum-khunrath",
+   "page": 74
+  }
+ },
+ {
+  "key": "planted:7021:B:q18",
+  "id": "L17",
+  "kind": "adjacent",
+  "from": {
+   "slug": "steganographia-vindicata-reserata-et-illustrata-trithemius",
+   "page": 342
+  },
+  "to": {
+   "slug": "steganographia-vindicata-reserata-et-illustrata-trithemius",
+   "page": 343
+  }
+ },
+ {
+  "key": "planted:7021:B:q18",
+  "id": "L20",
+  "kind": "other_book",
+  "from": {
+   "slug": "dictionnaire-mytho-hermetique-dans-lequel-on-trouve-les-pernety",
+   "page": 131
+  },
+  "to": {
+   "slug": "polygraphie-1561-french-translator",
+   "page": 413
+  }
+ },
+ {
+  "key": "planted:7021:C:q35",
+  "id": "L15",
+  "kind": "adjacent",
+  "from": {
+   "slug": "der-sich-aller-welt-zeigende-konig-in-seinem-purpur-mantel-fleischer",
+   "page": 7
+  },
+  "to": {
+   "slug": "der-sich-aller-welt-zeigende-konig-in-seinem-purpur-mantel-fleischer",
+   "page": 8
+  }
+ },
+ {
+  "key": "planted:7021:C:q35",
+  "id": "L14",
+  "kind": "other_book",
+  "from": {
+   "slug": "artis-auriferae-quam-chemiam-vocant-various",
+   "page": 718
+  },
+  "to": {
+   "slug": "viridarium-chymicum-figuris-cupro-incisis-adornatum-et-stoltzius-von-2",
+   "page": 331
+  }
+ },
+ {
+  "key": "planted:6904:B:q20",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "das-buch-henoch-henoch",
+   "page": 14
+  },
+  "to": {
+   "slug": "das-buch-henoch-henoch",
+   "page": 15
+  }
+ },
+ {
+  "key": "planted:6904:B:q20",
+  "id": "L5",
+  "kind": "other_book",
+  "from": {
+   "slug": "the-books-of-enoch-aramaic-fragments-of-qumran-cave-4-milik",
+   "page": 16
+  },
+  "to": {
+   "slug": "das-buch-henoch-henoch",
+   "page": 13
+  }
+ },
+ {
+  "key": "planted:7021:A:q25",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "mr-hoyle-s-treatises-of-whist-quadrille-piquet-chess-and-hoyle",
+   "page": 222
+  },
+  "to": {
+   "slug": "mr-hoyle-s-treatises-of-whist-quadrille-piquet-chess-and-hoyle",
+   "page": 223
+  }
+ },
+ {
+  "key": "planted:7021:A:q25",
+  "id": "L5",
+  "kind": "other_book",
+  "from": {
+   "slug": "libro-de-los-juegos-book-of-games-sabio",
+   "page": 187
+  },
+  "to": {
+   "slug": "the-game-of-chess-gustavus-selenus",
+   "page": 26
+  }
+ },
+ {
+  "key": "planted:6970:A:q28",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "tantraloka-of-sri-abhinavagupta-abhinavagupta",
+   "page": 2331
+  },
+  "to": {
+   "slug": "tantraloka-of-sri-abhinavagupta-abhinavagupta",
+   "page": 2332
+  }
+ },
+ {
+  "key": "planted:6970:A:q28",
+  "id": "L1",
+  "kind": "other_book",
+  "from": {
+   "slug": "quintilian-institutio-oratoria-vol-iv-loeb-quintilian",
+   "page": 243
+  },
+  "to": {
+   "slug": "tantraloka-of-sri-abhinavagupta-abhinavagupta",
+   "page": 2330
+  }
+ },
+ {
+  "key": "planted:6970:B:q28",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "confessions-hippo",
+   "page": 122
+  },
+  "to": {
+   "slug": "confessions-hippo",
+   "page": 123
+  }
+ },
+ {
+  "key": "planted:6970:B:q28",
+  "id": "L4",
+  "kind": "other_book",
+  "from": {
+   "slug": "dao-zong-liu-shu-six-daoist-classics-36-juan-li-shi-compiler",
+   "page": 318
+  },
+  "to": {
+   "slug": "confessions-hippo",
+   "page": 122
+  }
+ },
+ {
+  "key": "planted:6970:A:q09",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "dictionarium-theophrasti-paracelsi-continens-obscuriorum-dorn",
+   "page": 19
+  },
+  "to": {
+   "slug": "dictionarium-theophrasti-paracelsi-continens-obscuriorum-dorn",
+   "page": 20
+  }
+ },
+ {
+  "key": "planted:6970:A:q09",
+  "id": "L1",
+  "kind": "other_book",
+  "from": {
+   "slug": "astronomica-et-astrologica-astronomical-and-astrological-paracelsus",
+   "page": 287
+  },
+  "to": {
+   "slug": "opera-omnia-vol-i-galen",
+   "page": 24
+  }
+ },
+ {
+  "key": "planted:7021:C:q03",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 77
+  },
+  "to": {
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 76
+  }
+ },
+ {
+  "key": "planted:7021:C:q03",
+  "id": "L11",
+  "kind": "other_book",
+  "from": {
+   "slug": "imperial-parallel-characters-vol-126",
+   "page": 100
+  },
+  "to": {
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 209
+  }
+ },
+ {
+  "key": "planted:7021:B:q23",
+  "id": "L7",
+  "kind": "adjacent",
+  "from": {
+   "slug": "philippine-folk-tales-cole",
+   "page": 147
+  },
+  "to": {
+   "slug": "philippine-folk-tales-cole",
+   "page": 146
+  }
+ },
+ {
+  "key": "planted:7021:B:q23",
+  "id": "L3",
+  "kind": "other_book",
+  "from": {
+   "slug": "magia-naturalis-1619-latin-porta",
+   "page": 560
+  },
+  "to": {
+   "slug": "maori-tales-and-legends",
+   "page": 211
+  }
+ },
+ {
+  "key": "planted:6904:A:q11",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "le-istitutioni-harmoniche-zarlino",
+   "page": 148
+  },
+  "to": {
+   "slug": "le-istitutioni-harmoniche-zarlino",
+   "page": 149
+  }
+ },
+ {
+  "key": "planted:7021:C:q20",
+  "id": "L11",
+  "kind": "adjacent",
+  "from": {
+   "slug": "das-buch-henoch-athiopischer-text-dillmann",
+   "page": 369
+  },
+  "to": {
+   "slug": "das-buch-henoch-athiopischer-text-dillmann",
+   "page": 370
+  }
+ },
+ {
+  "key": "planted:6904:A:q25",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 61
+  },
+  "to": {
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 62
+  }
+ },
+ {
+  "key": "planted:6970:B:q01",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "three-books-on-life-ficino",
+   "page": 42
+  },
+  "to": {
+   "slug": "three-books-on-life-ficino",
+   "page": 43
+  }
+ },
+ {
+  "key": "planted:7021:A:q32",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "hebrew-sha-arei-orah-gikatilla",
+   "page": 137
+  },
+  "to": {
+   "slug": "hebrew-sha-arei-orah-gikatilla",
+   "page": 136
+  }
+ },
+ {
+  "key": "planted:7021:A:q04",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 344
+  },
+  "to": {
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 343
+  }
+ },
+ {
+  "key": "planted:6970:A2:q26",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15
+  },
+  "to": {
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 16
+  }
+ },
+ {
+  "key": "planted:6970:B:q12",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 178
+  },
+  "to": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 179
+  }
+ },
+ {
+  "key": "planted:6904:B:q38",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 32
+  },
+  "to": {
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 31
+  }
+ },
+ {
+  "key": "planted:7021:A:q15",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "dao-zong-liu-shu-six-daoist-classics-36-juan-li-shi-compiler",
+   "page": 18
+  },
+  "to": {
+   "slug": "dao-zong-liu-shu-six-daoist-classics-36-juan-li-shi-compiler",
+   "page": 17
+  }
+ },
+ {
+  "key": "planted:7021:C:q31",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50
+  },
+  "to": {
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51
+  }
+ },
+ {
+  "key": "planted:6904:B:q19",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "phonurgia-nova-kircher",
+   "page": 238
+  },
+  "to": {
+   "slug": "phonurgia-nova-kircher",
+   "page": 237
+  }
+ },
+ {
+  "key": "planted:6970:B:q37",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "ioh-andreae-segneri-cvrsvs-mathematici-partes-3-elementorum-segner",
+   "page": 263
+  },
+  "to": {
+   "slug": "ioh-andreae-segneri-cvrsvs-mathematici-partes-3-elementorum-segner",
+   "page": 262
+  }
+ },
+ {
+  "key": "planted:6904:A:q39",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "horou-apollonos-neiloou-hieroglyphika-eklekta-hori-horapollo",
+   "page": 10
+  },
+  "to": {
+   "slug": "horou-apollonos-neiloou-hieroglyphika-eklekta-hori-horapollo",
+   "page": 9
+  }
+ },
+ {
+  "key": "planted:6904:A:q29",
+  "id": "L7",
+  "kind": "adjacent",
+  "from": {
+   "slug": "recherches-sur-les-superstitions-en-chine-vol-15-dore",
+   "page": 99
+  },
+  "to": {
+   "slug": "recherches-sur-les-superstitions-en-chine-vol-15-dore",
+   "page": 100
+  }
+ },
+ {
+  "key": "planted:6904:A:q33",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "description-of-china-korea-and-tibet-halde",
+   "page": 469
+  },
+  "to": {
+   "slug": "description-of-china-korea-and-tibet-halde",
+   "page": 470
+  }
+ },
+ {
+  "key": "planted:6904:A:q15",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "dao-de-jing-laozi",
+   "page": 54
+  },
+  "to": {
+   "slug": "dao-de-jing-laozi",
+   "page": 55
+  }
+ },
+ {
+  "key": "planted:7021:C:q26",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 7
+  },
+  "to": {
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 8
+  }
+ },
+ {
+  "key": "planted:6970:A:q31",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51
+  },
+  "to": {
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 52
+  }
+ },
+ {
+  "key": "planted:7021:C:q12",
+  "id": "L18",
+  "kind": "adjacent",
+  "from": {
+   "slug": "basil-valentine-last-will-testament-1671-valentinus",
+   "page": 436
+  },
+  "to": {
+   "slug": "basil-valentine-last-will-testament-1671-valentinus",
+   "page": 437
+  }
+ }
+]

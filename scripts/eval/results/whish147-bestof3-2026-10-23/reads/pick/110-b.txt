@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A is the only one that reproduces recognisable Sāṅkhyakārikā wording across most rows ("tasmāt tat-saṃyogād acetanaṃ cetanāvad iva liṅgam", "guṇakartṛtve ca tathā karteva bhavaty udāsīnaḥ", "puruṣasya darśanārthaṃ kaivalyārthaṃ tathā pradhānasya paṅgvandhavad ubhayor api saṃyogaḥ"), while C keeps only scattered real phrases inside garbled Malayalam and B is mostly nonsense syllables.

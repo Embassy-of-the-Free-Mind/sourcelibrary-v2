@@ -1,0 +1,3 @@
+PICK | A
+RANK | ACB
+WHY | Transcription A has the most real Sanskrit, with recognisable Sāṅkhya-commentary phrases such as "mukhyāḥ … siddhayaḥ", "gauṇyaḥ pañca siddhayaḥ", "duḥkhābhighātānāṃ tritayasya", "pūrvapakṣa-nirākaraṇena uttarapakṣa-vyapade(śa)", "ācakṣate" and "yathāvidhi"; C keeps only a few of these, and B is mostly garbled.

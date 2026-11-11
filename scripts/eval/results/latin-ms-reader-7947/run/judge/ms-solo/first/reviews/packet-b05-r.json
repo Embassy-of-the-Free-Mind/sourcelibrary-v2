@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "b05-r", "slot": 1, "title": "Horae beatae Mariae virginis (use of Paris)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection given in the packet. An illuminated Paris-use Book of Hours is a devotional primary source; nothing on these pages contradicts the title.",
+    "rights_flag": null,
+    "structure_note": "No structure counts given. Pencilled folio/page numbers in the lower-left margin read 35 (p.5), 57 (p.10) and 85 (p.14), rising in order. None of the three pages has a translation (translation is null on all of them), so a reader sees only the Latin/French transcription. The metadata says 'published 1515', but the pages look like a hand-illuminated manuscript in a bâtarde hand, so the date may be an estimate rather than an imprint (not checkable from these pages).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page (translation null), so the Latin versicle 'Domine labia mea aperies…' on the scroll is not rendered in English.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "(no <page-num>)", "image": "pencil '57' at lower left margin", "problem": "Pencilled page number not recorded, although the other two pages record theirs", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page (translation null).", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<unclear>Mesuis</unclear> retraict", "image": "Me suis re|traict (clearly legible)", "problem": "Legible words flagged as unclear, and the word break is lost ('Me suis')", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page (translation null). The Middle French verse is left untranslated.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcriptions are faithful on all three miniature pages. The short scroll texts are read correctly, the pseudo-lettering in the frieze is rightly flagged as decorative, and the scene descriptions match the images. The only gaps are that no page has a translation and that p.10's pencilled page number is missing."
+  }
+]

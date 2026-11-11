@@ -1,0 +1,100 @@
+{
+ "built_by": "scripts/eval/read-surface-6740/backlog.py",
+ "readings": [
+  [
+   "2026-10-31T10:29:44+00:00",
+   0.8814338445663452
+  ],
+  [
+   "2026-10-31T10:49:59+00:00",
+   0.8796074390411377
+  ],
+  [
+   "2026-10-31T11:49:28+00:00",
+   0.8519793748855591
+  ],
+  [
+   "2026-10-31T13:05:47+00:00",
+   0.8311094641685486
+  ],
+  [
+   "2026-10-31T13:14:12+00:00",
+   0.8267667293548584
+  ],
+  [
+   "2026-10-31T16:35:24+00:00",
+   0.7566074728965759
+  ]
+ ],
+ "bounds": [
+  {
+   "from": "2026-10-31T10:49:59+00:00",
+   "to": "2026-10-31T11:49:28+00:00",
+   "pool_fell": 0.027628064155578613,
+   "job_usd": 15.849526425000002,
+   "week_at_least_usd": 573.6748812999875
+  },
+  {
+   "from": "2026-10-31T11:49:28+00:00",
+   "to": "2026-10-31T13:05:47+00:00",
+   "pool_fell": 0.020869910717010498,
+   "job_usd": 39.00198952500002,
+   "week_at_least_usd": 1868.8143928287416
+  },
+  {
+   "from": "2026-10-31T13:05:47+00:00",
+   "to": "2026-10-31T13:14:12+00:00",
+   "pool_fell": 0.0043427348136901855,
+   "job_usd": 2.829327675,
+   "week_at_least_usd": 651.5082767846499
+  },
+  {
+   "from": "2026-10-31T13:14:12+00:00",
+   "to": "2026-10-31T16:35:24+00:00",
+   "pool_fell": 0.07015925645828247,
+   "job_usd": 98.17463069999992,
+   "week_at_least_usd": 1399.3111622894085
+  }
+ ],
+ "week_of_quota_at_least_usd": 1868.8143928287416,
+ "queue_measured": "2026-10-31, frame.mjs (visible books held as scans only, the first-read lane frame; unread pages = pages_count - pages_ocr)",
+ "note": "weeks are an upper bound (the capacity is a lower bound: other jobs shared the pool) for one lane with the whole default pool",
+ "rows": [
+  {
+   "lang": "de",
+   "pages": 797772,
+   "books": 3131,
+   "best": "8 a call, low",
+   "usd_live": 9155.947154981277,
+   "usd_best": 5063.178346483141,
+   "weeks_live": 4.899334674495055,
+   "weeks_best": 2.709299738867717,
+   "reader_hours_live": 5477.458198674406,
+   "reader_hours_best": 8837.283283925435
+  },
+  {
+   "lang": "la",
+   "pages": 4741905,
+   "books": 15356,
+   "best": "4 a call, low",
+   "usd_live": 47582.15211675189,
+   "usd_best": 47582.15211675189,
+   "weeks_live": 25.46114386711721,
+   "weeks_best": 25.46114386711721,
+   "reader_hours_live": 15860.719846162581,
+   "reader_hours_best": 15860.719846162581
+  },
+  {
+   "lang": "en",
+   "pages": 204822,
+   "books": 1305,
+   "best": "8 a call, low",
+   "usd_live": 3815.8689902150136,
+   "usd_best": 2783.339647569316,
+   "weeks_live": 2.0418662253767756,
+   "weeks_best": 1.4893612004755048,
+   "reader_hours_live": 3734.135470659329,
+   "reader_hours_best": 6619.171917815464
+  }
+ ]
+}

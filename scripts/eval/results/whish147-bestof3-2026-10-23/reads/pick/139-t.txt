@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads as a coherent Navya-Nyāya discussion of abhāva throughout, with phrases like samavāyasaṃbandhena ghaṭābhāvaḥ, bhūtalattil ghaṭābhāvāt, svābhāvika-kārya, viśeṣaṇatva and saṃyogaprāgabhāva; A is fluent in rows 1, 8 and 9 but garbled in rows 3–7 and 10; C's sound fragments (ghaṭatvāvacchinna, vyadhikaraṇa) sit among mostly broken syllables.

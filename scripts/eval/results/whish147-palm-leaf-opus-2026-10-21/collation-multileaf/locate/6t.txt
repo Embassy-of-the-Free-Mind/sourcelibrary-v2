@@ -1,0 +1,16 @@
+I placed the leaf at SK_17–SK_22. Lines 1 and 3–8 are fairly secure. Lines 9–10 are guesses: the hand there is cramped and I couldn't read it cleanly.
+
+The middle of the leaf is split by the string hole, so lines 3–8 each have a short piece left of the hole and a longer piece right of it. I read each such line left piece first, then right piece. A few word boundaries, especially at the right edge, are inferred from what the edition's order requires rather than read letter by letter.
+
+LINE 1 | SK_17 | parā'rthatvāt (saṃghāta- probably at the damaged start) | adhiṣṭhānāt | confident
+LINE 2 | SK_17-SK_18 | kaivalyā'rthaṃ | karaṇānāṃ (janana-maraṇa is visible) | unsure
+LINE 3 | SK_18 | prati-niyamād | siddhaṃ (or trai-) | confident
+LINE 4 | SK_18-SK_19 | trai-guṇya-viparyayāc c' aiva (only the ending -ṇya is visible) | sākṣitvam | confident
+LINE 5 | SK_19 | (puru)ṣasya | a-kartṛ-bhāvaś | confident
+LINE 6 | SK_19-SK_20 | (ca / tasmāt tat-)saṃyogād | iva | confident
+LINE 7 | SK_20 | liṅgaṃ | udāsīnaḥ (may run on to puruṣasya darśanā'rthaṃ of SK_21) | unsure
+LINE 8 | SK_21 | kaivalyā'rthaṃ | pradhānasya | confident
+LINE 9 | SK_21 | paṅgv-andhavad | saṃyogas | unsure
+LINE 10 | SK_21-SK_22 | sargaḥ | ahaṃ-kāras | unsure
+
+FIRST_VISIBLE_VERSE=17 LAST_VISIBLE_VERSE=22

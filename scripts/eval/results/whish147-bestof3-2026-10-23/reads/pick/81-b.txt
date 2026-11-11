@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three gives readable text, since almost every row is [illegible]; all three look like repetition loops, and B repeats its "śruti" fragment the least mechanically, while A repeats "ḥ śruti" and C repeats "ḥ uktaṃhi" at near-identical positions row after row, so the pick is close to arbitrary.

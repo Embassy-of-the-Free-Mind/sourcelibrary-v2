@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   // canonical '/gallery' and told search engines it was a duplicate of it.
   alternates: {
     canonical: '/gallery/collections',
-    types: { 'application/atom+xml': '/api/feed/gallery' },
   },
   description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts: woodcuts, engravings, emblems, and diagrams spanning five centuries.',
   openGraph: {

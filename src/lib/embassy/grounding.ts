@@ -88,7 +88,8 @@ export interface GroundingImage {
 }
 
 // 'notebook_claim' is not produced here: src/lib/embassy/notebook-claims.ts (#6255).
-export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim';
+// 'citation_page' is produced by src/lib/embassy/citation-pages.ts (#6946).
+export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim' | 'citation_page' | 'requested_rewrite';
 
 export interface GroundingEdit {
   /** Exact substring of the streamed text. Edits are in document order. */
@@ -107,6 +108,8 @@ export interface GroundingReport {
   quotesChecked: number;
   quotesUnquoted: number;
   blockquotesRemoved: number;
+  /** Unsupported blockquotes kept, unquoted, because the reader asked for a rewrite (REWRITE_REQUEST). */
+  blockquotesUnquoted: number;
   quantitiesChecked: number;
   sentencesDropped: number;
   captionsChecked: number;
@@ -180,7 +183,7 @@ export function plainText(s: string): string {
 
 const BOOK_LINK = /(?<![\w.-])sourcelibrary\.org(?:\/es)?\/book\/[a-z0-9-]+/;
 
-function isMostlyLatin(s: string): boolean {
+export function isMostlyLatin(s: string): boolean {
   const letters = s.match(/\p{L}/gu) ?? [];
   if (letters.length === 0) return false;
   const latin = letters.filter(ch => /\p{Script=Latin}/u.test(ch)).length;
@@ -209,7 +212,7 @@ const ANY_TAG = /<\/?[a-z][a-z-]*(?:\s[^>]*)?\/?>/gi;
 /** `<term>Retortam</term> <gloss>retort</gloss>`: a quoter writes one or the other. */
 const TERM_GLOSS = /<term>([\s\S]*?)<\/term>\s*<gloss>([\s\S]*?)<\/gloss>/gi;
 
-function pageReadings(text: string): string[] {
+export function pageReadings(text: string): string[] {
   const bare = text.replace(ANNOTATION_ELEMENT, ' ');
   return [
     text.replace(ANY_TAG, ' '),
@@ -438,7 +441,7 @@ function hasProperName(s: string): boolean {
 
 const INLINE_QUOTE = /(["“«])([^"“”«»\n]{3,500}?)(["”»])/g;
 
-function inlineQuotes(s: string): Array<{ full: string; inner: string }> {
+export function inlineQuotes(s: string): Array<{ full: string; inner: string }> {
   const out: Array<{ full: string; inner: string }> = [];
   // Quotes inside link text or URLs are titles, not quotations.
   const masked = s.replace(/\]\([^)]*\)/g, m => ' '.repeat(m.length));
@@ -572,13 +575,46 @@ export function blockquoteWords(body: string): string {
   return cite > 0 ? t.slice(0, cite) : t;
 }
 
-const REMOVED_QUOTE_NOTE = '*A quotation stood here that I could not find on any page I read, so I removed it.*';
+/**
+ * A removed blockquote leaves nothing behind (#7190). The italic note that
+ * used to stand in its place ("A quotation stood here that I could not find…")
+ * read to readers as the Librarian failing, and the sourcing footer already
+ * says a statement was removed. Most removed quotes follow a lead-in ending in
+ * a colon ("…describes it as follows:"); left as it is, that colon points at
+ * nothing, so it becomes a full stop.
+ */
+const LEAD_IN_COLON = /:(\s*)$/;
+
+/**
+ * The reader asked for the model's OWN version of a text: modern English, an
+ * adaptation, a paraphrase, a translation. That version is on no page by
+ * construction, so the blockquote check below would delete exactly what was
+ * asked for (2026-11-08: a reader asked three times for the Chemical Wedding's
+ * bird song in modern English and got an empty heading, then a bare citation).
+ * Such a blockquote is kept and loses its quote markers instead — the same
+ * treatment an unsupported inline quote gets — so it no longer asserts that a
+ * page says it. Every other unsupported blockquote is still removed.
+ * "Translate", "adapt" and "simplify" count only when aimed at a text
+ * ("translate this", "the adapted version"): "Who translated Ficino?" is a
+ * question, not a request, and must not let an invented quote survive.
+ */
+const AT_A_TEXT = String.raw`\s+(?:it|this|that|these|them|the\s+\w+)`;
+export const REWRITE_REQUEST = new RegExp(
+  String.raw`\b(?:modern\w*\s+(?:english|language|spelling|prose|words|terms|idiom)|moderni[sz]\w*|rewrit\w*|re-writ\w*|rephras\w*|paraphras\w*|in\s+your\s+own\s+words|plain(?:er)?\s+english|simpl(?:e|er)\s+(?:english|language|words|terms)`
+  + String.raw`|adapt(?:ed)?(?:\s+version|${AT_A_TEXT})|simplify${AT_A_TEXT}|translate${AT_A_TEXT}|translation\s+of\s+(?:it|this|that|these))`,
+  'i',
+);
+
+/** A blockquote unit with its `>` markers removed, line structure kept. */
+function unquoteBlock(raw: string): string {
+  return raw.split('\n').map(l => l.replace(/^(\s*)>\s?/, '$1')).join('\n');
+}
 
 export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; report: GroundingReport } {
   const { text, pages, siteBase } = input;
   const report: GroundingReport = {
     checkable: input.supportLoaded, claimUnits: 0, attached: 0, uncitedLeft: 0, quotesChecked: 0, quotesUnquoted: 0,
-    blockquotesRemoved: 0, quantitiesChecked: 0, sentencesDropped: 0, captionsChecked: 0, captionsRewritten: 0, details: [],
+    blockquotesRemoved: 0, blockquotesUnquoted: 0, quantitiesChecked: 0, sentencesDropped: 0, captionsChecked: 0, captionsRewritten: 0, details: [],
   };
   const edits: GroundingEdit[] = [];
   const idx = buildIndex(pages, `${input.extraSupport ?? ''}\n${input.question}`);
@@ -587,7 +623,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
   const topicNames = new Set((input.question.match(/(?<=\s)\p{Lu}[\p{L}]{3,}/gu) ?? []).flatMap(n => foldWords(n)));
   const units = answerUnits(text);
 
-  units.forEach(u => {
+  units.forEach((u, i) => {
     // Remove a whole unit together with the blank line after it.
     const removal = (): GroundingEdit['find'] => {
       const after = text.slice(u.end).match(/^\n+/)?.[0] ?? '';
@@ -622,7 +658,22 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
       report.quotesChecked++;
       if (checkQuote(quote, idx) !== 'unsupported') return;
-      edits.push({ find: u.raw, replace: `> ${REMOVED_QUOTE_NOTE}`, at: u.start, reasons: ['drop_blockquote'] });
+      if (REWRITE_REQUEST.test(input.question)) {
+        edits.push({ find: u.raw, replace: unquoteBlock(u.raw), at: u.start, reasons: ['requested_rewrite'] });
+        report.blockquotesUnquoted++;
+        report.details.push(`blockquote kept as the requested rewrite, unquoted: ${quote.slice(0, 120)}`);
+        return;
+      }
+      const prev = units[i - 1];
+      if (prev && (prev.kind === 'prose' || prev.kind === 'list')) {
+        const prevEdit = edits.length > 0 && edits[edits.length - 1].at === prev.start ? edits[edits.length - 1] : undefined;
+        if (prevEdit) {
+          if (prevEdit.replace && LEAD_IN_COLON.test(prevEdit.replace)) prevEdit.replace = prevEdit.replace.replace(LEAD_IN_COLON, '.$1');
+        } else if (LEAD_IN_COLON.test(prev.raw)) {
+          edits.push({ find: prev.raw, replace: prev.raw.replace(LEAD_IN_COLON, '.$1'), at: prev.start, reasons: ['drop_blockquote'] });
+        }
+      }
+      edits.push({ find: removal(), replace: '', at: u.start, reasons: ['drop_blockquote'] });
       report.blockquotesRemoved++;
       report.details.push(`blockquote not on any page read: ${quote.slice(0, 120)}`);
       return;

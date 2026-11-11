@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions mark every segment of every row [illegible], so none contains any readable Sanskrit or Malayalam; they tie, and this order is arbitrary.

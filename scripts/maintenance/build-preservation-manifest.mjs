@@ -181,7 +181,7 @@ for (const book of allBooks) {
   const pages = db.collection('pages').find(
     { book_id: book.id },
     { projection: { page_number: 1, ocr: 1, translation: 1 }, sort: { page_number: 1 } },
-  );
+  ).batchSize(1000);
   for await (const p of pages) {
     pageCount++;
     // `pages.ocr` is an OBJECT — the text is at .data, not the field itself.

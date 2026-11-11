@@ -1,0 +1,461 @@
+[
+ {
+  "uid": "6992cd6c43713c66ea636575:185",
+  "arm": "f38l",
+  "cer": 0.648,
+  "shares": {
+   "key_wrong": 85,
+   "invented": 7,
+   "omission": 5,
+   "misreading": 3
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "養肝氣 (image: 養肺氣)",
+   "header 欽定四庫全書 卷一下 omitted"
+  ],
+  "note": "Key omits image columns 3-5 (伐天和而又防其大過… / 捨本從標… / 苦溫以泄金…, ~60 chars) that every read correctly has; that gap drives most of the CER. 肝 for the image's 肺 is the canonical Bencao gangmu reading supplied from memory, not from the page."
+ },
+ {
+  "uid": "6992cd6c43713c66ea636575:185",
+  "arm": "f38h",
+  "cer": 0.63,
+  "shares": {
+   "key_wrong": 85,
+   "invented": 8,
+   "misreading": 4,
+   "omission": 3
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "養肝氣…養心氣 (image: 養肺氣…養腎氣)",
+   "味者 for 昧者"
+  ],
+  "note": "Key omits image columns 3-5 (伐天和而又防其大過… / 捨本從標… / 苦溫以泄金…, ~60 chars) that every read correctly has; that gap drives most of the CER. 肝/心 are the memorised canonical text; the scribe wrote 肺/腎."
+ },
+ {
+  "uid": "6992cd6c43713c66ea636575:185",
+  "arm": "pro",
+  "cer": 0.63,
+  "shares": {
+   "key_wrong": 87,
+   "invented": 8,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "養肝氣…養心氣 (image: 肺…腎)",
+   "[?] for header"
+  ],
+  "note": "Key omits image columns 3-5 (伐天和而又防其大過… / 捨本從標… / 苦溫以泄金…, ~60 chars) that every read correctly has; that gap drives most of the CER. Same memorised 肝/心 substitution; 凉/温 variant forms are convention."
+ },
+ {
+  "uid": "6992cd6c43713c66ea636575:185",
+  "arm": "opus",
+  "cer": 0.556,
+  "shares": {
+   "key_wrong": 92,
+   "misreading": 4,
+   "convention": 4
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "太過 (image: 大過)"
+  ],
+  "note": "Key omits image columns 3-5 (伐天和而又防其大過… / 捨本從標… / 苦溫以泄金…, ~60 chars) that every read correctly has; that gap drives most of the CER. Opus kept the scribe's 肺/腎; it is effectively right."
+ },
+ {
+  "uid": "6992cd6c43713c66ea636575:185",
+  "arm": "corr-opus",
+  "cer": 0.574,
+  "shares": {
+   "key_wrong": 88,
+   "invented": 8,
+   "convention": 4
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "養肝氣…養心氣 kept from Pro's draft"
+  ],
+  "note": "Key omits image columns 3-5 (伐天和而又防其大過… / 捨本從標… / 苦溫以泄金…, ~60 chars) that every read correctly has; that gap drives most of the CER. Correction pass kept Pro's memorised 肝/心."
+ },
+ {
+  "uid": "6992cd6c43713c66ea636575:185",
+  "arm": "disagree",
+  "cer": 0.556,
+  "shares": {
+   "key_wrong": 95,
+   "convention": 5
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "凉/温 variant forms"
+  ],
+  "note": "Key omits image columns 3-5 (伐天和而又防其大過… / 捨本從標… / 苦溫以泄金…, ~60 chars) that every read correctly has; that gap drives most of the CER. Otherwise correct, with 肺/腎 as on the page."
+ },
+ {
+  "uid": "69c1bb438522835be845df1f:20",
+  "arm": "f38h",
+  "cer": 0.587,
+  "shares": {
+   "invented": 45,
+   "misreading": 40,
+   "key_wrong": 10,
+   "order": 5
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "וגו' וירד אל גו' וכי אמר ה' אל גו' אחר ההסכמה (image line 1: וזהו וידבר אלקים כו' אנכי ה' אלקיך אשר ההמשכה…)",
+   "ציורת העילה והעלולה אינה נופלת בחכמת"
+  ],
+  "note": "Very hard cursive; I can follow the opening lines only. f38h's opening and middle are fluent Chabad-style phrasing that does not track the line shapes; the lower half loosely follows the key (חב עילאה להאיר … עולמות)."
+ },
+ {
+  "uid": "69c1bb438522835be845df1f:20",
+  "arm": "pro",
+  "cer": 0.762,
+  "shares": {
+   "invented": 50,
+   "omission": 40,
+   "misreading": 10
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "שהשכל בטל ממש כנר בפני האבוקה",
+   "וזהו ענין וידעת היום והשבות אל לבבך כי הוי' הוא האלקים בשמים ממעל",
+   "ואהבת את הוי' אלקיך … בכל לבבך ובכל נפשך"
+  ],
+  "note": "After two roughly right lines Pro writes memorised Tanya/Deut 4:39/Shema prose that is not on the page (line 4 of the image begins המאורות סבר עולם), then whole lines of [?]; it drops the lower half."
+ },
+ {
+  "uid": "69c1bb438522835be845df1f:20",
+  "arm": "corr-opus",
+  "cer": 0.313,
+  "shares": {
+   "misreading": 60,
+   "key_wrong": 25,
+   "omission": 15
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "דקדושה ועד עושה שלום לו (key: דקפ\"ד ועל יעשה שלום לי)"
+  ],
+  "note": "Follows the page line by line; the errors are misread cursive words and [?] gaps. The key is itself shaky in places (non-words such as יקחו', גובי זת), so part of the CER is key noise. Low confidence on fine judgments."
+ },
+ {
+  "uid": "69c29008b82ba5d5beda769c:16",
+  "arm": "pro",
+  "cer": 0.422,
+  "shares": {
+   "convention": 30,
+   "misreading": 30,
+   "order": 20,
+   "extra_real_text": 10,
+   "key_wrong": 5,
+   "invented": 5
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "die Cassa eins abgetheilten Xnates (image: die Cassa wird abgetheilt in Xnate)",
+   "so bleiben 675 fl. (image: 625)",
+   "als ein Gnad. Gehalt genießen, daß das Geld sicher ad 5 pro Cento (struck note: als ein Bund, so bewirken, daß das Geld höher als 6 pro Cent)"
+  ],
+  "note": "Mostly strike-through convention ([crossed out:] vs ~~), the left-column note placed between §4 and §5, and real right-edge marginal fragments the key lacks. The key has its own errors ('die Ordens', '850 fl')."
+ },
+ {
+  "uid": "69c29008b82ba5d5beda769c:16",
+  "arm": "corr-opus",
+  "cer": 0.412,
+  "shares": {
+   "convention": 35,
+   "misreading": 25,
+   "order": 20,
+   "key_wrong": 10,
+   "omission": 5,
+   "invented": 5
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "die Cassa wird abgetheilt in Xnate (right; key: die Ordens)",
+   "daß das Geld sicher ad 5 pro Cento genutzet werde"
+  ],
+  "note": "Line 1 is better than the key's. The CER is mostly bracket convention and the placement of the left-column note; Pro's invented 'sicher ad 5 pro Cento' is kept."
+ },
+ {
+  "uid": "69c29008b82ba5d5beda769c:16",
+  "arm": "disagree",
+  "cer": 0.126,
+  "shares": {
+   "convention": 35,
+   "misreading": 30,
+   "key_wrong": 20,
+   "extra_real_text": 15
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "die Cassa eins abgetheilten Xnates",
+   "so bleiben 675 fl."
+  ],
+  "note": "It mixes the ~~ and [crossed out:] conventions and keeps Pro's line-1 misreading. The marginal fragments ([?]ception, [?]stat.) are real text the key omits."
+ },
+ {
+  "uid": "69f33034876dd827cbc469f6:99",
+  "arm": "pro",
+  "cer": 0.158,
+  "shares": {
+   "misreading": 35,
+   "invented": 25,
+   "key_wrong": 15,
+   "convention": 15,
+   "extra_real_text": 5,
+   "order": 5
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "Ac in tellexim⁹ qđ E de vno laico feodo suo (image: Ac in / R Bem de C sup laico feodo suo)",
+   "… cont phibicõem nr̃am ꝛc Testꝰ ꝛc (image: … Et h'eas ꝛc)",
+   "vñ voƀ mandamus (image: ideo voƀ mandamus)"
+  ],
+  "note": "Plausible writ-formula continuations ('intelleximus quod', 'Teste') replace what the line says. Margin rubrics 'mutatis mutandꝰ' and 'Attachm inde' are on the page but missing from the key."
+ },
+ {
+  "uid": "69f33034876dd827cbc469f6:99",
+  "arm": "disagree",
+  "cer": 0.121,
+  "shares": {
+   "key_wrong": 30,
+   "misreading": 30,
+   "convention": 25,
+   "invented": 15
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "Testꝰ ꝛc (image: Et h'eas ꝛc)",
+   "ad ꝑsens kept from Pro"
+  ],
+  "note": "Fixes Pro's 'intelleximus' line but keeps the 'Testꝰ' ending. Much of the CER is the key lacking real rubrics such as 'mutatis mutandꝰ'."
+ },
+ {
+  "uid": "69b419422b0edf3eaa2df2b9:81",
+  "arm": "pro",
+  "cer": 0.157,
+  "shares": {
+   "key_wrong": 55,
+   "misreading": 40,
+   "convention": 5
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "47. (image: 71.)",
+   "gehangen, sondern dar=an, das die (image: gegangen, sondern den=ke, daß sie)",
+   "Herr! wie drängt (image: mir droht)"
+  ],
+  "note": "The key drops the first two lines of the page. Pro misreads the folio number and several Kurrent words."
+ },
+ {
+  "uid": "69b419422b0edf3eaa2df2b9:81",
+  "arm": "disagree",
+  "cer": 0.136,
+  "shares": {
+   "key_wrong": 95,
+   "convention": 5
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "gegangen, sondern den= / ke, daß sie Geschöpfe dei="
+  ],
+  "note": "Correct read; nearly all the CER comes from the key omitting the first two lines."
+ },
+ {
+  "uid": "6a20330218654bf8e1903ff6:11",
+  "arm": "pro",
+  "cer": 0.147,
+  "shares": {
+   "key_wrong": 55,
+   "misreading": 25,
+   "invented": 15,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "جَبِيْنُهُ كَالْقَمَرِ (image: كالصبح)",
+   "صَلُّوْا عَلَى ذِي النَّبِيِّ (ذي not on page)",
+   "اقالوا لسانه بالعلوم اخبر (real line, missing from key)"
+  ],
+  "note": "The key drops the last line of the right page and fuses lines 1+3 of the left page, dropping line 2; Pro has the right line structure. 'like the moon' is a stock substitution for the page's 'like the dawn'."
+ },
+ {
+  "uid": "6a20330218654bf8e1903ff6:11",
+  "arm": "disagree",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "entire output: 'and'"
+  ],
+  "note": "Output is the single word 'and', a failed or empty arm read rather than a misreading. It needs a pipeline check."
+ },
+ {
+  "uid": "69f33160876dd827cbc48b8b:417",
+  "arm": "pro",
+  "cer": 0.138,
+  "shares": {
+   "misreading": 40,
+   "invented": 25,
+   "convention": 20,
+   "key_wrong": 15
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "appere [?] defaut deuant eux ou p examynacion & distry lez maystrez auditz & coupablez lesquelx outre (image: destreyndre devant eux p comp'satio & distr lez maistres artificers & occupiantz les ditz artz)",
+   "& a la pson comaundez ou en autr ascun mane p attach q ils aiont (image: & en p temps consentz ou en autre al manere attentz aiant)",
+   "come qi vount p my les ditz Ryvors p kidels (image: come sont lez Reverz kidelz)"
+  ],
+  "note": "Fluent Anglo-French statute phrasing replaces hard lines, and invented marginal labels ('la [?]', 'appere [?]') appear in an empty margin. The key's line 1 'salariez' looks wrong (the page reads 'outrages')."
+ },
+ {
+  "uid": "69f33160876dd827cbc48b8b:417",
+  "arm": "disagree",
+  "cer": 0.112,
+  "shares": {
+   "misreading": 40,
+   "convention": 25,
+   "key_wrong": 20,
+   "invented": 15
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "& a la pson comaundez ou en autr ascun mane p attach q ils aiont (kept from Pro)"
+  ],
+  "note": "The opening lines are repaired against the page, but Pro's invented mid-page clause remains."
+ },
+ {
+  "uid": "69c1b9d18522835be8454825:42",
+  "arm": "pro",
+  "cer": 0.132,
+  "shares": {
+   "misreading": 65,
+   "repetition": 15,
+   "convention": 15,
+   "invented": 5
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "خوش خرامش كن بروح هر كس (image: خوش خامش کن و کم ورس)",
+   "روز تويي روز تويي (image: روشنی روز تویی)",
+   "از خود بيمار بيا (image: بیزار)"
+  ],
+  "note": "Mainly misread nasta'liq words plus one doubled phrase; Arabic ي/ك for Persian ی/ک is convention."
+ },
+ {
+  "uid": "69bfce8b8ab50eb88e8c85eb:2",
+  "arm": "opus",
+  "cer": 0.475,
+  "shares": {
+   "order": 75,
+   "convention": 15,
+   "misreading": 5,
+   "omission": 5
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "margin fragments ἔραν… ταῦ given as one block before the main column",
+   "φιλανθρωπίᾳ (abbreviation expanded; key φιλανπίᾳ)",
+   "αὐτῆς (image: αὐτὴν)"
+  ],
+  "note": "Opus transcribes the cut-off left-margin column, then the main column; the key interleaves them line by line. The text is essentially right. αὐτῆς is the NT variant, not the page's reading."
+ },
+ {
+  "uid": "69ef2f6c72c1376fdf2af335:219",
+  "arm": "corr-opus",
+  "cer": 0.186,
+  "shares": {
+   "key_wrong": 50,
+   "omission": 25,
+   "misreading": 25
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "و در تخم او مخروطی (right; key: و تخم او مرطوبی)",
+   "216 (right; key: 4216)",
+   "کسیکه درد (image: نفع کند در)"
+  ],
+  "note": "The key looks partly invented. Its line 6 'در مثانه پیدا شود … بچشم اندر کشند تاریکی ببرد سفیدی چشم پاک کند' does not match the page, which corr-opus follows ('در اندام او را … سالم کند'). The read's own errors are [?] gaps and a few misreadings."
+ },
+ {
+  "uid": "69c1b9368522835be844ef27:23",
+  "arm": "disagree",
+  "cer": 0.096,
+  "shares": {
+   "omission": 80,
+   "misreading": 10,
+   "convention": 10
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "omits vertical margin note و مالیدن قویه سود دارد … از مسامها بیرون آیند",
+   "omits marginal heads علاج تهیج چشم و روی / علاج بیخوابی"
+  ],
+  "note": "The main text block is near-perfect (it even has 'پف' right). All the loss is the marginalia; the key also mis-places one margin note inside the body text."
+ },
+ {
+  "uid": "6a16aca6410dd8afcae61a4c:498",
+  "arm": "disagree",
+  "cer": 0.052,
+  "shares": {
+   "convention": 70,
+   "misreading": 20,
+   "key_wrong": 10
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "xxvi (image: xxiiii; key xxuii)",
+   "deū uiuū / nob̄ (expanded vs key's dm viuū / nb)"
+  ],
+  "note": "Abbreviation and line-merge conventions; the key joins lines with ' / '. Both the read and the key misread the red chapter number."
+ },
+ {
+  "uid": "6a2704be605ae2293059f0e6:67",
+  "arm": "disagree",
+  "cer": 0.048,
+  "shares": {
+   "key_wrong": 60,
+   "convention": 30,
+   "misreading": 10
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "Sabba umb edel krutt und salben / und salbtē da mit den tottē lychnam / sines vatters (right; key merges 3 lines: 'wurtz … salbe … vatrs')",
+   "Darē gestarp (key: Vatr gestarp)"
+  ],
+  "note": "The read follows the page; the key fuses lines 2-4 and misreads several words. The rest is u/v convention."
+ }
+]

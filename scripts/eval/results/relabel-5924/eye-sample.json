@@ -1,0 +1,574 @@
+[
+  {
+    "book_id": "6a90c9493822dc24e540b9da",
+    "title": "Di una epistola Latina del cardinal osio scritta all' illustrissimo signor duca di brunsuico, nella causa del concilio. A' fratelli d' Italia",
+    "decision": "flip",
+    "to": "Italian",
+    "share": {
+      "Latin": 0.091,
+      "German": 0.005,
+      "French": 0.111,
+      "Italian": 0.736,
+      "Spanish": 0,
+      "Dutch": 0.005,
+      "English": 0.053
+    },
+    "pages": [
+      8,
+      9,
+      11,
+      12,
+      15,
+      16,
+      18,
+      19,
+      22,
+      23
+    ]
+  },
+  {
+    "book_id": "69f33541876dd827cbc4e1e8",
+    "title": "Statuta nova, ca. 1450",
+    "decision": "flip",
+    "to": "French",
+    "share": {
+      "Latin": 0.026,
+      "German": 0.001,
+      "French": 0.891,
+      "Italian": 0.067,
+      "Spanish": 0.005,
+      "Dutch": 0,
+      "English": 0.01
+    },
+    "pages": [
+      60,
+      61,
+      98,
+      99,
+      135,
+      136,
+      173,
+      174,
+      210,
+      211,
+      248,
+      249
+    ]
+  },
+  {
+    "book_id": "69aec137b87be1eef391d876",
+    "title": "Orlando Furioso, Vol. 1 (Rose Translation)",
+    "decision": "flip",
+    "to": "English",
+    "share": {
+      "Latin": 0,
+      "German": 0,
+      "French": 0,
+      "Italian": 0.002,
+      "Spanish": 0,
+      "Dutch": 0,
+      "English": 0.998
+    },
+    "pages": [
+      52,
+      53,
+      87,
+      88,
+      118,
+      119,
+      151,
+      152,
+      182,
+      183,
+      215,
+      216
+    ]
+  },
+  {
+    "book_id": "6a94480953b4f9c75be78bbf",
+    "title": "Von dem Bapst umb zu rome: wider den Hochberiembten Romanisten zu leyptzig doctor Martinus Luther Augustiner zu Wittenberg.",
+    "decision": "flip",
+    "to": "German",
+    "share": {
+      "Latin": 0.002,
+      "German": 0.956,
+      "French": 0.005,
+      "Italian": 0.015,
+      "Spanish": 0,
+      "Dutch": 0.003,
+      "English": 0.019
+    },
+    "pages": [
+      4,
+      5,
+      8,
+      9,
+      11,
+      12,
+      15,
+      16,
+      18,
+      19,
+      22,
+      23
+    ]
+  },
+  {
+    "book_id": "69b51dc6cf111105c4290129",
+    "title": "Theatrum tragicum",
+    "decision": "flip",
+    "to": "German",
+    "share": {
+      "Latin": 0.002,
+      "German": 0.97,
+      "French": 0.002,
+      "Italian": 0,
+      "Spanish": 0.002,
+      "Dutch": 0.004,
+      "English": 0.021
+    },
+    "pages": [
+      125,
+      126,
+      203,
+      204,
+      281,
+      282,
+      359,
+      360,
+      438,
+      439,
+      516,
+      517
+    ]
+  },
+  {
+    "book_id": "69aebb946059efb05d4fd9fe",
+    "title": "Taoist Teachings from the Book of Lieh Tzu",
+    "decision": "flip",
+    "to": "English",
+    "share": {
+      "Latin": 0,
+      "German": 0,
+      "French": 0,
+      "Italian": 0.003,
+      "Spanish": 0,
+      "Dutch": 0.001,
+      "English": 0.996
+    },
+    "pages": [
+      27,
+      28,
+      45,
+      46,
+      63,
+      64,
+      83,
+      84,
+      100,
+      101,
+      117,
+      118
+    ]
+  },
+  {
+    "book_id": "6992017e7c226bdd25f99525",
+    "title": "Germaniae Chronicon",
+    "decision": "flip",
+    "to": "German",
+    "share": {
+      "Latin": 0.01,
+      "German": 0.965,
+      "French": 0.001,
+      "Italian": 0.004,
+      "Spanish": 0,
+      "Dutch": 0.008,
+      "English": 0.013
+    },
+    "pages": [
+      147,
+      148,
+      238,
+      239,
+      329,
+      330,
+      421,
+      422,
+      512,
+      513,
+      603,
+      604
+    ]
+  },
+  {
+    "book_id": "6a26cbde5ac5aecc53ced590",
+    "title": "Drey curieuse bißher gantz geheim gehaltene Nun aber denen Liebhabern der Kunst zum besten An das Tages-Licht gegebene Chymische Schrifften : Als I. Nicolai Soleæ Philosophische Grund-Sätze, II. Herrn C. L. V. L. Chymischer Catechismus, III. CXXX. Grund-Sätze",
+    "decision": "flip",
+    "to": "German",
+    "share": {
+      "Latin": 0,
+      "German": 0.975,
+      "French": 0.003,
+      "Italian": 0.01,
+      "Spanish": 0,
+      "Dutch": 0.002,
+      "English": 0.01
+    },
+    "pages": [
+      7,
+      8,
+      13,
+      14,
+      19,
+      20,
+      24,
+      25,
+      30,
+      31,
+      36,
+      37
+    ]
+  },
+  {
+    "book_id": "6a4f72b5a692969b9145b887",
+    "title": "L'Oratione del'eccellentissimo Signore Giacobo Duca d'Ormondia, Signore Luogotente Regio d'Irlanda. Fatta 27 di Settembre, 1662. Innanzi la redunanza de'stati quando prestava loro il consentimento del re per ordinar diversi statuti.",
+    "decision": "flip",
+    "to": "Italian",
+    "share": {
+      "Latin": 0.02,
+      "German": 0.006,
+      "French": 0.141,
+      "Italian": 0.8,
+      "Spanish": 0,
+      "Dutch": 0,
+      "English": 0.034
+    },
+    "pages": [
+      4,
+      5,
+      8,
+      9,
+      11,
+      12,
+      14,
+      15,
+      18,
+      19,
+      21,
+      22
+    ]
+  },
+  {
+    "book_id": "69aec1231f4011b58bb54ab6",
+    "title": "Silius Italicus: Punica, Vol. 2 (Loeb)",
+    "decision": "mixed",
+    "to": "English",
+    "share": {
+      "Latin": 0.111,
+      "German": 0,
+      "French": 0.003,
+      "Italian": 0.005,
+      "Spanish": 0,
+      "Dutch": 0.003,
+      "English": 0.878
+    },
+    "pages": [
+      108,
+      109,
+      175,
+      176,
+      241,
+      242,
+      308,
+      309,
+      375,
+      376,
+      441,
+      442
+    ]
+  },
+  {
+    "book_id": "69b51e8d47b06ecd58193167",
+    "title": "Storia Letteraria D'Italia : divisa in tre libri. 10, Dal Luglio a tutto il Dicembre MDCCLIV",
+    "decision": "mixed",
+    "to": "Italian",
+    "share": {
+      "Latin": 0.147,
+      "German": 0.002,
+      "French": 0.171,
+      "Italian": 0.68,
+      "Spanish": 0,
+      "Dutch": 0,
+      "English": 0
+    },
+    "pages": [
+      81,
+      82,
+      131,
+      132,
+      181,
+      182,
+      231,
+      232,
+      281,
+      282,
+      331,
+      332
+    ]
+  },
+  {
+    "book_id": "69e3ff96b142e5dd9d6b0949",
+    "title": "Canticum Canticorum (Song of Songs, block-book facsimile)",
+    "decision": "mixed",
+    "to": "English",
+    "share": {
+      "Latin": 0.13,
+      "German": 0.003,
+      "French": 0.004,
+      "Italian": 0,
+      "Spanish": 0,
+      "Dutch": 0.003,
+      "English": 0.861
+    },
+    "pages": [
+      16,
+      17,
+      27,
+      28,
+      38,
+      39,
+      49,
+      50,
+      61
+    ]
+  },
+  {
+    "book_id": "69f33006876dd827cbc461ab",
+    "title": "Statuta vetera and tracts, ca. 1350",
+    "decision": "mixed",
+    "to": "French",
+    "share": {
+      "Latin": 0.482,
+      "German": 0.002,
+      "French": 0.438,
+      "Italian": 0.04,
+      "Spanish": 0.005,
+      "Dutch": 0,
+      "English": 0.033
+    },
+    "pages": [
+      74,
+      75,
+      121,
+      122,
+      167,
+      168,
+      214,
+      215,
+      261,
+      262,
+      308,
+      309
+    ]
+  },
+  {
+    "book_id": "69f335d8876dd827cbc4f11c",
+    "title": "Readings on statutes, ǂk [manuscript] 1465-1495",
+    "decision": "mixed",
+    "to": "French",
+    "share": {
+      "Latin": 0.143,
+      "German": 0,
+      "French": 0.789,
+      "Italian": 0.021,
+      "Spanish": 0.005,
+      "Dutch": 0.001,
+      "English": 0.041
+    },
+    "pages": [
+      106,
+      107,
+      174,
+      175,
+      246,
+      247,
+      322,
+      323,
+      385,
+      386,
+      452,
+      453
+    ]
+  },
+  {
+    "book_id": "69af2221b5227118e60e46dd",
+    "title": "Opera Historica, Vol. II",
+    "decision": "mixed",
+    "to": "English",
+    "share": {
+      "Latin": 0.187,
+      "German": 0,
+      "French": 0.006,
+      "Italian": 0.006,
+      "Spanish": 0,
+      "Dutch": 0.003,
+      "English": 0.799
+    },
+    "pages": [
+      114,
+      115,
+      184,
+      185,
+      254,
+      255,
+      324,
+      325,
+      394,
+      395,
+      464,
+      465
+    ]
+  },
+  {
+    "book_id": "6991f3de0d82ea4dc111d543",
+    "title": "Adnotationes et Monumenta ad Magni Cosmi Medicei Vitam",
+    "decision": "mixed",
+    "to": "Italian",
+    "share": {
+      "Latin": 0.416,
+      "German": 0.002,
+      "French": 0.063,
+      "Italian": 0.505,
+      "Spanish": 0.007,
+      "Dutch": 0.002,
+      "English": 0.007
+    },
+    "pages": [
+      59,
+      60,
+      96,
+      97,
+      133,
+      134,
+      169,
+      170,
+      206,
+      207,
+      243,
+      244
+    ]
+  },
+  {
+    "book_id": "6a426749f70718a51b8a4d1b",
+    "title": "De Vexillo Imperiali Diatriba",
+    "decision": "mixed",
+    "to": "German",
+    "share": {
+      "Latin": 0.451,
+      "German": 0.512,
+      "French": 0.007,
+      "Italian": 0.012,
+      "Spanish": 0.002,
+      "Dutch": 0.002,
+      "English": 0.015
+    },
+    "pages": [
+      10,
+      11,
+      16,
+      17,
+      23,
+      24,
+      29,
+      30,
+      36,
+      37,
+      42,
+      43
+    ]
+  },
+  {
+    "book_id": "69af2221f98f6eff774cbea1",
+    "title": "Opera Historica, Vol. I",
+    "decision": "mixed",
+    "to": "English",
+    "share": {
+      "Latin": 0.208,
+      "German": 0,
+      "French": 0.004,
+      "Italian": 0.005,
+      "Spanish": 0,
+      "Dutch": 0,
+      "English": 0.783
+    },
+    "pages": [
+      121,
+      122,
+      200,
+      201,
+      277,
+      278,
+      353,
+      354,
+      426,
+      427,
+      500,
+      501
+    ]
+  },
+  {
+    "book_id": "6ab5ad768f9ccb356243f8b9",
+    "title": "48 Claves Angelicae; Liber Scientiae Auxilii et Victoriae Terrestris; De Heptarchia Mystica — British Library, Sloane MS 3191",
+    "decision": "mixed",
+    "to": "English",
+    "share": {
+      "Latin": 0.103,
+      "German": 0.005,
+      "French": 0,
+      "Italian": 0,
+      "Spanish": 0,
+      "Dutch": 0.007,
+      "English": 0.885
+    },
+    "pages": [
+      34,
+      35,
+      78,
+      79,
+      99,
+      100,
+      121,
+      122,
+      144
+    ]
+  },
+  {
+    "book_id": "6a907057336010794b0d397a",
+    "title": "Quantum Pontificiis Reformatio B. Luth. ipsis non diffitentibus profuerit?, in Illustri Universitate Wittebergensi, Sub Praesidio Academiae h.t. Rectoris Jo. Friderici Mayeri ipso Reformationis festo d. 31. Octobr. horis pomeridianis in Auditorio Theologorum P.P. Laurentius Wittmann, Flensb. Hols. A.O.R. MDCLXXXIV.",
+    "decision": "mixed",
+    "to": "German",
+    "share": {
+      "Latin": 0.462,
+      "German": 0.491,
+      "French": 0.027,
+      "Italian": 0.013,
+      "Spanish": 0,
+      "Dutch": 0,
+      "English": 0.008
+    },
+    "pages": [
+      4,
+      5,
+      8,
+      9,
+      11,
+      12,
+      14,
+      15,
+      18,
+      19,
+      21,
+      22
+    ]
+  }
+]

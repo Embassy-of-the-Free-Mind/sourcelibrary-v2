@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A reads most consistently as a Malayalam commentary on atoms and how they change under heat (paramāṇuttvaṃ, abhikramam, bhinnāśaṃ, pākapā, avayave), and C keeps some of the same terms but breaks down in more rows, while B is mostly syllable strings that only look like words.

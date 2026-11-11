@@ -1,0 +1,9 @@
+pages: 60; both arms split: 52; stored unsplit 0; argon unsplit 1; argon missing 7
+| column | norm | stored CER | Argon CER | stored WER (page mean) | Argon WER (page mean) |
+|---|---|---|---|---|---|
+| nah | A | 0.152 | 0.061 | 0.706 | 0.472 |
+| nah | B | 0.142 | 0.057 | 0.669 | 0.454 |
+| spa | A | 0.194 | 0.118 | 0.509 | 0.497 |
+| spa | B | 0.188 | 0.108 | 0.496 | 0.471 |
+median page CER (A): Nahuatl stored 0.131 Argon 0.063; Spanish stored 0.118 Argon 0.120
+Argon better/same/worse by CER (A): Nahuatl 49/2/1, Spanish 20/10/22

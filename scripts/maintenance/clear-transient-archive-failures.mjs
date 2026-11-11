@@ -32,6 +32,13 @@
  *   node scripts/maintenance/clear-transient-archive-failures.mjs --apply
  *   node scripts/maintenance/clear-transient-archive-failures.mjs --apply --max-per-provider=500
  *   node scripts/maintenance/clear-transient-archive-failures.mjs --book-id=<id> --apply
+ *   node scripts/maintenance/clear-transient-archive-failures.mjs --verified-books=<file> [--apply]
+ *
+ * --verified-books=<file> (one book id per line) scopes the run to those books (an indexed scan) AND
+ * also clears their `source-not-found` markers. Only pass books a probe has just shown the source
+ * SERVING (#5448, 2026-10-28: Gallica books marked "fewer pages than DB stub" whose BnF manifest has
+ * every canvas and whose marked pages answer 200). It lifts the books' lane cooldown
+ * (`archive_metadata.cooldown_until`, archive-miss.mjs) in the same run, so the lane retries them.
  */
 import { MongoClient } from 'mongodb';
 import { classifyArchiveFailure, failureReasonKey, FAILURE_CLASS } from '../lib/archive-failure-class.mjs';
@@ -47,6 +54,7 @@ const LIMIT = parseInt(getArg('limit') || '0', 10) || Infinity;
 // refusing to serve in-copyright material. Only pass this after checking the
 // affected books are public domain.
 const INCLUDE_403 = args.includes('--include-403');
+const VERIFIED_FILE = getArg('verified-books');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
@@ -58,6 +66,14 @@ async function main() {
 
   const query = { archived_photo: { $regex: '^failed:' } };
   if (BOOK_ID) query.book_id = BOOK_ID;
+  let verified = null;
+  if (VERIFIED_FILE) {
+    const fs = await import('node:fs');
+    verified = [...new Set(fs.readFileSync(VERIFIED_FILE, 'utf8').split(/\s+/).filter(Boolean))];
+    if (!verified.length) { console.error(`[clear-failures] ${VERIFIED_FILE} lists no book ids`); process.exit(1); }
+    query.book_id = { $in: verified };
+    console.log(`[clear-failures] verified-books: ${verified.length} book(s) from ${VERIFIED_FILE}; their source-not-found markers are cleared too`);
+  }
 
   if (INCLUDE_403) {
     console.log('[clear-failures] WARNING: --include-403 is ON. 403 on this corpus is dominated by');
@@ -108,7 +124,8 @@ async function main() {
     const key = failureReasonKey(page.archived_photo);
     if (key) byReason[key] = (byReason[key] || 0) + 1;
 
-    if (cls !== FAILURE_CLASS.TRANSIENT) continue;
+    const verifiedNotFound = verified && cls === FAILURE_CLASS.PERMANENT && /source-not-found/i.test(page.archived_photo);
+    if (cls !== FAILURE_CLASS.TRANSIENT && !verifiedNotFound) continue;
 
     const prov = await providerFor(page.book_id);
     seenByProvider[prov] = (seenByProvider[prov] || 0) + 1;
@@ -154,6 +171,13 @@ async function main() {
     cleared += res.modifiedCount;
   }
   console.log(`\n  CLEARED ${cleared} page(s) — now eligible for the normal archivers.`);
+  if (verified) {
+    const r = await db.collection('books').updateMany(
+      { id: { $in: verified }, 'archive_metadata.cooldown_until': { $exists: true } },
+      { $unset: { 'archive_metadata.cooldown_until': '', 'archive_metadata.cooldown_reason': '' } }
+    );
+    console.log(`  lane cooldown lifted on ${r.modifiedCount} of ${verified.length} verified book(s).`);
+  }
   console.log('  Nothing was archived by this script; the archivers do that on their next run.');
 
   await client.close();

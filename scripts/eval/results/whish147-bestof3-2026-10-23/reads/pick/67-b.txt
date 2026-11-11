@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three gives readable text: B's fragments ("khakhaḥthayada", "ḥḥ", stray visargas) are not Sanskrit or Malayalam and look like noise, while A and C are identical and entirely [illegible], so they at least claim no false text (A wins the tie arbitrarily).

@@ -1,0 +1,12 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | I could not read any of the text reliably, so I gave no Malayalam rather than guessing. The layout is clear: 11 rows, with rows 1–4 and 9–11 running the full width and rows 5–8 broken at both holes (row 8 is short in the right column), plus one marginal mark at the far right. At this resolution, though, I can't tell the individual letters, conjuncts, dot-rephs or chillus apart well enough. Higher-resolution crops of each column (about 2–3× zoom) would let me attempt a real transcription.

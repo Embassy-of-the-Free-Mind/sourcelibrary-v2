@@ -1,0 +1,75 @@
+{
+ "issue": 5914,
+ "date": "2026-10-24",
+ "seed": 2026102405,
+ "frame": "recent",
+ "frame_size": 293,
+ "recent_days": 7,
+ "recent_since": "2026-10-17T05:54:22.214Z",
+ "n_books": 10,
+ "n_page_records": 30,
+ "rejected_no_run": [
+  "6992cfb1f5b4f75c1a4c968d",
+  "6992d006f5b4f75c1a4c9fb4",
+  "69af3c1ce2921802c6c77d53"
+ ],
+ "images": {
+  "checked": true,
+  "ok": 30,
+  "missing_url": 0
+ },
+ "rng": "mulberry32 (paired-stats makeRng); books seed, runs seed ^ 0x9e3779b9",
+ "code_sha": null,
+ "exposure": {
+  "6ad191b942debc9626925467": {
+   "45": "served",
+   "46": "served",
+   "47": "served"
+  },
+  "6a40efd67f8d954eada8b8ab": {
+   "75": "served",
+   "76": "served",
+   "77": "served"
+  },
+  "6a3cebe08642f0445b157ef6": {
+   "13": "served",
+   "14": "served",
+   "15": "served"
+  },
+  "6a40efac7f8d954eada8b72d": {
+   "49": "served",
+   "50": "served",
+   "51": "served"
+  },
+  "6a3cc0c0f9474f825c171eab": {
+   "90": "served",
+   "91": "served",
+   "92": "served"
+  },
+  "6a3cc13fec254ff6cae0aa41": {
+   "18": "served",
+   "19": "served",
+   "20": "served"
+  },
+  "6a40ef533a63957730efed48": {
+   "40": "served",
+   "41": "served",
+   "42": "served"
+  },
+  "6a40ef817f8d954eada8b5b3": {
+   "47": "served",
+   "48": "served",
+   "49": "served"
+  },
+  "6aa94ea998dd95a320803cca": {
+   "525": "served",
+   "526": "served",
+   "527": "served"
+  },
+  "69bd9f4bf6d63c91974800b0": {
+   "824": "served",
+   "825": "served",
+   "826": "served"
+  }
+ }
+}

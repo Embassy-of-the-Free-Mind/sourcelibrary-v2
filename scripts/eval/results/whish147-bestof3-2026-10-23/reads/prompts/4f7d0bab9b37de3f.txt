@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. aitraguṇābhidhayānāṃtrami ‖ evatrādguṇāssiddhaḥvyaktamitya [illegible] aiśakṣaḥkaḥ ‖ aitraguṇyālkaṃyasmāl
+2. guṇāḥavivekino ‖ bhāgyāssāmānyāḥacetanāḥprasavadharmmi ‖ ṇaścatecavyakta [illegible] ddhāḥ
+3. innimetrāguṇaṅṅaḻila ‖ jñayāḥbhāvādikkaiguṇyānyābhā ‖ ādikkaiguṇyānyābhāve
+4. kkamivetyādayo ‖ mabhāvālnamite [illegible] ṣṭuṇyasya [illegible] ‖ aivatrādijñaṃbhavanti
+5. kasmādtraiguṇyā ‖ aidavānaivatrāda [illegible] evañcasati ‖ pradhānamapitraiguṇya
+6. rlkamāvidhāniddhaṃ ‖ ledānākāraṇaguṇātmakatvālka ‖ āryyālprakṛmiti
+7. ddhamitikāraṇasya ‖ yoguṇesvatra [illegible] bhāvābhāvasya ‖ karaṇa [illegible]
+8. rkkiścaṃtattralña ‖ phalākaikāneguṇekkāṃkāryya ‖ ṣṭhaṃguṇeṣve [illegible]
+9. ṣyātrūbhirārañjepeṭe ‖ grūḥtvañjopādavabhicakṣila [illegible] kkantaāvidha ‖ yanyālkaṃvyakta [illegible]
+10. ṣiyaṃdravalbhantacasabhiya ‖ ddhiṇyādya [illegible] teprayānenyādyarmmi ‖ ṇolañciddhārkka
+11. phaṃdamimetrādityāga ‖ ḥbhedānāmitrādikāññitajjapalabai ‖ mahadāditatvakāryyamiture
+
+TRANSCRIPTION B
+1. ainaguṇābhidhānaṃtrami ‖ vaktādyaiguṇaistriṣvyaktakkaipātraśeṣaḥ [illegible] kaḥ ‖ [illegible] ruguṇārkkaeṃśāstrāl
+2. guṇāevāmivekito ‖ ābhāgyāstrāmānyādeścetanāḥprasavadharmmi ‖ ṇaśceticavyaktasiddhāḥ
+3. ititoguṇākkadidha ‖ tthyāḥbhāvādikkaitraiguṇyādyabhā ‖ ve
+4. kkavivektādayo ‖ dabhāvālnabhirgaiṇasyapuruṣasyāpi ‖ aivaktādiliṃbhavati
+5. kasmādaitraguṇyā ‖ daivāvektādinniddaḥevaṃsati ‖ pradhānamapitraiguṇya
+6. darkkāvidhāniddhaṃ ‖ bhedānākāraṇaguṇātmakatvālka ‖ ādyartthāstakamiti
+7. ddhamitikāraṇasya ‖ lokkaguṇasvabhāttṛsthabhāvevāyasya ‖ kāleyākkaṃtrasyabha
+8. dapakṣyaṃtasmāli ‖ laliṅkakāraṇaguṇakāṃkāryyūnda ‖ ṇḍaṃguṇellukrevella
+9. ṣyādattilakṣyaveṭabhe ‖ ddaḥbhakṣyāvādabhavitiyillūtyakkataeviya ‖ ntassyālkiṃvyaktatae
+10. miyaṃbhavelnanacasamiya ‖ mindyakṣmāditunepradhānātmāvadharmmi ‖ ṇailakṣaṇiddhārkka
+11. maṃgamivektāditvāllāḥ ‖ bhedānāmityādikāryyakāraṇaddhalabai ‖ jñemahadādikārkkāryyamitye
+
+TRANSCRIPTION C
+1. aira [illegible] guṇābhidhānaṃ tri [illegible] ‖ vatvādguṇassiddhaḥ vyakta [illegible] bhavātvāśeṣaḥ kakaḥ ‖ [illegible] guṇālkamaṃ [illegible]
+2. guṇāavivekino [illegible] ‖ [illegible] dyāssāmānyā [illegible] cetanāḥprasavadharmmi ‖ ṇaśca [illegible] vyaktasiddhā [illegible]
+3. ititraiguṇyādiva ‖ [illegible] bhāvādikkitraiguṇyānyābhā ‖ [illegible] ādikkaitraiguṇyābhāve
+4. kkavivekatvādayo ‖ [illegible] bhāvālna [illegible] ṇasyapuruṣasyāvi ‖ ve [illegible] bhavanti
+5. kasmātraiguṇyā ‖ devāvetvāda [illegible] ddhaḥ eva [illegible] ‖ pradhānamapitraiguṇya
+6. [illegible] lka [illegible] vidhā [illegible] ṃ ‖ [illegible] kāraṇaguṇātmakatvālka ‖ āryyasyāvyaktamapisi
+7. ddhamitikāraṇasya ‖ yoguṇaḥsvātmabhūtabhāvoyasya ‖ ka [illegible] ktaṃ [illegible]
+8. [illegible] tanmālṇa ‖ phala [illegible] kāra [illegible] kāryya [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] vyakta [illegible] ‖ viyannyālkamaṃ vyakta [illegible]
+10. vidhaṃ [illegible] ‖ [illegible] prasavadharmmi ‖ dharmmiṇā [illegible] siddha [illegible]
+11. maṃ [illegible] vetvāditvā ‖ [illegible] dānāditvādvakāryyakāraṇa [illegible] ‖ [illegible] tmakā [illegible] mitu [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

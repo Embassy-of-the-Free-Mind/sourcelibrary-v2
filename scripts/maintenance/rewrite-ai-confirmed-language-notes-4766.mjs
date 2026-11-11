@@ -90,7 +90,7 @@ try {
     const out = arg('out');
     if (!out) throw new Error('--out <dir> is required');
     fs.mkdirSync(out, { recursive: true });
-    const cur = books.find({ 'field_provenance.language.note': /^AI confirmed as / }, { projection: { id: 1, title: 1, language: 1, 'field_provenance.language': 1, 'ai_metadata.model': 1, 'ai_metadata.enriched_at': 1 } });
+    const cur = books.find({ 'field_provenance.language.note': /^AI confirmed as / }, { projection: { id: 1, title: 1, language: 1, 'field_provenance.language': 1, 'ai_metadata.model': 1, 'ai_metadata.enriched_at': 1 } }).batchSize(1000);
     const rows = []; const pairs = {}; let seen = 0, excluded = 0;
     for await (const b of cur) {
       seen++;

@@ -43,6 +43,13 @@ vi.mock('@/lib/ai', () => ({
   }),
 }));
 
+// The metered reader's page gate (#4357) is pinned in metered-leak-doors.test.ts;
+// here every page is in the free sample, so it never walls.
+vi.mock('@/lib/metered-gate', () => ({
+  pageGateForRequest: vi.fn(async () => null),
+  meteredSignInResponse: vi.fn(() => new Response(null, { status: 401 })),
+}));
+
 vi.mock('@/lib/gemini-logger', () => ({ logGeminiCall: vi.fn(async () => undefined) }));
 vi.mock('@/lib/cron-auth', () => ({ getTriggerSource: vi.fn(() => 'manual') }));
 vi.mock('@/lib/tenant-context', () => ({ resolveTenantId: vi.fn(async () => 'tenant-uuid-1') }));

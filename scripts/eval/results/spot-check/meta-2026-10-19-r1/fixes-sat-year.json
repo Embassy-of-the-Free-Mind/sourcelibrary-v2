@@ -1,0 +1,806 @@
+{
+ "run": "meta-round-6056-r1-sat-year",
+ "source": "meta-round-class-fix-v1",
+ "reader": "claude-opus-5-5 (20 of the rows checked by eye against the scan)",
+ "method": "SAT Daizokyo / BSB imports carry year 2018 (digitisation) while published holds the print date; year := the edition year when the dated layer is one exact year that published also names, else unset",
+ "fixes": [
+  {
+   "book_id": "69f13478365e3fcae574ed14",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "7.-11-Jh.",
+    "edition": {
+     "from": 700,
+     "to": 1100,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"7.-11-Jh.\""
+   }
+  },
+  {
+   "book_id": "69f13483365e3fcae574edb0",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 975
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "975",
+    "edition": {
+     "from": 975,
+     "to": 975,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"975\""
+   }
+  },
+  {
+   "book_id": "69f13459365e3fcae574e286",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1440
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1440",
+    "edition": {
+     "from": 1440,
+     "to": 1440,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1440\""
+   }
+  },
+  {
+   "book_id": "69f13443365e3fcae574e08e",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1453
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1453",
+    "edition": {
+     "from": 1453,
+     "to": 1453,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1453\""
+   }
+  },
+  {
+   "book_id": "69f134001764d779d0c72269",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 673
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "673",
+    "edition": {
+     "from": 673,
+     "to": 673,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"673\""
+   }
+  },
+  {
+   "book_id": "69f133f41764d779d0c7217a",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "7.-11. Jh.",
+    "edition": {
+     "from": 700,
+     "to": 1100,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"7.-11. Jh.\""
+   }
+  },
+  {
+   "book_id": "69f13415c8d07a68106531ad",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Yuan (1271-1368)",
+    "edition": {
+     "from": 1127,
+     "to": 1276,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Yuan (1271-1368)\""
+   }
+  },
+  {
+   "book_id": "69f1344a365e3fcae574e0d1",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1110",
+    "edition": {
+     "from": 1080,
+     "to": 1151,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1110\""
+   }
+  },
+  {
+   "book_id": "69f13464365e3fcae574e3d8",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1301",
+    "edition": {
+     "from": 1277,
+     "to": 1320,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1301\""
+   }
+  },
+  {
+   "book_id": "69f13452365e3fcae574e1c1",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1284",
+    "edition": {
+     "from": 1284,
+     "to": 1285,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1284\""
+   }
+  },
+  {
+   "book_id": "69f1341dc8d07a681065333c",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Yuan (1271-1368)",
+    "edition": {
+     "from": 1271,
+     "to": 1368,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Yuan (1271-1368)\""
+   }
+  },
+  {
+   "book_id": "69f13438365e3fcae574dfe1",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1306
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1306",
+    "edition": {
+     "from": 1306,
+     "to": 1306,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1306\""
+   }
+  },
+  {
+   "book_id": "69f13428c8d07a6810653407",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1795
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1795",
+    "edition": {
+     "from": 1795,
+     "to": 1795,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1795\""
+   }
+  },
+  {
+   "book_id": "69f1347f365e3fcae574ed95",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1162
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1162",
+    "edition": {
+     "from": 1162,
+     "to": 1162,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1162\""
+   }
+  },
+  {
+   "book_id": "69f133eb1764d779d0c72100",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1797
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Qing Jiaqing 2 nian 1797",
+    "edition": {
+     "from": 1797,
+     "to": 1797,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Qing Jiaqing 2 nian 1797\""
+   }
+  },
+  {
+   "book_id": "69f133f81764d779d0c72185",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1237
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "('chŏngyu'/1237)",
+    "edition": {
+     "from": 1237,
+     "to": 1237,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"('chŏngyu'/1237)\""
+   }
+  },
+  {
+   "book_id": "69f13434365e3fcae574dfb3",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1805
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1805",
+    "edition": {
+     "from": 1805,
+     "to": 1805,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1805\""
+   }
+  },
+  {
+   "book_id": "69f13467365e3fcae574e3e7",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1812
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Qing Jiaqing 17 nian 1812",
+    "edition": {
+     "from": 1812,
+     "to": 1812,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Qing Jiaqing 17 nian 1812\""
+   }
+  },
+  {
+   "book_id": "69f13446365e3fcae574e099",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1237
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "('chŏngyu'/1237)",
+    "edition": {
+     "from": 1237,
+     "to": 1237,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"('chŏngyu'/1237)\""
+   }
+  },
+  {
+   "book_id": "69f13487365e3fcae574edba",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1800
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1800",
+    "edition": {
+     "from": 1800,
+     "to": 1800,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1800\""
+   }
+  },
+  {
+   "book_id": "69f1340cc8d07a681065316c",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "ca. 19 Jh.",
+    "edition": {
+     "from": 1800,
+     "to": 1911,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"ca. 19 Jh.\""
+   }
+  },
+  {
+   "book_id": "69f1343f365e3fcae574e04b",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1800
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1800",
+    "edition": {
+     "from": 1800,
+     "to": 1800,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1800\""
+   }
+  },
+  {
+   "book_id": "69f13430c8d07a681065352c",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Guangxu (1875-1908)",
+    "edition": {
+     "from": 1875,
+     "to": 1908,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Guangxu (1875-1908)\""
+   }
+  },
+  {
+   "book_id": "69f13425c8d07a68106533b5",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1765
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Qing Qianlong yi you 30 nian, 1765",
+    "edition": {
+     "from": 1765,
+     "to": 1765,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Qing Qianlong yi you 30 nian, 1765\""
+   }
+  },
+  {
+   "book_id": "69f1343c365e3fcae574dff3",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "ca. 19 Jh.",
+    "edition": {
+     "from": 1800,
+     "to": 1911,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"ca. 19 Jh.\""
+   }
+  },
+  {
+   "book_id": "69f133ef1764d779d0c72122",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Qing, between 1644 and 1824",
+    "edition": {
+     "from": 1447,
+     "to": 1824,
+     "basis": "model_knowledge"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Qing, between 1644 and 1824\""
+   }
+  },
+  {
+   "book_id": "69f1346b365e3fcae574e419",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1795
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1795",
+    "edition": {
+     "from": 1795,
+     "to": 1795,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1795\""
+   }
+  },
+  {
+   "book_id": "69f13421c8d07a681065334d",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1826
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1826",
+    "edition": {
+     "from": 1826,
+     "to": 1826,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1826\""
+   }
+  },
+  {
+   "book_id": "69f1347c365e3fcae574ed1c",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "15. Jh ?",
+    "edition": {
+     "from": 1711,
+     "to": 1711,
+     "basis": "colophon"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"15. Jh ?\""
+   }
+  },
+  {
+   "book_id": "69f134031764d779d0c72274",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1680
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1680",
+    "edition": {
+     "from": 1680,
+     "to": 1680,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1680\""
+   }
+  },
+  {
+   "book_id": "69f13460365e3fcae574e33e",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1733
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Qing Yongzheng 11 nian 1733",
+    "edition": {
+     "from": 1733,
+     "to": 1733,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Qing Yongzheng 11 nian 1733\""
+   }
+  },
+  {
+   "book_id": "69f13455365e3fcae574e1d2",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1695
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1695",
+    "edition": {
+     "from": 1695,
+     "to": 1695,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1695\""
+   }
+  },
+  {
+   "book_id": "69f133fc1764d779d0c721aa",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1922
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1922",
+    "edition": {
+     "from": 1922,
+     "to": 1922,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1922\""
+   }
+  },
+  {
+   "book_id": "69f1344e365e3fcae574e0df",
+   "class": "digitisation-year-as-year",
+   "visible": true,
+   "set": {
+    "year": 1735
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "Qing Yongzheng 13 1735",
+    "edition": {
+     "from": 1735,
+     "to": 1735,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"Qing Yongzheng 13 1735\""
+   }
+  },
+  {
+   "book_id": "69f1342cc8d07a681065341a",
+   "class": "digitisation-year-as-year",
+   "visible": false,
+   "set": {
+    "year": 1735
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1735",
+    "edition": {
+     "from": 1735,
+     "to": 1735,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1735\""
+   }
+  },
+  {
+   "book_id": "69f13419c8d07a68106531ba",
+   "class": "digitisation-year-as-year",
+   "visible": false,
+   "set": {
+    "year": 1851
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1851",
+    "edition": {
+     "from": 1851,
+     "to": 1851,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1851\""
+   }
+  },
+  {
+   "book_id": "69f13474365e3fcae574eb86",
+   "class": "digitisation-year-as-year",
+   "visible": false,
+   "set": {
+    "year": 1735
+   },
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1735",
+    "edition": {
+     "from": 1735,
+     "to": 1735,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1735\""
+   }
+  },
+  {
+   "book_id": "69f1346f365e3fcae574e47f",
+   "class": "digitisation-year-as-year",
+   "visible": false,
+   "unset": [
+    "year"
+   ],
+   "expect": {
+    "year": 2018
+   },
+   "evidence": {
+    "page": 6,
+    "published": "1630-1642",
+    "edition": {
+     "from": 1630,
+     "to": 1642,
+     "basis": "catalogue"
+    },
+    "note": "year 2018 is the SAT/BSB digitisation year; published reads \"1630-1642\""
+   }
+  }
+ ]
+}

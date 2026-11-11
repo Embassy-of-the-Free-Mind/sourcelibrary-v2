@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A has the most real Sanskrit, with coherent phrases such as "devadattaḥ pacati devadattena pacyate", "ātmasākṣātkāraṇa", "tadanantaraṃ" and "vidhinā nididhyāsana"; B has only scattered real words like "aprayojanaṃ" and "mokṣaḥ", and C is mostly syllables that only look like words.

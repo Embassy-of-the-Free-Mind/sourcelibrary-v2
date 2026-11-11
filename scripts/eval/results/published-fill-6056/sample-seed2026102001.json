@@ -1,0 +1,228 @@
+{
+ "seed": 2026102001,
+ "rng": "mulberry32 (paired-stats makeRng)",
+ "pool": 3691,
+ "n": 20,
+ "rows": [
+  {
+   "id": "6a4de8857f10a16d4eddb3ae",
+   "title": "De communione praesidente doctore leon. Marstaller, duae quaestiones hoc in libello conscriptae, unà",
+   "value": "1543",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10165451_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "publicandis, Ingolstadii Anno. M. D. XLIII. > 1. Timoth. 3. Math.",
+   "url": "https://sourcelibrary.org/book/6a4de8857f10a16d4eddb3ae?page=1"
+  },
+  {
+   "id": "6a4adbed2f55066780cb4bea",
+   "title": "Clava Herculis, Potentissimo Et Serenissimo Principi Ac Domino, Dn. Friderico Wilhelmo, S.R.I. Elect",
+   "value": "1681",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10631656_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "ingressus, quae fuit 2. Junii Anno 1681. humillima cum subjectione",
+   "url": "https://sourcelibrary.org/book/6a4adbed2f55066780cb4bea?page=1"
+  },
+  {
+   "id": "6a4ab33c0a459d47e0d00029",
+   "title": "De Aaronitici Pectoralis Insigni Urim atque Tummim, Ad Exod. XXVIII. Com. 30. Dissertatio Philologic",
+   "value": "1666",
+   "page": 3,
+   "image": "https://images.sourcelibrary.org/pages/6a4ab33c0a459d47e0d00029/0003.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "Exscribebat MICHAEL Wendt/ Anno M DC LXVI.",
+   "url": "https://sourcelibrary.org/book/6a4ab33c0a459d47e0d00029?page=3"
+  },
+  {
+   "id": "6a4c8a2a6a017d6d1595c8f2",
+   "title": "Dissertatio Inauguralis De Obligationibus Accessoriis, Quam In Celeberrima Altdorffina Auctoritate P",
+   "value": "1669",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/pages/6a4c8a2a6a017d6d1595c8f2/0001.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "LIPSIENSIS. Ad diem [blank] Octobris, M. DC. LXIX. ALTORFFI Typis Johannis",
+   "url": "https://sourcelibrary.org/book/6a4c8a2a6a017d6d1595c8f2?page=1"
+  },
+  {
+   "id": "6a4e59a600c1250433dc255e",
+   "title": "Judiciorum praxis ad statutum Florentinum secumdum secundi libri, de modo probandi mortem, filiation",
+   "value": "1589",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/pages/6a4e59a600c1250433dc255e/0001.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "impensis Sigismundi Feyrabendij. M. D. LXXXIX.",
+   "url": "https://sourcelibrary.org/book/6a4e59a600c1250433dc255e?page=1"
+  },
+  {
+   "id": "6a490f0da9e39181572dd59a",
+   "title": "Ludovici Liebhardi In Illustri Gymnasio Christian-Ernestino, Quod Beruthi Francorum Est, Historiarum",
+   "value": "1664",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10644380_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "APUD JOHANNEM GEBHARDUM. ANNO MDCLXIV. - 1 -",
+   "url": "https://sourcelibrary.org/book/6a490f0da9e39181572dd59a?page=1"
+  },
+  {
+   "id": "6a49232da45b99e46af93275",
+   "title": "Ausführlicher Unterricht und Anweisung, wie die Salivation-Cur nach allen Umbständen und Vortheilen ",
+   "value": "1700",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10191375_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Liegnitz seeligen Wittib und Erben / 1700.",
+   "url": "https://sourcelibrary.org/book/6a49232da45b99e46af93275?page=1"
+  },
+  {
+   "id": "6a4c12f86fcacb6a93788bae",
+   "title": "Christiani Woldenbergii, Crempa-Holsati Oratio Inauguralis De Origine, Progressu, Et Usu Corporis Ca",
+   "value": "1659",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10971169_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Eruditorum conventu, 13. Decembris: 1659. memoriter pronunciata.",
+   "url": "https://sourcelibrary.org/book/6a4c12f86fcacb6a93788bae?page=1"
+  },
+  {
+   "id": "6a4aab5014a573f4677174a6",
+   "title": "Diarium rerum Argelae gestarum anno 1619. durante detentione I. B. Gramay",
+   "value": "1623",
+   "page": 3,
+   "image": "https://images.sourcelibrary.org/pages/6a4aab5014a573f4677174a6/0003.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "Excudebat ALBINVS Duffeldorpff, ANNO M. DC. XXIII.",
+   "url": "https://sourcelibrary.org/book/6a4aab5014a573f4677174a6?page=3"
+  },
+  {
+   "id": "6a4b2f0debdd5bdf63df0761",
+   "title": "Disputatio Historica De Ambonibus Veteris Ecclesiae, Quam In Alma Lipsiensi Sub Praesidio Dn. M. Chr",
+   "value": "1687",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10643192_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Wittebergenſis Ad die 23. Martii Anno 1687. Horis Locoque Consuetis.",
+   "url": "https://sourcelibrary.org/book/6a4b2f0debdd5bdf63df0761?page=1"
+  },
+  {
+   "id": "6a4f2173ce720e255f3c5162",
+   "title": "Bulla Synodica Joh. Duraeo, Scoto, Quondam Presbytero, nuper data a Synodo quadam Ecclesiarum Reform",
+   "value": "1657",
+   "page": 3,
+   "image": "https://images.sourcelibrary.org/pages/6a4f2173ce720e255f3c5162/0003.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "1657 1075 BULLA SYNODICA",
+   "url": "https://sourcelibrary.org/book/6a4f2173ce720e255f3c5162?page=3"
+  },
+  {
+   "id": "6a4f091130413060585942f4",
+   "title": "Exercitatio Iuridica De Servitutibus Personarum, Usufructu, Usu Et Habitatione, Quam Ex consensu & a",
+   "value": "1651",
+   "page": 9,
+   "image": "https://images.sourcelibrary.org/pages/6a4f091130413060585942f4/0009.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "KILII, Academiae Typographi. Anno M. DC. LI.",
+   "url": "https://sourcelibrary.org/book/6a4f091130413060585942f4?page=9"
+  },
+  {
+   "id": "6a4a70427b720133514b2b70",
+   "title": "Disputatio theologica, de Christo Dei hominumque mediatore. In qua exponuntur verba illa apostoli, 1",
+   "value": "1569",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/pages/6a4a70427b720133514b2b70/0001.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "proposita atque publice defensa. 1569 INGOLSTADII Excudebat",
+   "url": "https://sourcelibrary.org/book/6a4a70427b720133514b2b70?page=1"
+  },
+  {
+   "id": "6a4bfc384f392afd49e42bd3",
+   "title": "Discussio Physico-Astronomica Controversiae inter Ptolemaicos, Tychonicos & Copernicaeos agitatae, A",
+   "value": "1660",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/archived/6a4bfc384f392afd49e42bd3/1.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Schnizlern / Cibiniensi-Transylvano. 1660 In Electorali VVittebergensium",
+   "url": "https://sourcelibrary.org/book/6a4bfc384f392afd49e42bd3?page=1"
+  },
+  {
+   "id": "6a4f7e782a450f51978cffdf",
+   "title": "Versuum quorundam M. Johannis hartvici quedlinburgensis, scholae Henricopolitanae rectoris, schedias",
+   "value": "1600",
+   "page": 1,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10178803_00001/full/full/0/default.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Conradus Corneus ANNO M D C. 1. 1600 . (819/60) 216565 b",
+   "url": "https://sourcelibrary.org/book/6a4f7e782a450f51978cffdf?page=1"
+  },
+  {
+   "id": "6a4aff5e19bd0084b1bf282d",
+   "title": "Disputatio Historico-Ecclesiastica, De Veteri Clericorum Dignitate, Quam In illustri ad Albim Academ",
+   "value": "1684",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/pages/6a4aff5e19bd0084b1bf282d/0001.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "Aprilis Anno Reparatae Salutis M DC LXXXIV. Horis Locoque Consuetis.",
+   "url": "https://sourcelibrary.org/book/6a4aff5e19bd0084b1bf282d?page=1"
+  },
+  {
+   "id": "6a4f3ac139ecc8e27dc65333",
+   "title": "Disputatio Politica De Bello, Quam Suffragante Amplissimo Philosophorum, in Alma ad Viadrum Marchica",
+   "value": "1661",
+   "page": 5,
+   "image": "https://images.sourcelibrary.org/pages/6a4f3ac139ecc8e27dc65333/0005.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "Horis matutinis Die [ ] Aug: Anno M DC LXI. FRANCOFURTI AD ODERAM",
+   "url": "https://sourcelibrary.org/book/6a4f3ac139ecc8e27dc65333?page=5"
+  },
+  {
+   "id": "6a4b84a4c0fa233644e30e15",
+   "title": "Praeside Clarißimo [et] Excellentißimo Viro, Dno. Francisco Parcovio Rostochiensi ... Themata De Ast",
+   "value": "1608",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/pages/6a4b84a4c0fa233644e30e15/0001.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Excudebat Iacobus Lucius. Anno 1608. 26",
+   "url": "https://sourcelibrary.org/book/6a4b84a4c0fa233644e30e15?page=1"
+  },
+  {
+   "id": "6a4f225bce720e255f3c5d0e",
+   "title": "Sylva Academica, Sive De Antiquitate Urbis, Et Academiae Trevirorum Discursus: Ex Variis Veteribus, ",
+   "value": "1657",
+   "page": 5,
+   "image": "https://images.sourcelibrary.org/pages/6a4f225bce720e255f3c5d0e/0005.jpg",
+   "basis": "title_page",
+   "rule": "imprint_arabic",
+   "evidence": "Excudebat HVBERTVS REVLANDT, Anno 1657. David Lamprecht Ascaniensis",
+   "url": "https://sourcelibrary.org/book/6a4f225bce720e255f3c5d0e?page=5"
+  },
+  {
+   "id": "6a4ef2d3451d36458a83887f",
+   "title": "Iuris Foederis Delineatio Iuridico-Politica, In Qua De Foederibus Tam Religionis, Quam Politicis, Et",
+   "value": "1624",
+   "page": 1,
+   "image": "https://images.sourcelibrary.org/pages/6a4ef2d3451d36458a83887f/0001.jpg",
+   "basis": "title_page",
+   "rule": "imprint_roman",
+   "evidence": "Nicolai Hampelii, Acad. Typogr. M DC XXIV.",
+   "url": "https://sourcelibrary.org/book/6a4ef2d3451d36458a83887f?page=1"
+  }
+ ]
+}

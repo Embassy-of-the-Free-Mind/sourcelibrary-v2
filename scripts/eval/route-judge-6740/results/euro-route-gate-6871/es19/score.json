@@ -1,0 +1,21 @@
+{
+ "scored_at": "2026-11-07T11:58:38.659Z",
+ "cells": {
+  "es19": {
+   "lang": "Spanish",
+   "route": "lighton>agy-flash-low",
+   "drawn": 30,
+   "books": 14,
+   "written": 30,
+   "judged": 30,
+   "accepted": 28,
+   "wrong_text": 1,
+   "p_acc_ge_08": 0.962,
+   "all_drawn_accepted": "28/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "0/0",
+   "decision": "PASS: schedule",
+   "why": null
+  }
+ }
+}

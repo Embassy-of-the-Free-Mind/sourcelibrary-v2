@@ -28,6 +28,7 @@
 import { createRequire } from 'node:module';
 import { LATIN_SCRIPT_LANGUAGES, MODEL_FLASH, MODEL_LITE } from './translate-core.mjs';
 import { toLanguageCodes, codeFamily } from './language-normalize.mjs';
+import { FIRST_READ_CELL, liteReadAllowed as liteReadAllowedIn, batchOcrStamps, BATCH_OCR_LANE } from './ocr-lite-gate.mjs';
 
 // Re-exported under OCR-phase names so call sites read honestly. There is one
 // pair of models, not two — these ARE translate-core's constants.
@@ -85,20 +86,36 @@ export const GREEK_FLASH_FROM = new Date('2026-10-02T00:00:00Z');
 /**
  * The same exception, extended to the scripts where lite OCR is measured to hurt the
  * English (#5700 A5, job reocr-lift-5700, PR #5760; routing doc
- * .claude/docs/ocr-engine-routing.md). A flash re-read of a lite-read page lifted judged
+ * .claude/docs/routing.md). A flash re-read of a lite-read page lifted judged
  * translation fidelity by Persian +1.00, Sanskrit +0.75, Pali +0.58, Arabic +0.39 (1–5
  * scale, against published translations). Ge'ez failed the #4729 agreement bar
  * (0.47, 9/20 catastrophic). The scope is the same as Greek: visible books, and books
  * created on or after the decision. The hidden backlog of these scripts (~300K pages)
  * is a separate spend decision.
  *
- * Deliberately NOT here: Chinese (waits for #5574, Paddle vs flash off SKQS), Tibetan
+ * Chinese (`zho`, which folds Classical Chinese) joined on 2026-10-21 (#7075): #6101 measured
+ * Gemini 3 Flash best on Chinese print against CBETA, median CER 5.2% with 0 of 198 pages
+ * catastrophic, against lite's 3 of 198 and PaddleOCR-VL failing about one woodblock spread in
+ * seven; Derek routed the #7037 woodblock books to it on 2026-10-20. Chinese MANUSCRIPT stays
+ * as the decision tree says: the Paddle cost lane is adopted but has no writer (#4743), so until
+ * it does, flash; the books held for the Paddle lane keep their hold, and a hold wins over this
+ * router. Same scope as the others: visible books and books created from the date.
+ *
+ * Deliberately NOT here: Tibetan
  * and Syriac (own lanes; Gemini is not their reader), Japanese (NDL lane for cursive;
  * typeset unmeasured), Hebrew and everything unmeasured. Add a family only with a
  * measured cell, and cite it.
  *
+ * THE CHANNEL (#7075). Since 2026-10-08 the only Gemini model that runs on the paid API is
+ * gemini-3.1-flash-lite (Derek; DECIDED 2026-10-10 "Only via the CLI lane, no API"). A book this
+ * function picks therefore does NOT go to the Batch API: `ocrLaneForBook` below sends it to the
+ * agy CLI lane, and when that lane has no quota the book waits.
+ *
  * Keyed by language FAMILY (codeFamily of the first language), so "Judeo-Arabic"
  * (Hebrew script, family jrb) and "Latin, Arabic" do not qualify.
+ *
+ * THE LEGACY LABEL (#8283). These families no longer route a book (getOcrModelForBook below reads the router table). They
+ * name the lite/flash tier that the probes and the /quality table still read, through { liteOnly }.
  */
 export const FLASH_OCR_FROM = Object.freeze({
   grc: GREEK_FLASH_FROM,
@@ -107,6 +124,7 @@ export const FLASH_OCR_FROM = Object.freeze({
   pli: new Date('2026-10-04T00:00:00Z'),
   ara: new Date('2026-10-04T00:00:00Z'),
   gez: new Date('2026-10-04T00:00:00Z'),
+  zho: new Date('2026-10-21T00:00:00Z'),
 });
 
 /**
@@ -139,25 +157,44 @@ export function ocrEscalationModel() {
   return OCR_LITE_ONLY ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
 }
 
+/** The reader models a router cell can name: both run on a subscription lane, never the paid API. */
+export const OCR_MODEL_AGY = 'gemini-3.8-flash-low';
+export const OCR_MODEL_OPUS = 'claude-opus-5-5';
+const READER_MODEL = Object.freeze({ agy: OCR_MODEL_AGY, opus: OCR_MODEL_OPUS });
+
+export { FIRST_READ_CELL };
+
 /**
- * THE model routing for OCR. Mirrors getModelForBook in
- * src/lib/types/ai-models.ts — except under OCR_LITE_ONLY (above), when every
- * book routes to flash-lite except the measured scripts in FLASH_OCR_FROM (isFlashOcrBook).
- *
- * It does NOT mirror translation routing any more. Since #4759,
- * getTranslateModelForBook (translate-core.mjs) sends non-Latin scripts to
- * flash-lite too: the hallucination evidence behind the carve-out below is
- * about reading IMAGES (vision), and translation reads text. The two policies
- * diverge on purpose — do not re-sync them in either direction without new
- * evidence. tests/unit/translate-core-parity.test.ts pins the split.
- *
- * - BPH books: full flash (high-quality manuscripts)
- * - Non-Latin scripts: full flash (flash-lite hallucinates when visual decoding is hard, #1726)
- * - Latin-script European languages: flash-lite (50% cheaper)
- * - Unknown/null language: full flash (safer default)
+ * THE route for OCR (#8283): the book's cell in the bound router table (`router_cells`, generated from current.json), the way a
+ * cell decides it: { cell, route, model, draft, per_call }. Only a cell whose route reads the page fresh, by agy or Opus, answers;
+ * a stored-text route (lite, lite>opus) has nothing to say of an unread page. Any other book takes agy: rules.json menu, "an untested
+ * cell gets agy, never the incumbent". books.script_type is empty in practice (0 of 20,000 sampled on 2026-11-07), so an
+ * unclassified book asks the unknown-script cell and then print, and a manuscript never takes a print cell's route.
  */
-export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
-  if (liteOnly) return isFlashOcrBook(book) ? OCR_MODEL_FLASH : OCR_MODEL_LITE;
+export function ocrRouteForBook(book, table = OCR_ROUTING_TABLE) {
+  const first = toLanguageCodes(book?.language).codes[0];
+  const base = first ? FIRST_READ_CELL[first] ?? FIRST_READ_CELL[codeFamily(first)] : null;
+  const scripts = book?.script_type === 'handwritten' ? ['manuscript'] : book?.script_type === 'printed' ? ['print'] : ['unknown', 'print'];
+  for (const script of base ? scripts : []) {
+    const row = table.router_cells?.find((r) => r.cell === `${base}/${script}`);
+    if (row?.reads?.first_read && row.reads.reader) return { cell: row.cell, route: row.route, model: READER_MODEL[row.reads.reader], draft: row.reads.draft, per_call: row.reads.per_call };
+  }
+  return { cell: null, route: null, model: OCR_MODEL_AGY, draft: null, per_call: 1 };
+}
+
+/** The Flash-Lite gate and the Batch lane stamps (#8519) live in ocr-lite-gate.mjs, which the Next routes import without this
+ * module's translate-core chain; this default reads the bundled table. */
+export const liteReadAllowed = (book, table = OCR_ROUTING_TABLE) => liteReadAllowedIn(book, table);
+export { batchOcrStamps, BATCH_OCR_LANE };
+
+/**
+ * THE model for OCR: ocrRouteForBook's. With { liteOnly } it answers the LEGACY LABEL, the lite/flash tier the probes read
+ * (build-ocr-pareto, parity tests), and no lane asks that: lite under OCR_LITE_ONLY but for FLASH_OCR_FROM's
+ * families; with liteOnly false, flash for BPH, non-Latin scripts and an unknown language, else lite.
+ */
+export function getOcrModelForBook(book, opts = {}) {
+  if (!('liteOnly' in opts)) return ocrRouteForBook(book).model;
+  if (opts.liteOnly) return isFlashOcrBook(book) ? OCR_MODEL_FLASH : OCR_MODEL_LITE;
   if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
   const lang = (book?.language || '').toLowerCase().trim();
   if (!lang || !LATIN_SCRIPT_LANGUAGES.has(lang)) return OCR_MODEL_FLASH;
@@ -165,16 +202,90 @@ export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
 }
 
 /**
+ * THE CHANNEL RULE (#7075): the model fixes the channel.
+ *
+ *   gemini-3.1-flash-lite   paid Gemini API (Batch by default)
+ *   any other Gemini model  the agy CLI on the subscription (scripts/batch/cli-ocr.mjs), never the API
+ *   Claude                  `claude -p` on the subscription, never via agy
+ *
+ * Derek, 2026-10-08: "the only Gemini model that may run on the paid API without asking is
+ * gemini-3.1-flash-lite"; DECIDED 2026-10-10 for Flash OCR: "Only via the CLI lane, no API". Before
+ * this, the orchestrator sent every book getOcrModelForBook answered flash for to the Batch API on
+ * gemini-3-flash-preview: 502 jobs, 4,106 pages, $10.50 between 2026-10-08 and 2026-10-21 (#7075).
+ *
+ * When the CLI lane has no quota the book WAITS. Nothing here falls through to the API.
+ */
+//
+// NO MODEL RUNS ON THE PAID API FOR OCR (Derek, 2026-11-06: "no one should use lite", "everything on agy", "its just
+// better and cheaper"). The set is empty, so every book reads on the agy CLI lane, a book routed to flash-lite
+// included (scripts/batch/cli-ocr-lane.mjs CLI_MODEL_FOR maps it to gemini-3.8-flash-low), and assertApiOcrModel
+// refuses every paid OCR submission. That day a session released seven imports to the queue and they were headed for
+// the paid lane because this set still held lite; a rule a session must remember had failed, so the default changed.
+export const API_OCR_MODELS = Object.freeze(new Set());
+
+/** May this model be sent to the paid Gemini API (Batch or realtime) for OCR? */
+export function isApiOcrModel(model) {
+  return API_OCR_MODELS.has(model);
+}
+
+/**
+ * Throw before any paid-API OCR submission whose model is not flash-lite. Every OCR submitter in
+ * scripts/ calls it at the point of submission; tests/unit/ocr-api-channel-guard.test.ts checks
+ * that they do.
+ */
+export function assertApiOcrModel(model, callSite = 'unknown') {
+  if (!isApiOcrModel(model)) {
+    throw new Error(`${callSite}: refusing to send ${model} to the paid Gemini API for OCR. Only ${[...API_OCR_MODELS].join(', ')} runs on the API (#7075); `
+      + 'every other Gemini model reads through the agy CLI lane (scripts/batch/cli-ocr.mjs).');
+  }
+  return model;
+}
+
+/**
+ * The pipeline hold that queues a book for the CLI Flash lane (#7075). It is the mechanism the
+ * #7037 Chinese woodblock books used by hand (`zh-flash-agy-7037`): a held book is out of every
+ * lane (scripts/lib/pipeline-hold.mjs), so it cannot fall back to an API read while it waits, and
+ * the CLI run finds its books by this reason. The run reads the unread pages
+ * (`cli-ocr.mjs read --page-ids-file=…` then `apply`), then releases the book to the status it was
+ * held at; Phase 2 then finds nothing left to read and advances it.
+ */
+export const CLI_FLASH_OCR_HOLD = Object.freeze({
+  reason: 'ocr-flash-cli-7075',
+  issue: 7075,
+  release: 'the agy CLI lane (scripts/batch/cli-ocr.mjs read + apply, Gemini 3 Flash on the subscription) has read the unread pages; release with scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ocr-flash-cli-7075 --book <id> --apply',
+  release_when: { kind: 'test', ref: 'scripts/batch/cli-ocr.mjs has read every unread page' },
+});
+
+/**
+ * Which channel reads this book, and with which model.
+ *   { channel: 'api', model: flash-lite }       the paid Batch API
+ *   { channel: 'cli', model: <the routed one> } the agy CLI lane; the book waits for it
+ * getOcrModelForBook stays the decision; this only names the channel.
+ */
+export function ocrLaneForBook(book, opts) {
+  const model = getOcrModelForBook(book, opts);
+  return { channel: isApiOcrModel(model) ? 'api' : 'cli', model };
+}
+
+/** The model to send to the paid API for this book, or null when the book belongs to the CLI lane. */
+export function apiOcrModelForBook(book, opts) {
+  const lane = ocrLaneForBook(book, opts);
+  return lane.channel === 'api' ? lane.model : null;
+}
+
+/**
  * The routing table by PAGE KIND (#6688): which reader reads which kind of page, why, and the
  * experiment behind it. One lookup for a session about to OCR a book, and the source of the
  * "Who reads which page" section on /quality. The rows live in ocr-routing-table.json beside this
  * file and nowhere else: the table in scripts/eval/ocr-routing/README.md is generated from it
- * (scripts/eval/build-routing-table.mjs) and tests/unit/ocr-routing-table.test.ts checks each row's
+ * (scripts/maintenance/router-routing-rows.mjs) and tests/unit/ocr-routing-table.test.ts checks each row's
  * `code` claim against getOcrModelForBook above or the lane file it names.
  *
- * It RECORDS what the evidence settled; it does not route. getOcrModelForBook stays the only
- * Gemini router, and the specialist lanes select their own books. A row with `routed: 'no'` is
- * evidence production has not acted on, which is a decision for Derek, not a bug to fix here.
+ * Its prose RECORDS what the evidence settled. `router_cells` routes (generated, #8283), and the refused-pages `route` gives the
+ * refusal lane's next reader per script. getOcrModelForBook stays the only Gemini router, and the
+ * specialist lanes select their own books. A row with
+ * `routed: 'no'` is evidence production has not acted on, which is a decision for Derek, not a bug
+ * to fix here.
  */
 export const OCR_ROUTING_TABLE = Object.freeze(createRequire(import.meta.url)('./ocr-routing-table.json'));
 
@@ -183,4 +294,16 @@ export function ocrRouteForKind(id) {
   const row = OCR_ROUTING_TABLE.rows.find((r) => r.id === id);
   if (!row) throw new Error(`ocr-routing: no page kind "${id}" (known: ${OCR_ROUTING_TABLE.rows.map((r) => r.id).join(', ')})`);
   return row;
+}
+
+/**
+ * The next reader for a page Gemini refused (RECITATION), by estimator chart (`latin`, `greek`, `chinese-print` …),
+ * from the `refused-pages` row's route (#7170): { engine, lane, chart }. A chart the table does not list gets the
+ * row's `otherwise` reader. Never a Gemini model: the refusal is Gemini's.
+ */
+export function ocrRefusalFallback(chart, table = OCR_ROUTING_TABLE) {
+  const route = table.rows.find((r) => r.id === 'refused-pages')?.route;
+  if (!route?.fallback) throw new Error('ocr-routing: the refused-pages row has no route.fallback');
+  const hit = route.fallback.find((f) => f.chart === chart);
+  return hit ?? { chart, engine: route.otherwise, lane: 'scripts/batch/claude-ocr.mjs' };
 }

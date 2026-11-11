@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads most like a real Sāṅkhya commentary written in a mix of Sanskrit and Malayalam, with words like "ṣaḍbhiḥ pradhāna…", "pratipratyuṣa", "avadātamanas" and Malayalam endings such as "-ttattvāl"; A turns into nonsense in rows 8–9, and C keeps repeating "dṛṣṭi/dṛśya" in strings that look made up.

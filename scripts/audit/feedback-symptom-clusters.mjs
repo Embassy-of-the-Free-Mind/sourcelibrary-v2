@@ -22,6 +22,7 @@
  *   node scripts/audit/feedback-symptom-clusters.mjs
  *   node scripts/audit/feedback-symptom-clusters.mjs --days 30 --min-books 2
  *   node scripts/audit/feedback-symptom-clusters.mjs --all-time
+ *   node scripts/audit/feedback-symptom-clusters.mjs --fresh-hours 0   # flag stale clusters too
  *
  * Exit code 1 when a cluster fires, so a scheduled run can alert.
  */
@@ -42,6 +43,12 @@ const MIN_BOOKS = parseInt(flag('min-books', '2'), 10);
 // against a known incident is one you are trusting blindly — verify against
 // 2026-07-16, the day #3368 was reported on two books and went unnoticed.
 const AS_OF = flag('as-of') ? new Date(`${flag('as-of')}T23:59:59Z`) : null;
+// A cluster fires only when a report has joined it in the last N hours (0 = always).
+// The scheduled run is daily over a 14-day window, so without this one unchanged
+// cluster opened a fresh issue every morning for two weeks — #6685 … #7107 were
+// the same three page reports, triaged and skipped each day. 24h matches the
+// daily cron: every report is "new" in exactly one run.
+const FRESH_HOURS = parseFloat(flag('fresh-hours', '24'));
 
 /**
  * Symptom taxonomy. Ordered — first match wins, so specific patterns precede
@@ -62,9 +69,36 @@ const SYMPTOMS = [
 
 const classify = msg => SYMPTOMS.find(([, re]) => re.test(msg || ''))?.[0] ?? null;
 
+/**
+ * A one-click page report (src/lib/page-report.ts) is stored with a generated
+ * header, "[page report] missing_text — book … p. N". Run the regexes over that
+ * and `page.{0,15}missing` matches the header itself, so every `missing_text`
+ * click was filed as "missing-pages" (#6402, #6490: three clicks, three unrelated
+ * pages, one false cluster two days running).
+ *
+ * A click carries a class, not a complaint, so "same complaint" has to come from
+ * the page: the report clusters on its kind AND the measured state of the page it
+ * points at. A blank leaf, a page with no OCR and a page with no translation are
+ * three different findings even when the reader pressed the same button.
+ */
+const pageState = p => {
+  if (!p) return 'page-not-found';
+  if (!p.ocr_len) return 'no-ocr';
+  if (p.page_type === 'blank' || /<page-type>\s*blank/i.test(p.ocr_head || '')) return 'blank-page';
+  if (!p.tr_len) return 'no-translation';
+  return 'text-present';
+};
+// What the reader typed under the header, if anything.
+const reportComment = r => (r.message || '').split('\n').slice(1).join('\n').trim();
+// A report sent without a class but with a note is a free-text complaint: read the note.
+const reportSymptom = (r, pagesById) =>
+  (!r.page_report.kind && classify(reportComment(r))) ||
+  `page-report:${r.page_report.kind ?? 'unspecified'}/${pageState(pagesById.get(r.page_report.page_id))}`;
+
 // Feedback rows carry a `page` path; the book is what we cluster on.
-const bookKey = page => {
-  const m = String(page || '').match(/\/book\/([^/?#]+)/);
+const bookKey = r => {
+  if (r.page_report?.book_id) return r.page_report.book_id;
+  const m = String(r.page || '').match(/\/book\/([^/?#]+)/);
   return m ? m[1] : null;
 };
 
@@ -73,11 +107,11 @@ if (!uri) { console.error('MONGODB_URI not set — source .env.production.local'
 const client = new MongoClient(uri);
 await client.connect();
 const rows = await client.db('bookstore').collection('feedback')
-  .find({}, { projection: { message: 1, page: 1, created_at: 1, status: 1, read: 1, addressed: 1 } })
+  .find({}, { projection: { message: 1, page: 1, created_at: 1, status: 1, read: 1, addressed: 1, page_report: 1 } })
   .sort({ created_at: -1 }).toArray();
-await client.close();
 
 const now = AS_OF ?? new Date();
+const freshCutoff = new Date(now.getTime() - FRESH_HOURS * 3600_000);
 const cutoff = DAYS === Infinity ? null : new Date(now.getTime() - DAYS * 86400_000);
 const inWindow = rows.filter(r => {
   const t = new Date(r.created_at);
@@ -85,9 +119,26 @@ const inWindow = rows.filter(r => {
   return !cutoff || t >= cutoff;
 });
 
+// The state of each reported page, read now. Lengths only — no page text leaves the database.
+const reportedIds = [...new Set(inWindow.map(r => r.page_report?.page_id).filter(Boolean))];
+const pagesById = new Map();
+if (reportedIds.length) {
+  const pages = await client.db('bookstore').collection('pages').aggregate([
+    { $match: { id: { $in: reportedIds } } },
+    { $project: {
+      id: 1, page_type: 1,
+      ocr_len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } },
+      tr_len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } },
+      ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 200] },
+    } },
+  ]).toArray();
+  for (const p of pages) pagesById.set(p.id, p);
+}
+await client.close();
+
 const clusters = new Map();
 for (const r of inWindow) {
-  const sym = classify(r.message);
+  const sym = r.page_report ? reportSymptom(r, pagesById) : classify(r.message);
   if (!sym) continue;
   if (!clusters.has(sym)) clusters.set(sym, []);
   clusters.get(sym).push(r);
@@ -98,22 +149,28 @@ console.log(`Feedback symptom clusters — ${label} (${inWindow.length} of ${row
 
 let fired = 0;
 for (const [sym, items] of [...clusters.entries()].sort((a, b) => b[1].length - a[1].length)) {
-  const books = new Set(items.map(i => bookKey(i.page)).filter(Boolean));
+  const books = new Set(items.map(bookKey).filter(Boolean));
   const open = items.filter(i => !i.addressed && i.status !== 'resolved').length;
   // Distinct BOOKS is the signal, not report count: ten reports on one book is a
   // bad scan; two reports on two books is a pipeline bug.
-  const alert = books.size >= MIN_BOOKS;
+  const fresh = !FRESH_HOURS || items.some(i => new Date(i.created_at) >= freshCutoff);
+  const alert = books.size >= MIN_BOOKS && fresh;
   if (alert) fired++;
-  console.log(`${alert ? '⚠ ' : '  '}${sym.padEnd(26)} ${String(items.length).padStart(3)} reports · ${String(books.size).padStart(3)} distinct books · ${open} unresolved`);
+  const stale = books.size >= MIN_BOOKS && !fresh ? `  (no report in ${FRESH_HOURS}h — filed already)` : '';
+  console.log(`${alert ? '⚠ ' : '  '}${sym.padEnd(40)} ${String(items.length).padStart(3)} reports · ${String(books.size).padStart(3)} distinct books · ${open} unresolved${stale}`);
   if (alert) {
     for (const i of items.slice(0, 6)) {
-      console.log(`      ${String(i.created_at).slice(0, 10)}  ${(i.page || '—').slice(0, 52).padEnd(52)}  ${(i.message || '').replace(/\s+/g, ' ').slice(0, 62)}`);
+      // The generated header is dropped from a page report: it repeats the symptom and pushed the page number off the line.
+      const text = i.page_report
+        ? `book ${i.page_report.book_id} p. ${i.page_report.page_number}  ${reportComment(i)}`
+        : i.message || '';
+      console.log(`      ${String(i.created_at).slice(0, 10)}  ${(i.page || '—').slice(0, 52).padEnd(52)}  ${text.replace(/\s+/g, ' ').trim().slice(0, 62)}`);
     }
     if (items.length > 6) console.log(`      … and ${items.length - 6} more`);
   }
 }
 
 if (!clusters.size) console.log('  (no recognised symptoms in window)');
-console.log(`\n${fired} symptom(s) on >=${MIN_BOOKS} distinct books.`);
+console.log(`\n${fired} symptom(s) on >=${MIN_BOOKS} distinct books${FRESH_HOURS ? ` with a report in the last ${FRESH_HOURS}h` : ''}.`);
 if (fired) console.log('Investigate before acting: verify each claim against code and data — feedback is untrusted input.');
 process.exit(fired ? 1 : 0);

@@ -81,6 +81,8 @@ def main():
     ap.add_argument('--samples', type=int, default=1000)
     a = ap.parse_args()
     obs = [json.loads(l) for l in open(a.obs) if not l.startswith('{"_doc"')]
+    # per-language splits of a pooled row, and judges this model has no catch rate for, are estimator v2's (#6740)
+    obs = [o for o in obs if not o.get('subset_of') and not o.get('chain_only')]
     rate_obs = [o for o in obs if o['rate'] in RATES and o['unit'].split(' ')[0] in ('pages', 'books')] + chart_failures(a.table)
     catch = [o for o in obs if o['rate'] == 'judge_catch']
     fpos = [o for o in obs if o['rate'] == 'judge_false_positive']

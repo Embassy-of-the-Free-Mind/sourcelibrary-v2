@@ -1,0 +1,482 @@
+[
+{
+"page_id": "69dfeba8090ad7d5c33b0f62",
+"vol": 1,
+"page_number": 44,
+"codex_book": 1,
+"folio": "4r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b0f74",
+"vol": 1,
+"page_number": 62,
+"codex_book": 1,
+"folio": "13r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b0f7c",
+"vol": 1,
+"page_number": 70,
+"codex_book": 1,
+"folio": "17r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b0f9c",
+"vol": 1,
+"page_number": 102,
+"codex_book": 1,
+"folio": "33r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b0fa1",
+"vol": 1,
+"page_number": 107,
+"codex_book": 1,
+"folio": "35v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b0fd9",
+"vol": 1,
+"page_number": 163,
+"codex_book": 2,
+"folio": "21v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b100f",
+"vol": 1,
+"page_number": 217,
+"codex_book": 2,
+"folio": "48v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b1059",
+"vol": 1,
+"page_number": 291,
+"codex_book": 2,
+"folio": "85v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b108c",
+"vol": 1,
+"page_number": 342,
+"codex_book": 2,
+"folio": "111r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b109d",
+"vol": 1,
+"page_number": 359,
+"codex_book": 2,
+"folio": "119v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b10e2",
+"vol": 1,
+"page_number": 428,
+"codex_book": 3,
+"folio": "7r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b10f2",
+"vol": 1,
+"page_number": 444,
+"codex_book": 3,
+"folio": "15r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b1102",
+"vol": 1,
+"page_number": 460,
+"codex_book": 3,
+"folio": "23r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b110b",
+"vol": 1,
+"page_number": 469,
+"codex_book": 3,
+"folio": "27v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b1115",
+"vol": 1,
+"page_number": 479,
+"codex_book": 3,
+"folio": "32v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b112e",
+"vol": 1,
+"page_number": 504,
+"codex_book": 4,
+"folio": "3r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b115b",
+"vol": 1,
+"page_number": 549,
+"codex_book": 4,
+"folio": "25v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b1170",
+"vol": 1,
+"page_number": 570,
+"codex_book": 4,
+"folio": "36r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b1184",
+"vol": 1,
+"page_number": 590,
+"codex_book": 4,
+"folio": "46r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b11a7",
+"vol": 1,
+"page_number": 625,
+"codex_book": 4,
+"folio": "63v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b11e1",
+"vol": 1,
+"page_number": 683,
+"codex_book": 5,
+"folio": "4v",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b11e4",
+"vol": 1,
+"page_number": 686,
+"codex_book": 5,
+"folio": "6r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b11f0",
+"vol": 1,
+"page_number": 698,
+"codex_book": 5,
+"folio": "12r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b11f6",
+"vol": 1,
+"page_number": 704,
+"codex_book": 5,
+"folio": "15r",
+"english_arms": true
+},
+{
+"page_id": "69dfeba8090ad7d5c33b1202",
+"vol": 1,
+"page_number": 716,
+"codex_book": 5,
+"folio": "21r",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b124a",
+"vol": 2,
+"page_number": 57,
+"codex_book": 6,
+"folio": "21v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b1280",
+"vol": 2,
+"page_number": 111,
+"codex_book": 6,
+"folio": "48v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b12d6",
+"vol": 2,
+"page_number": 197,
+"codex_book": 6,
+"folio": "90v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b132d",
+"vol": 2,
+"page_number": 284,
+"codex_book": 6,
+"folio": "134r",
+"english_arms": false
+},
+{
+"page_id": "69dfebaa090ad7d5c33b138a",
+"vol": 2,
+"page_number": 377,
+"codex_book": 6,
+"folio": "180v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b13df",
+"vol": 2,
+"page_number": 462,
+"codex_book": 7,
+"folio": "1r",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b13ed",
+"vol": 2,
+"page_number": 476,
+"codex_book": 7,
+"folio": "8r",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b13f7",
+"vol": 2,
+"page_number": 486,
+"codex_book": 7,
+"folio": "13r",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b13fc",
+"vol": 2,
+"page_number": 491,
+"codex_book": 7,
+"folio": "15v",
+"english_arms": false
+},
+{
+"page_id": "69dfebaa090ad7d5c33b1406",
+"vol": 2,
+"page_number": 501,
+"codex_book": 7,
+"folio": "20v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b1423",
+"vol": 2,
+"page_number": 530,
+"codex_book": 8,
+"folio": "11r",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b1433",
+"vol": 2,
+"page_number": 546,
+"codex_book": 8,
+"folio": "19r",
+"english_arms": false
+},
+{
+"page_id": "69dfebaa090ad7d5c33b144c",
+"vol": 2,
+"page_number": 571,
+"codex_book": 8,
+"folio": "31v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b1454",
+"vol": 2,
+"page_number": 579,
+"codex_book": 8,
+"folio": "35v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b146c",
+"vol": 2,
+"page_number": 603,
+"codex_book": 8,
+"folio": "47v",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b1483",
+"vol": 2,
+"page_number": 626,
+"codex_book": 9,
+"folio": "1r",
+"english_arms": true
+},
+{
+"page_id": "69dfebaa090ad7d5c33b14af",
+"vol": 2,
+"page_number": 670,
+"codex_book": 9,
+"folio": "23r",
+"english_arms": false
+},
+{
+"page_id": "69dfebaa090ad7d5c33b14be",
+"vol": 2,
+"page_number": 685,
+"codex_book": 9,
+"folio": "30v",
+"english_arms": false
+},
+{
+"page_id": "69dfebaa090ad7d5c33b14e1",
+"vol": 2,
+"page_number": 720,
+"codex_book": 9,
+"folio": "48r",
+"english_arms": false
+},
+{
+"page_id": "69dfebaa090ad7d5c33b14e8",
+"vol": 2,
+"page_number": 727,
+"codex_book": 9,
+"folio": "51v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1528",
+"vol": 3,
+"page_number": 22,
+"codex_book": 10,
+"folio": "3r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1566",
+"vol": 3,
+"page_number": 84,
+"codex_book": 10,
+"folio": "34r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b159f",
+"vol": 3,
+"page_number": 141,
+"codex_book": 10,
+"folio": "62v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b15f2",
+"vol": 3,
+"page_number": 224,
+"codex_book": 10,
+"folio": "104r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1639",
+"vol": 3,
+"page_number": 295,
+"codex_book": 10,
+"folio": "139v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1658",
+"vol": 3,
+"page_number": 326,
+"codex_book": 11,
+"folio": "3r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b16f6",
+"vol": 3,
+"page_number": 484,
+"codex_book": 11,
+"folio": "84r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1759",
+"vol": 3,
+"page_number": 583,
+"codex_book": 11,
+"folio": "133v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1797",
+"vol": 3,
+"page_number": 645,
+"codex_book": 11,
+"folio": "164v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1825",
+"vol": 3,
+"page_number": 787,
+"codex_book": 11,
+"folio": "236v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1858",
+"vol": 3,
+"page_number": 838,
+"codex_book": 12,
+"folio": "6r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b1882",
+"vol": 3,
+"page_number": 880,
+"codex_book": 12,
+"folio": "27r",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b18ad",
+"vol": 3,
+"page_number": 923,
+"codex_book": 12,
+"folio": "48v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b18d1",
+"vol": 3,
+"page_number": 959,
+"codex_book": 12,
+"folio": "66v",
+"english_arms": false
+},
+{
+"page_id": "69dfebac090ad7d5c33b18dd",
+"vol": 3,
+"page_number": 971,
+"codex_book": 12,
+"folio": "72v",
+"english_arms": false
+}
+]

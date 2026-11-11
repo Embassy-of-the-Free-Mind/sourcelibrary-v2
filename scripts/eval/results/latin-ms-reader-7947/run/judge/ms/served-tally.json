@@ -1,0 +1,47 @@
+{
+ "stored": {
+  "read": 0,
+  "stored": 78,
+  "why": {},
+  "below_40pct_floor": 0,
+  "print_only_skip": 0,
+  "put_back": 0,
+  "pages_put_back": 0
+ },
+ "agyread": {
+  "read": 66,
+  "stored": 12,
+  "why": {
+   "wrapper: reply cut before <<<END>>>": 12
+  },
+  "below_40pct_floor": 7,
+  "print_only_skip": 0,
+  "put_back": 0,
+  "pages_put_back": 0
+ },
+ "armc": {
+  "read": 40,
+  "stored": 38,
+  "why": {
+   "put-back not like-for-like (stored stands)": 10,
+   "put-back spans a tag (stored stands)": 9,
+   "wrapper: reply cut before <<<END>>>": 14,
+   "wrapper: no <<<BEGIN>>> marker": 3,
+   "exit -9": 1,
+   "no read": 1
+  },
+  "below_40pct_floor": 7,
+  "print_only_skip": 53,
+  "put_back": 13,
+  "pages_put_back": 9
+ },
+ "opus": {
+  "read": 78,
+  "stored": 0,
+  "why": {},
+  "below_40pct_floor": 18,
+  "print_only_skip": 0,
+  "put_back": 0,
+  "pages_put_back": 0
+ }
+}

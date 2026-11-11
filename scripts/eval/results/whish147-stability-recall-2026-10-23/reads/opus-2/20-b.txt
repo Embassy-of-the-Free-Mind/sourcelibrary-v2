@@ -1,0 +1,10 @@
+ROW 1 | ആഷംണിത്രിഷ്ടക്കുദ ‖ [illegible]ങ്ങിണാനഫലങ്ങിമാ[illegible]ത്രൈണാസക്ഷംഭേകഖത്രിഭിഃ ‖ പ്രകാരമൊന്നു
+ROW 2 | താമഴിപദാക്ഷ്രാ[illegible] ‖ മനഫലങ്ങിദ്ര[illegible]ക്രമെ[illegible]ദുഖദൈദാക്ഷദ്വി[illegible] ‖ [illegible]പദൈദാക്കാദിതിമഹതൈദാമ
+ROW 3 | പ്രദക്ഷിണംകനമെദായ ‖ ദാക്ഷകാരണവ[illegible]തെടതെനദൾശനരഹാ ‖ [illegible]ണ്ടെതൃ[illegible]ദ്രാദ്ര
+ROW 4 | ലൂദ്രാത്രീനമ്പ്ലുകര ‖ ന്ത്രയഫലങ്ങളെണ്ണനെണ്ണഫലങ്ങൾഃസ ‖ മിദ്രാദിനി[illegible]
+ROW 5 | ശംകൊണ്ടാത്രാവിമ ‖ യാജ്ഞിയംസ്[illegible]ങ്ങൾസ്വാമിപ്രാദ്ധ ‖ ത്തിയപാഷണ്ഡ്യാഗ്ര
+ROW 6 | പ്രജ്ഞാനസൃഷ്ടിയ ‖ ക്രൂ[illegible]മെദസമൈദന്മഖത്താറ ‖ ഫലങ്ങൾഃളുളിയപ്ലാ
+ROW 7 | ശരിതജ്ജ്യമതൃത്വാദേ ‖ ളെനാംജ്യോജ്ജ്യയാഞാംദോവാനെ ‖ [illegible]ദ്രാദ്രുമദോനാഞ്ചികാ
+ROW 8 | ചിത്രമഹിംസക്കത്രൂത്രാന ‖ ദ്ദാമ്ണതഫലങ്ങിഃമഹേനൈസരനൈശ്ച[illegible] ‖ ന്നമസ്മാഹിംസകാത്ര
+
+NOTE | The leaf has 8 full rows. Column split: p01 is the left column, p02 and p03 are the middle column, and p04 is the right column. My reading is very uncertain: about 40–50% of the glyphs are confident identifications, and many conjuncts, vowel signs and the line ends are guesses. I joined the middle-column overlap by eye, so treat this as a rough draft that needs checking against the leaf.

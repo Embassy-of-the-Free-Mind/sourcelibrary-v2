@@ -297,7 +297,7 @@ function trimToRef(refW, hypW) {
   return { hypW: hypW.slice(headIns, hypW.length - tailIns), trimmedHead: headIns, trimmedTail: tailIns };
 }
 const r4 = (x) => (x == null || Number.isNaN(x) ? null : +x.toFixed(4));
-function scorePage(refText, hypText) {
+export function scorePage(refText, hypText) {
   const r = normalise(refText), h0 = normalise(hypText);
   const refW = words(r), hyp0 = words(h0);
   const { hypW, trimmedHead, trimmedTail } = trimToRef(refW, hyp0);
@@ -777,7 +777,7 @@ function stageFinalize() {
       slug: d.slug, source: gut ? 'gutenberg' : 'wikisource-en',
       source_url: gut ? d.source_url : `https://en.wikisource.org/w/index.php?title=${encodeURIComponent(d.ws_title)}&oldid=${d.ws_revid}`,
       source_revision: gut ? d.source_revision : `oldid ${d.ws_revid} (${d.ws_timestamp})`,
-      licence: gut ? 'PD-US (Project Gutenberg)' : 'CC-BY-SA-4.0',
+      licence: gut ? 'PD-US' : 'CC-BY-SA-4.0', // PD-US is not worldwide: build-quality-dataset.mjs ships the text only with pd_eu: true, set by hand (#7462)
       proofread_level: gut ? null : d.ws_quality,
       unit: { kind: 'page', chars: text.length },
       alignment: gut ? { method: 'gutenberg-pagenum-markers', guard: 'bag-of-words >= 0.7 vs IA leaf over whole book; leaf/page length ratio 0.8–1.25' } : { method: 'wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)', guard: 'leaf check by eye' },
@@ -1528,4 +1528,5 @@ async function main() {
   if (STAGE === 'mineru-report') return stageMineruReport();
   throw new Error(`unknown stage ${STAGE}`);
 }
-await main();
+// Imported for scorePage by scripts/eval/estimator/ocr/route-census.mjs (#6740): run the stages only when executed.
+if (import.meta.url === `file://${process.argv[1]}`) await main();

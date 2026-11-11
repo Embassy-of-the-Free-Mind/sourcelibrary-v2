@@ -1,0 +1,10 @@
+ROW 1 | ഭാവഞ്ഞഭേദകനബ്ബാദ്ര ‖ ദ്രാദ്വിഉഹാദേലാകേക്ഷിണിപക്ഷഃക്ഷാനണ്ടെന ‖ ന[illegible]യമാശരമിതാണ്ടെ
+ROW 2 | ദ്വിവം൦ഖടെചസര്‍ ‖ ഷടദഭ്രുഴ്യൂംകടെടചമ്ൽബിജ്ജാ[illegible] ‖ [illegible]ദ്വിനാക്കാമബണാമിശേഖ
+ROW 3 | ഷജ്ഞക്ലിയഒതനാപ ‖ ൽഉപാദാനമുരുഹാണദ്വികിഉപായ ‖ [illegible]ദക്ഷംഉപാദിയാ
+ROW 4 | കതസ്ത്രതദ്ദപാദാ ‖ നംക്കാദ്ധ്യണംയഎാദൈതലസ്യത്രി ‖ [illegible]ലാഃദക്ഷ്ണഃക്ഷ്മിരം
+ROW 5 | കൃതൈതലംദ്രവി ‖ ചതുദ്ദിനസ്യാൽക്കപന്തമെസ്യാ ‖ വാദദാതസ്യാദവാദ്ദാ
+ROW 6 | നസ്യഗ്രഹണംകദ ‖ ക്ഷദ്ദഃക്ലിയകൃകഞ്ജാദ്ദിചാദാ ‖ ത്സംഗ്രഹാൽസത
+ROW 7 | ദവങ്ങാദ്ധ്യംഞ്ജ്യ ‖ മാനികതാസസഖിലഭൈയാസവി ‖ ഗ്രഹണംസ്യാൽസ
+ROW 8 | ജ്യസംദ്ദപാദ്ദാപാദ്ദ ‖ ദ്ദിക്ഷയദ്രാസൽക്കാദ്ധ്യംടവൈൽക്കദാസ ‖ സവ്യസ്യസവ്യക്തസാഖ്യദ
+ROW 9 | സംദ്ദവസ്യാൽതദൈ ‖ ഫെവഞ്ഞിക്കസ്ഥാൽനസദെദവക്കാദ്ധ്യംശക്കി ‖ [illegible]കകസ്യശക്ത്യാകാരണാദ്ര
+NOTE | I could read only about half of this with any confidence, so treat every row as a provisional reading. Many letter shapes are uncertain, including ligatures, ദ/ദ്ദ, ണ/ന and vowel signs. I took the layout to be p01 = left column, p02 and p03 = the wide middle column, and p04 = right column. Row 9 runs full width and rows 1–2 probably do too. I worked from the strokes only and did not check against the Kārikā text.

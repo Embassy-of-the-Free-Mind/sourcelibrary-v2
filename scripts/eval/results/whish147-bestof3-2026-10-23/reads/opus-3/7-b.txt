@@ -1,0 +1,10 @@
+ROW 1 | ാശെഷാണിതുപഞ്ചവി‖ഷയാണി।൩൪।സാന്തഃകരണാബുദ്ധിഃസൎവ്വം‖വിഷയമവഗാഹതെയ
+ROW 2 | സ്മാൽതസ്മാത്ത്രിവിധ‖ംകരണംദ്വാരിദ്വാരാണിശെഷാണി।൩൫।‖ഏതെപ്രദീപകല്പാഃ
+ROW 3 | പരസ്പരവിലക്ഷ‖ണാഗുണവിശെഷാഃകൃത്സ്നംപുരു‖ഷസ്യാൎത്ഥംപ്രകാശ്യ
+ROW 4 | ബുദ്ധൌപ്രയച്ഛ‖ന്തി।൩൬।സൎവ്വംപ്രത്യുപഭൊഗം‖യസ്മാൽപുരുഷസ്യ
+ROW 5 | സാധയതിബുദ്ധിഃ‖സൈവചവിശിനഷ്ടിപുനഃപ്രധാ‖നപുരുഷാന്തരംസൂ
+ROW 6 | ക്ഷ്മം।൩൭।തന്മ‖ാത്രാണ്യവിശെഷാസ്തെഭ്യൊ‖ഭൂതാനിപഞ്ചപ
+ROW 7 | ഞ്ചഭ്യഃഏതെസ്മൃ‖താവിശെഷാശാന്താഘൊരാ‖ശ്ചമൂഢാശ്ച।൩൮।സൂ
+ROW 8 | ക്ഷ്മാമാതാപിതൃജാഃ‖സഹപ്രഭൂതൈസ്ത്രിധാവിശെഷാസ്യുഃ‖സൂക്ഷ്മാസ്തെഷാംനി
+ROW 9 | യതാമാതാപിതൃജാ‖നിവൎത്തന്തെ।൩൯।പൂൎവ്വൊത്പന്നമ‖സക്തംനിയതംമഹദാദി
+NOTE | The leaf has 9 rows with Kārikā numbers ൩൪–൩൯ visible, and most of it reads clearly. I did use my knowledge of the verses to settle ambiguous strokes, mainly in row 1's left column (its first syllables are the least certain), the ends of rows 6–7 at the right edge (പഞ്ചപ / ൩൮।സൂ), and whether there is a visarga after വിശെഷാ in row 7. A small mark in the left margin at row 6 (possibly a leaf number) is left out.

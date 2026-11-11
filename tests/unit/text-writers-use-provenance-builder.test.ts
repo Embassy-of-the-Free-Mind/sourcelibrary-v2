@@ -26,6 +26,7 @@ const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFil
 
 /** Writers whose text is not a Gemini reading — reason required. */
 const ALLOWED: Record<string, string> = {
+  'scripts/lib/longs-orthography.mjs': "f → ſ in the page's own stored transcription (assertOrthographicOnly), no model call; keeps the engine block, recomputes content_hash, page_revisions row first (#5924)",
   'scripts/maintenance/withhold-paddle-table-pages-6388.mjs': "--undo moves the page's own earlier transcription back from its page_revisions snapshot; the engine block it was written with never left the page (#6388); nothing is read from a model",
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text, not a Gemini reading — its own text_source / text_edition / alignment block + content_hash (#5560, #5571)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard; writes only page_revisions',
@@ -35,8 +36,10 @@ const ALLOWED: Record<string, string> = {
   'scripts/lib/syriac-kraken-lane.mjs': 'Kraken (specialist, not Gemini) — its own engine block, checked by missingProvenance',
   'scripts/workers/syriac-kraken-lane.mjs': 'Kraken lane worker; the $set is built in scripts/lib/syriac-kraken-lane.mjs',
   'scripts/lib/ndl-koten-lane.mjs': 'NDL古典籍OCR (specialist, not Gemini) — its own engine block + content_hash per the #4613 specialist standard (#4925)',
+  'scripts/lib/gpu-print-lane.mjs': 'LightOnOCR-3-1B on gex45 (specialist, not Gemini) — its own engine block + content_hash, `lightonocr` checked by missingProvenance (#6871)',
   'scripts/lib/paddle-zh-lane.mjs': 'PaddleOCR-VL (specialist, not Gemini) — its own engine block + content_hash, `paddle` checked by missingProvenance (#5600)',
   'scripts/maintenance/apply-reocr-verdicts.mjs': 'BDRC Tibetan models (specialist, not Gemini) — the template engine block',
+  'scripts/maintenance/apply-tib-gutter-vllm-6871.mjs': 'BDRC Yigdzin page reads on gex45 (specialist, not Gemini) — the apply-reocr-verdicts engine block, written through writePageText (#6871)',
   'scripts/import/ia-ocr-ingest.mjs': "the Internet Archive's own OCR, recorded in the `ia` block, not a Gemini read",
   'scripts/import/cdli-atf-source.mjs': "CDLI's published ATF transliteration",
   'scripts/import/import-oraec.mjs': 'ORAEC corpus dump, a published edition',
@@ -152,5 +155,97 @@ describe('every Gemini writer of page text goes through the provenance builder (
     for (const f of ['scripts/workers/batch-collector.mjs', 'scripts/lib/translate-core.mjs', 'scripts/batch/realtime-ocr.mjs', 'scripts/workers/translate-worker.mjs']) {
       expect(files, `${f} should be detected as a writer`).toContain(f);
     }
+  });
+});
+
+/**
+ * Every write of page TEXT goes through writePageText() (#7058) — the writer that keeps the
+ * whole prior field in page_revisions, stamps by/reason/run_id, and makes a run revertible.
+ *
+ * Broader than the provenance check above: a CLEAR (`$unset` of ocr/translation, or setting
+ * `*.data` to null/'') is a write too — reset-book-ocr's `$unset` wiped 759 good pages on
+ * 2026-10-21 and only a lossy hand-rolled snapshot brought them back. Scope: every tracked
+ * file under src/ and scripts/ except scripts/_archived, scripts/output and test files.
+ *
+ * Today's writers are grandfathered in tests/unit/fixtures/page-text-writers-grandfathered.json.
+ * That list may only SHRINK: GRANDFATHER_CEILING below is its size on 2026-10-21, a migrated
+ * or deleted writer must be removed from it, and a new file that writes page text without
+ * writePageText fails here.
+ */
+const GRANDFATHER_FILE = path.join(REPO, 'tests/unit/fixtures/page-text-writers-grandfathered.json');
+const GRANDFATHER_CEILING = 88; // measured 2026-10-21 (90), 89 after #7384, 88 after paddle-zh-guarded-lane migrated (#6871); lower it as writers migrate, never raise it
+
+const CLEAR_FIELD = /['"]?\b(ocr|translation)(\.data)?['"]?\s*:/;
+const SET_EMPTY = /['"](ocr|translation)\.data['"]\s*:\s*(null|''|""|undefined)\b/;
+
+/** `x['ocr.data'] = …` / `x[`${field}.data`] = …` — an update doc assembled by assignment. */
+const ASSIGN_TEXT = /\[\s*(['"](ocr|translation)(\.data)?['"]|`\$\{\w+\}\.data`)\s*\]\s*=(?!=)/;
+/** `[`${field}.data`]: text` — a computed-key write (not a `{ $exists … }` filter). */
+const COMPUTED_KEY_TEXT = /\[`\$\{\w+\}\.data`\]\s*:\s*(?!null\b|undefined\b|''|\{)[A-Za-z(]/;
+/** `ocr: { data: … }` / `translation: {` — a whole-field set. */
+const WHOLE_FIELD = /(^|[\s{,])['"]?(ocr|translation)['"]?\s*:\s*\{/;
+
+function clearsText(lines: string[]): boolean {
+  return lines.some((l, i) => {
+    const ctx = lines.slice(Math.max(0, i - 3), i + 1).join('\n');
+    if (/\$unset/.test(ctx) && CLEAR_FIELD.test(l)) return true;
+    if (/\$set/.test(ctx) && (SET_EMPTY.test(l) || WHOLE_FIELD.test(l) || COMPUTED_KEY_TEXT.test(l))) return true;
+    if (ASSIGN_TEXT.test(l)) return true;
+    return false;
+  });
+}
+
+function pageTextWriterFiles(): string[] {
+  let files: string[] = [];
+  try {
+    files = execFileSync('git', ['grep', '-lE', String.raw`ocr|translation`, '--', 'scripts', 'src'], { cwd: REPO, encoding: 'utf8' })
+      .split('\n').filter(Boolean);
+  } catch { return []; }
+  return files.filter((f) => {
+    if (/^scripts\/(_archived|output)\//.test(f) || /\/_archived\//.test(f) || /\.test\.[jt]sx?$/.test(f) || !/\.(m?[jt]sx?|cjs)$/.test(f)) return false;
+    if (f === 'scripts/lib/page-text-writer.mjs' || f === 'src/lib/page-text-writer.ts') return false;
+    const lines = readFileSync(path.join(REPO, f), 'utf8').split('\n');
+    return writesText(lines, OCR_WRITE, /\bocr\b\s*[:=]|'ocr'/) || writesText(lines, TR_WRITE, /\btranslation\b\s*[:=]|'translation'/) || clearsText(lines);
+  });
+}
+
+const usesPageTextWriter = (src: string) => /page-text-writer(\.mjs)?['"]/.test(src) && /\bwritePageText\s*\(/.test(src);
+
+function grandfathered(): { count: number; files: string[] } {
+  return JSON.parse(readFileSync(GRANDFATHER_FILE, 'utf8'));
+}
+
+describe('every write of page text goes through writePageText (#7058)', () => {
+  it('no new file writes pages.ocr / pages.translation without the writer', () => {
+    const allowed = new Set(grandfathered().files);
+    const offenders = pageTextWriterFiles().filter((f) => !allowed.has(f) && !usesPageTextWriter(readFileSync(path.join(REPO, f), 'utf8')));
+    expect(offenders, [
+      'These files write or clear page text without writePageText (#7058).',
+      'Route the write through scripts/lib/page-text-writer.mjs (or src/lib/page-text-writer.ts) so the prior text is kept and revertible.',
+      'Do not add them to page-text-writers-grandfathered.json — that list only shrinks.',
+    ].join(' ')).toEqual([]);
+  });
+
+  it('the grandfather list only shrinks', () => {
+    const g = grandfathered();
+    expect(g.files.length, 'count in the JSON must equal the number of files listed').toBe(g.count);
+    expect(new Set(g.files).size).toBe(g.files.length);
+    expect(g.count, `the list grew past ${GRANDFATHER_CEILING}: migrate the writer instead`).toBeLessThanOrEqual(GRANDFATHER_CEILING);
+  });
+
+  it('a grandfathered file that was migrated, deleted, or no longer writes must be removed (the list stays honest)', () => {
+    const live = new Set(pageTextWriterFiles());
+    const stale = grandfathered().files.filter((f) => !live.has(f) || usesPageTextWriter(readFileSync(path.join(REPO, f), 'utf8')));
+    expect(stale, 'remove these from page-text-writers-grandfathered.json and lower GRANDFATHER_CEILING').toEqual([]);
+  });
+
+  it('the probe still finds known writers and clears — a check that finds nothing proves nothing', () => {
+    const files = new Set(pageTextWriterFiles());
+    for (const f of ['scripts/workers/batch-collector.mjs', 'scripts/lib/translate-core.mjs', 'src/app/api/pages/[id]/route.ts']) {
+      expect(files, `${f} should be detected as a page-text writer`).toContain(f);
+    }
+    expect(clearsText(["await db.collection('pages').updateMany(f, { $unset: { ocr: '' } });"])).toBe(true);
+    expect(clearsText(['  { $set: {', "    'translation.data': null,"])).toBe(true);
+    expect(clearsText(["const q = { 'ocr.data': null };"])).toBe(false);
   });
 });

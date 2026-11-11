@@ -1,0 +1,52 @@
+# Collation: Sāṃkhyakārikā, SK 23–28 (left half of the leaf)
+
+The leaf has nine lines of text. The verse text appears to run across the whole width of the leaf, so roughly half of every verse is on the missing right half. Lines 3–7 also have a blank space around the string hole. Below is only what is visible. `…` marks text that is on the missing half or that I couldn't read. Spellings like *dharmmo* or *-rtt-* are ordinary Malayalam-script spelling habits and I haven't counted them as differences.
+
+The commentary is not transcribed. The column of glyphs on the left looks like a leaf number, so I left it out.
+
+## Line by line
+
+**SK_23** (line 1)
+Leaf: `[bu]ddhir dharmmo jñānaṃ virāga aiśvaryaṃ sāttvika…`
+- The *bu-* of *buddhir* should be at the end of the previous line, which isn't visible.
+- No differences from the edition in what is visible.
+
+**SK_24** (lines 2–3)
+Leaf: `[a]bhimāno 'haṃkā[?]s tasmād dvividhaḥ pravṛ…` / `…[mā]tra-pañcakaś cai` + `va ॥ 24 ॥`
+- **ahaṃkāra-**: the string covers the ending. The glyph after the string looks like *sta*, which would give *ahaṃkāras*. The edition has *ahaṃ-kāram*. Uncertain.
+- **pravartate**: the last glyph at the right edge looks like *vṛ*, which would give *pravṛ[ttaḥ?]* rather than *pravartate*. Uncertain.
+- **tan-mātraḥ pañcakaś**: the first glyph of line 3 is circled and hard to read. What follows seems to be *-tra-pañcakaś cai*, a compound with no visarga after *mātra*. Uncertain.
+- The verse number 24 seems to be written after *caiva*.
+
+**SK_25** (lines 3–5)
+Leaf: `sāttvika e…` / `[vai]kṛtād ahaṃkāra` + `-āt bhūtādes ta…` / `…[ubha]yaṃ ॥ 25 ॥`
+- No differences in what is visible. The *taijasād ubha-* section is on the missing half.
+
+**SK_26** (lines 5–7)
+Leaf: `buddhī` + `-ndriyāṇi cakṣu[ḥ] śro…` / `…ṇi vākpāṇi` + `[?] pādapāyūpa…`
+- **The leaf adds a word**: the line clearly reads *buddhīndriyāṇi* before *cakṣuḥ*, and the edition leaves it out. The edition's line is also a syllable group short for the metre, which supports the leaf. Certain.
+- Line 6 starts with a glyph that looks like *ṇi*, the same shape as the *ṇi* of *pāṇi*. That might mean *-ākhyāṇi* instead of *-ākhyāni*. Uncertain.
+- I can't read the glyph after the gap, just before *pāda*.
+
+**SK_27** (lines 7–8)
+Leaf: `ubhayātmakam a` + `-tra manas saṃkalpakam i…` / `…[guṇapari]ṇāmaviśeṣān nānātvaṃ bāhyabhe…`
+- **manaḥ saṃkalpakam**: the leaf has *manas saṃ-* (*-ss-*). This is only a spelling variant (sandhi). Fairly clear.
+- **nānātnam**: the leaf seems to have *nānātvaṃ*, and *nānātnam* is most likely a typo in the edition. I'm unsure of the *-tva-* glyph.
+- *bāhyabhe[dāc ca]* matches. The *-dāc ca* and the verse number are on the missing half.
+
+**SK_28** (line 9)
+Leaf: `…[pañcā]nām ālocanamātram iṣyate vṛttiḥ va…`
+- **The leaf has a different word**: it clearly reads *ālocanamātram* where the edition has *mūla-prakṛtir*. *Ālocanamātram* is the reading usually found for this verse, so the edition's wording looks wrong.
+- *śabdādiṣu* (or *rūpādiṣu*, as the edition's note gives) is on the missing half.
+
+SK_21, 22, 29 and 30 are not on this half of the leaf.
+
+## DIFFERENCES
+- SK_24 | ahaṃ-kāram | ahaṃkāras | uncertain
+- SK_24 | pravartate | pravṛ[…] | uncertain
+- SK_24 | tan-mātraḥ pañcakaś | [tanmā]trapañcakaś | uncertain
+- SK_26 | (omitted) | buddhīndriyāṇi | certain
+- SK_26 | -ākhyāni | -ākhyāṇi | uncertain
+- SK_27 | manaḥ | manas | certain (spelling variant only)
+- SK_27 | nānātnam | nānātvaṃ | uncertain
+- SK_28 | mūla-prakṛtir | ālocanamātram | certain

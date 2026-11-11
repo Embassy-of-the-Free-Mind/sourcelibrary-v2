@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A, D, F, E
+WHY | B gives the full, correct Sāṅkhyakārikā 40–45 text with its commentary in every row (e.g. "vinā yathā chāyā", "prākṛtikā vaikṛtikāś ca", "jñānena cāpavargo"), apart from a few stray "ā" marks at the string holes; C is close but drops syllables and has gaps, A is correct but mostly illegible, and D, E and F are strings of syllables that are not real words.

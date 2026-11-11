@@ -216,7 +216,7 @@ export default function IdentifyPage() {
     const timers: ReturnType<typeof setTimeout>[] = [];
     const clearTimers = () => { timers.forEach(clearTimeout); timers.length = 0; };
     setStageMessage('Reading the image…');
-    timers.push(setTimeout(() => setStageMessage('Comparing against 152,000 illustrations…'), 6000));
+    timers.push(setTimeout(() => setStageMessage('Comparing against the library’s pictures…'), 6000));
     timers.push(setTimeout(() => setStageMessage('Confirming the match…'), 14000));
 
     // Compress large images client-side (phone cameras produce 5-10MB files).
@@ -658,7 +658,7 @@ export default function IdentifyPage() {
                         href={c.read_url}
                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-accent-rust text-white text-sm font-medium hover:bg-accent-rust/85 transition-colors"
                       >
-                        {pageLocated ? 'Go to the source' : 'Open the book (page not located)'}
+                        {pageLocated ? 'Go to source' : 'Open the book (page not located)'}
                       </Link>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-1">

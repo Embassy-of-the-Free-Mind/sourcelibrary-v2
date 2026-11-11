@@ -1,0 +1,11 @@
+ROW 1 | സമവായസംബന്ധനാഘടാ ‖ ഭാവഃഭൂതലത്തിൽഘടാഭാവാൽഘടഭാവവിശി ‖ ഷ്ടിനപ്രത്യക്ഷേകസാമഗ്ര്യ
+ROW 2 | [illegible]ടാപ[illegible]ത്വിരിക്കേഃഏവമ ‖ [illegible]ഭാവൊഹികടഭാവ[illegible]നപ്ര ‖ [illegible]ടാനാക്ഷി[illegible]കരണ[illegible]
+ROW 3 | വക്ഷി[illegible]നാംശിക്ഷയ[illegible] ‖ ഘടപട[illegible]നാക്ഷി[illegible]ത്വനൃാൽ[illegible] ‖ [illegible]പലഭാധി.
+ROW 4 | സ്വാഭാവിക്കകാര്യ. ‖ നാഭാവ[illegible]സമയവിശേഷണത്വ ‖ ക്കിയമനഃഘടാഭാവ
+ROW 5 | ഇതിഘടാഭാവ ‖ [illegible]നൃാഹ്രാത്രഗമ ‖ നാഭാവ[illegible]വിശേപ്ര
+ROW 6 | [illegible]ഘടൊപ ‖ സം[illegible]ത്തി[illegible] ‖ [illegible]ലഘടസംയോഗ
+ROW 7 | [illegible]ഗടാവ[illegible] ‖ സ[illegible]ന്നനാഭാവപ്രതി ‖ [illegible]മക്ഷയം[illegible]
+ROW 8 | [illegible]ക്ഷടാവത്തിൽവ ‖ സംയോഗപ്രാഗഭാവൊ[illegible]സംയോ ‖ ഗ[illegible]സംത്രാദ[illegible]ഭാപ
+ROW 9 | [illegible]ത്തിൽ[illegible]ട ‖ [illegible]ണ്ണാവസംസംയോഗപ്രാഗഭാ ‖ [illegible]സംസംത്രാൽഉക്തി
+ROW 10 | [illegible]ലട[illegible]വി ‖ [illegible]ശാക്ഷിത്രിപ്രാപഹാ ‖ [illegible]ചൊപചാരത്തൊഘടാമെ
+NOTE | All 10 rows are traced, but I'm not confident in this reading: maybe half the glyphs are secure, mostly in rows 1, 4, 8 and 9 (e.g. സമവായസംബന്ധ, ഘടാഭാവ, സംയോഗപ്രാഗഭാ); the rest is a tentative guess. Rows 1–3 and 8–10 run the full width, and rows 4–8 break at the holes. I put ‖ at the piece joins (p01|p02 and p03|p04) on every row; p02+p03 make up the middle column.

@@ -41,6 +41,14 @@ interface SavedCollection {
   likeCount: number;
 }
 
+interface SavedArticle {
+  slug: string;
+  title: string;
+  summary?: string;
+  image?: string;
+  href: string;
+}
+
 interface PopularPage {
   id: string;
   pageNumber: number;
@@ -88,6 +96,7 @@ export default function FavoritesPage() {
   // My likes data
   const [myBooks, setMyBooks] = useState<PopularBook[]>([]);
   const [myCollections, setMyCollections] = useState<SavedCollection[]>([]);
+  const [myArticles, setMyArticles] = useState<SavedArticle[]>([]);
   const [myPages, setMyPages] = useState<PopularPage[]>([]);
   const [myImages, setMyImages] = useState<PopularImage[]>([]);
   const [loadingMyBooks, setLoadingMyBooks] = useState(true);
@@ -112,6 +121,10 @@ export default function FavoritesPage() {
 
     likes.getMine<SavedCollection>({ type: 'collection', visitorId })
       .then(data => setMyCollections(data.items))
+      .catch(console.error);
+
+    likes.getMine<SavedArticle>({ type: 'article', visitorId })
+      .then(data => setMyArticles(data.items))
       .catch(console.error);
 
     likes.getMine<PopularBook>({ type: 'book', visitorId })
@@ -196,7 +209,7 @@ export default function FavoritesPage() {
           <h1 className="text-4xl md:text-5xl mb-4">Favorites</h1>
           <p className="text-xl text-stone-300 max-w-2xl">
             {mode === 'mine'
-              ? 'Books, artworks, pages, and illustrations you\'ve liked.'
+              ? 'Books, articles, artworks, pages and illustrations you\'ve saved.'
               : 'The most loved books, artworks, pages, and illustrations, as chosen by readers.'}
           </p>
 
@@ -273,6 +286,25 @@ export default function FavoritesPage() {
                 <Link key={c.slug} href={`/collections/${c.slug}`} className="inline-flex items-baseline gap-2 border border-stone-200 bg-white px-4 py-2 text-sm text-stone-800 hover:border-stone-400 transition-colors">
                   {c.name}
                   {typeof c.bookCount === 'number' && c.bookCount > 0 && <span className="text-xs text-stone-400">{c.bookCount} books</span>}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+        {/* Saved articles: hearted at the end of an article (ArticleEnd). The
+            heart there is a private bookmark, so this is the only place an
+            article like shows up. */}
+        {mode === 'mine' && myArticles.length > 0 && (
+          <section className="mb-10">
+            <h2 className="text-sm font-medium text-stone-500 mb-3">Saved articles</h2>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {myArticles.map(a => (
+                <Link key={a.slug} href={a.href} className="flex gap-3 border border-stone-200 bg-white p-2 hover:border-stone-400 transition-colors">
+                  {a.image && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={a.image} alt="" loading="lazy" className="w-20 h-16 object-cover shrink-0" />
+                  )}
+                  <span className="text-sm text-stone-800 leading-snug self-center">{a.title}</span>
                 </Link>
               ))}
             </div>
@@ -511,6 +543,9 @@ export default function FavoritesPage() {
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 50vw, 33vw"
                   priority={i < 6}
+                  // croppedUrl is our own /api/crop-image address, which the optimiser
+                  // refuses (400 INVALID_IMAGE_OPTIMIZE_REQUEST); the crop is already sized.
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 flex flex-col justify-end p-4">

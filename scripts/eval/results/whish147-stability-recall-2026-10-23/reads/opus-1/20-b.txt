@@ -1,0 +1,11 @@
+I could only partly read this leaf, so treat everything below as tentative. The script is clear in several places, but I can't securely identify many of the conjuncts. The commentary looks like Malayalam prose: forms like ഫലങ്ങ്ളി recur, so it isn't pure Sanskrit. I've written only what the strokes seem to show and marked doubtful stretches [illegible].
+
+ROW 1 | ഗ്രഹണിത്വിൻങ്കു[illegible]ദ്ദ ‖ [illegible]ക്കിറനഫലങ്ങ്ളിമാത്രേണാസഷം ‖ ഘകബുദ്ധിഃപ്രകാരമെന്ന്
+ROW 2 | ത്വാമവിപരീതാക്ഷാര[illegible] ‖ മനഫലങ്ങ്ളിട്ടുവർക്കെ[illegible]ടഗടൊക[illegible]ബുദ്ധിം ‖ ഫലൊദ്ദാക്കാത്തിക്ക[illegible]ദ്ദാക്ഷ
+ROW 3 | പ്രദക്ഷെ[illegible]കനഭദായി ‖ [illegible]ക്ഷ്മകാരനവെ[illegible]ഒടൊദനദൾശനരഹാ ‖ [illegible]ളെട്ടു[illegible]ദ്രാദ
+ROW 4 | ഖഏാദ്ദൃ[illegible]ള്ളകര ‖ ന്ത്യ[illegible]ക്കിൾകണാ[illegible]ഒനഫലങ്ങ്ളുംസ ‖ ാമിത്യാരി[illegible]ക്കിംഷിക്കി
+ROW 5 | ശഷണ്ട്ടാത്രാവിശ ‖ യാങ്ങ്മിയംശ[illegible]ഷ്കെസാമിപ്യാദ്ദ ‖ ഞ്ഞപാചക[illegible]ത്ര
+ROW 6 | ഉജ്ഞാനസ്യുമുടില ‖ ക്രാ[illegible]മൈടസ[illegible]ഥടേത്ര[illegible]കിരാൻ ‖ ഫലങ്ങ്ളും[illegible]യപ്ലാ
+ROW 7 | ഒാലിളിലയം[illegible]ത്രാക്രാഭ്ര ‖ നാം[illegible]ളിലയാ[illegible]യാഞ്ഞാംടൊാനാ ‖ ദ്ദ്യാഹ്രാടൊഗരാവ[illegible]കാ
+ROW 8 | [illegible]മവി[illegible]ങ്ങ്ളിനാമ ‖ ാമൂനഫലങ്ങ്ളിഃമറെ[illegible]ാറെസ്രാനയ[illegible]റൊ ‖ ാരമസമാഹിതകാമ്മി
+NOTE | Low confidence throughout: maybe 40–50% of the glyphs are read with any certainty (ഫലങ്ങ്ളി, ബുദ്ധിഃ, പ്രകാര/പ്രകാശ, വിപരീത and സാമിപ്യ are the firmest), and many conjuncts are guesses. Rows 1–2 and 7–8 run the full width, rows 3–6 stop at the holes, and p02 and p03 together make up the middle column.

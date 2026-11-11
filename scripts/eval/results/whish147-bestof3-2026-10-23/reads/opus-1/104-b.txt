@@ -1,0 +1,14 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I could work out the layout but not the text. The leaf has 12 rows: rows 1–4 and 10–12 run the full width. Rows 5–9 are shorter and set between the holes; row 7 is underlined in the left column. Pieces p02 and p03 together make up the middle column. At this image resolution I can't identify the individual Malayalam letters (conjuncts, vowel signs, ൎ, chillus) reliably enough to transcribe them. Rather than guess or fill in from memory of the text, I've marked every segment [illegible]. Higher-resolution crops of each row would let me give a real transcription.

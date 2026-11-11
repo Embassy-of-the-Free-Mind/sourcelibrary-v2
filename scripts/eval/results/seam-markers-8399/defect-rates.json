@@ -1,0 +1,82 @@
+{
+ "_about": "#8399 per-page defect rates per cell and arm, copied from pages/paired-score.json (paired-arm.mjs score, Opus route judge); A = the live route",
+ "source": "scripts/eval/results/seam-markers-8399/pages/paired-score.json",
+ "cells": {
+  "latin-cli-agy4": {
+   "A": {
+    "n": 55,
+    "accept": "26/55",
+    "wrong_text_pages": "26/55",
+    "fidelity_mean": 3.44,
+    "words": 34788,
+    "misleads_per_1k": 2.33,
+    "wrong_text_per_1k": 1.29
+   },
+   "A2": {
+    "n": 55,
+    "accept": "25/55",
+    "wrong_text_pages": "24/55",
+    "fidelity_mean": 3.45,
+    "words": 34952,
+    "misleads_per_1k": 2.63,
+    "wrong_text_per_1k": 1.32
+   },
+   "B4": {
+    "n": 30,
+    "accept": "12/30",
+    "wrong_text_pages": "18/30",
+    "fidelity_mean": 3.4,
+    "words": 25438,
+    "misleads_per_1k": 2.79,
+    "wrong_text_per_1k": 1.26
+   },
+   "Bb": {
+    "n": 55,
+    "accept": "25/55",
+    "wrong_text_pages": "27/55",
+    "fidelity_mean": 3.27,
+    "words": 35970,
+    "misleads_per_1k": 2.97,
+    "wrong_text_per_1k": 1.39
+   }
+  },
+  "german-cli-agy4": {
+   "A": {
+    "n": 14,
+    "accept": "8/14",
+    "wrong_text_pages": "6/14",
+    "fidelity_mean": 3.79,
+    "words": 6479,
+    "misleads_per_1k": 2.32,
+    "wrong_text_per_1k": 1.08
+   },
+   "A2": {
+    "n": 14,
+    "accept": "10/14",
+    "wrong_text_pages": "4/14",
+    "fidelity_mean": 4.07,
+    "words": 6468,
+    "misleads_per_1k": 1.55,
+    "wrong_text_per_1k": 0.62
+   },
+   "Bb": {
+    "n": 14,
+    "accept": "11/14",
+    "wrong_text_pages": "3/14",
+    "fidelity_mean": 3.79,
+    "words": 6711,
+    "misleads_per_1k": 3.43,
+    "wrong_text_per_1k": 0.6
+   },
+   "B4": {
+    "n": 9,
+    "accept": "6/9",
+    "wrong_text_pages": "3/9",
+    "fidelity_mean": 3.78,
+    "words": 5391,
+    "misleads_per_1k": 2.04,
+    "wrong_text_per_1k": 1.11
+   }
+  }
+ }
+}

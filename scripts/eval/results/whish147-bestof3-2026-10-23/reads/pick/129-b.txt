@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A has the most recoverable Sanskrit and Malayalam terms for a discussion of inference types (anvayena…hetu-sādhya, vyāpāraḥ, upasaṃhāra, abhāva-pratiyogitvaṃ, kaivalya…, asādhāraṇa); B keeps a few terms (vyatirekavyāptiḥ, sarvvatra) but breaks more often, and C is mostly syllable strings that only look like words.

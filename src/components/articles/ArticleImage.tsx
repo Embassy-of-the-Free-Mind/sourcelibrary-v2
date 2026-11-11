@@ -33,11 +33,13 @@ export default function ArticleImage({
   priority?: boolean;
 }) {
   const known = SIZES[src];
+  // "auto" only with a known size: Chrome draws a lazy sizes=auto image without
+  // width and height in a fixed 300x150 box (contain: size), squashing a page scan.
   return (
     <FadeInImage
       src={src}
       alt={alt}
-      sizes={priority ? sizes : `auto, ${sizes}`}
+      sizes={priority || !known ? sizes : `auto, ${sizes}`}
       priority={priority}
       width={known?.w}
       height={known?.h}

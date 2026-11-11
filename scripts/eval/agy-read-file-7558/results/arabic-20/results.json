@@ -1,0 +1,126 @@
+{
+ "status": "result",
+ "controls_caught": "4/4",
+ "controls": [
+  {
+   "page_id": "6ade7d34ac678e4a42f8291e",
+   "kind": "drop",
+   "caught": true
+  },
+  {
+   "page_id": "6ade78affeac6f538e8157f9",
+   "kind": "bleed",
+   "caught": true
+  },
+  {
+   "page_id": "6ade7e637e01100c64383683",
+   "kind": "drop",
+   "caught": true
+  },
+  {
+   "page_id": "6ade7e4eb3f44425398a05b8",
+   "kind": "bleed",
+   "caught": true
+  }
+ ],
+ "arms": {
+  "old1": {
+   "pages": 20,
+   "judged": 20,
+   "usable": 13,
+   "usable_ci95": [
+    0.433,
+    0.819
+   ],
+   "faults": {
+    "omissions": 3,
+    "additions": 7,
+    "cross_page_bleed": 0,
+    "order_errors": 1,
+    "misreads": 15
+   },
+   "agy_calls": 23,
+   "tool_calls": 46,
+   "denied_tool_calls": 23,
+   "input_per_page": 32665,
+   "uncached_input_per_page": 25865,
+   "output_per_page": 584
+  },
+  "new1": {
+   "pages": 20,
+   "judged": 20,
+   "usable": 16,
+   "usable_ci95": [
+    0.584,
+    0.919
+   ],
+   "faults": {
+    "omissions": 2,
+    "additions": 5,
+    "cross_page_bleed": 0,
+    "order_errors": 0,
+    "misreads": 15
+   },
+   "agy_calls": 22,
+   "tool_calls": 22,
+   "denied_tool_calls": 0,
+   "input_per_page": 19138,
+   "uncached_input_per_page": 12841,
+   "output_per_page": 544
+  },
+  "old4": {
+   "pages": 20,
+   "judged": 20,
+   "usable": 14,
+   "usable_ci95": [
+    0.481,
+    0.855
+   ],
+   "faults": {
+    "omissions": 7,
+    "additions": 6,
+    "cross_page_bleed": 0,
+    "order_errors": 1,
+    "misreads": 14
+   },
+   "agy_calls": 10,
+   "tool_calls": 32,
+   "denied_tool_calls": 10,
+   "input_per_page": 18927,
+   "uncached_input_per_page": 13649,
+   "output_per_page": 504
+  },
+  "new4": {
+   "pages": 20,
+   "judged": 20,
+   "usable": 15,
+   "usable_ci95": [
+    0.531,
+    0.888
+   ],
+   "faults": {
+    "omissions": 1,
+    "additions": 5,
+    "cross_page_bleed": 0,
+    "order_errors": 2,
+    "misreads": 15
+   },
+   "agy_calls": 9,
+   "tool_calls": 21,
+   "denied_tool_calls": 0,
+   "input_per_page": 8590,
+   "uncached_input_per_page": 5950,
+   "output_per_page": 536
+  }
+ },
+ "paired": {
+  "1/call old→new": {
+   "new_worse": 0,
+   "new_better": 3
+  },
+  "4/call old→new": {
+   "new_worse": 4,
+   "new_better": 5
+  }
+ }
+}

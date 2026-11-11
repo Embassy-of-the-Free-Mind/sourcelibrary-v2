@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B has the most accurate legible text, including the Kārikā 33 commentary phrase "…kānāgatayor viṣayayoḥ kiṃ pratyakṣam astīty āha, sāṃpratakālaṃ bāhyam iti", "sāṃpratakālavarttamānaḥ" and "anāgatāvadhi"; A covers more of the leaf but garbles key phrases ("kiṃprarkkarassimentyāha"), and C is mostly syllable strings that only look like words.

@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. vaggabādhaisyvaprakitirisaṃruvepnamitragasānaṃgikāranārtthitaibāḻḻanaminaḻḻal̤ṭabhairamṛā
+2. jñatikicennāttvābhayavyātileṅkābhyāṃpral̤uṣigaḍhaghaṭesyvakatraṭānnāṃśikāranalhartaṣo
+3. mikaralasyasarvvādhārataiṣosaṣyvaṣāralakṣminānnāṃkhāle ‖ ttamivyājñirikice
+4. nnasaṣṭāyārabhya ‖ prayojanasaṃceghabhinnāsaṃbe ‖ ceghānalakṣaṇāvabodhya
+5. ṣṭimatatvārtthapṛṣṭa ‖ ṣiviṭajñatannodivimeyatti ‖ dyratvāṃdhyāṃsāprakṛtai
+6. ṣāgitaiṃdhyāna ‖ prattiyogitamatetvattvāprakā ‖ rānteneṇaṣibhajike
+7. ḍhanaritiñjabhainarai ‖ ṃragārathatannaṃgamināṣūṭavakṣinnāṣṭagaiṣa ‖ ṭāgojiāyataital
+8. ṭoggaikṣatanaṃpyai ‖ ṣṭḥbesākṣiālkārenāṭogaḥgaiśśa ‖ ḻūtakeṇṭāldrateṣiśaiṣa
+
+TRANSCRIPTION B
+1. vagnyobhaisrūvaprakṛtibhissaṃṭavepnidvitragasānāṃgikārantālkriyaivodda [illegible] namindra [illegible] ṭṭā
+2. [illegible] kkicaitannāntabhyāyāvyāttirekābhyāṃprakṛtibhigandhavaiśvaryavakatruṭunāṃgikāranalndarttaṣā
+3. ṣikaralanyasaṣṭādhāraṇaikakhyāsavyaṣṇarlakṣaṇatvāntāṃbāle ‖ tabhiprābhyudikaice
+4. nnāsaṣṇaddhyārantyā ‖ prataiyābhjanapnaṃbaikhabhinnāsaṃbai ‖ bhraḍhyanalakṣaṇavatvānya
+5. thriśarantālppuṣa ‖ ṣīkhiṭujñaśatannāddhibhileṇmide ‖ ndritvāṃyāṃsvāpruṣiṇa
+6. bhāgitvaṃghaṭādi ‖ śrutibhāyāgitavameditryāṇāṃprakā ‖ rāntaraṇaṣiṭajñaṭe
+7. ḍhyaniratvañjujjanaine [illegible] ‖ āgāratanmāśabhiranāyaṭavajñantāddabhi ‖ [illegible] ṭādigājñāyatannal
+8. ṭogśvallannaṃprava [illegible] ‖ ṭṭikhasākṣilkāābanaddaṭugaṭahadaiṣṭa ‖ ṣṭatakkoldrutaviśeṣa
+
+TRANSCRIPTION C
+1. vagasyoḍhaindravaprakīrttisaṃ ‖ ṭṭavenṇitrugasmānaṃgikānālkkiñetāṣṭha ‖ naminaṣṭhatuṭaradyogānvagdrā
+2. jñaramikaicettāttvāyaprā ‖ lpātrirddhekkābhyāṃprakṛmibhigandhadaiśvarakatrudā ‖ nnāṃśikkāranālvarttaṣā
+3. bikkaralantvasvaṣṭādyādataiṣosaśvaiṣāralakṣma ‖ ñānākhāle ‖ ttabhiprājñimikkai
+4. ntvasatvādyātmya ‖ pradayogjñasvabhāvelabaindhabhinnasaṃbe ‖ onnalakṣaṇavatvānn
+5. prakṛtattālpṛtha ‖ ṣṭhiviṭṭajñattantādimiśaitti ‖ tvāṃyāṃsātrūpti
+6. ṣāditavṃdhasāsa ‖ pratthitaiyāgitamabhitṛbāhaprakā ‖ nantararaññamiṭajñaka
+7. ṣanapritrajñattaidai ‖ āgāḍhatantāghaṭināyaṭavajjinājññe ‖ ṭāgoājñāyataital
+8. ṭogahaiktānaṃnyai ‖ ṭṭasvākṣiālkāāneṭāgaṃhameca ‖ ttaikkāldruteviśeṣa
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

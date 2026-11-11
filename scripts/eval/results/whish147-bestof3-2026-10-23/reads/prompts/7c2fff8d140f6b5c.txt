@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ukaṃkrāpitajjeddenaprayānandūtra [illegible] ‖ etaprayānany [illegible] ‖ nnūtvapratipattiḥkāryya
+2. dautra [illegible] ḥpuruṣantrāāntrapratrapaitta ‖ āൗaihakaṃyakṣyaki ‖ kiṃ [illegible] āṇḍintrāha
+3. lavādāditajjaka ‖ ājñamikkamavāḻcektikṣyaddya ‖ ntratevādādvivar
+4. teniṣṭhamakkita ‖ kaprayānaṃ [illegible] entradamavāddadda [illegible] ‖ lāryaṃndrābhiṃ [illegible]
+5. kathanasyakāda ‖ śyantrādikṣedadadarprakṛtivibhra ‖ paṃndhyarūpantomi
+6. tadyattipratikra ‖ kaḥprayānantrāsaṭṭayamaddara ‖ laśatrutaḥsiddha
+7. kanatravaitāṅkavi ‖ jñakaitalkādeṣṭaṃkāraṇāda ‖ dvitīyamaranāṃ [illegible]
+8. siddhiddhamakka [illegible] ‖ sarvvaṃcāsaddhasaṭasa [illegible] kkikakkika ‖ [illegible] vikkayakṣmaddūrāti
+9. taddhāḻsdān [illegible] ‖ ṇālamadrakekṣa [illegible] bhavaśakkaddakete ‖ [illegible] ṣṇikkādya [illegible] kkiddṛṣṭine
+
+TRANSCRIPTION B
+1. ekaṃkāvitakṣaṃśle ‖ ddenapradhānattinnutturatabudhānandra ‖ tapratipattiḥkāryya
+2. dauttaratvaḥpuruṣasya ‖ ādṛṣṭapratyuparattānaivakṛtaṃcakṣurabhi ‖ bhiṃtalkkāryyamityāha
+3. bhedādityatra ‖ ājñamikebhavālcetisiddheśca ‖ syatabhāvāddvi [illegible] vakṣya
+4. [illegible] mattita ‖ kalpayānaṃ [illegible] naisrādamahādeda ‖ [illegible] ātmyaṃprātī [illegible]
+5. kālamasyakāda ‖ [illegible] ndrāddiṣṭāvaddālprakṛtimitra ‖ paṃsvarūpamanoti
+6. tadyā [illegible] ‖ bhaḥprayānasvasdyapalameka ‖ [illegible] trāścaḥśāle
+7. [illegible] ṇojñavi ‖ jñānenatalkāvāsyāṃkāryya [illegible] ‖ [illegible] mānāṃlīnaṃ
+8. siddhimiddhame [illegible] ‖ sarvvaṃvāsyebhāvikamikabha ‖ kamiṣṭaṃbhaya [illegible] ātrāri
+9. jñānālpadevada ‖ ṇṇālavastraikāntya [illegible] ‖ [illegible] ḥ [illegible]
+
+TRANSCRIPTION C
+1. ekaṃkā [illegible] ruddhama [illegible] ‖ [illegible] napradhāna [illegible] ‖ [illegible] pradhāna [illegible] pratipattiḥkā [illegible]
+2. [illegible] uttaraḥpuruṣasya [illegible] ‖ [illegible] pa [illegible] ttā [illegible] vyakta [illegible] ‖ [illegible] kiṃtalkkāraṇamityāha
+3. [illegible] dāditattva [illegible] ‖ [illegible] mahāl [illegible] ‖ [illegible] hādā [illegible]
+4. [illegible] ‖ [illegible] yānaṃ [illegible] ‖ [illegible]
+5. [illegible] ‖ [illegible] ālpra [illegible] ‖ [illegible] svarūpa [illegible]
+6. [illegible] ‖ [illegible] kaḥpradhānasya [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible] kiṃ
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

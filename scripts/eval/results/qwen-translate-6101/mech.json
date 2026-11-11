@@ -1,0 +1,67 @@
+{
+ "A_stored": {
+  "n": 57,
+  "error": 0,
+  "hit_cap": 0,
+  "untranslated": 0,
+  "chatter": 0,
+  "any_prereg": 0,
+  "guard": {
+   "runaway": 1
+  },
+  "prompt_example": 0,
+  "out_tok_median": null
+ },
+ "q2-qwen3-14b-awq stored-source": {
+  "n": 57,
+  "error": 1,
+  "hit_cap": 3,
+  "untranslated": 2,
+  "chatter": 0,
+  "any_prereg": 6,
+  "guard": {
+   "echo": 1,
+   "runaway": 2
+  },
+  "prompt_example": 0,
+  "out_tok_median": 731
+ },
+ "q2-qwen3-14b-awq P1s-source ×3": {
+  "n": 120,
+  "error": 0,
+  "hit_cap": 7,
+  "untranslated": 4,
+  "chatter": 0,
+  "any_prereg": 11,
+  "guard": {
+   "runaway": 8
+  },
+  "prompt_example": 0,
+  "out_tok_median": 739
+ },
+ "q3-qwen3.6-27b-awq stored-source": {
+  "n": 57,
+  "error": 1,
+  "hit_cap": 1,
+  "untranslated": 1,
+  "chatter": 0,
+  "any_prereg": 3,
+  "guard": {
+   "echo": 1,
+   "runaway": 2
+  },
+  "prompt_example": 1,
+  "out_tok_median": 831
+ },
+ "q3-qwen3.6-27b-awq P1s-source ×3": {
+  "n": 120,
+  "error": 0,
+  "hit_cap": 0,
+  "untranslated": 0,
+  "chatter": 0,
+  "any_prereg": 0,
+  "guard": {},
+  "prompt_example": 5,
+  "out_tok_median": 862
+ }
+}

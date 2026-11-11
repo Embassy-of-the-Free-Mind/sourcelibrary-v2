@@ -1,0 +1,49 @@
+{
+ "run": "whish147-spotcheck-fix/2026-10-23T06:22:36",
+ "apply": true,
+ "written": 4,
+ "counts": {
+  "hole": 4,
+  "relabel": 0,
+  "halves_warning": 0,
+  "malayalam_rebuilt": 205,
+  "malayalam_changed": 4
+ },
+ "pages": [
+  {
+   "n": 21,
+   "hole": true,
+   "heads": false,
+   "halves": false
+  },
+  {
+   "n": 36,
+   "hole": true,
+   "heads": false,
+   "halves": false
+  },
+  {
+   "n": 54,
+   "hole": true,
+   "heads": false,
+   "halves": false
+  },
+  {
+   "n": 58,
+   "hole": true,
+   "heads": false,
+   "halves": false
+  }
+ ],
+ "audit": {},
+ "skipped": [
+  {
+   "n": 4,
+   "why": "contents leaf"
+  },
+  {
+   "n": 5,
+   "why": "contents leaf"
+  }
+ ]
+}

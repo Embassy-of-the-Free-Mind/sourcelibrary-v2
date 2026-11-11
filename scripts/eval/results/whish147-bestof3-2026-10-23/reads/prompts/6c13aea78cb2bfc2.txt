@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. bitarśyaḥyatrādināmakāraṇā ‖ prāvitranakāraṇamakāraṇannanyāṅṅa ‖ kāraṇāprāleṅkinekadu
+2. ṅṅādbhavatisatvāljñānā ‖ dhigamākhattakṣāṃyatrādināmabhiduṣya ‖ ktiṅṅavadaśakakatvājjña [illegible]
+3. āttarasvaṃjñakhadavacāda ‖ dyūtāśattittaṃbramākhaṇḍḍakkakāṣabaikudrama ‖ vankhaṣāṅṅalālvyāhā
+4. khasūkhattavikhavaśa ‖ paśālṅṅaḻnamavikālābaikudra ‖ makkijjaitaṣāśatti
+5. ramaṣitrattutadā ‖ saḻottakkādavāttitralkkakraprā ‖ okkāṇaśattiaikkada
+6. itrādriliṃgakaṭa ‖ ākrikaṣattikairavṛṣalṭṭiokaka ‖ ṣāsṃdratalakkaphi
+7. trakatattitratt ‖ cathitāttttāldvayānaṣibhvṛna ‖ rāvitripragānaṃliṃga
+8. dattanāparabattana ‖ palvatatvṛttāvṛṭaṣaṃokavao ‖ māokkāttaottākka
+9. mātrabhikaokkātta ‖ ottādaśajjñākaoālādādavajjaṃ ‖ ṭāvikakavalvamitra
+
+TRANSCRIPTION B
+1. ṣituryyaḥyaṣṭrīdvināmakāraṇaṃ ‖ prāvittanakāraṇaṅṅamakāraṇaṅṅanyākka ‖ kkāraṇaṃprā [illegible] ṣikaḻ
+2. ṅṅādbhavattisaptakṣṭabhūnādhigamā ‖ khattākkāṃpayaṣṭrīdvināmabhiddeva ‖ bhūṣitiḻavaṭeśa [illegible] ccākkiṭe
+3. ātmasvābhāvyavavihāredṛśyatā ‖ śarīraṃpṛmāvanṟṟusmṛtikāmaścedrama ‖ vanyathāṅṅalālindrādā
+4. oradṛṣṭattāvimevaśa ‖ khabhālkriyyānantamavikāralābhekkuru ‖ makkiṅkittaccāśari
+5. tmaṣituryyedā ‖ smomākkādavattiturkkaprā ‖ dekkāmāśarīrattābheda
+6. utubhaviṃgāda ‖ ubhakkābhimarupṛthakbhūkekke ‖ thāsaṃprūtelabhyādi
+7. tvattekkiturttha ‖ caritārtthobhayānamiścya ‖ ntrāvirupradhānaṃliṃga
+8. dantanāpariṇatābha ‖ iparvaimahṛttāvyābhūtākkovala ‖ māyeṣṭrākkalemekkākal
+9. mātrābhikābhekkā ‖ lakkirānmaṣṭhākṛtāraltādomavaśya ‖ ṃṭāviśeṣavaccikkrānti
+
+TRANSCRIPTION C
+1. vitarkkayuktirddināmakāra ‖ raṇālprāptinakāraṇāmakāraṇānantyākka ‖ kkāraṇaprā [illegible] e [illegible]
+2. jñādbhavatisatvāljñāna ‖ nādhigamā [illegible] kṣāṃyuktirddināmabhi [illegible] ‖ [illegible] jñavadaśakatvā [illegible]
+3. āntarasvaṃ [illegible] vyāda ‖ ādṛtāśarīraṃpramā [illegible] kā [illegible] dma ‖ damavan [illegible] lā [illegible]
+4. ṣa [illegible] ṣattaviṣavaśa ‖ [illegible] śāl [illegible] samavikālala [illegible] kkū ‖ ma [illegible] śi
+5. damaṣitra [illegible] dā ‖ sa [illegible] kṣādi [illegible] bhavati [illegible] prā ‖ [illegible] śi [illegible]
+6. utrā [illegible] liṃgaṭe ‖ [illegible] kaśari [illegible] ppa [illegible] kai ‖ ṣāsṃ [illegible] lo [illegible]
+7. [illegible] te [illegible] ‖ cari [illegible] āl [illegible] dhānami [illegible] ‖ [illegible] vi [illegible] pradhānaṃliṃga
+8. du [illegible] pariṇeta [illegible] ‖ [illegible] val [illegible] tya [illegible] duḥkhaṃ [illegible] kevala ‖ [illegible] mā [illegible] mātra [illegible] ka
+9. mātra [illegible] ka [illegible] ‖ [illegible] jña [illegible] ān [illegible] dava [illegible] ‖ [illegible] ṭāvi [illegible] kaivalya [illegible] ityu
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

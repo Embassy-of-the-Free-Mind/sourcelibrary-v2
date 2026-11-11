@@ -1,0 +1,60 @@
+{
+ "baseline_realgt_read": {
+  "v23_all": {
+   "n": 157,
+   "cer": 0.5546
+  },
+  "v23_confirmed": {
+   "n": 112,
+   "cer": 0.5287
+  },
+  "v23_clean3": {
+   "n": 118,
+   "cer": 0.5527
+  },
+  "real_train": {
+   "n": 468,
+   "cer": 0.4968
+  }
+ },
+ "reads-a-reread.jsonl": {
+  "v23_all": {
+   "n": 157,
+   "cer": 0.5683
+  },
+  "v23_confirmed": {
+   "n": 112,
+   "cer": 0.5274
+  },
+  "v23_clean3": {
+   "n": 118,
+   "cer": 0.5699
+  }
+ },
+ "reads-pilot.jsonl": {
+  "v23_all": {
+   "n": 157,
+   "cer": 0.2359
+  },
+  "v23_confirmed": {
+   "n": 112,
+   "cer": 0.204
+  },
+  "v23_clean3": {
+   "n": 118,
+   "cer": 0.2419
+  },
+  "real_train": {
+   "n": 468,
+   "cer": 0.0
+  },
+  "real_title_heldout": {
+   "n": 4,
+   "cer": 0.0301
+  },
+  "synth_heldout": {
+   "n": 400,
+   "cer": 0.042
+  }
+ }
+}

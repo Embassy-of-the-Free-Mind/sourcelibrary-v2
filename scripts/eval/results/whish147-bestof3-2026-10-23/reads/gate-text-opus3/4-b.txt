@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C gives the opening Sāṅkhyakārikā verses (1–5) as continuous, correct Sanskrit through row 9 ("liṃgaliṃgipūrvakam āptaśrutir āptavacanaṃ tu"); B is nearly the same but has stray verse numbers, a corrupt "astuḥ" and gaps in rows 8–9; A breaks off into fragments after row 2.

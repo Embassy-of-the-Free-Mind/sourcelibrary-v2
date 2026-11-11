@@ -73,6 +73,7 @@ const SWEEP = 'withhold-paddle-table-6388';
 const HOLD = {
   reason: 'paddle-table-6388', issue: 6388, source: SWEEP,
   release: 'Release when the detector-flagged table/diagram pages of this book have a re-read that passed the #6388 pilot gate (or Derek rules the Paddle text may be served), and their English is re-made from it.',
+  release_when: { kind: 'issue', ref: 6388 },
 };
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;

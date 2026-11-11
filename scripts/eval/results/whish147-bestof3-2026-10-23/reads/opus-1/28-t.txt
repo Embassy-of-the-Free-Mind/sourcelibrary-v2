@@ -1,0 +1,11 @@
+ROW 1 | [illegible]ത്ര്യാത്ര്യ[illegible]ഭ്യാഉത്ര്യത്വഃ[illegible]ചാക[illegible]ം.ബി[illegible]ഭ്യാം.[illegible]ജ്ഞയോ[illegible]ംസത്വം.സത്വ[illegible]
+ROW 2 | ബിഷ്ഠനാംരജ്ജഃഉട്ടയൈാ[illegible]ന്ദജ[illegible]സാദ്ധ്വ[illegible]തമഉച്യതേഇതി.ഏകാന്ത്യാവ്യ[illegible]ഭ്യഃ[illegible]
+ROW 3 | ട്ടഫ[illegible]യാഗന്ധ[illegible]ഌവ്യക്തമിതഃ[illegible]കഏ[illegible]വവൃത്തിൎന്നയക[illegible]ദ്ദേൎയ്യനാമി.[illegible]
+ROW 4 | [illegible]വൃത്ത[illegible] ‖ [illegible]ശ്ചാദി[illegible]ണാപ[illegible]ഃ[illegible]വൈ[illegible] ‖ ഇ[illegible]ചൃതകയവുച്ച[illegible]
+ROW 5 | [illegible]ത്ര്യാന്ത്യാവൃത്തി ‖ [illegible]ഉത്ര്യത്വഃ[illegible]രൂപാഃ[illegible]കാമിതൈ ‖ [illegible]പരി[illegible]ന്ത
+ROW 6 | [illegible]മിതരയൽസ ‖ [illegible]ക്കിസാദ്ദത്തി[illegible]ളാദയത്തി ‖ സവ[illegible]നാം.[illegible]സാക്ഷിത്വം[illegible]
+ROW 7 | [illegible]ംകൈവല്യസാക്ഷി[illegible] ‖ ക്ഷാ [illegible]ത്ര്യത്ര്യ[illegible]സ്വഭാവമാത്മ[illegible] ‖ [illegible]വൃത്തി[illegible]
+ROW 8 | ക[illegible]ചിൽപ്ര[illegible]ട്ടാ ‖ [illegible]ത്തനരക്ക[illegible]ാൽട്ടത്ര്യാ[illegible]ജ്ഞവക ‖ [illegible]ംഭയ[illegible]മാന്ദന്ദാ[illegible]
+ROW 9 | [illegible]ൈരന്ദ[illegible]ഃ[illegible]ംജ്ഞനയ[illegible]പലായമാ[illegible]ന്യാം[illegible]ക്കയസ്വാമിനഃ[illegible]മിത്ര[illegible]ജ്ഞത്വ[illegible]
+ROW 10 | [illegible]ഭ്യ[illegible]വൃത്തി[illegible][illegible]ഞ്ഞാംഭ്യാം[illegible]പാ[illegible]ഗന്ധകാ[illegible]ാഭി[illegible]ത്ര്യാനന്തര[illegible]
+NOTE | Low confidence throughout: maybe 30–40% of the glyphs could be identified, and even those readings are tentative, so treat this as a rough draft only. I put ‖ only in rows 4–8, where the text visibly stops at the two string holes; rows 1–3 and 9–10 run straight across. Overlapping text between neighbouring pieces was merged and not repeated.

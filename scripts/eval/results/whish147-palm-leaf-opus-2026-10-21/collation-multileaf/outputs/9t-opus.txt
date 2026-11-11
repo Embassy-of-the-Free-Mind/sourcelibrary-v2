@@ -1,0 +1,47 @@
+# Collation: left half of a palm leaf, Sāṃkhyakārikā 52–58
+
+This is a hedged result. I could only see the image at 2000×1014 and couldn't zoom in, so the akṣaras are small and in places smudged. I've marked anything I couldn't make out as illegible rather than filling it in from the edition. I'm fairly confident only of the readings given without "?".
+
+**Layout.** The verse text runs as one continuous line from the left column into the right column, passing the string-hole gap. Each row then goes on onto the missing right half of the leaf, so parts of each verse are not on this half. Lines 1–2 and 9–10 run the full width. The top two lines and the bottom two (except the SK_58 fragment) are mostly commentary, which I haven't transcribed.
+
+## Verse lines
+
+**SK_52** (line 1)
+- Leaf: *na vinā bhāvair liṅgaṃ* … [the rest of the line is illegible to me; I may see *liṅgā-* near the right edge]
+- Differences: none that I can confirm. The part after *liṅgaṃ* is unread, not checked against the edition.
+
+**SK_53** (line 2, then row 3)
+- Leaf: … *sargaḥ* | *tat-pūrvvikā daiva*[s?] … [illegible] … | *-ka-vidhaḥ samāsa*‖*to bhautika*[s s?]*a*…
+- Differences:
+  - *pūrvikā* → *pūrvvikā*. This is the usual Malayalam doubling of a consonant after r, a spelling habit rather than a real variant.
+  - *tairyag-yonaś ca bhavati mānuṣyaś c'ai-* is not readable on this half, so I haven't collated it.
+
+**SK_54** (rows 4–5)
+- Leaf: [*ūrdhvaṃ sattva-viśālas tamo-* is on the missing half] *viśālaś ca mūla*[*taḥ*]‖*sa*[*rgaḥ*?] *madhye rajo-*… [rest on the missing half] … *-ntaḥ*
+- Differences: possibly none. The word after *mūlataḥ* starts with s plus a conjunct. I read it as *sargaḥ*, but I can't rule out something else (for example *sṛṣṭiḥ*), so it's uncertain.
+
+**SK_55** (rows 5–6)
+- Leaf: *tatra jarā-maraṇa*‖*-kṛtaṃ duḥkhaṃ prā*[*pnoti* …] … [*a-liṅgasyā*] *vinivṛttes tasmā*‖*d duḥkhaṃ sva-bhāvena*
+- Differences: *duḥkham* → *duḥkhaṃ*, written with the anusvāra. This is spelling only. I'm reasonably sure of the reading, but the sign is small.
+
+**SK_56** (rows 7–8)
+- Leaf: [*ity eṣa prakṛti-kṛto mahadā-* is on the missing half] *-di-viśeṣa-bhūta*‖*-pary-antaḥ prati-puruṣa*[*-vi*-] … *mokṣā'rthaṃ svā'rtha iva*‖[illegible]
+- Differences: none confirmed. The *pary-* of *pary-antaḥ* is unclear and *parā'rtha ārambhaḥ* is illegible to me, so I haven't checked those.
+
+**SK_57** (rows 8–9)
+- Leaf: possibly [*vat*]*sa-vivṛddhi-nimitta*[*ṃ*] … *pravṛtti*[*r*] …, followed by *a-jñasya* on line 10. Most of it is too faint or cramped for me to read word by word.
+- Differences: none confirmed.
+
+**SK_58** (line 10)
+- Leaf: … [*kri*]*yā*[*su*] *pravartate lokaḥ* … [the rest is illegible or commentary]
+- Differences: *logaḥ* → *lokaḥ*. The leaf seems to read ലോകഃ (*lokaḥ*), and *logaḥ* in the edition is almost certainly a typo. The letters are small, so I've marked it uncertain.
+
+SK_49–51 and SK_59–60 do not appear on this half-leaf as far as I can see.
+
+## DIFFERENCES:
+- SK_53 | pūrvikā | pūrvvikā | certain (spelling only)
+- SK_55 | duḥkham | duḥkhaṃ | uncertain (spelling only)
+- SK_58 | logaḥ | lokaḥ | uncertain
+- SK_54 | sargaḥ | s[argaḥ?], possibly another word | uncertain (may be no difference)
+
+A clearer view would let me finish this. Crops of the left column, the right column and the bottom two lines at full 2556 px resolution would probably settle SK_52, 56 and 57 and confirm *lokaḥ*.

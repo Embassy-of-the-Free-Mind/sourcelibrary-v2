@@ -475,7 +475,10 @@ export async function getBookText(args: {
   // every quote shown to the user carries its page number and the page's
   // sourcelibrary.org url (each page entry includes both).
   (result as Record<string, unknown>).tip =
-    "When quoting from these pages, copy text verbatim from the translation field — do not paraphrase or reconstruct from memory. " +
+    // An English edition's English leaves carry no `translation` (#7100).
+    ((result as Record<string, unknown>).english_edition_note
+      ? "English edition: when quoting an English leaf, copy text verbatim from the ocr field (the author's own words, period spelling kept); use the translation field only on leaves that carry one — do not paraphrase or reconstruct from memory. "
+      : "When quoting from these pages, copy text verbatim from the translation field — do not paraphrase or reconstruct from memory. ") +
     "Present each quote to the user with its page number and the page's url (sourcelibrary.org link).";
 
   return result;
@@ -521,7 +524,8 @@ const ROMANIZED_TIP =
 // (src/app/api/mcp/route.ts) carries the same tip.
 const OCR_ORIGINAL_TIP =
   "This page is an ENGLISH ORIGINAL: the text printed on the leaf is already English, so there is " +
-  "no translation and none is needed (this is why the book reports pages_translated: 0). The " +
+  "no translation and none is needed (a pages_translated count on such a book is a legacy machine " +
+  "rewording of the English, which is never served — #7100). The " +
   "verbatim text is in `original`. Copy it exactly and attribute it as the source's own words — " +
   "never call it a translation. Render as:\n" +
   "> [exact original text, verbatim]\n" +

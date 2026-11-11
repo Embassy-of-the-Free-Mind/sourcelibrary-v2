@@ -1,7 +1,6 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
-import { FEED_TYPES } from '@/lib/feed-links';
 import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 
 export const revalidate = 3600; // 1h ISR
@@ -12,7 +11,7 @@ export const metadata = {
   // Own canonical: without it the page inherited the root layout's '/' and
   // read to search engines as a duplicate of the homepage. `types` restated
   // because metadata merges shallowly per key.
-  alternates: { canonical: '/podcast', types: FEED_TYPES },
+  alternates: { canonical: '/podcast' },
 };
 
 interface PodcastEpisode {

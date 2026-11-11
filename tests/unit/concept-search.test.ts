@@ -10,6 +10,7 @@ const state = {
   original: { rows: [] as any[], state: 'off' as string },
   englishDelay: 0,
   originalDelay: 0,
+  embedDelay: 0,
   books: [] as any[],
   pages: [] as any[],
   mongoFails: false,
@@ -26,10 +27,14 @@ const db = {
   }),
 };
 vi.mock('@/lib/mongodb', () => ({ getDb: async () => db }));
+// Both page lanes wait for the one query vector, as the real ones do.
+let embedding: Promise<number[]> | null = null;
+const embed = () => (embedding ??= sleep(state.embedDelay).then(() => [0]));
 vi.mock('@/lib/semantic-search', () => ({
-  semanticPageSearchGlobal: async () => { await sleep(state.englishDelay); return state.english; },
+  getQueryEmbedding: () => embed(),
+  semanticPageSearchGlobal: async () => { await embed(); await sleep(state.englishDelay); return state.english; },
   semanticConceptSearch: async (_q: string, _n: number, o: any) => { state.abstractScopes.push(o.scope); return state.abstracts; },
-  semanticPageSearchUntranslated: async () => { await sleep(state.originalDelay); return state.original; },
+  semanticPageSearchUntranslated: async () => { await embed(); await sleep(state.originalDelay); return state.original; },
 }));
 
 const en = (book: string, page: number, score: number) => ({ page_id: `${book}:${page}`, book_id: book, page_number: page, snippet: `en ${book} ${page}`, snippet_type: 'translation', score, book_title: book, book_author: null, book_language: 'Latin', book_year: 1600 });
@@ -38,7 +43,8 @@ const book = (id: string, tradition: string[], extra: Record<string, unknown> = 
 const GLOBAL = { kind: 'global' as const };
 
 beforeEach(() => {
-  state.english = []; state.abstracts = []; state.abstractScopes = []; state.original = { rows: [], state: 'off' }; state.books = []; state.pages = []; state.mongoFails = false; state.englishDelay = 0; state.originalDelay = 0;
+  state.english = []; state.abstracts = []; state.abstractScopes = []; state.original = { rows: [], state: 'off' }; state.books = []; state.pages = []; state.mongoFails = false; state.englishDelay = 0; state.originalDelay = 0; state.embedDelay = 0;
+  embedding = null;
 });
 
 describe('conceptPageSearch', () => {
@@ -167,17 +173,46 @@ describe('conceptPageSearch', () => {
     expect(out.lanes.untranslated).toBe('late');
   });
 
-  it('a lane that answers within the grace after English is still fused', async () => {
-    const { conceptPageSearch, UNTRANSLATED_GRACE_MS } = await import('@/lib/search/concept-search');
+  const lanesWith = () => {
     state.english = [en('e0', 1, 0.8), en('e1', 1, 0.79)];
     state.original = { rows: [orig('o0', 7, 0.85)], state: 'ok' };
     state.books = ['e0', 'e1', 'o0'].map((b) => book(b, []));
     state.pages = [{ id: 'o0:7', ocr: { data: 'Prima materia.' } }];
-    // Slower than English, but inside the grace measured from English's answer.
-    state.englishDelay = 300;
-    state.originalDelay = 300 + UNTRANSLATED_GRACE_MS / 2;
+  };
+
+  it('a lane that answers within the grace of its start is fused, after a slow query vector too', async () => {
+    const { conceptPageSearch, UNTRANSLATED_GRACE_MS } = await import('@/lib/search/concept-search');
+    lanesWith();
+    // The vector takes 300 ms; the clock starts when it is ready, not when the search did.
+    state.embedDelay = 300;
+    state.englishDelay = 20;
+    state.originalDelay = UNTRANSLATED_GRACE_MS - 150;
     const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off' });
     expect(out.lanes.untranslated).toBe('ok');
     expect(out.rows.map((r) => r.book_id)).toContain('o0');
+  });
+
+  it('the grace runs from the lane start, not from the English answer (#2049)', async () => {
+    const { conceptPageSearch, UNTRANSLATED_GRACE_MS } = await import('@/lib/search/concept-search');
+    lanesWith();
+    // English answers 300 ms in; the lane 100 ms past its own grace. Counted from
+    // English's answer, as until 2026-10-18, it would have been fused.
+    state.englishDelay = 300;
+    state.originalDelay = UNTRANSLATED_GRACE_MS + 100;
+    const t0 = Date.now();
+    const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off' });
+    expect(out.lanes.untranslated).toBe('late');
+    expect(Date.now() - t0).toBeLessThan(UNTRANSLATED_GRACE_MS + 80);
+  });
+
+  it('an English answer slower than the grace waits for nothing more', async () => {
+    const { conceptPageSearch, UNTRANSLATED_GRACE_MS } = await import('@/lib/search/concept-search');
+    lanesWith();
+    state.englishDelay = UNTRANSLATED_GRACE_MS + 200;
+    state.originalDelay = UNTRANSLATED_GRACE_MS + 1500;
+    const t0 = Date.now();
+    const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off' });
+    expect(out.lanes.untranslated).toBe('late');
+    expect(Date.now() - t0).toBeLessThan(UNTRANSLATED_GRACE_MS + 200 + 80);
   });
 });

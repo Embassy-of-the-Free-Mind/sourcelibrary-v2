@@ -1,7 +1,11 @@
 import { Fragment } from 'react';
 import { formatAuthor } from '@/lib/utils';
+import { localizeAuthorName } from '@/lib/book-labels';
+import type { Locale } from '@/lib/locale-path';
 
 interface AuthorNameProps {
+  /** Locale of the page: renders "Anonymous"/"Unknown" placeholders in its language (#7055). */
+  lang?: Locale;
   author: string | undefined | null;
   className?: string;
   fallback?: string;
@@ -13,7 +17,7 @@ interface AuthorNameProps {
  * indicating attributed (uncertain) authorship.
  * Multiple authors separated by "|" are rendered with " · " between them.
  */
-export default function AuthorName({ author, className, fallback }: AuthorNameProps) {
+export default function AuthorName({ author, className, fallback, lang = 'en' }: AuthorNameProps) {
   if (!author) return fallback ? <span className={className}>{fallback}</span> : null;
 
   const parts = author
@@ -31,7 +35,7 @@ export default function AuthorName({ author, className, fallback }: AuthorNamePr
           {p.attributed ? (
             <span className="italic" title="Attributed author (uncertain)">attr. {p.name}</span>
           ) : (
-            p.name
+            localizeAuthorName(p.name, lang)
           )}
         </Fragment>
       ))}

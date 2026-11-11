@@ -10,6 +10,7 @@ import {
   type Ladder, type LibraryDashboard, type Rung,
 } from '@/lib/library-dashboard';
 import { Bars, HBars, Legend, LineChart, Panel, PipelineCumulative } from './DashboardCharts';
+import { ReadersMap } from './ReadersMap';
 import { Grid2, Section, Tiles } from './dashboard-layout';
 import { RAMP, SERIES, dayLabel, fmtFull, fmtK, fmtUsd, monthLabel } from './dashboard-format';
 
@@ -221,11 +222,12 @@ export default async function AdminDashboard() {
             { l: 'Unique visitors, 30 days', v: fmtK(metrics.conversion.uniqVisitors), n: `${pct(metrics.conversion.returningVisitors, metrics.conversion.uniqVisitors)} came back on another day` },
             { l: 'Daily readers', v: fmtFull(metrics.engagement.avgDau), n: '14-day average' },
             { l: 'Page views, 7 days', v: fmtK(metrics.deltas.pageviews7.now), n: `${signed(metrics.deltas.pageviews7.now - metrics.deltas.pageviews7.prev)} on the week before`, up: metrics.deltas.pageviews7.now > metrics.deltas.pageviews7.prev },
-            { l: 'New accounts, 30 days', v: fmtFull(metrics.users.new30), n: `${metrics.users.new7} in the last 7 days` },
+            { l: 'New accounts, 30 days', v: fmtFull(metrics.users.new30), n: `${metrics.users.new7} in the last 7 days${metrics.conversion.newSignups != null ? ` · ${pct(metrics.conversion.newSignups, metrics.conversion.uniqVisitors)} of visitors` : ''}` },
             { l: 'Verified accounts', v: fmtFull(metrics.users.verified), n: `${pct(metrics.users.verified, metrics.users.total)} of ${fmtFull(metrics.users.total)}` },
-            { l: 'Downloads, 30 days', v: fmtFull(metrics.missionActions.download), n: `${metrics.missionActions.share} shares · ${metrics.missionActions.cite} citations` },
+            { l: 'Downloads, 30 days', v: fmtFull(metrics.missionActions.download), n: `${metrics.missionActions.share} shares · ${metrics.missionActions.cite} citations${metrics.social.likes != null ? ` · ${fmtFull(metrics.social.likes)} likes` : ''}` },
           ]} />
           <Grid2>
+            {metrics.geo?.countries?.length ? <ReadersMap countries={metrics.geo.countries} history={history} /> : null}
             {history.length > 1 && (
               <Panel title="Monthly and daily readers" note="Unique visitor fingerprints (IP and browser), humans only, recorded daily.">
                 <Legend names={['Monthly active (30-day unique)', 'Daily active (14-day average)']} colors={[SERIES[0], SERIES[2]]} />
@@ -253,7 +255,7 @@ export default async function AdminDashboard() {
               </div>
             </Panel>
             {metrics.readingMembers && (
-              <Panel title="How deeply members read" note={`Signed-in members only. ${Math.round(100 * metrics.readingMembers.top10PctPageShare)}% of member page reads come from the top 10% of readers.`}>
+              <Panel title="How deeply members read" note={`Signed-in members only. ${Math.round(100 * metrics.readingMembers.top10PctPageShare)}% of member page reads come from the top 10% of readers.${metrics.readingMembers.fastPages != null && metrics.readingMembers.totalPages ? ` Signing in keeps crawlers out but not bulk fetching: ${fmtFull(metrics.readingMembers.fastSessions ?? 0)} of ${fmtFull(metrics.readingMembers.pacedSessions ?? 0)} timed sessions moved faster than ${metrics.readingMembers.machinePacePpm ?? 20} pages a minute and carry ${pct(metrics.readingMembers.fastPages, metrics.readingMembers.totalPages)} of pages read, so the per-session figures hold and the totals run high.` : ''}`}>
                 <div className="grid gap-3 text-sm" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
                   {[['Readers, 30 days', fmtFull(metrics.readingMembers.users)], ['Reading sessions', fmtFull(metrics.readingMembers.sessions)], ['Books opened', fmtFull(metrics.readingMembers.books)], ['Median pages per session', String(metrics.readingMembers.median)], ['90th percentile', `${metrics.readingMembers.p90} pages`], ['Read 10+ pages', `${fmtFull(metrics.readingMembers.deep + metrics.readingMembers.veryDeep)} sessions`], ['Came back another day', fmtFull(metrics.readingMembers.multiDayUsers)], ['Read more than one book', fmtFull(metrics.readingMembers.multiBookUsers)]].map(([k, v]) => (
                     <div key={k} className="grid gap-0.5"><span className="text-xs text-stone-500">{k}</span><span className="text-lg font-semibold text-stone-900">{v}</span></div>
@@ -261,6 +263,22 @@ export default async function AdminDashboard() {
                 </div>
               </Panel>
             )}
+            {(metrics.traffic.topBooks?.length || metrics.traffic.topCollections?.length) ? (
+              <Panel title="Most read, last 30 days" note="Human page views, bots excluded. A book counts however it was reached (provider prefixes and partner embeds fold into one).">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm min-w-0">
+                  <table className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Books</th><th className="text-right py-1 font-medium w-14">views</th></tr></thead>
+                    <tbody>{(metrics.traffic.topBooks ?? []).slice(0, 10).map(b => <tr key={b.key} className="border-t border-stone-100"><td className="py-0.5 pr-2"><Link href={`/book/${b.key}`} className="block truncate hover:underline" title={b.author ? `${b.title} · ${b.author}` : b.title}>{b.title}</Link></td><td className="py-0.5 text-right tabular-nums">{fmtFull(b.hits)}</td></tr>)}</tbody></table>
+                  <table className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Collections</th><th className="text-right py-1 font-medium w-14">views</th></tr></thead>
+                    <tbody>{(metrics.traffic.topCollections ?? []).slice(0, 10).map(c => <tr key={c.slug} className="border-t border-stone-100"><td className="py-0.5 pr-2"><Link href={`/collections/${c.slug}`} className="block truncate hover:underline">{c.slug}</Link></td><td className="py-0.5 text-right tabular-nums">{fmtFull(c.hits)}</td></tr>)}</tbody></table>
+                </div>
+              </Panel>
+            ) : null}
+            {metrics.ai?.length ? (
+              <Panel title="AI features readers use, last 30 days" note={`The librarian, search expansion, voice and outside agents over MCP.${spend ? ' Cost is the model bill for each feature.' : ''}`}>
+                <table className="min-w-0 w-full text-sm"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Feature</th><th className="text-right py-1 font-medium">calls</th><th className="text-right py-1 font-medium">avg time</th>{spend && <th className="text-right py-1 font-medium">cost</th>}</tr></thead>
+                  <tbody>{metrics.ai.map(a => <tr key={a.feature} className="border-t border-stone-100"><td className="py-0.5 pr-2 font-mono text-xs">{a.feature}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(a.calls)}</td><td className="py-0.5 text-right tabular-nums">{(a.avgMs / 1000).toFixed(1)} s</td>{spend && <td className="py-0.5 text-right tabular-nums">${a.cost.toFixed(2)}</td>}</tr>)}</tbody></table>
+              </Panel>
+            ) : null}
           </Grid2>
         </Section>
       )}
@@ -272,7 +290,7 @@ export default async function AdminDashboard() {
             <Tiles tiles={[
               { l: 'Images on R2', v: `${(s.r2_bytes / 1e12).toFixed(1)} TB`, n: `${fmtK(s.r2_objects)} objects` },
               { l: 'Text held', v: `${(s.text_bytes_est / 1e9).toFixed(0)} GB`, n: `OCR and translation, ${fmtK(s.pages_total)} page records` },
-              { l: 'Held books', v: fmtFull(L.totals.held), n: 'kept out of every lane on purpose' },
+              { l: 'Held books', v: fmtFull(L.totals.held), n: L.totals.notAcquired != null ? `kept out of every lane on purpose; ${fmtK(L.totals.notAcquired)} catalogue records not yet acquired are not counted` : 'kept out of every lane on purpose' },
               { l: 'Enriched', v: snap ? fmtFull(snap.data.enrichment.with_summary) : '–', n: snap ? `summaries · ${fmtFull(snap.data.enrichment.with_index)} indexes · ${fmtFull(snap.data.enrichment.with_images)} with images` : undefined },
             ]} />
           ) : null; })()}
@@ -412,7 +430,7 @@ function Backlog({ L }: { L: LibraryDashboard }) {
     return { ...r, b, c };
   });
   const trOnly = [g('translate:body').pages_live + g('translate:tail').pages_live, g('translate:body').live + g('translate:tail').live];
-  const order: [string, string][] = [['archive', 'Archive'], ['ocr', 'Transcribe (OCR)'], ['translate:body', 'Translate'], ['translate:tail', 'Translate last 10%'], ['enrich', 'Summary and chapters'], ['done', 'Done'], ['blocked:held', 'Blocked: held'], ['blocked:source_unreachable', 'Blocked: source unreachable'], ['blocked:source_restricted', 'Blocked: source restricted'], ['blocked:source_dead', 'Blocked: source dead'], ['blocked:unstamped', 'Blocked: no rung stamped']];
+  const order: [string, string][] = [['archive', 'Archive'], ['ocr', 'Transcribe (OCR)'], ['translate:body', 'Translate'], ['translate:tail', 'Translate last 10%'], ['enrich', 'Summary and chapters'], ['done', 'Done'], ['blocked:held', 'Blocked: held'], ['blocked:not_acquired', 'Not acquired (catalogue record, no pages)'], ['blocked:source_unreachable', 'Blocked: source unreachable'], ['blocked:source_restricted', 'Blocked: source restricted'], ['blocked:source_dead', 'Blocked: source dead'], ['blocked:unstamped', 'Blocked: no rung stamped']];
   const top = L.nextStep.ocrBacklog.slice(0, 8), rest = L.nextStep.ocrBacklog.slice(8).reduce((o, r) => ({ books: o.books + r.books, pages: o.pages + r.pages }), { books: 0, pages: 0 });
   const totOcr = L.nextStep.ocrBacklog.reduce((a, r) => a + r.pages, 0), ch = L.nextStep.ocrBacklog.find(r => r.name === 'Chinese');
   return (

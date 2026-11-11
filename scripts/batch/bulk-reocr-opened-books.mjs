@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
+import { assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON } from '../lib/model-pricing.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
@@ -26,6 +27,9 @@ import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-re
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const TARGET_MODEL = 'gemini-3-flash-preview';
+// #7075: only gemini-3.1-flash-lite runs on the paid API. This script's model is Flash, so it refuses to run;
+// read these pages through the agy CLI lane instead (scripts/batch/cli-ocr.mjs).
+assertApiOcrModel(TARGET_MODEL, 'bulk-reocr-opened-books');
 const PROMPT_VERSION = 'v4.2026-02';
 const BATCH_SIZE = 10; // Pages per Gemini batch submission (matches batch-ocr-multi)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';

@@ -16,9 +16,9 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, neighbourGate, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
-import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
+import { engineFromBatchJob, imageInput, jobPromptVersion, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/batch/collect-batch-results.mjs';
@@ -198,10 +198,17 @@ async function processOneJob(db, job) {
         }
       }
     } else {
-      for (let idx = 0; idx < responses.length; idx++) {
-        const result = responses[idx];
-        const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
-        if (!pageId) { failCount++; continue; }
+      // Match by metadata.key ONLY. Gemini Batch does not keep request order, so
+      // the old fallback to job.page_ids[idx] wrote one page's text onto another,
+      // across books (2026-03-24 contamination; batch-collector.mjs was fixed then,
+      // this cron'd collector was not, #4685). A key must also name a page this
+      // job submitted, and a repeated key keeps only its first response.
+      const submitted = new Set((job.page_ids || []).map(String));
+      const seenKeys = new Set();
+      for (const result of responses) {
+        const pageId = result.metadata?.key;
+        if (!pageId || !submitted.has(String(pageId)) || seenKeys.has(String(pageId))) { failCount++; continue; }
+        seenKeys.add(String(pageId));
         const candidate = result.response?.candidates?.[0];
         const text = candidateText(candidate);
         if (!text) { failCount++; continue; }
@@ -238,6 +245,11 @@ async function processOneJob(db, job) {
 
     // Second pass: save results
     const bulkOps = [];
+    // #5026: the job's own replies by page number, so a translated page is judged against the English written beside
+    // it, not the stored English this job is replacing (one read per job; OCR jobs skip it).
+    const pageNos = job.type === 'ocr' || !pageResults.length ? new Map()
+      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { _id: 0, id: 1, page_number: 1 } }).toArray()).map((p) => [p.id, p.page_number]));
+    const jobEnglish = Object.fromEntries(pageResults.filter((r) => pageNos.get(r.pageId) != null && r.text).map((r) => [pageNos.get(r.pageId), r.text]));
     for (const { pageId, text: resultText, usage } of pageResults) {
       let text = resultText;
       if (humanEditedIds.has(pageId)) {
@@ -272,7 +284,7 @@ async function processOneJob(db, job) {
           'ocr.model': job.model,
           'ocr.language': job.language,
           'ocr.source': 'batch_api',
-          'ocr.prompt_version': job.prompt_version || 'v4.2026-02',
+          'ocr.prompt_version': jobPromptVersion(job), // never a constant (#7499)
           'ocr.batch_job_id': jobIdStr,
           'ocr.input_tokens': usage?.promptTokenCount || 0,
           'ocr.output_tokens': outputTokensFrom(usage),
@@ -302,6 +314,12 @@ async function processOneJob(db, job) {
 
         bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
       } else {
+        // #4685 — an empty answer is never stored; same failure record as batch-collector.mjs.
+        if (isEmptyTranslation(text)) {
+          console.warn(`  EMPTY RESPONSE: not writing page ${pageId} — the answer is only whitespace`);
+          if (!DRY_RUN) await recordEmptyTranslation(db, { id: pageId });
+          failCount++; continue;
+        }
         // The page's text inside its continuity <meta> is text no reader sees (#5376) — same
         // refusal as batch-collector.mjs: write nothing, stamp the reason, keep the text.
         if (hidesPageInMeta(text)) {
@@ -319,6 +337,9 @@ async function processOneJob(db, job) {
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { console.warn(`  STRAY SCRIPT: refusing page ${pageId}`); failCount++; continue; }
         text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+        // #5026: the page's English is not its neighbour's — same gate as batch-collector.mjs.
+        const nb = await neighbourGate(db, { id: pageId, book_id: job.book_id, page_number: pageNos.get(pageId) }, text, { neighbours: jobEnglish, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
+        if (nb.refused) { console.warn(`  NEIGHBOUR: refusing page ${pageId} (${nb.reason})`); failCount++; continue; }
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
@@ -330,7 +351,7 @@ async function processOneJob(db, job) {
                 'translation.source_language': job.language,
                 'translation.target_language': 'English',
                 'translation.source': 'batch_api',
-                'translation.prompt_version': job.prompt_version || 'v4.2026-02',
+                'translation.prompt_version': jobPromptVersion(job), // never a constant (#7499)
                 'translation.batch_job_id': jobIdStr,
                 'translation.input_tokens': usage?.promptTokenCount || 0,
                 'translation.output_tokens': outputTokensFrom(usage),
@@ -348,7 +369,7 @@ async function processOneJob(db, job) {
                 })(),
                 updated_at: now,
               },
-              $unset: CLEAR_STALE_UNSET,
+              $unset: { ...CLEAR_STALE_UNSET, ...CLEAR_EMPTY_RESPONSE_UNSET }, // a real write ends the empty-response record (#4685)
             },
           }
         });

@@ -1,0 +1,22 @@
+I couldn't place any line of this leaf in the edition with confidence. The script is hard to read at this resolution, and I couldn't make out enough syllables to match any line to the edition's wording. What follows is the layout plus my best guesses, all marked unsure.
+
+**Layout I can see:**
+- Lines 1–2 and the last line (10) run the full width of the half-leaf.
+- Lines 3–9 are split into two blocks by the string-hole: a short left block (about 7–9 aksharas per line) and a right block that continues past the right edge.
+- The right block on line 3 seems to begin with an invocation, "śrī gaṇapataye na(maḥ)". If that reading is right, a new text starts there. The short left-block lines and lines 1–2 would then be the end of something else, perhaps the end of the preceding text or a colophon.
+
+```
+LINE 1 | ? | – | – | unsure (full-width; cannot read enough to place; possibly end of a preceding text/commentary)
+LINE 2 | ? | – | – | unsure (same)
+LINE 3 | not edition text | left: unread short segment; right: invocation "śrī gaṇapataye na[maḥ]" | – | unsure
+LINE 4 | possibly SK_1 begins (right block) | duḥkha-trayā'bhighātāj? | ? | unsure
+LINE 5 | possibly SK_1 | ? | ? | unsure
+LINE 6 | possibly SK_1 | ? | ? | unsure
+LINE 7 | possibly SK_1 | ? | ? | unsure
+LINE 8 | possibly SK_1–SK_2 | ? | ? | unsure
+LINE 9 | possibly SK_2 | ? | ? | unsure
+LINE 10 | ? | ? | ? | unsure
+FIRST_VISIBLE_VERSE=1? LAST_VISIBLE_VERSE=NONE (cannot determine)
+```
+
+The main structural clue is the invocation mid-leaf. It suggests this is the opening leaf of the text, so the right block from line 4 on would start at SK_1. I couldn't confirm that from the actual words, though, so don't rely on these placements. A higher-resolution crop of the right block, lines 3–10, would let me check whether it really starts with *duḥkha-trayā'bhighātāj*.

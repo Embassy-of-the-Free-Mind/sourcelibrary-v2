@@ -1,0 +1,8 @@
+ROW 1 | പൃക്ഷിതഢിവിയഃസാ ‖ ത്വികഃവൈമിക്ഷികെകഞ്ഞോങിഃതൃഷ്ണാഃ[illegible] ‖ ദികഞ്ഞലഃഒരൊമിക്ഷി
+ROW 2 | കംപ്രഭൃതിരജ്ഞര ‖ സാപൃമ്പൃാഃഭൃ[illegible]ണാദ്രാവണ്ണസംരാറ്റു ‖ [illegible]രാഗജ്ഞശ്രദ്ധഖംഃരജ്ഞ
+ROW 3 | ബിഷ്വവജ്ഞാരദൗഛ്ര ‖ ജ്ഞാദ്ധ്യെണ്ഡിദഭാവഹെതൃഗ്ഗെ ‖ ഞ്ജസഃജ്ഞലമാത്രപൃ
+ROW 4 | ജ്ഞഃസദിവിയഃര ‖ ശ്രാത്രശ്രാറ്റാഗണഗ്ഗജ്യെങ്ങ ‖ കാദഗമഭൃപൃമെ
+ROW 5 | സഖിവിയഃയറ്റാ ‖ ണൈരകാരപജ്ഞാത്മകൈശത്ര ‖ പജ്ഞാത്മകജ്ജുംഃഷ്ടെ
+ROW 6 | ദഹഷ്ടാര്രവഃദശറ്റാ ‖ ങ്ങകൊദെടഢ്യാനെദഭഛഭിജ്ഞനംസ ‖ സാഷിവിയബഷ്ട്രക്രണ്ണട
+ROW 7 | ഖശ്വാഃസംജ്ഞാരമാ ‖ ത്രജ്ഞറ്റംജ്ഞാനംന്ദുജ്ഞിഃതൽഭാറ്റം ‖ ജ്ഞാനരമനെദവഃസഖി
+NOTE | I opened all four pieces and found seven rows. Overall this reading is not reliable: many of the letters are only guesses at what the cursive strokes show, and I did not fill anything in from the known text. The left margin also has one letter (ഢ) next to row 5, which I left out of the rows.

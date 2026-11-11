@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ghaṭarūpa [illegible] r ‖ pratyakṣajananesaṃyuktasamavāyaḥ ‖ cakṣussaṃyukteghaṭerūpa
+2. kku syasamavāyā ‖ lrūpatvasāmānyapratyakṣesaṃyuktasa ‖ mavetasamavāyaḥcakṣu
+3.  ‖ ssaṃyukteghaṭerūpaṃsamavetaṃtatra ‖ rūpatvasyasamavāya
+4. ālśrotre ‖ ṇaśabdasākṣālkāre ‖ samavāyaḥkarṇṇavi
+5. varavarttyākā ‖ śasyaśrotratvālśabdasya ‖ ākāśaguṇatvāl
+6. guṇaguṇino ‖ ścasamavāyālśabdatvasā ‖ kṣālkāresama
+7. vetasamavāyaḥ ‖ sannikarṣaḥśrotrasamaveteśa ‖ bdeśabdatvasyasamavā
+8. yāl abhāvapra ‖ tyakṣeviśeṣaṇaviśeṣyabhā ‖ va [illegible] nnikarṣaḥghaṭābhā
+
+TRANSCRIPTION B
+1. ṣaḥdrūpa [illegible] ‖ rpratyakṣajananesaṃyuktasamavāyaḥca ‖ kṣussaṃyuktaghaṭedrūpa
+2. [illegible] syasamavāyā ‖ ldrūpatvasāmānyapratyakṣesaṃyukta ‖ samavetasamavāyaḥcakṣu
+3.  ‖ ssaṃyuktaghaṭedrūpaṃsamavetaṃtadrū ‖ patvasyasamavāya
+4. ālśrotre ‖ ṇaśabdasākṣālkkāre ‖ samavāyaḥkarṇṇavi
+5. varavarttyākā ‖ śasyaśrotratvālśabdasya ‖ ākāśaguṇatvāl
+6. guṇaguṇino ‖ ścasamavāyālśabdatvasā ‖ kṣālkkāresama
+7. vetasamavāyaḥ ‖ [illegible] śrotrasamavete [illegible] ‖ śabdeśabdatvasyasamavā
+8. yālabhāvapra ‖ tyakṣeviśeṣaṇaviśeṣyabhā ‖ vassannikarṣaḥ [illegible]
+
+TRANSCRIPTION C
+1. odrūpakrūṇaṅṅaḻkṣaṇālpratyākṣajñānasaṃyuktasamavāyaḥcakṣussaṃyukteṣughaṭedrūpa
+2. kku nyasamavāyālrūpatvasāmānyapratyakṣesaṃyuktasamavetasamavāyaḥcakṣu
+3. [illegible] ‖ ssaṃyukte [illegible] ghaṭedrūparasakavaitvaṃ ‖ tvandrūpatvanyasamavāya
+4. nśrūdandra ‖ jñenajñesākṣālkāraṇa ‖ samavāyaḥkejñami
+5. palavantrākkā ‖ ganyaśrudrūtvālgandheṣva ‖ bhakāyaguṇatvāl
+6. graṇagrahaṇā ‖ tvasamavāyālśabdetvasā ‖ kṣālkkāreṇasama
+7. vaitasamavāyatta [illegible] trikkalḥ otruādrasamavetatvagaṇa [illegible] ṇṇagrahaṇatvanyasamavā
+8. yālttabhāva [illegible] drākṣaviśeṣaṇaviśeṣyabhāva [illegible] ṇannapratyakṣālḥ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

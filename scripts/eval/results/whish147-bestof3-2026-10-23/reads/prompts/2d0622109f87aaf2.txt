@@ -1,0 +1,50 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible]
+2. [illegible]
+3. [illegible]
+4. [illegible]
+5. [illegible] ‖ [illegible] ‖ [illegible]
+6. [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible]
+10. [illegible]
+11. [illegible]
+12. [illegible]
+
+TRANSCRIPTION B
+1. [illegible] tra [illegible] ndra [illegible] jña [illegible] ndri [illegible] pra [illegible] ṃ [illegible] kṣa [illegible] ṃ [illegible]
+2. pra [illegible] ṃ [illegible] kṣa [illegible] ṃ [illegible]
+3. [illegible] ḥ [illegible]
+4. [illegible] ḥ [illegible] ṃ [illegible] ḥ [illegible]
+5. [illegible] ‖ [illegible] ‖ [illegible]
+6. [illegible] ṃ [illegible] ṃ [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ḥ [illegible] ḥ [illegible]
+10. [illegible] ḥ [illegible] ṃ [illegible] ḥ [illegible]
+11. [illegible]
+12. [illegible] ḥ [illegible] ṃ [illegible]
+
+TRANSCRIPTION C
+1. ubhayatra [illegible] gareṭarayara [illegible] ṇaneṭakraraneṭadra [illegible] naḍaṣararenpra [illegible] letraḍeḍayara [illegible] laṭṭaya [illegible] rddhi
+2. pravara [illegible] ṃsayava [illegible] lena [illegible] rendra [illegible] radeṣa [illegible] kra [illegible] ṣara [illegible] de [illegible] ṃsa [illegible] rena [illegible] ṃtra [illegible] yare
+3. nnya [illegible] ra [illegible] yararantena [illegible] ra [illegible] tra [illegible] renanareṣa [illegible] ṃsra [illegible] reyara [illegible] rayaya [illegible] ḥ [illegible] rya [illegible] ra [illegible] re [illegible]
+4. na [illegible] re [illegible] tra [illegible] re [illegible] re [illegible] ra [illegible] bha [illegible] reṣara [illegible] dra [illegible] sa [illegible] ra [illegible] ḥra [illegible] ra [illegible] ṃra [illegible] re [illegible] ra [illegible] ḥya [illegible]
+5. derama [illegible] ṃdera ‖ [illegible] ṭerendra [illegible] ra [illegible] na [illegible] yra ‖ ra [illegible] tra [illegible] ya [illegible] ya
+6. ra [illegible] ṃra [illegible] ṃ [illegible] ‖ e [illegible] ra [illegible] dera [illegible] ṃera ‖ [illegible] re [illegible] ra [illegible] ma
+7. yara [illegible] rera ‖ eya [illegible] randra [illegible] reya [illegible] rarama ‖ [illegible] re [illegible] rera [illegible]
+8. ndra [illegible] dra [illegible] rera ‖ re [illegible] rendra [illegible] reyera [illegible] ra ‖ nenera [illegible]
+9. sanara [illegible] dra [illegible] re [illegible] renara [illegible] yeyara [illegible] ra [illegible] na [illegible] ḥ [illegible] ḥ [illegible] ra
+10. ena [illegible] ra [illegible] ḥ [illegible] ṃna [illegible] reya [illegible] rena [illegible] re [illegible] ḥna [illegible] ṃra [illegible] reyayara [illegible] re [illegible]
+11. [illegible] raya [illegible] reye [illegible] re [illegible] rana [illegible] yaye [illegible] re [illegible] reyaya [illegible] re [illegible]
+12. rera [illegible] ḥ [illegible] ṃe [illegible] re [illegible] re [illegible] re [illegible] rare [illegible] reya [illegible] rare [illegible] rare [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

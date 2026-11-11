@@ -1,0 +1,200 @@
+{
+ "set": "Set A, #6544: public manuscript pages with openly licensed, expert page-level transcriptions",
+ "built": "2026-10-12",
+ "scripts": "/mnt/HC_Volume_105839809/jobs/mss-thinking-6544/setA/scripts/ (bentham_select.py, select_alto.py, select_rasam.py, build.py, altolib.py, pagelib.py)",
+ "common_rules": {
+  "draw": "seeded random.Random(6544).shuffle of the eligible pages, then take in order: at most 2 pages per work; skip pages with <150 GT chars; skip pages with more than 1 untranscribed (empty) line; skip pages where a text region is drawn but left untranscribed (PAGE: region with no lines; ALTO: non-stamp blocks with no text covering >0.5% of the page). The draw stops at 20 pages.",
+  "gt": "line texts joined with \\n. Zones: every transcribed zone is included (main text, marginalia, catchwords, running titles, foliation where it was transcribed), in XML order. Exception: RASAM StampZone text is dropped. Rows of the ALTO and RASAM sets also carry gt_main (main-text zones only) for a margin-insensitive score.",
+  "images": "long side >4000 px or file >8 MB -> downscaled with PIL LANCZOS to 3000 px long side, JPEG quality 92 (downscaled=true in the row; orig_size and image_size recorded). Otherwise the original file is hard-linked unchanged. The GT has no coordinates in pages.jsonl, so downscaling does not affect it.",
+  "not_transcribed_anywhere": "library stamps (HTRomance StampZone; BnF stamps on several letters), and in places page/folio numbers. A model that transcribes those will be charged insertions."
+ },
+ "datasets": {
+  "bentham-r0": {
+   "stratum": "english-18-19",
+   "name": "Bentham Dataset R0 (tranScriptorium, ICFHR 2014 HTRtS)",
+   "citation": "B. Gatos, G. Louloudis, T. Causer, K. Grint, V. Romero, J. A. Sanchez, A. H. Toselli, E. Vidal, 'Ground-truth production in the tranScriptorium project', DAS 2014, pp. 237-241; J. A. Sanchez, V. Romero, A. H. Toselli, E. Vidal, 'ICFHR2014 Competition on Handwritten Text Recognition on the tranScriptorium Datasets (HTRtS)', ICFHR 2014.",
+   "doi": "10.5281/zenodo.44519",
+   "licence": "CC BY 4.0",
+   "licence_stated_at": "https://zenodo.org/records/44519 (record licence field)",
+   "date_range": "late 18th - early 19th c. (1780s-1830s)",
+   "hands_language": "English; Jeremy Bentham and his amanuenses/copyists",
+   "split_used": "R0 Validation (50 pages; none overlap the 33 Test pages used in #6547's gt.json)",
+   "pages_drawn": 20,
+   "works": {
+    "035_323": 1,
+    "071_192": 1,
+    "073_073": 1,
+    "096_052": 1,
+    "096_098": 1,
+    "115_008": 1,
+    "115_010": 1,
+    "115_012": 1,
+    "115_067": 1,
+    "115_072": 1,
+    "115_078": 1,
+    "115_084": 1,
+    "115_101": 1,
+    "115_107": 1,
+    "115_108": 1,
+    "116_100": 1,
+    "116_287": 1,
+    "116_405": 1,
+    "116_618": 1,
+    "116_627": 1
+   },
+   "work_definition": "first two id fields (box_folio, e.g. 115_084); the draw happened to give 20 distinct works",
+   "transcription_conventions": "Diplomatic-ish: line breaks kept, end-of-line hyphenation kept (with a leading '-' on the next line, e.g. 'hun-'/'-dred'), deletions dropped, insertions placed where they sort. Punctuation is TOKENISED with spaces ('King , Defender'), which a model will not reproduce: normalise whitespace around punctuation before scoring. Markup present: <gap/> (illegible), '_' for Bentham's dash, '||' and '+' marks, a few [ ] and #. 'In the  thirty' style double spaces mark blanks in the original.",
+   "gt_assembly": "sorted by y: all TextLines sorted top-to-bottom by the mean y of their polygon (then min x), same logic as scripts/eval/replicate-6547/prep.py bentham_gt() - R0 region order is not reading order. Validation XML uses <Point x= y=> children instead of points= attributes; the parser handles both. Interlinear insertions therefore sort as their own line just above their host line.",
+   "published_online_as_text": "Partly: Transcribe Bentham transcripts are public (UCL), and some of these texts (Panopticon contract drafts etc.) appear in the Collected Works. Moderate memorisation risk.",
+   "odd": "Images are 2731x4096 -> all 20 downscaled to 2000x3000."
+  },
+  "cremma-medii-aevi": {
+   "stratum": "medieval-latin",
+   "name": "CREMMA Medii Aevi (HTR-United/CREMMA-Medieval-LAT)",
+   "citation": "T. Clerice, A. Chague, M. Vlachou-Efstathiou, CREMMA Medii Aevi [dataset], https://github.com/HTR-United/CREMMA-Medieval-LAT, DOI 10.5281/zenodo.7013436; guidelines: A. Pinche, 'Guide de transcription pour les manuscrits du Xe au XVe siecle', HAL hal-03828353 / JOHD.",
+   "doi": "10.5281/zenodo.7013436",
+   "url": "https://github.com/HTR-United/CREMMA-Medieval-LAT",
+   "licence": "CC BY 4.0",
+   "licence_stated_at": "https://github.com/HTR-United/CREMMA-Medieval-LAT/blob/main/htr-united.yml (license: CC-BY 4.0) and CITATION.cff",
+   "date_range": "12th-16th c. (drawn pages: 12th-16th)",
+   "hands_language": "Latin; Praegothica, textualis (libraria/currens/meridionalis), semitextualis, cursiva, humanistica, personal cursive",
+   "split_used": "no official split; all 21 manuscripts minus 8 excluded (below)",
+   "pages_drawn": 20,
+   "works": {
+    "BIS-193": 2,
+    "CCCC-MSS-165": 2,
+    "CLM13027": 2,
+    "Egerton821": 2,
+    "H318": 2,
+    "LaurentianusPluteus53.08": 2,
+    "Mazarine915": 1,
+    "PalLat373": 2,
+    "Phi_10a135": 1,
+    "UBL758": 2,
+    "WettF0015": 2
+   },
+   "excluded_works": "widely published / memorised texts: CCCC-MSS-236 (Martial), Laur. Plut. 33.31 and 39.34 (Priapea), Arras-861 (Seneca, Epistulae), Latin6395 (Seneca, Medea), Latin8236 (Prudentius, Tibullus), BGO-511 (Psalm 6), SBB_PK_Hdschr25 (Book of Hours).",
+   "file_used": "*.chocomufin.xml (the repository's MUFI-normalised ALTO, recommended by the HTR-United/CATMuS pipeline), not the raw *.xml",
+   "transcription_conventions": "GRAPHEMIC, abbreviations NOT expanded: tironian et '⁊', con 'ꝯ', per/pro 'ꝑ ꝓ', -us 'ꝰ', -rum 'ꝵ', combining tilde and vertical tilde, superscript combining letters (U+0363-036F, U+1DD3-1DF4), 'ł', 'ħ', MUFI private-use characters (e.g. U+F1AC), '÷' (est), punctus elevatus etc. reduced to ':'; ligatures split; word spacing reproduces the manuscript. 14.6% of GT characters are non-ASCII abbreviation/MUFI marks. A model that expands abbreviations or writes plain Latin will be charged heavily - score both raw CER and CER after a MUFI-fold/abbreviation-strip normalisation (e.g. chocomufin's table or NFD + drop combining marks), or score at the 'letters only' level.",
+   "gt_assembly": "line-level reassembled in XML order (eScriptorium order). Checked: two-column pages run left column then right column (one backward y-jump per page, e.g. CLM13027 38v viewed against the image); in WettF0015, BIS-193 and Mazarine915 the margin glosses come BEFORE the main text in XML order. H318 pages are double-page spreads (two pages, read in column order). No reordering applied.",
+   "published_online_as_text": "Mixed. SCTA works (WettF0015 Rothwell, BIS-193 and Mazarine915 Wodeham, PalLat373 Plaoul, CCCC-MSS-165 Abelard Sic et non) exist online as normalised critical texts (scta.lombardpress.org); Donatus (Laur. 53.08) via HyperDonat; CLM13027/H318/Phi_10a135 medical texts only in print critical editions; Egerton821 charms and UBL758 sermon essentially not online. Diplomatic, abbreviated form is not online for any.",
+   "odd": "Pages are dense (median ~3,500 chars; BIS-193 ~8,000). Large originals (up to 4872x6496) -> most downscaled to 3000 px long side, which makes the smallest scholastic hands (BIS-193, Mazarine915) tight; originals remain in cremma/data/ if a higher-res variant is wanted."
+  },
+  "htromance-modern": {
+   "stratum": "early-modern",
+   "name": "HTRomance, Modern language corpus (HTRomance-Project/modern-roman-languages)",
+   "citation": "J. Norindr, A. Mikhalchuk, T. Clerice, A. Chague, 'HTRomance, Modern language corpus of ground-truth for Handwritten Text Recognition and Layout Segmentation' [dataset], https://github.com/HTRomance-Project/modern-roman-languages (CITATION.cff).",
+   "url": "https://github.com/HTRomance-Project/modern-roman-languages",
+   "licence": "CC BY 4.0",
+   "licence_stated_at": "https://github.com/HTRomance-Project/modern-roman-languages/blob/main/LICENSE (CC BY 4.0 legal code) and htr-united.yml / CITATION.cff",
+   "date_range": "16th-17th c. (selection restricted to these centuries; 18th-19th c. folders excluded to keep clear of the Bentham stratum)",
+   "hands_language": "French (Middle French / early modern French; one Latin+French item); secretary, italic and cursive hands of letters, treatises, accounts; all BnF manuscripts via Gallica",
+   "split_used": "no official split; 16 of 32 folders eligible",
+   "pages_drawn": 20,
+   "works": {
+    "bnf-4-s-3789-(-2)": 1,
+    "bnf-bibliothèque-de-l'-arsenal.-ms-9314": 1,
+    "bnf-français-17217": 2,
+    "bnf-français-2394": 2,
+    "bnf-français-2982": 1,
+    "bnf-français-3640": 2,
+    "bnf-français-3816": 2,
+    "bnf-français-4108": 1,
+    "bnf-ms-baluze-209": 2,
+    "bnf-ms-dupuy-63": 2,
+    "bnf-ms-picardie-13": 1,
+    "bnf-naf-12303-#-0": 1,
+    "bnf-naf-1992": 2
+   },
+   "excluded_works": "Not eligible: all 18th-19th c. folders, printed items (8-Q PIECE-1904 etc.), BnF Ms-3561 (Richelieu, Testament politique - published), Fr 8204 (armorial, mostly drawings); excluded after inspection: Francais 14944 (Fenelon, Les Aventures de Telemaque - widely published). Eligible pool: 16 folders, 89 pages.",
+   "why_not_kurrent": "Checked German Kurrent options: ICDAR2017 READ (Test-A ships without transcripts; Train-A is 19th-c. Escher letters at 1440 px), ICFHR2016 Ratsprotokolle test (50 consecutive pages of one volume = 1 work), Dresdner Hofdiarium (CC BY, but 3 volumes = max 6 pages under the 2-per-work rule), StABS Ratsbuecher (CC BY-NC-SA, one series), Gwalther (Latin, CC BY-NC, one book), Koenigsfelden charters (CC BY, 205 docs 1500-1662, but GT has editorial capitalisation/punctuation plus a '✳' marker and images sit in a 21 GB zip). Greifswald Konzilsprotokolle was already used in #6547. HTRomance gives 13 distinct documents with diplomatic GT under CC BY, so it was chosen.",
+   "file_used": "*.chocomufin.xml (repository README recommends the normalised files)",
+   "transcription_conventions": "CATMuS-style diplomatic: original spelling, capitalisation and punctuation; abbreviations kept with tilde/superscripts (põ, respoñ, contentem̃, '⁊'); superscript letters written with '^' (Ma^te, no.^bre, XVIII^e, IX^lt) - a model will usually write 'Mate'/'Majesté' or superscript Unicode; '>...<' marks a few deleted/inserted words; '¬' end-of-line hyphen in places. Leader dots in tables are not transcribed.",
+   "gt_assembly": "line-level reassembled in XML order, with three recorded repairs (gt_assembly field): 4-S-3789 (2) f14 is a two-column table -> re-sorted row-major (y, then x); Dupuy 63 page 4 ('Sommaire' heading) and NAF 1992 _59 ('Samedy matin' date line) had the top line last in XML -> moved to the top. Dupuy 63 page 4 is laid out as a left summary column + right letter column, kept in XML (column) order. Accounts page Picardie 13 f23 is row-major in XML (item then amount), kept.",
+   "published_online_as_text": "Mostly not: unpublished letters and administrative papers (Dupuy, Baluze, Picardie, Lully deeds, Tardif papers). Exceptions: La Fontaine fable autograph (NAF 12303 #0, text widely published), Fr 17217 cantiques, Fr 2394 Le Brun discourse (published).",
+   "odd": "Two pages are short (Fr 4108 f11 title page ~200 chars; 4-S-3789 f14 ~370). bnf-4-s-3789-(-2) carries a 'bpt6k' Gallica id but is a calligraphic manuscript (checked by eye)."
+  },
+  "rasam": {
+   "stratum": "non-latin",
+   "name": "RASAM 1 + RASAM 2 (Recognition and Analysis of Scripts in Arabic Maghrebi), calfa-co/rasam-dataset",
+   "citation": "C. Vidal-Gorene, N. Lucas, C. Salah, A. Decours-Perez, B. Dupin, 'RASAM - A Dataset for the Recognition and Analysis of Scripts in Arabic Maghrebi', ICDAR 2021 Workshops (ASAR), LNCS 12916, doi:10.1007/978-3-030-86198-8_19; RASAM 2: GIS MOMM / Calfa / BULAC hackathon 2021-22.",
+   "url": "https://github.com/calfa-co/rasam-dataset",
+   "licence": "GT (PAGE XML): Apache License 2.0; page images: BULAC, metadata 'Droits: Domaine public' (IIIF manifest 'license' field is rightsstatements.org CNE/1.0)",
+   "licence_stated_at": "https://github.com/calfa-co/rasam-dataset/blob/main/LICENSE (Apache-2.0); per-manuscript IIIF manifests e.g. https://bina.bulac.fr/iiif/2/150401/manifest ('Droits': 'Domaine public')",
+   "date_range": "17th-19th c. copies (dated mss: 1661, 1673, 1734, 1756, 1875)",
+   "hands_language": "Arabic in Maghrebi scripts (mabsut, mujawhar, etc.); chronicles, grammar commentaries, inheritance law, theology Q&A",
+   "split_used": "no official split; RASAM 1 (3 mss) + RASAM 2 (15 mss) pooled",
+   "pages_drawn": 18,
+   "works": {
+    "MS.ARA.1944": 2,
+    "MS.ARA.1946": 2,
+    "MS.ARA.1977": 2,
+    "MS.ARA.23": 2,
+    "MS.ARA.24": 2,
+    "MS.ARA.417": 2,
+    "MS.ARA.6": 2,
+    "MS.ARA.609": 2,
+    "MS.ARA.9": 2
+   },
+   "work_titles": {
+    "MS.ARA.417": [
+     "تاريخ بايات وهران",
+     "Tārīẖ Bāyāt Wahrān"
+    ],
+    "MS.ARA.609": [
+     "شرح الدرة البيضاء",
+     "Šarḥ al-Durraẗ al-bayḍāʾ"
+    ],
+    "MS.ARA.23": [
+     "شرح على شذور الذهب في معرفة كلام العرب",
+     "Šarḥ ʿalá Šuḏūr al-ḏahab fī maʿrifaẗ kalām al-ʿarab"
+    ],
+    "MS.ARA.6": [
+     "[كتاب محتوي على شرحي الجرومية في علم العربية ]",
+     "[Kitāb muḥtawī ʿalā Šarḥay al-Ǧurrūmiyyaẗ fī ʿilm al-ʿarabiyyaẗ ]"
+    ],
+    "MS.ARA.1926": [
+     "دلائل الخيرات وشوارق الأنوار في ذكر الصلاة على النبي المختار",
+     "Dalāʾil al-H̱ayrāt wa-šawāriq al-anwār fī ḍikr al-ṣalāẗ ʿalá al-nabī al-muẖtār"
+    ],
+    "MS.ARA.1944": [
+     "[تاريخ الدولتين الموحدية والحفصية ]",
+     "[Tārīẖ al-dawlatayn al-Muwaḥḥidiyyaẗ wa-al-Ḥafṣiyyaẗ]"
+    ],
+    "MS.ARA.1946": [
+     "مجموع",
+     "Recueil"
+    ],
+    "MS.ARA.1977": [
+     "مجموع",
+     "Recueil"
+    ],
+    "MS.ARA.24": [
+     "بلوغ الأرب بشرح شذور الذهب",
+     "Bulūġ al-arab bi-šarḥ Šuḏūr al-ḏahab"
+    ],
+    "MS.ARA.1947": [
+     "المقامات الحريرية",
+     "al-Maqāmāt al-Ḥarīriyyaẗ"
+    ],
+    "MS.ARA.9": [
+     "مجموع",
+     "Recueil"
+    ]
+   },
+   "excluded_works": "MS.ARA.1926 (Dala'il al-khayrat) and MS.ARA.1947 (Maqamat al-Hariri): widely published/memorised texts.",
+   "image_resolution_rule": "Images are not in the repo; they come from BULAC IIIF (full/full). BULAC now serves many RASAM 2 images at ~920-982 px wide while the GT was made on 2000-3550 px scans (mss 1936, 1943, 1960, 1982, 1983, 65 and part of 1947). Pages whose served width is <85% of the GT image width were skipped; that is why only 18 pages / 9 works passed (target 20). Remaining low-res pages (MS.ARA.1944, 1946, RASAM1 MS.ARA.1977 at 920-982 px wide) were ALSO that size in the dataset (microfilm-derived) - the transcribers saw the same pixels, but dense pages (MS.ARA.1977, ~3,000 chars) are hard at that size. Some served images are slightly larger than the dataset's (MS.ARA.23, 6): same aspect ratio, a newer derivative.",
+   "transcription_conventions": "Per RASAM spec (paper): Maghrebi letterforms mapped to standard Arabic code points (Maghrebi fa with dot below -> ف, qaf with one dot above -> ق); dotting as intended, not as written; vowels/shadda only where written (rare: ~0.2% of chars); hamza/madda as written (e.g. جآء); no punctuation normalisation; '#' marks an illegible/uncertain character; abbreviations as written (e.g. ص / ش for matn/sharh markers). Catchwords transcribed as their own line. Library stamps not transcribed (dropped if present).",
+   "gt_assembly": "line-level reassembled in XML order (regions mostly MainZone first, then margins; in some pages a marginal note or catchword region comes first). Within regions lines run top to bottom; text is in logical (right-to-left) order. Checked MS.ARA.23 f.42165 against the image: line order matches.",
+   "published_online_as_text": "Largely not as plain text (the RASAM GT itself is on GitHub/Hugging Face). Shudhur al-dhahab commentaries (MS.ARA.23, 24) and al-Ajurrumiyya commentaries (MS.ARA.6) are standard school texts with printed editions online; the base texts may be partly memorised.",
+   "odd": "GT contains real errors: e.g. BULAC_MS_ARA_23_42165 line 10 reads 'التجب للتميز الللااجح للابهام النسبة هة المسد' where the page has 'الناصب للتمييز الرافع لابهام النسبة هو المسند' (that page was in an earlier draw and is not in the final set, but expect similar noise). Page numbers written on the folio (e.g. '53' on MS.ARA.1977) are not transcribed."
+  }
+ },
+ "counts": {
+  "bentham-r0": 20,
+  "cremma-medii-aevi": 20,
+  "htromance-modern": 20,
+  "rasam": 18
+ },
+ "total_pages": 78
+}

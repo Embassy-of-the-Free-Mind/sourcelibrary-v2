@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most real Sanskrit and Malayalam that fits a Tarkasaṃgraha-dīpikā passage, with readings like "vyāptipratipādakamudāharaṇaṃ pakṣadharmmatājñānārtthamupanayaḥ", "anumitikaraṇamāha", "parāmarśikkeṇaṃ" and "kartavyamiti", while A breaks down into nonsense syllables after the first rows and B is broken up by many [illegible] gaps.

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads as continuous, grammatical Gauḍapāda-style commentary on Sāṅkhyakārikā 21–22 (duḥkhatrayaṃ svātmanyabhimanyamānaḥ kaivalyaṃ prārthayate…, prakṛter mahāṃs tato'haṃkāraḥ…, the pañcatanmātra/bhūta derivation) across nearly every row, while A is fluent only in pieces and C is mostly [illegible].

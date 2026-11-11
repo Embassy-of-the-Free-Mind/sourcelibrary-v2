@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | All three are heavily garbled and none reads as continuous Sanskrit or Malayalam; A has the most word-like stretches (e.g. *lakṣmī*, *abhāvāl*, *kṣapaṇa*, *niyantra*, *prakṛ*), while B and C break down into syllable strings more often, despite B's isolated *prakāreṇa*.

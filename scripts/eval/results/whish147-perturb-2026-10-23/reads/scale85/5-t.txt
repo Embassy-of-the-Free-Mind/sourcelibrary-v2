@@ -1,0 +1,10 @@
+ROW 1 | [illegible]ക്തവചനതു। [struck-out text] ‖ ഉസാമാത്രകതൃദ്ദേഷ്വാദതിശയാഭാവ ‖ ാ.പ്രസിദ്ധിമനസാമാന്യ
+ROW 2 | ൽകൎത്രാദവിചാരി [struck-out text] ‖ ത്വം.ചരണാത്മമാൎക്കാഗമാൽസിദ്ധം।ന ‖ [illegible]ദ്ധേഖരാൽസാ
+ROW 3 | ദ്ദ്യാഭിളിലൈച ‖ ാകാലകൈതൌനവത്മാനാൎക്ക ‖ സൌക്ഷ്മ്യാദ്രൂപയാ
+ROW 4 | നാദഭിദ്ദേപുൎക്ക ‖ സമാനാദിദ്ദേവി[illegible]തദൃഷ്ടാഭ്യാവെല ‖ നൂത്ഭാകെദവ
+ROW 5 | ലഭിന്താദോ ‖ വാൎക്കാരുതേങ്ങത്ര്യഃലഭ്യ ‖ ഃമിവാദാദികൎഷ
+ROW 6 | കാൎയ്യഃലക്ഷണ ‖ ഷ്ക്രഹ.വിഭക്തപക്ഷോ।വ്യാഷ്ട്രേ ‖ സ്ഥകനന്താദ്വ
+ROW 7 | ദേവനപ്രഹണാ ‖ ൽസമ്യസംദേടചാടുപ്പൂൎവ്വ ‖ കക്കൃത്യക്രണം
+ROW 8 | ാൽകാച്ഛാടാവ ‖ ദ്ദസൽകാൎയ്യം।നസൈനാതുമദ്ര ‖ ദമദ്രാവിസൽക്കിയമമൈ
+ROW 9 | നകമാദ്ഭീക്കംചി. ‖ ം.സ്ഥാപ്തശവാഃചരിതദ്രുംല്ലക്കം।വി ‖ വതിമൈദ്രക്കം।൯।
+NOTE | All 9 rows run across both holes; I could make out the script, but most aksharas are uncertain (especially conjuncts and the struck-out cluster at the top right of p01), so treat this as a rough, low-confidence reading. Only rows 2 and 8 (ഗമാൽസിദ്ധം, സൽകാൎയ്യം) are fairly secure, and the final number may not be ൯.

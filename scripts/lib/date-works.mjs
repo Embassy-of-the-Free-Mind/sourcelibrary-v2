@@ -120,9 +120,9 @@ export function findImprint(lead, year) {
   return null;
 }
 
-const DESCRIBING = /\b(edition|layout|image|scan|photograph|this page|the page|appears|transcri|original|reproduc|facsimile|copyright|digiti[sz]ed|indicated)\b/i;
+export const DESCRIBING = /\b(edition|layout|image|scan|photograph|this page|the page|appears|transcri|original|reproduc|facsimile|copyright|digiti[sz]ed|indicated)\b/i;
 // a library's label, stamp or shelfmark slip carries the CATALOGUE's year, not the printer's (716 of 20,197 hits, #6721)
-const LABEL = /\b(library|libraries|bibliot\w*|biblioteca|incunab\w*|signatur|shelf\s?mark|call\s?n(o|umber)|catalog\w*|vellum|pages|museum|collection|purchased|bequeathed|presented|stamp)\b|#\s*\d|\b[A-Z]{1,3}\d{2,4}\.[A-Z]\d/i;
+export const LABEL = /\b(library|libraries|bibliot\w*|biblioteca|incunab\w*|signatur|shelf\s?mark|call\s?n(o|umber)|catalog\w*|vellum|pages|museum|collection|purchased|bequeathed|presented|stamp)\b|#\s*\d|\b[A-Z]{1,3}\d{2,4}\.[A-Z]\d/i;
 // #3307: undated Bhutanese/Tibetan manuscripts carry a fabricated 1700
 const isPlaceholder = (b, y) => y === 1700 && /tibetan|dzongkha|bhutan/i.test(`${b.language} ${b.original_title}`);
 

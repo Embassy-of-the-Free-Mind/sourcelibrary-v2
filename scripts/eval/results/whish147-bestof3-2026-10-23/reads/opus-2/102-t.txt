@@ -1,0 +1,12 @@
+ROW 1 | [illegible]
+ROW 2 | [illegible]
+ROW 3 | [illegible]
+ROW 4 | [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible]
+ROW 10 | [illegible]
+ROW 11 | [illegible]
+NOTE | I could not read any of the text reliably. I could only see the layout: 11 rows, with rows 1–4 and 9–11 running the full width, rows 5–8 split into three short columns at the two holes, and a leaf number in the right margin next to row 6. At this resolution the letters in every row are too unclear to tell apart with confidence, and guessing would mean making up text or filling it in from the known Kārikā. Higher-resolution crops, each row at about 3× zoom, would let me try again.

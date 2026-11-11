@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B gives readable Tarkasaṃgraha text in every row ("tadubhayabhinnakāraṇaṃ nimittakāraṇaṃ yathā turīvemādikaṃ… trividhakāraṇamadhye yadasādhāraṇakāraṇaṃ tadeva karaṇaṃ… ḍittho'yaṃ brāhmaṇo'yaṃ śyāmo'yam"); A is close but has gaps and errors ("tantuvāya"), and C turns into nonsense syllables in rows 2, 6 and 7.

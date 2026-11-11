@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | A and B are illegible throughout and tie; C is barely better, with only "ha ga śrī" in row 1, which may be a shortened opening invocation (like hariḥ / gaṇapataye / śrī) but is too short to count as real continuous text.

@@ -74,7 +74,7 @@ async function downloadPdf() {
   const t0 = Date.now();
   const res = await fetch(PDF_URL, {
     signal: AbortSignal.timeout(120000),
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
   });
   if (!res.ok) throw new Error(`PDF download failed: ${res.status} ${res.statusText}`);
   const buf = Buffer.from(await res.arrayBuffer());

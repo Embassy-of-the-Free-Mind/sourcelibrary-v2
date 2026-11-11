@@ -44,6 +44,7 @@ const BOOK = {
   divina: '/book/de-divina-proportione-illust',
   wolowski: '/book/traictie-de-la-premiere-invention-des-monnoies-de-nicole-ed',
   kepler: '/book/the-harmony-of-the-world-kepler',
+  bodin: '/book/les-six-livres-de-la-republique-de-j-bodin-angevin-plus-lapologie-de-r',
   fama: '/book/fama-fraternitatis-oder-entdeckung-der-brudersch-des-ordens-fraternitatis',
   splendor: '/book/splendor-solis-the-splendour-of-the-sun-trismosin',
   canker: '/book/the-canker-of-england-s-common-wealth-malynes',
@@ -54,7 +55,8 @@ const BOOK = {
   smithTms: '/book/the-theory-of-moral-sentiments-smith',
   xenophonLoeb: '/book/xenophon-memorabilia-oeconomicus-symposium-apologia-loeb-168-xenophon',
   cyropaedia: '/book/xenophon-opera-cyropaedia-hunting-spartan-constitution-xenophon',
-  noyes: '/book/history-of-american-socialisms-noyes',
+  fourierUnite: '/book/theorie-de-l-unite-universelle-fourier',
+  fourierQuatre: '/book/theorie-des-quatre-mouvements-et-des-destinees-generales-fourier',
   davis: '/book/the-principles-of-nature-davis',
   levi: '/book/le-grand-arcane-ou-l-occultisme-devoile-levi',
   bastiat: '/book/harmonies-economiques-bastiat',
@@ -68,7 +70,16 @@ const PAGE = {
   oeconomicus436: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947e`,
   oeconomicus437: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947f`,
   cyropaedia285: `${BOOK.cyropaedia}/page/69b2218b08069e96e8430469`,
-  noyes659: `${BOOK.noyes}/page/6a58a3da08c84bb29c91ce6e`,
+  bodin1014: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ebd`,
+  bodin1016: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ebf`,
+  bodin1018: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ec1`,
+  bodin1020: `${BOOK.bodin}/page/6ac4fce54ba7223afef75ec3`,
+  malestroit47v: `${BOOK.bodin}/page/6ac4fce54ba7223afef75f77`,
+  malestroit48: `${BOOK.bodin}/page/6ac4fce54ba7223afef75f78`,
+  malestroit50: `${BOOK.bodin}/page/6ac4fce54ba7223afef75f7c`,
+  fourierUnite140: `${BOOK.fourierUnite}/page/6a8ee22f90f5a0e4155eab94`,
+  fourierUnite274: `${BOOK.fourierUnite}/page/6a8ee22f90f5a0e4155eac1a`,
+  fourierQuatre160: `${BOOK.fourierQuatre}/page/6a8ee2e990f5a0e4155ebabb`,
   davis586: `${BOOK.davis}/page/69905c85aaa7f10ed4cfbe2f`,
   levi35: `${BOOK.levi}/page/6959329ab91a6184ea943e45`,
   bastiat4: `${BOOK.bastiat}/page/6991dc4979a19ded6bdb3f04`,
@@ -496,16 +507,108 @@ export default function HarmonicJusticePage() {
           subjects: the astronomer who moved the earth wanted the measure of value to stay still.
         </p>
 
+        <h2 className={h2}>Bodin on the price of everything</h2>
+
+        <p className={p}>
+          By the 1560s prices in France had been rising for a generation, and assemblies were held all over Paris to find
+          out why. In 1566 Jean de Malestroit, employed in the matter by the king&apos;s command, answered with a pamphlet of{' '}
+          <em>Paradoxes</em>: nothing had really grown dearer in three hundred years. The same weight of gold and silver
+          bought what it always had, and only the coins had been cried up and made lighter. That is Copernicus&apos;s
+          diagnosis, a measure that had been moved. Jean Bodin replied in 1568. The library&apos;s copy of his{' '}
+          <Link href={BOOK.bodin}>
+            <em>République</em>
+          </Link>{' '}
+          (Lyon, 1593) binds in the reply, with Malestroit&apos;s <em>Paradoxes</em> printed after it. Bodin first lists
+          the prices fixed in the regional customs for a sheep, a cartload of hay, a setier of wheat and a day&apos;s
+          labour, and concludes that in sixty years everything had grown at least ten times dearer, in whatever money
+          Malestroit chose. Then he gives the cause:
+        </p>
+
+        <Quote href={PAGE.malestroit47v} cite="Jean Bodin, reply to the Paradoxes of Malestroit (1568), in the République (Lyon, 1593), fol. 47v">
+          I find that the dearness we see arises from about four or five causes. The principal and almost the only one,
+          which no one until now has touched upon, is the abundance of gold and silver, which is greater in this kingdom
+          today than it has been for four hundred years.
+        </Quote>
+
+        <p className={p}>
+          His proof is from Rome. When Aemilius Paullus brought the gold and silver of Macedon home, the price of land
+          around Rome rose by two-thirds &ldquo;in a moment.&rdquo; The land was the same land:
+        </p>
+
+        <Quote href={PAGE.malestroit48} cite="Bodin, reply to Malestroit, fol. 48r">
+          It was therefore not a scarcity of land, which can neither grow nor diminish, nor monopoly, which cannot occur in
+          such a case: it was the abundance of gold and silver, which makes it held cheap, and makes the things priced in it
+          dear.
+        </Quote>
+
+        <p className={p}>
+          He then traces where the metal came from: the Levant trade, the bank at Lyon, the Spaniards, English and
+          Flemings who paid in gold and silver for French wheat, cloth, wine and salt, and behind the Spaniards the New
+          World. Since the conquest of Peru in 1533,
+          he writes, &ldquo;more than a hundred million in gold has come from there, and twice as much in
+          silver&rdquo;{' '}
+          <Link href={PAGE.malestroit50}>(fol. 50r)</Link>. Copernicus treated money as a measure that had to be held
+          fixed. Bodin treated gold and silver as goods like any other, cheap when they are plentiful, and the prices of
+          everything else move with them.
+        </p>
+
         <h2 className={h2}>Bodin and Kepler: harmonic justice, checked against the ear</h2>
 
         <p className={p}>
-          Jean Bodin ended his <em>Six Books of the Commonwealth</em> (1576) with a theory of harmonic justice.
-          Arithmetic justice gives everyone equal shares. Geometric justice gives shares in proportion to merit. A
-          well-ordered state, Bodin argued, blends the two, the way a harmonic proportion blends an arithmetic and a
-          geometric one.
+          Bodin ended the <em>République</em> (first printed in 1576) with a chapter on justice, Book VI, chapter 6. He
+          claims priority here as well:
         </p>
 
+        <Quote href={PAGE.bodin1014} cite="Bodin, Les six livres de la République VI.6 (Lyon, 1593), p. 1014">
+          I call justice the right apportioning of rewards and punishments, and of what belongs to each person in terms of
+          law. &hellip; Now this apportioning cannot be accomplished except by a proportion of equality and of likeness
+          together. That is the true harmonic proportion, and no one has touched on it until now.
+        </Quote>
+
+        <p className={p}>
+          Arithmetic justice belongs to the popular state: equal shares, and the same fine for the rich and the poor.
+          Geometric justice belongs to the aristocracy: shares in proportion to rank and merit. Bodin takes his
+          definitions from the mathematicians:
+        </p>
+
+        <Quote href={PAGE.bodin1016} cite="Bodin, République VI.6, p. 1016">
+          Geometric proportion is the one whose ratios are similar; Arithmetic proportion is the one whose ratios are
+          always the same; Harmonic proportion is composed of the two, and yet differs from each. The first is similar; the
+          second is equal; the third is partly equal and partly similar.
+        </Quote>
+
         <MeansDiagram />
+
+        <p className={p}>
+          His examples come from ordinary life. A law that marries nobles only to nobles is geometric; marriages drawn by
+          lot would be arithmetic. The harmonic order mixes unlike people, and one of his cases is a business:
+        </p>
+
+        <Quote href={PAGE.bodin1018} cite="Bodin, République VI.6, p. 1018">
+          &hellip;among merchants there is no partnership more secure than that of a lazy rich man with a diligent poor one,
+          because there is both equality and similarity between them: equality, in that each has something good;
+          similarity, in that both have some defect.
+        </Quote>
+
+        <p className={p}>
+          A good host does the same at table. He seats a jester between two wise men and a peaceable man between two
+          quarrelsome ones, and from that order comes &ldquo;a sweet and pleasing harmony of each with the others and of
+          all together&rdquo;{' '}
+          <Link href={PAGE.bodin1018}>(p. 1018)</Link>. For the state Bodin sets four terms in the numbers 4, 6, 8 and 12: law, equity, the
+          execution of the law, and the duty of the magistrate.
+        </p>
+
+        <Quote href={PAGE.bodin1020} cite="Bodin, République VI.6, p. 1020">
+          For in these four numbers, 4, 6, 8, 12, the same ratio found from 4 to 6 is also found from 8 to 12, and there is
+          the same ratio from 4 to 8 as from 6 to 12. &hellip; From this results a melodious harmony composed of the fourth,
+          the fifth, and the octaves.
+        </Quote>
+
+        <p className={p}>
+          Law without equity is the rule of Polyclitus, too stiff to bend. Equity without law is the Lesbian
+          builders&apos; rule of lead, which bends to fit any stone. The harmonic rule bends when it has to and springs
+          straight again.
+        </p>
 
         <p className={p}>
           Forty years later Kepler read this and stopped the third book of his{' '}
@@ -798,22 +901,42 @@ export default function HarmonicJusticePage() {
           The first was Charles Fourier&apos;s (1772&ndash;1837). He called the society he was planning
           &ldquo;Harmony,&rdquo; to be built of communities called phalanxes, and his motto was that attractions are
           proportional to destinies: rightly arranged, people&apos;s passions would draw them to the work that needed
-          doing, as gravity draws the planets. Fourier&apos;s own books are not yet in the library, but the way he was
-          read is. An American summary of his system, which John Humphrey Noyes quoted in his{' '}
-          <Link href={BOOK.noyes}>
-            <em>History of American Socialisms</em>
+          doing, as gravity draws the planets. He meant the comparison with Newton exactly. In the{' '}
+          <Link href={BOOK.fourierUnite}>
+            <em>Théorie de l&apos;unité universelle</em>
           </Link>{' '}
-          (1870), begins:
+          he complained that philosophers had studied everything but man:
         </p>
 
-        <Quote href={PAGE.noyes659} cite="Fourier's system summarized, in J. H. Noyes, History of American Socialisms (Philadelphia, 1870), p. 659">
-          Fourier says: There are certain Laws of Organization in nature, which are the source of order and harmony in
-          creation. These laws human reason must discover and apply in the organization of society, if a true social order
-          is to be established on the earth.
+        <Quote href={PAGE.fourierUnite140} cite="Charles Fourier, Théorie de l'unité universelle (Paris, 1834), p. 140">
+          One might still pardon the ancients for committing such an oversight; but the moderns, well informed since
+          Newton of the role that attraction plays in the universe, ought to have finished what the geometer had begun,
+          extending to the sphere of the passions the theory of which he treated only the material branch.
         </Quote>
 
         <p className={p}>
-          The seer Andrew Jackson Davis took it literally. Fourier, he wrote in 1847, showed &ldquo;that the world of
+          The passions were also his notes. He counted twelve, &ldquo;forming the passional scale analogous to the
+          musical scale&rdquo; (
+          <Link href={PAGE.fourierQuatre160}>
+            <em>Théorie des quatre mouvements</em>, p. 160
+          </Link>
+          ), and the ties he meant to build between classes that normally repel each other he called{' '}
+          <em>accords</em>, the word for musical chords. When he came to dividing the phalanx&apos;s income, he applied
+          the law of gravitation to it:
+        </p>
+
+        <Quote href={PAGE.fourierUnite274} cite="Fourier, Théorie de l'unité universelle (1834), p. 274">
+          The other path to equilibrium, that of individual distribution, arises because every rich man increases his
+          income on the capital portion in proportion to his disinterestedness on the labor portion; so that the more
+          generous an opulent man is, the more he enriches himself. &hellip; it is the very one to which the Newtonian
+          theorem of direct ratio of masses and inverse ratio of the square of distances is applied. The associative
+          theory is therefore a passional geometry &hellip; the theory of neutral
+          [accords] or conquered antipathies, bonds between incompatible classes, such as rich and poor, masters and
+          servants.
+        </Quote>
+
+        <p className={p}>
+          His readers took the music literally. The seer Andrew Jackson Davis wrote in 1847 that Fourier had shown &ldquo;that the world of
           mankind is composed of the requisite notes to play a perfect tune of peace and harmony,&rdquo; and that each
           note needs only to be properly placed for the whole race to move &ldquo;like a perfectly-tuned
           instrument&rdquo; (
@@ -962,13 +1085,21 @@ export default function HarmonicJusticePage() {
           ask which ratios are fair in the same breath as which ones are stable.
         </p>
 
+        <p className={p}>
+          A second part,{' '}
+          <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link>, follows the older sense of the
+          word, the fitting together of unlike things, through a Chinese minister&apos;s soup, Miskawayh, Hume and
+          Smith on sympathy, Spinoza&apos;s refusal of the music of the spheres, and Wallace&apos;s governor.
+        </p>
+
         <p className="text-sm text-muted leading-relaxed">
           Quotations are the library&apos;s English translations, or for English books (Malynes, Misselden, Davis,
-          Noyes, Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
+          Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
           (Marchant&apos;s Xenophon, Geijsbeek&apos;s Pacioli, Wolowski&apos;s Copernicus), the wording is the
           translator&apos;s. The word in square brackets in the Bastiat creed is his <em>harmonieusement</em>, restored
-          from the French. Bodin&apos;s <em>République</em> is not yet in the library,
-          so his theory is given here in Kepler&apos;s account of it. Gresham&apos;s will and Petty&apos;s professorship
+          from the French; in the Fourier passage on distribution it is his <em>accords</em>, which the translation
+          gives as &ldquo;harmonies.&rdquo; Bodin&apos;s reply to Malestroit is bound into the library&apos;s 1593{' '}
+          <em>République</em> and is cited by its own folio numbers. Gresham&apos;s will and Petty&apos;s professorship
           are cited from outside the library.
         </p>
       </article>

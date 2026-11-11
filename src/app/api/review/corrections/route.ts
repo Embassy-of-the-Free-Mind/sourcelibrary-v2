@@ -5,6 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import { guardPublicSubmission } from '@/lib/public-submission-guard';
 import { isValidVolunteerId } from '@/lib/review-queue';
 import { contentHash } from '@/lib/write-provenance';
+import { SITE_TERMS_VERSION } from '@/lib/api-terms-version';
 import { applySpanEdits, normalizeEdits } from '../../../../../scripts/lib/span-edits.mjs';
 
 export const maxDuration = 10;
@@ -14,10 +15,22 @@ const DRAFTED_BY = new Set(['assistant', 'volunteer', 'assistant_accepted', 'mix
 const clip = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
 
 /**
+ * The volunteer's answer to the terms question the shift asks before its first
+ * submission ("your findings are licensed to Source Library under /terms"), and
+ * which version of /terms was current. null = the client did not say: shifts
+ * started before this field existed, or an assistant that skipped the question.
+ */
+const termsRecord = (body: Record<string, unknown>) => ({
+  terms_agreed: typeof body.terms_agreed === 'boolean' ? body.terms_agreed : null,
+  terms_version: SITE_TERMS_VERSION,
+});
+
+/**
  * POST /api/review/corrections — a volunteer PROPOSES a correction (#6418).
  *
  * Body: { page_id, field: 'ocr'|'translation', base_hash, edits: [{find, replace, reason?}],
- *         volunteer_id, volunteer_label?, drafted_by?, assistant_model?, note?, shift_id? }
+ *         volunteer_id, volunteer_label?, drafted_by?, assistant_model?, note?, shift_id?,
+ *         terms_agreed? }
  *
  * A proposal never touches `pages`. It lands in `page_corrections` with status
  * `proposed`; a second reader applies it with
@@ -101,6 +114,7 @@ export async function POST(request: NextRequest) {
       drafted_by: DRAFTED_BY.has(String(body.drafted_by)) ? String(body.drafted_by) : 'volunteer',
       assistant_model: clip(body.assistant_model, 80) ?? 'unreported',
       client: clip(body.client, 200),
+      ...termsRecord(body),
       via: 'mcp-shift',
       created_at: new Date(),
     });
@@ -134,6 +148,7 @@ export async function POST(request: NextRequest) {
     assistant_model: clip(body.assistant_model, 80) ?? 'unreported',
     client: clip(body.client, 200),
     shift_id: clip(body.shift_id, 64),
+    ...termsRecord(body),
     via: 'mcp-shift',
     created_at: new Date(),
   };

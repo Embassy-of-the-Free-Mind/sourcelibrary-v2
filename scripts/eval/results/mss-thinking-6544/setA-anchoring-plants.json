@@ -1,0 +1,991 @@
+{
+ "plants": {
+  "bentham-r0|035_323_001": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 18,
+     "prev": "the",
+     "orig": "greatest",
+     "planted": "wanting",
+     "next": "",
+     "left": [
+      "that",
+      "of",
+      "the"
+     ],
+     "right": [
+      "number:",
+      "for"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 10,
+     "prev": "number",
+     "orig": "three.",
+     "planted": "intellectual.",
+     "next": "",
+     "left": [
+      "number:",
+      "ordinary",
+      "number"
+     ],
+     "right": [
+      "For",
+      "this"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 25,
+     "orig": "number a different one.",
+     "left": [
+      "of",
+      "their",
+      "own"
+     ],
+     "right": [
+      "S.3."
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 12,
+     "prev": "of",
+     "orig": "Quasi",
+     "planted": "Constitutional",
+     "next": "jurors",
+     "left": [
+      "two",
+      "classеs",
+      "of"
+     ],
+     "right": [
+      "jurors",
+      "thе"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 2,
+     "prev": "2.",
+     "orig": "Composition",
+     "planted": "Forеman",
+     "next": "numbеr",
+     "left": [
+      "",
+      "S.",
+      "2."
+     ],
+     "right": [
+      "numbеr",
+      "UNIV."
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 4,
+     "orig": "                                          UNIV. COLL. LOND.",
+     "left": [],
+     "right": [
+      "35"
+     ]
+    }
+   ]
+  },
+  "bentham-r0|116_100_002": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 13,
+     "prev": "these",
+     "orig": "flights:",
+     "planted": "million:",
+     "next": "let",
+     "left": [
+      "me",
+      "in",
+      "these"
+     ],
+     "right": [
+      "let",
+      "me"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 10,
+     "prev": "my",
+     "orig": "accomplices",
+     "planted": "power",
+     "next": "in",
+     "left": [
+      "-",
+      "let",
+      "my"
+     ],
+     "right": [
+      "in",
+      "whose"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 1,
+     "orig": "Panopt versus N S Wales",
+     "left": [
+      "to",
+      "page",
+      "4"
+     ],
+     "right": [
+      "4",
+      "Compensation"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 5,
+     "prev": "many",
+     "orig": "lacks",
+     "planted": "possibility",
+     "next": "or",
+     "left": [
+      "?",
+      "How",
+      "many"
+     ],
+     "right": [
+      "or",
+      "crores"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 11,
+     "prev": "in",
+     "orig": "whose",
+     "planted": "grant",
+     "next": "company",
+     "left": [
+      "my",
+      "accomplices",
+      "in"
+     ],
+     "right": [
+      "company",
+      "I"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 1,
+     "orig": "\t\t\t\tPanopt versus N S Wales",
+     "left": [
+      "to",
+      "page",
+      "4"
+     ],
+     "right": [
+      "4",
+      "Compensation"
+     ]
+    }
+   ]
+  },
+  "cremma-medii-aevi|H318/13v": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 2,
+     "prev": "sisamino",
+     "orig": "recenti",
+     "planted": "libidine",
+     "next": "i",
+     "left": [
+      "e",
+      "olo",
+      "sisamino"
+     ],
+     "right": [
+      "i",
+      "sipadde"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 0,
+     "prev": "adauget",
+     "orig": "libidine.",
+     "planted": "sipadde.",
+     "next": "",
+     "left": [
+      "frigida",
+      ".",
+      "adauget"
+     ],
+     "right": [
+      "R.",
+      "ellebi."
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 22,
+     "prev": "q̄",
+     "orig": "manibꝰ",
+     "planted": "parte",
+     "next": "",
+     "left": [
+      "ılla",
+      "parꝫ",
+      "q̄"
+     ],
+     "right": [
+      "dieta",
+      "⁊"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 9,
+     "prev": "qm̄",
+     "orig": "meliꝰ",
+     "planted": "tractatꝫ",
+     "next": "ē",
+     "left": [
+      "ſ.",
+      "p̄ferebatꝫ",
+      "qm̄"
+     ],
+     "right": [
+      "ē",
+      "⁊"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 7,
+     "orig": "tiuā egritudinī. Sanitatıſ ſciencia cuſtodi-",
+     "left": [
+      "ſanitatıſ",
+      "⁊",
+      "cura-"
+     ],
+     "right": [
+      "tiū",
+      "apd",
+      "uetēſ"
+     ]
+    }
+   ]
+  },
+  "cremma-medii-aevi|LaurentianusPluteus53.08/Plut._53.08_102v": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 20,
+     "prev": "certaminis",
+     "orig": "presto",
+     "planted": "ceruã",
+     "next": "ẽ",
+     "left": [
+      "pro",
+      "causa",
+      "certaminis"
+     ],
+     "right": [
+      "ẽ",
+      "arte"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 49,
+     "prev": "ab",
+     "orig": "edilibus.",
+     "planted": "ambiguitas.",
+     "next": "inde",
+     "left": [
+      "uenturo",
+      "attribuũt",
+      "ab"
+     ],
+     "right": [
+      "inde",
+      "locus"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 59,
+     "orig": "omne qd i metez",
+     "left": [],
+     "right": [
+      "uenit."
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 15,
+     "prev": "omnes",
+     "orig": "prologos",
+     "planted": "lōcūꝫ",
+     "next": "maledictiꝫ",
+     "left": [
+      "terētius",
+      "q̊",
+      "omnes"
+     ],
+     "right": [
+      "maledictiꝫ",
+      "habēt."
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 19,
+     "prev": "mire",
+     "orig": "haberet.",
+     "planted": "acṭōreꝫ.",
+     "next": "qi",
+     "left": [
+      "cui",
+      "malediceret.",
+      "mire"
+     ],
+     "right": [
+      "qi",
+      "dubiuꝫ"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 63,
+     "orig": "bonit̄as / equānimitas",
+     "left": [
+      "ī",
+      "ṣpēctācō.",
+      "Auṭ"
+     ],
+     "right": [
+      "bonītāṣ",
+      "ī",
+      "p̄rbandiꝫ"
+     ]
+    }
+   ]
+  },
+  "cremma-medii-aevi|Mazarine915/751063002_MSS000915_0000000_0430": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 1,
+     "prev": "ad",
+     "orig": "talem",
+     "planted": "diuil",
+     "next": "tn̄",
+     "left": [
+      ".e.",
+      "ad"
+     ],
+     "right": [
+      "tn̄",
+      "sitūl"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 128,
+     "prev": "extensum",
+     "orig": "moueat",
+     "planted": "sinita",
+     "next": "g̃",
+     "left": [
+      "ꝑ̄ꝺ̄ale",
+      "et",
+      "extensum"
+     ],
+     "right": [
+      "g̃",
+      "ꝫ"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 6,
+     "prev": "e'",
+     "orig": "maior",
+     "planted": "ilico",
+     "next": "in",
+     "left": [
+      "t",
+      "nuc",
+      "e'"
+     ],
+     "right": [
+      "in",
+      "inifinis"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 4,
+     "prev": "e'",
+     "orig": "maior",
+     "planted": "tõdẽtn",
+     "next": "sunt",
+     "left": [
+      "q'",
+      "inĩa",
+      "e'"
+     ],
+     "right": [
+      "sunt",
+      "iq̃l"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 7,
+     "orig": "gra sunt mensura inũaa nialem inportent'",
+     "left": [
+      "aº",
+      "¶",
+      "Item"
+     ],
+     "right": [
+      "crũõi",
+      "s'",
+      "iuii"
+     ]
+    }
+   ]
+  },
+  "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_109r_max": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 20,
+     "prev": "ubu",
+     "orig": "notoale",
+     "planted": "intllcii",
+     "next": "genu",
+     "left": [
+      "et",
+      "p",
+      "ubu"
+     ],
+     "right": [
+      "genu",
+      "restingit"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 21,
+     "prev": "ad",
+     "orig": "stand",
+     "planted": "pfcillima",
+     "next": "p",
+     "left": [
+      "genu",
+      "restingit",
+      "ad"
+     ],
+     "right": [
+      "p",
+      "p"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 59,
+     "orig": "no ipa forma .",
+     "left": [
+      "p",
+      "form",
+      "agt"
+     ],
+     "right": [
+      "2",
+      "Vtr",
+      "gcedd"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 62,
+     "prev": "ā",
+     "orig": "aditiue",
+     "planted": "dīuitate",
+     "next": "accipꝛ",
+     "left": [
+      ".",
+      "si",
+      "ā"
+     ],
+     "right": [
+      "accipꝛ",
+      "fla"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 73,
+     "prev": "se",
+     "orig": "hn̄tia",
+     "planted": "hn̄tia",
+     "next": ".",
+     "left": [
+      "med",
+      "iū",
+      "se"
+     ],
+     "right": [
+      ".",
+      "s"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 58,
+     "orig": "no ipā forma ++++++++++++++",
+     "left": [
+      "ꝑ",
+      "form",
+      "agt̄"
+     ],
+     "right": [
+      "V",
+      "trꝰ",
+      "gcedd"
+     ]
+    }
+   ]
+  },
+  "htromance-modern|bnf-français-2394/Français 2394_f26": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 0,
+     "prev": "heroïques",
+     "orig": "actions",
+     "planted": "mesme",
+     "next": "",
+     "left": [
+      "Et",
+      "les",
+      "heroïques"
+     ],
+     "right": [
+      "de",
+      "ses"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 4,
+     "prev": "qui",
+     "orig": "n'appartient",
+     "planted": "n'appartient",
+     "next": "proprement",
+     "left": [
+      "d'oeu",
+      "ure",
+      "qui"
+     ],
+     "right": [
+      "proprement",
+      "qu'aux"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 4,
+     "orig": "ure qui n'appartient proprement qu'aux",
+     "left": [
+      "vn",
+      "chef",
+      "d'oeu"
+     ],
+     "right": [
+      "Maistres",
+      "de",
+      "ce"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 4,
+     "prev": "qui",
+     "orig": "n'appartient",
+     "planted": "n'appartient",
+     "next": "proprement",
+     "left": [
+      "doeu",
+      "ure",
+      "qui"
+     ],
+     "right": [
+      "proprement",
+      "qu'aux"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 9,
+     "prev": "la",
+     "orig": "grandeur",
+     "planted": "mesme",
+     "next": "de",
+     "left": [
+      "entierement",
+      "a",
+      "la"
+     ],
+     "right": [
+      "de",
+      "vos"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 4,
+     "orig": "ure qui n'appartient proprement qu'aux",
+     "left": [
+      "vn",
+      "chef",
+      "doeu"
+     ],
+     "right": [
+      "Maistres",
+      "de",
+      "ce"
+     ]
+    }
+   ]
+  },
+  "htromance-modern|bnf-français-3816/Recueil_de_lettres_originales__btv1b52507597h_15": {
+   "pro": [
+    {
+     "kind": "num",
+     "line": 16,
+     "prev": "febvrier",
+     "orig": "1619",
+     "planted": "1614",
+     "next": "",
+     "left": [
+      "Jour",
+      "de",
+      "febvrier"
+     ],
+     "right": []
+    },
+    {
+     "kind": "word",
+     "line": 1,
+     "prev": "Ma",
+     "orig": "figle",
+     "planted": "accompagnee",
+     "next": "Jay",
+     "left": [
+      "4",
+      "Ma"
+     ],
+     "right": [
+      "Jay",
+      "esté"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 5,
+     "orig": "et satisfaitte en vre mariage Asseurez",
+     "left": [
+      "estes",
+      "bien",
+      "contente"
+     ],
+     "right": [
+      "vous",
+      "que",
+      "iy"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 1,
+     "prev": "aise",
+     "orig": "dentendre",
+     "planted": "benedittions",
+     "next": "",
+     "left": [
+      "este",
+      "bien",
+      "aise"
+     ],
+     "right": [
+      "de",
+      "uos"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 7,
+     "prev": "et",
+     "orig": "contentement",
+     "planted": "croire",
+     "next": "",
+     "left": [
+      "ure",
+      "bien",
+      "et"
+     ],
+     "right": [
+      "enquoy",
+      "ayant"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 8,
+     "orig": "enquoy ayant este accompagnee des",
+     "left": [
+      "bien",
+      "et",
+      "croire"
+     ],
+     "right": [
+      "benedittions",
+      "de",
+      "Dieu"
+     ]
+    }
+   ]
+  },
+  "htromance-modern|bnf-naf-12303-#-0/Fable_autographe_de_Jean_de_..._btv1b525103983.pdf_page_3": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 13,
+     "prev": "le",
+     "orig": "caresser.",
+     "planted": "sçauroit.",
+     "next": "",
+     "left": [
+      "maistre,",
+      "alla",
+      "le"
+     ],
+     "right": [
+      "Comment,",
+      "disoit"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 1,
+     "prev": "le",
+     "orig": "petit",
+     "planted": "autant",
+     "next": "Chien.",
+     "left": [
+      "L'Asne",
+      "et",
+      "le"
+     ],
+     "right": [
+      "Chien.",
+      "Ne"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 14,
+     "orig": "Comment, disoit il en son ame,",
+     "left": [
+      "alla",
+      "le",
+      "sçauroit."
+     ],
+     "right": [
+      "Ce",
+      "chien",
+      "parce"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 22,
+     "prev": "faut",
+     "orig": "faire",
+     "planted": "ferions",
+     "next": "autant",
+     "left": [
+      "S'il",
+      "en",
+      "faut"
+     ],
+     "right": [
+      "autant",
+      "afin"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 16,
+     "prev": "chien",
+     "orig": "parce",
+     "planted": "aussitost",
+     "next": "qu'il",
+     "left": [
+      "ame,",
+      "Ce",
+      "chien"
+     ],
+     "right": [
+      "qu'il",
+      "est"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 5,
+     "orig": "Nous ne ferions rien auec grace.",
+     "left": [
+      "point",
+      "notre",
+      "talent,"
+     ],
+     "right": [
+      "Jamais",
+      "vn",
+      "lourdaut,"
+     ]
+    }
+   ]
+  },
+  "rasam|BULAC_MS_ARA_1977_0062": {
+   "pro": [
+    {
+     "kind": "word",
+     "line": 20,
+     "prev": "عليهما",
+     "orig": "السلام",
+     "planted": "غبقته",
+     "next": "تولى",
+     "left": [
+      "بن",
+      "ابرهيم",
+      "عليهما"
+     ],
+     "right": [
+      "تولى",
+      "[?]"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 13,
+     "prev": "اخبار",
+     "orig": "الملوك",
+     "planted": "كثروا",
+     "next": "[?]",
+     "left": [
+      "الله",
+      "من",
+      "اخبار"
+     ],
+     "right": [
+      "[?]",
+      "[?]"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 32,
+     "orig": "فعل اول قتال وقع بمكة",
+     "left": [
+      "الباطل",
+      "[?]",
+      "الناس"
+     ],
+     "right": [
+      "عزها"
+     ]
+    }
+   ],
+   "opus": [
+    {
+     "kind": "word",
+     "line": 17,
+     "prev": "اهلكنا",
+     "orig": "قبلهم",
+     "planted": "متشابها",
+     "next": "من",
+     "left": [
+      "تعلى",
+      "وكم",
+      "اهلكنا"
+     ],
+     "right": [
+      "من",
+      "قرن"
+     ]
+    },
+    {
+     "kind": "word",
+     "line": 20,
+     "prev": "اهل",
+     "orig": "التاريخ",
+     "planted": "للموضع",
+     "next": "انه",
+     "left": [
+      "ما",
+      "ذكر",
+      "اهل"
+     ],
+     "right": [
+      "انه",
+      "لما"
+     ]
+    },
+    {
+     "kind": "dropped_line",
+     "line": 27,
+     "orig": "هذا اول قتال وقع بمكة",
+     "left": [
+      "قطوراء",
+      "وسميت",
+      "لذلك"
+     ],
+     "right": [
+      "هذه",
+      "المواضع",
+      "ثم"
+     ]
+    }
+   ]
+  }
+ }
+}

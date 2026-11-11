@@ -9,10 +9,11 @@ import LanguageMenu, { HEADER_LANGUAGE_NAME } from './LanguageMenu';
 import SiteMenuPanel from './SiteMenuPanel';
 import { Search, X } from 'lucide-react';
 import { useChromeLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
-import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
+import { catalogueHref, isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
 import { trackEvent } from '@/lib/track-event';
+import { adminMenuLinks } from '@/lib/admin-links';
 
 interface NavLink {
   key: keyof NavStrings;
@@ -37,8 +38,8 @@ interface NavLink {
 // the Library page).
 function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
   const links: NavLink[] = [
-    // The catalogue page. Moves to /library with #6866, which redirects /catalog.
-    { key: 'library', label: t.library, href: '/catalog', activePrefix: '/catalog' },
+    // A partner host swaps this for its own /catalog, below.
+    { key: 'library', label: t.library, href: '/library', activePrefix: '/library' },
     { key: 'gallery', label: t.gallery, href: '/gallery', activePrefix: '/gallery' },
     { key: 'collections', label: t.collections, href: '/collections', activePrefix: '/collections' },
     // Research notes, now Articles at /articles (#6887; /blog redirects there).
@@ -120,6 +121,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // `/explore` and a prefix-blind lookup would miss it.
   const isTenantHost = useIsEmbedded();
   const NAV_LINKS = buildNavLinks(t, locale)
+    .map(link => (link.key === 'library' && isTenantHost ? { ...link, href: catalogueHref(true), activePrefix: catalogueHref(true) } : link))
     .filter(link => !(isTenantHost && isGlobalOnlyNavHref(canonicalPath(link.href))));
   const isActive = (link: NavLink) => {
     const prefix = link.activePrefix || link.href;
@@ -250,9 +252,16 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     image: session.user?.image,
     initials: (session.user?.name?.split(' ').map((n) => n[0]).join('') || session.user?.email?.[0] || '?').toUpperCase().slice(0, 2),
   } : undefined;
+  // Admins get the avatar dropdown's admin links inside the phone menu too;
+  // without them the menu's Account button was their only way in, and /account
+  // has none. Readers keep the plain Account button.
+  const role = (session?.user as { role?: string } | undefined)?.role;
+  const adminLinks = role === 'admin' || role === 'superadmin'
+    ? adminMenuLinks({ role }).map((l) => ({ href: l.href, label: l.label }))
+    : undefined;
 
   return (
-    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-30 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
+    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-40 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
       <header
         data-site-header=""
         className={`${barBg} text-white ${position}`}
@@ -344,6 +353,18 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             )}
           </div>
 
+          {/* Donate on phones too, beside the hamburger: inside the menu panel it
+              was one tap deeper than on a wide screen, where most readers are not. */}
+          {showSupport && (
+            <Link
+              href="/give"
+              onClick={() => trackEvent('give_nav_click', { source: 'header_mobile', url: '/give' })}
+              className="lg:hidden ml-auto inline-flex items-center h-[32px] px-3 whitespace-nowrap text-[13px] font-medium border border-white text-white bg-transparent hover:bg-white/10 transition-colors"
+            >
+              {t.support}
+            </Link>
+          )}
+
           {/* Hamburger: phones, and wide screens where the links don't fit. */}
           <button
             ref={burgerRef}
@@ -352,7 +373,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             aria-label={menuOpen ? CHROME_STRINGS[locale].close : t.menu}
             aria-expanded={menuOpen}
             aria-controls={MENU_ID}
-            className={`relative w-11 h-11 shrink-0 ml-auto text-white ${compact ? '' : 'lg:hidden'}`}
+            className={`relative w-11 h-11 shrink-0 text-white ${showSupport ? 'ml-1 lg:ml-auto' : 'ml-auto'} ${compact ? '' : 'lg:hidden'}`}
           >
             {[0, 1, 2].map((k) => (
               <i
@@ -382,7 +403,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           label: HEADER_LANGUAGE_NAME[l],
           current: l === locale,
         }))}
-        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar }}
+        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar, adminLinks }}
         support={showSupport ? { href: '/give', label: t.support, onClick: onSupportClick } : null}
         instant={closeInstantly}
       />

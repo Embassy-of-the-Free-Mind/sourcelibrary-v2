@@ -1,0 +1,42 @@
+Below are three machine transcriptions (A, B, C) of the same palm leaf of a Sanskrit manuscript, converted to IAST. The leaf is from a Kerala manuscript holding the Sāṅkhyakārikā with commentaries (Jayamaṅgalā, Tattvakaumudī) and Annambhaṭṭa's Tarkasaṃgraha with Dīpikā. Each row is one physical row of the leaf; ‖ marks a string hole, and a row continues straight across it. Words often run together (the scribe leaves no spaces), and a row may begin or end mid-word.
+
+You see no image and no edition. Judge only the language: for each row of each transcription, is it grammatical Sanskrit that makes sense in context as Sāṅkhya or Nyāya text? Use: S = sensible (readable Sanskrit, plausible in this text), P = partly (some real words or phrases, but broken), G = gibberish (syllables that do not form Sanskrit). Do not reward a row for being a passage you recognise; judge whether it reads as Sanskrit.
+
+TRANSCRIPTION A
+1.  ‖ ālakhañña0 ‖ khya āppavaprū ‖ ṛnāmātrāsthāmātrakia
+2. ṛ ḥprāṇātrāva ‖ ākhava ḥ ‖ ṛgava tta ṛt ‖ p ḥkramśakṛ
+3.  ‖ ṛkaൿ kṛ kā2ṛ ‖ p ḥ 0
+4.  ‖ k0 ‖ hrake ‖ p ā2
+5.  ‖  ‖ ka 0na
+6.  ‖  ‖ ṛda yā
+7.  ‖  ‖ viya0da ā
+8.  ‖ 0sasā0 ‖ laka h0 ‖ 
+9.  ‖ 0 va i ‖ ga vikha ‖ dava viṣṇala
+
+TRANSCRIPTION B
+1. śeṣāṇāṃyapunasthā ‖ lakṣaṇaṃpṛthvyantrakhanyaineṣāṭapañcā ‖ nmātrāṇāmātrakama
+2. śapyaiḥprāṇādyāva ‖ vāyavālekhāḍḍuhṛgavacchattuḻḻayanyattuttū ‖ ṛkkiḥkramaśaśakanyati
+3. cchādaiṇṇakaṣāpya ‖ ṭottaṣṭhakrabahukaikahṛṣṭhakā ‖ prakkiḥnthanthāṃnthāṃkra
+4. ndhiicchayuntapava ‖ jarātrukaṃohetrukaṃhattaṃ ‖ prattaṣāttakkalava
+5. gaintaikanati ‖ kkāṇṇakaikakkaṃraṇagarastuka ‖ nakhaṃākodaśavi
+6. dhaḥkaṭāgaraṇa ‖ karaṇaprakāśakaraṃkātta ‖ khatanyādaśadhāhā
+7. ḻḻaṃdhākkuṃpraka ‖ iikhānnaḥkandaḥkaraṇakku ‖ vidhaṃdaśākhāhu
+8. ttuyanyātikayāyuṃ ‖ sassāṃpratakālabhakkāvyaṃkrakāḻḻa ‖ untaraṃkaraṇaൗṃssuḻḻa
+9. ṭittuyāṇitekhāṃ ‖ pakhaviṣekhāviśaikaviṣayāṇā ‖ graṭavakraśaḻḻaviṣala
+
+TRANSCRIPTION C
+1. śaiṣīraṇīdaṃphalaphyandhā ‖ lakṣaṇaṃ straikhanyarairoṣīāṭapatra ‖ ntrāntāmātrāspomātrikira
+2. tvṛttiḥprāṇādyāva ‖ āyavacchedetibhūḥbhugavacchatuṣṭiyantyatulya ‖ tvakkiḥkri khakantyanti
+3. ṣṭādaśaiṣṭitaṣāḍhya ‖ daiṣṭu vandrakaḻkrustinmānya ‖ pṛktiḥbadhāṃ śru
+4. śraiyagrainivana ‖ jñanākkukaṃoehakkiṃpūkkiṃ ‖ ppaṅkimātmaevao
+5. gatṛñchaikkanādyi ‖ ḻkāl̤cekkinayi ka ‖ nanaṃtraiyāṭaśavi
+6. gaṃbhūdvihāndra ‖ kinandrakāgakānakāruḻḻa ‖ khaduḥkhabhagayāgra
+7. jhyāyātryeṣa ‖ l̤uttijñāḥonaḥkanaḻḻi ‖ vidhaṃdaśācāhi
+8. trakhyanyavikayāl̤yāṃ ‖ ṃsasyaṃ kkālakṣāhyaṃtraikāla ‖ trannaṃkindraṣyapṣa
+9. dvitriyādidaivāṃ ‖ cakṣuviśeṣāviśeṣaviṣayāṇā ‖ kṣaṭapadiśaṣṭaviṣaya
+
+Answer only, one line per transcription, then one line of comment:
+A | <S/P/G per row, comma-separated> | overall: <S/P/G>
+B | ...
+C | ...
+COMMENT | <one sentence>

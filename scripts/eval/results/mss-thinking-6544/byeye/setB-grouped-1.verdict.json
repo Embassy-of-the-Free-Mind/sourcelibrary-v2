@@ -1,0 +1,700 @@
+[
+ {
+  "uid": "69c40d682de785d8a2265e29:3",
+  "arm": "lite",
+  "cer": 1,
+  "shares": {
+   "invented": 60,
+   "wrong_script": 40
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "מכח השטר הזה אשר כתב בזה היום",
+   "העדים החתומים במטה"
+  ],
+  "note": "Image is Sogdian cursive (6 stanzas); read is a Hebrew legal-deed formula (witness clause) looped across stanzas - memorised boilerplate passed off as a transcription."
+ },
+ {
+  "uid": "69c40d682de785d8a2265e29:3",
+  "arm": "f38l",
+  "cer": 1,
+  "shares": {
+   "wrong_script": 45,
+   "invented": 30,
+   "repetition": 25
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "pywsnw wyšnw",
+   "mwnw δβʾnwst[?]"
+  ],
+  "note": "Romanised Sogdian transliteration, not the script; line count ~right but the recurring 'pywsnw wyšnw' tail every stanza is a pattern, not a reading. I cannot read Sogdian to confirm any word."
+ },
+ {
+  "uid": "69c40d682de785d8a2265e29:3",
+  "arm": "f38h",
+  "cer": 1,
+  "shares": {
+   "invented": 80,
+   "wrong_script": 20
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "ܡܕܪܫܐ ܕܡܪܝ ܐܦܪܝܡ",
+   "ܩܕܝܫܐ ܩܕܝܫܐ ܩܕܝܫܐ ܐܠܗܐ"
+  ],
+  "note": "Fluent Syriac hymn titled 'Madrasha of Mar Ephrem' with a Sanctus; nothing like the Sogdian page."
+ },
+ {
+  "uid": "69c40d682de785d8a2265e29:3",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 70,
+   "convention": 30
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "[?] [?] [?] [?]"
+  ],
+  "note": "Honest all-[?] with stanza layout matching the image; CER comes from dropping the shelfmark label 'Ch/So 13399a T II D' and [?] token counts."
+ },
+ {
+  "uid": "69c3cae42de785d8a2265992:2",
+  "arm": "lite",
+  "cer": 1,
+  "shares": {
+   "invented": 75,
+   "wrong_script": 25
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ܘܐܬܚܙܝ ܠܡܠܐܟܐ ܘܐܬܟܪܙ ܒܥܡܡܐ ܘܐܬܗܝܡܢ ܒܥܠܡܐ"
+  ],
+  "note": "Manichaean-script fragment with red-dot punctuation; lite emits the Peshitta 1 Tim 3:16 creed hymn - memorised scripture. Key itself is in Coptic letters, which this Turfan M-fragment almost certainly is not."
+ },
+ {
+  "uid": "69c3cae42de785d8a2265992:2",
+  "arm": "f38l",
+  "cer": 1,
+  "shares": {
+   "wrong_script": 45,
+   "invented": 25,
+   "convention": 30
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ηχος • πλαγιος",
+   "— ΝΑ • — — ΝΑ —"
+  ],
+  "note": "Greek letters; 'ηχος πλαγιος' (Byzantine mode label) invented; long dashes do mimic the extended ligature strokes on the page. Key (Coptic) equally a wrong-script guess."
+ },
+ {
+  "uid": "69c3cae42de785d8a2265992:2",
+  "arm": "f38h",
+  "cer": 1,
+  "shares": {
+   "wrong_script": 45,
+   "invented": 25,
+   "convention": 30
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ܙܘܡܪܐ • ܕܝܠܕܐ",
+   "—— ܢܐ • ——— ܢܐ"
+  ],
+  "note": "Syriac letters with dashes copying the stroke layout; 'ܙܘܡܪܐ ܕܝܠܕܐ' (nativity hymn) heading invented."
+ },
+ {
+  "uid": "69c3cae42de785d8a2265992:2",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[?] [?]"
+  ],
+  "note": "All [?]; 17 lines vs ~16 on the fragment. Key's Coptic is not a better reading."
+ },
+ {
+  "uid": "69c3cae42de785d8a2265992:2",
+  "arm": "corr-opus",
+  "cer": 1,
+  "shares": {
+   "omission": 90,
+   "convention": 10
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[?] • [?] • [?]"
+  ],
+  "note": "All [?] with bullets placed where the red-dot punctuation is - the most faithful-to-layout read; key's Coptic letters look wrong."
+ },
+ {
+  "uid": "69c3c80d2de785d8a226592e:2",
+  "arm": "lite",
+  "cer": 1,
+  "shares": {
+   "repetition": 70,
+   "invented": 30
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "ܘܡܢ ܟܠܗܘܢ ܕܒܝܫܐ ܐܢܘܢ ×20"
+  ],
+  "note": "Two-leaf fragment shown upside down (ruler inverted); lite loops one line 20 times in two blocks."
+ },
+ {
+  "uid": "69c3c80d2de785d8a226592e:2",
+  "arm": "f38l",
+  "cer": 1,
+  "shares": {
+   "invented": 70,
+   "wrong_script": 30
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "chascune persone deuant luy",
+   "Pater noster"
+  ],
+  "note": "Middle French devotional rubric text ('Iointes ensemble tresdevotement ... a genoulx deuant luy') - a different script and language passed off as the page, keeping only the two-column line rhythm."
+ },
+ {
+  "uid": "69c3c80d2de785d8a226592e:2",
+  "arm": "f38h",
+  "cer": 1,
+  "shares": {
+   "invented": 70,
+   "wrong_script": 30
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "per omnia saecula saeculorum Amen",
+   "qui vivit et regnat"
+  ],
+  "note": "Latin liturgical doxology invented over a Syriac-type script."
+ },
+ {
+  "uid": "69c3c80d2de785d8a226592e:2",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "[?]"
+  ],
+  "note": "One [?] per line, 16+17 lines - correct line count, no text. Key reads Syriac (2 Cor 1:8 wording fits '...beyond our strength ... despaired of life'); I could not verify upside-down but it is coherent and line-aligned."
+ },
+ {
+  "uid": "69c3a2d02de785d8a22647c8:1",
+  "arm": "lite",
+  "cer": 1,
+  "shares": {
+   "omission": 85,
+   "convention": 15
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[illegible — 8 lines of text]"
+  ],
+  "note": "Honest per-fragment summaries; counts roughly fit (c ~10, a ~7, b ~5, d ~6). Key's Syriac-language words ('ܕܐܡܪ ܦܘܠܘ', 'ܡܐܟܘܠܬܐ') on a Manichaean Iranian fragment look forced."
+ },
+ {
+  "uid": "69c3a2d02de785d8a22647c8:1",
+  "arm": "f38l",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[?]"
+  ],
+  "note": "All [?], no fragment labels."
+ },
+ {
+  "uid": "69c3a2d02de785d8a22647c8:1",
+  "arm": "f38h",
+  "cer": 1,
+  "shares": {
+   "omission": 60,
+   "invented": 25,
+   "wrong_script": 15
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ʾmwcʾgʾn / yspsgʾn / mhystgʾn / ʾrdʾwʾn / nywšʾgʾn"
+  ],
+  "note": "Transliterates fragment c as the Manichaean church hierarchy (teachers, bishops, presbyters, elect, hearers) one word per line - a stock memorised formula; plausible genre but not verifiable on the image, treat as seductively plausible invention."
+ },
+ {
+  "uid": "69c3a2d02de785d8a22647c8:1",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 85,
+   "extra_real_text": 15
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "c",
+   "M 746 a-d"
+  ],
+  "note": "All [?] under fragment labels c/a/b/d, plus the slide label 'M 746 a-d' which is really on the image."
+ },
+ {
+  "uid": "69c3a2d02de785d8a22647c8:1",
+  "arm": "corr-opus",
+  "cer": 1,
+  "shares": {
+   "omission": 80,
+   "extra_real_text": 10,
+   "order": 10
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "a",
+   "M 746 a-d"
+  ],
+  "note": "Same as opus but fragments ordered a,b,c,d rather than image left-to-right; label included."
+ },
+ {
+  "uid": "69c1bae58522835be845b540:126",
+  "arm": "lite",
+  "cer": 1,
+  "shares": {
+   "invented": 70,
+   "repetition": 30
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "סדר החופים. סדר חופים הוא שיהיה יום אחד מן השבוע",
+   "ודע כי השעות הן משתנות לפי אורך היום וקצרו"
+  ],
+  "note": "The page is prognostication of the sick (רכד) and remedies (רכה, רכו); lite writes a fluent planetary-hours treatise cued by the table's planet names, then loops 'ודע כי...' to the end."
+ },
+ {
+  "uid": "69c1bae58522835be845b540:126",
+  "arm": "pro",
+  "cer": 1,
+  "shares": {
+   "misreading": 45,
+   "omission": 25,
+   "invented": 20,
+   "key_wrong": 10
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "קכד סימן החולה אם נפל למשכב",
+   "כל פעולה טובה שתעשה לחולה כיום השמיני"
+  ],
+  "note": "Real text for רכד-רכה with heavy misreadings; drops the רכו section; post-table lines are garbled paraphrase, partly fluent invention."
+ },
+ {
+  "uid": "69c1bae58522835be845b540:126",
+  "arm": "corr-opus",
+  "cer": 1,
+  "shares": {
+   "key_wrong": 45,
+   "misreading": 40,
+   "extra_real_text": 10,
+   "omission": 5
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "כובע ישועה טוב הוא עד מאד",
+   "בלשון לע\"ז גודראיקו"
+  ],
+  "note": "Best read: matches the image line-for-line through רכו and the table; the key is [?] for most of רכה/רכו and the lower section, so CER is inflated by the key's gaps."
+ },
+ {
+  "uid": "6a3c60f240c88a541d8ec212:48",
+  "arm": "lite",
+  "cer": 0.919,
+  "shares": {
+   "order": 55,
+   "convention": 30,
+   "misreading": 10,
+   "omission": 5
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "| 祖 | 神 | 食 | 楚 |",
+   "史部"
+  ],
+  "note": "Vertical columns forced into a markdown table, so reading order is scrambled; characters largely real (時 for 畤); '史部' in the header is not on the page."
+ },
+ {
+  "uid": "699067ef249ce014347d4e4f:260",
+  "arm": "lite",
+  "cer": 0.874,
+  "shares": {
+   "invented": 60,
+   "omission": 40
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "וכל מה שכתבתי בזה הענין הוא ממה שקבלתי מפי רבותי זכרונם לברכה"
+  ],
+  "note": "Faint commentary page (~28 lines); lite outputs 3 lines 'illegible' then a fluent author's-colophon paragraph not on the page."
+ },
+ {
+  "uid": "699067ef249ce014347d4e4f:260",
+  "arm": "f38l",
+  "cer": 0.752,
+  "shares": {
+   "invented": 85,
+   "misreading": 15
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "וימהרו ויעלו את יוסף מן הבור",
+   "ירמיה: אל תפל אותי אל בית יונתן"
+  ],
+  "note": "Fluent midrashic prose about Joseph/Jeremiah, full page length; key (Isaiah 54-55 commentary: 'עניה סוערה', 'שברו ואכלו', 'הטו אזנכם') runs in verse order and is far more plausible."
+ },
+ {
+  "uid": "699067ef249ce014347d4e4f:260",
+  "arm": "f38h",
+  "cer": 0.752,
+  "shares": {
+   "invented": 90,
+   "omission": 10
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "ויעש צלם נחושת ושמו",
+   "שבעים איש ואנשי ביתו"
+  ],
+  "note": "An invented narrative about seventy men and a bronze image; no overlap with the page."
+ },
+ {
+  "uid": "699067ef249ce014347d4e4f:260",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "[?]"
+  ],
+  "note": "Page number then 28 lines of [?] - correct line count, honest abstention on a faint image."
+ },
+ {
+  "uid": "69a5f25a0a8b44a5d9dc961e:348",
+  "arm": "lite",
+  "cer": 0.854,
+  "shares": {
+   "invented": 95,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "ܐܢܐ ܐܢܐ ܠܚܡܐ ܕܚܝܐ",
+   "ܠܐ ܗܘܐ ܡܘܫܐ ܝܗܒ ܠܟܘܢ ܠܚܡܐ ܡܢ ܫܡܝܐ"
+  ],
+  "note": "Red heading reads 'ܬܘܒ ܕܢܝܢܘܝ̈ܐ' (Fast of the Ninevites) as in the key; lite emits Peshitta John 6:32-44 verbatim - memorised scripture."
+ },
+ {
+  "uid": "69a5f25a0a8b44a5d9dc961e:348",
+  "arm": "f38l",
+  "cer": 0.819,
+  "shares": {
+   "invented": 95,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "ܐܒܘܢ ܕܒܫܡܝܐ ܢܬܩܕܫ ܫܡܟ",
+   "ܩܕܝܫܐ ܐܠܗܐ ܩܕܝܫܐ ܚܝܠܬܢܐ"
+  ],
+  "note": "Doxology, Trisagion and Lord's Prayer - liturgical boilerplate in plausible line lengths."
+ },
+ {
+  "uid": "69a5f25a0a8b44a5d9dc961e:348",
+  "arm": "f38h",
+  "cer": 1,
+  "shares": {
+   "invented": 100
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "܀ ܣܗܕܘܬܐ . ܕܓܝܘܪܓܝܣ ܀",
+   "ܕܕܝܢܘܣ ܡܠܟܐ ܕܦܪ̈ܣܝܐ"
+  ],
+  "note": "A fluent Martyrdom of St George with invented heading; nothing from the page."
+ },
+ {
+  "uid": "69a5f25a0a8b44a5d9dc961e:348",
+  "arm": "pro",
+  "cer": 0.857,
+  "shares": {
+   "invented": 95,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "܀ ܬܘܒ . ܕܝܬܝܩܐ ܀",
+   "ܐܚ̈ܝ ܘܚܒܝܒ̈ܝ ܘܒܢ̈ܝ ܪܘܚܢܝ̈ܐ"
+  ],
+  "note": "Keeps 'ܬܘܒ' from the rubric but writes a monk's deathbed testament (ܕܝܬܝܩܐ) - plausible genre, wrong page."
+ },
+ {
+  "uid": "69a5f25a0a8b44a5d9dc961e:348",
+  "arm": "corr-opus",
+  "cer": 0.844,
+  "shares": {
+   "invented": 85,
+   "omission": 10,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": false,
+  "examples": [
+   "ܐܢܐ ܐܢܐ ܠܚܡܐ ܕܚܝܐ ܕܡܢ ܫܡܝܐ ܢܚܬܬ",
+   "ܗܠܝܢ ܐܡܪ ܟܕ ܡܠܦ ܒܟܢܘܫܬܐ ܒܟܦܪܢܚܘܡ"
+  ],
+  "note": "Discarded Pro's draft and wrote John 6:48-61 Peshitta with sprinkled [?] - memorised scripture dressed as a cautious read."
+ },
+ {
+  "uid": "69c3a8fe2de785d8a2264d2c:2",
+  "arm": "lite",
+  "cer": 0.849,
+  "shares": {
+   "wrong_script": 50,
+   "invented": 40,
+   "omission": 10
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ܡܫܡܥܢܘܬܐ",
+   "ܒܣܝܡܘܬܐ"
+  ],
+  "note": "Sogdian-script fragment shown upside down; lite gives scattered Syriac words. Key (Syriac 'ܡܫܝܚܐ ... ܝܗܒ') also looks like a Syriac forcing of Sogdian script."
+ },
+ {
+  "uid": "69c3a8fe2de785d8a2264d2c:2",
+  "arm": "f38l",
+  "cer": 0.755,
+  "shares": {
+   "wrong_script": 50,
+   "invented": 30,
+   "omission": 20
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ܣܗܕܐ ܟܕ",
+   "ܘܟܕ ܫܡܥ ܡܢ"
+  ],
+  "note": "Syriac words then [?]; same wrong-script issue as the key."
+ },
+ {
+  "uid": "69c3a8fe2de785d8a2264d2c:2",
+  "arm": "f38h",
+  "cer": 1,
+  "shares": {
+   "invented": 80,
+   "wrong_script": 20
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "الرحمن الرحيم",
+   "اطال الله بقاك وادام عزك واتم نعمته"
+  ],
+  "note": "An Arabic letter opening (basmala, 'may God prolong your life') - memorised epistolary formula on a Sogdian fragment."
+ },
+ {
+  "uid": "69c3a8fe2de785d8a2264d2c:2",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[?]"
+  ],
+  "note": "11 [?] lines - matches the ~11 visible lines; honest."
+ },
+ {
+  "uid": "69c3a8fe2de785d8a2264d2c:2",
+  "arm": "corr-opus",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[?] [?] [?] [?]"
+  ],
+  "note": "11 lines of [?] with word counts; honest."
+ },
+ {
+  "uid": "69c1b8df8522835be844c351:41",
+  "arm": "lite",
+  "cer": 0.732,
+  "shares": {
+   "order": 50,
+   "misreading": 40,
+   "omission": 10
+  },
+  "invented_text": false,
+  "key_wrong": false,
+  "examples": [
+   "کسی بر حرف جان گشت تنها",
+   "دهانش در سخن چون گل گشود"
+  ],
+  "note": "Reads the right column whole then the left, breaking the hemistich pairing the key keeps; plus misreadings (image has 'انگشت ننهاد', 'لب گشود')."
+ },
+ {
+  "uid": "69c1bd3e8522835be846885c:9",
+  "arm": "f38l",
+  "cer": 0.893,
+  "shares": {
+   "invented": 90,
+   "convention": 10
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ܡܰܟܬܒܢܘܬ ܐܱܒܳܗܳܬܼܐ ܩܰܕܝܫ̈ܶܐ",
+   "ܐܶܡܰܪ ܙܰܕܺܝܩܳܐ ܐܰܒܳܐ ܐܺܝܣܰܐܝܳܐ"
+  ],
+  "note": "Fully vowel-pointed hagiographic prose on a largely unpointed page; invented. Key is itself suspect: column-mixed lines and a near-loop of 'ܡܬܚܙܝ/ܡܬܚܙܝܢܘܬܗ'."
+ },
+ {
+  "uid": "69c1bd3e8522835be846885c:9",
+  "arm": "f38h",
+  "cer": 0.845,
+  "shares": {
+   "invented": 95,
+   "convention": 5
+  },
+  "invented_text": true,
+  "key_wrong": true,
+  "examples": [
+   "ܕܐܺܝܘܽܕܽܘܟܺܣܺܝܰܐ ܕܐܰܠܶܟܣܰܢܕܪܺܝܰܐ",
+   "ܩܦ܆ ܐ. ܥܠ ܕܠܐ ܢܣܒ ܩܫܝܫܐ"
+  ],
+  "note": "Invented Dioscorus-of-Alexandria narrative with a numbered list of canons; not on the page (which is a Christological discourse with headings)."
+ },
+ {
+  "uid": "69c1bd3e8522835be846885c:9",
+  "arm": "opus",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "[?]"
+  ],
+  "note": "All [?] - no attempt on a legible serto page."
+ },
+ {
+  "uid": "69c1bd3e8522835be846885c:9",
+  "arm": "corr-opus",
+  "cer": 0.61,
+  "shares": {
+   "misreading": 30,
+   "omission": 30,
+   "key_wrong": 30,
+   "order": 10
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "ܡܚܘܝܢ ܐܢܫܘܬܗ ܘܡܚܘܝܢ ܐܠܗܘܬܗ ܐܠܗܝܬܐ"
+  ],
+  "note": "First heading line reads 'ܡܚܘܝܢ ...' on the image, as corr-opus has, not the key's 'ܡܩܕܡܝܢ'; key interleaves the marginal column and repeats 'ܡܬܚܙܝ', so part of this CER is the key."
+ },
+ {
+  "uid": "6a20332a18654bf8e1904674:178",
+  "arm": "f38l",
+  "cer": 0.693,
+  "shares": {
+   "key_wrong": 50,
+   "misreading": 45,
+   "omission": 5
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "حتي مكه تد لوف هارب كران ورك اسمارة",
+   "كلان"
+  ],
+  "note": "Reads the LEFT page of the spread (real text: 'كلان وركاسماره', 'دودق دباليق كچاله'); the key covers only the right page, so CER is mostly the key; heavy misreading within."
+ },
+ {
+  "uid": "6a20332a18654bf8e1904674:178",
+  "arm": "opus",
+  "cer": 0.775,
+  "shares": {
+   "key_wrong": 45,
+   "omission": 35,
+   "misreading": 20
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "حتي سكه نك سوده چاري كلان ورك اسماره دودق دباليق",
+   "334 342 344"
+  ],
+  "note": "Reads the left page (closely matches the image first line) with many [?], then starts the right page; key omits the left page entirely."
+ },
+ {
+  "uid": "6a20332a18654bf8e1904674:178",
+  "arm": "disagree",
+  "cer": 1,
+  "shares": {
+   "omission": 100
+  },
+  "invented_text": false,
+  "key_wrong": true,
+  "examples": [
+   "and"
+  ],
+  "note": "Output is the single word 'and' - a pipeline/refusal failure, not a read."
+ }
+]

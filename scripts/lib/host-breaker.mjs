@@ -73,7 +73,7 @@ export function createHostBreaker(opts = {}) {
   const stateFor = (host) => {
     let s = hosts.get(host);
     if (!s) {
-      s = { ok: 0, fail: 0, skipped: 0, consecutiveFails: 0, statuses: new Map(), openedAt: 0, probing: false, reason: '' };
+      s = { ok: 0, fail: 0, miss: 0, skipped: 0, consecutiveFails: 0, statuses: new Map(), missStatuses: new Map(), openedAt: 0, probing: false, reason: '' };
       hosts.set(host, s);
     }
     return s;
@@ -137,6 +137,21 @@ export function createHostBreaker(opts = {}) {
       }
     },
 
+    /**
+     * The host answered, and the answer was "that page does not exist" (404/410).
+     * That is a fact about one URL, not about the host: counted and reported, but
+     * it neither trips nor closes the breaker. Fed to `failure` instead, one book
+     * of dead URLs at the head of a batch paused a healthy host and skipped
+     * 34,373 good pages, every 8 s for nine days (#5448). A host whose URLs are
+     * ALL dead is caught a level up, by the caller counting abandoned books.
+     */
+    pageMiss(host, code = '404') {
+      const s = stateFor(host);
+      s.miss++;
+      s.probing = false;
+      s.missStatuses.set(code, (s.missStatuses.get(code) ?? 0) + 1);
+    },
+
     skipped(host) { stateFor(host).skipped++; },
 
     /** True while the host is tripped and its cooldown has not elapsed. */
@@ -163,8 +178,9 @@ export function createHostBreaker(opts = {}) {
         .sort((a, b) => (b[1].ok + b[1].fail) - (a[1].ok + a[1].fail))
         .map(([h, s]) => {
           const codes = [...s.statuses.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([c, n]) => `${c}:${n}`).join(',');
+          const missCodes = [...s.missStatuses.entries()].map(([c, n]) => `${c}:${n}`).join(',');
           return `  ${h.padEnd(34)} ok ${String(s.ok).padStart(5)} | fail ${String(s.fail).padStart(5)}`
-            + `${codes ? ` [${codes}]` : ''}${s.skipped ? ` | skipped ${s.skipped}` : ''}${s.openedAt ? ` | PAUSED (${s.reason})` : ''}`;
+            + `${codes ? ` [${codes}]` : ''}${s.miss ? ` | page-miss ${s.miss} [${missCodes}]` : ''}${s.skipped ? ` | skipped ${s.skipped}` : ''}${s.openedAt ? ` | PAUSED (${s.reason})` : ''}`;
         }).join('\n');
     },
 

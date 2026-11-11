@@ -1,0 +1,1 @@
+{"arm": "siglip2-base", "model": "google/siglip2-base-patch16-224", "images": 14995, "secs": 34.4, "images_per_sec": 435.9, "peak_vram_mib": 1116}

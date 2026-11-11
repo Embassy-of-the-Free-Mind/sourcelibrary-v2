@@ -1,0 +1,13 @@
+ROW 1 | ദുഃഖ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I opened all four files and found 11 written rows: p01 is the left column, p02 and p03 together make the middle column, and p04 is the right column. Rows 5–7 are the short rows beside the string holes. I could not read any row reliably at this image resolution, so nearly all of the leaf is marked [illegible]. The only reading I'm moderately confident of is ദുഃഖ at the start of row 1, and even that may be a guess shaped by recognising the Sāṅkhyakārikā opening. A higher-resolution scan, or close-up crops of each row, would be needed for a faithful line-by-line transcription.

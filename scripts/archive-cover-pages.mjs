@@ -154,7 +154,7 @@ for (const book of books) {
         try {
           // Download
           const resp = await fetch(sourceUrl, {
-            headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly digitization project; contact@sourcelibrary.org)' },
+            headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
             signal: AbortSignal.timeout(30000),
           });
           if (!resp.ok) throw new Error(`HTTP ${resp.status}`);

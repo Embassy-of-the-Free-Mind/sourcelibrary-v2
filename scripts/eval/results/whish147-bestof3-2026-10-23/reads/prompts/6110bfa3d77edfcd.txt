@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ādditiviṣayasyapraka ‖ śanamātraṃkevvaṃtina [illegible] iśaṃcayastul̤aceṣṭiḥke ‖ ādiṣuddhyavasitamakṣaṃ
+2. pratyakṣamakhātayarāruti ‖ ndriyāṇāṃkevalyiyoṇāmaddhigānādibhyā ‖ āṃyathākramaṃyecandrādā
+3. nāddedṛṣṭabhakṣāḥkāḻḻā [illegible] ‖ ññatrayavādindriyasyanādanāviśacaraṇṇā ‖ ākṣādakṣaṃkāmāderanya
+4. dedābhaṃśyyavādamārya ‖ daḥṣṭhibhānantaraṃṭaśāntādaśamanaṃpā ‖ daśauḥutpattirupa
+5. danamalayantrābhajjana ‖ potayoḥśrutiranadanamādyanantarāḻḻi ‖ āddīkṣaḥśuklavinuttisa
+6. ṃnuktinuyabandhapa ‖ ālabdhiḥprakkīḥneḥślaitrāhākārama ‖ aunāṃkāravṛttitvā
+7. śaṃkhālakṣaṇāṃpṛtti ‖ ndyādiśyamāddhiścitṛlakṣaṇaṃya ‖ strālgalakṣaṇaṃtha
+8. syadāvatālakṣaṇa ‖ ṃtrabhavavṛttittiḥkriyaiyantrādike ‖ lpāhaṅkāramanasāddhi
+9. ddhiḥtaddhyavasāyeyā ‖ yāścakṣuṣabhimānanānālāṅkāranyasaṃka ‖ ṃkamppāmanasaḥupapā
+10. ddhyavasāyābhimānasa ‖ sakaḻḻāllocanāppṛttiścaśiṣṭāñcaipra ‖ ddyādindriyādiśānā
+11. catuṣṭayāpravṛttiḥsā ‖ sāmānyādyagavalkramaśaścakṣitatra ‖ āsāmānyādarkkaramā
+
+TRANSCRIPTION B
+1. rdditiviṣayasyapraka ‖ āśanamātraṃkeva [illegible] mitiśaba [illegible] yatracceṣṭiḥke ‖ ādiṣubhūvasi [illegible] mapyaṃ
+2. pratyakṣeṇānayārunni ‖ nniddhānukenarddibhyānāgamaddhināgāddi [illegible] ‖ āṃkhamādrimaṃyecandrādā
+3. nādanivyaktakaḥkāllā [illegible] ‖ [illegible] travādibhiścandra [illegible] hyanānāvidhava [illegible] ‖ āṣṭādaśaṃkāmyādeśasya
+4. āddābhaṃśityādyāṅṅū ‖ āḥkhithānaiśśaddaśānāmagamanaṃpā ‖ damayāḥuḻḻinūma
+5. ālamallavantyābhijñyana ‖ lapāyayāḥāttanandanithānta [illegible] ‖ ādmāḥśujñinissandresa
+6. ṃsṛṣṭisṛyantradupa ‖ kṣācchraddhayāpratyakṣiḥdehātmapākārama ‖ nsāṃkrāputrikṛtyā
+7. sāṃkhyālakṣaṇāṃpratijña ‖ tvādiṃkhyamākṣitṛṃlakṣaṇaṃya ‖ ntratatkhalakṣaṇaṃta
+8. syabhāvaprakalakṣaṇā ‖ ṃtavavadbhṛścakṣubhyāmasyaliba ‖ bhrūṣakādamanasādhi
+9. tukṣṇābhūvasāyoyāgaccareṇṭubabhimānannāyāsāṃkrārantasyaṣaṃkavarṇṇamanasaḥkaṃbhipā
+10. dṛṣṭavasāriṇābhūmātāsaṃkolābhrūyasyapṛṣṭapṛttyāliṣṭābhopyatrābhināntrayodaśānā
+11. ṃcatuṣyāpṛthikṣiḥsāmānyādyagaval [illegible] ṃkramaśaścakrāḥrutrānasāmānyādgalnitamā
+
+TRANSCRIPTION C
+1. dditrigindiṣiyayasyapraka ‖ śanamākreṃkeḻḻuntinniścayatteccekṣiḥke ‖ ādiṣṭhūrvasiddhamakṣaṃ
+2. pratyakṣamekhātayatetti ‖ nṟiddhāntākeṃgeślitriṅṅānāl̤amatvirāgāndrū ‖ āṃyegākrameṃyecanṟūdā
+3. nādatrivṛttakaḥkaḻḻā ‖ ṇṇatruvādi [illegible] yasyanānāviṣayapratye ‖ ākṣatādakṣaṃkampādeyessu
+4. daṭadabaṃ [illegible] vādakhanṟya ‖ daḥ [illegible] bānaṇṭeṃṭaṭaśāntānuśamanaṃpā ‖ dayoḥubhayindra [illegible]
+5. daḍhamalarasyāṣajñana ‖ aipāyeyāḥśrutanaḍhanamānatadgāḻḻi ‖ ādgraḥśūjñavisṛjñisa
+6. ṃsyaṣṭisyayabandhupa ‖ keṣāddhayaprakṣiḥdyutṛhāṃkāraṇa ‖ nasāṃkārapṛṣṭirityā
+7. ḍaṃghālakṣaṇāṃpratti ‖ ttitvādviṃghamākṣiyaṃlakṣaṇāṃya ‖ ndratalghalakṣaṇāṃta
+8. ndraṭāvaghālakṣaṇā ‖ ṃtebhedacapyattiḥkriyendrākkiyya ‖ ddhyūpāṃkāramanasāddhi
+9. uṣṭhaḥtridvyavasāyo ‖ āmevacoḻebhūndibhramādennābhimānakārasyasaṃka ‖ ḻkkalpāmanasaḥkaṃmevā
+10. ddhyavasāyābhimānasa ‖ ṃkalpādūyendriyavṛttikañcabhibhaൗpañcatu ‖ bhyādindriyaiḥdaśānā
+11. ṃcaturtthiyāprattiḥbhasa ‖ āmānyāgavalkramaśaścakṣiḥotta ‖ āsāmānyāndaḻkkitamā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

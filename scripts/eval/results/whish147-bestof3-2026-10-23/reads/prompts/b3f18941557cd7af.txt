@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. nandalyattinatvavyaktātmana [illegible] ‖ ātamobhiguṇairanai [illegible] saumyāvasthāprakṛti ‖ ḥkṛta [illegible] śaunasarvvātmanātmā
+2. nāprakāśayatipramāṇami ‖ nasarvvaṣāyavattvāmiteṣācālūḥguṇāraṇāḥ ‖ [illegible] raṇamaṃbhepanādkṣepa [illegible] ddha
+3. tilattudvipāṃprākkaṃ ‖ tmāyāvantṛtvakāmiki [illegible] trāsaprakṛ ‖ tivatityāda [illegible] kkamādatarajju
+4. mitisūkṣmakaramitrata ‖ nalmaitaddeṣaḥṭevakipra [illegible] brahmātma ‖ nāprakāśayatināca
+5. vyaktānāmikyena ‖ jñānāvasthāyāṃprakṛtaumūrtti ‖ patimamasūkṣmatanana
+6. takṣidavaramaṇḍile ‖ draṣṭavyaṃpuruṣeṇacaitriyādijña ‖ ājñitisāprakṛtiṣu
+7. kkātmanācaduṣṭāna ‖ mananattinapranadlnamūlakai ‖ tinaṃbhiṇṇasvaradraṣṭavya
+8. ābhāvāltatamaiśvaraṃ ‖ sammoprakṛtimevāmanāṃprakāśaya [illegible] ‖ yatidapujñamaveṣatāṃsa
+9. rṣamācaturttitattvānāpra ‖ pṛbhaṣitṛbānayānāmisaṃsaraṇaṃva ‖ ṃcemākekkalvaitrāhaka
+10. jñānabuddhyātautrādi ‖ babābhāvānābabuddhyātasvarūpama ‖ jñasyādikāśrutvāl
+
+TRANSCRIPTION B
+1. nandalyattinatvavyaktātmanā ‖ tamādiguṇānāṃ svātmāvasthāprakṛti ‖ [illegible] karṣeṇasaṃpūrṇṇatva [illegible] ntyā
+2. nāprakṛtāśaktipumānabhi ‖ nsva [illegible] vattvālṣeccācaṣṭaḥ guṇa [illegible] ‖ [illegible] maṃśrepanādiṣṣeṣapadddha
+3. tvatantūdijñapathaṃprāptaṃ ‖ tamāyāvantutatvakamitiatrāsaprakri ‖ [illegible] trārabheda [illegible] karañja
+4. mitisūkṣmakaraṇamityara ‖ l [illegible] taddeśadaṭevakipraśleṣmātma ‖ nāprakāśayatinatva
+5. vyaktānāmiśaiva ‖ jñānāvasthā [illegible] ḥprakṛtermūrttimal ‖ patimamanukṣmatanana
+6. tviṃdivaramaṅṅira ‖ draṣṭuvyāptaḥ [illegible] kṣanirttyādiṣṭu ‖ ājñitisāprakṛtiṣu
+7. kkārttanādañcādeva ‖ mandadantināpyanaddhvanamukkaiḥ ‖ [illegible] kṣanābhūṣṭhva
+8. ābhāvāltatamacettāvaṃ ‖ sarvvaprakṛtirātmānaṃprakāśayati ‖ yati [illegible] lakṣmavaitarāṃsa
+9. rbhāvatyāditattvānāv ‖ pṛthakkityāvamayānādisaṃsaraṇaṃ ‖ ṃcamākamukhyavairāgyādika
+10. jñānādbandhamuktādinica ‖ dibandhabhāvanobandha [illegible] ‖ kṣetṛāvikāraḥsamān
+
+TRANSCRIPTION C
+1. nandaryatinatvavyaktātmanā ‖ tamomahiguṇairana [illegible] svātmāvasthāprakṛti ‖ [illegible] kutasta [illegible] nasarvvātmanātmā
+2. nāprakāśayatipumānavi ‖ nnasvapraṣṭhāvatrabika [illegible] ṣāṣāhaḥguṇairatra ‖ [illegible] namaṃgrūpanādiśyapaśyugṛ
+3. dilattubhisthipāṃśaṃprāpyaṃ ‖ tamāyāvasthutuṣṭakāmitinnattānapratyu ‖ [illegible] varavitrāutsṛkamādaraṅṅu
+4. mitisūkṣmakaramityu ‖ naletaddekṣaṭevakiśraśrūṣayātma ‖ nāprakāśayatinātha
+5. dṛśyamānādikkaina ‖ jñānāvasthābhāprakṛtaimūrttil ‖ patimamasūkṣmatananā
+6. kliṃgidavaṃnaññila ‖ draṣṭvāṃpukalakaitrayāddī ‖ ājñitisāprakṛtivu
+7. kkātmanācaddhyāna ‖ mananatināpṛnaddinnammakaima ‖ tipṛṣatasvāddhyapra
+8. āddāvāltatameśvāvaṃ ‖ samprāprakṛtimanaitmabhanaṃprakāśaya ‖ yaticaścāvaitāḥṃsa
+9. bhjaḥpācandrikataktānapra ‖ praguṇabhrāmaighānāṣissaṃsaraṇaṃ ‖ [illegible] ramārakkiḥhṛtrārika
+10. jñānaboddhātauttāddhī ‖ babābhāvānaṃābebhyūtalṣyadṛṣṭa ‖ ṣyāvibhāvyaṃpāl [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,0 +1,7368 @@
+{
+ "bars": {
+  "_about": "The quality bar a route must clear in a cell, read by route_ocr_v1.py (#6740, .claude/docs/quality-research-system.md \u00a73a). A route clears the bar on a posterior draw when its expected error is within the margin of the measured, enabled route with the lowest posterior mean error (that route's draw, so the comparison is paired) (and under `absolute_max` if one is set). A margin rather than an absolute number, because levels differ by script and reference set far more than readers' tolerance does: the bar is 'a reader would not notice the difference from the best route we can run'. Prose cells need the character bar; number-dense cells need both.",
+  "threshold": 0.9,
+  "character": {
+   "metric": "E[CER] among reads, the 100%-error point mass included",
+   "margin": 0.01,
+   "absolute_max": null,
+   "margin_relative": 0.15
+  },
+  "numbers": {
+   "metric": "misread + dropped + spurious numbers per number printed",
+   "margin": 0.02,
+   "absolute_max": null,
+   "margin_relative": 0.15
+  },
+  "_margins_note": "The margin is max(margin, margin_relative x the best route's error): 0.01 CER is about one wrong character per line of 100, and on a chart whose best route is at 10% CER a reader cannot tell 10% from 11%, so there the margin is 15% of the best. 0.02 per number is one more wrong number in fifty. Both are judgment calls, set here so they can be changed without code; the router prints how the choice moves at half and double the margins."
+ },
+ "gpu_state": "idle",
+ "units": [
+  "usd",
+  "agy_plan_share",
+  "claude_weekly_points"
+ ],
+ "quota_shares": {
+  "agy_share_per_call": 4.3632e-06,
+  "agy_derivation": "meter_quota_share.py over /root/agy-quota/calls.csv, 2026-10-13T07:01 to 2026-10-24T05:30 (10.94 days): 83,551 calls succeeded and 1,936 hit the cap (so the stretch used the whole allowance) = 229,190 calls per 30 days. Cross-check: median 1,578 calls in the 5 h before a 429 burst = 227,232 per 30 days. Every agy model is counted as one call of one pool, as the meter counts them. A second reading, the median calls in the 24 h before a lock (status.json past_bursts prev24h: 5,771), gives 173K per 30 days: the share is between 4.4e-6 and 5.8e-6 a call.",
+  "claude_points_per_call": 0.0303,
+  "claude_derivation": "One point = 1% of an account's weekly limit. 66 sealed claude -p Sonnet text calls (about 15K in / 5K out) = +2 weekly points on one account (2026-10-14, #6721). NOT an OCR reading: an image call has not been metered. Re-measure before a Claude route decides a cell.",
+  "unused_quota_value": 1.0,
+  "unused_quota_note": "1.0 = a call is worth its full share. Quota left unused at a reset is worth nothing, so near a reset with quota to spare this falls toward 0 (set it per run)."
+ },
+ "note": "costs are in units (paid dollars, agy plan-month share, Claude weekly points); the choice was made in dollars with the private plan fees",
+ "cells": [
+  {
+   "chart": "armenian",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "ref-pinned",
+   "pages_in_cell": 9,
+   "choice": "Gemini 3.1 Flash-Lite, Batch API",
+   "sensitivity": {
+    "margin x0.5": "Gemini 3.1 Flash-Lite, Batch API",
+    "margin x2.0": "Gemini 3.1 Flash-Lite, Batch API"
+   },
+   "best_quality": "agy Gemini 3.7 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9913,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.4994,
+      0.7402,
+      0.8959
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 3.3647317430028484e-06,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9905,
+      0.9989,
+      0.9999
+     ],
+     "cer": [
+      0.078,
+      0.1173,
+      0.2115
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.287,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 3.6196890745496983e-06,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.02
+    },
+    {
+     "route": "Surya 2 (GPU)",
+     "engine": "surya2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9856,
+      0.9984,
+      0.9999
+     ],
+     "cer": [
+      0.1809,
+      0.335,
+      0.5703
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.007,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 5.8155271367527995e-06,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.978,
+      0.9964,
+      0.9997
+     ],
+     "cer": [
+      0.1531,
+      0.2978,
+      0.6207
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.015,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 9.553870608341978e-06,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9629,
+      0.9971,
+      0.9999
+     ],
+     "cer": [
+      0.5482,
+      0.8998,
+      0.9888
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 1.4786031426496107e-05,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9557,
+      0.9915,
+      0.9987
+     ],
+     "cer": [
+      0.3526,
+      0.571,
+      0.7746
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 1.929993898175458e-05,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9511,
+      0.9927,
+      0.999
+     ],
+     "cer": [
+      0.1445,
+      0.2751,
+      0.5697
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.015,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 2.0280959939463424e-05,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9794,
+      0.9977,
+      0.9997
+     ],
+     "cer": [
+      0.1194,
+      0.2287,
+      0.4338
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.03,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 7.736693573549042e-06,
+      "agy_plan_share": 4.386215951691266e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9659,
+      0.9956,
+      0.9995
+     ],
+     "cer": [
+      0.0403,
+      0.0741,
+      0.2856
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.618,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 1.3565118498399371e-05,
+      "agy_plan_share": 4.4045197696163486e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8872,
+      0.9705,
+      0.9932
+     ],
+     "cer": [
+      0.0461,
+      0.0773,
+      0.2231
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.635,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 6.040198297806664e-05,
+      "agy_plan_share": 4.553736618984757e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.305
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7712,
+      0.9406,
+      0.985
+     ],
+     "cer": [
+      0.0531,
+      0.0984,
+      0.2137
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.485,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.00012383889958770484,
+      "agy_plan_share": 4.7904581908301426e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.16
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9779,
+      0.9962,
+      0.9994
+     ],
+     "cer": [
+      0.049,
+      0.079,
+      0.1874
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.0015004371461110578,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.253
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.967,
+      0.9945,
+      0.9993
+     ],
+     "cer": [
+      0.0491,
+      0.0898,
+      0.2029
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.578,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.003468373284637086,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.223
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9922,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.155,
+      0.2805,
+      0.479
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.005,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.004011847167191852,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9902,
+      0.9991,
+      0.9999
+     ],
+     "cer": [
+      0.0716,
+      0.119,
+      0.2705
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.275,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 3.553536306992404e-06,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030373124474683683
+     },
+     "p_best": 0.04
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9752,
+      0.9973,
+      0.9998
+     ],
+     "cer": [
+      0.0508,
+      0.0937,
+      0.2749
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.507,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 1.0111114486656431e-05,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030513731838774715
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "chinese-manuscript",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "chinese-cohort-5547",
+   "pages_in_cell": 499,
+   "choice": "PaddleOCR-VL 1.6 (GPU)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 4 Argon low (CLI)",
+    "margin x2.0": "PaddleOCR-VL 1.6 (GPU)"
+   },
+   "best_quality": "agy Gemini 4 Argon low (CLI)",
+   "routes": [
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9448,
+      0.9931,
+      0.999
+     ],
+     "cer": [
+      0.2705,
+      0.3095,
+      0.3592
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.02,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9955,
+      0.9995,
+      0.9999
+     ],
+     "cer": [
+      0.2434,
+      0.2544,
+      0.2667
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.44,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9944,
+      0.9984,
+      0.9997
+     ],
+     "cer": [
+      0.5158,
+      0.5498,
+      0.5915
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9966,
+      0.9995,
+      0.9999
+     ],
+     "cer": [
+      0.2266,
+      0.2379,
+      0.2501
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.89,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.015
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9621,
+      0.9969,
+      0.9998
+     ],
+     "cer": [
+      0.2372,
+      0.4836,
+      0.7592
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.07,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Surya 2 (GPU)",
+     "engine": "surya2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9859,
+      0.9984,
+      0.9998
+     ],
+     "cer": [
+      0.2823,
+      0.3177,
+      0.3643
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.003,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "NDL Koten OCR v3 (GPU)",
+     "engine": "ndlkotenocr-v3",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9868,
+      0.9981,
+      0.9998
+     ],
+     "cer": [
+      0.284,
+      0.3469,
+      0.4073
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.005,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9919,
+      0.9981,
+      0.9996
+     ],
+     "cer": [
+      0.216,
+      0.2288,
+      0.2405
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.975,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.205202841950654e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.193
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9917,
+      0.9984,
+      0.9996
+     ],
+     "cer": [
+      0.3318,
+      0.3507,
+      0.371
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.375318840247009e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9886,
+      0.9981,
+      0.9997
+     ],
+     "cer": [
+      0.202,
+      0.219,
+      0.2385
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.378375387885389e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.56
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9632,
+      0.9963,
+      0.9994
+     ],
+     "cer": [
+      0.227,
+      0.2626,
+      0.3098
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.362,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.402814622801271e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9636,
+      0.9875,
+      0.9966
+     ],
+     "cer": [
+      0.2385,
+      0.2562,
+      0.2733
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.417,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.431033987698334e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8881,
+      0.926,
+      0.9537
+     ],
+     "cer": [
+      0.2499,
+      0.2635,
+      0.2758
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.21,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.721103896711176e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9917,
+      0.9975,
+      0.9994
+     ],
+     "cer": [
+      0.3068,
+      0.3196,
+      0.3332
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0014847354053820234,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9944,
+      0.9986,
+      0.9996
+     ],
+     "cer": [
+      0.24,
+      0.2534,
+      0.2681
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.46,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0034265376948110714,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9972,
+      0.9995,
+      0.9999
+     ],
+     "cer": [
+      0.299,
+      0.3108,
+      0.3236
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0040035000213023055,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9962,
+      0.9994,
+      0.9999
+     ],
+     "cer": [
+      0.2635,
+      0.2764,
+      0.2915
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.037,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030335682816061277
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9805,
+      0.9973,
+      0.9997
+     ],
+     "cer": [
+      0.2017,
+      0.2311,
+      0.262
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.815,
+     "next_route": "PaddleOCR-VL 1.6 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030473809016028575
+     },
+     "p_best": 0.23
+    }
+   ]
+  },
+  {
+   "chart": "chinese-print",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "chinese-ext",
+   "pages_in_cell": 19,
+   "choice": "agy Gemini 4 Argon low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 4 Argon low (CLI)",
+    "margin x2.0": "Chandra OCR 2 (GPU)"
+   },
+   "best_quality": "agy Gemini 4 Argon low (CLI)",
+   "routes": [
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9938,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.1738,
+      0.2116,
+      0.2536
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.733,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.837025388941795e-09,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.195
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9936,
+      0.9991,
+      0.9999
+     ],
+     "cer": [
+      0.193,
+      0.2396,
+      0.3202
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.417,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 8.980177024684044e-09,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.033
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.98,
+      0.9975,
+      0.9996
+     ],
+     "cer": [
+      0.2393,
+      0.2815,
+      0.334
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.128,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 2.458422614499908e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9681,
+      0.9971,
+      0.9998
+     ],
+     "cer": [
+      0.1897,
+      0.51,
+      0.8698
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.085,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 3.6947126106866925e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9516,
+      0.9924,
+      0.9989
+     ],
+     "cer": [
+      0.3939,
+      0.4999,
+      0.6596
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.186570462759132e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9475,
+      0.9922,
+      0.9988
+     ],
+     "cer": [
+      0.232,
+      0.2799,
+      0.3402
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.145,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.561369895277806e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9805,
+      0.9975,
+      0.9997
+     ],
+     "cer": [
+      0.245,
+      0.2947,
+      0.3537
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.077,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.410270716576319e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9769,
+      0.9968,
+      0.9995
+     ],
+     "cer": [
+      0.1543,
+      0.2038,
+      0.2563
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.418597008608778e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.403
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9692,
+      0.9958,
+      0.9995
+     ],
+     "cer": [
+      0.1895,
+      0.2365,
+      0.2911
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.49,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.4383378884067195e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9443,
+      0.9889,
+      0.9982
+     ],
+     "cer": [
+      0.1884,
+      0.2293,
+      0.2832
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.532,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.5295747329232575e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.062
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.838,
+      0.9587,
+      0.9882
+     ],
+     "cer": [
+      0.1966,
+      0.2382,
+      0.2906
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.453,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.917400207223683e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.02
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9745,
+      0.9963,
+      0.9996
+     ],
+     "cer": [
+      0.2173,
+      0.2681,
+      0.3239
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.242,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.001491419284342695,
+      "agy_plan_share": 3.234842554727723e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9661,
+      0.9939,
+      0.999
+     ],
+     "cer": [
+      0.184,
+      0.2309,
+      0.2829
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.527,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0034557809661340732,
+      "agy_plan_share": 4.4828102889102105e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.098
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9921,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.2109,
+      0.2538,
+      0.3139
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.302,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.004009489149299201,
+      "agy_plan_share": 1.0309871191182317e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9919,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.2183,
+      0.265,
+      0.3182
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.228,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 8.582457811212644e-09,
+      "claude_weekly_points": 0.030359638404662208
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9771,
+      0.9973,
+      0.9997
+     ],
+     "cer": [
+      0.175,
+      0.2183,
+      0.2674
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.662,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 2.879391797094228e-08,
+      "claude_weekly_points": 0.03051190741004997
+     },
+     "p_best": 0.185
+    }
+   ]
+  },
+  {
+   "chart": "english",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "before 1700",
+   "panel": "eebo-tcp-5488",
+   "pages_in_cell": 58,
+   "choice": "Chandra OCR 2 (GPU)",
+   "sensitivity": {
+    "margin x0.5": "claude -p Sonnet 5.5",
+    "margin x2.0": "Chandra OCR 2 (GPU)"
+   },
+   "best_quality": "claude -p Sonnet 5.5",
+   "routes": [
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9845,
+      0.9974,
+      0.9996
+     ],
+     "cer": [
+      0.0793,
+      0.089,
+      0.1024
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9822,
+      0.9959,
+      0.9991
+     ],
+     "cer": [
+      0.0531,
+      0.0608,
+      0.07
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.43,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9779,
+      0.995,
+      0.999
+     ],
+     "cer": [
+      0.084,
+      0.0964,
+      0.1167
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9942,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.0505,
+      0.0588,
+      0.0733
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.512,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9698,
+      0.9973,
+      0.9998
+     ],
+     "cer": [
+      0.0328,
+      0.1075,
+      0.3533
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.217,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9944,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.0445,
+      0.0507,
+      0.0573
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.912,
+     "next_route": "agy Gemini 3.8 Flash high (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.513578167848467e-09,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.107
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9646,
+      0.9939,
+      0.9989
+     ],
+     "cer": [
+      0.0554,
+      0.0639,
+      0.0737
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.253,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.407621267175629e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9623,
+      0.9916,
+      0.9985
+     ],
+     "cer": [
+      0.0432,
+      0.0497,
+      0.0573
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.943,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.4182437769382405e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.193
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9289,
+      0.9828,
+      0.9958
+     ],
+     "cer": [
+      0.0439,
+      0.051,
+      0.0596
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.895,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.4750939815531615e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.113
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9271,
+      0.9757,
+      0.9934
+     ],
+     "cer": [
+      0.0444,
+      0.0525,
+      0.0609
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.843,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.502025517763426e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.07
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9564,
+      0.986,
+      0.9957
+     ],
+     "cer": [
+      0.0538,
+      0.0628,
+      0.0738
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.29,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0015083878328045858,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9003,
+      0.9519,
+      0.9798
+     ],
+     "cer": [
+      0.0421,
+      0.05,
+      0.0587
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.897,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.003612882151044085,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.223
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9936,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.0524,
+      0.0586,
+      0.0662
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.515,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.004007012043631611,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9926,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.0414,
+      0.0488,
+      0.0594
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030367814014011764
+     },
+     "p_best": 0.292
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9665,
+      0.9961,
+      0.9996
+     ],
+     "cer": [
+      0.0296,
+      0.0385,
+      0.0503
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.998,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030577374395167178
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "english",
+   "kind": "prose",
+   "fame": "web transcription",
+   "era": "before 1700",
+   "panel": "eebo-tcp-5488",
+   "pages_in_cell": 0,
+   "choice": "Chandra OCR 2 (GPU)",
+   "sensitivity": {
+    "margin x0.5": "claude -p Sonnet 5.5",
+    "margin x2.0": "Chandra OCR 2 (GPU)"
+   },
+   "best_quality": "claude -p Sonnet 5.5",
+   "routes": [
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9982,
+      0.9998,
+      1.0
+     ],
+     "cer": [
+      0.0793,
+      0.089,
+      0.1024
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9974,
+      0.9998,
+      1.0
+     ],
+     "cer": [
+      0.0531,
+      0.0608,
+      0.07
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.43,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9968,
+      0.9997,
+      1.0
+     ],
+     "cer": [
+      0.084,
+      0.0964,
+      0.1167
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9995,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0505,
+      0.0588,
+      0.0733
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.512,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9961,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0328,
+      0.1075,
+      0.3533
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.217,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9994,
+      1.0,
+      1.0
+     ],
+     "cer": [
+      0.0445,
+      0.0507,
+      0.0573
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.912,
+     "next_route": "agy Gemini 3.8 Flash high (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.434717752867311e-10,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.107
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8831,
+      0.9781,
+      0.9959
+     ],
+     "cer": [
+      0.0554,
+      0.0639,
+      0.0737
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.253,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.530373131361411e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8717,
+      0.9688,
+      0.9944
+     ],
+     "cer": [
+      0.0432,
+      0.0497,
+      0.0573
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.943,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.570668133061359e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.193
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7961,
+      0.9409,
+      0.9836
+     ],
+     "cer": [
+      0.0439,
+      0.051,
+      0.0596
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.895,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.754830407471595e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.113
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7877,
+      0.9177,
+      0.9753
+     ],
+     "cer": [
+      0.0444,
+      0.0525,
+      0.0609
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.843,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.851197119437804e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.07
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6892,
+      0.8817,
+      0.9582
+     ],
+     "cer": [
+      0.0538,
+      0.0628,
+      0.0738
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.29,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0017340516342530627,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7577,
+      0.8958,
+      0.9638
+     ],
+     "cer": [
+      0.0421,
+      0.05,
+      0.0587
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.897,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0039071553521396385,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.223
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9993,
+      1.0,
+      1.0
+     ],
+     "cer": [
+      0.0524,
+      0.0586,
+      0.0662
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.515,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.004000749820435596,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9886,
+      0.9994,
+      1.0
+     ],
+     "cer": [
+      0.0414,
+      0.0488,
+      0.0594
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030394370376893746
+     },
+     "p_best": 0.292
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9556,
+      0.9971,
+      0.9999
+     ],
+     "cer": [
+      0.0296,
+      0.0385,
+      0.0503
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.998,
+     "next_route": "Chandra OCR 2 (GPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030648829906065957
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "english-1880-1930-dense",
+   "kind": "number-dense",
+   "fame": "no web transcription",
+   "era": "1880 on",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 0,
+   "choice": null,
+   "sensitivity": {
+    "margin x0.5": null,
+    "margin x2.0": null
+   },
+   "best_quality": "Internet Archive text (djvu)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9566,
+      0.9952,
+      0.9995
+     ],
+     "cer": [
+      0.0466,
+      0.0676,
+      0.0979
+     ],
+     "number_errors": [
+      0.1518,
+      0.1813,
+      0.2103
+     ],
+     "p_clears_bar": 0.163,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.815
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9445,
+      0.9928,
+      0.999
+     ],
+     "cer": [
+      0.035,
+      0.0528,
+      0.0813
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.6 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.510304569204373e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8895,
+      0.9873,
+      0.9985
+     ],
+     "cer": [
+      0.0257,
+      0.0392,
+      0.0602
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash high (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.623472799421344e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7509,
+      0.9555,
+      0.9947
+     ],
+     "cer": [
+      0.0238,
+      0.0385,
+      0.0615
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.7 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.1226693111502385e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6994,
+      0.829,
+      0.9195
+     ],
+     "cer": [
+      0.028,
+      0.0426,
+      0.0632
+     ],
+     "number_errors": [
+      0.1648,
+      0.2137,
+      0.2687
+     ],
+     "p_clears_bar": 0.445,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.324648282862711e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.185
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.95,
+      0.9785,
+      0.9924
+     ],
+     "cer": [
+      0.0324,
+      0.0484,
+      0.0733
+     ],
+     "number_errors": [
+      0.2545,
+      0.2903,
+      0.3329
+     ],
+     "p_clears_bar": 0.005,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.0015551034812866888,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    }
+   ]
+  },
+  {
+   "chart": "english-1880-1930-dense",
+   "kind": "number-dense",
+   "fame": "web transcription",
+   "era": "1880 on",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 34,
+   "choice": null,
+   "sensitivity": {
+    "margin x0.5": null,
+    "margin x2.0": null
+   },
+   "best_quality": "Internet Archive text (djvu)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.974,
+      0.9987,
+      0.9999
+     ],
+     "cer": [
+      0.0466,
+      0.0676,
+      0.0979
+     ],
+     "number_errors": [
+      0.1518,
+      0.1813,
+      0.2103
+     ],
+     "p_clears_bar": 0.163,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.815
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8281,
+      0.9725,
+      0.9957
+     ],
+     "cer": [
+      0.035,
+      0.0528,
+      0.0813
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.6 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.864832198604924e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7328,
+      0.952,
+      0.9939
+     ],
+     "cer": [
+      0.0257,
+      0.0392,
+      0.0602
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash high (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.198799910985578e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.4931,
+      0.8618,
+      0.9822
+     ],
+     "cer": [
+      0.0238,
+      0.0385,
+      0.0615
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.7 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.622772492105896e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.417,
+      0.6195,
+      0.7921
+     ],
+     "cer": [
+      0.028,
+      0.0426,
+      0.0632
+     ],
+     "number_errors": [
+      0.1648,
+      0.2137,
+      0.2687
+     ],
+     "p_clears_bar": 0.445,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.0200544700773524e-05,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.185
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6757,
+      0.8327,
+      0.9361
+     ],
+     "cer": [
+      0.0324,
+      0.0484,
+      0.0733
+     ],
+     "number_errors": [
+      0.2545,
+      0.2903,
+      0.3329
+     ],
+     "p_clears_bar": 0.005,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.0021240242088750596,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    }
+   ]
+  },
+  {
+   "chart": "english-1880-1930-prose",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "1880 on",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 0,
+   "choice": "Internet Archive text (djvu)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 3.8 Flash low (CLI)",
+    "margin x2.0": "Internet Archive text (djvu)"
+   },
+   "best_quality": "agy Gemini 3.8 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9795,
+      0.9978,
+      0.9998
+     ],
+     "cer": [
+      0.0053,
+      0.0077,
+      0.0132
+     ],
+     "number_errors": [
+      0.0497,
+      0.1104,
+      0.2332
+     ],
+     "p_clears_bar": 0.965,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 2.3895461747329475e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9768,
+      0.9975,
+      0.9997
+     ],
+     "cer": [
+      0.0035,
+      0.0054,
+      0.019
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.93,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.393248077053739e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9612,
+      0.9951,
+      0.9994
+     ],
+     "cer": [
+      0.0025,
+      0.0036,
+      0.0059
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.988,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.407474664823212e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9063,
+      0.9858,
+      0.998
+     ],
+     "cer": [
+      0.0024,
+      0.0036,
+      0.0058
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.998,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.484559672196215e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8972,
+      0.9534,
+      0.9804
+     ],
+     "cer": [
+      0.0027,
+      0.0039,
+      0.0071
+     ],
+     "number_errors": [
+      0.0426,
+      0.1055,
+      0.2148
+     ],
+     "p_clears_bar": 1.0,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.6007146965869445e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.637
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9772,
+      0.9908,
+      0.9963
+     ],
+     "cer": [
+      0.003,
+      0.0043,
+      0.0067
+     ],
+     "number_errors": [
+      0.049,
+      0.1035,
+      0.2099
+     ],
+     "p_clears_bar": 0.99,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0014959703415442038,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.36
+    }
+   ]
+  },
+  {
+   "chart": "english-1880-1930-prose",
+   "kind": "prose",
+   "fame": "web transcription",
+   "era": "1880 on",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 41,
+   "choice": "Internet Archive text (djvu)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 3.8 Flash low (CLI)",
+    "margin x2.0": "Internet Archive text (djvu)"
+   },
+   "best_quality": "agy Gemini 3.8 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9894,
+      0.9994,
+      1.0
+     ],
+     "cer": [
+      0.0053,
+      0.0077,
+      0.0132
+     ],
+     "number_errors": [
+      0.0497,
+      0.1104,
+      0.2332
+     ],
+     "p_clears_bar": 0.965,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.2794681219963054e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9111,
+      0.9903,
+      0.9989
+     ],
+     "cer": [
+      0.0035,
+      0.0054,
+      0.019
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.93,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.47479161054184e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8865,
+      0.9798,
+      0.9978
+     ],
+     "cer": [
+      0.0025,
+      0.0036,
+      0.0059
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.988,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.529209197097607e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7658,
+      0.9505,
+      0.993
+     ],
+     "cer": [
+      0.0024,
+      0.0036,
+      0.0058
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.998,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.778765066137409e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7345,
+      0.8603,
+      0.9383
+     ],
+     "cer": [
+      0.0027,
+      0.0039,
+      0.0071
+     ],
+     "number_errors": [
+      0.0426,
+      0.1055,
+      0.2148
+     ],
+     "p_clears_bar": 1.0,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.169063455598196e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.637
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8134,
+      0.9192,
+      0.9661
+     ],
+     "cer": [
+      0.003,
+      0.0043,
+      0.0067
+     ],
+     "number_errors": [
+      0.049,
+      0.1035,
+      0.2099
+     ],
+     "p_clears_bar": 0.99,
+     "next_route": "Internet Archive text (djvu)",
+     "cost_per_usable_page": {
+      "usd": 0.0016360760514093275,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.36
+    }
+   ]
+  },
+  {
+   "chart": "english-pre1880-dense",
+   "kind": "number-dense",
+   "fame": "no web transcription",
+   "era": "1700-1879",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 0,
+   "choice": "agy Gemini 3.8 Flash low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 3.8 Flash low (CLI)",
+    "margin x2.0": "agy Gemini 3.8 Flash low (CLI)"
+   },
+   "best_quality": "agy Gemini 3.8 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9362,
+      0.9941,
+      0.9997
+     ],
+     "cer": [
+      0.0428,
+      0.0626,
+      0.0882
+     ],
+     "number_errors": [
+      0.2792,
+      0.33,
+      0.3862
+     ],
+     "p_clears_bar": 0.01,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.369953350997582e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.013
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9488,
+      0.992,
+      0.999
+     ],
+     "cer": [
+      0.0278,
+      0.0413,
+      0.0671
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.507365294765956e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8815,
+      0.9856,
+      0.9986
+     ],
+     "cer": [
+      0.0196,
+      0.0314,
+      0.0489
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.658023566408101e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7897,
+      0.9516,
+      0.993
+     ],
+     "cer": [
+      0.0198,
+      0.0314,
+      0.0489
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.072345196237803e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7927,
+      0.905,
+      0.9594
+     ],
+     "cer": [
+      0.0216,
+      0.0329,
+      0.0489
+     ],
+     "number_errors": [
+      0.2018,
+      0.2492,
+      0.2964
+     ],
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.439344392526792e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.583
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.954,
+      0.9863,
+      0.9961
+     ],
+     "cer": [
+      0.0264,
+      0.0371,
+      0.0575
+     ],
+     "number_errors": [
+      0.2108,
+      0.2566,
+      0.3096
+     ],
+     "p_clears_bar": 0.545,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0015062533459716076,
+      "agy_plan_share": 8.422076250625221e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.405
+    }
+   ]
+  },
+  {
+   "chart": "english-pre1880-dense",
+   "kind": "number-dense",
+   "fame": "web transcription",
+   "era": "1700-1879",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 22,
+   "choice": "agy Gemini 3.8 Flash low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 3.8 Flash low (CLI)",
+    "margin x2.0": "agy Gemini 3.8 Flash low (CLI)"
+   },
+   "best_quality": "agy Gemini 3.8 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9725,
+      0.9983,
+      1.0
+     ],
+     "cer": [
+      0.0428,
+      0.0626,
+      0.0882
+     ],
+     "number_errors": [
+      0.2792,
+      0.33,
+      0.3862
+     ],
+     "p_clears_bar": 0.01,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.33515819924329e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.013
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8367,
+      0.9688,
+      0.9957
+     ],
+     "cer": [
+      0.0278,
+      0.0413,
+      0.0671
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.904815988415283e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6756,
+      0.9499,
+      0.9953
+     ],
+     "cer": [
+      0.0196,
+      0.0314,
+      0.0489
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.37797099770549e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.5416,
+      0.8592,
+      0.9738
+     ],
+     "cer": [
+      0.0198,
+      0.0314,
+      0.0489
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.613438478651508e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.5377,
+      0.7482,
+      0.8812
+     ],
+     "cer": [
+      0.0216,
+      0.0329,
+      0.0489
+     ],
+     "number_errors": [
+      0.2018,
+      0.2492,
+      0.2964
+     ],
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.68499108816282e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.583
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7276,
+      0.8849,
+      0.9626
+     ],
+     "cer": [
+      0.0264,
+      0.0371,
+      0.0575
+     ],
+     "number_errors": [
+      0.2108,
+      0.2566,
+      0.3096
+     ],
+     "p_clears_bar": 0.545,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0017193672166516988,
+      "agy_plan_share": 7.765510189812966e-07,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.405
+    }
+   ]
+  },
+  {
+   "chart": "english-pre1880-prose",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "1700-1879",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 0,
+   "choice": "agy Gemini 3.8 Flash low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 3.8 Flash low (CLI)",
+    "margin x2.0": "agy Gemini 3.8 Flash low (CLI)"
+   },
+   "best_quality": "agy Gemini 3.8 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9816,
+      0.998,
+      0.9998
+     ],
+     "cer": [
+      0.0359,
+      0.0547,
+      0.0833
+     ],
+     "number_errors": [
+      0.194,
+      0.3632,
+      0.639
+     ],
+     "p_clears_bar": 0.087,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 2.040191373705295e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.007
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9829,
+      0.9976,
+      0.9997
+     ],
+     "cer": [
+      0.022,
+      0.0342,
+      0.0591
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.667,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.40744822709042e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.961,
+      0.9951,
+      0.9994
+     ],
+     "cer": [
+      0.0167,
+      0.0254,
+      0.0401
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.97,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.455702556119513e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9082,
+      0.986,
+      0.9981
+     ],
+     "cer": [
+      0.0161,
+      0.0244,
+      0.039
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.993,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.593780867102298e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9072,
+      0.9574,
+      0.9824
+     ],
+     "cer": [
+      0.0171,
+      0.0263,
+      0.041
+     ],
+     "number_errors": [
+      0.2136,
+      0.3807,
+      0.6885
+     ],
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.802196342617734e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.61
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9811,
+      0.9947,
+      0.9983
+     ],
+     "cer": [
+      0.0191,
+      0.0283,
+      0.0439
+     ],
+     "number_errors": [
+      0.2287,
+      0.3999,
+      0.6847
+     ],
+     "p_clears_bar": 0.843,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.00149064971851746,
+      "agy_plan_share": 3.257423768426841e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.383
+    }
+   ]
+  },
+  {
+   "chart": "english-pre1880-prose",
+   "kind": "prose",
+   "fame": "web transcription",
+   "era": "1700-1879",
+   "panel": "english-ia-5124",
+   "pages_in_cell": 25,
+   "choice": "agy Gemini 3.8 Flash low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 3.8 Flash low (CLI)",
+    "margin x2.0": "agy Gemini 3.8 Flash low (CLI)"
+   },
+   "best_quality": "agy Gemini 3.8 Flash low (CLI)",
+   "routes": [
+    {
+     "route": "Internet Archive text (djvu)",
+     "engine": "ia-djvu",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9916,
+      0.9995,
+      1.0
+     ],
+     "cer": [
+      0.0359,
+      0.0547,
+      0.0833
+     ],
+     "number_errors": [
+      0.194,
+      0.3632,
+      0.639
+     ],
+     "p_clears_bar": 0.087,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.0491518568957833e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.007
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9353,
+      0.9906,
+      0.9988
+     ],
+     "cer": [
+      0.022,
+      0.0342,
+      0.0591
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.667,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.539008242418212e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8764,
+      0.982,
+      0.9978
+     ],
+     "cer": [
+      0.0167,
+      0.0254,
+      0.0401
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.97,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.7140914414839735e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7579,
+      0.9477,
+      0.9928
+     ],
+     "cer": [
+      0.0161,
+      0.0244,
+      0.039
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.993,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.142380668125875e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.7421,
+      0.8693,
+      0.9419
+     ],
+     "cer": [
+      0.0171,
+      0.0263,
+      0.041
+     ],
+     "number_errors": [
+      0.2136,
+      0.3807,
+      0.6885
+     ],
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.82914691601302e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.61
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8461,
+      0.9488,
+      0.9841
+     ],
+     "cer": [
+      0.0191,
+      0.0283,
+      0.0439
+     ],
+     "number_errors": [
+      0.2287,
+      0.3999,
+      0.6847
+     ],
+     "p_clears_bar": 0.843,
+     "next_route": "agy Gemini 3.8 Flash low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0015878352793160478,
+      "agy_plan_share": 3.3217557311775937e-07,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.383
+    }
+   ]
+  },
+  {
+   "chart": "greek",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "1700-1879",
+   "panel": "greek-ext",
+   "pages_in_cell": 146,
+   "choice": "agy Gemini 4 Argon low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 4 Argon low (CLI)",
+    "margin x2.0": "agy Gemini 4 Argon low (CLI)"
+   },
+   "best_quality": "agy Gemini 4 Argon low (CLI)",
+   "routes": [
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9939,
+      0.9991,
+      0.9999
+     ],
+     "cer": [
+      0.2519,
+      0.275,
+      0.308
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.69914357705324e-09,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9934,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.203,
+      0.2209,
+      0.2364
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.911996291609161e-09,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Surya 2 (GPU)",
+     "engine": "surya2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9849,
+      0.9985,
+      0.9999
+     ],
+     "cer": [
+      0.1633,
+      0.1936,
+      0.2266
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.7293860585277434e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9662,
+      0.9967,
+      0.9998
+     ],
+     "cer": [
+      0.2333,
+      0.4663,
+      0.7191
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 3.7509679140203696e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9499,
+      0.9889,
+      0.9975
+     ],
+     "cer": [
+      0.414,
+      0.4404,
+      0.4696
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.458534987427166e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8797,
+      0.933,
+      0.9661
+     ],
+     "cer": [
+      0.3708,
+      0.3957,
+      0.4227
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 3.1542367895744364e-07,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.5722,
+      0.6719,
+      0.7735
+     ],
+     "cer": [
+      0.4428,
+      0.4778,
+      0.524
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.4559226146412243e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9904,
+      0.9985,
+      0.9998
+     ],
+     "cer": [
+      0.1228,
+      0.1447,
+      0.1795
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.387780982533585e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9819,
+      0.9951,
+      0.9988
+     ],
+     "cer": [
+      0.0716,
+      0.0835,
+      0.101
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.42302522718231e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.432
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9612,
+      0.9957,
+      0.9996
+     ],
+     "cer": [
+      0.0741,
+      0.0935,
+      0.1191
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.605,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.451740042411062e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9518,
+      0.9827,
+      0.9942
+     ],
+     "cer": [
+      0.0771,
+      0.0881,
+      0.1013
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.797,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.553612933797178e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.18
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9152,
+      0.9549,
+      0.9765
+     ],
+     "cer": [
+      0.0908,
+      0.1025,
+      0.1188
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.282,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.798667477901294e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9907,
+      0.9975,
+      0.9993
+     ],
+     "cer": [
+      0.1169,
+      0.1302,
+      0.1462
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.01,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0014851696950933541,
+      "agy_plan_share": 1.5248856129091643e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9832,
+      0.994,
+      0.9981
+     ],
+     "cer": [
+      0.0733,
+      0.084,
+      0.0945
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.91,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.003446124076763227,
+      "agy_plan_share": 3.3161843922415745e-08,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.352
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9935,
+      0.9993,
+      0.9999
+     ],
+     "cer": [
+      0.2112,
+      0.2291,
+      0.2452
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.004007541215517384,
+      "agy_plan_share": 8.128522064605783e-09,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9892,
+      0.9988,
+      0.9999
+     ],
+     "cer": [
+      0.1043,
+      0.1288,
+      0.1553
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.037,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.3291687510414113e-08,
+      "claude_weekly_points": 0.03039435249070702
+     },
+     "p_best": null
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.963,
+      0.9929,
+      0.999
+     ],
+     "cer": [
+      0.0828,
+      0.1012,
+      0.1267
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.398,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.9910872079111304e-08,
+      "claude_weekly_points": 0.03065556919991109
+     },
+     "p_best": 0.035
+    }
+   ]
+  },
+  {
+   "chart": "greek-manuscript",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "greek-ms-6731",
+   "pages_in_cell": 64,
+   "choice": "agy Gemini 4 Argon low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 4 Argon low (CLI)",
+    "margin x2.0": "agy Gemini 4 Argon low (CLI)"
+   },
+   "best_quality": "agy Gemini 4 Argon low (CLI)",
+   "routes": [
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9867,
+      0.9979,
+      0.9996
+     ],
+     "cer": [
+      0.2032,
+      0.2267,
+      0.2501
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.39932509939962e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 1.0
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9807,
+      0.9972,
+      0.9996
+     ],
+     "cer": [
+      0.3642,
+      0.41,
+      0.4644
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.413813964908415e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9595,
+      0.9952,
+      0.9995
+     ],
+     "cer": [
+      0.304,
+      0.35,
+      0.4036
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.451258820376681e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9199,
+      0.9835,
+      0.9972
+     ],
+     "cer": [
+      0.3011,
+      0.3452,
+      0.3905
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.005,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.619645153077557e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6338,
+      0.7456,
+      0.8356
+     ],
+     "cer": [
+      0.3334,
+      0.363,
+      0.3919
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.0190172280121e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9895,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.3012,
+      0.3515,
+      0.3989
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.003,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.2239979739031031e-08,
+      "claude_weekly_points": 0.030386536048170886
+     },
+     "p_best": null
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9702,
+      0.997,
+      0.9997
+     ],
+     "cer": [
+      0.2473,
+      0.2884,
+      0.338
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.168,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 3.1967496088032005e-08,
+      "claude_weekly_points": 0.030528877204265184
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "hebrew",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "ref-pinned",
+   "pages_in_cell": 10,
+   "choice": "claude -p Opus 5.5",
+   "sensitivity": {
+    "margin x0.5": "claude -p Opus 5.5",
+    "margin x2.0": "claude -p Opus 5.5"
+   },
+   "best_quality": "claude -p Opus 5.5",
+   "routes": [
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9924,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.1326,
+      0.2113,
+      0.3332
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.273,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 5.998812828636386e-05
+     },
+     "p_best": 0.17
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9927,
+      0.9991,
+      0.9999
+     ],
+     "cer": [
+      0.5223,
+      0.6996,
+      0.8479
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.003,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 6.061106240012142e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9724,
+      0.9967,
+      0.9995
+     ],
+     "cer": [
+      0.2559,
+      0.4034,
+      0.6256
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.037,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.00023065277743856752
+     },
+     "p_best": null
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9574,
+      0.9973,
+      0.9998
+     ],
+     "cer": [
+      0.5972,
+      0.9022,
+      0.99
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0002833018835174446
+     },
+     "p_best": null
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9635,
+      0.9939,
+      0.999
+     ],
+     "cer": [
+      0.678,
+      0.8114,
+      0.9039
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0003301609632054692
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9564,
+      0.9913,
+      0.9987
+     ],
+     "cer": [
+      0.2465,
+      0.3777,
+      0.5756
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.055,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0004314381630863004
+     },
+     "p_best": null
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9936,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.1718,
+      0.2628,
+      0.4145
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.145,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.004007758682258976,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 5.8785097141419454e-05
+     },
+     "p_best": 0.037
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9889,
+      0.9986,
+      0.9999
+     ],
+     "cer": [
+      0.0811,
+      0.1364,
+      0.2875
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.647,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.03047835067184331
+     },
+     "p_best": null
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9708,
+      0.9968,
+      0.9996
+     ],
+     "cer": [
+      0.074,
+      0.1358,
+      0.3209
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.03078315364941034
+     },
+     "p_best": 0.792
+    }
+   ]
+  },
+  {
+   "chart": "latin",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "before 1700",
+   "panel": "ref-ws",
+   "pages_in_cell": 106,
+   "choice": "claude -p Sonnet 5.5",
+   "sensitivity": {
+    "margin x0.5": "claude -p Sonnet 5.5",
+    "margin x2.0": "claude -p Sonnet 5.5"
+   },
+   "best_quality": "agy Gemini 3.8 Flash high (CLI)",
+   "routes": [
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9951,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.1086,
+      0.1796,
+      0.2769
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.22,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 4.596578617080233e-05
+     },
+     "p_best": 0.013
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9929,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.2549,
+      0.3527,
+      0.4552
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.003,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 5.646264846632136e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Surya 2 (GPU)",
+     "engine": "surya2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9902,
+      0.9988,
+      0.9999
+     ],
+     "cer": [
+      0.1748,
+      0.2603,
+      0.3534
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.03,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 8.691056055382628e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9804,
+      0.9976,
+      0.9997
+     ],
+     "cer": [
+      0.3114,
+      0.4023,
+      0.512
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.005,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.00016046823630798269
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9816,
+      0.9961,
+      0.9989
+     ],
+     "cer": [
+      0.3406,
+      0.4237,
+      0.5086
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.003,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0001803547715232938
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9559,
+      0.9962,
+      0.9998
+     ],
+     "cer": [
+      0.5017,
+      0.7494,
+      0.9234
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.00030675415667717493
+     },
+     "p_best": null
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9635,
+      0.9934,
+      0.9991
+     ],
+     "cer": [
+      0.2383,
+      0.3298,
+      0.4226
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.007,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.00032647876264037647
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9838,
+      0.9968,
+      0.9995
+     ],
+     "cer": [
+      0.053,
+      0.1102,
+      0.2734
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.58,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.385129021744886e-06,
+      "claude_weekly_points": 0.0001509245096278841
+     },
+     "p_best": 0.355
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9778,
+      0.9953,
+      0.9989
+     ],
+     "cer": [
+      0.1639,
+      0.2447,
+      0.3579
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.068,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.395996712579989e-06,
+      "claude_weekly_points": 0.00022243328116866855
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9665,
+      0.9864,
+      0.9952
+     ],
+     "cer": [
+      0.0704,
+      0.1264,
+      0.211
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.497,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.432664058847479e-06,
+      "claude_weekly_points": 0.0004729298602122141
+     },
+     "p_best": 0.172
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9541,
+      0.9801,
+      0.9918
+     ],
+     "cer": [
+      0.0905,
+      0.152,
+      0.2672
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.333,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.470293305279941e-06,
+      "claude_weekly_points": 0.0007204958242172898
+     },
+     "p_best": 0.05
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9921,
+      0.9968,
+      0.9989
+     ],
+     "cer": [
+      0.1681,
+      0.2323,
+      0.3166
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.062,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0014854444770969963,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.00011114905124396814
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9716,
+      0.9895,
+      0.9962
+     ],
+     "cer": [
+      0.0814,
+      0.1299,
+      0.2077
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.497,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0034626807906293815,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0003721637495807263
+     },
+     "p_best": 0.085
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9918,
+      0.9993,
+      0.9999
+     ],
+     "cer": [
+      0.1371,
+      0.208,
+      0.3017
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.117,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0040074024891378415,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 5.582613052295259e-05
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9908,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.0606,
+      0.1086,
+      0.2087
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030431138235853177
+     },
+     "p_best": 0.323
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.969,
+      0.996,
+      0.9995
+     ],
+     "cer": [
+      0.064,
+      0.1592,
+      0.3543
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.395,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030861521542615164
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "latin-script-other",
+   "kind": "prose",
+   "fame": "web transcription",
+   "era": "1700-1879",
+   "panel": "ref-ws",
+   "pages_in_cell": 30,
+   "choice": "claude -p Sonnet 5.5",
+   "sensitivity": {
+    "margin x0.5": "claude -p Sonnet 5.5",
+    "margin x2.0": "claude -p Sonnet 5.5"
+   },
+   "best_quality": "claude -p Sonnet 5.5",
+   "routes": [
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9991,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0529,
+      0.1062,
+      0.2211
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.025,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 7.950045546258122e-06
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9989,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0262,
+      0.0384,
+      0.0865
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.265,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 9.380312777794934e-06
+     },
+     "p_best": 0.005
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9973,
+      0.9998,
+      1.0
+     ],
+     "cer": [
+      0.0683,
+      0.1051,
+      0.1734
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.01,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 1.9027171367559187e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9958,
+      0.9998,
+      1.0
+     ],
+     "cer": [
+      0.2325,
+      0.5555,
+      0.8596
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 3.312971289370868e-05
+     },
+     "p_best": null
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9956,
+      0.9996,
+      1.0
+     ],
+     "cer": [
+      0.0439,
+      0.0705,
+      0.142
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.052,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 3.7694865013182274e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Surya 2 (GPU)",
+     "engine": "surya2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9925,
+      0.9995,
+      1.0
+     ],
+     "cer": [
+      0.0432,
+      0.0687,
+      0.1183
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.043,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 4.684607058877825e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9942,
+      0.9995,
+      1.0
+     ],
+     "cer": [
+      0.0855,
+      0.1527,
+      0.2619
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.003,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 4.817682387638026e-05
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9578,
+      0.9933,
+      0.9992
+     ],
+     "cer": [
+      0.0227,
+      0.0555,
+      0.1424
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.212,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.418423823328808e-06,
+      "claude_weekly_points": 0.0003717839751124047
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8751,
+      0.9844,
+      0.9982
+     ],
+     "cer": [
+      0.0085,
+      0.017,
+      0.1036
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.74,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.518736698525565e-06,
+      "claude_weekly_points": 0.0009710056224608602
+     },
+     "p_best": null
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9031,
+      0.9697,
+      0.9914
+     ],
+     "cer": [
+      0.0156,
+      0.0275,
+      0.0628
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.57,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.001540522762562618,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0011634663506007723
+     },
+     "p_best": 0.075
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9155,
+      0.9758,
+      0.9933
+     ],
+     "cer": [
+      0.0097,
+      0.0201,
+      0.0463
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.785,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0035358435207089424,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.000977611509446562
+     },
+     "p_best": 0.352
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9991,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0296,
+      0.0505,
+      0.1284
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.133,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.004000879572226212,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 6.682894575274872e-06
+     },
+     "p_best": 0.003
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6179,
+      0.7685,
+      0.8708
+     ],
+     "cer": [
+      0.0124,
+      0.0319,
+      0.0989
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.48,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.819398738781181e-06,
+      "claude_weekly_points": 0.007353183989419742
+     },
+     "p_best": 0.122
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.5607,
+      0.7451,
+      0.8691
+     ],
+     "cer": [
+      0.0148,
+      0.0382,
+      0.1154
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.393,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.078053867797688e-06,
+      "claude_weekly_points": 0.008102112941127367
+     },
+     "p_best": 0.07
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9803,
+      0.9993,
+      1.0
+     ],
+     "cer": [
+      0.0105,
+      0.0187,
+      0.0617
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030576527689209314
+     },
+     "p_best": 0.37
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9422,
+      0.9972,
+      0.9999
+     ],
+     "cer": [
+      0.0102,
+      0.023,
+      0.105
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.623,
+     "next_route": "claude -p Sonnet 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.031128812115404574
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "rashi",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "rashi-6731",
+   "pages_in_cell": 58,
+   "choice": "agy Gemini 4 Argon low (CLI)",
+   "sensitivity": {
+    "margin x0.5": "agy Gemini 4 Argon low (CLI)",
+    "margin x2.0": "agy Gemini 4 Argon low (CLI)"
+   },
+   "best_quality": "agy Gemini 4 Argon low (CLI)",
+   "routes": [
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9754,
+      0.9976,
+      0.9997
+     ],
+     "cer": [
+      0.3917,
+      0.4641,
+      0.5471
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.41461362223879e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9691,
+      0.995,
+      0.9995
+     ],
+     "cer": [
+      0.3371,
+      0.4019,
+      0.4675
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.454964714412211e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9579,
+      0.9895,
+      0.9969
+     ],
+     "cer": [
+      0.3619,
+      0.4211,
+      0.4791
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.494194720302818e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9412,
+      0.9882,
+      0.9975
+     ],
+     "cer": [
+      0.1846,
+      0.2278,
+      0.2734
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.527989078550312e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 1.0
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9185,
+      0.9865,
+      0.998
+     ],
+     "cer": [
+      0.3266,
+      0.3908,
+      0.4572
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.573751971848153e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9889,
+      0.9988,
+      0.9999
+     ],
+     "cer": [
+      0.2827,
+      0.3432,
+      0.4161
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.03,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.3103554528733697e-08,
+      "claude_weekly_points": 0.030390643887235554
+     },
+     "p_best": null
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9567,
+      0.9967,
+      0.9996
+     ],
+     "cer": [
+      0.2258,
+      0.2877,
+      0.3548
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.273,
+     "next_route": "agy Gemini 4 Argon low (CLI)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.597314205690329e-08,
+      "claude_weekly_points": 0.030633882989826108
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "syriac",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "syriac-gt",
+   "pages_in_cell": 40,
+   "choice": "Sophro (GPU/CPU)",
+   "sensitivity": {
+    "margin x0.5": "Sophro (GPU/CPU)",
+    "margin x2.0": "Sophro (GPU/CPU)"
+   },
+   "best_quality": "Sophro (GPU/CPU)",
+   "routes": [
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9749,
+      0.9971,
+      0.9996
+     ],
+     "cer": [
+      0.9227,
+      0.958,
+      0.9857
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9462,
+      0.9925,
+      0.9991
+     ],
+     "cer": [
+      0.9222,
+      0.9564,
+      0.986
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9929,
+      0.9994,
+      0.9999
+     ],
+     "cer": [
+      0.89,
+      0.9227,
+      0.9484
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9644,
+      0.9942,
+      0.9991
+     ],
+     "cer": [
+      0.9826,
+      0.9911,
+      0.996
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9923,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.984,
+      0.9943,
+      0.9983
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9676,
+      0.9974,
+      0.9998
+     ],
+     "cer": [
+      0.9757,
+      0.9976,
+      0.9997
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Kraken OmniSyr (GPU/CPU)",
+     "engine": "omnisyr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.969,
+      0.9973,
+      0.9998
+     ],
+     "cer": [
+      0.6418,
+      0.689,
+      0.7368
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Sophro (GPU/CPU)",
+     "engine": "sophro-defaultseg",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9622,
+      0.9974,
+      0.9998
+     ],
+     "cer": [
+      0.3657,
+      0.419,
+      0.4736
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 1.0
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9795,
+      0.9974,
+      0.9998
+     ],
+     "cer": [
+      0.8481,
+      0.881,
+      0.9158
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.386873479072591e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9779,
+      0.9972,
+      0.9995
+     ],
+     "cer": [
+      0.5976,
+      0.6514,
+      0.7258
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.39186417251546e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9748,
+      0.9959,
+      0.9996
+     ],
+     "cer": [
+      0.7186,
+      0.7711,
+      0.8801
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.398949347963072e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9332,
+      0.9882,
+      0.9977
+     ],
+     "cer": [
+      0.7166,
+      0.7532,
+      0.8024
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.452934954423918e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9001,
+      0.9758,
+      0.9945
+     ],
+     "cer": [
+      0.7467,
+      0.7825,
+      0.8213
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.52208554490393e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9796,
+      0.9967,
+      0.9996
+     ],
+     "cer": [
+      0.8129,
+      0.8579,
+      0.9094
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0014890656568480002,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9691,
+      0.9947,
+      0.9991
+     ],
+     "cer": [
+      0.6865,
+      0.748,
+      0.8201
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0034555280729239362,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9899,
+      0.9991,
+      0.9999
+     ],
+     "cer": [
+      0.909,
+      0.9318,
+      0.9519
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Sophro (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0040133410881103265,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    }
+   ]
+  },
+  {
+   "chart": "syriac-print",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": "syriac-print-6295",
+   "pages_in_cell": 20,
+   "choice": "Kraken OmniSyr (GPU/CPU)",
+   "sensitivity": {
+    "margin x0.5": "Kraken OmniSyr (GPU/CPU)",
+    "margin x2.0": "Kraken OmniSyr (GPU/CPU)"
+   },
+   "best_quality": "Kraken OmniSyr (GPU/CPU)",
+   "routes": [
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "engine": "paddleocr-vl-1.6",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9727,
+      0.9971,
+      0.9997
+     ],
+     "cer": [
+      0.5646,
+      0.6897,
+      0.8444
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "engine": "olmocr-2-7b-fp8",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9385,
+      0.9929,
+      0.9992
+     ],
+     "cer": [
+      0.5361,
+      0.6703,
+      0.8208
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "engine": "chandra-ocr-2",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9915,
+      0.9992,
+      0.9999
+     ],
+     "cer": [
+      0.4064,
+      0.516,
+      0.6303
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "DeepSeek-OCR (GPU)",
+     "engine": "deepseek-ocr",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9377,
+      0.9917,
+      0.999
+     ],
+     "cer": [
+      0.7354,
+      0.8691,
+      0.9654
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "Qwen3-VL 8B (GPU)",
+     "engine": "qwen3-vl-8b",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9876,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.5467,
+      0.7153,
+      0.8813
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "MinerU (GPU)",
+     "engine": "mineru",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9657,
+      0.9975,
+      0.9998
+     ],
+     "cer": [
+      0.8855,
+      0.9805,
+      0.9976
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Kraken OmniSyr (GPU/CPU)",
+     "engine": "omnisyr",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9768,
+      0.9974,
+      0.9998
+     ],
+     "cer": [
+      0.1387,
+      0.1724,
+      0.2187
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 1.0
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.983,
+      0.998,
+      0.9997
+     ],
+     "cer": [
+      0.5273,
+      0.6105,
+      0.6854
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.381172768703812e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 4 Argon low (CLI)",
+     "engine": "gemini-4-argon-low+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9804,
+      0.997,
+      0.9995
+     ],
+     "cer": [
+      0.2852,
+      0.336,
+      0.4002
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3908425378574896e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9675,
+      0.9954,
+      0.9994
+     ],
+     "cer": [
+      0.4163,
+      0.4901,
+      0.5854
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.406795449999486e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9389,
+      0.9881,
+      0.9977
+     ],
+     "cer": [
+      0.4504,
+      0.5133,
+      0.589
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.453632897542705e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9409,
+      0.9846,
+      0.9964
+     ],
+     "cer": [
+      0.4702,
+      0.5325,
+      0.6162
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.468568963134585e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9778,
+      0.9962,
+      0.9994
+     ],
+     "cer": [
+      0.5793,
+      0.6466,
+      0.7066
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.0014894845138760451,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "Mistral OCR 4.1 API",
+     "engine": "mistral-ocr-4-1",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.004,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.992,
+      0.999,
+      0.9999
+     ],
+     "cer": [
+      0.4577,
+      0.5857,
+      0.7353
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.0,
+     "next_route": "Kraken OmniSyr (GPU/CPU)",
+     "cost_per_usable_page": {
+      "usd": 0.004009152816358428,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": null
+    }
+   ]
+  }
+ ]
+}

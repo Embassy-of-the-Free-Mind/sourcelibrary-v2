@@ -1,0 +1,9 @@
+ROW 1 | ഏ൨യിക്കാലഞ്ഞൂത്രാത്മാസദ്ദിവിയഃ‖ചനമാന്മാജ്ഞിവാത്മാചൈക‖[illegible]ത്രംനനാത്മതെജസ്വിക്കഃപര
+ROW 2 | മാങ്ങാഃഫലങ്കെവംജ്ഞിവാജ്ഞാ‖ത്രക്രൊഞൊങങ്ങന.ഭിന്നഃനിഭ്രതുത്രാഖ‖ന്യവാത്യലലജ്ഞിസായ
+ROW 3 | നമിള്ളിയജ്ഞാഃഭ‖ഷ്ഠലഞ്ഞാജ്ഞഭൊക്ഷരക്കാദ്രനത്തം‖പരമാത്മരൂപംഭ്രുതു
+ROW 4 | ചൈത്യാഃചാക്കുത്തിദ്ദു‖ഗുണാൎദ്ദഗുണൊനാഗുണംഭക്ഷ്യത്ര‖ജ്ഞിമിലകൎമകമലമ
+ROW 5 | നിരകകമിശചിത്ര‖ദ്ദിദ്രാൽസക്കനിയംഫ്ലൃക്ഷി‖ജ്ഞലാലനലൈജ്ഞയവ്വിക്കി
+ROW 6 | കൃത്രപൃശ്ചൌത്രാം‖സ്കതിയഃശടദ്രവ്യാശതജ്ഞ‖ജ്ഞോലല്ലഃഭ്രാമ്യലരൂ
+ROW 7 | ക്ഷാണിജ്ഞസ്വാദസ്വാ‖ഗൊദ്ദൌവൊദ്രൊണ്മാനസിദ്ധഷമയൃന്മാ‖കിലവണാക്കുഭാജ്യൈകാഭി
+ROW 8 | ക്ഷമാവദ്ദാൽഭാവത്രിംയ‖ഃപ്ലുഷ്ഠിജ്ഞലപ്ലജ്ഞിഃഭത്രപ്ലഫിന്നാ‖ാംഭാവ്യസ്ഥിഃജ്ഞാമലമപൃഥ
+NOTE | I read all four pieces (p01 is the left column, p02 and p03 the middle, p04 the right) and found 8 rows, but my confidence in the letters is low and most of this is a guessed reading, not a reliable one. Many conjuncts, vowel signs and the opening numeral-like signs of row 1 are uncertain. Overlaps were merged at -ദ്ദി-, -വാ-, -മാ-, -ഖ-, -പ്ല-. Check it against the leaf before using it.

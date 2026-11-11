@@ -1,0 +1,17 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam-script palm-leaf manuscript (incised with stylus, inked). Two leaves photographed on one image, each with two string holes and cord passing through; text wraps around the holes. The script is a cursive Malayalam hand of the Kerala tradition carrying Sanskrit text. The small, lightly inked aksharas cannot be read reliably at this resolution, so the body is marked as untranscribed rather than approximated.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Photograph of two palm leaves (upper and lower) against a black cloth background, cords threaded through two binding holes in each leaf. Upper leaf: 9 lines, with scratched-out or corrected marks near the first string hole on lines 1-2, and a short symbol at the far left of line 3. Lower leaf: 9 lines, with a small mark at the far left of line 6 near the leaf edge. Text runs in three blocks around the two holes on the middle lines, and full-width on the top and bottom lines. Line 9 of the upper leaf ends with a terminal mark resembling a section ending.</meta>
+
+<unclear>Upper leaf: 9 lines of Sanskrit in Malayalam script, not transcribed</unclear>
+
+---
+
+<unclear>Lower leaf: 9 lines of Sanskrit in Malayalam script, not transcribed</unclear>
+
+<image-desc size="large" type="diagram" significance="low">Two palm-leaf folios bound with cord through two holes each, photographed together on a dark background; no illustrations, only incised text.</image-desc>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, Kerala, Whish collection</vocab>

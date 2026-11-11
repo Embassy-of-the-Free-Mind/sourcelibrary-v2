@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most rows that read as real Sāṅkhya commentary on Kārikā 25 ("pravarttate sargaḥ iti sṛṣṭya", "śrotrādi śabdaḥ tanmātrā", "rūparasagandhādimātrāgrahaṇaṃ", "sāttvika", "svaviṣayagrahaṇāt bhūtādeḥ", "tanmātrāl"); B is fluent in places but breaks down more often, and A is the most garbled.

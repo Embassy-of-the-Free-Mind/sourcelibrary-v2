@@ -214,3 +214,55 @@ describe('semanticPageSearchGlobal, VECTOR_SEARCH_MODE=serve', () => {
     });
   }
 });
+
+// match_pages_in_books through the service's book_ids path (#2049). Serve mode only; anything the
+// service cannot vouch for (error, complete: false, a service that ignored book_ids) goes to the RPC.
+describe('semanticPageSearchScoped, VECTOR_SEARCH_MODE=serve', () => {
+  const svcRow = (id: string, sim = 0.7) => ({ ...rpcRow(id, sim) });
+
+  it('serves the service rows and sends the books, the threshold and k', async () => {
+    process.env.VECTOR_SEARCH_MODE = 'serve';
+    svcHandler = async () => jsonResponse({ rows: [svcRow('s1', 0.71), svcRow('s2', 0.6)], ms: 4, path: 'books', complete: true });
+    const { semanticPageSearchScoped } = await import('@/lib/semantic-search');
+    const out = await semanticPageSearchScoped('q', ['b1'], 10);
+    expect(out.map((r) => r.page_id)).toEqual(['s1', 's2']);
+    expect(out[0].score).toBe(0.71);
+    expect(out[0].snippet).toBe('text s1');
+    expect(svcCalls[0].body).toMatchObject({ book_ids: ['b1'], k: 10, threshold: 0.3, with_text: true });
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it('serves an empty answer as empty, without the RPC', async () => {
+    process.env.VECTOR_SEARCH_MODE = 'serve';
+    svcHandler = async () => jsonResponse({ rows: [], ms: 1, path: 'books', complete: true });
+    const { semanticPageSearchScoped } = await import('@/lib/semantic-search');
+    expect(await semanticPageSearchScoped('q', ['b1'], 10)).toEqual([]);
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ['an HTTP error', async () => jsonResponse({ error: 'x' }, 500)],
+    ['complete: false', async () => jsonResponse({ rows: [], ms: 1, path: 'books', complete: false })],
+    ['a service that ignored book_ids', async () => jsonResponse({ rows: [svcRow('elsewhere')], ms: 1, path: 'hnsw', complete: true })],
+  ])('falls back to match_pages_in_books on %s', async (_label, h) => {
+    process.env.VECTOR_SEARCH_MODE = 'serve';
+    svcHandler = h as typeof svcHandler;
+    rpc.mockResolvedValue({ data: [rpcRow('r1')], error: null });
+    const { semanticPageSearchScoped } = await import('@/lib/semantic-search');
+    const out = await semanticPageSearchScoped('q', ['b1'], 10);
+    expect(out.map((r) => r.page_id)).toEqual(['r1']);
+    expect(rpc).toHaveBeenCalledWith('match_pages_in_books', expect.objectContaining({ book_ids: ['b1'], match_count: 10 }));
+  });
+
+  it('never asks the service in shadow mode, for more than 50 books, or for another text language', async () => {
+    rpc.mockResolvedValue({ data: [rpcRow('r1')], error: null });
+    const { semanticPageSearchScoped } = await import('@/lib/semantic-search');
+    process.env.VECTOR_SEARCH_MODE = 'shadow';
+    await semanticPageSearchScoped('q', ['b1'], 10);
+    process.env.VECTOR_SEARCH_MODE = 'serve';
+    await semanticPageSearchScoped('q', Array.from({ length: 51 }, (_, i) => `b${i}`), 10);
+    await semanticPageSearchScoped('q', ['b1'], 10, { textLang: 'es' });
+    expect(svcCalls).toHaveLength(0);
+    expect(rpc).toHaveBeenCalledTimes(3);
+  });
+});

@@ -32,9 +32,20 @@ The page stays public with its image; the reader sees that the English is withhe
 hidden. Derek, 2026-10-07: warnings that link to evidence, not blocked access. Hiding a whole book
 is for a book with nothing sound to read (shelf-overview §5), or for rights, which is his call.
 
+## Then fix it (Derek, 2026-11-04: "when things like that happen, it should just get fixed")
+
+Containment is the first half. When the repair is a handful of pages and runs on the subscription CLIs, finish it in
+the same run: re-read (`scripts/batch/cli-ocr.mjs`), open each new read against its image and pass the by-eye check to
+`apply --by-eye`, translate (`scripts/batch/cli-translate.mjs`), read the English before applying it, then release the
+hold. `contained` is for a repair that really is blocked or priced, not a resting place. A by-eye row may name
+`scripts_seen` when a Latin book's Greek or Hebrew quotations trip the foreign-script guard.
+
+Do not skip reading the English. On #8189 the first translations of correct reads still reversed a negative and built a
+gloss on a misread Greek word; `--instructions-file` names the point and the page is read again.
+
 ## What this does not license
 
-- **No paid work.** Re-reading or re-translating the pages is a priced row for Derek.
+- **No paid work without the usual rules.** A repair on the subscription CLIs needs no ask; paid re-reads follow the spend floor.
 - **No deletion.** Nothing is unset without a snapshot; no book or page is removed.
 - **Not for a detector's output.** A predicate over thousands of pages has a false-positive rate and
   goes through the normal dry run, sample by eye, and approval (#6117 was 550 pages and was asked).

@@ -1,0 +1,647 @@
+{
+ "rule": "candidates: 1-6 words, <=50 chars, Latin script; order: distinct-IP >= 2 first, then seeded (6871) shuffle; walked in order, rejecting (a) a named edition/deck/book/artist, (b) a non-visual subject, (c) a near-duplicate (same subject, or a head noun already taken twice); stop at 60",
+ "queries": [
+  {
+   "qid": "q01",
+   "query": "ouroboros",
+   "nip": 23,
+   "rank": 0
+  },
+  {
+   "qid": "q02",
+   "query": "sufi tree",
+   "nip": 7,
+   "rank": 1
+  },
+  {
+   "qid": "q03",
+   "query": "tree of life",
+   "nip": 7,
+   "rank": 2
+  },
+  {
+   "qid": "q04",
+   "query": "christ pantocrator",
+   "nip": 6,
+   "rank": 5
+  },
+  {
+   "qid": "q05",
+   "query": "alchemy",
+   "nip": 4,
+   "rank": 7
+  },
+  {
+   "qid": "q06",
+   "query": "alchemical emblem",
+   "nip": 4,
+   "rank": 9
+  },
+  {
+   "qid": "q07",
+   "query": "green lion",
+   "nip": 3,
+   "rank": 10
+  },
+  {
+   "qid": "q08",
+   "query": "ashvattha",
+   "nip": 3,
+   "rank": 11
+  },
+  {
+   "qid": "q09",
+   "query": "monochord",
+   "nip": 3,
+   "rank": 15
+  },
+  {
+   "qid": "q10",
+   "query": "philosopher's stone",
+   "nip": 2,
+   "rank": 16
+  },
+  {
+   "qid": "q11",
+   "query": "memory palace",
+   "nip": 2,
+   "rank": 17
+  },
+  {
+   "qid": "q12",
+   "query": "diagram",
+   "nip": 2,
+   "rank": 19
+  },
+  {
+   "qid": "q13",
+   "query": "pentacle",
+   "nip": 2,
+   "rank": 20
+  },
+  {
+   "qid": "q14",
+   "query": "anael angel venus",
+   "nip": 2,
+   "rank": 21
+  },
+  {
+   "qid": "q15",
+   "query": "comet",
+   "nip": 2,
+   "rank": 24
+  },
+  {
+   "qid": "q16",
+   "query": "dragon",
+   "nip": 2,
+   "rank": 25
+  },
+  {
+   "qid": "q17",
+   "query": "head profile senses imagination memory",
+   "nip": 2,
+   "rank": 27
+  },
+  {
+   "qid": "q18",
+   "query": "kabbalah sefirot",
+   "nip": 2,
+   "rank": 28
+  },
+  {
+   "qid": "q19",
+   "query": "last supper",
+   "nip": 2,
+   "rank": 29
+  },
+  {
+   "qid": "q20",
+   "query": "mandala",
+   "nip": 2,
+   "rank": 30
+  },
+  {
+   "qid": "q21",
+   "query": "nigredo blackening darkness prima materia",
+   "nip": 2,
+   "rank": 32
+  },
+  {
+   "qid": "q22",
+   "query": "pleiades star cluster",
+   "nip": 2,
+   "rank": 33
+  },
+  {
+   "qid": "q23",
+   "query": "supper at emmaus meal at table",
+   "nip": 2,
+   "rank": 37
+  },
+  {
+   "qid": "q24",
+   "query": "unicorn",
+   "nip": 2,
+   "rank": 38
+  },
+  {
+   "qid": "q25",
+   "query": "cosmic man microcosm macrocosm body",
+   "nip": 1,
+   "rank": 39
+  },
+  {
+   "qid": "q26",
+   "query": "emblem book impresa motto pictura epigram",
+   "nip": 1,
+   "rank": 40
+  },
+  {
+   "qid": "q27",
+   "query": "quaternity cross four elements compass",
+   "nip": 1,
+   "rank": 41
+  },
+  {
+   "qid": "q28",
+   "query": "mesoamerican aztec codex",
+   "nip": 1,
+   "rank": 43
+  },
+  {
+   "qid": "q29",
+   "query": "homunculus",
+   "nip": 1,
+   "rank": 45
+  },
+  {
+   "qid": "q30",
+   "query": "clay tablet cuneiform inscription",
+   "nip": 1,
+   "rank": 46
+  },
+  {
+   "qid": "q31",
+   "query": "mystical rose solutio",
+   "nip": 1,
+   "rank": 48
+  },
+  {
+   "qid": "q32",
+   "query": "pentagon",
+   "nip": 1,
+   "rank": 53
+  },
+  {
+   "qid": "q33",
+   "query": "tower tarot lightning struck",
+   "nip": 1,
+   "rank": 54
+  },
+  {
+   "qid": "q34",
+   "query": "astrological symbols zodiac",
+   "nip": 1,
+   "rank": 55
+  },
+  {
+   "qid": "q35",
+   "query": "death of seneca painting stoic",
+   "nip": 1,
+   "rank": 58
+  },
+  {
+   "qid": "q36",
+   "query": "chest slats numbered columns box",
+   "nip": 1,
+   "rank": 59
+  },
+  {
+   "qid": "q37",
+   "query": "adam kadmon kabbalistic figure",
+   "nip": 1,
+   "rank": 62
+  },
+  {
+   "qid": "q38",
+   "query": "map of italy italia",
+   "nip": 1,
+   "rank": 63
+  },
+  {
+   "qid": "q39",
+   "query": "symbols of mourning alchemy",
+   "nip": 1,
+   "rank": 64
+  },
+  {
+   "qid": "q40",
+   "query": "plato socrates philosopher portrait",
+   "nip": 1,
+   "rank": 67
+  },
+  {
+   "qid": "q41",
+   "query": "gymnosophists alexander",
+   "nip": 1,
+   "rank": 69
+  },
+  {
+   "qid": "q42",
+   "query": "ape of nature simia naturae",
+   "nip": 1,
+   "rank": 70
+  },
+  {
+   "qid": "q43",
+   "query": "circe ulysses swine transformation",
+   "nip": 1,
+   "rank": 71
+  },
+  {
+   "qid": "q44",
+   "query": "sun moon conjunction sol luna",
+   "nip": 1,
+   "rank": 74
+  },
+  {
+   "qid": "q45",
+   "query": "geomantic figures sixteen",
+   "nip": 1,
+   "rank": 75
+  },
+  {
+   "qid": "q46",
+   "query": "venus seal character planet agrippa",
+   "nip": 1,
+   "rank": 78
+  },
+  {
+   "qid": "q47",
+   "query": "mars symbol astrological glyph circle arrow",
+   "nip": 1,
+   "rank": 82
+  },
+  {
+   "qid": "q48",
+   "query": "taurus constellation diagram",
+   "nip": 1,
+   "rank": 83
+  },
+  {
+   "qid": "q49",
+   "query": "flying machine",
+   "nip": 1,
+   "rank": 84
+  },
+  {
+   "qid": "q50",
+   "query": "twilight horizon rising stars celestial sphere",
+   "nip": 1,
+   "rank": 85
+  },
+  {
+   "qid": "q51",
+   "query": "bat wolf nocturnal creature",
+   "nip": 1,
+   "rank": 86
+  },
+  {
+   "qid": "q52",
+   "query": "magic square planetary seal sigil kamea",
+   "nip": 1,
+   "rank": 87
+  },
+  {
+   "qid": "q53",
+   "query": "treasure map buried",
+   "nip": 1,
+   "rank": 92
+  },
+  {
+   "qid": "q54",
+   "query": "illuminated manuscript sacred text page",
+   "nip": 1,
+   "rank": 93
+  },
+  {
+   "qid": "q55",
+   "query": "pythagoras hammers blacksmith forge music woodcut",
+   "nip": 1,
+   "rank": 98
+  },
+  {
+   "qid": "q56",
+   "query": "conjunction chemical wedding king queen alchemy",
+   "nip": 1,
+   "rank": 99
+  },
+  {
+   "qid": "q57",
+   "query": "vina musician raga indian music instrument",
+   "nip": 1,
+   "rank": 100
+  },
+  {
+   "qid": "q58",
+   "query": "griot storyteller oral tradition drum",
+   "nip": 1,
+   "rank": 102
+  },
+  {
+   "qid": "q59",
+   "query": "valknut odin",
+   "nip": 1,
+   "rank": 111
+  },
+  {
+   "qid": "q60",
+   "query": "angel hierarchy",
+   "nip": 1,
+   "rank": 115
+  }
+ ],
+ "rejected": [
+  {
+   "rank": 3,
+   "query": "bodhi tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 4,
+   "query": "world tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 6,
+   "query": "gnostic tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 8,
+   "query": "taoist tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 12,
+   "query": "atalanta fugiens emblem",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 13,
+   "query": "bodhi tree buddha",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 14,
+   "query": "egyptian sacred tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 18,
+   "query": "alchemical emblem engraving",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 22,
+   "query": "art of memory",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 23,
+   "query": "bodhi",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 26,
+   "query": "egyptian tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 31,
+   "query": "neoplatonic tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 34,
+   "query": "robert fludd tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 35,
+   "query": "sefirot",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 36,
+   "query": "sephiroth",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 42,
+   "query": "melancholy transformation philosophy",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 44,
+   "query": "tree maya",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 47,
+   "query": "ouroboros divine blueprint",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 49,
+   "query": "alchemical transformation",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 50,
+   "query": "sola busca tarocchi giudizio angel trumpet",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 51,
+   "query": "memory palace loci diagram",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 52,
+   "query": "maya world tree ceiba codex",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 56,
+   "query": "astrological symbols zodiac signs",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 57,
+   "query": "albedo celestial union",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 60,
+   "query": "kircher musurgia music harmony diagram organ",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 61,
+   "query": "tower tarot rider waite 1910",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 65,
+   "query": "philosopher's stone completion",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 66,
+   "query": "archicembalo keyboard enharmonic vicentino zarlino",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 68,
+   "query": "putrefaction nigredo black raven crow alchemy",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 72,
+   "query": "nahua world tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 73,
+   "query": "gaze into abyss",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 76,
+   "query": "art of memory memory palace",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 77,
+   "query": "tibetan mandala four gates palace",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 79,
+   "query": "man world microcosm",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 80,
+   "query": "luyken creation light",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 81,
+   "query": "door threshold knocker emblem",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 88,
+   "query": "splendor solis illuminated alchemical flask border",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 89,
+   "query": "harmony spheres coniunctio",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 90,
+   "query": "memory theater",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 91,
+   "query": "sufi tree cosmology",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 94,
+   "query": "ouroboros zosimos panopolis",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 95,
+   "query": "alchemical stages death",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 96,
+   "query": "craft wisdom embodiment",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 97,
+   "query": "atalanta fugiens maier emblem",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 101,
+   "query": "constellation",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 103,
+   "query": "sacred tree buddhism",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 104,
+   "query": "sephiroth tree",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 105,
+   "query": "alchemy divine union",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 106,
+   "query": "yucatan maya hieroglyph landa popol vuh",
+   "reason": "names a specific edition, deck, book or artist"
+  },
+  {
+   "rank": 107,
+   "query": "geomantic figures sixteen dots table divination",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 108,
+   "query": "fludd nested celestial spheres macrocosm diagram",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 109,
+   "query": "maya codex glyph deity",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 110,
+   "query": "alchemical descent journey",
+   "reason": "not a visual subject"
+  },
+  {
+   "rank": 112,
+   "query": "nigredo blackening dissolution",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 113,
+   "query": "road to emmaus supper",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  },
+  {
+   "rank": 114,
+   "query": "fludd divine monochord cosmic spheres",
+   "reason": "near-duplicate (same subject or head noun already taken twice)"
+  }
+ ]
+}

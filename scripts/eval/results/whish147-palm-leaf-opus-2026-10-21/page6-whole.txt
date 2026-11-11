@@ -1,0 +1,43 @@
+<warning>Handwritten Malayalam script (incised palm leaf, inked). The image shows two palm leaves bound with cord. Each leaf has two full-width lines at the top and two at the bottom, and three short columns between the string holes. The forms are Malayalam, including chillu letters such as ൽ and ൾ, so this page looks like Malayalam or Maṇipravāḷam commentary, not pure Sanskrit as expected. The incised letters are small and low in contrast, and could not be read reliably enough at this resolution to transcribe without guessing.</warning>
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>3</columns>
+<meta>Two palm leaves photographed together on a dark cloth, each threaded with cord through two string holes. The text area between the holes is divided into three columns. There is a small mark in the left margin of the lower leaf.</meta>
+
+<image-desc size="large" type="decorative" significance="low">Two oblong palm leaves on black cloth, threaded with twisted cord through two holes. Each leaf is written in Malayalam script, with full lines at top and bottom and three columns of short lines around the string holes.</image-desc>
+
+<unclear>Upper leaf: 2 full-width lines of Malayalam script, not transcribed</unclear>
+
+<unclear>Upper leaf, left column: about 6 short lines of Malayalam script, not transcribed</unclear>
+
+<column-break/>
+
+<unclear>Upper leaf, middle column: about 6 short lines of Malayalam script, not transcribed</unclear>
+
+<column-break/>
+
+<unclear>Upper leaf, right column: about 5 short lines of Malayalam script, not transcribed</unclear>
+
+<unclear>Upper leaf: 2 full-width lines of Malayalam script, not transcribed</unclear>
+
+---
+
+<unclear>Lower leaf: 2 full-width lines of Malayalam script, not transcribed</unclear>
+
+<margin><unclear>small mark in the left margin</unclear></margin>
+
+<unclear>Lower leaf, left column: about 5 short lines of Malayalam script, not transcribed</unclear>
+
+<column-break/>
+
+<unclear>Lower leaf, middle column: about 5 short lines of Malayalam script, not transcribed</unclear>
+
+<column-break/>
+
+<unclear>Lower leaf, right column: about 5 short lines of Malayalam script, not transcribed</unclear>
+
+<unclear>Lower leaf: 2 full-width lines of Malayalam script, not transcribed</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Maṇipravāḷam, grantha</vocab>

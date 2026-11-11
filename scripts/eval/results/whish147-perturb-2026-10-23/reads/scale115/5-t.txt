@@ -1,0 +1,10 @@
+ROW 1 | ത്യക്കവചനതു·[illegible] ‖ ൠ[illegible]ഭാവ്യൃമന്തുദജ്ഞാദന്ദ്രിയാണാ ‖ ണാം·പ്രവൃത്തിനമാനാ
+ROW 2 | ൽകഞ്ഞാദവിചാരി[illegible] ‖ ദ്വം·ച·ഒന്റാകൃമാക്കാഗമാൽന്നിത്തും·ഗ ‖ ം·നക്ഷത്രിദ്ധരാൽസാ
+ROW 3 | ത്രൃഗാദേഡിയാവ ‖ ൃകാലഭൈരനാവചനാഗന്ദാക്കൈ ‖ സൗക്ഷ്മ്യാദത്ത്രൂപധാ
+ROW 4 | നാദഭിദമഹത് ‖ സമാനാദ്ഭിഹാരാച്ച്വ[illegible]ക്കിനാഹാരൈവ ‖ ൎക്ഷാൽകാദ്ദിതദ്ദിഘ
+ROW 5 | ലബ്ധിന്ദ്രാദീ ‖ വാൽകാക്ഷ്യകൈങ്കൎദ്വ്യലക്ഷ ‖ ൃഭാഢാദികഭ
+ROW 6 | കാദ്യുംലക്ഷി ‖ ഷ്യങ്കൎവം·വിങ്കൎവകോ·ന്യാങ്ങ ‖ സ്ദകനണാദൃവ
+ROW 7 | ദദാനഗ്രഹണാ ‖ ൽസല്വസാ·ദഭവാദൃശ്ചൽഗ ‖ ക്കസ്ത്രശക്തകലാ
+ROW 8 | ൽകാരണോദയ[illegible] ‖ ജ്ഞസ്ൽകാൎയ്യം·ന·സൈതാമദദ്ദി ‖ ദമൃ·ചിസക്തിലമൈ
+ROW 9 | നകമാദ്ദിശകം·ഡി· ‖ ബം·സ്വാഭാവ്യം·ചസബത്വം·പ്രൂക്കം·ബ ‖ ബവരിതമൈവൃക്കം·।ച।
+NOTE | Low confidence. The script itself is clear, but many conjuncts and vowel signs are ambiguous at this resolution. Every row reads straight across both holes, with 9 rows in each column. Joins: left column = p01; middle = p02 + p03 (the overlap appears only once); right = p04. Treat these readings as approximate. They are not a verified transcription, and I didn't fill in any gaps from the known text.

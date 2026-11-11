@@ -6,7 +6,6 @@ import { getSiteStats } from '@/lib/site-stats';
 import { loadJourney } from '@/lib/journey/load-journey';
 import type { JourneyData, JourneyInstanceConfig } from '@/lib/journey/types';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
-import { FEED_TYPES } from '@/lib/feed-links';
 import SiteHeader from '@/components/layout/SiteHeader';
 import JourneyFilm from '@/components/journey/JourneyFilm';
 import JourneyProse from '@/components/journey/JourneyProse';
@@ -86,7 +85,7 @@ export const metadata: Metadata = {
   title: `${TITLE} · Source Library`,
   description: DESCRIPTION,
   // Declaring `alternates` replaces the layout's, so the feed links are spread back in.
-  alternates: { canonical: '/how-it-works', types: FEED_TYPES },
+  alternates: { canonical: '/how-it-works' },
 };
 
 // UTC, so the server render and the browser agree on the day.
@@ -141,15 +140,12 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
     },
     text: p.ocr?.model
       ? {
-          model: p.ocr.model,
           prompt: p.ocr.prompt_name ? `“${p.ocr.prompt_name}” v${p.ocr.prompt_version}` : undefined,
           at: day(p.ocr.updated_at),
         }
       : undefined,
     english: tr?.model
       ? {
-          model: tr.engine?.model ?? tr.model,
-          modelVersion: tr.engine?.model_version,
           prompt: tr.prompt_version ? `v${tr.prompt_version.replace(/^v/i, "")}` : undefined,
           api: tr.engine?.api === 'batch' ? 'Batch API' : undefined,
           batch: tr.batch_job_id,
@@ -198,7 +194,7 @@ export default async function HowItWorksPage() {
 
         <TextRoutesFigure
           tengyurPages={TENGYUR.pages_with_text}
-          examplePage={{ model: record.text?.model ?? data.readBy, label: `${PAGE_LABEL} in the film below` }}
+          examplePage={{ model: data.readBy, label: `${PAGE_LABEL} in the film below` }}
         />
       </div>
 

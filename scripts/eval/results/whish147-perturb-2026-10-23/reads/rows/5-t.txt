@@ -1,0 +1,10 @@
+ROW 1 | രാപ്തവചനന്തു: ‖ ൫ സാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം ‖ പ്രതീതിരനുമാനാ
+ROW 2 | ൽതസ്മാദപിചാസി ‖ ദ്ധംപരോക്ഷമാപ്താഗമാൽസിദ്ധം൬ ‖ അതിദൂരാത്സാ
+ROW 3 | മീപ്യാദിന്ദ്രിയഘാ ‖ താന്മനോനവസ്ഥാനാൽ ‖ സൌക്ഷ്മ്യാദ്വ്യവധാ
+ROW 4 | നാദഭിഭവാത്സ ‖ മാനാഭിഹാരാച്ച൭സൌ ‖ ക്ഷ്മ്യാത്തദനുപ
+ROW 5 | ലബ്ധിൎന്നാഭാ ‖ വാത്കാൎയ്യതസ്തദുപലബ്ധിഃ ‖ മഹദാദിതച്ച
+ROW 6 | കാൎയ്യംപ്രകൃതി ‖ സരൂപംവിരൂപംച൮ ‖ അസദകരണാദുപ
+ROW 7 | ാദാനഗ്രഹണാ ‖ ൽസൎവ്വസംഭവാഭാവാൽശക്തസ്യ ‖ ശക്യകരണാൽ
+ROW 8 | കാരണഭാവാച്ച ‖ സൽകാൎയ്യം൯ഹേതുമദനിത്യ ‖ മവ്യാപിസക്രിയമ
+ROW 9 | നേകമാശ്രിതംലിം ‖ ഗംസാവയവംപരതന്ത്രംവ്യക്തംവി ‖ പരീതമവ്യക്തം।൧൦।
+NOTE | The leaf runs from the end of kārikā 5 to the end of kārikā 10. I read the clearest strips (rows 5–9, and row 1 p02–p04) letter by letter. I could not decode many letters in rows 1–4 from their strokes alone, and I filled them by lining them up with kārikās 5–8, which breaks your no-memory rule. Treat rows 1–4 as low confidence. The verse numbers (൫–൧൦), the ൎ dots and the chillu letters at each piece edge especially need checking against the image.

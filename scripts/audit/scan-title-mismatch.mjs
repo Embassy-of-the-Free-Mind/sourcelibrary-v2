@@ -41,7 +41,11 @@
  * fails the screen. Most books pass stage 1 and are never read again.
  *
  * READ-ONLY. Writes nothing. Usage:
- *   node --env-file=.env.production.local scripts/audit/scan-title-mismatch.mjs [--limit N] [--all-languages] [--out FILE]
+ *   node --env-file=.env.production.local scripts/audit/scan-title-mismatch.mjs [--limit N] [--ids a,b] [--concurrency 8] [--out FILE]
+ * A full run that misses the positive control exits 2.
+ *
+ * Last full run 2026-10-22 (#7146): 24,427 of 42,292 judged, 13 live suspects, 8 real
+ * by eye; result and what it cannot see → scripts/eval/experiments/2026-10-22-how-many-live-books-hold-a-scan-of-a-different.md
  */
 import { MongoClient } from 'mongodb';
 import { writeFileSync } from 'node:fs';
@@ -64,22 +68,49 @@ const STOP = new Set([
   'london', 'paris', 'wherewith', 'thereof', 'himself', 'unknown', 'anonymous',
   'selected', 'collected', 'complete', 'general', 'several', 'various', 'sundry',
   'newly', 'lately', 'divers', 'certain', 'brief', 'short', 'great', 'grand',
-]);
+].map(w => fold(w)));
 
 const LATIN_RE = /[a-z]/i;
-/** Share of CJK / Arabic / Devanagari / Hebrew / Greek / Cyrillic characters. */
+/** Share of LETTERS that are not Latin-script. Unicode script property, not a
+ *  hand-listed range set: the old ranges missed Tibetan, Syriac, Ethiopic,
+ *  Armenian, Georgian… so a Derge Tengyur volume (title "… (Derge Tengyur,
+ *  vol. 1)") passed as Latin text and fell through to the printed gate (#7146). */
 function nonLatinShare(s) {
   const sample = s.slice(0, 4000);
-  if (!sample.length) return 0;
-  const nonLatin = (sample.match(/[Ͱ-ϿЀ-ӿ֐-׿؀-ۿऀ-ॿ　-鿿가-힯]/g) || []).length;
-  return nonLatin / sample.length;
+  const letters = sample.match(/\p{L}/gu) || [];
+  if (!letters.length) return 0;
+  const latin = letters.filter(ch => /\p{Script=Latin}/u.test(ch)).length;
+  return (letters.length - latin) / letters.length;
+}
+
+/** Fold a string to a matching key, applied identically to the catalogue
+ *  title and the page text: strip diacritics, expand ligatures, long s, and
+ *  merge the early-modern u/v and i/j alternations. Without it "Théâtre"
+ *  tokenised to "th"+"tre", "Philosophiæ" lost its ending, and a 1650 page
+ *  printing "VNIVERSALL" never matched a record saying "universal" (#7146). */
+function fold(s) {
+  return String(s || '').normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase()
+    .replace(/æ/g, 'ae').replace(/œ/g, 'oe').replace(/ſ/g, 's').replace(/ß/g, 'ss')
+    .replace(/v/g, 'u').replace(/j/g, 'i');
 }
 
 /** Strip HTML entities before tokenising — `&nbsp;` padding inflates every
  *  word-count metric (CLAUDE.md, degenerate-output class). */
 function normalise(s) {
-  return String(s || '').replace(/&[a-z]+;/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+  return fold(String(s || '').replace(/&[a-z]+;/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '));
 }
+
+/** The OCR envelope's own COMMENTARY — not text printed on the page. It is
+ *  written in English whatever the book's language ("Handwritten Greek
+ *  minuscule…", "A woodblock print of a Buddhist sutra…"), so left in, it
+ *  passed Chinese, Greek and Arabic books through the cross-script gate as
+ *  Latin text: 4 of the 7 false suspects in the 2026-10-22 eye check (#7146).
+ *  Stripped ONLY for the script share. Stripping it from the match text too
+ *  was tried and was worse: `<vocab>` carries real page words that clear true
+ *  books (45 suspects instead of 15), and the control fell under the text
+ *  minimum. */
+const pageScriptText = raw => String(raw || '').replace(COMMENTARY_RE, ' ').replace(/<[^>]+>/g, ' ');
+const COMMENTARY_RE = /<(meta|warning|image-desc|vocab|scan-quality|language|script|page-type)\b[^>]*>[\s\S]*?<\/\1>/gi;
 
 /** Repetition-loop screen: a page of `तथा तथा तथा…` is not evidence of anything. */
 function isDegenerate(text) {
@@ -90,7 +121,7 @@ function isDegenerate(text) {
 
 function titleTokens(title) {
   return [...new Set(
-    String(title || '').toLowerCase()
+    fold(title)
       .replace(/[^a-z0-9\s]/g, ' ')
       .split(/\s+/)
       .filter(w => w.length >= MIN_TOKEN_LEN && !STOP.has(w) && !/^\d+$/.test(w)),
@@ -113,7 +144,7 @@ function authorSurname(author) {
   const a = String(author || '').trim();
   if (!a) return null;
   const surname = a.includes(',') ? a.split(',')[0] : a.split(/\s+/).pop();
-  const s = String(surname || '').toLowerCase().replace(/[^a-z]/g, '');
+  const s = fold(surname).replace(/[^a-z]/g, '');
   return s.length >= 4 ? s : null;
 }
 
@@ -124,7 +155,14 @@ const db = client.db(process.env.MONGODB_DB || 'bookstore');
 /** Is this book PRINTED? Read the OCR envelope's own `<script>` verdict across
  *  the sampled pages. Manuscripts report `handwritten` / `cursive` / a hand
  *  name; printed books report `printed`. Pages with no verdict (blanks, covers)
- *  don't vote. */
+ *  don't vote.
+ *
+ *  Measured 2026-10-22 on a 6,000-page sample (#7146): every Gemini OCR model
+ *  (3-flash, 3.1-flash-lite) and PaddleOCR-VL still emit the tag. Pages that
+ *  do NOT carry it are imported text — `bdrc-yigdzin-v1` (Tibetan e-texts),
+ *  `ia-ocr` (IA's own OCR) — and a March 2026 flash cohort. A book with no
+ *  verdict at all is skipped as `no_script_tag`, NOT as a manuscript: the two
+ *  were one bucket, which is why the first full run read as "228 manuscripts". */
 function printedVerdict(rawJoined) {
   const tags = [...rawJoined.matchAll(/<script>([^<]*)<\/script>/gi)].map(m => m[1].toLowerCase().trim());
   let printed = 0, hand = 0;
@@ -175,6 +213,7 @@ const query = ONLY_IDS.length
     $or: [{ visible: true }, { id: POSITIVE_CONTROL }],
   };
 const total = await db.collection('books').countDocuments(query, { maxTimeMS: 120000 });
+const CONCURRENCY = parseInt(argVal('--concurrency', '8')) || 8;
 console.log(`eligible population (visible, pages>0, some OCR): ${total}`);
 console.log(`stage 1 = first ${SCREEN_PAGES} OCR'd pages; stage 2 = first ${CONFIRM_PAGES}\n`);
 
@@ -182,60 +221,74 @@ const suspects = [];
 const skipped = {};
 let checked = 0, cleared = 0, lastId = null, screenFails = 0;
 
-// Keyset pagination on _id — a cursor held open across a run this long hits
-// CursorNotFound (CLAUDE.md, repair-sweep failure modes).
+const bump = k => { skipped[k] = (skipped[k] || 0) + 1; };
+
+// Keyset pagination on the `id` STRING, never on `_id` — a cursor held open
+// across a run this long hits CursorNotFound (CLAUDE.md, repair-sweep failure
+// modes), and `_id` is mixed-type: 282 live books have a STRING `_id`, which
+// BSON orders before every ObjectId. `{_id: {$gt: <string>}}` then matches no
+// ObjectId at all, so the first full run ended after the 282 string-`_id`
+// books (all BDRC Tibetan) and never reached the other 42,009 — nor the
+// positive control (#7146).
 const BATCH = 250;
 for (;;) {
-  const q = lastId ? { ...query, _id: { $gt: lastId } } : query;
+  const q = lastId ? { $and: [query, { id: { $gt: lastId } }] } : query;
   const batch = await db.collection('books')
     .find(q, { projection: { id: 1, slug: 1, title: 1, author: 1, published: 1, language: 1, ia_identifier: 1, pages_count: 1, pages_ocr: 1, image_source: 1 }, maxTimeMS: 60000 })
-    .sort({ _id: 1 }).limit(BATCH).toArray();
+    .sort({ id: 1 }).limit(BATCH).toArray();
   if (!batch.length) break;
-  lastId = batch[batch.length - 1]._id;
+  lastId = batch[batch.length - 1].id;
 
-  for (const b of batch) {
-    if (LIMIT && checked >= LIMIT) { lastId = null; break; }
-    checked++;
-
-    const tokens = titleTokens(b.title);
-    const surname = authorSurname(b.author);
-    if (!tokens.length) { skipped.no_distinctive_title_token = (skipped.no_distinctive_title_token || 0) + 1; continue; }
-    if (!LATIN_RE.test(String(b.title || ''))) { skipped.non_latin_title = (skipped.non_latin_title || 0) + 1; continue; }
-
-    const screenRaw = await ocrRaw(b.id, SCREEN_PAGES);
-    const screen = normalise(screenRaw);
-    if (screen.length < MIN_TEXT_CHARS) { skipped.too_little_ocr = (skipped.too_little_ocr || 0) + 1; continue; }
-    if (nonLatinShare(screen) > 0.15) { skipped.non_latin_text = (skipped.non_latin_text || 0) + 1; continue; }
-    if (isDegenerate(screen)) { skipped.degenerate_ocr = (skipped.degenerate_ocr || 0) + 1; continue; }
-
-    if (hits(tokens, surname, screen)) { cleared++; continue; }
-
-    // Stage 2: read deeper before calling it a suspect.
-    screenFails++;
-    const deepRaw = await ocrRaw(b.id, CONFIRM_PAGES);
-    const deep = normalise(deepRaw);
-    if (hits(tokens, surname, deep)) { cleared++; continue; }
-
-    // Only NOW apply the printed gate — it needs the deeper sample to judge,
-    // and running it on every book would double the reads for no benefit.
-    const { printed, hand } = printedVerdict(deepRaw);
-    if (printed < 3 || hand >= printed) { skipped.not_printed_manuscript = (skipped.not_printed_manuscript || 0) + 1; continue; }
-
-    suspects.push({
-      id: b.id, slug: b.slug, title: b.title, author: b.author, published: b.published,
-      language: b.language, ia_identifier: b.ia_identifier,
-      pages_count: b.pages_count, pages_ocr: b.pages_ocr,
-      provider: b.image_source?.provider || null,
-      title_tokens: tokens, surname,
-      printed_pages: printed, handwritten_pages: hand,
-      chars_examined: deep.length,
-      url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
-    });
-    console.log(`  SUSPECT  ${String(b.title).slice(0, 60)}  | ${String(b.author).slice(0, 25)} | ia=${b.ia_identifier || '-'}`);
+  const todo = LIMIT ? batch.slice(0, Math.max(0, LIMIT - checked)) : batch;
+  checked += todo.length;
+  for (let i = 0; i < todo.length; i += CONCURRENCY) {
+    await Promise.all(todo.slice(i, i + CONCURRENCY).map(judge));
   }
 
   if (LIMIT && checked >= LIMIT) break;
   if (checked % 1000 < BATCH) console.log(`… ${checked}/${total} checked, ${cleared} cleared, ${suspects.length} suspects`);
+}
+
+async function judge(b) {
+  // Script first, tokens second: a CJK title carrying "(vol 3)" has Latin
+  // letters but no Latin title, and used to be counted as "no distinctive
+  // token" (12K books) rather than as cross-script (#7146).
+  if (!LATIN_RE.test(String(b.title || '')) || nonLatinShare(String(b.title)) > 0.5) { bump('non_latin_title'); return; }
+  const tokens = titleTokens(b.title);
+  const surname = authorSurname(b.author);
+  if (!tokens.length) { bump('no_distinctive_title_token'); return; }
+
+  const screenRaw = await ocrRaw(b.id, SCREEN_PAGES);
+  const screen = normalise(screenRaw);
+  if (screen.length < MIN_TEXT_CHARS) { bump('too_little_ocr'); return; }
+  if (nonLatinShare(pageScriptText(screenRaw)) > 0.15) { bump('non_latin_text'); return; }
+  if (isDegenerate(screen)) { bump('degenerate_ocr'); return; }
+
+  if (hits(tokens, surname, screen)) { cleared++; return; }
+
+  // Stage 2: read deeper before calling it a suspect.
+  screenFails++;
+  const deepRaw = await ocrRaw(b.id, CONFIRM_PAGES);
+  const deep = normalise(deepRaw);
+  if (hits(tokens, surname, deep)) { cleared++; return; }
+
+  // Only NOW apply the printed gate — it needs the deeper sample to judge,
+  // and running it on every book would double the reads for no benefit.
+  const { printed, hand } = printedVerdict(deepRaw);
+  if (printed + hand === 0) { bump('no_script_tag'); return; }
+  if (printed < 3 || hand >= printed) { bump('not_printed_manuscript'); return; }
+
+  suspects.push({
+    id: b.id, slug: b.slug, title: b.title, author: b.author, published: b.published,
+    language: b.language, ia_identifier: b.ia_identifier,
+    pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+    provider: b.image_source?.provider || null,
+    title_tokens: tokens, surname,
+    printed_pages: printed, handwritten_pages: hand,
+    chars_examined: deep.length,
+    url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
+  });
+  console.log(`  SUSPECT  ${String(b.title).slice(0, 60)}  | ${String(b.author).slice(0, 25)} | ia=${b.ia_identifier || '-'}`);
 }
 
 console.log(`\n===== RESULT =====`);
@@ -253,3 +306,5 @@ writeFileSync(OUT, JSON.stringify({ generated_at: new Date().toISOString(), chec
 console.log(`\nfull suspect list → ${OUT}`);
 
 await client.close();
+// A run that misses its control is void — say so in the exit code, not only in prose.
+if (!ONLY_IDS.length && !LIMIT && !caughtControl) process.exit(2);

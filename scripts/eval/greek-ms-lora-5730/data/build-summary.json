@@ -1,0 +1,72 @@
+{
+ "at": "2026-10-22T22:54:20.565Z",
+ "rules": {
+  "version": 2,
+  "edgeLetters": 90,
+  "edgeAgree": 150,
+  "minTextLetters": 300,
+  "minStripLetters": 200,
+  "minMonotoneShare": 0.2,
+  "anchorIdentity": 0.45,
+  "anchorMargin": 0.12,
+  "spanRatio": [
+   0.5,
+   1.8
+  ],
+  "minReadLetters": 300,
+  "informativeFloor": 0.12,
+  "minMargin": 0.08,
+  "minRatio": 1.8,
+  "readSpanRatio": [
+   0.6,
+   1.6
+  ]
+ },
+ "sets": {
+  "T1 Grec 1841": {
+   "pages": 355,
+   "text": 349,
+   "located": 341,
+   "usable": 291,
+   "test": 81
+  },
+  "T2 Marcianus gr. 299": {
+   "pages": 432,
+   "text": 387,
+   "located": 172,
+   "usable": 104,
+   "test": 104
+  },
+  "T2 Ars sacra (Laurenziana)": {
+   "pages": 660,
+   "text": 631,
+   "located": 296,
+   "usable": 203,
+   "test": 203
+  },
+  "train Grec 1839": {
+   "pages": 1060,
+   "text": 1043,
+   "located": 1028,
+   "usable": 954,
+   "after_cut": 302,
+   "train": 619,
+   "val": 33
+  }
+ },
+ "edition_69942ffcbb14908bbd9a1123_letters": 1465077,
+ "edition_6994383a6879ff0184cb803a_letters": 331746,
+ "cut": {
+  "fraction": 0.7,
+  "letter": 1025553,
+  "margin": 3000
+ },
+ "label_chars": {
+  "train_median": 1815,
+  "train_max": 2376
+ },
+ "test": {
+  "T1": 81,
+  "T2": 307
+ }
+}

@@ -312,7 +312,7 @@ const cursor = books.find(query, {
     'ai_metadata.author': 1, 'ai_metadata.confidence': 1, 'ai_metadata.description': 1,
     author_link_provenance: 1, work_id: 1,
   },
-});
+}).batchSize(1000);
 
 for await (const b of cursor) {
   compared++;

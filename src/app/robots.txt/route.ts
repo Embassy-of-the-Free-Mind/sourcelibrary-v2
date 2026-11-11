@@ -11,8 +11,8 @@
  *
  *  2. TRAINING / BULK crawlers (ClaudeBot, GPTBot, Google-Extended, CCBot,
  *     Applebot-Extended, Meta-ExternalAgent, anthropic-ai, …) are RESERVED.
- *     Our translations are CC-BY-SA 4.0 — whose ShareAlike term is incompatible
- *     with proprietary model training — so AI training / text-and-data-mining
+ *     Our translations are CC BY-NC-SA 4.0, non-commercial only, and the terms apply
+ *     to site and API use, so commercial AI training / text-and-data-mining
  *     requires a SEPARATE license. See https://sourcelibrary.org/licensing and
  *     the machine-readable reservation at /.well-known/tdmrep.json (TDMRep) plus
  *     the TDM-Reservation HTTP header. A standing rate card is published at
@@ -28,9 +28,15 @@
  * (src/lib/bot-gate.ts) is the enforcement layer.
  */
 
+import { PARTNER_TERMS_URL } from '@/lib/partner-terms-version';
 import { TRIPWIRE_PATH } from '@/lib/tripwire';
+import { pageStatusRobotsDisallow } from '@/lib/page-status';
+import { huntDoorRobotsBlock } from '@/lib/hunt-doors';
 
 const BASE_URL = 'https://sourcelibrary.org';
+const SEARCH_TEXT_PATH = '/search/text';
+// One book's passages for an assistant (#8161). Allowed for the fetcher groups only.
+const BOOK_SEARCH_TEXT_PATH = '/book/*/search/text';
 
 // Our content signals: discovery and assistant reading are welcome; training
 // is reserved (license available — see /licensing).
@@ -53,6 +59,9 @@ const POLICY_PREAMBLE = `# As a condition of accessing this website, you agree t
 # ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
 #
 # AI training is licensable: a standing rate card and standard terms are at ${BASE_URL}/licensing (see also ${BASE_URL}/llms.txt).`;
+
+// Our own notice, outside the verbatim preamble above (#8098).
+const PARTNER_TERMS_NOTE = `# Books from the Embassy of the Free Mind's collection carry further terms: ${PARTNER_TERMS_URL}`;
 
 // Endpoints a reserved AI crawler MAY still reach: the structured API, the
 // partnership/licensing docs, and the articles. Everything else (full text) is reserved.
@@ -82,6 +91,13 @@ const DEFAULT_DISALLOW = [
   // letting Google crawl this burns budget on tens of thousands of
   // redirects (showed up as "Blocked 403" / "Page with redirect" in GSC).
   '/book/*/page-number/',
+  // The whole-book reading view (/book/{slug}/read, ?part=N). It is noindex, so
+  // a search crawler gains nothing from it, and each fetch is an uncached
+  // function call that reads the book's text from Mongo: search crawlers made
+  // ~23.5K such fetches across 6.7K books in the week to 2026-11-08. Anchored
+  // with `$`/`?` so no other path that happens to contain "/read" is caught.
+  '/book/*/read$',
+  '/book/*/read?',
   // Auto-generated thin concept stubs. Google classifies these as
   // soft-404 (see 2026-05-31 GSC Coverage report) and crawling them burns
   // budget that should go to the ~15K /book/ landing pages.
@@ -95,16 +111,37 @@ const DEFAULT_DISALLOW = [
   '/qa',
   '/data?admin=true',
   '/upload',
-  '/auth/',
+  // NOT '/auth/': those pages carry `noindex` (src/app/auth/layout.tsx), and
+  // Google only sees a noindex on a page it may fetch. Disallowed, the sign-in
+  // URLs stayed indexed from links and drew ~200 search landings/30d (#6398).
   '/beta/',
   '/unauthorized',
   '/reading-history',
   '/highlights',
   '/favorites',
+  // Results pages for assistants (#8161): endless, thin and noindex. Each fetch is
+  // a function call, so no crawler should walk them.
+  SEARCH_TEXT_PATH,
+  BOOK_SEARCH_TEXT_PATH,
+  // Internal and draft pages from src/lib/page-status.ts (admins only).
+  // Archived pages stay crawlable so search engines follow their redirect.
+  ...pageStatusRobotsDisallow(),
   // Tripwire (#5995): disallowed for EVERY group, so a fetch of it means the
   // client ignored robots.txt. Groups ending in `Disallow: /` cover it already.
   TRIPWIRE_PATH,
 ];
+
+// ── ASSISTANTS FETCHING FOR A PERSON ──
+// Someone asked their assistant a question and it is reading on their behalf.
+// /llms.txt sends these fetchers to the search and quote routes, so the default
+// `Disallow: /api/` would close the door it just opened (#8161). Same names as
+// USER_FETCH_AGENTS in src/lib/bot-gate.ts and the Cloudflare skip rule; see
+// .claude/docs/invariants/crawler-access-gate.md, the layers must agree.
+const USER_FETCHERS = ['Claude-User', 'ChatGPT-User', 'Perplexity-User'];
+// One passage at a time. /api/books/*/text stays out on purpose: it returns a
+// whole book, and that is the bulk path /licensing prices. robots.txt only
+// declares this; the page budget in src/lib/api-budget.ts is what holds it.
+const USER_FETCH_API = ['/api/search', '/api/books/*/quote', '/api/books/*/search', SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH];
 
 type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 
@@ -117,8 +154,23 @@ type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 // scraping); the rest get the public docs + blog only. None get the full text.
 const GROUPS: Group[] = [
   { userAgent: '*', allow: ['/'], disallow: DEFAULT_DISALLOW },
-  { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
-  { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
+  // Sogou: a real search engine, but on 2026-10-25 it walked ~9K reader pages
+  // an hour (/book/<slug>/page/<id>), most of them noindex (#2688), and Sogou
+  // and Baidu together sent 26 search arrivals in the 30 days before. It keeps
+  // the book landing pages. NOT applied to '*': the 394K seo_indexable reader
+  // pages brought 14,283 Google/Bing arrivals in the same 30 days, half of all
+  // search traffic (5x the landing pages). A named group replaces '*' for this
+  // crawler, so it repeats the defaults.
+  { userAgent: 'Sogou web spider', allow: ['/'], disallow: [...DEFAULT_DISALLOW, '/book/*/page/'] },
+  // A named group replaces '*' for this fetcher, so it repeats the defaults, without
+  // the search it is allowed: Allow and Disallow on one path is a tie parsers may differ on.
+  ...USER_FETCHERS.map((userAgent) => ({
+    userAgent,
+    allow: ['/', ...USER_FETCH_API],
+    disallow: DEFAULT_DISALLOW.filter((path) => path !== SEARCH_TEXT_PATH),
+  })),
+  { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH] },
+  { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH] },
   { userAgent: 'GPTBot', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'Claude-Web', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'ClaudeBot', allow: DOCS_ONLY, disallow: ['/'] },
@@ -142,7 +194,11 @@ const GROUPS: Group[] = [
 function renderGroup(g: Group): string {
   const lines = [`User-agent: ${g.userAgent}`, `Content-Signal: ${CONTENT_SIGNAL}`];
   for (const a of g.allow ?? []) lines.push(`Allow: ${a}`);
-  for (const d of g.disallow ?? []) lines.push(`Disallow: ${d}`);
+  // Deduped: a page in src/lib/page-status.ts can also be in DEFAULT_DISALLOW. A path
+  // the group also Allows is left out: the fetcher groups repeat DEFAULT_DISALLOW, and
+  // an Allow and a Disallow on one path is a tie parsers may differ on (#8161).
+  const allowed = new Set(g.allow ?? []);
+  for (const d of new Set(g.disallow ?? [])) if (!allowed.has(d)) lines.push(`Disallow: ${d}`);
   return lines.join('\n');
 }
 
@@ -151,6 +207,9 @@ export const dynamic = 'force-static';
 export function GET(): Response {
   const body = [
     POLICY_PREAMBLE,
+    PARTNER_TERMS_NOTE,
+    // A comment block of its own, for people who read robots.txt (#8150 slice 4). It changes no group.
+    huntDoorRobotsBlock(),
     ...GROUPS.map(renderGroup),
     // RSL (Really Simple Licensing, rslstandard.org): machine-readable license
     // terms for automated agents — same policy as the Content-Signal lines and

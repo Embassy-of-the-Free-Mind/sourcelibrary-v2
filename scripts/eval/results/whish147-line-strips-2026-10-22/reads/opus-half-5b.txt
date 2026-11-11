@@ -1,0 +1,33 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script, incised on a palm leaf and inked. Only part of the leaf is in the image: the text runs off the right edge, so every line is incomplete. A string through the binding hole hides part of the first two lines. This palm-leaf manuscript is not a 16th–18th-century European codex as the project context describes. The script is Malayalam, and the readings are tentative.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>Palm-leaf folio, bound with a cord through the central string hole. The text around the hole is laid out in two blocks. The leaf is cropped at the right edge.</meta>
+
+ശ്രീ<unclear>ഗണേശവിഘ്നേശ</unclear> <unclear>[illegible — 1-2 words under cord]</unclear> <unclear>വിഘ്നയസ്ഥാമാതൃമചെ</unclear>
+<unclear>ഏനക തിച വികന്ദ</unclear> <unclear>[cord]</unclear> <unclear>ഗാചശുച മാൻ</unclear>
+
+<margin><unclear>~</unclear></margin>
+<unclear>പ്രവൃത്തിനിയമൌ</unclear>
+<unclear>ഗണൗഃസ്ഥഃസഖം</unclear>
+<unclear>ഗുണവ ണകാ</unclear>
+<unclear>കമിതചുദ്ധ</unclear>
+<unclear>ണൈഗുണാത്മക</unclear>
+<unclear>ഏവംചതിമാണാ</unclear>
+
+<column-break/>
+
+<unclear>ഷാഃ ഖ ഞ്ഞാഗ്രാ</unclear>
+<unclear>ലക്ഷ്യപ്രകാശകമി</unclear>
+<unclear>മവകമഃപ്ര</unclear>
+<unclear>സിദ്ധ ശൈസ്യഗു</unclear>
+<unclear>കാൽക ഏഴ്ച്ര</unclear>
+<unclear>സമവായാദ്</unclear>
+
+<unclear>ഗാഢവിഭാഗകൊച്ചശുപ്രസ്ഥകാരണ</unclear>
+<unclear>ഉദ്ദണാച്ചവതിണാമകസ്ഥീലവൽപ്രതി</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, pravṛtti, niyama, lakṣya, prakāśaka, samavāya, guṇa</vocab>

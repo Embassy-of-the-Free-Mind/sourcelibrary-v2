@@ -11,6 +11,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { notFound, permanentRedirect } from 'next/navigation';
 import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
+import RecentlyTranslatedLinks from '@/components/home/RecentlyTranslatedLinks';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import CollectionFurtherReading from '@/components/collections/CollectionFurtherReading';
 import CollectionReadingList from '@/components/collections/CollectionReadingList';
@@ -35,8 +36,9 @@ import {
   type FurtherReadingBook,
   type FurtherReadingRef,
 } from '@/lib/further-reading';
-import { resolveReadingList, readingListBookIds, type ReadingListDoc } from '@/lib/reading-list';
+import { resolveReadingList, readingListBookIds, readingListHeader, type ReadingListDoc } from '@/lib/reading-list';
 import { ObjectId } from 'mongodb';
+import { hasEsCollectionPage } from '@/lib/es-collections';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
@@ -194,6 +196,11 @@ interface CuratedHighlight {
   id: string;
 }
 
+/** An authored link target for a phrase in a collection description
+ *  (`collections.mentioned_books`). `text` is matched case-insensitively; it
+ *  links to a book by `book_id` (`books.id`) or to a person by `author_id`. */
+type DescriptionMention = { text: string; book_id?: string; author_id?: string };
+
 /** Auto-link book titles found in description text to their book pages.
  *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection. */
 // Inline markdown links [anchor](/path) authored in a collection description.
@@ -206,7 +213,7 @@ const MD_LINK_RE = /\[([^\]\n]+)\]\((\/[^)\s]+)\)/g;
 function linkBookTitles(
   text: string,
   allBooks: BookItem[],
-  explicitMentions?: { text: string; book_id: string }[],
+  explicitMentions?: DescriptionMention[],
   tenantSlug?: string | null,
   authorLinks: { name: string; href: string; canonical?: string; count?: number }[] = [],
 ): React.ReactNode {
@@ -241,7 +248,7 @@ function linkBookTitles(
 function autoLinkPlain(
   text: string,
   allBooks: BookItem[],
-  explicitMentions?: { text: string; book_id: string }[],
+  explicitMentions?: DescriptionMention[],
   tenantSlug?: string | null,
   authorLinks: { name: string; href: string; canonical?: string; count?: number }[] = [],
 ): React.ReactNode {
@@ -252,7 +259,11 @@ function autoLinkPlain(
   if (explicitMentions?.length) {
     // Sort longest first to avoid partial matches
     const sorted = [...explicitMentions].sort((a, b) => b.text.length - a.text.length);
-    for (const { text: mentionText, book_id } of sorted) {
+    for (const { text: mentionText, book_id, author_id } of sorted) {
+      // A mention names a book (book_id) or a person (author_id → /author/<id>,
+      // the same canonical link the byline auto-linker builds). #7897
+      const mentionHref = author_id ? authorUrl('', author_id) ?? undefined : undefined;
+      if (!book_id && !mentionHref) continue;
       const escaped = mentionText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       try {
         const regex = new RegExp(escaped, 'gi');
@@ -261,7 +272,7 @@ function autoLinkPlain(
           const start = match.index;
           const end = start + match[0].length;
           if (!usedRanges.some(([s, e]) => start < e && end > s)) {
-            matches.push({ start, end, title: match[0], id: book_id });
+            matches.push({ start, end, title: match[0], id: book_id || `author-${author_id}`, href: mentionHref });
             usedRanges.push([start, end]);
           }
         }
@@ -394,6 +405,8 @@ function autoLinkPlain(
 // ---------- Data fetching ----------
 
 const COMPACT_LIMIT = 14;
+// Paragraphs of the introduction shown before "Read more" (#7897).
+const INTRO_LEAD_PARAGRAPHS = 2;
 
 // A reading page that belongs to one collection and is written in code, not in
 // the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
@@ -1081,20 +1094,31 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   const isCatalogCollection = (catalogEditionCount ?? 0) > 0;
 
   // For catalogue collections, the description names many authors (Bruno,
-  // Galileo, …) — link them to their CANONICAL author page. Resolve each
-  // distinct author string → its book's entity → canonical name → canonical
-  // slug, so name-order variants of one person ("Bruno, Giordano" / "Giordano
-  // Bruno") share a single href (this is what the canonical-author relink in
-  // #2180 enables). Falls back to the raw string slug when unlinked.
+  // Galileo, …) — link them to their CANONICAL author page, so name-order
+  // variants of one person ("Bruno, Giordano" / "Giordano Bruno") share a
+  // single href. The link goes through `books.author_id` (the canonical FK),
+  // never a slug of the byline: a byline names whoever a catalogue wrote, and
+  // a bare "Thomas" slug points at one Thomas for all of them (#4318, #4355).
+  // A byline whose books carry MORE than one author_id names several people
+  // and gets no link at all. Only a byline with no author_id on any of its
+  // books falls back to the legacy entity name (#2180), then the byline slug.
   let descriptionAuthorLinks: { name: string; href: string; canonical?: string }[] = [];
   if (isCatalogCollection) {
     try {
       const db = await getReadDb();
       const pairs = await db.collection('books').aggregate([
         { $match: { collections: id, author: { $type: 'string', $ne: '' } } },
-        { $group: { _id: '$author', ent: { $first: '$author_entity_id' }, n: { $sum: 1 } } },
+        { $group: { _id: '$author', aids: { $addToSet: '$author_id' }, ent: { $first: '$author_entity_id' }, n: { $sum: 1 } } },
       ]).toArray();
-      const entIds = [...new Set(pairs.map(p => p.ent).filter(Boolean).map(String))];
+      const aidsOf = (p: { aids?: unknown[] }) =>
+        (p.aids || []).filter((a): a is string => typeof a === 'string' && a !== '');
+      const authorIds = [...new Set(pairs.flatMap(p => { const a = aidsOf(p); return a.length === 1 ? a : []; }))];
+      const authorDocs = authorIds.length
+        ? await db.collection<{ _id: string; canonical_name?: string }>('authors').find(
+          { _id: { $in: authorIds } }, { projection: { canonical_name: 1 } }).toArray()
+        : [];
+      const authorName = new Map(authorDocs.map(a => [a._id, a.canonical_name]));
+      const entIds = [...new Set(pairs.filter(p => aidsOf(p).length === 0).map(p => p.ent).filter(Boolean).map(String))];
       const entDocs = entIds.length
         ? await db.collection('entities').find(
           { _id: { $in: entIds.filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s)) } },
@@ -1102,8 +1126,13 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         : [];
       const entName = new Map(entDocs.map(e => [String(e._id), e.canonical_name || e.name]));
       descriptionAuthorLinks = pairs.flatMap(p => {
-        const canon = (p.ent ? entName.get(String(p.ent)) : null) as string | null;
-        const href = authorUrl(canon || (p._id as string));
+        const aids = aidsOf(p);
+        if (aids.length > 1) return [];
+        const aid = aids[0];
+        const canon = (aid ? authorName.get(aid) : p.ent ? entName.get(String(p.ent)) : null) as string | null | undefined;
+        // a placeholder ("Anonymous") is not a name to link in prose
+        if (canon && !authorUrl(canon)) return [];
+        const href = aid ? authorUrl(p._id as string, aid) : authorUrl(canon || (p._id as string));
         return href ? [{ name: p._id as string, canonical: canon || undefined, href, count: (p.n as number) || 1 }] : [];
       });
     } catch { /* non-fatal — description just won't gain author links */ }
@@ -1126,6 +1155,16 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   // collections keep their Featured "Start here" + tier treatment untouched.
   const featuredPreviewBooks = (!isArtCollection && !hasCuratedHighlights)
     ? (books as BookItem[]).filter(b => !b.resource_type).slice(0, 8)
+    : [];
+
+  // ExhibitionLayout is a client component, so whatever it is handed is
+  // serialised into the page. galleryImages are whole gallery_images rows
+  // (dhash, bbox, metadata, rationale, tenantId...); send only the fields its
+  // GalleryImage type reads. On /collections/alchemy the full rows were 116 KB.
+  const EXHIBITION_IMAGE_FIELDS = ['id', 'book_id', 'page_id', 'book_title', 'type', 'museum_description', 'extracted_url', 'thumbnail_url', 'image_url'] as const;
+  const exhibitionImages = exhibition?.layout
+    ? galleryImages.map((img: Record<string, unknown>) =>
+      Object.fromEntries(EXHIBITION_IMAGE_FIELDS.filter((k) => img[k] !== undefined).map((k) => [k, img[k]]))) as unknown as React.ComponentProps<typeof ExhibitionLayout>['images']
     : [];
 
   // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
@@ -1188,7 +1227,27 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
     ...books,
     ...mentionedBooks,
   ] as BookItem[];
-  const explicitMentions: { text: string; book_id: string }[] = collection.mentioned_books || [];
+  const explicitMentions: DescriptionMention[] = collection.mentioned_books || [];
+  const introParagraphs: string[] = (collection.expanded_description || collection.description || '')
+    .split('\n\n')
+    .map((p: string) => p.trim())
+    .filter(Boolean);
+  // The same authored links, resolved to hrefs for the exhibition layout (a
+  // client component), so a curated page links what its prose names (#7897).
+  const slugById = new Map(allBooksForLinking.map((b) => [b.id, (b as { slug?: string }).slug]));
+  const exhibitionMentions = explicitMentions.flatMap((m) => {
+    const href = m.author_id
+      ? authorUrl('', m.author_id)
+      : m.book_id ? tenantBookUrl({ id: m.book_id, slug: slugById.get(m.book_id) }, tenantSlug) : null;
+    return m.text && href ? [{ text: m.text, href }] : [];
+  });
+  // A curated exhibition that carries no description block of its own (yoga,
+  // courts-of-wonder, the-human-condition) used to hide the collection's intro
+  // entirely; it now shows it under the hero like every other collection.
+  const exhibitionHasDescription = Array.isArray(exhibition?.layout)
+    && exhibition.layout.some((b: { component?: string }) => b.component === 'description');
+  const renderIntroParagraph = (para: string) =>
+    renderInlineProse(para, (seg) => linkBookTitles(seg, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks));
 
   return (
     <div className="min-h-screen bg-cream">
@@ -1317,7 +1376,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 Shown only when the collection really has Spanish books — a link
                 into an empty Spanish page is the broken promise the route gate
                 exists to prevent. Tenants keep their own prefix and never get it. */}
-            {!tenantSlug && spanishBookCount > 0 && (
+            {!tenantSlug && spanishBookCount > 0 && hasEsCollectionPage(collection) && (
               <>
                 <span className="w-px h-4 bg-white/20" />
                 <Link
@@ -1332,6 +1391,37 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </div>
         </div>
       </div>
+
+      {/* Introduction — directly under the hero, before any band of covers, as
+          the collection-page spec orders it (§2: Introduction 4, First
+          translations 6). A reader learns what the tradition is and why these
+          books belong together before being shown them. Long intros show two
+          paragraphs; the rest sits behind a native disclosure (#7897). */}
+      {!exhibitionHasDescription && introParagraphs.length > 0 && (
+        <div id="introduction" className="bg-warm border-b border-border-light">
+          <div className="max-w-[1500px] mx-auto px-6 py-8">
+            <div className="max-w-4xl">
+              {introParagraphs.slice(0, INTRO_LEAD_PARAGRAPHS).map((para, i) => (
+                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                  {renderIntroParagraph(para)}
+                </p>
+              ))}
+              {introParagraphs.length > INTRO_LEAD_PARAGRAPHS && (
+                <details className="group mt-4">
+                  <summary className="cursor-pointer list-none text-sm text-muted hover:text-accent-rust transition-colors group-open:hidden">
+                    Read more &darr;
+                  </summary>
+                  {introParagraphs.slice(INTRO_LEAD_PARAGRAPHS).map((para, i) => (
+                    <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                      {renderIntroParagraph(para)}
+                    </p>
+                  ))}
+                </details>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Sub-collections grid */}
       {childCollections.length > 0 && (
@@ -1394,7 +1484,11 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           built around and the witnesses asked for. First content band on
           purpose: the reader who wrote the list checks it before browsing.
           Self-gates when the collection has none. */}
-      <CollectionReadingList rows={readingList} tenantSlug={tenantSlug} />
+      <CollectionReadingList
+        rows={readingList}
+        tenantSlug={tenantSlug}
+        {...readingListHeader(collection.reading_list, readingList.length)}
+      />
 
       {/* Featured books — a few of the collection's books, surfaced under the
           sub-collections and above the illustration gallery. Full catalogue stays below. */}
@@ -1642,8 +1736,9 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             <ExhibitionLayout
               layout={exhibition.layout}
               books={exhibitionBooks as any[]}
-              images={galleryImages}
+              images={exhibitionImages}
               collectionSlug={id}
+              mentions={exhibitionMentions}
             />
           </div>
         </div>
@@ -1726,21 +1821,6 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                   +{artworks.length - 15} more works
                 </Link>
               )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Overview description */}
-      {!exhibition?.layout && (collection.expanded_description || collection.description) && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-[1500px] mx-auto px-6 py-8">
-            <div className="max-w-4xl">
-              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {renderInlineProse(para, (seg) => linkBookTitles(seg, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks))}
-                </p>
-              ))}
             </div>
           </div>
         </div>
@@ -1938,6 +2018,18 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </p>
         )}
       </div>
+
+      {/* Server-rendered plain links to this collection's newest English-readable
+          books not already on the page (#3755). Apex only, like the catalog link:
+          partner subdomains are curated rooms. */}
+      {!tenantSlug && !isArtCollection && total > 0 && (
+        <RecentlyTranslatedLinks
+          collection={id}
+          limit={24}
+          excludeIds={[...books, ...curatedHighlightsData, ...firstTranslations].map((b) => b.id)}
+          className="px-6 md:px-12 max-w-[1500px] mx-auto pb-12"
+        />
+      )}
 
       {/* Further reading — adjacent works we hold, and the ones we don't. Sits
           AFTER the works grid on purpose: it is a handoff, not a member list,

@@ -144,6 +144,15 @@ describe('generateTypstSource', () => {
     expect(src).toContain('A, B');
   });
 
+  it('states CC BY-NC-SA for a new edition and the stored licence for one already minted (#8488)', () => {
+    const fresh = generateTypstSource(book, pages);
+    expect(fresh).toContain('Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)');
+    expect(fresh).not.toMatch(/CC BY-SA/);
+    const minted = generateTypstSource(book, pages, { license: 'CC-BY-SA-4.0' });
+    expect(minted).toContain('Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)');
+    expect(minted).not.toMatch(/NC-SA/);
+  });
+
   it('cross-links a page to its source text only when the source side has that page, and reflows the transcription', () => {
     const src = generateTypstSource({ ...book, acquisition_funder: 'Stefan Pernar' }, pages, { credits: ['Books funded by X'] });
     expect(src).toContain('#src("1", printed: none, side: "t", other: "Latin");');

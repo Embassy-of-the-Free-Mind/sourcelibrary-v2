@@ -10,7 +10,7 @@
 //     here (infrastructure/caddy/Caddyfile.l7a), so the token never crosses the network in cleartext.
 //
 // POST /match  {vector[768], k, threshold, filter_language?, filter_languages?, filter_exclude_languages?,
-//               year_min?, year_max?, with_text?}  →  {rows: [{page_id, book_id, page_number, similarity}], ms,
+//               year_min?, year_max?, book_ids?, with_text?}  →  {rows: [{page_id, book_id, page_number, similarity}], ms,
 //               path, complete, filtered_rows, candidates, rounds}
 //   with_text: true (phase 4) adds match_semantic's other columns to each row — book_language and
 //   book_year from the row store, translation, book_title and book_author from the text store
@@ -29,6 +29,9 @@
 //     hnsw+exact  the widening ran out with < k rows and the filter passes ≤ EXACT_FALLBACK_MAX rows
 //   `complete: false` means fewer than k rows came back AND rows above the threshold may exist that
 //   were not looked at — the caller should not serve that as the answer (the app falls back to the RPC).
+//   book_ids (≤ MAX_BOOK_IDS, #2049) — match_pages_in_books' question: path `books`, an exact float32
+//     scan of exactly those books' rows (the book index below), ANDed with any other filter. Without
+//     the shards (or the overrides that cover rows changed since the build) it answers `complete: false`.
 // GET  /health {size, built_at, last_delta_at, book_map_size, …}
 //
 // PRIOR ART: sourcelibrary-atlas scripts/local-corpus/semantic-lib.mjs — the query path (usearch,
@@ -42,7 +45,7 @@ import { timingSafeEqual } from 'node:crypto';
 import {
   DIM, SHARD_DIR, indexConfigFor, readState, writeJsonAtomic, STATE_PATH, indexPath, rowsPath, loadUsearch, RowStore, log,
   EXACT_VEC_PATH, EXACT_KEYS_PATH, EXACT_META_PATH, overridesPath, quantizeI8, classLang, classYear,
-  TEXT_DB_PATH, openTextReader, rangeOfPageId, decodeVec,
+  TEXT_DB_PATH, openTextReader, rangeOfPageId, decodeVec, scanKeysExact,
 } from './lib.mjs';
 
 const HOST = process.env.VECTOR_SEARCH_HOST || '127.0.0.1';
@@ -61,6 +64,7 @@ const EXACT_MAX = +(process.env.VECTOR_SEARCH_EXACT_MAX || 300000);
 const EXACT_FALLBACK_MAX = +(process.env.VECTOR_SEARCH_EXACT_FALLBACK_MAX || 600000);
 const EXACT_THREADS = +(process.env.VECTOR_SEARCH_EXACT_THREADS || 8); // one query's scan splits across threads: 153K rows in 21 ms at 8, 136 ms at 1
 const EXACT_CHUNK = 131072; // rows per read: 96 MB
+const MAX_BOOK_IDS = 50;
 if (!TOKEN || TOKEN.length < 32) { console.error('VECTOR_SEARCH_TOKEN missing or short (expected openssl rand -hex 32)'); process.exit(2); }
 
 const { Index, exactSearch } = loadUsearch();
@@ -116,6 +120,39 @@ catch (e) { log('text store not opened:', e.message); }
 const loadedAt = new Date().toISOString();
 let pending = 0; // changes applied since the last save
 
+// The book index (#2049): every key grouped by book, CSR over the row store's interned book ids, so the
+// book_ids path reads a book's keys instead of testing 7.6M rows. Built at startup and after each save
+// (~30 MB, well under a second); keys a delta sets in between are kept in `bookTouched` and checked
+// on every book query, so a page added since the build is found and a moved one is not double-counted.
+let bookIndex = null;
+const bookTouched = new Set();
+function buildBookIndex() {
+  const t = performance.now();
+  const nb = rows.books.length, start = new Uint32Array(nb + 1);
+  for (let k = 0; k < rows.n; k++) if (rows.alive[k]) start[rows.book[k] + 1]++;
+  for (let b = 0; b < nb; b++) start[b + 1] += start[b];
+  const keys = new Uint32Array(start[nb]), fill = start.slice(0, nb);
+  for (let k = 0; k < rows.n; k++) if (rows.alive[k]) keys[fill[rows.book[k]]++] = k;
+  bookIndex = { start, keys, nb };
+  bookTouched.clear();
+  log(`book index: ${keys.length.toLocaleString()} keys over ${nb.toLocaleString()} books in ${(performance.now() - t).toFixed(0)} ms`);
+}
+buildBookIndex();
+
+/** The live keys of these books that pass the other filters. */
+function bookKeys(f) {
+  const want = new Set();
+  for (const id of f.bookIds) { const b = rows.bookIdx.get(id); if (b !== undefined) want.add(b); }
+  const out = new Set();
+  const take = (k) => { if (rows.alive[k] && want.has(rows.book[k]) && passes(k, f)) out.add(k); };
+  for (const b of want) {
+    if (b >= bookIndex.nb) continue; // a book first seen after the build: only in bookTouched
+    for (let i = bookIndex.start[b]; i < bookIndex.start[b + 1]; i++) take(bookIndex.keys[i]);
+  }
+  for (const k of bookTouched) take(k);
+  return out;
+}
+
 // ── /match ─────────────────────────────────────────────────────────────────────────────────────
 
 class BadRequest extends Error {}
@@ -140,6 +177,8 @@ function parseMatch(b) {
     if (b[f] != null && (!Array.isArray(b[f]) || b[f].some((x) => typeof x !== 'string'))) throw new BadRequest(`${f} must be an array of strings`);
   }
   if (b.filter_language != null && typeof b.filter_language !== 'string') throw new BadRequest('filter_language must be a string');
+  if (b.book_ids != null && (!Array.isArray(b.book_ids) || b.book_ids.length === 0 || b.book_ids.length > MAX_BOOK_IDS
+    || b.book_ids.some((x) => typeof x !== 'string'))) throw new BadRequest(`book_ids must be 1..${MAX_BOOK_IDS} strings`);
   return {
     q, k, threshold,
     language: b.filter_language ?? null,
@@ -147,6 +186,7 @@ function parseMatch(b) {
     languages: nonEmpty(b.filter_languages) ? new Set(b.filter_languages) : null,
     exclude: nonEmpty(b.filter_exclude_languages) ? new Set(b.filter_exclude_languages) : null,
     yearMin: optInt(b.year_min, 'year_min'), yearMax: optInt(b.year_max, 'year_max'),
+    bookIds: b.book_ids ?? null,
     withText: b.with_text === true,
     withKeys: b.with_keys === true, // eval only (recall-eval.mjs): the usearch key = the shard row ordinal after a build
   };
@@ -285,7 +325,33 @@ async function exactScanLocked(f) {
   return { rows: out, scanned, reranked, timing: { read_ms: +readMs.toFixed(1), scan_ms: +(tRe - t0 - readMs).toFixed(1), rerank_ms: +(end - tRe).toFixed(1) } };
 }
 
+/**
+ * match_pages_in_books: every live row of the books, scored exactly. The RPC computes float32 cosine
+ * on the same vectors (the shards are its rows as pulled); a row changed since the build is scored
+ * from its int8 override (similarity error ~0.0005, lib.mjs quantizeI8).
+ */
+async function bookMatch(f) {
+  const t0 = performance.now();
+  const keys = bookKeys(f);
+  const tk = performance.now();
+  if (keys.size === 0) return { rows: [], path: 'books', complete: true, filtered_rows: 0, candidates: 0, rounds: 0 };
+  const scored = exact?.shards.length
+    ? await scanKeysExact(f.q, keys, { shards: exact.shards, overrides, threshold: f.threshold, k: f.k })
+    : null;
+  if (!scored) return { rows: [], path: 'books', complete: false, filtered_rows: keys.size, candidates: 0, rounds: 0 };
+  const out = scored.map(({ key, sim }) => {
+    const row = { page_id: rows.pageIds[key], book_id: rows.bookId(key), page_number: rows.pn[key], similarity: sim };
+    if (f.withKeys) row.key = key;
+    return row;
+  });
+  return {
+    rows: out, path: 'books', complete: true, filtered_rows: keys.size, candidates: keys.size, rounds: 1,
+    books_timing: { keys_ms: +(tk - t0).toFixed(1), scan_ms: +(performance.now() - tk).toFixed(1) },
+  };
+}
+
 async function match(f) {
+  if (f.bookIds) return bookMatch(f);
   if (!isFiltered(f)) {
     const { out } = hnswPass(f, Math.min(index.size(), f.k));
     return { rows: out, path: 'hnsw', complete: true, candidates: f.k, rounds: 1 };
@@ -378,6 +444,7 @@ async function applyDelta(b) {
     if (key === undefined) { key = nextKey++; added++; } else { replaced++; if (index.contains(BigInt(key))) index.remove(BigInt(key)); }
     index.add(BigInt(key), vec);
     rows.set(key, r);
+    bookTouched.add(key);
     if (exact) overrides.set(key, quantizeI8(vec));
   });
   await eachSliced(b.removes || [], (pid) => {
@@ -447,6 +514,7 @@ async function save() {
   writeJsonAtomic(STATE_PATH, state);
   for (const p of [indexPath(old), rowsPath(old), overridesPath(old)]) try { fs.unlinkSync(p); } catch {}
   pending = 0;
+  buildBookIndex();
   return { generation: g, ms: Date.now() - t };
 }
 
@@ -470,6 +538,7 @@ const send = (res, code, obj) => {
 function health() {
   return {
     ok: true, size: index.size(), live_rows: rows.live, book_map_size: rows.booksLive,
+    book_index: { keys: bookIndex.keys.length, books: bookIndex.nb, touched: bookTouched.size },
     built_at: state.built_at, last_delta_at: state.last_delta_at, saved_at: state.saved_at ?? null,
     checkpoint: state.checkpoint, generation: state.generation, pending_changes: pending,
     text_store: text ? { path: TEXT_DB_PATH, rows_hint: text.db.prepare('SELECT max(rowid) AS n FROM pages').get().n } : null,

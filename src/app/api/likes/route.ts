@@ -9,7 +9,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { LikeTargetType } from '@/lib/types';
+import { LikeTargetType, isLikeTargetType } from '@/lib/types';
+import { posts } from '@/app/articles/posts';
 
 /**
  * Resolve the like target: does it exist, and which tenantId (if any) should
@@ -30,6 +31,11 @@ async function resolveTarget(
   targetId: string
 ): Promise<{ found: boolean; tenantId: string | null }> {
   try {
+    if (targetType === 'article') {
+      // Articles are code, not documents: liked by slug, and only a listed
+      // article counts. Never tenant-scoped (articles live on the main site).
+      return { found: posts.some(p => p.slug === targetId), tenantId: null };
+    }
     if (targetType === 'book') {
       const book = await db.collection('books').findOne(
         { $or: [{ id: targetId }, { slug: targetId }] },
@@ -73,7 +79,7 @@ async function resolveTarget(
  * Toggle a like for a target. If already liked, removes it. If not, adds it.
  *
  * Body:
- *   - target_type: 'image' | 'page' | 'book' | 'collection'
+ *   - target_type: 'image' | 'page' | 'book' | 'collection' | 'article'
  *   - target_id: string
  *   - visitor_id: string (from localStorage)
  */
@@ -97,9 +103,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!['image', 'page', 'book', 'collection'].includes(target_type)) {
+    if (!isLikeTargetType(target_type)) {
       return NextResponse.json(
-        { error: 'target_type must be image, page, book, or collection' },
+        { error: 'target_type must be image, page, book, collection, or article' },
         { status: 400 }
       );
     }

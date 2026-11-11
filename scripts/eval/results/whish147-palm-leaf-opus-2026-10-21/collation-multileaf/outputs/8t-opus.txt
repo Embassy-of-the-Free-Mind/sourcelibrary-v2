@@ -1,0 +1,53 @@
+I could read only part of this leaf, and some of the line assignments are guesses. The image is fairly small, so many letters are ambiguous. I've marked how confident I am in each reading, and I haven't filled any gaps from the edition. The leaf has ten lines. A blank space around the string hole splits lines 3–7 into a left and a right segment. Each text line runs on past the right edge of this half-leaf, so every reading below breaks off at that edge.
+
+**Line 1 — SK_40 (second half)**
+Leaf: *sūkṣma-paryantaṃ saṃsarati nirupabhogaṃ bhāvai[r…]*
+- *saṃsarati* is clear on the leaf (സംസരതി) where the edition has **pravartate**. This is a real difference. *saṃsarati* is the usual vulgate reading, and it also fits the metre.
+- *nirupabhogaṃ* has anusvāra for the edition's final -m. That's only a spelling convention.
+
+**Line 2**
+I can't read this line. It should hold the end of SK_40 (*adhivāsitaṃ liṅgam*) and the start of SK_41, but I can't make out the glyphs well enough to confirm that, and it may be commentary.
+
+**Line 3**
+- Left: possibly *[…]nirāśrayaṃ liṃ[gaṃ]*, the end of SK_41. Uncertain.
+- Right: *gaṃ ॥ ślo: puruṣā[rtha…]*, the start of SK_42. Uncertain.
+
+**Line 4 — SK_42**
+- Left: possibly *[naimi]ttika-prasaṃge*. Uncertain.
+- Right: *na prakṛter vibhu[…]*. Fairly legible.
+- I can't compare the rest of SK_42 (*naṭavad vyavatiṣṭhate*) because it falls beyond the edge of this half.
+
+**Line 5 — SK_43**
+- Left: *[li]ṅgaṃ ॥ ślo: a-*. The first letters are uncertain.
+- Right: *sāṃsiddhikāś ca bhā[vāḥ…]*.
+- This matches the edition.
+
+**Line 6 — SK_43**
+- Left: *[…]ādyāḥ dṛ-*. Only partly legible.
+- Right: *ṣṭāḥ karaṇāśri[…]*. The akṣara after *karaṇā-* is underlined, so it may be a correction. I can't tell whether it reads *-śraya-* or *-śri-*.
+
+**Line 7 — SK_43 end / SK_44**
+- Left: *[…]ādyāḥ ॥ dharmeṇa*. Uncertain.
+- Right: *gamanam ūrdhvaṃ gama[nam…]*.
+- This matches the edition as far as it goes.
+
+**Line 8 — SK_44**
+- Left: *jñānena cāpavargo*. Fairly legible.
+- Right: *viparyayād iṣyate ba[ndhaḥ]*.
+- The leaf has **iṣyate** where the edition has **iṣyane**. That looks like a misprint in the edition. I read *-te* on the leaf, but not with full confidence.
+
+**Line 9 — SK_45**
+- Left: *[…]saṃsāro bhavati*. Uncertain.
+- Right: *rājasād rāgāt ai[śvaryād…]*.
+- The leaf has the word **rāgāt** (രാഗാൽ) after *rājasād*. The edition leaves it out, and it's needed for the metre.
+
+**Line 10**
+I couldn't identify this line. I can't make it out well enough to tell whether it's commentary or verse.
+
+**Not compared at all:** SK_38, SK_39 and SK_46–47 are not on this leaf. For SK_41–42, the leaf shows too little legible text to compare against the edition.
+
+DIFFERENCES:
+SK_40 | pravartate | saṃsarati | certain
+SK_44 | iṣyane | iṣyate | uncertain
+SK_45 | (omitted after rājasād) | rāgāt | certain
+SK_43 | karaṇā`śrayiṇaḥ | karaṇāśri… (underlined/corrected akṣara) | uncertain

@@ -34,6 +34,13 @@ export interface CanonWork {
   /** Title in the original language/script, e.g. "Πολιτεία" */
   originalTitle: string;
   author: string;
+  /**
+   * `authors._id` of the author — the "More by" link goes here rather than to a
+   * slug of `author` (#4355). Verified 2026-10-14 against the `author_id` the
+   * work's editions carry; it differs from the slug where the thesaurus's
+   * canonical id is not the English short name (Lucretius → `titus-lucretius`).
+   */
+  authorId: string;
   /** Approximate composition date, reader-facing, e.g. "c. 375 BCE" */
   era: string;
   /** Language the work was composed in ("Greek" | "Latin") */
@@ -52,7 +59,8 @@ export interface CanonWork {
   locus?: { system: 'bekker' | 'stephanus'; workSlug: string; example: string };
 }
 
-const PLATO_COLLECTED = ['Q139619812', 'plato-opera-ficino']; // Stephanus 1578; Ficino's Latin Opera
+// Stephanus 1578 (edition QID Q139619812 re-keyed to a local id, #8325); Ficino's Latin Opera
+const PLATO_COLLECTED = ['local:a:plato:extant-omnia-opera-quae', 'plato-opera-ficino'];
 const HOMER_COLLECTED = ['Q106691509']; // Homeri Opera (multi-volume)
 
 export const CANON_WORKS: CanonWork[] = [
@@ -61,12 +69,13 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Iliad',
     originalTitle: 'Ἰλιάς',
     author: 'Homer',
+    authorId: 'homer',
     era: 'c. 8th century BCE',
     originalLanguage: 'Greek',
     // Q125518202 merged into Q16547641 (2026-08-08, #3759); the two remaining
     // extra ids are combined Iliad+Odyssey volumes, shared with the Odyssey
     // entry on purpose — they are their own work_id, never merged.
-    workIds: ['Q16547641', 'homer-homer-iliad-odyssey', 'Q19090449'],
+    workIds: ['Q16547641', 'homer-homer-iliad-odyssey', 'local:a:homer:iliad-odyssey'], // edition QID Q19090449 re-keyed (#8325)
     collectedWorkIds: HOMER_COLLECTED,
   },
   {
@@ -74,9 +83,10 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Odyssey',
     originalTitle: 'Ὀδύσσεια',
     author: 'Homer',
+    authorId: 'homer',
     era: 'c. 8th century BCE',
     originalLanguage: 'Greek',
-    workIds: ['local:a:homer:dolinghe-odyssea-ulysse-van', 'Q19090449', 'homer-homer-iliad-odyssey'],
+    workIds: ['local:a:homer:dolinghe-odyssea-ulysse-van', 'local:a:homer:iliad-odyssey', 'homer-homer-iliad-odyssey'],
     collectedWorkIds: HOMER_COLLECTED,
   },
   {
@@ -84,6 +94,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Homeric Hymns',
     originalTitle: 'Ὕμνοι Ὁμηρικοί',
     author: 'Homer',
+    authorId: 'homer',
     era: '7th–6th century BCE',
     originalLanguage: 'Greek',
     workIds: ['Q329342'],
@@ -94,6 +105,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Republic',
     originalTitle: 'Πολιτεία',
     author: 'Plato',
+    authorId: 'plato',
     era: 'c. 375 BCE',
     originalLanguage: 'Greek',
     workIds: ['plato-republic'],
@@ -105,6 +117,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Timaeus',
     originalTitle: 'Τίμαιος',
     author: 'Plato',
+    authorId: 'plato',
     era: 'c. 360 BCE',
     originalLanguage: 'Greek',
     workIds: ['Q371884'], // plato-timaeus merged in (2026-08-08, #3759)
@@ -116,6 +129,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Phaedo',
     originalTitle: 'Φαίδων',
     author: 'Plato',
+    authorId: 'plato',
     era: 'c. 380 BCE',
     originalLanguage: 'Greek',
     workIds: ['Q244161'],
@@ -127,6 +141,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Laws',
     originalTitle: 'Νόμοι',
     author: 'Plato',
+    authorId: 'plato',
     era: 'c. 350 BCE',
     originalLanguage: 'Greek',
     workIds: ['Q752285'],
@@ -138,6 +153,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Nicomachean Ethics',
     originalTitle: 'Ἠθικὰ Νικομάχεια',
     author: 'Aristotle',
+    authorId: 'aristotle',
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['aristotle-nicomachean-ethics'],
@@ -148,6 +164,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Metaphysics',
     originalTitle: 'Τὰ μετὰ τὰ φυσικά',
     author: 'Aristotle',
+    authorId: 'aristotle',
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['aristotle-metaphysics'],
@@ -158,6 +175,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Organon',
     originalTitle: 'Ὄργανον',
     author: 'Aristotle',
+    authorId: 'aristotle',
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['Q500930'],
@@ -167,6 +185,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'On the Soul',
     originalTitle: 'Περὶ ψυχῆς',
     author: 'Aristotle',
+    authorId: 'aristotle',
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['local:a:aristotle:soul'],
@@ -177,6 +196,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Histories',
     originalTitle: 'Ἱστορίαι',
     author: 'Herodotus',
+    authorId: 'herodotus',
     era: 'c. 430 BCE',
     originalLanguage: 'Greek',
     workIds: ['Q746583'], // 4 local fragment ids merged in (2026-08-08, #3759)
@@ -186,6 +206,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Meditations',
     originalTitle: 'Τὰ εἰς ἑαυτόν',
     author: 'Marcus Aurelius',
+    authorId: 'marcus-aurelius',
     era: '170–180 CE',
     originalLanguage: 'Greek',
     workIds: ['Q136035389'],
@@ -195,6 +216,7 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Elements',
     originalTitle: 'Στοιχεῖα',
     author: 'Euclid',
+    authorId: 'euclid',
     era: 'c. 300 BCE',
     originalLanguage: 'Greek',
     workIds: ['Q172891'], // local:a:euclid:elements merged in (2026-08-08, #3759)
@@ -204,43 +226,48 @@ export const CANON_WORKS: CanonWork[] = [
     title: 'Aeneid',
     originalTitle: 'Aeneis',
     author: 'Virgil',
+    authorId: 'virgil',
     era: '29–19 BCE',
     originalLanguage: 'Latin',
     workIds: ['Q60220'],
-    collectedWorkIds: ['Q21205467'], // Opera (Bucolica, Georgica, Aeneis)
+    collectedWorkIds: ['local:a:virgil:opera'], // Opera (Bucolica, Georgica, Aeneis); edition QID Q21205467 re-keyed (#8325)
   },
   {
     slug: 'metamorphoses',
     title: 'Metamorphoses',
     originalTitle: 'Metamorphoseon libri XV',
     author: 'Ovid',
+    authorId: 'ovid',
     era: '8 CE',
     originalLanguage: 'Latin',
-    workIds: ['Q106595694'],
+    workIds: ['Q184742'], // edition QID Q106595694 re-keyed to the work (#8325)
   },
   {
     slug: 'de-rerum-natura',
     title: 'On the Nature of Things',
     originalTitle: 'De rerum natura',
     author: 'Lucretius',
+    authorId: 'titus-lucretius',
     era: 'c. 55 BCE',
     originalLanguage: 'Latin',
-    workIds: ['Q137592632'], // local natura-rerum id merged in (2026-08-08, #3759)
+    workIds: ['Q861986'], // local natura-rerum id merged in (2026-08-08, #3759); edition QID Q137592632 re-keyed (#8325)
   },
   {
     slug: 'consolation-of-philosophy',
     title: 'The Consolation of Philosophy',
     originalTitle: 'De consolatione philosophiae',
     author: 'Boethius',
+    authorId: 'boethius',
     era: '524 CE',
     originalLanguage: 'Latin',
-    workIds: ['Q138752489'], // local consolation id merged in (2026-08-08, #3759)
+    workIds: ['Q861927'], // local consolation id merged in (2026-08-08, #3759); edition QID Q138752489 re-keyed (#8325)
   },
   {
     slug: 'epistulae-morales',
     title: 'Moral Letters to Lucilius',
     originalTitle: 'Epistulae morales ad Lucilium',
     author: 'Seneca',
+    authorId: 'seneca',
     era: 'c. 65 CE',
     originalLanguage: 'Latin',
     // seneca-epistulae-morales merged in (2026-08-08, #3759)
@@ -288,11 +315,11 @@ export function workEditionsFilter(idOrSlug: string): Record<string, unknown> {
  * The same edition set as `workEditionsFilter`, in a form a REQUEST PATH can
  * afford — for counting "N editions of this work" on a search result (#4300).
  *
- * `workEditionsFilter`'s `$or` reaches `work_slug`, which carries no index, so
- * Mongo scans the whole `books` collection: measured 2026-08-28 that filter
- * takes **7,990 ms** for one work while the `work_id` half takes **38 ms**.
- * That is fine on `/work/[id]` (ISR, 6h window) and not fine inside a search
- * response (request-path-queries.md).
+ * `workEditionsFilter`'s `$or` reaches `work_slug`, which carried no index until
+ * 2026-10-20, so Mongo scanned the whole `books` collection: measured 2026-08-28
+ * at **7,990 ms** for one work while the `work_id` half took **38 ms**. The sparse
+ * `work_slug_1` index (#7057) brought the full filter to 6 ms; this narrower
+ * form remains the request-path choice (request-path-queries.md).
  *
  * Dropping the `work_slug` branch is safe **when the argument is a work_id**,
  * which is the only way this is called: `work_slug` holds human slugs

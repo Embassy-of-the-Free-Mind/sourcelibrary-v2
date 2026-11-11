@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | None of the three gives readable Sanskrit or Malayalam; A and B are identical and fully illegible, and C's scattered syllables (like "āryya", the doubled-y spelling usual in Kerala manuscripts) are at least plausible but too fragmentary to count as real text, so C wins only on a near-tie.

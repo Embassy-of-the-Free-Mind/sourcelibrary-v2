@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, F, B, E, A, D
+WHY | C gives Sāṅkhyakārikā 1–5 completely and grammatically, including "tadviparītaḥ śreyān", "āptaśruti" and "pramāṇāddhi", with plausible verse numbers; its only flaw is one stray Malayalam glyph ("taൗ"), while the others drop syllables, leave gaps, or add garbled text.

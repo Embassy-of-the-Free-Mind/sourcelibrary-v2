@@ -1,0 +1,10 @@
+ROW 1 | നത്വയോൎവയവസംശയ[illegible]ഖിശേഷക്രുപത്വാൽക‖ക്ഷിഖിഭങ്ങത്തെഉൽഭക്ഷെവ‖വത്തെത്വിസായൊഗലിനത്തെ
+ROW 2 | സത്വസംയോഗാസമവാ[illegible]കാരണംകൊള്ളകാള്ളഖജ്ഞ‖ജ്ഞാത്വിമഷാഭ്രമണാദ്ര[illegible]‖ാമഹിഗമമനന്നഭ്രാവാന്നവ
+ROW 3 | ബോധഷിരോയഃസ്വാമാദ്ദ[illegible]ഖിടങ്ങളെപനദിക്കി‖പനമഖികവൃത്തിക്കാപദ‖ജ്ഞനവൃത്തിസാമമാത്രാദിചതു
+ROW 4 | ജ്ഞയെജ്ഞാക്കിൻറാക്കി.ഖിശനത്തിംഖിടജ്ഞ‖രരളൈത്രത്തിചതുജ്ഞ‖യന്തുപതമാണവഃത്ര
+ROW 5 | ക്കാരഗാദ്വിവബൊക്കാബഭത്രുൎദ്ദ്വാഞാ‖സമാവയന്യാദേ‖രദ്വനന്ദജ്ഞിത്വാഗസമവ
+ROW 6 | ദ്യജ്ഞിത്തിണാടാവഖിടജ്ഞകെഗ്രുഗ‖ടാവജ്ഞത്തിത്തെഉ‖ദേശാനത്രമസാത്വാൽ
+ROW 7 | കമബാപ്രൃബിജ്യാലക്കാത്തേമാഹിഗന്ധ‖വാത്തിക്കിനാക്കാവ‖ദ്ദാഷനസംക്കിത്തിനക്ദ്ദേ
+ROW 8 | ശഃഉദ്ദേശക്രൂദമെചസത്വര്രൈഖിളൈവത്ത്വയാമക‖ത്തിക്കാനനന്യരദ്ദവഥ‖യവാദഭജ്ഞദ്ദ്വ്യാവരജ്ഞരമി
+ROW 9 | ബിന്ദ്രാഭയനഗന്ധാദ്രനള്ളദാദവ്യാക്കിഃനച‖ക്കിത്രഗന്ധപ്രക്കിത്രന്മ‖പചത്തിത്തിബാല്യംബവയ
+NOTE | Low-confidence attempt: I count 9 rows and placed text in all of them, but many letter identifications are guesses. The ‖ breaks for rows 1–3 and 8–9 are only estimated, and in rows 1–2 the overlap seams are hard to align. Treat this as a rough draft, not a reliable transcription. The left margin has a leaf number (looks like ൃ/ല്പ). Row 8 has a scribal insertion mark (+), and so does row 7 (+ with ന്ന added above), which I worked into the text.

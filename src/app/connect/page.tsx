@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { BOOK_CORPUS_STATS, IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 import { jsonLdHtml } from '@/lib/json-ld';
 
 export const revalidate = 86400;
@@ -30,14 +30,14 @@ const VIDEO = {
   og: '/connect/connect-og.jpg',
   uploadDate: '2026-09-29',
   duration: 'PT2M14S',
-  name: 'How to connect Source Library to Claude and search 200,000 historical illustrations',
+  name: `How to connect Source Library to Claude and search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations`,
   description:
     'Screen recording: adding the Source Library connector from the Claude directory, then asking Claude for alchemical emblems of the ouroboros and getting images from the original books with page-level citations.',
 };
 
 const TITLE = 'Connect Source Library to Claude or ChatGPT: Free, Five Clicks';
 const DESCRIPTION =
-  `Let Claude or ChatGPT read 15,000+ rare historical books and ${IMAGE_CORPUS_STATS.illustrations} illustrations for you. Free, no account, about a minute. Step-by-step pictures and a two-minute video for beginners; connection details for Claude Code, Cursor and other tools at the bottom.`;
+  `Let Claude or ChatGPT read ${BOOK_CORPUS_STATS.readableInEnglish} rare historical books and ${IMAGE_CORPUS_STATS.illustrations} illustrations for you. Free, no account, about a minute. Step-by-step pictures and a two-minute video for beginners; connection details for Claude Code, Cursor and other tools at the bottom.`;
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -93,7 +93,7 @@ const FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: 'What can Claude do once it is connected?',
-    a: `Search 15,000+ historical books that we have translated into English, read whole chapters, quote exact passages with a link to the page they come from, and search ${IMAGE_CORPUS_STATS.illustrations} illustrations by subject or symbol.`,
+    a: `Search ${BOOK_CORPUS_STATS.readableInEnglish} historical books you can read in English, read whole chapters, quote exact passages with a link to the page they come from, and search ${IMAGE_CORPUS_STATS.illustrations} illustrations by subject or symbol.`,
   },
   {
     q: 'Which languages are the books in?',
@@ -210,7 +210,7 @@ export default function ConnectPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Let Claude read 15,000 rare books for you"
+          title={`Let Claude read ${BOOK_CORPUS_STATS.readableInEnglish} rare books for you`}
           subtitle="Connect Source Library to Claude in five clicks. Free, no account, about a minute. Then ask it anything about alchemy, Hermetica, early science, theology and the rest of pre-modern thought, and it answers from the original books, with a link to every page."
           image={HERO_IMAGE}
           imageAlt="Ouroboros dragon, engraving by Matthäus Merian from the Musaeum Hermeticum, 1678"

@@ -1,0 +1,52 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ādeśakhyājñavicakkavi ‖ ccyājñaindrasāṅkyakaḥkaṇādaiścyaṣṭiḥsū ‖ ṣṭiviṣṇumaheśvarācāryaru
+2. ndrālkendrātraviya ‖ karaṇaṃdvāvidyānatānikkaiśvāniṃna ‖ ndraḥekamaprāptiṃkkaṇṇuḥ
+3. pariśleṣavilakṣi ‖ ṇāguṇaviśeṣaiṣāḥuṣṇyaṃpṛttha ‖ ṣantyātmaṃprakāśya
+4. ṣyekkānyapraśna ‖ trasatvasatvaṃprakryapadrūgaṃ ‖ yāntrālpṛthakṣantrya
+5. svāyathaṃśai ‖ svapacaviśiṣṭasthitapunaḥpradhā ‖ napṛthakṣāntaraṃtta
+6. tthrāsaryama ‖ āśrājñaviśeṣāśaṣāḥniściddha ‖ ābhratānvicāraṇa
+7. tattvaḥṣitantrāka ‖ āviśeṣāāśāntāākhaghoā ‖ laṃśāndravādāśantu
+8. ddhāramātāviṣṭajñā ‖ ājñahāpratyuktaikkamāviśeṣāsyaḥ ‖ ntrakkāraikṣṭamyāntira
+9. yabhāmātravitṛjña ‖ jñādaiścattarendradvaiṣṭābhyantamaska ‖ skaṃdaiśvaramahādeva
+
+TRANSCRIPTION B
+1. ā [illegible] ñcaviṣa ‖ yāṇi34sāntaḥkaraṇābuddhiḥsarvvaṃ ‖ viṣayamavagāhateya
+2. smāltasmāttrividhaṃ ‖ karaṇaṃdvāridvārāṇiśeṣāṇi35 ‖ etepradīpakalpāḥ
+3. parasparavilakṣa ‖ ṇāguṇaviśeṣāḥkṛtsnaṃpuru ‖ ṣasyārtthaṃprakāśya
+4. buddhauprayaccha ‖ nti36sarvvaṃpratyupabhogaṃ ‖ yasmālpuruṣasya
+5. sādhayatibu ‖ ddhiḥsaivacaviśinaṣṭipunaḥpradhā ‖ napuruṣāntaraṃsū
+6. kṣmaṃ37tanma ‖ ātrāṇyaviśeṣāstebhyo ‖ bhūtānipañca
+7. ñcabhyaḥetesmṛ ‖ tāviśeṣāḥśāntāghorā ‖ ścamūḍhāśca [illegible]
+8. kṣmāmātāpitṛjā ‖ ḥsahaprabhūtaistridhāviśeṣāsyuḥ ‖ sūkṣmāsteṣāṃni
+9. yatāmātāpitṛjā ‖ nivarttante39pūrvvolppannamasa ‖ ktaṃniyataṃmahadādi
+
+TRANSCRIPTION C
+1. āśeṣāṇitupañcavi ‖ ṣayāṇi34sāntaḥkaraṇābuddhiḥsarvvaṃ ‖ viṣayamavagāhateya
+2. smāltasmāttrividha ‖ ṃkaraṇaṃdvāridvārāṇiśeṣāṇi35 ‖ etepradīpakalpāḥ
+3. parasparavilakṣa ‖ ṇāguṇaviśeṣāḥkṛtsnaṃpuru ‖ ṣasyārtthaṃprakāśya
+4. buddhauprayaccha ‖ nti36sarvvaṃpratyupabhogaṃ ‖ yasmālpuruṣasya
+5. sādhayatibuddhiḥ ‖ saivacaviśinaṣṭipunaḥpradhā ‖ napuruṣāntaraṃsū
+6. kṣmaṃ37tanma ‖ ātrāṇyaviśeṣāstebhyo ‖ bhūtānipañcapa
+7. ñcabhyaḥetesmṛ ‖ tāviśeṣāśāntāghorā ‖ ścamūḍhāśca38sū
+8. kṣmāmātāpitṛjāḥ ‖ sahaprabhūtaistridhāviśeṣāsyuḥ ‖ sūkṣmāsteṣāṃni
+9. yatāmātāpitṛjā ‖ nivarttante39pūrvvotpannama ‖ saktaṃniyataṃmahadādi
+
+TRANSCRIPTION D
+1. āśeṣāṇitupañcavi ‖ ṣayāṇi34ḥsāntaḥkaraṇābuddhiḥsarvva ‖ viṣayamavagāhateya
+2. smāltasmātrividhaṃ ‖ karaṇaṃdvāridvārāṇiśeviśeṣāṇiḥ ‖ 35ḥetepradīpakalpāḥ
+3. parasparavilakṣa ‖ ṇāguṇaviśeṣāḥkṛtsnaṃpuru ‖ ṣasyārtthaṃprakāśya
+4. buddhauprayaccha ‖ ntiḥ36ḥsarvvaṃpratyupabhogaṃ ‖ yasmālpuruṣasya
+5. sādhayatibuddhi ‖ saivacaviśinaṣṭipunaḥpradhā ‖ napuruṣāntaraṃsū
+6. kṣmaṃ37ḥtanmā ‖ trāṇyaviśeṣāstebhyo ‖ bhūtānipañcapa
+7. ñcabhyaḥetesmṛtā ‖ viśeṣāḥśāntāgho ‖ rāścamūḍhāścasū
+8. kṣmāmātāpitṛjā ‖ ssahaprabhūtaistridhāviśeṣāsyuḥ ‖ sūkṣmāsteṣāṃni
+9. yatāmātāpitṛjā ‖ nivarttante39ḥpūrvvolpannamasa ‖ ktaṃniyataṃmahadādi
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

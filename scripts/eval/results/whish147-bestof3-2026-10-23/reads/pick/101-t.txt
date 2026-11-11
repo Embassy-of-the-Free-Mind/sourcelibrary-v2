@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three are almost entirely illegible, but only A has a complete real word, "triguṇa" (a core Sāṅkhya term), while B has only the fragment "tri" and C has no readable text at all.

@@ -53,6 +53,7 @@
  */
 import {
   PAGE_BREAK_SCOPED,
+  pageBreakVariant,
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
@@ -61,12 +62,14 @@ import {
   isTranslatablePage,
   sameLanguageReason,
   writePageTranslation,
+  recordTruncatedTranslation,
   syncBookTranslationCounters,
   getTranslateModelForBook,
   contentHash,
   BLOCK_TAGS,
 } from './translate-core.mjs';
 import { codeVersion, host, NOT_RECORDED } from './write-provenance.mjs';
+import { checkWrittenText } from './write-text-guard.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { ocrTrustGate, isOcrTrustRefusal } from './ocr-trust-gate.mjs';
@@ -75,6 +78,7 @@ import { enrolBrake } from './quality-gate.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
+import { reuseKeptReads } from './kept-read-reuse.mjs';
 import {
   planBlocks, maxOutputTokensFor, batchRequest, responseTextOf, selectPages,
   RUNS_COLLECTION, MAX_PAGES_PER_RUN, translateSubmitBrake, brakeStopsBook,
@@ -237,7 +241,7 @@ export async function buildRoundRequest(db, { prompts, book, pages, kind, noCont
   const maxOutputTokens = maxOutputTokensFor(pages);
   return {
     prompt: built.prompt, promptRef: built.promptRef, maxOutputTokens,
-    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: 'scoped', ...(noContext ? { mode: 'none' } : {}), ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
+    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), ...(noContext ? { mode: 'none' } : {}), ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
   };
 }
 
@@ -341,8 +345,18 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
   // #5915: the pre-translation gate judges the queue here; a dry run records nothing.
-  const { pages, excluded, gate } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: !dryRun, lane: 'chained-enrol' });
+  const sel = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: !dryRun, lane: 'chained-enrol' });
+  const { excluded, gate } = sel;
+  let pages = sel.pages;
   if (gate?.book) return { ok: false, reason: preGateBookReason(gate.book), book, excluded };
+  // #7075: a page we already translated for free and kept is applied, not bought again. Not on a dry run: it writes.
+  if (!dryRun && pages.length) {
+    const reuse = await (deps.reuseKeptReads ?? reuseKeptReads)(db, { bookId, field: 'translation', pageIds: pages.map((p) => p.id), minModel: getTranslateModelForBook(book), log });
+    if (reuse.applied) {
+      excluded.applied_from_kept_read = reuse.applied;
+      pages = pages.filter((p) => !reuse.appliedIds.has(p.id));
+    }
+  }
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const model = getTranslateModelForBook(book);
   const estimate = estimateChainedUsd({ prompts, book, pages, model, noContext });
@@ -603,6 +617,9 @@ async function writeRoundPage(db, run, book, page, text, deps, unit) {
   if (res.written) {
     run.counts.written++;
     if (deps.syncPage) deps.syncPage(page.id, { translation: { data: res.text, language: 'English', model: run.model, source: 'ai', prompt_version: String(run.prompt_ref?.version ?? ''), prompt_id: run.prompt_ref?.id, prompt_hash: run.prompt_ref?.content_hash, prompt_name: run.prompt_ref?.name, updated_at: new Date() } });
+  } else if (res.truncated) {
+    // #5055: the door recorded it (a failure marker, blocked on the second); the page stays in the queue.
+    run.counts.truncated = (run.counts.truncated || 0) + 1;
   } else if (res.unhealthy) {
     run.counts.unhealthy++;
     // Same stamp the realtime worker puts on a refused page, so the page leaves the queue.
@@ -665,8 +682,11 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
   if (round.kind === 'block') {
     const r = answerOf(0);
     summary.finish_reason = r.finishReason;
-    const parsed = parseBlockTranslations(r.text, pages);
+    const parsed = parseBlockTranslations(r.text, pages, { lang: book?.language });
     const { translations } = parsed;
+    // #5055: an entry the write guard calls truncated is left out of the block's translations, so its page goes
+    // single-page below — the one re-read.
+    if (parsed.truncated?.length) summary.truncated = parsed.truncated.map((t) => `${t.page_number}:${t.reasons[0]}`);
     // Echo-shift guard (#4681 by-eye, 2026-10-01): a block in which the model handed one page's
     // SOURCE back as its "translation" is a block whose other entries are one slot off. Seen on
     // book 69b6307b…, block p16–23: p16 came back as its own Latin, and p17–23 each carried the
@@ -721,7 +741,8 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     const page = pageDocs.get(unit.pages[0].id);
     const r = answerOf(i);
     if (!r || r.error) { outcomes.push('error'); continue; }
-    let text = sanitizeTranslationTags(String(r.text || '').trim());
+    const raw = String(r.text || '').trim();
+    let text = sanitizeTranslationTags(raw);
     const finish = r.finishReason || '';
     if (!text && /RECITATION|SAFETY|PROHIBITED/i.test(finish)) {
       if (page) await markRefused(db, page, finish, deps);
@@ -732,6 +753,24 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
       continue;
     }
     if (!text) { outcomes.push(`empty ${finish}`); continue; }
+    // #5055: the write guard on the reply as returned (sanitizeTranslationTags closes a cut tail tag). A truncated read
+    // is asked for once more, next round; a second one is recorded on the page (blocked) and leaves the plan. Its
+    // length rule runs at the door, after the collapse retry below and the health gate, which name a thin page better.
+    const cut = page ? checkWrittenText(raw, { kind: 'translation', finishReason: finish }) : null;
+    if (cut?.verdict === 'truncated') {
+      if (!unit.retry) {
+        retries.push({ page_id: page.id, first_text: null });
+        outcomes.push('truncated-retry');
+        log(`[translate-batch-chained] ${run.book_id}: p${page.page_number} truncated (${cut.reasons.join(', ')}) — retrying once`);
+        continue;
+      }
+      await recordTruncatedTranslation(db, page, raw, cut, { jobId: run.id, model: run.model });
+      run.counts.truncated = (run.counts.truncated || 0) + 1;
+      resolved.add(page.id);
+      outcomes.push('truncated');
+      log(`[translate-batch-chained] ${run.book_id}: p${page.page_number} truncated again (${cut.reasons.join(', ')}) — recorded, not written`);
+      continue;
+    }
     if (page && looksCollapsed(page.ocr?.data, text) && !unit.retry) {
       // Retry once, next round; keep this text to compare.
       retries.push({ page_id: page.id, first_text: text });
@@ -745,7 +784,7 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     resolved.add(unit.pages[0].id);
     outcomes.push('done');
   }
-  const moved = resolved.size + outcomes.filter((o) => o === 'collapsed-retry').length;
+  const moved = resolved.size + outcomes.filter((o) => o === 'collapsed-retry' || o === 'truncated-retry').length;
   if (!moved) return strike(db, run, deps, `singles: ${[...new Set(outcomes)].join(', ')}`);
   summary.outcomes = outcomes;
   await setRun(db, run, {

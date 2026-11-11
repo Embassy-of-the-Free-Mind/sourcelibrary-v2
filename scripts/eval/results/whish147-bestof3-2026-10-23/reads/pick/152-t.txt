@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A comes closest to the expected Tarkasaṃgraha/Dīpikā wording on the fallacious reasons (sādhyābhāvasādhakaṃ, satpratipakṣaḥ yathā, nityaḥ … ghaṭaval, and the -siddha types), though A has many gaps; B is continuous but mostly garbled, and C is padded with false jña/khyā syllables throughout.

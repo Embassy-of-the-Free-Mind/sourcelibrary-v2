@@ -196,15 +196,11 @@ describe('search_within_book — precision controls', () => {
   }
 
   /**
-   * KNOWN FAILURE — #3699. `it.fails` asserts this DOES fail, so when the bug
-   * is fixed the test goes red and whoever fixed it removes the marker. A
-   * `skip` would rot silently instead.
-   *
-   * The invariant is the one that matters to a caller deciding whether a
-   * passage is present or absent: a query the book cannot possibly answer must
-   * score BELOW one it answers verbatim. Today both top out at 1.0, because
-   * `score` is normalised within the result set — so the best of a bad lot is
-   * always a perfect match and the tool can never say "nothing here".
+   * #3699. The invariant that matters to a caller deciding whether a passage
+   * is present or absent: a query the book cannot possibly answer must score
+   * BELOW one it answers verbatim. Both used to top out at 1.0, because `score`
+   * was normalised within the result set; it is now absolute (raw cosine, or
+   * how much of the query the page prints together).
    *
    * Note this is NOT the control the original reporter wrote. Theirs was
    * "nonsense returns total 0", which passed before #3680 because the semantic
@@ -212,7 +208,7 @@ describe('search_within_book — precision controls', () => {
    * neighbours for nonsense is correct. Scoring them 1.0 is not.
    */
   for (const c of fixture.nonsense_control.cases) {
-    it.fails(`[#3699] nonsense ("${c.query}") must score below a verbatim hit`, async () => {
+    it(`[#3699] nonsense ("${c.query}") must score below a verbatim hit`, async () => {
       const golden = fixture.ranking.cases.find((r) => r.book_id === c.book_id)!;
       const [nonsense, real] = await Promise.all([
         mcpCall('search_within_book', { book_id: c.book_id, query: c.query }),

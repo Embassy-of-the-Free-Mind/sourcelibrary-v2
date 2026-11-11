@@ -1,0 +1,8 @@
+ROW 1 | ന്ത്യാനമകരയോരവ്യാൎത്ഥലക്ഷിത്വലക്ഷംച ‖ ചൈതൈവഹിവജ്ഞോനന്ദ്രിഷ്ട ‖ ഷ്ഠ:ന്യായേനപ്രബോധക
+ROW 2 | ഷാസംഭവാൽ।നശ ‖ ത്യഭിപദാക്കിത്ത്വാന്ദ്രാഭിതാൎത്ഥസംസൎഗ്ഗ ‖ ൎഗ്ഗഗ്രഹ:ന്യൂനാംകാരിമൎ
+ROW 3 | ഷട്കടംഭക്ത്വാൎത്ഥ ‖ മദ്ധ്യാഹ്നവരിതംഞ്ഞമാനാദ്വേഷസ ‖ ൎവ്വജ്ഞാതസംഭവാൽ
+ROW 4 | ലക്ഷ്യാനപ്രമാണ ‖ ാനേഷിതിഷേചനാത്താന്തിതൈ ‖ പങ്ക്തയാവിലക്ഷണസ്യ
+ROW 5 | ശബ്ദേക്ഷാനന്ദശ ‖ ബ്ദാൽപ്രത്യേതിന്ദിത്യനവ്യവസായ: ‖ സാക്ഷികസ്യസൎവ്വസ്മ
+ROW 6 | ത്ഥാൎത്ഥസബദ്ധാ ‖ ാവക്ഷിതവിപ്രമാണാന്തരമപ്പിവിശേഷേത ‖ ദേവദത്താദിപാനഭൂക്തേ
+ROW 7 | ഇതിദേജ്ജുകൈവാദി ‖ ാദിതാത്തുൎമ്മാനംന്ദ്വപപത്ത്യാനാഭിദേദ്ധ ‖ ാമിനമൎത്ഥാപത്ത്യാകണ്ണേഇ
+NOTE | All 7 rows have ink I could see, but my confidence in individual letters is low (about 50–60%). Many ligatures are uncertain guesses, especially the circled first letter of row 1, the joins where pieces overlap, and the letters next to the string holes, so check it against the leaf before using it.

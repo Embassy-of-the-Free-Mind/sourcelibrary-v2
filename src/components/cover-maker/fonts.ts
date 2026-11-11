@@ -1,4 +1,5 @@
-import { Cinzel, EB_Garamond, IM_Fell_English, Inter, UnifrakturMaguntia } from 'next/font/google';
+import { Cinzel, IM_Fell_English, Inter, UnifrakturMaguntia } from 'next/font/google';
+import localFont from 'next/font/local';
 import { aldineAetna, cardo } from '@/lib/fonts/aldine';
 import type { FontKey } from './types';
 
@@ -9,7 +10,17 @@ import type { FontKey } from './types';
  * so we read it from `.style.fontFamily`.
  */
 const fell = IM_Fell_English({ weight: '400', style: ['normal', 'italic'], subsets: ['latin'], display: 'swap', preload: false });
-const garamond = EB_Garamond({ weight: ['400', '700'], style: ['normal', 'italic'], subsets: ['latin', 'latin-ext'], display: 'swap', preload: false });
+// EB Garamond is a local copy (Google's variable latin files, SIL OFL), not next/font/google: on
+// 2026-10-22 every clean production build failed resolving its Google font URLs ("next/font/google
+// queries have exactly one entry", 28 errors), while the other Google faces here resolved fine.
+const garamond = localFont({
+  src: [
+    { path: '../../../public/fonts/eb-garamond/EBGaramond-latin.woff2', weight: '400 700', style: 'normal' },
+    { path: '../../../public/fonts/eb-garamond/EBGaramond-latin-italic.woff2', weight: '400 700', style: 'italic' },
+  ],
+  display: 'swap',
+  preload: false,
+});
 const fraktur = UnifrakturMaguntia({ weight: '400', subsets: ['latin'], display: 'swap', preload: false });
 const cinzel = Cinzel({ weight: ['400', '700'], subsets: ['latin', 'latin-ext'], display: 'swap', preload: false });
 const sans = Inter({ weight: ['400', '700'], subsets: ['latin', 'latin-ext'], display: 'swap', preload: false });

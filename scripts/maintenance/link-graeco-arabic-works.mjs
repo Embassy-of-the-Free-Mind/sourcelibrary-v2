@@ -52,7 +52,8 @@ const MAP = [
   // No \u escapes in any regex sent to Mongo: its PCRE2 rejects them outright,
   // and a JS-literal \u012B reaches the server as the four characters "\u01".
   // "ibn sin" already covers the transliterations we care about.
-  { work: 'Avicenna, Canon',          id: 'Q55360132', match: /(avicenn|ibn sin)/i, andMatch: /canon|qanun/i, notMatch: /masudi|mas'udi/i },
+  // Q466060 is the WORK; Q55360132 (used here until #8325) is one Hebrew manuscript of it.
+  { work: 'Avicenna, Canon',          id: 'Q466060',   match: /(avicenn|ibn sin)/i, andMatch: /canon|qanun/i, notMatch: /masudi|mas'udi/i },
   // "Aphorisms" is a GENRE. Unqualified it matched chemical, astrological,
   // legal and eucharistic aphorisms — four disciplines, none of them Hippocrates.
   { work: 'Hippocrates, Aphorisms',   id: 'local:a:hippocrates:aphorisms', match: /aphorism/i, andMatch: /hippocrat|buqrat/i },

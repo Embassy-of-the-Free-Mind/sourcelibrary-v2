@@ -1,4 +1,4 @@
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -28,17 +28,22 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org'
  * Fetch and process an image for EPUB/PDF embedding.
  * Minimal processing: resize, grayscale, normalize (auto contrast), compress.
  */
-export async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
+export async function fetchAndCompressImage(
+  url: string,
+  // `colour`: keep the colours (an illustration in a reflowable EPUB — e-ink readers grey it themselves, a
+  // tablet or the Kindle app shows a coloured miniature as coloured). Page scans keep the grayscale default.
+  opts: { colour?: boolean; width?: number; height?: number } = {},
+): Promise<Buffer | null> {
   try {
     const buffer = await images.fetchBuffer(url, { timeout: 60000 });
 
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
+    let pipeline = sharp(buffer)
+      .resize(opts.width ?? IMAGE_WIDTH, opts.height ?? IMAGE_HEIGHT, {
         fit: 'inside',
         withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
+      });
+    if (!opts.colour) pipeline = pipeline.grayscale().normalize();  // Auto contrast stretch
+    const processed = await pipeline
       .jpeg({
         quality: 75,
         mozjpeg: true
@@ -150,9 +155,9 @@ export async function fetchPageImagesOrdered(
  * crossed Cloudflare's ~100s origin window and died with a 524, and the reader
  * saved the Cloudflare error page as a corrupt `.zip`.
  */
-export function generateImagesZipStream(pages: Page[]): archiver.Archiver {
+export function generateImagesZipStream(pages: Page[]): ZipArchive {
   const validPages = pages.filter(hasExportImage);
-  const archive = archiver('zip', { zlib: { level: 6 } });
+  const archive = new ZipArchive({ zlib: { level: 6 } });
 
   (async () => {
     console.log(`Fetching ${validPages.length} images for ZIP (streaming)...`);

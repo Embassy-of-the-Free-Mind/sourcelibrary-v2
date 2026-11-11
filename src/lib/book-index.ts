@@ -22,7 +22,8 @@ import { getReadDb } from '@/lib/mongodb';
 export interface BookIndexData {
   entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }>;
   pageSummaries?: Array<{ page: number; summary: string }>;
-  sectionSummaries?: Array<{ title: string; startPage: number; endPage: number; summary: string }>;
+  /** `title` is English; `titleOriginal` is the heading as printed when the book is not in English. */
+  sectionSummaries?: Array<{ title: string; titleOriginal?: string; startPage: number; endPage: number; summary: string }>;
   bookSummary?: { brief?: string; detailed?: string; abstract?: string };
   people?: Array<{ name: string; role?: string }>;
   places?: Array<{ name: string }>;

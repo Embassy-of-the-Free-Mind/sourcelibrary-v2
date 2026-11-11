@@ -1,0 +1,11 @@
+ROW 1 | ക്രുലശ്വാപാരനലക്ഷ്മണട‖ഉവടത്തഃലചത്രാടന‖പടെത്രൗച്യെതക‖ണ്യലജത്ത്വാരദെഏകാന്ത്യവ
+ROW 2 | ക്ഷൎമ്മൈരാണാച്യാരകാര[illegible]ഝം।ക്ലിത്രകൎഗൈര[illegible]‖രക്കാഝാടദ്ഗിനാരൈമെര‖തരെയാൻരരക്ഷിഖ്വാരെദപ
+ROW 3 | ലാടഃപ്രഞ്ജയത്ഥിഞ്ഞാരരെ[illegible]യാരെരാരെനവപ്രക‖ന്ത്യക്ഷൈൎശക്തിലെഉപസ[illegible]‖ാണാദെന്ദ്രാപകഝരമവന
+ROW 4 | കത്രുശക്തിരക്ഷി।പടദ‖ത്ഥജ്ഞകടനസ്യാപന‖ാനനമപ്രെയാജനം‖രമാക്ഷഃശ്രഫാഡഷ്ട
+ROW 5 | ത്തോവാഷെനദ്രജ്ഞ‖പ്യൌത്തുാരരരപ്യ‖ാമൻദൎത്രാജ്ഞ‖ദൃഷ്യാബ്നവ്യഃഇതി
+ROW 6 | ശ്രുടത്വാശ്രുപണ്യാ‖ക്ഷന്നാംസാക്ഷാ‖ൎക്ഷാരരഹതു‖ബൈായനാൎത്ഥഉത്ത
+ROW 7 | ഉടഡഹാദ്രത്വില‖ക്ഷന്ന്യാത്ഥജ്ഞാ‖നസ്യാക്തിത്തസ‖ട്ടവാനടർവ്വതക്തേ
+ROW 8 | ജ്ഞാനസശാശ്രവമനന‖സാദ്യഷാമെനാവ‖ടൈയാശിവടരത്ഥന്ന‖ക്രുപണ്യദ്ധാരനാശാന്ത്രന്ന്യ
+ROW 9 | രപ്പരരാരരക്ഷാപരയാശ‖ഃതദനരരംജ്ഞൈ‖ത്രാനദ്ദപ്രശൈജ്ഞാശ‖വിയിനാശിദ്ധ്യാസന്ന
+ROW 10 | ജ്ഞാരരടന്നനാര[illegible]‖രഹേദ്വിലക്ഷണാത്മ‖സാക്ഷാൎക്ഷാരന‖ന്ത്രൈടഹാട്ടുവഗമഗ
+NOTE | I could make out roughly 50–60% of the glyphs, and many of those readings are low-confidence, especially the ligatures and vowel signs. I counted 10 rows: rows 1–3 and 8–10 run the full width, and rows 4–7 are shortened beside the holes. Where neighbouring pieces overlapped I joined them at the shared letters. In row 1, some phrases look like they could be Sāṅkhyakārikā 1, but I wrote only what the strokes show, so treat this as a rough draft rather than a reliable text.

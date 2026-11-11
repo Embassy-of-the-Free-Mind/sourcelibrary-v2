@@ -1,0 +1,44 @@
+{
+ "stage": "fable-3",
+ "id": "20-b",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-fable-5-1",
+ "model_requested": "fable",
+ "cli": "claude",
+ "started_at": "2026-10-23T06:54:08.237Z",
+ "finished_at": "2026-10-23T06:56:52.771Z",
+ "secs": 165,
+ "prompt_hash": "ef836994a6f1e9ca",
+ "prompt_file": "reads/prompts/ef836994a6f1e9ca.txt",
+ "images": [
+  {
+   "crop": "20-b-1.jpg",
+   "bytes": 466548,
+   "sha256": "c1e3adcaf1d5f55214570680953e80199f2bcd4eddc76a52b10a7450f125117c"
+  },
+  {
+   "crop": "20-b-2.jpg",
+   "bytes": 320744,
+   "sha256": "815631c4e9582bbab2ff918e517ae4cab12984d756b67d669c65a8d0e57ba767"
+  },
+  {
+   "crop": "20-b-3.jpg",
+   "bytes": 304673,
+   "sha256": "fbba66959bbac7966e08be4aef9e142ed69058ee5ff69e33a4ff8bcdce14d033"
+  },
+  {
+   "crop": "20-b-4.jpg",
+   "bytes": 421679,
+   "sha256": "a98601dca1b786ddacd9e51ca91be41be7c7083fa7511bb0014e446a6e2c0b76"
+  }
+ ],
+ "usage": {
+  "input": 34,
+  "output": 13263,
+  "cache_read": 10717,
+  "cache_creation": 9679,
+  "turns": 5,
+  "list_cost_usd": 0.85974925
+ }
+}

@@ -125,3 +125,52 @@ export function failureReasonKey(archivedPhoto) {
     .join('')
     .slice(0, 60);
 }
+
+/**
+ * A fetch the provider refused for quota or load, rather than a failure of the page (#7228).
+ *
+ * `archive-ocr.mjs` counts failures per page in `archive_metadata.failure_count` and never fetches
+ * a page again at 3. A quota refusal says nothing about the page, so it must not be counted: on
+ * 2026-10-23, 11,533 pages in 1,654 BSB books had been abandoned that way, against 12 for real
+ * 404s (#7176). BSB rations IIIF at ~25K requests a day and answers past it with HTTP 429, and
+ * sometimes with a 1×1 JPEG at 200 OK.
+ */
+export const THROTTLE_STATUSES = Object.freeze([429, 503]);
+
+/** An Error marked `throttled`, so callers record it without counting it against the page. */
+export function throttledError(reason) {
+  const err = new Error(`${reason} (throttled)`);
+  err.throttled = true;
+  return err;
+}
+
+/** A real page scan is never this small; BSB's over-quota answer is 1×1. */
+export const QUOTA_PLACEHOLDER_MAX_PX = 8;
+
+/** Are these the dimensions of an over-quota placeholder rather than a page? Unknown size → false. */
+export function isQuotaPlaceholderSize(width, height) {
+  return Boolean(width && height && width <= QUOTA_PLACEHOLDER_MAX_PX && height <= QUOTA_PLACEHOLDER_MAX_PX);
+}
+
+/**
+ * Throw a throttled error if `buffer` is an over-quota placeholder rather than a page.
+ * `readSize(buffer)` returns `{ width, height }` (sharp's `metadata`), passed in so this file stays
+ * free of image dependencies. An unreadable image is not judged here (the caller's decode decides).
+ *
+ * Every archiver that can reach BSB/MDZ must call this before it stores bytes as `archived_photo`:
+ * before #7254 only archive-ocr.mjs did, and 1,535 pages on 593 BSB books (310 visible) were found
+ * on 2026-10-25 holding a 457-byte 1×1 JPEG as their master — 435 of them written by an archiver
+ * that does not stamp `archive_metadata.archived_at` (archive-acquired.ts) (#5448).
+ */
+export async function assertNotQuotaPlaceholder(buffer, readSize) {
+  let size;
+  try { size = await readSize(buffer); } catch { return; }
+  if (isQuotaPlaceholderSize(size?.width, size?.height)) throw throttledError('HTTP 429 over-quota placeholder image');
+}
+
+/**
+ * The `last_failure_reason` of a page capped by quota refusals rather than real failures. The
+ * one-time re-queue (`scripts/maintenance/requeue-throttled-archive-pages-7228.mjs`) re-queues only
+ * a page whose LAST recorded failure matches; a page whose last failure is a 404 stays capped.
+ */
+export const THROTTLED_FAILURE_REASON = /^(HTTP (429|503)\b|over-quota placeholder)/;

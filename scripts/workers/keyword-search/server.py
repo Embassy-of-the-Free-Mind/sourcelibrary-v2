@@ -9,10 +9,10 @@ from a tantivy index in one round trip.
 
 One `/lane` call does what the route's lane does with up to four Atlas calls (README.md has the contract):
   main      ANY query word (or the quoted phrase) in translation (boost 2) or OCR (boost 1), BM25; one word of
-            6+ characters is fuzzy (1 edit, same first 4 characters, Lucene's blended scoring); non-content
-            pages dropped; top k.
+            6+ characters is fuzzy (1 edit, same first 4 characters, Lucene's blended scoring); an unquoted
+            unspaced-script query also scores as a phrase, boosted (#6877); non-content pages dropped; top k.
   variants  pages printing another spelling of the person the query names (and a topic word, if any), the
-            query's own words still scoring; up to variant_k, minus pages already in main.
+            query's own words still scoring; the top variant_k, then minus pages already in main (as Atlas).
   counts    pages printing EVERY roll-up term (each a phrase), per book, top `buckets`.
   extra     the best content page per counted book the main/variant pages did not reach, up to max_books.
 Every list is confined to live books (the set sync-delta.mjs posts) and to `book_ids` when given.
@@ -24,6 +24,7 @@ import hmac
 import json
 import math
 import os
+import re
 import sys
 import threading
 import time
@@ -40,6 +41,10 @@ FUZZY_MIN_LEN, FUZZY_PREFIX, FUZZY_MAX_EXPANSIONS = 6, 4, 50
 # forms the corpus prints, digits.
 SHORT_FUZZY_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789àáâãäåæçèéêëìíîïñòóôõöøœùúûüýÿßſ"
 FIELDS = (("tr", 2.0), ("ocr", 1.0))
+# src/lib/atlas-search.ts UNSPACED_SCRIPT / PHRASE_FIRST_BOOST (#6877): an unquoted query in these scripts
+# also scores as a phrase, boosted so the pages printing it rank first.
+UNSPACED_SCRIPT = re.compile(r"[฀-໿ༀ-࿿က-႟ក-៿぀-ヿ㐀-䶿一-鿿豈-﫿\U00020000-\U0003FFFF]")
+PHRASE_FIRST_BOOST = 100.0
 Occur = tantivy.Occur
 Q = tantivy.Query
 
@@ -136,6 +141,12 @@ class Engine:
             toks = kwindex.tokenize(q[1:-1])
             return (self.phrase_either(toks) if toks else None), toks, True, 0
         toks = list(dict.fromkeys(kwindex.tokenize(q)))
+        if UNSPACED_SCRIPT.search(q) and toks:
+            # buildPageSearchStage's phrase-first (#6877): one token per character or syllable, so ANY token
+            # matches nearly every page; the pages printing the run as typed come first, the rest follow.
+            ptoks = kwindex.tokenize(q)
+            return Q.boolean_query([(Occur.Should, self.phrase(f, ptoks, b * PHRASE_FIRST_BOOST)) for f, b in FIELDS]
+                                   + [(Occur.Should, self.any_terms(toks))]), toks, False, 0
         words = q.split()
         if len(words) == 1 and len(words[0]) >= FUZZY_MIN_LEN and toks:
             fq, n = self.fuzzy(toks)
@@ -246,8 +257,12 @@ class Engine:
                 cl.append((Occur.Must, self.any_terms(tw, boosts=False)))
             if toks:
                 cl.append((Occur.Should, self.any_terms(toks)))
+            # Atlas's contract: the variant query's top variant_k FIRST, then the route drops those already
+            # in main (often leaving 0-6). Excluding main before the cut returned ~10 new pages on every
+            # expanded query instead (290 vs 139 over the #2049 Check 5 panel, #6852).
             seen = {r["page_id"] for r in main}
-            variants = [dict(r, src="variant") for r in self.top(s, Q.boolean_query(cl), min(int(p.get("variant_k") or 10), 1000), allow, exclude=seen)]
+            variants = [dict(r, src="variant") for r in self.top(s, Q.boolean_query(cl), min(int(p.get("variant_k") or 10), 1000), allow)
+                        if r["page_id"] not in seen]
             ms["variants"] = round((time.perf_counter() - t) * 1000, 1)
 
         counts, extra = None, []

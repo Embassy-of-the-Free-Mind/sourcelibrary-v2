@@ -1,0 +1,11 @@
+ROW 1 | ക്കമിത്യൎത്ഥഃലിംഗമിതിപ്രളയ ‖ ൎക്കാലെലയംഗച്ഛതി[illegible]ക്കുത്വാനന്തകാരണ ‖ ണമാത്രമായെസംസരിക്കുന്നു
+ROW 2 | ക്ഷ്മശരീരെൎബ്ബാദ്രാഗചിത്രഭി ‖ ത്ത്യാദിശ[illegible]കമാത്രയമൃതെചിത്ര ‖ നിൽക്കില്ല[illegible]ദിഭ്യ
+ROW 3 | ഇന്ദ്രിയശബ്ദെനാവൃക്കപ്പെട്ടം ‖ ഭാദയഃ[illegible]നാനാഭിന്നകിയാ ‖ [illegible]കരണ്യാമിതിവ[illegible]
+ROW 4 | ടവമിതെത[illegible]ണാ ‖ യഥാച്ഛായാസ്ഥി[illegible] ‖ നിൽക്കില്ലതദ്വദ്വിനാ
+ROW 5 | വിശെഷൈൎന്തി ‖ ഷ്ഠതിനിരാശ്രയംലിംഗമിതി ‖ ഈവിശെഷങ്ങൾകൂടാ
+ROW 6 | ത്രാണിലിംഗംത്ര ‖ യൊദശവിധംകരണംമിഹ ‖ [illegible]മതെനിൽക്കി
+ROW 7 | നിരാശ്രയത്വാൽ ‖ ഒരെ[illegible]സൂക്ഷ്മശരീരമാരങ്ങ ‖ ഒക്കദാഭാവാണ
+ROW 8 | [illegible]നാക്കമിനരാ ‖ [illegible]യബാൽനടസഭസനൎത്തനംചെയ്യാ ‖ നനാകരണങ്ങളെപുരു
+ROW 9 | [illegible]സംയൊഗ[illegible] ‖ ടവക്കിച്ച[illegible]വിഭു[illegible]ത്വാൽന ‖ [illegible]സരിക്കുന്ന[illegible]കൂടി
+ROW 10 | ശരീരംഭിമൎത്ഥംസാ ‖ [illegible]ചെയ്ത[illegible]ഷാൎത്ഥഹെതുകമി ‖ ത്യാദി[illegible]
+NOTE | I could pick out roughly 60–70% of the glyphs. Rows 5–6 and the right-hand ends of rows 1, 2 and 10 are the most reliable. Rows 3, 8 and 9 are mostly guesswork, and many conjuncts and vowel signs are uncertain. It's Malayalam prose commentary with Sanskrit lemmas, but every reading comes from the strokes only, not from a known text.

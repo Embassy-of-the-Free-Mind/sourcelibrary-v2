@@ -1,0 +1,27 @@
+{
+ "source": "climits /root/.claude-limits/latest.json (= ops_reports claude-limits:latest) 2026-10-25T23:35:01.587105+00:00; cloudlayer (PP) from the OAuth usage endpoint on cloudlayer (climits cannot refresh its token)",
+ "accounts": [
+  {
+   "weekly_percent": 88,
+   "resets_at": "2026-10-27T14:00:00.477367+00:00",
+   "account": "main (team@)"
+  },
+  {
+   "weekly_percent": 52,
+   "resets_at": "2026-10-27T11:00:00.492352+00:00",
+   "account": "gex45 (GM)"
+  },
+  {
+   "weekly_percent": 66,
+   "resets_at": "2026-10-29T22:00:00.488314+00:00",
+   "account": "l7a (SLd)"
+  },
+  {
+   "weekly_percent": 20,
+   "resets_at": "2026-10-31T15:00:00+00:00",
+   "read_at": "2026-10-25T23:40Z",
+   "account": "cloudlayer (PP)"
+  }
+ ],
+ "as_of": "2026-10-25T23:40:00+00:00"
+}

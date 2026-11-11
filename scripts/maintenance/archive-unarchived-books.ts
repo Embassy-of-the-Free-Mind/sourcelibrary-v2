@@ -77,7 +77,9 @@ async function archivePage(db, page) {
 
       // Upload to storage
       const padded = String(page.page_number).padStart(4, '0');
-      const storagePath = `pages/${page.book_id}/${padded}.jpg`;
+      // Masters live under archived/; pages/<book>/NNNN.jpg is the marked display variant, which
+      // display-backfill makes (#4406). A master at that key was served to readers unmarked.
+      const storagePath = `archived/${page.book_id}/${page.page_number}.jpg`;
       const blob = await storagePut(storagePath, processed, {
         contentType: 'image/jpeg',
         access: 'public',
@@ -120,8 +122,8 @@ async function archivePage(db, page) {
         continue;
       }
       if (attempt === MAX_RETRIES - 1) {
-        // Mark as failed
-        const failUpdate = { $set: { archived_photo: `failed:${msg.slice(0, 80)}` } };
+        // Record the failure; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
+        const failUpdate = { $set: { 'archive_metadata.last_failure_reason': msg.slice(0, 80), 'archive_metadata.last_failure_at': new Date() } };
         await db.collection('pages').updateOne({ _id: page._id }, failUpdate).catch(() => {});
         return 'fail';
       }

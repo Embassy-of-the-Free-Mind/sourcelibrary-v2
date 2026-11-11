@@ -295,3 +295,30 @@ describe('stripMarkdownMarkers ReDoS bound', () => {
     expect(stripEditorialWrappers(long)).toBe(long);
   });
 });
+
+/**
+ * #7118: layout HTML in stored text reached quotable passages (/api/books/[id]/text served `<center>` 8 times and
+ * a stray `</t>` in one Latin book). The words stay; the inline glosses and page marks are left exactly as they were.
+ */
+describe('stripEditorialWrappers — layout HTML out of quotable text (#7118)', () => {
+  it('turns <br> into a line break and drops <center>/<italic>, keeping the words', () => {
+    const out = stripEditorialWrappers('Hour of <br> Meridian <center>P.</center> called <italic>laas</italic>.');
+    expect(out).not.toMatch(/<|>/);
+    expect(out).toContain('Meridian P. called laas.');
+  });
+  it('drops a closing tag that closed nothing', () => {
+    expect(stripEditorialWrappers('for the students.</t> Theorem')).toBe('for the students. Theorem');
+  });
+  it('leaves inline glosses and page marks alone', () => {
+    const s = 'Body <note>a gloss</note> and <term>azoth</term> text';
+    expect(stripEditorialWrappers(s)).toBe(s);
+  });
+  it('keeps a <br> inside a table row from cutting the row (keepTables)', () => {
+    const out = stripEditorialWrappers('| Midpoint <br> ω | Equal |\n|---|---|\n| 6 | 51 |', { keepTables: true });
+    expect(out.split('\n')).toHaveLength(3);
+    expect(out).not.toContain('<br>');
+  });
+  it('leaves comparison signs alone', () => {
+    expect(stripEditorialWrappers('if a < b and c > d')).toBe('if a < b and c > d');
+  });
+});

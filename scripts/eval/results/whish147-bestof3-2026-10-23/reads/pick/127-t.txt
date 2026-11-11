@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most real Tarkasaṃgraha-Dīpikā wording (e.g. "indriyasaṃbandhaḥ pratyakṣajñānam upasaṃharan tasya kāraṇam āha", "anumitikaraṇam", "pakṣadharmatā-vyāptatva"), while A breaks up after row 3 and B is mostly fragments.

@@ -101,7 +101,7 @@ async function scan(bookId) {
     { $match: { book_id: bookId } },
     { $project: { _id: 0, id: 1, page_number: 1, ts: { $ifNull: ['$translation.updated_at', { $ifNull: ['$ocr.updated_at', '$updated_at'] }] },
       tr: { $and: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, { $gt: [{ $strLenBytes: { $ifNull: ['$translation.data', ''] } }, 0] }] } } },
-  ]);
+  ]).batchSize(1000);
   for await (const p of cur) pages.set(String(p.id), p);
   const isLive = live.has(bookId);
   const isStale = (r, p) => Boolean(p.ts) && (!r.mongo_updated_at || new Date(p.ts).getTime() > new Date(r.mongo_updated_at).getTime());
@@ -114,7 +114,7 @@ async function scan(bookId) {
   const composed = new Map();
   for (let i = 0; i < want.length; i += FETCH) {
     const docs = db.collection('pages').find({ book_id: bookId, id: { $in: want.slice(i, i + FETCH) } },
-      { projection: { _id: 0, id: 1, 'translation.data': 1, 'ocr.data': 1 } });
+      { projection: { _id: 0, id: 1, 'translation.data': 1, 'ocr.data': 1 } }).batchSize(1000);
     for await (const d of docs) composed.set(String(d.id), workerEmbeddingInput(d));
   }
   // A page that was asked for and did not come back would read as "nothing to embed" and leave the list

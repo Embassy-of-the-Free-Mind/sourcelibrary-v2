@@ -21,6 +21,7 @@ import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 import { gatedTextCall } from '../../lib/agy-cli.mjs';
+import { agyBlocked } from '../../lib/model-limits.mjs';
 import { PROMPT, LABELS, validRepair, itemPrompt } from '../../eval/seams-6742/opus-reference.mjs';
 import { extractJson, pool } from '../../eval/seams-6742/lib.mjs';
 import { PACK_HEAD, joinText, packs, placed, verdicts } from './seam-repair.mjs';
@@ -32,11 +33,10 @@ const SEAMS = path.join(path.dirname(new URL(import.meta.url).pathname), '../../
 const gz = (f) => zlib.gunzipSync(fs.readFileSync(f)).toString('utf8').trim().split('\n').map(l => JSON.parse(l));
 export const MARKERS = '\n\nDo not open, read or write any file and do not use any tool: the joins are above. Write your JSON between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers.\n';
 export const DEFAULT_MODEL = 'gemini-3.8-flash-low';
-const AGY_STATUS = '/root/agy-quota/status.json';
 
 /** Is agy usable for `model` now? (the meter's view; a missing file counts as open) */
 export function agyOpen(model) {
-  try { const s = JSON.parse(fs.readFileSync(AGY_STATUS, 'utf8')); return s.open !== false && !(s.locked_models || {})[model]; } catch { return true; }
+  return !agyBlocked(model);
 }
 
 function stage(out) {

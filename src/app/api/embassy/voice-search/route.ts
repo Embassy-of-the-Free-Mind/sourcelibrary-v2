@@ -6,6 +6,7 @@ import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { logAiUsage } from '@/lib/log-ai-usage';
+import { clientCountry } from '@/lib/client-ip';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -153,7 +154,7 @@ export async function GET(req: NextRequest) {
   logAiUsage({
     feature: 'voice_search',
     ok: true,
-    country: req.headers.get('x-vercel-ip-country') || req.headers.get('cf-ipcountry') || null,
+    country: clientCountry(req.headers) || null,
   });
 
   return NextResponse.json({ spoken, found: sources.length, sources, images });

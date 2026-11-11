@@ -52,7 +52,7 @@ const ZENODO_URL = SANDBOX ? 'https://sandbox.zenodo.org' : 'https://zenodo.org'
 // Zenodo's edge serves an HTML "unusual traffic" page as 403 to undici's default
 // User-Agent. Verified again 2026-09-23: the same GET is 200 with this header and
 // 403 without it.
-const USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const OUT_DIR = 'scripts/output/doi-rebuild';
 const RESULTS = 'scripts/output/doi-rebuild-results.json';
 const DELAY_MS = 3000;
@@ -252,6 +252,9 @@ async function main() {
       methodology: edition.front_matter?.methodology,
       version: bumpMinor(edition.version),
       doi: edition.doi,
+      // Every edition on Zenodo was minted under CC BY-SA 4.0 before 2026-11-05;
+      // a new version of one keeps the licence its DOI record states (#8488).
+      license: edition.license || 'CC-BY-SA-4.0',
       frontispiece: await fetchFrontispiece(book),
       credits: editionCredits(book),
       dedication: resolveDedication(book, collections),

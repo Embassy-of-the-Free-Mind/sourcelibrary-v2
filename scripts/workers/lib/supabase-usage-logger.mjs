@@ -318,6 +318,8 @@ export async function logUsage(params, db = null) {
       if (!resp.ok) {
         const text = await resp.text().catch(() => '');
         console.warn(`[supabase-usage] Write failed (${resp.status}): ${text}`);
+        // A 4xx/5xx is as lost as a thrown fetch: keep the row in MongoDB too (#7185).
+        if (db) await db.collection('gemini_usage').insertOne({ ...row, timestamp: new Date(row.timestamp) }).catch(() => {});
       }
     } catch (err) {
       console.warn('[supabase-usage] Write error:', err.message);

@@ -1,0 +1,13 @@
+ROW 1 | ച[illegible]ക്കളെ പ്രാൎക്ക‖തിവിധമ[illegible]ഃ കരണമിത്യാഹഃ കരണന്ത്രയോ‖ദശവിധമിത്യ[illegible]ഷക്കെ
+ROW 2 | [illegible]ന്ദ്രിയാണി പഞ്ചകൎമ്മേ‖ന്ദ്രിയാണി ബുദ്ധ്യഹംകാരമനസാം[illegible]ചത്രി‖ണി ഏതത്രയോദശവിധംകാ
+ROW 3 | ണം.കാര[illegible]ക്കിക്കതൃ‖ല[illegible]ടാ[illegible]മിക്കൎമ്മ[illegible]. ത[illegible]ക്കസ്വ[illegible]‖ക്രിയായദെവക്ഷ്യ[illegible]രണമി
+ROW 4 | [illegible]ഹാര[illegible]ഹാരണയാ‖നപ്രകാശകാരമിതികൎക്കാരണമ‖ാഹാരണാദീനിക്കരെ
+ROW 5 | [illegible]ക്കിമരത്രക്കളെ[illegible]‖യാ[illegible]ദാരണം.ക്രവൃത്തി[illegible]ഹാം‖കൎമ്മേന്ദ്രിയാണാം
+ROW 6 | ം ബു[illegible]ന്ദ്രിയാണി[illegible]‖കാശമിതികൽക്കാൎയ്യം[illegible]ഹാ‖[illegible]ഹ്യുക്തിത്രാഹ
+ROW 7 | കാൎയ്യമിതി[illegible]ക്കാര‖ണ[illegible]ദശവിധം.കാൎയ്യം.[illegible]‖[illegible]പ്രതി[illegible]ഭാഗം[illegible]
+ROW 8 | വചനാദാനവിഹ‖രണോ[illegible]ൎഗ്ഗാനന്ദാഃപഞ്ചക[illegible]‖ശയാഃ[illegible]ഷ്ഷിവിധാഃ
+ROW 9 | ന്നുക്ക്യാൎത്ഥമാതൃലക്ക‖[illegible]മൈബാക്കെഷ്പടാവ[illegible]ാദ്ധ്യാഃ[illegible]ലാ‖[illegible]കാശാദയ[illegible]ട്ടെമ
+ROW 10 | [illegible]മക്കാഷ്യ[illegible]ശ്യാൎഗ്ഗ‖[illegible]തൽക്കാൎയ്യം[illegible]ന്ദ്രിയാണാംപ്രക‖[illegible]ത്രുംവാശാദിനാ[illegible]ക്കാദ
+ROW 11 | ാത[illegible]ഭികൾക്കാൎത്ഥമാൾ‖ക്കഃ[illegible]ക്രിവ[illegible]ശ്ശേഷ്യ[illegible]ണ്ണിഭ്രാമാ‖കെദവന്യാദ്രൈഭയമാണ്ഡവാദ്ര
+
+NOTE | There are 11 rows and the layout is clear, but at this image resolution I could not read the glyphs reliably. Large parts are [illegible] and much of the rest is uncertain. Only the opening of row 8 (വചനാദാനവിഹരണോ…) and a few words (കരണ…, …ന്ദ്രിയാണി, …ദശവിധം) are fairly confident, so treat this as a rough draft.

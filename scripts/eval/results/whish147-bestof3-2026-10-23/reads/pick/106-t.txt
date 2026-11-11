@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three has any readable text, so the language can't be judged; B ranks first only because its layout is the most physically plausible, with string holes interrupting just the middle rows (5–9), while A and C are identical and tie.

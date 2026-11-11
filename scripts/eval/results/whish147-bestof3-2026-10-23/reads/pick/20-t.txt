@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A gives the most continuous, recognisable Sāṅkhya pramāṇa vocabulary in most rows (dṛṣṭavad-, anumāna, siddhaṃ, pratiṣṭhita) mixed with plausible Malayalam. C's few fragments agree with A but are too sparse to read, and B is mostly syllable strings that only look like words.

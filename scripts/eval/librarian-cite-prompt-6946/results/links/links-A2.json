@@ -1,0 +1,270 @@
+{
+ "q01:A2": [
+  {
+   "id": "L1",
+   "slug": "three-books-on-life-ficino",
+   "page": 42,
+   "at": 1212,
+   "text": "Page 42"
+  },
+  {
+   "id": "L2",
+   "slug": "three-books-on-life-ficino",
+   "page": 42,
+   "at": 2245,
+   "text": "Page 42"
+  },
+  {
+   "id": "L3",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus",
+   "page": 19,
+   "at": 3215,
+   "text": "Page 19"
+  },
+  {
+   "id": "L4",
+   "slug": "platonic-theology-on-the-immortality-of-souls-1525-edition-ficino",
+   "page": 45,
+   "at": 3526,
+   "text": "Page 45"
+  }
+ ],
+ "q06:A2": [
+  {
+   "id": "L1",
+   "slug": "rvdimentorvm-cosmographicorum-ioan-honteri-coronensis-libri-honterus",
+   "page": 14,
+   "at": 927,
+   "text": "Page 14"
+  },
+  {
+   "id": "L2",
+   "slug": "rvdimentorvm-cosmographicorum-ioan-honteri-coronensis-libri-honterus",
+   "page": 14,
+   "at": 1671,
+   "text": "Page 14"
+  },
+  {
+   "id": "L3",
+   "slug": "bodleian-library-ms-bodl-614-anonymous",
+   "page": 49,
+   "at": 2148,
+   "text": "Page 49"
+  },
+  {
+   "id": "L4",
+   "slug": "c-iulii-hygini-augustei-liberti-fabularum-liber-et-poeticon-hyginus",
+   "page": 246,
+   "at": 2965,
+   "text": "Page 246"
+  },
+  {
+   "id": "L5",
+   "slug": "popular-treatises-on-science-written-during-the-middle-ages-ed",
+   "page": 58,
+   "at": 3656,
+   "text": "Page 58"
+  },
+  {
+   "id": "L6",
+   "slug": "de-usu-sphaerae-materialis-taisnier",
+   "page": 13,
+   "at": 4253,
+   "text": "Page 13"
+  },
+  {
+   "id": "L7",
+   "slug": "alchemical-recipes-codex-rossianus-247-various",
+   "page": 443,
+   "at": 4673,
+   "text": "Page 443"
+  },
+  {
+   "id": "L8",
+   "slug": "martini-borrhai-in-cosmographiae-elementa-commentatio-borrhaus",
+   "page": 50,
+   "at": 5102,
+   "text": "Page 50"
+  }
+ ],
+ "q11:A2": [
+  {
+   "id": "L1",
+   "slug": "universal-harmony-volume-i-mersenne",
+   "page": 741,
+   "at": 962,
+   "text": "Page 741"
+  },
+  {
+   "id": "L2",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 424,
+   "at": 1996,
+   "text": "Page 424"
+  },
+  {
+   "id": "L3",
+   "slug": "revelationes-divinae-a-sanctis-angelis-factae-wolfgangus-methodius",
+   "page": 16,
+   "at": 2952,
+   "text": "Page 16"
+  },
+  {
+   "id": "L4",
+   "slug": "syntagma-musicum-tomus-i-musicae-artis-analecta-praetorius",
+   "page": 858,
+   "at": 3880,
+   "text": "Page 858"
+  }
+ ],
+ "q16:A2": [
+  {
+   "id": "L1",
+   "slug": "a-history-of-hindu-chemistry-vol-1-ray",
+   "page": 126,
+   "at": 1353,
+   "text": "Page 126"
+  },
+  {
+   "id": "L2",
+   "slug": "coelvm-philosophorvm-sev-liber-de-secretis-naturae-ulsted",
+   "page": 280,
+   "at": 1787,
+   "text": "Page 280"
+  },
+  {
+   "id": "L3",
+   "slug": "a-history-of-hindu-chemistry-vol-1-ray",
+   "page": 126,
+   "at": 3361,
+   "text": "Page 126"
+  },
+  {
+   "id": "L4",
+   "slug": "rasa-jala-nidhi-or-ocean-of-indian-chemistry-alchemy-vol-1-mookerji",
+   "page": 97,
+   "at": 3931,
+   "text": "Page 97"
+  }
+ ],
+ "q21:A2": [
+  {
+   "id": "L1",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90,
+   "at": 1750,
+   "text": "Page 90"
+  },
+  {
+   "id": "L2",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 2639,
+   "text": "Page 51"
+  },
+  {
+   "id": "L3",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 3124,
+   "text": "Page 89"
+  },
+  {
+   "id": "L4",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 3690,
+   "text": "Page 88"
+  },
+  {
+   "id": "L5",
+   "slug": "the-red-lion-or-the-salt-of-the-philosophers-vreeswyk",
+   "page": 74,
+   "at": 4198,
+   "text": "Page 74"
+  }
+ ],
+ "q26:A2": [
+  {
+   "id": "L1",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 650,
+   "text": "Page 15"
+  },
+  {
+   "id": "L2",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 1576,
+   "text": "Page 15"
+  },
+  {
+   "id": "L3",
+   "slug": "symbolographia-sive-de-arte-symbolica-sermones-septem-bosch-2",
+   "page": 605,
+   "at": 2250,
+   "text": "Page 605"
+  }
+ ],
+ "q31:A2": [
+  {
+   "id": "L1",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 1265,
+   "text": "Page 51"
+  },
+  {
+   "id": "L2",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 52,
+   "at": 1626,
+   "text": "Page 52"
+  },
+  {
+   "id": "L3",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 2526,
+   "text": "Page 50"
+  },
+  {
+   "id": "L4",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 2968,
+   "text": "Page 50"
+  }
+ ],
+ "q36:A2": [
+  {
+   "id": "L1",
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14,
+   "at": 1020,
+   "text": "Page 14"
+  },
+  {
+   "id": "L2",
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 97,
+   "at": 1926,
+   "text": "Page 97"
+  },
+  {
+   "id": "L3",
+   "slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+   "page": 7,
+   "at": 2875,
+   "text": "Page 7"
+  },
+  {
+   "id": "L4",
+   "slug": "ortus-medicinae-origin-of-medicine-helmont",
+   "page": 665,
+   "at": 3341,
+   "text": "Page 665"
+  }
+ ]
+}

@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
+import { plainEngineWords } from '@/lib/plain-engine-words';
 
 // Static (server-rendered) diagrams for /research/canon-gap. No client JS: exact values
 // ride on `title` tooltips and on the per-canon rows further down the page, which act as
@@ -214,23 +215,24 @@ export type TraditionProgressRow = {
 // Plain names for the engine ids the page records carry.
 const ENGINE_NAMES: [RegExp, string][] = [
   [/^esukhia-derge/, 'Esukhia typed Derge text'],
-  [/^bdrc-yigdzin/, 'BDRC Yigdzin (Tibetan manuscript OCR)'],
+  [/^bdrc-yigdzin/, 'BDRC Tibetan model (manuscript OCR)'],
   [/^bdrc-woodblock/, 'BDRC woodblock OCR'],
   [/^cbeta/, 'CBETA typed text'],
   [/^sefaria/, 'Sefaria typed text'],
-  [/^gemini-3-flash/, 'Gemini 3 Flash'],
-  [/^gemini-3\.1-flash-lite/, 'Gemini 3.1 Flash-Lite'],
-  [/^gemini-2\.5-flash/, 'Gemini 2.5 Flash'],
-  [/^PaddleOCR-VL/i, 'PaddleOCR-VL'],
+  [/^gemini-3-flash/, 'the mid-tier model'],
+  [/^gemini-3\.8-flash/, 'the current reading model'],
+  [/^gemini-3\.1-flash-lite/, 'the lightest model'],
+  [/^gemini-2\.5-flash/, 'an earlier mid-tier model'],
+  [/^PaddleOCR-VL/i, 'Open engine A'],
   [/^kraken/, 'Kraken'],
   [/^ia-/, 'Internet Archive OCR'],
-  [/^mineru/, 'MinerU'],
+  [/^mineru/, 'Open engine B'],
   [/^manual$/, 'hand-entered'],
-  [/^unrecorded$/, 'model not recorded'],
+  [/^(unrecorded|unknown)$/, 'model not recorded'],
 ];
-const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? id;
+const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? plainEngineWords(id);
 
-/** "Gemini 3 Flash 62% · BDRC Yigdzin 31% · other 7%": merged by plain name, top three, shares of pages. */
+/** "The mid-tier model 62% · BDRC Tibetan model 31% · other 7%": merged by plain name, top three, shares of pages. */
 function engineLine(rows: [string, number][]) {
   const merged = new Map<string, number>();
   for (const [id, n] of rows) merged.set(engineName(id), (merged.get(engineName(id)) ?? 0) + n);
@@ -269,13 +271,24 @@ const SCANNED_ONLY = '#d6d3d1';
 // A stage with any pages gets at least one square, so a small start is visible rather than rounded away.
 const squares = (n: number) => (n > 0 ? Math.max(1, Math.round(n / UNIT)) : 0);
 
-export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n: number }) {
+export function TraditionProgress({
+  rows,
+  n,
+  title = 'What we hold, tradition by tradition',
+  caption,
+}: {
+  rows: TraditionProgressRow[];
+  n: number;
+  /** /research/tibetan reuses the figure for its own collections, with its own title and caption. */
+  title?: string;
+  caption?: ReactNode;
+}) {
   return (
     <Figure
       n={n}
-      title="What we hold, tradition by tradition"
+      title={title}
       caption={
-        <>
+        caption ?? <>
           Each square is {fmt(UNIT)} pages of scanned books in our library, any edition, published or still held for checking, rounded to the nearest square;
           squares are the same size in every tradition, so the areas compare directly. A page is transcribed when we
           hold its text (read from the image, or matched from an open typed edition) and translated when it has a

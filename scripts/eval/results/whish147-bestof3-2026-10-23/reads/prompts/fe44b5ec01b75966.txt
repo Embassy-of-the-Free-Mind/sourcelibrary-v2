@@ -1,0 +1,52 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ośaṣirṇīṃlaghusvālakṣaṇyaṃvṛttistrayasyasaiṣābhavatyasāmānyāsāmānyakima
+2. ṇavṛttiḥprāṇādyāvāyavaḥpañca [illegible] yugapaccatuṣṭayasyatuvṛttiḥkramaśaścatasyanirddi
+3. ṣṭādṛṣṭetathāpya ‖ dṛṣṭetrayasyatalpūrvvikāvṛ ‖ ttiḥsvāṃsvāṃpra
+4. tipadyantepara ‖ sparākūtahetukāṃvṛttiṃ ‖ puruṣārtthaeve
+5. haturnnakenaci ‖ lkāryyatekaraṇaṃ [illegible] ka ‖ raṇaṃtrayodaśavi
+6. dhaṃtadāharaṇa ‖ dhāraṇaprakāśakaraṃkāryya ‖ ñcatasyadaśadhāhā
+7. ryyaṃdhāryyaṃprakā ‖ śyañca [illegible] antaḥkaraṇantri ‖ vidhaṃdaśadhābāhya
+8. ntrayasyaviṣayākhyaṃsāmpratakālaṃbāhyaṃtrikālamābhyantaraṃkaraṇaṃ [illegible]
+9. buddhīndriyāṇiteṣāṃpañcaviśeṣāviśeṣaviṣayāṇivāൿbhavatiśabdaviṣayā
+
+TRANSCRIPTION B
+1. aiśaṣiāṇṇāṃlaghujhālakṣaṇyaṃ [illegible] ‖ [illegible] ṣyaināṣiādivatra ‖ nāmātrāsthāmātra [illegible]
+2. jāgṛttiḥprāṇṇādvāvākyaviśeṣebuddhyṛga ‖ āvacchatri [illegible] travṛ ‖ ttiḥkramaśa [illegible]
+3. ṣṭrādaiṣṭra [illegible] dvāvya ‖ daiṣṭrakriyasva [illegible] kṣvatikāāva ‖ vṛttiḥ [illegible]
+4. [illegible] vyaidari [illegible] ‖ jñanākri [illegible] aiha [illegible] ṃvṛttiṃ ‖ [illegible] tmai [illegible]
+5. sāryaikānami ‖ [illegible] kkābhyābhakkai [illegible] ṣṇāka ‖ noṃ [illegible] deśavi
+6. yaṃtadrāsa [illegible] ‖ kkasaṇokrakkāgakkaraṃ [illegible] ‖ [illegible] daśayāyā
+7. [illegible] āyā [illegible] kka ‖ āstrāaikka [illegible] jña [illegible] ‖ viyaṃ [illegible] daśāābā [illegible]
+8. krayantravikṣayājñāṃ ‖ sasāṃkkkāpradvāā [illegible] kuāāpa ‖ [illegible] krananta [illegible]
+9. [illegible] āṣairaivāṃ ‖ bhakṣavibherkkāvi [illegible] mukhyāṇi ‖ [illegible] ākṣai [illegible] vikṣaya
+
+TRANSCRIPTION C
+1. śeṣāṇāṃdhaprisvā ‖ lakṣaṇyaṃvṛttistrayasyasaiṣābhavatyasā ‖ mānyāsāmānyakara
+2. ṇavṛttiḥprāṇādyāvā ‖ yavaḥpañcaḍḍṛṣyagavaṣṭaiggayasya ‖ vṛttiḥkramaśaścakanyatiṭṭa
+3. dvādatteraśāṣya ‖ ṭākhaṇṇakrayadhānyakarkakṛgrakāthṛ ‖ ttiḥghasthāṃsthāṃkra
+4. kṣayaḻarantapara ‖ ivāttakaṃrāhakrakkiṃṣakkaṃ ‖ ṛttaṣāttṛkkavava
+5. hainthākaivami ‖ kkāttaikaikkaraṇāstuka ‖ naḥkraikādaśavi
+6. dhaḥtaṭāharaṇa ‖ karaṇaprakāśakāraṃkāḻu ‖ khatantrādaśadhāgā
+7. ṣṭaṃdhāttṛṃpraka ‖ uttañcantaḥkākantaḥkavaṇākka ‖ vidhaṃdaśābāhya
+8. krayanyāvikamayāmyāṃ ‖ sassāṃprakakālamakāmyaṃkkikāḻā ‖ ḻantaraṃkaraṇāpaslaṣṭa
+9. ṭrittayāṇiteṣāṃ ‖ pañcaviśeṣāviśaikaviṣayāṇā ‖ ṣṭavakkaśaḻḻaviṣala
+
+TRANSCRIPTION D
+1. śaiṣiൗṇāṃḍaḍyanmālakṣaṇaṃ pṛṣṭhrakrūṣanyaitainā [illegible] ṭavatrantāmātrāsvāmātrikabha
+2. gāpṛtiḥprāṇodrāvākhyaviśeṣeḍḍyadyugāvacchinna [illegible] tradyakṣiḥkra [illegible] śaṃkhakyanmindra
+3. ṣṭhāddaiṣṭhitaṣādya ‖ ddaiṣṭhrakrūvandra [illegible] karkkṛṣṇādya ‖ dyakkiḥ [illegible] ḍyāṃḍyāpra
+4. laiḍṛḍhanantapana ‖ jñātkrakṣaṃraihakrakkidṛṣṭi ‖ ṣyatṣār [illegible] vara
+5. sātmyataitiānāmi ‖ kkātmyaratai [illegible] tkkatatūstheta ‖ tmatraibhādaści
+6. yāraṇadvāhāraṇa ‖ bhatantrakkāgakkaraṃkāvya ‖ ṣatandṛdaśayāyā
+7. [illegible] āḍākṣrukka ‖ ddṛṣṭvāsthaḥbhasthaḥkrataitaddṛ ‖ viyaṃdaśābāhya
+8. trayānmikṣeyādṛ ‖ ṃsasāṃgranthakālaṭatoāhraṃddṛtākhala ‖ trandraṃkṣatraṃ [illegible] sthve
+9. ddiddhiṣobhitetaivāṃ ‖ lakṣaviśeṣākhiviśeṣaviṣayāṇāṃ ‖ [illegible] ḻṭava [illegible] śaktiviṣala
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

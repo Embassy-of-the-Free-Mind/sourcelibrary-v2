@@ -23,6 +23,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), '..');
@@ -45,8 +46,9 @@ async function applyOne(db, decisionsObj) {
   writeFileSync(snapPath, JSON.stringify({ book_id, slug: book.slug, pages_count_before: book.pages_count, decisions_in: accepted, pages: allPagesBefore.map(p => ({ _id: String(p._id), page_number: p.page_number })) }, null, 2));
 
   let marked = 0;
+  const hiddenIds = [];
   for (const d of accepted) {
-    const dup = await db.collection('pages').findOne({ _id: new ObjectId(d.dup_id) }, { projection: { _id: 1, page_number: 1 } });
+    const dup = await db.collection('pages').findOne({ _id: new ObjectId(d.dup_id) }, { projection: { _id: 1, id: 1, page_number: 1 } });
     if (!dup || dup.page_number <= 0) continue;
     await db.collection('pages').updateOne(
       { _id: dup._id },
@@ -63,7 +65,10 @@ async function applyOne(db, decisionsObj) {
       }
     );
     marked++;
+    hiddenIds.push(dup.id);
   }
+  // A hidden duplicate must stop being served by semantic search (#6270).
+  await withdrawPageVectors(hiddenIds, { reason: 'archived', writer: 'dedup-apply-approved' });
 
   // Re-sequence survivors
   const surviving = await db.collection('pages').find(

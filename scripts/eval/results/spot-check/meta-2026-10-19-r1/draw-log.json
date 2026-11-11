@@ -1,0 +1,294 @@
+{
+ "seed": 2026101901,
+ "n": 40,
+ "frame": "live (visible && pages_count > 0)",
+ "frame_size": 42391,
+ "drawn_at": "2026-10-19T21:24:56.031Z",
+ "groups": {
+  "internet_archive": [
+   "internet_archive",
+   "google_books"
+  ],
+  "bavarian": [
+   "mdz",
+   "bsb"
+  ],
+  "ritman": [
+   "bph",
+   "allard_pierson"
+  ],
+  "european_iiif": [
+   "bl",
+   "e-rara",
+   "harvard",
+   "sbb",
+   "gallica",
+   "goettingen",
+   "slub_dresden",
+   "manchester",
+   "bodleian",
+   "leiden",
+   "laurenziana",
+   "vatican",
+   "cambridge",
+   "loc",
+   "e-codices",
+   "wellcome",
+   "hab",
+   "morgan",
+   "princeton",
+   "penn_colenda",
+   "penn",
+   "tu_delft",
+   "tartu_dspace",
+   "chester_beatty",
+   "iiif"
+  ]
+ },
+ "bins": [
+  "<1500",
+  "1500s",
+  "1600s",
+  "1700s",
+  ">=1800"
+ ],
+ "cell_sizes": {
+  "internet_archive": {
+   "<1500": 296,
+   "1500s": 2518,
+   "1600s": 3030,
+   "1700s": 12788,
+   ">=1800": 4993
+  },
+  "bavarian": {
+   "<1500": 871,
+   "1500s": 2672,
+   "1600s": 4529,
+   "1700s": 627,
+   ">=1800": 118
+  },
+  "ritman": {
+   "<1500": 10,
+   "1500s": 400,
+   "1600s": 1038,
+   "1700s": 1043,
+   ">=1800": 311
+  },
+  "european_iiif": {
+   "<1500": 1030,
+   "1500s": 1105,
+   "1600s": 1518,
+   "1700s": 656,
+   ">=1800": 1774
+  },
+  "other": {
+   "<1500": 581,
+   "1500s": 16,
+   "1600s": 51,
+   "1700s": 63,
+   ">=1800": 353
+  }
+ },
+ "picks": [
+  {
+   "id": "69afcf8e1b215b8741e34b1b",
+   "group": "internet_archive",
+   "bin": "<1500"
+  },
+  {
+   "id": "69afd3f87e835c55c61b4dbb",
+   "group": "internet_archive",
+   "bin": "1500s"
+  },
+  {
+   "id": "6a43baa93c91e2a63d4dd3e0",
+   "group": "internet_archive",
+   "bin": "1600s"
+  },
+  {
+   "id": "6a3cbc99f9474f825c161b08",
+   "group": "internet_archive",
+   "bin": "1700s"
+  },
+  {
+   "id": "6a08e2c950bd891addfb4f7b",
+   "group": "internet_archive",
+   "bin": ">=1800"
+  },
+  {
+   "id": "69ea06de4c15c76fe934a3d9",
+   "group": "internet_archive",
+   "bin": "<1500"
+  },
+  {
+   "id": "6a06d0279a48d5139995d6e3",
+   "group": "internet_archive",
+   "bin": "1500s"
+  },
+  {
+   "id": "6a43b0223c91e2a63d4daaa5",
+   "group": "internet_archive",
+   "bin": "1600s"
+  },
+  {
+   "id": "699389ee74305116d72d2e0d",
+   "group": "bavarian",
+   "bin": "<1500"
+  },
+  {
+   "id": "69dbc7b21040d1d5e2093530",
+   "group": "bavarian",
+   "bin": "1500s"
+  },
+  {
+   "id": "69b51db9768235dc65987073",
+   "group": "bavarian",
+   "bin": "1600s"
+  },
+  {
+   "id": "69b51de0efd8df28f2dac79b",
+   "group": "bavarian",
+   "bin": "1700s"
+  },
+  {
+   "id": "69b51eb4cf111105c42a3669",
+   "group": "bavarian",
+   "bin": ">=1800"
+  },
+  {
+   "id": "69dbc7dd1040d1d5e2094cd9",
+   "group": "bavarian",
+   "bin": "<1500"
+  },
+  {
+   "id": "69b51e3e9a81ef7feb3d2398",
+   "group": "bavarian",
+   "bin": "1500s"
+  },
+  {
+   "id": "6a492128cc006f976d7f5b30",
+   "group": "bavarian",
+   "bin": "1600s"
+  },
+  {
+   "id": "69c88e706c6f3cc53c85b0f4",
+   "group": "ritman",
+   "bin": "<1500"
+  },
+  {
+   "id": "69c842b96c6f3cc53c850d69",
+   "group": "ritman",
+   "bin": "1500s"
+  },
+  {
+   "id": "69c648c1b2d26d717d1aaa41",
+   "group": "ritman",
+   "bin": "1600s"
+  },
+  {
+   "id": "69b525cf2f891867c1ae5acd",
+   "group": "ritman",
+   "bin": "1700s"
+  },
+  {
+   "id": "69c8981d6c6f3cc53c85ca0d",
+   "group": "ritman",
+   "bin": ">=1800"
+  },
+  {
+   "id": "69c89d966c6f3cc53c85d88d",
+   "group": "ritman",
+   "bin": "<1500"
+  },
+  {
+   "id": "69c864706c6f3cc53c855faa",
+   "group": "ritman",
+   "bin": "1500s"
+  },
+  {
+   "id": "698255f1d12278086554456d",
+   "group": "ritman",
+   "bin": "1600s"
+  },
+  {
+   "id": "6a0c53dad2444ffb6e7a7e93",
+   "group": "european_iiif",
+   "bin": "<1500"
+  },
+  {
+   "id": "69b62f831c1c21a3737f66f1",
+   "group": "european_iiif",
+   "bin": "1500s"
+  },
+  {
+   "id": "6a4f03a5e39e71f6b6e3b66a",
+   "group": "european_iiif",
+   "bin": "1600s"
+  },
+  {
+   "id": "69e7abd05f1a22ab19a9e929",
+   "group": "european_iiif",
+   "bin": "1700s"
+  },
+  {
+   "id": "69c1bc418522835be84621ca",
+   "group": "european_iiif",
+   "bin": ">=1800"
+  },
+  {
+   "id": "69b630e51c1c21a373804cb8",
+   "group": "european_iiif",
+   "bin": "<1500"
+  },
+  {
+   "id": "69a6827fb3d8052782b3c4ff",
+   "group": "european_iiif",
+   "bin": "1500s"
+  },
+  {
+   "id": "69e7ac065f1a22ab19aa262c",
+   "group": "european_iiif",
+   "bin": "1600s"
+  },
+  {
+   "id": "69dfee7ece6bb8619e07ecfa",
+   "group": "other",
+   "bin": "<1500"
+  },
+  {
+   "id": "6abb823dd43e89b8da329b03",
+   "group": "other",
+   "bin": "1500s"
+  },
+  {
+   "id": "69cfb6fe709cb88a028365a4",
+   "group": "other",
+   "bin": "1600s"
+  },
+  {
+   "id": "69f13412715b735032de724e",
+   "group": "other",
+   "bin": "1700s"
+  },
+  {
+   "id": "6a1966893e125aa8d6e00282",
+   "group": "other",
+   "bin": ">=1800"
+  },
+  {
+   "id": "69aff09c57adc49dbfc42838",
+   "group": "other",
+   "bin": "<1500"
+  },
+  {
+   "id": "69dfebaa090ad7d5c33b1211",
+   "group": "other",
+   "bin": "1500s"
+  },
+  {
+   "id": "6a08a3b48fae3d3f19b7903d",
+   "group": "other",
+   "bin": "1600s"
+  }
+ ]
+}

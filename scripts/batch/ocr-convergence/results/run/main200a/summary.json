@@ -1,0 +1,39 @@
+{
+ "set": "main200a",
+ "threshold": 0.01,
+ "pages": 360,
+ "books": 36,
+ "actions": {
+  "residual": 91,
+  "keep": 150,
+  "write": 38,
+  "agree": 68,
+  "no-second-read": 10,
+  "contain": 3
+ },
+ "by_group": {
+  "latin": {
+   "residual": 78,
+   "keep": 127,
+   "write": 35,
+   "agree": 47,
+   "no-second-read": 2,
+   "contain": 1
+  },
+  "german": {
+   "keep": 19,
+   "agree": 20,
+   "residual": 4,
+   "write": 3,
+   "no-second-read": 4
+  },
+  "hebrew": {
+   "no-second-read": 4,
+   "keep": 4,
+   "residual": 9,
+   "agree": 1,
+   "contain": 2
+  }
+ },
+ "decided_at": "2026-10-12T03:55:28.035Z"
+}

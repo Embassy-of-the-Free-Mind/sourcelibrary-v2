@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. sāṃkā [illegible] kkikkitāṣārka ‖ kānāgatāvapitatra ‖ kimidaṃduḥkhaṃnnyālnna ‖ mekekikimidaṃṭumiṇṇul
+2. bandhikkināntacaybhānta ‖ lāḥpṛmiddhyādayalkki ‖ viśeṣāḥboādyā ‖ bāhyakaraṇaṃḍyātikkayaṃ
+3. prativaddhāttepracchikku [illegible] ‖ ddhyādayakkimebhede ‖ danaprakṛtipattalyā [illegible] ‖ [illegible] habuddhindriyāṃbittyā
+4. okketanmātramitra ‖ yādaśanāṃ [illegible] ṃkālajñānāṃdyā ‖ napañcabuddhindriyāṇi
+5. kāriviśeṣā ‖ viśeṣikkay [illegible] lṇṭādayaḥ ‖ pañcaviṣayāḥdivi
+6. dhāḥkiśeṣā ‖ ññamiśeṣā [illegible] ābatatrayennu ‖ kkuāssamātrulakṣaṇa
+7. ṝmekkunamiśe ‖ bāḥyentula [illegible] lāḥṣyaṣṭhyādaya ‖ okkeviśeṣāḥviṣaya
+8. ṣāśśākiteraṣā [illegible] ‖ bekkiddhabdetakkuva [illegible] ulpakkiśeṣāviddhe ‖ ṇṇamathyaṣṭitikkarmmakkuma
+9. cūrktiyaḥkiriṣṭātakṣi ‖ ṣṭiṣṭāṃbakkikkaya [illegible] yālgṛṣṭākkitvāl ‖ ltatteśūātraṃballāna
+10. ānnānakṣdrādanakala ‖ lāngraṇṇātaḻiśaññe [illegible] jñatanmātrabendānika ‖ ḻokābhūlālbundradvin
+
+TRANSCRIPTION B
+1. saṃkṣekkitrāḥkārika [illegible] ‖ [illegible] ānāgatāvapitatra [illegible] kimidaṃ [illegible] nyāl ‖ [illegible] samamekikimidaṃ [illegible] dyuti
+2. otikkinātacayaddhā [illegible] ‖ [illegible] lāḥpṛthivyādayaścaviśeṣāḥśotraṃ ‖ [illegible] cāhukaraṇeṃsvātiśayaṃ
+3. pratipadyatepṛthivyā ‖ dayaścabhedanaprakṛtipa [illegible] ‖ [illegible] trāsā [illegible] ndriyāṇityā
+4. ditatmmāmamitra ‖ yodaśanānāṃ [illegible] kammanāṃyā ‖ napañcapañca [illegible] ndriyāṇi
+5. tāraviśeṣā ‖ viśeṣaviśeṣa [illegible] ttitalbbādayaḥ ‖ pañcatanmātrādivi
+6. dhālmiśrā ‖ tthaviśeṣā [illegible] ākhyatatvena ‖ kkāstanmātralakṣaṇa
+7. dehinimiteśa ‖ ṇādiyessu [illegible] lāḥpṛthivyādaya ‖ sthaviśeṣāḥviśa
+8. ṣādayākiratatrā [illegible] ‖ [illegible] ārebbatiddhātamita [illegible] vatiśeṣāḥvilūte ‖ [illegible] tedayaṣvāmitikitṛṇāma
+9. buddhyāḥkṣitiddādaya [illegible] ‖ [illegible] mitisthāṃśumāmitimayā [illegible] yāngrasthāmititva ‖ [illegible] dasaḥtatraśrātraṃsthalāna
+10. āmāsaṃsthānākala ‖ lānsthūlālaśaṅku [illegible] ṇṭatamātrabrandanīka ‖ [illegible] kkānūlālputrādin
+
+TRANSCRIPTION C
+1. nnaḥkāḻḻakkitriṣārta [illegible] ‖ ānāgatāvapitral [illegible] trikimidaṃbhṛṃsaṃnyālna [illegible] ‖ rnnamamekikkimidaṃṭavijñati
+2. betakṣikkanantacayarddha [illegible] ‖ [illegible] lāḥpṛthivyādayaśce [illegible] lkṣiviśeṣāḥboddhyaṃ ‖ [illegible] bāhyakaraṇessaṃvidyaṃ
+3. pratipadyatepṛthvi [illegible] ‖ dvyādayaścabhede [illegible] denaprakṛtipattavyā [illegible] ‖ [illegible] tvāsābhibuddhīndriyāṇccitvā
+4. ditetakṣāmamitra ‖ [illegible] yādaśānāṃ [illegible] āṃkaraṇānāṃprā ‖ napañcebuddhīndriyāṇi
+5. tānmāviśeṣā ‖ viśeṣamittya [illegible] mitimalpprṭṭādayaḥ ‖ pañcaviṣayāḥbhivi
+6. dhāḥliśeṣā ‖ tviśeṣāḥ [illegible] āstratrayentu ‖ sūkṣmāstralakṣaṇa
+7. dekṣatiśe ‖ ṇāḥbheystula [illegible] lāḥpṛthivyādaya ‖ dekṣaviśeṣāḥviśe
+8. ṣādaśāviśeṣāde [illegible] ‖ ādekhatidhvasthatakkāva [illegible] tvavativiśeṣāviddhure ‖ teteyabhūpāditikkitrayāṇāma
+9. ṣaśrīḥpiśiṣṭādaṣṭi [illegible] ‖ āmiviśiṣṭāṃbhūvikkitai [illegible] lśṛṣṭātitral ‖ [illegible] ltatrameśvātṛṃsthūlāna
+10. ānātejñānākala ‖ lāngrūnnābhiśśa [illegible] jjatamātrabandhānīkā ‖ [illegible] ikāsthūlālṣatvryādir
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

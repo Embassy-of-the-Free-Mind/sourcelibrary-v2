@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions are entirely [illegible] in every row, so none has any readable text to compare; they tie, and the order given is arbitrary.

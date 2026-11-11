@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | B and C are entirely [illegible], so they contain no text at all, while A is mostly unreadable too but does keep a few real Sāṅkhya terms (traiguṇya, lakṣa-, bhede, hṛdaya, śraddhā) in rows 1–4, which makes it the only one with any trace of what the scribe wrote, even though most of it is still syllable noise.

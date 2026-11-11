@@ -1,0 +1,52 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. buddhirddharmmojñānaṃvirā ‖ gaaiśvaryyaṃsātvikametadrūpaṃtāma ‖ samasmādviparyyastaṃ [illegible]
+2. bhimānohaṃkāra ‖ stasmāddvividhaḥpravarttatesarggaḥe ‖ kādaśakaścagaṇastanmā
+3. trapañcakaścaiva ‖ [illegible] sātvikaekādaśakaḥ ‖ pravarttatevai
+4. kṛtādahaṃkārā ‖ lbhūtādestanmātrassatāmasa ‖ staijasādubha
+5. yaṃ [illegible] buddhīndri ‖ yāṇicakṣuśśrotraghrāṇa ‖ rasanatvagākhyā
+6. nivākpāṇi ‖ pādapāyūpasthānkarmme ‖ ndriyāṇyāhu [illegible]
+7. ubhayātmakama ‖ tramanassaṃkalpakamindriyañcasā ‖ dharmmyālguṇapari
+8. ṇāmaviśeṣānnā ‖ nātvaṃbāhyabhedāśca [illegible] ‖ rūpādiṣupañcā
+9. nāmālocanamā ‖ tramiṣyatevṛttiḥvacanādānavi ‖ haraṇotsarggānandāś
+
+TRANSCRIPTION B
+1. ddhirdhammojñānaṃvi ‖ rāgaiśvaryyaṃsātvikametadrūpaṃtā ‖ masamasmādviparyyastaṃ
+2. bhimānohaṃkā ‖ rastasmādvividhaḥpravarttatesarggaḥe ‖ kādaśakaścagaṇaḥtanmā
+3. traḥpañcakaścai ‖ vaḥsātvikaikādaśakaḥ ‖ pravarttatevai
+4. kṛtādahaṃkāra ‖ ādbhūtādeḥtanmātraḥsatāmasaḥ ‖ taijasādubha
+5. yaṃḥḥddhi ‖ ndriyāṇicakṣuḥśrotraghrāṇa ‖ rasanatvagākhyā
+6. nivākpāṇi ‖ [illegible] pādapāyūpasthānkarmme ‖ ndriyāṇyāhuḥ
+7. ubhayātmakama ‖ tramanassaṃkalpakamindriyañcasā ‖ dharmmyālguṇapari
+8. ṇāmaviśeṣānnā ‖ nātvaṃbāhyabhedāścaḥ ‖ rūpādiṣupañcā
+9. nāmālocanamā ‖ tramiṣyatevṛttiḥvacanādānavihara ‖ ṇotsarggānandāścapañcānāṃ
+
+TRANSCRIPTION C
+1. ṣṭīyameḻḻajñānaṃvirāgamaiṣṣyaṃsākṣikaḻaikrūpaṃkarakasamastādipa [illegible] dvandvya
+2. blimānanāhaṃka [illegible] bajñajñādiviyaḥpra [illegible] vṛṣaisaṅgaḥeka [illegible] bhāṭaśakakṣagateḥkṣamā
+3. śrāṣakṣikaikai ‖ paśyaḥsākṣikaekādaśakaḥ ‖ prairakkaitaivai
+4. urāddhyākrāma ‖ āndrakāraijñamātrasakaima ‖ tāraikṣajñasāṭṭūṭa
+5. yaḥjhluḥl̤yebhi ‖ ddiyānicajjai [illegible] śrṛntari ‖ basanāāghagāākhyā
+6. bhivākpāṇi ‖ jjapādapājjūpasthānkāratra ‖ bhibrāññāhubheḍhya
+7. uddyāmakrama ‖ ramanāsskallikimiśśraṇṭossā ‖ yaṣṭālguṇapatri
+8. jñāmatidaiśampānākṣahaiāhvaiṭadākhyaൗḥjhyaiḥgantrṛpādiṣṭhiṣpakho
+9. aurabhāvalācanamatrūmisṟṟuraiggvaikkaḥpacanābhādbhavipānabhairaiḥasslīnatāśi
+
+TRANSCRIPTION D
+1. ṣṭadvīyamevājñānaṃṣṭirāgamekṣaṣyaṃsākṣi ‖ kṣikametadrūpaṃta [illegible] ‖ mesamastādiparyyantaṃyukta [illegible]
+2. [illegible] limādanāhāṃka [illegible] ñjajñādiviṣayaḥpra ‖ pravṛttetasyaḥeka ‖ [illegible] āṭaśakaṣaga [illegible] ḥjñamā
+3. śrāṣkṭikai [illegible] ‖ pabdhaḥsākṣikaekādaśakaḥ ‖ pratyakṣataive
+4. itthādiśaṃkkāra ‖ [illegible] drarādeñjamātrasabhāda ‖ ta [illegible] deñjasāṭṭaṭa
+5. yaḥ [illegible] ṣekṣi ‖ driyānticañjeśrāṣṭh [illegible] bha ‖ śasrāvagākhyā
+6. ndivākṣāni ‖ śśapādapāśśapasthānkamema ‖ driṣāṇṇāhravya
+7. uddayāṣṭeki ‖ āmanṣṣaṃkaḻḻimigrita [illegible] bhā ‖ yaktrālgaṇacandi
+8. ṇāmatiśeṣāṇā ‖ [illegible] āṇāyabhaiāhaiṭadekṣā [illegible] ga ‖ [illegible] jñrapādiṣṭhapakṣā
+9. ṇākūralācanama ‖ [illegible] kkamiñjabhekkṛttraḥpacanādadaśaviśā ‖ [illegible] bheṇābhasthabhāndūtaśca
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,0 +1,11 @@
+ROW 1 | ദ്വിഷംനവിനുദൃഷ്ടാവെനലിംഗ[illegible]ച്ചുക്കേഃലിംഗാവ്യാപ്താവാത്തുഃകന്മാദിവിഷയഃപ്രവൃത്തകരെ
+ROW 2 | സൎക്കഃ[illegible]പാക്ഷ്ടവികലെജ്ഞാനൈ[illegible]പ്രലൈക്കുല്യൈ[illegible]ന്യ[illegible]ക്ഷയാടു[illegible]മന[illegible]ത്തൈക്കു
+ROW 3 | കവിയഃസമാസ ‖ ൈതാരടദ്ദക[illegible]ശ്ലീഃ[illegible]ഷ്യം ‖ സതവിന്താലക്ഷ്മൈരാ
+ROW 4 | വിരാലന്തുദ്ദലത ‖ സ്സിൎമ്മൈദ്രപൈ[illegible]ജ്ഞാവിശാലാത്ര ‖ മൈാദിന്തംബോയുക്തെ
+ROW 5 | ക്ഷൂതൂദ്രഷനാമരണ ‖ ത്രൈണംന്ദുയൈംത്രാന്ദ്രാബ്ബാത്ഥൈചക ‖ ണഃപൃക്ഷഃലിംഗപ്രാവി
+ROW 6 | ലൈവൃതക്കൂന്താ ‖ ന്ദ്രഃസഘന്ദ്രാൈവെനശ്ചഉദ്രാക ‖ പ്രകൃതിഉൈരാമപൌ
+ROW 7 | ദ്വിതീശദ്വയെഃ ‖ ന്ത്യഃകഃപ്രവിചാര[illegible]കമവിമാക്കിാ ‖ ൽംന്തുാകൾഉവങ്ങ
+ROW 8 | ബൈക്കനദ്ദഭ്യച ‖ ലുവിവിധ്യദദ്വി[illegible]തമിതരംക്ഷത്രയമ ‖ ാപ്രവൃത്തിദങ്ങന്യച
+ROW 9 | നുക്തിവിവരാങ്ങളിമിണ‖[illegible]ത്താനപ്രശ്നക്കി[illegible]ത്രൈയാനന്ത്യഃജ്ഞ‖ൈന്ദുത്രിദിവൃത്ത്യാംഛ
+ROW 10 | ഭാൎത്ഥിയാന്തപ്രദ്ദൃ‖ൈതക്ഷൈക്ഷാഃപൃക്ഷക്ഷനഡിഗരാക്കിതമി‖തംപ്രവൃത്തെൌക്ഷദദ്ര
+NOTE | Low confidence throughout. I matched the layout (10 rows: rows 1, 2, 9 and 10 run the full width; rows 3–8 split at the two holes) and the overlaps, but the letters in the readings above are mostly tentative guesses at the strokes. They are not a reliable text, and many akṣaras, especially the vowel signs and conjuncts, are uncertain beyond the spots marked [illegible].

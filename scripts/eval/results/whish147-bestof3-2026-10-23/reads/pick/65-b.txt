@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most coherent text: it has the kārikā numbers 71 and 72, the real phrases "kṛtsnasya ṣaṣṭhitantrasya", "paravādavivarjitāś cāpi" and "saptatir iti", and a correct colophon; C is fragmentary but partly agrees with B, while A is mostly garbled syllables.

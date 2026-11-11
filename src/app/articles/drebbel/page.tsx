@@ -218,7 +218,7 @@ export default function DrebbelPage() {
             liquid that went up and down with the tide. The Jesuit Gaspar Schott wrote in 1657 that Drebbel
             &ldquo;is said to have enclosed two opposing and highly antipathetic liquids in a glass ring, which
             fought against each other in a perpetual struggle&rdquo; (
-            <Link href="/book/mechanica-hydraulico-pneumatica-schott?page=475">Schott, <em>Mechanica hydraulico-pneumatica</em>, p. 377</Link>). The
+            <Link href="/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott?page=474">Schott, <em>Mechanica hydraulico-pneumatica</em>, p. 377</Link>). The
             likeliest explanation today is that the liquid rose and fell with changes in air temperature and
             pressure: a thermometer and barometer made into a clock.
           </p>
@@ -488,7 +488,7 @@ export default function DrebbelPage() {
             <li><strong>Ferdinand II.</strong> The 1619&ndash;20 tutoring and imprisonment have no document behind them.</li>
             <li><strong>Francis Bacon.</strong> Often linked to Drebbel; we found no passage in which Bacon names him.</li>
             <li><strong>Michael Maier, Simon Stevin, the Rosicrucians.</strong> No documented tie. Morsius is the only bridge to Rosicrucian circles.</li>
-            <li><strong>James I in the submarine.</strong> The story that the king rode in it is not attested.</li>
+            <li><strong>James I in the submarine.</strong> The one source is Georg Philipp Harsd&ouml;rffer (1651), who had it from one of Drebbel&rsquo;s kinsmen; no English record of it has been found (<Link href="/articles/beeckman-on-drebbel#what-we-know">what the early reports say</Link>).</li>
             <li><strong>Jacob Kuffler</strong> was the brother of the two sons-in-law, not a son-in-law himself.</li>
           </ul>
         </section>

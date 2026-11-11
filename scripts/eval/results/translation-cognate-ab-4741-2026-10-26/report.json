@@ -1,0 +1,277 @@
+{
+ "measure": "term-fidelity (mechanical, cognate stem present in body)",
+ "m1": {
+  "v13a": {
+   "failed": 0,
+   "T_all": 0.4861111111111111,
+   "T_named": 0.4444444444444444,
+   "T_heldout": 0.5294117647058824,
+   "n_named": 9,
+   "n_heldout": 17,
+   "conflation": 3
+  },
+  "v13b": {
+   "failed": 0,
+   "T_all": 0.5416666666666666,
+   "T_named": 0.6666666666666666,
+   "T_heldout": 0.5294117647058824,
+   "n_named": 9,
+   "n_heldout": 17,
+   "conflation": 2
+  },
+  "v19": {
+   "failed": 0,
+   "T_all": 0.625,
+   "T_named": 0.8888888888888888,
+   "T_heldout": 0.5294117647058824,
+   "n_named": 9,
+   "n_heldout": 17,
+   "conflation": 0
+  }
+ },
+ "judge": {
+  "note": "first = v19 in cand pairs, v13b in noise pairs; second = v13a",
+  "control_tie_rate": 1,
+  "cand_all": {
+   "n": 48,
+   "fid": {
+    "first": 16,
+    "second": 19,
+    "tie": 13
+   },
+   "read": {
+    "first": 4,
+    "second": 28,
+    "tie": 16
+   },
+   "serious_first": 30,
+   "serious_second": 35,
+   "ff_first": 36,
+   "ff_second": 32
+  },
+  "noise_all": {
+   "n": 48,
+   "fid": {
+    "first": 13,
+    "second": 14,
+    "tie": 21
+   },
+   "read": {
+    "first": 13,
+    "second": 17,
+    "tie": 18
+   },
+   "serious_first": 30,
+   "serious_second": 28,
+   "ff_first": 28,
+   "ff_second": 24
+  },
+  "cand_F": {
+   "n": 12,
+   "fid": {
+    "first": 5,
+    "second": 6,
+    "tie": 1
+   },
+   "read": {
+    "first": 2,
+    "second": 8,
+    "tie": 2
+   },
+   "serious_first": 13,
+   "serious_second": 12,
+   "ff_first": 11,
+   "ff_second": 7
+  },
+  "cand_C": {
+   "n": 12,
+   "fid": {
+    "first": 3,
+    "second": 6,
+    "tie": 3
+   },
+   "read": {
+    "first": 1,
+    "second": 5,
+    "tie": 6
+   },
+   "serious_first": 6,
+   "serious_second": 9,
+   "ff_first": 12,
+   "ff_second": 7
+  },
+  "noise_C": {
+   "n": 12,
+   "fid": {
+    "first": 2,
+    "second": 4,
+    "tie": 6
+   },
+   "read": {
+    "first": 2,
+    "second": 5,
+    "tie": 5
+   },
+   "serious_first": 10,
+   "serious_second": 6,
+   "ff_first": 6,
+   "ff_second": 2
+  },
+  "by_kind_stratum": {
+   "cand|T": {
+    "n": 24,
+    "fidelity": {
+     "first": 8,
+     "second": 7,
+     "tie": 9
+    },
+    "readability": {
+     "first": 1,
+     "second": 15,
+     "tie": 8
+    },
+    "serious_first": 11,
+    "serious_second": 14,
+    "ff_first": 13,
+    "ff_second": 18
+   },
+   "cand|F": {
+    "n": 12,
+    "fidelity": {
+     "first": 5,
+     "second": 6,
+     "tie": 1
+    },
+    "readability": {
+     "first": 2,
+     "second": 8,
+     "tie": 2
+    },
+    "serious_first": 13,
+    "serious_second": 12,
+    "ff_first": 11,
+    "ff_second": 7
+   },
+   "noise|T": {
+    "n": 24,
+    "fidelity": {
+     "first": 8,
+     "second": 5,
+     "tie": 11
+    },
+    "readability": {
+     "first": 8,
+     "second": 9,
+     "tie": 7
+    },
+    "serious_first": 11,
+    "serious_second": 13,
+    "ff_first": 12,
+    "ff_second": 14
+   },
+   "noise|F": {
+    "n": 12,
+    "fidelity": {
+     "first": 3,
+     "second": 5,
+     "tie": 4
+    },
+    "readability": {
+     "first": 3,
+     "second": 3,
+     "tie": 6
+    },
+    "serious_first": 9,
+    "serious_second": 9,
+    "ff_first": 10,
+    "ff_second": 8
+   },
+   "noise|C": {
+    "n": 12,
+    "fidelity": {
+     "first": 2,
+     "second": 4,
+     "tie": 6
+    },
+    "readability": {
+     "first": 2,
+     "second": 5,
+     "tie": 5
+    },
+    "serious_first": 10,
+    "serious_second": 6,
+    "ff_first": 6,
+    "ff_second": 2
+   },
+   "cand|C": {
+    "n": 12,
+    "fidelity": {
+     "first": 3,
+     "second": 6,
+     "tie": 3
+    },
+    "readability": {
+     "first": 1,
+     "second": 5,
+     "tie": 6
+    },
+    "serious_first": 6,
+    "serious_second": 9,
+    "ff_first": 12,
+    "ff_second": 7
+   },
+   "control|C": {
+    "n": 3,
+    "fidelity": {
+     "first": 0,
+     "second": 0,
+     "tie": 3
+    },
+    "readability": {
+     "first": 0,
+     "second": 0,
+     "tie": 3
+    },
+    "serious_first": 0,
+    "serious_second": 0,
+    "ff_first": 0,
+    "ff_second": 0
+   },
+   "control|T": {
+    "n": 6,
+    "fidelity": {
+     "first": 0,
+     "second": 0,
+     "tie": 6
+    },
+    "readability": {
+     "first": 0,
+     "second": 0,
+     "tie": 6
+    },
+    "serious_first": 0,
+    "serious_second": 0,
+    "ff_first": 0,
+    "ff_second": 0
+   },
+   "control|F": {
+    "n": 3,
+    "fidelity": {
+     "first": 0,
+     "second": 0,
+     "tie": 3
+    },
+    "readability": {
+     "first": 0,
+     "second": 0,
+     "tie": 3
+    },
+    "serious_first": 0,
+    "serious_second": 0,
+    "ff_first": 0,
+    "ff_second": 0
+   }
+  },
+  "verdicts": 108
+ }
+}

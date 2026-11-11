@@ -1,0 +1,542 @@
+[
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6ad191b942debc9626925467",
+    "title": "Chilam Balam Texts, vol. 1: Chumayel, Calkiní, Libro de los Médicos",
+    "page": 46,
+    "url": "https://sourcelibrary.org/book/6ad191b942debc9626925467?page=46",
+    "list": "ocr",
+    "class": "O13",
+    "severity": "moderate",
+    "note": "later-hand foliation read as part of the text",
+    "lane": {
+      "ocr_model": "claude-opus-5-5",
+      "tr_model": "gemini-4-argon-low",
+      "language": "Yucatec Maya",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6ad191b942debc9626925467",
+    "title": "Chilam Balam Texts, vol. 1: Chumayel, Calkiní, Libro de los Médicos",
+    "page": 46,
+    "url": "https://sourcelibrary.org/book/6ad191b942debc9626925467?page=46",
+    "list": "tr",
+    "class": "O13",
+    "severity": "moderate",
+    "note": "pencil folio number translated as a numeral in the prophecy",
+    "lane": {
+      "ocr_model": "claude-opus-5-5",
+      "tr_model": "gemini-4-argon-low",
+      "language": "Yucatec Maya",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a40efd67f8d954eada8b8ab",
+    "title": "儒林外史(二十): The Scholars, vol 20",
+    "page": 76,
+    "url": "https://sourcelibrary.org/book/6a40efd67f8d954eada8b8ab?page=76",
+    "list": "ocr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "margin chapter label transcribed as running text, not tagged as furniture",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a40efd67f8d954eada8b8ab",
+    "title": "儒林外史(二十): The Scholars, vol 20",
+    "page": 76,
+    "url": "https://sourcelibrary.org/book/6a40efd67f8d954eada8b8ab?page=76",
+    "list": "tr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "the margin label means chapter 55, not page 55; a false page number appears in the reader text",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a3cebe08642f0445b157ef6",
+    "title": "易原·卷四~卷五 (vol 2)",
+    "page": 13,
+    "url": "https://sourcelibrary.org/book/6a3cebe08642f0445b157ef6?page=13",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "the note adds an unsupported alternative name and date (Meng Jingyi is usually placed in Southern Qi); invented gloss",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a40efac7f8d954eada8b72d",
+    "title": "儒林外史(十六): The Scholars, vol 16",
+    "page": 51,
+    "url": "https://sourcelibrary.org/book/6a40efac7f8d954eada8b72d?page=51",
+    "list": "other",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "the block-margin title 儒林外史 (transcribed as a bare first line) becomes a Markdown heading '# The Scholars' in the middle of the story",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a3cc13fec254ff6cae0aa41",
+    "title": "田間易學·卷五 (vol 7)",
+    "page": 18,
+    "url": "https://sourcelibrary.org/book/6a3cc13fec254ff6cae0aa41?page=18",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "念 read as a rare variant glyph; the translation then guesses 'accumulating errors'",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a3cc13fec254ff6cae0aa41",
+    "title": "田間易學·卷五 (vol 7)",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6a3cc13fec254ff6cae0aa41?page=20",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "大 read as 火, which creates a work that does not exist",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a3cc13fec254ff6cae0aa41",
+    "title": "田間易學·卷五 (vol 7)",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6a3cc13fec254ff6cae0aa41?page=20",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "invents a commentary title, 'Transmission of the Fire', from the misread; the quoted line is the Great Commentary (象曰或益之自外來也), which p.19 renders as 'The Commentary says'",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6a40ef533a63957730efed48",
+    "title": "儒林外史(六): The Scholars, vol 6",
+    "page": 41,
+    "url": "https://sourcelibrary.org/book/6a40ef533a63957730efed48?page=41",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "the translation pane ends with '<column-break/>' then the untranslated Chinese block-centre furniture '儒林外史 / 第十五回 / 五' in the middle of the English",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.8-flash-low",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=525",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "the rate 'sex' (six per cent) read as 'fer.'; the contrast six vs five is lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=525",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'makes himself debtor of the rent' read as 'establishes for the debtor'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=525",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "'pro sex' (at six per cent) rendered 'for profit'; the rule compares a 6% simple lease with a 5% libellary one",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=525",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "a ficto is the vernacular affitto (rent/lease), not 'fictitious'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=525",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "follows the misread; the source has Titius making himself debtor of the rent",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=525",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "modern numeric citations supplied by the model, some wrong (c. si feneraveris is in the Decretum, C.14 q.3, not Decretals 5.19.6, which is c. in civitate)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'the text is clear' (tex. est clarus) read as 'tenet clarus'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Ho(stiensis) read as Io.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "'tenear' (I am bound) read as 'teneat', and 'quantum' dropped, so the clause loses its structure",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "invents a jurist 'Clarus' from 'the text is clear'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "Arch. flo. is the Archbishop of Florence (Antoninus, Summa); misattributed to the Archdeacon (Guido de Baysio)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "follows the misread; the source is Hostiensis",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 526,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=526",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "the pact (I must repay as much as the pounds of grossi will be worth in Venice ten days later) is split into two disconnected statements",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'because he used the deposited money illicitly' read as 'quicquid illius est'; the condition for restitution is lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'excusat deponentem' (it excuses the depositor) garbled into 'ex causa reponens'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "antidotorum (counter-gifts) read as antedictorum",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "locum read as lucrum",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "direction reversed: the merchant pays the depositor, and the question is whether the depositor may lawfully receive it",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "the source says a (natural) obligation of counter-gifts makes the receipt just even of what was paid in error, so it may be kept; the English says the payer may recover it, which reverses the point",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-24-r5-recent",
+    "frame": "recent",
+    "book_id": "6aa94ea998dd95a320803cca",
+    "title": "Summa Angelica de casibus conscientie",
+    "page": 527,
+    "url": "https://sourcelibrary.org/book/6aa94ea998dd95a320803cca?page=527",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "follows the misread; the source says 'this does not apply (non haberet locum) to one who brings goods'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  }
+]

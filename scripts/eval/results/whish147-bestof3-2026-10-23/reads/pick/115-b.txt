@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most coherent Malayalam commentary prose across rows (e.g., "kāraṇaṃkoṇṭukāryyaṅṅākki", "jñeyajñāttinṟākki", "viśeṣaṃ…catuḻḻa", "dārtthasaṃkīrttana"); A has scattered good Sanskrit fragments ("dravyāṇi samavayanti", "uddeśakrame ca") but garbles much else, and B is the most broken overall.

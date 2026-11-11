@@ -41,6 +41,9 @@
  *   --limit=N               max new books this run (default 50 in --batch)
  *   --book-ids-file=PATH    confine admission to these ids (one per line)
  *   --run-tag=TAG           recorded on the lane's state rows (e.g. the envelope tag)
+ *
+ * agy CLI lane (#7628) — the same outputs, one Gemini 3.8 Flash call per book on the subscription:
+ *   --agy                   see ./lib/enrich-agy-lane.mjs (--limit, --max-calls-day, --deadline-min, --agy-home, …)
  */
 
 import { MongoClient } from 'mongodb';
@@ -63,10 +66,14 @@ import { autoAssignTargets, addedSlugs } from '../lib/collection-auto-assign.mjs
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
+import { pagesForEnrichment, isEnglishEdition } from '../lib/english-original-text.mjs';
 import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
+import { runEnrichAgyLane, parseJsonLoose } from './lib/enrich-agy-lane.mjs';
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import pg from 'pg';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -109,6 +116,7 @@ const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8');
 const MAX_BATCH_CONCURRENCY = 20; // Cap parallel Gemini calls per book (prevents 100+ simultaneous calls for huge books)
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
 const BATCH_MODE = args.includes('--batch');
+const AGY_MODE = args.includes('--agy'); // the agy CLI lane (#7628): see ./lib/enrich-agy-lane.mjs for its flags
 const BATCH_MAX_USD = parseFloat(args.find(a => a.startsWith('--max-usd='))?.split('=')[1] || '2');
 const BATCH_IDS_FILE = args.find(a => a.startsWith('--book-ids-file='))?.split('=')[1];
 const BATCH_RUN_TAG = args.find(a => a.startsWith('--run-tag='))?.split('=')[1] || 'enrich-batch';
@@ -388,7 +396,7 @@ async function researchBook(title, author) {
     const authorQuery = encodeURIComponent(author);
     const authorRes = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${authorQuery}`,
-      { headers: { 'User-Agent': 'SourceLibrary/1.0' } }
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }
     );
     if (authorRes.ok) {
       const data = await authorRes.json();
@@ -404,7 +412,7 @@ async function researchBook(title, author) {
     const titleQuery = encodeURIComponent(title.replace(/[^\w\s]/g, ''));
     const titleRes = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${titleQuery}`,
-      { headers: { 'User-Agent': 'SourceLibrary/1.0' } }
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }
     );
     if (titleRes.ok) {
       const data = await titleRes.json();
@@ -429,14 +437,9 @@ function emptyExtraction(pageRange, usage = null) {
   return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage };
 }
 
-/** The per-page-batch extraction prompt, or prompt=null when the batch has no translated text. */
-function buildIndexBatchPrompt(pages, bookTitle, bookAuthor, bookLanguage) {
-  const pageRange = {
-    start: pages[0].page_number,
-    end: pages[pages.length - 1].page_number,
-  };
-
-  const batchContent = pages
+/** The English text of `pages` as the extraction prompt shows it: tags stripped, `[Page N]` heads, `---` between. */
+function pagesTextBlock(pages) {
+  return pages
     .filter(p => p.translation?.data)
     .map(p => {
       const cleanText = (p.translation?.data || '')
@@ -448,10 +451,20 @@ function buildIndexBatchPrompt(pages, bookTitle, bookAuthor, bookLanguage) {
       return `[Page ${p.page_number}]\n${cleanText}`;
     })
     .join('\n\n---\n\n');
+}
+
+/** The per-page-batch extraction prompt, or prompt=null when the batch has no translated text. */
+function buildIndexBatchPrompt(pages, bookTitle, bookAuthor, bookLanguage) {
+  const pageRange = {
+    start: pages[0].page_number,
+    end: pages[pages.length - 1].page_number,
+  };
+
+  const batchContent = pagesTextBlock(pages);
 
   if (!batchContent.trim()) return { pageRange, prompt: null };
 
-  const prompt = `You are analyzing pages ${pageRange.start}-${pageRange.end} of "${bookTitle}" by ${bookAuthor}${bookLanguage ? ` (translated from ${bookLanguage})` : ''}.
+  const prompt = `You are analyzing pages ${pageRange.start}-${pageRange.end} of "${bookTitle}" by ${bookAuthor}${translatedFrom(bookLanguage)}.
 
 ## Pages to analyze:
 ${batchContent}
@@ -460,7 +473,15 @@ ${batchContent}
 Extract structured information from these pages.
 
 Output as JSON:
-{
+${INDEX_OUTPUT_SPEC}`;
+
+  return { pageRange, prompt };
+}
+
+const translatedFrom = (bookLanguage) => (bookLanguage && !isEnglishEdition(bookLanguage) ? ` (translated from ${bookLanguage})` : '');
+
+// The extraction's output schema and quote rules: the batch prompt above and the one-call CLI prompt (#7628) share it.
+const INDEX_OUTPUT_SPEC = `{
   "themes": ["Main theme 1", "Main theme 2"],
   "quotes": [
     {"text": "Copy the EXACT words from the text - a striking, memorable, or important sentence or passage", "page": 5, "context": "Brief note on why this quote matters"},
@@ -478,9 +499,6 @@ CRITICAL for quotes:
 - Look for: bold claims, definitions, vivid descriptions, key arguments
 - Include the page number where each quote appears
 - 3-5 quotes per batch`;
-
-  return { pageRange, prompt };
-}
 
 /** Parse one extraction response. Throws on malformed JSON (the realtime path retries on it). */
 function parseIndexBatchResponse(responseText, pageRange, usage) {
@@ -817,6 +835,115 @@ function parseBookSummaryResponse(responseText, usage) {
   };
 }
 
+// ── One-call enrichment through the agy CLI (#7628) ──
+// The same three outputs (extractions → index, summary, chapters) asked of Gemini 3.8 Flash in ONE call over the
+// whole English text, by ./lib/enrich-agy-lane.mjs. The outputs are each phase's own schema and go through the
+// phase's own parse and write (parseIndexBatchResponse, parseBookSummaryResponse, finishEnrichBook,
+// applyChapterExtraction), so a book enriched here is written in the same shape as by the API lanes. A book over the
+// lane's size cap is asked in parts: extractions per part, then summary + chapters from those extractions.
+const AGY_ENRICH_PROMPT_VERSION = 'agy-enrich-7628-v1';
+
+/**
+ * One CLI call's prompt, as the messages of one conversation (agy cuts a single message at ~190K characters, so a
+ * long text goes in parts of at most `msgChars`, each answered "OK", and the tasks ride in the last message).
+ * `want`: which of 'extractions' | 'summary' | 'chapters' to ask for. `pages` and `ranges` (the planned page batches'
+ * {start,end}) are needed for extractions; `summaryPrompt` and `chapterPrompt` are the phase prompts, built by the
+ * caller. Returns the messages (strings).
+ */
+function buildAgyEnrichPrompt({ want, pages = null, ranges = [], bookTitle, bookAuthor, bookLanguage, summaryPrompt = null, chapterPrompt = null, msgChars = 150000 }) {
+  const keys = want.map(k => `"${k}"`).join(', ');
+  const shape = `{${want.map(k => `"${k}": ${k === 'summary' ? '{…}' : '[…]'}`).join(', ')}}`;
+  // Said FIRST as well as last: with the instructions only after a long text, the CLI agent answered a whole-book
+  // call with a prose "reference apparatus" and no JSON (pilot, 2026-10-28).
+  const head = `Your final answer is ONE JSON object with the key${want.length > 1 ? 's' : ''} ${keys}, written between two marker lines <<<BEGIN>>> and <<<END>>>, and nothing else: no prose, no plan, no headings. The tasks say what goes under each key.`;
+  const intro = `You are preparing the reference apparatus of a digitized historical book for a reading library: "${bookTitle}" by ${bookAuthor}${translatedFrom(bookLanguage)}.`;
+
+  const tasks = [`## Your tasks
+Do each task below and answer with ONE JSON object with the key${want.length > 1 ? 's' : ''} ${keys}, of this shape: ${shape}. Each task's own instructions say what goes in its value. Where a task says to output a JSON object or array on its own, that value goes under its key in the one object instead.`];
+  if (want.includes('extractions')) {
+    tasks.push(`### Task: "extractions"
+The text is divided into ${ranges.length} section${ranges.length > 1 ? 's' : ''}. Give one entry per section, in this order, each drawn ONLY from its own pages:
+${ranges.map((r, i) => `- Section ${i + 1}: pages ${r.start}-${r.end}`).join('\n')}
+
+For each section, extract structured information from its pages. Each entry is this JSON object, with one more key, "pages", giving the section's page range as listed (e.g. "${ranges[0].start}-${ranges[0].end}"):
+${INDEX_OUTPUT_SPEC.replace('- 3-5 quotes per batch', '- 3-5 quotes per section')}`);
+  }
+  if (want.includes('summary')) tasks.push(`### Task: "summary"\n${summaryPrompt}`);
+  if (want.includes('chapters')) tasks.push(`### Task: "chapters"\n${chapterPrompt}`);
+  // Said again at the very end: in the pilot the one-call summaries broke the summary task's style list about once a
+  // book ("comprehensive" 8 times in 20 books, "testament" 3, em-dashes 2), against about once in seven books for
+  // the API lane, whose summary prompt is the whole request.
+  if (want.includes('summary')) tasks.push(`### Before you answer
+Check the "summary" prose (brief, abstract, detailed, section summaries) against the summary task's hard rules and style list, and rewrite any sentence that breaks one. In particular: no em-dashes (—); never the words "comprehensive", "testament", "intricate", "seminal", "profound", "pivotal", "meticulous"; never address or mention the reader ("you", "readers").`);
+  const taskText = tasks.join('\n\n');
+
+  // Everything goes in parts of at most msgChars: the text cut only between pages, the tasks (a chapter prompt's
+  // heading list can be long) only between lines. One message per part; every message but the last is answered "OK".
+  const pack = (pieces, sep) => {
+    const out = [];
+    let cur = '';
+    for (const piece of pieces) {
+      if (cur && cur.length + piece.length + sep.length > msgChars) { out.push(cur); cur = ''; }
+      cur = cur ? `${cur}${sep}${piece}` : piece;
+    }
+    if (cur) out.push(cur);
+    return out;
+  };
+  const textChunks = pages ? pack(pagesTextBlock(pages).split('\n\n---\n\n'), '\n\n---\n\n') : [];
+  const taskChunks = taskText.length > msgChars ? pack(taskText.split('\n'), '\n') : [taskText];
+  if (textChunks.some(c => c.length > msgChars + 20000) || taskChunks.some(c => c.length > msgChars + 20000)) throw new Error(`one page or one task line is over a message (${msgChars} characters)`);
+  const span = ranges.length ? ` (pages ${ranges[0].start}-${ranges[ranges.length - 1].end})` : '';
+  const textIntro = pages
+    ? `${intro} Its English text follows, page by page. The numbers in [Page N] are the library's page numbers: use them for every page reference.\n\n${head}`
+    : `${intro}\n\n${head}`;
+  const nt = textChunks.length;
+  const parts = textChunks.map((c, i) => `## The book's English text${i === 0 ? span : ''}${nt > 1 ? `, part ${i + 1} of ${nt}` : ''}\n${c}`);
+  const tasksStart = parts.length;
+  if (taskChunks.length === 1 && parts.length && parts[parts.length - 1].length + taskText.length <= msgChars) parts[parts.length - 1] += `\n\nThat is the whole text.\n\n${taskText}`;
+  else taskChunks.forEach((c, i) => parts.push(`${i === 0 && pages ? 'That is the whole text.\n\n' : ''}${taskChunks.length > 1 ? `(The tasks, part ${i + 1} of ${taskChunks.length}.)\n` : ''}${c}`));
+  if (parts.length === 1) return [`${textIntro}\n\n${parts[0]}`];
+  const n = parts.length;
+  const messages = parts.map((p, i) => (i === 0
+    ? `${textIntro}\n\nThis comes in ${n} messages. Reply to every message except the last with only the word OK.\n\n${p}`
+    : p));
+  if (tasksStart < n - 1 || taskChunks.length > 1) messages[n - 1] += `\n\nThat is the whole of the tasks. ${head}`;
+  else messages[n - 1] += `\n\n${head}`;
+  return messages;
+}
+
+/** The material line the summary prompt carries when the model reads the whole text in the same call. */
+const AGY_SUMMARY_MATERIAL = '## Material\nThe book\'s English text above, page by page. Ground every statement in it.';
+
+/** Parse a one-call reply into its parts. Throws when no JSON object can be recovered. */
+function parseAgyEnrichResponse(answer, { want, ranges = [] }, usage) {
+  const m = String(answer || '').match(/\{[\s\S]*\}/);
+  if (!m) throw new Error('no JSON object in the reply');
+  let obj;
+  // Trailing commas, raw control characters and unescaped quotes inside strings are repaired (parseJsonLoose).
+  try { obj = parseJsonLoose(m[0]); } catch (e) { throw new Error(`JSON parse failed: ${e.message}`); }
+  const out = { raw: obj };
+  // Flash sometimes names a quote's words "quote" instead of the schema's "text" (pilot, a Siku dictionary: 75 of 75).
+  // Grounding reads `text`, so an unrenamed quote is silently dropped.
+  const fixQuotes = (qs) => (Array.isArray(qs) ? qs.map(q => (q && typeof q === 'object' && q.text == null && typeof q.quote === 'string' ? (({ quote, ...rest }) => ({ ...rest, text: quote }))(q) : q)) : qs);
+  for (const e of Array.isArray(obj.extractions) ? obj.extractions : []) if (e && typeof e === 'object') e.quotes = fixQuotes(e.quotes);
+  for (const sec of Array.isArray(obj.summary?.sections) ? obj.summary.sections : []) if (sec && typeof sec === 'object') sec.quotes = fixQuotes(sec.quotes);
+  if (want.includes('extractions')) {
+    const list = Array.isArray(obj.extractions) ? obj.extractions : [];
+    const byPages = new Map(list.filter(x => x && typeof x.pages === 'string').map(x => [x.pages.replace(/\s/g, ''), x]));
+    // Matched by the "pages" label first; by position only when the reply has exactly one entry per section.
+    out.extractions = ranges.map((r, i) => {
+      const e = byPages.get(`${r.start}-${r.end}`) || (list.length === ranges.length ? list[i] : null);
+      if (!e || typeof e !== 'object') return emptyExtraction(r);
+      try { return parseIndexBatchResponse(JSON.stringify(e), r, null); } catch { return emptyExtraction(r); }
+    });
+  }
+  if (want.includes('summary')) {
+    out.summary = obj.summary && typeof obj.summary === 'object' ? parseBookSummaryResponse(JSON.stringify(obj.summary), usage) : null;
+  }
+  if (want.includes('chapters')) out.chaptersText = Array.isArray(obj.chapters) ? JSON.stringify(obj.chapters) : null;
+  return out;
+}
+
 async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, bookLanguage, researchContext, chapters, englishTitle) {
   const model = getClient().getGenerativeModel({
     model: LITE_MODEL,
@@ -974,14 +1101,16 @@ const PHASE_6_CHAPTER_TEXT_PROJECTION = {
 async function loadPhase6Inputs(db, book) {
   const bookId = book.id;
 
-  // Get all pages
-  const pages = await db.collection('pages')
+  // Get all pages. An English original's English leaves read as their transcription:
+  // everything below keys off translation.data, which such a book does not have (#6559).
+  const pages = pagesForEnrichment(await db.collection('pages')
     .find({ book_id: bookId }, { projection: PHASE_6_PAGE_PROJECTION })
     .sort({ page_number: 1 })
-    .toArray();
+    .toArray(), book);
 
   const translatedCount = pages.filter(p => p.translation?.data).length;
-  console.log(`    ${translatedCount}/${pages.length} pages translated`);
+  const originalCount = pages.filter(p => p.translation?.source === 'ocr_original').length;
+  console.log(`    ${translatedCount}/${pages.length} pages with English text${originalCount ? ` (${originalCount} English original, read from OCR)` : ''}`);
 
   // Get chapters for section structure
   const chapters = (book.chapters || []).map(c => ({
@@ -1044,7 +1173,7 @@ async function enrichBook(db, book) {
  * `mode: 'batch'` skips the usage rows — the batch lane meters its own, per job, at submit
  * and again at collect (#4567).
  */
-async function finishEnrichBook(db, book, inputs, batchExtractions, generated, { mode = 'realtime' } = {}) {
+async function finishEnrichBook(db, book, inputs, batchExtractions, generated, { mode = 'realtime', model = LITE_MODEL, engine = null } = {}) {
   const bookTitle = book.display_title || book.title;
   const bookAuthor = book.author || 'Unknown';
   const bookId = book.id;
@@ -1106,6 +1235,8 @@ async function finishEnrichBook(db, book, inputs, batchExtractions, generated, {
     generatedAt: new Date(),
     pagesCovered: pageSummaries.length,
     totalPages: pages.length,
+    // What produced it, when a lane records it (the agy CLI lane, #7628: write-provenance.mjs geminiEngine).
+    ...(engine ? { engine } : {}),
   };
 
   // Save to DB — write index to dedicated collection (keeps book docs small)
@@ -1130,8 +1261,9 @@ async function finishEnrichBook(db, book, inputs, batchExtractions, generated, {
       data: bookSummary.brief,
       generated_at: new Date(),
       page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
-      model: LITE_MODEL,
+      model,
       source: 'ai',
+      ...(engine ? { engine } : {}),
     };
     updateData.reading_summary = {
       overview: bookSummary.abstract || bookSummary.brief,
@@ -1139,8 +1271,9 @@ async function finishEnrichBook(db, book, inputs, batchExtractions, generated, {
       themes: spreadAcrossBook(batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i), 20),
       quotes: spreadAcrossBook(groundedBatchQuotes, 15),
       generated_at: new Date(),
-      model: LITE_MODEL,
+      model,
       source: 'ai',
+      ...(engine ? { engine } : {}),
       // Derivation provenance (Vaughan/Sammelband lesson #3584): record WHICH
       // pages this summary was derived from, so a wrong description can be
       // traced to its input instead of trusted as catalog fact.
@@ -1420,7 +1553,7 @@ async function prepareChapterExtraction(db, bookId) {
 }
 
 /** Parse, validate and save one chapter-extraction response. Throws on an unparseable response. */
-async function applyChapterExtraction(db, bookId, prep, responseText) {
+async function applyChapterExtraction(db, bookId, prep, responseText, { provenance = null } = {}) {
   const { pages } = prep;
 
   // Parse AI response
@@ -1476,9 +1609,10 @@ async function applyChapterExtraction(db, bookId, prep, responseText) {
   await createBookRevisions(db, bookId, ['chapters']);
 
   // Save
+  // `provenance`: field-provenance.mjs provenanceUpdate('chapters', …) from a lane that records it (#7628).
   await db.collection('books').updateOne(
     { id: bookId },
-    { $set: { chapters, chapters_extracted_at: new Date() } }
+    { $set: { chapters, chapters_extracted_at: new Date(), ...(provenance?.$set || {}) }, ...(provenance ? { $push: provenance.$push } : {}) }
   );
   return chapters;
 }
@@ -1555,6 +1689,32 @@ async function main() {
     const scopeIds = [...await resolveScopeBookIds(db, control)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[ENRICH] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
+
+  if (AGY_MODE) {
+    // The subscription lane (#7628): no dial, no envelope. Its budget is a share of an agy pool's week (the lane's
+    // daily call cap and quota floor); out of quota it stops and the book is left to the API batch lane.
+    const report = await runEnrichAgyLane({
+      db, dryRun: DRY_RUN, scopeFilter: SCOPE_FILTER, control, args,
+      bookIds: BATCH_IDS_FILE ? fs.readFileSync(BATCH_IDS_FILE, 'utf8').split(/\s+/).filter(Boolean) : (SINGLE_BOOK ? [SINGLE_BOOK] : null),
+      phases: {
+        LITE_MODEL, AGY_ENRICH_PROMPT_VERSION, AGY_SUMMARY_MATERIAL, emptyExtraction, planPageBatches, loadPhase6Inputs,
+        buildAgyEnrichPrompt, parseAgyEnrichResponse, buildBookSummaryRequest, buildSummaryPrompt, finishEnrichBook,
+        prepareChapterExtraction, applyChapterExtraction, revalidateBookPage,
+      },
+    });
+    if (!DRY_RUN) {
+      await db.collection('cron_runs').insertOne({
+        cron: 'hetzner-enrich-agy', timestamp: new Date(), duration_ms: Date.now() - startTime,
+        status: report.errors.length ? 'completed_with_errors' : 'success', failed: false,
+        actions: { ...report, errors: undefined, books: undefined }, errors: report.errors.slice(0, 20).map(message => ({ message, timestamp: new Date() })),
+        error_count: report.errors.length,
+        summary: `W:${report.written} C:${report.chaptersWritten} calls:${report.calls} F:${report.failed} stop:${report.stop || '-'}`,
+      }).catch(() => {});
+    }
+    await drainBackgroundTasks();
+    await client.close();
+    return;
   }
 
   // The dial caps money regardless of pause/scope state (#3826): a scope
@@ -1656,7 +1816,7 @@ async function main() {
         // generic embeddings and book_embeddings.year/categories were always
         // null/[] — the single-book --book lane (unprojected findOne) was
         // correct while this batch lane silently wasn't.
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, 'translation_state.english_original': 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
     }
@@ -2234,7 +2394,16 @@ NO explanation, just the JSON array.`;
   await client.close();
 }
 
-main()
+// Imported (scripts/eval/enrich-from-page-summaries-8512.mjs reads the phase functions below), main() does not run.
+const IS_MAIN = !!process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+export {
+  LITE_MODEL, AGY_ENRICH_PROMPT_VERSION, AGY_SUMMARY_MATERIAL, emptyExtraction, planPageBatches, loadPhase6Inputs,
+  buildAgyEnrichPrompt, parseAgyEnrichResponse, buildBookSummaryRequest, buildSummaryPrompt, finishEnrichBook,
+  prepareChapterExtraction, applyChapterExtraction, revalidateBookPage, extractPageSummaries, pagesTextBlock,
+  drainBackgroundTasks,
+};
+
+if (IS_MAIN) main()
   .then(() => {
     // Exit explicitly. A finished run that merely stops doing work is indistinguishable, from the
     // scheduler's side, from a wedged one — and one such run held the enrich lock for 4d18h while

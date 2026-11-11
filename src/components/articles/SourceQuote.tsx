@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import ArticleImage from './ArticleImage';
+import QuoteShare from './QuoteShare';
 
 /**
  * A quotation from a book in the library, with the page it comes from beside
@@ -18,7 +19,8 @@ import ArticleImage from './ArticleImage';
  *
  * `children` is the quotation as the article gives it (usually the library's
  * English); `original` is the source-language text when the article shows it.
- * On a phone the page sits under the quote.
+ * On a phone the page sits under the quote as a 12rem thumbnail, so a run of tall scans
+ * does not fill screen after screen.
  */
 export default function SourceQuote({
   book,
@@ -28,6 +30,8 @@ export default function SourceQuote({
   source,
   original,
   pageAlt,
+  linkToPage = false,
+  href: hrefOverride,
   children,
 }: {
   book: string;
@@ -38,21 +42,32 @@ export default function SourceQuote({
   source: ReactNode;
   original?: ReactNode;
   pageAlt?: string;
+  /** Clicking the page image opens the page in the reader instead of the lightbox. */
+  linkToPage?: boolean;
+  /** Where the page number links, when it should be a citation link (a /q/ shortlink) instead of the reader URL. */
+  href?: string;
   children: ReactNode;
 }) {
-  const href = `/book/${book}?page=${page}`;
+  const href = hrefOverride ?? `/book/${book}?page=${page}`;
   return (
     <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-center">
       <blockquote className="border-l-2 border-accent-gold/60 pl-5 font-body text-lg leading-relaxed text-primary">
         {original && <p className="mb-3 text-secondary italic">{original}</p>}
-        <div>{children}</div>
+        <div data-quote-text>{children}</div>
         <figcaption className="mt-3 text-sm text-muted not-italic">
-          {source}, <Link href={href}>p. {printedPage ?? page}</Link>
+          <span data-quote-source>{source}</span>, <Link href={href}>p. {printedPage ?? page}</Link>
+          <QuoteShare href={href} page={printedPage ?? page} />
         </figcaption>
       </blockquote>
-      <div data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
-        <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
-      </div>
+      {linkToPage ? (
+        <Link href={href} className="block w-full max-w-[12rem] mx-auto md:max-w-none">
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 192px, 256px" />
+        </Link>
+      ) : (
+        <div className="w-full max-w-[12rem] mx-auto md:max-w-none" data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 192px, 256px" />
+        </div>
+      )}
     </figure>
   );
 }

@@ -34,7 +34,6 @@ scripts/audit-subcollections.mjs
 scripts/audit/gemini-key-attribution.mjs
 scripts/audit/semantic-language-filter-recall.mjs
 scripts/audit/titlepage-attribution-run.mjs
-scripts/audit/titlepage-model-pilot-v2.mjs
 scripts/audit/titlepage-model-pilot.mjs
 scripts/backfill-catalog-author-held.mjs
 scripts/backfill-catalog-ustc-sl-links.mjs

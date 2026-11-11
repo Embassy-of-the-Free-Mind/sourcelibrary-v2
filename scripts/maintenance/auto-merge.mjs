@@ -13,15 +13,20 @@
  *   - gating checks `test` and `DCO` both SUCCESS (Vercel is not gating —
  *     its first result is often a spurious failure, see reap-prs.mjs), and
  *     `next-build` not running or failed when the PR has it (next-build.yml),
- *     and `issue-link` likewise (pr-issue-link.yml, #6284)
+ *     and `issue-link` likewise (pr-issue-link.yml, #6284), and
+ *     `experiments-valid` likewise (experiments-valid.yml, #6553)
  *   - last updated ≥ SETTLE_MIN minutes ago, so a session that opened the PR
  *     has time to run /review and add `blocked` before the merge lands
  *   - main's tip is ≥ BUILD_GAP_MIN minutes old: merges are serialised so
  *     each gets its own Vercel build (2026-09-25: the newest of two close
  *     merges got NO build while the older kept building)
- *   - the entities-sweep interlock is CLEAR (exit 0). A merge is a prod build,
+ *   - the entities-sweep interlock is CLEAR (exit 0). A merge was a prod build,
  *     and a concurrent bulk `entities` writer fails the /explore prerender.
  *     Exit 2 (UNKNOWN) is not clear — see CLAUDE.md.
+ *   Since #7008 a merge builds nothing: production is the `release` branch,
+ *   which release.yml fast-forwards twice a day and which runs the interlock
+ *   itself. The gap and the interlock stay here for one week so that pointing
+ *   Vercel back at `main` is a complete rollback; then remove them.
  *
  * Merges oldest-first, one per run, with --squash --delete-branch (the repo's
  * merge style). Prints what it did and why it skipped the rest.
@@ -39,6 +44,7 @@
  */
 import { execSync, spawnSync } from 'node:child_process';
 import { appendFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
@@ -53,7 +59,7 @@ const minutesAgo = (iso) => (Date.now() - new Date(iso).getTime()) / 60000;
 
 function gating(pr) {
   const byName = Object.fromEntries((pr.statusCheckRollup || []).map((c) => [c.name, c.conclusion || c.status]));
-  return { test: byName.test, DCO: byName.DCO, nextBuild: byName['next-build'], issueLink: byName['issue-link'] };
+  return { test: byName.test, DCO: byName.DCO, nextBuild: byName['next-build'], issueLink: byName['issue-link'], experimentsValid: byName['experiments-valid'] };
 }
 
 // `next-build` (next-build.yml) gates when present: running or failed holds
@@ -62,6 +68,10 @@ const NEXT_BUILD_OK = new Set([undefined, 'SUCCESS', 'SKIPPED', 'NEUTRAL']);
 // `issue-link` (pr-issue-link.yml) gates the same way: a PR whose title names an
 // open issue must say `Closes #N` or `Part of #N` before it merges (#6284).
 const ISSUE_LINK_OK = NEXT_BUILD_OK;
+// `experiments-valid` (experiments-valid.yml, #6553) runs only on PRs that touch
+// scripts/eval/experiments/; absent passes, a failure holds the PR — a write-up
+// main's ledger build would refuse.
+const EXPERIMENTS_VALID_OK = NEXT_BUILD_OK;
 
 // `gh pr list` reports mergeable=UNKNOWN for EVERY open PR right after anything
 // lands on main (GitHub invalidates them all at once and recomputes lazily, on a
@@ -97,6 +107,7 @@ function candidates() {
     if (g.DCO !== 'SUCCESS') why.push(`DCO=${g.DCO || 'missing'}`);
     if (!NEXT_BUILD_OK.has(g.nextBuild)) why.push(`next-build=${g.nextBuild}`);
     if (!ISSUE_LINK_OK.has(g.issueLink)) why.push(`issue-link=${g.issueLink}`);
+    if (!EXPERIMENTS_VALID_OK.has(g.experimentsValid)) why.push(`experiments-valid=${g.experimentsValid}`);
     if (minutesAgo(pr.updatedAt) < SETTLE_MIN) why.push(`updated ${minutesAgo(pr.updatedAt).toFixed(0)} min ago (< ${SETTLE_MIN} settle)`);
     out.push({ pr, why });
   }
@@ -114,7 +125,7 @@ function stallAdvice(why) {
     out.push('CI never ran on this head commit (no `test` or `DCO` result). That usually means the PR conflicted with `main` when it was pushed. Merge `main` into the branch and push, and CI starts.');
   }
   if (why.some((w) => w === 'mergeable=CONFLICTING')) out.push('It conflicts with `main`. Merge `main` into the branch and resolve the conflict.');
-  const failed = why.filter((w) => /^(test|DCO|next-build|issue-link)=(FAILURE|ERROR|TIMED_OUT|CANCELLED|ACTION_REQUIRED|STARTUP_FAILURE)$/.test(w));
+  const failed = why.filter((w) => /^(test|DCO|next-build|issue-link|experiments-valid)=(FAILURE|ERROR|TIMED_OUT|CANCELLED|ACTION_REQUIRED|STARTUP_FAILURE)$/.test(w));
   if (failed.length) out.push(`A gating check did not pass (${failed.join(', ')}). Fix it and push.`);
   return out;
 }
@@ -186,7 +197,8 @@ function main() {
   sh(`gh pr comment ${pr.number} --body "Auto-merged by auto-merge.yml: tier:auto, test+DCO green, interlock clear, main quiet ${gap.toFixed(0)} min. Rules: scripts/maintenance/pr-tier-rules.json"`);
   sh(`gh pr merge ${pr.number} --squash --delete-branch`);
   console.log(`merged #${pr.number}; the rest wait ${BUILD_GAP_MIN} min for the build`);
-  dispatchWarm(pr.number);
+  // The merge has landed; a failed close must not fail the run.
+  try { closeLinkedIssues(pr.number); } catch (e) { console.log(`::warning::closing linked issues failed: ${e.message}`); }
   dispatchLedgers(pr.number);
   return ready.length > 1 ? BUILD_GAP_MIN + 1 : null;
 }
@@ -202,23 +214,10 @@ function emitRetry(minutes) {
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `retry_in=${m}\n`);
 }
 
-// A push made with GITHUB_TOKEN never triggers `push` workflows (GitHub's
-// recursion guard), so post-deploy-warm.yml — the Cloudflare purge + re-warm
-// that stops stale HTML pointing at dead CSS chunks for 24h — must be started
-// by hand here for any merge Vercel will build. Paths mirror that workflow's
-// `on.push.paths`. deploy-hetzner.yml is not dispatched: Hetzner pulls hourly.
-const WARM_PATHS = [/^src\//, /^public\//, /^next\.config\.ts$/, /^vercel\.json$/, /^package(-lock)?\.json$/];
-function dispatchWarm(number) {
-  const view = JSON.parse(sh(`gh pr view ${number} --json files,mergeCommit`));
-  const paths = (view.files || []).map((f) => f.path);
-  if (!paths.some((p) => WARM_PATHS.some((re) => re.test(p)))) { console.log('no app files changed — no Vercel build, no warm needed'); return; }
-  const sha = view.mergeCommit?.oid;
-  if (!sha) { console.log('::warning::merge commit SHA unknown — run post-deploy-warm.yml by hand'); return; }
-  sh(`gh workflow run post-deploy-warm.yml --ref main -f sha=${sha}`);
-  console.log(`dispatched post-deploy-warm.yml for ${sha}`);
-}
+// The post-merge warm moved to release.yml (#7008): a merge no longer builds.
 
-// Same recursion guard, second victim: eval-ledgers-regenerate.yml rebuilds the
+// A push made with GITHUB_TOKEN never triggers `push` workflows (GitHub's
+// recursion guard): eval-ledgers-regenerate.yml rebuilds the
 // generated scripts/eval/EXPERIMENTS.md and INDEX.md on push to main, and a
 // token merge never fires it (#5390 on 2026-10-01 landed an entry nobody
 // regenerated). Dispatch it for any merge that touched scripts/eval/.
@@ -230,4 +229,25 @@ function dispatchLedgers(number) {
   console.log('dispatched eval-ledgers-regenerate.yml (scripts/eval/ changed)');
 }
 
-emitRetry(main());
+// GitHub does not apply closing keywords when the merger is github-actions, so
+// a tier:auto PR saying `Closes #N` merged and left #N open (#7288: 32 of 38
+// linked issues from bot merges 2026-10-01..24 stayed open; 0 of 9 from human
+// merges). Close them ourselves. closingIssuesReferences is GitHub's own parse
+// of the keywords, so `Part of #N` is not in it. Same-repo issues only; an
+// issue already closed (by hand, or by GitHub) is left alone.
+export function closeLinkedIssues(number, run = sh) {
+  const { closingIssuesReferences: refs } = JSON.parse(run(`gh pr view ${number} --json closingIssuesReferences`));
+  const repo = JSON.parse(run('gh repo view --json name,owner --jq \'{name: .name, owner: .owner.login}\''));
+  const closed = [];
+  for (const ref of refs || []) {
+    if (ref.repository && (ref.repository.name !== repo.name || ref.repository.owner?.login !== repo.owner)) continue;
+    const state = run(`gh issue view ${ref.number} --json state --jq .state`).trim();
+    if (state !== 'OPEN') continue;
+    run(`gh issue close ${ref.number} --reason completed --comment "Closed by #${number} (merged by auto-merge; GitHub skips closing keywords for github-actions merges, #7288)."`);
+    console.log(`closed #${ref.number} (linked from #${number})`);
+    closed.push(ref.number);
+  }
+  return closed;
+}
+
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) emitRetry(main());

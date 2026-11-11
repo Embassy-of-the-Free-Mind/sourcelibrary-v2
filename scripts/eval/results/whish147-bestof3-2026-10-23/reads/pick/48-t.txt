@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B gives the most continuous and grammatical text of the Gauḍapāda commentary on Kārikā 41: it reads "yathā kuḍyādikam āśrayam ṛte citraṃ na tiṣṭhati sthāṇvādibhyaḥ", "trayodaśavidhaṃ karaṇam iha" and "puruṣārthahetukam" cleanly, whereas A is broken in most rows and C mixes Sanskrit with Malayalam fragments that don't fit together grammatically.

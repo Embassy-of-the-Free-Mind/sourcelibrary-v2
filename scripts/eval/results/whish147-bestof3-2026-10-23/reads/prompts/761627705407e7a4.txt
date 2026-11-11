@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣādaivaṃvyapaviṟantu ‖ kāryyapadārtthivyalvattinnnil [illegible] ‖ rkkupādattilcennuṣārttve
+2. ātribhuvanattilekoṇṭu [illegible] ‖ indrādaisiddhivyapahārāldikka [illegible] ‖ kkitavaddeśyarṇṇatrādairu
+3. drūsiddhānādivyavahāra [illegible] ‖ lsiddhivimaddhyakārennavyaktavattidaḻnāl̤ka ‖ cakṣaṇākiśabdavṛttiśeṣa
+4. saṃbandhālakṣiṇa ‖ āṃśaṃgāṣṭāṃśalāvaṛttragaṃga ‖ madavācyapravāhasara
+5. bandhādevittirū ‖ pakṣitairāntiśaktirttyū ‖ taiḥtaisandhavādairu
+6. lavaṇoṣṭakṣayāḥ ‖ padasthasaṃbandhādivālnāna ‖ śaktikaḻenaṃlakṣaṇa
+7. ൗttividhāḥjahaḻ ‖ kṣatārajahaḻḻakṣaṇājahadaja ‖ haḻḻakṣaṇācentiḥkha
+8. travācyārtthasyāsvayā ‖ divāvaṣkraṣṭagatiyaṣṭābhañjāḥkrṛrgatan ‖ jīvitayatṛpācyasyāvyasya
+9. krūjahadajahalkkitiḥ ‖ yaṣṭāgāmahitilgaṃgal̤ttilakṣaṇaṃgga ‖ āvakṣatraraṣṭāḥggāsaṃbandha
+10. drupārtthaddrāṇukamya ‖ tthiddrūjaṣṭākimaṃjñaggaśaktilakṣaṇā ‖ ndretvaṃtvakkimulācārmamā
+
+TRANSCRIPTION B
+1. ṣādevaṃvyapaviṟana [illegible] ‖ kāryyapadeśā [illegible] vyulpattisiddha ‖ [illegible] pādi [illegible] cennukāryya [illegible]
+2. [illegible] bhuvanattilakkoḻḻu ‖ [illegible] nnu [illegible] dennasiddhe [illegible] vyapahāranālvi ‖ [illegible] tvena [illegible] yuraññu [illegible] dera
+3. [illegible] dhanaṅṅaḻilvyapavādana ‖ lsiddhivima [illegible] ddhyakārenna [illegible] vyaktapa [illegible] daḻnnāmma ‖ [illegible] ccakkaṇāki [illegible] vyakti [illegible]
+4. saṃbandhālakṣaṇā ‖ āṃśaṃgā [illegible] ṃmelopā [illegible] śāṃga ‖ [illegible] davācyapravāhisā
+5. bandhādevattine ‖ vakṣi [illegible] tīte [illegible] śaktirkkaḻḻa ‖ [illegible] svabhāvādera
+6. lavaṇādyupakkayyu ‖ va [illegible] saṃbandhādivārnnana ‖ [illegible] śaktikaḻinaṃlakṣaṇa
+7. [illegible] viyārajñahāḻḻa ‖ kṣobhājñahāḻḻakkaṇājñahādajña ‖ hāḻḻakkaṇācettiya
+8. ttavādṛḻ [illegible] yādi ‖ ādirava [illegible] jñagattiyapā [illegible] krogandha ‖ [illegible] yatrapā [illegible] vyaprabhaya
+9. [illegible] jñahādajñavaṅkittiya ‖ yadāraññaba [illegible] gānilakkakko [illegible] ‖ [illegible] va [illegible] mā [illegible] saṃbandha
+10. [illegible] pārnni [illegible] ṇakkaṇṭu ‖ [illegible] jñanākiśaṃ [illegible] śaktilakkaṇāntra ‖ [illegible] śaktimūlācārmma
+
+TRANSCRIPTION C
+1. ṣādevaṃvyapavi [illegible] nantu ‖ kāśyapa [illegible] cādyahivvṛlpakṣensiddha ‖ [illegible] pāda [illegible] cennaśā [illegible]
+2. ātribhuvanattilakkoṇṭa [illegible] ‖ [illegible] ṇṭādena [illegible] siddhitvyapahāranālvi [illegible] ‖ [illegible] tavarū [illegible] dṛ [illegible] trādena
+3. prasiddhamān [illegible] lyavahāra [illegible] ‖ lsiddhi [illegible] śyakārena [illegible] vṛlpakṣe [illegible] nāmma ‖ [illegible] lakṣaṇābhiśabda [illegible] śetra
+4. saṃbandholakṣaṇā ‖ [illegible] ṃśaṃśarā [illegible] ṃśela [illegible] utkra [illegible] gaṃgā ‖ [illegible] dapācyapravāhasva
+5. bandhādevitonā ‖ [illegible] tonīkṣi [illegible] miśaktir [illegible] ‖ tetaisandhavādena
+6. lavaṇādyabhakṣayān ‖ [illegible] saṃbandhā [illegible] vāl [illegible] ‖ [illegible] śakti [illegible] naṃlakṣaṇa
+7. ātrividhāḥjahalla ‖ kṣaṇāajahallakṣaṇājahadaja ‖ hallakṣaṇācetiya
+8. [illegible] vācyārtthanyāyā [illegible] ‖ ādrāva [illegible] kṣetra [illegible] ghatveyaparā [illegible] krośantī ‖ [illegible] yatravācyārtthapara
+9. kṣetrajña [illegible] daja [illegible] ti [illegible] ‖ yathā [illegible] śaraṇa [illegible] gau [illegible] tilakṣaṇaye [illegible] ‖ [illegible] va [illegible] gā [illegible] saṃbandha
+10. [illegible] pāntā [illegible] dityā [illegible] ‖ [illegible] jñanādi [illegible] śaktilakṣaṇāntra ‖ [illegible] to [illegible] śaktimūlācā [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

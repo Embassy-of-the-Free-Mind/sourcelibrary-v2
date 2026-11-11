@@ -1,0 +1,56 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. triguṇamavivekivi ‖ ṣayassāmānyamacetanaṃprasavadha ‖ rmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācappumān11prītyaprītiviṣa ‖ ādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥnyonyābhibhavāśrayaja ‖ jananamithunavṛttayaśca
+4. guṇāḥ12satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccārttha ‖ tovṛttiḥ13a
+6. [illegible] kyādessiddhi ‖ straiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ14bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvaiśva ‖ rūpyasya15kāraṇamastyavyaktaṃpra ‖ varttatetriguṇatassa
+10. mudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ yaviśeṣālsaṃgha
+
+TRANSCRIPTION B
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasavadha ‖ rmmivyaktantathāpradha
+2. ānantadviparītastathā ‖ capumānprītyaprītiviṣā ‖ dātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥanyonyābhibhavāśrayaja ‖ nanamithunavṛttayaśca
+4. guṇāḥsatvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccārttha ‖ tovṛttiḥ
+6. avivekyādiḥ ‖ siddhastraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃbhedā
+8. nāṃparimāṇā ‖ tsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvai ‖ śvarūpyasyakāraṇamastyavyaktaṃprava ‖ rttatetriguṇatassa
+10. mudayāccapariṇāma ‖ tassalilavalpratipratiguṇāśraya ‖ viśeṣālsaṃgha
+
+TRANSCRIPTION C
+1. triguṇamavivekiviṣayassāmānyamacetanaṃprasavadharmmivyaktantathāpradha
+2. ānantadviparītastathācapumān൰1prītyaprītiviṣādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥanyonyābhibhavāśraya ‖ jananamithunavṛttayaśca
+4. guṇāḥ൰2satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccār ‖ tthatovṛttiḥ൰3
+6. avivekyāde ‖ ḥsiddhistraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ൰4bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtte ‖ ścakāraṇakāryyavibhā
+9. gādavibhāgādvaiśvarūpyasya൰5kāraṇamastyavyaktaṃpravarttatetriguṇatassa
+10. mudayāccapariṇāmatassalilavalpratipratiguṇāśrayaviśeṣāl൰6saṃghā
+
+TRANSCRIPTION D
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasavadha ‖ rmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācapumān [illegible] prītyaprītivi ‖ ṣādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥ [illegible] nyonyābhibhavāśraya ‖ jananamithunavṛttayaśca
+4. guṇāḥ [illegible] satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇaka ‖ mevatamaḥpradīpavaccārttha ‖ tovṛttiḥ [illegible]
+6. [illegible] vivekyāde ‖ siddhaṃtraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ [illegible] bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvaiśva ‖ rūpyasyakāraṇamastyavyaktaṃprava ‖ rttatetriguṇatassa
+10. samudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ viśeṣāl [illegible] saṃgha
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

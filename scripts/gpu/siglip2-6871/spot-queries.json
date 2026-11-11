@@ -1,0 +1,285 @@
+{
+"rule": "q01-q60 = frozen #7042 set; n01-n10 = real search_images (mcp_tool_calls) queries picked 2026-10-26 by the job for the brief's subjects (alembic, zodiac man, printer's device) and recent traffic, none in the 60 or its rejects",
+"queries": [
+{
+"qid": "q01",
+"query": "ouroboros"
+},
+{
+"qid": "q02",
+"query": "sufi tree"
+},
+{
+"qid": "q03",
+"query": "tree of life"
+},
+{
+"qid": "q04",
+"query": "christ pantocrator"
+},
+{
+"qid": "q05",
+"query": "alchemy"
+},
+{
+"qid": "q06",
+"query": "alchemical emblem"
+},
+{
+"qid": "q07",
+"query": "green lion"
+},
+{
+"qid": "q08",
+"query": "ashvattha"
+},
+{
+"qid": "q09",
+"query": "monochord"
+},
+{
+"qid": "q10",
+"query": "philosopher's stone"
+},
+{
+"qid": "q11",
+"query": "memory palace"
+},
+{
+"qid": "q12",
+"query": "diagram"
+},
+{
+"qid": "q13",
+"query": "pentacle"
+},
+{
+"qid": "q14",
+"query": "anael angel venus"
+},
+{
+"qid": "q15",
+"query": "comet"
+},
+{
+"qid": "q16",
+"query": "dragon"
+},
+{
+"qid": "q17",
+"query": "head profile senses imagination memory"
+},
+{
+"qid": "q18",
+"query": "kabbalah sefirot"
+},
+{
+"qid": "q19",
+"query": "last supper"
+},
+{
+"qid": "q20",
+"query": "mandala"
+},
+{
+"qid": "q21",
+"query": "nigredo blackening darkness prima materia"
+},
+{
+"qid": "q22",
+"query": "pleiades star cluster"
+},
+{
+"qid": "q23",
+"query": "supper at emmaus meal at table"
+},
+{
+"qid": "q24",
+"query": "unicorn"
+},
+{
+"qid": "q25",
+"query": "cosmic man microcosm macrocosm body"
+},
+{
+"qid": "q26",
+"query": "emblem book impresa motto pictura epigram"
+},
+{
+"qid": "q27",
+"query": "quaternity cross four elements compass"
+},
+{
+"qid": "q28",
+"query": "mesoamerican aztec codex"
+},
+{
+"qid": "q29",
+"query": "homunculus"
+},
+{
+"qid": "q30",
+"query": "clay tablet cuneiform inscription"
+},
+{
+"qid": "q31",
+"query": "mystical rose solutio"
+},
+{
+"qid": "q32",
+"query": "pentagon"
+},
+{
+"qid": "q33",
+"query": "tower tarot lightning struck"
+},
+{
+"qid": "q34",
+"query": "astrological symbols zodiac"
+},
+{
+"qid": "q35",
+"query": "death of seneca painting stoic"
+},
+{
+"qid": "q36",
+"query": "chest slats numbered columns box"
+},
+{
+"qid": "q37",
+"query": "adam kadmon kabbalistic figure"
+},
+{
+"qid": "q38",
+"query": "map of italy italia"
+},
+{
+"qid": "q39",
+"query": "symbols of mourning alchemy"
+},
+{
+"qid": "q40",
+"query": "plato socrates philosopher portrait"
+},
+{
+"qid": "q41",
+"query": "gymnosophists alexander"
+},
+{
+"qid": "q42",
+"query": "ape of nature simia naturae"
+},
+{
+"qid": "q43",
+"query": "circe ulysses swine transformation"
+},
+{
+"qid": "q44",
+"query": "sun moon conjunction sol luna"
+},
+{
+"qid": "q45",
+"query": "geomantic figures sixteen"
+},
+{
+"qid": "q46",
+"query": "venus seal character planet agrippa"
+},
+{
+"qid": "q47",
+"query": "mars symbol astrological glyph circle arrow"
+},
+{
+"qid": "q48",
+"query": "taurus constellation diagram"
+},
+{
+"qid": "q49",
+"query": "flying machine"
+},
+{
+"qid": "q50",
+"query": "twilight horizon rising stars celestial sphere"
+},
+{
+"qid": "q51",
+"query": "bat wolf nocturnal creature"
+},
+{
+"qid": "q52",
+"query": "magic square planetary seal sigil kamea"
+},
+{
+"qid": "q53",
+"query": "treasure map buried"
+},
+{
+"qid": "q54",
+"query": "illuminated manuscript sacred text page"
+},
+{
+"qid": "q55",
+"query": "pythagoras hammers blacksmith forge music woodcut"
+},
+{
+"qid": "q56",
+"query": "conjunction chemical wedding king queen alchemy"
+},
+{
+"qid": "q57",
+"query": "vina musician raga indian music instrument"
+},
+{
+"qid": "q58",
+"query": "griot storyteller oral tradition drum"
+},
+{
+"qid": "q59",
+"query": "valknut odin"
+},
+{
+"qid": "q60",
+"query": "angel hierarchy"
+},
+{
+"qid": "n01",
+"query": "zodiac man"
+},
+{
+"qid": "n02",
+"query": "alchemist laboratory furnace alembic"
+},
+{
+"qid": "n03",
+"query": "printing press printer workshop engraving"
+},
+{
+"qid": "n04",
+"query": "skeleton"
+},
+{
+"qid": "n05",
+"query": "square and compasses masonic emblem"
+},
+{
+"qid": "n06",
+"query": "eye of providence in a triangle with rays of light"
+},
+{
+"qid": "n07",
+"query": "phases of the moon engraving"
+},
+{
+"qid": "n08",
+"query": "medieval herbal plant"
+},
+{
+"qid": "n09",
+"query": "world map hemispheres engraving"
+},
+{
+"qid": "n10",
+"query": "printer ornament headpiece fleuron"
+}
+]
+}

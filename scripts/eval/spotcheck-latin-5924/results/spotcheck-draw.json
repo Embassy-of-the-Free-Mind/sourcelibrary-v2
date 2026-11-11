@@ -1,0 +1,362 @@
+[
+ {
+  "book_id": "69b21c3c429e087c6f86448e",
+  "title": "Italia Antiqua",
+  "year": 1624,
+  "cell": "roman-1",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 336,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69b21c3c429e087c6f86448e/336.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69b21c3c429e087c6f86448e/0336.jpg"
+   },
+   {
+    "page_number": 337,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69b21c3c429e087c6f86448e/337.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69b21c3c429e087c6f86448e/0337.jpg"
+   },
+   {
+    "page_number": 338,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69b21c3c429e087c6f86448e/338.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69b21c3c429e087c6f86448e/0338.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "6990616cef12272ffdc8d980",
+  "title": "De Abstinentia ab Esu Animalium Libri Quatuor",
+  "year": 1767,
+  "cell": "roman-2",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 231,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/archived/6990616cef12272ffdc8d980/231.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6990616cef12272ffdc8d980/0231.jpg"
+   },
+   {
+    "page_number": 232,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/archived/6990616cef12272ffdc8d980/232.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6990616cef12272ffdc8d980/0232.jpg"
+   },
+   {
+    "page_number": 233,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/archived/6990616cef12272ffdc8d980/233.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6990616cef12272ffdc8d980/0233.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69c835706c6f3cc53c84e8f6",
+  "title": "Schediasmatum apocalypticorum",
+  "year": 1697,
+  "cell": "roman-1",
+  "engine": "lite",
+  "pages": [
+   {
+    "page_number": 147,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/0076-full.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/0076.jpg"
+   },
+   {
+    "page_number": 148,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/split-69c84cb8acfba683030208e3-full.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/split-69c84cb8acfba683030208e3.jpg"
+   },
+   {
+    "page_number": 149,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/0077-full.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/0077.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69af106e266659b71a32212f",
+  "title": "De Statica Medicina",
+  "year": 1701,
+  "cell": "roman-1",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 202,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69af106e266659b71a32212f/202.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69af106e266659b71a32212f/0202.jpg"
+   },
+   {
+    "page_number": 203,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69af106e266659b71a32212f/203.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69af106e266659b71a32212f/0203.jpg"
+   },
+   {
+    "page_number": 204,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69af106e266659b71a32212f/204.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69af106e266659b71a32212f/0204.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69b4cd08d5b6c3815e1a3880",
+  "title": "Speculum orbis terrae",
+  "year": 1578,
+  "cell": "roman-2",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 107,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69b4cd08d5b6c3815e1a3880/107.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69b4cd08d5b6c3815e1a3880/0107.jpg"
+   },
+   {
+    "page_number": 108,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69b4cd08d5b6c3815e1a3880/108.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69b4cd08d5b6c3815e1a3880/0108.jpg"
+   },
+   {
+    "page_number": 109,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69b4cd08d5b6c3815e1a3880/109.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69b4cd08d5b6c3815e1a3880/0109.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69906327ef12272ffdc8f9ac",
+  "title": "Somniorum Synesiorum Libri IV",
+  "year": 1585,
+  "cell": "italic-1",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 596,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69906327ef12272ffdc8f9ac/596.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69906327ef12272ffdc8f9ac/0596.jpg"
+   },
+   {
+    "page_number": 597,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69906327ef12272ffdc8f9ac/597.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69906327ef12272ffdc8f9ac/0597.jpg"
+   },
+   {
+    "page_number": 598,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69906327ef12272ffdc8f9ac/598.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69906327ef12272ffdc8f9ac/0598.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "title": "[Hebrew: IHVH] Opus mago-cabalisticum et theologicum. Vom Uhrsprung und Erzeugung des Saltzes",
+  "year": 1719,
+  "cell": "gothic-1",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 106,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/cropped/6984e84f5905f8d14dbe659b/698507821ca17dec0e9710a3.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6984e84f5905f8d14dbe659b/0106.jpg"
+   },
+   {
+    "page_number": 107,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/cropped/6984e84f5905f8d14dbe659b/698507821ca17dec0e9710a4.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6984e84f5905f8d14dbe659b/0107.jpg"
+   },
+   {
+    "page_number": 108,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/cropped/6984e84f5905f8d14dbe659b/6985086489b9b8df55d90365.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6984e84f5905f8d14dbe659b/0108.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69c82de66c6f3cc53c84d4bf",
+  "title": "Specimen philologicum de veterum gentilium et judaeorum theologia mythica",
+  "year": 1728,
+  "cell": "roman-2",
+  "engine": "lite",
+  "pages": [
+   {
+    "page_number": 9,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f533eb67d99f24d955d21f.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f533eb67d99f24d955d21f.jpg"
+   },
+   {
+    "page_number": 10,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f533ee67d99f24d955d220.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f533ee67d99f24d955d220.jpg"
+   },
+   {
+    "page_number": 11,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f533ee67d99f24d955d221.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f533ee67d99f24d955d221.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "6a06d3b79a48d5139996380e",
+  "title": "Valerius Maximus nuper editus index copiosissimus rerum omnium, & personarum, de quibus in his libris agitur.",
+  "year": 1534,
+  "cell": "italic-1",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 294,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/6a06d3b79a48d5139996380e/294.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6a06d3b79a48d5139996380e/0294.jpg"
+   },
+   {
+    "page_number": 295,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/6a06d3b79a48d5139996380e/295.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6a06d3b79a48d5139996380e/0295.jpg"
+   },
+   {
+    "page_number": 296,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/6a06d3b79a48d5139996380e/296.jpg",
+    "served": "https://images.sourcelibrary.org/pages/6a06d3b79a48d5139996380e/0296.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69af0f77a940055c46680e8b",
+  "title": "Astronomica Veterum Scripta Isagogica",
+  "year": 1589,
+  "cell": "italic-1",
+  "engine": "flash",
+  "pages": [
+   {
+    "page_number": 170,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69af0f77a940055c46680e8b/170.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69af0f77a940055c46680e8b/0170.jpg"
+   },
+   {
+    "page_number": 171,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69af0f77a940055c46680e8b/171.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69af0f77a940055c46680e8b/0171.jpg"
+   },
+   {
+    "page_number": 172,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69af0f77a940055c46680e8b/172.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69af0f77a940055c46680e8b/0172.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69c82e676c6f3cc53c84d61e",
+  "title": "Thesaurus et armamentarium medico-chymicum",
+  "year": 1670,
+  "cell": "gothic-1",
+  "engine": "lite",
+  "pages": [
+   {
+    "page_number": 85,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c82e676c6f3cc53c84d61e/sp69f65e00167a1f4e64714be9.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c82e676c6f3cc53c84d61e/sp69f65e00167a1f4e64714be9.jpg"
+   },
+   {
+    "page_number": 86,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c82e676c6f3cc53c84d61e/sp69f65dfd167a1f4e64714be6.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c82e676c6f3cc53c84d61e/sp69f65dfd167a1f4e64714be6.jpg"
+   },
+   {
+    "page_number": 87,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3-flash-preview",
+    "src": "https://images.sourcelibrary.org/pages/69c82e676c6f3cc53c84d61e/sp69f65dfd167a1f4e64714be7.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69c82e676c6f3cc53c84d61e/sp69f65dfd167a1f4e64714be7.jpg"
+   }
+  ]
+ },
+ {
+  "book_id": "69dbc9b11040d1d5e20a557b",
+  "title": "Speculum sapientiae",
+  "year": 1505,
+  "cell": "gothic-1",
+  "engine": "lite",
+  "pages": [
+   {
+    "page_number": 86,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69dbc9b11040d1d5e20a557b/86.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69dbc9b11040d1d5e20a557b/0086.jpg"
+   },
+   {
+    "page_number": 87,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69dbc9b11040d1d5e20a557b/87.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69dbc9b11040d1d5e20a557b/0087.jpg"
+   },
+   {
+    "page_number": 88,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "src": "https://images.sourcelibrary.org/archived/69dbc9b11040d1d5e20a557b/88.jpg",
+    "served": "https://images.sourcelibrary.org/pages/69dbc9b11040d1d5e20a557b/0088.jpg"
+   }
+  ]
+ }
+]

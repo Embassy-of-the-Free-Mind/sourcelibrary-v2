@@ -394,7 +394,7 @@ export default function ProgressStudiesPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Agostino Ramelli&rsquo;s{' '}
-            <Link href="/book/le-diverse-et-artificiose-machine-ramelli" className="text-accent-rust hover:underline">
+            <Link href="/book/le-diverse-et-artificiose-machine-agostino-ramelli-1588" className="text-accent-rust hover:underline">
               <em>Le diverse et artificiose machine</em></Link>{' '}
             (1588) is
             the most famous: 195 copperplate engravings of water-lifting devices, mills,

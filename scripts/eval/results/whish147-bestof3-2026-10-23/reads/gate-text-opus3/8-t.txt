@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads as fluent Sāṅkhyakārikā verse and commentary (kārikās 41–45) in nearly every row with only a few gaps, while C breaks words with doubled vowels across the string holes (sa‖āṃsiddhikāś, pra‖ākṛtikā, vaikṛta‖ikāś, kāryya‖āśrayiṇaś), and A is almost entirely illegible.

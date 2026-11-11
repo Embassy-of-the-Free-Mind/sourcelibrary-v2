@@ -1,0 +1,272 @@
+{
+ "source": "IA raswhish145-147 metadata; classify-script.json; identify-work.json; reads/probe; locate maps",
+ "manuscripts": 1,
+ "shelfmarks": [
+  "RAS South Indian Sanskrit MS 145",
+  "RAS Whish MS 147"
+ ],
+ "hands": {
+  "A": "larger, open hand, 7–11 rows a leaf",
+  "B": "small, dense hand, 11–13 rows a leaf (the stretch the edition-anchored method could not place)"
+ },
+ "map": [
+  {
+   "pages": [
+    1,
+    1
+   ],
+   "what": "wooden cover board",
+   "hand": null,
+   "script": null,
+   "language": null,
+   "hand_desc": null,
+   "classifier": {
+    "pages": 1,
+    "scripts": {
+     "no writing": 1
+    },
+    "rows_median": null
+   }
+  },
+  {
+   "pages": [
+    2,
+    3
+   ],
+   "what": "blank board / leaf",
+   "hand": null,
+   "script": null,
+   "language": null,
+   "hand_desc": null,
+   "classifier": {
+    "pages": 2,
+    "scripts": {
+     "no writing": 2
+    },
+    "rows_median": null
+   }
+  },
+  {
+   "pages": [
+    4,
+    4
+   ],
+   "what": "label in English (titles of the contents)",
+   "hand": "later, in ink",
+   "script": "Latin",
+   "language": "English",
+   "hand_desc": "later, in ink",
+   "classifier": {
+    "pages": 1,
+    "scripts": {
+     "other": 1
+    },
+    "rows_median": 6
+   }
+  },
+  {
+   "pages": [
+    5,
+    6
+   ],
+   "what": "contents leaf, then a leaf of large loose letters before the text",
+   "hand": "A",
+   "script": "Malayalam",
+   "language": "Sanskrit/Malayalam",
+   "hand_desc": "larger, open hand, 7–11 rows a leaf",
+   "classifier": {
+    "pages": 2,
+    "scripts": {
+     "Malayalam": 2
+    },
+    "rows_median": 5
+   }
+  },
+  {
+   "pages": [
+    7,
+    20
+   ],
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "hand": "A",
+   "script": "Malayalam",
+   "language": "Sanskrit",
+   "work": "sk",
+   "hand_desc": "larger, open hand, 7–11 rows a leaf",
+   "classifier": {
+    "pages": 14,
+    "scripts": {
+     "Malayalam": 14
+    },
+    "rows_median": 9
+   }
+  },
+  {
+   "pages": [
+    20,
+    129
+   ],
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "hand": "A",
+   "script": "Malayalam",
+   "language": "Sanskrit",
+   "work": "jm",
+   "hand_desc": "larger, open hand, 7–11 rows a leaf",
+   "classifier": {
+    "pages": 110,
+    "scripts": {
+     "Malayalam": 110
+    },
+    "rows_median": 10
+   }
+  },
+  {
+   "pages": [
+    130,
+    130
+   ],
+   "what": "blank leaf",
+   "hand": null,
+   "script": null,
+   "language": null,
+   "hand_desc": null,
+   "classifier": {
+    "pages": 1,
+    "scripts": {
+     "no writing": 1
+    },
+    "rows_median": null
+   }
+  },
+  {
+   "pages": [
+    131,
+    221
+   ],
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "hand": "B",
+   "script": "Malayalam",
+   "language": "Sanskrit, with a Malayalam note",
+   "work": "tk+fragment",
+   "hand_desc": "small, dense hand, 11–13 rows a leaf (the stretch the edition-anchored method could not place)",
+   "classifier": {
+    "pages": 91,
+    "scripts": {
+     "Malayalam": 91
+    },
+    "rows_median": 12
+   }
+  },
+  {
+   "pages": [
+    222,
+    222
+   ],
+   "what": "blank leaf",
+   "hand": null,
+   "script": null,
+   "language": null,
+   "hand_desc": null,
+   "classifier": {
+    "pages": 1,
+    "scripts": {
+     "no writing": 1
+    },
+    "rows_median": null
+   }
+  },
+  {
+   "pages": [
+    223,
+    285
+   ],
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "hand": "A",
+   "script": "Malayalam",
+   "language": "Sanskrit",
+   "work": "dipika",
+   "hand_desc": "larger, open hand, 7–11 rows a leaf",
+   "classifier": {
+    "pages": 63,
+    "scripts": {
+     "Malayalam": 63
+    },
+    "rows_median": 9
+   }
+  },
+  {
+   "pages": [
+    286,
+    286
+   ],
+   "what": "a short, faint leaf",
+   "hand": "A",
+   "script": "Malayalam",
+   "language": "Sanskrit",
+   "hand_desc": "larger, open hand, 7–11 rows a leaf",
+   "classifier": {
+    "pages": 1,
+    "scripts": {
+     "Malayalam": 1
+    },
+    "rows_median": 5
+   }
+  },
+  {
+   "pages": [
+    287,
+    310
+   ],
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "hand": "A",
+   "script": "Malayalam",
+   "language": "Sanskrit",
+   "work": "ts",
+   "hand_desc": "larger, open hand, 7–11 rows a leaf",
+   "classifier": {
+    "pages": 24,
+    "scripts": {
+     "Malayalam": 24
+    },
+    "rows_median": 8
+   }
+  },
+  {
+   "pages": [
+    311,
+    315
+   ],
+   "what": "blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314)",
+   "hand": null,
+   "script": null,
+   "language": null,
+   "hand_desc": null,
+   "classifier": {
+    "pages": 5,
+    "scripts": {
+     "no writing": 3,
+     "Malayalam": 2
+    },
+    "rows_median": 10
+   }
+  },
+  {
+   "pages": [
+    316,
+    316
+   ],
+   "what": "wooden cover board",
+   "hand": null,
+   "script": null,
+   "language": null,
+   "hand_desc": null,
+   "classifier": {
+    "pages": 1,
+    "scripts": {
+     "no writing": 1
+    },
+    "rows_median": null
+   }
+  }
+ ]
+}

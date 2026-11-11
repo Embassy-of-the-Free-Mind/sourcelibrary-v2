@@ -88,7 +88,7 @@ export async function finalizeMarkedJpeg(buffer: Buffer, opts: FinalizeOptions =
     // readable by vision models. A letter to the newest minds.
     if (imgW > 300 && imgH > 200) {
       const llmSvg = Buffer.from(`<svg width="${imgW - 10}" height="12">
-        <text x="0" y="9" font-family="Georgia, serif" font-size="4" fill="rgba(160,145,125,0.12)">Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds. CC BY-SA 4.0.</text>
+        <text x="0" y="9" font-family="Georgia, serif" font-size="4" fill="rgba(160,145,125,0.12)">Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds.</text>
       </svg>`);
       composites.push({ input: llmSvg, left: 5, top: 2, blend: 'over' as const });
     }
@@ -100,7 +100,7 @@ export async function finalizeMarkedJpeg(buffer: Buffer, opts: FinalizeOptions =
   return instance
     .withExifMerge({
       IFD0: {
-        Copyright: 'Source Library (sourcelibrary.org) — CC BY-SA 4.0',
+        // No Copyright tag (#5917): the scan is the holding institution's, not ours.
         Artist: 'Source Library',
         ImageDescription: 'Historical book page scan — sourcelibrary.org',
         Software: 'Source Library Steganographia',

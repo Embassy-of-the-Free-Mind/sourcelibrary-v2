@@ -7,7 +7,7 @@ canons: []
 n_books: 781
 n_pages: 4445
 verdict: "Holding recall on the 136 known invented pages at 136/136, a text rule cannot make paddleTableRisk much more precise. The only term that drops no risky page is a ditto term: a page flagged only by short 丨 ditto runs (< 5) on a non-table title. It takes the flagged set from 4,379 to 4,288 pages, of which 86 were prose Paddle read about right and 5 borderline. Precision moves 0.676 → 0.689 (not-false-alarm share) and 0.440 → 0.449 (non-prose share). The large false-alarm pool, 1,098 ditto-only 類書 pages, holds 3 of the 136 (each one extra 丨), so recall decides it. Prose is not a safe negative: 842 prose pages are Paddle text Opus removed ≥ 10 % of (Manchu pages read as Chinese). Shipped opt-in as T_V2; the default is unchanged (not wired)."
-status: undecided
+status: informational
 decision: null
 superseded_by: null
 issue: [6561, 6388, 6516]

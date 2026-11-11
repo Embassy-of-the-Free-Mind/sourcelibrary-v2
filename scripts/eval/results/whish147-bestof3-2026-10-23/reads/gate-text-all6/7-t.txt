@@ -1,0 +1,3 @@
+PICK | D
+RANK | D, B, A, E, F, C
+WHY | D gives continuous, grammatical text of Sāṅkhyakārikā verses 28–33 and their commentary, with verse numbers and string holes in sensible places; B has nearly the same text but its row breaks and holes don't line up, and it has more gaps, while A, E, F and C are mostly strings of syllables that only look like words, with real words in a few places.

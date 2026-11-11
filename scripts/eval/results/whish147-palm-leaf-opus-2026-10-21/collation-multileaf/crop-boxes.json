@@ -1,0 +1,4 @@
+{"_note": "Left-half crops of each leaf. Boxes are in 1/6-scale pixels of https://images.sourcelibrary.org/archived/6ad845ec6037414ddef152af/<page>.jpg; multiply by 6 for the full image. Same geometry as the pilot t03 crop (55,310,485,530 on page 5). t = upper leaf, b = lower leaf.",
+ "4b": [63,303,491,521], "5t": [54,44,484,266], "5b": [55,311,482,527], "6t": [67,45,493,262], "6b": [69,308,498,526],
+ "7t": [67,48,492,265], "7b": [63,308,493,528], "8t": [68,45,493,262], "8b": [65,302,492,524], "9t": [69,51,495,267], "9b": [70,306,497,526],
+ "10t": [63,48,489,267], "10b": [64,304,491,523], "11t": [64,48,493,266], "11b": [72,306,498,523]}

@@ -1,0 +1,1108 @@
+{
+ "issue": 5803,
+ "date": "2026-10-24",
+ "job": "triage-followup-1024",
+ "reader": "scripts/audit/printed-page-image-read.mjs (gemini-3.1-flash-lite, printed-page-read-v1)",
+ "planner": "scripts/maintenance/plan-reseat-by-printed-page.mjs --max-clear=0.2",
+ "writer": "scripts/maintenance/repair-text-permutation.mjs (source text-permutation-5803)",
+ "cost_usd": 2.7,
+ "pages_read": 6772,
+ "books": [
+  {
+   "id": "6988a59f090ba3597e45028a",
+   "title": "Seances des ecoles normales",
+   "leaves": 209,
+   "own_ok": 31,
+   "moved": 114,
+   "interpolated": 14,
+   "rows": 149,
+   "vacated": 35,
+   "ready": true,
+   "why": "ready",
+   "applied": true,
+   "own_ok_after": 145
+  },
+  {
+   "id": "6988a59e0d60689cec71ff35",
+   "title": "Der Rosenkreuzer in seiner Blösse. Zum N",
+   "leaves": 264,
+   "own_ok": 243,
+   "moved": 0,
+   "interpolated": 9,
+   "rows": 0,
+   "vacated": 0,
+   "ready": false,
+   "why": "nothing to move",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59e193b008ee3811520",
+   "title": "Les secrets les plus cachés de la philos",
+   "leaves": 388,
+   "own_ok": 0,
+   "moved": 345,
+   "interpolated": 14,
+   "rows": 380,
+   "vacated": 35,
+   "ready": true,
+   "why": "ready",
+   "applied": true,
+   "own_ok_after": 345
+  },
+  {
+   "id": "6988a59e9a7c579a2bf143f6",
+   "title": "Schilderung der Illuminaten",
+   "leaves": 86,
+   "own_ok": 67,
+   "moved": 1,
+   "interpolated": 1,
+   "rows": 1,
+   "vacated": 0,
+   "ready": false,
+   "why": "not permuted (67 leaves already match): report only",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59ef2833fb36a54e166",
+   "title": "Der Röm. Spanischen Cantzley Nachtrab: S",
+   "leaves": 139,
+   "own_ok": 0,
+   "moved": 105,
+   "interpolated": 3,
+   "rows": 127,
+   "vacated": 22,
+   "ready": true,
+   "why": "ready",
+   "applied": true,
+   "own_ok_after": 105
+  },
+  {
+   "id": "6988a59f1d68da8eccae8cf8",
+   "title": "Sacrarum observationum liber primus",
+   "leaves": 614,
+   "own_ok": 561,
+   "moved": 3,
+   "interpolated": 32,
+   "rows": 3,
+   "vacated": 0,
+   "ready": false,
+   "why": "not permuted (561 leaves already match): report only",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59f280c68b8795e5ba9",
+   "title": "Revelation des mysteres des teintures es",
+   "leaves": 333,
+   "own_ok": 173,
+   "moved": 3,
+   "interpolated": 18,
+   "rows": 4,
+   "vacated": 1,
+   "ready": false,
+   "why": "not permuted (173 leaves already match): report only",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59f3605c4167e76a79c",
+   "title": "Der Schmuck der Weisen",
+   "leaves": 222,
+   "own_ok": 94,
+   "moved": 118,
+   "interpolated": 2,
+   "rows": 122,
+   "vacated": 4,
+   "ready": true,
+   "why": "ready",
+   "applied": true,
+   "own_ok_after": 212
+  },
+  {
+   "id": "6988a59f3b3cedbf42d473a7",
+   "title": "The second wash: or the moore scour'd on",
+   "leaves": 227,
+   "own_ok": 1,
+   "moved": 200,
+   "interpolated": 3,
+   "rows": 220,
+   "vacated": 20,
+   "ready": true,
+   "why": "ready",
+   "applied": true,
+   "own_ok_after": 201
+  },
+  {
+   "id": "6988a59f4faa6559b7ce93ab",
+   "title": "Sehr geheim gehaltene, und nunmehro frey",
+   "leaves": 282,
+   "own_ok": 219,
+   "moved": 0,
+   "interpolated": 13,
+   "rows": 0,
+   "vacated": 0,
+   "ready": false,
+   "why": "nothing to move",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59f85cb2dd0f1e56e5b",
+   "title": "Sammlung unterschiedlicher bewährter chy",
+   "leaves": 855,
+   "own_ok": 804,
+   "moved": 2,
+   "interpolated": 5,
+   "rows": 2,
+   "vacated": 0,
+   "ready": false,
+   "why": "not permuted (804 leaves already match): report only",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59f894ca90f56984e37",
+   "title": "La religion chrétienne",
+   "leaves": 782,
+   "own_ok": 740,
+   "moved": 0,
+   "interpolated": 20,
+   "rows": 0,
+   "vacated": 0,
+   "ready": false,
+   "why": "nothing to move",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59f89d9e7e535be96cc",
+   "title": "The revelation of revelations",
+   "leaves": 154,
+   "own_ok": 0,
+   "moved": 110,
+   "interpolated": 30,
+   "rows": 138,
+   "vacated": 28,
+   "ready": true,
+   "why": "ready",
+   "applied": true,
+   "own_ok_after": 110
+  },
+  {
+   "id": "6988a59f8f2b65d11145d732",
+   "title": "De secretis mulierum. De virtutibus herb",
+   "leaves": 524,
+   "own_ok": 0,
+   "moved": 352,
+   "interpolated": 51,
+   "rows": 462,
+   "vacated": 110,
+   "ready": false,
+   "why": "110 leaves would be cleared",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59f9b275a14696ffe63",
+   "title": "Le renouvellement de l'esprit evangeliqu",
+   "leaves": 784,
+   "own_ok": 740,
+   "moved": 2,
+   "interpolated": 25,
+   "rows": 2,
+   "vacated": 0,
+   "ready": false,
+   "why": "not permuted (740 leaves already match): report only",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59fa4de5da34fd130e0",
+   "title": "[Hebrew: Sha'arei zedek]",
+   "leaves": 126,
+   "own_ok": 36,
+   "moved": 3,
+   "interpolated": 0,
+   "rows": 4,
+   "vacated": 1,
+   "ready": false,
+   "why": "not permuted (36 leaves already match): report only",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59fc4b7f7f0405a901a",
+   "title": "Scopus vitae meae Christus",
+   "leaves": 21,
+   "own_ok": 10,
+   "moved": 0,
+   "interpolated": 0,
+   "rows": 0,
+   "vacated": 0,
+   "ready": false,
+   "why": "nothing to move",
+   "applied": false,
+   "own_ok_after": null
+  },
+  {
+   "id": "6988a59fdf35fdd0691cdc42",
+   "title": "La royalle chymie",
+   "leaves": 672,
+   "own_ok": 616,
+   "moved": 0,
+   "interpolated": 34,
+   "rows": 0,
+   "vacated": 0,
+   "ready": false,
+   "why": "nothing to move",
+   "applied": false,
+   "own_ok_after": null
+  }
+ ],
+ "eye_check_before_apply": [
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 61,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.43, starts 'larme de tout, parce qu'elle est toujours fondee'; proposed starts p.43 same words; current is p.127"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 112,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.90, starts 'ral, je crois qu'il y a long-tems que la nature'; proposed p.90 same words; current is an SRIA bookplate/accession slip text"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 199,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.163, starts 'Tu ne peux trouver aucune place entre le doute et les miracles'; proposed p.163 same; current is p.69"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 68,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.48, starts 's'arrete la philosophie... bonne metaphysique', then Duhamel; proposed p.48 same; current is p.129"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 96,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.76, starts 'moral dont vous ne voulez point, vous ne gagneriez rien'; proposed p.70(sic, OCR of 76) same words; current is p.154"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 94,
+   "kind": "MOVE",
+   "proposed_matches": false,
+   "current_matches": false,
+   "verdict": "wrong",
+   "note": "image p.74, starts 'Je sais que quant a la culture, vous n'avez pas tout-a-fait determine'; proposed is p.73 'A cette distraction...' (the facing/preceding page); current is p.152"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 77,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.57, starts 'les idees que nous avons deja eues : or ce rappel'; current is p.135 'en prenant toutefois ici la langue' - not this page, clearing safe"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 25,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.11, starts 'intellectuel pour les objets d'intelligence'; current is p.93 'meme ; et vous voyez ici' - not this page, clearing safe"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 42,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.20, head 'Secrets de la Philos. des Anciens', starts 'rent qu'il prit son parti'; proposed p.20 same; current is p.296"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 279,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.245, head 'decouverts', starts '& c'est ce qu'il faut faire voir par l'autorite'; proposed p.245 same; current is p.61"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 134,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.104, head Secrets..., starts 'cette graisse est dessechee par la longue digestion'; proposed p.104 same; current is p.112"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 90,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.64, head Secrets..., starts 'che meme sortoit une autre branche d'or'; proposed p.64 same; current is empty ('none')"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 20,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.xvj, head AVIS, starts 'Lecteur a le lire de suite'; proposed p.xvj same; current is p.278"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 109,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.81, head 'decouverts', starts 'possible qu'un esprit plus subtil ait trouve une abbreviation'; proposed p.81 same; current is p.89"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 30,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head 'Secrets de la Philos. des Anciens' (page number not visible), starts 'belles raisons speculatives? Neanmoins'; current is p.285 'soufre de ses foeculentes' - not this page, clearing safe"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 389,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is a blank leaf (pencil '53' in margin); current is p.261 text - not this page, clearing safe"
+  },
+  {
+   "book": "6988a59e9a7c579a2bf143f6",
+   "leaf": 51,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image p.55, starts 'unter Menschen Ehrlichkeit, Treue, Credit'; proposed p.55 complete from first line; current is the same page but missing its first ~5 lines (starts 'Bruder in Athen') - proposed is the better, complete text"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 129,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.108, starts 'net ein Unkraut / so mit gutem Gewissen'; proposed p.108 same; current is p.71"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 76,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.58, starts 'nommen vnd ferner nit belegt'; proposed p.58 same; current is p.23"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 103,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.82, starts 'statte verursacht / dann sie beforchtet haben'; proposed p.82 same; current is p.47"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 70,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.52, starts 'wieder das Special herbrachte'; proposed p.52 same; current is p.17"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 130,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.103, starts 'tiger/Rebellen/Gottesdiebe/ H.D. Lutherum'; proposed p.103 same; current is p.72"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 58,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.40, headpiece + 'Num. 1. Das Ander Capitel...' then 'Dieser Eyd (welchen sie nennen Iuramentum professionis fidei'; proposed p.40 is this page's body text (chapter heading lines and 'Dieser Eyd' opening omitted by the OCR); current is p.7"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 126,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.105, starts 'Paulo post sub fin. Es ist wol wahr'; current is p.68 - not this page, clearing safe"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 25,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.11 (sig. B2), Fraktur, begins 'Bevelch ungehorsam seyn/ nicht von Babel außgehen'; current text is p.101 'Besonders Freundlicher Herr Bruder' - not this page"
+  },
+  {
+   "book": "6988a59f1d68da8eccae8cf8",
+   "leaf": 35,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image p.15 head OBSERVATIONES SACRAE, 'optime Syrus transposuit'; proposed and current both p.15 same words"
+  },
+  {
+   "book": "6988a59f1d68da8eccae8cf8",
+   "leaf": 140,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image p.109 head OBSERVATIONES SACRAE, 'sum genuinum. Ipsimet nos'; proposed and current both p.109"
+  },
+  {
+   "book": "6988a59f1d68da8eccae8cf8",
+   "leaf": 151,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image p.118 head C. VITRINGA, Greek first line, 'Quidam autem, quia primus fuit'; proposed and current both p.118"
+  },
+  {
+   "book": "6988a59f280c68b8795e5ba9",
+   "leaf": 74,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image p.32 head REVELATION, 'mie, les secrettes & interieures vertus', De l'Esprit ou Teinture de Mars Chap. 3; proposed and current both this page (current misreads page no. as 52)"
+  },
+  {
+   "book": "6988a59f280c68b8795e5ba9",
+   "leaf": 150,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "manuscript fol. 8, 'impropriè nuncupari, mercurii enim nomen', 'quos aequus amavit Jupiter', §41-42; proposed and current both this page (different readings)"
+  },
+  {
+   "book": "6988a59f280c68b8795e5ba9",
+   "leaf": 196,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": true,
+   "verdict": "wrong",
+   "note": "manuscript fol. 28, '130. perfectio elixiris in sicca siti et humidi unione', '131. Accipe terrae rubeae'; current text IS this page. Leaf 200 shows the same fol. 28 (different file, same page) - duplicate image; clearing 196 removes a correct text"
+  },
+  {
+   "book": "6988a59f280c68b8795e5ba9",
+   "leaf": 200,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "manuscript fol. 28 §130-131 (same page as leaf 196 - duplicate capture); proposed (from 196) and current both transcribe it"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 109,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.93 'die man, nach der Menge des Salpeters'; proposed p.93 same words; current is p.189"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 185,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.167 ',,Kreis oder Cirkel in 360 Grad eingetheilet'; proposed p.167 same; current is p.147"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 175,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.157 ',,fen; gleichwie aber der Verfasser ohne Zweifel'; proposed p.157 same; current is p.137"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 197,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.175 'Von den Veraenderungen der Natur. Was dem Menschen hierueber erleuchten'; proposed p.175 same; current is p.157"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 202,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.180 'Die Abhandlung von der allgemeinen Sprache. Sie wuerde zu allen Berechnungen'; proposed p.180 same; current is p.162"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 221,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is a blank endleaf with pencil shelfmarks ('79 NET', 'UBN127349'); current p.177 text not on it"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 222,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is the back board/cover of the binding, no text; current p.178 text not on it"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 77,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.52 head The Second Wash, 'creatures but thy self expires'; proposed p.52 same; current is p.23"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 194,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.163 (sig. M2) 'ter your opinion, and tell me, No Magicus'; proposed p.163 same; current is p.133"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 97,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.70 'and explicitly. This is my Doctrine'; proposed p.70 same; current is p.42"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 64,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.41 'their separation, or in their first naturall Composition'; proposed p.41 same; current is p.12"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 9,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head To the Reader, 'passe away. What horrible, intolerable Blasphemie'; proposed same; current is p.176"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 11,
+   "kind": "MOVE",
+   "proposed_matches": false,
+   "current_matches": false,
+   "verdict": "wrong",
+   "note": "image is a BLANK page carrying only mirrored show-through (ornament band, 'To the most Excellent ... Philosophers', 'Upon the Edition of this Book', verse 'How is...', plus faint reversed 'To the Reader' lines). Proposed text is an OCR of that show-through, mixing the end of To the Reader with the dedication verse - it belongs to neighbouring leaves, not this blank; current (p.178) also wrong. Should be cleared, not moved into"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 14,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is prefatory verse 'He is no Saint sure, but a zealous Moore'; current p.181 prose not on it"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 1,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is a blank page with mirrored show-through ending 'Soli Deo Gloria'; current p.168 text not on it"
+  },
+  {
+   "book": "6988a59f85cb2dd0f1e56e5b",
+   "leaf": 18,
+   "kind": "MOVE",
+   "proposed_matches": false,
+   "current_matches": true,
+   "verdict": "wrong",
+   "note": "image is a table-of-contents page (head ')o(') listing 'Cap. I. Der erste Irrgang in Lesung falscher Buecher 345.-348.' ... 'Opus Minerale. Vorrede des Ubersetzers 402.-410.' ... '411.-428.'; proposed is the BODY text of p.345 Cap. I, not this page; current (TOC entries VI-VIII, Opus Minerale) does transcribe this page (missing its first lines)"
+  },
+  {
+   "book": "6988a59f85cb2dd0f1e56e5b",
+   "leaf": 843,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image p.751, head 'de Lapide Philosophico' with paper strip over left column; proposed and current are the same transcription of this page (proposed adds a 'Handwritten on paper strip' note); move is near no-op — source leaf 845 apparently carries a duplicate of this text"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 29,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.(10), 'where nothing of this lump of Earth'; proposed starts p.10 same words; current is p.116"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 117,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.(104), 'own Sphear, and divine property'; proposed matches; current is p.40"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 14,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head 'An EPISTLE', italic 'shall be confirmed, as going up from Glory to Glory'; proposed matches; current is p.94"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 75,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.(52), 'Property, and thereby made capable of Commerce'; proposed matches; current is p.5"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 119,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.(106), 'both in one, swallowing up all in the Newness'; proposed matches; current is p.42"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 81,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image p.(58), 'there to stand a while as locked up in it, as a close working Philosopher'; proposed matches; current is p.10 (which belongs on leaf 29)"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 1,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is the front cover (cloth/leather binding, gilt sheaf stamp), no text; current text is p.71 — clearing safe"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 7,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image is the title page 'THE REVELATION OF Revelations ... ESSAY ... London 1683'; current text is p.(77) — clearing safe"
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 474,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head DE FALCONIBVS, 'aliam pennam illi similem, & fractae pennae inferas'; proposed matches; current is DE MIRAB. MVN. lamp text"
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 267,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image 'LIBER TERTIVS ALBERTI MAGNI de virtutibus Animalium' with animal-name table; proposed matches; current is ALBERT. MAGN. falcon-feather text"
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 376,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head DE FALCONIBVS, 'quia vero falconis est ictu pectoris percutere'; proposed matches; current is DE SECRET. MVL."
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 318,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head DE MIRAB. MVN., 'ratione cum lateant homines' (right edge cropped); proposed matches; current is empty ('None')"
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 96,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head DE SECRET. MVL., 'tem laederent ipsum ... DE INFLVENTIJS Planetarum Cap. III'; proposed matches; current is a different DE SECRET. MVL. page (lachrimatur)"
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 476,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head DE FALCONIBVS, 'conferens operatur. Si autem digiti articulum' ending 'nobis de asturibus', Capitu- catchword; proposed matches; current is DE MIRAB. MVN."
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 13,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image head PROOEMIVM, sig. A4, 'cancrosum. Et quia malum non euitatur'; current is ALBERT. MAGN. Mercurius text — clearing safe"
+  },
+  {
+   "book": "6988a59f8f2b65d11145d732",
+   "leaf": 289,
+   "kind": "CLEAR",
+   "proposed_matches": null,
+   "current_matches": false,
+   "verdict": "right",
+   "note": "image 'EIVSDEM ALBERTI MAGNI DE mirabilibus mundi feliciter incipit'; current is ALBERT. MAGN. falcon text (Capitulum 22) — clearing safe"
+  },
+  {
+   "book": "6988a59f9b275a14696ffe63",
+   "leaf": 35,
+   "kind": "MOVE",
+   "proposed_matches": false,
+   "current_matches": true,
+   "verdict": "wrong",
+   "note": "image p.27, head 'aux Enfans de Dieu', 'b Dieu n'est accepteur de personne', margin Act. 10 v.34; CURRENT matches this image; proposed is a different p.27 (head 'IV. Moyens de surmonter la corruption', 'priser: vuque Dieu...') from another part"
+  },
+  {
+   "book": "6988a59f9b275a14696ffe63",
+   "leaf": 555,
+   "kind": "MOVE",
+   "proposed_matches": false,
+   "current_matches": true,
+   "verdict": "wrong",
+   "note": "image head 'Au Lecteur', sig. *4, 'les choses qui leur ont aide ou servy a la damnation'; CURRENT matches; proposed is p.4 of III. Part (Renouvellement...), not this image"
+  },
+  {
+   "book": "6988a59fa4de5da34fd130e0",
+   "leaf": 13,
+   "kind": "MOVE",
+   "proposed_matches": false,
+   "current_matches": true,
+   "verdict": "wrong",
+   "note": "image: woodcut frame with heading שאלת, sig. ב, two columns beginning שבו תלך והשער שבו תיכנס / ממני ידיד נפשי; CURRENT matches; proposed (וילן שם ויחלום והנה סולם) is not on this page"
+  },
+  {
+   "book": "6988a59fa4de5da34fd130e0",
+   "leaf": 87,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image folio לח, two columns: left begins חומת יריחו, right begins נשפט וצורך המשרתים, headings צור / זרועה / העושר. Leaves 87 and 89 are duplicate scans of the same page; current and proposed are both transcriptions of it in different column order — swap is a harmless no-op"
+  },
+  {
+   "book": "6988a59fa4de5da34fd130e0",
+   "leaf": 89,
+   "kind": "MOVE",
+   "proposed_matches": true,
+   "current_matches": true,
+   "verdict": "right",
+   "note": "image is the same folio לח as leaf 87 (duplicate scan); current (חומת יריחו...) and proposed (נשפט וצורך...) both transcribe it, differing only in column order — swap is a no-op"
+  }
+ ],
+ "eye_check_after_apply": [
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 141,
+   "text_matches": true,
+   "english_matches": null,
+   "note": "image p.117, head '( 117 )'; text starts 'de prononcer à priori', ends 'permission d'étendre' + pencil marginalia — matches. English start is only a context preamble about a 'faculty of intelligence' (the p.16 exchange), not visibly this page's content; cannot confirm from preamble"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 112,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.90, head '( 90 )'; text starts 'ral, je crois qu'il y a long-tems', ends 'naître de nouveaux' — matches; English notes right-edge trimming, which the image shows"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 17,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.7, head '( 7 )', signature A 4; text starts 'serez que c'est à lui', ends 'Voici le sujet du premier' — matches. NOTE: leaf 15 is a duplicate capture of the same p.7 with identical text"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 15,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.7, head '( 7 )', signature A 4; text starts 'serez que c'est à lui', ends 'Voici le sujet du premier' — matches. NOTE: same page as leaf 17 (duplicate capture), identical text on both"
+  },
+  {
+   "book": "6988a59f090ba3597e45028a",
+   "leaf": 30,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.16, head '( 16 )', catchword 'De Saint-'; text starts 'ce doute désespérant', ends 'Ce n'est donc pas un organe' — matches"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 136,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.106, head '106 Secrets de la Philos. des Anciens'; text starts 'point l'autre', ends 'une foible cha-' — matches"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 271,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.237, head 'découverts. 237', margin 'Dans le grand Rozaire'; text starts 'Sans le Soleil', ends '& terrestre' — matches"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 121,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.93, head 'découverts. 93'; text starts 'que de donner par la distillation', ends 'sans vertu ; étant' — matches"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 301,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.265, head 'découverts. 265', signature Z; text starts 'autre mercure plus prochain', ends 'pour le rendre encore' — matches"
+  },
+  {
+   "book": "6988a59e193b008ee3811520",
+   "leaf": 360,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.312, head '312 Secrets de la Philos. des Anciens'; text starts 'osé seulement nommer', ends 'qu'au commen-' — matches"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 120,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.99, signature N ij; text starts 'vnnd alle andere Catholische Ständ', ends 'Deputation, vnd andern' — matches"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 31,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.17, signature C; text starts 'dern vielmehr jhre hitzige Consilia', ends 'andere Farben angestrich-' — matches"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 17,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.3, signature A 2; text starts 'noch Raht vnter sich', ends 'daß man wol' — matches"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 49,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.31, head 'COPIA Schreibens Kaysers Ferdinandi'; text starts at the heading, ends 'abgebetten /' — matches"
+  },
+  {
+   "book": "6988a59ef2833fb36a54e166",
+   "leaf": 43,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.27, signature D 2; text starts 'de / vnd jhr Kriegsvolck den Herren Marquis Spinola', ends 'Vnd zu' — matches"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 189,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.169, sig L 5, catchword 'der'; text starts 'weil alles seinen Ursprung von der Einheit', ends 'Die Meßkünstler haben also die Eigenschaft' = last line"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 48,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.36, heading 'Anmerkungen über das Meyerische acidum pingue'; text starts 'Wenn wir die Scheidung der Wässer', ends 'wenn sie in' = last line"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 39,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.31, red/green stamps right margin; text starts 'sen vereiniget sind. Gott schuf also den Menschen', ends 'der Mund stellt den Nordpol,' = last line"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 53,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.39, sig E 4; text starts 'Mit Beihülfe der Natur beweiset', ends 'das Goldwasser (aqua' = last line"
+  },
+  {
+   "book": "6988a59f3605c4167e76a79c",
+   "leaf": 37,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.29, head 'Mikrokosmisches Gemälde'; text starts 'Ich habe weiter oben gezeigt', ends with footnotes (Pernette; Matth./Moses/Marc./Luc.) = page foot"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 97,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.70, head 'The Second Wash.'; text starts 'and explicitly. This is my Doctrine', ends 'pure spirit, and free from' = last line"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 182,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.151, head 'The Second Wash.', sig L 4; text starts 'degrees of sense are subordinat', ends 'principles both' = last line"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 48,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.25, head 'The Second Wash.'; text starts 'little of his Light? Come Knipperdoling', ends 'grosse and corpulent' = last line"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 59,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.36, head 'The Second Wash.', 'Page. 68. Line 17.'; text starts 'But now to put the Bloud', ends 'he saw the Trap was layd' = last line"
+  },
+  {
+   "book": "6988a59f3b3cedbf42d473a7",
+   "leaf": 26,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.5, head 'The Second Wash.', sig B 3; text starts 'Two considerable Motives', ends 'If it be a fault to call him' = last line"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 40,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.(21), margin 'The fourth Thunder'/'The fifth Thunder'; text starts 'The fourth Thunder opened thus', ends 'Character that only shall be given to them.' = last line"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 41,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.(22), margin 'The sixth Thunder'/'The seventh Thunder'; text starts 'The Declaration of the sixth Thunder', ends 'taketh up his abode here.' = last line"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 71,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.(48); text starts 'venture through the fiery Gulf', ends 'whilst she was under the' = last line (catchword Temptation)"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 11,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image unnumbered preface leaf, head 'To the Living Stones gathered, &c.'; text starts 'any force, power or authority', ends 'perishing Mamon of Un-' = last line"
+  },
+  {
+   "book": "6988a59f89d9e7e535be96cc",
+   "leaf": 58,
+   "text_matches": true,
+   "english_matches": true,
+   "note": "image p.(36); text starts 'which hath been so long asleep. This was the concluding Word', ends 'these would scarce be-' = last line"
+  }
+ ]
+}

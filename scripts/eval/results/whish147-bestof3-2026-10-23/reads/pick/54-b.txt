@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most gaps, but what it does read fits a Sāṅkhyakārikā commentary on the siddhis ("siddhivighātā", "ūhākhye", "adhyayanam ity", "phalāntaram ity ucyate", "tāram ity ucyate"); B has some real fragments ("ityucyate", "ajñānam ucyate") among garbled strings, and A is mostly syllables that only look like words.

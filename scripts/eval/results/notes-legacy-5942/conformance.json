@@ -1,0 +1,711 @@
+{
+ "total": {
+  "pages": 72188,
+  "uniform": 59387,
+  "v2_equal": 46562,
+  "v3_equal": 68348,
+  "round_trip": 72040,
+  "ledger_lost": 530,
+  "ledger_leaked": 496,
+  "legacy_pages": 25354,
+  "legacy_v2_equal": 1446,
+  "legacy_v3_equal": 23232
+ },
+ "uniformN": 59387,
+ "byVersion": {
+  "1": {
+   "pages": 838,
+   "legacy": 483
+  },
+  "2": {
+   "pages": 333,
+   "legacy": 104
+  },
+  "3": {
+   "pages": 36,
+   "legacy": 10
+  },
+  "11": {
+   "pages": 11546,
+   "legacy": 2303
+  },
+  "12": {
+   "pages": 291,
+   "legacy": 51
+  },
+  "13": {
+   "pages": 11876,
+   "legacy": 1887
+  },
+  "v10": {
+   "pages": 21657,
+   "legacy": 5544
+  },
+  "v1": {
+   "pages": 5597,
+   "legacy": 2720
+  },
+  "v6": {
+   "pages": 479,
+   "legacy": 225
+  },
+  "v5.2026-02": {
+   "pages": 3343,
+   "legacy": 2092
+  },
+  "v2": {
+   "pages": 10936,
+   "legacy": 6043
+  },
+  "none": {
+   "pages": 3464,
+   "legacy": 3189
+  },
+  "v5.1.2026-03b": {
+   "pages": 1534,
+   "legacy": 673
+  },
+  "v11": {
+   "pages": 22,
+   "legacy": 0
+  },
+  "v5.1.2026-03c": {
+   "pages": 121,
+   "legacy": 12
+  },
+  "v12": {
+   "pages": 92,
+   "legacy": 10
+  },
+  "v0": {
+   "pages": 16,
+   "legacy": 8
+  },
+  "v11-retx": {
+   "pages": 7,
+   "legacy": 0
+  }
+ },
+ "table": [
+  {
+   "syntax": "[[notes:]]",
+   "from": "OCR + translation, 2025-12-12 → 12-27 (translation v0)",
+   "pages": 816,
+   "uniform": 6,
+   "est_pages": 579,
+   "versions": "none:809 v2:7",
+   "v2_equal": 199,
+   "v3_equal": 775,
+   "v2_own": 815,
+   "v3_own": 816,
+   "round_trip": 816,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[meta:]]",
+   "from": "OCR, 2025-12-21 → 12-27",
+   "pages": 816,
+   "uniform": 6,
+   "est_pages": 579,
+   "versions": "none:800 v2:12 v1:4",
+   "v2_equal": 206,
+   "v3_equal": 773,
+   "v2_own": 816,
+   "v3_own": 816,
+   "round_trip": 816,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[warning:]]",
+   "from": "OCR, 2025-12-24 → 12-27",
+   "pages": 1,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "v1:1",
+   "v2_equal": 0,
+   "v3_equal": 1,
+   "v2_own": 1,
+   "v3_own": 1,
+   "round_trip": 1,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[language:]]",
+   "from": "OCR, 2025-12-17 → 12-27",
+   "pages": 35,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:34 v1:1",
+   "v2_equal": 4,
+   "v3_equal": 3,
+   "v2_own": 35,
+   "v3_own": 35,
+   "round_trip": 35,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[page number:]]",
+   "from": "OCR, 2025-12-12 → 12-27",
+   "pages": 607,
+   "uniform": 3,
+   "est_pages": 289,
+   "versions": "v2:599 none:8",
+   "v2_equal": 245,
+   "v3_equal": 578,
+   "v2_own": 607,
+   "v3_own": 607,
+   "round_trip": 602,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[folio:]]",
+   "from": "OCR, 2025-12-21 → 12-27",
+   "pages": 0
+  },
+  {
+   "syntax": "[[signature:]]",
+   "from": "OCR, 2025-12-25 → 12-27",
+   "pages": 11,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "v2:8 none:2 v1:1",
+   "v2_equal": 4,
+   "v3_equal": 9,
+   "v2_own": 11,
+   "v3_own": 11,
+   "round_trip": 11,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[abbrev:]]",
+   "from": "OCR, 2025-12-21 → 12-27",
+   "pages": 7,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:7",
+   "v2_equal": 0,
+   "v3_equal": 4,
+   "v2_own": 7,
+   "v3_own": 7,
+   "round_trip": 7,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[summary:]]",
+   "from": "translation, 2025-12-21 → 12-27",
+   "pages": 802,
+   "uniform": 6,
+   "est_pages": 579,
+   "versions": "none:802",
+   "v2_equal": 196,
+   "v3_equal": 764,
+   "v2_own": 802,
+   "v3_own": 802,
+   "round_trip": 802,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[keywords:]]",
+   "from": "translation, 2025-12-21 → 12-27",
+   "pages": 802,
+   "uniform": 6,
+   "est_pages": 579,
+   "versions": "none:802",
+   "v2_equal": 196,
+   "v3_equal": 764,
+   "v2_own": 802,
+   "v3_own": 802,
+   "round_trip": 802,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[vocabulary:]]",
+   "from": "OCR, 2025-12-21 → 12-27",
+   "pages": 368,
+   "uniform": 2,
+   "est_pages": 193,
+   "versions": "v2:219 none:138 v1:11",
+   "v2_equal": 0,
+   "v3_equal": 218,
+   "v2_own": 0,
+   "v3_own": 368,
+   "round_trip": 367,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[image:]]",
+   "from": "OCR, 2025-12-25 → 12-27",
+   "pages": 90,
+   "uniform": 2,
+   "est_pages": 193,
+   "versions": "v1:68 none:14 v2:8",
+   "v2_equal": 0,
+   "v3_equal": 59,
+   "v2_own": 0,
+   "v3_own": 90,
+   "round_trip": 84,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[header:]]",
+   "from": "OCR, 2025-12-21 → 12-27",
+   "pages": 16,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "v2:14 none:2",
+   "v2_equal": 0,
+   "v3_equal": 16,
+   "v2_own": 0,
+   "v3_own": 16,
+   "round_trip": 16,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[markup:]]",
+   "from": "translation placeholder, 2025-12-18 → 12-27",
+   "pages": 11,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:11",
+   "v2_equal": 0,
+   "v3_equal": 10,
+   "v2_own": 0,
+   "v3_own": 11,
+   "round_trip": 11,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[page type:]]",
+   "from": "invented",
+   "pages": 0
+  },
+  {
+   "syntax": "[[margin:]]",
+   "from": "OCR (translation keeps), 2025-12-18 → 12-27",
+   "pages": 458,
+   "uniform": 3,
+   "est_pages": 289,
+   "versions": "none:388 v2:64 v1:6",
+   "v2_equal": 0,
+   "v3_equal": 428,
+   "v2_own": 0,
+   "v3_own": 458,
+   "round_trip": 458,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[gloss:]]",
+   "from": "OCR (translation keeps), 2025-12-18 → 12-27",
+   "pages": 80,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:78 v2:2",
+   "v2_equal": 0,
+   "v3_equal": 79,
+   "v2_own": 0,
+   "v3_own": 80,
+   "round_trip": 80,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[insert:]]",
+   "from": "OCR (translation keeps), 2025-12-18 → 12-27",
+   "pages": 12,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:10 v1:1 v2:1",
+   "v2_equal": 0,
+   "v3_equal": 8,
+   "v2_own": 0,
+   "v3_own": 12,
+   "round_trip": 12,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[unclear:]]",
+   "from": "OCR (translation keeps), 2025-12-18 → 12-27",
+   "pages": 3,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:3",
+   "v2_equal": 0,
+   "v3_equal": 1,
+   "v2_own": 0,
+   "v3_own": 3,
+   "round_trip": 3,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[term:]]",
+   "from": "OCR + translation, 2025-12-21 → 12-27",
+   "pages": 17,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:11 v2:6",
+   "v2_equal": 1,
+   "v3_equal": 8,
+   "v2_own": 1,
+   "v3_own": 17,
+   "round_trip": 17,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[original page:]] / [[catchword:]] / [[sig:]] / [[vocab:]] / [[heading:]] / [[crossed out:]]",
+   "from": "invented; no reader rule reads it",
+   "pages": 302,
+   "uniform": 2,
+   "est_pages": 193,
+   "versions": "none:224 v1:45 v2:33",
+   "v2_equal": 48,
+   "v3_equal": 0,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 300,
+   "own_examples": []
+  },
+  {
+   "syntax": "[[other label:]]",
+   "from": "invented",
+   "pages": 4,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "v2:3 none:1",
+   "v2_equal": 0,
+   "v3_equal": 2,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 4,
+   "own_examples": []
+  },
+  {
+   "syntax": "bracketed image paragraph",
+   "from": "invented",
+   "pages": 603,
+   "uniform": 26,
+   "est_pages": 2507,
+   "versions": "v10:162 none:159 v1:135 1:85 v2:54 v6:7 v5.2026-02:1",
+   "v2_equal": 0,
+   "v3_equal": 544,
+   "v2_own": 0,
+   "v3_own": 603,
+   "round_trip": 603,
+   "own_examples": []
+  },
+  {
+   "syntax": "[interpolation]",
+   "from": "invented; banned from translation v7/v8 (2026-03-25)",
+   "pages": 23635,
+   "uniform": 12273,
+   "est_pages": 1183406,
+   "versions": "v10:5371 v2:5336 none:2696 v1:2595 11:2255 v5.2026-02:2073 13:1812 v5.1.2026-03b:609 1:477 v6:223 2:104 12:51 v5.1.2026-03c:12 3:10 v0:7 v12:4",
+   "v2_equal": 898,
+   "v3_equal": 22067,
+   "v2_own": 993,
+   "v3_own": 23628,
+   "round_trip": 23563,
+   "own_examples": [
+    {
+     "id": "69af0e54067c0c26ee26e248",
+     "lost": [
+      "δ",
+      "δ",
+      "δ",
+      "δ",
+      "δ",
+      "δ",
+      "δ",
+      "δ"
+     ],
+     "leaked": [
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac"
+     ]
+    },
+    {
+     "id": "69aea4c53f91570550876e8f",
+     "lost": [],
+     "leaked": [
+      "frac"
+     ]
+    },
+    {
+     "id": "69cf7c88878f40c5945f2e15",
+     "lost": [
+      "μιν",
+      "των",
+      "αλλων",
+      "νησιω",
+      "ν",
+      "διχα",
+      "μεγων",
+      "ει"
+     ],
+     "leaked": [
+      "the",
+      "for",
+      "others",
+      "apart",
+      "them",
+      "op",
+      "enly",
+      "appro"
+     ]
+    },
+    {
+     "id": "69ac5f687f20875486da4e0f",
+     "lost": [
+      "4",
+      "5"
+     ],
+     "leaked": [
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac",
+      "frac"
+     ]
+    },
+    {
+     "id": "69b51e6e768235dc65993422",
+     "lost": [
+      "ω",
+      "ω",
+      "ω",
+      "6ω",
+      "6ω"
+     ],
+     "leaked": [
+      "6",
+      "6",
+      "omega",
+      "omega",
+      "omega",
+      "omega",
+      "omega",
+      "infty"
+     ]
+    },
+    {
+     "id": "69a5e3c79bb980f504233ea2",
+     "lost": [
+      "original",
+      "original",
+      "original",
+      "original",
+      "original",
+      "pollaplasiōn",
+      "a",
+      "a"
+     ],
+     "leaked": []
+    },
+    {
+     "id": "69a5e3c79bb980f504233ec8",
+     "lost": [],
+     "leaked": [
+      "of",
+      "of",
+      "the",
+      "the",
+      "the",
+      "the",
+      "the",
+      "the"
+     ]
+    }
+   ]
+  },
+  {
+   "syntax": "[Note: …]",
+   "from": "invented",
+   "pages": 94,
+   "uniform": 12,
+   "est_pages": 1157,
+   "versions": "none:56 v10:21 11:7 1:5 v1:2 v2:1 v5.2026-02:1 v5.1.2026-03b:1",
+   "v2_equal": 5,
+   "v3_equal": 87,
+   "v2_own": 8,
+   "v3_own": 94,
+   "round_trip": 94,
+   "own_examples": []
+  },
+  {
+   "syntax": "[…] lacuna",
+   "from": "invented",
+   "pages": 178,
+   "uniform": 145,
+   "est_pages": 13981,
+   "versions": "v10:54 13:37 v2:29 11:21 v1:12 v5.2026-02:9 none:4 1:3 12:2 v5.1.2026-03b:2 2:1 v12:1 v11-retx:1 v0:1 v6:1",
+   "v2_equal": 61,
+   "v3_equal": 170,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 177,
+   "own_examples": []
+  },
+  {
+   "syntax": "plain Summary: line",
+   "from": "invented",
+   "pages": 25,
+   "uniform": 3,
+   "est_pages": 289,
+   "versions": "13:15 v10:9 v5.2026-02:1",
+   "v2_equal": 0,
+   "v3_equal": 24,
+   "v2_own": 1,
+   "v3_own": 25,
+   "round_trip": 25,
+   "own_examples": []
+  },
+  {
+   "syntax": "preamble (\"Here is the translation\")",
+   "from": "invented",
+   "pages": 8,
+   "uniform": 4,
+   "est_pages": 386,
+   "versions": "v10:4 11:2 13:2",
+   "v2_equal": 5,
+   "v3_equal": 7,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 8,
+   "own_examples": []
+  },
+  {
+   "syntax": "\"# Title Page\"-style heading",
+   "from": "invented",
+   "pages": 280,
+   "uniform": 248,
+   "est_pages": 23913,
+   "versions": "v10:101 v2:54 11:38 v1:25 v5.1.2026-03b:21 13:15 v5.2026-02:15 v12:6 v6:2 1:1 12:1 v0:1",
+   "v2_equal": 0,
+   "v3_equal": 0,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 280,
+   "own_examples": []
+  },
+  {
+   "syntax": "code fence",
+   "from": "invented",
+   "pages": 2,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:2",
+   "v2_equal": 1,
+   "v3_equal": 2,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 2,
+   "own_examples": []
+  },
+  {
+   "syntax": "free-text Vocabulary section",
+   "from": "invented",
+   "pages": 278,
+   "uniform": 28,
+   "est_pages": 2700,
+   "versions": "v2:155 v5.1.2026-03b:58 13:42 v5.2026-02:20 v1:2 v10:1",
+   "v2_equal": 13,
+   "v3_equal": 133,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 277,
+   "own_examples": []
+  },
+  {
+   "syntax": "(Note: …)",
+   "from": "invented",
+   "pages": 27,
+   "uniform": 15,
+   "est_pages": 1446,
+   "versions": "v10:9 v1:5 11:4 v2:4 13:3 v5.2026-02:1 v5.1.2026-03b:1",
+   "v2_equal": 22,
+   "v3_equal": 25,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 27,
+   "own_examples": []
+  },
+  {
+   "syntax": "Translator's note:",
+   "from": "invented",
+   "pages": 53,
+   "uniform": 37,
+   "est_pages": 3568,
+   "versions": "v2:13 v10:10 v5.2026-02:9 11:8 13:4 none:4 v1:3 v12:1 v5.1.2026-03b:1",
+   "v2_equal": 29,
+   "v3_equal": 49,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 53,
+   "own_examples": []
+  },
+  {
+   "syntax": "<<…>>",
+   "from": "invented",
+   "pages": 2,
+   "uniform": 2,
+   "est_pages": 193,
+   "versions": "13:2",
+   "v2_equal": 2,
+   "v3_equal": 2,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 2,
+   "own_examples": []
+  },
+  {
+   "syntax": "«…»",
+   "from": "invented (also ordinary quotation marks)",
+   "pages": 27,
+   "uniform": 27,
+   "est_pages": 2603,
+   "versions": "v10:13 11:4 13:4 v2:3 v5.2026-02:2 v1:1",
+   "v2_equal": 18,
+   "v3_equal": 25,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 27,
+   "own_examples": []
+  },
+  {
+   "syntax": "{{…}}",
+   "from": "invented",
+   "pages": 0
+  },
+  {
+   "syntax": "→ in a term",
+   "from": "OCR [[term: X → Y]], 2025-12-21 → 12-27",
+   "pages": 1,
+   "uniform": 0,
+   "est_pages": 0,
+   "versions": "none:1",
+   "v2_equal": 0,
+   "v3_equal": 1,
+   "v2_own": null,
+   "v3_own": null,
+   "round_trip": 1,
+   "own_examples": []
+  },
+  {
+   "syntax": "<lacuna>",
+   "from": "OCR v17 (2026-09-03, non-default)",
+   "pages": 0
+  },
+  {
+   "syntax": "<interp>",
+   "from": "invented (the reader emits it; no prompt does)",
+   "pages": 0
+  }
+ ]
+}

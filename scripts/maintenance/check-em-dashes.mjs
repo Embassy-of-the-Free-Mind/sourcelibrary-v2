@@ -51,7 +51,7 @@ const LIST = process.argv.includes('--list');
 const TIGHTEN = process.argv.includes('--tighten');
 
 function trackedFiles() {
-  const out = execFileSync('git', ['ls-files', '--', ...ROOTS], { encoding: 'utf8' });
+  const out = execFileSync('git', ['ls-files', '--', ...ROOTS], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   return out.split('\n').filter((f) => /\.(ts|tsx)$/.test(f) && !f.endsWith('.d.ts'));
 }
 

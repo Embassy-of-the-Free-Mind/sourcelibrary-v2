@@ -79,15 +79,20 @@ section and `engine.mjs` change with them.
   - An unquoted query matches pages printing **ANY** of its words: two `text` clauses,
     translation boost 2 and OCR boost 1, summed BM25.
   - A query wrapped in `"…"` is a `phrase` on both fields.
-  - One word of 6+ characters is **fuzzy**: maxEdits 1, prefixLength 4.
+  - An unquoted query in an unspaced script (Han, kana, Tibetan, Thai, Lao, Khmer, Myanmar) is
+    **phrase-first** (#6877): the same two `text` clauses plus a `phrase` on both fields, boosted
+    `PHRASE_FIRST_BOOST` (100) times. Each character or syllable is a token, so ANY alone matched
+    nearly every page.
+  - One word of 6+ characters is **fuzzy**: maxEdits 1, prefixLength 4. Never in an unspaced script.
   - Filter: `page_number > 0`, plus `book_id` (one id, or `$in` an allow-list; an empty allow-list
     matches nothing, #2760).
   - Then `$match page_type ∉ NON_CONTENT_PAGE_TYPES` and `$limit`: 25 pages, `limit` for one book,
     150–500 for `pages_only`.
 - **Name variants** (`expandNameQuery` → `requireNameVariant`). When the query names a person
   `entities` knows, a second query must match one of up to 40 other spellings, plus one topic word
-  when there are any. The query's own words still score. Up to 10 pages are appended after the main
-  pages, minus duplicates. Not for a quoted phrase.
+  when there are any. The query's own words still score. Its top 10 pages are taken first, then those
+  already in the main list are dropped, and the rest are appended after the main pages. Not for a quoted
+  phrase.
 - **Roll-up** (#5905; not for `book_id` or `pages_only`):
   - `rollupTerms` gives up to 8 non-stopword terms.
   - `countMatchingPagesByBook` counts pages printing **EVERY** term, each as a phrase, faceted on

@@ -1,0 +1,385 @@
+{
+ "run": "meta-round-6056-r1-sat-year",
+ "entries": [
+  {
+   "book_id": "69f13478365e3fcae574ed14",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:00.623Z"
+  },
+  {
+   "book_id": "69f13483365e3fcae574edb0",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 975
+   },
+   "at": "2026-10-19T21:40:01.203Z"
+  },
+  {
+   "book_id": "69f13459365e3fcae574e286",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1440
+   },
+   "at": "2026-10-19T21:40:01.524Z"
+  },
+  {
+   "book_id": "69f13443365e3fcae574e08e",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1453
+   },
+   "at": "2026-10-19T21:40:01.902Z"
+  },
+  {
+   "book_id": "69f134001764d779d0c72269",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 673
+   },
+   "at": "2026-10-19T21:40:02.275Z"
+  },
+  {
+   "book_id": "69f133f41764d779d0c7217a",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:02.586Z"
+  },
+  {
+   "book_id": "69f13415c8d07a68106531ad",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:03.027Z"
+  },
+  {
+   "book_id": "69f1344a365e3fcae574e0d1",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:03.358Z"
+  },
+  {
+   "book_id": "69f13464365e3fcae574e3d8",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:03.703Z"
+  },
+  {
+   "book_id": "69f13452365e3fcae574e1c1",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:04.050Z"
+  },
+  {
+   "book_id": "69f1341dc8d07a681065333c",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:04.387Z"
+  },
+  {
+   "book_id": "69f13438365e3fcae574dfe1",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1306
+   },
+   "at": "2026-10-19T21:40:04.730Z"
+  },
+  {
+   "book_id": "69f13428c8d07a6810653407",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1795
+   },
+   "at": "2026-10-19T21:40:05.072Z"
+  },
+  {
+   "book_id": "69f1347f365e3fcae574ed95",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1162
+   },
+   "at": "2026-10-19T21:40:05.424Z"
+  },
+  {
+   "book_id": "69f133eb1764d779d0c72100",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1797
+   },
+   "at": "2026-10-19T21:40:05.790Z"
+  },
+  {
+   "book_id": "69f133f81764d779d0c72185",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1237
+   },
+   "at": "2026-10-19T21:40:06.217Z"
+  },
+  {
+   "book_id": "69f13434365e3fcae574dfb3",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1805
+   },
+   "at": "2026-10-19T21:40:06.661Z"
+  },
+  {
+   "book_id": "69f13467365e3fcae574e3e7",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1812
+   },
+   "at": "2026-10-19T21:40:07.508Z"
+  },
+  {
+   "book_id": "69f13446365e3fcae574e099",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1237
+   },
+   "at": "2026-10-19T21:40:07.837Z"
+  },
+  {
+   "book_id": "69f13487365e3fcae574edba",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1800
+   },
+   "at": "2026-10-19T21:40:08.688Z"
+  },
+  {
+   "book_id": "69f1340cc8d07a681065316c",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:09.127Z"
+  },
+  {
+   "book_id": "69f1343f365e3fcae574e04b",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1800
+   },
+   "at": "2026-10-19T21:40:09.472Z"
+  },
+  {
+   "book_id": "69f13430c8d07a681065352c",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:09.848Z"
+  },
+  {
+   "book_id": "69f13425c8d07a68106533b5",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1765
+   },
+   "at": "2026-10-19T21:40:10.182Z"
+  },
+  {
+   "book_id": "69f1343c365e3fcae574dff3",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:10.474Z"
+  },
+  {
+   "book_id": "69f133ef1764d779d0c72122",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:10.761Z"
+  },
+  {
+   "book_id": "69f1346b365e3fcae574e419",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1795
+   },
+   "at": "2026-10-19T21:40:11.070Z"
+  },
+  {
+   "book_id": "69f13421c8d07a681065334d",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1826
+   },
+   "at": "2026-10-19T21:40:11.406Z"
+  },
+  {
+   "book_id": "69f1347c365e3fcae574ed1c",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:11.747Z"
+  },
+  {
+   "book_id": "69f134031764d779d0c72274",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1680
+   },
+   "at": "2026-10-19T21:40:12.484Z"
+  },
+  {
+   "book_id": "69f13460365e3fcae574e33e",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1733
+   },
+   "at": "2026-10-19T21:40:12.808Z"
+  },
+  {
+   "book_id": "69f13455365e3fcae574e1d2",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1695
+   },
+   "at": "2026-10-19T21:40:13.077Z"
+  },
+  {
+   "book_id": "69f133fc1764d779d0c721aa",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1922
+   },
+   "at": "2026-10-19T21:40:13.352Z"
+  },
+  {
+   "book_id": "69f1344e365e3fcae574e0df",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1735
+   },
+   "at": "2026-10-19T21:40:13.653Z"
+  },
+  {
+   "book_id": "69f1342cc8d07a681065341a",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1735
+   },
+   "at": "2026-10-19T21:40:13.992Z"
+  },
+  {
+   "book_id": "69f13419c8d07a68106531ba",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1851
+   },
+   "at": "2026-10-19T21:40:14.370Z"
+  },
+  {
+   "book_id": "69f13474365e3fcae574eb86",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": 1735
+   },
+   "at": "2026-10-19T21:40:14.659Z"
+  },
+  {
+   "book_id": "69f1346f365e3fcae574e47f",
+   "before": {
+    "year": 2018
+   },
+   "after": {
+    "year": null
+   },
+   "at": "2026-10-19T21:40:14.960Z"
+  }
+ ]
+}

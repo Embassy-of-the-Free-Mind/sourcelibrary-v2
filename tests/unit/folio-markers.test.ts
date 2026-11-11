@@ -16,7 +16,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { parseFolioMarkedText, trailingFragment, leadingFragment, endsSentence } from '../../scripts/lib/folio-markers.mjs';
+import { parseFolioMarkedText, trailingFragment, leadingFragment, endsSentence, cliFolioMarkersEnabled, splitMarkedReply } from '../../scripts/lib/folio-markers.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { buildBlockTranslationPrompt, LEAF_BREAK_ONLY, FOLIO_MARKER_RULE } from '../../scripts/lib/translate-core.mjs';
@@ -265,3 +265,57 @@ describe('fixtures: the Tengyur preview blocks (#5682) parse to the spans they w
   }
 });
 
+
+describe('the CLI lane (#7118): marked pairs on by default, a bad split falls back', () => {
+  it('reads TRANSLATE_FOLIO_MARKERS_CLI: on unless 0', () => {
+    expect(cliFolioMarkersEnabled({})).toBe(true);
+    expect(cliFolioMarkersEnabled({ TRANSLATE_FOLIO_MARKERS_CLI: '0' })).toBe(false);
+    expect(cliFolioMarkersEnabled({ TRANSLATE_FOLIO_MARKERS_CLI: '1' })).toBe(true);
+  });
+
+  it('gives each page its span, with the block summary and keywords after it', () => {
+    const reply = '<translation><pb n="14"/>The texts which are cited under the title\n<pb n="15"/>from the Council of Arles cannot illuminate it.</translation>\n<summary>On clerical property.</summary>\n<keywords>peculium</keywords>';
+    const r = splitMarkedReply(reply, [14, 15]);
+    expect(r.ok).toBe(true);
+    expect(r.texts[0]).toBe('The texts which are cited under the title\n\n<summary>On clerical property.</summary>\n<keywords>peculium</keywords>');
+    expect(r.texts[1].startsWith('from the Council of Arles cannot illuminate it.')).toBe(true);
+    expect(r.texts[0]).not.toContain('Arles');
+  });
+
+  it('refuses a reply that leaves a page without its own span', () => {
+    expect(splitMarkedReply('<translation><pb n="14"/>The texts which are cited from the Council of Arles.</translation>', [14, 15]).ok).toBe(false);
+    expect(splitMarkedReply('<translation><pb n="14"/>a<pb n="15"/>b<pb n="16"/>c<pb n="17"/>d</translation>', [14, 15]).ok).toBe(false);
+  });
+});
+
+describe('the CLI lane (#7118): a misplaced marker falls back', () => {
+  const src = 'verbum '.repeat(100);
+  it('refuses a split whose pages are far out of balance with their sources', () => {
+    const reply = `<translation><pb n="1"/>${'word '.repeat(20)}<pb n="2"/>${'word '.repeat(180)}</translation>`;
+    const r = splitMarkedReply(reply, [1, 2], { sources: [src, src] });
+    expect(r.ok).toBe(false);
+    expect(r.why).toMatch(/unbalanced/);
+  });
+  it('accepts a balanced split', () => {
+    const reply = `<translation><pb n="1"/>${'word '.repeat(100)}<pb n="2"/>${'word '.repeat(110)}</translation>`;
+    expect(splitMarkedReply(reply, [1, 2], { sources: [src, src] }).ok).toBe(true);
+  });});
+
+describe('blocks of 4 (#8399): every page turn is held to the bound', () => {
+  const src = 'verbum '.repeat(100);
+  const four = (ws: number[]) => `<translation>${ws.map((w, i) => `<pb n="${i + 1}"/>${'word '.repeat(w)}`).join('')}</translation>\n<summary>s</summary>\n<keywords>k</keywords>`;
+  it('accepts a balanced 4-page split, each page its own span with the block summary', () => {
+    const r = splitMarkedReply(four([100, 110, 95, 105]), [1, 2, 3, 4], { sources: [src, src, src, src] });
+    expect(r.ok).toBe(true);
+    expect(r.texts).toHaveLength(4);
+    expect(r.texts[3]).toContain('<summary>s</summary>');
+  });
+  it('refuses a split whose INNER turn is out of balance, though the first turn is fine', () => {
+    const r = splitMarkedReply(four([100, 100, 30, 170]), [1, 2, 3, 4], { sources: [src, src, src, src] });
+    expect(r.ok).toBe(false);
+    expect(r.why).toMatch(/unbalanced .* at 2\|3/);
+  });
+  it('refuses a 4-page reply with a page left unmarked', () => {
+    expect(splitMarkedReply('<translation><pb n="1"/>a b<pb n="2"/>c d<pb n="4"/>e f</translation>', [1, 2, 3, 4]).ok).toBe(false);
+  });
+});

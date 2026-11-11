@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, D, B, A
+WHY | C reads cleanly as Sāṅkhyakārikā 34–39 with correct verse numbers (including 38) and good readings like "pūrvvotpannam"; D adds stray visarga marks and the corrupt "śeviśeṣāṇi", B has [illegible] gaps and drops verse number 38, and A is mostly strings of syllables that aren't real words.

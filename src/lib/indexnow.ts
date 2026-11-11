@@ -42,6 +42,7 @@ export async function notifyIndexNow(urls: string[]): Promise<{ success: boolean
         keyLocation: INDEXNOW_KEY_LOCATION,
         urlList: validUrls.slice(0, 10000), // Max 10,000 URLs per request
       }),
+      signal: AbortSignal.timeout(5000), // never hold a publish request open on a slow endpoint
     });
 
     if (response.ok || response.status === 200 || response.status === 202) {
@@ -73,9 +74,9 @@ export async function notifyPageTranslation(bookId: string, pageNumber: number, 
 export async function notifyBatchTranslation(bookId: string, pageNumbers: number[], slug?: string): Promise<void> {
   const bookPath = slug || bookId;
   const urls = pageNumbers.map(p => `https://${INDEXNOW_HOST}/book/${bookPath}/page-number/${p}`);
-  // Also include the book page and read page
+  // Also include the book page. Not /read: it is noindex and disallowed in
+  // robots.txt, so announcing it only invites an uncached whole-book fetch.
   urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}`);
-  urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/read`);
   urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/guide`);
   await notifyIndexNow(urls);
 }
@@ -97,7 +98,20 @@ export async function notifyEditionPublished(bookId: string, slug?: string): Pro
   const bookPath = slug || bookId;
   await notifyIndexNow([
     `https://${INDEXNOW_HOST}/book/${bookPath}`,
-    `https://${INDEXNOW_HOST}/book/${bookPath}/read`,
     `https://${INDEXNOW_HOST}/book/${bookPath}/guide`,
   ]);
+}
+
+/**
+ * Notify about books that just became public (publication writer, #3755).
+ * Batched: one POST per 10,000 URLs, never one per book. Never throws.
+ * Skipped under tests and when SKIP_INDEXNOW=1. Mirror: scripts/lib/indexnow.mjs.
+ */
+export async function notifyBooksPublic(books: Record<string, unknown>[]): Promise<void> {
+  if (process.env.NODE_ENV === 'test' || process.env.VITEST || process.env.SKIP_INDEXNOW === '1') return;
+  // Same canonical the sitemap emits: /book/<slug>, never a hex id.
+  const urls = [...new Set(books.filter((b) => b.slug).map((b) => `https://${INDEXNOW_HOST}/book/${String(b.slug)}`))];
+  for (let i = 0; i < urls.length; i += 10000) {
+    await notifyIndexNow(urls.slice(i, i + 10000));
+  }
 }

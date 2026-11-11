@@ -18,6 +18,7 @@
 
 import type { Db } from 'mongodb';
 import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 
 export interface DedupResult {
   bookId: string;
@@ -98,6 +99,8 @@ export async function deduplicateOverlappingPages(
 
   // Delete duplicates from pages collection
   await pagesCol.deleteMany({ id: { $in: pageIdsToArchive } });
+  // Their vectors must stop being served by semantic search (#6270).
+  await withdrawPageVectors(pageIdsToArchive, { reason: 'removed', writer: 'dedup-overlapping-pages' });
 
   // Renumber remaining pages sequentially
   const remainingPages = await pagesCol

@@ -1,0 +1,128 @@
+[
+ {
+  "book_id": "69dc557bcb6f7429748b8d13",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "gothic",
+  "columns": 1,
+  "note": "Incunable gothic textura with heavy abbreviation; p68 is verse with interlinear printed glosses and handwritten slash marks"
+ },
+ {
+  "book_id": "69b51e67768235dc65992a5f",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "17th-c roman/italic Latin theological citations; dark, show-through, somewhat blurry scan"
+ },
+ {
+  "book_id": "69b51e18efd8df28f2db058d",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "italic",
+  "columns": 1,
+  "note": "Italic body with roman marginal side-notes, abbreviations; one woodcut initial"
+ },
+ {
+  "book_id": "69b51eba47b06ecd581960d3",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 2,
+  "note": "Two-page spread, each page 2 cols: italic commentary + roman Timaeus text, line numbers, brief Greek quotation"
+ },
+ {
+  "book_id": "69c81aed6c6f3cc53c849851",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "1708 roman with italic emphasis and italic margin notes; p381 photo cuts off right side of text block"
+ },
+ {
+  "book_id": "69bd9d726120d54bd0376d18",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "Small-format roman text with italic commentary paragraphs; abbreviations, some blurry/faded print"
+ },
+ {
+  "book_id": "69b51e7f9a81ef7feb3d64c8",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "Roman with italic sidenotes, smudged inking; p191 running head 'Bartholomaei Rulichij' suggests a different work bound in"
+ },
+ {
+  "book_id": "69af0a0a4c57359b8d2d0f49",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "roman",
+  "columns": 1,
+  "note": "Clean roman with italics; p229 has amulet woodcuts with Greek-letter inscriptions"
+ },
+ {
+  "book_id": "69b638be1c1c21a373839d77",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "roman",
+  "columns": 1,
+  "note": "1522 roman with dense abbreviations (tildes, q-bar, p-bar), virgule punctuation"
+ },
+ {
+  "book_id": "69bd9d056120d54bd0372a3a",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "Folio roman with italic chapter heads/sidenotes; p205 warped lines, p385 right edge curved into gutter"
+ },
+ {
+  "book_id": "69b51e71768235dc65993773",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "18th-c roman with italic names/quoted inscription, year in margin; clean"
+ },
+ {
+  "book_id": "69b51ecfcf111105c42a44a2",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "Roman with italic terms; p167 is a two-column glossary list (italic phrase / roman gloss)"
+ },
+ {
+  "book_id": "69b655e318b87551bfcd9c00",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "mixed",
+  "columns": 1,
+  "note": "Small roman body with dense italic legal-citation sidenotes keyed by letters"
+ },
+ {
+  "book_id": "6a205564bf38605d952c547c",
+  "printed": true,
+  "latin": true,
+  "pass": true,
+  "typeface": "roman",
+  "columns": 1,
+  "note": "1521 roman with abbreviations; line ends curve into gutter and adjacent page edge visible"
+ }
+]

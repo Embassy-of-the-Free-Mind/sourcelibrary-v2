@@ -1,0 +1,13 @@
+ROW 1 | ംണത്ര[illegible]ഥമഹ[illegible]ഥ[illegible]ണ ‖ ണം[illegible]സ്സി[illegible]ണ[illegible]പ്പയ[illegible]ന്ന[illegible]ന്നിയ[illegible]യ[illegible] ‖ [illegible]
+ROW 2 | യ[illegible]ക്കാ[illegible]പ്പ[illegible]യ[illegible] ‖ [illegible]യ[illegible]യ[illegible]ൿ[illegible]ന്ദ്ര[illegible]യ[illegible] ‖ [illegible]യ[illegible]ഃ[illegible]
+ROW 3 | ഭ[illegible]ംണ[illegible]ന്ന[illegible] ‖ [illegible]യയ[illegible]യ[illegible]ംണ[illegible]ഃ ‖ [illegible]ഃ[illegible]
+ROW 4 | [illegible]ംയ[illegible]ഃ[illegible] ‖ [illegible]ംണ[illegible]യയ[illegible]ംണ[illegible] ‖ [illegible]യം[illegible]യ[illegible]ംയ
+ROW 5 | [illegible] ‖ [illegible]ംണ[illegible]ംണ[illegible] ‖ [illegible]ംയ[illegible]
+ROW 6 | [illegible]യ[illegible] ‖ [illegible]ംയ[illegible]യ[illegible] ‖ [illegible]യ[illegible]
+ROW 7 | [illegible]യ ‖ [illegible]യ[illegible] ‖ [illegible]യഃ[illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible]യമയമമ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible]യ[illegible] ‖ [illegible]യ[illegible] ‖ [illegible]ഃ[illegible]
+ROW 11 | [illegible]യ[illegible] ‖ [illegible]യയ[illegible] ‖ [illegible]യ[illegible]
+ROW 12 | [illegible]യ[illegible] ‖ [illegible]ംണ[illegible]ഃ[illegible]ംണ[illegible] ‖ [illegible]ഃ[illegible]
+NOTE | I could not read this leaf: what's above is mostly [illegible] and well under 10% of the text, and even the few letters I kept are low-confidence guesses. The leaf has 12 rows. Rows 1–4 and 9–12 run past the holes, and rows 5–8 are short blocks between them. The right margin carries the leaf number, which looks like "ഡ്ഡു" (unconfirmed). Higher-resolution crops of single rows would be needed for a reliable reading.

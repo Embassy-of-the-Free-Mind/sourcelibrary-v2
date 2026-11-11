@@ -203,6 +203,7 @@ describe('every translation enrol path asks the gate', () => {
     'scripts/lib/translate-core.mjs': 'defines the router; writePageTranslation is the write door, reached only through gated lanes',
     'scripts/lib/ocr-routing.mjs': 'a comment about the split',
     'src/lib/types/ai-models.ts': 'the TS twin of the router',
+    'scripts/lib/translation-routing.mjs': 'the pure table reader both routers call (#7170); names the router only in a comment',
     'src/data/public-models.ts': 'a comment',
     'src/workers/translation-processor-logic.ts': 'the Lambda processor: consumes jobs queued by the gated /api/jobs/queue-books route',
     'scripts/maintenance/relabel-language-4884.mjs': 'asks the router only to REPORT the model before and after a language relabel (#4884); enrols and translates nothing',

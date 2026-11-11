@@ -1,0 +1,10 @@
+ROW 1 | ണഃക്രിയൈവന്നക്ഷിതി ‖ ന്ദ്രിയംകല്യാജനക്കാൎയ്യത്വാൽഞെകകം ‖ ൈച്യുത്തംമഹദാദ്വിശേഷകവ
+ROW 2 | ൎത്തരാശ്യാശ്രൂതൈസാ ‖ ംഗതിപ്രകാരബാൽവിപരീതമവ്യക്ത ‖ ൎയ്യാണാംചൈകാരന
+ROW 3 | ാതരമൈന്റ്രുഞ്ഞ്യഞാ ‖ ഞ്ഞത്വാൽശ്രുതിരേഭിക്കിയത്ര ‖ സ്ഥാദ്ധ്രമ്ഭൂഘദ്ര
+ROW 4 | ദ്വിഷ്യക്താതമം[illegible]വ ‖ തരദേവകദാക്രിനന്നാൽ ‖ ഉള്ളന്നമന്നദാക്രി
+ROW 5 | കമിതദൾന്നാൎശ് ‖ ംവമന്നംബിന്റുമാഖിതമ ‖ ഒക്ഷ്രാവലനിരവാ
+ROW 6 | [illegible]കംപികമേവ ‖ വിപരീതമവ്യക്തമന്യാക്രിതം ‖ തരാന്ന്യകാര
+ROW 7 | ഞെന്നാട്ടാവാക് ‖ ബിംശമിക്കലീംവ്രതരണൈനന ‖ ാല്ലക്ഷമികിമിംശഃ
+ROW 8 | വിപരീതമവ്യക്തംന ‖ ക്കിഷ്ഠിംഗ്രഹകനനകൈബ്രഹ്മാവാലയ ‖ യംഗപ്ലിക്കമിഹാംന്ദ്ര
+ROW 9 | ലക്ഷാലെഭ്യാക്ഷാൎതാ ‖ ാദ്യഃലബ്ധ്യമാത്മംശക്ത്യാരക്ഷാവർ ‖ ത്ത്ക്ഷമിയക്ഷകമാക്രാ
+NOTE | Confidence is low: there are 9 rows and I could make out their outlines, but many letter readings are guesses (especially the stacked conjuncts, the big looped letters and rows 3–7), so treat this as a rough draft, not a reliable transcription. In the left margin there is also a leaf number, roughly ഡ/൧.

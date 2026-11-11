@@ -1,0 +1,19 @@
+ROW 1 | ക്ഷ്വചനമെമവന്പ്രമാണാനനംഖദാവില‖ക്ഷ്യാപ[illegible]ദേശാശ്ര‖വയഃപശ്രുതികദാവിഷി
+
+ROW 2 | ദലക്ഷ്ണെനബന്ധിക്കാദാദണാ[illegible]ന്ദബിം[illegible]ഗന‖ാനഗ[illegible]ന്ദ്രവ്യപഡാന‖ാനഃപ്രവൎത്തയന്തിത്യസമാ
+
+ROW 3 | നമെവന്ബ്രമ‖[illegible]ദണാന്തനനംഉ[illegible]പടൈവ‖ഗ്രുവണ[illegible]ത്രത്തിഷ്യ
+
+ROW 4 | എങ്ങൈദാങ്ങ്‖വചുനമൈവനാന്ത്രമാണൈ[illegible]ങ്കന‖ം[illegible]വാന്ന
+
+ROW 5 | സമ്പദായാദാവര‖ദശ[illegible]നംവരയ്യവൎക്കരക്ഷാത്തി‖[illegible]വഷ്ടിഹ്യ
+
+ROW 6 | സ്വാ[illegible]ക്ക്‖നാഇഷ്ണിപാഷാ[illegible]ടദഴഖ്യലം[illegible]‖ത്രാടാവഃ[illegible]
+
+ROW 7 | തൃപൃ[illegible]ടദശ‖വങ്ങടാദ്രാവഃസചപ്ര[illegible]ക്കിപ്ര‖മാണ്ണന്തസിദ്ധോപാദന്യ
+
+ROW 8 | ശ്രുമാണാദ്രന്തരാമാഗ‖[illegible]ശ്ര[illegible]ഷ്ണകചകാാലഃ[illegible]വ‖ഷ്ഠബൊാ[illegible]ദമജിസംഭവ
+
+ROW 9 | ഷ്ഠിത്രയം.ഷരബ‖ാഃ[illegible]സദ്ധദാാശലിം[illegible]വഖ്യാവ‖ല്ലിംഗിനഃപറിജ്ഞദാന
+
+NOTE | This is a low-confidence reading, so check it against the images. The leaf has 9 rows. I matched the pieces at the overlaps (p01|p02, p02|p03, p03|p04), but I could only make out the letters roughly. The only sequences I'm fairly sure of are പ്രമാണ (row 1), പ്രവൎത്തയന്തി (row 2), സിദ്ധ (row 7) and ലിംഗിനഃ (row 9). Most other letters, the vowel signs especially, are tentative, and I didn't fill anything in from the known text. In rows 1–2 and 8–9 the ‖ marks show roughly where the holes fall below or above the line.

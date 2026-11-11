@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three are mostly broken, but A keeps the most recognizable Sāṅkhyakārikā 10 vocabulary in a coherent sequence (kāryatvāt anekakaṃ, mahadādiviśeṣa, āśrita, viparītam avyaktam, kāraṇa), while B and C break down into nonsense syllables more often, and C also has many [illegible] gaps.

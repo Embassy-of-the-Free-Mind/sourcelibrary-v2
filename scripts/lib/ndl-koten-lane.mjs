@@ -38,6 +38,7 @@
 // (lesson_ocr_apply_triggers_gapfill_retranslation). Re-translation is a separate, priced go.
 
 import { contentHash } from './write-provenance.mjs';
+import { laneForWrite } from './lanes.mjs';
 
 export { isHumanEdited, hasRealTranslation, STALE_OCR_FIELDS, reenrolDecision, markTranslationsStale } from './syriac-kraken-lane.mjs';
 
@@ -51,6 +52,7 @@ export const BOOK_EVENT = 'ndl_koten_reocr';
 /** `pipeline_auto.hold.reason` for every book the lane touches. */
 export const HOLD_REASON = 'ndl-koten-lane-4925';
 export const HOLD_RELEASE = 'the NDL re-transcription of this book is read by eye (#4745 pilot or the full-run check) and a re-translation of its rewritten pages is approved as a separate, priced go';
+export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: 'release ndl-koten-lane-4925' });
 
 export const CURSIVE_CLASSES = new Set(['woodblock-cursive', 'manuscript-cursive']);
 
@@ -153,6 +155,7 @@ export function ocrSetFields(text, route, { run, now = new Date(), secs = null, 
     'ocr.model': `ndl-koten/v${NDL.version}`,
     'ocr.source': 'ndl-koten',
     'ocr.pipeline': LANE,
+    'ocr.lane': laneForWrite('ocr', { call_site: 'scripts/lib/ndl-koten-lane.mjs' }),
     'ocr.updated_at': now,
     'ocr.engine': {
       name: NDL.name, label: NDL.label, version: NDL.version, repo: NDL.repo,

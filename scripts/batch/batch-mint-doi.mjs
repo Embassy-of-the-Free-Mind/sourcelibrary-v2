@@ -26,10 +26,11 @@ import path from 'path';
 import { generateScholarlyPdf, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
 import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { IMPRINT_PAGES, screenBookPages, screenImprint } from '../lib/modern-intrusion.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const LICENSE = 'CC-BY-SA-4.0';
+const LICENSE = 'CC-BY-NC-SA-4.0';
 const GEMINI_MODEL = 'gemini-3-flash-preview';
 const DELAY_BETWEEN_MINTS_MS = 3000;
 const DELAY_BETWEEN_FRONT_MATTER_MS = 1000;
@@ -93,7 +94,7 @@ const LICENSE_MAP = {
  *
  * Identifying ourselves is also just correct behaviour toward a public repository.
  */
-const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 function zenodoHeaders(extra = {}) {
   return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
@@ -592,6 +593,7 @@ async function mintOneBook(db, book) {
     introduction: edition.front_matter?.introduction,
     methodology: edition.front_matter?.methodology,
     version: edition.version,
+    license: edition.license || LICENSE,
     frontispiece: await fetchFrontispiece(book),
     credits: editionCredits(book),
     dedication: resolveDedication(book, book.collections?.length
@@ -698,6 +700,29 @@ async function main() {
       { $limit: BOOK_ID ? 1 : LIMIT },
       { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, place_published: 1, publisher: 1, ustc_id: 1, quality_score: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, _pct: 1, slug: 1, ia_identifier: 1, ia_id: 1, editions: 1, categories: 1, reading_summary: 1, index: 1 } }
     ]).toArray();
+
+    // quality_score is not a fabrication screen (#4960): Kircher's Iter extaticum II scored 100 with
+    // a 2011 nephrology journal's contents as the English of p.170. A book with any page that cannot
+    // belong to its date is held out of every mode here until a person reads the page.
+    const screened = [];
+    for (const b of eligible) {
+      const pages = await db.collection('pages')
+        .find({ book_id: b.id, 'translation.data': { $exists: true, $ne: '' } }, { projection: { page_number: 1, 'translation.data': 1 } })
+        .toArray();
+      const frontMatter = await db.collection('pages')
+        .find({ book_id: b.id, page_number: { $lte: IMPRINT_PAGES } }, { projection: { page_number: 1, 'ocr.data': 1 } })
+        .toArray();
+      const imprints = screenImprint(frontMatter);
+      if (imprints.length) {
+        console.log(`HOLD ${b.id} ${(b.display_title || b.title || '').slice(0, 60)} — modern imprint on p.${imprints.map(i => i.page_number).join(', p.')} (${[...new Set(imprints.flatMap(i => i.hits.map(h => h.marker)))].join(', ')}). Read the colophon.`);
+        continue;
+      }
+      const flagged = screenBookPages(b, pages);
+      if (!flagged.length) { screened.push(b); continue; }
+      console.log(`HOLD ${b.id} ${(b.display_title || b.title || '').slice(0, 60)} — modern intrusion on p.${flagged.map(f => f.page_number).join(', p.')} (${[...new Set(flagged.flatMap(f => f.hits.map(h => h.marker)))].join(', ')}). Read it: node scripts/audit/detect-modern-intrusion.mjs --book-id ${b.id}`);
+    }
+    if (screened.length < eligible.length) console.log('');
+    eligible.splice(0, eligible.length, ...screened);
 
     console.log(`Found ${eligible.length} eligible book(s)\n`);
 

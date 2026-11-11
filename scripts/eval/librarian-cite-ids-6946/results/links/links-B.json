@@ -1,0 +1,4231 @@
+{
+ "q01:B": [
+  {
+   "id": "L1",
+   "slug": "three-books-on-life-ficino",
+   "page": 44,
+   "at": 511,
+   "text": "Page 44"
+  },
+  {
+   "id": "L2",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 17,
+   "at": 692,
+   "text": "Page 17"
+  },
+  {
+   "id": "L3",
+   "slug": "de-le-tre-vite-cioe-a-qual-guisa-si-possono-le-persone-ficinus",
+   "page": 22,
+   "at": 1197,
+   "text": "Page 22"
+  },
+  {
+   "id": "L4",
+   "slug": "ficino-three-books-on-life-talismanic-magic-celestial-ficino",
+   "page": 22,
+   "at": 1477,
+   "text": "Page 22"
+  },
+  {
+   "id": "L5",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 23,
+   "at": 1791,
+   "text": "Page 23"
+  },
+  {
+   "id": "L6",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 240,
+   "at": 2034,
+   "text": "Page 240"
+  },
+  {
+   "id": "L7",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 240,
+   "at": 2187,
+   "text": "Page 240"
+  },
+  {
+   "id": "L8",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 240,
+   "at": 2446,
+   "text": "Page 240"
+  },
+  {
+   "id": "L9",
+   "slug": "three-books-on-life-ficino",
+   "page": 42,
+   "at": 2942,
+   "text": "Page 42"
+  },
+  {
+   "id": "L10",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 18,
+   "at": 3226,
+   "text": "Page 18"
+  },
+  {
+   "id": "L11",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 16,
+   "at": 3409,
+   "text": "Page 16"
+  },
+  {
+   "id": "L12",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 18,
+   "at": 3755,
+   "text": "Page 18"
+  },
+  {
+   "id": "L13",
+   "slug": "three-books-on-life-ficino",
+   "page": 42,
+   "at": 3936,
+   "text": "Page 42"
+  },
+  {
+   "id": "L14",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 23,
+   "at": 4264,
+   "text": "Page 23"
+  },
+  {
+   "id": "L15",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 23,
+   "at": 4500,
+   "text": "Page 23"
+  },
+  {
+   "id": "L16",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 22,
+   "at": 4683,
+   "text": "Page 22"
+  },
+  {
+   "id": "L17",
+   "slug": "three-books-on-life-ficino",
+   "page": 44,
+   "at": 5019,
+   "text": "Page 44"
+  },
+  {
+   "id": "L18",
+   "slug": "tomo-delle-divine-lettere-del-gran-marsilio-ficino-1-ficinus",
+   "page": 422,
+   "at": 5947,
+   "text": "Page 422"
+  },
+  {
+   "id": "L19",
+   "slug": "de-vita-libri-tres-three-books-on-life-ficino",
+   "page": 3,
+   "at": 6388,
+   "text": "Page 3"
+  },
+  {
+   "id": "L20",
+   "slug": "three-books-on-life-ficino-2",
+   "page": 239,
+   "at": 7223,
+   "text": "Page 239"
+  },
+  {
+   "id": "L21",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 16,
+   "at": 7574,
+   "text": "Page 16"
+  }
+ ],
+ "q02:B": [
+  {
+   "id": "L1",
+   "slug": "the-religion-of-the-samurai-a-study-of-zen-philosophy-nukariya",
+   "page": 152,
+   "at": 800,
+   "text": "Page 152"
+  },
+  {
+   "id": "L2",
+   "slug": "sermons-of-a-buddhist-abbot-soyen-shaku-daisetz",
+   "page": 57,
+   "at": 1369,
+   "text": "Page 57"
+  },
+  {
+   "id": "L3",
+   "slug": "sermons-of-a-buddhist-abbot-soyen-shaku-daisetz",
+   "page": 159,
+   "at": 1803,
+   "text": "Page 159"
+  },
+  {
+   "id": "L4",
+   "slug": "jikji-anthology-of-great-buddhist-priests-zen-teachings",
+   "page": 70,
+   "at": 2220,
+   "text": "Page 70"
+  },
+  {
+   "id": "L5",
+   "slug": "meccan-revelations-al-arabi",
+   "page": 409,
+   "at": 2855,
+   "text": "Page 409"
+  },
+  {
+   "id": "L6",
+   "slug": "kitab-al-luma-book-of-flashes-ed",
+   "page": 483,
+   "at": 3388,
+   "text": "Page 483"
+  },
+  {
+   "id": "L7",
+   "slug": "meccan-revelations-al-arabi",
+   "page": 409,
+   "at": 3576,
+   "text": "Page 409"
+  },
+  {
+   "id": "L8",
+   "slug": "awrad-ibn-arabi-daily-prayers-arabi",
+   "page": 49,
+   "at": 4147,
+   "text": "Page 49"
+  },
+  {
+   "id": "L9",
+   "slug": "hasidic-discourses-schneersohn-4",
+   "page": 669,
+   "at": 4862,
+   "text": "Page 669"
+  },
+  {
+   "id": "L10",
+   "slug": "tree-of-life-by-hayyim-vital-with-glosses-and-prefaces-anonymous",
+   "page": 130,
+   "at": 5427,
+   "text": "Page 130"
+  },
+  {
+   "id": "L11",
+   "slug": "hasidic-discourses-schneersohn-2",
+   "page": 90,
+   "at": 5653,
+   "text": "Page 90"
+  },
+  {
+   "id": "L12",
+   "slug": "hasidic-discourses-schneersohn-4",
+   "page": 669,
+   "at": 6073,
+   "text": "Page 669"
+  }
+ ],
+ "q03:B": [
+  {
+   "id": "L1",
+   "slug": "trait-des-champignons-9e05",
+   "page": 42,
+   "at": 316,
+   "text": "Page 42"
+  },
+  {
+   "id": "L2",
+   "slug": "anleitung-zum-studium-der-mykologie-1809-1849",
+   "page": 51,
+   "at": 763,
+   "text": "Page 51"
+  },
+  {
+   "id": "L3",
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 66,
+   "at": 1133,
+   "text": "Page 66"
+  },
+  {
+   "id": "L4",
+   "slug": "les-champignons-de-la-france-histoire-description-culture-cordier",
+   "page": 127,
+   "at": 1738,
+   "text": "Page 127"
+  },
+  {
+   "id": "L5",
+   "slug": "les-champignons-de-la-france-histoire-description-culture-cordier",
+   "page": 160,
+   "at": 2236,
+   "text": "Page 160"
+  },
+  {
+   "id": "L6",
+   "slug": "les-champignons-de-la-france-histoire-description-culture-cordier",
+   "page": 160,
+   "at": 2560,
+   "text": "Page 160"
+  },
+  {
+   "id": "L7",
+   "slug": "les-champignons-de-la-france-histoire-description-culture-cordier",
+   "page": 161,
+   "at": 2934,
+   "text": "Page 161"
+  },
+  {
+   "id": "L8",
+   "slug": "les-champignons-de-la-france-histoire-description-culture-cordier",
+   "page": 161,
+   "at": 3168,
+   "text": "Page 161"
+  },
+  {
+   "id": "L9",
+   "slug": "anleitung-zum-studium-der-mykologie-1809-1849",
+   "page": 51,
+   "at": 3775,
+   "text": "Page 51"
+  },
+  {
+   "id": "L10",
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 66,
+   "at": 4213,
+   "text": "Page 66"
+  },
+  {
+   "id": "L11",
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 68,
+   "at": 4321,
+   "text": "Page 68"
+  },
+  {
+   "id": "L12",
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 174,
+   "at": 4647,
+   "text": "Page 174"
+  },
+  {
+   "id": "L13",
+   "slug": "theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371",
+   "page": 66,
+   "at": 5062,
+   "text": "Page 66"
+  },
+  {
+   "id": "L14",
+   "slug": "les-champignons-de-la-france-histoire-description-culture-cordier",
+   "page": 160,
+   "at": 5423,
+   "text": "Page 160"
+  },
+  {
+   "id": "L15",
+   "slug": "anleitung-zum-studium-der-mykologie-1809-1849",
+   "page": 51,
+   "at": 5749,
+   "text": "Page 51"
+  },
+  {
+   "id": "L16",
+   "slug": "anleitung-zum-studium-der-mykologie-1809-1849",
+   "page": 52,
+   "at": 5954,
+   "text": "Page 52"
+  },
+  {
+   "id": "L17",
+   "slug": "trait-des-champignons-9e05",
+   "page": 56,
+   "at": 6137,
+   "text": "Page 56"
+  },
+  {
+   "id": "L18",
+   "slug": "anleitung-zum-studium-der-mykologie-1809-1849",
+   "page": 51,
+   "at": 6546,
+   "text": "Page 51"
+  }
+ ],
+ "q04:B": [
+  {
+   "id": "L1",
+   "slug": "horou-apollonos-neiloou-hieroglyphika-eklekta-hori-horapollo",
+   "page": 119,
+   "at": 791,
+   "text": "Page 119"
+  },
+  {
+   "id": "L2",
+   "slug": "bencao-gangmu-compendium-of-materia-medica-vols-39-40",
+   "page": 26,
+   "at": 1251,
+   "text": "Page 26"
+  },
+  {
+   "id": "L3",
+   "slug": "the-pagan-world-and-the-origin-of-its-gods-herold",
+   "page": 831,
+   "at": 1688,
+   "text": "Page 831"
+  },
+  {
+   "id": "L4",
+   "slug": "select-works-of-porphyry-porphyry",
+   "page": 207,
+   "at": 2182,
+   "text": "Page 207"
+  },
+  {
+   "id": "L5",
+   "slug": "select-works-of-porphyry-porphyry",
+   "page": 204,
+   "at": 2450,
+   "text": "Page 204"
+  },
+  {
+   "id": "L6",
+   "slug": "commentaries-of-proclus-on-euclid-vol-2-taylor",
+   "page": 333,
+   "at": 2663,
+   "text": "Page 333"
+  },
+  {
+   "id": "L7",
+   "slug": "select-works-of-porphyry-porphyry",
+   "page": 207,
+   "at": 3060,
+   "text": "Page 207"
+  },
+  {
+   "id": "L8",
+   "slug": "commentaries-of-proclus-on-euclid-vol-2-taylor",
+   "page": 334,
+   "at": 3273,
+   "text": "Page 334"
+  },
+  {
+   "id": "L9",
+   "slug": "select-works-of-porphyry-porphyry",
+   "page": 204,
+   "at": 3684,
+   "text": "Page 204"
+  },
+  {
+   "id": "L10",
+   "slug": "select-works-of-porphyry-porphyry",
+   "page": 207,
+   "at": 3771,
+   "text": "Page 207"
+  },
+  {
+   "id": "L11",
+   "slug": "septimana-philosophica-maier",
+   "page": 240,
+   "at": 4199,
+   "text": "Page 240"
+  },
+  {
+   "id": "L12",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n-2",
+   "page": 243,
+   "at": 4633,
+   "text": "Page 243"
+  },
+  {
+   "id": "L13",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-huser",
+   "page": 2379,
+   "at": 5140,
+   "text": "Page 2379"
+  },
+  {
+   "id": "L14",
+   "slug": "the-highest-good-fludd",
+   "page": 5,
+   "at": 5515,
+   "text": "Page 5"
+  },
+  {
+   "id": "L15",
+   "slug": "bencao-gangmu-compendium-of-materia-medica-vols-39-40",
+   "page": 12,
+   "at": 6095,
+   "text": "Page 12"
+  },
+  {
+   "id": "L16",
+   "slug": "bencao-gangmu-compendium-of-materia-medica-vols-39-40",
+   "page": 11,
+   "at": 6200,
+   "text": "Page 11"
+  },
+  {
+   "id": "L17",
+   "slug": "bencao-gangmu-compendium-of-materia-medica-vols-45-46",
+   "page": 57,
+   "at": 6548,
+   "text": "Page 57"
+  },
+  {
+   "id": "L18",
+   "slug": "bencao-gangmu-compendium-of-materia-medica-vols-39-40",
+   "page": 26,
+   "at": 6912,
+   "text": "Page 26"
+  },
+  {
+   "id": "L19",
+   "slug": "bencao-gangmu-compendium-of-materia-medica-vols-39-40",
+   "page": 27,
+   "at": 7017,
+   "text": "Page 27"
+  }
+ ],
+ "q05:B": [
+  {
+   "id": "L1",
+   "slug": "thirteen-books-of-natural-philosophy-sennert",
+   "page": 115,
+   "at": 411,
+   "text": "Page 115"
+  },
+  {
+   "id": "L2",
+   "slug": "opera-omnia-kuhn-edition-vol-i-galen",
+   "page": 63,
+   "at": 944,
+   "text": "Page 63"
+  },
+  {
+   "id": "L3",
+   "slug": "de-caelo-aristotle",
+   "page": 214,
+   "at": 1305,
+   "text": "Page 214"
+  },
+  {
+   "id": "L4",
+   "slug": "works-of-aristotle-vol-2-physics-de-caelo-de-generatione-et-smith",
+   "page": 484,
+   "at": 1548,
+   "text": "Page 484"
+  },
+  {
+   "id": "L5",
+   "slug": "opera-hactenus-inedita-fasciculus-viii-bacon",
+   "page": 343,
+   "at": 1990,
+   "text": "Page 343"
+  },
+  {
+   "id": "L6",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 2261,
+   "text": "Page 146"
+  },
+  {
+   "id": "L7",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 3034,
+   "text": "Page 146"
+  },
+  {
+   "id": "L8",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 3332,
+   "text": "Page 146"
+  },
+  {
+   "id": "L9",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 3743,
+   "text": "Page 146"
+  },
+  {
+   "id": "L10",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 4041,
+   "text": "Page 146"
+  },
+  {
+   "id": "L11",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 4445,
+   "text": "Page 146"
+  },
+  {
+   "id": "L12",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 4743,
+   "text": "Page 146"
+  },
+  {
+   "id": "L13",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 5154,
+   "text": "Page 146"
+  },
+  {
+   "id": "L14",
+   "slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+   "page": 146,
+   "at": 5452,
+   "text": "Page 146"
+  },
+  {
+   "id": "L15",
+   "slug": "the-writings-of-hippocrates-and-galen-galen",
+   "page": 41,
+   "at": 5814,
+   "text": "Page 41"
+  },
+  {
+   "id": "L16",
+   "slug": "hippocrates-vol-iv-loeb-classical-library-hippocrates",
+   "page": 77,
+   "at": 6285,
+   "text": "Page 77"
+  },
+  {
+   "id": "L17",
+   "slug": "commentary-on-anatomy-al-nafis",
+   "page": 37,
+   "at": 6651,
+   "text": "Page 37"
+  },
+  {
+   "id": "L18",
+   "slug": "hippocrates-vol-iv-loeb-classical-library-hippocrates",
+   "page": 78,
+   "at": 6870,
+   "text": "Page 78"
+  },
+  {
+   "id": "L19",
+   "slug": "greek-astrological-and-divinatory-texts-cambridge-trinity-nicholas-of-otranto",
+   "page": 62,
+   "at": 7299,
+   "text": "Page 62"
+  },
+  {
+   "id": "L20",
+   "slug": "london-british-library-cotton-ms-vitellius-a-xii-including-exeter",
+   "page": 119,
+   "at": 7882,
+   "text": "Page 119"
+  },
+  {
+   "id": "L21",
+   "slug": "thirteen-books-of-natural-philosophy-sennert",
+   "page": 116,
+   "at": 8273,
+   "text": "Page 116"
+  },
+  {
+   "id": "L22",
+   "slug": "philosophy-reformed-four-profound-tractates-paracelsus",
+   "page": 229,
+   "at": 8778,
+   "text": "Page 229"
+  }
+ ],
+ "q06:B": [
+  {
+   "id": "L1",
+   "slug": "philosophia-pauperum-sive-isagoge-in-libros-aristotelis-phys-albertus-magnus",
+   "page": 51,
+   "at": 677,
+   "text": "Page 51"
+  },
+  {
+   "id": "L2",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 1107,
+   "text": "Page 211"
+  },
+  {
+   "id": "L3",
+   "slug": "collection-of-alchemical-works-cambridge-university-library-various",
+   "page": 209,
+   "at": 1363,
+   "text": "Page 209"
+  },
+  {
+   "id": "L4",
+   "slug": "rvdimentorvm-cosmographicorum-ioan-honteri-coronensis-libri-honterus",
+   "page": 14,
+   "at": 1774,
+   "text": "Page 14"
+  },
+  {
+   "id": "L5",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 1990,
+   "text": "Page 211"
+  },
+  {
+   "id": "L6",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 2168,
+   "text": "Page 211"
+  },
+  {
+   "id": "L7",
+   "slug": "rvdimentorvm-cosmographicorum-ioan-honteri-coronensis-libri-honterus",
+   "page": 14,
+   "at": 2551,
+   "text": "Page 14"
+  },
+  {
+   "id": "L8",
+   "slug": "collection-of-alchemical-works-cambridge-university-library-various",
+   "page": 209,
+   "at": 2843,
+   "text": "Page 209"
+  },
+  {
+   "id": "L9",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 3270,
+   "text": "Page 211"
+  },
+  {
+   "id": "L10",
+   "slug": "alchemical-recipes-codex-rossianus-247-various",
+   "page": 443,
+   "at": 3576,
+   "text": "Page 443"
+  },
+  {
+   "id": "L11",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 3772,
+   "text": "Page 211"
+  },
+  {
+   "id": "L12",
+   "slug": "bodleian-library-ms-bodl-614-anonymous",
+   "page": 48,
+   "at": 4265,
+   "text": "Page 48"
+  },
+  {
+   "id": "L13",
+   "slug": "philosophia-pauperum-sive-isagoge-in-libros-aristotelis-phys-albertus-magnus",
+   "page": 51,
+   "at": 4635,
+   "text": "Page 51"
+  },
+  {
+   "id": "L14",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 4930,
+   "text": "Page 211"
+  },
+  {
+   "id": "L15",
+   "slug": "albertus-magnus-philosophia-1496-incunable-magnus",
+   "page": 49,
+   "at": 5146,
+   "text": "Page 49"
+  },
+  {
+   "id": "L16",
+   "slug": "epitoma-rei-militaris-vegetius",
+   "page": 211,
+   "at": 5408,
+   "text": "Page 211"
+  },
+  {
+   "id": "L17",
+   "slug": "albertus-magnus-philosophia-1496-incunable-magnus",
+   "page": 49,
+   "at": 5678,
+   "text": "Page 49"
+  },
+  {
+   "id": "L18",
+   "slug": "c-iulii-hygini-augustei-liberti-fabularum-liber-et-poeticon-hyginus",
+   "page": 246,
+   "at": 6260,
+   "text": "Page 246"
+  },
+  {
+   "id": "L19",
+   "slug": "martini-borrhai-in-cosmographiae-elementa-commentatio-borrhaus",
+   "page": 50,
+   "at": 6902,
+   "text": "Page 50"
+  },
+  {
+   "id": "L20",
+   "slug": "rvdimentorvm-cosmographicorum-ioan-honteri-coronensis-libri-honterus",
+   "page": 13,
+   "at": 7383,
+   "text": "Page 13"
+  },
+  {
+   "id": "L21",
+   "slug": "collection-of-alchemical-works-cambridge-university-library-various",
+   "page": 209,
+   "at": 7675,
+   "text": "Page 209"
+  },
+  {
+   "id": "L22",
+   "slug": "alchemical-recipes-codex-rossianus-247-various",
+   "page": 443,
+   "at": 8180,
+   "text": "Page 443"
+  },
+  {
+   "id": "L23",
+   "slug": "alberuni-s-india-sachau-english-transl-of-tahqiq-ma-li-l-sachau",
+   "page": 346,
+   "at": 8903,
+   "text": "Page 346"
+  },
+  {
+   "id": "L24",
+   "slug": "alberuni-s-india-sachau-english-transl-of-tahqiq-ma-li-l-sachau",
+   "page": 346,
+   "at": 9164,
+   "text": "Page 346"
+  },
+  {
+   "id": "L25",
+   "slug": "chilam-balam-de-kaua-maler-photographs-1887",
+   "page": 128,
+   "at": 9603,
+   "text": "Page 128"
+  }
+ ],
+ "q07:B": [
+  {
+   "id": "L1",
+   "slug": "theatrum-sympatheticum-auctum-exhibens-varios-authores-de-magneticum",
+   "page": 10,
+   "at": 429,
+   "text": "Page 10"
+  },
+  {
+   "id": "L2",
+   "slug": "theatrum-sympatheticum-auctum-exhibens-varios-authores-de-magneticum",
+   "page": 9,
+   "at": 689,
+   "text": "Page 9"
+  },
+  {
+   "id": "L3",
+   "slug": "magia-naturalis-libri-viginti-porta",
+   "page": 180,
+   "at": 1295,
+   "text": "Page 180"
+  },
+  {
+   "id": "L4",
+   "slug": "anaskeue-hopliatrias-quam-sub-praesidio-domini-joh-rudolphi-saltzmann",
+   "page": 7,
+   "at": 1539,
+   "text": "Page 7"
+  },
+  {
+   "id": "L5",
+   "slug": "magia-naturalis-libri-viginti-porta",
+   "page": 180,
+   "at": 2346,
+   "text": "Page 180"
+  },
+  {
+   "id": "L6",
+   "slug": "tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius",
+   "page": 103,
+   "at": 2905,
+   "text": "Page 103"
+  },
+  {
+   "id": "L7",
+   "slug": "tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius",
+   "page": 103,
+   "at": 3241,
+   "text": "Page 103"
+  },
+  {
+   "id": "L8",
+   "slug": "tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius",
+   "page": 103,
+   "at": 3712,
+   "text": "Page 103"
+  },
+  {
+   "id": "L9",
+   "slug": "theatrum-sympatheticum-auctum-exhibens-varios-authores-de-magneticum",
+   "page": 10,
+   "at": 4123,
+   "text": "Page 10"
+  },
+  {
+   "id": "L10",
+   "slug": "philosophia-moysaica-in-qua-sapientia-scientia-creationis-fludd",
+   "page": 295,
+   "at": 4546,
+   "text": "Page 295"
+  },
+  {
+   "id": "L11",
+   "slug": "a-candle-in-the-dark-or-a-treatise-concerning-the-nature-of-ady",
+   "page": 53,
+   "at": 5000,
+   "text": "Page 53"
+  },
+  {
+   "id": "L12",
+   "slug": "anaskeue-hopliatrias-quam-sub-praesidio-domini-joh-rudolphi-saltzmann",
+   "page": 15,
+   "at": 5537,
+   "text": "Page 15"
+  },
+  {
+   "id": "L13",
+   "slug": "oswaldi-crollii-hassi-chymisch-kleynod-hiebevor-zwar-croll",
+   "page": 397,
+   "at": 5949,
+   "text": "Page 397"
+  },
+  {
+   "id": "L14",
+   "slug": "magia-naturalis-libri-viginti-porta",
+   "page": 180,
+   "at": 6375,
+   "text": "Page 180"
+  },
+  {
+   "id": "L15",
+   "slug": "florilegium-hippocrateo-galenochymicum-novum-philippi-gruling",
+   "page": 550,
+   "at": 6749,
+   "text": "Page 550"
+  },
+  {
+   "id": "L16",
+   "slug": "florilegium-hippocrateo-galenochymicum-novum-philippi-gruling",
+   "page": 550,
+   "at": 7062,
+   "text": "Page 550"
+  }
+ ],
+ "q08:B": [
+  {
+   "id": "L1",
+   "slug": "notes-of-experiments-in-chemistry-and-alchemy-ms-add-3973-newton",
+   "page": 43,
+   "at": 1238,
+   "text": "Page 43"
+  },
+  {
+   "id": "L2",
+   "slug": "notes-of-experiments-in-chemistry-and-alchemy-ms-add-3973-newton",
+   "page": 52,
+   "at": 1354,
+   "text": "Page 52"
+  },
+  {
+   "id": "L3",
+   "slug": "index-chemicus-ms-30-3-newton",
+   "page": 1,
+   "at": 1830,
+   "text": "Page 1"
+  },
+  {
+   "id": "L4",
+   "slug": "opticks-1704-first-edition-newton",
+   "page": 14,
+   "at": 2511,
+   "text": "Page 14"
+  },
+  {
+   "id": "L5",
+   "slug": "philosophical-transactions-of-the-royal-society-vol-16-1686-london",
+   "page": 333,
+   "at": 2981,
+   "text": "Page 333"
+  },
+  {
+   "id": "L6",
+   "slug": "theatrum-chemicum-britannicum-compiler",
+   "page": 3,
+   "at": 3357,
+   "text": "Page 3"
+  },
+  {
+   "id": "L7",
+   "slug": "theatrum-chemicum-britannicum-compiler",
+   "page": 3,
+   "at": 3599,
+   "text": "Page 3"
+  }
+ ],
+ "q09:B": [
+  {
+   "id": "L1",
+   "slug": "ortus-medicinae-origin-of-medicine-helmont",
+   "page": 457,
+   "at": 647,
+   "text": "Page 457"
+  },
+  {
+   "id": "L2",
+   "slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+   "page": 7,
+   "at": 1047,
+   "text": "Page 7"
+  },
+  {
+   "id": "L3",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 86,
+   "at": 1507,
+   "text": "Page 86"
+  },
+  {
+   "id": "L4",
+   "slug": "noctes-medicae-sive-de-abuso-medicinae-tractatus-accessit-freitag",
+   "page": 146,
+   "at": 1775,
+   "text": "Page 146"
+  },
+  {
+   "id": "L5",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 90,
+   "at": 2251,
+   "text": "Page 90"
+  },
+  {
+   "id": "L6",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 90,
+   "at": 2464,
+   "text": "Page 90"
+  },
+  {
+   "id": "L7",
+   "slug": "trei-tractat-philippi-theophrasti-paracelsi-bombast-des-paracelsus",
+   "page": 19,
+   "at": 2851,
+   "text": "Page 19"
+  },
+  {
+   "id": "L8",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 89,
+   "at": 3337,
+   "text": "Page 89"
+  },
+  {
+   "id": "L9",
+   "slug": "noctes-medicae-sive-de-abuso-medicinae-tractatus-accessit-freitag",
+   "page": 146,
+   "at": 3605,
+   "text": "Page 146"
+  },
+  {
+   "id": "L10",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 86,
+   "at": 4127,
+   "text": "Page 86"
+  },
+  {
+   "id": "L11",
+   "slug": "die-geschichte-der-neueren-philosophie-windelband",
+   "page": 66,
+   "at": 4511,
+   "text": "Page 66"
+  },
+  {
+   "id": "L12",
+   "slug": "griechische-zauberpapyri-und-das-gemeinde-und-dankgebet-im-schermann",
+   "page": 87,
+   "at": 4789,
+   "text": "Page 87"
+  },
+  {
+   "id": "L13",
+   "slug": "schreiben-von-warmen-oder-wildbaderen-paracelsus",
+   "page": 3,
+   "at": 5247,
+   "text": "Page 3"
+  },
+  {
+   "id": "L14",
+   "slug": "noctes-medicae-sive-de-abuso-medicinae-tractatus-accessit-freitag",
+   "page": 146,
+   "at": 5500,
+   "text": "Page 146"
+  },
+  {
+   "id": "L15",
+   "slug": "isis-revelata-an-inquiry-into-animal-magnetism-colquhoun",
+   "page": 20,
+   "at": 5917,
+   "text": "Page 20"
+  },
+  {
+   "id": "L16",
+   "slug": "report-of-the-experiments-on-animal-magnetism-1831-academy-academy",
+   "page": 12,
+   "at": 6197,
+   "text": "Page 12"
+  },
+  {
+   "id": "L17",
+   "slug": "ortus-medicinae-origin-of-medicine-helmont",
+   "page": 457,
+   "at": 6572,
+   "text": "Page 457"
+  },
+  {
+   "id": "L18",
+   "slug": "die-geschichte-der-neueren-philosophie-windelband",
+   "page": 66,
+   "at": 6786,
+   "text": "Page 66"
+  },
+  {
+   "id": "L19",
+   "slug": "opuscula-medica-inaudita-helmont",
+   "page": 130,
+   "at": 7166,
+   "text": "Page 130"
+  },
+  {
+   "id": "L20",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 86,
+   "at": 7574,
+   "text": "Page 86"
+  },
+  {
+   "id": "L21",
+   "slug": "griechische-zauberpapyri-und-das-gemeinde-und-dankgebet-im-schermann",
+   "page": 87,
+   "at": 7864,
+   "text": "Page 87"
+  },
+  {
+   "id": "L22",
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 86,
+   "at": 8339,
+   "text": "Page 86"
+  },
+  {
+   "id": "L23",
+   "slug": "noctes-medicae-sive-de-abuso-medicinae-tractatus-accessit-freitag",
+   "page": 145,
+   "at": 8771,
+   "text": "Page 145"
+  },
+  {
+   "id": "L24",
+   "slug": "oriatrike-or-physick-refined-chandler",
+   "page": 281,
+   "at": 9118,
+   "text": "Page 281"
+  }
+ ],
+ "q10:B": [],
+ "q11:B": [
+  {
+   "id": "L1",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von",
+   "page": 285,
+   "at": 903,
+   "text": "Page 285"
+  },
+  {
+   "id": "L2",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von",
+   "page": 285,
+   "at": 1285,
+   "text": "Page 285"
+  },
+  {
+   "id": "L3",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 953,
+   "at": 1769,
+   "text": "Page 953"
+  },
+  {
+   "id": "L4",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 180,
+   "at": 2031,
+   "text": "Page 180"
+  },
+  {
+   "id": "L5",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von",
+   "page": 285,
+   "at": 2623,
+   "text": "Page 285"
+  },
+  {
+   "id": "L6",
+   "slug": "de-sensu-rerum-et-magia-campanella",
+   "page": 369,
+   "at": 2854,
+   "text": "Page 369"
+  },
+  {
+   "id": "L7",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 953,
+   "at": 3340,
+   "text": "Page 953"
+  },
+  {
+   "id": "L8",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 180,
+   "at": 3602,
+   "text": "Page 180"
+  },
+  {
+   "id": "L9",
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264,
+   "at": 4152,
+   "text": "Page 264"
+  },
+  {
+   "id": "L10",
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264,
+   "at": 4424,
+   "text": "Page 264"
+  },
+  {
+   "id": "L11",
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264,
+   "at": 4703,
+   "text": "Page 264"
+  },
+  {
+   "id": "L12",
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264,
+   "at": 4978,
+   "text": "Page 264"
+  },
+  {
+   "id": "L13",
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264,
+   "at": 5295,
+   "text": "Page 264"
+  },
+  {
+   "id": "L14",
+   "slug": "history-of-the-macrocosm-and-microcosm-fludd",
+   "page": 731,
+   "at": 5790,
+   "text": "Page 731"
+  },
+  {
+   "id": "L15",
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 341,
+   "at": 6239,
+   "text": "Page 341"
+  },
+  {
+   "id": "L16",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 180,
+   "at": 6500,
+   "text": "Page 180"
+  },
+  {
+   "id": "L17",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 180,
+   "at": 6823,
+   "text": "Page 180"
+  },
+  {
+   "id": "L18",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 953,
+   "at": 7282,
+   "text": "Page 953"
+  },
+  {
+   "id": "L19",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 180,
+   "at": 7544,
+   "text": "Page 180"
+  },
+  {
+   "id": "L20",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 417,
+   "at": 8207,
+   "text": "Page 417"
+  }
+ ],
+ "q12:B": [
+  {
+   "id": "L1",
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 178,
+   "at": 558,
+   "text": "Page 178"
+  },
+  {
+   "id": "L2",
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 322,
+   "at": 851,
+   "text": "Page 322"
+  },
+  {
+   "id": "L3",
+   "slug": "deutsches-theatrum-chemicum-auf-welchem-der-beruhmtesten-s-n",
+   "page": 63,
+   "at": 1460,
+   "text": "Page 63"
+  },
+  {
+   "id": "L4",
+   "slug": "book-of-perfect-chemical-knowledge-czech-alchemy-ferrariensis",
+   "page": 108,
+   "at": 1721,
+   "text": "Page 108"
+  },
+  {
+   "id": "L5",
+   "slug": "book-of-perfect-chemical-knowledge-czech-alchemy-ferrariensis",
+   "page": 108,
+   "at": 1936,
+   "text": "Page 108"
+  },
+  {
+   "id": "L6",
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 264,
+   "at": 2219,
+   "text": "Page 264"
+  },
+  {
+   "id": "L7",
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 265,
+   "at": 2469,
+   "text": "Page 265"
+  },
+  {
+   "id": "L8",
+   "slug": "man-the-grand-symbol-of-the-mysteries-hall",
+   "page": 33,
+   "at": 2931,
+   "text": "Page 33"
+  },
+  {
+   "id": "L9",
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 322,
+   "at": 3634,
+   "text": "Page 322"
+  },
+  {
+   "id": "L10",
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 321,
+   "at": 3875,
+   "text": "Page 321"
+  },
+  {
+   "id": "L11",
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 321,
+   "at": 4137,
+   "text": "Page 321"
+  },
+  {
+   "id": "L12",
+   "slug": "secretioris-naturae-secretorum-scrutinium-chymicum-maier",
+   "page": 118,
+   "at": 4705,
+   "text": "Page 118"
+  },
+  {
+   "id": "L13",
+   "slug": "deutsches-theatrum-chemicum-auf-welchem-der-beruhmtesten-s-n",
+   "page": 63,
+   "at": 5735,
+   "text": "Page 63"
+  },
+  {
+   "id": "L14",
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 178,
+   "at": 6172,
+   "text": "Page 178"
+  },
+  {
+   "id": "L15",
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 265,
+   "at": 6451,
+   "text": "Page 265"
+  },
+  {
+   "id": "L16",
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 264,
+   "at": 6572,
+   "text": "Page 264"
+  }
+ ],
+ "q13:B": [
+  {
+   "id": "L1",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 21,
+   "at": 403,
+   "text": "Page 21"
+  },
+  {
+   "id": "L2",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 22,
+   "at": 849,
+   "text": "Page 22"
+  },
+  {
+   "id": "L3",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 21,
+   "at": 1174,
+   "text": "Page 21"
+  },
+  {
+   "id": "L4",
+   "slug": "corpus-hermeticum-pimander-ficino-translation-translator",
+   "page": 1,
+   "at": 1437,
+   "text": "Page 1"
+  },
+  {
+   "id": "L5",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 21,
+   "at": 1913,
+   "text": "Page 21"
+  },
+  {
+   "id": "L6",
+   "slug": "aureum-plane-que-divinu-m-opusculu-m-mercurij-trismegisti-hermes",
+   "page": 7,
+   "at": 2177,
+   "text": "Page 7"
+  },
+  {
+   "id": "L7",
+   "slug": "corpus-hermeticum-pimander-ficino-translation-translator",
+   "page": 1,
+   "at": 2590,
+   "text": "Page 1"
+  },
+  {
+   "id": "L8",
+   "slug": "corpus-hermeticum-pimander-ficino-translation-translator",
+   "page": 1,
+   "at": 2871,
+   "text": "Page 1"
+  },
+  {
+   "id": "L9",
+   "slug": "hermes-trismegistus-on-the-power-and-wisdom-of-god-ficino-translator",
+   "page": 7,
+   "at": 3144,
+   "text": "Page 7"
+  },
+  {
+   "id": "L10",
+   "slug": "aureum-plane-que-divinu-m-opusculu-m-mercurij-trismegisti-hermes",
+   "page": 7,
+   "at": 3918,
+   "text": "Page 7"
+  },
+  {
+   "id": "L11",
+   "slug": "corpus-hermeticum-pimander-ficino-translation-translator",
+   "page": 1,
+   "at": 4175,
+   "text": "Page 1"
+  },
+  {
+   "id": "L12",
+   "slug": "compendium-alchimiae-johannes",
+   "page": 20,
+   "at": 4563,
+   "text": "Page 20"
+  },
+  {
+   "id": "L13",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 22,
+   "at": 4932,
+   "text": "Page 22"
+  },
+  {
+   "id": "L14",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 23,
+   "at": 5404,
+   "text": "Page 23"
+  },
+  {
+   "id": "L15",
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 188,
+   "at": 5775,
+   "text": "Page 188"
+  },
+  {
+   "id": "L16",
+   "slug": "aureum-plane-que-divinu-m-opusculu-m-mercurij-trismegisti-hermes",
+   "page": 7,
+   "at": 6232,
+   "text": "Page 7"
+  },
+  {
+   "id": "L17",
+   "slug": "hermetis-trismegisti-de-dei-providentia-a-l-bsb-clm-18971-1-hermes",
+   "page": 44,
+   "at": 6460,
+   "text": "Page 44"
+  },
+  {
+   "id": "L18",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 22,
+   "at": 6905,
+   "text": "Page 22"
+  }
+ ],
+ "q14:B": [],
+ "q15:B": [
+  {
+   "id": "L1",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 13,
+   "at": 1180,
+   "text": "Page 13"
+  },
+  {
+   "id": "L2",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 13,
+   "at": 1562,
+   "text": "Page 13"
+  },
+  {
+   "id": "L3",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 14,
+   "at": 1777,
+   "text": "Page 14"
+  },
+  {
+   "id": "L4",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 14,
+   "at": 2004,
+   "text": "Page 14"
+  },
+  {
+   "id": "L5",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 13,
+   "at": 2365,
+   "text": "Page 13"
+  },
+  {
+   "id": "L6",
+   "slug": "dao-zong-liu-shu-six-daoist-classics-36-juan-li-shi-compiler",
+   "page": 87,
+   "at": 2589,
+   "text": "Page 87"
+  },
+  {
+   "id": "L7",
+   "slug": "dao-zong-liu-shu-six-daoist-classics-36-juan-li-shi-compiler",
+   "page": 80,
+   "at": 2863,
+   "text": "Page 80"
+  },
+  {
+   "id": "L8",
+   "slug": "daoyan-neiwai-mijue-quanshu-wuzhen-pian",
+   "page": 20,
+   "at": 3061,
+   "text": "Page 20"
+  },
+  {
+   "id": "L9",
+   "slug": "vivekachudamani-crest-jewel-of-discrimination-shankaracharya",
+   "page": 115,
+   "at": 3474,
+   "text": "Page 115"
+  },
+  {
+   "id": "L10",
+   "slug": "vivekachudamani-crest-jewel-of-discrimination-shankaracharya",
+   "page": 115,
+   "at": 3691,
+   "text": "Page 115"
+  },
+  {
+   "id": "L11",
+   "slug": "the-yoga-vasishtha-maharamayana-of-valmiki-vol-1-mitra-mitra",
+   "page": 335,
+   "at": 4453,
+   "text": "Page 335"
+  },
+  {
+   "id": "L12",
+   "slug": "vivekachudamani-crest-jewel-of-discrimination-shankaracharya",
+   "page": 114,
+   "at": 4928,
+   "text": "Page 114"
+  },
+  {
+   "id": "L13",
+   "slug": "vivekachudamani-crest-jewel-of-discrimination-shankaracharya",
+   "page": 116,
+   "at": 5168,
+   "text": "Page 116"
+  },
+  {
+   "id": "L14",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 13,
+   "at": 5611,
+   "text": "Page 13"
+  },
+  {
+   "id": "L15",
+   "slug": "vivekachudamani-crest-jewel-of-discrimination-shankaracharya",
+   "page": 116,
+   "at": 5863,
+   "text": "Page 116"
+  },
+  {
+   "id": "L16",
+   "slug": "daoyan-neiwai-mijue-quanshu-wuzhen-pian",
+   "page": 20,
+   "at": 6157,
+   "text": "Page 20"
+  },
+  {
+   "id": "L17",
+   "slug": "studies-in-saiva-siddhanta-pillai",
+   "page": 263,
+   "at": 6460,
+   "text": "Page 263"
+  },
+  {
+   "id": "L18",
+   "slug": "the-yoga-vasishtha-maharamayana-of-valmiki-vol-1-mitra-mitra",
+   "page": 335,
+   "at": 6716,
+   "text": "Page 335"
+  },
+  {
+   "id": "L19",
+   "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+   "page": 14,
+   "at": 7157,
+   "text": "Page 14"
+  },
+  {
+   "id": "L20",
+   "slug": "the-yoga-vasishtha-maharamayana-of-valmiki-vol-1-mitra-mitra",
+   "page": 334,
+   "at": 7432,
+   "text": "Page 334"
+  }
+ ],
+ "q16:B": [
+  {
+   "id": "L1",
+   "slug": "compendium-alchymisticum-novum-new-alchemical-compendium-faust",
+   "page": 1427,
+   "at": 940,
+   "text": "Page 1427"
+  },
+  {
+   "id": "L2",
+   "slug": "de-ortu-et-progressu-chemiae-dissertatio-borch",
+   "page": 699,
+   "at": 1480,
+   "text": "Page 699"
+  },
+  {
+   "id": "L3",
+   "slug": "pharmacopee-universelle-lemery",
+   "page": 18,
+   "at": 1935,
+   "text": "Page 18"
+  },
+  {
+   "id": "L4",
+   "slug": "hermetical-and-alchemical-writings-of-paracelsus-waite",
+   "page": 186,
+   "at": 2637,
+   "text": "Page 186"
+  },
+  {
+   "id": "L5",
+   "slug": "hermetical-and-alchemical-writings-of-paracelsus-waite",
+   "page": 185,
+   "at": 3118,
+   "text": "Page 185"
+  },
+  {
+   "id": "L6",
+   "slug": "hermetical-and-alchemical-writings-of-paracelsus-waite",
+   "page": 186,
+   "at": 3625,
+   "text": "Page 186"
+  },
+  {
+   "id": "L7",
+   "slug": "pharmacopee-universelle-lemery",
+   "page": 880,
+   "at": 4082,
+   "text": "Page 880"
+  },
+  {
+   "id": "L8",
+   "slug": "pharmacopee-universelle-lemery",
+   "page": 880,
+   "at": 4732,
+   "text": "Page 880"
+  },
+  {
+   "id": "L9",
+   "slug": "alchemiae-gebri-arabis-libri-hayyan",
+   "page": 100,
+   "at": 5198,
+   "text": "Page 100"
+  },
+  {
+   "id": "L10",
+   "slug": "crollius-revived-the-hermetic-wonder-tree",
+   "page": 97,
+   "at": 5674,
+   "text": "Page 97"
+  },
+  {
+   "id": "L11",
+   "slug": "hermetical-and-alchemical-writings-of-paracelsus-waite",
+   "page": 186,
+   "at": 6386,
+   "text": "Page 186"
+  }
+ ],
+ "q17:B": [
+  {
+   "id": "L1",
+   "slug": "the-secret-symbols-of-the-rosicrucians",
+   "page": 118,
+   "at": 510,
+   "text": "Page 118"
+  },
+  {
+   "id": "L2",
+   "slug": "tabula-smaragdina-trismegistus",
+   "page": 1,
+   "at": 996,
+   "text": "Page 1"
+  },
+  {
+   "id": "L3",
+   "slug": "tabula-smaragdina-trismegistus",
+   "page": 1,
+   "at": 1355,
+   "text": "Page 1"
+  },
+  {
+   "id": "L4",
+   "slug": "transcendental-magic-its-doctrine-and-ritual-waite",
+   "page": 138,
+   "at": 1676,
+   "text": "Page 138"
+  },
+  {
+   "id": "L5",
+   "slug": "tabula-smaragdina-trismegistus",
+   "page": 1,
+   "at": 2059,
+   "text": "Page 1"
+  },
+  {
+   "id": "L6",
+   "slug": "tabula-smaragdina-trismegistus",
+   "page": 1,
+   "at": 2300,
+   "text": "Page 1"
+  },
+  {
+   "id": "L7",
+   "slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-chemicum",
+   "page": 739,
+   "at": 2655,
+   "text": "Page 739"
+  },
+  {
+   "id": "L8",
+   "slug": "amphitheatrvm-sapientiae-aeternae-solius-verae-christiano-khunrath",
+   "page": 299,
+   "at": 3421,
+   "text": "Page 299"
+  },
+  {
+   "id": "L9",
+   "slug": "the-secret-symbols-of-the-rosicrucians",
+   "page": 114,
+   "at": 3893,
+   "text": "Page 114"
+  }
+ ],
+ "q18:B": [
+  {
+   "id": "L1",
+   "slug": "steganologia-steganographia-aucta-geheime-magische-schwenter",
+   "page": 205,
+   "at": 1105,
+   "text": "Page 205"
+  },
+  {
+   "id": "L2",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von",
+   "page": 465,
+   "at": 1489,
+   "text": "Page 465"
+  },
+  {
+   "id": "L3",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-a-consiliis-et-archivis-agrippa-von",
+   "page": 459,
+   "at": 1781,
+   "text": "Page 459"
+  },
+  {
+   "id": "L4",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-a-consiliis-et-archivis-agrippa-von",
+   "page": 459,
+   "at": 1983,
+   "text": "Page 459"
+  },
+  {
+   "id": "L5",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von",
+   "page": 465,
+   "at": 2388,
+   "text": "Page 465"
+  },
+  {
+   "id": "L6",
+   "slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von",
+   "page": 466,
+   "at": 2511,
+   "text": "Page 466"
+  },
+  {
+   "id": "L7",
+   "slug": "the-secret-tradition-in-freemasonry-waite",
+   "page": 94,
+   "at": 2982,
+   "text": "Page 94"
+  },
+  {
+   "id": "L8",
+   "slug": "polygraphie-1561-french-translator",
+   "page": 622,
+   "at": 3438,
+   "text": "Page 622"
+  },
+  {
+   "id": "L9",
+   "slug": "polygraphiae-libri-sex-ioannis-trithemii-abbatis-trithemius",
+   "page": 584,
+   "at": 3822,
+   "text": "Page 584"
+  },
+  {
+   "id": "L10",
+   "slug": "steganologia-steganographia-aucta-geheime-magische-schwenter",
+   "page": 205,
+   "at": 4181,
+   "text": "Page 205"
+  },
+  {
+   "id": "L11",
+   "slug": "polygraphiae-libri-sex-ioannis-trithemii-abbatis-trithemius",
+   "page": 584,
+   "at": 4614,
+   "text": "Page 584"
+  },
+  {
+   "id": "L12",
+   "slug": "polygraphiae-libri-sex-ioannis-trithemii-abbatis-trithemius",
+   "page": 584,
+   "at": 4848,
+   "text": "Page 584"
+  },
+  {
+   "id": "L13",
+   "slug": "de-furtivis-literarum-notis-vulgo-de-ziferis-libri-iii-della-porta",
+   "page": 117,
+   "at": 5565,
+   "text": "Page 117"
+  },
+  {
+   "id": "L14",
+   "slug": "de-furtivis-literarum-notis-vulgo-de-ziferis-libri-iii-della-porta",
+   "page": 118,
+   "at": 5685,
+   "text": "Page 118"
+  },
+  {
+   "id": "L15",
+   "slug": "de-occultis-literarum-notis-secret-writing-porta",
+   "page": 143,
+   "at": 6124,
+   "text": "Page 143"
+  },
+  {
+   "id": "L16",
+   "slug": "epitome-graecae-palaeographiae-et-de-recta-graeci-sermonis-piacentini",
+   "page": 103,
+   "at": 6393,
+   "text": "Page 103"
+  },
+  {
+   "id": "L17",
+   "slug": "steganographia-vindicata-reserata-et-illustrata-trithemius",
+   "page": 342,
+   "at": 6842,
+   "text": "Page 342"
+  },
+  {
+   "id": "L18",
+   "slug": "gold-und-rosenkreutzer-correspondenz-und-aufnahme-ropert-von-i3nv",
+   "page": 6,
+   "at": 7305,
+   "text": "Page 6"
+  },
+  {
+   "id": "L19",
+   "slug": "de-furtivis-literarum-notis-porta",
+   "page": 187,
+   "at": 7743,
+   "text": "Page 187"
+  },
+  {
+   "id": "L20",
+   "slug": "dictionnaire-mytho-hermetique-dans-lequel-on-trouve-les-pernety",
+   "page": 131,
+   "at": 8206,
+   "text": "Page 131"
+  },
+  {
+   "id": "L21",
+   "slug": "steganologia-steganographia-aucta-geheime-magische-schwenter",
+   "page": 199,
+   "at": 8766,
+   "text": "Page 199"
+  }
+ ],
+ "q19:B": [
+  {
+   "id": "L1",
+   "slug": "ficino-letters-third-manuscript-ficino",
+   "page": 212,
+   "at": 620,
+   "text": "Page 212"
+  },
+  {
+   "id": "L2",
+   "slug": "syntagma-musicum-tomus-i-musicae-artis-analecta-praetorius",
+   "page": 282,
+   "at": 825,
+   "text": "Page 282"
+  },
+  {
+   "id": "L3",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 159,
+   "at": 1316,
+   "text": "Page 159"
+  },
+  {
+   "id": "L4",
+   "slug": "ficino-letters-third-manuscript-ficino",
+   "page": 212,
+   "at": 1526,
+   "text": "Page 212"
+  },
+  {
+   "id": "L5",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 968,
+   "at": 2034,
+   "text": "Page 968"
+  },
+  {
+   "id": "L6",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 967,
+   "at": 2150,
+   "text": "Page 967"
+  },
+  {
+   "id": "L7",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 14,
+   "at": 2472,
+   "text": "Page 14"
+  },
+  {
+   "id": "L8",
+   "slug": "syntagma-musicum-tomus-i-musicae-artis-analecta-praetorius",
+   "page": 282,
+   "at": 2886,
+   "text": "Page 282"
+  },
+  {
+   "id": "L9",
+   "slug": "syntagma-musicum-tomus-i-musicae-artis-analecta-praetorius",
+   "page": 282,
+   "at": 3315,
+   "text": "Page 282"
+  },
+  {
+   "id": "L10",
+   "slug": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+   "page": 262,
+   "at": 3602,
+   "text": "Page 262"
+  },
+  {
+   "id": "L11",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 967,
+   "at": 4109,
+   "text": "Page 967"
+  },
+  {
+   "id": "L12",
+   "slug": "phonurgia-nova-kircher",
+   "page": 238,
+   "at": 4528,
+   "text": "Page 238"
+  },
+  {
+   "id": "L13",
+   "slug": "syntagma-musicum-tomus-i-musicae-artis-analecta-praetorius",
+   "page": 282,
+   "at": 4891,
+   "text": "Page 282"
+  },
+  {
+   "id": "L14",
+   "slug": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+   "page": 262,
+   "at": 5178,
+   "text": "Page 262"
+  },
+  {
+   "id": "L15",
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 14,
+   "at": 5814,
+   "text": "Page 14"
+  },
+  {
+   "id": "L16",
+   "slug": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+   "page": 262,
+   "at": 6221,
+   "text": "Page 262"
+  },
+  {
+   "id": "L17",
+   "slug": "syntagma-musicum-tomus-i-musicae-artis-analecta-praetorius",
+   "page": 857,
+   "at": 6747,
+   "text": "Page 857"
+  }
+ ],
+ "q20:B": [
+  {
+   "id": "L1",
+   "slug": "the-dead-sea-scrolls-translated-martinez",
+   "page": 317,
+   "at": 572,
+   "text": "Page 317"
+  },
+  {
+   "id": "L2",
+   "slug": "the-book-of-enoch-charles",
+   "page": 82,
+   "at": 1082,
+   "text": "Page 82"
+  },
+  {
+   "id": "L3",
+   "slug": "the-book-of-enoch-charles",
+   "page": 82,
+   "at": 1263,
+   "text": "Page 82"
+  },
+  {
+   "id": "L4",
+   "slug": "das-buch-henoch-henoch",
+   "page": 37,
+   "at": 1418,
+   "text": "Page 37"
+  },
+  {
+   "id": "L5",
+   "slug": "das-buch-henoch-henoch",
+   "page": 38,
+   "at": 1804,
+   "text": "Page 38"
+  },
+  {
+   "id": "L6",
+   "slug": "das-buch-henoch-henoch",
+   "page": 39,
+   "at": 1878,
+   "text": "Page 39"
+  },
+  {
+   "id": "L7",
+   "slug": "das-buch-henoch-henoch",
+   "page": 38,
+   "at": 2063,
+   "text": "Page 38"
+  },
+  {
+   "id": "L8",
+   "slug": "das-buch-henoch-henoch",
+   "page": 39,
+   "at": 2137,
+   "text": "Page 39"
+  },
+  {
+   "id": "L9",
+   "slug": "das-buch-henoch-henoch",
+   "page": 38,
+   "at": 2292,
+   "text": "Page 38"
+  },
+  {
+   "id": "L10",
+   "slug": "das-buch-henoch-henoch",
+   "page": 39,
+   "at": 2366,
+   "text": "Page 39"
+  },
+  {
+   "id": "L11",
+   "slug": "das-buch-henoch-henoch",
+   "page": 38,
+   "at": 2777,
+   "text": "Page 38"
+  },
+  {
+   "id": "L12",
+   "slug": "das-buch-henoch-henoch",
+   "page": 38,
+   "at": 2851,
+   "text": "Page 38"
+  },
+  {
+   "id": "L13",
+   "slug": "1-enoch-ethiopic-text-ed",
+   "page": 70,
+   "at": 3178,
+   "text": "Page 70"
+  },
+  {
+   "id": "L14",
+   "slug": "das-buch-henoch-henoch",
+   "page": 52,
+   "at": 3332,
+   "text": "Page 52"
+  },
+  {
+   "id": "L15",
+   "slug": "1-enoch-ethiopic-text-ed",
+   "page": 70,
+   "at": 3646,
+   "text": "Page 70"
+  },
+  {
+   "id": "L16",
+   "slug": "the-book-of-the-secrets-of-enoch-2-enoch-charles",
+   "page": 53,
+   "at": 3998,
+   "text": "Page 53"
+  },
+  {
+   "id": "L17",
+   "slug": "das-buch-henoch-henoch",
+   "page": 56,
+   "at": 4176,
+   "text": "Page 56"
+  },
+  {
+   "id": "L18",
+   "slug": "the-book-of-the-secrets-of-enoch-2-enoch-charles",
+   "page": 56,
+   "at": 4565,
+   "text": "Page 56"
+  },
+  {
+   "id": "L19",
+   "slug": "the-book-of-enoch-or-1-enoch-charles",
+   "page": 408,
+   "at": 4917,
+   "text": "Page 408"
+  },
+  {
+   "id": "L20",
+   "slug": "das-buch-henoch-henoch",
+   "page": 55,
+   "at": 5085,
+   "text": "Page 55"
+  },
+  {
+   "id": "L21",
+   "slug": "das-buch-henoch-henoch",
+   "page": 56,
+   "at": 5304,
+   "text": "Page 56"
+  },
+  {
+   "id": "L22",
+   "slug": "das-buch-henoch-henoch",
+   "page": 55,
+   "at": 5378,
+   "text": "Page 55"
+  },
+  {
+   "id": "L23",
+   "slug": "the-dead-sea-scrolls-translated-martinez",
+   "page": 316,
+   "at": 6275,
+   "text": "Page 316"
+  }
+ ],
+ "q21:B": [
+  {
+   "id": "L1",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 464,
+   "text": "Page 88"
+  },
+  {
+   "id": "L2",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 579,
+   "text": "Page 89"
+  },
+  {
+   "id": "L3",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 1133,
+   "text": "Page 88"
+  },
+  {
+   "id": "L4",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 1312,
+   "text": "Page 88"
+  },
+  {
+   "id": "L5",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90,
+   "at": 1427,
+   "text": "Page 90"
+  },
+  {
+   "id": "L6",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 1714,
+   "text": "Page 88"
+  },
+  {
+   "id": "L7",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 2010,
+   "text": "Page 88"
+  },
+  {
+   "id": "L8",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 2125,
+   "text": "Page 89"
+  },
+  {
+   "id": "L9",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 2511,
+   "text": "Page 88"
+  },
+  {
+   "id": "L10",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90,
+   "at": 2943,
+   "text": "Page 90"
+  },
+  {
+   "id": "L11",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 3058,
+   "text": "Page 89"
+  },
+  {
+   "id": "L12",
+   "slug": "ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel",
+   "page": 4,
+   "at": 3506,
+   "text": "Page 4"
+  },
+  {
+   "id": "L13",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 4194,
+   "text": "Page 88"
+  },
+  {
+   "id": "L14",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 4309,
+   "text": "Page 89"
+  },
+  {
+   "id": "L15",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 4686,
+   "text": "Page 89"
+  },
+  {
+   "id": "L16",
+   "slug": "narrische-weiszheit-und-weise-narrheit-oder-ein-hundert-so-becher",
+   "page": 170,
+   "at": 5207,
+   "text": "Page 170"
+  },
+  {
+   "id": "L17",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 5679,
+   "text": "Page 89"
+  }
+ ],
+ "q22:B": [
+  {
+   "id": "L1",
+   "slug": "outlines-of-mahayana-buddhism-suzuki",
+   "page": 189,
+   "at": 450,
+   "text": "Page 189"
+  },
+  {
+   "id": "L2",
+   "slug": "derge-tengyur-vol-40",
+   "page": 470,
+   "at": 1062,
+   "text": "Page 470"
+  },
+  {
+   "id": "L3",
+   "slug": "derge-tengyur-vol-85",
+   "page": 111,
+   "at": 1739,
+   "text": "Page 111"
+  },
+  {
+   "id": "L4",
+   "slug": "derge-tengyur-vol-82",
+   "page": 340,
+   "at": 1894,
+   "text": "Page 340"
+  },
+  {
+   "id": "L5",
+   "slug": "tantrik-texts-vol-vii-1919-woodroffe",
+   "page": 18,
+   "at": 2463,
+   "text": "Page 18"
+  },
+  {
+   "id": "L6",
+   "slug": "derge-kangyur-vol-81",
+   "page": 430,
+   "at": 2927,
+   "text": "Page 430"
+  },
+  {
+   "id": "L7",
+   "slug": "derge-tengyur-vol-40",
+   "page": 470,
+   "at": 3082,
+   "text": "Page 470"
+  }
+ ],
+ "q23:B": [
+  {
+   "id": "L1",
+   "slug": "la-magie-naturelle-secrets-et-miracles-de-nature-porta",
+   "page": 221,
+   "at": 437,
+   "text": "Page 221"
+  },
+  {
+   "id": "L2",
+   "slug": "magia-naturalis-1619-latin-porta",
+   "page": 560,
+   "at": 647,
+   "text": "Page 560"
+  },
+  {
+   "id": "L3",
+   "slug": "magia-naturalis-1619-latin-porta",
+   "page": 560,
+   "at": 1297,
+   "text": "Page 560"
+  },
+  {
+   "id": "L4",
+   "slug": "magia-naturalis-1619-latin-porta",
+   "page": 560,
+   "at": 1910,
+   "text": "Page 560"
+  },
+  {
+   "id": "L5",
+   "slug": "maori-tales-and-legends",
+   "page": 211,
+   "at": 2465,
+   "text": "Page 211"
+  },
+  {
+   "id": "L6",
+   "slug": "maori-tales-and-legends",
+   "page": 211,
+   "at": 2730,
+   "text": "Page 211"
+  },
+  {
+   "id": "L7",
+   "slug": "philippine-folk-tales-cole",
+   "page": 147,
+   "at": 3158,
+   "text": "Page 147"
+  },
+  {
+   "id": "L8",
+   "slug": "an-account-of-the-manners-and-customs-of-the-modern-lane",
+   "page": 64,
+   "at": 3623,
+   "text": "Page 64"
+  },
+  {
+   "id": "L9",
+   "slug": "religion-and-folklore-of-northern-india-crooke",
+   "page": 305,
+   "at": 4107,
+   "text": "Page 305"
+  },
+  {
+   "id": "L10",
+   "slug": "sancai-tuhui-juan-33",
+   "page": 44,
+   "at": 4571,
+   "text": "Page 44"
+  },
+  {
+   "id": "L11",
+   "slug": "an-account-of-the-manners-and-customs-of-the-modern-lane",
+   "page": 64,
+   "at": 5000,
+   "text": "Page 64"
+  },
+  {
+   "id": "L12",
+   "slug": "the-life-of-a-south-african-tribe-vol-1-the-social-life-junod",
+   "page": 193,
+   "at": 5479,
+   "text": "Page 193"
+  },
+  {
+   "id": "L13",
+   "slug": "did-jesus-live-100-bc-an-enquiry-into-the-talmud-jesus-stories-the-tol",
+   "page": 189,
+   "at": 5905,
+   "text": "Page 189"
+  },
+  {
+   "id": "L14",
+   "slug": "pagan-races-of-the-malay-peninsula-vol-1-skeat",
+   "page": 564,
+   "at": 6269,
+   "text": "Page 564"
+  }
+ ],
+ "q24:B": [
+  {
+   "id": "L1",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 190,
+   "at": 1043,
+   "text": "Page 190"
+  },
+  {
+   "id": "L2",
+   "slug": "athanasii-kircheri-magnes-sive-de-arte-magnetica-opus-kircher",
+   "page": 836,
+   "at": 1313,
+   "text": "Page 836"
+  },
+  {
+   "id": "L3",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 213,
+   "at": 1939,
+   "text": "Page 213"
+  },
+  {
+   "id": "L4",
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 390,
+   "at": 2345,
+   "text": "Page 390"
+  },
+  {
+   "id": "L5",
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 241,
+   "at": 2460,
+   "text": "Page 241"
+  },
+  {
+   "id": "L6",
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 241,
+   "at": 2714,
+   "text": "Page 241"
+  },
+  {
+   "id": "L7",
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 241,
+   "at": 2948,
+   "text": "Page 241"
+  },
+  {
+   "id": "L8",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 214,
+   "at": 3209,
+   "text": "Page 214"
+  },
+  {
+   "id": "L9",
+   "slug": "history-of-the-macrocosm-and-microcosm-fludd",
+   "page": 731,
+   "at": 3951,
+   "text": "Page 731"
+  },
+  {
+   "id": "L10",
+   "slug": "utriusque-cosmi-historia-tomus-primus-de-macrocosmi-fludd",
+   "page": 92,
+   "at": 4200,
+   "text": "Page 92"
+  },
+  {
+   "id": "L11",
+   "slug": "history-of-the-macrocosm-and-microcosm-fludd",
+   "page": 731,
+   "at": 4631,
+   "text": "Page 731"
+  },
+  {
+   "id": "L12",
+   "slug": "de-sensu-rerum-et-magia-campanella",
+   "page": 329,
+   "at": 5208,
+   "text": "Page 329"
+  },
+  {
+   "id": "L13",
+   "slug": "de-sensu-rerum-et-magia-campanella",
+   "page": 329,
+   "at": 5505,
+   "text": "Page 329"
+  },
+  {
+   "id": "L14",
+   "slug": "the-astral-plane-its-scenery-inhabitants-and-phenomena-leadbeater",
+   "page": 118,
+   "at": 6083,
+   "text": "Page 118"
+  },
+  {
+   "id": "L15",
+   "slug": "keely-and-his-discoveries-bloomfield-moore",
+   "page": 397,
+   "at": 6581,
+   "text": "Page 397"
+  },
+  {
+   "id": "L16",
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 241,
+   "at": 7164,
+   "text": "Page 241"
+  },
+  {
+   "id": "L17",
+   "slug": "history-of-the-macrocosm-and-microcosm-fludd",
+   "page": 721,
+   "at": 7531,
+   "text": "Page 721"
+  }
+ ],
+ "q25:B": [
+  {
+   "id": "L1",
+   "slug": "coloquios-dos-simples-e-drogas-da-india-orta",
+   "page": 171,
+   "at": 317,
+   "text": "Page 171"
+  },
+  {
+   "id": "L2",
+   "slug": "the-history-of-chess-from-the-time-of-the-early-invention-forbes",
+   "page": 17,
+   "at": 584,
+   "text": "Page 17"
+  },
+  {
+   "id": "L3",
+   "slug": "the-history-of-chess-from-the-time-of-the-early-invention-forbes",
+   "page": 17,
+   "at": 1033,
+   "text": "Page 17"
+  },
+  {
+   "id": "L4",
+   "slug": "a-history-of-chess-murray",
+   "page": 9,
+   "at": 1231,
+   "text": "Page 9"
+  },
+  {
+   "id": "L5",
+   "slug": "coloquios-dos-simples-e-drogas-da-india-orta",
+   "page": 171,
+   "at": 1681,
+   "text": "Page 171"
+  },
+  {
+   "id": "L6",
+   "slug": "hitopadesha-a-collection-of-fables-and-tales-in-sanskrit-vishnusarma",
+   "page": 375,
+   "at": 1943,
+   "text": "Page 375"
+  },
+  {
+   "id": "L7",
+   "slug": "coloquios-dos-simples-e-drogas-da-india-orta",
+   "page": 171,
+   "at": 2263,
+   "text": "Page 171"
+  },
+  {
+   "id": "L8",
+   "slug": "a-history-of-chess-murray",
+   "page": 9,
+   "at": 2587,
+   "text": "Page 9"
+  },
+  {
+   "id": "L9",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 202,
+   "at": 3018,
+   "text": "Page 202"
+  },
+  {
+   "id": "L10",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 201,
+   "at": 3132,
+   "text": "Page 201"
+  },
+  {
+   "id": "L11",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 202,
+   "at": 3333,
+   "text": "Page 202"
+  },
+  {
+   "id": "L12",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 203,
+   "at": 3447,
+   "text": "Page 203"
+  },
+  {
+   "id": "L13",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 207,
+   "at": 3988,
+   "text": "Page 207"
+  },
+  {
+   "id": "L14",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 202,
+   "at": 4362,
+   "text": "Page 202"
+  },
+  {
+   "id": "L15",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 201,
+   "at": 4476,
+   "text": "Page 201"
+  },
+  {
+   "id": "L16",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 202,
+   "at": 4937,
+   "text": "Page 202"
+  },
+  {
+   "id": "L17",
+   "slug": "book-of-chess-its-problems-and-its-subtleties-1257-anonymous",
+   "page": 46,
+   "at": 5051,
+   "text": "Page 46"
+  },
+  {
+   "id": "L18",
+   "slug": "a-history-of-chess-murray",
+   "page": 9,
+   "at": 5542,
+   "text": "Page 9"
+  },
+  {
+   "id": "L19",
+   "slug": "sancai-tuhui-juan-65",
+   "page": 60,
+   "at": 5892,
+   "text": "Page 60"
+  },
+  {
+   "id": "L20",
+   "slug": "games-ancient-and-oriental-and-how-to-play-them-falkener",
+   "page": 7,
+   "at": 6106,
+   "text": "Page 7"
+  },
+  {
+   "id": "L21",
+   "slug": "libro-de-los-juegos-book-of-games-sabio",
+   "page": 205,
+   "at": 6512,
+   "text": "Page 205"
+  },
+  {
+   "id": "L22",
+   "slug": "libro-de-los-juegos-book-of-games-sabio",
+   "page": 187,
+   "at": 6869,
+   "text": "Page 187"
+  }
+ ],
+ "q26:B": [
+  {
+   "id": "L1",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 463,
+   "text": "Page 15"
+  },
+  {
+   "id": "L2",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 863,
+   "text": "Page 15"
+  },
+  {
+   "id": "L3",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 1266,
+   "text": "Page 15"
+  },
+  {
+   "id": "L4",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 1610,
+   "text": "Page 15"
+  },
+  {
+   "id": "L5",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 2142,
+   "text": "Page 15"
+  },
+  {
+   "id": "L6",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 2367,
+   "text": "Page 15"
+  },
+  {
+   "id": "L7",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 3158,
+   "text": "Page 15"
+  },
+  {
+   "id": "L8",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 16,
+   "at": 3826,
+   "text": "Page 16"
+  }
+ ],
+ "q27:B": [
+  {
+   "id": "L1",
+   "slug": "nanhua-jing-jue-zhuangzi-with-guo-xiang-commentary-zhuangzi",
+   "page": 124,
+   "at": 839,
+   "text": "Page 124"
+  },
+  {
+   "id": "L2",
+   "slug": "nanhua-jing-jue-zhuangzi-with-guo-xiang-commentary-zhuangzi",
+   "page": 124,
+   "at": 1227,
+   "text": "Page 124"
+  },
+  {
+   "id": "L3",
+   "slug": "nanhua-jing-jue-zhuangzi-with-guo-xiang-commentary-zhuangzi",
+   "page": 124,
+   "at": 1619,
+   "text": "Page 124"
+  },
+  {
+   "id": "L4",
+   "slug": "nanhua-jing-jue-zhuangzi-with-guo-xiang-commentary-zhuangzi",
+   "page": 125,
+   "at": 1732,
+   "text": "Page 125"
+  },
+  {
+   "id": "L5",
+   "slug": "nanhua-jing-jue-zhuangzi-with-guo-xiang-commentary-zhuangzi",
+   "page": 124,
+   "at": 2179,
+   "text": "Page 124"
+  },
+  {
+   "id": "L6",
+   "slug": "nanhua-jing-jue-zhuangzi-with-guo-xiang-commentary-zhuangzi",
+   "page": 125,
+   "at": 2292,
+   "text": "Page 125"
+  },
+  {
+   "id": "L7",
+   "slug": "zhuangzi-with-commentary-vol-2-zhuangzi",
+   "page": 8,
+   "at": 2774,
+   "text": "Page 8"
+  },
+  {
+   "id": "L8",
+   "slug": "rasa-il-ikhwan-al-safa-epistles-of-the-brethren-of-purity-al-safa",
+   "page": 160,
+   "at": 3508,
+   "text": "Page 160"
+  },
+  {
+   "id": "L9",
+   "slug": "rasa-il-ikhwan-al-safa-epistles-of-the-brethren-of-purity-al-safa",
+   "page": 160,
+   "at": 3932,
+   "text": "Page 160"
+  },
+  {
+   "id": "L10",
+   "slug": "die-philosophie-der-araber-im-x-jahrhundert-vol-5-dieterici",
+   "page": 46,
+   "at": 4537,
+   "text": "Page 46"
+  },
+  {
+   "id": "L11",
+   "slug": "rasa-il-ikhwan-al-safa-epistles-of-the-brethren-of-purity-al-safa",
+   "page": 58,
+   "at": 5004,
+   "text": "Page 58"
+  }
+ ],
+ "q28:B": [
+  {
+   "id": "L1",
+   "slug": "confessions-hippo",
+   "page": 122,
+   "at": 1126,
+   "text": "Page 122"
+  },
+  {
+   "id": "L2",
+   "slug": "de-summo-bono-isidorus-hispalensis-1",
+   "page": 117,
+   "at": 2012,
+   "text": "Page 117"
+  },
+  {
+   "id": "L3",
+   "slug": "quintilian-institutio-oratoria-vol-iv-loeb-quintilian",
+   "page": 243,
+   "at": 2590,
+   "text": "Page 243"
+  },
+  {
+   "id": "L4",
+   "slug": "memory-culture-atkinson",
+   "page": 45,
+   "at": 3313,
+   "text": "Page 45"
+  },
+  {
+   "id": "L5",
+   "slug": "maximos-the-confessor-treatises-and-letters-cambridge-confessor",
+   "page": 161,
+   "at": 3861,
+   "text": "Page 161"
+  },
+  {
+   "id": "L6",
+   "slug": "dissertatio-solemnis-de-philosophia-silentii-schneider",
+   "page": 3,
+   "at": 4315,
+   "text": "Page 3"
+  }
+ ],
+ "q29:B": [
+  {
+   "id": "L1",
+   "slug": "de-insomniis-ed-andreas-brentius-hippocrates",
+   "page": 16,
+   "at": 633,
+   "text": "Page 16"
+  },
+  {
+   "id": "L2",
+   "slug": "discours-et-histoires-des-spectres-loyer",
+   "page": 450,
+   "at": 843,
+   "text": "Page 450"
+  },
+  {
+   "id": "L3",
+   "slug": "claudii-galeni-opera-omnia-vol-17-pt-1-ed",
+   "page": 224,
+   "at": 1288,
+   "text": "Page 224"
+  },
+  {
+   "id": "L4",
+   "slug": "die-philosophie-der-alten-wiederkommend-in-der-guldenen-oetinger",
+   "page": 147,
+   "at": 1549,
+   "text": "Page 147"
+  },
+  {
+   "id": "L5",
+   "slug": "claudii-galeni-opera-omnia-vol-17-pt-1-ed",
+   "page": 224,
+   "at": 2182,
+   "text": "Page 224"
+  },
+  {
+   "id": "L6",
+   "slug": "constantini-africani-opera-vol-ii-africanus",
+   "page": 375,
+   "at": 2400,
+   "text": "Page 375"
+  },
+  {
+   "id": "L7",
+   "slug": "claudii-galeni-opera-omnia-vol-17-pt-1-ed",
+   "page": 224,
+   "at": 2774,
+   "text": "Page 224"
+  },
+  {
+   "id": "L8",
+   "slug": "opera-omnia-vol-i-galen",
+   "page": 189,
+   "at": 2966,
+   "text": "Page 189"
+  },
+  {
+   "id": "L9",
+   "slug": "claudii-galeni-opera-omnia-vol-17-pt-1-ed",
+   "page": 224,
+   "at": 3296,
+   "text": "Page 224"
+  },
+  {
+   "id": "L10",
+   "slug": "cl-galeni-pergameni-ars-medica-galen",
+   "page": 182,
+   "at": 3485,
+   "text": "Page 182"
+  },
+  {
+   "id": "L11",
+   "slug": "constantini-africani-opera-vol-ii-africanus",
+   "page": 375,
+   "at": 3872,
+   "text": "Page 375"
+  },
+  {
+   "id": "L12",
+   "slug": "de-secretis-mulierum-et-de-virtutibus-herbarum-magnus",
+   "page": 343,
+   "at": 4109,
+   "text": "Page 343"
+  },
+  {
+   "id": "L13",
+   "slug": "constantini-africani-opera-vol-ii-africanus",
+   "page": 375,
+   "at": 4612,
+   "text": "Page 375"
+  },
+  {
+   "id": "L14",
+   "slug": "discours-et-histoires-des-spectres-loyer",
+   "page": 450,
+   "at": 4823,
+   "text": "Page 450"
+  },
+  {
+   "id": "L15",
+   "slug": "constantini-africani-opera-vol-ii-africanus",
+   "page": 375,
+   "at": 5159,
+   "text": "Page 375"
+  },
+  {
+   "id": "L16",
+   "slug": "ripa-iconologia-1603-ripa",
+   "page": 103,
+   "at": 5618,
+   "text": "Page 103"
+  },
+  {
+   "id": "L17",
+   "slug": "cl-galeni-pergameni-ars-medica-galen",
+   "page": 182,
+   "at": 6142,
+   "text": "Page 182"
+  },
+  {
+   "id": "L18",
+   "slug": "cl-galeni-pergameni-ars-medica-galen",
+   "page": 182,
+   "at": 6427,
+   "text": "Page 182"
+  },
+  {
+   "id": "L19",
+   "slug": "discours-et-histoires-des-spectres-loyer",
+   "page": 450,
+   "at": 6811,
+   "text": "Page 450"
+  },
+  {
+   "id": "L20",
+   "slug": "discours-et-histoires-des-spectres-loyer",
+   "page": 450,
+   "at": 7111,
+   "text": "Page 450"
+  },
+  {
+   "id": "L21",
+   "slug": "ripa-iconologia-1603-ripa",
+   "page": 106,
+   "at": 7562,
+   "text": "Page 106"
+  }
+ ],
+ "q30:B": [
+  {
+   "id": "L1",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 102,
+   "at": 675,
+   "text": "Page 102"
+  },
+  {
+   "id": "L2",
+   "slug": "de-providentia-fato-1655-hierocles",
+   "page": 182,
+   "at": 889,
+   "text": "Page 182"
+  },
+  {
+   "id": "L3",
+   "slug": "iamblichus-life-of-pythagoras-iamblichus",
+   "page": 220,
+   "at": 1463,
+   "text": "Page 220"
+  },
+  {
+   "id": "L4",
+   "slug": "the-history-of-philosophy-vol-iii-pythagoras-italick-school-stanley",
+   "page": 143,
+   "at": 1728,
+   "text": "Page 143"
+  },
+  {
+   "id": "L5",
+   "slug": "the-history-of-philosophy-vol-iii-pythagoras-italick-school-stanley",
+   "page": 143,
+   "at": 2344,
+   "text": "Page 143"
+  },
+  {
+   "id": "L6",
+   "slug": "de-mensibus-on-the-months-roether",
+   "page": 210,
+   "at": 2550,
+   "text": "Page 210"
+  },
+  {
+   "id": "L7",
+   "slug": "de-providentia-fato-1655-hierocles",
+   "page": 179,
+   "at": 2823,
+   "text": "Page 179"
+  },
+  {
+   "id": "L8",
+   "slug": "the-history-of-philosophy-vol-iii-pythagoras-italick-school-stanley",
+   "page": 143,
+   "at": 3082,
+   "text": "Page 143"
+  },
+  {
+   "id": "L9",
+   "slug": "missus-tertius-ex-pythagorae-symbolis-iam-proponitur-rabener",
+   "page": 10,
+   "at": 3434,
+   "text": "Page 10"
+  },
+  {
+   "id": "L10",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 102,
+   "at": 3968,
+   "text": "Page 102"
+  },
+  {
+   "id": "L11",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 101,
+   "at": 4087,
+   "text": "Page 101"
+  },
+  {
+   "id": "L12",
+   "slug": "the-history-of-philosophy-vol-iii-pythagoras-italick-school-stanley",
+   "page": 143,
+   "at": 4377,
+   "text": "Page 143"
+  },
+  {
+   "id": "L13",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 102,
+   "at": 4812,
+   "text": "Page 102"
+  },
+  {
+   "id": "L14",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 102,
+   "at": 5273,
+   "text": "Page 102"
+  },
+  {
+   "id": "L15",
+   "slug": "de-providentia-fato-1655-hierocles",
+   "page": 178,
+   "at": 5487,
+   "text": "Page 178"
+  },
+  {
+   "id": "L16",
+   "slug": "historiae-commentitiae-dyscolus",
+   "page": 183,
+   "at": 5663,
+   "text": "Page 183"
+  },
+  {
+   "id": "L17",
+   "slug": "the-complete-pythagoras-a-compilation-of-pythagorean-texts-trans",
+   "page": 43,
+   "at": 6019,
+   "text": "Page 43"
+  },
+  {
+   "id": "L18",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 102,
+   "at": 6471,
+   "text": "Page 102"
+  },
+  {
+   "id": "L19",
+   "slug": "missus-tertius-ex-pythagorae-symbolis-iam-proponitur-rabener",
+   "page": 10,
+   "at": 6749,
+   "text": "Page 10"
+  },
+  {
+   "id": "L20",
+   "slug": "de-providentia-fato-1655-hierocles",
+   "page": 182,
+   "at": 6956,
+   "text": "Page 182"
+  },
+  {
+   "id": "L21",
+   "slug": "de-providentia-fato-1655-hierocles",
+   "page": 178,
+   "at": 7479,
+   "text": "Page 178"
+  },
+  {
+   "id": "L22",
+   "slug": "life-of-pythagoras-with-symbols-and-golden-verses-hierocles-trans",
+   "page": 103,
+   "at": 7732,
+   "text": "Page 103"
+  },
+  {
+   "id": "L23",
+   "slug": "missus-tertius-ex-pythagorae-symbolis-iam-proponitur-rabener",
+   "page": 10,
+   "at": 8157,
+   "text": "Page 10"
+  },
+  {
+   "id": "L24",
+   "slug": "three-books-of-occult-philosophy-agrippa",
+   "page": 322,
+   "at": 9017,
+   "text": "Page 322"
+  }
+ ],
+ "q31:B": [
+  {
+   "id": "L1",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 396,
+   "text": "Page 50"
+  },
+  {
+   "id": "L2",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 981,
+   "text": "Page 50"
+  },
+  {
+   "id": "L3",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 1101,
+   "text": "Page 51"
+  },
+  {
+   "id": "L4",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 2071,
+   "text": "Page 51"
+  },
+  {
+   "id": "L5",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 2560,
+   "text": "Page 51"
+  },
+  {
+   "id": "L6",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 2820,
+   "text": "Page 88"
+  },
+  {
+   "id": "L7",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 3275,
+   "text": "Page 51"
+  },
+  {
+   "id": "L8",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 3967,
+   "text": "Page 51"
+  },
+  {
+   "id": "L9",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 51,
+   "at": 4351,
+   "text": "Page 51"
+  },
+  {
+   "id": "L10",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 5019,
+   "text": "Page 50"
+  },
+  {
+   "id": "L11",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 5235,
+   "text": "Page 50"
+  },
+  {
+   "id": "L12",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 5533,
+   "text": "Page 50"
+  },
+  {
+   "id": "L13",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 5783,
+   "text": "Page 50"
+  }
+ ],
+ "q32:B": [
+  {
+   "id": "L1",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 399,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L2",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2230,
+   "at": 534,
+   "text": "Page 2230"
+  },
+  {
+   "id": "L3",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 998,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L4",
+   "slug": "the-platonist-87-feb-ed",
+   "page": 57,
+   "at": 1204,
+   "text": "Page 57"
+  },
+  {
+   "id": "L5",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 1633,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L6",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 2190,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L7",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 2490,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L8",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 2870,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L9",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 3262,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L10",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 3660,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L11",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 3960,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L12",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 4182,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L13",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 4576,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L14",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 4943,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L15",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 5124,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L16",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 5532,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L17",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 5832,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L18",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 6032,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L19",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2229,
+   "at": 6466,
+   "text": "Page 2229"
+  },
+  {
+   "id": "L20",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-s-n-2",
+   "page": 1151,
+   "at": 6766,
+   "text": "Page 1151"
+  },
+  {
+   "id": "L21",
+   "slug": "kabbalistic-ilan-anonymous",
+   "page": 2,
+   "at": 7223,
+   "text": "Page 2"
+  },
+  {
+   "id": "L22",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2230,
+   "at": 7480,
+   "text": "Page 2230"
+  },
+  {
+   "id": "L23",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page": 2230,
+   "at": 7786,
+   "text": "Page 2230"
+  },
+  {
+   "id": "L24",
+   "slug": "tree-of-life-by-hayyim-vital-with-glosses-and-prefaces-anonymous",
+   "page": 2,
+   "at": 9097,
+   "text": "Page 2"
+  }
+ ],
+ "q33:B": [
+  {
+   "id": "L1",
+   "slug": "a-praise-poem-of-shulgi-shulgi-b",
+   "page": 12,
+   "at": 1557,
+   "text": "Page 12"
+  },
+  {
+   "id": "L2",
+   "slug": "a-praise-poem-of-shulgi-shulgi-b",
+   "page": 12,
+   "at": 1870,
+   "text": "Page 12"
+  },
+  {
+   "id": "L3",
+   "slug": "a-praise-poem-of-shulgi-shulgi-b",
+   "page": 12,
+   "at": 2198,
+   "text": "Page 12"
+  },
+  {
+   "id": "L4",
+   "slug": "2-m-tullii-ciceronis-de-philosophia-volumen-secundum-idest-cicero",
+   "page": 170,
+   "at": 2800,
+   "text": "Page 170"
+  },
+  {
+   "id": "L5",
+   "slug": "mt-ciceronis-de-philosophia-volumen-primum-secundo-volumine-",
+   "page": 172,
+   "at": 3084,
+   "text": "Page 172"
+  },
+  {
+   "id": "L6",
+   "slug": "2-m-tullii-ciceronis-de-philosophia-volumen-secundum-idest-cicero",
+   "page": 170,
+   "at": 3525,
+   "text": "Page 170"
+  },
+  {
+   "id": "L7",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 53,
+   "at": 4358,
+   "text": "Page 53"
+  },
+  {
+   "id": "L8",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 53,
+   "at": 4601,
+   "text": "Page 53"
+  },
+  {
+   "id": "L9",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 53,
+   "at": 4920,
+   "text": "Page 53"
+  },
+  {
+   "id": "L10",
+   "slug": "a-praise-poem-of-shulgi-shulgi-b",
+   "page": 12,
+   "at": 5355,
+   "text": "Page 12"
+  },
+  {
+   "id": "L11",
+   "slug": "2-m-tullii-ciceronis-de-philosophia-volumen-secundum-idest-cicero",
+   "page": 170,
+   "at": 5667,
+   "text": "Page 170"
+  },
+  {
+   "id": "L12",
+   "slug": "a-history-of-magic-and-experimental-science-vol-i-during-thorndike",
+   "page": 53,
+   "at": 6037,
+   "text": "Page 53"
+  },
+  {
+   "id": "L13",
+   "slug": "the-religion-of-babylonia-and-assyria",
+   "page": 374,
+   "at": 6523,
+   "text": "Page 374"
+  }
+ ],
+ "q34:B": [
+  {
+   "id": "L1",
+   "slug": "memory-how-to-develop-train-and-use-it-atkinson",
+   "page": 47,
+   "at": 843,
+   "text": "Page 47"
+  },
+  {
+   "id": "L2",
+   "slug": "rhetorica-ad-c-herennium-cicero",
+   "page": 57,
+   "at": 1428,
+   "text": "Page 57"
+  },
+  {
+   "id": "L3",
+   "slug": "raymundi-lulli-ars-brevis-imago-artis-generalis-logica-brevis",
+   "page": 111,
+   "at": 1863,
+   "text": "Page 111"
+  },
+  {
+   "id": "L4",
+   "slug": "quintilian-institutio-oratoria-vol-iv-loeb-quintilian",
+   "page": 234,
+   "at": 2349,
+   "text": "Page 234"
+  },
+  {
+   "id": "L5",
+   "slug": "rhetorica-ad-c-herennium-cicero",
+   "page": 58,
+   "at": 3040,
+   "text": "Page 58"
+  },
+  {
+   "id": "L6",
+   "slug": "via-regia-ad-omnes-scientias-et-artes-hoc-est-ars-knittel",
+   "page": 255,
+   "at": 3505,
+   "text": "Page 255"
+  },
+  {
+   "id": "L7",
+   "slug": "history-of-the-microcosm-volume-ii-fludd",
+   "page": 308,
+   "at": 3974,
+   "text": "Page 308"
+  },
+  {
+   "id": "L8",
+   "slug": "the-latin-works-of-giordano-bruno-bruno",
+   "page": 164,
+   "at": 4630,
+   "text": "Page 164"
+  },
+  {
+   "id": "L9",
+   "slug": "iordani-bruni-nolani-de-imaginum-signorum-amp-idearum-bruno",
+   "page": 69,
+   "at": 4887,
+   "text": "Page 69"
+  },
+  {
+   "id": "L10",
+   "slug": "history-of-the-microcosm-volume-ii-fludd",
+   "page": 299,
+   "at": 5299,
+   "text": "Page 299"
+  },
+  {
+   "id": "L11",
+   "slug": "history-of-both-worlds-microcosm-fludd",
+   "page": 337,
+   "at": 5505,
+   "text": "Page 337"
+  },
+  {
+   "id": "L12",
+   "slug": "memoriae-artificiosae-concentratae-decalogus-sive-decem-herseler",
+   "page": 24,
+   "at": 5966,
+   "text": "Page 24"
+  }
+ ],
+ "q35:B": [
+  {
+   "id": "L1",
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 203,
+   "at": 368,
+   "text": "Page 203"
+  },
+  {
+   "id": "L2",
+   "slug": "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3",
+   "page": 179,
+   "at": 955,
+   "text": "Page 179"
+  },
+  {
+   "id": "L3",
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 204,
+   "at": 1199,
+   "text": "Page 204"
+  },
+  {
+   "id": "L4",
+   "slug": "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3",
+   "page": 179,
+   "at": 1668,
+   "text": "Page 179"
+  },
+  {
+   "id": "L5",
+   "slug": "der-sich-aller-welt-zeigende-konig-in-seinem-purpur-mantel-fleischer",
+   "page": 7,
+   "at": 1959,
+   "text": "Page 7"
+  },
+  {
+   "id": "L6",
+   "slug": "der-sich-aller-welt-zeigende-konig-in-seinem-purpur-mantel-fleischer",
+   "page": 7,
+   "at": 2289,
+   "text": "Page 7"
+  },
+  {
+   "id": "L7",
+   "slug": "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3",
+   "page": 179,
+   "at": 2706,
+   "text": "Page 179"
+  },
+  {
+   "id": "L8",
+   "slug": "alchymia-comprehensive-treatise-on-alchemy-libavius",
+   "page": 8,
+   "at": 3262,
+   "text": "Page 8"
+  },
+  {
+   "id": "L9",
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 200,
+   "at": 3655,
+   "text": "Page 200"
+  },
+  {
+   "id": "L10",
+   "slug": "les-fables-egyptiennes-et-grecques-devoilees-amp-reduites-s-n-2",
+   "page": 383,
+   "at": 3922,
+   "text": "Page 383"
+  },
+  {
+   "id": "L11",
+   "slug": "viridarium-chymicum-figuris-cupro-incisis-adornatum-et-stoltzius-von-2",
+   "page": 330,
+   "at": 4361,
+   "text": "Page 330"
+  },
+  {
+   "id": "L12",
+   "slug": "viridarium-chymicum-figuris-cupro-incisis-adornatum-et-stoltzius-von-2",
+   "page": 330,
+   "at": 4617,
+   "text": "Page 330"
+  },
+  {
+   "id": "L13",
+   "slug": "alchemical-anthology-17th-century-german-ms-various",
+   "page": 11,
+   "at": 5038,
+   "text": "Page 11"
+  },
+  {
+   "id": "L14",
+   "slug": "a-history-of-magic-and-experimental-science-vol-ii-thorndike",
+   "page": 231,
+   "at": 5659,
+   "text": "Page 231"
+  },
+  {
+   "id": "L15",
+   "slug": "les-fables-egyptiennes-et-grecques-devoilees-amp-reduites-s-n-2",
+   "page": 383,
+   "at": 5939,
+   "text": "Page 383"
+  },
+  {
+   "id": "L16",
+   "slug": "alchemical-writings-stone-of-philosophers-kelly",
+   "page": 200,
+   "at": 6392,
+   "text": "Page 200"
+  }
+ ],
+ "q36:B": [
+  {
+   "id": "L1",
+   "slug": "ortus-medicinae-origin-of-medicine-helmont",
+   "page": 299,
+   "at": 426,
+   "text": "Page 299"
+  },
+  {
+   "id": "L2",
+   "slug": "paramirum-works-paracelsus",
+   "page": 141,
+   "at": 774,
+   "text": "Page 141"
+  },
+  {
+   "id": "L3",
+   "slug": "paramirum-works-paracelsus",
+   "page": 284,
+   "at": 854,
+   "text": "Page 284"
+  },
+  {
+   "id": "L4",
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14,
+   "at": 1192,
+   "text": "Page 14"
+  },
+  {
+   "id": "L5",
+   "slug": "paracelsus-complete-works-latin-paracelsus",
+   "page": 50,
+   "at": 1455,
+   "text": "Page 50"
+  },
+  {
+   "id": "L6",
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14,
+   "at": 1918,
+   "text": "Page 14"
+  },
+  {
+   "id": "L7",
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 97,
+   "at": 2259,
+   "text": "Page 97"
+  },
+  {
+   "id": "L8",
+   "slug": "paramirum-works-paracelsus",
+   "page": 284,
+   "at": 2630,
+   "text": "Page 284"
+  },
+  {
+   "id": "L9",
+   "slug": "paramirum-works-paracelsus",
+   "page": 141,
+   "at": 3111,
+   "text": "Page 141"
+  },
+  {
+   "id": "L10",
+   "slug": "paracelsus-complete-works-latin-paracelsus",
+   "page": 50,
+   "at": 3579,
+   "text": "Page 50"
+  },
+  {
+   "id": "L11",
+   "slug": "ortus-medicinae-origin-of-medicine-helmont",
+   "page": 597,
+   "at": 4067,
+   "text": "Page 597"
+  },
+  {
+   "id": "L12",
+   "slug": "dageraad-ofte-nieuwe-opkomst-der-geneeskonst-helmont",
+   "page": 183,
+   "at": 4302,
+   "text": "Page 183"
+  },
+  {
+   "id": "L13",
+   "slug": "musaeum-regalis-societatis-grew",
+   "page": 507,
+   "at": 4781,
+   "text": "Page 507"
+  },
+  {
+   "id": "L14",
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 97,
+   "at": 5289,
+   "text": "Page 97"
+  },
+  {
+   "id": "L15",
+   "slug": "de-secretis-antimonii-liber-unus-suchten",
+   "page": 98,
+   "at": 5495,
+   "text": "Page 98"
+  }
+ ],
+ "q37:B": [
+  {
+   "id": "L1",
+   "slug": "arithmologia-kircher",
+   "page": 52,
+   "at": 679,
+   "text": "Page 52"
+  },
+  {
+   "id": "L2",
+   "slug": "arithmologia-kircher",
+   "page": 52,
+   "at": 1320,
+   "text": "Page 52"
+  },
+  {
+   "id": "L3",
+   "slug": "arithmologia-kircher",
+   "page": 51,
+   "at": 1679,
+   "text": "Page 51"
+  },
+  {
+   "id": "L4",
+   "slug": "arithmologia-kircher",
+   "page": 52,
+   "at": 1751,
+   "text": "Page 52"
+  },
+  {
+   "id": "L5",
+   "slug": "the-arcane-teaching-atkinson",
+   "page": 28,
+   "at": 2710,
+   "text": "Page 28"
+  },
+  {
+   "id": "L6",
+   "slug": "the-arcane-teaching-atkinson",
+   "page": 28,
+   "at": 2873,
+   "text": "Page 28"
+  },
+  {
+   "id": "L7",
+   "slug": "the-arcane-teaching-atkinson",
+   "page": 27,
+   "at": 2953,
+   "text": "Page 27"
+  },
+  {
+   "id": "L8",
+   "slug": "the-pictorial-key-to-the-tarot-being-fragments-of-a-secret-waite",
+   "page": 297,
+   "at": 3586,
+   "text": "Page 297"
+  },
+  {
+   "id": "L9",
+   "slug": "the-pictorial-key-to-the-tarot-being-fragments-of-a-secret-waite",
+   "page": 297,
+   "at": 4127,
+   "text": "Page 297"
+  },
+  {
+   "id": "L10",
+   "slug": "ioh-andreae-segneri-cvrsvs-mathematici-partes-3-elementorum-segner",
+   "page": 263,
+   "at": 5221,
+   "text": "Page 263"
+  },
+  {
+   "id": "L11",
+   "slug": "ioh-andreae-segneri-cvrsvs-mathematici-partes-3-elementorum-segner",
+   "page": 265,
+   "at": 5341,
+   "text": "Page 265"
+  }
+ ],
+ "q38:B": [
+  {
+   "id": "L1",
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 32,
+   "at": 800,
+   "text": "Page 32"
+  },
+  {
+   "id": "L2",
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 32,
+   "at": 994,
+   "text": "Page 32"
+  },
+  {
+   "id": "L3",
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 33,
+   "at": 1579,
+   "text": "Page 33"
+  },
+  {
+   "id": "L4",
+   "slug": "sammlung-alchymistischer-schriften-german-ms-3-philosophers",
+   "page": 39,
+   "at": 1842,
+   "text": "Page 39"
+  },
+  {
+   "id": "L5",
+   "slug": "sammlung-alchymistischer-schriften-german-ms-3-philosophers",
+   "page": 39,
+   "at": 2024,
+   "text": "Page 39"
+  },
+  {
+   "id": "L6",
+   "slug": "a-mytho-hermetic-dictionary-1798-rainsford",
+   "page": 37,
+   "at": 2327,
+   "text": "Page 37"
+  },
+  {
+   "id": "L7",
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 38,
+   "at": 2591,
+   "text": "Page 38"
+  },
+  {
+   "id": "L8",
+   "slug": "a-mytho-hermetic-dictionary-1798-rainsford",
+   "page": 37,
+   "at": 2847,
+   "text": "Page 37"
+  },
+  {
+   "id": "L9",
+   "slug": "sammlung-alchymistischer-schriften-german-ms-3-philosophers",
+   "page": 39,
+   "at": 3347,
+   "text": "Page 39"
+  },
+  {
+   "id": "L10",
+   "slug": "wilhelm-christoph-kriegsmanns-taaut-oder-au-legung-der-kriegsmann",
+   "page": 33,
+   "at": 3729,
+   "text": "Page 33"
+  }
+ ],
+ "q40:B": [
+  {
+   "id": "L1",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 5,
+   "at": 336,
+   "text": "Page 5"
+  },
+  {
+   "id": "L2",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 104,
+   "at": 880,
+   "text": "Page 104"
+  },
+  {
+   "id": "L3",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 194,
+   "at": 1145,
+   "text": "Page 194"
+  },
+  {
+   "id": "L4",
+   "slug": "the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates",
+   "page": 193,
+   "at": 1267,
+   "text": "Page 193"
+  },
+  {
+   "id": "L5",
+   "slug": "compendium-der-gantzen-hermetischen-philosophie-compendium-anonymous",
+   "page": 1,
+   "at": 1917,
+   "text": "Page 1"
+  }
+ ],
+ "q39:B": [
+  {
+   "id": "L1",
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 71,
+   "at": 1841,
+   "text": "Page 71"
+  },
+  {
+   "id": "L2",
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 71,
+   "at": 2326,
+   "text": "Page 71"
+  },
+  {
+   "id": "L3",
+   "slug": "the-way-to-christ-boehme-2",
+   "page": 255,
+   "at": 2929,
+   "text": "Page 255"
+  },
+  {
+   "id": "L4",
+   "slug": "the-way-to-christ-boehme-2",
+   "page": 255,
+   "at": 3261,
+   "text": "Page 255"
+  },
+  {
+   "id": "L5",
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 71,
+   "at": 5636,
+   "text": "Page 71"
+  },
+  {
+   "id": "L6",
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 71,
+   "at": 6121,
+   "text": "Page 71"
+  },
+  {
+   "id": "L7",
+   "slug": "the-way-to-christ-boehme-2",
+   "page": 255,
+   "at": 6777,
+   "text": "Page 255"
+  },
+  {
+   "id": "L8",
+   "slug": "the-way-to-christ-boehme-2",
+   "page": 255,
+   "at": 7109,
+   "text": "Page 255"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible]ഭേ. ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible]ഃപ്രാപ്തേ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I read all four files and counted 12 rows: rows 1–4 and 9–12 run the full width, and rows 5–8 are short lines set between the holes. At this image resolution I could not reliably read the letters themselves, so I'm only giving the two small pieces I'm fairly sure of (row 8 ending "ഭേ." with a stop, and row 9 "ഃപ്രാപ്തേ"). Rather than fill gaps from a text I might recognise, I marked everything else [illegible]. Higher-resolution crops of each row would allow a real transcription.

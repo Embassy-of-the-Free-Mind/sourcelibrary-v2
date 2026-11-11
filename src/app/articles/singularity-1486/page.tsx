@@ -159,7 +159,7 @@ export default function Singularity1486Page() {
             &ldquo;This is the great justice of creation: that everyone creates for themselves the conditions of their future existence.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/the-little-book-of-life-after-death-fechner?page=2160" className="text-accent-rust hover:underline">Fechner, <em>Life After Death</em>, p. 20 &rarr;</Link>
+            <Link href="/book/the-little-book-of-life-after-death-fechner?page=20" className="text-accent-rust hover:underline">Fechner, <em>Life After Death</em>, p. 20 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -245,10 +245,10 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;The movements of the heavens, therefore, are nothing other than a perpetual song &mdash; perceived by the mind, not by the ear &mdash; progressing through dissonant tensions, like certain syncopations or cadences, tending toward certain and prescribed closures, each consisting of six voices.&rdquo;
+            &ldquo;Therefore, the motions of the heavens are nothing other than a certain perennial concert (rational, not vocal) tending toward certain and prescribed musical endings [clausulae] through dissonant tensions, like certain Syncopations or Cadences (by which humans imitate those natural dissonances). Each of these endings consists of six terms (as if six Voices), marking and distinguishing the immensity of time with those notes.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21695" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
+            <Link href="/book/the-harmony-of-the-world-kepler?page=341" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, Book V, chapter 7 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -265,7 +265,7 @@ export default function Singularity1486Page() {
             &ldquo;The Earth sings MI FA MI so that even from these syllables it can be seen that in this our domicile, Misery and Famine hold sway.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21690" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 290 &rarr;</Link>
+            <Link href="/book/the-harmony-of-the-world-kepler?page=336" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em> (1619) &rarr;</Link>
           </p>
         </blockquote>
 
@@ -279,10 +279,10 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;It is no longer a wonder, then, that man &mdash; the ape of his Creator &mdash; has finally discovered a method of singing in harmony which was unknown to the ancients. He did this so that he might play out the perpetuity of all cosmic time in a brief portion of an hour through the artful symphony of many voices, and so that he might, to some extent, taste the delight of God the Master Craftsman in His own works.&rdquo;
+            &ldquo;Thus, it is no longer a wonder that at last, the method of singing in harmony&mdash;unknown to the ancients&mdash;was discovered by Man, the ape of his Creator. He did this so that he might play out, in a brief part of an hour, the perpetuity of all worldly time through the artistic symphony of many voices, and might taste to some extent the delight of God the Architect in His own works&hellip;&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21695" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
+            <Link href="/book/the-harmony-of-the-world-kepler?page=341" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, Book V, chapter 7 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -291,7 +291,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          <Link href="/book/harmonices-mundi-1619-first-edition-kepler" className="text-accent-rust hover:underline">
+          <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:underline">
             Read the full translation &rarr;
           </Link>
         </p>
@@ -523,7 +523,7 @@ export default function Singularity1486Page() {
             : the Earth as a conscious being, the noosphere a century early
           </li>
           <li className="text-secondary font-body">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler" className="text-accent-rust hover:underline">
+            <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:underline">
               Kepler, <em>Harmonices Mundi</em> (1619)
             </Link>
             : planetary motion as polyphonic music

@@ -1,0 +1,993 @@
+{
+ "4-t": {
+  "status": "not-in-window",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "sk",
+  "window_start": 0
+ },
+ "4-b": {
+  "status": "located",
+  "work": "sk",
+  "start": 0,
+  "end": 530,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "5-t": {
+  "status": "located",
+  "work": "sk",
+  "start": 516,
+  "end": 1062,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "5-b": {
+  "status": "located",
+  "work": "sk",
+  "start": 1067,
+  "end": 1742,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "6-t": {
+  "status": "located",
+  "work": "sk",
+  "start": 1722,
+  "end": 2383,
+  "phrases": 39,
+  "dropped": 0
+ },
+ "6-b": {
+  "status": "located",
+  "work": "sk",
+  "start": 2392,
+  "end": 2965,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "7-t": {
+  "status": "located",
+  "work": "sk",
+  "start": 3034,
+  "end": 3634,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "7-b": {
+  "status": "located",
+  "work": "sk",
+  "start": 3635,
+  "end": 4228,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "8-t": {
+  "status": "located",
+  "work": "sk",
+  "start": 4229,
+  "end": 4831,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "8-b": {
+  "status": "located",
+  "work": "sk",
+  "start": 4808,
+  "end": 5505,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "9-t": {
+  "status": "located",
+  "work": "sk",
+  "start": 5490,
+  "end": 6232,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "9-b": {
+  "status": "located",
+  "work": "sk",
+  "start": 6217,
+  "end": 6864,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "10-t": {
+  "status": "located",
+  "work": "sk",
+  "start": 6865,
+  "end": 7478,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "10-b": {
+  "status": "partly",
+  "work": "sk",
+  "start": 7479,
+  "end": 7857,
+  "phrases": 22,
+  "dropped": 0
+ },
+ "11-t": {
+  "status": "partly",
+  "work": "sk",
+  "start": 7534,
+  "end": 7861,
+  "phrases": 32,
+  "dropped": 0
+ },
+ "11-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 427,
+  "end": 1192,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "12-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 1143,
+  "end": 1745,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "12-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 1710,
+  "end": 2296,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "13-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 2305,
+  "end": 3003,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "13-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 2783,
+  "end": 3479,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "14-t": {
+  "status": "partly",
+  "work": "jm",
+  "start": 3384,
+  "end": 4188,
+  "phrases": 20,
+  "dropped": 0
+ },
+ "14-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 4180,
+  "end": 4790,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "15-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 4761,
+  "end": 5519,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "15-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 5514,
+  "end": 6052,
+  "phrases": 27,
+  "dropped": 0
+ },
+ "16-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 6035,
+  "end": 6742,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "16-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 6697,
+  "end": 7350,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "17-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 7329,
+  "end": 7954,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "17-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 7898,
+  "end": 8748,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "18-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 8429,
+  "end": 9380,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "18-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 9357,
+  "end": 9995,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "19-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 9972,
+  "end": 10553,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "19-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 10501,
+  "end": 11270,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "20-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 11238,
+  "end": 11784,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "20-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 11785,
+  "end": 12475,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "21-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 12156,
+  "end": 13000,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "21-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 12988,
+  "end": 13724,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "22-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 13714,
+  "end": 14346,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "22-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 14360,
+  "end": 15053,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "23-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 15054,
+  "end": 15649,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "23-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 15411,
+  "end": 16367,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "24-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 16007,
+  "end": 16990,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "24-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 16983,
+  "end": 17626,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "25-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 17458,
+  "end": 18461,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "25-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 18295,
+  "end": 19100,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "26-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 18947,
+  "end": 19712,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "26-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 19607,
+  "end": 20424,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "27-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 20403,
+  "end": 21170,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "27-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 21125,
+  "end": 22015,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "28-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 22018,
+  "end": 22818,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "28-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 22812,
+  "end": 23888,
+  "phrases": 46,
+  "dropped": 0
+ },
+ "29-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 23844,
+  "end": 24726,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "29-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 24631,
+  "end": 25784,
+  "phrases": 44,
+  "dropped": 0
+ },
+ "30-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 25776,
+  "end": 26611,
+  "phrases": 39,
+  "dropped": 0
+ },
+ "30-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 26262,
+  "end": 27467,
+  "phrases": 44,
+  "dropped": 0
+ },
+ "31-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 27438,
+  "end": 28147,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "31-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 28140,
+  "end": 28922,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "32-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 28902,
+  "end": 29811,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "32-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 29812,
+  "end": 30825,
+  "phrases": 46,
+  "dropped": 0
+ },
+ "33-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 30787,
+  "end": 31677,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "33-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 31643,
+  "end": 32417,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "34-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 32332,
+  "end": 33269,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "34-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 32977,
+  "end": 34054,
+  "phrases": 39,
+  "dropped": 0
+ },
+ "35-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 33969,
+  "end": 34930,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "35-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 34927,
+  "end": 35817,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "36-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 35805,
+  "end": 36879,
+  "phrases": 45,
+  "dropped": 0
+ },
+ "36-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 36875,
+  "end": 37895,
+  "phrases": 44,
+  "dropped": 0
+ },
+ "37-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 37880,
+  "end": 38785,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "37-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 38787,
+  "end": 39591,
+  "phrases": 45,
+  "dropped": 0
+ },
+ "38-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 39565,
+  "end": 40625,
+  "phrases": 45,
+  "dropped": 0
+ },
+ "38-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 40588,
+  "end": 41516,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "39-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 41178,
+  "end": 42570,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "39-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 42389,
+  "end": 43444,
+  "phrases": 45,
+  "dropped": 0
+ },
+ "40-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 43446,
+  "end": 44280,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "40-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 44270,
+  "end": 45239,
+  "phrases": 45,
+  "dropped": 0
+ },
+ "41-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 45226,
+  "end": 46014,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "41-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 46118,
+  "end": 46940,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "42-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 46899,
+  "end": 47793,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "42-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 47786,
+  "end": 48664,
+  "phrases": 46,
+  "dropped": 0
+ },
+ "43-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 48633,
+  "end": 49699,
+  "phrases": 46,
+  "dropped": 0
+ },
+ "43-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 49682,
+  "end": 50622,
+  "phrases": 43,
+  "dropped": 0
+ },
+ "44-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 50626,
+  "end": 51323,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "44-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 51324,
+  "end": 52160,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "45-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 52143,
+  "end": 53016,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "45-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 52995,
+  "end": 53881,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "46-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 53841,
+  "end": 54808,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "46-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 54799,
+  "end": 55702,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "47-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 55691,
+  "end": 56434,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "47-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 56417,
+  "end": 57328,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "48-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 57299,
+  "end": 58344,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "48-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 58325,
+  "end": 59192,
+  "phrases": 45,
+  "dropped": 0
+ },
+ "49-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 59185,
+  "end": 60039,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "49-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 60005,
+  "end": 60932,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "50-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 60870,
+  "end": 61760,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "50-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 61755,
+  "end": 62588,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "51-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 62566,
+  "end": 63420,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "51-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 63405,
+  "end": 64290,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "52-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 64264,
+  "end": 65308,
+  "phrases": 22,
+  "dropped": 0
+ },
+ "52-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 65243,
+  "end": 66134,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "53-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 66117,
+  "end": 66972,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "53-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 66963,
+  "end": 67631,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "54-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 67607,
+  "end": 68254,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "54-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 68232,
+  "end": 69073,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "55-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 69075,
+  "end": 69753,
+  "phrases": 39,
+  "dropped": 0
+ },
+ "55-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 69757,
+  "end": 70486,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "56-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 70487,
+  "end": 71196,
+  "phrases": 39,
+  "dropped": 0
+ },
+ "56-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 71191,
+  "end": 72172,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "57-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 72156,
+  "end": 72984,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "57-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 72936,
+  "end": 73999,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "58-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 73632,
+  "end": 74759,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "58-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 74767,
+  "end": 75541,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "59-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 75512,
+  "end": 76216,
+  "phrases": 22,
+  "dropped": 0
+ },
+ "59-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 76219,
+  "end": 77354,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "60-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 77339,
+  "end": 78287,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "60-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 78281,
+  "end": 79374,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "61-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 79230,
+  "end": 80290,
+  "phrases": 39,
+  "dropped": 0
+ },
+ "61-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 80279,
+  "end": 81123,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "62-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 81131,
+  "end": 81962,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "62-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 82095,
+  "end": 82841,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "63-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 82847,
+  "end": 83654,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "63-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 83644,
+  "end": 84441,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "64-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 84444,
+  "end": 85198,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "64-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 85190,
+  "end": 85831,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "65-t": {
+  "status": "located",
+  "work": "jm",
+  "start": 85813,
+  "end": 86661,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "65-b": {
+  "status": "located",
+  "work": "jm",
+  "start": 86561,
+  "end": 87076,
+  "phrases": 28,
+  "dropped": 0
+ }
+}

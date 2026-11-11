@@ -756,7 +756,7 @@ export default function HiddenEngineersPage() {
                 detail: 'Basel, 1572: Mary the Prophetess and the bain-marie',
               },
               {
-                href: '/book/the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous',
+                href: '/book/the-secret-symbols-of-the-rosicrucians',
                 title: 'Die Lehren der Rosenkreuzer',
                 detail: 'MS: steam engine schematic as "Elijah\'s Chariot"',
               },

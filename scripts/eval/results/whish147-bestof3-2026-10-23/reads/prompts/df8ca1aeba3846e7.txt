@@ -1,0 +1,35 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] cākṣakāraṃga ‖ jñānā [illegible] najñānva [illegible] śupañcabhārttha [illegible] sva ‖ svāpādikaiścāpravṛtta [illegible]
+2. [illegible] diyaḥsvāttvyāca ‖ cakṣastisvāyana [illegible] ntāvyāpakātmepa ‖ [illegible] diḥsvāttvasamānādi
+3. kāraṇānyajñānādirā ‖ [illegible] ddiccāditva [illegible] tvaṃsvāttyartthapaka ‖ katvaṃsvayaṃprakāśa [illegible]
+4. tvajñānādirapra [illegible] ‖ cakṣāditvā [illegible] sthāyantyrāpa ‖ katvāyama [illegible] pavar
+5. ra orāyumivān ‖ [illegible] cavajñamamatva [illegible] ddhurantu ‖ dreḥghana [illegible] sthaṃbha
+6. lāghavādiḥ ‖ patryartthamantra [illegible] krāderastha ‖ saṃyogajjvā
+7. jyūyyācakṣanāvala ‖ [illegible] pravṛttyurvvattāddil̤kk [illegible] kurairasthāṃsaṃla ‖ lohitaśuklājāmekā
+
+TRANSCRIPTION B
+1. trupākṣakaṇaṃga ‖ jñanāntrañajñendriyaśrupañcatvālgaisva ‖ svāpāmikkoraplāraplānva
+2. niyaḥsātmāntrāca ‖ āccasattisvāyanānāvyāvakāmepa ‖ pathiḥsātmasamānādi
+3. kālajñānajñānaiṭāva ‖ [illegible] ttimejñādittatvaṃsāddhyādyāvaka ‖ katvaṃsādhanāpantriṇṇa
+4. tṛjñānaiṭāvallabha ‖ ājñāditvantthāyanatmāva ‖ kayyāyamāpaṇḍa
+5. ra orāyūmivān ‖ jñavakamakhantarmittukuntu ‖ bhreḥkhana [illegible] sthaṃ
+6. lāgavāvāthiḥ ‖ vyatū [illegible] majñattābhrekhana ‖ saṃbhayāgaṇattisā
+7. dṛṣṭāvakkatāva ‖ vṛttavaka [illegible] jñattakuprekhnāṃsaṃbha ‖ bhavādīnānākkijñabhrayā
+
+TRANSCRIPTION C
+1. [illegible] cākṣukaraṇaṃga ‖ cchenāstrīnacchendriga [illegible] śuṣṣābhyālbhaisvā ‖ pādikairaprāpyatvā
+2. niyaḥsvātryātvācana ‖ ācchasiddhisvāyana [illegible] nābhyāvakārepa ‖ [illegible] ādhiḥsvātryasamānādi
+3. kāraṇātryanādibhāva [illegible] ‖ utbhāvāditvaṃsādṛśyatvavaka ‖ tvaṃsādhanāparimitta [illegible]
+4. tranaidevābhe [illegible] ‖ aivābhiditva [illegible] stādhanatvāva ‖ kāryyāyagavāpūrvva
+5. oroyūmivān ‖ kaivaṇametndritvatra ‖ bhreḥghana [illegible] saṃre
+6. laigalevādiḥ ‖ latrūmentratrādveḥghana ‖ saṃreyāgañcisvā
+7. bhūprāyakkatārepra ‖ krūvaṇanīkrukkekureghanāṃsaṃre ‖ relompāñjibaireyā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

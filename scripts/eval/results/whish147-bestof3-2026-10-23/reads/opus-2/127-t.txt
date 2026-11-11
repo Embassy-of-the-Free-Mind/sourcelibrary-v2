@@ -1,0 +1,9 @@
+ROW 1 | ഘനലലഭെഷ്ടഃക്ഷനണ്ണെബ ‖ [illegible]ാദ്യന്തരാൽവിശെഷണവിശെഷ്യ ‖ ഭാവൊവിശെഷണവിശെഷ
+ROW 2 | ത്രസ്യഗ്രഹാവ്യവനാദിഭി ‖ ന്നംബൊധഃപ്രത്യക്ഷജ്ഞാനമുപസം ‖ ഹരൻതസ്യകാരണമാഹാക്ഷി
+ROW 3 | ഘമിതിജ്ഞാനസാ[illegible]ണൊ ‖ ക്കാര[illegible]ത്വാദിന്ദ്രിയംപ്രത്യക്ഷജ്ഞാ ‖ നകാരണമിതിപ്രത്യക്ഷ
+ROW 4 | [illegible]സംബന്ധ[illegible] ‖ [illegible]ദ്ധിഃഅനുമാനംലക്ഷയ ‖ ത്തനുമിതിരെരണമി
+ROW 5 | ത്ര[illegible]ള്ള ‖ ജ്ഞാനമാഹവനാ[illegible]ൽ[illegible]ലനന ‖ സംശയൊ[illegible]പ്രത്യ
+ROW 6 | [illegible]ക്ഷതിഗ്രാ[illegible]ഃ ‖ [illegible]സംശയാനകരാം ‖ [illegible]ക്ഷത്വാ[illegible]വ്യക്തനാദിമ
+ROW 7 | ഏ[illegible]മിതിവ[illegible]ൾ ‖ സത്വ[illegible]ദിവൊതിപ്രത്യക്ഷജ്ഞ ‖ നാൽ[illegible]മിതി
+ROW 8 | [illegible]വതി[illegible]ച്ഛാ[illegible] ‖ [illegible]ന്മിത്യ[illegible] ‖ [illegible]വിരൊധാദിതിചെ
+NOTE | This reading is low confidence. All four pieces were read; there are 8 rows. Only the general shape of rows 1–3 and short stretches elsewhere are reasonably secure, such as "പ്രത്യക്ഷജ്ഞാനമുപസം", "നകാരണമിതിപ്രത്യക്ഷ" and "അനുമാനംലക്ഷയ". Rows 4–8 are mostly uncertain, and many readings in the legible parts are tentative, especially in rows 1 and 5–8.

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B has many illegible marks, but what it does read holds together as Sanskrit and Malayalam (phalaṅṅḻi used consistently, mātreṇa, buddhiḥ prakāram ennu, viparīta, samāhita); C is next with some real words such as bhedadarśanād, and A reads fluently but is mostly made-up syllables.

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads as real commentary text in most rows (it has "indriyavṛttireṅkiṃ cittavṛttirāl", "devadattāyamitrayābuddhirulpadyate", "trividhamanumāna", "sāmānyatodṛṣṭamitiśeṣaṃ", "atītānāgata"), while C has a few matching anchors but long runs of nonsense syllables, and A is mostly [illegible] with only scattered fragments.

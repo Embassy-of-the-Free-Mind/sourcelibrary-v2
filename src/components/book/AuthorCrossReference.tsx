@@ -4,6 +4,7 @@ import { BookOpen, Paintbrush } from 'lucide-react';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 import { authorUrl } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { displayPublished } from '@/lib/publication-date';
 
 export interface CrossRefItem {
   slug: string;
@@ -27,12 +28,14 @@ export interface AuthorCrossRefData {
 
 interface Props {
   author: string;
+  /** `books.author_id` — the "View all" link prefers it over the byline (#4355). */
+  authorId?: string | null;
   crossRef?: AuthorCrossRefData;
   /** 'book' = we're on a book page, show artworks. 'artwork' = we're on artwork, show books. */
   context: 'book' | 'artwork';
 }
 
-export default function AuthorCrossReference({ author, crossRef, context }: Props) {
+export default function AuthorCrossReference({ author, authorId, crossRef, context }: Props) {
   if (!crossRef) return null;
 
   if (context === 'book') {
@@ -96,9 +99,9 @@ export default function AuthorCrossReference({ author, crossRef, context }: Prop
           <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
           Books by {author}
         </h2>
-        {authorUrl(author) && (
+        {authorUrl(author, authorId) && (
           <Link
-            href={authorUrl(author)!}
+            href={authorUrl(author, authorId)!}
             className="text-sm hover:underline"
             style={{ color: 'var(--accent-rust)' }}
           >
@@ -129,7 +132,7 @@ export default function AuthorCrossReference({ author, crossRef, context }: Prop
                   {b.display_title || b.title}
                 </p>
                 <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                  {[b.published, b.language].filter(Boolean).join(' · ')}
+                  {[displayPublished(b.published), b.language].filter(Boolean).join(' · ')}
                   {b.pages_translated ? ` · ${b.pages_translated} pages translated` : ''}
                 </p>
               </div>

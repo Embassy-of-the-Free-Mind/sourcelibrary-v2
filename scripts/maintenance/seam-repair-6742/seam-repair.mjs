@@ -156,8 +156,11 @@ async function repair(out, model, limit, pack, conc) {
 
 // ── placement: an excerpt repair, checked and mapped onto the stored page ──
 const words = (t) => String(t).trim().split(/\s+/).filter(Boolean);
-/** Why a repair may not be written, or null. Checks the edge-sentence bound on the excerpt. */
-export function edgeRefusal(it, rep) {
+/** The edge-sentence bound: at most 3 sentences and 120 words replaced per side, the new text at most 60 words longer. */
+export const EDGE_BOUND = { maxSentences: 3, maxOldWords: 120, maxGrowWords: 60, maxGrowSentences: Infinity };
+/** Why a repair may not be written, or null. Checks the edge-sentence bound on the excerpt (`b`, default EDGE_BOUND;
+ *  lean.mjs --majors-wide passes a wider one for majors only). */
+export function edgeRefusal(it, rep, b = EDGE_BOUND) {
   if (!rep) return 'no-repair';
   const vc = validRepair(it, rep);
   if (!vc.ok) return vc.tailOk ? 'head-old-not-at-edge' : 'tail-old-not-at-edge';
@@ -165,8 +168,9 @@ export function edgeRefusal(it, rep) {
   if (!tOld && !hOld) return 'empty-repair';
   for (const [o, nw] of [[tOld, rep.tail_new || ''], [hOld, rep.head_new || '']]) {
     if (!o) { if (String(nw).trim()) return 'new-text-without-old-span'; continue; }
-    if (sentences(o).length > 3) return 'touches-more-than-3-sentences';
-    if (words(o).length > 120 || words(nw).length > words(o).length + 60) return 'edit-too-large';
+    if (sentences(o).length > b.maxSentences) return `touches-more-than-${b.maxSentences}-sentences`;
+    if (words(o).length > b.maxOldWords || words(nw).length > words(o).length + b.maxGrowWords) return 'edit-too-large';
+    if (sentences(nw).length - sentences(o).length > b.maxGrowSentences) return `restores-more-than-${b.maxGrowSentences}-sentences`;
   }
   return applyRepair(it, rep) ? null : 'repair-changes-nothing';
 }
@@ -392,10 +396,11 @@ async function applyStage(out, arms, doApply) {
  * either way. `callSite` names the writer in the engine block; the revision reason stays TAG so `undo` finds it.
  */
 export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude', model = 'claude-opus-5-5', promptName = 'seam-repair-6742 label+minimal edge repair (opus-reference PROMPT, packed)',
-  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders', allowHidden = false, throwOnStop = false, callSite = TAG } = {}) {
+  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders', allowHidden = false, throwOnStop = false, callSite = TAG, runId: givenRunId = null } = {}) {
   const stop = (code, msg) => { if (throwOnStop) throw new Error(msg); console.error(msg); process.exit(code); };
   const manifest = path.join(out, 'manifest.jsonl'), refusals = path.join(out, 'apply-refusals.jsonl');
-  const runId = `${TAG}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+  // `runId`: a caller writing its joins one call at a time (claude-translate's seam pass, #8399) keeps them in one run.
+  const runId = givenRunId || `${TAG}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
   const bin = cli === 'claude' ? CLI : cli;
   const cliVersion = String(cli !== 'claude' || fs.existsSync(CLI) ? (await new Promise(res => { const c = spawn(bin, ['--version']); let o = ''; c.stdout.on('data', d => { o += d; }); c.on('error', () => res('unknown')); c.on('close', () => res(o.trim().split(' ')[0] || 'unknown')); })) : 'unknown');
   const cv = await codeVersion();

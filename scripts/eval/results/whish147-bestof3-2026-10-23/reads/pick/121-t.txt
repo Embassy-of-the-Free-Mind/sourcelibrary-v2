@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A keeps the most real Dīpikā phrasing, such as "rūpavat samavetatvāt pratyakṣatvaprasaṅgāt", "(ati)vyāpti-vāraṇāya guṇa…", "trayaṃ vibhajya… pṛthivī" and "gandhalakṣaṇa", while B gets some rows right (for example "citrarūpasiddhiḥ") but garbles "vyāpti" as "vyāḻḻi", and C keeps inserting fake syllables like "candru" and "ൗ".

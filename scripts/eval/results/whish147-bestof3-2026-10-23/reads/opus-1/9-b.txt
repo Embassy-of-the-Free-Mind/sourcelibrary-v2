@@ -1,0 +1,10 @@
+ROW 1 | ഭിംജ്ഞോരംഗന്ത്യദശ്ശ[illegible] ‖ ചാന്ദിവർക്കാരജ[illegible]ൽക്കിയചൊഷാനത്താൽ ‖ പുരുഷന്ത്യരകഏന്മാനംല്ല
+ROW 2 | ഏകാദശ്രുഭിപ്പരംരൈര[illegible] ‖ ദ്ധിഃനാജ്ഞാനാര[illegible]നാമിതൈയകചാദെണ്ണ ‖ ത്ത്ചകാവിജ്ഞാനംചകാവി
+ROW 3 | ജീഹംലീഗുണാഖ ‖ ത്രുഗുണാന്ത്യനകക്കി[illegible]ക്കത്രുാൽഭയാക്ക ‖ കംചതരിഃഭസപ്ര
+ROW 4 | ഉത്തന്ത്രങ്ങരാഭ ‖ രരാന്നകത്രി[illegible]ർദ്ദരഷ്ടരകളദരക്ക് ‖ വക്രിഷാദഷ്ടാന്ത്രി
+ROW 5 | ഇപ്പനന്ദദശ്നര ‖ നനാത്മന്ദതന[illegible]തചാഗ്രാനുഃകന്ത ‖ ാന്നചെദ്രരരാ
+ROW 6 | ഖഷ്ടഇരതരാഖി ‖ സാന്നന്തരകഭി[illegible]ക്കിൽസംസാരത്തിഖ ‖ ദ്രരതമമചരഖൈ
+ROW 7 | നാനാഗുയല ‖ ത്രിഃന്ത്രഃഗ്രര[illegible]ദരൈചൈഷിശ്രദ്ധര ‖ രംരന്നാര്യാഞ്ച
+ROW 8 | നമാത്മാദ്യത്രഷ്ടിംര ‖ ൈസവമാപ്പുരുഷ്യാര[illegible]ർക്കാരലിത്രവിരൊച ‖ ചക്രരരുക്രരൈചണഷു
+ROW 9 | ഷ്ടിംവംരതുാഭൂാസാ ‖ ാദ്രുാദ്ധിനരമനാച[illegible]ാഹമിത്രചരിരഷി ‖ ഷിംബധിചന്ദ്രയാദിശകം
+NOTE | Confidence is low. These are glyph-by-glyph guesses from small images that I couldn't zoom, and many conjuncts and vowel signs are uncertain. Only a few stretches read clearly: ഏകാദ… (row 2), …വിജ്ഞാന… (row 2), …സംസാര… (row 6) and …ചന്ദ്രയാദിശകം (row 9). The leaf has 9 rows, and the ‖ marks are placed after p01 and after p03. Treat this as a rough draft to check against the original, not a reliable transcription.

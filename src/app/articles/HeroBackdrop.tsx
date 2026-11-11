@@ -39,7 +39,7 @@ export default function HeroBackdrop() {
   return (
     <>
       <div
-        className="absolute inset-x-0 top-0 h-[520px] overflow-hidden pointer-events-none"
+        className="absolute inset-x-0 top-0 h-[520px] overflow-hidden pointer-events-none animate-fade-in-slow"
         style={{ maskImage: 'linear-gradient(to bottom, black 45%, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, black 45%, transparent)' }}
       >
         <div

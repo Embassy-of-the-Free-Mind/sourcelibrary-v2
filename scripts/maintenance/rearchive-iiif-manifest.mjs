@@ -21,6 +21,7 @@
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
  *   --dry-run                  no writes; print mapping summary
+ *   --no-guard                 skip the alignment guard (ONLY for a provider already audited aligned)
  *   --min-upgrade-ratio R      skip if master/current < R (default 1.5)
  *   --max-width N              sharp cap (default 6000)
  *   --jpeg-quality N           default 90
@@ -49,6 +50,7 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
 import { rateLimitedFetch } from '../lib/iiif-utils.mjs';
+import { checkAlignment, hashBuffer } from '../lib/page-alignment.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../.env.production.local') });
@@ -65,6 +67,9 @@ const BOOK_ID = ARG('--book-id');
 const PROVIDER = ARG('--provider');
 const MANIFEST_URL = ARG('--manifest-url');
 const DRY_RUN = FLAG('--dry-run');
+// The #3186 consistency guard, as in rearchive-iiif-fullres.mjs. ON by default; --no-guard only for
+// a provider already audited aligned.
+const NO_GUARD = FLAG('--no-guard');
 const CONCURRENCY = parseInt(ARG('--concurrency', '2'));
 const PAGE_CONCURRENCY = parseInt(ARG('--page-concurrency', '4'));
 const LIMIT = parseInt(ARG('--limit', '0'));
@@ -250,6 +255,32 @@ async function processBook(book) {
   const masterWidth = firstSvc.width;
   if (currentWidth && masterWidth && masterWidth / currentWidth < MIN_UPGRADE_RATIO) {
     return { skipped: `not-low-res (master=${masterWidth}, current=${currentWidth})` };
+  }
+
+  // ── Consistency guard (#3186, #7949): the canvas we are about to write must be the leaf the
+  // archive holds now. The text on a page was read from the ARCHIVED image; if that image is
+  // not this canvas, overwriting slides a new leaf under the old text and both still look fine.
+  // That is how Huser's Paracelsus (69bd9d546120d54bd0375241) ended up 3 leaves off on 2026-07-20.
+  if (!NO_GUARD && pages.some(p => p.archived_photo)) {
+    const svcByPage = new Map(mapping.map(m => [m.page.page_number, m.svc]));
+    const align = await checkAlignment(pages, {
+      hashUrl: async (url) => hashBuffer(await rateLimitedFetch(url, { timeout: 30_000 })),
+      sourceUrlFor: p => `${svcByPage.get(p.page_number).id.replace(/\/$/, '')}/full/600,/0/default.jpg`,
+      isUsableSource: p => Boolean(svcByPage.get(p.page_number)?.id),
+    });
+    if (align.verdict !== 'aligned') {
+      if (!DRY_RUN) {
+        await db.collection('books').updateOne(
+          { id: book.id },
+          { $set: { rearchive_blocked: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, at: new Date() }, updated_at: new Date() } },
+        );
+        await db.collection('book_events').insertOne({
+          book_id: book.id, type: 'rearchive_blocked', at: new Date(), source: 'rearchive-iiif-manifest',
+          details: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, reason: 'manifest canvas != archived content (#3186/#7949 guard)' },
+        });
+      }
+      return { skipped: `guard:${align.verdict} (${align.detail})` };
+    }
   }
 
   console.log(`  ${(book.title || '').substring(0, 55)} — manifest=${canvases.length} canvases, master≈${masterWidth}px, refetching ${pages.length} pages`);

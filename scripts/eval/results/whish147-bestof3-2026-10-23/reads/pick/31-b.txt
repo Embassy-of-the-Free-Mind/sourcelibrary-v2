@@ -1,0 +1,4 @@
+PICK | A
+RANK | A, B, C
+
+WHY | A keeps the most recognisable Sāṅkhya commentary wording across its rows ("vibhāgādvaiśvarūpya", "avyakta…", "upalabdhe", "nānārūpa", "pralayakāle"), which fits Kārikā 15–16; B keeps some of these words but garbles the rest, and C repeatedly turns "vaiśvarūpya" into nonsense like "daivaśatru".

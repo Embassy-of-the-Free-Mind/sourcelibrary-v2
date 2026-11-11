@@ -1,0 +1,11 @@
+ROW 1 | ഹരിഃശ്രീഗണപത‖യെനമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദഭിഘാതകെഹെ‖തൌദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ‖കാന്താത്യന്തതൊ
+ROW 3 | ഭാവാൽദൃഷ്ട‖വദാനുശ്രവികസ്സഹ്യവിശു‖ദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരീ‖തഃശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽമൂല
+ROW 5 | പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയഃസപ്തഷൊ
+ROW 6 | ഡശകസ്തുവി‖കാരൊനപ്രകൃതിൎന്നവികൃ‖തിഃപുരുഷഃദൃഷ്ട
+ROW 7 | മനുമാനമാ‖പ്തവചനഞ്ചസൎവ്വപ്രമാണ‖സിദ്ധത്വാൽത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ടം‖പ്രമെയസിദ്ധിഃപ്രതിവിഷ‖യാദ്ധ്യവസായൊദൃ
+ROW 9 | ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി‖പൂൎവ്വകമാപ്തശ്രുതി
+ROW 10 | [illegible]‖[illegible]മാണാദി।‖[illegible]
+NOTE | Rows 1–9 read across all three columns, but many aksharas are uncertain: row 1 middle (the യെ and the mark after മസ്തു), the end of row 5 right (സപ്തഷൊ), the start of row 8 middle (പ്രതിവിഷ), row 9 left (whether ഷ്ട has an anusvara) and row 9 right (പൂൎവ്വ). Row 10 is a short line found only in the middle column; I could read just "…മാണാദി।".

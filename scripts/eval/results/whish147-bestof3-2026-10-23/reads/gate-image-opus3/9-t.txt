@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf reads roughly ദ്വിഷംനവിന…ദ്ധാവെനലിം… and ends …ബ്ദാദിവിഷയഃപ്രവൃത്തരെ (that is, ശബ്ദാദി). B gets the start and the ending (…ലിംഗാവ്യാദ്ധാവാത്മഃശന്ദാദിവി…പ്രവൃത്തരെ) close to the leaf. A and C get the start, but both end in a fluent കന്മാദി…പ്രവൃത്തകരെ. That is wrong on the ബ്ദ letter and adds a ക that is not there.
+
+CHECK | row 5: The leaf reads ക്ഷതത്ത്വജ്ഞനാമരഷ… and ends …നഃപൃഥക്ഷഃലിംഗന്ത്രാവി. B matches both parts, with ന്ത്ര at the end. C gets the start (ക്ഷ്മതത്രജ്ഞ) but its ending, പൃഷ്ഠ…ലിംഗത്വാവി, is wrong. A misreads the start (ക്ഷൂതൂദ്രഷ…) and gives ലിംഗപ്രാവി at the end.
+
+CHECK | row 10: The leaf reads മാസ്ഥിയാന്ത്യ…പൂ… then …തനെവാകഃപ്ലക്ക… then …കനവിമൊക്ഷനിമിത്തം॰ and ends പ്രവൃത്തപെക്ഷതബഞ്ചവൃ. B follows this, including …വിമൊക്ഷനിമിത്തം and the ending. C has the wrong letters: …സവിശെഷണമി…, then a doubled മിമിതഃ, then …പ്രവൃത്തകൊതദേവ്യ. A is garbled through the middle and ends in …പ്രവൃത്തെൌക്ഷദദ്ര.
+
+PICK | B
+
+RANK | B, C, A
+
+WHY | B matches the actual strokes across the leaf: row 9 has …മൊക്ഷനിമി…, row 3 ends സന്ധിവിനാലക്കമൊ, row 4 ends …മൊദിക്കംബൊധ്യൈ, and row 8 ends …പ്രവൃത്തിരബ്ബന്ദ്രുഹ; C is fluent but substitutes letters that aren't on the leaf, and A has many wrong letters plus many [illegible] gaps.

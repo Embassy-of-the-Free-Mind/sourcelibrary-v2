@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. śakkandraṇṭsahabuddhyāreka [illegible] tthisaṃjñābhedābhavanti [illegible] rājñasāṅkhyāgame [illegible] ntiḥtevaeṣāhyaviparyyayāṇe
+2. āśūddhivindyādibhyaṣṣāṃśa [illegible] gānājñasānāgaḥrandhraśūdrāśūdrakamu [illegible] ḥkṣamapakṣaṣartasyāñja
+3. ddapādibhikṣayajñanāgni [illegible] drācepanasaṃsanatvāce [illegible] bhāddhyādidiprābheññatthecenabha
+4. śśrāttaddhivaparyyāsai ‖ tthinniviplāra [illegible] randhivaparyyākoṇṭā ‖ viplaൗtaḥupābhināna
+5. āmaprāptirityartthaḥ ‖ uktisūtrace [illegible] nāravādiyete ‖ truvaṣeṣāmaṣṭennāṃ
+6. jjatthirūpāṇāṃeka ‖ kanakkamākṣaḥsa [illegible] sanddhabheṣarmyaḥsaṃ ‖ sālaṇḍratiṅkaḻda [illegible]
+7. tthitayaimitikañce ‖ pairāndhyaśaktya [illegible] tiṃtalsvaṃkle ‖ veṇaṃkammādyacaturddi
+8. dhamāddaḥphiṣṣaddo ‖ ipratyakhaḍha [illegible] ceṣṭenantetthitra ‖ ccuretanyasavigrāyaḥ
+9. ceṣṭākaḍaśavidhāukteca [illegible] kaṇṭhiviparyyayādaśa [illegible] śaktiruṣṭisiddhyādya [illegible] dyuḥviparyyādināmāmāyya
+10. ābhyantyāhyattāyasaptanyāsa [illegible] sarakaṣoḍaśaḥtekva [illegible] viparyyayaṃsaṃjñā [illegible] ānāṃṇṭaśaktiḥjñānādi
+
+TRANSCRIPTION B
+1. okkendrujñasthāddhyarekudi ‖ bhisaṃkhyātobhavatirājñasanddhāgabhi ‖ [illegible] ḥvaiparāgrāviparyyaṇṇe
+2. āśuddhivijñayāddhri [illegible] ṃśa ‖ śārājjasvārāgaḥrandhyaśubhāśubhakāmya ‖ [illegible] ḥcekṣavakarmmāltandrākke
+3. ddvapābhikṣuyajñanādra [illegible] ‖ ṣṭhiddācenasaṃsaratviṃ [illegible] baddhyādi ‖ diplokaḻu [illegible] nenaśca
+4. lpārattiddhipakṣyāsthai ‖ bhi [illegible] viplārātampipakṣyānesthā ‖ vibhrādraḥupākṣirāna
+5. damaprāṇṇititṛṣṇaḥ ‖ makkisūbhrarāvārthiyera ‖ [illegible] vapakṣyamajjyanāṃ
+6. jñamindruvāṇāṃeke ‖ kanarmmākkūḥsajjabhiṣṭamāḥsaṃ ‖ sālaḻitviṣṭavuṭarandra
+7. mitamamakaiṇmitikaiñca ‖ caivāndvaśamkkūṃtalvāṃkke ‖ vaiṇṇa [illegible] caturddvi
+8. ḍamāvagaṃṣikiṇātrā ‖ bhipratyyakhaṭaceṇṭanāsviddha ‖ ccaratantyasavegrāyaḥ
+9. caipākamaśavidhaśakke ‖ ekādīvapañcayādaśaktitṛṣṇitivṛstrāva ‖ lluṃviparyyābhināmāyāvva
+10. āṣṭrṛttāyasadbhistrāsa ‖ sararaddhākṣaraḥtṛṇaviparyyayaṃññajñā ‖ ānaṃnnaśaktirjñanādi
+
+TRANSCRIPTION C
+1. śakkanturṣṇasahgṛccyareka [illegible] ‖ tisaṃjñānobhivatirājñisāṃkhyāgadra [illegible] ‖ [illegible] ḥtaivapañcāgraviparyyaṅṅa
+2. āśuddhivijñayāddhrabāṃga ‖ gārājñasorāgaḥtrasyaśuddhāśuddhakāddha ‖ ddhaḥkṣipakarbāntasmādda
+3. ddapā [illegible] kṣyajñānāddya ‖ ddiddācaivanasaṃsārattinaijjīṣabūddhāddhi ‖ ddhiprātaṇṭa [illegible] caināśa
+4. ślotaddhiparyyāsadda ‖ ddiññaviplātantraviparyyāmeṃnna ‖ viplaൗtaḥprākkitāna
+5. āmaprāptitṛbbuḥ ‖ muktisūtraivāvarātthārmiyameta ‖ nnuvaprāṣṭhamaṣṭanannaṃ
+6. jñamindravāṇaiṃgraha ‖ kamarmākkiḥsajñabhikṣmandhaḥsaṃ ‖ sālakhitakhḍaṭamandra
+7. mitamainemitikkabba ‖ ṣaiḍaśamukkaḻkkuṃklsaṃkku ‖ vaiṇa [illegible] caturdda
+8. ḍamādiḥhvikṣautrā ‖ trapratūlacaśacakaindranabdiddha ‖ ccuraitantrasabaiṣṭrāyaḥ
+9. ṣaiḍākaḍaśavidhaulkke ‖ ekāviparyyayādaśaśaktituṣṭisiddhyāva ‖ ṣṭiviparyyālnāmāmāvva
+10. ākṣyāptyāyasaddhyāsa ‖ sarrakṣākṣaḥtantraviparyyayaṃnnajñā ‖ ānaṃttaśaktijñānādi
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

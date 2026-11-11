@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has more [illegible] marks, but its readable parts fit a Sāṅkhya satkārya discussion with recognisable words such as kāryyaṃ, satkāryya, kāraṇa and ghaṭa; B has only a few real words like kāraṇa, and A is mostly strings of syllables that aren't words.

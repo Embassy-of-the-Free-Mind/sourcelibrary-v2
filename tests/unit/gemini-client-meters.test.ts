@@ -39,7 +39,9 @@ vi.mock('@/lib/gemini-logger', async () => {
 });
 
 import { logGeminiCall } from '@/lib/gemini-logger';
-import { getGeminiClient, getUnmeteredGeminiClient, acceptsZeroThinking } from '@/lib/gemini-client';
+import { getGeminiClient, getUnmeteredGeminiClient, acceptsZeroThinking, noThinkingConfig } from '@/lib/gemini-client';
+// @ts-expect-error — plain .mjs, no types
+import * as scriptTwin from '../../scripts/lib/model-pricing.mjs';
 
 const usage = { promptTokenCount: 100, candidatesTokenCount: 20, thoughtsTokenCount: 300 };
 
@@ -186,10 +188,35 @@ describe('thinking is off by default', () => {
       expect(acceptsZeroThinking(id), id).toBe(true);
     }
     for (const id of ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-3-pro-preview', 'gemini-2.5-pro',
-      'gemini-2.5-flash-preview-tts', 'gemini-embedding-001']) {
+      'gemini-2.5-flash-preview-tts', 'gemini-embedding-001', 'gemini-3.5-flash-lite']) {
       expect(acceptsZeroThinking(id), id).toBe(false);
     }
     const untouched = getGeminiClient({ endpoint: 't' }).getGenerativeModel({ model: 'gemini-2.0-flash' });
     expect(budgetOf(untouched.generationConfig)).toBeUndefined();
+  });
+
+  // #5232: 3.5-flash-lite 400s on thinkingBudget 0 (probed 2026-09-28, 2026-10-07) and
+  // takes thinkingLevel 'minimal'. Dropping the field would leave thinking ON and billed.
+  it('sends a level-only model thinkingLevel minimal, not a budget it would 400 on', async () => {
+    const model = getGeminiClient({ endpoint: 't' }).getGenerativeModel({ model: 'gemini-3.5-flash-lite' });
+    expect((model.generationConfig as { thinkingConfig?: unknown }).thinkingConfig).toEqual({ thinkingLevel: 'minimal' });
+    await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: 'x' }] }],
+      generationConfig: { temperature: 0.2 },
+    });
+    const sent = generateContent.mock.calls[0][0] as { generationConfig: { thinkingConfig?: unknown } };
+    expect(sent.generationConfig.thinkingConfig).toEqual({ thinkingLevel: 'minimal' });
+  });
+
+  it('the script twin (model-pricing.mjs) agrees model for model', () => {
+    const ids = ['gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-3.6-flash',
+      'gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-3-flash-preview', 'gemini-2.0-flash', 'gemini-3-pro-preview',
+      'gemini-2.5-flash-preview-tts', 'gemini-embedding-001'];
+    for (const id of ids) {
+      expect(scriptTwin.noThinkingConfig(id), id).toEqual(noThinkingConfig(id));
+      expect(scriptTwin.acceptsZeroThinking(id), id).toBe(acceptsZeroThinking(id));
+    }
+    expect(noThinkingConfig('gemini-3.1-flash-lite')).toEqual({ thinkingBudget: 0 });
+    expect(noThinkingConfig('gemini-2.5-pro')).toBeNull();
   });
 });

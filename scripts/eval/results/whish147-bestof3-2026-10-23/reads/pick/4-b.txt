@@ -1,0 +1,3 @@
+PICK | D
+RANK | D, B, A, C
+WHY | D gives Sāṅkhyakārikā verses 1–5 complete and grammatical, with plausible verse numerals and correct sandhi such as "āttrividhaṃ". B is nearly as good but adds a stray [illegible] in row 8. A has the errors "dapaghātake" and "dṛṣṭatrividham". C garbles the end into "māṇābdhi".

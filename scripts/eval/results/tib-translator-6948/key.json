@@ -1,0 +1,977 @@
+{
+ "items": {
+  "T001": {
+   "kind": "ARMS",
+   "page_id": "6ac0b701f427c9bb0692cf61",
+   "book": "6ac0b6fff427c9bb0692cebd",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": "derge",
+   "labels": {
+    "T1": "F38",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T002": {
+   "kind": "ARMS",
+   "page_id": "69e7abc05f1a22ab19a9d70c",
+   "book": "69e7abc05f1a22ab19a9d6b0",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "PROD",
+    "T4": "OP"
+   }
+  },
+  "T003": {
+   "kind": "ARMS",
+   "page_id": "69e7abd05f1a22ab19a9eb02",
+   "book": "69e7abd05f1a22ab19a9e929",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "PROD",
+    "T4": "OP"
+   }
+  },
+  "T004": {
+   "kind": "DUP",
+   "page_id": "6ac0b3b0f427c9bb0692ca6e",
+   "labels": {
+    "T1": "G4L",
+    "T2": "P_DUP",
+    "T3": "P"
+   }
+  },
+  "T005": {
+   "kind": "PLANT",
+   "page_id": "69e7ac885f1a22ab19aa8d81",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "At the conclusion of the praise to the deity's body, it is also excellent to append the two stanzas praising the retinue below.",
+    "new": "At the conclusion of the praise to the deity's body, it is not also excellent to append the two stanzas praising the retinue below.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "T006": {
+   "kind": "ARMS",
+   "page_id": "6ac0ba25f427c9bb0692d50b",
+   "book": "6ac0ba11f427c9bb0692d3bd",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "F38"
+   }
+  },
+  "T007": {
+   "kind": "ARMS",
+   "page_id": "69e787854a6785cfd60cbd1c",
+   "book": "69e787854a6785cfd60cbc69",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "PROD",
+    "T4": "F38"
+   }
+  },
+  "T008": {
+   "kind": "ARMS",
+   "page_id": "6a14e194311a9edd46222662",
+   "book": "6a14e194311a9edd4622263e",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "OP",
+    "T3": "G4L",
+    "T4": "PROD"
+   }
+  },
+  "T009": {
+   "kind": "ARMS",
+   "page_id": "69e7ac885f1a22ab19aa8d81",
+   "book": "69e7ac885f1a22ab19aa8d56",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "F38",
+    "T3": "G4L",
+    "T4": "PROD"
+   }
+  },
+  "T010": {
+   "kind": "ARMS",
+   "page_id": "69e7ab1f5f1a22ab19a93467",
+   "book": "69e7ab1f5f1a22ab19a933c7",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "G4L",
+    "T3": "OP",
+    "T4": "PROD"
+   }
+  },
+  "T011": {
+   "kind": "ARMS",
+   "page_id": "6ac0b91ef427c9bb0692d2b6",
+   "book": "6ac0b910f427c9bb0692d126",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "F38",
+    "T3": "G4L"
+   }
+  },
+  "T012": {
+   "kind": "ARMS",
+   "page_id": "69e782aad93c1f60075043f9",
+   "book": "69e782aad93c1f600750430d",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "OP",
+    "T4": "PROD"
+   }
+  },
+  "T013": {
+   "kind": "ARMS",
+   "page_id": "69e77a510fc6fc955e35f46e",
+   "book": "69e77a510fc6fc955e35f452",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "PROD",
+    "T4": "F38"
+   }
+  },
+  "T014": {
+   "kind": "DUP",
+   "page_id": "69e7abd05f1a22ab19a9eb02",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "G4L",
+    "T3": "P"
+   }
+  },
+  "T015": {
+   "kind": "ARMS",
+   "page_id": "69e7ab9d5f1a22ab19a9afb3",
+   "book": "69e7ab9d5f1a22ab19a9aebb",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "G4L",
+    "T3": "F38",
+    "T4": "OP"
+   }
+  },
+  "T016": {
+   "kind": "PLANT",
+   "page_id": "69e7ab045f1a22ab19a91850",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "When the aggregates are thoroughly expressed through words,",
+    "new": "When the aggregates are not thoroughly expressed through words,",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "T017": {
+   "kind": "ARMS",
+   "page_id": "69e7ac1a5f1a22ab19aa3abe",
+   "book": "69e7ac1a5f1a22ab19aa39bf",
+   "stratum": "CANON",
+   "cell": "Y_none",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "F38",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T018": {
+   "kind": "ARMS",
+   "page_id": "69e788554a6785cfd60d08b5",
+   "book": "69e788554a6785cfd60d083e",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "OP",
+    "T3": "PROD",
+    "T4": "G4L"
+   }
+  },
+  "T019": {
+   "kind": "ARMS",
+   "page_id": "69e787424a6785cfd60cb30d",
+   "book": "69e787424a6785cfd60cb29e",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "OP",
+    "T2": "PROD",
+    "T3": "F38",
+    "T4": "G4L"
+   }
+  },
+  "T020": {
+   "kind": "ARMS",
+   "page_id": "69e76163cc48e59ad74ef784",
+   "book": "69e76163cc48e59ad74ef6fa",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "G4L",
+    "T4": "F38"
+   }
+  },
+  "T021": {
+   "kind": "ARMS",
+   "page_id": "69e7aabf80b52390feb19fbc",
+   "book": "69e7aabf80b52390feb19eee",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "PROD",
+    "T3": "G4L",
+    "T4": "OP"
+   }
+  },
+  "T022": {
+   "kind": "ARMS",
+   "page_id": "69e7aad55f1a22ab19a8e2ec",
+   "book": "69e7aad55f1a22ab19a8e1f6",
+   "stratum": "CANON",
+   "cell": "Y_none",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "F38"
+   }
+  },
+  "T023": {
+   "kind": "ARMS",
+   "page_id": "69e7ab1b5f1a22ab19a93163",
+   "book": "69e7ab1b5f1a22ab19a93040",
+   "stratum": "CANON",
+   "cell": "Y_none",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "F38",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T024": {
+   "kind": "ARMS",
+   "page_id": "6ac0afedf427c9bb0692c264",
+   "book": "6ac0afecf427c9bb0692c231",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "OP"
+   }
+  },
+  "T025": {
+   "kind": "ARMS",
+   "page_id": "6a14e1d5311a9edd462245d4",
+   "book": "6a14e1d5311a9edd4622456e",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "PROD",
+    "T3": "OP",
+    "T4": "G4L"
+   }
+  },
+  "T026": {
+   "kind": "ARMS",
+   "page_id": "6a14e1a2311a9edd46222d8e",
+   "book": "6a14e1a2311a9edd46222c8e",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "F38",
+    "T4": "G4L"
+   }
+  },
+  "T027": {
+   "kind": "ARMS",
+   "page_id": "69e7ab075f1a22ab19a91bf3",
+   "book": "69e7ab075f1a22ab19a91a42",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "OP",
+    "T4": "PROD"
+   }
+  },
+  "T028": {
+   "kind": "ARMS",
+   "page_id": "69e76142cc48e59ad74eebfe",
+   "book": "69e76142cc48e59ad74ee8bd",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "F38",
+    "T2": "OP",
+    "T3": "PROD",
+    "T4": "G4L"
+   }
+  },
+  "T029": {
+   "kind": "DUP",
+   "page_id": "69e788554a6785cfd60d08b5",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "P",
+    "T3": "G4L"
+   }
+  },
+  "T030": {
+   "kind": "ARMS",
+   "page_id": "6ac0b3b0f427c9bb0692ca6e",
+   "book": "6ac0b3aff427c9bb0692c9c7",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": "derge",
+   "labels": {
+    "T1": "OP",
+    "T2": "F38",
+    "T3": "G4L"
+   }
+  },
+  "T031": {
+   "kind": "ARMS",
+   "page_id": "6a14e164311a9edd46220669",
+   "book": "6a14e164311a9edd46220539",
+   "stratum": "OTHER",
+   "cell": "Y_stale",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "F38",
+    "T4": "PROD"
+   }
+  },
+  "T032": {
+   "kind": "ARMS",
+   "page_id": "69e787214a6785cfd60cb1a8",
+   "book": "69e787214a6785cfd60cb0f4",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "G4L",
+    "T2": "PROD",
+    "T3": "F38",
+    "T4": "OP"
+   }
+  },
+  "T033": {
+   "kind": "ARMS",
+   "page_id": "69e761f7cc48e59ad74f289c",
+   "book": "69e761f7cc48e59ad74f27f4",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "PROD",
+    "T4": "OP"
+   }
+  },
+  "T034": {
+   "kind": "ARMS",
+   "page_id": "69e7888f4a6785cfd60d12fd",
+   "book": "69e7888f4a6785cfd60d12ec",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "PROD",
+    "T3": "G4L",
+    "T4": "OP"
+   }
+  },
+  "T035": {
+   "kind": "ARMS",
+   "page_id": "69e77acf0fc6fc955e3625b4",
+   "book": "69e77acf0fc6fc955e362537",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "G4L",
+    "T4": "F38"
+   }
+  },
+  "T036": {
+   "kind": "ARMS",
+   "page_id": "69e7ac225f1a22ab19aa432d",
+   "book": "69e7ac225f1a22ab19aa42a0",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "OP",
+    "T2": "F38",
+    "T3": "G4L",
+    "T4": "PROD"
+   }
+  },
+  "T037": {
+   "kind": "ARMS",
+   "page_id": "69e7ab695f1a22ab19a985de",
+   "book": "69e7ab695f1a22ab19a985d5",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "F38",
+    "T4": "G4L"
+   }
+  },
+  "T038": {
+   "kind": "ARMS",
+   "page_id": "6ac0c100f427c9bb0692ddbf",
+   "book": "6ac0c0fef427c9bb0692dd73",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": "derge",
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "F38"
+   }
+  },
+  "T039": {
+   "kind": "ARMS",
+   "page_id": "69e788624a6785cfd60d0cea",
+   "book": "69e788624a6785cfd60d0cc2",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "PROD",
+    "T3": "G4L",
+    "T4": "OP"
+   }
+  },
+  "T040": {
+   "kind": "ARMS",
+   "page_id": "69e7ac145f1a22ab19aa349e",
+   "book": "69e7ac145f1a22ab19aa33d0",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "PROD",
+    "T2": "G4L",
+    "T3": "OP",
+    "T4": "F38"
+   }
+  },
+  "T041": {
+   "kind": "PLANT",
+   "page_id": "69e7aad55f1a22ab19a8e2ec",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "If these substances are not at hand, offer tormas according to one's resources and whatever is available.",
+    "new": "If these substances are at hand, offer tormas according to one's resources and whatever is available.",
+    "how": "\\bare not\\b → are"
+   }
+  },
+  "T042": {
+   "kind": "ARMS",
+   "page_id": "69e7ac785f1a22ab19aa820a",
+   "book": "69e7ac785f1a22ab19aa809b",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "F38"
+   }
+  },
+  "T043": {
+   "kind": "ARMS",
+   "page_id": "69e77acb0fc6fc955e3623c5",
+   "book": "69e77acb0fc6fc955e3623a3",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "PROD",
+    "T4": "OP"
+   }
+  },
+  "T044": {
+   "kind": "ARMS",
+   "page_id": "69e77a680fc6fc955e35fb90",
+   "book": "69e77a680fc6fc955e35fab1",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "G4L",
+    "T4": "F38"
+   }
+  },
+  "T045": {
+   "kind": "ARMS",
+   "page_id": "69e779fd0fc6fc955e35d76f",
+   "book": "69e779fd0fc6fc955e35d734",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "PROD"
+   }
+  },
+  "T046": {
+   "kind": "ARMS",
+   "page_id": "69e788454a6785cfd60d0260",
+   "book": "69e788454a6785cfd60d0228",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "F38",
+    "T3": "G4L",
+    "T4": "PROD"
+   }
+  },
+  "T047": {
+   "kind": "ARMS",
+   "page_id": "6a14e185311a9edd46221edb",
+   "book": "6a14e185311a9edd46221ea9",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "PROD",
+    "T3": "G4L",
+    "T4": "F38"
+   }
+  },
+  "T048": {
+   "kind": "ARMS",
+   "page_id": "69e7ab045f1a22ab19a91850",
+   "book": "69e7ab045f1a22ab19a916c5",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "PROD",
+    "T4": "F38"
+   }
+  },
+  "T049": {
+   "kind": "ARMS",
+   "page_id": "69e788484a6785cfd60d04ab",
+   "book": "69e788484a6785cfd60d0434",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "F38",
+    "T4": "PROD"
+   }
+  },
+  "T050": {
+   "kind": "ARMS",
+   "page_id": "69e78fe39adaf7b110e39c21",
+   "book": "69e78fe39adaf7b110e39b0e",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "F38",
+    "T2": "PROD",
+    "T3": "OP",
+    "T4": "G4L"
+   }
+  },
+  "T051": {
+   "kind": "ARMS",
+   "page_id": "69e7ab9b5f1a22ab19a9ae8c",
+   "book": "69e7ab9b5f1a22ab19a9ad39",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "OP",
+    "T3": "F38",
+    "T4": "G4L"
+   }
+  },
+  "T052": {
+   "kind": "ARMS",
+   "page_id": "69e78a844a6785cfd60d3a1e",
+   "book": "69e78a844a6785cfd60d3916",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "PROD",
+    "T4": "OP"
+   }
+  },
+  "T053": {
+   "kind": "PLANT",
+   "page_id": "69e77acf0fc6fc955e3625b4",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "His hands resting in meditative equanimity hold the vase of longevity, and he is adorned in the full garments of the enjoyment body.",
+    "new": "His hands resting in meditative equanimity hold the vase of longevity, and he is not adorned in the full garments of the enjoyment body.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "T054": {
+   "kind": "ARMS",
+   "page_id": "69e77a8d0fc6fc955e360855",
+   "book": "69e77a8d0fc6fc955e360850",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "G4L",
+    "T3": "OP",
+    "T4": "PROD"
+   }
+  },
+  "T055": {
+   "kind": "ARMS",
+   "page_id": "69e77abf0fc6fc955e361dc3",
+   "book": "69e77abf0fc6fc955e361d14",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "PROD",
+    "T4": "F38"
+   }
+  },
+  "T056": {
+   "kind": "ARMS",
+   "page_id": "69e7ac4d5f1a22ab19aa668e",
+   "book": "69e7ac4d5f1a22ab19aa6607",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "PROD",
+    "T2": "F38",
+    "T3": "G4L",
+    "T4": "OP"
+   }
+  },
+  "T057": {
+   "kind": "ARMS",
+   "page_id": "69e7aacd5f1a22ab19a8dae5",
+   "book": "69e7aacd5f1a22ab19a8d9de",
+   "stratum": "CANON",
+   "cell": "Y_unverified",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "OP",
+    "T2": "PROD",
+    "T3": "G4L",
+    "T4": "F38"
+   }
+  },
+  "T058": {
+   "kind": "ARMS",
+   "page_id": "69e787bc4a6785cfd60cd25a",
+   "book": "69e787bc4a6785cfd60cd18f",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "PROD",
+    "T4": "F38"
+   }
+  },
+  "T059": {
+   "kind": "ARMS",
+   "page_id": "69e7ab935f1a22ab19a9a4d1",
+   "book": "69e7ab935f1a22ab19a9a48c",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "F38",
+    "T3": "PROD",
+    "T4": "G4L"
+   }
+  },
+  "T060": {
+   "kind": "ARMS",
+   "page_id": "69e7ab485f1a22ab19a95f3d",
+   "book": "69e7ab485f1a22ab19a95e06",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "F38",
+    "T2": "G4L",
+    "T3": "OP",
+    "T4": "PROD"
+   }
+  },
+  "T061": {
+   "kind": "PLANT",
+   "page_id": "69e7ab075f1a22ab19a91bf3",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "Śāriputra, when those who have heard this Dharma from other buddhas hear it during the final period of five hundred years, it is impossible and there is no occasion for them to lack faith, to disbelieve, or to fail to comprehend it.",
+    "new": "Śāriputra, when those who have heard this Dharma from other buddhas hear it during the final period of five hundred years, it is not impossible and there is no occasion for them to lack faith, to disbelieve, or to fail to comprehend it.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "T062": {
+   "kind": "PLANT",
+   "page_id": "6a14e1a2311a9edd46222d8e",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "By bestowing these upon the spiritual children, they will be generated individually without failing to gather within the fully established stages.",
+    "new": "By bestowing these upon the spiritual children, they will not be generated individually without failing to gather within the fully established stages.",
+    "how": "\\bwill\\b → will not"
+   }
+  },
+  "T063": {
+   "kind": "ARMS",
+   "page_id": "69e788054a6785cfd60ce9f2",
+   "book": "69e788054a6785cfd60ce99b",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "PROD",
+    "T4": "F38"
+   }
+  },
+  "T064": {
+   "kind": "ARMS",
+   "page_id": "6ac0b531f427c9bb0692cce5",
+   "book": "6ac0b529f427c9bb0692cc11",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "F38"
+   }
+  },
+  "T065": {
+   "kind": "PLANT",
+   "page_id": "69e7ab695f1a22ab19a985de",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "In the northwest intermediate direction is the great deity, the Wrathful Tamer of All, surrounded by the worldly deities",
+    "new": "In the northwest intermediate direction is not the great deity, the Wrathful Tamer of All, surrounded by the worldly deities",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "T066": {
+   "kind": "ARMS",
+   "page_id": "6a14e16d311a9edd462210d6",
+   "book": "6a14e16d311a9edd46220fc7",
+   "stratum": "OTHER",
+   "cell": "Y_none",
+   "ref": null,
+   "labels": {
+    "T1": "F38",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T067": {
+   "kind": "DUP",
+   "page_id": "69e787214a6785cfd60cb1a8",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "G4L",
+    "T3": "P"
+   }
+  },
+  "T068": {
+   "kind": "PLANT",
+   "page_id": "6a14e1d5311a9edd462245d4",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "So that all enlightened activities are unobstructed,",
+    "new": "So that all enlightened activities are not unobstructed,",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "T069": {
+   "kind": "ARMS",
+   "page_id": "6ac0ceb1f427c9bb0692f621",
+   "book": "6ac0ceadf427c9bb0692f4ff",
+   "stratum": "CANON",
+   "cell": "D_none",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "F38",
+    "T3": "OP"
+   }
+  },
+  "T070": {
+   "kind": "ARMS",
+   "page_id": "69e788204a6785cfd60cf477",
+   "book": "69e788204a6785cfd60cf3e7",
+   "stratum": "OTHER",
+   "cell": "Y_unverified",
+   "ref": null,
+   "labels": {
+    "T1": "OP",
+    "T2": "PROD",
+    "T3": "G4L"
+   }
+  },
+  "T071": {
+   "kind": "ARMS",
+   "page_id": "69e7ac095f1a22ab19aa2951",
+   "book": "69e7ac095f1a22ab19aa2934",
+   "stratum": "CANON",
+   "cell": "Y_none",
+   "ref": "manuscript",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "F38"
+   }
+  },
+  "T072": {
+   "kind": "ARMS",
+   "page_id": "69e7abe95f1a22ab19aa04b3",
+   "book": "69e7abe95f1a22ab19aa030c",
+   "stratum": "CANON",
+   "cell": "Y_stale",
+   "ref": null,
+   "labels": {
+    "T1": "G4L",
+    "T2": "PROD",
+    "T3": "F38",
+    "T4": "OP"
+   }
+  }
+ },
+ "missing_arm": {
+  "F38": [
+   "69e779fd0fc6fc955e35d76f",
+   "69e788204a6785cfd60cf477"
+  ],
+  "G4L": [
+   "69e7ac785f1a22ab19aa820a"
+  ]
+ }
+}

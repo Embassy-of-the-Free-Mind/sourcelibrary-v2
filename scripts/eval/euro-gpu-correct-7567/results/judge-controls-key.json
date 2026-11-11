@@ -1,0 +1,44 @@
+{
+ "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189__lite__ctrl": {
+  "A": "orig",
+  "B": "drop",
+  "C": "insert",
+  "dropped_line": "Areolæque brevi, modici quam roris egentem",
+  "inserted_line": "### Septem Phialarum & Beſtiæ Babyloniſque ad occaſum vergentium."
+ },
+ "ed-6a906153ce57ddf536207e42-p9__lite__ctrl": {
+  "A": "orig",
+  "B": "insert",
+  "C": "drop",
+  "dropped_line": "rursus testudinem meam in-",
+  "inserted_line": "14 Ianuar. Nauarræus publico edicto Lotharingum"
+ },
+ "ed-69906319ef12272ffdc8f380-p107__lite__ctrl": {
+  "A": "orig",
+  "B": "drop",
+  "C": "insert",
+  "dropped_line": "which time, the Cloaths and Children were",
+  "inserted_line": "seinem Werke über Winrichs von Kniprode Regierungsgeschichte"
+ },
+ "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15__lite__ctrl": {
+  "A": "drop",
+  "B": "insert",
+  "C": "orig",
+  "dropped_line": "sicht der Civilgesetze hier ganz oder zum Theil des",
+  "inserted_line": "tatis redire possit. Nec multum la-"
+ },
+ "ed-6a90e2d81a02a5cb2d7325f2-p21__lite__ctrl": {
+  "A": "insert",
+  "B": "drop",
+  "C": "orig",
+  "dropped_line": "Pallas ad aethereas rursus contemta cateruas",
+  "inserted_line": "gentiorem duximus. In quo etiam quo-"
+ },
+ "ed-6a4ad920d6371d99e766879c-p83__lite__ctrl": {
+  "A": "insert",
+  "B": "orig",
+  "C": "drop",
+  "dropped_line": "would give a whole Countrey, or the",
+  "inserted_line": "ones partium textus, minùs rectam arguunt"
+ }
+}

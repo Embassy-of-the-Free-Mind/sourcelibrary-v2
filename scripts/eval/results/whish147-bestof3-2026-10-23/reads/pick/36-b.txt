@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B is noisy, but most of its rows clearly follow the Gauḍapāda commentary on Sāṅkhyakārikā 21–22 (kaivalyārthaṃ, mahadādi, tasmād gaṇaś ca ṣoḍaśakaḥ, daśa indriyāṇi, pañca tanmātrāṇi, bhūtāni); A's few readable pieces are cleaner but too sparse to make continuous text, and C is almost entirely illegible.

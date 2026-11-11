@@ -1,0 +1,12 @@
+ROW 1 | ൈര[illegible]ഗുണാഭിധാനം ത്രി[illegible] ‖ വത്വാദ്ഗുണസ്സിദ്ധഃ വ്യക്ത[illegible]ഭവാത്വാശെഷഃ കകഃ ‖ [illegible]ഗുണാൽകമം[illegible]
+ROW 2 | ഗുണാഅവിവെകിനോ[illegible] ‖ [illegible]ദ്യാസ്സാമാന്യാ[illegible]ചെതനാഃപ്രസവധൎമ്മി ‖ ണശ്ച[illegible]വ്യക്തസിദ്ധാ[illegible]
+ROW 3 | ഇതിത്രൈഗുണ്യാദിവ ‖ [illegible]ഭാവാദിക്കിത്രൈഗുണ്യാന്യാഭാ ‖ [illegible]ാദിക്കൈത്രൈഗുണ്യാഭാവെ
+ROW 4 | ക്കവിവെകത്വാദയോ ‖ [illegible]ഭാവാൽന[illegible]ണസ്യപുരുഷസ്യാവി ‖ വെ[illegible]ഭവന്തി
+ROW 5 | കസ്മാത്രൈഗുണ്യാ ‖ ദെവാവെത്വാദ[illegible]ദ്ധഃ ഏവ[illegible] ‖ പ്രധാനമപിത്രൈഗുണ്യ
+ROW 6 | [illegible]ൽക[illegible]വിധാ[illegible]ം ‖ [illegible]കാരണഗുണാത്മകത്വാൽക ‖ ാൎയ്യസ്യാവ്യക്തമപിസി
+ROW 7 | ദ്ധമിതികാരണസ്യ ‖ യോഗുണഃസ്വാത്മഭൂതഭാവോയസ്യ ‖ ക[illegible]ക്തം[illegible]
+ROW 8 | [illegible]തന്മാൽണ ‖ ഫല[illegible]കാര[illegible]കാൎയ്യ[illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible]വ്യക്ത[illegible] ‖ വിയന്ന്യാൽകമം വ്യക്ത[illegible]
+ROW 10 | വിധം[illegible] ‖ [illegible]പ്രസവധൎമ്മി ‖ ധൎമ്മിണാ[illegible]സിദ്ധ[illegible]
+ROW 11 | മം[illegible]വെത്വാദിത്വാ ‖ [illegible]ദാനാദിത്വാദ്വകാൎയ്യകാരണ[illegible] ‖ [illegible]ത്മകാ[illegible]മിതു[illegible]
+NOTE | I read all four pieces, but this is a low-confidence partial transcription: the piece order and the 11-row layout are reliable, while many glyph readings are not (rows 8–11 are mostly unreadable to me). Some segments, such as "-ചെതനാഃപ്രസവധൎമ്മി", "കാരണഗുണാത്മകത്വാൽ", "ാൎയ്യസ്യാവ്യക്തമപിസി" and "പ്രധാനമപിത്രൈഗുണ്യ", fit the strokes, but they also match Sāṅkhyakārikā 11/14, so my recognition of the text may have influenced how I read them. Treat every reading as provisional; it needs checking against a higher-resolution image.

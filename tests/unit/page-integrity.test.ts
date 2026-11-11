@@ -13,8 +13,8 @@ import fs from 'fs';
 import path from 'path';
 import {
   catchwordBoundary, parseCatchword, pageNumberBreaks, parsePageNum, duplicateScan,
-  truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
-  parseVocab, vocabAbsent, repeatedBlocks, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
+  truncationRatio, echoedSource, copiesPrintedEnglish, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
+  parseVocab, vocabAbsent, repeatedBlocks, duplicateSlots, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
   metaPayload, continuityMeta,
   translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -33,6 +33,7 @@ const PN = fx('page-numbers.json').cases as any[];
 const DUP = fx('duplicate-scans.json').cases as any[];
 const TR = fx('translations.json');
 const MP = fx('meta-payload.json').cases as any[];
+const DS = fx('duplicate-slots.json').cases as Record<string, any>;
 
 describe('catchword continuity', () => {
   it('reads the catchword out of <meta>, and refuses a CJK fore-edge title', () => {
@@ -254,6 +255,35 @@ describe('O4 · a block repeated inside one page (#5135)', () => {
   });
 });
 
+describe('a block reused in a second slot (#3591)', () => {
+  it('flags Kitab al-Bulhan p.41: the <margin> is the body paragraph word for word', () => {
+    // repeatedBlocks is blind to it: sourceProse strips <margin> before it looks
+    expect(repeatedBlocks(DS['bulhan-p41-margin-copies-body'].ocr)).toMatchObject({ flag: false });
+    const r = duplicateSlots(DS['bulhan-p41-margin-copies-body'].ocr);
+    expect(r).toMatchObject({ judged: true, flag: true, repeatedHeads: [] });
+    expect(r.copiedSlots).toHaveLength(1);
+    expect(r.copiedSlots[0]).toMatchObject({ tag: 'margin' });
+    expect(r.copiedSlots[0].share).toBeGreaterThan(0.9);
+  });
+  it('flags p.159: two headings transcribed identically while its own image-descs say one dot, then two', () => {
+    const r = duplicateSlots(DS['bulhan-p159-heading-twice'].ocr);
+    expect(r).toMatchObject({ judged: true, flag: true, copiedSlots: [] });
+    expect(r.repeatedHeads).toEqual([{ text: 'قارعت الاثنين قارعت خمسة انا', count: 2, descsDiffer: true }]);
+  });
+  it('does not flag p.60 (one heading, no slot), nor headings that recur by design', () => {
+    expect(duplicateSlots(DS['bulhan-p60-torn-grid'].ocr)).toMatchObject({ flag: false });
+    // "A L I U D." twice: a letter-spaced label is ONE word, under HEADING_MIN_UNITS
+    expect(duplicateSlots(DS['aliud-p17-spaced-label-twice'].ocr)).toEqual({ judged: false, why: 'no-slots' });
+    // "Deinde cum dicit." — a commentary formula, three words
+    expect(duplicateSlots(DS['commentary-p47-formula-heading'].ocr)).toEqual({ judged: false, why: 'no-slots' });
+  });
+  it('flags a <note> copied from an earlier slot, and passes a short marginal citation', () => {
+    const para = 'Nihil est in intellectu quod non prius fuerit in sensu, ut dicunt philosophi omnes qui de anima scripserunt';
+    expect(duplicateSlots(`<margin>${para}</margin>\n\nAliud corpus paginae.\n\n<note>${para}</note>`).copiedSlots).toMatchObject([{ tag: 'note', share: 1 }]);
+    expect(duplicateSlots('<margin>Matth. ult.</margin>\n\nEuntes docete omnes gentes. Matth. ult.')).toEqual({ judged: false, why: 'no-slots' });
+  });
+});
+
 describe('text hidden in the continuity <meta>', () => {
   it('has hidden, whole-page and copied cases', () => {
     expect(MP.filter((c) => c.expect.shape === 'hidden-text').length).toBeGreaterThanOrEqual(3);
@@ -345,9 +375,88 @@ describe('translationReasoningLeak', () => {
       expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
     }
   });
+  // #8465: Plotinus, Perna 1580 (6952c9ca77f38f6761bc3062) pp. 811, 184, 246, as stored.
+  it('a refusal, an answer to the request, and the prompt\'s own input labels are chat replies', () => {
+    for (const t of [
+      'The Greek text to be translated is missing from your request. The string `+"+"+"+"...` appears where the Greek text should be.\n\nYou have provided a Latin text under "Previous page text for continuity". If you would like me to translate this Latin text, please let me know. Otherwise, please provide the Greek text you wish to have translated.',
+      'I apologize, but the Greek text that is supposed to be in the right column is not provided in your request. I only see the Latin text in the left column.\n\nTherefore, I am unable to translate the Greek text as requested.',
+      'Here is the translation of the Greek and Latin text to English, preserving formatting and paragraph breaks, and maintaining continuity with the previous page.\n\n**Previous page text for continuity:**\n\nfirst: wherefore it is necessary that all things after the first always exist in succession',
+      '**Previous page translation for continuity:**\nand so the stone is made.\n\n**Text to translate:**\nDe lapide',
+      '<meta>continues</meta>\nI\'m sorry, but the text you provided appears to be blank.',
+      'I cannot translate this page because the image you have provided is unreadable.',
+    ]) {
+      expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'assistant-reply', readerVisible: true });
+      expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    }
+  });
+  it('book text that apologises, cannot translate, or points at the previous page is left alone', () => {
+    for (const t of [
+      'I apologize, dear reader, for the length of this preface, which my friends have urged upon me.',
+      'I cannot translate this word into our tongue without losing its force; the Greeks call it <term>ousia</term>.',
+      'He said: "I am sorry that the letter you sent me was lost on the road to Basel."',
+      'See the previous page for the figure of the furnace.',
+      'The second part, which is missing from the manuscript, was printed at Leiden in 1612.',
+      'the conditions are not provided in the statute, and the judge must decide.',
+      'Unfortunately, the text of this chapter is corrupt in every manuscript.',
+    ]) expect(translationReasoningLeak(t), t).toBeNull();
+  });
   it('the model naming its input is the mildest kind, and usually sits in <meta>', () => {
     expect(translationReasoningLeak('<meta>Page 405 is missing from the provided transcription.</meta>\ndominion. But the daemon')).toMatchObject({ kind: 'input-talk', readerVisible: false });
     expect(translationReasoningLeak('The provided text contains no content to modernize, as it consists only of a blank page.')).toMatchObject({ kind: 'input-talk', readerVisible: true });
+  });
+  // #6117, found on #7968: Marcellus, De medicamentis (69af49c4d6be7ec9cc3246fd) p.84, as stored.
+  const P84 = '<meta>Note: This content seems to be a continuation from the previous page\'s index and headers, but follows the specific source text structure provided.</meta>\n<note>The text continues from the previous page\'s section on head treatments and purgatives.</note>\n...[text continues as per original structure]...\n\n<summary>This page continues the catalog of remedies for parasitic infestations of the scalp and introduces new treatments for head congestion and phlegm-related ailments.</summary>\n<keywords>Marcellus Empiricus, De Medicamentis, porrigo, papulae</keywords>';
+  it('a placeholder or a description where the translation should be is its own kind', () => {
+    for (const t of [
+      P84,
+      'Such a one has offended and is not deprived by the law itself if, for the third time... [text continues regarding the suspension of those who confer benefices]... the Archbishop speaks thus in his decree.',
+      'Item, for the gout:\n\n(list continues repeating similar collation notes)',
+      '[This page is a continuation of the previous translation; see page 12 for the finalized English.]',
+      'Of the first remedy, take rue and honey.\n\n[The rest of the recipes are omitted for brevity.]',
+      'And the second chapter opens thus. [Remainder of the passage omitted for brevity.]',
+      '<note>The text continues from the previous page, discussing property disputes.</note>\n\n',
+      '<header>LIVES OF THE SOPHISTS</header>\n[The text continues from the previous page, detailing the impact of Nicetes of Smyrna on the rhetorical arts of his time.]',
+    ]) {
+      expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'summary-placeholder', readerVisible: true });
+      expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    }
+  });
+  it('editorial brackets, a damaged source and a note beside a real translation are not a placeholder', () => {
+    for (const t of [
+      'he wrote that the stone [sic] was found in the river, and that the waters were bitter.',
+      'and the vessel shall be [illegible] for nine days, until the matter turns black.',
+      'Awake[ ] awake[ ] put on your strength [Zion, pu]t on your beautiful garments [...]',
+      'for the King of Kings [ … ] and he gave thanks to the Lord.',
+      '<note>The remaining text on this page is illegible due to water damage.</note> And so the work ended.',
+      'in the year of our Lord [remaining text illegible]',
+      '[The rest of the page is torn away.]',
+      'TABLE I. (continued)\n\n| Sign | Degree |',
+      'They have tied me to a stake. [*Alarums continued.*]',
+      '(he continues) "But the soul, my friend, is not so easily persuaded."',
+      '[continued on next page]',
+      '(continues with **the kingdom of God to appear**, omitting **immediately**)',
+      'A B C D E F G H I K L M N O P Q R S T U W X Y Z (A-Z, with \'j\' and \'v\' omitted as per 17th-century convention)',
+      '[Latin translation omitted for brevity as it repeats the Greek text above]',
+      '[The text continues describing the exorcism of a young woman in Catalonia:]\n\nThere was in Catalonia a girl',
+      // a bridge over the sentence carried across the page break: the leaf's words are all there
+      '# BOOK IX.\n\nChapter I. [The text continues, discussing how worms] sometimes are born; as was said above concerning the poisonous offspring of fennel and sage.',
+      'from the channels the canon has arranged in the transverse direction\n\n->**Fig. 124b.**<-\n\n[The text continues describing the mechanism.]',
+      'and so the chapter ends with the third remedy [rest of text continues on next page]',
+      '(my own, with the variation of Hercher\'s text omitted for the sake of brevity)',
+      'Of the sun and moon. [Greek text continues with the same meaning] Of the stars, which are many.',
+      'the bards sang of it, saying: [text continues with obscured rhythmic verse] and the king was pleased.',
+      // a centring marker (->…<-) is not a tag: the English after it is still English
+      '->### P R E F A C E .<-\n\n...immortalize <note>The text continues from the previous page\'s word "immortalize."</note>, and who knows if they do not live longer because of it?',
+      '# PLATONIC THEOLOGY\n<note>The page contains a block of Latin text, but the resolution and fading make individual words impossible to distinguish. The text appears to be a continuation of a philosophical treatise.</note>',
+      '<note>The text continues from the previous page: ...standard of a good man to use and enjoy them. If, therefore, they are handed over for the purpose of enjoyment, no one doubts that the person who received them does not become the owner, for they are not handed over so that the ownership is stripped from the one who hands them over, but so that the legatee may use and enjoy them. Therefore, since the vessels do not become the property of the usufructuary, they can be claimed by the owner.</note>',
+      'but rather that the god must be prevented from interfering with his welfare.\n\n(The list continues regarding the classification of worship):\n4. Worship of visible things, animate or inanimate.',
+      '<note>The text continues from the previous page: ...The Wardens having repeated the same thing, all together we perform the sign.</note>\n# The End.',
+      '### OBVERSE II\n\n(Cuneiform text omitted for brevity)\n\n1. ..... its brilliant ........ let him behold.',
+      'Blessed are You, Lord, who loves His people Israel. [Continue with] the <term>Shema</term> until "to You they answered with a song."',
+      '<note>from the previous page: [continues regarding the dissolution of betrothals].</note> of fickleness, and he shall recover the dowry which he gave',
+      '<note>The text continues from the previous page, discussing property disputes near borders.</note> that if it has sent its roots into the neighbour\'s field, the tree belongs to him in whose land it stands.',
+      '<note>The text appears to be corrupt here; the printer seems to have dropped a line.</note> and the fire must be gentle.',
+    ]) expect(translationReasoningLeak(t), t).toBeNull();
   });
   it('the bare thinking-channel label at the head of a page is its own kind', () => {
     expect(translationReasoningLeak('thought\n<meta>This page continues the legal analysis</meta>')).toMatchObject({ kind: 'thought-token' });
@@ -388,5 +497,21 @@ describe('a stored translation the write door would refuse as a runaway (#4098)'
     const { lines } = scanBookForOverlong('b', rows, { bookLang: 'Latin' });
     expect(lines.at(-1).overlong).toEqual({ judged: 2, flagged: 1, shapes: { padding: 1 } });
     expect(lines.filter((l: { kind: string }) => l.kind === 'overlong').map((l: { p: number }) => l.p)).toEqual([2]);
+  });
+});
+
+// #7075: a Loeb's facing English handed back as the translation (Plutarch Loeb 99 p.94).
+describe('a read that copies the English printed on the page', () => {
+  const L = fx('loeb-facing-english-7075.json');
+  it('refuses the read that is the facing English, which echoedSource exempts', () => {
+    expect(echoedSource({ ocr: L.ocr, tr: L.copied, lang: 'Greek' }).echo).toBe(false);
+    expect(copiesPrintedEnglish({ ocr: L.ocr, tr: L.copied, lang: 'Greek' })).toBe(true);
+  });
+  it('passes a translation of the same page, and a page that shares a shorter run with its English', () => {
+    expect(copiesPrintedEnglish({ ocr: L.ocr, tr: L.translated, lang: 'Greek' })).toBe(false);
+    expect(copiesPrintedEnglish({ ocr: L.other_ocr, tr: L.other_tr, lang: 'Greek' })).toBe(false);
+  });
+  it('never judges an English book, whose pages are modernised, not translated', () => {
+    expect(copiesPrintedEnglish({ ocr: L.ocr, tr: L.copied, lang: 'English' })).toBe(false);
   });
 });

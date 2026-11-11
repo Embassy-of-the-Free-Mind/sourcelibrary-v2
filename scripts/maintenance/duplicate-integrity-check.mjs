@@ -239,7 +239,7 @@ const extractVolume = (title) => {
 const visible = books.find(
   { visible: true, content_type: { $ne: 'artwork' } },
   { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, edition_key: 1 } }
-);
+).batchSize(1000);
 const clusters = new Map();
 let storedKeys = 0;
 let fallbackKeys = 0;

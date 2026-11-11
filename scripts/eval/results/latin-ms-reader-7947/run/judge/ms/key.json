@@ -1,0 +1,418 @@
+{
+ "b01-k": {
+  "arm": "stored",
+  "book_id": "6a0c53fc99c52ea845a06630"
+ },
+ "b01-m": {
+  "arm": "opus",
+  "book_id": "6a0c53fc99c52ea845a06630"
+ },
+ "b01-r": {
+  "arm": "agyread",
+  "book_id": "6a0c53fc99c52ea845a06630"
+ },
+ "b01-t": {
+  "arm": "armc",
+  "book_id": "6a0c53fc99c52ea845a06630"
+ },
+ "b02-k": {
+  "arm": "armc",
+  "book_id": "69f32d7e876dd827cbc42eb1"
+ },
+ "b02-m": {
+  "arm": "stored",
+  "book_id": "69f32d7e876dd827cbc42eb1"
+ },
+ "b02-r": {
+  "arm": "opus",
+  "book_id": "69f32d7e876dd827cbc42eb1"
+ },
+ "b02-t": {
+  "arm": "agyread",
+  "book_id": "69f32d7e876dd827cbc42eb1"
+ },
+ "b03-k": {
+  "arm": "opus",
+  "book_id": "69f32becb6c06ca8a5e75ef3"
+ },
+ "b03-m": {
+  "arm": "stored",
+  "book_id": "69f32becb6c06ca8a5e75ef3"
+ },
+ "b03-r": {
+  "arm": "agyread",
+  "book_id": "69f32becb6c06ca8a5e75ef3"
+ },
+ "b03-t": {
+  "arm": "armc",
+  "book_id": "69f32becb6c06ca8a5e75ef3"
+ },
+ "b04-k": {
+  "arm": "armc",
+  "book_id": "69f337b3876dd827cbc529da"
+ },
+ "b04-m": {
+  "arm": "stored",
+  "book_id": "69f337b3876dd827cbc529da"
+ },
+ "b04-r": {
+  "arm": "opus",
+  "book_id": "69f337b3876dd827cbc529da"
+ },
+ "b04-t": {
+  "arm": "agyread",
+  "book_id": "69f337b3876dd827cbc529da"
+ },
+ "b05-k": {
+  "arm": "stored",
+  "book_id": "69f338e1876dd827cbc54599"
+ },
+ "b05-m": {
+  "arm": "armc",
+  "book_id": "69f338e1876dd827cbc54599"
+ },
+ "b05-r": {
+  "arm": "opus",
+  "book_id": "69f338e1876dd827cbc54599"
+ },
+ "b05-t": {
+  "arm": "agyread",
+  "book_id": "69f338e1876dd827cbc54599"
+ },
+ "b06-k": {
+  "arm": "opus",
+  "book_id": "69f33964876dd827cbc54e04"
+ },
+ "b06-m": {
+  "arm": "agyread",
+  "book_id": "69f33964876dd827cbc54e04"
+ },
+ "b06-r": {
+  "arm": "stored",
+  "book_id": "69f33964876dd827cbc54e04"
+ },
+ "b06-t": {
+  "arm": "armc",
+  "book_id": "69f33964876dd827cbc54e04"
+ },
+ "b07-k": {
+  "arm": "agyread",
+  "book_id": "69f33932876dd827cbc5487b"
+ },
+ "b07-m": {
+  "arm": "stored",
+  "book_id": "69f33932876dd827cbc5487b"
+ },
+ "b07-r": {
+  "arm": "armc",
+  "book_id": "69f33932876dd827cbc5487b"
+ },
+ "b07-t": {
+  "arm": "opus",
+  "book_id": "69f33932876dd827cbc5487b"
+ },
+ "b08-k": {
+  "arm": "opus",
+  "book_id": "69f3394f876dd827cbc54be6"
+ },
+ "b08-m": {
+  "arm": "armc",
+  "book_id": "69f3394f876dd827cbc54be6"
+ },
+ "b08-r": {
+  "arm": "stored",
+  "book_id": "69f3394f876dd827cbc54be6"
+ },
+ "b08-t": {
+  "arm": "agyread",
+  "book_id": "69f3394f876dd827cbc54be6"
+ },
+ "b09-k": {
+  "arm": "agyread",
+  "book_id": "69f338cc876dd827cbc5431d"
+ },
+ "b09-m": {
+  "arm": "stored",
+  "book_id": "69f338cc876dd827cbc5431d"
+ },
+ "b09-r": {
+  "arm": "opus",
+  "book_id": "69f338cc876dd827cbc5431d"
+ },
+ "b09-t": {
+  "arm": "armc",
+  "book_id": "69f338cc876dd827cbc5431d"
+ },
+ "b10-k": {
+  "arm": "stored",
+  "book_id": "69b418ab2b0edf3eaa2dd947"
+ },
+ "b10-m": {
+  "arm": "agyread",
+  "book_id": "69b418ab2b0edf3eaa2dd947"
+ },
+ "b10-r": {
+  "arm": "opus",
+  "book_id": "69b418ab2b0edf3eaa2dd947"
+ },
+ "b10-t": {
+  "arm": "armc",
+  "book_id": "69b418ab2b0edf3eaa2dd947"
+ },
+ "b11-k": {
+  "arm": "armc",
+  "book_id": "69f33a4e876dd827cbc57c95"
+ },
+ "b11-m": {
+  "arm": "agyread",
+  "book_id": "69f33a4e876dd827cbc57c95"
+ },
+ "b11-r": {
+  "arm": "opus",
+  "book_id": "69f33a4e876dd827cbc57c95"
+ },
+ "b11-t": {
+  "arm": "stored",
+  "book_id": "69f33a4e876dd827cbc57c95"
+ },
+ "b12-k": {
+  "arm": "opus",
+  "book_id": "69b4188d2b0edf3eaa2dd39d"
+ },
+ "b12-m": {
+  "arm": "armc",
+  "book_id": "69b4188d2b0edf3eaa2dd39d"
+ },
+ "b12-r": {
+  "arm": "agyread",
+  "book_id": "69b4188d2b0edf3eaa2dd39d"
+ },
+ "b12-t": {
+  "arm": "stored",
+  "book_id": "69b4188d2b0edf3eaa2dd39d"
+ },
+ "b13-k": {
+  "arm": "agyread",
+  "book_id": "d850a255-4633-43d5-8383-7c67a7e55144"
+ },
+ "b13-m": {
+  "arm": "armc",
+  "book_id": "d850a255-4633-43d5-8383-7c67a7e55144"
+ },
+ "b13-r": {
+  "arm": "opus",
+  "book_id": "d850a255-4633-43d5-8383-7c67a7e55144"
+ },
+ "b13-t": {
+  "arm": "stored",
+  "book_id": "d850a255-4633-43d5-8383-7c67a7e55144"
+ },
+ "b14-k": {
+  "arm": "armc",
+  "book_id": "69b4193f2b0edf3eaa2df265"
+ },
+ "b14-m": {
+  "arm": "agyread",
+  "book_id": "69b4193f2b0edf3eaa2df265"
+ },
+ "b14-r": {
+  "arm": "opus",
+  "book_id": "69b4193f2b0edf3eaa2df265"
+ },
+ "b14-t": {
+  "arm": "stored",
+  "book_id": "69b4193f2b0edf3eaa2df265"
+ },
+ "b15-k": {
+  "arm": "agyread",
+  "book_id": "69b419052b0edf3eaa2de888"
+ },
+ "b15-m": {
+  "arm": "stored",
+  "book_id": "69b419052b0edf3eaa2de888"
+ },
+ "b15-r": {
+  "arm": "opus",
+  "book_id": "69b419052b0edf3eaa2de888"
+ },
+ "b15-t": {
+  "arm": "armc",
+  "book_id": "69b419052b0edf3eaa2de888"
+ },
+ "b16-k": {
+  "arm": "opus",
+  "book_id": "69b419382b0edf3eaa2df003"
+ },
+ "b16-m": {
+  "arm": "armc",
+  "book_id": "69b419382b0edf3eaa2df003"
+ },
+ "b16-r": {
+  "arm": "stored",
+  "book_id": "69b419382b0edf3eaa2df003"
+ },
+ "b16-t": {
+  "arm": "agyread",
+  "book_id": "69b419382b0edf3eaa2df003"
+ },
+ "b17-k": {
+  "arm": "opus",
+  "book_id": "69d66608bf5afe33937f8c15"
+ },
+ "b17-m": {
+  "arm": "armc",
+  "book_id": "69d66608bf5afe33937f8c15"
+ },
+ "b17-r": {
+  "arm": "stored",
+  "book_id": "69d66608bf5afe33937f8c15"
+ },
+ "b17-t": {
+  "arm": "agyread",
+  "book_id": "69d66608bf5afe33937f8c15"
+ },
+ "b18-k": {
+  "arm": "stored",
+  "book_id": "69b51e02261c58d63664e132"
+ },
+ "b18-m": {
+  "arm": "agyread",
+  "book_id": "69b51e02261c58d63664e132"
+ },
+ "b18-r": {
+  "arm": "opus",
+  "book_id": "69b51e02261c58d63664e132"
+ },
+ "b18-t": {
+  "arm": "armc",
+  "book_id": "69b51e02261c58d63664e132"
+ },
+ "b19-k": {
+  "arm": "armc",
+  "book_id": "69b418d42b0edf3eaa2ddfeb"
+ },
+ "b19-m": {
+  "arm": "agyread",
+  "book_id": "69b418d42b0edf3eaa2ddfeb"
+ },
+ "b19-r": {
+  "arm": "stored",
+  "book_id": "69b418d42b0edf3eaa2ddfeb"
+ },
+ "b19-t": {
+  "arm": "opus",
+  "book_id": "69b418d42b0edf3eaa2ddfeb"
+ },
+ "b20-k": {
+  "arm": "armc",
+  "book_id": "69b4194bddff1f043992a157"
+ },
+ "b20-m": {
+  "arm": "opus",
+  "book_id": "69b4194bddff1f043992a157"
+ },
+ "b20-r": {
+  "arm": "stored",
+  "book_id": "69b4194bddff1f043992a157"
+ },
+ "b20-t": {
+  "arm": "agyread",
+  "book_id": "69b4194bddff1f043992a157"
+ },
+ "b21-k": {
+  "arm": "opus",
+  "book_id": "69d8ca5fa09828f83ddcabf9"
+ },
+ "b21-m": {
+  "arm": "agyread",
+  "book_id": "69d8ca5fa09828f83ddcabf9"
+ },
+ "b21-r": {
+  "arm": "armc",
+  "book_id": "69d8ca5fa09828f83ddcabf9"
+ },
+ "b21-t": {
+  "arm": "stored",
+  "book_id": "69d8ca5fa09828f83ddcabf9"
+ },
+ "b22-k": {
+  "arm": "armc",
+  "book_id": "69b418f82b0edf3eaa2de64c"
+ },
+ "b22-m": {
+  "arm": "opus",
+  "book_id": "69b418f82b0edf3eaa2de64c"
+ },
+ "b22-r": {
+  "arm": "agyread",
+  "book_id": "69b418f82b0edf3eaa2de64c"
+ },
+ "b22-t": {
+  "arm": "stored",
+  "book_id": "69b418f82b0edf3eaa2de64c"
+ },
+ "b23-k": {
+  "arm": "opus",
+  "book_id": "69b418a62b0edf3eaa2dd7f1"
+ },
+ "b23-m": {
+  "arm": "armc",
+  "book_id": "69b418a62b0edf3eaa2dd7f1"
+ },
+ "b23-r": {
+  "arm": "agyread",
+  "book_id": "69b418a62b0edf3eaa2dd7f1"
+ },
+ "b23-t": {
+  "arm": "stored",
+  "book_id": "69b418a62b0edf3eaa2dd7f1"
+ },
+ "b24-k": {
+  "arm": "stored",
+  "book_id": "69d665f8bf5afe33937f8a3f"
+ },
+ "b24-m": {
+  "arm": "armc",
+  "book_id": "69d665f8bf5afe33937f8a3f"
+ },
+ "b24-r": {
+  "arm": "agyread",
+  "book_id": "69d665f8bf5afe33937f8a3f"
+ },
+ "b24-t": {
+  "arm": "opus",
+  "book_id": "69d665f8bf5afe33937f8a3f"
+ },
+ "b25-k": {
+  "arm": "stored",
+  "book_id": "69f32ed5876dd827cbc44913"
+ },
+ "b25-m": {
+  "arm": "opus",
+  "book_id": "69f32ed5876dd827cbc44913"
+ },
+ "b25-r": {
+  "arm": "agyread",
+  "book_id": "69f32ed5876dd827cbc44913"
+ },
+ "b25-t": {
+  "arm": "armc",
+  "book_id": "69f32ed5876dd827cbc44913"
+ },
+ "b26-k": {
+  "arm": "stored",
+  "book_id": "69b51eb4768235dc659977b1"
+ },
+ "b26-m": {
+  "arm": "agyread",
+  "book_id": "69b51eb4768235dc659977b1"
+ },
+ "b26-r": {
+  "arm": "armc",
+  "book_id": "69b51eb4768235dc659977b1"
+ },
+ "b26-t": {
+  "arm": "opus",
+  "book_id": "69b51eb4768235dc659977b1"
+ }
+}

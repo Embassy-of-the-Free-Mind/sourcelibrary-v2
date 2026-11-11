@@ -1,0 +1,11 @@
+ROW 1 | ജ്ഞാനകൎമ്മത്താൽത്രി‖ഗുണാദിവിപൎയ്യാസാദയിക്കുന്നാൽപുരു‖ഷ[illegible]ക്കുട[illegible]യാൎക്കെ
+ROW 2 | കൈവല്യാൎത്ഥംപ്രവൃത്ത‖കൈകബ[illegible]ജ്ജനനമനഭേകനണാനാംപ്ര‖കൃതി[illegible]മാദന്യ[illegible]ഗവൽപ്ര
+ROW 3 | ഉത്തരത്തെക്കാട്ടു‖[illegible]ബഹുബാംന്വിദ്ധ[illegible]ഉജ്ഞാവി‖പശ്യാവൈശിഷ്ട്യം
+ROW 4 | ണ്ടാ।[illegible]ച്ചവി‖പശ്ചാത്താൽസിദ്ധാംസാഭികമ‖[illegible]പ്രകൃ[illegible]സ്ത്ര്യവൈക
+ROW 5 | വല്യംമാന്ത്യാത്യ‖ജ്ജ[illegible]ദ്ദജ്ഞബൈകകന്ത്യദാദാ‖ക്ഷേ:[illegible]।ഭജ്ഞാക്കൽ
+ROW 6 | സംയോഗാദ്ദൈ‖ചരണഭക്കൈകൈ[illegible]നാപദൈവവി‖ംഗംഗുണേക്കുര[illegible]
+ROW 7 | വിനൈരാഗ്യൈക്ക‖പടവഴ്വുദ്ദാസ്വീ[illegible]।ദ്ധ്യപ്പൊരു‖[illegible]ദൽ[illegible]ംെ
+ROW 8 | ൈകവല്യാദ്ധ്യ‖ദാപ്രധാനസ്യാചംഗാസ്ഥ്യപടുമ‖[illegible]
+ROW 9 | ക്ഷിൽക്രമണസിദ്ധ:।[illegible]‖[illegible]ത്മാംഗ്ക്കൈ[illegible]നാഹാംകൊാനങ്ങ‖ങ്ങിൽഗത[illegible]മൈരവ
+ROW 10 | ഗക:ഭജ്ഞാദവി‖രാഘസ്ക്കാൽപക്കാദ്രുപേക്കാദ്രേകാ‖രെഷു।ബിബ്ബ്യപസാദൈധാ
+NOTE | I could read only a small part of this leaf with any confidence, and most of the text above should be treated as tentative. Row breaks are judged from the line heights in the four pieces. The layout reads as 10 rows: rows 1–2 and 9–10 run the full width, and rows 3–8 are in three columns. Many letters, especially the conjuncts and the dot-reph, are uncertain guesses from the strokes. I did not fill anything in from the Sāṅkhyakārikā or any commentary, so the output is often not well-formed Sanskrit or Malayalam. It needs checking against a higher-resolution image or a trained reader. Right-column rows 7–8 were the hardest to read.

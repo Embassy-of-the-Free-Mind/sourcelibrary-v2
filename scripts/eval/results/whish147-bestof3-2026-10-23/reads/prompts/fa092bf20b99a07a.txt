@@ -1,0 +1,56 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. hariḥśrīgaṇapata ‖ yenamaḥavighnamastuduḥkhatrayābhi ‖ ghātājjijñāsāta
+2. dapaghātakehe ‖ taudṛṣṭesāpārtthācennai ‖ kāntātyantato
+3. bhāvāldṛ ‖ ṣṭavadānuśravikassahyaviśu ‖ ddhikṣayātiśayayu
+4. ktaḥtadviparī ‖ taśreyānvyaktāvyaktajña ‖ vijñānālmūla
+5. prakṛtiravikṛ ‖ tirmmahadādyāḥprakṛtivi ‖ kṛtayassaptaṣo
+6. ḍaśakastuvi ‖ kāronaprakṛtirnnavikṛ ‖ tiḥpuruṣaḥdṛṣṭa
+7. manumānamā ‖ ptavacanañcasarvvapramāṇa ‖ siddhatvāltrivi
+8. dhaṃpramāṇamiṣṭaṃ ‖ prameyasiddhiḥprativiṣa ‖ yāddhyavasāyodṛ
+9. ṣṭatrividhama ‖ numānamākhyātaṃtalliṃgaliṃgi ‖ pūrvvakamāptaśruti
+10. [illegible] ‖ pramāṇāddhi ‖ [illegible]
+
+TRANSCRIPTION B
+1. hariḥśrīgaṇapatayenamaḥ ‖ avighnamastuduḥkhatrayābhi ‖ ghātājjijñāsāta
+2. dabhighātakehe ‖ taudṛṣṭesāpārtthācennai ‖ kāntātyantato
+3. bhāvāldṛ ‖ ṣṭavadānuśravikaḥsahyaviśu ‖ ddhikṣayātiśayayu
+4. ktaḥtadviparī ‖ taśreyānvyaktāvyaktajña ‖ vijñānālmūla
+5. prakṛtiravikṛ ‖ tirmmahadādyāḥprakṛtivi ‖ kṛtayassapta
+6. ṣoḍaśakastuvi ‖ kāronaprakṛtirnnavikṛ ‖ tiḥpuruṣaḥdṛṣṭa
+7. manumānamāpta ‖ vacanañcasarvvapramāṇa ‖ siddhatvāltrivi
+8. dhaṃpramāṇamiṣṭaṃ ‖ prameyasiddhiḥ [illegible] prativiṣa ‖ yāddhyavasāyodṛ
+9. ṣṭaṃtrividhama ‖ numānamākhyātaṃtalliṃgaliṃ ‖ gipūrvvakamāptaśruti
+10.  ‖ pramāṇāddhi ‖ 
+
+TRANSCRIPTION C
+1. hariḥśrīgaṇapata ‖ yenamaḥavighnamastuduḥkhatrayābhi ‖ ghātājjijñāsāta
+2. dabhighātakehe ‖ taudṛṣṭesāpārtthācennai ‖ kāntātyantato
+3. bhāvāl1dṛ ‖ ṣṭavadānuśravikassahyaviśu ‖ ddhikṣayātiśayayu
+4. ktaḥtadviparī ‖ taśreyānvyaktāvyaktajña ‖ vijñānāl2mūla
+5. prakṛtiravikṛ ‖ tirmmahadādyāḥprakṛtivi ‖ kṛtayassapta
+6. ṣoḍaśakastuvi ‖ kāronaprakṛtirnnavikṛ ‖ tiḥpuruṣaḥ3dṛ
+7. ṣṭamanumānamā ‖ ptavacanañcasarvvapramāṇa ‖ siddhatvāltrivi
+8. dhaṃpramāṇamiṣṭaṃ ‖ prameyasiddhiḥ4prativiṣa ‖ yāddhyavasāyodṛ
+9. ṣṭaṃtrividhama ‖ numānamākhyātaṃtalliṃgaliṃgi ‖ pūrvvakamā [illegible]
+10.  ‖ [illegible] māṇābdhi ‖ 
+
+TRANSCRIPTION D
+1. hariḥśrīgaṇapata ‖ yenamaḥavighnama ‖ studuḥkhatrayābhighātājjijñāsāta
+2. dabhighātakehe ‖ taudṛṣṭesā ‖ pārtthācennaikāntātyantato
+3. bhāvāt1dṛ ‖ ṣṭavadānuśra ‖ vikassahyaviśuddhikṣayātiśayayu
+4. ktaḥtadviparī ‖ taśśreyānvya ‖ ktāvyaktajñavijñānāt2mūlapra
+5. kṛtiravikṛ ‖ tirmmahadā ‖ dyāḥprakṛtivikṛtayassaptaṣo
+6. ḍaśakastuvi ‖ kāronapra ‖ kṛtirnnavikṛtiḥpuruṣaḥ3
+7. dṛṣṭamanumānamā ‖ ptavacanaṃca ‖ sarvvapramāṇasiddhatvāttrivi
+8. dhaṃpramāṇamiṣṭaṃ ‖ prameyasiddhiḥ4 ‖ prativiṣayāddhyavasāyodṛ
+9. ṣṭaṃtrividhama ‖ numānamākhyātaṃ ‖ talliṃgaliṃgipūrvvakamāptaśruti
+10.  ‖ pramāṇāddhi ‖ 
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

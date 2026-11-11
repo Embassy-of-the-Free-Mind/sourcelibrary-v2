@@ -1,0 +1,12 @@
+ROW 1 | യദുക്തംജ്ഞാനാഭിപ്ലവശുദ്ധിഃസാചസ ‖ [illegible]സപാസനസംഗിയവിവക്ഷ്യവദിണാ ‖ ജ്ഞാനിവെകസാക്ഷാൽകാര
+ROW 2 | ശ്രുസ്മൃഷുപ്രവാദെഹവഷ്ടാ ‖ നാംസാച[illegible]നാദരനൈരന്തൎയ്യദീൎഘകാ ‖ ലസെവിതാഭ്യാസപരിപാ
+ROW 3 | [illegible]ൽകടവക്കി[illegible]ദാനെണവി ‖ വെകഖ്യാത്യാകാരെ[illegible]ജ്ഞാസൊഭിസംഗൃഹീ ‖ തംശ്രെയാംപക്ഷെമിസ്സിദ്ധെദ
+ROW 4 | ാമുദിതമുച്യതെതിസ്രൊമുഖ്യ ‖ ാഭിധെയഃപ്രമൊദപ്രമുദിതമൊദമാനാ ‖ ഉ[illegible]ട്ടയഃക്ഷ
+ROW 5 | [illegible]െവ്യാചക്ഷതെതി ‖ നാപദെശാദിനാപ്രാൽകടമിത്യാദ്യൂഹസ ‖ വശാൽതത്വസ്യ[illegible]യാ
+ROW 6 | [illegible]ഹനാംയൽസാന്നിദ്ധ്യ ‖ ഉപായപ്രസാംഖ്യശാസ്ത്രപാഠമദ്ധ്യ ‖ യാമാകൎണ്ണ്യ[illegible]ക്കാ
+ROW 7 | ണമുൽപദ്യതെസാ ‖ സിദ്ധിശ്ശബ്ദഃ[illegible]പാഠാനന്തരം[illegible]ൽ ‖ യ[illegible]ചാൎയ്യസം[illegible]
+ROW 8 | [illegible]നാസാംഖ്യശാസ്ത്രഗ്രന്ഥ ‖ ൊ[illegible]ൎത്ഥ[illegible]ജ്ഞാനമുൽപദ്യതെസാ ‖ [illegible]ന്നിദ്ധിരദ്ധ്യയനം
+ROW 9 | സുഹൃൽപ്രാപ്തിരിതിയ[illegible] ‖ ന[illegible]ജ്ഞാനമുൽപദ്യതെസാജ്ഞ ‖ ാനലക്ഷണാ[illegible]
+ROW 10 | ൽപ്രാപ്തം.ദാനാഖ്യെസിദ്ധി[illegible] ‖ [illegible]ദാനെനനാ[illegible]ജ്ഞാനി[illegible] ‖ [illegible]ഭിൎജ്ഞാനസ്യ[illegible]യുക്താദ്യു
+ROW 11 | [illegible]നെ[illegible] ‖ [illegible]ൈ[illegible]ൽ[illegible] ‖ [illegible]മാ[illegible]പനപ്രവൃത്താ
+NOTE | I could read the 11-row leaf only in part and with low confidence: some strings read clearly (ജ്ഞാനിവെകസാക്ഷാൽകാര, നൈരന്തൎയ്യദീൎഘകാ, പ്രമൊദപ്രമുദിതമൊദമാനാ, സിദ്ധിശ്ശബ്ദഃ, ജ്ഞാനമുൽപദ്യതെസാ, സിദ്ധിരദ്ധ്യയനം), but much of rows 3 and 5–11, and nearly all of row 11, is uncertain or marked [illegible]. The ‖ positions in rows 1–4 and 8–11 are only approximate, and text under the string in rows 8–11 may be missing.

@@ -1,0 +1,122 @@
+[
+  {
+    "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0447",
+    "cer": 0.591,
+    "shares": {"convention": 15, "misreading": 75, "omission": 5, "extra_real_text": 5, "invented": 0, "order": 0, "repetition": 0},
+    "invented_text": false,
+    "examples": [
+      "ref 'non mgͣni ... acꝰ s sit ꝙ citius uellem sͥ ẜuire et p̃pon̾e' -> read 'nomine ne de se et de cui bellum et pene et pone'",
+      "ref 'de distĩcta pena ꝓ morͣli scito' -> read 'de stulta pend p moli fhto'",
+      "read adds folio '223' and the left-margin note 'thur pladhes' (on the page, not in the reference)"
+    ],
+    "note": "Dense two-column scholastic cursive; the model follows the left column line by line (as does the reference) but reads it as near-random letter fragments. Not invented, just unreadable to it; the last ~3 reference lines are missing."
+  },
+  {
+    "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 3r",
+    "cer": 0.578,
+    "shares": {"convention": 5, "misreading": 45, "omission": 0, "extra_real_text": 0, "invented": 15, "order": 0, "repetition": 35},
+    "invented_text": true,
+    "examples": [
+      "repetition loop: 'fuerunt' appears 65 times in a 441-word read (e.g. 'et fuerunt et fuerunt fuerunt / et fuerunt et fuerunt fuerunt'); the page has no such run, and the read is 30% longer than the reference",
+      "invented opening: read 'videtur ministerialiter ad eadem dura et sine virtute' where the image clearly has 'inclinat intellectum ad creden/dum deo et purae ueritati'",
+      "read 'sophismate. Quia primum est quod producat et est fremitus quorum' vs ref 'ymo omnes rões n᷑ales repudeat ⁊ est frauior quam'"
+    ],
+    "note": "Both columns are attempted in the right order, but the read slides from loose fluent Latin into a degenerate 'fuerunt/fuerit' loop for most of the second column. A few anchor words survive (holkot/holgot, Abraham, Iacobi)."
+  },
+  {
+    "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_108v_max",
+    "cer": 0.564,
+    "shares": {"convention": 20, "misreading": 35, "omission": 40, "extra_real_text": 0, "invented": 5, "order": 0, "repetition": 0},
+    "invented_text": true,
+    "examples": [
+      "omission: the read goes straight from '... et ignoti et bruti' (end of the 2nd left-column paragraph) to 'lectu uel potentia afficit ea re intellecta' (top of the right column), dropping three whole paragraphs, about 24 lines (from 'Queritur utrum ymago dei sit in sola parte rationali' through '... intłłnĩa hꝰi uͦ reflexionẽ')",
+      "wrong fluent expansion: 'ꝑ uestigiũ' (image 'p uestigiu') rendered as 'uel imaginativa' / 'intellectu potentia uel imaginativa' — words that are not on the page",
+      "read '11' is a red paragraph number in the margin; reference marginal numbers 6-13 are listed but not '11' at the head"
+    ],
+    "note": "About a third of the page is silently left out, which drives the CER. The rest is a mix of legitimate expansion and wrong expansion of abbreviations (cogͦ -> 'cogitativa uel imaginativa'). The reference also lists the marginal paragraph numbers 6-13 at its head."
+  },
+  {
+    "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 4r",
+    "cer": 0.503,
+    "shares": {"convention": 15, "misreading": 50, "omission": 5, "extra_real_text": 0, "invented": 25, "order": 0, "repetition": 5},
+    "invented_text": true,
+    "examples": [
+      "invented: read 'dicendo quod questiones / tales essent refutande / condemne' where the image/ref has 'Sed quaeritur / utrũ talis esset infidelis di/cendum'; nothing about questions being refuted or condemned is on the page",
+      "repetition plus invention: read 'non hec facit inponendo / non sic facit inponendo' for ref '3 ͦ ͦ seu fidem infusã ... si intelligit᷑ ꝙ hr̃et actũ'",
+      "read 'Circa questionem notandum / quod una est via que est causa' vs ref 'quedam est sciẽtia que ẽ causa'; the heading '3a lectio' is omitted"
+    ],
+    "note": "Line breaks are kept and the read is fluent scholastic Latin, so it looks plausible, but it tracks the page only loosely; many lines are confabulated paraphrase anchored on one or two real words. This is the 'seductively plausible' failure."
+  },
+  {
+    "uid": "cremma-medii-aevi|H318/13v",
+    "cer": 0.47,
+    "shares": {"convention": 15, "misreading": 60, "omission": 10, "extra_real_text": 3, "invented": 0, "order": 12, "repetition": 0},
+    "invented_text": false,
+    "examples": [
+      "misreading: ref 'sana corꝑra sine artificio ĩ sanitate sua' -> read 'lana ꝑ una fine araficio i laurace tua'",
+      "misreading: ref 'Sanitatiᷤᷤ ... custoditiue' -> read 'Samtan ... famaci custodie' (long s / f / m-n confusions throughout)",
+      "order: the right-margin note 'adhuc ĩ seq̃tibꝰ de ipsa dicet᷑. Cirurgia dr̾ illa parᷤᷤ ...' (which the reference puts at the end) is spliced into the middle of the main text after 'sai er planani e'; the other margin note 'Pꝰ ħ de alta sub sec̃ritẽ tͣctabimꝰ' is omitted"
+    ],
+    "note": "This is a two-page spread; both reference and read cover the 3-line top of the verso plus the recto. The errors are honest letter confusions in a faded hand, plus a margin note put in the wrong place. Folio '14' is added."
+  },
+  {
+    "uid": "rasam|BULAC_MS_ARA_6_49803",
+    "cer": 0.449,
+    "shares": {"convention": 5, "misreading": 50, "omission": 10, "extra_real_text": 2, "invented": 28, "order": 5, "repetition": 0},
+    "invented_text": true,
+    "examples": [
+      "invented: line 1 read 'فصل ابن ملك قوله وسمى الذي فيه فاعلًا اسم الفاعل' where the image has the Alfiyya verse 'قال ابن ملك و مضمر الرفع الذي قد انفصل اكد به كل ضمير اتصل' — the read swaps in a different grammar topic (the active participle, اسم الفاعل) that is not on this page, which is about البدل",
+      "invented: read 'وجميع أفعال اسم الفاعل يرفع كما زيدًا فاعله' for image 'تبعه في جميع إعرابه اما في الاسم ففى رفعه كجاء زيد اخوك'",
+      "omission/merge: the verse 'و يبدل الفعل من الفعل كمن يصل إلينا يستعن بنا يعن' is collapsed into 'قوله متى تاتنا فاعلًا ياتنا ستعرفنا به'"
+    ],
+    "note": "The middle of the page (the four kinds of badal, اكلت الرغيف ثلثه) is roughly right. But the opening and the verse lines are replaced by fluent grammatical Arabic on a different topic. The reference has minor slips of its own ('جاء زيدا اخوك'; a truncated 'يعو')."
+  },
+  {
+    "uid": "rasam|BULAC_MS_ARA_609_00166",
+    "cer": 0.394,
+    "shares": {"convention": 10, "misreading": 75, "omission": 3, "extra_real_text": 0, "invented": 12, "order": 0, "repetition": 0},
+    "invented_text": true,
+    "examples": [
+      "Maghrebi fa/qaf misread: ref 'فريضة' -> read 'بريغة'/'بليغة'; ref 'المقر' -> read 'المغر'",
+      "fluent substitution: ref 'عشر وناها فضل المقر' -> read 'عشرة وزمانا بفضل الله' (a pious formula that is not on the page)",
+      "ref 'وبالله التوفيق الباب السادس في' -> read 'وبلا الله اسو ميو العباد ريشام سري'"
+    ],
+    "note": "This is mostly script-convention misreading: the Maghrebi fa (dot below) and qaf (one dot above) are read with Eastern values, and that cascades into wrong words. A few phrases are lexicalised into fluent stock Arabic."
+  },
+  {
+    "uid": "rasam|BULAC_MS_ARA_609_00012",
+    "cer": 0.389,
+    "shares": {"convention": 10, "misreading": 50, "omission": 0, "extra_real_text": 0, "invented": 10, "order": 0, "repetition": 30},
+    "invented_text": true,
+    "examples": [
+      "attraction loop: 'الآحاد' appears 30 times in the read vs 4 times in the reference; every 'الالاف' (13x) and many other words become 'الآحاد', e.g. ref 'ميون الالاف ءالاف الالاف' -> read 'فهو الآحاد الآحاد ثم الآحاد الآحاد'",
+      "misreading: ref 'صفرا لان الصفر في اللغة الخالي' -> read 'صبع اللفظ الغاية' (Maghrebi fa read as ba)",
+      "invented opening: ref 'اثنان وكذلك الى تسعة وهاذه صورتها مرتبه' -> read 'أقسام منازل التسعة وآحادها صورتها مرتبة'"
+    ],
+    "note": "The arithmetic text (units/tens/hundreds/thousands) collapses into repeating one term. The red verse numerals in the margin are left out by both. The reference has typos ('مربتة', 'فقلتت')."
+  },
+  {
+    "uid": "rasam|BULAC_MS_ARA_24_41491",
+    "cer": 0.336,
+    "shares": {"convention": 10, "misreading": 75, "omission": 0, "extra_real_text": 2, "invented": 13, "order": 0, "repetition": 0},
+    "invented_text": true,
+    "examples": [
+      "invented: ref 'عنها وعن الاضافة لتاليها وهو مقتنع خلافا للفدا' -> read 'عشر وعشرون تاليفها وموضعها خلاف للعراقيين' ('the Iraqis' is a plausible grammarians' attribution, but the image has 'للعرا/للفرا', i.e. al-Farra')",
+      "misreading: 'بدلا' -> 'برلا' repeatedly (dal read as ra in this hand); 'الندا' -> 'النرا'/'الترا'",
+      "ref 'فمقام ابراهيم بدل لا عطف بيان' -> read 'مفاخ ابراهيم برباع علمه بيان'"
+    ],
+    "note": "A clean, framed Maghrebi naskh. The line structure is perfect; the errors are letter-form confusions plus a few fluent word substitutions. Folio '98' is added. The reference's 'للفدا' is itself likely a slip for 'للفرا'."
+  },
+  {
+    "uid": "cremma-medii-aevi|Egerton821/55v",
+    "cer": 0.315,
+    "shares": {"convention": 45, "misreading": 40, "omission": 2, "extra_real_text": 10, "invented": 3, "order": 0, "repetition": 0},
+    "invented_text": false,
+    "examples": [
+      "convention: the sortes tallies 'III.IͥIͥ' / 'IIIIIII' / 'II II II' are all normalised to 'iiii.'; abbreviations expanded ('dñi ñri iħu' -> 'domini nostri ihesu')",
+      "misreading: ref 'Mel tenes ⁊ acetũ desid̾as q̃ petis' -> read 'Tenet racione desiderii que petit'; 'fid̾ł esto ĩ ꝑpetuũ' -> 'Sist esto imperium'; 'scõꝵ' -> 'scio'",
+      "extra: the red line-filler strokes are transcribed as 'mmmm', '--- mmm'; folio '56' is added"
+    ],
+    "note": "This is the most readable page; the read is close and mostly differs in conventions (expansion, tally marks, filler strokes). The real misreadings are short and local, not invented."
+  }
+]

@@ -18,7 +18,7 @@
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
-import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, apiOcrModelForBook } from '../lib/ocr-routing.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // ── Config ──
@@ -265,7 +265,10 @@ async function main() {
     console.log(`  Downloaded ${downloaded.length}/${pages.length} images`);
 
     // Build prompt with book context
-    const ocrModel = getOcrModelForBook(book);
+    // #7075: only flash-lite runs on the paid API.
+    const apiModel = apiOcrModelForBook(book);
+    if (!apiModel) { console.log(`  ${book.id}: routes to ${getOcrModelForBook(book)}, which reads through the agy CLI lane (scripts/batch/cli-ocr.mjs), not the API (#7075) — skipped`); continue; }
+    const ocrModel = apiModel;
     const yearStr = book.year ? `Published ${book.year}.` : '';
     const copyrightNote = book.year && book.year < 1930 ? 'This work is in the public domain.' : '';
     let prompt = basePrompt;

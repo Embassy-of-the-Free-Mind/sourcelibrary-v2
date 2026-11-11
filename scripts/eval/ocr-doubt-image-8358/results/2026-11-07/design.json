@@ -1,0 +1,226 @@
+{
+ "t1_ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "pairs": [
+  {
+   "page_id": "69b51eba47b06ecd58196160",
+   "book_id": "69b51eba47b06ecd581960d3",
+   "page_number": 141,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "69b51eba47b06ecd5819615e",
+    "page_number": 139,
+    "image_url": "https://images.sourcelibrary.org/archived/69b51eba47b06ecd581960d3/139.jpg",
+    "ocr_chars": 5396
+   }
+  },
+  {
+   "page_id": "6a3cebd38642f0445b1578f1",
+   "book_id": "6a3cebd38642f0445b1578bb",
+   "page_number": 54,
+   "stratum": "Chinese GPU",
+   "control": {
+    "page_id": "6a3cebd38642f0445b1578f3",
+    "page_number": 56,
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cebd38642f0445b1578bb/56.jpg",
+    "ocr_chars": 206
+   }
+  },
+  {
+   "page_id": "69b64aa018b87551bfc67b00",
+   "book_id": "69b64aa018b87551bfc67af1",
+   "page_number": 15,
+   "stratum": "Latin GPU>GEM",
+   "control": {
+    "page_id": "69b64aa018b87551bfc67afe",
+    "page_number": 13,
+    "image_url": "https://images.sourcelibrary.org/archived/69b64aa018b87551bfc67af1/13.jpg",
+    "ocr_chars": 4069
+   }
+  },
+  {
+   "page_id": "6a26f89437eba173bb6bb83a",
+   "book_id": "69592fb8a41e40e9146a4943",
+   "page_number": 49,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "6a26f89437eba173bb6bb838",
+    "page_number": 47,
+    "image_url": "https://images.sourcelibrary.org/pages/69592fb8a41e40e9146a4943/sp9old-0047-full.jpg",
+    "ocr_chars": 1211
+   }
+  },
+  {
+   "page_id": "6a3c771001fe4f593c1ff807",
+   "book_id": "6a3c770f01fe4f593c1ff7e4",
+   "page_number": 33,
+   "stratum": "Chinese GPU",
+   "control": {
+    "page_id": "6a3c771001fe4f593c1ff805",
+    "page_number": 31,
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c770f01fe4f593c1ff7e4/31.jpg",
+    "ocr_chars": 166
+   }
+  },
+  {
+   "page_id": "69e7aad75f1a22ab19a8e3d9",
+   "book_id": "69e7aad75f1a22ab19a8e376",
+   "page_number": 99,
+   "stratum": "Tibetan GPU",
+   "control": {
+    "page_id": "69e7aad75f1a22ab19a8e3d7",
+    "page_number": 97,
+    "image_url": "https://images.sourcelibrary.org/archived/69e7aad75f1a22ab19a8e376/97.jpg",
+    "ocr_chars": 2260
+   }
+  },
+  {
+   "page_id": "69b51ed3ff09e4fe943b5740",
+   "book_id": "69b51ed3ff09e4fe943b565f",
+   "page_number": 225,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "69b51ed3ff09e4fe943b573e",
+    "page_number": 223,
+    "image_url": "https://images.sourcelibrary.org/archived/69b51ed3ff09e4fe943b565f/223.jpg",
+    "ocr_chars": 1617
+   }
+  },
+  {
+   "page_id": "69b51e18efd8df28f2db06ee",
+   "book_id": "69b51e18efd8df28f2db058d",
+   "page_number": 353,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "69b51e18efd8df28f2db06ec",
+    "page_number": 351,
+    "image_url": "https://images.sourcelibrary.org/archived/69b51e18efd8df28f2db058d/351.jpg",
+    "ocr_chars": 3320
+   }
+  },
+  {
+   "page_id": "6a26badd61b3857ed05b0fa5",
+   "book_id": "6a26badd61b3857ed05b0fa1",
+   "page_number": 4,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "6a26badd61b3857ed05b0fa3",
+    "page_number": 2,
+    "image_url": "https://images.sourcelibrary.org/archived/6a26badd61b3857ed05b0fa1/2.jpg",
+    "ocr_chars": 1482
+   }
+  },
+  {
+   "page_id": "69e7ab9e5f1a22ab19a9b148",
+   "book_id": "69e7ab9e5f1a22ab19a9b03b",
+   "page_number": 269,
+   "stratum": "Tibetan GPU",
+   "control": {
+    "page_id": "69e7ab9e5f1a22ab19a9b143",
+    "page_number": 264,
+    "image_url": "https://images.sourcelibrary.org/archived/69e7ab9e5f1a22ab19a9b03b/264.jpg",
+    "ocr_chars": 2225
+   }
+  },
+  {
+   "page_id": "69c1bc048522835be846118c",
+   "book_id": "69c1bc048522835be8461149",
+   "page_number": 67,
+   "stratum": "Hebrew",
+   "control": {
+    "page_id": "69c1bc048522835be846118a",
+    "page_number": 65,
+    "image_url": "https://images.sourcelibrary.org/archived/69c1bc048522835be8461149/65.jpg",
+    "ocr_chars": 1008
+   }
+  },
+  {
+   "page_id": "69b51d48f23ccdcced307236",
+   "book_id": "69b51d48f23ccdcced3071e8",
+   "page_number": 78,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "69b51d48f23ccdcced307234",
+    "page_number": 76,
+    "image_url": "https://images.sourcelibrary.org/archived/69b51d48f23ccdcced3071e8/76.jpg",
+    "ocr_chars": 2298
+   }
+  },
+  {
+   "page_id": "69e7ab2c5f1a22ab19a942d9",
+   "book_id": "69e7ab2c5f1a22ab19a9418f",
+   "page_number": 330,
+   "stratum": "Tibetan GPU",
+   "control": {
+    "page_id": "69e7ab2c5f1a22ab19a942e5",
+    "page_number": 342,
+    "image_url": "https://images.sourcelibrary.org/archived/69e7ab2c5f1a22ab19a9418f/342.jpg",
+    "ocr_chars": 1999
+   }
+  },
+  {
+   "page_id": "69b4cd3dd5b6c3815e1a516e",
+   "book_id": "69b4cd3dd5b6c3815e1a504b",
+   "page_number": 291,
+   "stratum": "Hebrew",
+   "control": {
+    "page_id": "69b4cd3dd5b6c3815e1a516c",
+    "page_number": 289,
+    "image_url": "https://images.sourcelibrary.org/archived/69b4cd3dd5b6c3815e1a504b/289.jpg",
+    "ocr_chars": 5414
+   }
+  },
+  {
+   "page_id": "69dbc7d71040d1d5e2094b38",
+   "book_id": "69dbc7d71040d1d5e2094b24",
+   "page_number": 20,
+   "stratum": "Latin GPU>GEM",
+   "control": {
+    "page_id": "69dbc7d71040d1d5e2094b36",
+    "page_number": 18,
+    "image_url": "https://images.sourcelibrary.org/archived/69dbc7d71040d1d5e2094b24/18.jpg",
+    "ocr_chars": 2104
+   }
+  },
+  {
+   "page_id": "69c1b7affe4b8f25b92010c2",
+   "book_id": "69c1b7affe4b8f25b92010a5",
+   "page_number": 29,
+   "stratum": "Arabic",
+   "control": {
+    "page_id": "69c1b7affe4b8f25b92010c0",
+    "page_number": 27,
+    "image_url": "https://images.sourcelibrary.org/archived/69c1b7affe4b8f25b92010a5/27.jpg",
+    "ocr_chars": 1422
+   }
+  },
+  {
+   "page_id": "6a44359d0235c9147000dd72",
+   "book_id": "6a44359d0235c9147000dd12",
+   "page_number": 96,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "6a44359d0235c9147000dd70",
+    "page_number": 94,
+    "image_url": "https://images.sourcelibrary.org/archived/6a44359d0235c9147000dd12/94.jpg",
+    "ocr_chars": 2375
+   }
+  },
+  {
+   "page_id": "69b51e63768235dc659928fb",
+   "book_id": "69b51e63768235dc659928d8",
+   "page_number": 35,
+   "stratum": "Latin/German/French GEM",
+   "control": {
+    "page_id": "69b51e63768235dc659928f9",
+    "page_number": 33,
+    "image_url": "https://images.sourcelibrary.org/archived/69b51e63768235dc659928d8-0033.jpg",
+    "ocr_chars": 1487
+   }
+  }
+ ]
+}

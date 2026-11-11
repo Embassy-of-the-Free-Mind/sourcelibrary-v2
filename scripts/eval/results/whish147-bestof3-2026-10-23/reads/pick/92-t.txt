@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A has a few real Sanskrit commentary fragments ("abhidhāsyann āha", "pramāṇaṃ") and leaves the rest marked illegible, B reads nothing at all, and C fills every row with repetitive nonsense syllables ("ṭammatru", "truhihitru") that are not Sanskrit or Malayalam.

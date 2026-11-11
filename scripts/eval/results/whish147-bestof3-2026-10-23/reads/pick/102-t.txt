@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | None of the three has any readable text (every row is [illegible]), so I can't judge them as Sanskrit or Malayalam; C ranks first only because it puts string holes in rows 5–8, which fits holes cutting through the middle rows rather than every row, and A and B are identical, so their order is arbitrary.

@@ -4,6 +4,7 @@
  * Makes book metadata discoverable by library crawlers and aggregators.
  */
 import { bylineClaimsAuthorship, institutionalByline } from '@/lib/corporate-bylines';
+import { dcRightsForBook } from '@/lib/license-info';
 
 interface DublinCoreMetaProps {
   title: string;
@@ -73,7 +74,7 @@ export default function DublinCoreMeta({
         <meta key={`kw-${i}`} name="DC.subject" content={kw} />
       ))}
       {publisher && <meta name="DC.publisher" content={publisher} />}
-      <meta name="DC.rights" content={rights || 'CC BY-SA 4.0'} />
+      <meta name="DC.rights" content={dcRightsForBook(rights)} />
       <meta name="DC.identifier" content={identifier} />
       <meta name="DC.type" content="Text" />
       {source && <meta name="DC.source" content={source} />}

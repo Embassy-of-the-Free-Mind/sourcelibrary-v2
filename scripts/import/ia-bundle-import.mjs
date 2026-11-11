@@ -33,6 +33,10 @@
  * Usage:
  *   set -a; source .env.production.local; set +a
  *   node scripts/import/ia-bundle-import.mjs --data=/path/to/batch.json [--dry-run]
+ *     [--hold=<reason> --release-when=issue:<N>|decision:<words>|test:<check>|date:YYYY-MM-DD]
+ *
+ * --hold parks each book off the pipeline IN THE INSERT DOCUMENT, the ia-manifest-direct.mjs shape, so a
+ * book imported for a few hand-read leaves is never enrolled on a paid lane whole (#8049, #8440).
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
@@ -40,10 +44,21 @@ import fs from 'fs';
 import crypto from 'crypto';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const DATA_FILE = args.find(a => a.startsWith('--data='))?.split('=')[1];
+const HOLD_REASON = args.find(a => a.startsWith('--hold='))?.split('=')[1];
+const RELEASE_WHEN = args.find(a => a.startsWith('--release-when='))?.slice('--release-when='.length);
+const HOLD = HOLD_REASON ? {
+  reason: HOLD_REASON,
+  release: `Held at import by ia-bundle-import.mjs (--hold=${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  release_when: parseReleaseWhen(RELEASE_WHEN),
+} : null;
+if (HOLD?.release_when?.kind === 'issue') HOLD.issue = Number(HOLD.release_when.ref) || null;
+// Refuse before the first insert: a hold that throws after insertBookIfNew leaves the book imported and unheld (#7860).
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --release-when=issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 
 if (!DATA_FILE) {
   console.error('Required: --data=/path/to/batch.json');
@@ -156,8 +171,10 @@ async function main() {
       const slug = await generateUniqueSlug(db, slugify(`${entry.title}-${entry.author}`.substring(0, 80)));
       const bookId = new ObjectId();
       const bookIdStr = bookId.toHexString();
+      const now = new Date();
 
       const acquired = await insertBookIfNew(db, {
+        ...(HOLD ? { pipeline_auto: { status: HOLD_STATUS, hold: makeHoldMarker(HOLD, { from: null, now }), last_updated: now } } : {}),
         _id: bookId,
         id: bookIdStr,
         slug,
@@ -199,6 +216,14 @@ async function main() {
       }, { importer: 'script:ia-bundle-import', sourceIdentifier: `${bundle_id}/${fileHash}`, sourceUrl: `https://archive.org/details/${bundle_id}` });
       // The gate declined this candidate; the reason is a row in `dedup_skips`.
       if (!acquired.inserted) { console.log(`  SKIP — ${acquired.message}`); skipped++; continue; }
+      // The hold went in with the insert; record it the way holdBook() does, and confirm it is there.
+      let held = 'not-held';
+      if (HOLD) {
+        await db.collection('book_events').insertOne({ book_id: bookIdStr, type: HOLD_EVENT, at: now, source: 'script:ia-bundle-import',
+          details: { reason: HOLD.reason, issue: HOLD.issue ?? null, from_status: null, release: HOLD.release, at_insert: true } });
+        const back = await db.collection('books').findOne({ id: bookIdStr }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+        held = back?.pipeline_auto?.hold?.reason === HOLD.reason ? 'held' : (await holdBook(db, bookIdStr, HOLD)).outcome;
+      }
 
       const CHUNK = 500;
       for (let start = 0; start < pageCount; start += CHUNK) {
@@ -220,7 +245,7 @@ async function main() {
         await db.collection('pages').insertMany(pageDocs, { ordered: false });
       }
 
-      console.log(`${tag}: OK ${pageCount}p id=${bookIdStr}`);
+      console.log(`${tag}: OK ${pageCount}p id=${bookIdStr} hold=${held}`);
       imported++;
     } catch (err) {
       console.error(`${tag}: ERROR ${err.message}`);

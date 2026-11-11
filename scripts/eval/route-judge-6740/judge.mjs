@@ -1,0 +1,1247 @@
+#!/usr/bin/env node
+// PRIOR ART: scripts/eval/translate-cli-lane-7075/sample.mjs — its draw (one page per book, seeded by page id), blind
+// packet with a key, wrong-page control and two-family judge loop are reused here (claudeCall's env scrub, parseJson,
+// agy-cli's gated call). It does not fit as is: it judges translations only, PAIRWISE, from the OCR text alone, with a
+// 1-5 score and no defect tags. This instrument reads ONE output at a time against the PAGE IMAGE (OCR and translation
+// alike), tags defects with the page-error-taxonomy classes, and runs across four cells whose routes come from three
+// different places (the live page, a page_revisions draft, an eval's kept reads).
+/**
+ * Same-judge, image-grounded, qualitative read of what routes produced (#6740). Every route in every cell is judged by
+ * ONE judge, Opus through `claude -p`, with the same prompt, blind to the route, one output per call, the page image
+ * attached.
+ *
+ * THE IMAGE IS THE KEY, NOT AN OPUS READ (Derek, 2026-10-26, after the evidence check). Opus is the one judge: it
+ * shows no measurable self-preference (estimator v2 −0.11 to −0.13, every interval spans 0) and catches the most
+ * planted errors (43/46 vs Pro 37/46, #6545). But as a READER it is not a safe key: it invented text on 23/100 Chinese
+ * table reads (#6388), was worse than the specialist on 27/30 Tibetan pages, and is not the measured leader for Latin,
+ * German/French, Greek or Chinese print OCR (estimator v1). So the judge reads each output against the PAGE IMAGE
+ * (plus the source OCR for a translation) and never against an Opus text. Where a cell holds an Opus correction or
+ * read, it is one more blind candidate, scored like the others, and priced as the Opus route. Where an external
+ * reference exists (Derge for Tibetan, Kanripo for Chinese where the leaf aligns), every candidate is scored against it
+ * too, and the judge's agreement with it is reported.
+ *
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs draw   --out=DIR [--n=30]
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs refs   --out=DIR
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs translate --out=DIR
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs packet --out=DIR
+ *   node scripts/eval/route-judge-6740/judge.mjs judge --out=DIR [--concurrency=3] [--cell=latin] [--routes=a,b] [--limit=N]
+ *   node scripts/eval/route-judge-6740/judge.mjs score --out=DIR
+ * Router tests (below): draw --cells=zh-dice,de-lite,... --out=DIR, then refs (zh-dice), correct [--cell=X], translate
+ * (german), packet, derge (tib-kangyur), judge [--reuse=<a verdicts file>], names (zh-dice), score.
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs correct --out=DIR [--cell=X] [--by=opus|agy] [--agy-max=N]
+ *   node scripts/eval/route-judge-6740/judge.mjs names --out=DIR
+ * correct --keep-reads [--job=NAME] (#7263 router-next): reuse a kept read and keep every new one (no --fresh, reads
+ * not off), for tests drawn from WAITING pages whose reads may be written; sample.json may come from another draw.
+ *
+ * CELLS (each an open routing decision). "experiment read" = never served; it comes from the eval named.
+ *   latin    Latin print OCR (#5924). lite as served; lite > Opus correction (experiment read, #5924 oc-reads).
+ *   chinese  Chinese OCR (#6871). Paddle draft (page_revisions, opus_correct_6561); Paddle > Opus correction as served
+ *            (#6561). Kanripo leaf (refs stage, paddle-table-6388/align.mjs) where the page aligns.
+ *   tibetan  Tibetan OCR (#6560). The 30 Kangyur folios of tibetan-proofread-2026-10 (one per book): Yigdzin as
+ *            served then; Yigdzin > Flash 3.8 low correction and Yigdzin > Opus correction (both experiment reads,
+ *            #6560 out/). Derge e-text identity per candidate (scores-flash.json.gz). PLANTED: 10 Yigdzin drafts with
+ *            one planted syllable each (plants.json); the judge's catch rate decides whether it or Derge decides the
+ *            cell (below 80%: Derge).
+ *   german   German translation (#7263). 3 Flash and Flash-Lite as served; Opus CLI (this run's reads, not served:
+ *            `translate` runs claude-translate.mjs read with CANDIDATE_READS=off on half of each served route's pages).
+ *
+ * ROUTER TESTS (#6740, the router table's "test next" cells; `draw --cells=a,b,...` draws only these, into a new DIR).
+ * Each is a STORED draft and its corrections, read now by the correctors the router would send it to; nothing applied.
+ *   zh-dice      Chinese Paddle pages whose own Kanripo screen is trusted and below 0.90 dice (0.6 <= dice < 0.90,
+ *                not the guarded #6871 apply, interior, >= 40 Han). paddle; paddle>agy-flash-high; paddle>opus-correct.
+ *                The Kanripo leaf goes to the judge as a REFERENCE (another edition: the image decides), and every
+ *                accepted page gets a NAME CHECK (`names`): personal and place names, character by character.
+ *   de-lite      German OCR, Flash-Lite drafts: lite; lite>agy-flash-low; lite>opus-correct.
+ *   de-flash3    German OCR, 3 Flash drafts: 3flash; 3flash>agy-flash-low; 3flash>opus-correct.
+ *   latin        The pilot's 30 Latin pages again, plus lite>agy-flash-low. `judge --reuse=<pilot verdicts>` copies
+ *                the pilot's verdicts for every item whose text is unchanged, so lite and lite>opus-correct pair with it.
+ *   latin-flash3 Latin print, 3 Flash drafts: 3flash; 3flash>agy-flash-low.
+ *   fr-lite      French OCR, Flash-Lite drafts: lite; lite>agy-flash-low; agy-flash-low (a FRESH read, #7517).
+ *   latin-lite   Latin print, Flash-Lite drafts, one page per book (#7517): lite; lite>agy-flash-low; agy-flash-low.
+ *                de-lite has the fresh route too. A FRESH route is cli-ocr.mjs read on the image alone (no draft).
+ *                `draw --from=<sample.json> --routes=a,b` re-uses an earlier draw's pages for a cell and keeps only
+ *                the named routes, so `judge --reuse` pairs the new route with the verdicts already made.
+ *   la-blank, de-blank, fr-blank (#7701)  NO STORED TEXT: a page with no OCR in the first-read lane's frame (visible
+ *                books held as scans only, cli-ocr-lane.mjs firstReadSkip), read fresh by agy-flash-low, Latin and German
+ *                4 a call (the drawn page inside a block of its unread neighbours; only it is judged), French 1. The
+ *                only route in the cell: no draft to compare against.
+ *   german       German translation, a second draw (salt german-r2, the pilot's books left out), as the pilot's cell.
+ *   latin-lite-7545  Opus through agy against Opus through claude -p (#7545): lite; lite>opus-correct; lite>agy-opus
+ *                (cli-ocr.mjs correct mode on claude-opus-5-5-low, which agyClaudeGate allows only on an empty Gemini pool).
+ *   german-7545  The same for German translation, PAIRED (salt agy-opus-7545): opus-cli; agy-opus-tr (cli-translate.mjs
+ *                on claude-opus-5-5-low). `translate [--by=opus|agy]` makes both reads.
+ *   tib-kangyur  Tibetan Kangyur, 30 NEW folios in the pilot's frame (drawTib): yigdzin; yigdzin>agy-flash-low;
+ *                yigdzin>opus-correct, both on the #6560 CORR prompt (Opus through opusPromptCorrect, run-claude-arm's
+ *                request). Derge through tib-derge.py on an OpenPecha P000001 checkout (TIB_P1): placement at draw,
+ *                identity per output (`derge`). 10 drafts get a planted syllable (DIR/plants.json, prep.py plant()).
+ * OCR frames: visible books not held, of the cell's language; one page per book, interior, >= 300 characters (Chinese:
+ * 40 Han), not <script>handwritten</script>, the stored OCR by the cell's draft engine. `correct` runs the correctors on
+ * the stored draft: Opus through scripts/batch/ocr-convergence/correct.mjs (one page a call here: one page per book),
+ * agy through scripts/batch/cli-ocr.mjs read --correct-prompt (the #5924 one-page template, fc-prompt.mjs), both with
+ * CANDIDATE_READS=off and --fresh, so nothing is kept in R2. Their reads stay in DIR/corr/. An UNCHANGED answer is
+ * the draft; a CONTAIN answer is counted apart (score: contain), never judged.
+ *
+ * VERDICT per output: accept (would a reader accept this as this leaf's text / translation), a 1-5 fidelity score,
+ * defects tagged with the 44 page-error-taxonomy classes, each with a quoted span and a severity, and a one-line note.
+ * Two routes that produced the same text on a page are judged once.
+ *
+ * CONTROL per cell x route: two wrong-page items (this page's image, another page's output from the same route).
+ * The judge passes when it accepts neither and scores both <= 2; a route whose control fails does not count.
+ *
+ * PACE: the judge does not call while this box's Claude account is at or above ROUTE_JUDGE_WEEKLY_MAX (85) of its
+ * week or ROUTE_JUDGE_SESSION_MAX (95) of its 5 hours (model-limits.mjs; CLAUDE_LIMITS_FILE may point at a per-box
+ * meter), nor after ROUTE_JUDGE_STOP_AT (an ISO time) when that is set. `correct` checks the same before each corrector. Read-only: no writes
+ * to pages, books or R2. Large files live in DIR, under $JOB_SCRATCH; the committed summary is score.json.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import os from 'node:os';
+import zlib from 'node:zlib';
+import crypto from 'node:crypto';
+import { spawn, spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { makeRng } from '../lib/paired-stats.mjs';
+import { parseJson } from '../translate-cli-lane-7075/sample.mjs';
+import { contentHash } from '../../lib/write-provenance.mjs';
+
+const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
+const STAGE = process.argv[2];
+const OUT = arg('out') && path.resolve(arg('out'));
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
+const J = (f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
+const W = (f, x) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(x, null, 1));
+const gz = (f) => zlib.gunzipSync(fs.readFileSync(f)).toString('utf8');
+const jsonl = (t) => t.split('\n').filter(Boolean).map((l) => JSON.parse(l));
+const N = Number(arg('n') || 30);
+const LATIN_READS = path.join(ROOT, 'scripts/eval/flash-reread-5924/results/oc-reads.jsonl.gz');
+const TIB = path.join(ROOT, 'scripts/eval/results/tibetan-correct-6560');
+const TIB_MANIFEST = path.join(ROOT, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl');
+const TIB_ARMS = { yigdzin: 'baseline', 'yigdzin>flash-low-correct': 'flash-low-corr', 'yigdzin>opus-correct': 'opus-corr' };
+const TIB_CORR = 'scripts/eval/tibetan-correct-6560/corr-prompt.txt';   // prep.py CORR, the #6560 arms' and volume pass's prompt
+// tib-kangyur: Derge through tib-derge.py on a checkout of OpenPecha P000001 (TIB_P1, or DIR/../p1 / $JOB_SCRATCH/p1).
+const TIB_P1 = () => process.env.TIB_P1 || [process.env.JOB_SCRATCH && path.join(process.env.JOB_SCRATCH, 'p1'), OUT && path.join(OUT, '..', 'p1')].find((d) => d && fs.existsSync(path.join(d, 'P000001.opf')));
+const TIB_BAND = [0.9, 0.97];   // tibetan-proofread/draw.mjs LO, HI: the pilot's frame
+const TIB_HOLDS = /^(tibetan-retranslation-awaits-derek|kangyur-import|specialist-ocr-lane-4523)$/;   // lane holds, not containment
+function tibDerge(cmd, rows, extra = []) {
+  const inF = path.join(OUT, `derge-${cmd}-in.jsonl`), outF = path.join(OUT, `derge-${cmd}-out.json${cmd === 'locate' ? 'l' : ''}`);
+  if (!TIB_P1()) throw new Error('no OpenPecha P000001 checkout: set TIB_P1 (git clone --filter=blob:none --sparse https://github.com/OpenPecha-Data/P000001)');
+  fs.writeFileSync(inF, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const r = spawnSync('python3', [path.join(ROOT, 'scripts/eval/route-judge-6740/tib-derge.py'), cmd, '--p1', TIB_P1(), inF, outF, ...extra], { stdio: ['ignore', 'inherit', 'inherit'] });
+  if (r.status !== 0) throw new Error(`tib-derge.py ${cmd} exit ${r.status}`);
+  return cmd === 'locate' ? readJsonl(outF) : JSON.parse(fs.readFileSync(outF, 'utf8'));
+}
+const LITE = ['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview'];
+const FLASH3 = ['gemini-3-flash-preview'];
+const OPUS = ['claude-opus-5-5'];
+const DE_OPUS_DIR = 'opus-de';
+const PILOT_DIR = path.join(ROOT, 'scripts/eval/route-judge-6740/results/pilot-2026-10-26');
+const SESSION_MAX = Number(process.env.ROUTE_JUDGE_SESSION_MAX || 95);
+const pastStop = () => process.env.ROUTE_JUDGE_STOP_AT && Date.now() >= Date.parse(process.env.ROUTE_JUDGE_STOP_AT);
+const readJsonl = (f) => (fs.existsSync(f) ? jsonl(f.endsWith('.gz') ? gz(f) : fs.readFileSync(f, 'utf8')) : []);
+const textSha = (t) => h(String(t || '')).slice(0, 16);
+const AGY = (model) => ({ by: 'agy', model });
+// A FRESH read (#7517): the page image alone on the live OCR prompt (cli-ocr.mjs read, no draft), in place of the draft.
+const FRESH = (model) => ({ by: 'agy', model, fresh: true });
+// The router tests' cells (header). `draft` is the stored engine; correctors read that stored text and the image.
+const RT = {
+  // Every Paddle-lane book carries an OCR-only lane hold (translation waits; not a containment): those are allowed.
+  'zh-dice': { lang: 'Chinese', draft: 'paddle', laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-high': AGY('gemini-3.8-flash-high'), 'paddle>opus-correct': { by: 'opus' }, 'paddle>agy-flash-low': AGY('gemini-3.8-flash-low') }, kanripo: true },
+  'de-lite': { lang: 'German', draft: 'lite', models: LITE, books: '^German', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'lite>opus-correct': { by: 'opus' }, 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
+  'de-flash3': { lang: 'German', draft: '3flash', models: FLASH3, books: '^German', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), '3flash>opus-correct': { by: 'opus' } } },
+  latin: { lang: 'Latin', draft: 'lite', models: LITE, pilot: true, routes: ['lite', 'lite>opus-correct', 'lite>agy-flash-low'], correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'latin-flash3': { lang: 'Latin', draft: '3flash', models: FLASH3, books: '^Latin', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'fr-lite': { lang: 'French', draft: 'lite', models: LITE, books: '^French', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
+  // #7517: Latin print, Flash-Lite drafts, one page per book (the pilot's latin cell is 30 pages in 9 books).
+  'latin-lite': { lang: 'Latin', draft: 'lite', models: LITE, books: '^Latin', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
+  // #7263: the cells with no agy Flash-low measurement. zh-frame-6871 is the #6871 guarded Paddle lane's own pages
+  // (ocr.pipeline paddle-zh-guarded-2026-10, Paddle's text, not its Flash fallback); its books carry that lane's hold.
+  'zh-frame-6871': { lang: 'Chinese', draft: 'paddle', guarded: true, laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'hebrew-flash3': { lang: 'Hebrew', draft: '3flash', models: FLASH3, books: '^Hebrew', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'arabic-flash3': { lang: 'Arabic', draft: '3flash', models: FLASH3, books: '^Arabic', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'chinese-flash3': { lang: 'Chinese', draft: '3flash', models: FLASH3, books: '^Chinese', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  // #7263: the latin cell's pages (draw --from the 2026-10-26 router tests), drafted by a GPU engine on gex45 and kept
+  // on disk (DIR/gpu-drafts.json {page_id: text}, not stored), corrected by agy from that file (cli-ocr --draft-file).
+  'latin-gpu': { lang: 'Latin', draft: 'gpu', draftFile: 'gpu-drafts.json', fromCell: 'latin', correctors: { 'gpu>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  // #7545: Opus through agy (on an account whose Gemini pool is empty) against Opus through claude -p, the cell's route.
+  // The agy corrector is the correction lane's own call (cli-ocr.mjs correct mode, the fc template) on claude-opus-5-5-low.
+  'latin-lite-7545': { lang: 'Latin', draft: 'lite', models: LITE, books: '^Latin', correctors: { 'lite>opus-correct': { by: 'opus' }, 'lite>agy-opus': AGY('claude-opus-5-5-low') } },
+  // #7701: NO STORED TEXT. Visible books published as scans (the first-read cohort, cli-ocr-lane.mjs firstReadSkip),
+  // a page with no OCR read fresh by agy Flash-low, as the first-read lane reads it: Latin and German 4 pages a call
+  // (the drawn page and its neighbours in one call, only the drawn page judged), French 1. No draft, no competing route.
+  // Arm B (Derek 2026-10-29, "an initial read with agy flash and then corrected by it in a second pass"): the fresh read,
+  // then the #7558 correction pass on it (fc template, the image), its draft A's read on disk (draftFrom, --draft-file).
+  'la-blank': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' } } },
+  'de-blank': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' } } },
+  'fr-blank': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low' } } },
+  // #7701 cheap routes (job cheap-routes-7701): 30 NEW books per cell (draw --exclude-from=<the 2026-10-29 sample.json>),
+  // the same frame. German: read@4 alone (A), A > the one-page correction (B, the live route), A > the correction 4
+  // pages a call (C: cli-ocr.mjs --correct-prompt --per-call=4, A's reads of the whole block as drafts). French: read@1
+  // (the live route) against read@4, PAIRED on the same pages. Latin arm c: the page's PERO GPU draft (DIR/pero.json,
+  // made on gex45 from DIR/img/<page>.jpg, the image the corrector is then sent) corrected by agy Flash-low with the
+  // image, one page a call and 4 a call (the block's drafts).
+  'de-blank-r2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' }, 'agy-flash-low@4>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4', perCall: 4 } } },
+  'fr-blank-r2': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 } } },
+  'la-armc': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'pero>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img' }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4 } } },
+  // #7701 german-cheaper (job german-cheaper-7701): 30 NEW German books (draw --exclude-from=<both earlier #7701 draws>),
+  // each page in a block of up to 8 unread neighbours. A = read@4 (the live route), R8 = read@8, and arm C's shape on
+  // two GPU drafts of the block (DIR/lighton.json LightOnOCR-3-1B, DIR/pero.json PERO-OCR, made on gex45 from DIR/img):
+  // the draft corrected by agy Flash-low with the image, 4 a call. The GPU drafts ALONE are routes too, judged from the
+  // draft files by german-cheaper-7701/run.mjs (no agy call).
+  // #6740 read-surface confirmation (job read-surface-6740): the live read@4 (the 4-page piece of the drawn page's block)
+  // against the response surface's Latin optimum, 8 a call with the image fitted to 1,600 px, on the SAME new queue pages.
+  // #6740 read-surface, German confirmation (read-surface-6740/confirm-de/RULE.md): era-stratified to the frame's unread pages.
+  'de-surface': { lang: 'German', draft: null, blank: 'deu', eraQuota: { 'before 1700': 17, '1700s': 11, '1800 on': 2 }, correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
+  // #6740 read-surface, German confirmation 2 (confirm-de2/RULE.md): drawn by confirm-de2/draw.mjs, read here unchanged.
+  'de-surface2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
+  'la-surface': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8-1600px': { ...FRESH('gemini-3.8-flash-low'), perCall: 8, longEdge: 1600 } } },
+  'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'kraken>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'kraken.json', imageDir: 'img', perCall: 4, blockPages: 4 } } },
+  // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
+  'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
+    correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
+};
+const slug = (route) => route.replace(/[^a-z0-9]+/gi, '_');
+
+/** One page per book in a seeded order; a second round per book only when there are fewer books than n. */
+function onePerBook(rows, n, salt) {
+  const byBook = new Map();
+  for (const r of [...rows].sort((a, b) => h(salt + a.page_id).localeCompare(h(salt + b.page_id)))) byBook.set(r.book_id, [...(byBook.get(r.book_id) ?? []), r]);
+  const books = [...byBook].sort((a, b) => h(salt + a[0]).localeCompare(h(salt + b[0])));
+  const out = [];
+  for (let round = 0; out.length < n && round < 20; round++) for (const [, l] of books) if (l[round] && out.length < n) out.push(l[round]);
+  return out;
+}
+
+// The #6560 reads keep the reply's <<<BEGIN>>>/<<<END>>> sentinels (#6523); its score.py reads the text between them.
+const sentinelBody = (t) => { const b = t.indexOf('<<<BEGIN>>>'), e = t.lastIndexOf('<<<END>>>'); return b < 0 ? t : t.slice(b + 11, e > b ? e : undefined).trim(); };
+const tibManifest = () => fs.readFileSync(TIB_MANIFEST, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.stratum === 'kangyur');
+
+async function draw() {
+  if (arg('cells')) return drawRouterTests(arg('cells').split(','));
+  const { MongoClient } = await import('mongodb');
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const db = c.db('bookstore');
+  const cells = {};
+
+  // latin: the #5924 Opus-correct pages, minus the wrong-leaf book whose 25 pages the corrector CONTAINed.
+  const oc = jsonl(gz(LATIN_READS)).filter((r) => r.outcome !== 'contain');
+  const lat = onePerBook(oc.map((r) => ({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number })), N, 'latin');
+  cells.latin = { task: 'ocr', lang: 'Latin', paired: true, routes: ['lite', 'lite>opus-correct'], served: { lite: 'served', 'lite>opus-correct': 'experiment read, not served (#5924 oc-reads)' }, pages: lat,
+    frame: { pages: oc.length, books: new Set(oc.map((r) => r.book_id)).size, note: '#5924 oc-reads: 250 lite Latin pages in 10 books; the wrong-leaf book (25 CONTAIN pages) left out' } };
+
+  // chinese: pages whose served OCR is the #6561 Opus correction; the Paddle draft is the revision it superseded.
+  // Tables come first where there are any (#6561 / #7275); the draw found one.
+  const isTable = (t) => /\|[^\n]*\|[^\n]*\|/.test(t || '') || /<table|<td/.test(t || '');
+  const revs = (await db.collection('page_revisions').find({ field: 'ocr', reason: 'opus_correct_6561' }, { projection: { page_id: 1, book_id: 1, model: 1, created_at: 1, data: 1 } }).toArray())
+    .map(({ data, ...r }) => ({ ...r, table: isTable(data) }));
+  const zhLive = new Map((await db.collection('pages').find({ id: { $in: revs.map((r) => r.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, 'ocr.model': 1, 'ocr.updated_at': 1 } }).toArray()).map((p) => [p.id, p]));
+  const zhOk = revs.filter((r) => { const p = zhLive.get(r.page_id); return p && OPUS.includes(p.ocr?.model) && new Date(p.ocr.updated_at) >= new Date(r.created_at); })
+    .map((r) => ({ page_id: r.page_id, book_id: zhLive.get(r.page_id).book_id, page_number: zhLive.get(r.page_id).page_number, page_type: zhLive.get(r.page_id).page_type ?? null, table: r.table }));
+  const zhTab = onePerBook(zhOk.filter((r) => r.table), N, 'chinese');
+  const zhPick = [...zhTab, ...onePerBook(zhOk.filter((r) => !r.table && !zhTab.some((t) => t.book_id === r.book_id)), N - zhTab.length, 'chinese')];
+  cells.chinese = { task: 'ocr', lang: 'Chinese', paired: true, routes: ['paddle', 'paddle>opus-correct'], served: { paddle: 'served before the correction (page_revisions draft)', 'paddle>opus-correct': 'served (#6561)' }, pages: zhPick,
+    frame: { revisions: revs.length, served_opus_still: zhOk.length, books: new Set(zhOk.map((r) => r.book_id)).size, table_drafts: zhOk.filter((r) => r.table).length, table_books: new Set(zhOk.filter((r) => r.table).map((r) => r.book_id)).size, drawn_tables: zhTab.length } };
+
+  // tibetan: the 30 Kangyur folios of tibetan-proofread-2026-10 (one per book), every one with a Derge window and the
+  // #6560 correction reads committed. The served Yigdzin text is the manifest's (what the correctors were given).
+  const tib = tibManifest();
+  const plants = JSON.parse(fs.readFileSync(path.join(TIB, 'plants.json'), 'utf8'));
+  cells.tibetan = { task: 'ocr', lang: 'Tibetan', paired: true, routes: Object.keys(TIB_ARMS),
+    served: { yigdzin: 'served (as of the 2026-10 manifest)', 'yigdzin>flash-low-correct': 'experiment read, not served (#6560 out/flash-low-corr)', 'yigdzin>opus-correct': 'experiment read, not served (#6560 out/opus-corr)' },
+    pages: tib.map((r) => ({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, uid: r.id })),
+    planted: plants.anchor_ids,
+    frame: { folios: tib.length, books: new Set(tib.map((r) => r.book_id)).size, note: 'tibetan-proofread-2026-10 Kangyur stratum: one folio per book, Derge identity 0.904-0.969' } };
+
+  cells.german = await drawGerman(db, 'german');
+
+  await c.close();
+  fs.mkdirSync(OUT, { recursive: true });
+  W('sample.json', { drawn_at: new Date().toISOString(), n: N, cells });
+  for (const [k, v] of Object.entries(cells)) console.log(`${k}: ${v.pages.length} rows from ${new Set(v.pages.map((p) => p.book_id)).size} books; frame ${JSON.stringify(v.frame)}`);
+}
+
+// german: one frame, two served translation routes, one page per book per route. Opus CLI reads half of each.
+// `salt` is the pilot's 'german'; a later draw passes its own salt and the books already drawn to leave out.
+async function drawGerman(db, salt, exclude = new Set()) {
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const books = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: '^German', $options: 'i' }, year: { $gte: 1500, $lte: 1800 } }, { projection: { id: 1, title: 1, year: 1 } }).toArray()).filter((b) => !exclude.has(b.id));
+  const toDate = (f) => ({ $convert: { input: f, to: 'date', onError: null, onNull: null } });
+  const de = await db.collection('pages').aggregate([
+    { $match: { book_id: { $in: books.map((b) => b.id) }, page_number: { $gt: 0 }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'translation.model': { $in: [...FLASH3, ...LITE] }, 'ocr.data': { $type: 'string' }, 'translation.data': { $type: 'string' } } },
+    { $match: { $expr: { $and: [{ $gte: [{ $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] }, 300] }, { $gte: [toDate('$translation.updated_at'), toDate('$ocr.updated_at')] }] } } },
+    { $project: { _id: 0, id: 1, book_id: 1, page_number: 1, 'translation.model': 1, 'translation.source': 1 } },
+  ], { allowDiskUse: true }).toArray();
+  const deRoute = (m) => (FLASH3.includes(m) ? 'flash3' : 'flash-lite');
+  const dePages = [], deFrame = {};
+  for (const route of ['flash3', 'flash-lite']) {
+    const rows = de.filter((p) => deRoute(p.translation.model) === route).map((p) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, route, tr_source: p.translation.source ?? null }));
+    deFrame[route] = { pages: rows.length, books: new Set(rows.map((r) => r.book_id)).size };
+    const pick = onePerBook(rows, N, `${salt}-${route}`);
+    dePages.push(...pick, ...pick.slice(0, Math.ceil(N / 2)).map((p) => ({ ...p, route: 'opus-cli', paired_with: route })));
+  }
+  return { task: 'translation', lang: 'German', paired: false, routes: ['flash3', 'flash-lite', 'opus-cli'], pages: dePages,
+    served: { flash3: 'served', 'flash-lite': 'served', 'opus-cli': "this run's reads, not served (claude-translate.mjs read, one page a call)" },
+    frame: { books: books.length, routes: deFrame, salt, books_left_out: exclude.size, note: 'visible German books dated 1500-1800; English newer than the OCR' } };
+}
+
+/** The router tests' cells (RT, header): one page per book, the stored draft by the cell's engine, books not held. */
+async function drawRouterTests(names) {
+  const { MongoClient } = await import('mongodb');
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const { isInterior, bodyText, foldHan } = await import('../ground-truth-5935/lib.mjs');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const db = c.db('bookstore');
+  const pilot = JSON.parse(fs.readFileSync(path.join(PILOT_DIR, 'sample.json'), 'utf8'));
+  const notHeld = { visible: true, pages_count: { $gt: 0 }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.status': { $ne: 'held' } };
+  const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, translation_withheld: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.pipeline': 1, 'ocr.unreadable': 1, 'ocr.qa_screen': 1, 'ocr.updated_at': 1 };
+  const row = (p, extra = {}) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, draft_model: p.ocr.model, draft_sha: contentHash(p.ocr.data), ...extra });
+  const shuffled = (ids, salt) => [...ids].sort((a, b) => h(salt + a).localeCompare(h(salt + b)));
+  const cells = {};
+  for (const name of names) {
+    const t = RT[name];
+    if (name === 'german') { cells.german = await drawGerman(db, 'german-r2', new Set(pilot.cells.german.pages.map((p) => p.book_id))); continue; }
+    if (name === 'german-7545') {
+      // #7545: German pages whose served English is 3 Flash or Flash-Lite (the german-tr cells), one per book, PAIRED:
+      // every page translated by both Opus routes. Alternating from the two served routes' seeded draws.
+      const g = await drawGerman(db, 'agy-opus-7545', new Set(pilot.cells.german.pages.map((p) => p.book_id)));
+      const f3 = g.pages.filter((p) => p.route === 'flash3'), fl = g.pages.filter((p) => p.route === 'flash-lite');
+      const pages = [], seen = new Set();
+      for (let i = 0; pages.length < N && (i < f3.length || i < fl.length); i++) for (const p of [f3[i], fl[i]]) if (p && pages.length < N && !seen.has(p.book_id)) { seen.add(p.book_id); pages.push({ ...p, served_route: p.route, route: undefined }); }
+      cells[name] = { task: 'translation', lang: 'German', paired: true, routes: ['opus-cli', 'agy-opus-tr'], pages,
+        served: { 'opus-cli': "this run's reads, not served (claude-translate.mjs read --model=opus, one page a call)", 'agy-opus-tr': "this run's reads, not served (cli-translate.mjs read --model=claude-opus-5-5-low, one page a call)" },
+        frame: { ...g.frame, note: `${g.frame.note}; one page per book, alternating 3 Flash / Flash-Lite served English` } };
+      continue;
+    }
+    if (!t) throw new Error(`unknown cell ${name}; cells: ${Object.keys(RT).join(', ')}, german`);
+    // --routes=a,b keeps only these of the cell's routes (#7517: the draft and the new fresh read, not the correctors
+    // an earlier run already judged on the same pages).
+    const routes = (t.routes ?? [t.draft, ...Object.keys(t.correctors)]).filter((r) => r && (!arg('routes') || arg('routes').split(',').includes(r)));
+    const base = { task: 'ocr', lang: t.lang, paired: true, kind: 'router-test', draft_route: t.draft, routes, correctors: t.correctors, kanripo: !!t.kanripo, ...(t.draftFile && { draft_file: t.draftFile }), ...(t.blank && { blank: true }),
+      served: Object.fromEntries(routes.map((r) => [r, r === t.draft ? 'served (the stored draft)' : t.correctors[r]?.fresh ? `this run's fresh read of the image, not served (${t.correctors[r].by} ${t.correctors[r].model})` : t.correctors[r] ? `this run's correction of the stored draft, not served (${t.correctors[r].by}${t.correctors[r].model ? ` ${t.correctors[r].model}` : ''})` : 'experiment read, not served (#5924 oc-reads)'])) };
+    base.correctors = Object.fromEntries(Object.entries(t.correctors).filter(([r]) => routes.includes(r)));
+    // --from=<an earlier sample.json>: the SAME pages that run drew for this cell, so the new route pairs with the
+    // verdicts it already has (judge --reuse copies them: same cell, page and text, same id).
+    if (arg('from')) {
+      const prior = JSON.parse(fs.readFileSync(arg('from'), 'utf8')).cells[t.fromCell ?? name];
+      if (prior) { cells[name] = { ...base, pages: prior.pages, frame: { ...prior.frame, pages_from: arg('from') } }; continue; }
+    }
+    if (t.pilot) {
+      // The pilot's own pages, so its judgements pair with the new route; the stored draft must still be the lite read.
+      const ps = await db.collection('pages').find({ id: { $in: pilot.cells[name].pages.map((p) => p.page_id) } }, { projection: PROJ }).toArray();
+      const by = new Map(ps.map((p) => [p.id, p]));
+      const pages = pilot.cells[name].pages.filter((sp) => t.models.includes(by.get(sp.page_id)?.ocr?.model)).map((sp) => row(by.get(sp.page_id)));
+      cells[name] = { ...base, pages, frame: { ...pilot.cells[name].frame, pilot_pages: pilot.cells[name].pages.length, still_lite: pages.length, note: `the pilot's pages (${pilot.drawn_at.slice(0, 10)}); ${pilot.cells[name].frame.note}` } };
+      continue;
+    }
+    if (name === 'tib-kangyur') { cells[name] = { ...base, derge: true, ...(await drawTib(db, name, row, isInterior)) }; continue; }
+    if (t.blank) { cells[name] = { ...base, ...(await drawBlank(db, name, t, isInterior)) }; continue; }
+    let frameBooks, eligible;
+    if (t.guarded) {
+      const ev = await db.collection('book_events').find({ type: 'paddle_zh_guarded_ocr', 'details.paddle': { $gt: 0 } }, { projection: { _id: 0, book_id: 1 } }).toArray();
+      frameBooks = [...new Set(ev.map((e) => e.book_id))];
+      eligible = (p) => p.ocr?.pipeline === 'paddle-zh-guarded-2026-10' && /paddle/i.test(`${p.ocr.source} ${p.ocr.model}`) && !p.ocr.unreadable && [...foldHan(bodyText(p.ocr.data))].length >= 40;
+    } else if (name === 'zh-dice') {
+      // #6561 set B's frame (books the Paddle lane wrote), its own-leaf rule, and the v2 cell's dice bucket.
+      const ev = await db.collection('book_events').find({ type: 'paddle_zh_reocr', 'details.pages_written': { $gt: 0 } }, { projection: { _id: 0, book_id: 1 } }).toArray();
+      frameBooks = [...new Set(ev.map((e) => e.book_id))];
+      eligible = (p) => { const q = p.ocr?.qa_screen; return p.ocr?.source === 'paddle' && !p.ocr.unreadable && p.ocr.pipeline !== 'paddle-zh-guarded-2026-10' && q?.status === 'screened' && q.dice >= 0.6 && q.dice < 0.9 && [...foldHan(bodyText(p.ocr.data))].length >= 40; };
+    } else {
+      frameBooks = (await db.collection('books').find({ ...notHeld, language: { $regex: t.books, $options: 'i' } }, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id);
+      eligible = (p) => t.models.includes(p.ocr?.model) && typeof p.ocr.data === 'string' && p.ocr.data.length >= 300 && !/<script>\s*handwritten/i.test(p.ocr.data);
+    }
+    const order = shuffled(frameBooks, `rt-${name}`);
+    const pages = [], tally = { books_walked: 0, held_or_hidden: 0, no_eligible_page: 0 };
+    for (const bid of order) {
+      if (pages.length >= N) break;
+      tally.books_walked++;
+      const b = await db.collection('books').findOne({ id: bid, visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, pages_count: 1, pipeline_auto: 1 } });
+      const hold = b?.pipeline_auto?.hold;
+      if (!b || ((hold || b.pipeline_auto?.status === 'held') && !(hold && t.laneHolds?.test(hold.reason)))) { tally.held_or_hidden++; continue; }
+      const ps = (await db.collection('pages').find({ book_id: bid, page_number: { $gt: 0 } }, { projection: PROJ }).toArray())
+        .filter((p) => !p.translation_withheld && !SKIP_TRANSLATION_PAGE_TYPES.includes(p.page_type) && isInterior(p.page_number, b.pages_count) && eligible(p));
+      if (!ps.length) { tally.no_eligible_page++; continue; }
+      const p = ps.sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`)))[0];
+      pages.push(row(p, name === 'zh-dice' ? { qa_dice: p.ocr.qa_screen.dice, qa_pb: p.ocr.qa_screen.pb ?? null } : {}));
+    }
+    cells[name] = { ...base, pages, frame: { books: frameBooks.length, ...tally, rule: t.guarded ? 'paddle_zh_guarded_ocr books, visible (their lane holds allowed, no other hold); ocr.pipeline paddle-zh-guarded-2026-10, Paddle text (not the Flash fallback), interior, >= 40 Han' : name === 'zh-dice' ? 'paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han' : `visible ${t.lang} books not held; stored OCR by ${t.models.join('/')}, interior, >= 300 chars, not handwritten` } };
+  }
+  await c.close();
+  fs.mkdirSync(OUT, { recursive: true });
+  // A second draw into the same DIR replaces only the cells it names.
+  const prev = fs.existsSync(path.join(OUT, 'sample.json')) ? J('sample.json') : null;
+  W('sample.json', { drawn_at: new Date().toISOString(), n: N, router_tests: true, cells: { ...(prev?.router_tests ? prev.cells : {}), ...cells } });
+  for (const [k, v] of Object.entries(cells)) console.log(`${k}: ${v.pages.length} rows from ${new Set(v.pages.map((p) => p.book_id)).size} books; frame ${JSON.stringify(v.frame)}`);
+}
+
+/**
+ * A no-stored-text cell (#7701): the first-read lane's own frame (cli-ocr-lane.mjs FIRST_READ_BOOKS + firstReadSkip,
+ * the cell's language; spreadReason on the book's unread pages), books in a seeded order (salt rt-<cell>), one interior
+ * UNREAD page per book. For a corrector with perCall N the page is read inside a block of up to N consecutive unread
+ * pages of its book (its position in the block seeded), as the lane groups them; only the drawn page is judged.
+ */
+async function drawBlank(db, name, t, isInterior) {
+  const lane = await import('../../batch/cli-ocr-lane.mjs');
+  const perCall = Math.max(1, ...Object.values(t.correctors).map((c) => c.perCall ?? 1));
+  const books = (await db.collection('books').find(lane.FIRST_READ_BOOKS, { projection: { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray())
+    .filter((b) => !lane.firstReadSkip(b, { languages: [t.blank] }));
+  // --exclude-from=<sample.json> (#7701 cheap routes): no book any cell of that draw used
+  // (comma-separated: several draws)
+  const excluded = new Set(arg('exclude-from') ? arg('exclude-from').split(',').flatMap((f) => Object.values(JSON.parse(fs.readFileSync(f, 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id))) : []);
+  for (const b of [...books]) if (excluded.has(b.id)) books.splice(books.indexOf(b), 1);
+  const order = [...books].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
+  const pages = [], tally = { books_in_frame: books.length, books_left_out: excluded.size, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
+  // #6740 read-surface (Amendment 6.8c): an era-stratified draw. t.eraQuota = {era: n}; a book of a full era is passed.
+  const eraOf = (pub) => { const m = String(pub ?? '').match(/1[4-9]\d\d/); const y = m ? Number(m[0]) : null; return y === null ? null : y < 1700 ? 'before 1700' : y < 1800 ? '1700s' : '1800 on'; };
+  const got = {};
+  if (t.eraQuota) tally.era_quota = t.eraQuota;
+  for (const b of order) {
+    if (pages.length >= N) break;
+    if (t.eraQuota) { const e = eraOf(b.published); if (!e || (got[e] || 0) >= (t.eraQuota[e] || 0)) continue; }
+    tally.books_walked++;
+    const unread = await db.collection('pages').find({ book_id: b.id, ...lane.UNREAD }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
+    if (lane.spreadReason(b, unread)) { tally.spread_wait++; continue; }
+    const inner = unread.filter((p) => isInterior(p.page_number, b.pages_count));
+    if (!inner.length) { tally.no_interior_unread++; continue; }
+    const p = inner.sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`)))[0];
+    // The block: the run of consecutive unread page numbers around p, cut to perCall pages with p at a seeded position.
+    const byNum = new Map(unread.map((x) => [x.page_number, x]));
+    const pos = parseInt(h(`pos-${p.id}`).slice(0, 8), 16) % perCall;
+    let start = p.page_number - pos;
+    const runTo = (a, z) => { for (let n = a; n <= z; n++) if (!byNum.has(n)) return false; return true; };
+    while (start < p.page_number && !runTo(start, p.page_number)) start++;
+    let end = p.page_number;
+    while (end + 1 - start < perCall && byNum.has(end + 1)) end++;
+    const block = Array.from({ length: end - start + 1 }, (_, i) => byNum.get(start + i).id);
+    pages.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, draft_model: null, draft_sha: null, block, book_language: b.language, provider: b.image_source?.provider ?? null, hold: b.pipeline_auto?.hold?.reason ?? null, pages_ocr: b.pages_ocr ?? 0, published: b.published ?? null, ...(t.eraQuota && { era: eraOf(b.published) }) });
+    if (t.eraQuota) got[eraOf(b.published)] = (got[eraOf(b.published)] || 0) + 1;
+  }
+  return { pages, frame: { ...tally, rule: `the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=${t.blank}, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of ${perCall}` } };
+}
+
+/**
+ * tib-kangyur (#6740): 30 NEW folios in the pilot's frame (tibetan-proofread/draw.mjs): British Library Kangyur
+ * manuscripts, the served read still Yigdzin's (not the #6560 volume pass), placed in Derge with identity in
+ * TIB_BAND, one folio per book, none of the pilot's 30 books. The pilot's 10 marked-seam + 20 single mix is not
+ * available outside its books (2026-10-26: 4 single-leaf folios placed in band in 195 books), so the seam mix is the frame's own.
+ * Books are walked in a seeded order (salt rt-tib-kangyur); each contributes its first in-band folio of two seeded
+ * candidates. 10 folios (seeded) get the pilot's planted syllables (prep.py plant(), DIR/plants.json).
+ */
+async function drawTib(db, name, row, isInterior) {
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const pilotBooks = new Set(tibManifest().map((r) => r.book_id));
+  const books = (await db.collection('books').find({ language: 'Tibetan', title: /Kanjur|Kangyur/i, visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, title: 1, pages_count: 1, pipeline_auto: 1 } }).toArray());
+  const tally = { kanjur_books: books.length, pilot_books_left_out: 0, held_or_quarantined: 0, no_eligible_page: 0, candidates: 0, not_placed_in_band: 0 };
+  const ok = books.filter((b) => {
+    if (pilotBooks.has(b.id)) { tally.pilot_books_left_out++; return false; }
+    const hold = b.pipeline_auto?.hold, st = b.pipeline_auto?.status;
+    if ((hold && !TIB_HOLDS.test(hold.reason)) || (!hold && st && !['complete', 'held'].includes(st)) || (!hold && st === 'held')) { tally.held_or_quarantined++; return false; }
+    return true;
+  });
+  const order = [...ok].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
+  const got = [];
+  const PR = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, translation_withheld: 1, photo_original: 1, split_from_spread: 1, cropped_photo: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.pipeline': 1 };
+  for (let at = 0; at < order.length && got.length < N; at += 40) {
+    const cands = [];
+    for (const b of order.slice(at, at + 40)) {
+      const ps = (await db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 }, 'ocr.model': 'bdrc-yigdzin-v1' }, { projection: PR }).toArray())
+        .filter((p) => p.ocr.source === 'bdrc' && p.ocr.pipeline !== 'tib-correct-6560' && /eap\.bl\.uk/.test(p.photo_original || '') && !p.split_from_spread && !p.cropped_photo
+          && !p.translation_withheld && !SKIP_TRANSLATION_PAGE_TYPES.includes(p.page_type) && isInterior(p.page_number, b.pages_count))
+        .sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`))).slice(0, 6);
+      const full = (await db.collection('pages').find({ id: { $in: ps.map((p) => p.id) } }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1 } }).toArray())
+        .filter((p) => typeof p.ocr?.data === 'string' && p.ocr.data.length >= 300 && (p.ocr.data.match(/<leaf-break\/>/g) || []).length <= 1)
+        .sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`))).slice(0, 2);
+      if (!full.length) { tally.no_eligible_page++; continue; }
+      cands.push(...full.map((p, i) => ({ p, i, b })));
+    }
+    tally.candidates += cands.length;
+    const loc = new Map(tibDerge('locate', cands.map(({ p }) => ({ key: p.id, text: p.ocr.data }))).map((r) => [r.key, r]));
+    for (const b of order.slice(at, at + 40)) {
+      const mine = cands.filter((c) => c.b.id === b.id); if (!mine.length) continue;
+      const hit = mine.find(({ p }) => { const l = loc.get(p.id); return l?.identity != null && l.identity >= TIB_BAND[0] && l.identity <= TIB_BAND[1]; });
+      if (!hit) { tally.not_placed_in_band++; continue; }
+      const seam = (hit.p.ocr.data.match(/<leaf-break\/>/g) || []).length;
+      if (got.length >= N) break;
+      const l = loc.get(hit.p.id);
+      got.push(row(hit.p, { uid: hit.p.id, title: b.title, leaf_breaks: seam, derge_vol: l.vol, derge_imgnum: l.imgnum, derge_identity: l.identity, derge_votes: l.votes }));
+    }
+    console.log(`tib-kangyur: books ${Math.min(at + 40, order.length)}/${order.length}: ${got.length}/${N} (two-leaf ${got.filter((g) => g.leaf_breaks).length})`);
+  }
+  const pages = [...got].sort((a, b) => h(`rt-${name}${a.page_id}`).localeCompare(h(`rt-${name}${b.page_id}`)));
+  // Planted syllables on 10 of them (seeded), prep.py's rule; packet plants one per folio, kind rotating as the pilot.
+  const anchors = pages.slice(0, 10);
+  const full = new Map((await db.collection('pages').find({ id: { $in: anchors.map((p) => p.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr.data]));
+  fs.mkdirSync(OUT, { recursive: true });
+  const pl = tibDerge('plants', anchors.map((p) => ({ key: p.page_id, vol: p.derge_vol, imgnum: p.derge_imgnum, served_text: full.get(p.page_id) })), ['--seed', '6740']);
+  W('plants.json', pl);
+  return { pages, planted: pl.anchor_ids, frame: { ...tally, band: TIB_BAND, salt: `rt-${name}`, derge: 'OpenPecha P000001, tib-derge.py locate (5-gram votes, best of top 3 by identity), window imgnum +- 2',
+    rule: 'visible Tibetan books titled Kanjur/Kangyur, lane holds allowed (TIB_HOLDS), pilot books left out; page served by bdrc-yigdzin-v1 (ocr.source bdrc, not tib-correct-6560), BL EAP image, not split or cropped, interior, >= 300 chars, <= 1 leaf-break; Derge identity in band; one per book, in book order (the pilot\'s 10 marked-seam + 20 single mix is not available: 4 single-leaf folios placed in band in 195 books)', marked_seam: pages.filter((p) => p.leaf_breaks).length } };
+}
+
+/** Kanripo leaf (WYG witness) for each drawn Chinese page, where paddle-table-6388/align.mjs can place it. */
+async function refs() {
+  const s = J('sample.json');
+  const zh = Object.entries(s.cells).filter(([k, cs]) => k === 'chinese' || cs.kanripo).flatMap(([, cs]) => cs.pages);
+  const cand = zh.map((p) => JSON.stringify({ key: p.page_id, bid: p.book_id, pn: p.page_number })).join('\n') + '\n';
+  fs.writeFileSync(path.join(OUT, 'kanripo-cand.jsonl'), cand);
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/eval/paddle-table-6388/align.mjs'), path.join(OUT, 'kanripo-cand.jsonl'), path.join(OUT, 'kanripo-align.jsonl')], { stdio: 'inherit', env: process.env });
+  if (r.status !== 0) { console.error(`align.mjs exit ${r.status}`); process.exit(1); }
+}
+
+/** German Opus CLI reads: production's claude-translate.mjs, one page a call, nothing kept in R2, nothing written. */
+async function translate() {
+  const s = J('sample.json');
+  if (s.cells['german-7545']) return translate7545(s.cells['german-7545']);
+  const ids = s.cells.german.pages.filter((p) => p.route === 'opus-cli').map((p) => p.page_id);
+  fs.writeFileSync(path.join(OUT, 'opus-de-ids.json'), JSON.stringify(ids));
+  const limits = await import('../../lib/model-limits.mjs');
+  const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+  if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${path.join(OUT, 'opus-de-ids.json')}`, `--out=${path.join(OUT, DE_OPUS_DIR)}`,
+    '--model=opus', '--per-call=1', '--job=route-judge-6740', '--ocr-checked=eval reads for #6740, never applied; the judge reads every page against its image'],
+  { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' } });
+  process.exit(r.status ?? 1);
+}
+
+/**
+ * #7545: both Opus routes on the same German pages. claude -p through claude-translate.mjs (as the pilot's opus-cli),
+ * agy through cli-translate.mjs on claude-opus-5-5-low; both one page a call, CANDIDATE_READS=off and --fresh.
+ * --by=opus|agy runs one of them.
+ */
+const TR_DIRS = { 'opus-cli': 'opus-de-7545', 'agy-opus-tr': 'agy-opus-de-7545' };
+async function translate7545(cs) {
+  const ids = cs.pages.map((p) => p.page_id);
+  fs.writeFileSync(path.join(OUT, 'de-7545-ids.json'), JSON.stringify(ids));
+  const limits = await import('../../lib/model-limits.mjs');
+  const env = { ...process.env, CANDIDATE_READS: 'off' };
+  if (!arg('by') || arg('by') === 'opus') {
+    const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+    if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
+    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${path.join(OUT, 'de-7545-ids.json')}`, `--out=${path.join(OUT, TR_DIRS['opus-cli'])}`,
+      '--model=opus', '--per-call=1', '--job=agy-opus-7545', '--fresh', '--ocr-checked=eval reads for #7545, never applied; the judge reads every page against its image'], { stdio: 'inherit', env });
+    if (r.status) process.exit(r.status);
+  }
+  if (!arg('by') || arg('by') === 'agy') {
+    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${path.join(OUT, 'de-7545-ids.json')}`, `--out=${path.join(OUT, TR_DIRS['agy-opus-tr'])}`,
+      '--model=claude-opus-5-5-low', '--job=agy-opus-7545', '--fresh', '--ocr-checked=eval reads for #7545, never applied; the judge reads every page against its image'], { stdio: 'inherit', env });
+    if (r.status) process.exit(r.status);
+  }
+}
+
+/**
+ * The router tests' correctors, on the STORED draft and the image: Opus through correct.mjs, agy through cli-ocr.mjs
+ * correct mode on the #5924 one-page template (fc-prompt.mjs, rebuilt from the live OCR prompt). CANDIDATE_READS=off
+ * and --fresh: nothing goes to R2, nothing is reused, nothing is written to the database. Reads land in
+ * DIR/corr/<cell>/<route>/. --agy-max caps this run's agy calls; an agy QUOTA or LOCKED line stops every agy call.
+ */
+async function correct() {
+  const s = J('sample.json');
+  const limits = await import('../../lib/model-limits.mjs');
+  const tpl = path.join(OUT, 'fc-correct-prompt.txt');
+  if (!fs.existsSync(tpl)) {
+    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/eval/flash-reread-5924/fc-prompt.mjs'), tpl], { stdio: 'inherit', env: process.env, cwd: ROOT });
+    if (r.status !== 0) { console.error('fc-prompt.mjs failed: the agy template could not be rebuilt'); process.exit(1); }
+  }
+  const agyCalls = () => Object.entries(s.cells).flatMap(([cell, cs]) => Object.entries(cs.correctors || {}).filter(([, c]) => c.by === 'agy').flatMap(([route]) => {
+    const d = path.join(OUT, 'corr', cell, slug(route)); return fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(d, f), 'utf8')).calls || 1) : [];
+  })).reduce((a, b) => a + b, 0);
+  const AGY_MAX = Number(arg('agy-max') || 1200);
+  let agyStopped = fs.existsSync(path.join(OUT, 'agy-stopped.txt'));
+  for (const [cell, cs] of Object.entries(s.cells)) {
+    if (arg('cell') && arg('cell') !== cell) continue;
+    for (const [route, cor] of Object.entries(cs.correctors || {})) {
+      if (arg('by') && arg('by') !== cor.by) continue;
+      if (arg('route') && arg('route') !== route) continue;   // one route only (#7701 arm B on arm A's finished reads)
+      const dir = path.join(OUT, 'corr', cell, slug(route)); fs.mkdirSync(dir, { recursive: true });
+      const ids = cs.pages.map((p) => p.page_id);
+      if (pastStop()) { console.log('STOP_AT reached'); process.exit(3); }
+      if (cor.by === 'opus-prompt') {
+        const r = await opusPromptCorrect(cs, cor, dir, limits);
+        if (r === 'blocked') process.exit(3);
+      } else if (cor.by === 'opus') {
+        const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+        if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
+        fs.writeFileSync(path.join(dir, 'manifest.jsonl'), ids.map((id) => JSON.stringify({ page_id: id })).join('\n') + '\n');
+        console.log(`${cell}/${route}: correct.mjs on ${ids.length} pages`);
+        const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/ocr-convergence/correct.mjs'), `--set-dir=${dir}`, '--model=opus', '--per-call=10', '--concurrency=3', '--job=route-judge-6740', '--fresh'],
+          { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT });
+        if (r.status === 3) { console.log('Opus usage limit: stopped'); process.exit(3); }
+      } else {
+        if (agyStopped) { console.log(`${cell}/${route}: agy stopped earlier (agy-stopped.txt); skipped`); continue; }
+        const used = agyCalls();
+        if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
+        // perCall (#7701 blank cells): each drawn page with its block of neighbours, read N a call as the lane reads.
+        // blockPages (#7701 german-cheaper, the agy budget): only the blockPages-page piece of the drawn page's block that
+        // holds it, cut as a perCall=blockPages read cuts the block (the call the read@4 route made for that page)
+        const piece = (p) => { const b = p.block ?? [p.page_id], n = cor.blockPages; if (!n) return b; for (let i = 0; i < b.length; i += n) if (b.slice(i, i + n).includes(p.page_id)) return b.slice(i, i + n); return [p.page_id]; };
+        let readIds = cor.perCall > 1 ? cs.pages.flatMap(piece) : ids;
+        // draftFrom (#7701 arm B): the draft is the named route's read of each page in this DIR (a page it did not deliver
+        // has no draft and is not corrected), handed to cli-ocr.mjs as --draft-file.
+        let draftsFile = null;
+        if (cor.draftFrom) {
+          const drafts = {};
+          // perCall (#7701 arm C): the draft route's reads of the whole block, so the correction sees the block it read
+          for (const id of cor.perCall > 1 ? readIds : ids) { const a = correction(cell, cs, cor.draftFrom, { page_id: id }, ''); if (a.text) drafts[id] = a.text; }
+          draftsFile = path.join(dir, 'drafts-from.json'); fs.writeFileSync(draftsFile, JSON.stringify(drafts));
+          readIds = readIds.filter((id) => drafts[id]);
+        }
+        fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(readIds));
+        console.log(`${cell}/${route}: cli-ocr.mjs ${cor.fresh ? 'fresh read (live OCR prompt, no draft)' : `correct mode, ${cor.prompt ?? 'fc template'}`}, ${cor.model}, ${ids.length} pages (${used} agy calls so far${process.env.AGY_HOME ? `; AGY_HOME=${process.env.AGY_HOME}` : ''})`);
+        // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
+        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : []), ...(draftsFile ? [`--draft-file=${draftsFile}`] : []), ...(cor.gpuDraft ? [`--gpu-draft=${path.join(OUT, cor.gpuDraft)}`, `--image-dir=${path.join(OUT, cor.imageDir)}`] : [])];
+        // --keep-reads (#7263 router-next: tests on WAITING pages are useful work): a kept read of the same page, prompt
+        // and model is reused (candidate-reads findRead) and every new read is kept, so a later lane need not pay again.
+        const keep = process.argv.includes('--keep-reads');
+        await new Promise((resolve) => {
+          const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
+            ...mode, ...(cor.perCall > 1 ? [`--per-call=${cor.perCall}`] : []), ...(cor.longEdge ? [`--long-edge=${cor.longEdge}`] : []), `--job=${arg('job') || 'route-judge-6740'}`, '--concurrency=3', ...(keep ? [] : ['--fresh'])], { env: keep ? process.env : { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+          child.stdout.on('data', (d) => {
+            process.stdout.write(d);
+            if (/QUOTA at|LOCKED at/.test(String(d))) { agyStopped = true; fs.writeFileSync(path.join(OUT, 'agy-stopped.txt'), `${new Date().toISOString()} ${String(d).trim()}\n`); child.kill('SIGTERM'); }
+          });
+          child.on('close', resolve);
+        });
+      }
+    }
+  }
+  console.log(`agy calls in DIR: ${agyCalls()}`);
+}
+
+/**
+ * Opus on a corrector's own prompt file ({draft} = the stored draft), one page a call, the image in a sealed folder:
+ * replicate-6547/run-claude-arm.py's request (the #6560 opus-corr arm), through opusCall. Nothing is kept or written
+ * but DIR/<page_id>.{txt,raw.txt,meta.json}; a page already read on the same draft is skipped.
+ */
+async function opusPromptCorrect(cs, cor, dir, limits) {
+  const { MongoClient } = await import('mongodb');
+  const { getPageSource } = await import('../../lib/page-image-url.mjs');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const ps = await c.db('bookstore').collection('pages').find({ id: { $in: cs.pages.map((p) => p.page_id) } }, { projection: { id: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1 } }).toArray();
+  await c.close();
+  const tpl = fs.readFileSync(path.join(ROOT, cor.prompt), 'utf8').trimEnd();
+  const todo = ps.filter((p) => { try { const m = JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')); return !(m.exit === 0 && m.draft_sha === contentHash(p.ocr.data)); } catch { return true; } });
+  console.log(`opus-prompt: ${todo.length} of ${ps.length} pages to read (${cor.prompt})`);
+  let stop = null, i = 0;
+  const one = async (p) => {
+    if (pastStop()) { stop = 'blocked'; return; }
+    const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+    if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); stop = 'blocked'; return; }
+    const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-corr-'));
+    try {
+      const src = getPageSource(p), res = await fetch(src);
+      if (!res.ok) { fs.writeFileSync(path.join(dir, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, exit: 1, error_class: `image HTTP ${res.status}` })); return; }
+      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      const prompt = `${tpl.replace('{draft}', p.ocr.data)}\n\nThe page image is the file ./page.jpg in this folder. Open it with the Read tool.`;
+      const t0 = Date.now(), r = await opusCall(prompt, ws);
+      if (r.cls === 'quota') { limits.noteLimitHit('claude', { reason: r.text.slice(0, 200) }); console.log('Opus quota reply: stopped'); stop = 'blocked'; return; }
+      const bgn = r.text.indexOf('<<<BEGIN>>>'), end = r.text.lastIndexOf('<<<END>>>');
+      const body = bgn < 0 ? '' : r.text.slice(bgn + 11, end > bgn ? end : undefined).replace(/^```\w*\n|\n```$/g, '').trim();
+      fs.writeFileSync(path.join(dir, `${p.id}.raw.txt`), r.text);
+      fs.writeFileSync(path.join(dir, `${p.id}.txt`), body);
+      fs.writeFileSync(path.join(dir, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, exit: r.cls || !/[\u0F00-\u0FFF]/.test(body) ? 1 : 0, error_class: r.cls ?? (bgn < 0 ? 'no_sentinel' : end <= bgn ? 'no_end_sentinel' : !/[\u0F00-\u0FFF]/.test(body) ? 'no_tibetan' : null),
+        draft_sha: contentHash(p.ocr.data), image_url: src, prompt_file: cor.prompt, prompt_sha: h(prompt).slice(0, 16), model: r.model, usage: r.usage, list_usd: r.cost, secs: Math.round((Date.now() - t0) / 1000), at: new Date().toISOString() }));
+      console.log(`  ${p.id}: ${body.length} chars ${r.cls ?? ''}`);
+    } finally { fs.rmSync(ws, { recursive: true, force: true }); }
+  };
+  await Promise.all(Array.from({ length: Math.max(1, Math.min(3, Number(arg('concurrency') || 2))) }, async () => { while (!stop && i < todo.length) await one(todo[i++]); }));
+  return stop;
+}
+
+/** A router-test corrector's answer for a page: { text } | { contain } | { none } (no answer / failed / stale draft). */
+function correction(cell, cs, route, sp, draftText) {
+  // correct.mjs keeps its reads in <set-dir>/reads/; cli-ocr.mjs in its --out.
+  const dir = path.join(OUT, 'corr', cell, slug(route), cs.correctors[route].by === 'opus' ? 'reads' : '');
+  let m; try { m = JSON.parse(fs.readFileSync(path.join(dir, `${sp.page_id}.meta.json`), 'utf8')); } catch { return { none: 'not read' }; }
+  // A fresh read saw no draft: no draft to match, no UNCHANGED or CONTAIN answer to parse.
+  if (cs.correctors[route].fresh) {
+    if (m.exit !== 0 || m.error_class || m.wrapper) return { none: m.error_class || m.wrapper || `exit ${m.exit}` };
+    const t = fs.readFileSync(path.join(dir, `${sp.page_id}.txt`), 'utf8').trim();
+    return t ? { text: t } : { none: 'empty' };
+  }
+  const seen = { opus: m.stored_sha256, 'opus-prompt': m.draft_sha }[cs.correctors[route].by] ?? m.draft?.text_hash;
+  if (seen !== contentHash(draftText)) return { none: 'the draft the corrector read is not the stored draft' };
+  if (cs.correctors[route].by === 'opus') {
+    if (m.outcome === 'unchanged') return { text: draftText, unchanged: true };
+    if (m.outcome === 'contain') return { contain: m.reason };
+    return m.outcome === 'corrected' ? { text: fs.readFileSync(path.join(dir, `${sp.page_id}.txt`), 'utf8') } : { none: m.reason || m.outcome };
+  }
+  if (m.exit !== 0 || m.error_class || m.wrapper) return { none: m.error_class || m.wrapper || `exit ${m.exit}` };
+  const t = fs.readFileSync(path.join(dir, `${sp.page_id}.txt`), 'utf8').trim();
+  if (/^UNCHANGED\.?$/i.test(t)) return { text: draftText, unchanged: true };
+  if (/^CONTAIN\s*:/i.test(t) && t.length < 600 && !/<page-type>/.test(t)) return { contain: t.replace(/^CONTAIN\s*:\s*/i, '') };
+  return t ? { text: t } : { none: 'empty' };
+}
+
+async function packet() {
+  const { MongoClient } = await import('mongodb');
+  const { getPageSource } = await import('../../lib/page-image-url.mjs');
+  const s = J('sample.json');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const db = c.db('bookstore');
+  const all = Object.entries(s.cells).filter(([k]) => k !== 'tibetan').flatMap(([, cs]) => cs.pages.map((p) => p.page_id));
+  const pages = new Map((await db.collection('pages').find({ id: { $in: all } }, { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1, 'ocr.model': 1, 'translation.data': 1, 'translation.model': 1 } }).toArray()).map((p) => [p.id, p]));
+  // The newest opus_correct_6561 revision of a page is the draft the served correction replaced.
+  const zhDraft = new Map((await db.collection('page_revisions').find({ field: 'ocr', reason: 'opus_correct_6561', page_id: { $in: (s.cells.chinese?.pages ?? []).map((p) => p.page_id) } }, { projection: { page_id: 1, data: 1, created_at: 1 } }).sort({ created_at: 1 }).toArray()).map((r) => [r.page_id, r.data]));
+  await c.close();
+  const oc = new Map(jsonl(gz(LATIN_READS)).map((r) => [r.page_id, r]));
+  const tibM = new Map(tibManifest().map((r) => [r.id, r]));
+  const tibOut = Object.fromEntries(Object.entries(TIB_ARMS).filter(([, a]) => a !== 'baseline').map(([route, a]) => [route, new Map(jsonl(gz(path.join(TIB, 'out', `${a}.jsonl.gz`))).filter((r) => r.text && !r.error).map((r) => [r.uid, sentinelBody(r.text)]))]));
+  const deOpus = (id) => { const m = path.join(OUT, DE_OPUS_DIR, `${id}.meta.json`); try { return JSON.parse(fs.readFileSync(m, 'utf8')).exit === 0 ? fs.readFileSync(path.join(OUT, DE_OPUS_DIR, `${id}.txt`), 'utf8') : null; } catch { return null; } };
+  const lite = (p) => (LITE.includes(p?.ocr?.model) ? p.ocr.data : null);
+
+  const corrOf = new Map();   // router tests: why a corrector gave no text (CONTAIN counted apart)
+  const fileDrafts = {};
+  const draftOf = (cs, sp) => {
+    if (cs.draft_file) return (fileDrafts[cs.draft_file] ??= fs.existsSync(path.join(OUT, cs.draft_file)) ? J(cs.draft_file) : {})[sp.page_id] || null;
+    const p = pages.get(sp.page_id); return p?.ocr?.data && contentHash(p.ocr.data) === sp.draft_sha ? p.ocr.data : null;
+  };
+  const output = (cell, route, sp) => {
+    const p = pages.get(sp.page_id), cs = s.cells[cell];
+    if (cs.kind === 'router-test' && cs.blank) {   // no stored text (#7701): the fresh read, or its correction (draftFrom)
+      const from = cs.correctors[route]?.draftFrom;
+      const d = from ? correction(cell, cs, from, sp, '').text : '';
+      if (from && !d) { corrOf.set(`${cell}/${route}/${sp.page_id}`, { none: `${from} delivered no read to correct` }); return null; }
+      const a = correction(cell, cs, route, sp, d); corrOf.set(`${cell}/${route}/${sp.page_id}`, a);
+      return a.text ?? null;
+    }
+    if (cs.kind === 'router-test' && (cs.correctors[route] || route === cs.draft_route)) {
+      const d = draftOf(cs, sp);
+      if (!d) { corrOf.set(`${cell}/${route}/${sp.page_id}`, { none: 'stored draft changed since the draw' }); return null; }
+      if (route === cs.draft_route) return d;
+      const a = correction(cell, cs, route, sp, d); corrOf.set(`${cell}/${route}/${sp.page_id}`, a);
+      return a.text ?? null;
+    }
+    if (cell === 'latin') { const r = oc.get(sp.page_id); return route === 'lite' ? lite(p) : r?.outcome === 'unchanged' ? lite(p) : r?.text || null; }
+    if (cell === 'chinese') return route === 'paddle' ? zhDraft.get(sp.page_id) ?? null : OPUS.includes(p?.ocr?.model) ? p.ocr.data : null;
+    if (cell === 'tibetan') return route === 'yigdzin' ? tibM.get(sp.uid)?.served_text ?? null : tibOut[route].get(sp.uid) ?? null;
+    if (TR_DIRS[route] && cell === 'german-7545') { try { const m = JSON.parse(fs.readFileSync(path.join(OUT, TR_DIRS[route], `${sp.page_id}.meta.json`), 'utf8')); return m.exit === 0 && !m.error_class && !m.wrapper ? fs.readFileSync(path.join(OUT, TR_DIRS[route], `${sp.page_id}.txt`), 'utf8') : null; } catch { return null; } }
+    return route === 'opus-cli' ? deOpus(sp.page_id) : p?.translation?.data ?? null;
+  };
+  // image-pick-ok: Tibetan pages are the frozen #6560 manifest's images (the ones Derge was scored against); none of the 30 is split_from_spread or cropped (checked 2026-10-26)
+  const image = (cell, sp) => (cell === 'tibetan' ? (tibM.get(sp.uid)?.archived_photo || tibM.get(sp.uid)?.display_photo) : getPageSource(pages.get(sp.page_id)));
+  // Kanripo leaf as the judge's REFERENCE (router tests, zh-dice): only where some candidate is within CER 0.5 of it;
+  // further than that the neighbour rule placed the wrong leaf, and no reference is given.
+  const kan = new Map(readJsonl(path.join(OUT, 'kanripo-align.jsonl')).filter((a) => a.status === 'aligned').map((a) => [a.key, a]));
+  const refOf = new Map();
+  for (const [cell, cs] of Object.entries(s.cells).filter(([, x]) => x.kanripo)) for (const sp of cs.pages) {
+    const a = kan.get(sp.page_id); if (!a) continue;
+    const ref = kanFold(a.kanripo_text);
+    const best = Math.min(...cs.routes.map((r) => output(cell, r, sp)).filter(Boolean).map((t) => lev(kanFold(t), ref) / Math.max(1, ref.length)));
+    if (ref.length && best <= 0.5) refOf.set(`${cell}:${sp.page_id}`, { text: a.kanripo_text, pb: a.ref_pb, leaf: a.leaf, best_cer: +best.toFixed(4) });
+  }
+  const items = [], key = [], skipped = [], byText = new Map();
+  // One judge call per distinct (cell, page, text): two routes that produced the same text share a verdict.
+  const add = (cell, route, sp, kind, text, extra = {}) => {
+    const cs = s.cells[cell];
+    const tag = kind === 'item' ? `${cell}:${sp.page_id}:${h(text.trim())}` : `${kind}:${cell}:${route}:${sp.page_id}:${extra.other ?? ''}:${extra.plant?.planted ?? ''}`;
+    const id = `j${h(tag).slice(0, 10)}`;
+    if (!byText.has(id)) {
+      byText.set(id, true);
+      items.push({ id, task: cs.task, lang: cs.lang, image_url: image(cell, sp), text, source: cs.task === 'translation' ? pages.get(sp.page_id)?.ocr?.data ?? '' : undefined, reference: refOf.get(`${cell}:${sp.page_id}`)?.text });
+    }
+    key.push({ id: `k${h(`${kind}:${cell}:${route}:${sp.page_id}:${extra.other ?? ''}`).slice(0, 10)}`, judged_as: id, cell, route, kind, served: cs.served?.[route] ?? null, page_id: sp.page_id, book_id: sp.book_id, page_number: sp.page_number, uid: sp.uid, ...extra });
+  };
+  for (const [cell, cs] of Object.entries(s.cells)) {
+    for (const route of cs.routes) {
+      const mine = cs.paired ? cs.pages : cs.pages.filter((p) => p.route === route);
+      const ok = mine.filter((sp) => {
+        const t = output(cell, route, sp), img = image(cell, sp);
+        const good = img && t?.trim() && (cs.task === 'ocr' || pages.get(sp.page_id)?.ocr?.data);
+        const cr = corrOf.get(`${cell}/${route}/${sp.page_id}`);
+        if (!good) skipped.push({ cell, route, page_id: sp.page_id, book_id: sp.book_id, why: !img ? 'no image' : cr?.contain ? `CONTAIN: ${cr.contain}` : cr?.none ? cr.none : !t?.trim() ? 'no output' : 'no source OCR', contain: !!cr?.contain });
+        return good;
+      });
+      for (const sp of ok) add(cell, route, sp, 'item', output(cell, route, sp), { ...(sp.paired_with && { paired_with: sp.paired_with }), ...(corrOf.get(`${cell}/${route}/${sp.page_id}`)?.unchanged && { unchanged: true }), ...(refOf.has(`${cell}:${sp.page_id}`) && { reference: refOf.get(`${cell}:${sp.page_id}`).pb }) });
+      // Wrong-page controls: this page's image, the output this route made for a page of ANOTHER book.
+      for (let i = 0; i < 2 && ok.length > 2; i++) {
+        const sp = ok[i];
+        const other = ok.find((o, j) => j >= Math.floor(ok.length / 2) + i && o.book_id !== sp.book_id) ?? ok[(i + Math.floor(ok.length / 2)) % ok.length];
+        add(cell, route, sp, 'wrong_page', output(cell, route, other), { other: other.page_id });
+      }
+    }
+  }
+  // Planted: one syllable planted in the served Yigdzin read of each of the 10 #6560 anchor folios (plants.json; the
+  // kind rotates vowel / swap / letter). The judge catches it if a defect quotes the planted syllable in its context.
+  const plants = JSON.parse(fs.readFileSync(path.join(TIB, 'plants.json'), 'utf8'));
+  if (s.cells.tibetan) plants.anchor_ids.forEach((uid, i) => {
+    const m = tibM.get(uid), pl = plants.plants[uid].plants;
+    const p = pl.find((x) => x.kind === ['vowel', 'swap', 'letter'][i % 3]) ?? pl[0];
+    const lines = m.served_text.split('\n');
+    if (lines[p.line].slice(p.offset, p.offset + p.orig.length) !== p.orig) throw new Error(`plant does not sit on ${uid}`);
+    lines[p.line] = lines[p.line].slice(0, p.offset) + p.planted + lines[p.line].slice(p.offset + p.orig.length);
+    const sp = s.cells.tibetan.pages.find((x) => x.uid === uid);
+    add('tibetan', 'yigdzin', sp, 'planted', lines.join('\n'), { plant: { kind: p.kind, orig: p.orig, planted: p.planted, prev: p.prev, next: p.next, line: p.line } });
+  });
+  // tib-kangyur: the same on its own 10 anchors (DIR/plants.json, drawn with the cell), planted in the STORED draft.
+  for (const [cell, cs] of Object.entries(s.cells).filter(([, x]) => x.kind === 'router-test' && x.planted?.length)) {
+    const P = J('plants.json');
+    cs.planted.forEach((uid, i) => {
+      const sp = cs.pages.find((x) => x.uid === uid), d = sp && draftOf(cs, sp);
+      if (!d) { skipped.push({ cell, route: cs.draft_route, page_id: uid, why: 'planted: stored draft changed since the draw' }); return; }
+      const pl = P.plants[uid].plants, p = pl.find((x) => x.kind === ['vowel', 'swap', 'letter'][i % 3]) ?? pl[0];
+      const lines = d.split('\n');
+      if (lines[p.line].slice(p.offset, p.offset + p.orig.length) !== p.orig) throw new Error(`plant does not sit on ${uid}`);
+      lines[p.line] = lines[p.line].slice(0, p.offset) + p.planted + lines[p.line].slice(p.offset + p.orig.length);
+      add(cell, cs.draft_route, sp, 'planted', lines.join('\n'), { plant: { kind: p.kind, orig: p.orig, planted: p.planted, prev: p.prev, next: p.next, line: p.line } });
+    });
+  }
+  const order = items.map((it, i) => [h(`order:${it.id}`), i]).sort((a, b) => a[0].localeCompare(b[0])).map(([, i]) => i);
+  W('packet.json', { items: order.map((i) => items[i]) });
+  W('key.json', key);
+  W('packet-skipped.json', skipped);
+  const tally = {}; for (const k of key) { const t = `${k.cell}/${k.route}/${k.kind}`; tally[t] = (tally[t] ?? 0) + 1; }
+  console.log(`packet: ${items.length} judge calls; ${key.length} keyed rows; skipped ${skipped.length}`); console.log(tally);
+}
+
+// The 44 classes of .claude/docs/page-error-taxonomy.md, by code and name: the judge tags with these, nothing else.
+export const TAXONOMY = `I1 image one leaf away from its text; I2 duplicate scan; I3 spread not split; I4 neighbour strip read as content; I5 several leaves in one photo; I6 pages reversed; I7 catalogue identity wrong;
+O1 confabulation on an illegible or unfamiliar leaf (text not on the page); O2 wrong-script fabrication; O3 canonical-text substitution (a known text put in place of what the leaf says); O4 block-level repetition (lines or blocks duplicated); O5 silent omission inside the page; O6 meaning-changing misread; O7 numerals, dates, doses and units wrong; O8 silent normalisation toward the expected; O9 convention flips between pages; O10 secondary script dropped or garbled; O11 page furniture mis-tagged; O12 marginalia and apparatus dropped, merged or mis-tagged; O13 later hands read as text; O14 non-linear content described, not transcribed; O15 reasoning or notes inside the transcription; O16 self-reported tags wrong; O17 table structure invented or lost (columns dropped, cells merged, re-laid); O18 page left empty;
+T1 translation truncated; T2 echoed source; T3 translation hidden inside a meta/note wrapper; T4 in-block drift / tail block shift; T5 continuity leak or lookahead duplication; T6 catchword and split-word seams; T7 fluent English over a garbled source, no uncertainty; T8 sense inverted or a qualifier dropped; T9 quiet omission; T10 invented scholarship in notes and glosses; T11 parallel edition mishandled; T12 same-language source rewritten; T13 apparatus stripped; T14 the two panes from different reads; T15 continuity meta wrong; T16 form imposed or lost; T17 reasoning or a chat reply stored as the translation;
+D1 markup broken or unknown to the renderer; E2 other (say what)`;
+
+/** The judge reads the candidate against the IMAGE (and, for a translation, the source transcription). No reference. */
+export function judgePrompt(it, imageRef) {
+  const ocr = it.task === 'ocr';
+  const head = ocr
+    ? `You are checking a candidate transcription of one page of a historical ${it.lang} book against the page image, for a library that publishes the transcription beside the image. The image is the only authority: read the leaf yourself, closely, line by line, and compare.
+
+The page image is attached: ${imageRef}
+
+`
+    : `You are checking a candidate English translation of one page of a historical ${it.lang} book, for a library that publishes it beside the original. The transcription below may contain recognition errors; the image is the authority for what the page says.
+
+The page image is attached: ${imageRef}
+
+TRANSCRIPTION (${it.lang}):
+"""
+${it.source}
+"""
+
+`;
+  // Router tests, zh-dice: the Kanripo leaf as a reference (brief, #6740). It is another edition: the image decides.
+  const ref = it.reference ? `REFERENCE: the Kanripo e-text (Wenyuange Siku quanshu witness) of the passage this leaf holds, aligned to this leaf. It is ANOTHER EDITION's digital text: it may differ from this print in variant or simplified characters, small-character notes, layout, line breaks, and in places in wording, and its first and last lines may run past this leaf. Use it to check names, numbers and hard characters; where it and the image differ, the IMAGE decides, and a candidate is not wrong for following the image against it.
+"""
+${it.reference}
+"""
+
+` : '';
+  return `${head}${ref}CANDIDATE ${ocr ? 'TRANSCRIPTION' : 'TRANSLATION'}:
+"""
+${it.text}
+"""
+
+Questions:
+- accept: would a reader of this library be served by publishing this candidate as ${ocr ? "this page's transcription (every line of the page, in order, the right words and numerals; spelling conventions and markup aside)" : "this page's translation (the page's statements, negations, names and numbers; style aside)"}, with nothing that matters lost, added or changed? true or false.
+- fidelity: 1-5 to the page (5 = faithful and complete, 4 = small slips that mislead no one, 3 = usable with real errors, 2 = substantially wrong or incomplete, 1 = not this page's ${ocr ? 'text' : 'translation'} at all).
+- defects: every defect in the CANDIDATE, each tagged with ONE class code from this list (E2 only if nothing fits):
+${TAXONOMY}
+  with a short verbatim quote of the offending span from the candidate and a severity: "cosmetic" (no reader is misled), "misleads" (a reader would understand something not quite on the page) or "wrong_text" (the candidate says something the page does not: invented, duplicated, dropped, another page, a wrong word that changes the sense).
+- reader_note: one line, what a reader of this page would notice.
+
+Tags such as <page-type>, <scan-quality>, <header>, <note>, <meta>, <margin>, <leaf-break/> and markdown tables are the library's markup; judge them only where they misplace or drop the page's content.
+
+Answer with one JSON object only: {"accept": bool, "fidelity": n, "defects": [{"class": "O6", "quote": "...", "severity": "misleads", "what": "a few words"}], "reader_note": "..."}`;
+}
+
+export const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'boolean' && Number(v.fidelity) >= 1 && Number(v.fidelity) <= 5 && Array.isArray(v.defects ?? []));
+
+export const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
+function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
+/** Opus with the image in its workspace and Read as its only tool (replicate-6547/run-claude-arm.py's call). */
+export function opusCall(prompt, cwd, model = 'opus') {
+  return new Promise((resolve) => {
+    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    let out = '', err = '';
+    const timer = setTimeout(() => child.kill('SIGKILL'), 900e3);
+    child.stdout.on('data', (d) => { out += d; }); child.stderr.on('data', (d) => { err += d; });
+    child.stdin.end(prompt);
+    child.on('close', (code) => {
+      clearTimeout(timer);
+      let j = {}; try { j = JSON.parse(out); } catch { /* not JSON */ }
+      const text = String(j.result ?? '');
+      resolve({ text, cls: (j.is_error || code !== 0) && QUOTA.test(text + out + err) ? 'quota' : code !== 0 ? `exit_${code}` : null, model: Object.keys(j.modelUsage || {})[0] ?? null, usage: j.usage ?? null, cost: j.total_cost_usd ?? null });
+    });
+  });
+}
+
+async function judge() {
+  const only = arg('cell'), limit = Number(arg('limit') || Infinity);
+  const cellOf = new Map(J('key.json').map((k) => [k.judged_as, k.cell]));
+  // --routes=a,b: only items some key row of these routes judges (a route still being corrected waits for its turn).
+  const routes = arg('routes')?.split(','), routeOk = new Set(J('key.json').filter((k) => !routes || routes.includes(k.route)).map((k) => k.judged_as));
+  const pk = J('packet.json').items.filter((it) => (!only || cellOf.get(it.id) === only) && routeOk.has(it.id));
+  const file = path.join(OUT, 'verdicts-opus.jsonl');
+  const done = new Set(fs.existsSync(file) ? jsonl(fs.readFileSync(file, 'utf8')).filter((r) => r.verdict).map((r) => r.id) : []);
+  const tries = new Map(); if (fs.existsSync(file)) for (const r of jsonl(fs.readFileSync(file, 'utf8'))) if (!r.verdict) tries.set(r.id, (tries.get(r.id) ?? 0) + 1);
+  const limits = await import('../../lib/model-limits.mjs');
+  // --reuse=FILE: a verdict an earlier run gave the SAME item (same cell, page and text, so the same id) is copied, not
+  // re-judged: the router tests' latin cell pairs with the pilot's lite and lite>opus-correct judgements this way.
+  if (arg('reuse')) {
+    const want = new Set(pk.map((it) => it.id).filter((id) => !done.has(id)));
+    const got = readJsonl(arg('reuse')).filter((r) => r.verdict && want.has(r.id));
+    for (const r of got) { fs.appendFileSync(file, JSON.stringify({ ...r, reused_from: path.relative(ROOT, path.resolve(arg('reuse'))) }) + '\n'); done.add(r.id); }
+    console.log(`reused ${got.length} verdicts from ${arg('reuse')}`);
+  }
+  // The brief's ceiling: this box's Claude account stays under ROUTE_JUDGE_WEEKLY_MAX of its week.
+  const WEEKLY = Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85);
+  let stop = null, calls = 0;
+  const one = async (it) => {
+    if (stop || calls >= limit) return;
+    if (pastStop()) { stop = { until: process.env.ROUTE_JUDGE_STOP_AT, reason: 'ROUTE_JUDGE_STOP_AT' }; return; }
+    const b = limits.claudeBlocked({ weeklyMax: WEEKLY, sessionMax: SESSION_MAX });
+    if (b) { stop = b; return; }
+    calls++;
+    const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-opus-'));
+    try {
+      // image_file: the image the packet drew, on disk (a library that refuses this box, #6871 manifest-only sample)
+      if (it.image_file) fs.copyFileSync(it.image_file, path.join(ws, 'page.jpg'));
+      else {
+        const res = await fetch(it.image_url);
+        if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ id: it.id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
+        fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      }
+      const t0 = Date.now();
+      const r = await opusCall(judgePrompt(it, 'the file ./page.jpg in your working directory (open it with Read before you answer)'), ws);
+      if (r.cls === 'quota') { limits.noteLimitHit('claude', { reason: r.text.slice(0, 200) }); stop = { until: limits.claudeUsage()?.sessionReset ?? null, reason: 'quota reply' }; return; }
+      const v = parseVerdict(r.text);
+      fs.appendFileSync(file, JSON.stringify({ id: it.id, judge: 'opus', model: r.model, cls: r.cls, verdict: v, raw: v ? undefined : String(r.text).slice(0, 500), usage: r.usage, list_usd: r.cost, secs: Math.round((Date.now() - t0) / 1000), at: new Date().toISOString() }) + '\n');
+      console.log(`  ${it.id}: ${v ? `accept=${v.accept} ${v.fidelity} (${(v.defects || []).length} defects)` : `unparsed ${r.cls ?? ''}`}`);
+    } finally { fs.rmSync(ws, { recursive: true, force: true }); }
+  };
+  // An item that failed to parse three times is left out (and counted by score), not retried forever.
+  const todo = pk.filter((it) => !done.has(it.id) && (tries.get(it.id) ?? 0) < 3);
+  console.log(`opus: ${todo.length} of ${pk.length} items to judge`);
+  const conc = Math.max(1, Math.min(4, Number(arg('concurrency') || 3)));
+  let i = 0;
+  await Promise.all(Array.from({ length: conc }, async () => { while (!stop && i < todo.length && calls < limit) await one(todo[i++]); }));
+  if (stop) { console.log(`BLOCKED until=${stop.until} (${stop.reason})`); process.exit(3); }
+}
+
+/** The name check's prompt: the image, the Kanripo leaf, and the page's accepted candidates under blind labels. */
+export function namesPrompt(e, imageRef) {
+  return `You are checking the personal names and place names on one page of a historical Chinese book, for a library that publishes transcriptions beside the page image. The image is the only authority for what this leaf prints.
+
+The page image is attached: ${imageRef}
+
+REFERENCE: the Kanripo e-text (Wenyuange Siku quanshu witness) of the passage this leaf holds. It is another edition's text: it may differ from this print, and it may run past the leaf at either end.
+"""
+${e.reference}
+"""
+
+${e.labels.map((l) => `CANDIDATE ${l}:\n"""\n${e.texts[l]}\n"""`).join('\n\n')}
+
+List every personal name (surname and given name, courtesy name, style, posthumous or official name, a title used as a name) and every place name (state, commandery, prefecture, county, mountain, river, building) that appears on THIS LEAF, in the reference or in any candidate. Read each one on the IMAGE, character by character.
+For each name give: "kind" ("person" or "place"); "image": the characters this leaf prints, exactly (null if you cannot read it on the leaf, or it is not on this leaf); "reference": the reference's characters at that place (null if the reference has none); "candidates": for each candidate label, the characters that candidate gives at that place (null if it leaves the name out).
+
+Answer with one JSON object only: {"names": [{"kind": "person", "image": "章德懋", "reference": "章德懋", "candidates": {${e.labels.map((l, i) => `"${l}": "${i ? '章德懋' : '童德懋'}"`).join(', ')}}}]}`;
+}
+
+/**
+ * Name check (router tests, zh-dice; the brief: the pilot's judge accepted 章德懋 -> 童德懋). Every page with an ACCEPTED
+ * candidate and a Kanripo reference: one Opus call with the image, the reference and the accepted candidates (blind,
+ * seeded order). score counts a name error where a name the image prints (two or more Han) is not in the candidate,
+ * Han-folded: a mechanical check on the checker's reading of the image, not on its reading of the candidate.
+ */
+async function names() {
+  const keyRows = J('key.json'), s = J('sample.json');
+  const pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
+  const V = new Map(readJsonl(path.join(OUT, 'verdicts-opus.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
+  const file = path.join(OUT, 'names-opus.jsonl');
+  const tries = new Map(); for (const r of readJsonl(file)) tries.set(r.page_id, r.verdict ? 99 : (tries.get(r.page_id) ?? 0) + 1);
+  const limits = await import('../../lib/model-limits.mjs');
+  const WEEKLY = Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85);
+  const pages = new Map();
+  for (const k of keyRows.filter((x) => x.kind === 'item' && s.cells[x.cell]?.kanripo && V.get(x.judged_as)?.accept)) {
+    const it = pk.get(k.judged_as); if (!it?.reference) continue;
+    const e = pages.get(k.page_id) ?? { page_id: k.page_id, cell: k.cell, image_url: it.image_url, reference: it.reference, ids: new Set() };
+    e.ids.add(k.judged_as); pages.set(k.page_id, e);
+  }
+  const todo = [...pages.values()].filter((e) => (tries.get(e.page_id) ?? 0) < 3);
+  console.log(`names: ${todo.length} of ${pages.size} pages to check`);
+  let stop = null, i = 0;
+  const one = async (e) => {
+    if (pastStop()) { stop = { reason: 'ROUTE_JUDGE_STOP_AT' }; return; }
+    const b = limits.claudeBlocked({ weeklyMax: WEEKLY, sessionMax: SESSION_MAX }); if (b) { stop = b; return; }
+    const ids = [...e.ids].sort((a, b2) => h(`names:${a}`).localeCompare(h(`names:${b2}`)));
+    const labels = ids.map((_, j) => `C${j + 1}`), texts = Object.fromEntries(ids.map((id, j) => [labels[j], pk.get(id).text]));
+    const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-names-'));
+    try {
+      const res = await fetch(e.image_url);
+      if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ page_id: e.page_id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
+      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      const r = await opusCall(namesPrompt({ ...e, labels, texts }, 'the file ./page.jpg in your working directory (open it with Read before you answer)'), ws);
+      if (r.cls === 'quota') { stop = { reason: 'quota reply' }; return; }
+      const v = parseJson(r.text, (x) => Array.isArray(x.names));
+      fs.appendFileSync(file, JSON.stringify({ page_id: e.page_id, cell: e.cell, labels: Object.fromEntries(labels.map((l, j) => [l, ids[j]])), texts, verdict: v, raw: v ? undefined : String(r.text).slice(0, 500), usage: r.usage, list_usd: r.cost, at: new Date().toISOString() }) + '\n');
+      console.log(`  ${e.page_id}: ${v ? `${v.names.length} names` : 'unparsed'}`);
+    } finally { fs.rmSync(ws, { recursive: true, force: true }); }
+  };
+  await Promise.all(Array.from({ length: 3 }, async () => { while (!stop && i < todo.length) await one(todo[i++]); }));
+  if (stop) { console.log(`BLOCKED (${stop.reason})`); process.exit(3); }
+}
+
+/** tib-kangyur: Derge identity of every judged output (after packet), into DIR/derge-scores.json. */
+function derge() {
+  const s = J('sample.json'), pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
+  const rows = [];
+  for (const k of J('key.json').filter((x) => x.kind === 'item' && s.cells[x.cell]?.derge)) {
+    const sp = s.cells[k.cell].pages.find((p) => p.page_id === k.page_id);
+    rows.push({ key: k.page_id, route: k.route, vol: sp.derge_vol, imgnum: sp.derge_imgnum, text: pk.get(k.judged_as).text });
+  }
+  const out = tibDerge('score', rows);
+  W('derge-scores.json', out);
+  console.log(`derge: ${rows.length} outputs scored`);
+}
+
+// ------------------------------------------------------------------------------------------------ score
+const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
+/** Cluster (by-book) bootstrap 95% interval of the mean of rows[].v; by page when the cell is one or two books. */
+export function clusterCI(rows, seed) {
+  const books = [...new Set(rows.map((r) => r.book))];
+  const byPage = books.length < 3;
+  const units = byPage ? rows.map((r) => [r.v]) : books.map((b) => rows.filter((r) => r.book === b).map((r) => r.v));
+  if (!units.length) return { ci95: null, unit: byPage ? 'page' : 'book', units: 0 };
+  const rnd = makeRng(seed);
+  const boots = Array.from({ length: 4000 }, () => { const s = []; for (let i = 0; i < units.length; i++) s.push(...units[Math.floor(rnd() * units.length)]); return mean(s); }).sort((a, b) => a - b);
+  return { ci95: [+boots[100].toFixed(3), +boots[3899].toFixed(3)], unit: byPage ? 'page' : 'book', units: units.length };
+}
+function lev(a, b) {
+  const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  let prev = Array.from({ length: n + 1 }, (_, j) => j), cur = new Array(n + 1);
+  for (let i = 1; i <= m; i++) { cur[0] = i; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); [prev, cur] = [cur, prev]; }
+  return prev[n];
+}
+
+/**
+ * Cost of one page on each route, in the route's own unit, from scripts/eval/estimator/ocr/route-costs.json (quota
+ * shares, never plan fees). A correction route costs its draft plus one call of the corrector. `measuredPoints` is the
+ * Claude weekly points one judge-sized Opus image call took in THIS run, from the meter, when the run measured it.
+ */
+function routeCosts(measuredPoints) {
+  const rc = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/eval/estimator/ocr/route-costs.json'), 'utf8'));
+  const by = (e) => rc.routes.find((r) => r.engine === e);
+  const q = rc.quota_shares, pts = measuredPoints ?? q.claude_points_per_call;
+  const ptsBasis = measuredPoints ? "Claude weekly points per Opus image call, measured on this run's meter" : 'route-costs claude_points_per_call (a Sonnet text call; images not metered)';
+  return {
+    'latin/lite': { usd: by('gemini-3.1-flash-lite').usd_per_page, basis: 'Flash-Lite Batch list price' },
+    'latin/lite>opus-correct': { usd: by('gemini-3.1-flash-lite').usd_per_page, claude_points: pts, basis: `lite + one Opus call (${ptsBasis})` },
+    'chinese/paddle': { usd: by('paddleocr-vl-1.6').busy_usd_per_1k / 1000, basis: 'Paddle VL 1.6 busy-card compute' },
+    'chinese/paddle>opus-correct': { usd: by('paddleocr-vl-1.6').busy_usd_per_1k / 1000, claude_points: pts, basis: `Paddle + one Opus call (${ptsBasis})` },
+    'tibetan/yigdzin': { usd: 0, basis: "BDRC's own OCR, held" },
+    'tibetan/yigdzin>flash-low-correct': { usd: 0, agy_share: q.agy_share_per_call, basis: 'held Yigdzin + one agy 3.8 Flash low call' },
+    'tibetan/yigdzin>opus-correct': { usd: 0, claude_points: pts, basis: `held Yigdzin + one Opus call (${ptsBasis})` },
+    'german/flash3': { usd: null, basis: 'not in route-costs.json (an OCR table); 3 Flash translation price not measured per page' },
+    'german/flash-lite': { usd: null, basis: 'not in route-costs.json (an OCR table)' },
+    'german/opus-cli': { claude_points: pts, basis: `one Opus text call per page here (production sends 10 pages a call) (${ptsBasis})` },
+    _q: { ...q, by, ptsBasis, pts },
+  };
+}
+/** A router-test route's cost: the draft's (route-costs.json engine), plus one corrector call (Opus points / agy share). */
+function rtCost(cs, route, q, measuredPoints) {
+  if (cs.kind !== 'router-test' || !q) return null;
+  const eng = { lite: 'gemini-3.1-flash-lite', '3flash': 'gemini-3-flash-preview', paddle: 'paddleocr-vl-1.6' }[cs.draft_route];
+  const e = q.by(eng), usd = e ? (e.usd_per_page ?? (e.busy_usd_per_1k != null ? e.busy_usd_per_1k / 1000 : null)) : null;
+  const cor = cs.correctors?.[route];
+  if (cor?.fresh) return { usd: 0, agy_share: q.agy_share_per_call, basis: `one agy ${cor.model} call, no draft` };
+  if (!cor && cs.draft_route !== 'yigdzin') return { usd, basis: `${eng} (route-costs.json${e ? '' : ': not listed'})` };
+  if (cs.draft_route === 'yigdzin') return cor ? (cor.by.startsWith('opus') ? { usd: 0, claude_points: measuredPoints ?? q.pts, basis: `held Yigdzin + one Opus image call (${q.ptsBasis})` } : { usd: 0, agy_share: q.agy_share_per_call, basis: `held Yigdzin + one agy ${cor.model} call` }) : { usd: 0, basis: "BDRC's own OCR, held" };
+  // A route of several agy calls a page (#7591 diff-QA: correction + fresh read + span judge) carries its measured count.
+  if (cor.calls_per_page) return { usd, agy_calls: cor.calls_per_page, agy_share: +(q.agy_share_per_call * cor.calls_per_page).toPrecision(3), basis: `draft + ${cor.calls_per_page} agy calls a page, measured on this run (${cor.by})` };
+  return cor.by.startsWith('opus') ? { usd, claude_points: measuredPoints ?? q.pts, basis: `draft + one Opus image call (${q.ptsBasis}; correct.mjs at one page a call here)` }
+    : { usd, agy_share: q.agy_share_per_call, basis: `draft + one agy ${cor.model} call` };
+}
+const perUsable = (cost, rate) => (cost && rate ? Object.fromEntries(Object.entries(cost).filter(([k, v]) => typeof v === 'number').map(([k, v]) => [k, +(v / rate).toPrecision(3)])) : null);
+
+// Apparatus (the library's tags whose CONTENT is not the page's text) goes before a Kanripo compare; the leaf's own
+// small-character notes stay (<gloss>, <unclear> keep their text), as Kanripo carries them inline. Han only.
+const KAN_APP = 'vocab|warning|meta|note|header|summary|keywords|image-desc|page-num|sig|scan-quality|language|script|page-type|columns';
+const kanFold = (t) => String(t || '').replace(new RegExp(`<(${KAN_APP})\\b[^>]*>[\\s\\S]*?</\\1>`, 'g'), '').replace(/<[^>]+>/g, '').replace(/[^\p{Script=Han}]/gu, '');
+
+// Glyph variants (the same character, another form) met in the name check of 2026-10-26, classed by eye: the checker
+// copies Kanripo's form (often a shinjitai-like variant) as the image's, so a strict compare flags 荆州 / 荊州. 己 已 巳
+// are one glyph in this woodblock type (釋齊巳 / 齊已 / 齊己 on one page): not separable from the image. A pair of
+// DIFFERENT characters (五羖 / 五殺, by eye on the leaf) is never here.
+const GLYPH_VARIANTS = ['恵惠', '隠隱', '瓉瓚', '高髙', '荆荊', '虚虛', '温溫', '渉涉', '濵濱', '逹達', '禇褚', '己已巳'];
+const glyphFold = (t) => { let o = String(t); for (const g of GLYPH_VARIANTS) o = o.replace(new RegExp(`[${g}]`, 'g'), g[0]); return o; };
+
+/** Did a verdict on a planted item quote the planted syllable in its context? */
+function caught(v, plant) {
+  const T = '་', norm = (t) => String(t || '').replace(/\s+/g, '');
+  const probes = [`${plant.prev.at(-1)}${T}${plant.planted}`, `${plant.planted}${T}${plant.next[0]}`, `${plant.planted}${T}`].map(norm);
+  return (v.defects || []).some((d) => { const q = norm(d.quote); return probes.slice(0, 2).some((p) => q.includes(p)) || q === norm(plant.planted) || q === probes[2]; });
+}
+
+function score() {
+  const keyRows = J('key.json');
+  const s = J('sample.json');
+  const f = path.join(OUT, 'verdicts-opus.jsonl');
+  const rows = fs.existsSync(f) ? jsonl(fs.readFileSync(f, 'utf8')) : [];
+  const V = new Map(rows.filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
+  const verdict = (k) => V.get(k.judged_as);
+  const wrongText = (v) => (v.defects || []).some((d) => d.severity === 'wrong_text');
+  const cls = (d) => String(d.class || '').toUpperCase().match(/^[IOTDE]\d+/)?.[0] ?? 'E2';
+  const meter = fs.existsSync(path.join(OUT, 'meter.json')) ? J('meter.json') : null;
+  const costs = routeCosts(meter?.points_per_call ?? null);
+  const FILE = path.relative(ROOT, path.join(OUT, 'score.json'));
+  const skippedRows = fs.existsSync(path.join(OUT, 'packet-skipped.json')) ? J('packet-skipped.json') : [];
+  // Name check (router tests, `names`): a name the image prints that an accepted candidate does not carry, Han-folded.
+  const nameRows = readJsonl(path.join(OUT, 'names-opus.jsonl')).filter((r) => r.verdict);
+  const nameOf = new Map(); for (const r of nameRows) for (const [lab, jid] of Object.entries(r.labels)) nameOf.set(`${r.page_id}:${jid}`, { r, lab });
+  // strict: character by character. folded: the same character in another glyph (GLYPH_VARIANTS) is not a name error.
+  const nameErrors = (k, fold = (t) => t) => { const x = nameOf.get(`${k.page_id}:${k.judged_as}`); if (!x) return null; const t = fold(kanFold(x.r.texts[x.lab]));
+    return (x.r.verdict.names || []).filter((n) => kanFold(n.image).length >= 2 && !t.includes(fold(kanFold(n.image)))).map((n) => ({ kind: n.kind, image: n.image, reference: n.reference ?? null, candidate: n.candidates?.[x.lab] ?? null })); };
+  const report = { generated_at: new Date().toISOString(), judge: 'claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key',
+    calls: { judged: V.size, unparsed: [...new Set(rows.filter((r) => !r.verdict).map((r) => r.id))].filter((id) => !V.has(id)).length, list_usd_equiv: +rows.reduce((a, r) => a + (r.list_usd || 0), 0).toFixed(2) }, meter, cells: {} };
+  const ocrRows = [], trRows = [], contain = [];
+  for (const [cell, cs] of Object.entries(s.cells)) {
+    const C = report.cells[cell] = { task: cs.task, lang: cs.lang, frame: cs.frame, controls: {}, routes: {} };
+    const ks = keyRows.filter((k) => k.cell === cell);
+    for (const route of cs.routes) {
+      const wp = ks.filter((k) => k.kind === 'wrong_page' && k.route === route && verdict(k)).map(verdict);
+      const passed = wp.length > 0 && wp.every((v) => !v.accept && Number(v.fidelity) <= 2);
+      C.controls[route] = { n: wp.length, passed, verdicts: wp.map((v) => ({ accept: v.accept, fidelity: v.fidelity })) };
+      const got = ks.filter((k) => k.kind === 'item' && k.route === route && verdict(k));
+      const accept = got.filter((k) => verdict(k).accept), wt = got.filter((k) => wrongText(verdict(k)));
+      const classes = {}, wtClasses = {}, spans = {};
+      for (const k of got) {
+        for (const c2 of new Set((verdict(k).defects || []).map(cls))) classes[c2] = (classes[c2] ?? 0) + 1;
+        for (const c2 of new Set((verdict(k).defects || []).filter((d) => d.severity === 'wrong_text').map(cls))) wtClasses[c2] = (wtClasses[c2] ?? 0) + 1;
+        for (const d of verdict(k).defects || []) (spans[cls(d)] ??= []).push({ page: `${k.book_id}:${k.page_number}`, quote: String(d.quote || '').slice(0, 160), severity: d.severity, what: d.what });
+        // A served page the judge says carries text not on the leaf: a by-eye check, and containment if it holds.
+        if (cs.served?.[route]?.startsWith('served') && route !== 'paddle' && (verdict(k).defects || []).some((d) => d.severity === 'wrong_text' && /^(O1|O2|O3|I1|T17|T14)$/.test(cls(d))))
+          contain.push({ cell, route, page_id: k.page_id, book_id: k.book_id, page_number: k.page_number, defects: verdict(k).defects.filter((d) => d.severity === 'wrong_text'), note: verdict(k).reader_note });
+      }
+      const k2n = (o) => Object.fromEntries(Object.entries(o).sort((a, b) => b[1] - a[1]).map(([c2, k]) => [c2, `${k}/${got.length}`]));
+      const top = Object.entries(wtClasses).sort((a, b) => b[1] - a[1])[0]?.[0] ?? Object.entries(classes).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+      const rate = got.length ? accept.length / got.length : null;
+      const cost = costs[`${cell}/${route}`] ?? rtCost(cs, route, costs._q, meter?.points_per_call ?? null);
+      const contains = skippedRows.filter((x) => x.cell === cell && x.route === route && x.contain);
+      const nc = s.cells[cell].kanripo ? accept.map((k) => [k, nameErrors(k, glyphFold)]) : null;
+      const ncStrict = s.cells[cell].kanripo ? accept.map((k) => [k, nameErrors(k)]) : null;
+      C.routes[route] = {
+        served: cs.served?.[route] ?? null, n: got.length, books: new Set(got.map((k) => k.book_id)).size,
+        accept: `${accept.length}/${got.length}`, accept_rate: rate == null ? null : +rate.toFixed(2), accept_ci: clusterCI(got.map((k) => ({ book: k.book_id, v: verdict(k).accept ? 1 : 0 })), 6740),
+        wrong_text_pages: `${wt.length}/${got.length}`, wrong_text_ci: clusterCI(got.map((k) => ({ book: k.book_id, v: wrongText(verdict(k)) ? 1 : 0 })), 6743),
+        wrong_text_classes: k2n(wtClasses), classes_k_of_n: k2n(classes),
+        fidelity_mean: got.length ? +mean(got.map((k) => Number(verdict(k).fidelity))).toFixed(2) : null,
+        commonest: top, examples: top ? spans[top].filter((x) => x.severity === 'wrong_text').concat(spans[top]).slice(0, 3) : [],
+        cost, cost_per_usable_page: perUsable(cost, rate), counts: passed,
+        ...(cs.kind === 'router-test' && { contain_answers: `${contains.length}/${got.length + contains.length}`, contain_reasons: contains.map((x) => x.why.slice(0, 200)),
+          unchanged: `${got.filter((k) => k.unchanged).length}/${got.length}`, skipped: skippedRows.filter((x) => x.cell === cell && x.route === route && !x.contain).length }),
+        ...(nc && { name_check: { accepted: accept.length, checked: nc.filter(([, e]) => e).length, unchecked: nc.filter(([, e]) => !e).length, with_name_error: nc.filter(([, e]) => e?.length).length,
+          accept_after_name_check: `${nc.filter(([, e]) => e && !e.length).length}/${got.length}`,
+          accept_after_name_check_strict: `${ncStrict.filter(([, e]) => e && !e.length).length}/${got.length}`,
+          rule: 'accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count',
+          errors: nc.filter(([, e]) => e?.length).map(([k, e]) => ({ page: `${k.book_id}:${k.page_number}`, names: e })),
+          errors_strict: ncStrict.filter(([, e]) => e?.length).map(([k, e]) => ({ page: `${k.book_id}:${k.page_number}`, names: e })) } }),
+      };
+      const base = { route: `${cell}: ${route}`, script: cs.lang, judge: 'opus-image', note: passed ? 'Opus reads against the image; no reference text' : 'wrong-page control failed: does not count', source: '6740 route-judge pilot', unit: 'pages', books: new Set(got.map((k) => k.book_id)).size, one_page_per_book: new Set(got.map((k) => k.book_id)).size === got.length, file: FILE };
+      if (cs.task === 'ocr') {
+        ocrRows.push({ rate: 'not_accepted', ...base, k: got.length - accept.length, n: got.length });
+        ocrRows.push({ rate: 'wrong_text', ...base, k: wt.length, n: got.length });
+        for (const [c2, k] of Object.entries(classes)) ocrRows.push({ rate: `defect_${c2}`, ...base, k, n: got.length });
+      } else {
+        for (const k of got) trRows.push({ experiment: '6740-route-judge', round: 'r6740rj', page: k.page_id, work: k.book_id, language: 'de', lang_name: 'German', arm: route, route, repeat: false,
+          judge: 'opus-image', judge_model: 'claude-opus-5-5', judge_family: 'claude', score: Number(verdict(k).fidelity), scored: true, accept: verdict(k).accept,
+          wrong_text: wrongText(verdict(k)), defects: (verdict(k).defects || []).map(cls), counts: passed, failed_read: false, variant: '', instrument: 'image+ocr, no reference' });
+      }
+    }
+  }
+
+  // Pages made worse: a correction (or the Opus read) beside the draft (or the served route) on the same page.
+  const pairsOf = { latin: [['lite', 'lite>opus-correct']], chinese: [['paddle', 'paddle>opus-correct']], tibetan: [['yigdzin', 'yigdzin>flash-low-correct'], ['yigdzin', 'yigdzin>opus-correct']], german: [['flash3', 'opus-cli'], ['flash-lite', 'opus-cli']] };
+  for (const [cell, cs] of Object.entries(s.cells)) if (cs.kind === 'router-test' && cs.blank) pairsOf[cell] = Object.entries(cs.correctors).filter(([r, c]) => c.draftFrom && cs.routes.includes(r)).map(([r, c]) => [c.draftFrom, r]);
+  for (const [cell, cs] of Object.entries(s.cells)) if (cs.kind === 'router-test' && !cs.blank) pairsOf[cell] = cs.routes.filter((r) => r !== cs.draft_route).map((r) => [cs.draft_route, r]);
+  for (const [cell, prs] of Object.entries(pairsOf).filter(([c2]) => s.cells[c2])) {
+    const ks = keyRows.filter((k) => k.cell === cell && k.kind === 'item');
+    report.cells[cell].made_worse = {};
+    for (const [draft, corr] of prs) {
+      const pairs = ks.filter((k) => k.route === draft).map((a) => [a, ks.find((b) => b.route === corr && b.page_id === a.page_id)]).filter(([a, b]) => b && verdict(a) && verdict(b));
+      const d = pairs.map(([a, b]) => Number(verdict(b).fidelity) - Number(verdict(a).fidelity));
+      const worse = pairs.filter(([a, b], i) => d[i] < 0 || (verdict(a).accept && !verdict(b).accept) || (!wrongText(verdict(a)) && wrongText(verdict(b))));
+      report.cells[cell].made_worse[`${draft} -> ${corr}`] = { pairs: pairs.length, identical_text: pairs.filter(([a, b]) => a.judged_as === b.judged_as).length, fidelity_diff: d.length ? +mean(d).toFixed(2) : null, fidelity_diff_ci: clusterCI(pairs.map(([a], i) => ({ book: a.book_id, v: d[i] })), 6742).ci95,
+        worse: `${worse.length}/${pairs.length}`, better: `${d.filter((x) => x > 0).length}/${pairs.length}`,
+        accept_lost: `${pairs.filter(([a, b]) => verdict(a).accept && !verdict(b).accept).length}/${pairs.length}`, accept_gained: `${pairs.filter(([a, b]) => !verdict(a).accept && verdict(b).accept).length}/${pairs.length}`,
+        wrong_text_added: `${pairs.filter(([a, b]) => !wrongText(verdict(a)) && wrongText(verdict(b))).length}/${pairs.length}`,
+        worse_pages: worse.map(([a, b]) => ({ page: `${a.book_id}:${a.page_number}`, draft: verdict(a).fidelity, after: verdict(b).fidelity, accept: `${verdict(a).accept}->${verdict(b).accept}`, note: verdict(b).reader_note })) };
+    }
+  }
+
+  // External references: Derge (Tibetan) and Kanripo (Chinese, where the leaf aligns). Per route the reference score;
+  // then, on every page where two routes differ on the reference by more than its noise, does the judge order them
+  // the same way? (Judge ties are counted apart.)
+  const agreement = (cell, refScore, minGap, higherIsBetter) => {
+    const ks = keyRows.filter((k) => k.cell === cell && k.kind === 'item' && verdict(k));
+    const byPage = new Map(); for (const k of ks) { const r = refScore(k); if (r != null) byPage.set(k.page_id, [...(byPage.get(k.page_id) ?? []), { k, r }]); }
+    const perRoute = {};
+    for (const route of s.cells[cell].routes) { const xs = ks.filter((k) => k.route === route).map((k) => ({ book: k.book_id, v: refScore(k) })).filter((x) => x.v != null); perRoute[route] = { n: xs.length, mean: xs.length ? +mean(xs.map((x) => x.v)).toFixed(4) : null, ci95: clusterCI(xs, 6744).ci95 }; }
+    let agree = 0, disagree = 0, ties = 0; const dis = [];
+    for (const l of byPage.values()) for (let i = 0; i < l.length; i++) for (let j = i + 1; j < l.length; j++) {
+      const [a, b] = [l[i], l[j]]; const g = higherIsBetter ? b.r - a.r : a.r - b.r;
+      if (Math.abs(g) < minGap || a.k.judged_as === b.k.judged_as) continue;
+      const jd = Number(verdict(b.k).fidelity) - Number(verdict(a.k).fidelity) || (verdict(b.k).accept - verdict(a.k).accept);
+      if (!jd) ties++; else if (Math.sign(jd) === Math.sign(g)) agree++; else { disagree++; dis.push({ page: `${a.k.book_id}:${a.k.page_number}`, routes: [a.k.route, b.k.route], ref: [a.r, b.r], fidelity: [verdict(a.k).fidelity, verdict(b.k).fidelity] }); }
+    }
+    const acc = ks.filter((k) => refScore(k) != null);
+    const mAcc = mean(acc.filter((k) => verdict(k).accept).map(refScore)), mRej = mean(acc.filter((k) => !verdict(k).accept).map(refScore));
+    return { per_route: perRoute, pages_with_ref: byPage.size, pair_min_gap: minGap, ordered_pairs: agree + disagree + ties, judge_agrees: agree, judge_disagrees: disagree, judge_ties: ties,
+      agreement: agree + disagree ? +(agree / (agree + disagree)).toFixed(2) : null, disagreements: dis.slice(0, 8),
+      ref_mean_accepted: mAcc == null ? null : +mAcc.toFixed(4), ref_mean_not_accepted: mRej == null ? null : +mRej.toFixed(4) };
+  };
+  const derge = JSON.parse(gz(path.join(TIB, 'scores-flash.json.gz'))).pages;
+  if (s.cells.tibetan) report.cells.tibetan.reference = { name: 'Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (scores-flash.json.gz)',
+    ...agreement('tibetan', (k) => derge[k.uid]?.[TIB_ARMS[k.route]]?.identity ?? null, 0.005, true) };
+  const kanFile = path.join(OUT, 'kanripo-align.jsonl');
+  if (fs.existsSync(kanFile)) {
+    const kan = new Map(jsonl(fs.readFileSync(kanFile, 'utf8')).filter((a) => a.status === 'aligned').map((a) => [a.key, a]));
+    const pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
+    const fold = kanFold;
+    const rawCer = (k) => { const a = kan.get(k.page_id); if (!a) return null; const ref = fold(a.kanripo_text); return ref.length ? +(lev(fold(pk.get(k.judged_as)?.text), ref) / ref.length).toFixed(4) : null; };
+    // A neighbour-rule leaf can be one leaf off: where no candidate comes within CER 0.5 of it, the leaf is not this page.
+    for (const zc of Object.keys(s.cells).filter((x) => x === 'chinese' || s.cells[x].kanripo)) {
+    const best = new Map(); for (const k of keyRows.filter((x) => x.cell === zc && x.kind === 'item')) { const c2 = rawCer(k); if (c2 != null) best.set(k.page_id, Math.min(best.get(k.page_id) ?? 9, c2)); }
+    const misplaced = [...best].filter(([, c2]) => c2 > 0.5).map(([id]) => id);
+    const cer = (k) => (misplaced.includes(k.page_id) ? null : rawCer(k));
+    const zk = new Set(s.cells[zc].pages.map((p) => p.page_id));
+    const st = {}; for (const a of jsonl(fs.readFileSync(kanFile, 'utf8')).filter((x) => zk.has(x.key))) st[a.status + (a.leaf ? `:${a.leaf}` : '')] = (st[a.status + (a.leaf ? `:${a.leaf}` : '')] ?? 0) + 1;
+    report.cells[zc].reference = { name: 'Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)', align_status: st, leaf_misplaced: misplaced.length,
+      given_to_judge: !!s.cells[zc].kanripo, ...agreement(zc, cer, 0.01, false) };
+    }
+  }
+
+  // tib-kangyur: Derge identity of every judged output (DIR/derge-scores.json, the `derge` stage), and its planted set.
+  for (const [cell, cs] of Object.entries(s.cells).filter(([, x]) => x.kind === 'router-test' && x.derge)) {
+    const dg = fs.existsSync(path.join(OUT, 'derge-scores.json')) ? J('derge-scores.json').pages : {};
+    report.cells[cell].reference = { name: 'Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (tib-derge.py, window imgnum +- 2)',
+      ...agreement(cell, (k) => dg[k.page_id]?.[k.route]?.identity ?? null, 0.005, true) };
+    const pk = keyRows.filter((k) => k.cell === cell && k.kind === 'planted' && verdict(k)), ck = pk.filter((k) => caught(verdict(k), k.plant));
+    const r = pk.length ? ck.length / pk.length : null;
+    report.cells[cell].planted = { n: pk.length, caught: ck.length, catch_rate: r == null ? null : +r.toFixed(2), rule: 'below 0.80 the Derge score decides the cell, not the judge',
+      decides: r != null && r >= 0.8 ? 'judge' : 'derge', accepted_with_plant: pk.filter((k) => verdict(k).accept).length,
+      detail: pk.map((k) => ({ page_id: k.page_id, kind: k.plant.kind, orig: k.plant.orig, planted: k.plant.planted, caught: caught(verdict(k), k.plant), accept: verdict(k).accept, fidelity: verdict(k).fidelity })) };
+  }
+  // Planted errors (Tibetan): the judge's catch rate. Below 80%, Derge decides the cell, not the judge.
+  const pl = keyRows.filter((k) => k.cell === 'tibetan' && k.kind === 'planted' && verdict(k));
+  const ct = pl.filter((k) => caught(verdict(k), k.plant));
+  const plRate = pl.length ? ct.length / pl.length : null;
+  if (s.cells.tibetan) report.cells.tibetan.planted = { n: pl.length, caught: ct.length, catch_rate: plRate == null ? null : +plRate.toFixed(2), rule: 'below 0.80 the Derge score decides the cell, not the judge',
+    decides: plRate != null && plRate >= 0.8 ? 'judge' : 'derge', accepted_with_plant: pl.filter((k) => verdict(k).accept).length,
+    detail: pl.map((k) => ({ uid: k.uid, kind: k.plant.kind, orig: k.plant.orig, planted: k.plant.planted, caught: caught(verdict(k), k.plant), accept: verdict(k).accept, fidelity: verdict(k).fidelity })) };
+  report.contain_candidates = contain;
+  W('score.json', report);
+  fs.writeFileSync(path.join(OUT, 'ocr-defect-observations.jsonl'), ocrRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  fs.writeFileSync(path.join(OUT, 'translation-rows.jsonl'), trRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  console.log(`judged ${V.size} items; contain candidates ${contain.length}`);
+  for (const [cell, C] of Object.entries(report.cells)) {
+    for (const [route, x] of Object.entries(C.routes))
+      console.log(`${cell}/${route}: control ${C.controls[route].passed ? 'PASS' : 'FAIL'} accept ${x.accept} [${x.accept_ci.ci95?.join(', ')}] by ${x.accept_ci.unit} wrong_text ${x.wrong_text_pages} ${JSON.stringify(x.wrong_text_classes)} fid ${x.fidelity_mean} per-usable ${JSON.stringify(x.cost_per_usable_page)}`);
+    if (C.made_worse) for (const [p, m] of Object.entries(C.made_worse)) console.log(`  ${p}: worse ${m.worse} better ${m.better} accept lost ${m.accept_lost} gained ${m.accept_gained} wrong_text added ${m.wrong_text_added}`);
+    if (C.reference) console.log(`  ref: ${JSON.stringify(C.reference.per_route)} agreement ${C.reference.agreement} (${C.reference.judge_agrees}/${C.reference.judge_agrees + C.reference.judge_disagrees}, ties ${C.reference.judge_ties})`);
+    if (C.planted) console.log(`  planted: ${C.planted.caught}/${C.planted.n} -> ${C.planted.decides} decides`);
+  }
+}
+
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+  if (!OUT) { console.error('--out=DIR required'); process.exit(2); }
+  await ({ draw, refs, translate, correct, packet, derge, judge, names, score }[STAGE] ?? (() => { console.error('stages: draw | refs | translate | correct | packet | judge | names | score'); process.exit(2); }))();
+}

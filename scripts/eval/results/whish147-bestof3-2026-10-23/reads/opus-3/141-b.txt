@@ -1,0 +1,12 @@
+ROW 1 | വിശേഷണൈപഞ്ചപ്രത്യൈൽ ‖ ഡപനജ്ഞത്വസ്വരൂപസഗകാദിക്ഷുഗ്രന്ഥല[illegible] ‖ രണപലരണ്യരപ്രണ്ഡത്രിഭാ
+ROW 2 | ദ്യൈഷ്ടസായനക്കാജ്ഞാദ ‖ ദൈന്യലതിക്ഷിക്കാഡാദ്രാപ്രയത്നജ്ഞാനകാര[illegible] ‖ യാൽനചരിതൈദ്യഉപ്പന
+ROW 3 | ദയ്നയാടാവാദ്രപ്രവൃത്തി ‖ പ്രസാദഃത്രൈവിലപ്രതുത്യായാല്യവണിഹാരണ്യാ ‖ പാപക്ഷയസ്യചഫലത്വ
+ROW 4 | കാജ്ഞനാൽശേദാത്മ ‖ ത്തസാദൈ്യഷ്ടസാധനത്വമെവപ്ലീ[illegible] ‖ ദ്രാഭഃനഭിജ്ഞാതൈ
+ROW 5 | ഷ്ടദമെനന്മൾക്കാദെ ‖ മായദീക്ഷതെന്ത്യതുബിംദാനഃ ‖ ൾസാധനകാരഷ്ണ
+ROW 6 | പ്രക്രിയരതയാഗന്യാ ‖ ഉള്ളവിനാശിനഃകാലകൃതടാവി ‖ ഷൾസാധനത്വാദ
+ROW 7 | യാഗ്ര്യത്വാൽയൊഗ്ര ‖ ഃഡൂദികാദൃഷ്ടമദൃഷ്ടമെവചം ‖ ദതഃകാരഷ്ണംഇതി
+ROW 8 | സാദൃശ്യംതത്സ്വിക്കര ‖ ഷലയാൽനിഷയാദികാംക്ഷാദയാംയാദെ ‖ ഗൊവിഷയത്വാദ
+ROW 9 | നാത്മകാമജ്ഞഃകാന്യകാദഷ്ട ‖ ഷ്ടതിത്തമെയാജ്ഞാകാംക്ഷാദയാംസാൾ ‖ ൾകാമവടംഭവെയാജ്ഞ
+ROW 10 | പരതയാതെജ്ഞമദൃ ‖ ാഷ്ടമെവാപനമെയാജ്ഞാനസ്യമെജ്ഞാതെ ‖ തെജ്ഞസ്ഥാമനാമകയാ
+
+NOTE | This is a low-confidence reading: I could make out the shapes of nearly all the characters, but I'm unsure of many of them, especially conjuncts and dot-rephs, and the text near the cords is partly guessed. Rows 4–7 stop short of the left hole. At the overlaps I tried not to repeat text, but some joins may still be wrong. The small mark in the left margin of row 6 (it looks like ശ) is not included in the rows.

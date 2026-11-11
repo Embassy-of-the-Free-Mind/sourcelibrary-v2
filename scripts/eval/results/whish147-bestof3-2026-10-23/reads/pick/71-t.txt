@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three has readable Sanskrit or Malayalam, so this is close to a tie; B ranks first only because it keeps a few syllable runs (śra…, yanoya, yatabha, śru), A has only stray single syllables, and C has nothing legible.

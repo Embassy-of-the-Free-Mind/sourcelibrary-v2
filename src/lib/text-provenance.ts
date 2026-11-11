@@ -168,7 +168,8 @@ export type TranscriptProvenance =
   /** Written or corrected by a person; `model` is what they started from, if known. */
   | { kind: 'manual'; model: string | null }
   /** Syriac read by a specialist Kraken model (#4883): Sophro Mhiro for
-   *  manuscripts, omnisyr for print. Named, with its measured accuracy. */
+   *  manuscripts, omnisyr for print. The drawer names these scholarly models, with
+   *  their measured accuracy; the chip says only "machine transcription". */
   | { kind: 'kraken'; route: 'manuscript' | 'print' }
   /** Read from the scan by a model in the ordinary pipeline. */
   | { kind: 'model'; model: string };
@@ -211,15 +212,56 @@ export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvena
 }
 
 /**
- * A model id as a reader would say it: `gemini-3.1-flash-lite-preview` →
- * "Gemini 3.1 Flash-Lite". Unknown ids pass through untouched — the exact id is
- * the honest fallback, never a guess.
+ * A model id as a staff page would say it: `gemini-3.1-flash-lite-preview` →
+ * "Gemini 3.1 Flash-Lite". Not for the book reader, which names the kind of text
+ * and never the model (#7263). Unknown ids pass through untouched.
  */
 export function modelDisplayName(model: string): string {
   const m = /^gemini-(\d+(?:\.\d+)?)-(flash-lite|flash|pro)(?:-preview)?(?:-\d{2}-\d{2})?$/i.exec(model.trim());
   if (!m) return model;
   const tier = m[2].toLowerCase() === 'flash-lite' ? 'Flash-Lite' : m[2][0].toUpperCase() + m[2].slice(1).toLowerCase();
   return `Gemini ${m[1]} ${tier}`;
+}
+
+/**
+ * The date a page's machine-made text was produced, or null when the record does not
+ * say (#7263, Derek 2026-11-04: "only give dates of when it was run"). Null is an
+ * answer; a guessed date is not (data-provenance.md rule 5).
+ *
+ * `engine.run.at` is the run itself, but only rows written since #4613 have it (8% of
+ * OCR, 26% of translation, 584 random books, 2026-11-05). Older rows fall back on the
+ * field's `updated_at`, which held up as a month: within 7 days of `run.at` on all 3,816
+ * rows carrying both, and on none of 1,372 older records was it moved by a repair sweep.
+ * Not every source gets one:
+ * - a person's edit dates from `edited_at`, or goes undated: `updated_at` may be the machine's;
+ * - a split leaf without a run date: the swap stamps `updated_at` (split-stage.mjs `swapStamps`);
+ * - e-texts, corpora and the Archive's OCR: we did not make them, and `updated_at` is our import.
+ */
+export function textProducedAt(
+  page: Pick<Page, 'ocr' | 'translation'> & Partial<Pick<Page, 'split_from'>>,
+  field: 'ocr' | 'translation',
+): Date | null {
+  const rec = field === 'ocr' ? page.ocr : page.translation;
+  if (!rec) return null;
+  const valid = (v: unknown): Date | null => {
+    if (!v) return null;
+    const d = new Date(v as string | Date);
+    return Number.isFinite(d.getTime()) && d.getTime() > 0 ? d : null;
+  };
+  if (rec.edited_at || rec.edited_by) return valid(rec.edited_at);
+  if (field === 'ocr') {
+    const kind = transcriptProvenance(page)?.kind;
+    if (kind !== 'model' && kind !== 'kraken') return null;
+  } else if (!isUnreviewedMachineTranslation(page)) {
+    return null;
+  }
+  const engine = rec.engine as { run?: { at?: unknown } } | undefined;
+  return valid(engine?.run?.at) ?? (page.split_from ? null : valid(rec.updated_at));
+}
+
+/** A provenance label with its month when the record has one; the bare label when it does not. */
+export function datedProvenanceLabel(label: string, at: Date | null, t: ReaderStrings['info']): string {
+  return at ? t.producedLabel(label, t.producedMonth(at)) : label;
 }
 
 /**
@@ -243,17 +285,18 @@ export function transcriptProvenanceLabel(
         : t.corpusTranscript(prov.corpus.name, prov.corpus.org);
     case 'ia':
       return form === 'short'
-        ? t.transcriptChipIa(prov.engine)
-        : t.iaTranscript(prov.engine, prov.year, prov.agreement);
+        ? t.transcriptChipIa
+        : t.iaTranscript(prov.year, prov.agreement);
     case 'manual':
       return form === 'short'
         ? t.transcriptChipManual
-        : t.manualTranscript(prov.model ? modelDisplayName(prov.model) : null);
+        // A model id here is what the person started from; 'human'/'manual' are not a machine.
+        : t.manualTranscript(!!prov.model && !/^(human|manual|hand)\b/i.test(prov.model));
     case 'kraken':
       return form === 'short'
-        ? (prov.route === 'print' ? 'omnisyr (Kraken)' : 'Sophro Mhiro (Kraken)')
+        ? t.transcriptChipMachine
         : t.krakenTranscript(prov.route);
     case 'model':
-      return form === 'short' ? modelDisplayName(prov.model) : t.transcribedBy(prov.model);
+      return form === 'short' ? t.transcriptChipMachine : t.machineTranscript;
   }
 }

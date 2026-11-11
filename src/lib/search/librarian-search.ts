@@ -13,6 +13,7 @@
  * reranks the top candidates. No-op (skipped silently) when neither is set.
  */
 
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { GLOBAL_SCOPE, tenantSearchScope, type SearchScope } from '@/lib/tenant-search-scope';
@@ -28,6 +29,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 import { editionYear } from '@/lib/dedup';
 import { resolveQuoteText } from '@/lib/quote-text';
+import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import type { Page } from '@/lib/types';
 
@@ -165,6 +167,7 @@ async function keywordSource(query: string, _opts: HybridSearchOptions): Promise
   const rows = await db.collection('pages')
     .aggregate([
       searchStage,
+      { $match: NOT_REPEAT_CAPTURE }, // a repeat capture's leaf is already a hit (#5056)
       { $limit: 48 },
       { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
     ])
@@ -279,6 +282,7 @@ async function nameVariantSource(query: string): Promise<RawHit[]> {
         // "Paracelsus on the plague": a Paracelsi page must also be about the plague, or the
         // lane fills with pages that merely name him.
         buildPageSearchStage(query, undefined, { nameVariants: variants, requireNameVariant: true, requireWords: topicWords }),
+        { $match: NOT_REPEAT_CAPTURE },
         { $limit: 24 },
         { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
       ])
@@ -420,6 +424,7 @@ async function collectionScopedSources(
     db.collection('pages')
       .aggregate([
         buildPageSearchStage(query, bookIds, { nameVariants }),
+        { $match: NOT_REPEAT_CAPTURE },
         { $limit: 24 },
         { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
       ])
@@ -694,7 +699,9 @@ async function loadPassageTexts(hits: RawHit[]): Promise<Map<string, string>> {
     const pages = await db.collection('pages')
       .find({ $or: hits.map(h => ({ book_id: h.book_id, page_number: h.page_number })) })
       .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 })
-      .toArray();
+      .toArray()
+      // An English edition's stored "translation" is a rewording (#7100).
+      .then((rows) => serveEnglishOriginalPages(db, rows, { modernized: false }));
     const untranslated = new Set(hits.filter(h => h.untranslated).map(h => pageKey(h.book_id, h.page_number)));
     for (const p of pages) {
       const resolved = resolveQuoteText(p as unknown as Page, p.book_id, 'en', { mark: false });

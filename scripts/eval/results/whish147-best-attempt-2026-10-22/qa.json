@@ -1,0 +1,45 @@
+{
+ "at": "2026-10-22T22:51:58.643Z",
+ "pages": [
+  {
+   "n": 35,
+   "methods": "edition-anchored",
+   "ocr_warning": true,
+   "en_warning": true,
+   "halves_in_order": true,
+   "url": "https://sourcelibrary.org/book/sankhyasaptati-sankhyakarika-with-the-jayamangala-and-tattvakaumudi-co/page/6ad845ee6037414ddef152d4"
+  },
+  {
+   "n": 39,
+   "methods": "edition-anchored",
+   "ocr_warning": true,
+   "en_warning": true,
+   "halves_in_order": true,
+   "url": "https://sourcelibrary.org/book/sankhyasaptati-sankhyakarika-with-the-jayamangala-and-tattvakaumudi-co/page/6ad845ee6037414ddef152d8"
+  },
+  {
+   "n": 102,
+   "methods": "free-read",
+   "ocr_warning": true,
+   "en_warning": true,
+   "halves_in_order": true,
+   "url": "https://sourcelibrary.org/book/sankhyasaptati-sankhyakarika-with-the-jayamangala-and-tattvakaumudi-co/page/6ad845ee6037414ddef15317"
+  },
+  {
+   "n": 107,
+   "methods": "free-read",
+   "ocr_warning": true,
+   "en_warning": false,
+   "halves_in_order": true,
+   "url": "https://sourcelibrary.org/book/sankhyasaptati-sankhyakarika-with-the-jayamangala-and-tattvakaumudi-co/page/6ad845ee6037414ddef1531c"
+  },
+  {
+   "n": 158,
+   "methods": "no-text",
+   "ocr_warning": true,
+   "en_warning": true,
+   "halves_in_order": false,
+   "url": "https://sourcelibrary.org/book/sankhyasaptati-sankhyakarika-with-the-jayamangala-and-tattvakaumudi-co/page/6ad845ee6037414ddef1534f"
+  }
+ ]
+}

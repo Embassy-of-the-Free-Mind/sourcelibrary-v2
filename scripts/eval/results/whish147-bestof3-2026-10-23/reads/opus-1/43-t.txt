@@ -1,0 +1,12 @@
+ROW 1 | ചന്ദെറ്റുക്കളെവപ്രാൎക്ക‖തവിധമന്തഃകരണമിത്ത്യൎത്ഥഃകരണത്രയൊ‖ദശവിധമിത്ത്യൎത്ഥഃപഞ്ചബു
+ROW 2 | ജ്ഞിന്ദ്രിയാണിപഞ്ചകാൎമ്മ‖ഇന്ദ്രിയാണി[illegible]ഹംകാരമനാംസിചത്രീണി‖ഏതത്രയൊദശവിധംകാ
+ROW 3 | രണം•കാരണമിതിക്കെന്നുല‖ല്യുടാ[illegible]കൾ[illegible]ൾ•രത്രകൊന്യുണാകി‖ക്രിയായാ[illegible]രണമി
+ROW 4 | ജ്ഞാഹരണധാരണയാ‖[illegible]പ്രകാശകാരമിതികൾക്കൊന്നെമ‖ഹാരണാദിനിക്കു
+ROW 5 | ദാക്കിതുന്നുകളെള്ളി‖യാജ്ഞാസാരണം•[illegible]വൃത്തി•ബുദ്ധ്യഹാം‖കാരമനാംസി[illegible]
+ROW 6 | ം•ഷ[illegible]ദ്രിയാണിപ്ര‖കാശമിതിക്കെ[illegible]തൽകാൎയ്യം[illegible]ഹാ‖രണം[illegible]കൎമ്മേന്ദ്രിയാഹ
+ROW 7 | കാൎയ്യമിതിതന്ത്രകാര‖ണസ്യദശവിധംകാൎയ്യം[illegible]‖ൎപ്പരമൎശാനായഃവ[illegible]
+ROW 8 | പചനാദാനവിഹ‖[illegible]ൎദ്ദാനന്ദാഃപ[illegible]‖ശയാഃ[illegible]വിവിധാഃ
+ROW 9 | ന്തുക്കിവന്തമാത്രലക്ക‖[illegible]ക്ഷൂ[illegible]പദ്മാദ്ധ്വാഃ[illegible]ലാര‖ദികാശാദയ[illegible]ക്ഷെമ
+ROW 10 | ദുഃഖാത്മകകാ[illegible]ല്ല‖[illegible]തൽകാൎയ്യം[illegible]ഇന്ദ്രിയാണാംപ്രക‖കാശ്യംചാശാലിനാം[illegible]ദ
+ROW 11 | ദന്താദികൾകാൎയ്യത്താക‖ൾ[illegible]കുന്നവ[illegible]ശബ്ദസ്പൎശാദി[illegible]ഭ്യാമാ‖ദികൾവന്നുഭേദമാണവൾ
+NOTE | This is a low-confidence reading. I took p01 as the left column, p02 and p03 together as the middle, and p04 as the right, giving 11 rows. Words that are clearly written (the "ൎത്ഥഃ", "ഇന്ദ്രിയാണി" and "കാൎയ്യം" forms) are fairly secure. Much of the rest is my best guess at the stroke shapes, so the text needs checking against the images, especially rows 3 and 6–11.

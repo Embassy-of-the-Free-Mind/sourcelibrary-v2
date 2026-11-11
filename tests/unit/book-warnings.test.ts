@@ -10,8 +10,8 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { BookCheck, PageTextStamp } from '@/lib/book-checks';
-import { deriveWarnings, kindsOfFinding, ownChecks, pageAnchor, checkAnchor, WARNING_KINDS } from '@/lib/book-warnings';
-import { CHECK_METHODS } from '@/lib/check-methods';
+import { deriveWarnings, kindsOfFinding, ownChecks, pageAnchor, checkAnchor, commonKinds, WARNING_KINDS } from '@/lib/book-warnings';
+import { CHECK_METHODS, evidenceUrl } from '@/lib/check-methods';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 
 const row = (over: Partial<BookCheck> = {}): BookCheck => ({
@@ -42,6 +42,14 @@ describe('deriveWarnings', () => {
     expect(w.book).toMatchObject({ pagesRead: 4, pagesSerious: 2, anchor: checkAnchor(row()) });
   });
 
+  it('derives nothing from a row written with reader_warning: false: no warning, no "checked", and no clearing (#8069)', () => {
+    const quiet = row({ reader_warning: false, run_id: 'r2', checked_at: new Date('2026-10-08T10:00:00Z') });
+    expect(deriveWarnings([quiet], untouched([7, 8, 9, 10]))).toEqual({ book: null, checked: null, pages: {} });
+    const clean = row({ reader_warning: false, run_id: 'r3', checked_at: new Date('2026-10-08T10:00:00Z'), verdict: 'show', page_findings: [] });
+    expect(deriveWarnings([clean], untouched([7, 8, 9, 10])).checked).toBeNull();
+    expect(Object.keys(deriveWarnings([row(), clean], untouched([7, 8, 9, 10])).pages).map(Number)).toEqual([7, 9]);
+  });
+
   it('drops a page whose text was rewritten after the check, from the warning and from both counts', () => {
     const stamps = untouched([7, 8, 9, 10]);
     stamps.set(7, { page_number: 7, translation: { updated_at: '2026-10-07T00:00:00Z' } });
@@ -54,7 +62,7 @@ describe('deriveWarnings', () => {
     const stamps = untouched([8, 10]);
     stamps.set(7, { page_number: 7, ocr: { updated_at: '2026-10-07T00:00:00Z' } });
     // page 9 has no record any more
-    expect(deriveWarnings([row()], stamps)).toEqual({ book: null, pages: {} });
+    expect(deriveWarnings([row()], stamps)).toEqual({ book: null, checked: null, pages: {} });
   });
 
   it('lets a later clean read of the same page clear an earlier finding', () => {
@@ -69,7 +77,7 @@ describe('deriveWarnings', () => {
   it('never counts or warns about a soft-hidden page (page_number ≤ 0)', () => {
     const r = row({ pages_read: [-3, 8], text_provenance: [-3, 8].map((n) => ({ page_number: n, ocr_model: 'm', translation_model: 'm' })),
       page_findings: [{ page_number: -3, errors: [{ stage: 'ocr', class: 'O1' }] }] });
-    expect(deriveWarnings([r], untouched([-3, 8]))).toEqual({ book: null, pages: {} });
+    expect(deriveWarnings([r], untouched([-3, 8]))).toEqual({ book: null, checked: null, pages: {} });
   });
 
   it('gives a book warning without a count when a fix verdict kept no per-page record', () => {
@@ -121,5 +129,58 @@ describe('copy and registry stay in step', () => {
         expect(issues, `${id}: detector issue ${info.issue} is not in the registry header`).toContain(info.issue);
       }
     }
+  });
+});
+
+describe('commonKinds — what the book banner names after its count', () => {
+  it('counts each kind once per page and names the commonest first, at most two', () => {
+    expect(commonKinds([
+      ['misread_meaning', 'misread_meaning'], ['misread_meaning', 'number_misread'], ['missing_english'], ['number_misread'], ['misread_meaning'],
+    ])).toEqual(['misread_meaning', 'number_misread']);
+  });
+  it('breaks a tie in WARNING_KINDS order, so the banner does not change between renders', () => {
+    expect(commonKinds([['number_misread'], ['wrong_page']])).toEqual(['wrong_page', 'number_misread']);
+  });
+  it('names nothing when no page has a kind', () => {
+    expect(commonKinds([])).toEqual([]);
+  });
+});
+
+describe('kindsOfFinding — named classes', () => {
+  const f = (cls: string, stage: 'ocr' | 'translation' = 'ocr') => ({ page_number: 1, errors: [{ stage, class: cls }] }) as never;
+  it('a single misread word is named as such, not as "a serious error" (ocr-misread is the commonest finding)', () => {
+    expect(kindsOfFinding(f('ocr-misread'))).toEqual(['word_misread']);
+  });
+  it('wrong-leaf and not-of-page names map to the wrong-page kinds', () => {
+    expect(kindsOfFinding(f('ocr-wrong-leaf'))).toEqual(['wrong_page']);
+    expect(kindsOfFinding(f('other:translation-not-of-page', 'translation'))).toEqual(['english_other_page']);
+  });
+  it('two readings the scan could not settle are named as such, not as "a serious error" (#7082)', () => {
+    expect(kindsOfFinding(f('ocr-unsettled'))).toEqual(['transcription_unsettled']);
+  });
+});
+
+describe('the book line says how many pages were clean (#7082)', () => {
+  const langs = Object.keys(READER_UI_STRINGS) as (keyof typeof READER_UI_STRINGS)[];
+  it('names the clean pages when some were clean, and only then', () => {
+    const book = READER_UI_STRINGS.en.info.qualityBook;
+    const base = { ai: true, image: true, date: '22 October 2026' };
+    expect(book({ ...base, read: 10, serious: 3 })).toContain('on 3 of them; the other 7 had none.');
+    expect(book({ ...base, read: 4, serious: 3 })).toContain('; the other page had none.');
+    expect(book({ ...base, read: 3, serious: 3 })).toMatch(/on 3 of them\.$/);
+    expect(book({ ...base, read: 1, serious: 1 })).toMatch(/on it\.$/);
+    expect(book({ ...base, read: 5, serious: null })).toMatch(/found serious errors\.$/);
+    for (const lang of langs) {
+      const l = READER_UI_STRINGS[lang].info.qualityBook({ ...base, read: 10, serious: 3 });
+      expect(l, lang).toContain('7');
+    }
+  });
+});
+
+describe('evidence with no public URL (#8069)', () => {
+  it('a file on a box or in the ops repo has no link; a repo path does', () => {
+    expect(evidenceUrl('box:clawdbot:/mnt/x/verdicts.json')).toBeNull();
+    expect(evidenceUrl('ops:quality-sprint/x.json')).toBeNull();
+    expect(evidenceUrl('scripts/eval/results/x.json')).toMatch(/blob\/main\/scripts\/eval\/results\/x\.json$/);
   });
 });

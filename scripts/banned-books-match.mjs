@@ -311,7 +311,7 @@ async function main() {
     if (allMatchedIds.size > 0) {
       const result = await books.updateMany(
         { _id: { $in: [...allMatchedIds] } },
-        { $addToSet: { collections: SLUG } }
+        { $addToSet: { collections: SLUG }, $currentDate: { updated_at: true } }
       );
       console.log(`Tagged ${result.modifiedCount} books with collection '${SLUG}'`);
     }

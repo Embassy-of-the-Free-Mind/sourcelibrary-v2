@@ -1,0 +1,46 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 3 machine transcriptions (A, B, C) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. ആപ്തവചനന്തു:[illegible ornament/numeral]‖സാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം‖പ്രസിദ്ധിരനുമാനാ
+2. ൽതസ്മാദപിചാസി‖ദ്ധംപരോക്ഷമാപ്താഗമാൽസിദ്ധം॥൬॥‖അതിദൂരാൽസാ
+3. മീപ്യാദിന്ദ്രിയഘ‖ാതാന്മനോനവസ്ഥാനാൽ‖സൌക്ഷ്മ്യാദ്വ്യവധാ
+4. നാദഭിഭവാൽ‖സമാനാഭിഹാരാച്ച॥൭॥സൌ‖ക്ഷ്മ്യാത്തദനുപ
+5. ലബ്ധിൎന്നാഭാ‖വാൽകാൎയ്യതസ്തദുപലബ്ധി‖ഃമഹദാദിതച്ച
+6. കാൎയ്യംപ്രകൃ‖തിവിരൂപംസരൂപഞ്ച॥൮॥‖അസദകരണാദുപ
+7. ാദാനഗ്രഹണാ‖ൽസൎവ്വസംഭവാഭാവാൽശ‖ക്തസ്യശക്യകരണാ
+8. ൽകാരണഭാവാ‖ച്ചസൽകാൎയ്യം॥൯॥ഹേതുമദനിത്യ‖മവ്യാപിസക്രിയമനേ
+9. കമാശ്രിതംലിം‖ഗംസാവയവംപരതന്ത്രംവ്യക്തം‖വിപരീതമവ്യക്തം॥൧൦॥
+
+TRANSCRIPTION B
+1. [illegible]ക്കവചനതു: + ‖ ദസാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം ‖ പ്രസിദ്ധിരനുമാനാ
+2. ൽതസ്മാദപിചാസിദ്ധംപരോക്ഷമാ ‖ മാപ്താഗമാൽസിദ്ധം।ന ‖ [illegible]ന്ദ്രിയാൽസാ
+3. [illegible]ാദിന്ദ്രിയൈര[illegible]ാന്നൈന ‖ [illegible]നവച്ചാനാക്ക ‖ സാ[illegible]
+4. നാദിദൃഷ്ട[illegible]സമാനദൃഷ്ട ‖ [illegible]നാഷ്ടൈര ‖ [illegible]മാനാദേവ
+5. ലഭ്യന്താ[illegible]വാൽകാര്യങ്ങ ‖ ങ്ങ[illegible]ലക്ഷണ്ട ‖ ഃമഹദാദിക[illegible]
+6. കാര്യംലിംഗ[illegible]ഷ്ടൃന്തംവി[illegible] ‖ [illegible]പകൊ।ണ്ടു[illegible] ‖ ന്ദുകനനാദൃ[illegible]
+7. ദാനന്ദ്രഗ്രഹണാൽസപ്തസംദ ‖ ദചാന്ദ്രുവിദ്ധൽഗ ‖ ക്കസ്യ[illegible]ക്കമി
+8. ാൽക്കാല[illegible]ദ്ധസൽകാര്യം।ന ‖ [illegible]പൈശതമദ[illegible] ‖ ദ[illegible]ചിസക്തിയമൈ
+9. നക്കമാത്തിക്കംചി·ം·സാമാന്യം·ച ‖ ചരിത്രൃം·[illegible]ക്തം·ന ‖ [illegible]മൈവ്യക്തം।[illegible]।
+
+TRANSCRIPTION C
+1. ഞ്ചൂക്കവചനതു: ‖ ദസാമഗ്ര്യകന്തൂദഷ്ടാദതിൎഭിയാ[illegible] ‖ ാം.പ്രസിദ്ധിരനമാനാ
+2. ൽകഞ്ചാദവിചാരി ‖ ദ്ധം.ചനാങ്ങമാക്ഷാഗമാൽസിദ്ധം.[illegible] ‖ ന[illegible]ക്കിദൂരപാൽസാ
+3. ഭ്യാദദിയന ‖ ൗകാങ്കരൗന[illegible]നവഭ്യാനാൎക്ക ‖ സാക്ഷ്യാദ്രൂപ്യാ
+4. നാദദിഭരയൿ ‖ സമാനദിൎഭി[illegible]ന്താമ്ലൈഷു ‖ ദൃക്ഷ്യാക്കെദനവ
+5. ലബ്ധിന്നൊടാ ‖ വാൿകാരഞ്ച[illegible]കഞ്ചദ്ദപലഞ്ചെ ‖ ൃമേവദാദികഴ
+6. കാരഞ്ചുംലത്തി ‖ ഷ്യൂൎവ്വം.വിഭ്ര[illegible]ഭൂപകൊ:ഷ്യാഭി ‖ ന്ദകനനൊദൂപ
+7. ദദാനഗ്രഹണാ ‖ ൽസമ്യംസം.ദ[illegible]വാദൂരവിതൽമാ ‖ ക്കന്തുന്ത്രകാലഭൊ
+8. ാൽകാനനൊദാവ ‖ ദ്ധസൽകാൎയ്യം.ന[illegible]സെഹാതുമദന്ദ ‖ [illegible]
+9. നകമാഭ്രിക്കം.ചി. ‖ ം.സ്വാലാദാബം.ന[illegible]ന്യവ്യക്തിം.ശ്ലക്കം.ന ‖ [not visible]
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

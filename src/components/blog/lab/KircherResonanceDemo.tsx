@@ -158,7 +158,7 @@ export default function KircherResonanceDemo() {
         </button>
       }
       caption="Two strings. The left is plucked, always at A · 220 Hz; the right is never touched. At unison the silent string sings back, the effect Kircher read as natural magic. And the physics of shared partials adds a prediction he would have relished: tuned a fifth up, it still answers, faintly. Find both."
-      sourceHref="/book/kircher-musurgia-universalis-vol-ii-1650-kircher"
+      sourceHref="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher"
       sourceLabel="Kircher, Musurgia Universalis, Vol. II (1650)"
     >
       <div className="mb-4">

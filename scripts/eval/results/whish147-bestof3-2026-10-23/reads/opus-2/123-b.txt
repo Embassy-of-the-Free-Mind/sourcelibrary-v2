@@ -1,0 +1,9 @@
+ROW 1 | യാഗജ്ഞന്ത:ദ്വി[illegible]ഷൈരപ ‖ ം ശപാട്രമാഭ്യൊദ്ഭൂളഉദ്ഭയമിട്ടാഗജ്ഞന്തട ‖ ടപടശബ്ദ:ഭെദ്ധ്രാഭിദെദൃശമ
+ROW 2 | ദരഭൂപ്രെഭ്രാത്രപശ്ച്ചെ:ദ്വി ‖ ജ്ഞാഭിശജ്ഞേദസ്ലേജ്ഞാ:ഭ്യേഠാപ്പ്ഷാണമാ ‖ ലാ:ഭ്യേത്രിജ്ഞാനാമിത്വ്യ
+ROW 3 | പ്യവസ്ഥായഗമ്യജ്ഞാ ‖ നത്വമെവലക്ഷണമിത്യത്ഭ്യെദ്ധിം ‖ മിംഭൂജതെസിത്വി।ന്ദ്ര
+ROW 4 | തെജ്ഞ്ജ്ഞാണമാവാന ‖ ംത്മാ[illegible]നക്ഷ:ട്രാവനാഖ്യ ‖ സംജ്ഞാദരസേംജ്ഞാദി
+ROW 5 | മ്പംചെത്തിപ്രാജ്ഞ ‖ വാരണാദപ്യജ്ഞാനമിതിഷ്ടാ ‖ ഭൂലൃതാക്കൊത്തിവ്യാക്ക:
+ROW 6 | വാരണാദ്വസംജ്ഞാ ‖ നജ്ഞഇമിതി:ന്തത്തന്ദ്രവാലക്ഷ്യ ‖ ത്വ:തൽഭിന്നമിതി।ന്ത്ര
+ROW 7 | ഭിന്നാംജ്ഞാനമന്ദ്രവാഇ ‖ ഉത്ഥ:ണന്ദ്രലാംവിദ്ദജ്ഞതെസഭിവിധ ‖ യഇതിഷ്ഠാരത്ഥാന്ദ്രവസ്ത്വല
+ROW 8 | ക്ഷ്ണാമാഹ।കച്ചതിതെ ‖ ന്നക്ഷ്ലകടഷ്ടഭ്യമിത്വലത്വക്ഷ്ലമാദ ‖ യാമിവ്യാക്ത:ഷ്ടഭെച്ചല
+NOTE | I could make out all 8 rows and their layout (rows 1–2 and 7–8 run the full width; rows 3–6 are shorter around the holes), but my confidence in individual aksharas is low, roughly 50–60%. Conjuncts, reph and chillu forms are often guesses, and the text near the holes and where the pieces overlap is the least certain.

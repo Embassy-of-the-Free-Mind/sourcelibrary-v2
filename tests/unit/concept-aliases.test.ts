@@ -11,9 +11,12 @@ const FLOOR = 0.7;
 describe('concept-aliases data contract', () => {
   const concepts = allConcepts();
 
-  it('has the 62 map concepts, the 41 body-practice concepts and daimōn (#4251), each with a headword and tiers', () => {
-    expect(concepts.length).toBe(104);
+  it('has the 62 map concepts, the 41 body-practice concepts, daimōn (#4251), 13 psychoactives (#7398) and 9 harmony/magic concepts (#7408), each with a headword and tiers', () => {
+    expect(concepts.length).toBe(126);
+    expect(concepts.filter((c) => c.theme === 'harmony').length).toBe(5);
+    expect(concepts.filter((c) => c.theme === 'magic').length).toBe(4);
     expect(concepts.filter((c) => c.theme === 'body').length).toBe(41);
+    expect(concepts.filter((c) => c.theme === 'psychoactives').length).toBe(13);
     for (const c of concepts) {
       expect(typeof c.concept).toBe('string');
       expect(Array.isArray(c.variants) && Array.isArray(c.equivalents) && Array.isArray(c.related)).toBe(true);

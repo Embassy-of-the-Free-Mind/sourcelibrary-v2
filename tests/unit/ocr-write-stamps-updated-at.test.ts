@@ -41,6 +41,7 @@ const WINDOW = 40;
 
 /** Files that write the field but are not a change of the page's reading. */
 const ALLOWED: Record<string, string> = {
+  'scripts/lib/longs-orthography.mjs': "the ONE deliberate exception (#5924): an orthographic-only edit (f → ſ, the same letter) that must NOT stamp ocr.updated_at, or ~1M pages go stale and queue paid retranslation; assertOrthographicOnly throws on any other change, so it cannot make a changed reading look fresh (tests/unit/longs-orthography.test.ts)",
   'scripts/maintenance/backfill-woodblock-provenance-4523.mjs': "matches 'ocr.data' only in the update FILTER (a race guard on the unchanged text); its $set stamps source/engine/content_hash and never writes text (#4523)",
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself; writes only page_revisions',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
@@ -95,6 +96,32 @@ function ocrWrites(): Array<[string, number]> {
   return out;
 }
 
+/**
+ * The clock must be a BSON Date, not an ISO string (#5228). A string compares
+ * against a Date by BSON type order, not by time — strings sort after dates —
+ * so a string-stamped page matches every `$gte: <Date>` window or none, and
+ * the staleness comparison is meaningless. Returns the 0-based lines in
+ * `lines` whose `ocr.updated_at` stamp is a string: either `.toISOString()`
+ * inline, or an identifier whose nearest preceding declaration is one.
+ */
+function stringClockStamps(lines: string[]): number[] {
+  const out: number[] = [];
+  lines.forEach((l, i) => {
+    const m = l.match(/['"]ocr\.updated_at['"]\s*:\s*([^,}]+)/);
+    if (!m) return;
+    const expr = m[1].trim();
+    if (/toISOString\(\)/.test(expr)) { out.push(i); return; }
+    if (!/^[A-Za-z_$][\w$]*$/.test(expr)) return;
+    const decl = new RegExp(String.raw`\b(?:const|let|var)\s+${expr.replace(/\$/g, '\\$')}\s*=`);
+    for (let j = i - 1; j >= 0; j--) {
+      if (!decl.test(lines[j])) continue;
+      if (/toISOString\(\)|String\(/.test(lines[j])) out.push(i);
+      break;
+    }
+  });
+  return out;
+}
+
 describe('every write of pages.ocr.data also stamps ocr.updated_at (#4927)', () => {
   it('no OCR-text write leaves the clock alone', () => {
     const unstamped: string[] = [];
@@ -132,5 +159,26 @@ describe('every write of pages.ocr.data also stamps ocr.updated_at (#4927)', () 
     const whole = ['  ocr: {', '    data: text,', '    updated_at: new Date(),', '  },'];
     expect(writeLines(whole)).toEqual([1]);
     expect(stampsClock(whole, 1)).toBe(true);
+  });
+
+  it('the clock is stamped as a Date, never an ISO string (#5228)', () => {
+    const stringly: string[] = [];
+    for (const f of candidateFiles()) {
+      if (/(^|\/)(_archived|tests)\//.test(f) || /\/(audit|eval)\//.test(f)) continue;
+      const lines = readFileSync(path.join(REPO, f), 'utf8').split('\n');
+      for (const i of stringClockStamps(lines)) stringly.push(`${f}:${i + 1}`);
+    }
+    expect(stringly, [
+      'These writes stamp ocr.updated_at with a STRING (#5228). Strings sort after Dates in BSON,',
+      'so staleness and every $gte window over the clock silently mis-classify the page. Use new Date().',
+    ].join(' ')).toEqual([]);
+  });
+
+  it('the type check can fail — a string clock is caught', () => {
+    const bad = ['  const now = new Date().toISOString();', '  { $set: {', "    'ocr.data': text,", "    'ocr.updated_at': now,", '  } }'];
+    expect(stringClockStamps(bad)).toEqual([3]);
+    expect(stringClockStamps(["    'ocr.updated_at': new Date().toISOString(),"])).toEqual([0]);
+    const good = ['  const now = new Date();', ...bad.slice(1)];
+    expect(stringClockStamps(good)).toEqual([]);
   });
 });

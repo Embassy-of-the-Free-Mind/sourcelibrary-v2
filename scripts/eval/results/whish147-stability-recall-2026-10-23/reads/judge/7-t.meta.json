@@ -1,0 +1,23 @@
+{
+ "stage": "judge",
+ "id": "7-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T07:16:01.840Z",
+ "finished_at": "2026-10-23T07:16:17.006Z",
+ "secs": 15,
+ "prompt_hash": "fd48012bcf934799",
+ "prompt_file": "reads/prompts/fd48012bcf934799.txt",
+ "images": [],
+ "usage": {
+  "input": 2,
+  "output": 1042,
+  "cache_read": 2589,
+  "cache_creation": 2575,
+  "turns": 1,
+  "list_cost_usd": 0.0419658
+ }
+}

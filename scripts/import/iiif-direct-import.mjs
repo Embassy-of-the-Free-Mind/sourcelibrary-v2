@@ -17,19 +17,33 @@
  *
  * INPUT: a JSON array of entries. Required: manifest_url, title. Optional:
  *   author, year, language, collections[], provider, provider_name, source_url,
- *   source_id, license, license_url, contributing_library.
+ *   source_id, license, license_url, contributing_library, manifest_file,
+ *   iiif_size (v2 full-image size keyword, default `full`; `max` for hosts that
+ *   refuse `full`).
+ *   `manifest_file` is a local copy of the manifest, read instead of fetching
+ *   manifest_url — for a host whose manifest endpoint is unreachable from the
+ *   box (e.g. an expired TLS certificate) while its image server is fine.
+ *   manifest_url is still what is stored and deduped on.
  *
  * Usage (run on Hetzner — direct Mongo, no API auth needed):
  *   set -a; source .env.production.local; set +a
  *   node scripts/import/iiif-direct-import.mjs --data=/root/pg-import.json
  *   node scripts/import/iiif-direct-import.mjs --data=/root/pg-import.json --dry-run
  * Options: --dry-run  --limit=N  --delay=<ms,default 1500>  --start-from=N  --concurrency=N(default 1)
+ *          --sweep=<name>  record each import as a `sweep_log` row (the wave tag;
+ *                          a row, never a new field — field-sprawl.md)
+ *          --hold=<reason> --release-when=<issue:N|decision:..|test:..|date:..> [--hold-release=<text>]
+ *                          insert the book already held (pipeline-hold.mjs), as
+ *                          ia-manifest-direct.mjs does, so no lane picks it up
+ *                          between the insert and a later holdBook()
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -42,6 +56,18 @@ const START_FROM = parseInt(args.find(a => a.startsWith('--start-from='))?.split
 const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '1');
 const DATA_FILE = args.find(a => a.startsWith('--data='))?.split('=')[1];
 const LOG_FILE = args.find(a => a.startsWith('--log='))?.split('=')[1] || '/root/iiif-direct-import.log';
+const SWEEP = args.find(a => a.startsWith('--sweep='))?.split('=')[1] || null;
+const argVal = (name) => { const a = args.find(x => x.startsWith(`--${name}=`)); return a ? a.slice(name.length + 3) : null; };
+const HOLD_REASON = argVal('hold');
+const HOLD = HOLD_REASON ? {
+  reason: HOLD_REASON,
+  release: argVal('hold-release') || `Held at import by iiif-direct-import.mjs (--hold=${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  release_when: parseReleaseWhen(argVal('release-when')),
+  source: 'script:iiif-direct-import',
+} : null;
+if (HOLD?.release_when?.kind === 'issue') HOLD.issue = Number(HOLD.release_when.ref) || null;
+// Refuse before the first insert: a hold that throws after insertBookIfNew leaves the book imported and unheld (#7860).
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --release-when=issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 
 if (!DATA_FILE || !fs.existsSync(DATA_FILE)) { console.error(`--data=<file> required and must exist (got: ${DATA_FILE})`); process.exit(1); }
 const entries = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
@@ -69,7 +95,7 @@ async function fetchWithRetry(url, retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)', 'Accept': 'application/json, application/ld+json' },
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)', 'Accept': 'application/json, application/ld+json' },
         signal: AbortSignal.timeout(45000),
       });
       if (res.ok) return await res.json();
@@ -83,7 +109,11 @@ async function fetchWithRetry(url, retries = 3) {
   return null;
 }
 // IIIF v2 (sequences/canvases) + v3 (items). Returns [{photo, thumbnail}].
-function extractPages(manifest) {
+// `size` is the v2 size keyword for the full image. Most servers honour `full`;
+// a few refuse it and serve only `max` (image.library.jhu.edu answers 403 to
+// `/full/full/`, 200 to `/full/max/`). The archiver tile-stitches past any
+// maxArea cap, so `max` still archives at native resolution.
+function extractPages(manifest, size = 'full') {
   if (manifest?.items?.length) {
     return manifest.items.map(item => {
       const body = item.items?.[0]?.items?.[0]?.body;
@@ -100,7 +130,7 @@ function extractPages(manifest) {
     let imageUrl = res?.['@id'] || '';
     const svc = res?.service?.['@id'];
     let thumbnail = imageUrl;
-    if (svc) { imageUrl = `${svc}/full/full/0/default.jpg`; thumbnail = `${svc}/full/200,/0/default.jpg`; }
+    if (svc) { imageUrl = `${svc}/full/${size}/0/default.jpg`; thumbnail = `${svc}/full/200,/0/default.jpg`; }
     return { photo: imageUrl, thumbnail };
   }).filter(p => p.photo);
 }
@@ -124,15 +154,18 @@ async function processEntry(db, entry, idx) {
 
   if (DRY_RUN) { log(`${prefix} DRY-RUN "${(entry.title || '').substring(0, 55)}"`); imported++; return; }
 
-  const manifest = await fetchWithRetry(manifestUrl);
+  const manifest = entry.manifest_file
+    ? JSON.parse(fs.readFileSync(entry.manifest_file, 'utf8'))
+    : await fetchWithRetry(manifestUrl);
   if (!manifest) { log(`${prefix} ERROR — manifest fetch failed`); errors++; return; }
-  const pages = extractPages(manifest);
+  const pages = extractPages(manifest, entry.iiif_size || 'full');
   if (!pages.length) { log(`${prefix} ERROR — no pages in manifest`); errors++; return; }
 
   try {
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
     const slug = await ensureUniqueSlug(db, generateSlug(entry.title, entry.author));
+    const now = new Date();
     const acquired = await insertBookIfNew(db, {
       _id: bookId, id: bookIdStr, slug,
       title: entry.title || 'Unknown', author: entry.author || 'Unknown',
@@ -151,10 +184,22 @@ async function processEntry(db, entry, idx) {
         access_date: new Date(),
       },
       status: 'draft', hidden: true, visible: false,
-      created_at: new Date(), updated_at: new Date(),
+      ...(HOLD ? { pipeline_auto: { status: HOLD_STATUS, hold: makeHoldMarker({ ...HOLD, detail: null }, { from: null, now }), last_updated: now } } : {}),
+      created_at: now, updated_at: now,
     }, { importer: 'script:iiif-direct-import', sourceIdentifier: entry.source_id || null, sourceUrl: manifestUrl });
     // The gate declined this candidate; the reason is a row in `dedup_skips`.
     if (!acquired.inserted) { log(`${prefix} SKIP — ${acquired.message}`); skipped++; return; }
+    if (HOLD) {
+      // The hold went in with the insert; record it the way holdBook() does, and confirm it is there.
+      await db.collection('book_events').insertOne({ book_id: bookIdStr, type: HOLD_EVENT, at: now, source: HOLD.source,
+        details: { reason: HOLD.reason, issue: HOLD.issue ?? null, from_status: null, release: HOLD.release, release_when: makeHoldMarker(HOLD).release_when, at_insert: true } });
+      const back = await db.collection('books').findOne({ id: bookIdStr }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+      if (back?.pipeline_auto?.hold?.reason !== HOLD.reason) {
+        const h = await holdBook(db, bookIdStr, HOLD);
+        log(`${prefix} WARN — hold not found after insert; holdBook: ${h.outcome}`);
+        if (h.outcome !== 'held') { log(`${prefix} ERROR — book inserted but NOT held; no pages written`); errors++; return; }
+      }
+    }
     for (let start = 0; start < pages.length; start += 500) {
       const chunk = pages.slice(start, start + 500).map((p, j) => {
         const pageId = new ObjectId();
@@ -163,6 +208,10 @@ async function processEntry(db, entry, idx) {
           created_at: new Date(), updated_at: new Date() });
       });
       await db.collection('pages').insertMany(chunk, { ordered: false });
+    }
+    if (SWEEP) {
+      await recordSweepAction(db, { sweep: SWEEP, book_id: bookIdStr, action: 'imported-hidden',
+        detail: { importer: 'iiif-direct-import', source_id: entry.source_id || null, manifest_url: manifestUrl, pages: pages.length } });
     }
     totalPages += pages.length; imported++;
     log(`${prefix} OK ${pages.length}p — "${(entry.title || '').substring(0, 55)}" -> /book/${slug}`);

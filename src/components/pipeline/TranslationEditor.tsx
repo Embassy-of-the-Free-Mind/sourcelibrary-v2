@@ -46,6 +46,7 @@ import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { useLocale, useLocalePath } from '@/lib/i18n';
+import { localizeAuthorName, localizePublished } from '@/lib/book-labels';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import ShareButton from '@/components/ui/ShareButton';
@@ -840,6 +841,34 @@ export default function TranslationEditor({
   // download link (it is never marked). See issue #2651.
   const pageFullUrl = pageNativeUrl || pageProxyUrl;
 
+  // The download link used to be a bare <a download>, which saves whatever the
+  // server answers: a blocked or failed request was saved as an HTML file with a
+  // .jpg name (EFM, 2026-10-29). Fetch first, keep only an image, and fall back
+  // to the same-origin proxy when the native URL fails (e.g. CORS off-apex).
+  const [scanDownloadFailed, setScanDownloadFailed] = useState(false);
+  const downloadScan = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setScanDownloadFailed(false);
+    const filename = `${book.slug || book.id}-page-${page.page_number}.jpg`;
+    for (const url of [pageNativeUrl, pageProxyUrl]) {
+      if (!url) continue;
+      try {
+        const res = await fetch(url);
+        if (!res.ok || !(res.headers.get('content-type') || '').startsWith('image/')) continue;
+        const objectUrl = URL.createObjectURL(await res.blob());
+        const a = document.createElement('a');
+        a.href = objectUrl; a.download = filename;
+        document.body.appendChild(a); a.click();
+        a.remove(); URL.revokeObjectURL(objectUrl);
+        return;
+      } catch {
+        // try the next URL
+      }
+    }
+    setScanDownloadFailed(true);
+  };
+
   // CDLI tablet witnesses (for text-only ETCSL books)
   const witnessesWithPhotos = useMemo(
     () => (book.cdli_witnesses || []).filter(w => w.has_photo && w.photo_url),
@@ -1375,7 +1404,7 @@ export default function TranslationEditor({
                 </h1>
                 {(book.author || book.published) && (
                   <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                    {book.author}{book.author && book.published ? ' · ' : ''}{book.published}
+                    {book.author ? localizeAuthorName(book.author, locale) : ''}{book.author && book.published ? ' · ' : ''}{book.published ? localizePublished(book.published, locale) : ''}
                   </p>
                 )}
               </a>
@@ -1903,13 +1932,13 @@ export default function TranslationEditor({
                             download={`${book.slug || book.id}-page-${page.page_number}.jpg`}
                             className="inline-flex items-center gap-1 hover:underline"
                             style={{ color: 'var(--text-muted)' }}
-                            title={rs.downloadFullRes}
-                            onClick={(e) => e.stopPropagation()}
+                            title={scanDownloadFailed ? rs.downloadFailed : rs.downloadFullRes}
+                            onClick={downloadScan}
                           >
                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            {rs.download}
+                            {scanDownloadFailed ? rs.downloadFailed : rs.download}
                           </a>
                         )}
                       </div>
@@ -2653,7 +2682,7 @@ export default function TranslationEditor({
               </h1>
               {(book.author || book.published) && (
                 <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                  {book.author}{book.author && book.published ? ' · ' : ''}{book.published}
+                  {book.author ? localizeAuthorName(book.author, locale) : ''}{book.author && book.published ? ' · ' : ''}{book.published ? localizePublished(book.published, locale) : ''}
                 </p>
               )}
             </a>

@@ -1,0 +1,685 @@
+[
+  {
+    "book_id": "69b419382b0edf3eaa2df003",
+    "slot": 69,
+    "title": "Palladis Chymicae Arcana Detecta: Marengus (PH165)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Italian-hand Latin alchemical manuscript of practical recipes (amalgams, mercury of metals, minerae); belongs on an alchemy shelf.",
+    "rights_flag": null,
+    "structure_note": "Pages 107/207/308 carry manuscript folios 93/193/294: offset of 14 and 15 between pages 107, 207 and 308. That is consistent with front matter plus one extra leaf, not a splice. 16 of 418 pages untranslated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 107,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ac manum exsicca … Deinde hanc manum pone … supra dictam manum",
+            "image": "ac maam exsicca … hanc maam … dictam maam (materiam, abbreviated)",
+            "problem": "the abbreviation for 'materiam' (the matter) read as 'manum' three times",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "de mercurium solve",
+            "image": "d.' mercurium solve (dictum)",
+            "problem": "abbreviation misread, no sense change",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ac manum exsicca (image: ac maam exsicca)",
+            "english": "and dry it by hand",
+            "problem": "should be 'and dry the matter'. Follows the OCR misread and invents a manual step",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Calcina tartarum",
+            "english": "Calcimate tartar",
+            "problem": "typo for 'Calcinate'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "translation opens with a <meta> that has a <note> nested in it ('from four ounces of this <note>antimony</note> you will draw'). This is continuity text from the previous page; it cannot be verified here",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 207,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>lia uncia\nautem re:\nquousq;\n… ue supra,</margin>",
+            "image": "30 line-ends of the facing verso (the previous page's text) visible at the left edge of the photo",
+            "problem": "neighbour leaf's strip transcribed as a 'margin' of this page",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "ut 1. … decoque ut 2. … decoque ut 3.",
+            "image": "ut s.a … ut s.a … ut s.a (ut supra)",
+            "problem": "'as above' read as step numbers 1, 2, 3",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "fundum boccie lumbis",
+            "image": "fundum boccie lutabis",
+            "problem": "'you will lute' misread as 'lumbis'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "et sunc cupellatis",
+            "image": "et Lune cupellate",
+            "problem": "Luna (silver) misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "oia ut fusionem",
+            "image": "oia ut s.a fusionem",
+            "problem": "'ut supra' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ut 1. / ut 2. / ut 3. (image: ut supra)",
+            "english": "as in the first step … as in the second step … as in the third step",
+            "problem": "invented step references replace 'as above'. The reader is sent to steps that do not exist",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "fundum boccie lumbis (lutabis)",
+            "english": "<note>text missing: support?</note> the bottom of the flask <note>original: \"lumbis\"</note>",
+            "problem": "should be 'lute the bottom of the flask'. A gap is invented and shown to the reader",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "translation has a 31-line <margin> list of English fragments ('another ounce / however repeat / until …'), translated from the neighbour page's strip",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "note": "heading '## <span style=\"color:red\">The Second Ore.</span>' carries raw inline HTML in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 308,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "ad calorem lucernae congelabit",
+            "image": "congelabis",
+            "problem": "person of the verb changed, no sense loss",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean and readable on two of three pages. Page 207 transcribes and translates a strip of the facing page as a marginal column, and turns 'ut supra' into invented step numbers."
+  },
+  {
+    "book_id": "69b418f82b0edf3eaa2de64c",
+    "slot": 83,
+    "title": "Collection of Alchemical Texts: Flamel, Bernard, Llull (PH228)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "18th-century manuscript miscellany: Giorgi's Harmonia Mundi excerpted in French, Basil Valentine text, the Emerald Tablet. Alchemy/Hermetica.",
+    "rights_flag": null,
+    "structure_note": "The OCR reads page numbers '1' (page 70) and '201' (page 212) for these pages. The miscellany seems to restart its pagination per tract, so printed numbers will not run straight. Page 212's photo is cropped at the right edge: line-ends are not visible.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 70,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Ubicunque unum, 1, … binarius est, 2, … ternarium facit, 3,",
+            "image": "unum, ℵ, … binarius est, ב, … ternarium facit, ג,",
+            "problem": "Hebrew aleph/beth/gimel replaced by Arabic digits",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "Aentitas igitur omnium rerum",
+            "image": "Identitas igitur omnium rerum",
+            "problem": "'Identitas' (set against 'Alteritas') misread as a non-word",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "alligare videtur Geometrica. quide substantiarum",
+            "image": "alligare videtur. Geometrica quidē substantiarum",
+            "problem": "full stop moved, so 'Geometrica' joins the wrong sentence",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Aentitas (Identitas) … Alteritas … alteritatum unio",
+            "english": "The entitas <gloss>entity or being</gloss> of all existing things …",
+            "problem": "Identity/Otherness/union triad of Proclus lost. 'Identity' made 'entity' with an explanatory gloss",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Ubicunque unum, ℵ, …",
+            "english": "Wherever the One, 1, is found …",
+            "problem": "the Hebrew letters that carry the Kabbalistic point are gone from the reader text",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "source": "ideo quia universi ordine alligare videtur. Geometrica quidem substantiarum comp[ositionem]",
+            "english": "because the Geometric mean seems to bind the order of the universe. Indeed, the Geometric [mean] of substances comp",
+            "problem": "follows the misplaced full stop. Subject supplied wrongly",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 141,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Lentini Ordinis sancti Benedicti - In festo 1570.</margin>",
+            "image": "running head across the spread: '[Basilii Va]lentini Ordi- | nis s[anc]ti P. Benedicti - In testa[men]to 70.' (approx.)",
+            "problem": "running title read as a margin note; 'In testamento' made 'In festo 1570'",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "<columns>2</columns>",
+            "image": "one column",
+            "problem": "self-reported tag wrong",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "In festo 1570",
+            "english": "On the feast day, 1570.",
+            "problem": "invented date/occasion from a misread running head",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 212,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Aenigmatica verba sunt haec / Hermetis, vel Mercurii Trismegisti, … (full lines)",
+            "image": "right edge of the leaf cut off in the photograph (e.g. 'Trismeg…', 'non i…', 'certum …')",
+            "problem": "line-ends not in the image are supplied, evidently from the standard Emerald Tablet text. They are probably right but cannot be checked against this scan",
+            "severity": "minor",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "page image is cropped at the right edge: the reader sees truncated lines",
+            "severity": "moderate",
+            "class": "other:image-cropped"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Readable translations of a learned miscellany. Expert readers would catch two losses on page 70: the Hebrew letters became digits, and 'Identitas' became 'entity'. Page 141's misread running head yields an invented 'feast day, 1570'."
+  },
+  {
+    "book_id": "6a4e42f17d2e40767268db33",
+    "slot": 107,
+    "title": "De confirmationis sacramento disputatio … Ingolstadiensi, anno M. D. LXXV …",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Jesuit theological disputation on Confirmation (Ingolstadt 1575). No tradition and no collection assigned. Outside the esoteric core, though it could sit on a Catholic theology / disputation shelf.",
+    "rights_flag": null,
+    "structure_note": "Published is 'Unknown' although the title states 1575 (I7). 24/24 pages OCR'd and translated; nothing else stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Tradite haec omnia gentibus",
+            "image": "Trade hæc omnia gentibus",
+            "problem": "imperative number normalised",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<sig>A iij</sig>",
+            "image": "A iiij",
+            "problem": "signature one stroke short",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ut verè ex utroque Cyrillo ac Theophane Nyceno de Eucharistia & Chrismate dixerit apud Esaiam Deus. Trade haec omnia gentibus.",
+            "english": "so that he may truly say, as both Cyril and Theophanes the Nicaean stated regarding the Eucharist and Chrism before Isaiah: Deliver all these things to the nations.",
+            "problem": "subject 'Deus' dropped and 'apud Esaiam' (in Isaiah) made 'before Isaiah'. It should say God said in Isaiah, as both Cyrils and Theophanes interpret it",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "y sermone de abluere pedes.\nz de vnctione Chrismatis.\n1 caput 36.",
+            "image": "y serm. de abl. ped. & de vnct. Chris. / z cap. 36.",
+            "problem": "note y split into two notes; 'z' moved and a spurious '1' inserted",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "non defuit manus angelica, quae [ampul-] (page ends)",
+            "english": "the angelic hand was not lacking to guide the vessel with spiritual support; it could not feel the fall after being thrown, and by God's protection, it landed unharmed among the rocks.",
+            "problem": "a whole clause and a miracle narrative invented past the page end (the page stops at 'quae ampul-')",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "ante C M. annos",
+            "english": "a thousand years ago",
+            "problem": "CM = 900; rounded/changed",
+            "severity": "minor"
+          },
+          {
+            "source": "in Germania Francica",
+            "english": "the Councils of Frankfurt",
+            "problem": "'Frankish' made a specific city",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Ioan. III. in ep. Decret. Concil.",
+            "image": "… Concil. Flor. in fine.",
+            "problem": "last margin line dropped",
+            "severity": "minor",
+            "class": "O12"
+          },
+          {
+            "ocr": "<image-desc …>Small vertical typographic ornament … left margin near the bottom.</image-desc>",
+            "image": "bleed-through/neighbour strip at the lower left, no ornament",
+            "problem": "page description of a non-ornament",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(image-desc)",
+            "english": "<note>A small, decorative typographical ornament is located in the left margin near the bottom.</note>",
+            "problem": "page description carried into the reader text",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good OCR of a clean 1575 print, and mostly faithful translations. Page 13's translation invents a miracle narrative beyond the page end (lookahead), and the record lacks its 1575 date."
+  },
+  {
+    "book_id": "69b418d42b0edf3eaa2ddfeb",
+    "slot": 80,
+    "title": "Collection of Rosicrucian and Alchemical Texts (PH255)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "18th-century Latin alchemical manuscript on antimony regulus, arsenic and mercury preparation. Alchemy shelf.",
+    "rights_flag": null,
+    "structure_note": "No printed page numbers in the OCR. 17 of 318 pages untranslated. The hand is heavily abbreviated with chemical symbols, and the OCR cannot read the symbols. That is a book-wide problem, not a structural one.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "non enim purificatus Regulus unicum est in terris reperibile solvens",
+            "image": "noẽr etenim purificatus Regulus unicum est in terris reperibile solvens (noster etenim)",
+            "problem": "'noster etenim' (for our purified Regulus is the only solvent) read as 'non enim', which inserts a negation",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "aut denes aquilatus intelligas",
+            "image": "aut decies aquilatum intelligas",
+            "problem": "'ten times eagled' misread",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "spiritu rectificati non spiritu spiritu martialis partes duas",
+            "image": "rectificati nostri ♁ii (antimonii) martialis partes duas",
+            "problem": "symbol read as a stutter of 'spiritu'",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "sine humidi radicalis nota coitura",
+            "image": "sine humidi radicalis [struck word] iactura",
+            "problem": "struck-out word read as text and 'iactura' (loss) misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "noster etenim purificatus Regulus unicum est … solvens",
+            "english": "For the purified Regulus is not the only solvent to be found on earth",
+            "problem": "sense reversed: the source says it IS the only solvent",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "decies aquilatum",
+            "english": "the nine eagles <gloss>a series of nine sublimations</gloss>",
+            "problem": "ten made nine, with an invented gloss",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "sine humidi radicalis iactura",
+            "english": "without any mark of radical moisture",
+            "problem": "should be 'without loss of the radical moisture'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 154,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "hunc gum et rubeum gem … habbis gum splendentem",
+            "image": "hunc ♁um (regulum) et rubeum ⊖em (salem) … habebis ♁um splendentem",
+            "problem": "the antimony and salt symbols with endings read as the non-words 'gum' and 'gem'",
+            "severity": "serious",
+            "class": "O10"
+          },
+          {
+            "ocr": "6 lot[iones] O[lei] … paucam quantitatem O[lei]",
+            "image": "6 lot ⊖i … pauca quantitate ⊖ fusi (salt symbol)",
+            "problem": "salt symbol expanded as 'Olei' (oil)",
+            "severity": "serious",
+            "class": "O10"
+          },
+          {
+            "ocr": "1mo A[ntimonium] et O[leum]: Sis et tri in chaos coniunguntur",
+            "image": "1mo ♁ : ⊖ : et ☿ : ⊖is et ♁ii in chaos coniunguntur",
+            "problem": "symbols garbled",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "♁um et rubeum ⊖em",
+            "english": "the red <term>gum</term> <gloss>a thickened alchemical substance</gloss> and the red <term>gem</term> <gloss>crystalline salt</gloss>",
+            "problem": "invented substances with confident glosses; the source means the regulus and the red salt",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "6 lot ⊖i",
+            "english": "6 lot of Oil <term>Olei</term> <gloss>likely Oil of Vitriol …</gloss>",
+            "problem": "salt rendered as oil throughout the recipe",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "⊖is et ♁ii in chaos coniunguntur",
+            "english": "The Antimony and the Trinity <note>or three parts</note> are joined in the chaos",
+            "problem": "'Trinity' invented from a garbled symbol",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "et fixationem ☿rii",
+            "english": "and the thought <note>or coagulation</note>",
+            "problem": "fixation of mercury became 'thought'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 232,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<columns>2</columns> … <column-break/> suis =nua / puris =Aa bene abso / … eum quod minr Sabe vivo arec",
+            "image": "single column; the 'second column' is the facing leaf's line-starts visible at the right edge",
+            "problem": "neighbour leaf's strip transcribed as a second column",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "Purgatio et cum Ferro et Vestigra nam deo inutilis",
+            "image": "Purgatio ♁ii cum ♂ro et Vestigra … ideo inutilis",
+            "problem": "symbols read as 'et'; 'ideo' read as 'deo'",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "Reguli et et Purificatio",
+            "image": "Reguli ♁ii 1a Purificatio",
+            "problem": "antimony symbol and '1a' read as 'et et'",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "Quamuis iam Rege nostri … suui federe nondum luit",
+            "image": "Quamvis iam Regulus noster … sui foedere nondum liceat (approx.)",
+            "problem": "opening garbled",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "nam deo inutilis (ideo inutilis)",
+            "english": "is useless to God",
+            "problem": "God invented from a misread 'ideo'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "suui federe nondum luit",
+            "english": "he has not yet paid his debt by his covenant",
+            "problem": "fluent sense over garble",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "translation renders the neighbour strip as 'fragmentary notes … mirroring the left' with invented English ('the forge of the magi etc. fail', 'must live purely golden')",
+            "severity": "serious",
+            "class": "I4"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Not readable as offered. The engine cannot read this hand's chemical symbols, so salt becomes 'oil' and the regulus becomes 'gum'. One page reverses 'the only solvent' into 'not the only solvent', and another translates the facing leaf's strip as a column of notes."
+  },
+  {
+    "book_id": "6a4bd679ce03c0929df13652",
+    "slot": 70,
+    "title": "Paulum Athletam, ex I. Corinth. IX. comm. 26. 27. … MDCXXCIIX",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Wittenberg-style philological dissertation (1688) on Paul as athlete, 1 Cor 9:26-27. No tradition or collection. Fits early-modern scholarship and classical philology, not the esoteric core.",
+    "rights_flag": null,
+    "structure_note": "Printed pages 1215, 1218, 1223 run forward, consistent with a dissertation bound in a larger volume. 15 of 16 pages translated (presumably the title page is not). Nothing amiss.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "γυμνῆς ἆθλα ἀπέδοσαν",
+            "image": "πυγμῆς ἆθλα ἀπέδοσαν",
+            "problem": "'of boxing' misread as 'of nude'",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "Ignatius Heronem ἐσθ’ ἀθλητὴν",
+            "image": "Heronem θεοῦ ἀθλητὴν",
+            "problem": "'God's athlete' misread",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "πυγμῆς (OCR γυμνῆς) ἆθλα ἀπέδοσαν",
+            "english": "They awarded ἆθλα for the nude games",
+            "problem": "should be 'prizes for boxing'",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "source": "Heronem θεοῦ ἀθλητὴν appellat",
+            "english": "Ignatius calls Hero an ἀθλητὴν <gloss>athlete</gloss>",
+            "problem": "'of God' lost: the point is the sacred use of the word",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "source": "ejus propinquiores [origines]",
+            "english": "his more immediate origins",
+            "problem": "'its' (the word's) rendered 'his'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "eum maximè",
+            "image": "cum maximè",
+            "problem": "one letter",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Pindarus Pyth. 4. 58.",
+            "image": "Pyth. η. ςη. (8.58?)",
+            "problem": "Greek numeral η (8) read as 4",
+            "severity": "minor",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "νικώμενοι ἄνδρες ἀγρυξίᾳ δέδενται",
+            "english": "Men who are conquered are bound by the wrestling.",
+            "problem": "ἀγρυξία is silence; it should read 'bound to silence', which is the point (nec audebant hiscere)",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A good page set. The OCR handles dense Latin and Greek well, with a few Greek misreadings ('nude' for 'boxing', 'bound by wrestling' for 'bound to silence') that an expert would correct but that do not wreck the argument."
+  }
+]

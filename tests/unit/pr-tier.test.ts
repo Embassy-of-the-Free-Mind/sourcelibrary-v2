@@ -79,6 +79,11 @@ describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashi
   const view = JSON.stringify({ number: 5991, title: 'eval: big results drop', author: { login: 'JDerekLomas' }, labels: [], files: [{ path: 'scripts/eval/results/x.json' }], comments: [] });
   const fakeGh = (diff: () => string) => (cmd: string) => (cmd.startsWith('gh pr view') ? view : diff());
 
+  it('every box crontab snapshot holds, not only hetzner (#7618 auto-merged a new cloudlayer cron)', () => {
+    for (const f of ['infrastructure/hetzner-crontab', 'infrastructure/gex45-crontab', 'infrastructure/l7a-crontab', 'infrastructure/cloudlayer-crontab'])
+      expect(classifyPaths([f]).reasons.map((r: { reason: string }) => r.reason).join(' ')).toMatch(/crons/);
+  });
+
   it('a readable diff of harmless paths is AUTO', () => {
     expect(classifyPR(5991, fakeGh(() => '')).result.tier).toBe('AUTO');
   });
@@ -181,6 +186,40 @@ describe('pr-tier: interface strings in another language are public copy (#6403)
   it('regenerated data keyed by language code does not', () => {
     const diff = diffOf('src/generated/ustc-year-counts.json', ['  "nl": {', '    "1650": 12']);
     expect(scannableAddedLines(diff)).toEqual([]);
+  });
+});
+
+describe('pr-tier: a very large PR is held for a human read (#8353)', () => {
+  const lines = (n: number) => Array.from({ length: n }, (_, i) => `const v${i} = ${i};`);
+  const run = (file: string, n: number) => {
+    const view = JSON.stringify({ number: 1, title: 'x', author: { login: 'JDerekLomas' }, labels: [], files: [{ path: file }], comments: [] });
+    const diff = diffOf(file, lines(n));
+    return classifyPR(1, (cmd: string) => (cmd.startsWith('gh pr view') ? view : diff)).result;
+  };
+
+  it('over the threshold holds, with the count in the reason', () => {
+    const r = run('src/lib/big.ts', 4001);
+    expect(r.tier).toBe('HOLD');
+    expect(r.reasons.map((x: { reason: string }) => x.reason).join('\n')).toMatch(/very large PR: 4001 added lines/);
+  });
+
+  it('under the threshold stays auto', () => {
+    expect(run('src/lib/ok.ts', 3999).tier).toBe('AUTO');
+  });
+
+  it('a huge PR that is all data, results or lockfile stays auto (negative control)', () => {
+    for (const f of ['src/data/big.json', 'scripts/eval/results/x/out.json', 'package-lock.json', 'tests/fixtures/x.json', 'scripts/eval/experiments/x.md']) {
+      expect(run(f, 9000).tier, f).toBe('AUTO');
+    }
+  });
+
+  it('a dated router-table build is generated data; the pointer and the rule code still count (#8283)', () => {
+    for (const f of ['scripts/eval/estimator/router-table/2026-11-10-nightly.json', 'scripts/eval/estimator/router-table/2026-11-10-nightly.md']) {
+      expect(run(f, 43000).tier, f).toBe('AUTO');
+    }
+    for (const f of ['scripts/eval/estimator/router-table/current.json', 'scripts/lib/router-binding.mjs']) {
+      expect(run(f, 4001).tier, f).toBe('HOLD');
+    }
   });
 });
 

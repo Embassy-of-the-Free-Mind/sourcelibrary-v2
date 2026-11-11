@@ -1,0 +1,12 @@
+--- lexicon labels: 18341 words, 14384 shape keys
+sanity (Manchu real test words): word acc manchu 89/100, roman 92/100
+manchu flip=0 len>=1: crops  1215 (empty reads 9) shape-key lexicon hit 0.56 | letter-shuffled 0.43
+manchu flip=0 len>=4: crops   614 (empty reads 9) shape-key lexicon hit 0.19 | letter-shuffled 0.06
+  same crops with a LoRA read, LoRA len>=1: n  490  LoRA key-hit 0.47  Manchu key-hit 0.43  Manchu==LoRA key 0.09  key length diff median 1
+  same crops with a LoRA read, LoRA len>=4: n  329  LoRA key-hit 0.24  Manchu key-hit 0.21  Manchu==LoRA key 0.02  key length diff median 1
+--- lexicon mc2: 228336 words, 95698 shape keys
+sanity (Manchu real test words): word acc manchu 89/100, roman 92/100
+manchu flip=0 len>=1: crops  1215 (empty reads 9) shape-key lexicon hit 0.68 | letter-shuffled 0.52
+manchu flip=0 len>=4: crops   614 (empty reads 9) shape-key lexicon hit 0.40 | letter-shuffled 0.14
+  same crops with a LoRA read, LoRA len>=1: n  490  LoRA key-hit 0.59  Manchu key-hit 0.57  Manchu==LoRA key 0.09  key length diff median 1
+  same crops with a LoRA read, LoRA len>=4: n  329  LoRA key-hit 0.41  Manchu key-hit 0.39  Manchu==LoRA key 0.02  key length diff median 1

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads most consistently as a real Nyāya passage on pramāṇa and prāmāṇya, with phrases like "pratyakṣapramāsādhāraṇakāraṇa", "yathārtha", "śābdajñāna", "vyāpaka-pakṣa", "anumiti" and "pramāṇaṃ parata eva grahyate"; B is fluent only in patches, and C is mostly strings that only look like words.

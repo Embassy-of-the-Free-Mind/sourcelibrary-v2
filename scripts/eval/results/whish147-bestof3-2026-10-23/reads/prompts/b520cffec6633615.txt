@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. sābheravarnnabheprāmira [illegible] ‖ [illegible] trṛkākṣaṃniṣyadajñanayakiṃvibhinnāraṇṭrṛbhe ‖ [illegible] ṣkivalābhyānujñimitṛkrama
+2. maṅṅarttannaṭitālāṣepraśna ‖ vātraṃteṣāṣṭṭammahiṇānyaṃlakṣaṇaina [illegible] ‖ [illegible] namaൗhāsabrahmitṛādiijñaṃ
+3. sāṃkhyācāryyaissaṃ ‖ [illegible] sthāṃlakṣyabādopaṃprakāśakoyatennyābha ‖ bhekāṣṭhitegāhilakṣya
+4. ññaṭavatiṣṭhakare ‖ kṛśanasamartthādicaitṛyāṇve ‖ bhyānicadravyāṇla
+5. ttiprakāśātma ‖ kānandikkalāndraṭavatiupaṣṭaṃ ‖ ṭakaṣelakṣanajjautra
+6. upaṣṭaṃbhayatitra ‖ vaṣṭaṃṭakaṃyalennyābhekādaiva ‖ daśatālyavantyātica
+7. lanitayāṭavati ‖ bāhyāṇḍacalalāndhaṭavakirigu ‖ ṝvalalākāmamavara
+8. mauktivṛṇaiൗti ‖ vidhatauttaratṛccabheṭābahula ‖ mitikkāgatiḻḻuṭakāna
+9. ṣevāvaśabārtthākaikkārtthayennyākaikkāḻgurutvāṃśāni ‖ ṭava [illegible] ‖ ṭavatiiḻiyāṇicatamamaile
+10. vānaൗniṭavatilaihyānicagurutvānitralāṇḍaca ‖ ṭavatiudāharaṇai ‖ rīvaṃbāhyānyāthivikṣeṇa
+11. dhāniṭavatitaphācarahpratimūrttiṃgalarṇṭacāraṇekṣasā ‖ [illegible] ‖ deśāvarṇṇāṣaṅkbhedaṃdṛtru
+
+TRANSCRIPTION B
+1. ndhābhairavan na [illegible] mira [illegible] ttvakāñco nikṣābhajñā [illegible] ddhyayativa [illegible] kāryaṭṭave ‖ [illegible] kṣivalānyāntar [illegible] tra [illegible]
+2. ma [illegible] ṭataicācepṛ [illegible] hātr etārddh [illegible] mauddhyaṃ lakṣaṇaina ‖ [illegible] namaൗhyāsatvamityādiuktaṃ
+3. sāṃkhyācāryyai [illegible] rlakṣaṇodevaṃ prakāśakoyamaindrāde ‖ [illegible] kārddhthitai govilampa
+4. iṭṭavatinikkeṇa ‖ ka [illegible] samartthābhicerddyāṇive ‖ [illegible] dyānicadravyāṇila
+5. [illegible] prakāśātma ‖ kānnihiklalāntedavati upaṣṭaṃ ‖ [illegible] kaṃcalaṃcajjaukta
+6. upaṣṭaṃ bhayatiṣṭha ‖ paṣṭaṃ ṭakaṃ yamendrāṇḍagoddeva ‖ [illegible] ttālpavastvatica
+7. latitaiścadavati ‖ caindrāṇicalalāṇibhavantinai ‖ [illegible] va [illegible] kālamava [illegible]
+8. manutipṛṇoti ‖ niyamauttitu [illegible] ṭāmahala ‖ [illegible] nikkuntilṛṭṭakāla
+9. orāvāviśyārtthākha [illegible] tterkkāllayaprākkālgurutvaṃ śāntida ‖ [illegible] bhavati itiyonicatamamanai
+10. vānmānītibhavantipauryādicagurutvahitalānticabhavanti udāharaṇa ‖ [illegible] ṇaṃ tatrānyādimi [illegible]
+11. dhyānibhavantitathācārahu citicititividhārddhmaṃgalabhyaivāntinisyā ‖ [illegible] devārenghnaṣṭā bhaiśaṃbhastra
+
+TRANSCRIPTION C
+1. sā [illegible] ratal [illegible] kroṣṇa [illegible] trukāṣoniṣyādijñāyaticati [illegible] raṇṭbhe ‖ [illegible] ‖ ṣṇivalānāntujñi [illegible] trukrama
+2. ma [illegible] ṭitobo [illegible] pṛ [illegible] hātṛ [illegible] nmi [illegible] nyalakṣaṇai [illegible] ‖ [illegible] ‖ namauhā [illegible] mitrādiujja
+3. sā0khyācā [illegible] 0nya [illegible] lakṣya [illegible] dāvaṃprakāśa [illegible] yamendyā [illegible] ‖ [illegible] ‖ [illegible] kā [illegible] 0gā [illegible] lakṣya
+4. iṭavati [illegible] kkalu [illegible] ‖ [illegible] śana [illegible] rtthādi [illegible] yāṇive ‖ [illegible] hyānica [illegible] vyāṇila
+5. [illegible] prakāśātma ‖ kā [illegible] lā [illegible] ṭavatiupajñaṃ ‖ ṭaka [illegible] la [illegible] jña [illegible]
+6. u [illegible] jñabha [illegible] titva ‖ pajñaṃṭakāya [illegible] ndyā [illegible] kā [illegible] va ‖ [illegible] lṛva [illegible] tica
+7. la [illegible] ṭavati ‖ bāhyā [illegible] cala [illegible] lā [illegible] bhava [illegible] ‖ [illegible] va [illegible] kā [illegible]
+8. mau [illegible] vṛ [illegible] ti ‖ vi [illegible] uta [illegible] tṛ [illegible] bahula ‖ [illegible] tikka [illegible] lpya [illegible]
+9. [illegible] vā [illegible] rthyā [illegible] kkāl [illegible] ndyā [illegible] kkāḻ [illegible] śa [illegible] ṭa ‖ [illegible] ‖ [illegible] ṭavatii [illegible] yāṇicara [illegible]
+10. vā [illegible] bhava [illegible] hyā [illegible] ca [illegible] lā [illegible] caṭavati [illegible] dāharaṇa [illegible] ‖ [illegible] ‖ [illegible] [illegible] prāntyā [illegible]
+11. yānibhavati [illegible] h [illegible] ga [illegible] vā [illegible] sā ‖ [illegible] ‖ sā [illegible] r [illegible] ṅk [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

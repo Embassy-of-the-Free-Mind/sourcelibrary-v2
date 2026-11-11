@@ -1,0 +1,240 @@
+{
+  "date": "2026-10-24",
+  "seed": 5942,
+  "translation": {
+    "field": "translation",
+    "pages": 2000,
+    "pages_with_annotations": 1780,
+    "pages_with_commentary": 1423,
+    "pages_with_malformed": 33,
+    "by_type": {
+      "margin": 1190,
+      "note": 2835,
+      "original": 1612,
+      "insert": 164,
+      "summary": 1012,
+      "keywords": 1012,
+      "meta": 716,
+      "pagedata": 688,
+      "term": 6083,
+      "definition": 2810,
+      "gloss": 722,
+      "vocab": 47,
+      "unclear": 1011,
+      "image": 41,
+      "warning": 24
+    },
+    "by_kind": {
+      "mark": 9170,
+      "commentary": 7298,
+      "page": 3499
+    },
+    "malformed": {
+      "stray-close": 53,
+      "unclosed": 5
+    },
+    "malformed_by_tag": {
+      "stray-close:insert": 14,
+      "stray-close:margin": 34,
+      "unclosed:gloss": 2,
+      "stray-close:term": 2,
+      "unclosed:term": 2,
+      "stray-close:gloss": 2,
+      "stray-close:note": 1,
+      "unclosed:note": 1
+    },
+    "inline_byte_exact": 1997,
+    "term_definitions_lifted_pages": 3,
+    "text_vs_reader_notes_off": {
+      "equal": 1921,
+      "differs": 79
+    },
+    "markup_from_layers_vs_reader": {
+      "notes_on_equal": 1886,
+      "notes_off_equal": 1944,
+      "orphans": 0
+    },
+    "own_text_anchor": {
+      "offset": 16467,
+      "no-anchor": 1
+    },
+    "phrase_occurrences": {
+      "once": 6003,
+      "more": 772,
+      "point": 522
+    },
+    "vs_translation_layers": {
+      "compared": 2000,
+      "text_equal": 1490,
+      "ts_inexact": 1,
+      "annotation_count_equal": 1947
+    },
+    "notes_off_diff_class": {
+      "today shows commentary words": 50,
+      "spacing": 16,
+      "today shows commentary words (+ spacing)": 5,
+      "other": 7,
+      "text keeps words today drops": 1
+    },
+    "survival": {
+      "field": "translation",
+      "pages_with_history": 405,
+      "pairs": 428,
+      "pairs_text_unchanged": 153,
+      "pairs_with_anchors": 241,
+      "by_band": {
+        "rewrite (<0.4)": {
+          "pairs": 142,
+          "commentary": {
+            "orphan, words gone": 510,
+            "resolved, diff lost the words (read by eye)": 5,
+            "resolved:quote": 5,
+            "orphan, words still there": 8
+          },
+          "mark": {
+            "orphan, words gone": 1026,
+            "resolved:quote": 10,
+            "orphan, words still there": 16,
+            "resolved, diff lost the words (read by eye)": 5
+          }
+        },
+        "partial (0.4–0.8)": {
+          "pairs": 51,
+          "commentary": {
+            "resolved, diff lost the words (read by eye)": 20,
+            "orphan, words gone": 173,
+            "resolved:quote": 34,
+            "orphan, words still there": 8,
+            "resolved:offset": 3
+          },
+          "mark": {
+            "orphan, words gone": 176,
+            "resolved:quote": 23,
+            "resolved, diff lost the words (read by eye)": 9,
+            "resolved:offset": 2,
+            "orphan, words still there": 10
+          }
+        },
+        "edit (≥0.8 kept)": {
+          "pairs": 48,
+          "commentary": {
+            "orphan, words still there": 2,
+            "resolved:offset": 74,
+            "resolved, diff lost the words (read by eye)": 21,
+            "resolved:quote": 111,
+            "orphan, words gone": 10,
+            "resolved:fuzzy": 1
+          },
+          "mark": {
+            "resolved, diff lost the words (read by eye)": 8,
+            "resolved:offset": 74,
+            "resolved:quote": 167,
+            "orphan, words gone": 7,
+            "orphan, words still there": 1,
+            "MISPLACED (diff disagrees)": 2
+          }
+        }
+      }
+    }
+  },
+  "ocr": {
+    "field": "ocr",
+    "pages": 1000,
+    "pages_with_annotations": 927,
+    "pages_with_commentary": 182,
+    "pages_with_malformed": 0,
+    "by_type": {
+      "pagedata": 3982,
+      "margin": 439,
+      "vocab": 678,
+      "meta": 342,
+      "image": 243,
+      "warning": 104,
+      "term": 115,
+      "insert": 44,
+      "gloss": 111,
+      "unclear": 84,
+      "note": 22
+    },
+    "by_kind": {
+      "page": 5106,
+      "mark": 793,
+      "commentary": 265
+    },
+    "malformed": {},
+    "malformed_by_tag": {},
+    "inline_byte_exact": 1000,
+    "term_definitions_lifted_pages": 0,
+    "text_vs_reader_notes_off": {
+      "equal": 994,
+      "differs": 6
+    },
+    "markup_from_layers_vs_reader": {
+      "notes_on_equal": 983,
+      "notes_off_equal": 997,
+      "orphans": 0
+    },
+    "own_text_anchor": {
+      "offset": 1058
+    },
+    "phrase_occurrences": {
+      "once": 44,
+      "more": 4,
+      "point": 217
+    },
+    "vs_translation_layers": {
+      "compared": 0,
+      "text_equal": 0,
+      "ts_inexact": 0,
+      "annotation_count_equal": 0
+    },
+    "notes_off_diff_class": {
+      "today shows commentary words (+ spacing)": 2,
+      "today shows commentary words": 4
+    },
+    "survival": {
+      "field": "ocr",
+      "pages_with_history": 134,
+      "pairs": 177,
+      "pairs_text_unchanged": 28,
+      "pairs_with_anchors": 74,
+      "by_band": {
+        "edit (≥0.8 kept)": {
+          "pairs": 25,
+          "commentary": {
+            "resolved:offset": 12
+          },
+          "mark": {
+            "resolved:offset": 62,
+            "orphan, words gone": 5,
+            "resolved:quote": 2,
+            "resolved, diff lost the words (read by eye)": 3
+          }
+        },
+        "rewrite (<0.4)": {
+          "pairs": 42,
+          "commentary": {
+            "orphan, words gone": 33,
+            "orphan, words still there": 4
+          },
+          "mark": {
+            "orphan, words gone": 110,
+            "orphan, words still there": 1
+          }
+        },
+        "partial (0.4–0.8)": {
+          "pairs": 7,
+          "commentary": {
+            "orphan, words gone": 1
+          },
+          "mark": {
+            "resolved:offset": 2,
+            "orphan, words gone": 13,
+            "resolved:quote": 1,
+            "resolved, diff lost the words (read by eye)": 4
+          }
+        }
+      }
+    }
+  }
+}

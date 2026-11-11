@@ -37,7 +37,7 @@
  *
  * Status is never written: a book here is already past Phase 6/7's statuses, or not selected.
  */
-import { NOT_HELD } from '../../lib/pipeline-hold.mjs';
+import { NOT_HELD, HOLD_STATUS } from '../../lib/pipeline-hold.mjs';
 import { isPaused } from '../../lib/pause.mjs';
 import { shouldBypassPause } from './selective-unpause.mjs';
 import { createThenDeleteInput, uploadBatchInputFile } from '../../lib/gemini-batch-input-file.mjs';
@@ -83,14 +83,52 @@ const EST = {
 };
 const tokensOf = (text) => Math.ceil((text || '').length / 4);
 
-/** Mongo filter for the gap. Exclusions that need a second collection are applied per candidate. */
-export function gapFilter(scopeFilter = {}) {
+/**
+ * READABLE ENOUGH TO SUMMARISE. A book-level summary, index and chapter list are derived from the book's English, so
+ * the book must actually BE readable in English — the `readable` rung of translation-state.md (translated >= 90% of
+ * translatable), or `complete`. The old test was `pages_translated > 0`, which was wrong in both directions:
+ *
+ *  - it ADMITTED books at `translating`, so the lane wrote a summary of a 431-page book from its ONE translated page
+ *    (12 such books on 2026-11-02; 3,455 visible books already carry a summary below the `readable` rung, 67 of them
+ *    with no English at all). A summary of a twentieth of a book is not thin, it is a different book.
+ *  - it EXCLUDED English originals, whose English is their own transcription and whose `pages_translated` is therefore
+ *    0 by design (#6559). 1,770 live English originals sit at `transcribed` — readable by the ladder's own rule — and
+ *    had never been eligible. `pagesForEnrichment()` has read their OCR as the English since #6559; only selection
+ *    kept them out.
+ *
+ * An English original is readable at `transcribed` (translation-state.md: the rungs above it describe modernization,
+ * not readability), so it qualifies from `transcribed` up.
+ */
+export const ENRICHABLE_RUNGS = Object.freeze(['readable', 'complete']);
+export const ENGLISH_ORIGINAL_ENRICHABLE_RUNGS = Object.freeze(['transcribed', 'translating', 'readable', 'complete']);
+export const READABLE_ENOUGH_TO_ENRICH = Object.freeze({
+  $or: [
+    { 'translation_state.rung': { $in: ENRICHABLE_RUNGS } },
+    { 'translation_state.english_original': true, 'translation_state.rung': { $in: ENGLISH_ORIGINAL_ENRICHABLE_RUNGS } },
+  ],
+});
+
+/**
+ * Mongo filter for the gap. Exclusions that need a second collection are applied per candidate.
+ *
+ * The rung gate goes in `$and`, not at the top level: this filter already owns `$or` (the missing-output clause), and
+ * `scopeFilter` is spread last, so a second top-level `$or` would silently replace one of them.
+ */
+export function gapFilter(scopeFilter = {}, { allowHeld = false } = {}) {
+  // `allowHeld` (the agy lane, #8482 part B) swaps the blanket hold exclusion for the ENRICHABLE_HOLD_REASONS
+  // allowlist. It goes in `$and` because a held book also carries `pipeline_auto.status: 'held'`, which the status
+  // gate below would otherwise refuse. The default stays the old blanket exclusion, so the batch lane is unchanged.
+  const heldGate = allowHeld
+    ? [{ $or: [
+        { ...NOT_HELD, 'pipeline_auto.status': { $nin: REALTIME_LANE_STATUSES } },
+        { 'pipeline_auto.hold.reason': { $in: Object.keys(ENRICHABLE_HOLD_REASONS) }, 'pipeline_auto.status': { $nin: REALTIME_LANE_STATUSES.filter(st => st !== HOLD_STATUS) } },
+      ] }]
+    : [];
   return {
     visible: true,
     pages_count: { $gt: 0 },
-    pages_translated: { $gt: 0 },
-    ...NOT_HELD,
-    'pipeline_auto.status': { $nin: REALTIME_LANE_STATUSES },
+    $and: [READABLE_ENOUGH_TO_ENRICH, ...heldGate],
+    ...(allowHeld ? {} : { ...NOT_HELD, 'pipeline_auto.status': { $nin: REALTIME_LANE_STATUSES } }),
     needs_resplit: { $in: [null, false] },
     source_unrecoverable: { $in: [null, false] },
     spread_translation_crisis: { $in: [null, false] },
@@ -104,17 +142,146 @@ export function gapFilter(scopeFilter = {}) {
   };
 }
 
-async function hasWithheldPages(db, bookId) {
+/**
+ * HOLD REASONS THAT DO NOT KEEP A TRANSLATED BOOK OUT OF ENRICHMENT (#8482 part B). An ALLOWLIST: any reason not named
+ * here keeps the book out, so a new hold, and every rights / integrity / containment hold (invented text, wrong leaf,
+ * ocr-unsettled, leak-contained, ...), stays excluded without anyone having to list it.
+ *
+ * Each entry is a hold whose purpose is to route a book to a TRANSLATION or OCR lane, not a verdict on the text. Even
+ * so, a held book is enriched only once no translatable page of it is left untranslated (`hasUntranslatedPages`): the
+ * hold's lane has finished, and the summary is of the whole book. Reasons read in code 2026-11-10:
+ *   - paddle-zh-5600-ocr-only: Siku Quanshu cohort OCR'd by the Paddle lane (#5600); the hold kept it out of the paid
+ *     lanes while siku-translate-lane (SIKU_LANE_HOLDS) translated it on agy. Translation done = nothing left to wait for.
+ *   - gpu-backlog-5660: Tibetan/Chinese pages first-OCR'd on the GPU backlog (#5660, OCR only); translated later by the
+ *     Siku lane (SIKU_LANE_HOLDS).
+ *   - zh-histories-7546: the Four Histories, Paddle-OCR'd, translated by the Siku lane while held (SIKU_LANE_HOLDS).
+ *   - tibetan-translation-lane-6948: Tibetan books waiting on their own translation lane (Opus, claude -p, #6948). A
+ *     lane hold, released by #7860 part B once translated.
+ *   - translate-cli-7075: CLI_TRANSLATE_HOLD (translation-routing.mjs): the book waits for cli-translate-lane, which
+ *     releases it when every untranslated page is done.
+ * NOT here, on purpose: tengyur-import-5497 and kangyur-import (translation not approved: a priced decision),
+ * paddle-zh-6388-ocr-only (its pages were held for invented English), scans-only-* and acquisition-wave-* (no text),
+ * and every containment hold.
+ */
+export const ENRICHABLE_HOLD_REASONS = Object.freeze({
+  'paddle-zh-5600-ocr-only': 'Siku cohort; translated by the Siku lane while held',
+  'gpu-backlog-5660': 'GPU-backlog OCR; translated by the Siku lane while held',
+  'zh-histories-7546': 'Four Histories; translated by the Siku lane while held',
+  'tibetan-translation-lane-6948': 'waiting on the Tibetan translation lane',
+  'translate-cli-7075': 'waiting on cli-translate-lane',
+});
+
+/**
+ * The most withheld pages a book may have and still be enriched, as a share of its translatable pages. A book is
+ * enriched when at most this much of it is withheld; the withheld pages are left OUT of what the model reads
+ * (`withheldPageIds`), so the summary and index describe the English that exists and no more. Why 2%: a summary is
+ * written from the other 98% of the book, so a few missing pages cannot change what it says; above that the withheld
+ * pages are a real part of the book and it stays out until they are repaired. Was zero (#4523/#4757).
+ */
+export const WITHHELD_MAX_SHARE = 0.02;
+
+/**
+ * Does this book have a page whose English is withheld RIGHT NOW?
+ *
+ * `translation_withheld` is an ARCHIVE, not a state: it holds the old English, and a page that has since been repaired
+ * and re-translated keeps its archive record. Reading the archive as the state made this return true for every book
+ * that had ever had a page withheld, which on 2026-11-02 was 343 of the 343 books in the enrichment queue — 100%,
+ * which is the tell. Both lanes therefore skipped the entire backlog and only ever enriched the few books that had
+ * never been touched by a withhold sweep.
+ *
+ * The reader's own test is the authority, and it checks the text first: `!translationHtml && !!p.translation_withheld`
+ * (`src/app/book/[id]/read/page.tsx`, `ReaderV2Bits.tsx`). A page with an archive record AND live English reads
+ * normally, so it must not block enrichment. The hint still applies: the partial index leads on
+ * `translation_withheld.reason`, and the text clause filters the fetched docs.
+ */
+export async function hasWithheldPages(db, bookId) {
   return !!(await db.collection('pages').findOne(
-    { 'translation_withheld.reason': { $exists: true }, book_id: bookId },
+    {
+      'translation_withheld.reason': { $exists: true },
+      book_id: bookId,
+      $or: [{ 'translation.data': { $in: [null, ''] } }, { 'translation.data': { $exists: false } }],
+    },
     { projection: { _id: 1 }, hint: 'pages_translation_withheld_partial' },
   ));
 }
 
+/** Ids (the page `id`) of the pages whose English is withheld right now: same test as hasWithheldPages. */
+export async function withheldPageIds(db, bookId) {
+  const rows = await db.collection('pages').find(
+    {
+      'translation_withheld.reason': { $exists: true },
+      book_id: bookId,
+      $or: [{ 'translation.data': { $in: [null, ''] } }, { 'translation.data': { $exists: false } }],
+    },
+    { projection: { id: 1 }, hint: 'pages_translation_withheld_partial', maxTimeMS: 60000 },
+  ).toArray();
+  return rows.map(r => r.id ?? String(r._id));
+}
+
+/**
+ * Is any translatable page of the book still without English (and not withheld, which is counted apart)? The page
+ * test mirrors isTranslatablePageForCount (scripts/lib/page-counts.mjs); a page with no OCR yet is pending work, so
+ * it counts.
+ */
+export async function hasUntranslatedPages(db, bookId) {
+  return !!(await db.collection('pages').findOne(
+    {
+      book_id: bookId,
+      page_type: { $nin: ['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert'] },
+      $and: [
+        { $or: [{ 'translation.data': { $in: [null, ''] } }, { 'translation.data': { $exists: false } }] },
+        { 'translation_withheld.reason': { $exists: false } },
+        { $nor: [{ page_type: 'illustration', 'ocr.text_free': true }] },
+      ],
+      'translation.recitation_blocked': { $ne: true },
+      'translation.safety_blocked': { $ne: true },
+      'ocr.recitation_blocked': { $ne: true },
+      'ocr.fail_blocked': { $ne: true },
+    },
+    { projection: { _id: 1 }, maxTimeMS: 60000 },
+  ));
+}
+
+/**
+ * Why this candidate book is not enriched (a short key for the run's skip counts), or null; plus the withheld page
+ * ids to leave out of its input.
+ *   `held:<reason>`              a hold not on the allowlist (or any hold, with allowHeld false)
+ *   `held-untranslated:<reason>` an allowlisted hold whose lane has not finished translating
+ *   `withheld>2%`                withheld pages over WITHHELD_MAX_SHARE of the translatable pages (or any, if not tolerated)
+ * `book` needs id, pipeline_auto.hold, pages_translatable, pages_count and translation_state.english_original.
+ */
+export async function enrichmentSkip(db, book, { allowHeld = false, tolerateWithheld = false } = {}) {
+  const hold = book.pipeline_auto?.hold ? (book.pipeline_auto.hold.reason ?? 'unknown') : null;
+  if (hold) {
+    if (!allowHeld || !ENRICHABLE_HOLD_REASONS[hold]) return { skip: `held:${hold}`, withheldIds: [] };
+    if (!book.translation_state?.english_original && await hasUntranslatedPages(db, book.id)) return { skip: `held-untranslated:${hold}`, withheldIds: [] };
+  }
+  const ids = await withheldPageIds(db, book.id);
+  if (!ids.length) return { skip: null, withheldIds: [] };
+  const base = book.pages_translatable || book.pages_count || ids.length;
+  if (!tolerateWithheld || ids.length / base > WITHHELD_MAX_SHARE) return { skip: 'withheld>2%', withheldIds: ids };
+  return { skip: null, withheldIds: ids };
+}
+
+/** Mongo filter fragment: a book that may be enriched now (not held, or held for an allowlisted lane). */
+export const admissionClause = (allowHeld) => allowHeld
+  ? { $or: [
+      { ...NOT_HELD, 'pipeline_auto.status': { $ne: HOLD_STATUS } },
+      { 'pipeline_auto.hold.reason': { $in: Object.keys(ENRICHABLE_HOLD_REASONS) } },
+    ] }
+  : { ...NOT_HELD, 'pipeline_auto.status': { $ne: HOLD_STATUS } };
+
 /** Re-checked at write time: a book may have been held or had a translation withheld since submit. */
-async function stillEligible(db, bookId) {
-  const book = await db.collection('books').findOne({ id: bookId, ...NOT_HELD, 'pipeline_auto.status': { $ne: 'held' } }, { projection: { _id: 1 } });
+export async function stillEligible(db, bookId, { withheld = true, allowHeld = false } = {}) {
+  const book = await db.collection('books').findOne({ id: bookId, ...admissionClause(allowHeld) }, { projection: { id: 1, pages_translatable: 1, pages_count: 1, 'pipeline_auto.hold': 1, 'translation_state.english_original': 1 } });
   if (!book) return 'held or missing';
+  // `withheld: false`: a chapters-only read (enrich-agy-lane --retry-empty-chapters) reads the heading list, not the
+  // English text whose holes the withheld check guards the summary and index against.
+  if (!withheld) return null;
+  if (allowHeld) {
+    const { skip } = await enrichmentSkip(db, book, { allowHeld, tolerateWithheld: true });
+    return skip ? (skip.startsWith('withheld') ? 'translation withheld' : skip) : null;
+  }
   if (await hasWithheldPages(db, bookId)) return 'translation withheld';
   return null;
 }
@@ -327,9 +494,9 @@ async function admit(o, report) {
   const stateColl = db.collection(BOOKS_COLL);
   const filter = gapFilter(o.scopeFilter);
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
-  const cursor = booksOf(db).find(filter)
+  const cursor = booksOf(db).find(filter).batchSize(1000)
     .sort({ read_count: -1, pages_translated: -1 })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: 1, chapters_extracted_at: 1, pages_count: 1, read_count: 1, pages_translated: 1 });
+    .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: 1, chapters_extracted_at: 1, pages_count: 1, read_count: 1, pages_translated: 1 });
 
   const known = new Map((await stateColl.find({}, { projection: { stage: 1, attempts: 1 } }).toArray()).map(r => [r._id, r]));
   const lines = [];
@@ -381,7 +548,13 @@ async function admit(o, report) {
   }
 
   const now = new Date();
+  // The agy CLI lane (#7628) claims a book in this collection before its call. One claimed since `known` was read
+  // is left to it: the upsert below would overwrite its claim and both lanes would pay for the book.
+  const rowsNow = await stateColl.find({ _id: { $in: admitted.map(a => a.b.id) } }, { projection: { stage: 1 } }).toArray();
+  const taken = new Set(rowsNow.filter(r => r.stage !== known.get(r._id)?.stage).map(r => r._id));
+  if (taken.size) console.log(`  [batch] ${taken.size} admitted book(s) claimed by another lane meanwhile: left to it`);
   for (const a of admitted) {
+    if (taken.has(a.b.id)) continue;
     await stateColl.updateOne({ _id: a.b.id }, {
       $set: {
         book_id: a.b.id, run_tag: o.runTag, stage: a.needIndex ? 'index_pending' : 'indexed',
@@ -392,7 +565,7 @@ async function admit(o, report) {
       $setOnInsert: { attempts: 0 },
     }, { upsert: true });
   }
-  const indexBooks = admitted.filter(a => a.needIndex);
+  const indexBooks = admitted.filter(a => a.needIndex && !taken.has(a.b.id));
   if (indexBooks.length) {
     await submitJob(o, 'index', 'index', indexBooks.map(a => ({ bookId: a.b.id, estUsd: a.estIndexUsd, title: a.b.title })), lines, report);
     // A failed submit leaves nothing in flight: forget those books so the next run re-admits them.

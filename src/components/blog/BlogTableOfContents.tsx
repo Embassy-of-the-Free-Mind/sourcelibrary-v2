@@ -108,10 +108,12 @@ export default function BlogTableOfContents() {
 
   return (
     <>
-      {/* Desktop: sticky sidebar */}
+      {/* Wide screens: sticky sidebar. It only clears the 928px article column from about 1500px
+          (column + two 240px panels + gaps); below that it covered the line ends, so narrower
+          screens get the floating button instead. */}
       <nav
         aria-label="Table of contents"
-        className={`hidden xl:block fixed top-28 w-60 max-h-[calc(100vh-9rem)] overflow-y-auto border border-border-light bg-white transition-opacity duration-300 ${
+        className={`hidden min-[1500px]:block fixed top-28 w-60 max-h-[calc(100vh-9rem)] overflow-y-auto border border-border-light bg-white transition-opacity duration-300 ${
           visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         style={{ right: 'max(1.5rem, calc((100vw - 1024px) / 2 - 16.5rem))' }}
@@ -152,7 +154,7 @@ export default function BlogTableOfContents() {
       </nav>
 
       {/* Mobile: floating button + dropdown */}
-      <div className="xl:hidden fixed bottom-6 right-6 z-50">
+      <div className="min-[1500px]:hidden fixed bottom-6 right-6 z-50">
         {mobileOpen && (
           <div className="absolute bottom-14 right-0 w-72 max-h-80 overflow-y-auto bg-white shadow-xl border border-border-light p-4">
             <p className="text-sm font-medium text-primary mb-2">Contents</p>

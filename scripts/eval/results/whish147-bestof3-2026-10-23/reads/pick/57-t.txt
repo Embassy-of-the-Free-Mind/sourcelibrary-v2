@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives real, grammatical Gauḍapāda-style commentary on Sāṅkhyakārikā 53 ("paśavaḥ siṃhādyāḥ… pakṣiṇaḥ sarppādyāḥ krimyantāḥ sarisṛpāḥ vṛkṣādyā tṛṇāntāḥ sthāvarāḥ iti mānuṣaś caikavidha iti caturdaśavidho bhūtasargaḥ"); its gaps are marked honestly, while C is only partly readable and A is mostly garbled syllables.

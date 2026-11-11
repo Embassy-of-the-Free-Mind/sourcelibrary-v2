@@ -115,14 +115,14 @@ async function main() {
   if (papyriIds.length) {
     const r = await db.collection('books').updateMany(
       { $or: [{ id: { $in: papyriIds } }, { _id: { $in: papyriIds } }] },
-      { $addToSet: { collections: 'ancient-papyri' } }
+      { $addToSet: { collections: 'ancient-papyri' }, $currentDate: { updated_at: true } }
     );
     console.log(`\nTagged ${r.modifiedCount} books into ancient-papyri`);
   }
   if (msIds.length) {
     const r = await db.collection('books').updateMany(
       { $or: [{ id: { $in: msIds } }, { _id: { $in: msIds } }] },
-      { $addToSet: { collections: 'great-manuscripts' } }
+      { $addToSet: { collections: 'great-manuscripts' }, $currentDate: { updated_at: true } }
     );
     console.log(`Tagged ${r.modifiedCount} books into great-manuscripts`);
   }

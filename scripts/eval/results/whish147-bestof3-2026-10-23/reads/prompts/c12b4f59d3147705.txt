@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. jñatipārārāstruyautrukkā ‖ ṃukārukhyākkintyassiddhayaḥtatrapāvatayote ‖ ṃgauṇyaḥpañcasiddhayaḥ
+2. tākṣiddhimotumatāśvādyapa ‖ hitābhākrātrāddhyāṇāccakkāṇāsiddhiṃbhoguro ‖ [illegible] mukhyāntyasiddhayoviśiṣṭa
+3. trukkapamaddhyamacandrahaitute ‖ hetumantraḥnnimittavalhṛdamavādduḥkhābhighātānāṃtri ‖ tritayasyātthaprahāṇamukhyatvānmu
+4. phalasiddhikkāraṇamucyatetal ‖ kāyyasyaṣṭraḥgaൗṇyauttarāgaൗṣṭddhyotaljñānāṃu ‖ pañcokkayogikābhikkāraṇa
+5. āpacaurānsāmpriya ‖ ānimmuktāramucyate ubhapatt ‖ ttoḥitihāsābhidheyānāya
+6. āyenātthaparikkā ‖ ṇāṃparikkaṇobhosaṃśayytṛ ‖ pakṣapirākaraṇena
+7. uttarapakṣavyapade ‖ āpaṇāṃtaddeśanamācakṣatega ‖ ṇṇitaḥsārajñiyātvā
+8. rāttāramucyatenyanil ‖ lokṛddhyūharāmāyenduḥkhittitoppyatthāna ‖ tthiyatetāpalyā
+9. vanābhyuddhiṣṭusauplaṃcā ‖ diṅṅḍḍisāṃpāddatetattattvakāṃuddhikkyasau ‖ sauplaṃcāmināṃsaṃpādakā
+10. nāṃkhokkijñāsanāmit ‖ śikhyāḻahīratṛkkamukhyateddānaṃmokṣabhūtibaddhevakkikha ‖ kṣānanyattaideṇāyanāḻḻu
+11. sthālddhānapadallulpa ‖ pamettuḥyathāvidhiṭṭolpatajjñiḥkhivaikalyā ‖ ttirabhiṣṭapādinopā
+
+TRANSCRIPTION B
+1. jñattiphārāntraśautraṅṅa [illegible] ‖ ṭhikāruryyāṇṇityassiddhayaḥtadbhūpālatakaitara ‖ [illegible] gauṇyaḥpakṣeniddhayaḥ
+2. nnāṇḍiṣogurattaśrarhra [illegible] ‖ hitāketrāddhyātmyāṇāccaññāsiddhiṣṭhenrudare ‖ [illegible] daikṣyāntassiddhayobhavituma
+3. trūkkavacaddhyamacandrahaidurihi ‖ ddamantraḥniścivarhrūmaravādadrāntvidvānāṃṣu ‖ [illegible] bhorasvārtthapagrahāṇamūddhyayinātma
+4. phamāstiṅkāramṛcchatetal ‖ kāyyrtṛṣṇaḥśūbhṣuḻiśūṣmarṣyāmalṅṅonāṃu ‖ [illegible] pākkāyathikāmel̤yyikkārahaṃ
+5. āpacārālsāmyibbiya ‖ ānijjissyāramṛcrateudāhar ‖ rthaiḥṣṭhahamānviterāṣṭrātrya
+6. āyenārtthaparikṣa ‖ ñāṃparikṣaṇebhavesaṃśayyabhuva ‖ pakṣibhirākaraṅṅaḻ
+7. uttarapakṣavyāpakaṃ ‖ āvaṇaṃtadvādṛṇanamācakṣatega ‖ ṣinaḥsātmiyātmā
+8. roktāramṛcchatenyatilṣo ‖ ṣihantrāvaināsyapariśiṣṭhitopyavairānti ‖ ṣṭhiyatetāpalsyā
+9. vanādhundikṣrasremacā ‖ lidrissadhisaṃpādrukatetappatandṛprakāṃgurunikṣrasa ‖ sūtramacāriṇāṃsaṃpāditā
+10. nāāṃbhokṣrasanniddhima ‖ āyuddhiratrākkamṛcratedaināṃbhiśuddhiddhveṣkameḥ ‖ [illegible] lānnyadaidebhākhanamṛtra
+11. strāldānapadelyūlpa ‖ retraḥyadhyahastrolpatañjaliḥmivaiśākhyā ‖ śyātritinviṣṭvāhānohā
+
+TRANSCRIPTION C
+1. kkatiṣābāntyāuttukkāṃ ‖ ukāravyākṣentyassiddhayaḥtaṭṭapākhataite ‖ gaigauṇyāḥpañcasiddhayaḥ
+2. śābdikkaiśubhatryādyapa ‖ hitāketrāddhyāddhyayaṇāccajñānāssiddhirhmare ‖ [illegible] mukhyāntasiddheyākiruma
+3. tryakṣvacamaddhyamaṣaṇṇuphetubhe ‖ hetumatryaḥsiddhivalhūrmmavādatryālsiddhyānāṃnru ‖ [illegible] rasvātmaṣaślahaṇamallayināspa
+4. chamāsmyilkkāramṛccateten ‖ kāymprattyaḥśakkaludyeśaṣlekṣmyamattkkonoupa ‖ [illegible] kkayalkāryyakṣāraraga
+5. āpacārānsāmikṣiya ‖ āsmiśśrāramṛccateutrahil ‖ [illegible] ḥktṛhamapākhairāddhanāśra
+6. ābhaiyanārikṣapaṭhikka ‖ ṇāṃparikkaṇobhosaṃślūkṛvya ‖ pakṣibhirābharaṇeṇana
+7. uttarapakṣivyapakṣa ‖ āvaṇāṃtaddumaṇānamācakṣateiḻa ‖ minaḥsātvikayātā
+8. roktāramṛccāratenyanilpa ‖ pākkiḥhrāmenāhasarikkitopyarailrānatta ‖ miyatetāpalyā
+9. vanāuddiṣṭhyastraiṣacā ‖ cāriddhisthvisaṃpādyateṣṭatantupyakāṃgatantrikṣyasa ‖ sacceṣacāriṇāṃsaṃpādakā
+10. nāāṃprārtthyāsānāddhime ‖ ṇṭauddhiratyakkamṛccatedaiānaṃbijñāddhimyevakkṣe ‖ nāsyaidevabhāyanatai
+11. ndāldānapadeśrulpa ‖ ñcitraḥyathādhiṣṭolpatantviḥvivaiṣakyā ‖ khyātiraviślavāhanoha
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

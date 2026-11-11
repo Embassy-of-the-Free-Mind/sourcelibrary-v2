@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { PipelineStep, PipelineState, PipelineConfig, Job } from '@/lib/types';
 import { nanoid } from 'nanoid';
 import { withAuth } from '@/lib/auth-helpers';
+import { selfCallHeaders } from '@/lib/self-call';
 
 // Increase timeout for long-running steps
 export const maxDuration = 60;
@@ -179,7 +180,7 @@ async function executeSummarize(
 
     const indexResponse = await fetch(`${baseUrl}/api/books/${bookId}/index`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...selfCallHeaders(baseUrl) },
     });
 
     if (!indexResponse.ok) {
@@ -244,7 +245,7 @@ async function executeEdition(
     id: editionId,
     version,
     status: 'draft',
-    license: config.license || 'CC0-1.0',
+    license: config.license || 'CC-BY-NC-SA-4.0',
     created_at: new Date(),
     pages_count: translatedCount,
   };

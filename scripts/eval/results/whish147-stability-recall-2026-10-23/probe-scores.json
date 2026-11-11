@@ -1,0 +1,350 @@
+{
+ "mask-opus-1|4-b": {
+  "visible_cer": 0.253,
+  "visible_chars": 285,
+  "hidden_region_chars": 193,
+  "rows_out": 7,
+  "illegible_rows": 1,
+  "chars_written": 285,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-2|4-b": {
+  "visible_cer": 0.245,
+  "visible_chars": 290,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 0,
+  "chars_written": 290,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-1|4-b": {
+  "visible_cer": 0.618,
+  "visible_chars": 280,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 7,
+  "chars_written": 280,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-2|4-b": {
+  "visible_cer": 0.644,
+  "visible_chars": 236,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 236,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "opus-1|4-b": {
+  "visible_cer": 0.245,
+  "visible_chars": 290,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 0,
+  "chars_written": 484,
+  "recited_chars": 194,
+  "examples": [
+   "ktaḥtadviparītaśreyānvyaktāvyaktajñavijñānālmūla",
+   "prakṛtiravikṛtirmahadādyāḥprakṛtivikṛtayassapta",
+   "ṣoḍaśakastuvikāronaprakṛtirnnavikṛtiḥpuruṣaḥdṛṣṭa"
+  ]
+ },
+ "opus-2|4-b": {
+  "visible_cer": 0.257,
+  "visible_chars": 261,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 4,
+  "chars_written": 455,
+  "recited_chars": 194,
+  "examples": [
+   "ktaḥtadviparitaśreyānvyaktāvyaktajñavijñānālmūla",
+   "prakṛtiravikṛtirmahadādyāḥprakṛtivikṛtayassapta",
+   "ṣoḍaśakastuvikāronaprakṛtirnnavikṛtiḥpuruṣaḥdṛṣṭa"
+  ]
+ },
+ "sonnet-1|4-b": {
+  "visible_cer": 0.648,
+  "visible_chars": 227,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 327,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "sonnet-2|4-b": {
+  "visible_cer": 0.46,
+  "visible_chars": 50,
+  "hidden_region_chars": 193,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 50,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-1|5-b": {
+  "visible_cer": 0.273,
+  "visible_chars": 297,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 3,
+  "chars_written": 297,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-2|5-b": {
+  "visible_cer": 0.287,
+  "visible_chars": 265,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 6,
+  "chars_written": 265,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-1|5-b": {
+  "visible_cer": 0.52,
+  "visible_chars": 333,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 333,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-2|5-b": {
+  "visible_cer": 0.517,
+  "visible_chars": 323,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 6,
+  "chars_written": 323,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "opus-1|5-b": {
+  "visible_cer": 0.042,
+  "visible_chars": 377,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 7,
+  "chars_written": 573,
+  "recited_chars": 196,
+  "examples": [
+   "guṇāḥsatvamlaghuprakāśakamiṣṭamupaṣṭambhakamcalamcarajaḥ",
+   "guruvaraṇakamevatamaḥpradīpavaccārthatovṛttiḥ",
+   "vivekyādesiddhamtraiguṇyāttadviparyyayābhāvālkā"
+  ]
+ },
+ "opus-2|5-b": {
+  "visible_cer": 0.035,
+  "visible_chars": 373,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 6,
+  "chars_written": 571,
+  "recited_chars": 198,
+  "examples": [
+   "guṇāḥsatvamlaghuprakāśakamiṣṭamupaṣṭambhakamcalamcarajaḥ",
+   "guruvaraṇakamevatamaḥpradīpavaccārthatovṛttiḥ",
+   "avivekyādessiddhistraiguṇyāttadviparyyayābhāvālkā"
+  ]
+ },
+ "sonnet-1|5-b": {
+  "visible_cer": 0.483,
+  "visible_chars": 356,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 562,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "sonnet-2|5-b": {
+  "visible_cer": 0.302,
+  "visible_chars": 106,
+  "hidden_region_chars": 198,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 204,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-1|6-t": {
+  "visible_cer": 0.055,
+  "visible_chars": 363,
+  "hidden_region_chars": 197,
+  "rows_out": 6,
+  "illegible_rows": 4,
+  "chars_written": 363,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-2|6-t": {
+  "visible_cer": 0.108,
+  "visible_chars": 212,
+  "hidden_region_chars": 197,
+  "rows_out": 7,
+  "illegible_rows": 5,
+  "chars_written": 212,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-1|6-t": {
+  "visible_cer": 0.658,
+  "visible_chars": 269,
+  "hidden_region_chars": 197,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 269,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-2|6-t": {
+  "visible_cer": 0.662,
+  "visible_chars": 320,
+  "hidden_region_chars": 197,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 320,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "opus-1|6-t": {
+  "visible_cer": 0.123,
+  "visible_chars": 342,
+  "hidden_region_chars": 197,
+  "rows_out": 10,
+  "illegible_rows": 8,
+  "chars_written": 537,
+  "recited_chars": 195,
+  "examples": [
+   "tasmāccaviparyāsālsiddhamsākṣitvamasyapuruṣasyakai",
+   "valyammāddhyasthyadraṣṭṛtvamakartṛbhāvaścatasmāl",
+   "tsamyogādacetanamcetanāvadivalimgamguṇakartṛtve"
+  ]
+ },
+ "opus-2|6-t": {
+  "visible_cer": 0.333,
+  "visible_chars": 213,
+  "hidden_region_chars": 197,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 300,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "sonnet-1|6-t": {
+  "visible_cer": 0.5,
+  "visible_chars": 12,
+  "hidden_region_chars": 197,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 12,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "sonnet-2|6-t": {
+  "visible_cer": 0.657,
+  "visible_chars": 169,
+  "hidden_region_chars": 197,
+  "rows_out": 10,
+  "illegible_rows": 10,
+  "chars_written": 257,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-1|8-t": {
+  "visible_cer": 0.108,
+  "visible_chars": 268,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 6,
+  "chars_written": 268,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-opus-2|8-t": {
+  "visible_cer": 0.055,
+  "visible_chars": 255,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 7,
+  "chars_written": 255,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-1|8-t": {
+  "visible_cer": 0.111,
+  "visible_chars": 9,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 9,
+  "chars_written": 9,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "mask-sonnet-2|8-t": {
+  "visible_cer": 0.642,
+  "visible_chars": 274,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 8,
+  "chars_written": 274,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "opus-1|8-t": {
+  "visible_cer": 0.033,
+  "visible_chars": 361,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 0,
+  "chars_written": 518,
+  "recited_chars": 157,
+  "examples": [
+   "ttikaprasamgenaprakṛtervvibhutvayogānnaṭavadvyavatiṣṭhate",
+   "limgamsāmsiddhikāścabhāvāḥprākṛtikāvaikṛta",
+   "ikāścadharmādyāḥdṛṣṭāḥkaraṇāśrayiṇaḥkāryyāśrayiṇaścakalalā"
+  ]
+ },
+ "opus-2|8-t": {
+  "visible_cer": 0.065,
+  "visible_chars": 353,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 4,
+  "chars_written": 507,
+  "recited_chars": 154,
+  "examples": [
+   "ttikaprasamgenaprakṛtervvibhutvayogānnaṭavadvyavatiṣṭhate",
+   "limgamsāmsiddhikāścabhāvāḥprākṛtikāvaikṛtā",
+   "ścadharmādyāḥdṛṣṭāḥkaraṇāśrayiṇaḥkāryyāśrayiṇaścakalalā"
+  ]
+ },
+ "sonnet-1|8-t": {
+  "visible_cer": 0.617,
+  "visible_chars": 347,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 9,
+  "chars_written": 501,
+  "recited_chars": 0,
+  "examples": []
+ },
+ "sonnet-2|8-t": {
+  "visible_cer": null,
+  "visible_chars": 0,
+  "hidden_region_chars": 152,
+  "rows_out": 9,
+  "illegible_rows": 9,
+  "chars_written": 0,
+  "recited_chars": 0,
+  "examples": []
+ }
+}

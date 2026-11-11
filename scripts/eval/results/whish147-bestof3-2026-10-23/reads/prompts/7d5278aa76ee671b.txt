@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣṭadbhikṣvāmātraikoṭṭe ‖ ṃbhedāddevādibhi [illegible] bhedākkubbāditvāl ‖ [illegible] hārapākaibhedānnāṃdṛṣṭā
+2. bhedālkkānmiyaikoṭṭa ‖ kkeṣādāddṛṣṭavacchannaṃbhedādyaṃtantra ‖ ā [illegible] tryāmiṭedrākṣyādimitṛṃ
+3. utmasvāmātraikoṭṭe ‖ nacānekatvaṃ [illegible] bhedāddṛṣṭvā [illegible] ‖ [illegible] ccālbhedāddṛṣṭa [illegible]
+4. śraidrākkāsyakkāva ‖ pratyakṣāsāddhyamakakṣṭivasthitaṃprā ‖ jātimatvāltantri
+5. daiṣāmeyāyamā ‖ tmāsamāgajjāggāntiyābhenakava ‖ ppacantarasahāyaḥprava
+6. nyāyaikyañjamā ‖ mujjvalamānakabālmarannāva ‖ lkaivalyārtthapravṛtte
+7. tteccittaikatvā ‖ lyatraikatvāldattvālpradhānamai ‖ ntrāṣṭrapravṛttiḥśarīra
+8. śradhānaṃśṛtrānta ‖ hācatirekkirempeṭṭukakoṣṭā ‖ vaṃśānirekṣaccajñā
+9. naṃkaivalyāttrayada ‖ dyuktaikkādrākṣlkkadākaddhyāpravṛtti ‖ ttirbhaveltantrādatvā
+10. ndhamaprāmṛkṣaimyāṃ ‖ āstrantranidupraṃsiddhivādāḥekae ‖ evāyaṃ ṣaḍviddhva [illegible]
+
+TRANSCRIPTION B
+1. buddhikkisāmānyattoṭukkū ‖ ṃbhedāktadoṣādikkibhedākkubāditrṛkkaḻ ‖ [illegible] hālokakabhedāntraṃ dukkhā
+2. bhedākkānandiyalekeṭṭa [illegible] ‖ ṣeṣādādibhṛddhaca [illegible] ccūnnaṃ bhedānnyaṃkandā ‖ [illegible] ntyādibhedāddinādakitanvaṃ
+3. uttisāmānyattoṭukkū ‖ nacāntaḥkālasaṃbhedāktampyādṛśaka ‖ katvālbhedāntyamāṇḍabu [illegible]
+4. ṣyabhedākkānassāva ‖ ppatthāsāddhīsthimakarttivasthitasaṃprā ‖ ptāmidamatvāltantrita
+5. dehassaiyāma ‖ tmāsamānḷrddāggrāhyānekapa ‖ nuvantarasahāyaḥpravṛ
+6. niyattaijñamā ‖ bhijñaryyamānabālmannāpa ‖ lkaivalyārtthapravṛ
+7. tteṣvitaikkāva ‖ lpateddākkāḥkabhadyādipradhāname ‖ ttālpravṛtteḥbhāṣa
+8. pradhānaṃcaitanyātma ‖ hācaritamuktimmelmukhyakṣoṣmā ‖ vaṃgāniteṣṭhacajñā
+9. naṃkaivalyaṃtantrada ‖ daṃśaṅkaikhāyedṛṣṭāntalkadābhaddhyāpravṛtti ‖ ttinṟabhaveltandrādarśśā
+10. svapnatrādṛśśeyyā ‖ śāstratantridekṣaṃsvivyādābhyokapa ‖ ppavāyaḥ ṣissiddhyal
+
+TRANSCRIPTION C
+1. buddhikisāmātramorāṭṭṃ ‖ bhoktṛtāvadikki bhoktṛtvāditra [illegible] ḥ ‖ [illegible] hālokebhogyaṃ dakṣā
+2. bhoktānamiyakeṭṭu [illegible] ‖ bhekṣahādādi [illegible] ca [illegible] naṃ bhogya [illegible] nna ‖ āgryāmibhogyādimitṛṃ
+3. ubhisāmānyatoṭṭu [illegible] ‖ naca [illegible] kastraṃ bhoktṛtvāca [illegible] ‖ [illegible] cāl bhogya [illegible] āṣṭu [illegible]
+4. [illegible] bhoktāsakkāva ‖ pra [illegible] sāmpi [illegible] ka [illegible] vasthitaṃ prā ‖ auddhamatvāl [illegible]
+5. dukhasva [illegible] yamā ‖ tmāsamānaṃ jñā [illegible] triyānakapa ‖ [illegible] catarasahāyaḥ prava
+6. nya [illegible] ññamā ‖ [illegible] jñāmāna [illegible] ktālmanopa ‖ l kaivalyārtthaṃ pravṛ
+7. [illegible] kṣa [illegible] kāva ‖ lya [illegible] kta [illegible] dantā [illegible] pradhānake ‖ ttyartthā pravṛttiḥ [illegible]
+8. pradhānaṃmellātma ‖ hācatiḥ [illegible] kṣa [illegible] kārtthā ‖ vaṃ gānitokkucajñā
+9. naṃ [illegible] kkavalyatte [illegible] da ‖ [illegible] kṣakār [illegible] tvālko dāhabhārttha [illegible] pravṛtti ‖ [illegible] ttibhaval [illegible] danta [illegible]
+10. sava [illegible] trāmṛta [illegible] yi [illegible] ‖ ā [illegible] l [illegible] kṣaṃ siddhivādābhya [illegible] ‖ [illegible] vāyaṃ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

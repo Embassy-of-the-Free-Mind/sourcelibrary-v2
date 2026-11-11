@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 120;
@@ -47,6 +48,8 @@ export const POST = withAuth(async (request, session) => {
         }
       )
     ]);
+    // The deleted halves must stop being served by semantic search (#6270).
+    await withdrawPageVectors(siblingIds, { reason: 'removed', writer: 'POST /api/pages/batch-reset' });
 
     // Renumber all pages ONCE at the end
     const allPages = await db.collection('pages')

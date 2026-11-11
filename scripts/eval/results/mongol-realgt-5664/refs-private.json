@@ -1,0 +1,41 @@
+{
+ "licence": "CC BY-NC-ND 4.0 (journal policy, mongoloved.kigiran.com/jour/about/editorialPolicies; Oriental Studies DOAJ record); Mirzaeva 2019 thesis: no licence stated",
+ "text_location": "private: ~/sourcelibrary-ops/evals/refs-private/mongol-kanjur-5664/ on the job box; labels for training on gex45:/root/jobs/mongol-realgt-5664/kept.jsonl",
+ "files": {
+  "A_v023.txt": {
+   "source": "Muzraeva & Batsuuri 2020, Mongolovedenie 12(2):255-270, doi:10.22162/2500-1523-2020-2-255-270",
+   "where": "vol 23 ff. 84b-87a (Chandra 168-173), Aparimitāyur-jñāna-hṛdaya dhāraṇī, Mng1.491",
+   "line_marks": "line ends marked",
+   "use": "evaluation only (frozen volume)",
+   "sha256": "54091c65fb7be9bf11d4d27bbc4501fdd6aa1cb6ee42a30dbb2ffb7a6457d4cc"
+  },
+  "B_v091.txt": {
+   "source": "Muzraeva 2004, Mongolovedenie 3:271-283",
+   "where": "vol 91 ff. 364a-368a, Ligeti 1108",
+   "line_marks": "no line marks; re-keyed from page images (text layer garbled)",
+   "use": "training",
+   "sha256": "835838533dd0ca8ec4512496a22854d43ff68c9174c4bce5a023ec55219308fb"
+  },
+  "C_v014.txt": {
+   "source": "Muzraeva 2020, Oriental Studies 13(6):1623-1631, doi:10.22162/2619-0990-2020-52-6-1623-1631",
+   "where": "vol 14 ff. 356b-358a (Chandra 712-715), three dhāraṇīs",
+   "line_marks": "line ends marked",
+   "use": "training",
+   "sha256": "13a131d3c66bf5f7966872f77a47815c0bc6418fc012671f68df7c493eeb370b"
+  },
+  "C_v024.txt": {
+   "source": "Muzraeva 2020, Oriental Studies 13(6):1623-1631",
+   "where": "vol 24 ff. 226b-227b (Chandra 452-454), three dhāraṇīs",
+   "line_marks": "line ends marked",
+   "use": "training",
+   "sha256": "d6110c2637c30011d77efb3c740333ef90a08dae4bf517280e2b5b661bc932e5"
+  },
+  "D_v108.txt": {
+   "source": "Mirzaeva 2019, PhD thesis (IL RAN), Appendix 2",
+   "where": "vol 108 ff. 250a-254a (Chandra 499-507), Bhadracarī-praṇidhāna",
+   "line_marks": "no line marks",
+   "use": "training",
+   "sha256": "e31ca4344d3bf635fbed0f69f1691ab63ab65262d37b23546f772d8b57440db1"
+  }
+ }
+}

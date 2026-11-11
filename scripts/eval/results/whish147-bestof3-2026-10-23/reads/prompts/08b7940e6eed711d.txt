@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. lakṣaṇapratya [illegible] prā ‖ pāṭa [illegible] bonyathāsiddhibhinnatva ‖ [illegible] tvaṃkāraṇatvaṃkā
+2. [illegible] lakṣaṇamāhakāryya ‖ [illegible] kāraṇaṃvibhajña [illegible] ryyamitthaṃsamavā ‖ yikāraṇalakṣaṇamāha
+3. yalsamaveta [illegible] ‖ [illegible] lsamavetamityartthaḥnasamavāyikā ‖ raṇaṃlakṣayatikāraṇa [illegible]
+4. [illegible] ddūrāvā ‖ [illegible] tvarūpasaṃbandharāga [illegible] kāraṇa ‖ [illegible]
+5. l [illegible] ‖ [illegible] tvasaṃ [illegible] ghaṭapaṭa [illegible] ‖ [illegible] samavāyikāraṇa [illegible]
+6. mityartthaḥkāraṇa [illegible] ‖ [illegible] tra [illegible] miti ‖ kāraṇa [illegible]
+7. [illegible] rmmil [illegible] ‖ nnusamavetatvā [illegible] paṭagata ‖ [illegible] samavāyikā
+8. [illegible] mityartthaḥ [illegible] ‖ [illegible] lakṣaṇa [illegible] ‖ [illegible] samavāyyasama [illegible]
+
+TRANSCRIPTION B
+1. lakṣaṇaprattirūpaprāpāṭa [illegible] vaṃevabo2ntrachāsiddhiterū [illegible] lpra [illegible] vaṃkāraṇatvaṃkāra
+2. ṣṭalakṣaṇamāhakāṣṭa [illegible] ttikāraṇaṃ [illegible] jñatekkoṣṭamittisamavāyikāraṇalakṣaṇamāha
+3. yalsamavetamitti [illegible] nnilsamavetamitryatvḥnasamavāyikāraṇaṃ [illegible] lakṣayatikāraṇaṣṭa
+4. oṇṇattieteṭṭudravya ‖ nattitantusaṃyogajatvāda ‖ ṣṇayadainaki [illegible]
+5. ltontrarapaṭāpa ‖ tantāmmantrasaṃyogabhepaṭasya ‖ āsamavāyikāraṇa
+6. mitrālkāraṇaota ‖ otrudravyatvitatvarūpamitti ‖ kāraṇeṇṇenaval̤eṭa
+7. nnasvāhākekkaṣmilteonnasamavetandhrāratantrūvaṃpaṭaga [illegible] rūpasyāsamavāyikā
+8. raṇṇamitrālttimate [illegible] kāraṇaṃlakṣaṇa [illegible] ttitoddukṣya [illegible] ddhive [illegible] samavāyyasamavāyikāri
+
+TRANSCRIPTION C
+1. lakṣyapratirūpaprāpṭagrahavaṃśaivalonṛphānviddhinetarandrūṣṭriyaṃkāraṇatvaṃkāra ‖  ‖ 
+2. kṣlakṣaṇamāhakākṣmamatikāraṇaṃvibhajñenakakṣmamitisadmava ‖  ‖ pādikāraṇalakṣaṇamāha
+3. yalsamavetamitiyandilsamavetamitrūlḥsamavāyika ‖  ‖ kāraṇaṃlakṣayatikāraṇeṣṇa
+4. oṇṇiṣetaṭṭadvāha ‖ ntitantrasaṃyogaitikāraṇa ‖ ṣṭhenapaṭenakikkāntra
+5. ltantrāṇāsamave ‖ tantvāntantrasaṃyograpaṭasya ‖ samavāyikāraṇa
+6. mityarthaḥkāraṇe ‖ tantradvāratitantrūpamiti ‖ kānenapaṭe
+7. nsāhayekatriltetana ‖ nnasamavetatvārātanturūpaṃpaṭagara ‖ rūpasyāsamavāyikā
+8. śśamityartthaḥnimitta ‖ ttānaṃlakṣaṇānitādṛśabhimiṣatti [illegible] ‖ samavādyasamavāyādi
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,0 +1,242 @@
+[
+ {
+  "id": "q01-B-m1",
+  "key": "q01:B",
+  "by": "router",
+  "claim": "Marsilio Ficino's De Vita Libri Tres (1589) is the foundational text for the Renaissance understanding of the \"melancholy genius,\" a state he inextricably links to the influence of the planet Saturn.",
+  "from": "694f396c23a1d0c2ad1d8698:22",
+  "to": "69520600ab34727b1f042e3c:240",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q03-A-m1",
+  "key": "q03:A",
+  "by": "router",
+  "claim": "He observed that they often emerge after rain and can grow both from the earth and upon the trunks of trees.",
+  "from": "6958ea4dd3a892833481514e:60",
+  "to": "6957ef81cbe1dcad7b76c52d:667",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q03-A-m2",
+  "key": "q03:A",
+  "by": "router",
+  "claim": "Pliny the Elder (1st century AD): In his Naturalis Historia, Pliny suggested that fungi were generated from the \"phlegm of trees\" (pituita arborum) and noted that truffles were believed to be produced by thunderstorms and lightning, arising without seed..",
+  "from": "6958dfb9dbe0f678e5c52aa7:1014",
+  "to": "6958ea4dd3a892833481514e:60",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q13-A-m1",
+  "key": "q13:A",
+  "by": "router",
+  "claim": "Hermes Trismegistus is the legendary sage of Hellenistic Egypt, a syncretism of the Greek god Hermes and the Egyptian Thoth, regarded as the \"thrice-great\" author of the Hermetica and the mythical founder of alchemy and natural philosophy.",
+  "from": "6953e33f77f38f6761bec67d:137",
+  "to": "699058adaaa7f10ed4cfa5ce:21",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q15-B-m1",
+  "key": "q15:B",
+  "by": "router",
+  "claim": "It is \"eternally nameless\" and exists in a cycle that precedes even the \"Supreme Ultimate.\".",
+  "from": "6a1d81b45afc14a085e6d8a2:44",
+  "to": "6a1d81b45afc14a085e6d8a2:778",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q16-A-m1",
+  "key": "q16:A",
+  "by": "quote",
+  "claim": "Alchemy, or Spagyria, is the mistress and inventress of distillation, which reveals the compositions... Chemistry teaches how to dissolve and coagulate.",
+  "from": "695677cbbe7c607c5f03acc3:1326",
+  "to": "695677cbbe7c607c5f03acc3:1327",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q16-A-m2",
+  "key": "q16:A",
+  "by": "router",
+  "claim": "Separation (Solve): Breaking a substance down into its three essential alchemical principles: Salt (the body/earth), Sulphur (the soul/oil), and Mercury (the spirit/volatile part).",
+  "from": "6952d19977f38f6761bc5eb1:274",
+  "to": "6a267dab6c1f37c9c4f3abd8:5",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q18-B-m1",
+  "key": "q18:B",
+  "by": "quote",
+  "claim": "Johannes Trithemius is a central figure here; his Polygraphia and Steganographia (1676) contain numerous systems of \"secret notations,\" including the alphabets of the Normans, the ancient Franks, and the \"Secret Alphabet of Honorius of Thebes\".",
+  "from": "695929a57c072c27f686d29f:342",
+  "to": "69b51e7f768235dc6599433c:205",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q18-B-m2",
+  "key": "q18:B",
+  "by": "router",
+  "claim": "The Crossing of the River (Transitus Fluvii): A script derived from the Hebrew alphabet, often used in Jewish magical traditions.",
+  "from": "69b51e7f768235dc6599433c:207",
+  "to": "695929a57c072c27f686d29f:342",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q19-B-m1",
+  "key": "q19:B",
+  "by": "router",
+  "claim": "Physicians like Marsilio Ficino believed that sound was a \"living\" substance capable of altering the human spiritus—the subtle, vaporous bridge between the material body and the immaterial soul.",
+  "from": "694f396c23a1d0c2ad1d8698:159",
+  "to": "694b3abfde93d1d4cec196fd:666",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q20-B-m1",
+  "key": "q20:B",
+  "by": "quote",
+  "claim": "These texts represent a \"fragmentary survival of an entire literature\" that once circulated under the name of the patriarch Enoch, the great-grandfather of Noah.",
+  "from": "6953112e77f38f6761bcbe3b:39",
+  "to": "69ae9b59636ab3c20b7cf1a0:46",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q21-B-m1",
+  "key": "q21:B",
+  "by": "router",
+  "claim": "Because Drebbel was notoriously secretive and left few writings—his A Short Treatise on the Nature of the Elements focuses more on natural philosophy than mechanical blueprints—knowledge of the oven survived through his family and scientific observers:",
+  "from": "9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4:1",
+  "to": "6ac3a8f04de0ba35e46502b0:9",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q22-B-m1",
+  "key": "q22:B",
+  "by": "router",
+  "claim": "It signifies the lack of inherent existence in all phenomena, asserting that things exist only through dependent origination.",
+  "from": "6abee32da43718d234bf1d47:495",
+  "to": "6abeb2ec896ea18127c83529:505",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q22-B-m2",
+  "key": "q22:B",
+  "by": "router",
+  "claim": "In the Tibetan Buddhist tradition, emptiness (śūnyatā) is not a void of nothingness, but rather the fact that all phenomena lack inherent existence because they arise dependently.",
+  "from": "6abee32da43718d234bf1d47:495",
+  "to": "6abeb2ec896ea18127c83529:505",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q22-A-m1",
+  "key": "q22:A",
+  "by": "router",
+  "claim": "Internal Emptiness (adhyātma-śūnyatā): The lack of inherent nature in the sense faculties.",
+  "from": "6abeb404896ea18127c84235:499",
+  "to": "6abeafd3896ea18127c8218e:240",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q22-A-m2",
+  "key": "q22:A",
+  "by": "router",
+  "claim": "Emptiness of Emptiness (śūnyatā-śūnyatā): The realization that even the concept of emptiness itself lacks inherent existence, preventing it from becoming a fixed dogma.",
+  "from": "6abe825059b86b7d32a6597a:330",
+  "to": "6abee265a43718d234bf1807:293",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q28-B-m1",
+  "key": "q28:B",
+  "by": "quote",
+  "claim": "This text examines silence across cultures, from the \"lazy silence\" of Indian Gymnosophists to the \"wholesomeness of silence\" in the Roman Senate..",
+  "from": "69b51e69ff09e4fe943ae8a3:3",
+  "to": "69b51e69ff09e4fe943ae8a3:23",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q32-A-m1",
+  "key": "q32:A",
+  "by": "router",
+  "claim": "It depicts the ten Sephirot—divine emanations or \"vessels\"—through which the infinite light of the Ein Sof (the Infinite) descends to create and sustain the universe.",
+  "from": "6a08aa8b26bf28a2268d1774:388",
+  "to": "69c1ba928522835be845954d:308",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q32-A-m2",
+  "key": "q32:A",
+  "by": "router",
+  "claim": "Binah (Understanding): The source of \"judgments\" and discernment, associated with YHWH Elohim.",
+  "from": "69c1bec88522835be846c226:2",
+  "to": "69c1ba928522835be845954d:47",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q32-A-m3",
+  "key": "q32:A",
+  "by": "router",
+  "claim": "Tiferet (Beauty): The central balance of the tree, associated with the Tetragrammaton (YHWH).",
+  "from": "69c1bec88522835be846c226:2",
+  "to": "6a08aa8b26bf28a2268d1774:388",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q32-A-m4",
+  "key": "q32:A",
+  "by": "router",
+  "claim": "Yesod (Foundation): The channel that connects the upper Sephirot to the physical world, associated with El Chai.",
+  "from": "69c1bec88522835be846c226:2",
+  "to": "69c1ba928522835be845954d:47",
+  "A": "to",
+  "B": "from"
+ },
+ {
+  "id": "q33-B-m1",
+  "key": "q33:B",
+  "by": "router",
+  "claim": "These omens were used for state decisions, such as choosing priestesses or deciding whether to go to war.",
+  "from": "69e63bfcd932f2d58adbdf0f:357",
+  "to": "69afeb0257adc49dbfc41f54:12",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q36-B-m1",
+  "key": "q36:B",
+  "by": "router",
+  "claim": "For Paracelsus, digestion is not a simple mechanical or chemical process, but an alchemical one overseen by an internal spirit or \"craftsman\" known as the Archeus.",
+  "from": "69ac7f2d20878c5c9ba528cd:1220",
+  "to": "69b4d649853c26e0d15606cb:99",
+  "A": "from",
+  "B": "to"
+ },
+ {
+  "id": "q36-B-m2",
+  "key": "q36:B",
+  "by": "router",
+  "claim": "The Archeus acts like a miner or metallurgist, separating the pure \"gold\" of nutrition from the \"slag\" of waste..",
+  "from": "6a26bd07d6b178e5aad87c1f:14",
+  "to": "69ac7f2d20878c5c9ba528cd:1220",
+  "A": "to",
+  "B": "from"
+ }
+]

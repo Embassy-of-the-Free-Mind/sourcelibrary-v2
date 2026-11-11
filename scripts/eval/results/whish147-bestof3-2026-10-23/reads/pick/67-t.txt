@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A and B mostly agree, and A reads more fluently across both rows ("…vidhāṃ…ākṣiccyatikkamaḥ śrīśrīgurubhyonamaḥ"). B garbles the opening and "trividhāṃ" ("ntimicāṃsa"), and C starts well ("bhūtendriyāṇāṃ…kṣetram") but its second row breaks into nonsense ("dviśrugubhadyonumaḥ").

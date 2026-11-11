@@ -7,9 +7,9 @@ canons: [mongolian-kanjur]
 n_books: 40
 n_pages: 50
 verdict: "Preregistration only: a Qwen2.5-VL-7B LoRA trained on synthetic Kanjur-style columns (ManchuAI-OCR recipe) is scored by a text-only Opus meaning check on 30 frozen real columns (one per volume) against the Derge Tibetan, with shuffled-parallel controls. No result here."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: "2026-10-18-mongol-synth-score-5664.md"
 issue: [5664, 6871]
 ---
 PRIOR ART: `2026-10-04-mongol-kanjur-ocr-probe-5664.md` and `2026-10-16-mongol-kanjur-argon-opus-probe-5664.md` (the 0/10 baseline: Flash, Argon and Opus read no Kanjur page; their proportional folio→Derge mapping is generalised here to a column); `2026-10-18-mongol-imu-dataset-gate-5664.md` (PR #6902: IMU data gated and unlike the Kanjur; its suggestion 3 is this run); `scripts/eval/mongol-argon-probe-5664.mjs` (the sealed `claude -p` judge, adapted: it read an English translation of a page, this reads the model's Mongolian for one column, as #6813 proposed); ManchuAI-OCR (arXiv 2507.06761) for the recipe. `scripts/eval/INDEX.md` has no Mongolian-script trainer, renderer or segmenter.

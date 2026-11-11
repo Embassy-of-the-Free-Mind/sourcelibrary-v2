@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three has any readable text, so no ranking on language is possible; A and B tie with a consistent string-hole layout on every row, and C ranks last because seven of its ten rows are missing the string holes, which a single physical leaf should show on every row.

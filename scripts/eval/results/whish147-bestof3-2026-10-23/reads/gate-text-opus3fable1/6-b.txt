@@ -1,0 +1,3 @@
+PICK | D
+RANK | D, B, A, C
+WHY | D reads cleanly as Sāṅkhyakārikā 23–27 ("buddhir dharmo jñānaṃ virāga aiśvaryaṃ… tanmātrapañcakaś caiva… ālocanamātram iṣyate vṛttiḥ") with correct verse numbering; B has the same text but with small corruptions ("tanmātraḥpañcakaś", "ātbhūtādes", a gap in row 8), while A and C are mostly garbled syllable strings with only a few recognizable words.

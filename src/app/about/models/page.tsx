@@ -200,7 +200,7 @@ function ModelCard({ m, count, languages, extra }: {
         {m.why !== '—' && <div><dt className="inline text-muted">Why: </dt><dd className="inline text-secondary">{m.why}</dd></div>}
         <div><dt className="inline text-muted">Known weakness: </dt><dd className="inline text-secondary">{m.weakness}</dd></div>
       </dl>
-      {m.version !== '—' && (
+      {m.version !== '—' && (m.access === 'existing text, no model' || m.id === 'ocr-kraken') && (
         <div className="text-xs text-muted mt-2 break-words">{m.access === 'existing text, no model' ? 'Source' : 'Model'}: <span className="font-mono">{m.version}</span></div>
       )}
       {m.evidence.length > 0 && (

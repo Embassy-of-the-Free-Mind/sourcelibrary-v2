@@ -1,0 +1,2622 @@
+[
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "47-140",
+"s": 47,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter III Wondrous Weed heading"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "47-140",
+"s": 93,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p65 Pipeology Kaffirs"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "47-140",
+"s": 139,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p111 Race of Pretenders representatives"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "125-205",
+"s": 125,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p103 baseness towards Sigurd"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "125-205",
+"s": 165,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p143 from above darkness from beneath"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "125-205",
+"s": 204,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p182 wolf Fenrir Hvedrung"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "241-287",
+"s": 241,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p209 False Prophets command of cultivators"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "241-287",
+"s": 264,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p232 greatest avidity"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "241-287",
+"s": 286,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p254 long journey"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "193-238",
+"s": 193,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter XII Pandemonium heading"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "193-238",
+"s": 215,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p185 Opium Morals per cent"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "193-238",
+"s": 237,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p207 produce those mental reveries"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "289-329",
+"s": 289,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter XVIII Siri and Pinang"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "289-329",
+"s": 309,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Chapter XX Chewing the Coon"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "289-329",
+"s": 328,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p296 refused to return"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "34-64",
+"s": 34,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p12 third stands over Niflheim"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "34-64",
+"s": 49,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p27 bristle Slidrugtanni"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "34-64",
+"s": 63,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p41 Kvasir drowned in wisdom"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "162-191",
+"s": 162,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter X Gates of Paradise"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "162-191",
+"s": 176,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p146 cessive little cups"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "162-191",
+"s": 190,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p160 common than in others"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "373-398",
+"s": 373,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p339 Gmelin and Pallas"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "373-398",
+"s": 385,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p351 boil water for coffee"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "373-398",
+"s": 397,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p363 Table XII East India income"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "77-100",
+"s": 77,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Prologo del Autor opening page"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "77-100",
+"s": 88,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p12 indice con el favor de Dios"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "77-100",
+"s": 99,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p23 granos y legumbres"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "100-122",
+"s": 100,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p78 promptitude Thor grasped"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "100-122",
+"s": 111,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p89 brought him victory Velint"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "100-122",
+"s": 121,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p99 received him with great state"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "68-89",
+"s": 68,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p46 But Skadi answered"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "68-89",
+"s": 78,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p56 enough of treasures Freyia"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "68-89",
+"s": 88,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p66 way asked Hymir bait"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "274-295",
+"s": 274,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p250 Chapter II march to besiege Mexico"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "274-295",
+"s": 284,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p260 the Mexicans driving remainder"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "274-295",
+"s": 294,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p270 found it to consist"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "132-152",
+"s": 132,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p56 Parte Primera esto es blanda"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "132-152",
+"s": 142,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p66 correspondiente conforme"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "132-152",
+"s": 151,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p75 que le dexa"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "655-673",
+"s": 655,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p635 betrifft also den Inhalt"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "655-673",
+"s": 664,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p644 ist welches aber allein"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "655-673",
+"s": 672,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p652 schlechterdings notwendig"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "144-160",
+"s": 144,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter IX Mash Allah heading"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "144-160",
+"s": 152,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p122 Kong identical Singapore"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "144-160",
+"s": 159,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.129 MASH ALLAH head, 'legitimate' first line"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "690-704",
+"s": 690,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.670 Elementarlehre head, 'aber vor uns alles'"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "690-704",
+"s": 697,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.677 head, 'Fruchtbarkeit, sondern als Intelligenz'"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "690-704",
+"s": 703,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.683 head, 'beschuldigt werden darf'"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "87-100",
+"s": 87,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.55 list of names landed in Supply"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "87-100",
+"s": 93,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.61, 'fionate manner', Sasquesahanocks margin"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "87-100",
+"s": 99,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.67 second supply, 'tion for the most part'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "207-219",
+"s": 207,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.185 begins 'Terrestrial Serpent, or Wolf'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "207-219",
+"s": 213,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.191 begins 'fields (Brunnakr)'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "207-219",
+"s": 218,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.196 begins 'nourish). He is supposed'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "37-48",
+"s": 37,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.13 CHAPTER II Juan de Grijalva"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "37-48",
+"s": 42,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.18 'We were satisfied however by this proof'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "37-48",
+"s": 47,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.23 'he kept for himself'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "144-155",
+"s": 144,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.120 'Hereupon Cortes sent orders'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "144-155",
+"s": 149,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.125 'exculpate himself in regard'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "144-155",
+"s": 154,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.130 'which is in the water'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "317-327",
+"s": 317,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "INDEX first page, Angeia, Angurboda entries"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "317-327",
+"s": 322,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.300 index begins Ifing, Irpa, Ivald"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "317-327",
+"s": 326,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.304 index Svanhvit, Svart-alfheim, T entries"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "62-71",
+"s": 62,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.48 'course of that River winding'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "62-71",
+"s": 66,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.52 'their victories of old'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "62-71",
+"s": 70,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.56 'double, having, within it also'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "230-239",
+"s": 230,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.208 'more when the ship sank'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "230-239",
+"s": 234,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.212 Of Places of Worship, horg"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "230-239",
+"s": 238,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.216 'and the witch could, like Harthgrebe'"
+},
+{
+"book": "69e719500b32e23d63bf6e73",
+"run": "497-505",
+"s": 497,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.331 Farmer Weathersky head, 'Good evening, mother'"
+},
+{
+"book": "69e719500b32e23d63bf6e73",
+"run": "497-505",
+"s": 501,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.335 'While he did this, the Eagle'"
+},
+{
+"book": "69e719500b32e23d63bf6e73",
+"run": "497-505",
+"s": 504,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.338 'and jumped into a duck-pond'"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "29-37",
+"s": 29,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "CONTENTS Part I Chapter I Leave Calcutta"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "29-37",
+"s": 33,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.xxiii CONTENTS Part II header matches; OCR noisy"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "29-37",
+"s": 36,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.xxvi 'Wind.—Rock behind Teshoo Loomboo'"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "363-371",
+"s": 363,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.329 'lest in their folly'"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "363-371",
+"s": 367,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.333 'logous to insanity'"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "363-371",
+"s": 370,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter XXV Exile of Siberia opening"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "119-127",
+"s": 119,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.97 'khalifs who was actually a real musician'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "119-127",
+"s": 123,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.101 'the poet Abu Nuwas'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "119-127",
+"s": 126,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.104 'During the period covered by the Golden Age'"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "45-52",
+"s": 45,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Narrative &c. Bengal Chapter I opening"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "45-52",
+"s": 48,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.6 'by the familiar appellation of North-wester'"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "45-52",
+"s": 51,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.9 'on the right, ten miles from Ghiddildow'"
+},
+{
+"book": "69e786b34a6785cfd60c8fbf",
+"run": "743-750",
+"s": 743,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.735 'decir, que se engañan', Trigo"
+},
+{
+"book": "69e786b34a6785cfd60c8fbf",
+"run": "743-750",
+"s": 746,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.738 Catálogo, Cedro abiete del Líbano"
+},
+{
+"book": "69e786b34a6785cfd60c8fbf",
+"run": "743-750",
+"s": 749,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.741 'Especie de palma en su figura'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "91-98",
+"s": 91,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.69 'then the kettle from his head'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "91-98",
+"s": 94,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p72, frost-bitten Orvandil's toe opening matches"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "91-98",
+"s": 97,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p75 opens 'but his ship named Hringhorni'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "221-228",
+"s": 221,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p199 opens 'etc. is signified, and that Beyla'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "221-228",
+"s": 224,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p202 opens 'kind under the name of Rig'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "221-228",
+"s": 227,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p205 opens 'between summer and winter'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "272-279",
+"s": 272,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p250 opens 'far in the field... Cornwife'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "272-279",
+"s": 275,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p253 Appendix, domestic sprites or Goblins"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "272-279",
+"s": 278,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p256 opens 'in assuming that a sort of fetish'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "298-305",
+"s": 298,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p276 opens 'later popular tradition this appellation'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "298-305",
+"s": 301,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p279 opens 'races. We will not decide'"
+},
+{
+"book": "69ee64a07b983848aff58240",
+"run": "298-305",
+"s": 304,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p282 opens 'ghostly and magical was attached'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "202-209",
+"s": 202,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Chapter VII The Abbasids, The Fall heading"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "202-209",
+"s": 205,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p181 'did not succeed in re-establishing'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "202-209",
+"s": 208,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p184 opens 'Mustansiriyya college at Baghdad'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "359-366",
+"s": 359,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p343 opens 'humility, and requesting'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "359-366",
+"s": 362,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p346 opens 'tricts until he had so completely'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "359-366",
+"s": 365,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p349 opens 'Sandoval and Ocampo having thus cleared'"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "105-111",
+"s": 105,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p29 'Del tiempo en que deben ponerse'"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "105-111",
+"s": 108,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p32 opens 'meliloto [o corona de Rey]'"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "105-111",
+"s": 110,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p34 opens 'con su auxilio qualquier viage'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "40-46",
+"s": 40,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p26 opens 'her body had been together'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "40-46",
+"s": 43,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p29 opens 'whilest living... Ambresbury'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "40-46",
+"s": 45,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p31 opens 'Britannos doctores nullam peritiam'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "56-62",
+"s": 56,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p34 opens 'scribed by the Maliki school'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "56-62",
+"s": 59,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p37 opens 'Bilal ibn Riyah'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "56-62",
+"s": 61,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter III The Orthodox Khalifs heading"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "165-171",
+"s": 165,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p141 'but he inherited neither his father's culture'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "165-171",
+"s": 168,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p144 opens 'Al-Farabi, and in their dominions'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "165-171",
+"s": 170,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p146 'but Iran was penetrated to the core'"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "343-349",
+"s": 343,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p321 'when it is, there is most commonly'"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "343-349",
+"s": 346,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p304 'with the most perfect sight can describe'"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "343-349",
+"s": 348,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p326 'man being instructed in what other respects'"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "290-296",
+"s": 290,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p266 Dogs and butchers, 'over their heads'"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "290-296",
+"s": 293,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p269 '(rising into warmth,) how is it mean'"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "290-296",
+"s": 295,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p271 Goldsmith in company, 'that he is master'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "402-408",
+"s": 402,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p364 'each of them, the successor'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "402-408",
+"s": 405,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p367 'yond the grave assumed to be'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "402-408",
+"s": 407,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p369 'of the world have reported her spirit'"
+},
+{
+"book": "69af2220a854057228c081ee",
+"run": "28-33",
+"s": 28,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "pxx 'perly explained by reference' Roman Fathers"
+},
+{
+"book": "69af2220a854057228c081ee",
+"run": "28-33",
+"s": 30,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "pxxii 'tended to convey any sentiment'"
+},
+{
+"book": "69af2220a854057228c081ee",
+"run": "28-33",
+"s": 32,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Chapter III apologetic writings heading"
+},
+{
+"book": "69e719500b32e23d63bf6e73",
+"run": "198-203",
+"s": 198,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p32 Norse Tales 'the left ear, and beg him'"
+},
+{
+"book": "69e719500b32e23d63bf6e73",
+"run": "198-203",
+"s": 200,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p34 'blown; but if you will'"
+},
+{
+"book": "69e719500b32e23d63bf6e73",
+"run": "198-203",
+"s": 202,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p36 'far they went... North Wind'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "55-60",
+"s": 55,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "55-60",
+"s": 57,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "55-60",
+"s": 59,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "400-405",
+"s": 400,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "400-405",
+"s": 402,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "400-405",
+"s": 404,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "26-31",
+"s": 26,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "26-31",
+"s": 28,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "26-31",
+"s": 30,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "265-270",
+"s": 265,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "265-270",
+"s": 267,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "265-270",
+"s": 269,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "351-356",
+"s": 351,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "351-356",
+"s": 353,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "351-356",
+"s": 355,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69f8c1350c0c281d4bd32bfd",
+"run": "533-538",
+"s": 533,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "TABLE DES SOMMAIRES, LIVRE PREMIER heading matches"
+},
+{
+"book": "69f8c1350c0c281d4bd32bfd",
+"run": "533-538",
+"s": 535,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69f8c1350c0c281d4bd32bfd",
+"run": "533-538",
+"s": 537,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "233-238",
+"s": 233,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "233-238",
+"s": 235,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "233-238",
+"s": 237,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "130-135",
+"s": 130,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "130-135",
+"s": 132,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "130-135",
+"s": 134,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "137-142",
+"s": 137,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "137-142",
+"s": 139,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "137-142",
+"s": 141,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa4fcc8638d1ea5c8061f",
+"run": "52-57",
+"s": 52,
+"d": 3,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa4fcc8638d1ea5c8061f",
+"run": "52-57",
+"s": 53,
+"d": 3,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa4fcc8638d1ea5c8061f",
+"run": "52-57",
+"s": 54,
+"d": 3,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "31-36",
+"s": 31,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "31-36",
+"s": 33,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "31-36",
+"s": 35,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "284-289",
+"s": 284,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "284-289",
+"s": 286,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "284-289",
+"s": 288,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "589-594",
+"s": 589,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "589-594",
+"s": 591,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "589-594",
+"s": 593,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "596-601",
+"s": 596,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "596-601",
+"s": 598,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "596-601",
+"s": 600,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69aec4473b6ebce5e0ee5929",
+"run": "605-609",
+"s": 605,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69aec4473b6ebce5e0ee5929",
+"run": "605-609",
+"s": 607,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "page number and opening lines match"
+},
+{
+"book": "69aec4473b6ebce5e0ee5929",
+"run": "605-609",
+"s": 608,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.362 'Here then the chances'; B matches, A is other page"
+},
+{
+"book": "69e41fab4fc48a88423e0693",
+"run": "39-43",
+"s": 39,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.27 Krishna Lila, 'Rajput art is constantly preoccupied'"
+},
+{
+"book": "69e41fab4fc48a88423e0693",
+"run": "39-43",
+"s": 41,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.29 'of religious art. On the other hand'"
+},
+{
+"book": "69e41fab4fc48a88423e0693",
+"run": "39-43",
+"s": 42,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.30 'which I have not seen at least one picture'"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "242-246",
+"s": 242,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.208 'For Affrica, had not the industrious Portugals'"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "242-246",
+"s": 244,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.210 'the Sea the source of those siluer streames'"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "242-246",
+"s": 245,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.211 'Persia, and China; besides diuers other'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "34-38",
+"s": 34,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.20 'ratus est, Nemet oure saxas'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "34-38",
+"s": 36,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.22 'so well known, I need not relate it'"
+},
+{
+"book": "69ee2b7060a4f4b5ab09ee61",
+"run": "34-38",
+"s": 37,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.23 'compleated his victories over Hengist'"
+},
+{
+"book": "69ee4f376dd925d126f4338c",
+"run": "482-486",
+"s": 482,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.456 '250. But, besides negative proof'"
+},
+{
+"book": "69ee4f376dd925d126f4338c",
+"run": "482-486",
+"s": 484,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.458 'is known, there is not a single arch'"
+},
+{
+"book": "69ee4f376dd925d126f4338c",
+"run": "482-486",
+"s": 485,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.459 'any new form of faith'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "45-49",
+"s": 45,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Enquiry I.i.6-9 'are included under excess and defect'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "45-49",
+"s": 47,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Enquiry I.i.9-11 'the members of animals'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "45-49",
+"s": 48,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Theophrastus Greek 'hyparchei, kathaper eiretai', section 12"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "121-125",
+"s": 121,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Enquiry I.xii.1-2 'some kinds of apples'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "121-125",
+"s": 123,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Enquiry I.xii.2-xiii.1 'distinct; in fact we must consider'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "121-125",
+"s": 124,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Greek 'epei kai ton anthon ta men esti chnoode'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "253-257",
+"s": 253,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Enquiry III.ix.6-7 'while the whole trunk is longer'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "253-257",
+"s": 255,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Enquiry III.ix.7-x.1 'called its white centre'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "253-257",
+"s": 256,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Greek 'plen [ouk] anakantho kai leio'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "457-461",
+"s": 457,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Enquiry V.i.5-8 'flesh of open texture'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "457-461",
+"s": 459,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Enquiry V.i.9-11 'These are the characteristics peculiar'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "457-461",
+"s": 460,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Greek 'poion ti esti; ton men gar euktedonon'"
+},
+{
+"book": "69ef254d85daccce30f2ba13",
+"run": "388-392",
+"s": 388,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.32 Faulkner, Fay entries"
+},
+{
+"book": "69ef254d85daccce30f2ba13",
+"run": "388-392",
+"s": 390,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.34 Fox Memorial Edition entries"
+},
+{
+"book": "69ef254d85daccce30f2ba13",
+"run": "388-392",
+"s": 391,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.35 Free Press continued entries"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "64-68",
+"s": 64,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.42 'braided and cudgelled them for this'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "64-68",
+"s": 66,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.44 'of Islam by the sword brought'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "64-68",
+"s": 67,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.45 'affected the habits of women'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "81-85",
+"s": 81,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Chapter IV The Umayyads opening"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "81-85",
+"s": 83,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.61 'were scandalized at the ungodliness'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "81-85",
+"s": 84,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.62 'arts began to flourish'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "112-116",
+"s": 112,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Chapter V The Abbasids opening"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "112-116",
+"s": 114,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.92 'patron of the arts withal'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "112-116",
+"s": 115,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.93 'mad ibn Abi'l-Abbas, all eager'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "196-200",
+"s": 196,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.172 'as has already been stressed'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "196-200",
+"s": 198,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.174 'Abu Bakr Muhammad ibn Zakariyya al-Razi'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "196-200",
+"s": 199,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.175 'into Hebrew by Judah ben Tibbon'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "244-248",
+"s": 244,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.218 'and one of Egypt's great historians'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "244-248",
+"s": 246,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.220 'Al-Basra, where he rose to wazir'"
+},
+{
+"book": "69ef2f8972c1376fdf2af9df",
+"run": "244-248",
+"s": 247,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "p.221 'Abu'l-Qasim Abdallah ibn Muhammad'"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "275-279",
+"s": 275,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "p.251 Goldsmith sings, 'else than martial honours'"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "275-279",
+"s": 277,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 253, Histories of the present age"
+},
+{
+"book": "6a08f62850bd891addfbabfc",
+"run": "275-279",
+"s": 278,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 254, London hospitality, Goldsmith opens"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "119-123",
+"s": 119,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 95, 'which was the uniform of their general'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "119-123",
+"s": 121,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 97, 'was, That we should go to Tlascala'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "119-123",
+"s": 122,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 98, 'spective device, and they advanced'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "268-272",
+"s": 268,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 244, 'regularly attested. And now the poor soldier'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "268-272",
+"s": 270,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 246, 'to get rid of their importunities'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "268-272",
+"s": 271,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 247, 'ly suspected, that the treasure'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "297-301",
+"s": 297,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 281, 'of the saints, under heavy penalties'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "297-301",
+"s": 299,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 283, 'party had also orders not to march'"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "297-301",
+"s": 300,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 284, 'for the night... named Aculma'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "327-331",
+"s": 327,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 289, Death of H.P.B., 'idea than the man'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "327-331",
+"s": 329,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 291, 'this—comes a new accusation'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "327-331",
+"s": 330,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 292, 'hitherto left uninvestigated by Science'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "471-475",
+"s": 471,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 433, 'ments, criticisms, and charges'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "471-475",
+"s": 473,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 435, 'been leading up'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "471-475",
+"s": 474,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 436, 'and himself in which the Adept'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "609-613",
+"s": 609,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 571, 'Judge had declared to be genuine'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "609-613",
+"s": 611,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 573, 'was made after the Enquiry'"
+},
+{
+"book": "6a1aa509c8638d1ea5c80753",
+"run": "609-613",
+"s": 612,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Chapter XXXII Westminster Gazette opening"
+},
+{
+"book": "6a1aa526c8638d1ea5c80f42",
+"run": "344-348",
+"s": 344,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 310, Clothed with the Sun"
+},
+{
+"book": "6a1aa526c8638d1ea5c80f42",
+"run": "344-348",
+"s": 346,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 312, 'negative. Polarisation'"
+},
+{
+"book": "6a1aa526c8638d1ea5c80f42",
+"run": "344-348",
+"s": 347,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 313 Appendix, 'Failing to comprehend'"
+},
+{
+"book": "6a1aa8fbc8638d1ea5c81cef",
+"run": "110-114",
+"s": 110,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "'A MIND burdened by psychological pictures'"
+},
+{
+"book": "6a1aa8fbc8638d1ea5c81cef",
+"run": "110-114",
+"s": 112,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "'WE must live in the Light'"
+},
+{
+"book": "6a1aa8fbc8638d1ea5c81cef",
+"run": "110-114",
+"s": 113,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "'WITH this new view, when parting'"
+},
+{
+"book": "6a3e75be28fae891bf27b0f1",
+"run": "334-338",
+"s": 334,
+"d": 1,
+"ctrl": false,
+"pick": "neither",
+"matched": "neither",
+"why": "Image is page 330; candidates are 329 and 331"
+},
+{
+"book": "6a3e75be28fae891bf27b0f1",
+"run": "334-338",
+"s": 336,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 332 Lucifer, 'M. C. But how is it'"
+},
+{
+"book": "6a3e75be28fae891bf27b0f1",
+"run": "334-338",
+"s": 337,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 333, 'which we call silent'"
+},
+{
+"book": "6a3e75be28fae891bf27b0f1",
+"run": "343-347",
+"s": 343,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 339 Correspondence, 'however, remind your readers'"
+},
+{
+"book": "6a3e75be28fae891bf27b0f1",
+"run": "343-347",
+"s": 345,
+"d": 1,
+"ctrl": false,
+"pick": "B",
+"matched": "move",
+"why": "Page 341, 'With faith we can do all things'"
+},
+{
+"book": "6a3e75be28fae891bf27b0f1",
+"run": "343-347",
+"s": 346,
+"d": 1,
+"ctrl": false,
+"pick": "A",
+"matched": "move",
+"why": "Page 342, 'idea. Good Christian people'"
+},
+{
+"book": "69ef218eb3e2d3a0927f38fc",
+"run": "47-140",
+"s": 44,
+"d": 1,
+"ctrl": true,
+"pick": "A",
+"matched": "stay",
+"why": "Page 16, 'this word rendered henbane'"
+},
+{
+"book": "69e786a94a6785cfd60c88a8",
+"run": "132-152",
+"s": 129,
+"d": 1,
+"ctrl": true,
+"pick": "B",
+"matched": "stay",
+"why": "Page 53 Capitulo Primero, 'humedad que el agua'"
+},
+{
+"book": "69e8b2e52ff2a8dc09e78cf9",
+"run": "690-704",
+"s": 687,
+"d": 1,
+"ctrl": true,
+"pick": "B",
+"matched": "move",
+"why": "Page 667 Kant, 'ertragen: dass ein Wesen'"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "29-37",
+"s": 26,
+"d": 1,
+"ctrl": true,
+"pick": "A",
+"matched": "stay",
+"why": "Page xvi Introduction, 'and Bengal, by receiving'"
+},
+{
+"book": "69e745c9b2cef37284e6cf2d",
+"run": "45-52",
+"s": 42,
+"d": 1,
+"ctrl": true,
+"pick": "A",
+"matched": "stay",
+"why": "Blank page; A says blank"
+},
+{
+"book": "69ef3d5872c1376fdf2b0374",
+"run": "343-349",
+"s": 340,
+"d": 1,
+"ctrl": true,
+"pick": "both",
+"matched": "both",
+"why": "Both are page 318 same text"
+},
+{
+"book": "69ea0f7013a685002bb8e200",
+"run": "242-246",
+"s": 239,
+"d": 1,
+"ctrl": true,
+"pick": "A",
+"matched": "stay",
+"why": "Page 205, 'the Master of this ship'"
+},
+{
+"book": "69ef215db3e2d3a0927f2bb3",
+"run": "457-461",
+"s": 454,
+"d": 1,
+"ctrl": true,
+"pick": "both",
+"matched": "both",
+"why": "Identical Theophrastus 420 text in both"
+},
+{
+"book": "6a08f9299c1b82475e1597a3",
+"run": "268-272",
+"s": 265,
+"d": 1,
+"ctrl": true,
+"pick": "A",
+"matched": "stay",
+"why": "Page 241 matches A's page number"
+},
+{
+"book": "6a1aa8fbc8638d1ea5c81cef",
+"run": "110-114",
+"s": 107,
+"d": 1,
+"ctrl": true,
+"pick": "B",
+"matched": "stay",
+"why": "'I AM often asked why I leave Point Loma'"
+}
+]

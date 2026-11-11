@@ -7,7 +7,7 @@ const vols = {'6abeb583896ea18127c84e6f':113,'6abe932b6a920ffd924d73b0':33,'6abe
 const out = fs.createWriteStream('pages.jsonl');
 let n=0;
 for (const [id,vol] of Object.entries(vols)) {
-  const cur = db.collection('pages').find({book_id:id, 'translation.model':'gemini-3-flash-preview', 'translation.updated_at': {$gte: new Date('2026-10-02T21:00:00Z')}}).sort({page_number:1});
+  const cur = db.collection('pages').find({book_id:id, 'translation.model':'gemini-3-flash-preview', 'translation.updated_at': {$gte: new Date('2026-10-02T21:00:00Z')}}).batchSize(1000).sort({page_number:1});
   for await (const p of cur) {
     out.write(JSON.stringify({book_id:id, vol, page_id:p.id, page_number:p.page_number, label:p.page_label, image:p.archived_photo||p.photo, src:p.ocr?.data||'', tohoku:p.ocr?.text_edition?.tohoku||[], folio:p.ocr?.text_edition?.folio, en:p.translation?.data||'', tr_updated:p.translation?.updated_at, prompt_version:p.translation?.prompt_version, finish:p.translation?.engine?.run?.finish_reason ?? p.translation?.finish_reason})+'\n'); n++;
   }

@@ -1,0 +1,31 @@
+===== PAGE p01 =====
+<warning>Handwritten old Malayalam script incised on palm leaf (Sanskrit text in Malayalam characters). This image is a crop of roughly a quarter of the leaf: every line is cut off at the left and right edges, and a binding cord and hole obscure aksharas near the left. Readings are tentative.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Partial crop of a palm-leaf folio; binding hole with cord in the left-centre. No page number, header or signature visible in this crop. Lines are transcribed as they stand, with the cord gap marked by a space.</meta>
+
+<unclear>ബ</unclear>തിവിഷയസ്ത<unclear>ാ</unclear>മാരുമ
+
+<unclear>ർത്തണ്ഡ</unclear> . <unclear>ഡാ</unclear>ചത്തലമാൻയ്യ
+
+മാ ഖാ<unclear>ഃ</unclear>കേതൈാ<unclear>രൂ</unclear>
+
+ഖം ല<unclear>ശ്ശ</unclear>പ്രകാശക<unclear>വി</unclear>
+
+<unclear>ക</unclear> മവകമഃപ്രെതി<unclear>ള</unclear>
+
+<unclear>ാഭ്ര</unclear> നിദ്ധൈാന്ദ്ര<unclear>ഇണ</unclear>
+
+ക ഖാൽകാള്ളന്ത<unclear>ാ</unclear>
+
+<unclear>ാ</unclear> <unclear>ൽ</unclear>സമമ്പയാള്ള<unclear>ക</unclear>
+
+<unclear>ാ</unclear>മൈാശരൂപ്പന്തന്തകാരണ
+
+ഖധിണബാമകന്തശ്രീലവൽ<unclear>ഗ്ര</unclear>ക
+
+<image-desc size="small" type="symbol" significance="low">Circular binding hole in the leaf with a twisted cord passing through it, near the left-centre of the crop.</image-desc>
+
+<vocab>വിഷയ (viṣaya), പ്രകാശക (prakāśaka), സമന്വയ (samanvaya), കാരണ (kāraṇa), ശ്രീ (śrī), palm-leaf manuscript, Malayalam script</vocab>

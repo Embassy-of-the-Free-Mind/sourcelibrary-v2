@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Handwritten palm-leaf manuscript, incised Malayalam/Grantha script; the central string hole splits lines 3–7 into left and right halves. Readings are tentative throughout; several akṣaras are given as best readings.</warning>
+<scan-quality>good</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num><unclear>൩</unclear></page-num>
+<meta>Single palm leaf with binding cord through central hole; leaf number incised in left margin. Text is Sanskrit (with possible Malayalam) in Malayalam script, 9 lines.</meta>
+
+<unclear>ശ്രീധർമ്മൊങ്കാനം ലി</unclear> <unclear>ാഗമൈശഷ്കം സാധിക</unclear>
+<unclear>ത്രളമാനഹ·കാ</unclear> <unclear>ഹങ്കള്ളാബിബിധഃ പ്രഷ്ഠ</unclear>
+<unclear>ത്രാഷങ്കെകെക്കൊ</unclear> <unclear>പഡ്യഃ സാധികെർത്ത</unclear>
+<unclear>കൃതാദാഗംകാര</unclear> <unclear>ാർദ്രതാതൈങ്കെരാ</unclear>
+<unclear>ധംഃഡഒഃങ്ങകി</unclear> <unclear>ൊയാണചക്കുതെശ്ര</unclear>
+<unclear>ാവാക്കപാണ</unclear> <unclear>ത്തപാടപാന്യപ</unclear>
+ഉഭയാത്മകമ <unclear>ത്രമനസ്സംകള്ളകിബി</unclear>
+<unclear>ണാമധിതൈകാണാനാഖബൊാഡാട</unclear>
+<unclear>ാമാലൊചനമത്രമത്തുതൈപ്പുത്തുഃപ</unclear>
+
+<vocab>ഉഭയാത്മക (ubhayātmaka), ആലോചന (ālocana), മനസ് (manas), palm-leaf manuscript, Malayalam script</vocab>

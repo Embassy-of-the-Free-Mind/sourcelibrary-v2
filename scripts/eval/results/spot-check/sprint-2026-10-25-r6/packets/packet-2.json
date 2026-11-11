@@ -1,0 +1,411 @@
+[
+ {
+  "slot": 6,
+  "book_id": "69b51e0e768235dc6598b8f2",
+  "book_url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2",
+  "tradition": null,
+  "book": {
+   "author": "Hermes, Trismegistus, ca. 2./4. Jh.",
+   "display_title": "Contents of this Volume: Pimander, Asclepius, and the Crater of Hermes",
+   "id": "69b51e0e768235dc6598b8f2",
+   "image_source": {
+    "provider": "mdz"
+   },
+   "language": "Latin",
+   "original_language": "Latin",
+   "pages_count": 164,
+   "pages_ocr": 164,
+   "pages_translated": 164,
+   "published": "1505",
+   "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius. Eiusdem Mercurij liber de voluntate diuina. Item Crater Hermetis A Lazarelo Septempedano",
+   "catalog_metadata": {},
+   "visible": true
+  },
+  "structure": {
+   "page_records": 164,
+   "distinct_page_numbers": 164,
+   "duplicate_records": 0,
+   "pages_with_ocr": 164,
+   "pages_translated": 164,
+   "with_printed_number": 78,
+   "printed_backsteps": 12,
+   "printed_repeats": 17,
+   "pages_count_field": 164,
+   "pages_ocr_field": 164,
+   "pages_translated_field": 164
+  },
+  "run": [
+   31,
+   32,
+   33
+  ],
+  "pages": [
+   {
+    "page_number": 31,
+    "page_id": "69dfe3052e48086c70da5140",
+    "image_url": "https://images.sourcelibrary.org/archived/69b51e0e768235dc6598b8f2/31.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>16</page-num>\n\nhil eius iugum subterfugit: quo contemptus idignet atque irascat, nec est sapientius eo quicquid illi emulationem incutiat. Itaque cum hec illi non accidant: nihil eius nature preter ipsum bonum restat. Quemadmodum vero nihil eorum que mala sunt in hac sunt effeta: ita in nullo alio bonum inuenitur. In singulis enim reliqua sunt singula: tum in paruis tum in magnis tum etiam in his que secundum unum et in ipso quoque animali maximo omnium atque potentissimo quod utique passionibus genita replet. Nam gnatio: passio quedam est, ubi autem passio: nullo modo bonum, ubi bonum: non passio ponitur ulla. ubi dies: nullo modo nox: ubi nox neque etiam dies, Quapropter in generatione bonum esse non potest. restat itaque eo quod ingenitum. Vt autem materie concessa est omnium participatio: sic quoque boni participatione mundus bonus, bonum dico: in quantum ipse etiam omnia efficit, qua quidem ex parte bonus est mundus: in reliquis omnibus non bonus, passibilis ei ac mobilis est: et omnium preterea causa passionum. In homine insuper comparatione mali: bonum. Id quippe quod non nimis malum quoque minus malum: bonum in hominibus appellamus. Quofit: ut bonum nostrum nihil aliud sit quam mali portio minima. Vnde illud etiam sequitur: ut bonum huiusmodi a malo separatum esse non possit, Inquinat enim hoc bonum: admixtione malorum. infectum vero ulterius bonum non permanet, sin minime permanet: malum efficit. In solo igitur deo bonum ipsum existit. Quare solum boni nomen homini adesto Esculapi: natura boni nequaquam, neque enim id capere potest materiale corpus confectum undique et oppressum prauitate, laboribus, doloribus, cupiditatibus, iracundia, deceptionibus, stultisque opinionibus, ac nugis. Deterrimum tamen omnium id censeo Esculapi: quod unum quodque eorum que dixi: summum creditur esse bonum. Fugiendum in primis malum est, uentris luxus: malorum omnium fomes, hic\n\n<vocab>bonum, malum, passio, generatio, Esculapi, natura, mundus, participatio</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<page-num>16</page-num>\nescapes His yoke, at which, being despised, He might be indignant and grow angry. Nor is there anything wiser than Him that might strike emulation into Him. Therefore, since these things do not happen to Him, nothing remains of His nature except the good itself. Just as, however, none of those things that are evil are contained in Him, so the good is not found in any other. For in individuals, other things are individuals, both in small things, in great things, and even in those which are according to one, and in that greatest and most powerful animal of all, which indeed fills the things begotten with passions. For generation is a certain passion; where there is passion, however, the good is not placed in any way. Where there is good, no passion is placed. Where there is day, there is in no way night; where there is night, neither is there day. Therefore, the good cannot exist in generation. It remains, therefore, that it is in that which is unbegotten. Just as, however, participation in all things is granted to matter, so also the world is good by participation in the good; I say good, in so far as it also makes all things. In which part the world is indeed good; in all remaining things, it is not good. For it is passive and movable, and furthermore the cause of all passions. In man, moreover, by comparison to evil, it is good. For that which is not too much evil, but also less evil, we call good among men. From which it happens that our good is nothing other than the smallest portion of evil. From where it also follows that the good of this kind cannot be separated from evil. For this good pollutes with the admixture of evils; the good, however, does not remain further infected. If it does not remain at all, it makes evil. In God alone, therefore, does the good itself exist. Wherefore, let the name of the good be present to man alone, O Asclepius; the nature of the good, by no means. For the material body, finished everywhere and oppressed by depravity, labors, pains, desires, wrath, deceptions, and foolish opinions and trifles, cannot grasp it. I consider it the worst of all, however, O Asclepius, that each one of those things which I have said is believed to be the highest good. Evil must be avoided in the first place; the luxury of the belly is the tinder of all evils, this",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 32,
+    "page_id": "69dfe3052e48086c70da5141",
+    "image_url": "https://images.sourcelibrary.org/archived/69b51e0e768235dc6598b8f2/32.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>MER. Fo</header>\n\nerror: hinc boni priuatio. Equidem ingentes deo gratias habeo: qui de natura boni cogitati mihi sententiam hanc certam infudit, quod in mundo bonum esse non possit. siquidem mundus congeries est malorum. Deus autem boni vel boni dei exuberans plenitudo. supereminentia quippe bonorum circa essentiam sincere fulgentis atque purissime. Neque forte sunt essentie dei. Audiendum sane id affero o Esculapi: essentiam dei (si ullam deus habet essentiam) ipsum bonum esse. Pulchrum vero et bonum in mundo: aut in mundi partibus inuenire non licet. Nam quecunque sensus mouet: idola sunt et vane quedam admirationes, que vero sensuum organa subterfugiunt: ad pulchrum bonumque ptinent. Vtque acies oculi deum non cernit: sic neque pulchrum bonumque cognoscit. He siquidem partes dei sunt: integerrimique illius proprie cognate inseparabiles precipueque dilecte, et vt has ipse deus amat: sic ab his ipse deus amatur, si deum percipere poteris: pulchrum quoque bonumque percipies, perfulges oibus illustratu a deo. Pulchritudo enim sine comparatione sine imitatione bonum, Deus ei copatione imitationeque nulla admittit. Quemadmodum ergo deum pulchrum bonumque noueris: ita sane et ceteris viuentibus cum deo conferri nequeant nunquam communicandum. Si deum quiſieris: pulchritudine ipsa qres. Que tandem ad id ferat: vnica via est, pietas cognitioni coniuncta. Quapropter ignari mortales et a pietatis semita deuij: hominem quoque bonum noiare non veretur, cum boni noticia vera habere nulla possit, sed malis irretitus et illaqueatus sit, malumque bonum esse ceseat, insanabiliterque malis vtat, eorumque iactura priuationeque formidet, oibus denique machinametis viribusque cotedat, ne vnico solu malo prematur, vere et in numerose mala magnitudineque augeatur. Talia fut o Esculapi decora ho\n\n<vocab>Deus, bonum, pulchrum, Esculapi, pietas, cognitio, essentia</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<header>MER. Fo</header>\nerror, hence the privation of the good. I truly have great thanks to God, who has infused into me this certain sentiment concerning the nature of the good, that the good cannot exist in the world. For the world is a heap of evils. God, however, is the overflowing plenitude of the good or of the good God, the supereminence of good things indeed shining sincerely and most purely around the essence. Nor are they, perhaps, the essences of God. I truly bring this to be heard, O Asclepius: that the essence of God (if God has any essence) is the good itself. But it is not permitted to find the beautiful and the good in the world or in the parts of the world. For whatever moves the senses are idols and certain vain admirations, but those things which escape the organs of the senses pertain to the beautiful and the good. And just as the sharpness of the eye does not discern God, so it does not know the beautiful and the good. For these are parts of God, properly cognate, inseparable, and especially loved by His most entire self. And as God Himself loves these, so God Himself is loved by them. If you can perceive God, you will also perceive the beautiful and the good. You shine through all things, illuminated by God. For beauty is the good without comparison and without imitation. God admits of no comparison and imitation. Just as, therefore, you will know God to be beautiful and good, so indeed, it should never be communicated to other living things, since they cannot be compared with God. If you will seek God, you will seek beauty itself. What, finally, may lead to that, there is only one way: piety joined to knowledge. Wherefore, ignorant mortals, and those straying from the path of piety, do not fear to name man good also, although he can have no true knowledge of the good, but is entangled and ensnared by evils, and believes evil to be good, and uses evils incurably, and fears the loss and privation of them, and finally contends with all machines and powers, so that he may not be pressed by one evil alone, and may be increased in true and numerous evils and in magnitude. Such, O Asclepius, are the decorations of man",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 33,
+    "page_id": "69dfe3052e48086c70da5142",
+    "image_url": "https://images.sourcelibrary.org/archived/69b51e0e768235dc6598b8f2/33.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>cj</meta>\n\nminu atque bona: quae nec fugere nec odisse valemus. oim namque difficilimum id existit: ob eam potissimum causam: quia nos illis uti oportet atque vesci: illisque orbati vitam agere nullo modo possimus.\n\n<margin>f</margin>\nExtus hoc contedit. in solo deo bonu/bonique natura (hoc est ipsa bonitate) reperiri: pariter et pulchri potestis sapientisque natura. In mundo autem solum boni nomen est. et error cecos homines arguit. vicia abhorrere monet. et quae via nos ad ipsa bonitate/ipsaque pulchritudine perducat/edocet/pietas scilicet cognitioni coniuncta. ad qua ignari mortales a pietatis semita deuii: pertingere valeant nunquam. Hec sextus.\n\nQuod summum malu est hominibus ignorare deum. VII\n\n<margin>q</margin>\nVoruitis mortales ebrii: qui meru ignorantie bibistis. cum id ferre neqatis: euomite. Viuite sobrii: oculis mentis inspicite. Quod si minus potestis: saltem qui possunt id agant. Ignorantie pestis omnem terram subuertit/animamque corrumpit/corporis vinclis inclusa: neque sinit eam salutis iter asciscere. ne permittite vos in lacu corruptionis/mortisque submergi. Respirate iam respirate/ad fonte vite recurrite: illumque qui vos introducet in adytum veritatis/capescite. ibi fulgidum lumen nullis immixtu tenebris. ibi nullus ebrietate delirat sed omnes sobrii vigilant: atque mentis oculis eum/qui videri vult/acutius intuentur. Is nec auribus percipitur/nec cernitur oculis/neque sermone profertur: sola mens eum prospicit/sola mens predicat. In primis autem oportet veste/qua circumfers: exuere indumentu inicitie/prauitatis fundamentu/corruptionis vinculum/velamen opacum/viuam mortem/sensituum cadauer/sepulchru circumertile/domesticum denique furem. Qui dum blanditur: odit. dum odit: iuidet. huiuscemodi est: quo circumtegeris vmbraculu inimicum. Ad seipsum te deorsum raptat: ne forte cons\n\n<vocab>ignorantia, deus, pietas, veritas, corruptio, mors, sobrii, mens</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "and good things, which we can neither flee nor hate. For this is most difficult of all, and for this reason especially: because it is necessary for us to use and partake of them, and deprived of them we could in no way lead our lives.\n\n<margin>f</margin>\nThe sixth <note>section/chapter</note> contends with this. In God alone can the good, the nature of the good (which is goodness itself), and likewise the nature of the beautiful and the wise be found. In the world, however, there is only the name of the good; and error proves men blind, warns them to abhor vices, and teaches what path may lead us to goodness itself and beauty itself—namely, piety joined to knowledge. Ignorant mortals, straying from the path of piety, can never attain this. This is the sixth.\n\nThat it is the greatest evil for men to be ignorant of God. VII\n\n<margin>q</margin>\nDrunken mortals, you who have drunk the wine of ignorance, since you cannot bear it, vomit it up. Live soberly; look with the eyes of the mind. But if you cannot, at least let those who can do so. The plague of ignorance overturns the whole earth, corrupts the soul enclosed in the bonds of the body, and does not permit it to choose the path of salvation. Do not allow yourselves to be submerged in the lake of corruption and death. Breathe now, breathe; return to the fountain of life, and take hold of Him who will introduce you into the sanctuary of truth. There shines a brilliant light, unmixed with any darkness. There no one wanders in drunkenness, but all are sober and vigilant, and with the eyes of the mind they behold Him more keenly—He who wishes to be seen. He is neither perceived by the ears, nor seen by the eyes, nor expressed in speech; the mind alone looks upon Him, the mind alone proclaims Him. But first, you must strip off the garment you wear: the foundation of malice, the bond of corruption, the opaque veil, the living death, the corpse of the senses, the mobile sepulcher, and finally, the domestic thief. Who, while he fancies you, hates you; while he hates you, he envies you. Such is the enemy shade by which you are covered. It drags you downward to itself, so that you might not by chance look",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 7,
+  "book_id": "69b2232756715b0e32476687",
+  "book_url": "https://sourcelibrary.org/book/69b2232756715b0e32476687",
+  "tradition": null,
+  "book": {
+   "id": "69b2232756715b0e32476687",
+   "title": "Claudian, Opera (Aldine Press)",
+   "display_title": "Claudian, Works",
+   "author": "Claudian",
+   "language": "Latin",
+   "published": "1523",
+   "ia_identifier": "ita-bnc-ald-00000865-001",
+   "pages_count": 372,
+   "pages_ocr": 372,
+   "pages_translated": 356,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "early-european-books",
+     "europeanlibraries"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 372,
+   "distinct_page_numbers": 372,
+   "duplicate_records": 0,
+   "pages_with_ocr": 372,
+   "pages_translated": 372,
+   "with_printed_number": 210,
+   "printed_backsteps": 41,
+   "printed_repeats": 34,
+   "pages_count_field": 372,
+   "pages_ocr_field": 372,
+   "pages_translated_field": 356
+  },
+  "run": [
+   111,
+   112,
+   113
+  ],
+  "pages": [
+   {
+    "page_number": 111,
+    "page_id": "69b2232756715b0e324766f6",
+    "image_url": "https://images.sourcelibrary.org/archived/69b2232756715b0e32476687/111.jpg",
+    "image_status": 200,
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<header>IN EVTROP.</header>\n<meta>catchword: Ne'ue</meta>\n\nExultant merito gentes, facilisq; uolenti\nPræda sumus iam Bistoniis, aemoq; niuali.\nVastior expulsis oriens squalebit aratris.\nHei mihi quas urbes, & quanto tempore Martis\nIgnaras uno rapuerunt prælia cursu.\nNuper ab extremo ueniens equitatus Araxe\nTerruit Antiochi muros: ipsumq; decoræ\nPenè caput Syriæ, flammis hostilibus arsit.\nVtq; grauis spolijs, nulloq; obstante profunda\nLætus cæde ruit: sequitur mucrone secundo\nContinuū uulnus: nec iam mihi Caucasus hostes,\nNec mittit gelidus Phasis: nascuntur in ipso\nBella sinu. legio pridem Romana Gothunni\nIura quibus uictis dedimus: quibus arua, domosq;\nPræbuimus: Lydos, Asiæq; uberrima uastant\nIgnibus: & siquid tempestas prima reliquit.\nNec duce, nec numero freti, sed inertia nutrit,\nProdigiumq; ducum: quorum per crimina miles\nCaptiuus dat terga suis: quos teste subegi\nDanubio: partemq; timet, qui reppulit omnes.\nAula choris, epulisq; uacat: nec perdita curant:\nDum superest aliquid. nequid tamen orbe reciso\nVenditor amittat. prouincia quæq; superstes\nDiuiditur: geminumq; duplex passura tribunal,\nCogitur alternis pretium sarcire peremptæ.\nSic mihi restituunt populos. hac arte repertæ\nRectorum numerum terris pereuntibus augent.\nIn te iam spes una mihi. pro fronde Mineruæ\nHas tibi protendo lachrymas. succurre ruenti.\nEripe me tandem. seruilibus eripe regnis.\n\n<vocab>Eutropius, Claudian, Bistoniis, Araxe, Antiochi, Caucasus, Phasis, Gothunni, Lydos, Danubio, Mineruæ</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "The nations exult with merit, and we, now easy prey,\nAre to the Bistones and the snowy tribes.\nThe rising expanse will grow foul, the plows having been driven out.\nAlas for me, what cities, and in what time of Mars,\nIgnorant of war, they have seized in a single course!\nRecently, the cavalry coming from the furthest Araxes\nTerrified the walls of Antioch: and the very head of beautiful\nSyria was nearly consumed by hostile flames.\nAnd as it rushes, heavy with spoils, and with nothing hindering,\nHappy in the slaughter: the continuous wound follows\nWith a second blade: nor does the Caucasus now send me enemies,\nNor does the icy Phasis: wars are born in the very\nBosom. The Roman legion of old, the Gothunni\nTo whom we gave rights when conquered; to whom we provided\nFields and homes; they lay waste to the Lydians and the richest parts of Asia\nWith fires: and if any part remained from the first tempest.\nRelying on neither leader nor number, but sloth nourishes them,\nA prodigy of leaders: through whose crimes the captive soldier\nTurns his back to his own: those whom I subdued with the\nDanube as witness: and he fears a part, who repelled them all.\nThe court is empty of dances and feasts: nor do they care for what is lost:\nWhile something remains. Yet, lest the seller lose anything\nWith the world cut to pieces. Every surviving province\nIs divided: and about to suffer the double tribunal,\nIt is forced to make up the price of the destroyed one in turns.\nThus they restore the peoples to me. By this art, they find\nWays to increase the number of rulers while the lands perish.\nIn you now is my only hope. Instead of the leaf of Minerva,\nI hold out these tears to you. Succor the falling.\nSnatch me away at last. Snatch me away from servile kingdoms.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 112,
+    "page_id": "69b2232756715b0e324766f7",
+    "image_url": "https://images.sourcelibrary.org/archived/69b2232756715b0e32476687/112.jpg",
+    "image_status": 200,
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>30</page-num>\n<header>LIB. II.</header>\n<sig>g ii</sig>\n<meta>The text is printed in an italic typeface with upright capital initials. There is some bleed-through from the reverse side of the page.</meta>\n\n**N**e'ue adeo cunctos paucorum crimine damnes:\n**N**ec noua tot meritis offenſa prioribus obſtet.\n**I**am iam flecte animum. ſuprema pericula ſemper\n**D**ant ueniam culpæ. quamuis iratus, & exul\n**P**ro patriæ flammis non diſtulit arma Camillus.\n**N**on te ſubtrahimus Latio defenſor utrique\n**S**ufficis. armorum liceat ſplendore tuorum\n**I**n commune frui. clypeus nos protegat idem:\n**V**naq; pro gemino deſudet cardine uirtus.\n\n---\n\n### CL. CLAVDIANI DE LAVDI-\n### BVS STILICONIS, LI-\n### BER PRIMVS.\n\n->**C**ontinuant ſuperi pleno Romana fa-<-\n->uore<-\n->**G**audia: ſucceſſusq; nouis ſucceſſibus<-\n->augent.<-\n\n**C**oniugij nec dum feſtiuos Regia cantus\n**S**opierat: cecinit fuſo Gildone triumphos:\n**E**t calidis thalami ſucceſſit laurea ſertis:\n**S**umeret ut pariter princeps nomenq; mariti,\n**V**ictorisq; decus. Libyæ poſt prælia crimen\n**C**oncidit Eoum: rurſusq; oriente ſubacto\n**C**onſule defenſæ ſurgunt Stilicone ſecures.\n**O**rdine uota meant. equidem ſi carmen in unum\n**T**antarum ſperem cumulos aduoluere rerum:\n**P**romptius imponam glaciali pelion Oſſæ.\n**S**i partem tacuiſſe uelim: quodcunq; relinquam:\n\n<vocab>Claudianus, Stilicho, Camillus, Latium, Gildo, Libya, Pelion, Ossa</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Nor should you condemn everyone for the crimes of a few:\nNor let a new offense stand in the way of so many previous merits.\nNow, now bend your mind. Final dangers always\nGrant pardon to a fault. Though angry and an exile,\nCamillus did not delay his arms for the sake of his country's flames.\nWe do not withdraw you from Latium as a defender; you are\nSufficient for both. Let it be permitted to enjoy the splendor\nOf your arms in common. Let the same shield protect us:\nAnd let one virtue labor for the twin axis.\n\nCL. CLAUDIAN ON THE PRAISES OF STILICHO, BOOK FIRST.\n\nMay the gods continue the Roman joys with full \nfavor: and increase success with new successes.\n\nThe palace had not yet silenced the festive songs \nof the wedding: it sang of triumphs with Gildo routed:\nAnd the laurel succeeded the warm garlands of the bridal chamber:\nSo that the prince might receive both the name of husband\nAnd the honor of victor, in equal measure. After the battles of Libya, the crime \nof the East collapsed: and once the Orient was subdued, \nthe axes of the consul rise up, defended by Stilicho.\nThe vows proceed in order. Indeed, if I should hope to heap\nThe piles of such great deeds into a single song:\nI would more readily place Pelion upon icy Ossa.\nIf I should wish to keep silent about a part: whatever I might leave out:",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 113,
+    "page_id": "69b2232756715b0e324766f8",
+    "image_url": "https://images.sourcelibrary.org/archived/69b2232756715b0e32476687/113.jpg",
+    "image_status": 200,
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<header>DE LAVDIB. STIL.</header>\n<meta>catchword: Iam; library stamp: BIBLIOTECA NAZIONALE CENTRALE FIRENZE</meta>\n\nMadius erit ueteres actus, primamq; iuuentam\nProsequar: ad sese mentem præsentia ducunt.\nNarrem iustitiam. resplendet gloria Martis.\nArmati referam uires. plus egit inermis.\nQuod floret latium. latio quod reddita seruit\nAfricæ uicinum quod nescit Iberia Maurum:\nTuta quod imbellem miratur Gallia Rhenum.\nAngelidam Thracem, decertatosq; labores\nHebro teste canam? magnum mihi panditur æquor:\nIpsaq; pierios lassant procliui currus\nLaudibus innumeris. etenim mortalibus ex quo\nTellus cœpta coli: nunquam sincera bonorum\nSors ulli concessa uiro. quem uultus honestat:\nDedecorant mores. animus quem pulchrior ornat:\nCorpus destituit. Bellis insignior ille:\nSed pacem fœdat uitijs. in publica felix:\nSed priuata minus. partitum singula quenq;\nNobilitant. hunc forma decens, hunc robur in armis,\nHunc rigor, hunc pietas, illum solertia iuris,\nHunc soboles, castiq; tori sparguntur in omnes:\nIn te mista fluunt: & quæ diuisa beatos\nEfficiunt: collecta tenes. quid facta reuoluam?\nMilitiamq; patris? cuius protendere famam,\nSi nihil egisset clarum: nec fida ualenti\nDextera duxisset rutilantes crinibus alas:\nSufficeret natus Stilico. mens ardua semper\nA puero, tenerisq; etiam fulgebat in annis.\nFortunæ maioris honos. erectus, & acer\nNil breue moliri: nullis hærere potentum\nLiminibus: fastisq; loqui iam digna futuris:\n\n<vocab>Stilico, Mars, Latium, Iberia, Gallia, Rhenus, Thracem, Hebro, Pierios</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "It will be meager. I will follow the ancient deeds and your first youth:\nThe present leads the mind to itself.\nI might narrate justice. The glory of Mars shines out.\nI might recount the strengths of the armed man. He did more unarmed.\nThat Latium flourishes. That Africa, restored to Latium, serves:\nThat Iberia does not know the neighboring Moor:\nThat Gaul, safe, marvels at the unwarlike Rhine.\nShall I sing of the Thracian Angelida, and the labored struggles\nWith the Hebrus as witness? A great sea is opened to me:\nAnd the Pierian chariots themselves grow weary with the steep\nRoad of countless praises. For indeed, ever since\nThe earth began to be tilled by mortals: never has a pure\nLot of good things been granted to any man. Whom a face honors:\nManners disgrace. Whom a more beautiful soul adorns:\nThe body abandons. That one is more distinguished in wars:\nBut he fouls peace with vices. Fortunate in public matters:\nBut less so in private. Single things ennoble each one:\nOne is favored by handsome form, one by strength in arms,\nOne by rigor, one by piety, another by skill in law,\nOne by offspring, and chaste marriage beds are scattered among all:\nIn you they flow mixed together: and what separate things\nMake men blessed: you hold collected. Why should I revolve deeds?\nAnd the military service of a father? Whose fame, if he had\nDone nothing famous: and his faithful right hand had not led\nThe red-haired wings in strength: would be enough for his son Stilicho.\nAn arduous mind always, even from a boy, and it shone in tender years.\nThe honor of a greater fortune. Upright, and keen,\nTo attempt nothing short: to cling to no thresholds\nOf the powerful: and already speaking things worthy of future annals:",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 8,
+  "book_id": "69b302e53613a84e6806812d",
+  "book_url": "https://sourcelibrary.org/book/69b302e53613a84e6806812d",
+  "tradition": null,
+  "book": {
+   "id": "69b302e53613a84e6806812d",
+   "title": "Schat der Gesontheyt",
+   "display_title": "Treasure of Health",
+   "author": "Johan van Beverwijck",
+   "language": "Dutch",
+   "published": "1637",
+   "ia_identifier": "hin-wel-all-00002138-001",
+   "pages_count": 422,
+   "pages_ocr": 421,
+   "pages_translated": 407,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "early-european-books",
+     "europeanlibraries"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 422,
+   "distinct_page_numbers": 422,
+   "duplicate_records": 0,
+   "pages_with_ocr": 421,
+   "pages_translated": 419,
+   "with_printed_number": 389,
+   "printed_backsteps": 5,
+   "printed_repeats": 8,
+   "pages_count_field": 422,
+   "pages_ocr_field": 421,
+   "pages_translated_field": 407
+  },
+  "run": [
+   210,
+   211,
+   212
+  ],
+  "pages": [
+   {
+    "page_number": 210,
+    "page_id": "69b302e53613a84e680681ff",
+    "image_url": "https://images.sourcelibrary.org/archived/69b302e53613a84e6806812d/210.jpg",
+    "image_status": 200,
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>193</page-num>\n<header>THERAPEUTICE.</header>\n<sig>N</sig>\n<meta>catchword: He-</meta>\n\nSolis ortum collecta, ita ut nemo colligentem videat, contra tertianas adalligata lævo brachio, ita ut æger quid sit illud ignoret, tertianas arcere traditur.\n\n<margin>¹ Idem 27. 12.</margin>\n¹ Datur & polygoni succus in febribus ante accessiones duobus cyathis, in tertianis quartanisve præcipuè.\n\n<margin>² Idem 28. 8.</margin>\n² Cor in cibo sumptum quartanis medetur: &\n<margin>³ Senec. 6. de benef. 8.</margin>\n³ quartana quorundam flagellis discussa est. An fortuito? ⁴ An quia ater & lentus ille humor incaluit, & motu item dissipatus est?\n<margin>⁴ Lipsius in com.</margin>\n\n<margin>⁵ Livius.</margin>\n⁵ Q. Fabius Maximus, diu multumque, quartana febre languebat, nec artis remediis optatum successum consequebatur, quousque conferto cum Allobrogibus prælio, pugnandi ardore, novo velut incendio febrile vetus incendium discussit.\n\nInedia sæpissime pro remedio est. Ita Gallus, sive Pythagoras Micyllo frugaliter viventi, ⁶ *Labores*, inquit, *qui te exacuunt, certatorem non contemnendum reddunt adversum eas res quæ compluribus inexpugnabiles videntur. Atque hinc fit, ut nullus ex gravioribus hisce morbis insidias tibi moliatur. Quin siquando levis febricula invaserit, paulo negotio eam medicatus, & inedia excutiens exilis. Illa porrò fugit illico, metuens te, quem videat frigido victu impleri, & medicorum illis recursibus longum plorare renuntiantem.*\n<margin>⁶ Lucian. Gallo.</margin>\n\n<margin>⁷ Plutarch. in præc. San.</margin>\n⁷ Non igitur imitari debemus bonos naviculatores, corpusque subinde impletum & oneratum, purgando rursum & proluendo evacuare: sicut illi ob avaritiam multa in naves cum ingesserunt, assiduò deinceps aquam exhaurire coguntur: sed corpora nostra habilia & expedita servare, ut etiamsi aliquando premantur, ob levitatem suberis instar sursum sese efferant.\n\n*Maximè autẽ à repletione in febribus cavendũ est.*\n\n<vocab>Therapeutice, tertiana, quartana, polygonum, Q. Fabius Maximus, inedia, Pythagoras, Plutarchus, febris</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>THERAPEUTICS.</header>\n\nsunrise, in such a way that no one sees the collector, is said to ward off tertian fevers when tied to the left arm, so that the patient does not know what it is.\n\n<margin>¹ Idem, 27. 12.</margin>\n¹ The juice of knotgrass is also given in fevers before the attacks in two *cyathi* <note>small measures</note>, especially in tertians or quartans.\n\n<margin>² Idem, 28. 8.</margin>\n² The heart [of certain animals] taken in food cures quartans; and\n<margin>³ Seneca, 6. On Benefits 8.</margin>\n³ a quartan has been shaken off by the scourges <note>lashes</note> of some. Was it by chance? ⁴ Or because that black and sluggish humor grew hot, and was likewise dissipated by the motion?\n<margin>⁴ Lipsius in commentary.</margin>\n\n<margin>⁵ Livy.</margin>\n⁵ Q. Fabius Maximus was languishing for a long time and greatly with a quartan fever, nor was he attaining the desired success with the remedies of art, until, in a battle joined with the Allobroges, by the ardor of fighting, he shook off the old febrile fire as if with a new fire.\n\nAbstinence from food is very often a remedy. Thus the Gaul, or Pythagoras, said to Micyllus, who was living frugally: ⁶ \"The labors that sharpen you make you a contender not to be despised against those things which seem impregnable to very many. And hence it happens that none of these more serious diseases lays traps for you. But if ever a slight fever has invaded, you medicate it with little trouble and shake it off by fasting. It immediately flees, fearing you, whom it sees being filled with cold diet, and renouncing the long laments of those medical recourses.\"\n<margin>⁶ Lucian, The Gaul.</margin>\n\n<margin>⁷ Plutarch, Precepts of Health.</margin>\n⁷ Therefore, we must not imitate good sailors, and evacuate the body, once it has been filled and burdened, by purging and washing it out again: just as they, due to greed, when they have heaped many things into their ships, are thereafter compelled to constantly bail out water: but we must keep our bodies supple and ready, so that even if they are occasionally pressed, they may rise up like cork because of their lightness.\n\n*In fevers, one must especially beware of repletion.*\n\n<summary>This page advocates for the curative power of fasting and physical exertion over medical intervention, while warning against the dangers of overeating during a fever.</summary>\n<keywords>fasting, knotgrass, Q. Fabius Maximus, Pythagoras, Lucian, diet, repletion</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 211,
+    "page_id": "69b302e53613a84e68068200",
+    "image_url": "https://images.sourcelibrary.org/archived/69b302e53613a84e6806812d/211.jpg",
+    "image_status": 200,
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>194</page-num>\n<header>MED. VET. PARS III.</header>\n\n<margin>¹ Idem Alexandro.</margin>\n¹ Hephæstio febre correptus, ut juvenis & militaris, exactioris impatiens victus, dum medicus Glaucus ad spectaculum abiit, prandium sumpsit, adesoque gallo gallinaceo asso, atque epoto ingenti vini frigefacti cratere, malè habuit, pauloque post decessit.\n\n<margin>Vinum febricitantib. noxium.\n² Idem in prac. San.</margin>\n² Corpus autem ita validum est nullum, cui conturbato & inflammato vinum adhibitum non adferat aliquid damni.\n\n<margin>³ Plin. 23. 1.</margin>\n*Quare* ³ non dandum in febre, nisi veteribus ægris, vinum: nec nisi declinante morbo.\n\n<margin>4 Cicer. 3. de nat. Deor.</margin>\nSed ⁴ quia ægrotis prodest raro, nocet sæpissimè, melius est non adhibere omninò, quam spe dubiæ salutis in apertam perniciem incurrere.\n\n*Melior aqua, quæ tamen potius recreat, quã sanat.*\n\n<margin>Aqua.\n⁵ Idem 1. Catil.</margin>\n⁵ Sæpe homines ægri, morbo gravi, cum æstu febrique jactantur, si aquam gelidam biberint, primo relevari videntur, deinde multo gravius vehementiusque afflictantur.\n\n<margin>Vuæ.\n⁶ Plin. 23. 1.</margin>\n⁶ Saluberrimas putant Medici uvas in cœlesti aqua servatas, etiamsi minimè jucundas: sed voluptatem earum in stomachi ardore sentiri, & in amaritudine jecoris, fellisque vomitione in choleris, cum ardore febrium ægrotantibus.\n\n*Omnis præterea labor, & defatigatio febricitantibus vitanda.*\n\n<margin>⁷ Martial. 4. Epigr. 81.</margin>\n> ⁷ *Declamas in febre, Mathon: hanc esse phrenesin*\n> *Si nescis, non es sanus amice, Mathon.*\n> *Declamas ager, declamas hemitritæus.*\n> *Si sudare aliter non potes, est ratio.*\n> *Magna tamen res est. errans cum viscere febris*\n> *Exurit. res est magna tacere, Mathon.*\n\n<meta>catchword: CAP.</meta>\n\n<vocab>Hephæstio, Alexander Magnus, vinum, febris, aqua, uvæ, phrenesis, hemitritæus, Plinius, Cicero, Martialis</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>MED. VET. PART III.</header>\n\n<margin>¹ Idem to Alexander.</margin>\n¹ Hephaestion, seized by fever, as a young man and a soldier impatient of a stricter diet, while his physician Glaucus went off to a spectacle, took lunch, and having eaten a roasted cock and drunk a huge bowl of chilled wine, felt badly and died a short time later.\n\n<margin>Wine harmful to the feverish. ² Idem in Precepts of Health.</margin>\n² There is no body so strong that wine, when added to it while it is disturbed and inflamed, does not bring some harm.\n\n<margin>³ Pliny, 23. 1.</margin>\n*Wherefore* ³ wine should not be given in a fever, except to aged patients: and not unless the disease is declining.\n\n<margin>4 Cicero, 3. On the Nature of the Gods.</margin>\nBut ⁴ because it rarely benefits the sick and very often harms them, it is better not to use it at all than to rush into open destruction in the hope of a dubious recovery.\n\n*Water is better, which, however, refreshes rather than heals.*\n\n<margin>Water. ⁵ Idem, 1. Catilinarian.</margin>\n⁵ Often, sick people, suffering from a serious disease, when they are tossed by heat and fever, if they drink cold water, seem to be relieved at first, but then are afflicted much more gravely and vehemently.\n\n<margin>Grapes. ⁶ Pliny, 23. 1.</margin>\n⁶ Physicians consider grapes preserved in rainwater to be most healthy, even if they are not very pleasant: but their pleasure is felt in the burning of the stomach, and in the bitterness of the liver, and the vomiting of bile in those suffering from cholera, along with the burning of fevers.\n\n*Furthermore, all labor and fatigue must be avoided by those with fever.*\n\n<margin>⁷ Martial, 4. Epigram 81.</margin>\n> ⁷ \"You declaim in a fever, Mathon: if you do not know that this is phrenesis <note>delirium</note>, you are not sane, my friend Mathon.\n> You declaim while sick, you declaim with a double tertian <note>a fever recurring every other day</note>.\n> If you cannot sweat otherwise, that is a reason.\n> Yet it is a great matter. The fever, wandering with the viscera,\n> burns. It is a great matter to be silent, Mathon.\"\n\n<summary>This page warns against the use of wine and physical exertion during a fever, citing historical examples of death and providing clinical advice on the use of water and diet.</summary>\n<keywords>Hephaestion, wine, water, grapes, phrenesis, fever, Pliny, Cicero, Martial</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 212,
+    "page_id": "69b302e53613a84e68068201",
+    "image_url": "https://images.sourcelibrary.org/archived/69b302e53613a84e6806812d/212.jpg",
+    "image_status": 200,
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>195</page-num>\n<header>THERAPEVTICE.</header>\n<sig>N 2</sig>\n<meta>catchword: λο-</meta>\n\n### CAP. II.\n\n### *Peftis etymologia, nomina, definitio, cauffæ, figna, ſymptomata, prognoſtica, præfagia, præſervatio, curatio. Peſte correptorum diæta.*\n\n<margin>Peftis nomina & etymon.</margin>\nCVm inter Febres etiam ſit peſtilens: imo Peſtis ipſa tam frequenter febrem comitem habeat, ut multi ſtatuant eas tantum gradu putredinis differre, de ea poſt febrium doctrinam hic agere operæ pretium eſt. Peſtis, quæ etiam Peſtilitas Lucretio, & communiter <margin>¹ Iſidor. 5. Etym.</margin>¹ Peſtilentia dicta, quaſi paſtilentia, quod quaſi fera venenata aut <margin>² Gal. de Theriac.</margin>² efferata rabie lupus civitates populoſque depaſcat. Mureto eſt ἀπὸ τοῦ πεσεῖν, cadere. Aliis <margin>³ Fr. Iunius 2. Parall. 44.</margin>³ Peſtis nomen factum eſt per ſyncopen ex compoſito pereſtis, & mutato *r* in *s* (ut ſæpe factum eſt) peſeſtis, à verbo peredo: quo ſignificatur, quicquid peredit, & planè conſumit ac perdit materiam quamque. Græcis λοιμὸς, λοίμη & λοιγὸς appellatur. <margin>⁴ Euſtath. in Il. 1.</margin>⁴ Λοιμὸς vel à λείπω, quod eſt deficio, juxta veterum notionem, unde etiam λοιμεὸς, vel potius à λέχω, λέξων, quod eſt obdormiens in mortem, præcipuè verò ἀπ’ ὀλίγου, quod eſt paucus, ablata litera ο, quaſi qui paucos reddat viventes. <margin>⁵ Etymolog.</margin>⁵ Dicitur autem λοιμὸς vel quaſi λοιπὸς à λείπω, vel à λίαν & μᾷν, quod eſt nimis inquirere & indagare, quod ſcilicet nihil relinquat intactum, ſed omnia veſtigia abditorum perſequatur, addito per pleonaſmum ο litera: vel à λιμὸς ob ſimilitudinem, nam fames eſt cibi indigentia, & peſtis eſt corporum indigentia: ſeu potius ob cauſſam, nam ἐκ λιμοῦ λοιμὸς, ex fame peſtis. Generali quoque nomine dicitur <margin>⁶ Thucyd. 2. Hiſt.</margin>⁶ νόσος, φθορὰ, πάθος, & cum adjectivo, νόσος λοιμικὴ, ſeu λοιμώδης, νόσημα λοιμῶδες, πάθος λοιμῶδες, νόσος ἐπίδημος, ἐπιδήμιος, ἐπιδημικὴ, & ἐπιδημία. Simpliciter etiam λοιμική. Quibuſdam <margin>⁷ Sophocl. Oedip.</margin>⁷ φόινιος νόσος,\n\n<vocab>Peftis, Peſtilentia, etymologia, febris, Lucretius, Iſidorus, Galenus, Muretus, Franciscus Iunius, Euſtathius, Thucydides, Sophocles</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>THERAPEUTICS.</header>\n<sig>N 2</sig>\n\n### CHAP. II.\n\n### *The etymology of the Plague, its names, definition, causes, signs, symptoms, prognostics, forewarnings, preservation, and cure. The diet of those seized by the plague.*\n\n<margin>Names and etymology of the Plague.</margin>\nSince there is also a pestilential fever, or rather, since the Plague itself so frequently has fever as a companion that many determine they differ only in the degree of putrefaction, it is worthwhile to discuss it here after the doctrine of fevers. The Plague, which Lucretius also calls pestilence, and which is commonly <margin>¹ Isidore, 5. Etymologies.</margin>¹ called <term>pestilentia</term> <gloss>pestilence</gloss>, as if it were <term>pastilentia</term> <gloss>a feeding-sickness</gloss>, because it devours cities and peoples like a wild, venomous, or <margin>² Galen on Theriac.</margin>² enraged wolf. According to Muretus, it is from the Greek <term>apo tou pesein</term> <gloss>from falling</gloss>. To others, <margin>³ Fr. Junius, 2. Parallels 44.</margin>³ the name <term>pestis</term> <gloss>plague</gloss> is formed by syncope from the compound <term>perestis</term>, changing the *r* into *s* (as is often done) to <term>pesestis</term>, from the verb <term>peredo</term> <gloss>to devour</gloss>; by which is signified whatever eats through, plainly consumes, and destroys any substance. In Greek, it is called <term>loimos</term>, <term>loime</term>, and <term>loigos</term>. <margin>⁴ Eustathius on Iliad 1.</margin>⁴ <term>Loimos</term> is derived either from <term>leipo</term>, which means to fail, according to the notion of the ancients, whence also <term>loimeos</term>, or rather from <term>lecho</term>, <term>lexon</term>, which is to fall asleep into death, but especially from <term>oligou</term>, which means few, with the letter <term>o</term> removed, as if it renders the living few. <margin>⁵ Etymology.</margin>⁵ It is called <term>loimos</term> as if it were <term>loipos</term> from <term>leipo</term>, or from <term>lian</term> and <term>maein</term>, which means to inquire and investigate too much, because it leaves nothing untouched but follows all the traces of hidden things, with the letter <term>o</term> added by pleonasm; or from <term>limos</term> <gloss>hunger</gloss> because of their similarity, for hunger is a lack of food, and plague is a lack of bodies; or rather because of the cause, for <term>ek limou loimos</term> <gloss>from hunger, plague</gloss>. It is also called by the general name <margin>⁶ Thucydides, 2. History.</margin>⁶ <term>nosos</term> <gloss>disease</gloss>, <term>phthora</term> <gloss>destruction</gloss>, <term>pathos</term> <gloss>suffering</gloss>, and with an adjective, <term>nosos loimike</term> or <term>loimodes</term> <gloss>plague-like disease</gloss>, <term>nosema loimodes</term>, <term>pathos loimodes</term>, <term>nosos epidemos</term>, <term>epidemios</term>, <term>epidemike</term>, and <term>epidemia</term>. Simply also <term>loimike</term>. By some, <margin>⁷ Sophocles, Oedipus.</margin>⁷ <term>phoinios nosos</term> <gloss>blood-red disease</gloss>.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 9,
+  "book_id": "6a4266e1dfbbb4d07aa70535",
+  "book_url": "https://sourcelibrary.org/book/6a4266e1dfbbb4d07aa70535",
+  "tradition": null,
+  "book": {
+   "id": "6a4266e1dfbbb4d07aa70535",
+   "title": "De Memoria Artificiosa Libellus : Omnibus cuiuscunq[ue] status aut conditionis hominibus, praecipue vero literarum studiosis, Oratoribus, Theologis, Iurisperitis, atq[ue] iis, qui ad Doctoratus apicem ascendere satagunt, maxime utilis [et] necessarius , A",
+   "display_title": "A Booklet on the Artificial Memory",
+   "author": "Magirus, Johann",
+   "language": "Latin",
+   "published": "1603",
+   "ia_identifier": "hin-wel-all-00002336-003",
+   "pages_count": 54,
+   "pages_ocr": 54,
+   "pages_translated": 49,
+   "catalog_metadata": {
+    "collections": [
+     "early-european-books",
+     "europeanlibraries"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 54,
+   "distinct_page_numbers": 54,
+   "duplicate_records": 0,
+   "pages_with_ocr": 54,
+   "pages_translated": 49,
+   "with_printed_number": 46,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 54,
+   "pages_ocr_field": 54,
+   "pages_translated_field": 49
+  },
+  "run": [
+   21,
+   22,
+   23
+  ],
+  "pages": [
+   {
+    "page_number": 21,
+    "page_id": "6a4266e1dfbbb4d07aa7054a",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4266e1dfbbb4d07aa70535/21.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>15</page-num>\n<header>REMINISCENTIÆ.</header>\n\n# DE IMAGINIBVS.\n\n->*Quid sunt imagines?*<-\n\nSunt notæ et formæ quædam, et similitudines earum rerum, quas meminisse volumus.\n\n->*Quot sunt diuisiones imaginum?*<-\n\n->Tres.<-\n\n->*Quæ est prima imaginum diuisio?*<-\n\nQuædam sunt firmæ, et admodum idoneæ; vt sunt res magnæ, incredibiles, inuisæ, inauditæ, nouæ, raræ admirabiles, habentes singularem, vel venustatem, vel turpitudinem. Vel quæ sunt ridiculæ, vel obscenæ. Quædam sunt infirmæ et imbecilles, quæ vix excitare memoriam possunt; vt sunt res paruæ, vsitatæ, quotidianæ. Nam iuxta naturam, quantò res animum nostrum minùs commouerit, tantò citiùs labitur ex memoria. Contrà, quantò fortiùs mouerit, tantò diutiùs et firmiùs memoriæ permanebit impressa.\n\n<meta>catchword: Quæ</meta>\n\n<vocab>reminiscentia, imagines, memoria, divisio, mnemotechnics</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# ON IMAGES.\n\n-> *What are images?* <-\n\nThey are certain signs and forms, and likenesses of those things which we wish to remember.\n\n-> *How many divisions of images are there?* <-\n\n-> Three. <-\n\n-> *What is the first division of images?* <-\n\nSome are firm and quite suitable; such as things that are large, incredible, ugly, unheard of, new, rare, admirable, having a singular beauty or foulness. Or things which are ridiculous or obscene. Some are weak and feeble, which can scarcely stir the memory; such as things that are small, habitual, and daily. For according to nature, the less a thing has moved our mind, the more quickly it slips from memory. Conversely, the more strongly it has moved it, the longer and more firmly it will remain impressed upon the memory.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 22,
+    "page_id": "6a4266e1dfbbb4d07aa7054b",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4266e1dfbbb4d07aa70535/22.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>16</page-num>\n<header>DE ARTE</header>\n<meta>catchword: Dacon-</meta>\n\n*Quae est secunda imaginum diuisio?*\n\nImagines aliæ sunt rerum, aliæ verborum.\n\nRes sunt duplices: visibiles & invisibiles, corporales & incorporales.\n\nCorporalium, aliæ substantiæ, aliæ accidentia. Voces similiter sunt duplices, quædam notæ, quædam ignotæ.\n\n*Quae est tertia diuisio imaginum?*\n\nImaginum, aliæ sunt simplices, vt dictionum, aliæ compositæ, vt sententiarum.\n\n*Quae sunt imagines dictionum?*\n\nQuando vna quæque figuratur speciali imagine, vt homo, equus, asinus, suas habent imagines.\n\n*Quae dicuntur imagines sententiarum?*\n\nQuando rem gestam, aut orationem ex pluribus dictionibus compositam, aut totam sententiam, historiam, fabulam, vel carmen vna imagine, vel pluribus comprehendimus: vt, quælibet plaga Ægypti habet suam imaginem, vel ranas, vel locustas.\n\n->Dacon-<-\n\n<vocab>imaginum diuisio, res visibiles, res invisibiles, corporales, incorporales, voces, imagines dictionum, imagines sententiarum, plaga Ægypti</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# ON THE ART\n\n*What is the second division of images?*\n\nImages are either of things or of words.\n\nThings are twofold: visible and invisible, corporeal and incorporeal.\n\nOf corporeal things, some are substances, others are accidents. Voices are likewise twofold: some known, some unknown.\n\n*What is the third division of images?*\n\nOf images, some are simple, such as those for individual words; others are composite, such as those for sentences.\n\n*What are images of words?*\n\nWhen each individual word is figured by a special image, such as a man, a horse, or an ass, each having its own image.\n\n*What are called images of sentences?*\n\nWhen we grasp a completed action, or an oration composed of several words, or an entire sentence, history, fable, or poem with one or more images: for example, each plague of Egypt has its own image, whether it be frogs or locusts.\n\n-><-",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 23,
+    "page_id": "6a4266e1dfbbb4d07aa7054c",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4266e1dfbbb4d07aa70535/23.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>17</page-num>\n<header>REMINISCENTIÆ.</header>\n<sig>B</sig>\n<meta>catchword: repete</meta>\n\n### *Da conditiones imaginum?*\n\n1. Omnis imago debet esse mirabilis, iucunda, ridicula, crudelis, aut alia insigni passione adfecta. Tales enim imagines plus mouent memorantem, & fortiùs imprimuntur.\n\n2. Imagines non debent esse ociosæ. Quæ enim exercitio carent, parùm vel nihil mouent.\n\n3. Imagines debent esse propriæ, ut rem memorandam repræsentent. Hinc dissimilitudo imaginum vitanda est.\n\n4. Multæ imagines non debent esse in vno eodemque loco. Generant enim confusionem. Multæ tamen imagines vnam rem significantes, possunt poni in vno loco: vt, pro bello, plures homines bellantes.\n\n5. Imagines inuentæ sunt propter res memorandas, sicut loca propter ordinem.\n\n6. Imagines debent sæpiùs repeti, vt eò firmiùs imprimuntur. Debilitas enim impressionis impedit memoriam.\n\n7. Cum ad quinarium perueneris,\n\n---\n\n<vocab>reminiscentia, imagines, memoria, mnemonic, quinarium, passio</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# REMINISCENCES.\n\n### *Give the conditions of images.*\n\n1. Every image ought to be marvelous, pleasant, ridiculous, cruel, or affected by some other notable passion. For such images move the person memorizing more, and are imprinted more strongly.\n\n2. Images should not be idle. For those which lack activity move little or nothing at all.\n\n3. Images ought to be appropriate, so that they represent the thing to be remembered. Hence, the unlikeness of images is to be avoided.\n\n4. Many images should not be in one and the same place. For they generate confusion. Many images signifying one thing, however, can be placed in one location: for example, for war, many men fighting.\n\n5. Images are invented for the sake of things to be remembered, just as locations are for the sake of order.\n\n6. Images ought to be repeated frequently, so that they are imprinted more firmly. For weakness of impression hinders memory.\n\n7. When you have reached the fifth position,",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "book_id": "6a4e5c0500c1250433dc2e93",
+  "book_url": "https://sourcelibrary.org/book/6a4e5c0500c1250433dc2e93",
+  "tradition": null,
+  "book": {
+   "id": "6a4e5c0500c1250433dc2e93",
+   "title": "Disputatio 20. De obligationlbus, quae quasi ex contractu nascuntur per quas personas nobis obligatio acquiratur et denique de modis, quibus tollitur obligatio. Quam sub praesidio D. Lucae langenmanteli a sparren in illustri Julia pro viribus defendere conabitur Petrus ebertz isnensis. Disputabuntur mense martio.",
+   "display_title": "Langemantel, Lucas: Disp. de obligationibus",
+   "author": "Langemantel, Lucas",
+   "language": "Latin",
+   "published": "1591",
+   "pages_count": 13,
+   "pages_ocr": 13,
+   "pages_translated": 13,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "mdz"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 13,
+   "distinct_page_numbers": 13,
+   "duplicate_records": 0,
+   "pages_with_ocr": 13,
+   "pages_translated": 13,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 13,
+   "pages_ocr_field": 13,
+   "pages_translated_field": 13
+  },
+  "run": [
+   3,
+   4,
+   5
+  ],
+  "pages": [
+   {
+    "page_number": 3,
+    "page_id": "6a4e5c0500c1250433dc2ebd",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4e5c0500c1250433dc2e93/3.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>dedication</page-type>\n<meta>Catchwords, image ornaments</meta>\n<vocab>Georgius Obrechtus, Leo Vveislandius, Petrus Ebertz, Argentinensis, Vlmensis, disputatio</vocab>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Horizontal ornamental printer's band at the top of the page, featuring symmetrical foliage scrolls and a central mask motif.</image-desc>\n\n# CLARISSIMIS AC CONSVLTISSIMIS VIRIS:\n\n## DOMINO GEORGIO OBRECHTO, IVRISCONSVLTO, ET *inclytae* Argentinensium Academiae Professori codicis ordinario:\n\n->ET<-\n\n## DOMINO LEONI VVEISLANDIO, IURIS CONSULTO CELEBERRIMAE REIPUBLICAE Vlmensis Syndico dignissimo:\n\n->*Dominis cognatis atque patronis suis colendissimis:*<-\n\n### PETRVS EBERTZ ISNENSIS:\n\n->*Hanc qualemcunque disputationem:*<-\n\n->In studiorum testimonium:<-\n->Debitae obseruantiae pignus: &<-\n->Grati animi significationem:<-\n->Dedicat Dat.<-",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<note>A horizontal ornamental printer's band at the top of the page features symmetrical foliage scrolls and a central mask motif.</note>\n\n# TO THE MOST DISTINGUISHED AND LEARNED MEN:\n\n## DOMINUS GEORGIUS OBRECHTUS, JURIST, AND *illustrious* Professor of the Code in the Academy of Strasbourg:\n\n->AND<-\n\n## DOMINUS LEO VVEISLANDIUS, JURIST AND most worthy Syndic of the celebrated Republic of Ulm:\n\n->*His most esteemed Lords, kinsmen, and patrons:*<-\n\n### PETRUS EBERTZ OF ISNY:\n\n->*This disputation, such as it is:*<-\n\n->As a testimony of his studies:<-\n->As a pledge of dutiful observance: &<-\n->As a token of a grateful heart:<-\n->Dedicates and presents.<-",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 4,
+    "page_id": "6a4e5c0500c1250433dc2ebe",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4e5c0500c1250433dc2e93/4.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>Disputatio vigesima. Continuatio.</header>\n<sig>A 2</sig>\n<meta>catchword: 8. Quae</meta>\n<vocab>obligatio, negotiorum gestio, actio directa, actio contraria, diligentia, dolus, fortuitus casus</vocab>\n\n<margin>a textus in principio Institutionibus de obligationibus quae quasi ex contractu nascuntur.</margin>\nPost genera contractuum enumerata, ea sequuntur obligationes, quae quasi ex contractu nasci videntur *a*.\n\n### Thes. I.\n\n<image-desc size=\"small\" type=\"woodcut\" significance=\"low\">Decorative woodcut initial 'I' within a square frame featuring floral and foliage motifs.</image-desc>\n<margin>b Paragraphus igitur cum quis Institutionibus hoc titulo lege si quis absens. Paragraphus in principio Digestis de obligationibus et actionibus factis lege 1. Digestis de negotiis gestis.</margin>\nInter has primum se offert ultro citroque; inde nata obligatio, quod alicuius negocia sine mandato ipsius quis gessit *b*.\n\n<margin>c dicta Paragraphus igitur lege 2. Digestis de negotiis gestis.</margin>\n2. Quo casu directa actio adversus gestorem competit, ut actus sui rationem reddat *c*.\n\n<margin>d dicta lege 2. Digestis de negotiis gestis.</margin>\n3. Eoque nomine condemnetur, si quid vel non ut oportuit, gessit, vel ex his negotiis retinet *d*.\n\n<margin>e dicta Paragraphus igitur lege si mater tua 24. Codice de usuris.</margin>\n4. Cum diligentiam exactissimam praestare debeat, si modo alius diligentior eo commodius administraturus esset negotia *e*.\n\n<margin>f lege 3. Paragraphus interdum Digestis de negotiis gestis.</margin>\n5. Nam si affectione summa coactus negotiis gerendis se obtulit, aequissimum est solum dolum praestari *f*.\n\n<margin>g lege si negotia 11. Digestis de negotiis gestis facit casus lege si pupillus lege 6. Paragraphus sed et si quis negotia Digestis de negotiis gestis Mynsingerus in dicto Paragraphus igitur numero 14.</margin>\n6. Quemadmodum et viceversa fortuitus casus interdum praestatur, veluti, si novum negotium, quod non sit solitus absens facere, eius nomine geratur *g*.\n\n<margin>h dicta Paragraphus igitur dicta lege 2. in fine de negotiis gestis.</margin>\n7. Contraria ei, qui utiliter gessit, competit, in id, quicquid eo nomine vel abest ei vel aſuturum est *h*.",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>Disputation twenty. Continuation.</header>\n\n<margin>a text in the beginning of the Institutes on obligations which arise as if from contract.</margin>\nAfter the types of contracts have been enumerated, those obligations follow which seem to arise as if from contract <note>original: \"a\"</note>.\n\n### Thesis I.\n\n<meta>Decorative woodcut initial 'I' within a square frame featuring floral and foliage motifs.</meta>\n<margin>b Paragraph: \"therefore when anyone\" in the Institutes under this title; Law: \"if anyone absent.\" Paragraph: \"in the beginning\" in the Digest on obligations and actions; Law 1 in the Digest on actions performed (negotiorum gestio).</margin>\nAmong these, first offers itself the obligation born mutually from the fact that someone has managed the business of another without his mandate <note>original: \"b\"</note>.\n\n<margin>c the said Paragraph: \"therefore\"; Law 2 in the Digest on actions performed.</margin>\n2. In which case, a direct action is available against the manager, so that he may render an account of his actions <note>original: \"c\"</note>.\n\n<margin>d the said Law 2 in the Digest on actions performed.</margin>\n3. And on that account he may be condemned, if he has managed anything either not as he ought, or if he retains something from this business <note>original: \"d\"</note>.\n\n<margin>e the said Paragraph: \"therefore\"; Law: \"if your mother\" 24 in the Code on interest.</margin>\n4. Since he ought to provide the most exact diligence, provided that someone else would have managed the business more advantageously than he <note>original: \"e\"</note>.\n\n<margin>f Law 3, Paragraph: \"sometimes\" in the Digest on actions performed.</margin>\n5. For if he offered himself to manage the business compelled by the highest affection, it is most equitable that he be held liable only for deceit <note>original: \"f\"</note>.\n\n<margin>g Law: \"if business\" 11 in the Digest on actions performed; it makes the case: Law \"if a ward,\" Law 6, Paragraph \"but also if anyone's business\" in the Digest on actions performed; Mynsinger in the said Paragraph: \"therefore\" number 14.</margin>\n6. Just as, conversely, a fortuitous case is sometimes provided for, for example, if new business is managed in the name of the absent person, which he is not accustomed to doing <note>original: \"g\"</note>.\n\n<margin>h the said Paragraph: \"therefore\"; the said Law 2 at the end in the Digest on actions performed.</margin>\n7. A contrary action is available to him who managed it usefully, for whatever is lacking to him on that account, or will be lacking <note>original: \"h\"</note>.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 5,
+    "page_id": "6a4e5c0500c1250433dc2ebf",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4e5c0500c1250433dc2e93/5.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n<margin>\n*i* lex si autem 8. paragraphus finis de negotiis gestis lex ultima Codex eodem.\n</margin>\n8. Quæ tamen ei, qui domino prohibente gessit, nequaquam datur *i*.\n\n<margin>\n*k* paragraphus tutores Institutionibus de obligationibus quæ quasi ex contractu dicta lex s. paragraphus tutela quoque Digestum de obligationibus et actionibus.\n</margin>\n9. Similis priori est ea obligatio, quæ ex tutelae administratione descendit *k*.\n\n<margin>\n*l* in principio Digestum de tutela et rationibus distrahendis lex quicquid Codex arbitrium tutelae.\n</margin>\n10. Oritur ex eâ actio tutelae directa, vt tutor actus sui rationem reddat, præstando dolum, culpam, & quantam in suis rebus diligentiam *l*.\n\n<margin>\n*m* lex 1. paragraphus hanc actionem Digestum de tutela et rationibus distrahendis.\n*n* dicta lex 1. paragraphus hanc actionem lex 1. Codex de herede tutorum et curatorum.\n</margin>\n11. Et hæc pupillo, eiusque heredi, *m* in tutores, eorumque heredes *n* competit.\n\n<margin>\n*o* dicta lex 1. paragraphus nunc tractemus Digestum de tutela et rationibus distrahendis lex 23. Codex de diuidenda tutela.\n</margin>\n12. Diuisionis atque ordinis beneficio, si plures tutores sint, obseruando *o*.\n\n<margin>\n*p* lex 1. paragraphus 5 titulus Digestum de contraria tutela et Utili actione dicta paragraphus tutores Institutionibus de obligationibus quæ quasi ex contractu.\n</margin>\n13. Contraria tutori datur, ad recipiendum id, in quod ipsi pupillus ex administratione obligatus est *p*.\n\n<margin>\n*q* lex 1. paragraphus in tutela Digestum de tutela et rationibus distrahendis.\n</margin>\n14. Ex vna eademque illa obligatione *q* & de rationibus distrahendis est actio.\n\n<margin>\n*r* lex 2. in principio Digestum de tutela et rationibus distrahendis.\n*s* dicta lex 1. paragraphus considerandum cum paragrapho sequenti lex 2. paragraphus 1 Digestum de tutela et rationibus distrahendis.\n</margin>\n15. Hac is, qui in tutela gerenda rem ex pupilli bonis abstulerit, *r* in duplum cui rei persecutio inest, tenetur *s*.\n\n<margin>\n*t* dicta lex 1. in fine lex 4. in principio Digestum de tutela et rationibus distrahendis facit paragraphus finalis institutionibus de Atiliano tutore.\n</margin>\n16. Et tum competit, cum & tutelae actio, hoc est, finita demum tutela *t*.\n\n<margin>\n*u* Vide Reichsabscheidt zu Augsburg anno 48. titulus von pupillen und minderjährigen paragraphus 3. parte 2. folio 59. sequitur Churfürstliche Pfalz Vormundschaftsordnung titulus 9. Arnoldus ab Haersolt in aduersariorum actionum parte 4. actione 22. numero 5.\n</margin>\n17. Quod tamen hodiè secus est, cum singulis annis administrationis reddenda sit ratio *u*.\n\n18. Actiones prioribus affines, vtpote ex administratione adeoque quasi contractu natæ, sunt, vtilis curationis causa\n\n<vocab>tutela, pupillus, actio tutelae, obligatio, curator, Digestum, Codex, Reichsabscheidt, Vormundschaftsordnung</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<margin>i Law: \"if however\" 8, end of paragraph in the Digest on actions performed; the final law in the Code on the same.</margin>\n8. Which, however, is by no means granted to him who managed it against the wish of the owner <note>original: \"i\"</note>.\n\n<margin>k Paragraph: \"tutors\" in the Institutes on obligations which arise as if from contract; the said Law 8, paragraph: \"guardianship also\" in the Digest on obligations and actions.</margin>\n9. Similar to the former is that obligation which descends from the administration of guardianship <note>original: \"k\"</note>.\n\n<margin>l In the beginning in the Digest on guardianship and the distribution of accounts; Law: \"whatever\" in the Code on the discretion of guardianship.</margin>\n10. From it arises a direct action of guardianship, so that the tutor may render an account of his actions, by providing for deceit, fault, and the same diligence as in his own affairs <note>original: \"l\"</note>.\n\n<margin>m the said Law 1, paragraph: \"this action\" in the Digest on guardianship and the distribution of accounts; the said Law 1, paragraph: \"this action\"; Law 1 in the Code on the heir of tutors and curators.</margin>\n11. And this is competent to the ward and his heir, against the tutors and their heirs <note>original: \"m\" and \"n\"</note>.\n\n<margin>o the said Law 1, paragraph: \"let us now treat\" in the Digest on guardianship and the distribution of accounts; Law 23 in the Code on dividing guardianship.</margin>\n12. By observing the benefit of division and order, if there are several tutors <note>original: \"o\"</note>.\n\n<margin>p Law 1, paragraph 5, title in the Digest on contrary guardianship and useful action; the said paragraph: \"tutors\" in the Institutes on obligations which arise as if from contract.</margin>\n13. A contrary action is granted to the tutor, to recover that for which the ward is obligated to him from the administration <note>original: \"p\"</note>.\n\n<margin>q Law 1, paragraph: \"in guardianship\" in the Digest on guardianship and the distribution of accounts.</margin>\n14. From one and the same obligation there is also the action concerning the distribution of accounts <note>original: \"q\"</note>.\n\n<margin>r Law 2, in the beginning in the Digest on guardianship and the distribution of accounts; the said Law 1, paragraph: \"it must be considered\" with the following paragraph; Law 2, paragraph 1 in the Digest on guardianship and the distribution of accounts.</margin>\n15. By this, he who has stolen property from the goods of the ward during the administration of the guardianship is held for double, to which is added the prosecution of the thing itself <note>original: \"r\" and \"s\"</note>.\n\n<margin>t the said Law 1, at the end; Law 4 in the beginning in the Digest on guardianship and the distribution of accounts; it makes the final paragraph in the Institutes on the Atilian tutor.</margin>\n16. And it is then competent, when the action of guardianship is also competent, that is, only when the guardianship is finished <note>original: \"t\"</note>.\n\n<margin>u See the Reichsabscheidt (Imperial Decree) of Augsburg, year 1548, title \"on wards and minors,\" paragraph 3, part 2, folio 59; follows the Electorate of the Palatinate Guardianship Ordinance, title 9; Arnoldus ab Haersolt in Adversaria of actions, part 4, action 22, number 5.</margin>\n17. Which, however, is different today, since an account must be rendered every year of the administration <note>original: \"u\"</note>.\n\n18. Actions akin to the former, inasmuch as they are born from administration and thus from quasi-contract, are the useful action of curatorship",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

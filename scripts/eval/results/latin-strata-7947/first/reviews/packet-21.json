@@ -1,0 +1,737 @@
+[
+  {
+    "book_id": "69af11509553e8701d660b15",
+    "slot": 45,
+    "title": "Medicinae Libri Octo",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Celsus, De medicina (Aldine 1528) in medical-heritage collections; right shelf.",
+    "rights_flag": null,
+    "structure_note": "352 pages, 350 with OCR, 342 translated; the leaves sampled (printed 35, 79, 123) run in order with matching running heads (TERTIVS, QVINTVS, SEPTIMVS). Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "si flauus manet stomachus",
+            "image": "Si ſiccus manet ſtomachus",
+            "problem": "'siccus' (dry) misread as 'flauus' (yellow); changes the indication",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "si flauus manet stomachus",
+            "english": "If the stomach remains yellow",
+            "problem": "carries the OCR misread; the image says the stomach stays dry",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Fortasse enim curationi",
+            "english": "Perhaps it will become more susceptible to treatment.",
+            "problem": "the sentence breaks off at the foot of the page; the translation finishes it from what it guesses comes next",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 177,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "vulnus … Vinum … movere",
+            "image": "uulnus … Vinum … moueri",
+            "problem": "u/v silently normalised to v, while p89 and p265 keep the printed u",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "& sano quoq; eo tumorem permanere",
+            "english": "and it is still there with the swelling",
+            "problem": "the point that swelling stays even after the wound has healed is lost",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ac quodcunq; sensu caret, quod non naturaliter sentit, quod nimium aut aridum, aut humidum est. Quod aut pallidum … id purum non est.",
+            "english": "and as it lacks sensation, which does not feel naturally, it is either too arid or too moist.",
+            "problem": "the list of signs of an unclean wound (no feeling, abnormal feeling, too dry or too moist) is rendered as a confused description of a clean one",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation field ends in <summary>…</summary> and <keywords> blocks (harmless if the renderer strips them)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 265,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "oræq; scroti futuris inter se committendæ",
+            "image": "oræq; ſcroti ſuturis inter ſe committendæ",
+            "problem": "long-s 'suturis' (with sutures) misread as 'futuris'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "parunlum … uinari lino",
+            "image": "paruu-lum … uinciri lino",
+            "problem": "small misreadings",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "quæ ipsa si robu[stus est …] (page ends)",
+            "english": "If the patient is robust, it is to be cooked in vinegar; if delicate, in honey. There is no doubt that … similar to those things which we have prescribed for every other type of wound.",
+            "problem": "about six sentences that are not on this leaf (the rest of the chapter, from the next page) are appended to the translation",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "oræq; scroti futuris inter se committendæ, neq; paucis … neque multis",
+            "english": "the edges of the scrotum must be brought together for the future, not with few … nor with many",
+            "problem": "'with sutures' becomes 'for the future', so 'not with few … nor with many' has nothing to refer to",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this Aldine Celsus is good, and the translation is mostly faithful. But p265's translation runs on for about six sentences taken from the next page, and the misread 'flauus' and 'futuris' are carried into fluent, wrong English."
+  },
+  {
+    "book_id": "6a4bd575ce03c0929df13275",
+    "slot": 76,
+    "title": "Disquisitionem Iuridicam Inauguralem De Foenore Nautico …",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned. It is a 1700 juridical dissertation on maritime loans, a legitimate early-modern Latin source but outside the esoteric core.",
+    "rights_flag": null,
+    "structure_note": "24 pages, all with OCR and translation; printed 5, 11, 16 sit on scans 7, 13, 18, consistent with 2 leaves of front matter. Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Covarruviam III. Variarum 2. numero 5. et sequentes",
+            "image": "Covarruv. III. Var. 2. num. 5. & seqq.",
+            "problem": "abbreviated citations silently expanded instead of transcribed (also 'legem 40. Digestorum Locati' for 'l.40.ff. Loc.', 'lege 5. Digestorum hujus tituli' for 'l.5.ff.h.t.', 'exempli gratia' for 'e.g.')",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "mutuarium",
+            "image": "mutuatarium",
+            "problem": "word normalised",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<meta>catchword: respici,</meta>",
+            "image": "respici, (the last word of the text, set flush right)",
+            "problem": "the run-over last word is tagged as a catchword",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "per l.40.ff. Loc.",
+            "english": "<note>*Digest* 19.2 (Locati), Law 40</note>",
+            "problem": "the translation adds the book and title number '19.2', which is not on the page (correct, but editorial apparatus); likewise 'Digest 22.2, Law 5'",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with a <note> describing the image: 'The page number at the top is centered and flanked by decorative floral and scrollwork ornaments.'",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Lex 26. §. 1. Codex de Usuris … Novella 106 … numero 91",
+            "image": "L.26.§.1.C. de Usuris … Nov.106 … num.91",
+            "problem": "abbreviations silently expanded",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "ris periculo committitur, in quantas convenerit usuras, hanc pecuniam dare creditor potest.",
+            "image": "(set in italic as a quotation)",
+            "problem": "the italic of the quoted law is lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "foenus legitimum",
+            "english": "legitimate lending",
+            "problem": "the term means the legal rate of interest",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with an image-description <note> ('Typographical ornaments consisting of fleurons and scrollwork…')",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Cujac. ad African. pagina 346",
+            "image": "Cujac. ad African. p.346.",
+            "problem": "half-expanded citation; elsewhere on the page 'l. 3. C. h. t.' is kept as printed, so the convention is inconsistent",
+            "severity": "minor",
+            "class": "O9"
+          },
+          {
+            "ocr": "(italics) per vitium sive culpam debitoris",
+            "image": "per vitium (italic) sive culpam (roman) debitoris (italic)",
+            "problem": "the italic spans differ from the print",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text is read accurately and translated well, but the OCR silently expands the legal abbreviations, and on two of the three pages the translation opens with a note describing the decorative page-number ornament."
+  },
+  {
+    "book_id": "69f32becb6c06ca8a5e75ef3",
+    "slot": 7,
+    "title": "Homiliary",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned. These are 12th-century Caroline-minuscule homiliary leaves (Harvard) and a legitimate primary source.",
+    "rights_flag": null,
+    "structure_note": "6 leaves from different homilies: p2 is a sermon on the cross and the good thief (pencilled 'Sermo CLV, P.L. 39'), p4 is Augustine on John 13:31 (pencilled 'fer. V Palmarum, In Cena Domini'), and p5 is the homily on the feeding of the five thousand. Consistent with fragments of a homiliary, not a continuous book.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Non mortuum resuscitans. non marem uitiens.",
+            "image": "Non mortuū reſuſcitans. non mari et uenti imperans. non demones eiciens.",
+            "problem": "a clause ('not casting out demons') is dropped and 'commanding sea and wind' is garbled",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "et quanta maior oratio",
+            "image": "et quanta maior o[b]latio",
+            "problem": "'oblatio' (offering) misread as 'oratio' (prayer)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Neque dicit. sed potius honorauit",
+            "image": "Neq; deicit. sed potius honorauit",
+            "problem": "'deicit' (casts down) read as 'dicit' (says)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "fumo araru et modo robustorum",
+            "image": "fumo ararū et nido[re] rubustorū",
+            "problem": "'nidore' (reek) read as 'modo'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "in altitudine crucifixi immolatur",
+            "image": "inaltitudine crucis immolatur",
+            "problem": "'crucis' read as 'crucifixi'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "et quanta maior oratio. tanto eminentior sanctificati",
+            "english": "as much greater as the prayer is, the more eminent is the sanctification",
+            "problem": "the offering becomes 'prayer' (from the OCR); the contrast between the sheep and the spiritual offering is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Neque dicit. sed potius honorauit paradisum",
+            "english": "Nor does he say so, but rather he honored paradise",
+            "problem": "should read 'he does not cast it down but rather honoured paradise'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "non marem uitiens",
+            "english": "not by taming the sea",
+            "problem": "the fluent rendering hides a garbled source and drops 'not casting out demons'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "sed dictum est nec clarificatus est filius hominis … sed petra significabat",
+            "image": "sed dictū ē nc [nunc] clarificatus ē filius hominis … sed petra erat xp̄s",
+            "problem": "'nunc' read as 'nec'; 'petra erat Christus' (the rock was Christ) replaced by 'petra significabat', which destroys the scriptural point of the argument",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Quid ait dies. cum exisset nox. dicit redemptor.",
+            "image": "Quid ait dies. cū exiſſet nox. qd ait redēptor. cū exiſſet uenditor.",
+            "problem": "the clause 'when the seller had gone out' is dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "hoc enim traditurus … ita nunc nunc clarificatus est … quia uim impendet … aut tamen de illo … si hoc dies ille magister … prefiguret manu aliquod … finem scilicet",
+            "image": "hoc ē dn̄m traditurus … ita ne nunc clarificatus ē … quia iam impendet … ait tamen de illo … si hoc ds ille magister … prefiguret magnū aliqd … in finem sc̄li",
+            "problem": "many meaning-changing misreadings of abbreviations (dominum, itane, iam, ait, deus, magnum, saeculi)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>fer. v. Palmeriorum In Cena Domini</margin>",
+            "image": "modern pencil note at the head of the leaf",
+            "problem": "a later hand is transcribed as a margin of the text",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "sed dictum est nec clarificatus est filius hominis quem admodum non est dictum petra significabat Christum. sed petra significabat.",
+            "english": "but it is said, nor is the Son of Man glorified, just as it is not said the rock signified Christ, but the rock signified.",
+            "problem": "the passage says the opposite of Augustine's point: scripture says 'now is glorified' and 'the rock WAS Christ'. The English is self-contradictory nonsense",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "fer. v. Palmeriorum In Cena Domini",
+            "english": "Friday, Week of Palms, Maundy Thursday",
+            "problem": "'feria V' is Thursday, not Friday",
+            "severity": "moderate"
+          },
+          {
+            "source": "si hoc dies ille magister significabat",
+            "english": "if that day, that master, was signifying",
+            "problem": "'deus ille magister' (God, that teacher) becomes 'that day'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Uideo hic aliquod quod prefiguret manu aliquod",
+            "english": "I see here something that prefigures one thing by hand",
+            "problem": "should be 'something great'; nonsense rendered fluently",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Fenum in quo discipuli turbam reficitur",
+            "image": "Foenū inquo diſcūbens turba reficitur",
+            "problem": "'discumbens turba' (the reclining crowd) misread as 'discipuli turbam'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "uirorum quippe non solent inseripturis pfectiones quinque figurari. quod feminei mollities nulla corrup.",
+            "image": "uirorū quippe nōe solent inſcripturiſ pfectiores quinq; figurari. quoſ feminea mollities nulla corrūp[it]",
+            "problem": "'nomine' read as 'non', and 'quos' as 'quod', which inverts the clause",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "eorum que non scripta indicaffe incelus",
+            "image": "eorū que nōa [nomina] scripta indicasse incelis",
+            "problem": "'nomina' (names) read as 'non': the source says their names are written in heaven",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ab a reuelata ei parua",
+            "image": "tibꝫ et reuelaſti ea paruulis",
+            "problem": "the first line of column 2 is garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quod ea que sapientibus abscondit",
+            "image": "quod ea que ſupbientibꝰ abſcondit",
+            "problem": "'superbientibus' (the proud) replaced by the familiar gospel word 'sapientibus'",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "uisus unde licet",
+            "image": "uiſuſ uidelicet",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "uoluntate carnis edomat",
+            "english": "subdue it to the will of the flesh",
+            "problem": "reversed: the homily says to TAME the will of the flesh",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "eorum que non scripta indicaffe incelus",
+            "english": "things which were not written, indicating those things that are hidden",
+            "problem": "the source says their names are written in heaven (Lk 10:20); the English says nothing was written",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "uirorum quippe non solent … quod feminei mollities nulla corrup.",
+            "english": "perfection is not customarily figured by the feminine, because there is no corruption of feminine softness",
+            "problem": "the source says 'men' stands for the more perfect, whom no feminine softness corrupts; the English is incoherent",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "uisus unde licet",
+            "english": "sight, from whence it is permitted",
+            "problem": "nonsense from the misread 'videlicet'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Hi seruili cophini solent opa fieri unde de populo qui in luto ac lateribus seruiebat in egypto",
+            "english": "These are accustomed to be the baskets of the labors, whence he served in Egypt with mud and bricks.",
+            "problem": "garbled: baskets are for servile work, as of the people who served in mud and brick in Egypt",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<column-break/> tag inside the reader translation, mid-sentence",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "These are real 12th-century homiliary leaves, but flash-lite misreads the abbreviated Caroline minuscule throughout, and the fluent translation turns those misreadings into statements the homilies do not make: 'subdue it to the will of the flesh', 'the rock signified', 'things which were not written'. Not fit to show without a re-read."
+  },
+  {
+    "book_id": "69bda035f6d63c91974856ae",
+    "slot": 91,
+    "title": "Speculum imaginum veritatis occultae …",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Masen's emblem and symbol encyclopaedia (1714). No shelf assigned, but it fits the library's symbol, emblem and hieroglyphic interests.",
+    "rights_flag": null,
+    "structure_note": "1280 pages, 1270 translated; printed 244, 562, 877 on scans 323, 640, 958 follow consistently. Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 323,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "dextra offices vel cultrum furtivum",
+            "image": "dextra forfices vel cultrum furtivum",
+            "problem": "'forfices' (shears) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "in altera: Obscura",
+            "image": "in altera: Obſecra",
+            "problem": "'Obsecra' (entreat; cf. 2 Tim 4:2 'argue, obsecra') misread as 'Obscura'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(no letter)",
+            "image": "S (section letter above SALUS)",
+            "problem": "the alphabet heading is dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "peros religio. August. vel armata Mulier, pro hasta crucem ferens … in pectore solem & longam manu crucem præfert. Cæsar.",
+            "english": "(nothing; the translation starts at REMORSUS CONSCIENTIAE)",
+            "problem": "the first paragraph of the page (about 7 lines, the end of the RELIGIO entry) is not translated",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "dextra offices vel cultrum",
+            "english": "a file or a secret knife",
+            "problem": "the attribute is shears",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "in altera: Obscura",
+            "english": "on the other: Obscure",
+            "problem": "the motto should be 'Entreat'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "altera clavum tenet",
+            "english": "a nail in the other",
+            "problem": "on Salus/Fortuna coins the clavus is a rudder",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page</meta> in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 640,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Dicamus Prol",
+            "image": "Dicamus ſanè Pro…",
+            "problem": "a word at the curved gutter edge is lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 958,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>b.1.10. cidi co conferundi- … fola a ræma ia her- [5] Et ccluso- tur re- … itur.</margin>",
+            "image": "cut-off text strip of the facing page (verso) at the left edge",
+            "problem": "the neighbouring page's strip is transcribed as a margin of this page",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "(4) Latet in dispositos casses, (5) Alterius quoque sunt generis homine conspecto, aut territa cursu sese tacito proripit cornicum magnitudine",
+            "image": "(4) Latet homine conſpecto, aut territa curſu ſeſe tacito proripit in diſpoſitos caſſes. (5) Alterius quoque ſunt generis coturnicum magnitudine",
+            "problem": "the lines are reordered on the curved page and 'coturnicum' (quail) is read as 'cornicum' (crows), so the ptarmigan's behaviour is attached to 'another kind'",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Latet in dispositos casses, (5) Alterius quoque sunt generis homine conspecto … cornicum magnitudine",
+            "english": "It hides in prepared nets. There are others of the same genus that, upon seeing a man or being frightened, rush away in silent flight, the size of crows",
+            "problem": "the source says the ptarmigan hides when it sees a man, or runs in silent flight into the set nets, and that the other kind is quail-sized; the English misattributes the behaviour and gives the wrong size",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "(16) Stesichori vatis …",
+            "english": "(note 16 omitted)",
+            "problem": "a footnote marker is dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean pages of this 1714 emblem encyclopaedia read well (p640), but p323's translation silently drops the opening paragraph and mistranslates two attributes. On p958 the curved page scrambles the line order (the ptarmigan's behaviour goes to 'another kind', the size to crows), and the OCR pane includes a strip of the facing page."
+  },
+  {
+    "book_id": "69f33a4e876dd827cbc57c95",
+    "slot": 51,
+    "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "No tradition or collection assigned. A 1562 manuscript oration praising the city of Lodi (Laus Pompeia), a civic humanist encomium unrelated to the library's core traditions.",
+    "rights_flag": null,
+    "structure_note": "52 pages, 52 with OCR but only 45 translated (7 untranslated, perhaps blanks or binding). Pencil foliation 4, 15, 26 on scans 14, 25, 36 runs consistently.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "per hoc reliquis aboliorem sustulit",
+            "image": "per hoc reliquis atro-ciorem sustulit",
+            "problem": "'atrociorem' (more atrocious) misread as 'aboliorem'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quasit haec structura",
+            "image": "euasit hæc structura",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "sita opera, praestantis formae, et rarae maiestatis, euasit haec structura, ob id, nomen Laudis (ni me mea fallat opinio) sortitur, tanquam in perennia lustra … supprema in gloria.",
+            "english": "(not translated; the English starts at 'This was brought into a Roman colony')",
+            "problem": "the first six lines of the page, which explain the name 'Laus', are dropped",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "quando à Mediolanensibus, ferè (page ends)",
+            "english": "when it was almost entirely razed to the ground by the Milanese through devastations, fires, plundering, rapine, and overthrowings. (O bloody and inhuman work!)",
+            "problem": "text from the next page is appended; the devastations and the exclamation are not on this leaf",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "priorem, ac per hoc reliquis aboliorem",
+            "english": "the first, and therefore the most forgotten by the rest",
+            "problem": "should be 'more atrocious than the rest'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Coloneum",
+            "image": "Coto-neum",
+            "problem": "place name (Codogno) misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Mitto castella … unà et illorum pinguedinem referre",
+            "english": "I omit the castles … and also mention their richness",
+            "problem": "praeteritio: he omits to RELATE their richness, but the English says he mentions it",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "conscripti auditores",
+            "english": "dear listeners",
+            "problem": "the senatorial address ('conscript hearers') is flattened",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Oldradus Tressonus",
+            "image": "Oldradus Tressenus",
+            "problem": "name misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "auspicamur … Et et",
+            "image": "auspicemur … E,n et",
+            "problem": "small misreadings",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The clear humanist hand is mostly read well, but p14's translation drops the page's first six lines and appends a sentence and an exclamation from the next page, so on that page the two panes do not match the leaf. The other pages are sound."
+  }
+]

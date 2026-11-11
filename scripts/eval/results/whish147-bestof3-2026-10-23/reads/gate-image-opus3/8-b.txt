@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf reads ദിവശ്ശ്രാസ്ഃത്ര' എഷെ ‖ പ്രത്യക്ഷതശ്ശ്രാവിഷയ്യാഗ്ഗ്കിരൂപ്പിവി ‖ ദ്ധ്യാഭ്യഃ ഗുണവൈഷമ്യവി. C matches it stroke for stroke. A starts with ദിഷ്ട്വാ…, marks എഷെ as [illegible] and writes ഗ്ദ്രാ…ഗ്രഹിത്രത്വാ where the leaf has ശ്ശ്രാ…ഗ്ഗ്കിരൂപ്പി. B has ദ്വിവൎജ്ജാ… and several [illegible] gaps.
+
+CHECK | row 6: The leaf reads ധാസ്സഹാഭേദ്ദീവര ‖ മധ്നശക്തിരുദ്ദ്യാ…ദ്ദധ ‖ ാല…വ. C matches. B's start is close (ധാസ്സഹാചെദിവര), but it has [illegible] gaps. A's യാന്മഹാ… and രയനഗക്കി… are not the letters on the leaf.
+
+CHECK | row 10: The leaf reads ദാ?ക്ഷേസിദ്ധൈവാ… ‖ …ല്ലാംകഗസ്തുവിയഃ। ‖ യഃ।ഭ്രഷ്ടിനവിനാടാവൈ…. C matches, though it misreads the first ന as ര and places the first string-hole mark too late. A's start (ദാനക്ഷേസിദ്ധകൊ) is close, but its middle (ാണ്ണ്വാസിഭക്തം…) is wrong. B is mostly [illegible].
+
+PICK | C
+
+RANK | C, B, A
+
+WHY | C's letters match the leaf's strokes across rows 1, 6 and 10. B has some correct letters but loses much of the leaf to [illegible]. A reads fluently in places, but many of its letters aren't on the leaf (for example row 4's യാമവാരമാനാകേ where the leaf has യാമഹാഭെമാഹാദേ).

@@ -1,3 +1,6 @@
+import { translateEngineFor, validateTranslationTable } from '../../../scripts/lib/translation-routing.mjs';
+import translationRoutingTable from '../../../scripts/lib/translation-routing-table.json';
+
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
   { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Best Quality - Use for BPH and complex content' },
@@ -9,6 +12,10 @@ export const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 // Cost-efficient model for standard OCR and translation
 export const DEFAULT_LITE_MODEL = 'gemini-3.1-flash-lite';
+
+// Translation routing by row (#7170): the same JSON getTranslateModelForBook in
+// scripts/lib/translate-core.mjs reads. Validated at import, as there.
+const TRANSLATION_ROUTING_TABLE = validateTranslationTable(translationRoutingTable, [DEFAULT_MODEL, DEFAULT_LITE_MODEL]);
 
 // There is deliberately NO "default batch model". Batch vs realtime is a
 // lane, not a quality tier; the model is the book's (`getModelForBook`). A
@@ -128,17 +135,7 @@ export function getModelForBook(book: RoutableBook | null): string {
  * faithfulness gap. Do not re-sync this with OCR routing without new evidence.
  */
 export function getTranslateModelForBook(book: RoutableBook | null): string {
-  if (book?.image_source?.provider === 'bph') {
-    return DEFAULT_MODEL;
-  }
-  // Tibetan is the one measured exception (#4742) — see isTibetanBook in
-  // scripts/lib/translate-core.mjs for the evidence.
-  if (/^\s*tibetan\b/i.test(String(book?.language ?? ''))) {
-    return DEFAULT_MODEL;
-  }
-  // #5695 — see isFlashMeasuredLanguage in scripts/lib/translate-core.mjs.
-  if (/^\s*(ancient\s+)?(greek|hebrew|heb|aramaic|arabic|persian|sanskrit|pali|chinese|classical\s+chinese)\b/i.test(String(book?.language ?? ''))) {
-    return DEFAULT_MODEL;
-  }
-  return DEFAULT_LITE_MODEL;
+  // The rows (bph, tibetan #4742, flash-measured #5695; default lite) live in
+  // scripts/lib/translation-routing-table.json, read by both routers (#7170).
+  return translateEngineFor(TRANSLATION_ROUTING_TABLE, book);
 }

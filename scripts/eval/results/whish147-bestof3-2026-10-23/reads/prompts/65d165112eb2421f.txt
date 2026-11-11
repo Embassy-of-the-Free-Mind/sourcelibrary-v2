@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ūrddhvannakkiṇemikathācokkaṃtarggamevāntratapastrāṃodevānāṃpadippālināntarikṣai
+2. vakṣyatedevañcaindramitrāṃbhūmiyantarapṛkṣitiṅṅeṣṭhavāvaiśyāvaidevatāyanādicatandra
+3. ṭānamānāmaḥpūrttami [illegible] ddiyaratekiṣūḥciravikārakaevaivṛkṣavṛṣṭalakṣmīṇaḥprarūyiāvujire
+4. takṣāḥvikkārarāra [illegible] ‖ pādināṃovaivakkāvirakoābainaḥ ‖ ovairāgyādityādi
+5. oyoṣikṣayādioṭā ‖ ṣadaḻnā [illegible] ṇṭinakiraḥdhamaṇiya ‖ maparamidatrinajñā
+6. naṃparabhyaikṣataraḥtantya ‖ dditantyataiparārāgyādajñānaprakṛ ‖ ttiṣupradhānādita
+7. mātracaghvratāsvala ‖ yaḥsthūlagarireṇavikāriṇyāva ‖ oddhāganvimitāna
+8. oyāgaḥtakṣināma ‖ dyānaṃvikkamivamannoratantra ‖ mikkaṃsvarkkāle
+9. khanassaṃsāraṇālkkātrajñānaṃpadyajñānatandāmiccānamakhavataṣācokaṃjñe
+10. ṭhānādimavirāgāccatapādyaśrīntyāsaṃkālūyālitetravajñāyakaramolokkā
+
+TRANSCRIPTION B
+1. trarttāndakṣiṇotikathādacokkaḥantarggahondrotepaśrutrāṃdevānāṃpavippalināntraviṣṭai
+2. vakṣedevañcaiṭṭamityāṃbhūmiyaktapṛṣṭheññaiggovāvyādevatāmaranādicantanābhya
+3. ṭānamānāmaḥpūrttha [illegible] dimiyakteṣiṣṭhāḥvikāramakṣevaṣṣyalakṣmaṇaḥpretayamātmme
+4. tākṣādyādikādaśa [illegible] ‖ pāddhanāḥdaivakādikakādaśaḥ ‖ vaivarttāgyamityādi
+5. oyāmiṣayādimedā ‖ ṣadaḻnāñjūdīnakataḥyāmamiya ‖ mahatattvamitānajña
+6. naṃparaśśmatetanya ‖ matanyataiparāgyādajñānyaprakṛ ‖ tiṣṭhapradhānādita
+7. mātracaśśronasthala ‖ yaḥsthūlaśarīramenaraṇaiviṣamamayāpa ‖ laṭṭāśanimittena
+8. oyāgaḥtrajñīnakṣa ‖ dvidānaṃmikkamivamantrāmetanatra ‖ mikkaṃsarkkādala
+9. unnassaṃsārantālkṣa [illegible] ātrajñikānaṃparaśśma ‖ mmatetadāmmyāta ‖ tammavatathācoktaṃjñe
+10. ṭhanādebhavināśāddhva [illegible] kṣethāktaṃññanyāsaṃ ‖ kkāyapālitentyava ‖ lajñāyatemomahākṣṭā
+
+TRANSCRIPTION C
+1. [illegible] rttānukkiṇomi kathāco ‖ ktāḥ antarggatairantraitepajñātāṃbhedavā ‖ nānāṃparipālināntariṣṭai
+2. vakṣārebhavañcaindriyāṃbha ‖ bhiślayaratapṛṣṇaññuṣṭāvāvaiśyāveda ‖ davatāśramanāśricatantra
+3. ṭānamānāmaḥpṛtthimi [illegible] ‖ [illegible] ddhiścayare kṣiprāḥvikārakevaivaśyapla ‖ lakṣmaṇaḥprūjayanitrai
+4. takṣāravikāranara [illegible] ‖ pādināṃcaivakārikakāraṇaḥ ‖ vairāgyamityādi
+5. bauddhikṣayādibhedā ‖ ṣṭadalnāguññadinarakiraḥyāmaṇiya ‖ micaramyamittānañja
+6. naṃparatryakṣate tantra ‖ mmrantrapairānāgrāddyānuprakṛ ‖ bhiṣupradhānādita
+7. mātrapañcvatāsvala ‖ yaḥsthūlaśarīrairāṇāviṣayayopa ‖ laṭṭāgandhamittana
+8. mayogaḥtarkkīnāddha ‖ āntranaṃmūkkakamivamantrābhitannū ‖ mikkaṃsarkkāle
+9. ṛndassaṃsāraṇālkṣa ‖ ātrajñānāṃparaśyajñānaratādimṛrtra ‖ lāravatathācokaṃ [illegible]
+10. ṭhānādigravirāgārkṣa ‖ bhamākkṛnnyasaṃkāṣolitaityava ‖ pajñāratarumokṣaḥ
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

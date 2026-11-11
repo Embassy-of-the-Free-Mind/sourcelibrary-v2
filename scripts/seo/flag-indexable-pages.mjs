@@ -41,9 +41,11 @@
  *   node scripts/seo/flag-indexable-pages.mjs --include-ft --ft-language=Latin
  *   node scripts/seo/flag-indexable-pages.mjs --include-quality --quality-cap=25 --exclude-books=<file> --no-reconcile
  *   node scripts/seo/flag-indexable-pages.mjs --clear          # revert
+ *   node scripts/seo/flag-indexable-pages.mjs --cited-only     # only pages our articles/letters link to; never unsets
  */
 import { readFileSync } from 'node:fs';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
+import { citedPageRefs } from '../lib/cited-pages.mjs';
 
 const args = process.argv.slice(2);
 const has = (f) => args.includes(f);
@@ -65,7 +67,10 @@ const MIN_TRANSLATION_CHARS = parseInt(val('--min-translation-chars', '300'), 10
 // Additive run: set flags, never unset. Use when the options that produced the
 // currently-flagged set are not being reproduced in this run — reconcile would
 // otherwise unflag every page an omitted arm had opened.
-const NO_RECONCILE = has('--no-reconcile');
+// Arm 4, cited pages, runs in EVERY mode so a full run's reconcile keeps them.
+// --cited-only runs that arm alone and never unsets (articles-cited-pages.yml).
+const CITED_ONLY = has('--cited-only');
+const NO_RECONCILE = has('--no-reconcile') || CITED_ONLY;
 const EXCLUDE_FILE = val('--exclude-books', null);
 const excludedBooks = new Set(
   EXCLUDE_FILE
@@ -173,7 +178,8 @@ const ftPerBook = new Map(); // book_id -> count (for --ft-cap)
 const qualified = []; // { id, seo_url }
 let scanned = 0, skippedThin = 0, skippedNoSlug = 0, skippedType = 0, skippedCap = 0;
 
-for await (const page of cursor) {
+// --cited-only skips Arms 1–3 entirely (the cursor is never iterated).
+for await (const page of CITED_ONLY ? [] : cursor) {
   scanned++;
   if (page.page_type === 'digitizer-insert' || page.page_type === 'archived-spread') { skippedType++; continue; }
   if (!hasSubstantialText(page)) { skippedThin++; continue; }
@@ -199,7 +205,7 @@ for await (const page of cursor) {
 // Per-book aggregation on the {book_id, page_number} index; lengths are computed
 // server-side so no page text crosses the wire.
 let qualityBooks = 0, qualityAdded = 0;
-if (INCLUDE_QUALITY) {
+if (INCLUDE_QUALITY && !CITED_ONLY) {
   const seen = new Set(qualified.map((q) => q.id));
   const candidates = (await books.find(
     {
@@ -242,6 +248,34 @@ if (INCLUDE_QUALITY) {
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 }
 
+// --- Arm 4 (always): pages our own writing links to (scripts/lib/cited-pages.mjs) ---
+// The metered reader (#4357) gives signed-out readers the first 20% of a book
+// plus seo_indexable pages; a cited page past that showed a scan and no English
+// (265 of 456 article citations, 2026-11-11). Cited pages skip the thin-text
+// and readership tests: we chose them, so they open.
+const refs = citedPageRefs();
+const already = new Set(qualified.map((q) => q.id));
+const newlyCited = []; // seo_urls (and link forms) of cited pages not flagged before this run
+let citedFound = 0, citedMissing = 0;
+for (const ref of refs) {
+  const bookOr = [{ id: ref.bookKey }, { slug: ref.bookKey }];
+  if (/^[0-9a-f]{24}$/.test(ref.bookKey)) bookOr.push({ _id: new ObjectId(ref.bookKey) });
+  const book = await books.findOne({ $or: bookOr }, { projection: { _id: 0, id: 1, slug: 1, visible: 1 } });
+  if (!book?.slug || book.visible === false) { citedMissing++; continue; }
+  const pageQuery = ref.pageNumber != null
+    ? { book_id: book.id, page_number: ref.pageNumber }
+    : /^[0-9a-f]{24}$/.test(ref.pageKey) ? { $or: [{ _id: new ObjectId(ref.pageKey) }, { id: ref.pageKey }] } : { id: ref.pageKey };
+  const page = await pages.findOne(pageQuery, { projection: { _id: 0, id: 1, page_number: 1, seo_indexable: 1 } });
+  if (!page?.id) { citedMissing++; continue; }
+  citedFound++;
+  if (already.has(page.id)) continue;
+  already.add(page.id);
+  const seo_url = `/book/${book.slug}/page/${page.id}`;
+  qualified.push({ id: page.id, seo_url });
+  if (page.seo_indexable !== true) newlyCited.push(seo_url, `/book/${book.slug}/page/${page.page_number}`);
+}
+console.log(`Arm 4 — cited: ${refs.length} references, ${citedFound} pages found, ${citedMissing} unresolved, ${newlyCited.length / 2} not yet open`);
+
 console.log(`\nScanned ${scanned} candidate pages:`);
 console.log(`  qualified      : ${qualified.length}`);
 console.log(`  skipped (thin) : ${skippedThin}`);
@@ -280,7 +314,7 @@ console.log(`\nset seo_indexable on ${qualified.length} pages (${modified} newly
 // of ids that query document approaches Mongo's 16MB BSON limit. The partial
 // index makes streaming the flagged ids cheap.
 const stale = [];
-if (!NO_RECONCILE) for await (const p of pages.find({ seo_indexable: true }, { projection: { _id: 0, id: 1 } })) {
+if (!NO_RECONCILE) for await (const p of pages.find({ seo_indexable: true }, { projection: { _id: 0, id: 1 } }).batchSize(1000)) {
   if (!qualifiedIds.has(p.id)) stale.push(p.id);
 }
 let unset = 0;
@@ -292,6 +326,24 @@ for (let i = 0; i < stale.length; i += BATCH) {
   unset += r.modifiedCount;
 }
 if (stale.length) console.log(`unset seo_indexable on ${unset} now-stale pages (of ${stale.length})`);
+
+// Signed-out renders of newly opened cited pages may sit in Cloudflare's cache
+// without their English for up to 24 h; purge them when we can.
+if (newlyCited.length && process.env.CLOUDFLARE_API_TOKEN && process.env.CLOUDFLARE_ZONE_ID) {
+  let purged = 0;
+  for (let i = 0; i < newlyCited.length; i += 30) {
+    const files = newlyCited.slice(i, i + 30).map((u) => `https://sourcelibrary.org${u}`);
+    const r = await fetch(`https://api.cloudflare.com/client/v4/zones/${process.env.CLOUDFLARE_ZONE_ID}/purge_cache`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ files }),
+    });
+    if ((await r.json()).success) purged += files.length;
+  }
+  console.log(`purged ${purged} of ${newlyCited.length} cited-page URLs from Cloudflare`);
+} else if (newlyCited.length) {
+  console.log(`not purged (no Cloudflare credentials): ${newlyCited.length} URLs open within 24 h as cached copies expire`);
+}
 
 const total = await pages.countDocuments({ seo_indexable: true });
 console.log(`\nTotal indexable reader pages now: ${total}`);

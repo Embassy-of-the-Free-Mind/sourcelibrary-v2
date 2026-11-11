@@ -1,0 +1,9 @@
+ROW 1 | ഹരിഃശ്രീഗണപതയെന ‖ നമഃഞ്ഞവിജ്ഞമദ്രൂപിലെശുഭരംസാംഖ്യമൂ ‖ ൎത്തിംപ്രണമ്യപ്രത്യഗ്ഗിരാംഗു
+ROW 2 | ഞ്ഞംട്ടികാംശ്രുതിക[illegible] ‖ താംകരൊമ്യഹംസ്ഗ്രഹാദ്രിഷികാരം।മീക്ക ‖ ക്ഷിത്വാഗ്രന്ഥാന്യാകി
+ROW 3 | ജ്ഞപരിസമാത്രൃത്ഥ[illegible] ‖ ഷിഷ്യാചാനാനമിതശ്രുതമബൊധിതെ[illegible] ‖ [illegible]തെൽപ്പൃതാകമിഷ്ടെദെവ
+ROW 4 | കാനമഷ്കാരല ‖ ഖണ്ഡംമംഗളംശിഷ്യശിക്ഷാരൈയ്യ ‖ ഗ്രന്ഥരൊരംഭെദ്ദും
+ROW 5 | ഷികിക്ത്രിതപ്ര ‖ ത്തജ്ഞാനിരതെ।നിയാഒഞ്ചിതെ।ന ‖ സഃരൊഗളൃസമാ
+ROW 6 | ത്തിബായഥനഖ ‖ നാന്ത്തിമംഗളെദിക്കുണെമിക്കിരണ്ണെ ‖ ാപൎയ്യാദൈവസമാപ്തൃ
+ROW 7 | ദൾനൃൽമഗളൂട ‖ ടൊവഷികാാദംബെചയ്യാരൈദൈവസജ്ജമാപ്തി ‖ ക്ഷിദൾനാൽത്തബാധാപ്ര
+ROW 8 | ത്രൈക്കരകാപ്രൃഭച ‖ ചാനാഭിതിമചണ്ണംഇതരൊാപൎയ്യാദൈവ ‖ ദൈവഷിജ്ഞബാഹൃത്താൽസമ
+NOTE | Eight rows. I read it glyph by glyph from the strokes only, but the image resolution was low, so most conjuncts and vowel signs are uncertain and some words are probably misread. Treat this as a rough draft and check it against the leaf. p02 and p03 are the two halves of the middle column; where they overlap I dropped the repeated text by judgement. I put ‖ at both holes on every row, including the full-width rows (1–3 and 7–8), which pass above or below the holes.

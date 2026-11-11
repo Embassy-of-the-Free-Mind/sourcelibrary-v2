@@ -21,7 +21,7 @@ const ISSUE = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issu
 const LEVELS = [
   {
     name: 'One read, cheapest engine',
-    how: 'Gemini Flash-Lite transcribes the page and translates it.',
+    how: 'The lightest model transcribes the page and translates it.',
     perThousand: '$2.20',
     perBook: '$0.60',
     finish: '$40,000',
@@ -29,7 +29,7 @@ const LEVELS = [
   },
   {
     name: 'One read, stronger engine',
-    how: 'Gemini Flash transcribes and translates.',
+    how: 'The mid-tier model transcribes and translates.',
     perThousand: '$3.90',
     perBook: '$1.00',
     finish: '$69,000',
@@ -37,7 +37,7 @@ const LEVELS = [
   },
   {
     name: 'Two reads, disagreements re-read',
-    how: 'Flash reads the page and Flash-Lite reads it again. Where the two disagree, a stronger model reads the page and translates it.',
+    how: 'The mid-tier model reads the page and the lightest model reads it again. Where the two disagree, a stronger model reads the page and translates it.',
     perThousand: '$6.70',
     perBook: '$1.80',
     finish: '$118,000',
@@ -49,13 +49,13 @@ const QUESTIONS: { n: number; q: string; a: string; status: 'running' | 'planned
   {
     n: 5924,
     q: 'Which engine reads Latin print best, century by century?',
-    a: 'Latin is the largest share of what is left: about 7.5 million pages, mostly printed 1500–1700. Earlier tests found Flash only 0.3 points better than Flash-Lite on 1600s print, but much better on the earliest printed books. An open model (GLM-OCR) looked better still on 1600s print, on too few pages to decide. The test now under way reads random runs of three pages from random books in each century with every candidate. It scores them against published transcriptions of the same editions, with old letterforms normalized.',
+    a: 'Latin is the largest share of what is left: about 7.5 million pages, mostly printed 1500–1700. Earlier tests found the mid-tier model only 0.3 points better than the lightest model on 1600s print, but much better on the earliest printed books. An open model looked better still on 1600s print, on too few pages to decide. The test now under way reads random runs of three pages from random books in each century with every candidate. It scores them against published transcriptions of the same editions, with old letterforms normalized.',
     status: 'running',
   },
   {
     n: 5924,
     q: 'Is the strongest model worth its price?',
-    a: 'Gemini Pro costs roughly five to ten times as much as Flash per page and has never been measured on our pages. The same test reads the earliest books and a random set of 1600s books with it. The answer sets the cost of the third level above.',
+    a: 'The largest model costs roughly five to ten times as much as the mid-tier model per page and has never been measured on our pages. The same test reads the earliest books and a random set of 1600s books with it. The answer sets the cost of the third level above.',
     status: 'running',
   },
   {
@@ -73,7 +73,7 @@ const QUESTIONS: { n: number; q: string; a: string; status: 'running' | 'planned
   {
     n: 5660,
     q: 'Should we run our own GPU server?',
-    a: 'Open engines on our own hardware already read Tibetan, where Gemini fails, and Chinese hand-copied books. A standing server costs about $250 a month. Whether it is worth that depends on the Latin answer above, because Latin is the only lane big enough to keep it busy.',
+    a: 'Open engines on our own hardware already read Tibetan, where our general model fails, and Chinese hand-copied books. A standing server costs about $250 a month. Whether it is worth that depends on the Latin answer above, because Latin is the only lane big enough to keep it busy.',
     status: 'running',
   },
   {
@@ -191,7 +191,7 @@ export default function ReadingPlanPage() {
           <ul className="list-disc pl-5 space-y-2 text-secondary leading-relaxed">
             <li>On Latin printed in the 1600s the stronger engine is barely better, so the cheaper one is good enough.</li>
             <li>On books printed before 1500 the stronger engine made about a third as many errors in a small first test, so those pages get it while the test is repeated on more books.</li>
-            <li>On Tibetan, an open engine running on our own hardware reads pages where Gemini invents text.</li>
+            <li>On Tibetan, an open engine running on our own hardware reads pages where our general model invents text.</li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4">
             So we expect the real cost of a quality-first plan to land between the second and third levels above. The third is
