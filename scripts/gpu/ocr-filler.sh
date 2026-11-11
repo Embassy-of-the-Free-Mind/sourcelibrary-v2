@@ -39,6 +39,8 @@
 # with nothing running, the filler starts an Opus job on this box, `claude-job.sh start gpu-rescue-<ts>`, with
 # gpu-rescue-brief.txt (beside this file) plus the box state. At most one every RESCUE_EVERY_H (12) hours, and never
 # while the last one is still running. Off: `touch $ST/RESCUE-OFF`. The page says which job is on it.
+# Not when every route is merely read out or waiting on its correction stage and none is DISABLED: that idleness is by
+# design, the only remedy is a new route (a #6871 decision), so the filler pages and starts no session (2026-11-11).
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROUTES=${OCR_FILLER_ROUTES:-$HERE/ocr-filler-routes.tsv}
@@ -91,14 +93,16 @@ rescue() {
   echo "started Opus job $name (gex45:$JOBS/$name.*; start log $ST/rescue.log)"
 }
 
-# idle_check <why nothing was queued>: the card has nothing queued or running. Page after 2 h and start a rescue.
+# idle_check <why nothing was queued> [norescue]: the card has nothing queued or running. Page after 2 h and start a
+# rescue; with `norescue`, page only (the card is idle by design: nothing an Opus session on the box could fix).
 idle_check() {
   [ -e "$ST/IDLE-SINCE" ] || date +%s > "$ST/IDLE-SINCE"
   local idle_m last r
   idle_m=$(( ( $(date +%s) - $(cat "$ST/IDLE-SINCE") ) / 60 ))
   last=$(cat "$ST/IDLE-PAGED" 2>/dev/null || echo 0)
   if [ "$idle_m" -ge 120 ] && [ $(( $(date +%s) - last )) -ge 43200 ]; then
-    r=$(rescue "the card has had nothing queued or running for $idle_m min: $1")
+    if [ "${2:-}" = norescue ]; then r="no rescue started: nothing on the box is broken"
+    else r=$(rescue "the card has had nothing queued or running for $idle_m min: $1"); fi
     echo "$(now) idle $idle_m min: $r"
     page "gex45 GPU idle ${idle_m} min (#6871)" "$1. $r. ocr-filler.sh status shows the routes."
     date +%s > "$ST/IDLE-PAGED"
@@ -315,7 +319,15 @@ EOF
     # idle check: nothing queued or running → note when it started; page after 2 h, then at most every 12 h
     if [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -eq 0 ]; then
       dis=$(cd "$ST" && ls *.DISABLED 2>/dev/null | sed 's/\.DISABLED$//' | tr '\n' ' ')
-      idle_check "no enabled OCR route has pages left${dis:+ (disabled after failures: $dis)} and the backfill queued nothing"
+      if [ -n "$dis" ]; then
+        idle_check "no enabled OCR route has pages left (disabled after failures: $dis) and the backfill queued nothing"
+      else
+        # every route is read out or waiting on its correction stage (a euro lane's plan is capped by its agy horizon, and
+        # the agy pool keeps a weekly reserve): idle by design. Two rescues in a row found nothing to fix (2026-11-10 12:20Z,
+        # 11-11 12:40Z: fr19's corrector at "weekly 17.4% is under the weekly reserve 18.0%"); refilling the card is a route
+        # decision (#6871), so page once and start no Opus session. A failing route still rescues (the branch above).
+        idle_check "no enabled OCR route has pages left: each is read out or waiting on its correction stage (see cli-ocr-armc-*.log); a new route is a #6871 decision" norescue
+      fi
     else
       rm -f "$ST/IDLE-SINCE"
     fi ;;
