@@ -80,7 +80,8 @@ export function languageGroups(): { groups: Group[]; books: number; named: numbe
     };
   });
   const groups = [{ id: 'all', label: 'Languages', alt: [], pics: [], narrower: rows }];
-  return { groups, books: raw.total_books, named: rows.length, values: raw.languages.length, unmatched: all.length - ok.length };
+  // The count matches the list: the books under the languages shown, not the hidden values.
+  return { groups, books: rows.reduce((s, r) => s + (r.size ?? 0), 0), named: rows.length, values: raw.languages.length, unmatched: all.length - ok.length };
 }
 
 /** The week's featured period or language: one with enough pictures to fill the hero, in turn. */
