@@ -53,6 +53,13 @@
    "set": "2026-11-01",
    "until": "2026-11-15",
    "reason": "#6740 read-surface, Derek 2026-11-01: German first reads at 8 a call (agy-flash-low@8-written) on the pooled paired evidence (78 queue books, 8 a call won 8-1, fewer wrong-text pages, about half the quota a accepted page) although neither preregistered rule passed. A decision, not a pass. Stop: back to 4 (FIRST_READ_PER_CALL_BY_LANGUAGE in cli-ocr-lane.mjs) if the lane's acceptance k/n falls below live's. Re-decide by 11-15 with the cell's k/n under @8."
+  },
+  {
+   "cell": "latin-blank/print",
+   "lane": "first-read",
+   "set": "2026-11-11",
+   "until": "2026-11-25",
+   "reason": "#7701 (EXPERIMENTS 2026-11-04, 'Arm C's refused Latin reads'): the cell's pinned pick, pero>agy-flash-low-written 18/18, counts only pages the route wrote. Over pages drawn it is 37/70 (pero>agy-flash-low-tried); in production it wrote 4,708 of 28,104 pages tried, 5.8 agy calls per accepted page against 0.72 for read@4, and its written pages carry more wrong text (2.34 against 0.17 a 1,000 words). Derek paused it on 11-04; the first-read lane runs agy-flash-low@4-written (17/19), as #8181 and #8529 did. The 11-01 table already moved this cell off pero>agy to HOLD; the pin to 2026-10-31-correction-pass-7818 kept the old pick. Re-decide by 11-25: move the cell's pointer, or build the cell scoring -tried rows in place of -written."
   }
  ]
 }
