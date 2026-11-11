@@ -19,7 +19,12 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 10 was too tight: when the site is slow every test burns 15s x 3 attempts
+    # and the JOB timeout cancelled the run (11-09, 11-10), which skips the
+    # failure()-gated issue step, so nobody was told. The Playwright step has
+    # its own shorter limit below so a slow site FAILS (and files an issue)
+    # instead of being cancelled.
+    timeout-minutes: 25
     permissions:
       contents: read
       issues: write
@@ -38,7 +43,10 @@ jobs:
         run: npx playwright install chromium
 
       - name: Run E2E tests
-        run: npx playwright test
+        # --max-failures: if the site is down or crawling, stop after a few
+        # failed tests instead of retrying all ~70 until the clock runs out.
+        run: npx playwright test --max-failures=12
+        timeout-minutes: 15
         env:
           BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
 
