@@ -92,6 +92,12 @@ describe('fitted open-edition text is never overwritten', () => {
 });
 
 describe('foreign-script guard', () => {
+  it('lets a Latin-script book carry Greek and Hebrew on a first read (#8529), but not other scripts', () => {
+    expect(foreignScriptReason('per amicum etiam βοτανόφιλον compos factus fuit', { languages: ['Latin'] })).toBeNull();
+    expect(foreignScriptReason('wie es im Text heißt: בְּרֵאשִׁית', { languages: ['German'] })).toBeNull();
+    expect(foreignScriptReason('per amicum etiam ಕನ್ನಡ compos', { languages: ['Latin'] })).toMatch(/Kannada/);
+    expect(foreignScriptReason('བཀྲ་ཤིས་བདེ་ལེགས་ λόγος', { languages: ['Tibetan'] })).toMatch(/Greek/);
+  });
   it('refuses Kannada letters in a Tibetan read (#6560)', () => {
     expect(foreignScriptReason('བཀྲ་ཤིས་བདེ་ལེགས་ ಕನ್ನಡ', { languages: ['Tibetan'] })).toMatch(/Kannada/);
   });
