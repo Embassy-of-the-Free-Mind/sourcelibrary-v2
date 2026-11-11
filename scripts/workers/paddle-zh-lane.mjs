@@ -43,11 +43,11 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
+import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { juanRange } from '../eval/zh-cohort-5547-duplicates.mjs';
 import {
-  LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, MIN_HAN, PADDLE,
+  LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, KEEP_HOLDS, laneMayWrite, MIN_HAN, PADDLE,
   convertPaddle, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields,
   isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/paddle-zh-lane.mjs';
@@ -61,6 +61,9 @@ const COHORT = arg('--cohort', '/root/preview-stubs-4719/ids-chinese-held-5481.t
 const APPLY = flag('--apply');
 const BOOK = arg('--book', null);
 const LIMIT = Number(arg('--limit', 0)) || 0;
+/** plan --unread-only: plan only pages with no `ocr.data` that Paddle has not already found textless (a first read
+ *  of the residue; never a re-read of a stored reading). */
+const UNREAD_ONLY = flag('--unread-only');
 /** Kanripo alignment threshold (#5568: aligned = Dice ≥ 0.6). */
 const QA_THRESH = 0.6;
 /** A page needs this many folded Han characters to be screened (#5568 drift: shorter = cover/plate). */
@@ -176,28 +179,35 @@ async function plan() {
   const tally = { books: 0, pages: 0, keep_human: 0, no_image: 0, already_lane: 0, skipped_books: [] };
   await withMongo(async (db) => {
     for (const bid of ids) {
-      const book = await db.collection('books').findOne({ $or: [{ id: bid }, { _id: bid }] }, { projection: { id: 1, title: 1, work_id: 1, hidden_reason: 1, visible: 1, pipeline_auto: 1, pages_count: 1 } });
+      const book = await db.collection('books').findOne({ $or: [{ id: bid }, { _id: bid }] }, { projection: { id: 1, title: 1, work_id: 1, hidden_reason: 1, visible: 1, pipeline_auto: 1, pages_count: 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { tally.skipped_books.push({ bid, why: 'not_found' }); continue; }
+      // a multi-leaf frame is split first (image-classifiers-and-splits.md): never plan an unsplit spread
+      if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'unsplit spread' }); continue; }
       const hr = String(book.hidden_reason || '');
       if (hr && !/^(unprocessed|launch_curation)$/.test(hr)) { tally.skipped_books.push({ bid, why: `hidden_reason: ${hr.slice(0, 60)}` }); continue; }
-      if (isHeld(book) && book.pipeline_auto.hold.reason !== HOLD_REASON) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
+      if (isHeld(book) && !laneMayWrite(book.pipeline_auto.hold.reason)) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
       const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gt: 0 } }, { projection: {
-        id: 1, page_number: 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1, 'ocr.source': 1, 'ocr.data': 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
+        id: 1, page_number: 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1, 'ocr.source': 1, 'ocr.data': 1, 'ocr.last_skip': 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
       } }).sort({ page_number: 1 }).toArray();
       if (!APPLY) { log(`${bid} would plan ${pages.length} pages | ${String(book.title).slice(0, 50)}`); continue; }
-      // the hold BEFORE anything else: an OCR write on a `complete` book otherwise queues paid gap-fill translation
-      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: PADDLE.model } });
+      // the hold BEFORE anything else: an OCR write on a `complete` book otherwise queues paid gap-fill translation.
+      // A book already under a hold the lane keeps (KEEP_HOLDS) is held already: no second hold, its own stays.
+      const kept = isHeld(book) && KEEP_HOLDS.has(book.pipeline_auto.hold.reason) && book.pipeline_auto.hold.reason !== HOLD_REASON;
+      const h = kept ? { outcome: 'already_held', from: book.pipeline_auto.hold.held_from_status ?? null }
+        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: PADDLE.model } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); log(`${bid} hold: ${h.outcome} — not planned`); continue; }
       const rows = [];
       for (const p of pages) {
         if (p.ocr?.pipeline === LANE) { tally.already_lane++; continue; }
+        if (UNREAD_ONLY && p.ocr?.data) { tally.has_text = (tally.has_text || 0) + 1; continue; }
+        if (UNREAD_ONLY && p.ocr?.last_skip?.model === PADDLE.model) { tally.paddle_textless = (tally.paddle_textless || 0) + 1; continue; }
         if (pagePolicy(p, isHumanEdited).action === 'keep') { tally.keep_human++; continue; }
         const src = getPageSource(p);
         if (!src) { tally.no_image++; continue; }
         rows.push({ pid: p.id, pn: p.page_number, src, first_write: !p.ocr?.data });
       }
       fs.writeFileSync(planFile(book.id), JSON.stringify({ bid: book.id, title: book.title, work_id: book.work_id || null, pages_count: book.pages_count || pages.length, listed: pages.length, planned_at: new Date().toISOString(), pages: rows }));
-      books[book.id] = { title: book.title, pages: rows.length, status_before: h.from ?? null };
+      books[book.id] = { title: book.title, pages: rows.length, status_before: h.from ?? null, hold: kept ? book.pipeline_auto.hold.reason : HOLD_REASON };
       tally.books++; tally.pages += rows.length;
       if (tally.books % 200 === 0) { fs.writeFileSync(F.books, JSON.stringify(books)); log(`planned ${tally.books} books, ${tally.pages} pages`); }
     }
@@ -294,7 +304,7 @@ async function apply() {
       const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, work_id: 1, pipeline_auto: 1 } });
       if (!book) { log(`${bid} not found — skipping`); continue; }
       // the hold is the lane's guarantee that no paid re-translation follows the write
-      if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { log(`${bid} NOT held for ${HOLD_REASON} — refusing to write`); totals.not_held++; continue; }
+      if (!laneMayWrite(book.pipeline_auto?.hold?.reason)) { log(`${bid} NOT held for ${[HOLD_REASON, ...KEEP_HOLDS].join(' / ')} — refusing to write`); totals.not_held++; continue; }
       const pages = await P.find({ id: { $in: rows.map((r) => r.pid) } }, { projection: { id: 1, page_number: 1, ocr: 1 } }).toArray();
       const byId = new Map(pages.map((p) => [p.id, p]));
       const boxName = assign[bid] || null;

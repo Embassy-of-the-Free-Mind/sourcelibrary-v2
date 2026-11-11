@@ -152,3 +152,25 @@ describe('paddle-zh-lane: hold and human-edit guard', () => {
     expect(pagePolicy({ ocr: { data: 'x', source: 'ai' } }, isHumanEdited)).toEqual({ action: 'reocr', why: 'skqs_cohort' });
   });
 });
+
+describe('paddle-zh-lane KEEP_HOLDS (#5660 job paddle-runs-5660)', () => {
+  it('writes under its own hold or a kept one, never under any other or none', async () => {
+    const { vi } = await import('vitest');
+    vi.resetModules();
+    vi.stubEnv('PADDLE_ZH_HOLD', 'gpu-backlog-5660');
+    vi.stubEnv('PADDLE_ZH_KEEP_HOLDS', 'gpu-backlog-5660, paddle-zh-5600-ocr-only,paddle-zh-6388-ocr-only');
+    try {
+      // @ts-expect-error — plain .mjs module
+      const m = await import('../../scripts/lib/paddle-zh-lane.mjs');
+      expect(m.laneMayWrite('gpu-backlog-5660')).toBe(true);
+      expect(m.laneMayWrite('paddle-zh-5600-ocr-only')).toBe(true);
+      expect(m.laneMayWrite('paddle-zh-6388-ocr-only')).toBe(true);
+      expect(m.laneMayWrite('paddle-zh-6388-excluded')).toBe(false); // kept out of Paddle on purpose
+      expect(m.laneMayWrite('zh-shi-ji-8053')).toBe(false);
+      expect(m.laneMayWrite(undefined)).toBe(false);
+    } finally { vi.unstubAllEnvs(); vi.resetModules(); }
+  });
+  it('unset, keeps nothing but its own hold', () => {
+    expect(HOLD_REASON).toBe('paddle-zh-5600-ocr-only');
+  });
+});

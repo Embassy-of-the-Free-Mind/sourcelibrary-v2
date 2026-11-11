@@ -22,9 +22,18 @@
 #   tibetan (Yigdzin, #4523)                   sets A/B00/B01 (50,794 pp) read by job tib-gemini-ocr-6871, done 10-28 06:47Z;
 #                                              the apply (#4523 write rule) is pending on main, not GPU work.
 #   gpu-backlog-5660 Siku residue              22K pp scattered ~6 per book, no stored read: the textless pages the lane
-#                                              does not store. Re-reading them would mostly re-find blanks.
+#                                              does not store. Re-reading them would mostly re-find blanks. 2026-11-11: listed after all, as zh-gpu-holds-5660
+#                                              (the measurement of what they are is that run; textless reads are now stamped ocr.last_skip, so a re-plan skips them).
 #   Siku duplicates (no hold, 1,044 bk)        skipped on purpose by job paddle-skqs-rest-6388 (a read copy is live).
 on	zh-histories-7546	paddle-zh	7546	/root/jobs/zh-histories-7546	zh-histories-7546	3	paddle-zh-lane.mjs apply --apply (revisions, guards, WYG screen); books stay held zh-histories-7546 until translation is released (#7546 priority juan first)
+#   zh-gpu-holds-5660 (#5660, Derek 2026-11-11 "lets make sure paddle runs"): the residue of the VISIBLE SKQS books under the
+#   OCR-only GPU-lane holds (gpu-backlog-5660, paddle-zh-5600-ocr-only, paddle-zh-6388-ocr-only): pages with no OCR that Paddle has not already found textless (plan --unread-only), so no stored reading is re-read. The hold column is a
+#   comma list: the first is the lane's own, every one is KEPT (PADDLE_ZH_KEEP_HOLDS) — a book is written under its own hold and
+#   no hold is placed, moved or released. NOT paddle-zh-6388-excluded:
+#   those are seal-script, table-heavy or mixed-script volumes kept out of Paddle on purpose (#6388). Router: every Chinese cell
+#   is HOLD with no bound route; the nearest judged cell is
+#   zh-paddle-dice-lt090 (Paddle 15/30 on the name check, 2026-10-26); the brief decides Paddle alone for these first reads.
+on	zh-gpu-holds-5660	paddle-zh	5660	/root/jobs/zh-gpu-holds-5660	gpu-backlog-5660,paddle-zh-5600-ocr-only,paddle-zh-6388-ocr-only	3	paddle-zh-lane.mjs apply --apply (revisions, guards, Kanripo WYG screen, textless pages stamped ocr.last_skip); first reads only (planned --unread-only); every book keeps its own hold, nothing released to translation
 #   la-first-read-armc-7701 (#7701 cheap routes): kind euro-draft over the first-read frame (cli-ocr-lane.mjs armc --frame=first-read). Before gpu-print-en on purpose: the filler takes the FIRST route with pages left, and this one has pages only while the armc plan is ahead of its drafts.
 off	la-first-read-armc-7701	euro-draft	7701	/root/jobs/armc-first-read-7701	scans-only (FIRST_READ_HOLDS)	2	cli-ocr-lane.mjs armc --frame=first-read --apply (gex45 cron :35): Latin pages with no OCR in visible scans-only books, the PERO draft corrected by agy Flash-low with the image, #7695 put-back against the draft, first reads only, printed only, stamped pero-agy-first-read-7701; books keep their hold. Router 2026-10-29-cheap-routes-7701 (#7701). Listed before gpu-print-en: its pages left are the armc plan (~2 days of corrections ahead), so Latin drafts run between English chunks
 #   la-translate-armc-7263 (#7263, Derek 2026-11-02: GPU OCR → agy Flash correction → agy Flash translation): kind euro-draft over the translate-held frame (cli-ocr-lane.mjs armc --frame=translate-held): Latin books the CLI translation lane waits on, whose untranslated pages are unchecked Flash-Lite drafts. After the first-read route (pages with no text come first), before gpu-print-en; it has pages left only while its armc plan is ahead of its drafts.
@@ -48,8 +57,9 @@ on	gpu-print-en	gpu-print	6871	/root/jobs/gpu-print-6871	scans-only-publish-7270
 #   Turn on only after a new gate passes. Stop: `-` in the first column (the task plans, reads and applies; nothing else to stop).
 -	gpu-print-en19-6871	gpu-print	6871	/root/jobs/gpu-print-en19-6871	none (the lane holds gpu-print-6871 and releases it), or scans-only-publish-7270 (kept)	1	gpu-print-lane.mjs apply --apply (lang en19: pages with no text only, guards, revisions, stamped for a later agy correction); OFF: gate failed 2026-11-07
 #   zh-shi-ji-8053 (#8053): the Siku 史部 then 集部 volumes imported hidden from IA's CADAL mirror (~17.9K bk, ~2.6M pp). Lane dir
-#   planned on gex45 with priority.txt = 史部 book ids first. OFF (`-`) on purpose: the paddle-zh task reads AND applies, and the
-#   zh-paddle-dice-lt090/manuscript router cell is on HOLD with no k/n (judge not valid, table 2026-11-03-sonnet-7263). Flip to
-#   `on` only when that cell is released. Last of the OCR routes: it has pages only after the routes above run dry.
--	zh-shi-ji-8053	paddle-zh	8053	/root/jobs/zh-shi-ji-8053	zh-shi-ji-8053	3	paddle-zh-lane.mjs apply --apply (revisions, guards, Kanripo WYG screen on the kr: work_id); books stay held zh-shi-ji-8053 (OCR only; release with --to ocr_complete by decision "release zh-shi-ji-8053")
+#   planned on gex45 with priority.txt = 史部 book ids first. Was OFF while the zh-paddle-dice-lt090/manuscript cell sat on HOLD
+#   (judge not valid; nearest judged numbers Paddle 15/30, Opus 29/30 on the name check, 2026-10-26). ON 2026-11-11 by Derek's
+#   brief (#5660 job paddle-runs-5660: "lets make sure paddle runs"): a Paddle first read of hidden, held books, OCR only; the
+#   books stay hidden and held, and translation remains its own priced decision. Last of the OCR routes: the card's standing work.
+on	zh-shi-ji-8053	paddle-zh	8053	/root/jobs/zh-shi-ji-8053	zh-shi-ji-8053	3	paddle-zh-lane.mjs apply --apply (revisions, guards, Kanripo WYG screen on the kr: work_id); books stay held zh-shi-ji-8053 (OCR only; release with --to ocr_complete by decision "release zh-shi-ji-8053")
 -	euro-armc-7567	euro-draft	7567	/root/jobs/euro-armc-7567	-	4	cli-ocr-lane.mjs armc --apply (gex45 cron): agy Flash-low correction with the image, E3 diff guard put-back, revisions, --mark-stale; off until the production pilot passes (#7567)
