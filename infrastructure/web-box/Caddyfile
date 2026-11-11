@@ -1,0 +1,97 @@
+# Reader-origin box (#8384). Caddy is the only thing that listens beyond loopback.
+#
+# Who may talk to it: only the Cloudflare Worker (workers/web-origin), proven by the shared
+# secret header X-SL-Origin-Secret, arriving from Cloudflare's ranges (firewall.sh). A
+# request without the secret gets a bare 403 and never reaches Next.
+#
+# What it serves: /book/* (the reader routes the Worker sends) and /_box/_next/static/*
+# (the box's own CSS and JS, trap 1). Everything else is 404, including every tenant host:
+# the upstream Host is pinned to sourcelibrary.org, so a partner subdomain can never be
+# rendered here (tenant-lockdown.md).
+#
+# Environment (from /etc/sl-web/caddy.env):
+#   SL_BOX_SECRET   the shared secret, the same value as the Worker's BOX_SECRET
+#   SL_BOX_SITE     the site address, e.g. "box1.sourcelibrary.org" (the Worker's BOX_ORIGIN
+#                   host) or ":8443" for the loopback stage-0 check
+#   SL_BOX_TLS      "/etc/sl-web/origin.pem /etc/sl-web/origin.key" (a Cloudflare Origin CA
+#                   certificate, needs Derek) or "internal" (self-signed, loopback checks)
+#   SL_BOX_BIND     listen addresses; default all interfaces
+{
+	admin localhost:2019
+	auto_https disable_redirects
+	servers {
+		# Peers are Cloudflare; the client's address arrives in X-SL-Client-IP from the
+		# Worker, never from a client-writable header.
+		trusted_proxies static private_ranges
+	}
+}
+
+{$SL_BOX_SITE} {
+	tls {$SL_BOX_TLS}
+	# "127.0.0.1 ::1" for the loopback stage-0 check; all interfaces once 443 opens.
+	bind {$SL_BOX_BIND:0.0.0.0 ::}
+
+	log {
+		output file /var/log/caddy/sl-web.log {
+			roll_size 100MiB
+			roll_keep 5
+		}
+		format json
+	}
+
+	@nosecret not header X-SL-Origin-Secret {$SL_BOX_SECRET}
+	handle @nosecret {
+		respond 403
+	}
+
+	# The box's build assets, from the cumulative folder deploy.sh keeps (current release
+	# plus the last 7 days of releases, so an open tab's chunks never 404).
+	handle_path /_box/* {
+		@static path /_next/static/*
+		handle @static {
+			root * /srv/sl-web/static
+			header Cache-Control "public, max-age=31536000, immutable"
+			file_server
+		}
+		respond 404
+	}
+
+	@reader path /book /book/*
+	handle @reader {
+		reverse_proxy localhost:3101 localhost:3102 localhost:3103 localhost:3104 {
+			lb_policy least_conn
+			lb_try_duration 2s
+			fail_duration 10s
+			health_uri /favicon.ico
+			health_interval 10s
+			health_headers {
+				Host sourcelibrary.org
+			}
+			# Pinned: a tenant host never reaches Next through this box.
+			header_up Host sourcelibrary.org
+			header_up X-Forwarded-Host sourcelibrary.org
+			header_up X-Forwarded-Proto https
+			header_up -X-SL-Origin-Secret
+			# Client identity (trap 2). Only the Worker's values survive: every header a
+			# client could write to claim an address or a country is replaced or dropped.
+			header_up CF-Connecting-IP {http.request.header.X-SL-Client-IP}
+			header_up CF-IPCountry {http.request.header.X-SL-Client-Country}
+			header_up X-Forwarded-For {http.request.header.X-SL-Client-IP}
+			header_up -X-Real-IP
+			header_up -True-Client-IP
+			header_up -X-Vercel-Forwarded-For
+			header_up -X-Vercel-IP-Country
+			header_up -X-Vercel-IP-Country-Region
+			header_up -X-Vercel-IP-City
+			header_up -X-Vercel-IP-Latitude
+			header_up -X-Vercel-IP-Longitude
+			header_up -X-SL-Client-IP
+			header_up -X-SL-Client-Country
+			header_down X-SL-Origin box
+		}
+	}
+
+	handle {
+		respond 404
+	}
+}
