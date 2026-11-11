@@ -16,7 +16,7 @@
  * coordinates rounded to 0.01 degrees (172 KB, 54 KB gzipped). No runtime
  * topojson dependency. N. Cyprus, Somaliland and Kosovo have no code and stay grey.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { geoNaturalEarth1, geoPath } from 'd3-geo';
 import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import { Legend, LineChart, Panel } from './DashboardCharts';
@@ -30,7 +30,11 @@ type CountryProps = { iso: string | null; name: string };
 const W = 640, H = 330;
 
 /** `audience="public"` (/about/readers) drops the fleet-comparison column and the daily trend, and words the notes for readers. */
-export function ReadersMap({ countries, history, audience = 'admin', since }: { countries: GeoCountry[]; history: GeoHistoryRow[]; audience?: 'admin' | 'public'; since?: string }) {
+export function ReadersMap({ countries, history, audience = 'admin', since, title, note, unit = 'readers' }: {
+  countries: GeoCountry[]; history: GeoHistoryRow[]; audience?: 'admin' | 'public'; since?: string;
+  /** Public view only: override the map title, its note, and what one count is called. */
+  title?: string; note?: ReactNode; unit?: string;
+}) {
   const pub = audience === 'public';
   const [shapes, setShapes] = useState<Feature<Geometry, CountryProps>[] | null>(null);
   const [hover, setHover] = useState<{ name: string; n: number; all: number } | null>(null);
@@ -78,9 +82,9 @@ export function ReadersMap({ countries, history, audience = 'admin', since }: { 
   return (
     <>
       <Panel
-        title={pub ? (since ? `Where readers are, since ${new Date(since).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}` : 'Where readers are') : 'Where readers are, last 30 days'}
-        right={<span className="text-xs text-stone-500">{hover ? (pub ? `${hover.name}: ${fmtFull(hover.n)}` : `${hover.name}: ${fmtFull(hover.n)} likely human of ${fmtFull(hover.all)} fingerprints`) : `${fmtFull(total)} ${pub ? 'readers' : 'likely-human visitors'}`}</span>}
-        note={pub ? <>A reader here is a browser that arrived from another site, read three or more pages, or was on a phone. Automated traffic does none of these, and it is most of what reaches the site. A person on two devices counts twice. Countries come from Cloudflare, which sees each reader&apos;s own connection. Shading is logarithmic; updated daily.</> : <>Likely-human visitors: a browser fingerprint that arrived from another site, read three or more pages, or used a phone. Proxy fleets do none of these; they are desktop, direct and one page deep, and they are most of the {fmtFull(totalAll)} raw fingerprints. A person on two devices counts twice. Shading is logarithmic.</>}
+        title={pub ? title ?? (since ? `Where readers are, since ${new Date(since).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}` : 'Where readers are') : 'Where readers are, last 30 days'}
+        right={<span className="text-xs text-stone-500">{hover ? (pub ? `${hover.name}: ${fmtFull(hover.n)} ${unit}` : `${hover.name}: ${fmtFull(hover.n)} likely human of ${fmtFull(hover.all)} fingerprints`) : `${fmtFull(total)} ${pub ? unit : 'likely-human visitors'}`}</span>}
+        note={pub ? note ?? <>A reader here is a browser that arrived from another site, read three or more pages, or was on a phone. Automated traffic does none of these, and it is most of what reaches the site. A person on two devices counts twice. Countries come from Cloudflare, which sees each reader&apos;s own connection. Shading is logarithmic; updated daily.</> : <>Likely-human visitors: a browser fingerprint that arrived from another site, read three or more pages, or used a phone. Proxy fleets do none of these; they are desktop, direct and one page deep, and they are most of the {fmtFull(totalAll)} raw fingerprints. A person on two devices counts twice. Shading is logarithmic.</>}
       >
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label="World map of likely-human visitors by country, last 30 days">
           <path d={path({ type: 'Sphere' }) ?? undefined} fill="#fafaf9" stroke="#e7e5e4" />
@@ -98,13 +102,13 @@ export function ReadersMap({ countries, history, audience = 'admin', since }: { 
       </Panel>
       <Panel title="Readers by region" note={pub ? 'Share of readers on the map above.' : 'Share of likely-human visitors. The raw column counts every non-bot fingerprint, fleets included, to show how much the filter removes.'}>
         <table className="min-w-0 w-full text-sm">
-          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Region</th><th className="text-right py-1 font-medium">{pub ? 'readers' : 'likely human'}</th><th className="text-right py-1 font-medium">share</th>{!pub && <th className="text-right py-1 font-medium">raw</th>}</tr></thead>
+          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Region</th><th className="text-right py-1 font-medium">{pub ? unit : 'likely human'}</th><th className="text-right py-1 font-medium">share</th>{!pub && <th className="text-right py-1 font-medium">raw</th>}</tr></thead>
           <tbody>{regions.map(r => (
             <tr key={r.region} className="border-t border-stone-100"><td className="py-0.5 pr-2">{r.region}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(r.likely)}</td><td className="py-0.5 text-right tabular-nums font-medium">{pct(r.likely, total)}</td>{!pub && <td className="py-0.5 text-right tabular-nums text-stone-500">{fmtFull(r.all)}</td>}</tr>
           ))}</tbody>
         </table>
         <table className="min-w-0 w-full text-sm mt-2">
-          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Top countries</th><th className="text-right py-1 font-medium">{pub ? 'readers' : 'likely human'}</th><th className="text-right py-1 font-medium">from another site</th></tr></thead>
+          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Top countries</th><th className="text-right py-1 font-medium">{pub ? unit : 'likely human'}</th><th className="text-right py-1 font-medium">from another site</th></tr></thead>
           <tbody>{countries.filter(c => c.country !== 'unknown').slice(0, 12).map(c => (
             <tr key={c.country} className="border-t border-stone-100"><td className="py-0.5 pr-2">{countryName(c.country)}</td><td className="py-0.5 text-right tabular-nums">{fmtFull(c.likely)}</td><td className="py-0.5 text-right tabular-nums text-stone-500">{fmtFull(c.referred)}</td></tr>
           ))}</tbody>
