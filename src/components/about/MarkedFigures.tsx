@@ -46,29 +46,3 @@ export function WonderFigure({ t, readEnglish }: { t: AboutFigureStrings; readEn
     />
   );
 }
-
-const SOUL_PAGE = '/book/ficino-on-the-immortality-of-souls-ficino/page/69b52bf33dd6d9423027cd9b';
-
-/** The first page of Ficino's Platonic Theology, in an illuminated copy dedicated to Lorenzo. */
-export function SoulFigure({ t, readEnglish }: { t: AboutFigureStrings; readEnglish: string }) {
-  return (
-    <MarkedPage
-      src="/about/immortality-p11.jpg"
-      w={659}
-      h={1000}
-      alt={t.alt}
-      href={SOUL_PAGE}
-      marks={MARKS.soul}
-      aside={(lit) => (
-        <div>
-          <p className="text-lg text-secondary">{t.lead}</p>
-          <blockquote className="mt-4 font-serif text-xl md:text-2xl text-primary leading-snug">
-            <span className="mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>&ldquo;{t.quote}&rdquo;</span>
-          </blockquote>
-          <style>{`.mp-q { transition: opacity .6s ease; }`}</style>
-        </div>
-      )}
-      caption={<Caption t={t} href={SOUL_PAGE} readEnglish={readEnglish} />}
-    />
-  );
-}

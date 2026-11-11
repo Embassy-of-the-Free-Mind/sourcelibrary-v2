@@ -14,6 +14,12 @@ type Change = { key: string; section: string; before: string | null; after: stri
 const STORE = 'ai-partners-edit-v1';
 const BLOCKS = 'h1,h2,h3,p,li,td,th,figcaption,dt,dd,a.primary';
 
+// Blocks of the HTML string only. React sections rendered between the HTML parts
+// (page.tsx, data-island) are not copy in content.ts, so they are never diffed.
+function blocks(el: HTMLElement): Element[] {
+  return Array.from(el.querySelectorAll(BLOCKS)).filter((b) => !b.closest('[data-island]'));
+}
+
 function root(): HTMLElement | null {
   return document.querySelector('main.ai-partners');
 }
@@ -64,7 +70,7 @@ export default function EditMode() {
     const el = root();
     if (!el) return;
     // Key every block on the pristine page, before any saved draft is restored.
-    el.querySelectorAll(BLOCKS).forEach((b, i) => {
+    blocks(el).forEach((b, i) => {
       b.setAttribute('data-k', String(i));
       original.current.set(String(i), { html: cleanHTML(b), section: sectionOf(b) });
     });
@@ -144,7 +150,7 @@ export default function EditMode() {
     if (!el) return [];
     const out: Change[] = [];
     const seen = new Set<string>();
-    el.querySelectorAll(BLOCKS).forEach((b) => {
+    blocks(el).forEach((b) => {
       const k = b.getAttribute('data-k');
       const after = cleanHTML(b);
       if (k && !seen.has(k)) {

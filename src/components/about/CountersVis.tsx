@@ -49,7 +49,7 @@ export default function CountersVis({ stats, mode, t: tr, lang = 'en' }: { stats
   const legend = (
     <dl className="mt-10 md:mt-12 grid grid-cols-[minmax(0,1fr)] sm:grid-cols-3 gap-8">
       {[
-        { c: C.rest, v: all, label: tr.digitised, href: localePath('/search', lang) },
+        { c: C.rest, v: all, label: tr.online, href: localePath('/search', lang) },
         { c: C.readable, v: read, label: tr.readable, href: localePath('/search?has_translation=true', lang) },
         { c: C.first, v: first, label: tr.first, href: localePath('/search?first_translation=true', lang) },
       ].map((it) => (
