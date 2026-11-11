@@ -18,6 +18,7 @@
  *   - yesterday's metered Gemini spend (both stores) vs the dial, plus the latest spend-daily verdict
  *     and envelopes at ≥ 90 % of cap (that row is written at 07:00Z, so at 06:00Z it is a day older)
  *   - decisions waiting: new lines in decisions.txt + decision pages from both boxes, top 3 with URLs
+ *   - untriaged decisions: rows with no mark on every box (main's file + `box.sh others decisions`) (#8551)
  *   - anything stuck: LIVE jobs with a stale heartbeat, DIED jobs, waiter scripts still running
  *   - tier:hold PRs waiting on Derek
  *
@@ -78,6 +79,30 @@ export function recentDecisions(text, sinceDay) {
     .reverse();
 }
 
+/**
+ * Unmarked decisions.txt rows: a triaged row starts with a mark ("[TRIAGED …]", "[DECIDED …]"), so a row
+ * that still starts with its date is waiting on someone. `old` counts rows more than `ageDays` old (#8551:
+ * 127 waited a week with no reader). Rows before MARKS_FROM predate marking in place (#7268 began it on the
+ * 2026-10-17 rows; earlier sweeps kept their verdicts in reports), so they are not counted.
+ */
+export const MARKS_FROM = '2026-10-17';
+export function untriagedDecisions(text, today, ageDays = 7) {
+  const cut = new Date(Date.parse(today) - ageDays * 864e5).toISOString().slice(0, 10);
+  const days = String(text || '').split('\n').map((l) => l.match(/^(\d{4}-\d\d-\d\d) \| [^|]+ \| DECISION: /)?.[1]).filter((d) => d && d >= MARKS_FROM);
+  return { total: days.length, old: days.filter((d) => d < cut).length };
+}
+
+/** `box.sh others decisions` output ("== <box>" headers, then that box's rows) → { box: text }. */
+export function splitBoxes(text) {
+  const out = {};
+  let cur = null;
+  for (const l of String(text || '').split('\n')) {
+    const m = l.match(/^== (\S+)$/);
+    if (m) { cur = m[1]; out[cur] = ''; } else if (cur) out[cur] += l + '\n';
+  }
+  return out;
+}
+
 /** `claude-job.sh status` lines → what is stuck. */
 export function stuckJobs(statusText, staleMin = HB_STALE_MIN) {
   const stuck = [];
@@ -131,6 +156,15 @@ export function formatDigest(d) {
       const url = issueUrl(x.text);
       L.push(`  ${x.job}: ${clip(x.text.replace(/\s*\(#\d+\)\s*$/, ''), 150)}${url ? ' ' + url : ''}`);
     }
+  }
+
+  const u = d.untriaged;
+  if (u?.error) L.push(un('Untriaged decisions', u.error));
+  else if (u) {
+    const boxes = Object.entries(u.boxes);
+    const sum = (k) => boxes.reduce((a, [, v]) => a + (v.error ? 0 : v[k]), 0);
+    L.push(`Untriaged decisions: ${sum('total')} (${sum('old')} over 7 days) · ` +
+      boxes.map(([b, v]) => `${b} ${v.error ? '?' : v.total}`).join(', ') + ` · sweep as in ${GH}/issues/8551`);
   }
 
   const st = d.stuck;
@@ -191,6 +225,17 @@ function readDecisions(sinceDay) {
   return { sinceDay, rows: recentDecisions(fs.readFileSync(DECISIONS, 'utf8'), sinceDay) };
 }
 
+/** This box's file plus the others' over the mesh (the last 300 rows each). An unreachable box says "?". */
+function readUntriaged(today) {
+  const boxes = { main: untriagedDecisions(fs.readFileSync(DECISIONS, 'utf8'), today) };
+  let others = {};
+  try { others = splitBoxes(sh('/root/bin/box.sh', ['others', 'decisions'])); } catch (e) { others = splitBoxes(e.stdout); }
+  for (const b of ['gex45', 'l7a', 'cloudlayer']) {
+    boxes[b] = others[b]?.trim() ? untriagedDecisions(others[b], today) : { error: 'unreachable' };
+  }
+  return { boxes };
+}
+
 function readStuck() {
   return { items: stuckJobs(sh(JOB_SH, ['status', '3'])) };
 }
@@ -232,6 +277,7 @@ async function main() {
     spend: db ? await settle(() => readSpend(db, ObjectId, yStart, todayStart)) : { error: dbError },
     spendDaily: db ? await settle(() => readSpendDaily(db)) : { error: dbError },
     decisions: await settle(() => readDecisions(day(yStart))),
+    untriaged: await settle(() => readUntriaged(day(now))),
     stuck: await settle(readStuck),
     waiters: await settle(readWaiters),
     holds: await settle(readHolds),
