@@ -80,4 +80,15 @@ describe('brief-route-check.sh', () => {
     // Beside a refusal it does not change the refusal.
     expect(check('# Task\nOCR the visible books with cli-ocr-lane.mjs run --apply, by eye.\n').code).toBe(8);
   });
+  it('refuses a translation Route whose engine the live routing table has moved off, unless it says override (#8606)', () => {
+    const TR = '\n# Task\nTranslate the Tibetan pages with claude-translate.mjs, then apply --apply.\n';
+    const old = 'Route: tibetan-tr (corrected Kangyur e-text) → opus-cli claude-translate.mjs --per-call=10, 27/30\n';
+    const r = check('Lands: #1\n' + old + TR);
+    expect(r.code).toBe(8);
+    expect(r.out).toMatch(/^REFUSED: .*live router sends this language to .*agy.*row tibetan-cli-agy/);
+    expect(check('Lands: #1\n' + old.replace('27/30', '27/30 (override: Derek asked for Opus on the Kangyur)') + TR).code).toBe(0);
+    expect(check('Lands: #1\nRoute: tibetan-tr → tibetan-cli-agy gemini-3.8-flash agy 27/30\n' + TR).code).toBe(0);
+    // A Route that defers to the live table per book has nothing to contradict.
+    expect(check('Lands: #1\nRoute: translation = book\'s cli row in translation-routing-table.json; reread → opus 3/3\n' + TR).code).toBe(0);
+  });
 });

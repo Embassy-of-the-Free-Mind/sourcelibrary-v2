@@ -64,4 +64,49 @@ if echo "$route" | grep -qE '[0-9]+[[:space:]]*/[[:space:]]*[0-9]+'; then :     
 elif echo "$route" | grep -qiE '^untested\b.*cell test'; then :                         # an unmeasured cell, tested first
 elif echo "$route" | grep -qiE '^none[[:space:]]*(—|-|–|:)[[:space:]]*[^[:space:]].{5,}'; then : # not a routed write, with a reason
 else echo "REFUSED: 'Route: $route' has no k/n, is not 'untested → cell test', and is not 'none — <why>'. $how"; exit 8; fi
+
+# A translation route must still be the LIVE router's engine for that language (#8606). The router-table files are
+# dated evals; scripts/lib/translation-routing-table.json is what the pipeline routes by today. On 2026-11-11
+# kangyur-finish-8482 cited the 10-27 Tibetan table (opus-cli 27/30) and ran Opus; the same day #8596 moved Tibetan
+# to agy, and nothing compared the two. A brief that means to differ says so: '(override: <why>)' on the Route line.
+table="${ROUTE_TABLE:-$(dirname "$0")/../lib/translation-routing-table.json}"
+if [ -f "$table" ] && ! echo "$route" | grep -qiE '\boverride:[[:space:]]*[^[:space:])]{3,}' && \
+   { echo "$route" | grep -qiE 'transl|-tr\b'; } ; then
+  live=$(ROUTE="$route" TITLE="$(grep -m1 -E '^# ' "$brief")" python3 - "$table" <<'PY'
+import json, os, re, sys
+t = json.load(open(sys.argv[1]))
+route = os.environ["ROUTE"]
+cell, _, chosen = route.partition("→")
+if not chosen:
+    cell, _, chosen = route.partition("->")
+# Only a single, named route is checked: a Route that defers to the live table per book, or names several
+# routes, has nothing one engine can contradict. The engine is the first clause after the arrow.
+if "routing-table" in route or route.count("→") + route.count("->") != 1:
+    sys.exit(0)
+chosen = re.split(r"[,;(]", chosen)[0]
+text = (cell + " " + os.environ.get("TITLE", "")).lower()
+def family(s):
+    s = s.lower()
+    if re.search(r"opus|sonnet|claude", s): return "claude"
+    if re.search(r"flash-?lite|\blite\b", s): return "flash-lite"
+    if re.search(r"agy|gemini|flash", s): return "agy"
+    return ""
+want = family(chosen)
+if not want:
+    sys.exit(0)
+for row in t.get("rows", []):
+    langs = (row.get("match") or {}).get("language_prefix") or []
+    if any(re.search(r"\b" + re.escape(l.lower()) + r"\b", text) for l in langs):
+        have = family(row.get("engine", ""))
+        if have and have != want:
+            print("%s|%s|%s|%s" % (row["id"], row.get("engine", ""), want, t.get("as_of", "")))
+        sys.exit(0)
+PY
+)
+  if [ -n "$live" ]; then
+    IFS='|' read -r lid leng lwant lasof <<< "$live"
+    echo "REFUSED: 'Route: $route' runs $lwant, but the live router sends this language to $leng (row $lid, scripts/lib/translation-routing-table.json, as of ${lasof:-?}). Use the live route, or say why not on the Route line: '… (override: <why>)'."
+    exit 8
+  fi
+fi
 echo "ok: $route"
