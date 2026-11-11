@@ -296,7 +296,7 @@ function stripWrapperBlocks(text: string, plain: boolean): string {
 const LAYOUT_BLOCK_TAGS = 'p|div';
 const LAYOUT_INLINE_TAGS = 'center|foreign|italic|bold|i|b|em|strong|s|u|sup|sub|small|big|span|font';
 /** Tags with their own meaning here (inline glosses, page marks, structural markers): never touched by this step. */
-const KEPT_TAGS = /^(?:note|term|margin|gloss|unclear|insert|lacuna|image-desc|header|catchword|sig|page-num|folio|column-break|leaf-break)$/i;
+const KEPT_TAGS = /^(?:note|term|margin|gloss|unclear|insert|footnote|lacuna|image-desc|header|catchword|sig|page-num|folio|column-break|leaf-break)$/i;
 
 /**
  * Layout HTML out of plain page text, the words kept (#7118). A probe of 12 random books found `<br>`, `<center>`,
