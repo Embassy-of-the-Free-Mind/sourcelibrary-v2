@@ -1,0 +1,92 @@
+{
+  "_about": "PRIOR ART: none — hand-assembled 2026-11-11 from the experiment log (scripts/eval/experiments/), one row per repair route that has been measured. Each row cites the write-up whose numbers it quotes. Rendered by the error zoo page. Update a row when its experiment is superseded.",
+  "statuses": {
+    "running": "Fixed in production",
+    "ready": "Fixable now: measured, waiting on a decision",
+    "gated": "Fixable with more work: a gate failed",
+    "contain": "Not fixable yet: withhold and label",
+    "instrument": "Not a reader problem"
+  },
+  "routes": [
+    {
+      "status": "ready",
+      "route": "Opus corrects the stored OCR in place",
+      "classes": ["O6", "O7", "O5", "O8"],
+      "when": "Printed books whose OCR is a Flash-Lite draft. Measured in Latin, German, Chinese, Greek, Sanskrit and Arabic.",
+      "result": "Pages a blind Opus reader called misleading fell from 63 to 6 of 250 (German), 57 to 5 of 75 (Chinese), 208 to 26 of 250 (Sanskrit), 193 to 44 of 250 (Arabic). Head to head against a Flash re-read it won 61 to 7 and 214 to 14. Made worse: 1 of 196 changed pages (#6694).",
+      "weak": "Greek manuscripts: 245 to 87 of 250, still a third misleading. Pages the corrector marks CONTAIN need a fresh read.",
+      "cost": "About 5% of one Claude account-week per 1,000 pages. No API spend.",
+      "evidence": ["2026-10-28-correct-vs-reread-wave1-zh-de-grc-7568.md", "2026-10-28-correct-vs-reread-wave2-sa-ar-7568.md", "2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md"]
+    },
+    {
+      "status": "ready",
+      "route": "Gemini Flash (agy) corrects the Flash-Lite draft",
+      "classes": ["O6", "O8", "O5"],
+      "when": "German and French print.",
+      "result": "Pages the Opus judge accepts rose from 37 to 45 of 60 (German) and 27 to 34 of 43 (French). 0 pages lost, no wrong text added. CER on 40 Wikisource pages 1.5% to 1.1%.",
+      "weak": "Pages where a guard refused the correction keep the Flash-Lite draft: 10 of 15 German and 11 of 17 French of those still fail.",
+      "cost": "One agy call a page, Gemini Ultra plan.",
+      "evidence": ["2026-10-31-correction-pass-paired-7818.md", "2026-10-28-correction-lane-production-accept-de-fr-7263.md"]
+    },
+    {
+      "status": "running",
+      "route": "Re-translate the page from its own leaf, one page a call",
+      "classes": ["T14", "I1"],
+      "when": "English that belongs to the neighbouring leaf (the image is right, the translation is one page off).",
+      "result": "The new English is on its own leaf 30 of 30 times (the stored English: 2 of 30). Severity-weighted defects 22 against 114. Adopted: 11,944 pages in 2,608 books queued.",
+      "weak": "Where the OCR itself is one leaf off, the OCR has to be re-read first.",
+      "cost": "agy Gemini Flash, one call a page.",
+      "evidence": ["2026-11-03-wrong-leaf-fix-5021.md"]
+    },
+    {
+      "status": "gated",
+      "route": "Re-translate English that repeats a neighbour's text",
+      "classes": ["T5", "T4"],
+      "when": "The leak detector flags a page pair; 88% of its flags are real.",
+      "result": "The duplicate is gone on 29 of 30 pages, but only 24 of 30 come out usable. The 6 failures: 3 from the page's own OCR, 3 engine errors.",
+      "weak": "Fails its gate. The OCR has to be checked against the neighbours first.",
+      "cost": "agy Gemini Flash, one call a page.",
+      "evidence": ["2026-11-08-leak-repair-5026.md", "2026-11-08-leak-repair-5026-round2.md"]
+    },
+    {
+      "status": "gated",
+      "route": "Re-translate with Gemini 3.8 Flash from good OCR",
+      "classes": ["T8", "T9", "T10"],
+      "when": "Lite-era translations where the OCR is right.",
+      "result": "+0.35 fidelity on 363 pages, but more reversed meanings than the old text (26 against 19), so the reversal gate failed pooled. Opus re-translating 738 corrected Tibetan leaves invented nothing on the leaves checked by eye.",
+      "weak": "Sense flips with correct OCR are the hardest class to detect (about half are caught), so the pages to re-translate are hard to find.",
+      "cost": "Gemini CLI or Claude subscription.",
+      "evidence": ["2026-10-27-opus-retranslate-flash-corrected-tibetan-6948.md"]
+    },
+    {
+      "status": "contain",
+      "route": "Re-read looping pages",
+      "classes": ["O4"],
+      "when": "OCR that repeats a block until the token limit.",
+      "result": "The loop goes away (29 of 30), but the new reads carry more invented spans than the old ones (176 against 131). Opus accepts 1 of 30. Rejected.",
+      "weak": "Trim the looping tail instead (a deterministic fix, #4850).",
+      "cost": "",
+      "evidence": ["2026-11-02-agy-reread-looping-pages-4850.md"]
+    },
+    {
+      "status": "contain",
+      "route": "Re-translate near-blank or caption-only leaves",
+      "classes": ["O1", "T7"],
+      "when": "Leaves with little or no text, where the model invents a page.",
+      "result": "No invented entries after re-translation, but background still leaks into glosses: 26 of 30 clean against a bar of 27. Rejected; 547 pages stay withheld.",
+      "weak": "Confabulation on manuscripts has no measured fix. Handwritten pages carry five times the confabulation of printed ones.",
+      "cost": "",
+      "evidence": ["2026-11-04-near-blank-fix-5274.md"]
+    },
+    {
+      "status": "instrument",
+      "route": "Raw tags in the stored text",
+      "classes": ["D1", "O11"],
+      "when": "Reviewers read the stored payload, not the page a reader sees.",
+      "result": "The reader already moves <summary>, <keywords>, <sig>, <page-num>, <header> and <vocab> out of the reading text and renders <leaf-break/> and <column-break/>. Most of these findings never reach a reader.",
+      "weak": "The fix is to the review brief: tell reviewers which tags the reader strips.",
+      "cost": "",
+      "evidence": ["src/components/reader/NotesRenderer.tsx"]
+    }
+  ]
+}

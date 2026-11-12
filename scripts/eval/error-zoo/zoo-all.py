@@ -17,11 +17,20 @@ defs = {}
 for m in re.finditer(r'^### ([IOTDE]\d+) · (.+?)(?: — (.*?))?$\n(.*?)(?=^### |\Z)', TAX, re.M | re.S):
     code, name, status, body = m.groups()
     sees = re.search(r'\*\*Reader sees:\*\*\s*(.+)', body)
-    defs[code] = dict(name=name.strip(), status=(status or '').strip(), sees=(sees.group(1).strip()[:420] if sees else ''))
+    det = re.search(r'\*\*Detector(?: / issue)?:\*\*\s*(.+)', body)
+    fix = re.search(r'\*\*Fix:\*\*\s*(.+)', body)
+    lane = re.search(r'\*\*Lane:\*\*\s*(.+)', body)
+    clean = lambda m: re.sub(r'`([^`]*)`', r'\1', m.group(1).strip())[:360] if m else ''
+    defs[code] = dict(name=name.strip(), status=(status or '').strip(), sees=(sees.group(1).strip()[:420] if sees else ''), detector=clean(det), fix=clean(fix), where=clean(lane))
 # class -> default kind, from review-vocabulary.mjs
 VOC = open(os.path.join(HERE, '../../lib/review-vocabulary.mjs')).read()
 kind = dict(re.findall(r"\b([IOTDE]\d{1,2}):\s*'([a-z_]+)'", VOC))
 CODE = re.compile(r'\b([IOTDE]\d{1,2})\b')
+import hashlib
+def fid(r, e):
+    """Stable id of one finding, by content: survives a regather that reorders labels.jsonl."""
+    k = '|'.join(str(x) for x in (r.get('source'), r.get('run_id'), r.get('page_id'), r.get('page_number'), e.get('stage'), e.get('class'), e.get('problem'), e.get('bad')))
+    return hashlib.sha1(k.encode()).hexdigest()[:16]
 
 rows = [json.loads(l) for l in open(f'{DIR}/labels.jsonl')]
 titles = {}
@@ -44,7 +53,7 @@ for ri, r in enumerate(rows):
         total += 1
         m = CODE.search(str(e.get('class') or ''))
         if m: c = m.group(1); how['reader'] += 1
-        elif f'{ri}:{ei}' in assigned: c, h = assigned[f'{ri}:{ei}']; how[h] += 1
+        elif fid(r, e) in assigned: c, h = assigned[fid(r, e)]; how[h] += 1
         else: unclassed += 1; continue
         sev = e.get('severity') or 'serious'
         cnt[c][sev] += 1; pages[c].add(pk); langs[c][r.get('language') or '?'] += 1; bysrc[c][r['source']] += 1
@@ -52,7 +61,7 @@ for ri, r in enumerate(rows):
             url=f"https://sourcelibrary.org/book/{r['book_id']}?page={r['page_number']}", ocr_model=r.get('ocr_model_at_check') or '',
             problem=(e.get('problem') or '')[:400], bad=(e.get('bad') or '')[:240], good=(e.get('good') or '')[:240],
             badlabel='OCR' if e.get('stage') == 'ocr' else 'English' if e.get('stage') == 'translation' else '', goodlabel='On the page' if e.get('stage') == 'ocr' else 'Source' if e.get('stage') == 'translation' else '',
-            source=r['source'], classed_by='reader' if m else assigned[f'{ri}:{ei}'][1]))
+            source=r['source'], classed_by='reader' if m else assigned[fid(r, e)][1]))
 order = {'serious': 0, 'moderate': 1, 'minor': 2}
 out = []
 for c in sorted(set(defs) | set(cnt), key=lambda k: ('IOTDE'.index(k[0]), int(k[1:]))):
@@ -65,7 +74,7 @@ for c in sorted(set(defs) | set(cnt), key=lambda k: ('IOTDE'.index(k[0]), int(k[
         if s['url'] in seenb or seenl[s['lang']] >= 3 or seens[s['source']] >= 5 or len(s['problem']) < 25: continue
         picked.append(s); seenl[s['lang']] += 1; seenb.add(s['url']); seens[s['source']] += 1
     d = defs.get(c, {'name': '(not in taxonomy doc)', 'status': '', 'sees': ''})
-    out.append(dict(code=c, lane=c[0], kind=kind.get(c, ''), name=d['name'], status=d['status'], sees=d['sees'], n=sum(cnt[c].values()), sev=dict(cnt[c]), pages=len(pages[c]),
+    out.append(dict(code=c, lane=c[0], kind=kind.get(c, ''), name=d['name'], status=d['status'], sees=d['sees'], detector=d.get('detector', ''), fix=d.get('fix', ''), where=d.get('where', ''), n=sum(cnt[c].values()), sev=dict(cnt[c]), pages=len(pages[c]),
                     langs=langs[c].most_common(4), sources=dict(bysrc[c]), specimens=picked))
 meta = dict(total=total, unclassed=unclassed, pages=len(page_keys), serious_pages=len(serious_pages), runs=len({r['run_id'] for r in rows if r.get('run_id')}),
             classed_by=dict(how), sources={SRC_LABEL.get(s, s): n for s, n in C.Counter(r['source'] for r in rows if not r.get('positive_only')).items()}, built='2026-11-11')

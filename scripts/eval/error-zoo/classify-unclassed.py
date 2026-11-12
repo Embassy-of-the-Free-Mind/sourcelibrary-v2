@@ -18,6 +18,11 @@ CD = f'{DIR}/classes'; os.makedirs(f'{CD}/batches', exist_ok=True)
 TAX = open(os.path.join(os.path.dirname(__file__), '../../../.claude/docs/page-error-taxonomy.md')).read()
 DEFS = {m.group(1): m.group(2).strip() for m in re.finditer(r'^### ([IOTDE]\d+) · (.+?)(?: — .*)?$', TAX, re.M)}
 CODE = re.compile(r'\b([IOTDE]\d{1,2})\b')
+import hashlib
+def fid(r, e):
+    """Stable id of one finding, by content: survives a regather that reorders labels.jsonl."""
+    k = '|'.join(str(x) for x in (r.get('source'), r.get('run_id'), r.get('page_id'), r.get('page_number'), e.get('stage'), e.get('class'), e.get('problem'), e.get('bad')))
+    return hashlib.sha1(k.encode()).hexdigest()[:16]
 
 LEGACY = {'ocr-misread': 'O6', 'ocr-unsettled': 'O6', 'wrong_leaf': 'I1', 'ocr-wrong-leaf': 'I1', 'other:translation-not-of-page': 'T14', 'other:translation not of this text': 'T14',
           'other:mistranslation': 'T8', 'other:lexical mistranslation': 'T8', 'other:lexical mistranslation with correct OCR': 'T8', 'other:column-interleave': 'O9', 'other:name-mistranslated': 'T8',
@@ -76,7 +81,7 @@ def load():
         if r.get('positive_only'): continue
         for ei, e in enumerate(r['errors']):
             if CODE.search(str(e.get('class') or '')): continue
-            items.append(dict(id=f'{ri}:{ei}', source=r['source'], stage=e.get('stage') or 'other', severity=e.get('severity'), cls=e.get('class'), problem=(e.get('problem') or '')[:600], bad=(e.get('bad') or '')[:200], good=(e.get('good') or '')[:200], language=r.get('language') or ''))
+            items.append(dict(id=fid(r, e), source=r['source'], stage=e.get('stage') or 'other', severity=e.get('severity'), cls=e.get('class'), problem=(e.get('problem') or '')[:600], bad=(e.get('bad') or '')[:200], good=(e.get('good') or '')[:200], language=r.get('language') or ''))
     return rows, items
 
 if MODE == 'rules':

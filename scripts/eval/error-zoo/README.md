@@ -1,5 +1,17 @@
 # Error zoo and bad-page predictor
 
+## v3 (2026-11-12): a readable page, and is "serious" predictable?
+
+- **The page.** `zoo-stats.py <dir>` computes the cross-tabs (language × half-century, detectability by class and
+  severity, class × circumstance); `build-page.py <dir> <out.html>` fills `zoo-page.html` with the zoo, the stats and
+  `fixability.json` (every measured repair route, each citing its experiment). Published at
+  https://claude.ai/artifact/5JkkHvq7mnsmkJDqaHxUPK. `head.html` / `tail.html` are the v1/v2 page, kept for reference.
+- **Finding ids are now content hashes** (`fid()` in classify-unclassed.py, zoo-all.py, zoo-stats.py). Positional ids
+  broke when labels.jsonl was regathered; a model answer could have been attached to the wrong finding.
+- **Errors or instruments?** `instrument-leakage.py <dir>` → `leakage-report-2026-11-12.md`; write-up
+  `scripts/eval/experiments/2026-11-12-is-serious-predictable-6420.md`. Proposals, not in use:
+  `SEVERITY-RUBRIC-PROPOSAL.md`, `CALIBRATION-SET-DESIGN.md`.
+
 ## v2 (2026-11-11, later the same day): every label source, per-source numbers
 
 The v1 scripts below read ONE source (the spare audits on disk). v2 reads every page-level judgment we hold and
