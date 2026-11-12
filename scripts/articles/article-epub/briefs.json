@@ -24,19 +24,20 @@
     }
   },
   "sea-road-china-gulf": {
-    "tldr": "For a thousand years ships sailed between the ports of China and the Persian Gulf. This is the route told by the people who knew it: Arab merchants and geographers, a Chinese customs inspector, Marco Polo, Ibn Battuta, Zheng He's charts, the Portuguese, and finally a Chinese scholar looking back in 1844.",
-    "summary": "It begins with a Portuguese physician's memory that four hundred Chinese ships once came into Hormuz on a single tide. From there it follows the sailing directions of the ninth-century merchants of Siraf, the marvels geographers collected about the China Sea, the same road seen from the Chinese port of Quanzhou, Marco Polo's voyage home by way of Hormuz, Ibn Battuta waiting at Calicut for the monsoon, the Ming chart of Zheng He's route, the Portuguese at Hormuz, and Wei Yuan writing after the Opium War, when the road had turned against China.",
+    "tldr": "For a thousand years ships sailed between the ports of China and the Persian Gulf. Here is the road in the words of people who knew it: the merchants of Siraf, the geographers of Baghdad and Isfahan, Marco Polo, Ibn Battuta, Zheng He's chart, the Portuguese and Dutch at Hormuz, and a Chinese scholar looking back in 1844.",
+    "summary": "Stories, one to a chapter: a fleet of four hundred lost on the shoals off Hormuz; a water fee of a thousand dirhams; a king who threw his gold into the sea; musk the tax collectors could smell; fourteen ships and six hundred dead; a wreck in Calicut harbour; a star chart to Hormuz; men sleeping in tubs of water in the Hormuz heat. Short Context panels give the history around them and can be skipped.",
     "chapters": {
-      "The Sea Road from China to the Gulf": "Four hundred Chinese ships at Hormuz, remembered in a Portuguese book of drugs.",
-      "The stages from Siraf": "The ninth-century merchants' sailing directions, stage by stage to China.",
-      "Wonders of the China Sea": "What sailors told the geographers: pearls, whirlpools and white wings on the water.",
-      "The same road from the Chinese end": "Zhao Rugua at Quanzhou on the Arabs, Oman and Kish.",
-      "Marco Polo goes home by sea": "Fourteen ships, six hundred dead, and Hormuz.",
-      "Ibn Battuta waits for the monsoon": "Chinese junks at Calicut, and a wreck in the harbour.",
-      "Zheng He’s charts": "The Ming fleets, and the chart of their route printed in 1621.",
-      "The Portuguese at Hormuz": "When the junks were only a memory on the Malabar coast.",
-      "Looking back from Canton, 1844": "Wei Yuan on Hormuz, after the road had turned against China.",
-      "A note on the sources": "Whose English you are reading, and where it comes from."
+      "The Sea Road from China to the Gulf": "Four hundred ships, lost together on the shoals off Hormuz.",
+      "A thousand dirhams for water": "Why the China ships loaded at Siraf, and what Quilon charged them.",
+      "“This is my treasury”": "The Maharaja of Zabaj and his gold bricks in the water.",
+      "White wings before a calm": "How sailors read the China Sea, and the whirlpool.",
+      "Musk that gave itself away": "Musk from Guangzhou, and the teak houses of Siraf.",
+      "A customs inspector at Quanzhou": "Zhao Rugua writes down what foreign merchants told him.",
+      "Fourteen ships, six hundred dead": "Marco Polo's voyage home, and the sewn ships of Hormuz.",
+      "Three months at Calicut": "Ibn Battuta, the junks, and the wreck in the harbour.",
+      "Stars to Hormuz": "The Ming chart of Zheng He's route.",
+      "Sleeping in tubs at Hormuz": "Linschoten and Kaempfer at the island of heat.",
+      "Hormuz from Canton, 1844": "Wei Yuan, after the Opium War."
     }
   }
 }

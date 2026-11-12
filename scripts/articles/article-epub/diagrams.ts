@@ -130,6 +130,6 @@ export function hyperboreaPlate(bw: boolean, componentFile: string): string {
 
 /** Plates by article and chapter heading; each is placed after the chapter's heading (or its opening picture). */
 export const DIAGRAMS: Record<string, Record<string, (bw: boolean, root: string) => string>> = {
-  'sea-road-china-gulf': { 'The stages from Siraf': (bw) => seaRoadPlate(bw) },
+  'sea-road-china-gulf': { 'A thousand dirhams for water': (bw) => seaRoadPlate(bw) },
   hyperborea: { "Everyone's Hyperborea": (bw, root) => hyperboreaPlate(bw, `${root}/src/app/articles/hyperborea/HyperboreaTimeline.tsx`) },
 };

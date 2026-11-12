@@ -146,7 +146,13 @@ h1 + p, h2 + p, figure + p, blockquote + p, div + p, p.first, .noindent { text-i
 h1 { font-weight: normal; font-size: 1.9em; text-align: center; margin: 0.6em 0 0.8em; line-height: 1.2; color: #9e4a3a; }
 h2 { font-weight: normal; font-size: 1.5em; text-align: center; margin: 0.2em 0 1em; line-height: 1.25; color: #9e4a3a; }
 h3 { font-weight: normal; font-size: 1.2em; margin: 0 0 0.2em; color: #9e4a3a; }
-a, a:link, a:visited { color: #9e4a3a; -webkit-text-fill-color: #9e4a3a; text-decoration: none; }
+a, a:link, a:visited { color: #9e4a3a !important; -webkit-text-fill-color: #9e4a3a; text-decoration: none !important; }
+/* Apple Books paints the link element in its own blue whatever the CSS says; the colour is carried by a span
+   inside each link instead (linkSpans below). Books marks its theme on the root element: night gets a lighter
+   rust so links still read on black. */
+.lk { color: #9e4a3a !important; -webkit-text-fill-color: #9e4a3a !important; }
+:root[__ibooks_internal_theme*="Night"] .lk, :root[__ibooks_internal_theme*="Night"] a { color: #e39a82 !important; -webkit-text-fill-color: #e39a82 !important; }
+:root[__ibooks_internal_theme*="Gray"] .lk, :root[__ibooks_internal_theme*="Gray"] a { color: #f0b09a !important; -webkit-text-fill-color: #f0b09a !important; }
 .headpiece { text-align: center; margin: 0.4em 0 0.6em; }
 .headpiece img { width: 72%; }
 .tailpiece { text-align: center; margin: 1.6em 0 0.4em; page-break-inside: avoid; }
@@ -165,8 +171,8 @@ figcaption { font-size: 0.9em; color: #5d5346; margin-top: 0.45em; text-align: c
 figure.opener { margin: 0 0 1.4em; }
 figure.opener img { max-height: 62vh; }
 figure.plate img { max-height: 92vh; }
-figure.map { margin: 0; text-align: center; }
-figure.map img { max-height: 96vh; max-width: 100%; }
+figure.map { margin: 0; text-align: center; page-break-inside: avoid; }
+figure.map img { width: 100%; max-height: 98vh; object-fit: contain; }
 .person { width: 100%; border-collapse: collapse; margin: 0 0 1.1em; page-break-inside: avoid; }
 .facecell { width: 6.2em; vertical-align: top; padding: 0.2em 0.9em 0 0; text-align: center; }
 .textcell { vertical-align: top; }
@@ -183,7 +189,8 @@ figure.map img { max-height: 96vh; max-width: 100%; }
 .context .ctx-label { font-variant-caps: all-small-caps; letter-spacing: 0.2em; color: #9e7c3c; margin: 0 0 0.1em; font-size: 0.9em; }
 .context .ctx-title { font-size: 1.05em; color: #9e4a3a; margin: 0 0 0.4em; }
 .hl { background-color: #e9e6e1; padding: 0.05em 0.15em; border-radius: 0.15em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-a .hl, .hl a, a .hl a { color: #1a1612; -webkit-text-fill-color: #1a1612; }
+a .hl, .hl a, a .hl a, .hl .lk { color: #1a1612 !important; -webkit-text-fill-color: #1a1612 !important; }
+:root[__ibooks_internal_theme*="Night"] .hl, :root[__ibooks_internal_theme*="Night"] .hl .lk { background-color: #3a3631; color: #f1ece4 !important; -webkit-text-fill-color: #f1ece4 !important; }
 a.nref { font-size: 0.8em; vertical-align: super; line-height: 0; margin-left: 0.1em; color: #9e4a3a; }
 aside.hnote { margin: 1.4em 0 0; padding-top: 0.6em; border-top: 1px solid #c9a86c; }
 aside.hnote p { text-indent: 0; text-align: left; font-size: 0.92em; line-height: 1.4; color: #4a3f33; margin: 0 0 0.6em; }
@@ -384,11 +391,9 @@ const PURPOSE = `<h2>Source Library</h2>
 const mapPages: string[] = [];
 for (const [k, spec] of (MAPS[slug] ?? []).entries()) {
   const f = `${process.cwd()}/scans/map-${k}.png`;
-  // A wide map is turned to fill the page, as a book prints a wide plate (tip the reader to read it);
-  // a squarish one stays upright.
-  const flat = await sharp(Buffer.from(mapSvg(spec, BW))).png().toBuffer();
-  const { width = 1, height = 1 } = await sharp(flat).metadata();
-  const png = width / height > 1.25 ? sharp(flat).rotate(-90).resize({ height: 1700 }) : sharp(flat).resize({ width: 1600 });
+  // Maps stay upright: turning the phone turns the page with it (Apple Books), so a wide map is read by
+  // holding the reader sideways, where it fills the screen. A rotated image would stay sideways (Derek, 2026-11-12).
+  const png = sharp(Buffer.from(mapSvg(spec, BW))).resize({ width: 1800 });
   fs.writeFileSync(f, BW ? await png.png({ palette: true, colours: 8 }).toBuffer() : await png.jpeg({ quality: 88 }).toBuffer().then((b) => b));
   mapPages.push(`<figure class="map"><img src="file://${f}" alt="${esc(spec.title)}: ${esc(spec.sub)}"/></figure>`);
 }
@@ -414,6 +419,10 @@ type Brief = { tldr: string; summary: string; chapters?: Record<string, string> 
 const brief = (briefs as unknown as Record<string, Brief>)[slug];
 const briefChapters = brief?.chapters ? essayChapters.filter((c) => brief.chapters![c.title]).map((c) =>
   `<p><a href="${c.filename}">${esc(c.title)}</a> · ${esc(brief.chapters![c.title])}</p>`).join('') : '';
+
+/** Every text link carries its colour on an inner span (see .lk): Apple Books overrides the colour of <a> itself. */
+const linkSpans = (html: string) => html.replace(/<a\b([^>]*)>([\s\S]*?)<\/a>/g, (m, attrs: string, inner: string) =>
+  /<img\b/.test(inner) || /class="lk"/.test(inner) ? m : `<a${attrs}><span class="lk">${inner}</span></a>`);
 
 const epub = await new EPub({
   title: displayTitle,
@@ -452,6 +461,6 @@ const epub = await new EPub({
     title: 'Colophon', filename: 'colophon.xhtml',
     content: `<div class="colophon"><img class="device" src="file://${deviceFile}" alt="The printer's device of Source Library"/><p class="col-title">${esc(displayTitle)}</p><p>Set in EB Garamond. Initials from Alberti, <i>De re aedificatoria</i> (Paris, 1512); headpiece and tailpiece from <i>${esc(orn.headpiece.title)}</i> and <i>${esc(orn.tailpiece.title)}</i>, all in the library.</p><p>Made by Source Library, Amsterdam, ${esc(year)}. Text and translations CC BY-NC-SA 4.0.</p><p><a href="${SITE}">sourcelibrary.org</a></p></div>`,
   },
-]).genEpub();
+].map((ch) => ({ ...ch, content: linkSpans(ch.content) }))).genEpub();
 fs.writeFileSync(out, epub);
 console.log(`${out}: ${readingCount} readings (${scans} scans, ${withheld} withheld), ${words} words of sources, ${(epub.length / 1e6).toFixed(1)} MB`);

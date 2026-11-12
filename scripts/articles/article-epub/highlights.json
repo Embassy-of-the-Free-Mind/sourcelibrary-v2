@@ -1,24 +1,40 @@
 {
   "_comment": "Lines worth stopping for, set on a light grey ground with a note that pops up on tap (EPUB footnotes: Apple Books, Kobo, Kindle). `text` must appear in the essay exactly; `note` only what the essay or the cited page says; `ref` (book-slug?page=N) links the note to that page among the Sources.",
   "sea-road-china-gulf": [
-    { "text": "four hundred Chinese ships had once come in on a single tide",
-      "note": "Da Costa’s own words: the people of Hormuz “find it written in their books, that in a single tide, four hundred large ships entered the Island of Geru (which is now called Hormuz), and that all at once they were lost together on the shoals.”",
-      "ref": "tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa?page=38" },
-    { "text": "He fashions it into bricks and throws them into the water",
-      "note": "The Maharaja of Zabaj, king of Srivijaya on Sumatra, as Ibn Khordadbeh heard of him in the ninth century: two hundred mann of gold a day, cast into bricks and thrown in the water as “my treasury”." },
-    { "text": "its scent intensifies, and the merchants cannot hide it from the tax collectors",
-      "note": "Musk from Guangzhou giving itself away at the head of the Gulf, in an older authority quoted by Ibn Rustah in Isfahan in the early tenth century." },
-    { "text": "about six hundred people died among the sailors and others who were in said ships",
-      "note": "Marco Polo’s voyage home, around 1291: fourteen four-masted ships, eighteen months on the Indian Sea, and of the three ambassadors only one, Goza, was left." }
+    {
+      "text": "in a single tide, four hundred large ships entered the Island of Geru",
+      "note": "Da Costa had the story from the people of Hormuz, who kept it in their books. On his next page the same fleet is lost on the shoals of Chilao, “numbering more than two hundred ships”.",
+      "ref": "tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa?page=38"
+    },
+    {
+      "text": "He fashions it into bricks and throws them into the water",
+      "note": "The Maharaja of Zabaj, king of Srivijaya on Sumatra, as Ibn Khordadbeh heard of him in the ninth century: two hundred mann of gold a day, cast into bricks and thrown in the water as “my treasury”."
+    },
+    {
+      "text": "its scent intensifies, and the merchants cannot hide it from the tax collectors",
+      "note": "Musk from Guangzhou giving itself away at the head of the Gulf, in an older authority quoted by Ibn Rustah in Isfahan in the early tenth century."
+    },
+    {
+      "text": "about six hundred people died among the sailors and others who were in said ships",
+      "note": "Marco Polo’s voyage home, around 1291: fourteen four-masted ships, eighteen months on the Indian Sea, and of the three ambassadors only one, Goza, was left."
+    }
   ],
   "hyperborea": [
-    { "text": "every year a bundle arrived on their island from the far north, wrapped in wheat straw",
-      "note": "Herodotus had it from the priests of Delos: the offerings passed from people to people across Europe, and nobody on the island had met the senders." },
-    { "text": "their tears hardened into amber",
-      "note": "The myth has a real substance under it: laboratory analysis finds Baltic amber among the offerings in Greek sanctuaries in the generations before Herodotus." },
-    { "text": "a kind of substance concreted from all these elements, resembling a sea-lung",
-      "note": "Pytheas of Massalia, who sailed north past Britain around 325 BCE, as Pliny preserves him: beyond Thule there was no longer land or sea or air." },
-    { "text": "he displayed his golden thigh to Abaris the Hyperborean",
-      "note": "In Iamblichus, Pythagoras proves to Apollo’s Hyperborean priest that he is the god himself." }
+    {
+      "text": "every year a bundle arrived on their island from the far north, wrapped in wheat straw",
+      "note": "Herodotus had it from the priests of Delos: the offerings passed from people to people across Europe, and nobody on the island had met the senders."
+    },
+    {
+      "text": "their tears hardened into amber",
+      "note": "The myth has a real substance under it: laboratory analysis finds Baltic amber among the offerings in Greek sanctuaries in the generations before Herodotus."
+    },
+    {
+      "text": "a kind of substance concreted from all these elements, resembling a sea-lung",
+      "note": "Pytheas of Massalia, who sailed north past Britain around 325 BCE, as Pliny preserves him: beyond Thule there was no longer land or sea or air."
+    },
+    {
+      "text": "he displayed his golden thigh to Abaris the Hyperborean",
+      "note": "In Iamblichus, Pythagoras proves to Apollo’s Hyperborean priest that he is the god himself."
+    }
   ]
 }
