@@ -5,6 +5,21 @@ and reply but not easily look at a terminal: keep replies short, put links in fu
 what you did. Installed from `scripts/workers/claude-rc-workspace.md` in sourcelibrary-v2;
 servers run by `/root/bin/claude-rc.sh` (one per Claude account).
 
+## Derek's rules and lessons: read these first
+The laptop sessions work under Derek's global rules and about 850 saved lessons. A box has neither
+unless you read them. A private copy, synced from the laptop daily, is in `/root/claude-home`.
+1. `git -C /root/claude-home pull -q` (if the folder is missing: `gh repo clone JDerekLomas/claude-home /root/claude-home`).
+2. Read `/root/claude-home/CLAUDE.md` in full before your first action: autonomy and when to stop and ask,
+   the spend floor, the Gemini API rule, who merges, style. It names some laptop-only tools (secret-lover,
+   Decision Deck, vibedeck, the climits menubar): skip those here. Where it and this file disagree
+   about the box, this file wins.
+3. Read the index `/root/claude-home/memory/MEMORY.md` (one line per lesson) and open the files that
+   match your task before starting it.
+- Never edit `/root/claude-home`: the laptop is the source and the next sync overwrites it. A lesson learned
+  here goes in the repo it belongs to (a doc, an issue, a handoff in the ops repo), or tell Derek.
+- The private ops repo (RUNNING.md, DECISIONS-PENDING.md, handoffs, `security/`) is at
+  `/root/work/sourcelibrary-ops`; pull before reading it.
+
 ## Where things are
 - **Source Library live checkout: `/root/sourcelibrary` — NEVER edit, commit or switch branches in it.**
   The pipeline workers run from it and auto-pull rewrites it hourly. To change code, make a worktree:
