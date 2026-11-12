@@ -89,6 +89,7 @@ const KINDS = ['number', 'negation', 'name', 'drop_line', 'facing_line'];
 let planted = 0;
 for (const c of plantFrom) {
   if (planted >= N_PLANT) break;
+  if (used.has(c.book_id)) continue;  // one page per book, rechecked as books are used
   const p = await db.collection('pages').findOne({ id: c.page_id }, { projection: proj }); if (!p?.ocr?.data) continue;
   let t = p.ocr.data; const want = KINDS[planted % KINDS.length]; let ans = null;
   const lines = bodyLines(t); if (lines.length < 6) continue;
@@ -107,6 +108,7 @@ for (const c of plantFrom) {
 let wrong = 0;
 for (const c of shuffle(cand.filter((x) => A[x.language] && !used.has(x.book_id)))) {
   if (wrong >= N_WRONG) break;
+  if (used.has(c.book_id)) continue;
   const p = await db.collection('pages').findOne({ id: c.page_id }, { projection: proj });
   const nx = p && await db.collection('pages').findOne({ book_id: p.book_id, page_number: p.page_number + 1 }, { projection: proj });
   if (!nx?.ocr?.data || (nx.ocr.data.length < 300) || !(nx.translation?.data || '').trim()) continue;
