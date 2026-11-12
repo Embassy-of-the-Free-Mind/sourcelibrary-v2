@@ -69,7 +69,9 @@ for (const p of pages.values()) {
   const d = live.get(p.page_id); if (!d) continue;
   const b = books.get(d.book_id) || {};
   const { cell, row } = cellFor(String(b.language || '').trim(), d.ocr?.model, d.script_type);
-  const route = row ? boundRoute(row) : null;
+  let route = row ? boundRoute(row) : null;
+  // A bound route that is just the engine that made the page (`lite` on a lite read) keeps the text: not a repair.
+  if (route && !route.includes('>') && engineOf(route) && engineOf(route) === engineOf(d.ocr?.model)) route = null;
   const confirmed = p.families.size >= 2 || (p.families.has('claude') && p.families.has('gemini'));
   let status;
   if (d.ocr?.edited_by || d.ocr?.source === 'manual') status = 'skip';
