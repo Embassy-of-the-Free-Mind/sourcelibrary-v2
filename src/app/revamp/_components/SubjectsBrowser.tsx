@@ -42,7 +42,7 @@ function PicCard({ s, also }: { s: SubjectRow; also?: string }) {
   return (
     <Link id={s.home ? s.id : undefined} href={to(s)} className="group block bg-white border border-border-light text-primary hover:border-primary transition-colors scroll-mt-20">
       {!(s.bare && !s.pics[0]) && <span className="block aspect-square overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />}</span>}
-      <span className="block px-3.5 py-3 text-[15px] leading-snug">{s.label}{s.note && <span className="block text-[12.5px] text-muted mt-0.5">{s.note}</span>}{also && <span className="block text-[12.5px] text-muted mt-0.5">Also called {also}</span>}</span>
+      <span className="block px-3.5 py-3"><span className="block text-[17px] leading-snug font-display">{s.label}</span>{s.note && <span className="block text-[13px] text-muted mt-0.5">{s.note}</span>}{also && <span className="block text-[12.5px] text-muted mt-0.5">Also called {also}</span>}</span>
     </Link>
   );
 }
@@ -177,10 +177,12 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
             <div className={`${WRAP} ${i ? 'pt-5 md:pt-8' : ''} pb-5 md:pb-8`}>
               {(
                 // The whole picture band is the way into the subject.
-                <Link href={to(g)} className="group relative flex min-h-[132px] md:min-h-[200px] overflow-hidden mb-3 md:mb-4">
+                <Link href={to(g)} className={`group relative flex overflow-hidden mb-3 md:mb-4 ${card === 'top' ? '' : 'min-h-[132px] md:min-h-[200px]'}`}>
                   <Strip pics={g.pics} className="absolute inset-0 h-full" />
                   <span className="absolute inset-0 transition-opacity group-hover:opacity-80" style={{ background: BAND_TINT }} />
-                  <span className="relative self-end w-full flex flex-col md:flex-row items-start md:items-end md:justify-between gap-1.5 md:gap-4 p-4 pt-10 md:p-7 text-white">
+                  {/* With pictures on top, the band is exactly as tall as one card's picture: this square is one column wide. */}
+                  {card === 'top' && <span aria-hidden className="block shrink-0 aspect-square -mb-[2px] w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2rem)/3)] md:w-[calc((100%-3rem)/4)] lg:w-[calc((100%-4rem)/5)]" />}
+                  <span className={`${card === 'top' ? 'absolute inset-x-0 bottom-0' : 'relative self-end w-full'} flex flex-col md:flex-row items-start md:items-end md:justify-between gap-1.5 md:gap-4 p-4 pt-10 md:p-7 text-white`}>
                     <span className="font-serif text-[26px] md:text-[48px] leading-[1.05] tracking-tight">{g.label}</span>
                     <span className="text-[13px] md:text-[15px] font-medium md:whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5">Everything in {g.label} <Arrow /></span>
                   </span>

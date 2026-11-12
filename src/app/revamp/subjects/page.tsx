@@ -7,7 +7,7 @@ import { RAMP } from '../_lib/ramp';
 import { HERO_H } from '../_lib/hero';
 import { subjectPictures } from '../_lib/subject-pics';
 
-interface Subj { id: string; label: string; level: number; parents: string[]; altLabels?: Record<string, string[]> }
+interface Subj { id: string; label: string; level: number; parents: string[]; altLabels?: Record<string, string[]>; bookCount?: number; imageCount?: number }
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 
@@ -39,7 +39,7 @@ export default function Page() {
     const hit = all.find((s) => s.label.toLowerCase() === m.name.toLowerCase());
     if (hit) { pages.set(hit.id, slug); tiles.push(...m.heroTiles.slice(0, 4)); }
   }
-  const row = (s: Subj): SubjectRow => ({ id: s.id, label: s.label, href: pages.has(s.id) ? `/revamp/s/${pages.get(s.id)}` : undefined, alt: Object.values(s.altLabels ?? {}).flat(), pics: (pics[s.id] ?? []).filter((p) => p.src) });
+  const row = (s: Subj): SubjectRow => ({ id: s.id, label: s.label, href: pages.has(s.id) ? `/revamp/s/${pages.get(s.id)}` : undefined, alt: Object.values(s.altLabels ?? {}).flat(), pics: (pics[s.id] ?? []).filter((p) => p.src), note: [s.bookCount ? `${s.bookCount.toLocaleString('en-GB')} ${s.bookCount === 1 ? 'book' : 'books'}` : '', s.imageCount ? `${s.imageCount.toLocaleString('en-GB')} ${s.imageCount === 1 ? 'image' : 'images'}` : ''].filter(Boolean).join(' · ') || undefined, size: s.bookCount ?? 0 });
   // Featured: one subject a week, chosen in turn from the subjects with enough in them to carry the hero.
   const featured = featuredSubject([...pages.values()]);
   const total = new Set(all.map((x) => x.id)).size;
