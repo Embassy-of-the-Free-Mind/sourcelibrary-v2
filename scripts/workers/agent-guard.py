@@ -61,6 +61,30 @@ INFRA = re.compile(r"\b(?!(127|10|0)\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)\d{1
 EGRESS = re.compile(r"\b(curl|wget)\s(?:[^;&|\n$(]*\s)?(-d|--data[a-z-]*|-F|--form|-T|--upload-file|-X\s*(POST|PUT))\b")
 URL_HOST = re.compile(r"https?://([^/\s:'\"]+)")
 APPLY = re.compile(r"\s--apply\b")
+# Added 2026-11-11 (#8614 follow-up, Derek "what should it look for?"), all shadow until a week of data is in.
+DB_MASS = re.compile(r"\.(updateMany|bulkWrite|replaceOne|insertMany)\s*\(|\bvisible\s*:\s*(true|false)\b[^\n]*updateMany")
+R2_DELETE = re.compile(r"\brclone\s+(delete|deletefile|purge|rmdirs|sync)\b|\baws\s+s3\s+(rm|rb)\b|\bs3api\s+delete-objects?\b|"
+                       r"DeleteObjects?Command")
+PROD_DEPLOY = re.compile(r"\bvercel\b[^;&|\n]*\s--prod\b|\bdeploy:prod\b|\bgh\s+workflow\s+run\s+release")
+PAID_GEMINI = re.compile(r"generativelanguage\.googleapis\.com|GEMINI_API_KEY|@google/genai|google\.generativeai")
+GEMINI_MODEL = re.compile(r"gemini-[0-9][\w.\-]*")
+PAID_API = re.compile(r"openrouter\.ai|OPENROUTER_API_KEY|api\.replicate\.com|REPLICATE_API_TOKEN|api\.mistral\.ai|"
+                      r"MISTRAL_API_KEY|api\.anthropic\.com/v1/messages|ANTHROPIC_API_KEY")
+CLOUD_CREATE = re.compile(r"\bhcloud\s+(server|volume|load-balancer)\s+create|\bscw\s+\S+\s+\S+\s+create|"
+                          r"\baws\s+ec2\s+run-instances|\bgcloud\s+compute\s+instances\s+create")
+PERSIST = re.compile(r"\bsystemctl\s+(enable|disable|mask|unmask|daemon-reload)\b|/etc/systemd/system/|"
+                     r"\biptables\s+-[AIDFX]|\bufw\s+(allow|deny|disable|delete)|\bnft\s+(add|delete|flush)|"
+                     r"(^|[;&|]\s*)(useradd|adduser|userdel|groupadd)\b|\btailscale\s+(up|down|set|logout|serve|funnel)\b")
+RAW_SSH = re.compile(r"\b(ssh|scp|rsync)\b[^;&|\n]*\broot@")
+LIVE = "/root/sourcelibrary"
+LIVE_GIT = re.compile(r"\bgit\s+(?:-C\s+/root/sourcelibrary/?\s+)?(checkout|switch|reset|commit|merge|rebase|pull|clean|stash|cherry-pick|revert|am)(?![\w-])")
+PUSH_PROTECTED = re.compile(r"\bgit\s+(?:-C\s+\S+\s+)?push\b[^;&|\n]*\s(?:\S+:)?(main|release)\b")
+OUTBOUND = re.compile(r"\b(sendmail|mailx?\s+-s|swaks)\b|smtp\.|api\.twitter\.com|api\.x\.com|TWITTER_ACCESS|"
+                      r"\btweet\b.*\b(post|send)|graph\.facebook\.com|api\.linkedin\.com")
+# The skip-permissions flag is built from parts, so tests/unit/no-cli-auto-approve.test.ts (which bans the literal) passes.
+SKIP_PERMS = "--" + "-".join(["dangerously", "skip", "permissions"])
+TAMPER = re.compile(re.escape(SKIP_PERMS) + r"|disableAllHooks|/etc/agent-guard|agent-guard\.(py|mode)\b[^\n]*(>|sed\s+-i|rm\b)")
+NETSEND = re.compile(r"\b(curl|wget|scp|rsync|nc|ncat|socat)\b|\bgh\s+(issue|pr|api|gist)\b")
 
 def file_text(cmd):
     """Text of any --body-file / -F file / --input file the command names (to check a public post's body)."""
@@ -78,9 +102,27 @@ HEREDOC = re.compile(r"<<-?\s*(['\"]?)([A-Za-z_]\w*)\1[^\n]*\n.*?\n[ \t]*\2[ \t]
 def strip_heredocs(cmd):
     """The command without heredoc bodies: text being WRITTEN to a file is not a command (replay 2026-11-11: most
     false matches were state files and PR bodies that quoted commands)."""
-    return HEREDOC.sub("<<HEREDOC", cmd)
+    # A heredoc fed straight to an interpreter (`node - <<EOF`, `python3 - <<'EOF'`, `mongosh <<EOF`) IS code that runs.
+    def keep(m):
+        before = cmd[:m.start()].rsplit("\n", 1)[-1]
+        # python heredocs are kept OUT: agents use them to edit source files, whose text is not a command.
+        return m.group(0) if re.search(r"\b(node|mongosh|bash|sh)\b[^|;&]*$", before) else "<<HEREDOC"
+    return HEREDOC.sub(keep, cmd)
 
-def rules_bash(full, env=os.environ):
+def effective_dir(cmd, cwd):
+    """Where the command runs: its last `cd <dir>`, else the session's cwd."""
+    cds = re.findall(r"(?:^|[;&|(]\s*)cd\s+([^\s;&|)]+)", cmd)
+    return (cds[-1] if cds else (cwd or "")).rstrip("/")
+
+def in_live_checkout(cmd, cwd):
+    """Does the command act on the live checkout (not a worktree under it)?"""
+    return effective_dir(cmd, cwd) == LIVE or bool(re.search(r"git\s+-C\s+/root/sourcelibrary/?\s", cmd))
+
+def in_v2_checkout(cmd, cwd):
+    d = effective_dir(cmd, cwd)
+    return d.startswith(LIVE) or bool(re.match(r"/mnt/HC_Volume_\d+/worktrees/|/root/worktrees/|/data/scratch/sl/sourcelibrary", d))
+
+def rules_bash(full, env=os.environ, cwd=""):
     hits = []
     cmd = strip_heredocs(full)
     if DB_DESTRUCTIVE.search(cmd): hits.append("db-destructive")
@@ -101,19 +143,38 @@ def rules_bash(full, env=os.environ):
     if EGRESS.search(cmd):
         hosts = URL_HOST.findall(cmd)
         if hosts and any(not EGRESS_OK.search(h.lower()) for h in hosts): hits.append("egress-upload")
+    if DB_MASS.search(cmd): hits.append("db-mass-write")
+    if R2_DELETE.search(cmd): hits.append("r2-delete")
+    if PROD_DEPLOY.search(cmd): hits.append("prod-deploy")
+    if PAID_GEMINI.search(cmd) and any("lite" not in m for m in GEMINI_MODEL.findall(cmd)): hits.append("paid-gemini-not-lite")
+    if PAID_API.search(cmd): hits.append("paid-api")
+    if CLOUD_CREATE.search(cmd): hits.append("cloud-create")
+    if PERSIST.search(cmd): hits.append("persistence")
+    if RAW_SSH.search(cmd): hits.append("raw-ssh")
+    unquoted = re.sub(r"'[^']*'|\"[^\"]*\"", "''", cmd)   # a grep pattern that says "git pull" is not a pull
+    if in_live_checkout(cmd, cwd) and LIVE_GIT.search(unquoted): hits.append("live-checkout")
+    if re.search(r"(>>?|\btee\s+(-a\s+)?)\s*/root/sourcelibrary/(?!\.claude/worktrees/)", cmd): hits.append("live-checkout")
+    if PUSH_PROTECTED.search(unquoted) and in_v2_checkout(cmd, cwd):
+        hits.append("push-main-or-release")
+    if OUTBOUND.search(cmd): hits.append("outbound-message")
+    if TAMPER.search(cmd): hits.append("guard-tamper")
     if APPLY.search(cmd) and not (env.get("JOB_NAME") or re.search(r"--(job|reason)[=\s]", cmd)):
         hits.append("apply-without-run-name")
     return hits
 
 def rules_write(path):
+    if path.startswith(LIVE + "/") and "/.claude/worktrees/" not in path: return ["live-checkout"]
+    if "/.github/workflows/" in path: return ["workflow-edit"]
     if re.search(r"authorized_keys|sshd_config|/etc/ssh/|/etc/cron|/var/spool/cron|/etc/sudoers", path): return ["auth-or-cron"]
     if re.search(r"/\.claude[^/]*/settings(\.local)?\.json$|/agent-guard\.(py|mode)$|/etc/agent-guard", path): return ["guard-tamper"]
     if re.search(r"\.env(\.[a-z.]+)?$|\.credentials\.json$", path): return ["secret-write"]
     return []
 
-def judge(tool, tin, env=os.environ):
+def judge(tool, tin, env=os.environ, cwd=""):
+    if re.search(r"^mcp__.*(send_message|reply|forward|share_file|create_session_share|send_feedback|publish)", tool):
+        return ["outbound-message"]
     if tool == "Bash":
-        return rules_bash(tin.get("command", ""), env)
+        return rules_bash(tin.get("command", ""), env, cwd)
     if tool in ("Write", "Edit", "MultiEdit", "NotebookEdit"):
         return rules_write(tin.get("file_path", "") or tin.get("notebook_path", ""))
     if tool == "Read" and re.search(r"\.env(\.[a-z.]+)?$|\.credentials\.json$|/proc/[^/]+/environ$|/id_(ed25519|rsa|mesh|xfer)$",
@@ -139,7 +200,18 @@ def pre():
     try:
         ev = json.load(sys.stdin)
         tool, tin = ev.get("tool_name", ""), ev.get("tool_input") or {}
-        hits = judge(tool, tin)
+        hits = judge(tool, tin, cwd=ev.get("cwd", ""))
+        # Read-then-send (session level): a session that read a secret and later sends to the network. Reading alone
+        # is common (the internal key into a header); reading then shipping out is the exfiltration shape.
+        sid = re.sub(r"[^\w-]", "", ev.get("session_id", ""))[:64]
+        if sid:
+            taint = os.path.join(LOG_DIR, ".taint", sid)
+            if "secret-read" in hits:
+                os.makedirs(os.path.dirname(taint), exist_ok=True); open(taint, "w").write(str(time.time()))
+            elif tool == "Bash" and os.path.exists(taint) and NETSEND.search(strip_heredocs(tin.get("command", ""))):
+                hosts = URL_HOST.findall(tin.get("command", ""))
+                if not hosts or any(not EGRESS_OK.search(h.lower()) for h in hosts):
+                    hits = hits + ["secret-then-send"]
         m = mode()
         rec = {"ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "box": socket.gethostname(),
                "job": os.environ.get("JOB_NAME", ""), "session": ev.get("session_id", ""),

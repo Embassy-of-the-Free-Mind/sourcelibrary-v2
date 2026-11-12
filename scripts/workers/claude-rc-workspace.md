@@ -28,3 +28,9 @@ servers run by `/root/bin/claude-rc.sh` (one per Claude account).
 - Commit and push finished work; don't leave changes only on this disk.
 - The box also runs the paid pipeline at high load: don't start heavy CPU work (big builds, model runs)
   without saying so.
+
+## Security and provenance (2026-11-11)
+- **Infra and security details never go in the public `sourcelibrary-v2` repo** (issues, PRs, comments). That means IPs, keys, fingerprints, hostnames, `.env` contents and access findings. Put them in the private ops repo (`security/`). agent-guard logs a public post that carries them as `public-infra-leak`.
+- **Start a job on another box only with `box.sh <box> start <name> < brief`**, never a raw `ssh root@…`, so the launcher is recorded. "Where did job X come from?" → `job-ledger.sh why X`, or ops `jobs/ledger/`.
+- **agent-guard** (`/root/bin/agent-guard.py`) checks every tool call against the project's rules. It is in **shadow mode**: it logs, blocks nothing. `agent-guard.py report 7` shows what it would block. A deny that names a rule means enforcement is on: ask Derek, don't work around it.
+- Plan, open decisions and audits: ops `security/agent-fleet-security-plan.md`. Shared ops store (provenance, claims, decisions, notes): #8609.

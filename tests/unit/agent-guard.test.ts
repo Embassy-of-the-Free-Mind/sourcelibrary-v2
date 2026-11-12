@@ -44,7 +44,7 @@ describe('agent-guard.py pre hook', () => {
     const r = pre(call, env);
     expect(r.status).toBe(0);
     expect(r.stdout).toBe('');
-    const [f] = fs.readdirSync(path.join(dir, 'log'));
+    const [f] = fs.readdirSync(path.join(dir, 'log')).filter((n) => n.endsWith('.jsonl'));
     const rec = JSON.parse(fs.readFileSync(path.join(dir, 'log', f), 'utf8').trim());
     expect(rec).toMatchObject({ tool: 'Bash', rules: ['secret-read'], action: 'would_block', mode: 'shadow' });
     expect(rec.call).not.toMatch(/abc123|u:pw/);
@@ -74,5 +74,31 @@ describe('agent-guard.py pre hook', () => {
       expect(s.hooks.PreToolUse[0].hooks[0].command).toMatch(/agent-guard\.py pre$/);
     }
     expect(JSON.parse(fs.readFileSync(path.join(dir, '.claude-team', 'settings.json'), 'utf8')).permissions.allow).toEqual(['Bash']);
+  });
+});
+
+describe('agent-guard.py rules added 2026-11-11 (shadow)', () => {
+  const judge = (cmd: string, cwd = '/tmp') => spawnSync('python3', ['-c',
+    `import importlib.util,sys;s=importlib.util.spec_from_file_location('g',sys.argv[1]);g=importlib.util.module_from_spec(s);s.loader.exec_module(g);print(','.join(g.rules_bash(sys.argv[2],{},sys.argv[3])) or 'allow')`,
+    SCRIPT, cmd, cwd], { encoding: 'utf8' }).stdout.trim();
+  it('flags production, money, access, house-rule and outbound actions', () => {
+    expect(judge('rclone delete r2:sl-corpus/x')).toMatch(/r2-delete/);
+    expect(judge('gh workflow run release.yml')).toMatch(/prod-deploy/);
+    expect(judge('curl https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro:generateContent?key=$GEMINI_API_KEY')).toMatch(/paid-gemini-not-lite/);
+    expect(judge('hcloud server create --name x')).toMatch(/cloud-create/);
+    expect(judge('systemctl enable foo')).toMatch(/persistence/);
+    expect(judge('ssh root@65.108.136.89 uptime')).toMatch(/raw-ssh/);
+    expect(judge('git reset --hard origin/main', '/root/sourcelibrary')).toMatch(/live-checkout/);
+    expect(judge('git push origin HEAD:main', '/mnt/HC_Volume_1/worktrees/job-x')).toMatch(/push-main-or-release/);
+    expect(judge("node - <<'EOF'\nawait db.collection('pages').updateMany({}, {$set: {x: 1}})\nEOF")).toMatch(/db-mass-write/);
+  });
+  it('does not flag look-alikes', () => {
+    expect(judge('curl https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent')).toBe('allow');
+    expect(judge('git merge-base --is-ancestor a b', '/root/sourcelibrary')).toBe('allow');
+    expect(judge('git status && git fetch -q origin main', '/root/sourcelibrary')).toBe('allow');
+    expect(judge('crontab -l | grep "git pull"', '/root/sourcelibrary')).toBe('allow');
+    expect(judge('cd /mnt/HC_Volume_1/worktrees/job-x && git commit -qm y', '/root/sourcelibrary')).toBe('allow');
+    expect(judge('git push -q origin main', '/root/work/sourcelibrary-ops')).toBe('allow');
+    expect(judge("python3 - <<'EOF'\ns = s.replace('updateMany(', 'updateOne(')\nEOF")).toBe('allow');
   });
 });
