@@ -12,10 +12,11 @@ const H2 = 'font-display text-3xl text-primary mb-2';
 // Two sources, one colour each (validated: CVD ΔE 18.8, both above 3:1 on cream).
 const SRC = { collection: { label: 'Collections', color: '#7c5db5' }, gallery: { label: 'Gallery sets', color: '#9e4a3a' } } as const;
 
-function Flow({ rows }: { rows: Sorted[] }) {
-  const destKey = (p: string) => (p === 'library_slice' || p === 'historic_library' ? 'libraries' : p);
-  const dests = [['subject', 'Subject pages'], ['libraries', 'Libraries'], ['collection', 'Collections'], ['merge', 'Folded into a subject'], ['retire', 'Retired']] as const;
-  const W = 900, H = 400, GAP = 12, BAR = 12, LX = 150, RX = W - 230;
+function Flow({ rows, subjects }: { rows: Sorted[]; subjects: number }) {
+  // Folded sets join a subject, so they land with the subjects: many old groupings become one subject.
+  const destKey = (p: string) => (p === 'library_slice' || p === 'historic_library' ? 'libraries' : p === 'merge' ? 'subject' : p);
+  const dests = [['subject', 'Subjects'], ['collection', 'Collections'], ['libraries', 'Libraries'], ['retire', 'Retired']] as const;
+  const W = 900, H = 400, GAP = 12, BAR = 12, LX = 150, RX = W - 250;
   const total = rows.length;
   const k = (H - GAP * (dests.length - 1)) / total;
   const count = (s: string, d: string) => rows.filter((r) => r.source === s && destKey(r.proposed) === d).length;
@@ -55,7 +56,7 @@ function Flow({ rows }: { rows: Sorted[] }) {
         {dests.map(([d, label]) => (
           <g key={d}>
             <rect x={RX} y={right[d].y} width={BAR} height={Math.max(2, right[d].h)} rx={2} fill="#1a1612" />
-            <text x={RX + BAR + 10} y={right[d].y + Math.max(right[d].h, 2) / 2 + 5} fontSize="15" fill="#1a1612">{label} <tspan fill="#7a7065">{right[d].n}</tspan></text>
+            <text x={RX + BAR + 10} y={right[d].y + Math.max(right[d].h, 2) / 2 + 5} fontSize="15" fill="#1a1612">{label} <tspan fill="#7a7065">{right[d].n}</tspan>{d === 'subject' && <tspan x={RX + BAR + 10} dy="20" fontSize="13" fill="#7a7065">now {subjects} subjects</tspan>}</text>
           </g>
         ))}
         <text x={LX} y={H + 20} fontSize="12" fill="#7a7065">BEFORE</text>
@@ -91,7 +92,7 @@ export default function Page() {
   const periods = periodGroups(), langs = languageGroups(), types = typeGroups();
   const subjects = (dataFile<{ subjects: unknown[] }>('subjects')?.subjects ?? []).length;
   const aType = typeSlugs()[0];
-  const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.groups.reduce((s, g) => s + g.narrower.length, 0)), 'types of picture and text']];
+  const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.pictureGroups.reduce((s, g) => s + g.narrower.length, 0)), 'types of picture'], [n(types.bookGroups.reduce((s, g) => s + g.narrower.length, 0)), 'types of text']];
 
   const SITE: Node[] = [
     { title: 'Homepage', href: '/revamp/home', note: 'Three full-height featured layouts, Popular this week below', kids: [{ title: 'Featured collection schedule', href: '/revamp/featured', note: 'One file drives the homepage, Library and Gallery' }] },
@@ -126,10 +127,10 @@ export default function Page() {
 
       <section className={`${WRAP} py-10 border-t border-border-light`}>
         <h2 className={H2}>Before and after</h2>
-        <p className="text-secondary max-w-2xl mb-8">Today the site has {n(rows.length)} groupings, all called collections or gallery sets, mixing fields, chosen sets and libraries. Each one sorted into what it really is. Hover a ribbon for its number.</p>
-        <Flow rows={rows} />
+        <p className="text-secondary max-w-2xl mb-8">Today the site has {n(rows.length)} groupings, all called collections or gallery sets, mixing fields of study, chosen sets and libraries. Each one is sorted into what it really is. Fields become subjects, where duplicates merge, so {n(rows.filter((r) => r.proposed === 'subject' || r.proposed === 'merge').length)} groupings make {n(subjects)} subjects. Hover a ribbon for its number.</p>
+        <Flow rows={rows} subjects={subjects} />
         <h3 className="text-lg font-medium text-primary mt-12 mb-4">New ways in that did not exist before</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {tiles.map(([v, l]) => <div key={l} className="bg-white border border-border-light px-5 py-4"><div className="font-display text-4xl text-primary">{v}</div><div className="text-sm text-muted mt-1">{l}</div></div>)}
         </div>
       </section>
