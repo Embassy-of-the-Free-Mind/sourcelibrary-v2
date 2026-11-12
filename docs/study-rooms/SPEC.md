@@ -241,6 +241,20 @@ A reader gets an email invitation for a group meeting and follows the link.
   copy. `src/app/api/embassy/voice` is the AI Librarian voice agent (ElevenLabs),
   not person-to-person audio.
 
+### Design references
+
+Recipe: Gather's interaction model + WorkAdventure's open-source engine and Tiled maps + the philosopher's-library art. A cozy reading room, not a virtual office. Full moodboard: https://claude.ai/artifact/Nzgjo5sAHmGLwMmsGgbRGN
+
+| Journey | Reference |
+| --- | --- |
+| J3–J4 walk, presence | [Gather](https://www.gather.town), [WorkAdventure](https://workadventu.re) ([Tiled](https://www.mapeditor.org) maps) |
+| J5–J6 chat, calls | Discord voice rooms, Slack huddles, Gather proximity bubbles |
+| J7–J8 text, notes | [Perusall](https://www.perusall.com), [Hypothes.is](https://web.hypothes.is), Figma multiplayer cursors |
+| J9 phone | [Apple HIG](https://developer.apple.com/design/human-interface-guidelines/): tap-to-walk, safe areas |
+| J11 moderation | Club Penguin / Habbo safe chat, Discord roles |
+| J12 accessibility | Gather's list view, [WCAG 2.2](https://www.w3.org/TR/WCAG22/) |
+| Look | Philosopher's library sprites; Eastward and Sea of Stars interiors; the Embassy of the Free Mind reading room and Wren Library alcoves (one alcove per group) |
+
 ## 7. Open questions for Derek
 
 1. Who can host a group — only you at first, or named volunteers per group?
