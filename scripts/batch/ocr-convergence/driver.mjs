@@ -462,7 +462,7 @@ async function auditScore() {
   const gem = new Map();
   for (const l of fs.existsSync(path.join(AUD, 'gemini-out.jsonl')) ? fs.readFileSync(path.join(AUD, 'gemini-out.jsonl'), 'utf8').split('\n') : []) {
     // #6694: a verdict whose call never opened the attached image (no view_file in the tool gate's log) is missing.
-    try { const o = JSON.parse(l); if (!o.text || !(o.gate_calls || []).includes('view_file')) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
+    try { const o = JSON.parse(l); if (!o.text || !(o.gate_calls || []).some((t) => t === 'read_file' || t === 'view_file')) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
   }
   const rows = key.map((k) => {
     const verdict = (v) => (!v ? null : v.better === 'same' ? 'same' : v.better === k.stored_is ? 'stored' : 'cli');

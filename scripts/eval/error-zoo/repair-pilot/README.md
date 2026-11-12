@@ -40,3 +40,41 @@ node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-i
 
 It restores only pages still holding exactly what the run wrote. `before-2026-11-12.jsonl` is the independent copy.
 `written.jsonl` (added after the write) lists every page written, with the before and after hashes.
+
+## Result, 2026-11-12: STOP — nothing written
+
+| | Opus (fresh, sealed) | Gemini 3.8 Flash **low** (james pool) |
+|---|---|---|
+| writes judged | 35 | 34 (one call returned no verdict) |
+| correction better than stored | 34 | 24 |
+| same | 1 | 0 |
+| **correction worse than stored** | **0** | **10** (4 of them flagged serious) |
+| gate (≤ 2 worse each) | pass | **fail** |
+
+**Gate: STOP.** No page was written; the run id `error-zoo-pilot-7809-ocr` has no rows; there is nothing to revert.
+
+- **The judge was not the preregistered one.** The #6694 rule was set with Gemini 3.8 Flash **high**. This box's
+  default agy account is out of quota until about 2026-11-15 15:00 UTC; the two pools with quota are held to Flash
+  **low**. The gate was run as written, with the judge available.
+- **What Flash low objected to** (`audit-result-2026-11-12.json`, notes per page): it calls `gank` a faithful reading of
+  printed `gantz` (the tz ligature misread as k, a known Flash-Lite error) on two pages; on three pages it calls the
+  facing leaf's cut-off line ends "marginal notes the correction omits", where the original audit and Opus both
+  identified them as a facing-page strip (I4); on others it prefers `Feldgeschren`, `jeko`, `Herz` where Opus quotes
+  the print as `Feldgeschrey`, `jetzo`, `Herr`. These disputes are not settled here: the rule exists so that one
+  model's reading does not overrule another's.
+- **The audit findings themselves** (`finding-check-2026-11-12.json`, no model): of 17 audit findings whose quotes can
+  be checked, the correction removes 15 (11 misreads replaced by the audit's reading, 4 facing-page strips removed),
+  changes 1 to another reading, and leaves 1. 18 findings had no quotable misread.
+- **A scorer bug found and fixed on the way:** `driver.mjs`, `judge-6694.mjs` and `screen-6694.mjs` counted a Gemini
+  verdict only if its tool log showed `view_file`; current agy opens images with `read_file` (the shared
+  `agy-cli.mjs` accepts both). Before the fix every Gemini verdict was dropped and this gate read GO on Opus alone.
+
+**Next (no new approval needed, same pilot):** re-judge with Flash high when the quota resets, unchanged packets:
+
+```
+python3 scripts/eval/run-cli-arm.py --requests /root/jobs/repair-pilot-7809/set/audit/gemini-requests.jsonl \
+  --out /root/jobs/repair-pilot-7809/set/audit/gemini-high-out.jsonl --arm audit7809-g38h --model gemini-3.8-flash-high \
+  --job repair-pilot-7809 --kind audit --parallel 2 --attempts 4
+```
+then score with that file as `gemini-out.jsonl`. GO under Flash high writes the 35 pages as step 5 above; STOP again
+ends the pilot.

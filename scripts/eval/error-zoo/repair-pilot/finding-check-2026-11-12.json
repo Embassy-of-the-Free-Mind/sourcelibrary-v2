@@ -1,0 +1,292 @@
+{
+ "tally": {
+  "fixed": 11,
+  "uncheckable (quoted misread not found in the stored text)": 1,
+  "fixed (removed: the audit said it is not on the leaf)": 4,
+  "uncheckable (no quoted misread and reading)": 17,
+  "changed, but not to the reading the audit gave": 1,
+  "still there": 1
+ },
+ "rows": [
+  {
+   "page_id": "69f71e22be92de21c83162d0",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "kräftiger überzeugung",
+   "good": "kräfftiger uberzeugung",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f771ca6028036f8e239393",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "pons arnuia' / 'fluss arnuie",
+   "good": "pons aruiæ",
+   "status": "uncheckable (quoted misread not found in the stored text)"
+  },
+  {
+   "page_id": "69f6672b0f4e4a53c70f0a26",
+   "source": "spare_audit",
+   "cls": "I4",
+   "bad": "die [...] der [...] wie [...] ber [...] ren [...]",
+   "good": "a strip of the facing page's line-openings in the frame",
+   "status": "fixed (removed: the audit said it is not on the leaf)"
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba7",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69e0138d93b116d24238b14c",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "oder wie *ġ* das arabische *غ*, *g* das *ج* bezeichnet",
+   "good": "oder wie ϑ' das arabische ث, ϑ' das ذ bezeichnet",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69f7676390139e9166c2222f",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8743",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481cd1",
+   "source": "book_checks",
+   "cls": "O5",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f69ea36b70293ff4a3f753",
+   "source": "spare_audit",
+   "cls": "I4",
+   "bad": "sie be- fel- ang ihr cht- zu liche en! ich ng, ches es en, asse lass ii vid. ut,",
+   "good": "the line-ends of the facing page",
+   "status": "fixed (removed: the audit said it is not on the leaf)"
+  },
+  {
+   "page_id": "69f6f8756662642ee90b4191",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "gelanger",
+   "good": "gelanget",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f6af58f58c4b99a4bce746",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "152",
+   "good": "151",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69c823066c6f3cc53c84aed7",
+   "source": "book_checks",
+   "cls": "O1",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f72961d17421b7412a6c5c",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69c84a7cacfba68303020746",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "auff gott will ich hoffen und mich fürchten",
+   "good": "auff gott will ich hoffen und mich nicht fürchten",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f725fb56d1205ea1c29244",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "wie sich die seelen von gott solchen verhalten solle",
+   "good": "wie sich die seel in solchen verhalten solle",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69b51ec8768235dc65998ad6",
+   "source": "spare_audit",
+   "cls": "O10",
+   "bad": "quo illud intexav rite exerceatur",
+   "good": "quo illud ἐπέχειν rite exerceatur",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69bda116f6d63c919748e138",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "feldgeschren",
+   "good": "feldgeschrey",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f6b6f113e0cab6b64bf1f9",
+   "source": "book_checks",
+   "cls": "O10",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f68bdb05ebe79c516d6428",
+   "source": "book_checks",
+   "cls": "O1",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69bd9eedf6d63c919747d903",
+   "source": "spare_audit",
+   "cls": "I4",
+   "bad": "ein einiges leben/ das in der natur verborgen ist/ das in der finsterniß lebet /",
+   "good": "the right edge shows only the cut-off line openings of the facing page: 'ein ei ",
+   "status": "fixed (removed: the audit said it is not on the leaf)"
+  },
+  {
+   "page_id": "69f33b0e876dd827cbc586a1",
+   "source": "spare_audit",
+   "cls": "I4",
+   "bad": "gans eines weise sun",
+   "good": "the line-ends of the facing verso, cut off at the left edge of the photograph",
+   "status": "fixed (removed: the audit said it is not on the leaf)"
+  },
+  {
+   "page_id": "6a267ed26c1f37c9c4f3cc41",
+   "source": "book_checks",
+   "cls": "O5",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f7358c5873545c995dc864",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "saulheit",
+   "good": "faulheit",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba8",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f6af29f58c4b99a4bce6cb",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "zusamensekung",
+   "good": "zusamensetzung",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f728f1d17421b7412a6abc",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f71d8fbe92de21c8316124",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "d 2",
+   "good": "o 2",
+   "status": "still there"
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481d77",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f725cf56d1205ea1c291a1",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8749",
+   "source": "book_checks",
+   "cls": "O7",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f6f83b6662642ee90b40eb",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "kann glauben will",
+   "good": "kaum glauben will",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f6af22f58c4b99a4bce6ba",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "baur.",
+   "good": "bawr.",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69f6681f8b8e4d6b41815b6d",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8750",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69f72930d17421b7412a6bac",
+   "source": "book_checks",
+   "cls": "ocr-misread",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  }
+ ]
+}
