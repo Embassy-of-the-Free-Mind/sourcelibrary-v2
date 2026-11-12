@@ -67,6 +67,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const [saved, setSaved] = useState<CollectionDoc | null>(null);
   const [editing, setEditing] = useState(false);
   const [pics, setPics] = useState<Pics>('tab');
+  // Prototype: three ways a collection could list its works, to compare. A chapters, B like a subject, C contents rail.
+  const [listing, setListing] = useState<'a' | 'b' | 'c'>('b');
   const [tab, setTab] = useState<string>('works');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [sortPick, setSort] = useState<string | null>(null);
@@ -218,7 +220,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const imagesHere = plates.length > 0;
   // Categories (subjects, centuries, languages, types) always keep texts and pictures apart, in tabs.
   // Collections still offer the mixed layouts while their listing is being decided.
-  const tabs = ((!small || !curated) && imagesHere && pics === 'tab') || (!curated && extraTabs.length > 0);
+  const chaptersLook = curated && listing === 'a';
+  const tabs = !chaptersLook && (((!small || !curated) && imagesHere && pics === 'tab') || (!curated && extraTabs.length > 0));
   const headTabs: [string, string, number][] = [['works', 'Works', n], ...(imagesHere ? [['images', 'Images', imagesTotal] as [string, string, number]] : []), ...extraTabs.map((t) => [t.key, t.label, t.count] as [string, string, number])];
   const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
     fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
@@ -270,7 +273,11 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         <span className="text-muted mr-1">Prototype only.{protoNote && ` ${protoNote}`}</span>
         {curated && <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>}
         {saved && <span className="text-muted ml-1">Your edits are kept in this browser.</span>}
-        {curated && imagesHere && <>
+        {curated && <>
+          <span className="text-muted ml-3 mr-1">Listing:</span>
+          {([['a', 'A: chapters'], ['b', 'B: like a subject'], ['c', 'C: contents rail']] as const).map(([k, l]) => <button key={k} type="button" aria-pressed={listing === k} onClick={() => { setListing(k); setSort(k === 'b' ? null : 'maker'); setPage(1); }} className={pill(listing === k)}>{l}</button>)}
+        </>}
+        {curated && imagesHere && listing === 'b' && <>
           <span className="text-muted ml-3 mr-1">Pictures:</span>
           <button type="button" aria-pressed={pics === 'tab'} onClick={() => setPics('tab')} className={pill(pics === 'tab')}>Separate</button>
           <button type="button" aria-pressed={pics === 'mixA'} onClick={() => { setPics('mixA'); setPage(1); }} className={pill(pics === 'mixA')}>Mixed A: columns</button>
@@ -281,12 +288,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
 
       <div ref={top} className="scroll-mt-24" id="works">
         {tabs ? (
-          curated ? (
-            <div className="flex items-center gap-2 mb-5" role="tablist">
-              <button type="button" role="tab" aria-selected={tab === 'works'} onClick={() => setTab('works')} className={pill(tab === 'works')}>Works {fmt(n)}</button>
-              <button type="button" role="tab" aria-selected={tab === 'images'} onClick={() => setTab('images')} className={pill(tab === 'images')}>Images {fmt(imagesTotal)}</button>
-            </div>
-          ) : (
+          (
             // The section heading is the tab. The one you are on is black and underlined; the other waits in grey.
             <div className="flex items-end gap-2 sm:gap-12 border-b border-border-light mb-7 overflow-x-auto" role="tablist">
               {headTabs.map(([k, l, c]) => (
@@ -334,8 +336,17 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
           )}
           {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
           {mixed && columns(pageEntries)}
+          {(() => { const rail = curated && listing === 'c' && group === 'sections' && blocks.length > 1; return (
+          <div className={rail ? 'lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12' : ''}>
+          {rail && (
+            // C: the maker's chapters as a contents list that stays in view.
+            <nav aria-label="Chapters" className="hidden lg:block"><ol className="sticky top-24 space-y-1 border-l border-border-light">
+              {blocks.map((g) => <li key={g.k}><a href={`#ch-${g.k}`} className="block pl-4 -ml-px border-l-2 border-transparent hover:border-primary py-1.5 text-[14.5px] text-secondary hover:text-primary leading-snug">{sections.get(g.k)?.heading || 'Untitled section'} <span className="text-muted text-[12.5px]">{g.items.length}</span></a></li>)}
+            </ol></nav>
+          )}
+          <div>
           {!mixed && blocks.map((g, i) => (
-            <div key={`${g.k}-${i}`} className={g.k ? `${i > 0 ? 'mt-16 md:mt-24 pt-10 md:pt-14 border-t border-border-light' : 'mt-4'}` : ''}>
+            <div key={`${g.k}-${i}`} id={g.k ? `ch-${g.k}` : undefined} className={`scroll-mt-24 ${g.k ? `${i > 0 ? 'mt-16 md:mt-24 pt-10 md:pt-14 border-t border-border-light' : 'mt-4'}` : ''}`}>
               {g.k && (
                 // Section header: the heading at H2 scale, its line as a standfirst, the count kept small.
                 <header className="mb-8 md:mb-10 max-w-3xl">
@@ -344,9 +355,14 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                   <p className="mt-3 text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'work' : 'works'}</p>
                 </header>
               )}
+              {chaptersLook && (() => { const ps = g.items.flatMap((b) => byBook[b.id!] ?? []).slice(0, 8); return ps.length > 0 && (
+                // A: each chapter shows its own pictures under its heading, so pictures and texts are read together.
+                <div className="flex gap-2 overflow-x-auto mb-8 -mx-1 px-1">{ps.map((p, j) => <a key={j} href={p.href} className="shrink-0"><img src={p.src} alt={p.label ?? ''} loading="lazy" className="h-32 md:h-40 w-auto block" /></a>)}</div>
+              ); })()}
               {body(g.items)}
             </div>
           ))}
+          </div></div>); })()}
           {(!small || mixed) && last > 1 && <div className="mt-8"><CatalogPagination currentPage={at} totalPages={last} onPageChange={go} variant="search" /></div>}
         </>}
 
@@ -354,7 +370,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         {tabs && extraTabs.map((t) => tab === t.key && <div key={t.key}>{t.body}</div>)}
       </div>
 
-      {!tabs && imagesHere && pics === 'tab' && (
+      {!tabs && !chaptersLook && imagesHere && pics === 'tab' && (
         <section className="mt-14">
           <h2 className={`${H2} mb-5`}>Images</h2>
           {images}
