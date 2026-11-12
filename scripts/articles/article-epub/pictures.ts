@@ -38,7 +38,7 @@ function contentBox(gray: Uint8Array, bin: Uint8Array, W: number, H: number): Bo
 }
 
 /** Ink where a pixel is darker than K × the mean of its window (~1/20 of the long edge), via an integral image. */
-function adaptiveBinary(gray: Uint8Array, W: number, H: number): Uint8Array {
+export function adaptiveBinary(gray: Uint8Array, W: number, H: number): Uint8Array {
   const I = new Float64Array((W + 1) * (H + 1));
   for (let y = 0; y < H; y++) {
     let row = 0;

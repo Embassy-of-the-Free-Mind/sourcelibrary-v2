@@ -1,0 +1,113 @@
+{
+  "_comment": "The house ornaments, chosen by eye from the library's gallery (decorative woodcuts, books whose scans may be shared). Initials: one alphabet, Alberti, De re aedificatoria (Paris, 1512). Processed by ornaments.ts into ink on transparent.",
+  "initials": {
+    "A": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcea3-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 210
+    },
+    "B": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcde4-0.jpg?v=1771876895055",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 19
+    },
+    "C": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bce76-0.jpg?v=1771876904226",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 165
+    },
+    "D": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcdf5-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 36
+    },
+    "E": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcf0c-0.jpg?v=1771876901150",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 315
+    },
+    "F": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcde7-1.jpg?v=1771876898823",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 22
+    },
+    "G": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcde8-0.jpg?v=1771876898039",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 23
+    },
+    "H": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bce78-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 167
+    },
+    "I": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcde9-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 24
+    },
+    "L": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcde9-1.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 24
+    },
+    "M": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bceae-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 221
+    },
+    "N": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcea8-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 215
+    },
+    "O": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bce12-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 65
+    },
+    "P": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bce69-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 152
+    },
+    "Q": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcf21-0.jpg?v=1771876912178",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 336
+    },
+    "R": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bceb9-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 232
+    },
+    "S": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcf16-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 325
+    },
+    "T": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bcdef-0.jpg?v=1771876902809",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 30
+    },
+    "V": {
+      "image": "https://images.sourcelibrary.org/gallery/17c0e140-78f4-420f-98b3-01bf7dbb683a/6959067595a91542b28bce4a-0.jpg",
+      "book": "alberti-de-re-aedificatoria-1512-paris-alberti",
+      "page": 121
+    }
+  },
+  "headpiece": {
+    "image": "https://images.sourcelibrary.org/gallery/6956905950d4fc9bdc434e3a/695699811479a63c1108f5a2-0.jpg?v=1773153544551",
+    "book": "of-the-law-of-nature-and-nations-pufendorf",
+    "page": 995,
+    "title": "Of the Law of Nature and Nations"
+  },
+  "tailpiece": {
+    "image": "https://images.sourcelibrary.org/gallery/695435461479a63c1108bbc2/695435461479a63c1108bd9f-0.jpg?v=1773153127760",
+    "book": "cosmologia-generalis-wolff",
+    "page": 477,
+    "title": "General Cosmology"
+  },
+  "initialsTitle": "On the Art of Building"
+}

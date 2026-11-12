@@ -12,6 +12,11 @@ import { preparePicture } from './pictures';
 import { makeCover, type CoverCrop } from './cover';
 import covers from './covers.json';
 import openers from './openers.json';
+import ornaments from './ornaments.json';
+import briefs from './briefs.json';
+import { inkOrnament } from './ornaments';
+import { deviceSvg } from './device';
+import { DIAGRAMS } from './diagrams';
 import { images } from '@/lib/api-client';
 
 const [slug, out] = process.argv.slice(2);
@@ -124,58 +129,73 @@ ${pg.scan}
 </section>`).join('\n')}
 </section>`).join('\n');
 
+// Typography (Derek's review, 2026-11-12): one face (EB Garamond, headings included, weight 400 so a reader
+// without the variable axis does not fall back to its own sans); one accent (Source Library rust) for headings,
+// links and initials, gold for rules; italic for titles only; nothing smaller than 0.9em.
 const css = `
-@font-face { font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; src: url(fonts/EBGaramond-latin.woff2); }
-@font-face { font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; src: url(fonts/EBGaramond-latin-italic.woff2); }
-body { font-family: "EB Garamond", Georgia, "Palatino Linotype", serif; font-size: 1.08em; line-height: 1.5; color: #1f1a14; font-variant-numeric: oldstyle-nums; font-kerning: normal; }
+@font-face { font-family: "EB Garamond"; font-style: normal; font-weight: normal; src: url(fonts/EBGaramond-latin.woff2); }
+@font-face { font-family: "EB Garamond"; font-style: italic; font-weight: normal; src: url(fonts/EBGaramond-latin-italic.woff2); }
+html, body { font-family: "EB Garamond", Georgia, "Palatino Linotype", serif; }
+body { font-size: 1.08em; line-height: 1.5; color: #1a1612; font-variant-numeric: oldstyle-nums; font-kerning: normal; }
+h1, h2, h3, h4, .chapnum, .titlepage, .purpose, figcaption, .cite { font-family: "EB Garamond", Georgia, serif; }
 p { margin: 0; text-indent: 1.4em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
-h1 + p, h2 + p, figure + p, blockquote + p, .chapnum + h2 + p, p.first, .noindent { text-indent: 0; }
-h1 { font-weight: 500; font-size: 1.9em; text-align: center; margin: 1.2em 0 0.8em; line-height: 1.2; color: #6e2617; }
-h2 { font-weight: 500; font-size: 1.45em; text-align: center; margin: 0.3em 0 1.1em; line-height: 1.25; color: #6e2617; }
-h2::after { content: ""; display: block; width: 2.5em; margin: 0.55em auto 0; border-bottom: 1px solid #b08a4a; }
-h3 { font-weight: 500; font-size: 1.2em; margin: 0 0 0.2em; line-height: 1.25; color: #6e2617; }
-.chapnum { text-align: center; text-indent: 0; font-size: 0.8em; letter-spacing: 0.3em; color: #b08a4a; margin: 1.6em 0 0.2em; }
-p.first::first-letter { float: left; font-size: 3.3em; line-height: 0.85; margin: 0.06em 0.08em 0 0; color: #6e2617; }
+h1 + p, h2 + p, figure + p, blockquote + p, div + p, p.first, .noindent { text-indent: 0; }
+h1 { font-weight: normal; font-size: 1.9em; text-align: center; margin: 0.6em 0 0.8em; line-height: 1.2; color: #9e4a3a; }
+h2 { font-weight: normal; font-size: 1.5em; text-align: center; margin: 0.2em 0 1em; line-height: 1.25; color: #9e4a3a; }
+h3 { font-weight: normal; font-size: 1.2em; margin: 0 0 0.2em; color: #9e4a3a; }
+a, a:link, a:visited { color: #9e4a3a; -webkit-text-fill-color: #9e4a3a; text-decoration: none; }
+.headpiece { text-align: center; margin: 0.4em 0 0.6em; }
+.headpiece img { width: 72%; }
+.tailpiece { text-align: center; margin: 1.6em 0 0.4em; page-break-inside: avoid; }
+.tailpiece img { width: 22%; }
+.chapnum { text-align: center; text-indent: 0; font-size: 0.95em; letter-spacing: 0.3em; color: #9e7c3c; margin: 0.4em 0 0.1em; }
+p.first::first-letter { float: left; font-size: 3.3em; line-height: 0.85; margin: 0.06em 0.08em 0 0; color: #9e4a3a; }
+p.first.woodcut::first-letter { float: none; font-size: 1em; line-height: inherit; margin: 0; color: inherit; }
 p.first::first-line { font-variant-caps: all-small-caps; letter-spacing: 0.05em; }
-a { color: #6e2617; text-decoration: none; }
-em, i { font-style: italic; }
-blockquote { margin: 1.3em 0.4em; padding: 0.7em 0.9em; border-left: 3px solid #b08a4a; background: #f6efe1; }
+img.initial { float: left; width: 4.5em; height: 4.5em; margin: 0.28em 0.6em 0.1em 0; }
+blockquote { margin: 1.3em 0.4em; padding: 0.7em 0.9em; border-left: 3px solid #c9a86c; background: #f6efe1; }
 blockquote p { text-align: left; text-indent: 0; margin-bottom: 0.4em; }
-.cite { font-size: 0.82em; font-variant: small-caps; letter-spacing: 0.03em; color: #7a6a52; margin: 0.4em 0 0; }
+.cite { font-size: 0.9em; color: #6b5d4b; margin: 0.4em 0 0; }
 figure { margin: 1.5em 0; text-align: center; page-break-inside: avoid; }
 figure img { max-width: 100%; }
-figcaption { font-size: 0.85em; font-style: italic; color: #5d5346; margin-top: 0.45em; text-align: center; line-height: 1.35; }
+figcaption { font-size: 0.9em; color: #5d5346; margin-top: 0.45em; text-align: center; line-height: 1.35; }
 figure.opener { margin: 0 0 1.4em; }
-figure.opener img { max-height: 70vh; }
+figure.opener img { max-height: 62vh; }
+figure.plate img { max-height: 92vh; }
 .coverpage { margin: 0; padding: 0; text-align: center; }
 .coverpage img { height: 100vh; max-width: 100%; }
 .titlepage { text-align: center; padding-top: 6%; }
 .titlepage p { text-indent: 0; text-align: center; }
-.titlepage .logo { width: 46%; margin: 0 auto 28%; }
-.titlepage h1 { font-size: 2.4em; line-height: 1.12; margin: 0 0 0.45em; }
-.titlepage .subtitle { font-style: italic; font-size: 1.15em; line-height: 1.4; margin: 0 8% 1.6em; color: #4a3f33; }
-.titlepage .orn { width: 3.5em; margin: 0 auto 1.6em; border-bottom: 1px solid #b08a4a; }
-.titlepage .small { font-size: 0.8em; color: #6b5d4b; font-variant-caps: all-small-caps; letter-spacing: 0.14em; margin-bottom: 0.3em; }
-.note p { text-indent: 0; margin-bottom: 0.7em; font-size: 0.95em; }
-.intro { text-indent: 0; text-align: center; font-style: italic; color: #4a3f33; margin: 0 6% 1.6em; }
-.sources .src { text-align: left; text-indent: -1.4em; margin: 0 0 0.55em 1.4em; line-height: 1.35; }
+.titlepage .logo { width: 46%; margin: 0 auto 26%; }
+.titlepage h1 { font-size: 2.4em; line-height: 1.12; margin: 0 0 0.5em; }
+.titlepage .subtitle { font-size: 1.12em; line-height: 1.4; margin: 0 8% 1.6em; color: #4a3f33; }
+.titlepage .orn { width: 3.5em; margin: 0 auto 1.6em; border-bottom: 1px solid #c9a86c; }
+.titlepage .small { font-size: 0.9em; color: #6b5d4b; font-variant-caps: all-small-caps; letter-spacing: 0.14em; margin-bottom: 0.3em; }
+.purpose { padding-top: 4%; }
+.purpose .logo { display: block; width: 3.2em; margin: 0 auto 1em; }
+.purpose p { margin-bottom: 0.8em; text-indent: 0; }
+.tldr { text-indent: 0; text-align: left; font-size: 1.22em; line-height: 1.4; margin: 0 0 1.1em; color: #1a1612; }
+.summary { text-indent: 0; margin: 0 0 1.4em; }
+.chapters p { text-indent: 0; text-align: left; margin: 0 0 0.55em; }
+.intro { text-indent: 0; text-align: center; color: #4a3f33; margin: 0 6% 1.6em; }
+.sources .src { text-align: left; text-indent: -1.4em; margin: 0 0 0.6em 1.4em; line-height: 1.38; }
 .sources .au { font-variant-caps: all-small-caps; letter-spacing: 0.04em; }
-.sources .pp { color: #b08a4a; }
-.sources .pp a { color: #6e2617; }
+.sources .pp { color: #9e7c3c; }
 .book { page-break-before: always; }
 h2.booktitle { font-size: 1.5em; margin: 1.2em 0 0.35em; }
-h2.booktitle::after { display: none; }
 .byline { text-align: center; text-indent: 0; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: #6b5d4b; margin: 0 0 0.2em; }
-.byline.small { font-variant-caps: normal; letter-spacing: 0; font-style: italic; font-size: 0.85em; }
+.byline.small { font-variant-caps: normal; letter-spacing: 0; font-size: 0.92em; }
 .reading { margin-top: 1.6em; }
 .reading.next { page-break-before: always; margin-top: 0; }
-.pagelabel { text-align: center; text-indent: 0; color: #b08a4a; font-variant-caps: all-small-caps; letter-spacing: 0.2em; margin: 0 0 0.8em; }
+.pagelabel { text-align: center; text-indent: 0; color: #9e7c3c; font-variant-caps: all-small-caps; letter-spacing: 0.2em; margin: 0 0 0.8em; }
 .reading .text p { text-indent: 0; margin-bottom: 0.6em; }
-.online { text-align: right; text-indent: 0; font-size: 0.82em; font-style: italic; margin-top: 0.6em; }
+.online { text-align: right; text-indent: 0; font-size: 0.92em; margin-top: 0.6em; }
 .scan { margin: 0 0 1.2em; }
 .scan img { max-height: 92vh; }
-.colophon { margin-top: 30%; }
-.colophon p { text-align: center; text-indent: 0; font-size: 0.85em; color: #5d5346; margin-bottom: 0.4em; }
+.colophon { text-align: center; padding-top: 8%; }
+.colophon .device { width: 48%; margin: 0 auto 1.6em; }
+.colophon p { text-align: center; text-indent: 0; font-size: 0.92em; color: #4a3f33; margin: 0 6% 0.5em; }
+.colophon .col-title { font-variant-caps: all-small-caps; letter-spacing: 0.12em; font-size: 1em; margin-bottom: 0.9em; }
 `;
 
 // Pictures that open each chapter: the best illustration (the gallery's crops) from a book the chapter cites,
@@ -240,7 +260,33 @@ async function opener(html: string, n: number, title: string): Promise<string> {
 }
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV'];
-const firstPara = (html: string) => html.replace(/<p(?: class="[^"]*")?>/, '<p class="first">');
+// The house ornaments (ornaments.json), inked: initials in rust as early printers rubricated capitals, the
+// headpiece, tailpiece and printer's device in ink. The e-ink edition inks them black.
+const RUST = BW ? '#000000' : '#9e4a3a', INK = BW ? '#000000' : '#2b2118';
+const orn = ornaments as unknown as { initials: Record<string, { image: string; book: string }>; headpiece: { image: string; book: string; title: string }; tailpiece: { image: string; book: string; title: string }; initialsTitle: string };
+async function ornamentFile(url: string, name: string, colour: string, block: boolean, size: number): Promise<string | null> {
+  try {
+    const f = `${process.cwd()}/scans/orn-${name}.png`;
+    if (!fs.existsSync(f)) fs.writeFileSync(f, await inkOrnament(await images.fetchBuffer(url, { timeout: 60000 }), colour, { block, size }));
+    return `file://${f}`;
+  } catch { return null; }
+}
+const headpiece = await ornamentFile(orn.headpiece.image, 'head', INK, false, 1400);
+const tailpiece = await ornamentFile(orn.tailpiece.image, 'tail', INK, false, 700);
+const deviceFile = `${process.cwd()}/scans/device.png`;
+fs.writeFileSync(deviceFile, await sharp(Buffer.from(deviceSvg(INK, RUST))).png().toBuffer());
+
+/** The chapter's first paragraph opens with a woodcut initial of its letter (the house alphabet), the letter
+ *  taken out of the text; a letter the alphabet lacks keeps a typeset drop cap. */
+async function firstPara(html: string): Promise<string> {
+  const m = html.match(/<p(?: class="[^"]*")?>(\s*)([A-Za-z])/);
+  const letter = m?.[2].toUpperCase();
+  const cut = letter && orn.initials[letter] ? await ornamentFile(orn.initials[letter].image, `init-${letter}`, RUST, true, 500) : null;
+  if (!m || !cut) return html.replace(/<p(?: class="[^"]*")?>/, '<p class="first">');
+  return html.replace(m[0], `<p class="first woodcut">${m[1]}<img class="initial" src="${cut}" alt="${letter}"/>`);
+}
+const ornamentHead = headpiece ? `<div class="headpiece"><img src="${headpiece}" alt=""/></div>` : '';
+const ornamentTail = tailpiece ? `<div class="tailpiece"><img src="${tailpiece}" alt=""/></div>` : '';
 
 // The essay, one chapter per section, so the contents page lists them. The opening before the first
 // section heading is the first chapter, under the article's title. Sections are numbered; a closing note on
@@ -250,11 +296,19 @@ const essayChapters = [];
 for (const [i, html] of parts.entries()) {
   const h = html.match(/^(<h2[^>]*>([\s\S]*?)<\/h2>)([\s\S]*)$/);
   const title = h ? unesc(h[2].replace(/<[^>]+>/g, '')) : displayTitle;
-  const pic = await opener(html, i, title);
+  let pic = await opener(html, i, title);
+  // A plate the chapter needs (diagrams.ts), after its opening picture.
+  const plate = DIAGRAMS[slug]?.[title];
+  if (plate) {
+    const f = `${process.cwd()}/scans/plate-${i}.png`;
+    let png = sharp(Buffer.from(plate(BW, `${process.env.PUBLIC_DIR}/..`))).resize({ width: 1200 });
+    fs.writeFileSync(f, BW ? await png.png({ palette: true, colours: 4 }).toBuffer() : await png.png().toBuffer());
+    pic += `<figure class="plate"><img src="file://${f}" alt="${esc(title)}: a plate"/></figure>`;
+  }
   const numbered = h && !/^(sources|a note on the sources|notes?)$/i.test(title.trim());
   const body = h
-    ? `${numbered ? `<p class="chapnum">${ROMAN[i - 1] ?? i}</p>` : ''}${h[1]}${pic}${firstPara(h[3])}`
-    : `<h1>${esc(displayTitle)}</h1>${pic}${firstPara(html)}`;
+    ? `${numbered ? ornamentHead : ''}${numbered ? `<p class="chapnum">${ROMAN[i - 1] ?? i}</p>` : ''}${h[1]}${pic}${numbered ? await firstPara(h[3]) : h[3]}${numbered ? ornamentTail : ''}`
+    : `${ornamentHead}<h1>${esc(displayTitle)}</h1>${pic}${await firstPara(html)}${ornamentTail}`;
   essayChapters.push({ title, filename: `essay-${String(i).padStart(2, '0')}.xhtml`, content: body });
 }
 
@@ -275,6 +329,16 @@ const coverFile = `${process.cwd()}/scans/cover.jpg`;
 }
 const year = (post.date.match(/\d{4}/) || [''])[0];
 
+// The opening page. DRAFT copy: Derek approves it once, then every article EPUB carries it.
+const PURPOSE = `<h2>Source Library</h2>
+<p>Most of what was written before 1800 has never been translated into English. Whole libraries of philosophy, science, medicine, magic and history, the books our modern ideas grew out of, are still shut inside Latin, Greek, Arabic, Persian, Chinese and a dozen other languages, open to a few specialists or to no one at all.</p>
+<p>Source Library is opening them. With the Embassy of the Free Mind in Amsterdam we scan these books, transcribe them and translate them, and set every page beside its translation, free to read.</p>
+<p>This book carries one of our articles off the screen: an essay that tells a story through those books, followed by every page it quotes, with the scan, so that you can read the sources for yourself.</p>`;
+type Brief = { tldr: string; summary: string; chapters?: Record<string, string> };
+const brief = (briefs as unknown as Record<string, Brief>)[slug];
+const briefChapters = brief?.chapters ? essayChapters.filter((c) => brief.chapters![c.title]).map((c) =>
+  `<p><a href="${c.filename}">${esc(c.title)}</a> · ${esc(brief.chapters![c.title])}</p>`).join('') : '';
+
 const epub = await new EPub({
   title: displayTitle,
   author: 'Source Library',
@@ -293,9 +357,14 @@ const epub = await new EPub({
     content: `<div class="titlepage"><img class="logo" src="file://${process.env.PUBLIC_DIR}/brand/png/logo-full--black-on-transparent--256h.png" alt="Source Library"/><h1>${esc(displayTitle)}</h1>${displaySubtitle ? `<p class="subtitle">${esc(displaySubtitle)}</p>` : ''}<div class="orn"></div><p class="small">An essay with its sources</p><p class="small">${esc(post.date)}</p></div>`,
   },
   {
-    title: 'About this edition', filename: 'about.xhtml', beforeToc: true,
-    content: `<h2>About this edition</h2><div class="note"><p>This is an article from Source Library, followed by the ${readingCount} book pages it cites, so the sources can be read offline. A linked phrase in the article takes you to its page among the Sources; each reading links back to the page online.</p><p>Pages not in English are given in Source Library's AI translation, English-language books as transcribed from the scan. Both can contain errors; the scan above each reading shows what the page says.</p><p>Online: <a href="${SITE}/articles/${slug}">${SITE.replace('https://', '')}/articles/${slug}</a></p></div>`,
+    // Why the book exists, before anything else. Shared by every article EPUB.
+    title: 'Source Library', filename: 'purpose.xhtml', beforeToc: true,
+    content: `<div class="purpose"><img class="logo" src="file://${process.env.PUBLIC_DIR}/brand/png/icon-only--black-on-transparent--256h.png" alt=""/>${await firstPara(PURPOSE)}</div>`,
   },
+  ...(brief ? [{
+    title: 'In brief', filename: 'brief.xhtml', beforeToc: true,
+    content: `<h2>In brief</h2><p class="tldr">${esc(brief.tldr)}</p><p class="summary">${esc(brief.summary)}</p>${briefChapters ? `<div class="chapters">${briefChapters}</div>` : ''}`,
+  }] : []),
   ...essayChapters,
   {
     title: 'The Sources', filename: 'readings.xhtml',
@@ -303,7 +372,7 @@ const epub = await new EPub({
   },
   {
     title: 'Colophon', filename: 'colophon.xhtml',
-    content: `<div class="colophon"><p>${esc(displayTitle)}</p><p>Source Library, ${esc(year)}</p><p>Text and translations: CC BY-NC-SA 4.0.</p><p><a href="${SITE}">sourcelibrary.org</a></p></div>`,
+    content: `<div class="colophon"><img class="device" src="file://${deviceFile}" alt="The printer's device of Source Library"/><p class="col-title">${esc(displayTitle)}</p><p>Set in EB Garamond. Initials from Alberti, <i>De re aedificatoria</i> (Paris, 1512); headpiece and tailpiece from <i>${esc(orn.headpiece.title)}</i> and <i>${esc(orn.tailpiece.title)}</i>, all in the library.</p><p>Made by Source Library, Amsterdam, ${esc(year)}. Text and translations CC BY-NC-SA 4.0.</p><p><a href="${SITE}">sourcelibrary.org</a></p></div>`,
   },
 ]).genEpub();
 fs.writeFileSync(out, epub);

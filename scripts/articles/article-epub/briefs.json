@@ -1,0 +1,42 @@
+{
+  "_comment": "Per article: a TL;DR and a summary for the 'In brief' page, from the essay only, plus one line per chapter keyed by chapter heading. Written by hand (or drafted and reviewed): every claim must be in the essay.",
+  "hyperborea": {
+    "tldr": "The Greeks told of a blessed people of Apollo beyond the north wind, and of amber that came from the edge of the world. Herodotus already doubted the people. The amber was real, and two thousand years later the historians of the Baltic claimed both for themselves.",
+    "summary": "This essay follows Hyperborea through the books themselves: Pindar and Herodotus, the priest Abaris and the gifts that reached Delos wrapped in straw, Phaethon's sisters weeping amber by the Eridanus, Thule and Stonehenge, druids and bronze dodecahedra, and then the scholars of Sweden, Prussia, Lithuania and beyond who each found the land beyond the north wind at home. It ends with what the sources can bear: a mythical people of Apollo, and a real chain of exchange that carried amber south out of northern Europe through hands that never knew where it began.",
+    "chapters": {
+      "Beyond the North Wind": "The bundle in wheat straw that reached Delos from a people no one had met.",
+      "What the Greeks said": "Pindar's unreachable Hyperborea, and Herodotus, the first to doubt it.",
+      "Abaris and the golden arrow": "The one Hyperborean with a name, and the career later writers gave him.",
+      "Other travellers from the north": "Maidens, gods and offerings brought south to Delos and Delphi.",
+      "Apollo's tears": "Phaethon's sisters, the river Eridanus, and the real amber trade.",
+      "Thule and the other edges of the north": "Pytheas's island of the midnight sun, and how it differs from Hyperborea.",
+      "A round temple: Stonehenge?": "Hecataeus's island temple, and the British readers who saw Stonehenge in it.",
+      "Pythagorean druids?": "Classical writers who described the druids in Pythagorean terms.",
+      "The twelve-sided objects": "The bronze dodecahedra of Roman Gaul, and what they do not prove.",
+      "What the ground shows": "Baltic amber in Greek sanctuaries before Herodotus, by laboratory analysis.",
+      "Everyone's Hyperborea": "Sweden, and nation after nation, finding the north wind's land at home.",
+      "The Prussian claim": "Hartknoch's Old and New Prussia reads the amber river as his own coast.",
+      "Lithuania and the sun": "Narbutt's sun cult, and Lithuanian traced to Sanskrit.",
+      "Was it Russia?": "The oldest Greek route north-east, past griffins guarding gold.",
+      "The polar homeland": "From a people to a lost homeland of humanity at the Pole.",
+      "What was the Hyperborean Apollo?": "The candidates for a real Apollo of the north, by the evidence.",
+      "What the sources support": "A myth of Apollo's people, and a real chain of trade."
+    }
+  },
+  "sea-road-china-gulf": {
+    "tldr": "For a thousand years ships sailed between the ports of China and the Persian Gulf. This is the route told by the people who knew it: Arab merchants and geographers, a Chinese customs inspector, Marco Polo, Ibn Battuta, Zheng He's charts, the Portuguese, and finally a Chinese scholar looking back in 1844.",
+    "summary": "It begins with a Portuguese physician's memory that four hundred Chinese ships once came into Hormuz on a single tide. From there it follows the sailing directions of the ninth-century merchants of Siraf, the marvels geographers collected about the China Sea, the same road seen from the Chinese port of Quanzhou, Marco Polo's voyage home by way of Hormuz, Ibn Battuta waiting at Calicut for the monsoon, the Ming chart of Zheng He's route, the Portuguese at Hormuz, and Wei Yuan writing after the Opium War, when the road had turned against China.",
+    "chapters": {
+      "The Sea Road from China to the Gulf": "Four hundred Chinese ships at Hormuz, remembered in a Portuguese book of drugs.",
+      "The stages from Siraf": "The ninth-century merchants' sailing directions, stage by stage to China.",
+      "Wonders of the China Sea": "What sailors told the geographers: pearls, whirlpools and white wings on the water.",
+      "The same road from the Chinese end": "Zhao Rugua at Quanzhou on the Arabs, Oman and Kish.",
+      "Marco Polo goes home by sea": "Fourteen ships, six hundred dead, and Hormuz.",
+      "Ibn Battuta waits for the monsoon": "Chinese junks at Calicut, and a wreck in the harbour.",
+      "Zheng He’s charts": "The Ming fleets, and the chart of their route printed in 1621.",
+      "The Portuguese at Hormuz": "When the junks were only a memory on the Malabar coast.",
+      "Looking back from Canton, 1844": "Wei Yuan on Hormuz, after the road had turned against China.",
+      "A note on the sources": "Whose English you are reading, and where it comes from."
+    }
+  }
+}

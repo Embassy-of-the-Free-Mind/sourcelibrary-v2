@@ -27,4 +27,4 @@ NODE_PATH="$ROOT/node_modules" "$ESB" "$HERE/build.ts" --bundle --platform=node 
 [ "${UPLOAD:-1}" = 0 ] && { echo "not uploaded (UPLOAD=0)"; exit 0; }
 NODE_PATH="$ROOT/node_modules" "$ESB" "$HERE/upload.ts" --bundle --platform=node --format=esm --tsconfig="$ROOT/tsconfig.json" \
   --outfile="$WORK/upload.mjs" --log-level=error --banner:js="$banner"
-node --no-deprecation --env-file="$ENV" "$WORK/upload.mjs" "$SLUG${STYLE:+-$STYLE}" "$OUT"
+node --no-deprecation --env-file="$ENV" "$WORK/upload.mjs" "$SLUG${STYLE:+-$STYLE}${NAME_SUFFIX:-}" "$OUT"
