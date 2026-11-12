@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, Fragment } from 'react';
 
-export interface Rec { source: string; slug: string; name: string; kind?: string | null; books?: number | null; images?: number | null; proposed: string; proposed_subject?: string | null; merge_into?: string; confidence: string; reason: string; looks_handmade?: boolean | null }
+export interface Rec { source: string; slug: string; name: string; kind?: string | null; books?: number | null; images?: number | null; proposed: string; proposed_subject?: string | null; merge_into?: string; confidence: string; reason: string; looks_handmade?: boolean | null; flag?: string }
 const TYPES = ['subject', 'collection', 'type', 'historic_library', 'merge', 'library_slice', 'hidden', 'retire'];
 // Plain actions, not category names: each option says what happens to the grouping.
 const LABEL: Record<string, string> = { subject: 'Make it a subject', collection: 'Keep as a collection', type: 'Make it a type of picture', historic_library: 'Keep as a historic library', merge: 'Fold into another', library_slice: 'Turn into a filter', hidden: 'Keep hidden', retire: 'Remove it' };
@@ -32,7 +32,7 @@ export default function ReviewTable({ records }: { records: Rec[] }) {
     && (type === 'all' || (edits[key(r)] || r.proposed) === type)
     && (!low || (r.confidence !== 'high' && !edits[key(r)]))
     && r.name.toLowerCase().includes(q.toLowerCase()))
-    .sort((a, b) => (a.confidence === 'low' ? 0 : 1) - (b.confidence === 'low' ? 0 : 1) || a.proposed.localeCompare(b.proposed) || a.name.localeCompare(b.name)), [records, src, type, low, q, edits]);
+    .sort((a, b) => (a.flag === 'suggest_remove' ? 0 : 1) - (b.flag === 'suggest_remove' ? 0 : 1) || (a.confidence === 'low' ? 0 : 1) - (b.confidence === 'low' ? 0 : 1) || a.proposed.localeCompare(b.proposed) || a.name.localeCompare(b.name)), [records, src, type, low, q, edits]);
   const left = records.filter((r) => r.confidence !== 'high' && !edits[key(r)]).length;
   const counts = TYPES.map((t) => [t, records.filter((r) => (edits[key(r)] || r.proposed) === t).length] as const);
   const exportEdits = () => {
@@ -57,10 +57,10 @@ export default function ReviewTable({ records }: { records: Rec[] }) {
           <tbody>
             {rows.map((r) => (
               <tr key={key(r)} className="border-b border-border-light align-top">
-                <td className="py-2 pr-4 min-w-[220px]"><span className="text-primary">{r.name}</span><span className="block text-[12px] text-muted">{r.source === 'gallery' ? 'Gallery set' : r.kind || 'No kind'}</span></td>
+                <td className="py-2 pr-4 min-w-[220px]"><span className="text-primary">{r.name}</span>{r.flag === 'suggest_remove' && <span className="ml-2 inline-block px-1.5 py-0.5 text-[11px] uppercase tracking-wide bg-[#9e4a3a] text-white align-middle">Suggest remove</span>}<span className="block text-[12px] text-muted">{r.source === 'gallery' ? 'Gallery set' : r.kind || 'No kind'}</span></td>
                 <td className="py-2 pr-4 whitespace-nowrap text-muted">{r.books != null ? `${r.books.toLocaleString('en-GB')} books` : ''}{r.images ? ` ${r.images.toLocaleString('en-GB')} images` : ''}</td>
                 <td className="py-2 pr-4"><select aria-label={`Type for ${r.name}`} value={edits[key(r)] || r.proposed} onChange={(e) => change(r, e.target.value)} className="border border-border-light bg-white px-1 py-0.5 text-base">{TYPES.map((t) => <option key={t} value={t}>{LABEL[t]}</option>)}</select>{!edits[key(r)] && r.confidence !== 'high' && <button type="button" onClick={() => change(r, r.proposed)} className="ml-2 h-7 px-2.5 bg-primary text-cream text-[12.5px]" title="The suggestion is right">Right</button>}{r.confidence !== 'high' && <span className="block text-[12px] text-muted">{r.confidence} confidence</span>}</td>
-                <td className="py-2 pr-4 text-muted">{r.merge_into || r.proposed_subject}</td>
+                <td className="py-2 pr-4 text-muted">{['merge', 'subject', 'type'].includes(edits[key(r)] || r.proposed) ? (r.merge_into || r.proposed_subject) : ''}</td>
                 <td className="py-2 text-secondary min-w-[260px]">{r.reason}</td>
               </tr>
             ))}
