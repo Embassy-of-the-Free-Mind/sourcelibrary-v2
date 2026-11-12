@@ -33,7 +33,12 @@ mkdir -p "$BASE/tmp"
 exec 9>"${AUDIT_LOCK:-/tmp/sl-convergent-audit.lock}"; flock -n 9 || { echo "$(date -u +%FT%TZ) another audit is running"; exit 0; }
 cd "$REPO" || exit 1
 echo "== $(date -u +%FT%TZ) convergent audit $RUN"
-[ -d "$RUN/packets" ] || node --env-file="$ENV" scripts/audit/convergent-audit-weekly.mjs draw --run "$RUN" ${AUDIT_SEED:+--seed "$AUDIT_SEED"} || exit 1
+# The scheduled weekly round (#6420 decision 5, Derek 2026-11-12): 40 random books + 40 pages from the risk score's top
+# decile (scripts/audit/risk-pool/current.json), no lane-B stratum. Spare-lane rounds (AUDIT_OPUS_ONLY=1) keep the
+# uniform 60 + 20 design, because they are the uniform frame the predictor is trained and checked on.
+if [ "${AUDIT_OPUS_ONLY:-0}" = 1 ]; then DRAW_ARGS=""; else DRAW_ARGS="--books ${AUDIT_BOOKS:-40} --written ${AUDIT_WRITTEN:-0} --risk ${AUDIT_RISK:-40}"; fi
+# shellcheck disable=SC2086
+[ -d "$RUN/packets" ] || node --env-file="$ENV" scripts/audit/convergent-audit-weekly.mjs draw --run "$RUN" $DRAW_ARGS ${AUDIT_SEED:+--seed "$AUDIT_SEED"} || exit 1
 # Opus: sealed folder per page, Read/Write only (run-readers.sh), 4 at a time, on the box's Claude account.
 # A refusal (exit 2: no claude CLI, or one without --restricted) read no page. Say so and stop, so the
 # round does not print the "done" line a finished run prints (#6420, spare-audit-20261021-1).

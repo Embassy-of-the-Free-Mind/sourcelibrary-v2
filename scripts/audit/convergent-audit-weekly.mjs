@@ -11,7 +11,7 @@
  * under 80% of the pages is named with the reason (quota, no reply, unparsable; convergent-audit-lib.mjs readerStatus)
  * and its rates and the agreement line are left out, never printed as dashes (#6203: the 2026-10-12 run).
  *
- *   node --env-file=.env.production.local scripts/audit/convergent-audit-weekly.mjs draw  --run R [--books 60] [--written 20] [--seed N]
+ *   node --env-file=.env.production.local scripts/audit/convergent-audit-weekly.mjs draw  --run R [--books 60] [--written 20] [--risk 0] [--risk-pool scripts/audit/risk-pool/current.json] [--seed N]
  *   scripts/eval/second-reader/run-readers.sh R opus claude opus read 4
  *   node scripts/eval/second-reader/second-reader.mjs cli-requests --run R --reader gemini37
  *   python3 scripts/eval/run-cli-arm.py --requests R/readers/gemini37/requests.jsonl --out R/readers/gemini37/cli-out.jsonl \
@@ -65,6 +65,11 @@ async function download(url) {
 if (cmd === 'draw') {
   if (fs.existsSync(J('packets'))) throw new Error(`${J('packets')} exists — refusing to draw over a run`);
   const nBooks = Number(opt('books', 60)), nWritten = Number(opt('written', 20));
+  // Stratum 3 (#6420 decision 5, Derek 2026-11-12), opt-in: `--risk N` pages from the top decile of a scored pool
+  // (scripts/eval/error-zoo/score.py over pool.mjs candidates, target: serious OCR error or wrong leaf), one per book,
+  // books already drawn excluded. A pool older than RISK_MAX_DAYS, or missing, draws no risk pages and says why.
+  const nRisk = Number(opt('risk', 0)), riskPoolPath = opt('risk-pool', 'scripts/audit/risk-pool/current.json');
+  const RISK_MAX_DAYS = 21;
   // A new seed each week by default (the ISO date), recorded; pass --seed to reproduce a run.
   const seed = Number(opt('seed', new Date().toISOString().slice(0, 10).replace(/-/g, '')));
   const rng = makeRng(seed);
@@ -113,14 +118,35 @@ if (cmd === 'draw') {
     const rec = await makeRecord(w.book_id, p, 'lane-b-written', all);
     if (rec) records.push(rec);
   }
+  let riskPool = null;
+  if (nRisk > 0) {
+    try { riskPool = read(riskPoolPath); } catch { reasons.risk_pool_missing = riskPoolPath; }
+    const ageDays = riskPool ? (Date.now() - Date.parse(riskPool.generated_at)) / 86400e3 : null;
+    if (riskPool && !(ageDays <= RISK_MAX_DAYS)) { reasons.risk_pool_stale = `${riskPoolPath} is ${Math.round(ageDays)} days old (limit ${RISK_MAX_DAYS})`; riskPool = null; }
+    if (riskPool) {
+      const top = riskPool.candidates.filter((c) => c.pct >= 0.9);
+      const taken = new Set(records.map((r) => r.book_id));
+      for (const c of shuffle(top)) {
+        if (records.filter((r) => r.stratum === 'risk-top-decile').length >= nRisk) break;
+        if (taken.has(c.book_id)) continue;
+        const p = await db.collection('pages').findOne({ id: c.page_id }, { projection: proj });
+        if (!p || !eligible(p)) { reasons.risk_page_no_longer_eligible = (reasons.risk_page_no_longer_eligible || 0) + 1; continue; }
+        const all = await db.collection('pages').find({ book_id: c.book_id }, { projection: { page_number: 1, 'ocr.data': 1 } }).toArray();
+        const rec = await makeRecord(c.book_id, p, 'risk-top-decile', all);
+        if (!rec) { reasons.image_unavailable = (reasons.image_unavailable || 0) + 1; continue; }
+        records.push(rec); taken.add(c.book_id);
+      }
+    }
+  }
   await client.close();
   // One book, one page per packet: the Gemini path reads one page per call (#6338 amendment 2).
   // Redacted as the #6338 packets are (no engine, model or URL), and the stratum is hidden: a reader cannot tell a
   // page lane B wrote from a random one, or which family made the text.
   records.forEach((r, i) => write(J('packets', `p${String(i).padStart(3, '0')}.json`), [redactRecord({ ...r, slot: 1, stratum: 'audit', exposure: undefined })]));
   write(J('draw.json'), { seed, drawn_at: new Date().toISOString(), frame_books: frame.length, rejected: reasons, lane_b_written_pages: writtenRows.length,
+    risk_pool: riskPool ? { path: riskPoolPath, generated_at: riskPool.generated_at, target: riskPool.target, n_candidates: riskPool.n_candidates, top_decile: riskPool.candidates.filter((c) => c.pct >= 0.9).length, cv_auc_within_audit_random: riskPool.cv_auc_within_audit_random } : null,
     pages: records.map((r, i) => ({ packet: `p${String(i).padStart(3, '0')}`, stratum: r.stratum, exposure: r.exposure, book_id: r.book_id, page_number: r.pages[0].page_number, language: r.book?.language, ocr_model: r.pages[0].ocr_model })) });
-  console.log(`drew ${records.length} pages: ${records.filter((r) => r.stratum === 'random').length} random books (frame ${frame.length}), ${records.filter((r) => r.stratum === 'lane-b-written').length} lane-B-written (of ${writtenRows.length}); seed ${seed}`);
+  console.log(`drew ${records.length} pages: ${records.filter((r) => r.stratum === 'random').length} random books (frame ${frame.length}), ${records.filter((r) => r.stratum === 'lane-b-written').length} lane-B-written (of ${writtenRows.length}), ${records.filter((r) => r.stratum === 'risk-top-decile').length} risk top decile${nRisk && !riskPool ? ` (none: ${reasons.risk_pool_missing ? 'no pool' : reasons.risk_pool_stale})` : ''}; seed ${seed}`);
 }
 
 else if (cmd === 'score') {
@@ -140,7 +166,8 @@ else if (cmd === 'score') {
     }
     byReader[name] = got;
   }
-  const strata = ['random', 'lane-b-written'];
+  // risk-top-decile only when the draw has it, so older runs score exactly as before
+  const strata = ['random', 'lane-b-written', ...(draw.pages.some((d) => d.stratum === 'risk-top-decile') ? ['risk-top-decile'] : [])];
   // Why a reader has the verdicts it has. A reader under MIN_READ_SHARE is not a reader of this run.
   const lines = (f) => { try { return fs.readFileSync(f, 'utf8').split('\n').filter(Boolean); } catch { return []; } };
   const parse = (l) => { try { return JSON.parse(l); } catch { return null; } };
@@ -200,11 +227,12 @@ else if (cmd === 'score') {
   const md = [
     `**Weekly convergent audit (#6420 lane D)${incomplete.length ? ', INCOMPLETE: one reader' : ''}** — run \`${report.run}\`, seed ${draw.seed}, drawn ${draw.drawn_at.slice(0, 10)}`,
     '',
-    `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote. Each read against its image by Opus (subscription, sealed) and Gemini Flash (CLI; the model that read is named below), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}${models('gemini37')}.`,
+    `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote${strata.includes('risk-top-decile') ? `, plus ${draw.pages.filter((d) => d.stratum === 'risk-top-decile').length} pages from the risk score's top decile (pool of ${draw.risk_pool?.n_candidates} scored ${draw.risk_pool?.generated_at?.slice(0, 10)}; the random rate stays the headline)` : ''}. Each read against its image by Opus (subscription, sealed) and Gemini Flash (CLI; the model that read is named below), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}${models('gemini37')}.`,
     ...incomplete.flatMap((r) => ['', `**${r} did not read this run:** ${status[r].why}. Its rates and the agreement line are left out; the figures below are ONE reader's, so nothing here is convergent. Finish it with \`scripts/audit/convergent-audit-weekly.sh ${report.run}\` (every step skips what is done).`]),
     '',
     ...counted.filter((r) => typed[`random/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`random/${r}`], { what: 'random visible non-English books', reader: r })),
     ...counted.filter((r) => typed[`lane-b-written/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`lane-b-written/${r}`], { what: 'books lane B wrote a page of', reader: r })),
+    ...counted.filter((r) => typed[`risk-top-decile/${r}`]?.books).flatMap((r) => kOfNMarkdown(typed[`risk-top-decile/${r}`], { what: "books in the risk score's top decile (precision of the aim, not a library rate)", reader: r })),
     '',
     'By page, every exposure together (the earlier weeks\' table, kept for the series):',
     '',
