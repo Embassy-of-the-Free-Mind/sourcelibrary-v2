@@ -230,7 +230,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
           <span className="text-[13.5px] text-muted mr-2">{fmt(shownPlates.length)} {shownPlates.length === 1 ? 'picture' : 'pictures'}{shownPlates.length < plates.length ? ` of ${fmt(plates.length)}` : ''}</span>
           {picTypeMenu}
           {canPeriod && periodMenu(picPeriodCount)}
-          <FilterChips chips={chips.filter((c) => c.key === 'ptype' || c.key === 'period')} onRemove={clear} onClearAll={() => { clear('ptype'); clear('period'); }} />
+          {chips.some((c) => c.key === 'ptype' || c.key === 'period') && <div className="basis-full order-last"><FilterChips chips={chips.filter((c) => c.key === 'ptype' || c.key === 'period')} onRemove={clear} onClearAll={() => { clear('ptype'); clear('period'); }} /></div>}
         </div>
       )}
       {shownPlates.length === 0 ? <p className="py-10 text-muted">No pictures match. <button type="button" className="underline underline-offset-[3px]" onClick={() => { clear('ptype'); clear('period'); }}>Clear the filters</button></p> : <GalleryMasonry plates={shownPlates} />}
@@ -290,8 +290,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         {(!tabs || tab === 'works') && <>
           {!small && (
             <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
-              {/* The tab already says how many; the count comes back once a filter narrows it. */}
-              {(!tabs || list.length < n) && <span className="hidden sm:inline text-[13.5px] text-muted mr-2">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span>}
               {hasMenus && <>
                 {/* Below laptop width the filter menus fold behind Filters, as on the index pages. */}
                 <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${filtersBtn(open)}`}>
@@ -307,7 +305,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                   {mixed && picTypeMenu}
                 </div>
               </>}
-              <FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
+              {/* The filter menus have the first line to themselves. The second line is always there: how many and what is applied on the left, group, sort and view on the right. Filtering never moves anything. */}
+              <div className="basis-full order-last flex flex-wrap items-center gap-2 sm:gap-3 min-h-8 [&>div]:basis-auto"><span className="text-[13.5px] text-muted">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span><FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
                 {group !== 'sections' && !mixed && (canPeriod || canMade || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period written'] as [string, string]] : []), ...(canMade ? [['made', 'By date made'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
                 <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
@@ -317,6 +316,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                     <button type="button" aria-pressed={view === 'list'} aria-label="List" onClick={() => setView('list')} className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
                   </div>
                 )}
+              </div>
               </div>
             </div>
           )}
