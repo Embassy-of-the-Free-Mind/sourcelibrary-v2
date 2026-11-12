@@ -77,7 +77,7 @@ scripts/workers/job-where.sh
 It asks each box for `claude-job.sh where` (load, free memory, free job disk, live jobs, and whether the box is ready to run a job at all) and each box account's Claude headroom (5-hour %, week % and hours to reset, the week that would go unused at its pace; from `ops_reports` `claude-limits:latest`). Load, memory and disk only filter; it drops accounts at >= 80% of their 5-hour window or >= 90% of their week, and names the box whose account has the most week left per hour to its reset (#6751). Start the job there:
 
 ```
-scp brief.txt root@<box>:/tmp/ && ssh root@<box> /root/bin/claude-job.sh start <name> /tmp/brief.txt
+/root/bin/box.sh <box> start <name> < brief.txt      # from a box; logged, and the job ledger records who sent it (#8606)
 ```
 
 Do not default to main. On 2026-10-09 main sat at load 17 on 16 cores with its root disk 86% full while cloudlayer ran no jobs.
@@ -155,10 +155,25 @@ Measured on 45 cloudlayer job transcripts from 2026-10-24 to 11-01, cutting at t
 
 **Per-item `claude -p` calls run lean.** A script that calls `claude -p` once per page or item pays to load the whole Claude Code system prompt and tool list on every call. Cache writes, which are that load plus each item's own prompt, were 84% of ch-audit's cost in the week to 2026-11-03, and 47–73% of the Sanskrit adjudicator and the split-unread screen. Give each call only what it uses: `--tools ""` or `--tools Read`, `--strict-mcp-config`, `--setting-sources local`, `--disable-slash-commands`, `--no-session-persistence`, and a one-line `--system-prompt` when it needs no tools. `scripts/audit/leaf-shift-screen-5021.mjs` is a working example. Use `--model sonnet` where the job is a screen rather than a judgement. `--no-session-persistence` leaves no transcript, so these calls are missing from `usage_report.py`; log their usage to the job's own output.
 
+## Working on another box from a job: the mesh verbs, not a root ssh (#8614)
+
+A job on one box that needs another box (most often gex45's GPU) uses `box.sh <box> <verb>`. It does not use `ssh root@<box>`: a raw shell is unlogged and unbounded, and agent-guard flags it as `raw-ssh`. The verbs are logged in the far box's `/var/log/box-rpc.log` and stay inside the job and log trees:
+
+| need | verb |
+|---|---|
+| GPU and queue state | `box.sh gex45 gpu` |
+| queue a GPU task | `box.sh gex45 gpu-add NN-name < task.sh` (needs a `# issue: NNNN` line; same contract as `gpu-queue.sh add`) |
+| read a log or output | `box.sh <box> tail /root/jobs/<job>/<file> [lines]`, `box.sh <box> ls /root/jobs/<job>` |
+| copy code or data in | `box.sh <box> put /root/jobs/<job>/<path> < file` (20 MB max) |
+| load, memory, disks | `box.sh <box> health` |
+| start a job there | `box.sh <box> start <name> < brief` |
+
+Anything else (crontab, systemd, installing packages, editing `/root/bin`) is a change to that box: a PR to `infrastructure/<box>-crontab` or the installer, or a job started ON that box, never a remote shell.
+
 ## Steering a running job: the inbox (#6534)
 
 ```
-ssh root@<box> /root/bin/claude-job.sh note <name> "score recitation cuts as unscored, not 100% error"
+ssh root@<box> /root/bin/claude-job.sh note <name> "score recitation cuts as unscored, not 100% error"   # from the laptop
 ```
 
 A headless job's prompt is fixed when it starts, so before this the only way to add an instruction was to stop and restart it (three dispatches of the #6523 fix on 2026-10-11). `note` appends a timestamped line to `$JD/<name>.inbox`. The headless rules tell the job to read its inbox at the start of each step, before each report and before the done file, and to name the notes it acted on. There is deliberately no hook: a PostToolUse hook would run in every Claude session on the box, which is more exposure than the gain is worth (#6534). A note therefore lands at the job's next step, not mid-step. A note to a job that is not running is read when the job resumes. Prefer a note to a restart, unless the job has gone the wrong way so far that its work is better discarded.

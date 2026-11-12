@@ -11,8 +11,10 @@ Report ONLY by ONE comment on #6871. Use `node --env-file=/root/sourcelibrary/.e
 queries. No SendMessage.
 
 ## Situation
-- GEX45: `ssh root@65.108.136.89` (key authorized from cloudlayer and main). Queue a task with
-  `/root/bin/gpu-queue.sh add <task.sh> NN-name`; the task contract (timeout/issue headers, stop every model, the runner
+- GEX45 through the mesh, not a root ssh (#8614, JOB-HOSTS.md "mesh verbs"): `box.sh gex45 gpu` (card + queue),
+  `box.sh gex45 gpu-add NN-name < task.sh` to queue a task (it needs a `# issue: NNNN` line), `box.sh gex45 tail
+  /root/jobs/gpu-queue/<name>/task.log`, `box.sh gex45 put /root/jobs/<job>/<file> < file`. On gex45 itself the
+  queue is `/root/bin/gpu-queue.sh add <task.sh> NN-name`; the task contract (timeout/issue headers, stop every model, the runner
   holds /root/gpu.lock) is in the header of /root/bin/gpu-queue.sh. `gpu-queue.sh list` shows what ran; logs are in
   /root/jobs/gpu-queue/<name>/task.log. Read the memory note on GEX45 traps before building a task.
 - The work list is the table in the body of #6871, and its newest comments. `scripts/audit/gpu-queue-5660.mjs`
