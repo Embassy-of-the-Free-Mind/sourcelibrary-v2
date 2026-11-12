@@ -102,7 +102,7 @@ const types = (): Types => { const t = dataFile<Types>('snap/_types') ?? { pictu
  *  catalogue yet (it only says printed or manuscript, on some books), so these have no pages or counts until the catalogue round. */
 const FORMS: SubjectRow[] = ['Printed book', 'Manuscript book', 'Scroll', 'Clay tablet', 'Papyrus', 'Palm-leaf manuscript', 'Inscription']
   .map((label) => ({ id: `form-${label.toLowerCase().replace(/[^a-z]+/g, '-')}`, label, href: '#g-forms', alt: [], pics: [], bare: true, note: 'Not recorded yet' }));
-export function typeGroups(): { groups: Group[]; pictures: number; texts: number } {
+export function typeGroups(): { groups: Group[]; pictureGroups: Group[]; bookGroups: Group[]; pictures: number; texts: number } {
   const t = types();
   const pic = (kind: string) => PICTURE_TYPE_MAP.filter((x) => x.kind === kind).flatMap((x) => {
     const s = t.pictures.find((p) => p.id === x.ours);
@@ -116,8 +116,11 @@ export function typeGroups(): { groups: Group[]; pictures: number; texts: number
     return [{ id: s.slug, label: x.label, href: `/revamp/t/${s.slug}`, alt: x.terms.map((y) => y.label), pics: covers, note: `${n(s.total)} books`, home: true }];
   });
   const band = (id: string, label: string, narrower: SubjectRow[]) => ({ id, label, alt: [], pics: narrower.flatMap((x) => x.pics.slice(0, 3)).slice(0, 14), narrower });
-  const groups = [band('technique', 'Pictures: technique', pic('technique')), band('shows', 'Pictures: what they show', pic('what it shows')), band('place', 'Pictures: place in the book', pic('place in the book')), band('texts', 'Kinds of writing', textRows), band('forms', 'Forms', FORMS)].filter((g) => g.narrower.length);
-  return { groups, pictures: t.pictures.reduce((a, b) => a + b.total, 0), texts: t.texts.reduce((a, b) => a + b.total, 0) };
+  // Two pages, each answering one question with question-named groups.
+  const pictureGroups = [band('shows', 'What it shows', pic('what it shows')), band('technique', 'How it was made', pic('technique')), band('place', 'Where it sits in the book', pic('place in the book'))].filter((g) => g.narrower.length);
+  const bookGroups = [band('texts', 'What kind of writing', textRows), band('forms', 'What it’s written on', FORMS)].filter((g) => g.narrower.length);
+  const groups = [...pictureGroups, ...bookGroups];
+  return { groups, pictureGroups, bookGroups, pictures: t.pictures.reduce((a, b) => a + b.total, 0), texts: t.texts.reduce((a, b) => a + b.total, 0) };
 }
 export function typeOfSlug(slug: string) {
   const t = types();

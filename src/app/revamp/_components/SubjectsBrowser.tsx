@@ -184,7 +184,7 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
                   {card === 'top' && <span aria-hidden className="block shrink-0 aspect-square -mb-[2px] w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2rem)/3)] md:w-[calc((100%-3rem)/4)] lg:w-[calc((100%-4rem)/5)]" />}
                   <span className={`${card === 'top' ? 'absolute inset-x-0 bottom-0' : 'relative self-end w-full'} flex flex-col md:flex-row items-start md:items-end md:justify-between gap-1.5 md:gap-4 p-4 pt-10 md:p-7 text-white`}>
                     <span className="font-serif text-[26px] md:text-[48px] leading-[1.05] tracking-tight">{g.label}</span>
-                    <span className="text-[13px] md:text-[15px] font-medium md:whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5">Everything in {g.label} <Arrow /></span>
+                    {g.pics.length > 0 && <span className="text-[13px] md:text-[15px] font-medium md:whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5">Everything in {g.label} <Arrow /></span>}
                   </span>
                 </Link>
               )}

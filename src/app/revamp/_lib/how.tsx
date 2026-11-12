@@ -17,10 +17,15 @@ export const howLanguages = (values: number | string, unmatched: number | string
         <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
       ] });
 
-export const HOW_TYPES: How = { title: 'How we name types', items: [
-        'Picture types are named after the Getty Art & Architecture Thesaurus, the museum standard, which keeps how a picture was made (technique) apart from what it shows.',
-        'Kinds of writing are named after the Library of Congress genre and form terms, the library standard.',
-        'Kinds of writing say what a text is (a treatise, a commentary, letters). Forms say what it is written on (a printed book, a scroll, a clay tablet), named after the Getty object types. Forms are not recorded yet.',
-        'A picture has one type for now, so an engraved portrait is under either Engraving or Portrait, not both. Giving every picture both is the next step.',
+export const HOW_PICTURE_KINDS: How = { title: 'How we name kinds of pictures', items: [
+        'Three questions, kept apart: what a picture shows, how it was made, and where it sits in the book. The names follow the Getty Art & Architecture Thesaurus, the museum standard.',
+        'A picture has one kind for now, so an engraved portrait is under either Engraving or Portrait, not both. Giving every picture an answer to each question is the next step.',
+        <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
+      ] };
+
+export const HOW_BOOK_KINDS: How = { title: 'How we name kinds of books', items: [
+        'Two questions, kept apart: what a text is written on (a printed book, a scroll, a clay tablet) and what kind of writing it is (a treatise, a commentary, letters).',
+        'What it is written on follows the Getty object types; the kinds of writing follow the Library of Congress genre and form terms.',
+        'What a text is written on is not recorded in the catalogue yet. It is part of the coming catalogue round.',
         <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
       ] };

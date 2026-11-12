@@ -91,7 +91,7 @@ export default function Page() {
   const periods = periodGroups(), langs = languageGroups(), types = typeGroups();
   const subjects = (dataFile<{ subjects: unknown[] }>('subjects')?.subjects ?? []).length;
   const aType = typeSlugs()[0];
-  const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.groups.reduce((s, g) => s + g.narrower.length, 0)), 'types of text and picture']];
+  const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.groups.reduce((s, g) => s + g.narrower.length, 0)), 'kinds of picture and book']];
 
   const SITE: Node[] = [
     { title: 'Homepage', href: '/revamp/home', note: 'Three full-height featured layouts, Popular this week below', kids: [{ title: 'Featured collection schedule', href: '/revamp/featured', note: 'One file drives the homepage, Library and Gallery' }] },
@@ -106,7 +106,8 @@ export default function Page() {
     ] },
     { title: 'Centuries', href: '/revamp/periods', note: 'When works were written', kids: [{ title: 'A century: 1900–1999', href: '/revamp/p/period-1900' }] },
     { title: 'Languages', href: '/revamp/languages', note: 'The language of the copy', kids: [{ title: 'A language: Latin', href: '/revamp/l/language-latin' }] },
-    { title: 'Types', href: '/revamp/types', note: 'Kinds of text and picture, named after LCGFT and Getty AAT', kids: aType ? [{ title: `A type: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
+    { title: 'Kinds of pictures', href: '/revamp/kinds/pictures', note: 'What it shows · How it was made · Where it sits in the book', kids: aType ? [{ title: `A kind: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
+    { title: 'Kinds of books', href: '/revamp/kinds/books', note: 'What it’s written on · What kind of writing' },
     { title: 'Behind the scenes', kids: [
       { title: 'Every term against its standard', href: '/revamp/standards' },
       { title: 'Sorting review', href: '/revamp/review', note: 'Every collection and gallery set sorted into the new types, to correct' },
@@ -150,7 +151,7 @@ export default function Page() {
             <li>Sub-subjects as picture boxes under the hero; every subject has a picture.</li>
             <li>Filters on one line; count, tags, sort and view on a fixed second line; menu numbers follow the other filters.</li>
             <li>One set of control styles for every search, filter and sort.</li>
-            <li>Types: texts split into Kinds of writing (genres) and Forms (what it is written on: scroll, clay tablet, papyrus…).</li>
+            <li>Types became two pages: Kinds of pictures (what it shows, how it was made, where it sits) and Kinds of books (what it’s written on, what kind of writing).</li>
             <li>Catalogue fixes wait for one combined round.</li>
             <li>New subjects are semi-automatic: proposed from new books, public only past a minimum.</li>
           </ul>
