@@ -150,6 +150,9 @@ export default function Page() {
             <li>Sub-subjects as picture boxes under the hero; every subject has a picture.</li>
             <li>Filters on one line; count, tags, sort and view on a fixed second line; menu numbers follow the other filters.</li>
             <li>One set of control styles for every search, filter and sort.</li>
+            <li>Types: texts split into Kinds of writing (genres) and Forms (what it is written on: scroll, clay tablet, papyrus…).</li>
+            <li>Catalogue fixes wait for one combined round.</li>
+            <li>New subjects are semi-automatic: proposed from new books, public only past a minimum.</li>
           </ul>
         </div>
         <div>
@@ -167,7 +170,8 @@ export default function Page() {
             <li>A written plan: what the real pages need from the site and the database (subject list, featured schedule, sub-subject tags on books, subject pictures).</li>
             <li>Split into small pull requests, the shared control styles first, since /library and /gallery already use them.</li>
             <li>Derek reviews each one; nothing merges without your yes.</li>
-            <li>Catalogue work: tag books with their sub-subjects, so a Subject filter can work.</li>
+            <li>One catalogue round, all together: record each book&apos;s form (scroll, tablet, papyrus…); tag books with their sub-subjects; give subject pictures a proper home.</li>
+            <li>Subjects that grow: new books get subjects from the list automatically, and counts update. When new books point to a FAST heading we have no subject for, it becomes a proposed subject; it goes public once it holds a minimum number of works and images (10 suggested, a setting) and someone has checked the name.</li>
           </ol>
         </div>
       </section>

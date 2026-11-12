@@ -19,7 +19,8 @@ export const howLanguages = (values: number | string, unmatched: number | string
 
 export const HOW_TYPES: How = { title: 'How we name types', items: [
         'Picture types are named after the Getty Art & Architecture Thesaurus, the museum standard, which keeps how a picture was made (technique) apart from what it shows.',
-        'Text types are named after the Library of Congress genre and form terms, the library standard.',
+        'Kinds of writing are named after the Library of Congress genre and form terms, the library standard.',
+        'Kinds of writing say what a text is (a treatise, a commentary, letters). Forms say what it is written on (a printed book, a scroll, a clay tablet), named after the Getty object types. Forms are not recorded yet.',
         'A picture has one type for now, so an engraved portrait is under either Engraving or Portrait, not both. Giving every picture both is the next step.',
         <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
       ] };

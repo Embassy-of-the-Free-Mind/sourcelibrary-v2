@@ -98,6 +98,10 @@ export const centuryOfSlug = (slug: string) => axes().centuries.find((c) => c.sl
 /* Types: picture types (the gallery's) and text types (the site's form tags), as pages. */
 interface Types { pictures: { id: string; slug: string; total: number }[]; texts: { id: string; slug: string; total: number }[] }
 const types = (): Types => { const t = dataFile<Types>('snap/_types') ?? { pictures: [], texts: [] }; return { pictures: t.pictures.filter((x) => x.total > 0), texts: t.texts.filter((x) => x.total > 0) }; };
+/** What a text is written on. Names follow the Getty Art & Architecture Thesaurus object types. Not recorded in the
+ *  catalogue yet (it only says printed or manuscript, on some books), so these have no pages or counts until the catalogue round. */
+const FORMS: SubjectRow[] = ['Printed book', 'Manuscript book', 'Scroll', 'Clay tablet', 'Papyrus', 'Palm-leaf manuscript', 'Inscription']
+  .map((label) => ({ id: `form-${label.toLowerCase().replace(/[^a-z]+/g, '-')}`, label, href: '#g-forms', alt: [], pics: [], bare: true, note: 'Not recorded yet' }));
 export function typeGroups(): { groups: Group[]; pictures: number; texts: number } {
   const t = types();
   const pic = (kind: string) => PICTURE_TYPE_MAP.filter((x) => x.kind === kind).flatMap((x) => {
@@ -112,7 +116,7 @@ export function typeGroups(): { groups: Group[]; pictures: number; texts: number
     return [{ id: s.slug, label: x.label, href: `/revamp/t/${s.slug}`, alt: x.terms.map((y) => y.label), pics: covers, note: `${n(s.total)} books`, home: true }];
   });
   const band = (id: string, label: string, narrower: SubjectRow[]) => ({ id, label, alt: [], pics: narrower.flatMap((x) => x.pics.slice(0, 3)).slice(0, 14), narrower });
-  const groups = [band('technique', 'Pictures: technique', pic('technique')), band('shows', 'Pictures: what they show', pic('what it shows')), band('place', 'Pictures: place in the book', pic('place in the book')), band('texts', 'Texts', textRows)].filter((g) => g.narrower.length);
+  const groups = [band('technique', 'Pictures: technique', pic('technique')), band('shows', 'Pictures: what they show', pic('what it shows')), band('place', 'Pictures: place in the book', pic('place in the book')), band('texts', 'Kinds of writing', textRows), band('forms', 'Forms', FORMS)].filter((g) => g.narrower.length);
   return { groups, pictures: t.pictures.reduce((a, b) => a + b.total, 0), texts: t.texts.reduce((a, b) => a + b.total, 0) };
 }
 export function typeOfSlug(slug: string) {
