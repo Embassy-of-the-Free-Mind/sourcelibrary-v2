@@ -679,6 +679,13 @@ import { contentHash, geminiEngine, translationInput, translationProvenance, isN
 import { translationLayers, writePageAnnotations } from './translation-text.mjs'; // #5942: text + annotations beside data
 export { contentHash };
 
+/**
+ * The hash of a page's stored English as a reader saw it (#8550). A reader records it in each read's meta as
+ * `translation_hash_at_read`; the writer refuses a read whose page's English has changed since, so a second lane
+ * that read the same page cannot overwrite English another lane wrote minutes earlier. No English hashes as ''.
+ */
+export const translationHashAtRead = (page) => contentHash(page?.translation?.data || '');
+
 // ────────────────────────────────────────────────────────────────────────────
 // Semantic health (issue #3756): collapse / runaway detection at the door.
 // Extracted verbatim from scripts/maintenance/retranslate-pages.mjs (which
