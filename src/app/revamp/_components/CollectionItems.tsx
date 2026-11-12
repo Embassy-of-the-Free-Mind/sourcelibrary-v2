@@ -25,10 +25,12 @@ type Pics = 'tab' | 'mixA';
 type Entry = { kind: 'work'; b: Book } | { kind: 'image'; p: Plate; from: Book };
 const NONE = 'none';
 /** Options for a facet menu: every value with its count, in the given order, then the untagged. */
-const facetOptions = (all: string, counts: Map<string, number>, order: string[], label: (v: string) => string, none: string): [string, string][] => [
+// `counts` decides which choices a menu offers (everything in the list); `here` gives the number shown,
+// counted after the OTHER filters, so you can see a combination is empty before you pick it.
+const facetOptions = (all: string, counts: Map<string, number>, order: string[], label: (v: string) => string, none: string, here: Map<string, number> = counts): [string, string][] => [
   ['all', all],
-  ...order.filter((v) => counts.has(v)).map((v) => [v, `${label(v)} (${counts.get(v)})`] as [string, string]),
-  ...(counts.has(NONE) ? [[NONE, `${none} (${counts.get(NONE)})`] as [string, string]] : []),
+  ...order.filter((v) => counts.has(v)).map((v) => [v, `${label(v)} (${here.get(v) ?? 0})`] as [string, string]),
+  ...(counts.has(NONE) ? [[NONE, `${none} (${here.get(NONE) ?? 0})`] as [string, string]] : []),
 ];
 const tally = (lists: string[][]) => { const m = new Map<string, number>(); for (const l of lists) for (const v of l.length ? l : [NONE]) m.set(v, (m.get(v) ?? 0) + 1); return m; };
 const matches = (pick: string, vs: string[]) => pick === 'all' || (pick === NONE ? vs.length === 0 : vs.includes(pick));
@@ -137,8 +139,19 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
     author: (a, b) => (a.author || '~').localeCompare(b.author || '~', 'en'),
   };
   const t = q.toLowerCase();
-  let list = works.filter((b) => (lang === 'all' || b.language === lang) && matches(ttype, typesOf(b)) && matches(fmtPick, formatOf(b)) && matches(made, madeOf(b)) && matches(period, periodsOf(b))
-    && (!t || `${b.display_title} ${b.title} ${b.author} ${noteOf[b.id!] ?? ''}`.toLowerCase().includes(t)));
+  // A work passes every filter except `skip`: the list uses none skipped, each menu's numbers skip that menu.
+  type Facet = 'lang' | 'type' | 'format' | 'made' | 'period' | '';
+  const passes = (b: Book, skip: Facet) => (skip === 'lang' || lang === 'all' || b.language === lang) && (skip === 'type' || matches(ttype, typesOf(b)))
+    && (skip === 'format' || matches(fmtPick, formatOf(b))) && (skip === 'made' || matches(made, madeOf(b))) && (skip === 'period' || matches(period, periodsOf(b)))
+    && (!t || `${b.display_title} ${b.title} ${b.author} ${noteOf[b.id!] ?? ''}`.toLowerCase().includes(t));
+  const without = (skip: Facet) => works.filter((b) => passes(b, skip));
+  const typeHere = tally(without('type').map(typesOf));
+  const formatHere = tally(without('format').map(formatOf));
+  const madeHere = tally(without('made').map(madeOf));
+  const periodHere = tally(without('period').map(periodsOf));
+  const langHere = new Map<string, number>();
+  for (const b of without('lang')) if (b.language) langHere.set(b.language, (langHere.get(b.language) ?? 0) + 1);
+  let list = works.filter((b) => passes(b, ''));
   list = [...list].sort(by[group === 'sections' ? 'maker' : sort] ?? by.year_asc);
   const keyOf = (b: Book) => group === 'made' ? (madeOf(b)[0] ?? NONE) : group === 'period' ? firstPeriod(b) : group === 'type' ? (typesOf(b)[0] ?? NONE) : group === 'language' ? (b.language || 'Language not recorded') : group === 'sections' ? (sectionOf.get(b.id!) ?? '') : '';
   const rank = (order: string[], v: string) => (v === NONE ? 999 : order.indexOf(v));
@@ -214,12 +227,12 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
     made !== 'all' && { key: 'made', label: made === NONE ? 'Made: undated' : `Made: ${centuryLabel(Number(made))}` },
     ptype !== 'all' && { key: 'ptype', label: ptype === NONE ? 'Picture type not recorded' : PICTURE_TYPES[ptype] }].filter(Boolean) as { key: string; label: string }[];
   const clear = (k: string) => { if (k === 'q') setQ(''); if (k === 'lang') setLang('all'); if (k === 'type') setTtype('all'); if (k === 'format') setFmt('all'); if (k === 'period') setPeriod('all'); if (k === 'made') setMade('all'); if (k === 'ptype') setPtype('all'); setPage(1); };
-  const formatMenu = canFormat && <SortSelect label="Format" value={fmtPick} onChange={reset(setFmt)} options={facetOptions('Printed or manuscript', formatCount, ['book', 'manuscript'], (v) => FORMATS[v], 'Not recorded')} />;
+  const formatMenu = canFormat && <SortSelect label="Format" value={fmtPick} onChange={reset(setFmt)} options={facetOptions('Printed or manuscript', formatCount, ['book', 'manuscript'], (v) => FORMATS[v], 'Not recorded', formatHere)} />;
   const hasMenus = (big && canLang) || canType || canFormat || canPeriod || canMade || (mixed && canPicType);
   const active = [lang, ttype, fmtPick, period, made, ...(mixed ? [ptype] : [])].filter((v) => v !== 'all').length;
-  const typeMenu = canType && <SortSelect label="Type" value={ttype} onChange={reset(setTtype)} options={facetOptions('Any type', typeCount, ORDER_T, (v) => TEXT_TYPES[v], 'Type not recorded')} />;
-  const periodMenu = (counts: Map<string, number>) => <SortSelect label="Period written" value={period} onChange={reset(setPeriod)} options={facetOptions('Written any time', counts, ORDER_P, periodLabel, 'Not recorded')} />;
-  const madeMenu = canMade && <SortSelect label="Date made" value={made} onChange={reset(setMade)} options={facetOptions('Made any time', madeCount, madeOrder, (v) => centuryLabel(Number(v)), 'Undated')} />;
+  const typeMenu = canType && <SortSelect label="Type" value={ttype} onChange={reset(setTtype)} options={facetOptions('Any type', typeCount, ORDER_T, (v) => TEXT_TYPES[v], 'Type not recorded', typeHere)} />;
+  const periodMenu = (counts: Map<string, number>, here?: Map<string, number>) => <SortSelect label="Period written" value={period} onChange={reset(setPeriod)} options={facetOptions('Written any time', counts, ORDER_P, periodLabel, 'Not recorded', here)} />;
+  const madeMenu = canMade && <SortSelect label="Date made" value={made} onChange={reset(setMade)} options={facetOptions('Made any time', madeCount, madeOrder, (v) => centuryLabel(Number(v)), 'Undated', madeHere)} />;
   const picTypeMenu = canPicType && <SortSelect label="Picture type" value={ptype} onChange={reset(setPtype)} options={facetOptions(mixed ? 'Any picture' : 'Any type', picCount, ORDER_I, (v) => PICTURE_TYPES[v], 'Type not recorded')} />;
 
   const images = (
@@ -296,10 +309,10 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
                 </button>
                 <div className={`${open ? 'flex' : 'hidden'} lg:contents order-last lg:order-none w-full flex-wrap gap-2`}>
-                  {big && canLang && <SortSelect label="Language" value={lang} onChange={reset(setLang)} options={[['all', 'Any language'], ...langs.map(([l, c]) => [l, `${l} (${c})`] as [string, string])]} />}
+                  {big && canLang && <SortSelect label="Language" value={lang} onChange={reset(setLang)} options={[['all', 'Any language'], ...langs.map(([l]) => [l, `${l} (${langHere.get(l) ?? 0})`] as [string, string])]} />}
                   {typeMenu}
                   {formatMenu}
-                  {canPeriod && periodMenu(periodCount)}
+                  {canPeriod && periodMenu(periodCount, periodHere)}
                   {madeMenu}
                   {mixed && picTypeMenu}
                 </div>
