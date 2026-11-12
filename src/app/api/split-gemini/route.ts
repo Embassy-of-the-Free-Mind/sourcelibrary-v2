@@ -115,4 +115,4 @@ Example output: 487`;
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

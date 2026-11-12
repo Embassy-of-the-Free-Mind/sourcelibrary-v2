@@ -133,4 +133,4 @@ export const POST = withAuth(async (request: NextRequest, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'reader' });

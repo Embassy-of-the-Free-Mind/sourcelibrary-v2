@@ -273,4 +273,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error running experiment:', error);
     return NextResponse.json({ error: 'Failed to run experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -25,7 +25,7 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error fetching experiment:', error);
     return NextResponse.json({ error: 'Failed to fetch experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // PATCH /api/experiments/[id] - Update experiment status
 export const PATCH = withAuth(async (request, session, context) => {
@@ -49,7 +49,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating experiment:', error);
     return NextResponse.json({ error: 'Failed to update experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // DELETE /api/experiments/[id] - Delete experiment and its results
 export const DELETE = withAuth(async (request, session, context) => {
@@ -68,4 +68,4 @@ export const DELETE = withAuth(async (request, session, context) => {
     console.error('Error deleting experiment:', error);
     return NextResponse.json({ error: 'Failed to delete experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -197,7 +197,7 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * POST /api/detections
@@ -247,7 +247,7 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * DELETE /api/detections
@@ -289,7 +289,7 @@ export const DELETE = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * PATCH /api/detections
@@ -347,4 +347,4 @@ export const PATCH = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

@@ -80,4 +80,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error during cleanup:', error);
     return NextResponse.json({ error: 'Cleanup failed' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

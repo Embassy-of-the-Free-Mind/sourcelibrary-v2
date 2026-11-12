@@ -22,7 +22,7 @@ export const GET = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // DELETE - Delete a job
 export const DELETE = withAuth(async (request, session, context) => {
@@ -54,4 +54,4 @@ export const DELETE = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

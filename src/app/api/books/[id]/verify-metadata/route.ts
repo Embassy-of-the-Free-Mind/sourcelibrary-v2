@@ -242,7 +242,7 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Verify metadata error:', error);
     return NextResponse.json({ error: 'Verification failed' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // POST /api/books/[id]/verify-metadata - Apply verified metadata
 export const POST = withAuth(async (request, session, context) => {
@@ -353,4 +353,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Apply metadata error:', error);
     return NextResponse.json({ error: 'Update failed' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

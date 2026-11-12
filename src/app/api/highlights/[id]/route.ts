@@ -84,7 +84,7 @@ export const DELETE = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // PATCH /api/highlights/[id] - Update a highlight (e.g., add note)
 export const PATCH = withAuth(async (request, session, context) => {
@@ -138,4 +138,4 @@ export const PATCH = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

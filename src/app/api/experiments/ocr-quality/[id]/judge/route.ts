@@ -105,7 +105,7 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error getting comparison:', error);
     return NextResponse.json({ error: 'Failed to get comparison' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // POST /api/experiments/ocr-quality/[id]/judge - Submit a judgment
 export const POST = withAuth(async (request, session, context) => {
@@ -181,4 +181,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error saving judgment:', error);
     return NextResponse.json({ error: 'Failed to save judgment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

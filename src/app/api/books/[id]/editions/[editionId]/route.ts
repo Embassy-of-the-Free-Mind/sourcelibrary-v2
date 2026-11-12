@@ -104,4 +104,4 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating edition:', error);
     return NextResponse.json({ error: 'Failed to update edition' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

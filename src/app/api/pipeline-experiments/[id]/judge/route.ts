@@ -240,4 +240,4 @@ Which translation is better? Reply: A, B, or TIE`;
     console.error('Error in pipeline judge:', error);
     return NextResponse.json({ error: 'Failed' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

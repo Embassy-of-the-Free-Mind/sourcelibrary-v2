@@ -168,4 +168,4 @@ export const POST = withAuth(async (
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

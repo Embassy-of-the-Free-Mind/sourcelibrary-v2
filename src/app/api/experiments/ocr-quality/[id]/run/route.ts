@@ -427,4 +427,4 @@ Return each transcription clearly separated:
     console.error('Error running OCR condition:', error);
     return NextResponse.json({ error: 'Failed to run condition' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

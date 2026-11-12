@@ -38,4 +38,4 @@ export const POST = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

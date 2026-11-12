@@ -56,4 +56,4 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error listing deleted books:', error);
     return NextResponse.json({ error: 'Failed to list deleted books' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

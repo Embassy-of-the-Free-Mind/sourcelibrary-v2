@@ -355,4 +355,4 @@ Which transcription is more accurate to the manuscript image? Reply with your ve
     console.error('Error in auto-judge:', error);
     return NextResponse.json({ error: 'Failed to run auto-judge' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -25,4 +25,4 @@ export const POST = withAuth(async (request, session, context) => {
     match: result.match,
     ustc_url: result.match ? `https://www.ustc.ac.uk/editions/${result.match.ustc_sn}` : null,
   });
-});
+}, { minRole: 'editor' });

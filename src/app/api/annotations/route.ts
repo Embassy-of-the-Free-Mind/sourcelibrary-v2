@@ -155,4 +155,4 @@ try {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'reader' });

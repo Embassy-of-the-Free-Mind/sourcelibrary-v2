@@ -79,4 +79,4 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error scanning book for QA issues:', error);
     return NextResponse.json({ error: 'Failed to scan book' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

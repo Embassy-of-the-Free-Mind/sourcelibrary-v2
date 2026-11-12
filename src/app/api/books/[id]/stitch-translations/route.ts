@@ -294,7 +294,7 @@ export const POST = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * GET /api/books/[id]/stitch-translations
@@ -358,4 +358,4 @@ export const GET = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

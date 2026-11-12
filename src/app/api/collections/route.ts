@@ -138,7 +138,7 @@ export const PATCH = withAuth(async (request) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 export const POST = withAuth(async (request) => {
   try {
@@ -167,4 +167,4 @@ export const POST = withAuth(async (request) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

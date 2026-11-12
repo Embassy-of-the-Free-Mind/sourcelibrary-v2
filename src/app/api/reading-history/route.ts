@@ -192,4 +192,4 @@ export const GET = withAuth(async (request, session) => {
   ]);
 
   return NextResponse.json({ entries, total: totalResult, offset, limit });
-});
+}, { minRole: 'reader' });

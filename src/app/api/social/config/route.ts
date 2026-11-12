@@ -104,7 +104,7 @@ export const GET = withAuth(async () => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * PATCH /api/social/config
@@ -174,4 +174,4 @@ export const PATCH = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
