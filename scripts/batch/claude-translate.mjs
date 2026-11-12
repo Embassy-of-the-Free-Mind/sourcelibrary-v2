@@ -88,7 +88,7 @@ import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
-import { PAGE_BREAK_SCOPED, pageBreakVariant, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, dropLeafSeamBreaches, contentHash } from '../lib/translate-core.mjs';
+import { PAGE_BREAK_SCOPED, pageBreakVariant, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, dropLeafSeamBreaches, contentHash, translationHashAtRead } from '../lib/translate-core.mjs';
 import { leafNumberOf } from '../lib/split-stage.mjs';
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
@@ -331,7 +331,7 @@ async function main() {
   if (!FRESH) {
     for (const p of [...todo]) {
       const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'translation', model: MODEL, prompt_hash: reuseKeyOf(p), derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) });
-      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; todo.splice(todo.indexOf(p), 1); console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); }
+      if (hit && await reuseInto(OUT, p.id, hit, { translation_hash_at_read: translationHashAtRead(p) })) { reused++; todo.splice(todo.indexOf(p), 1); console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); }
     }
   }
   // Blocks: consecutive runs of one book (a gap in page numbers or a new book starts a run), cut by planBlocks.
@@ -412,7 +412,7 @@ async function main() {
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT, block: group.map((p) => p.page_number), ...(marked && { folio_markers: true }) },
       ...(marked && { folio_block: { pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), reading: markedSplit.reading } }),
     };
-    const pageMeta = (p, i) => ({ ...common, call_position: i + 1, ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, ...(imgMeta.has(p.id) && { images: imgMeta.get(p.id), tool_turns: r.usage?.turns ?? null }) });
+    const pageMeta = (p, i) => ({ ...common, call_position: i + 1, ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, translation_hash_at_read: translationHashAtRead(p), ...(imgMeta.has(p.id) && { images: imgMeta.get(p.id), tool_turns: r.usage?.turns ?? null }) });
     if (r.cls || !texts) {
       if (attempt > 0) group.forEach((p, i) => writePage(p, '', { ...pageMeta(p, i), exit: r.code === null ? -9 : (r.code || 1), error_class: r.cls || 'page_tags_mismatch', stderr_tail: r.err }));
       console.log(`  ${first.book_id} p.${first.page_number}-${lastP.page_number}: ${r.cls || 'translation tags do not match the pages: call refused'} (${Math.round(r.secs)}s)`);
