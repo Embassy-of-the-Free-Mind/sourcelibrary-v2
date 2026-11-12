@@ -46,11 +46,11 @@ export const posts: BlogPost[] = [
     slug: 'sea-road-china-gulf',
     title: 'The Sea Road from China to the Gulf',
     subtitle:
-      'Guangzhou, Quanzhou, Calicut, Siraf and Hormuz in the books of the people who sailed, taxed or charted the route: Arab geographers, a Song customs inspector, Marco Polo, Ibn Battuta, Zheng He’s star charts, the Portuguese and Dutch, and Wei Yuan in 1844.',
+      'Lost fleets, gold thrown into the sea, musk the customs men could smell, and the star chart to Hormuz: stories from the sea route between Guangzhou, Quanzhou, Calicut, Siraf and Hormuz',
     summary:
       'Siraf to Canton by sea: Arab geographers, Zhao Rugua at Quanzhou, Marco Polo, Ibn Battuta’s junks, Zheng He’s star chart to Hormuz and Wei Yuan in 1844.',
     date: '11 November 2026',
-    readTime: '30 min read',
+    readTime: '22 min read',
     kind: 'stories',
     image: '/articles/sea-road-china-gulf/ormus-kaempfer.jpg',
     imageAlt:
