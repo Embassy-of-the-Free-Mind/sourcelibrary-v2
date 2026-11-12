@@ -17,6 +17,7 @@ import briefs from './briefs.json';
 import { inkOrnament } from './ornaments';
 import { deviceSvg } from './device';
 import { DIAGRAMS } from './diagrams';
+import highlights from './highlights.json';
 import { images } from '@/lib/api-client';
 
 const [slug, out] = process.argv.slice(2);
@@ -162,6 +163,11 @@ figcaption { font-size: 0.9em; color: #5d5346; margin-top: 0.45em; text-align: c
 figure.opener { margin: 0 0 1.4em; }
 figure.opener img { max-height: 62vh; }
 figure.plate img { max-height: 92vh; }
+.hl { background-color: #e9e6e1; padding: 0.05em 0.15em; border-radius: 0.15em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+a .hl, .hl a, a .hl a { color: #1a1612; -webkit-text-fill-color: #1a1612; }
+a.nref { font-size: 0.8em; vertical-align: super; line-height: 0; margin-left: 0.1em; color: #9e4a3a; }
+aside.hnote { margin: 1.4em 0 0; padding-top: 0.6em; border-top: 1px solid #c9a86c; }
+aside.hnote p { text-indent: 0; text-align: left; font-size: 0.92em; line-height: 1.4; color: #4a3f33; margin: 0 0 0.6em; }
 .coverpage { margin: 0; padding: 0; text-align: center; }
 .coverpage img { height: 100vh; max-width: 100%; }
 .titlepage { text-align: center; padding-top: 6%; }
@@ -259,6 +265,27 @@ async function opener(html: string, n: number, title: string): Promise<string> {
   return '';
 }
 
+// Lines worth stopping for (highlights.json): a light grey ground and a dagger whose note pops up on tap,
+// as an EPUB footnote; readers without pop-ups show the note at the chapter's end.
+type Highlight = { text: string; note: string; ref?: string };
+let noteN = 0;
+const QUOTES = "(?:'|’|‘|&#x27;|&apos;|&#39;|&#x2019;|&#x2018;)";
+function highlight(body: string): string {
+  const notes: string[] = [];
+  for (const hl of (highlights as unknown as Record<string, Highlight[]>)[slug] ?? []) {
+    const re = new RegExp(hl.text.split('').map((c) => /['’‘]/.test(c) ? QUOTES : /\s/.test(c) ? '\\s+' : c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join(''));
+    if (!re.test(body)) continue;
+    const n = ++noteN;
+    body = body.replace(re, (m) => `<span class="hl">${m}</span><a epub:type="noteref" href="#hn-${n}" id="hr-${n}" class="nref">†</a>`);
+    const more = hl.ref ? ` <a href="readings.xhtml#${anchor(hl.ref)}">See the page.</a>` : '';
+    notes.push(`<aside epub:type="footnote" id="hn-${n}" class="hnote"><p><a href="#hr-${n}">†</a> ${esc(hl.note)}${more}</p></aside>`);
+  }
+  if (!notes.length) return body;
+  // Before the tailpiece, so the ornament still closes the chapter.
+  const tail = body.lastIndexOf('<div class="tailpiece">');
+  return tail >= 0 ? body.slice(0, tail) + notes.join('') + body.slice(tail) : body + notes.join('');
+}
+
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV'];
 // The house ornaments (ornaments.json), inked: initials in rust as early printers rubricated capitals, the
 // headpiece, tailpiece and printer's device in ink. The e-ink edition inks them black.
@@ -309,7 +336,7 @@ for (const [i, html] of parts.entries()) {
   const body = h
     ? `${numbered ? ornamentHead : ''}${numbered ? `<p class="chapnum">${ROMAN[i - 1] ?? i}</p>` : ''}${h[1]}${pic}${numbered ? await firstPara(h[3]) : h[3]}${numbered ? ornamentTail : ''}`
     : `${ornamentHead}<h1>${esc(displayTitle)}</h1>${pic}${await firstPara(html)}${ornamentTail}`;
-  essayChapters.push({ title, filename: `essay-${String(i).padStart(2, '0')}.xhtml`, content: body });
+  essayChapters.push({ title, filename: `essay-${String(i).padStart(2, '0')}.xhtml`, content: highlight(body) });
 }
 
 
