@@ -11,7 +11,7 @@ const MEANS: [string, string][] = [
   ['Keep as a collection', 'everything that is not a standard subject or type: a set someone chose, like Music of the Spheres'],
   ['Make it a type of picture', 'only when it matches a standard type (Getty or Library of Congress), like Maps or Portraits'],
   ['Fold into another', 'it covers the same ground as another grouping (shown under “Joins”): its pictures move there and its address redirects'],
-  ['Turn into a filter', 'no page of its own, just a filter in the Library, such as one library’s books'],
+  ['Turn into a filter', 'no page of its own, just a filter: a place (East Asia), a period, or one library’s books'],
   ['Keep as a historic library', 'the books of a real past library, like Jung’s'],
   ['Keep hidden', 'out of lists and search, but its address still works for anyone with the link'],
   ['Remove it', 'empty, a duplicate, or not a real grouping'],
@@ -60,7 +60,7 @@ export default function ReviewTable({ records }: { records: Rec[] }) {
                 <td className="py-2 pr-4 min-w-[220px]"><span className="text-primary">{r.name}</span>{r.flag === 'suggest_remove' && <span className="ml-2 inline-block px-1.5 py-0.5 text-[11px] uppercase tracking-wide bg-[#9e4a3a] text-white align-middle">Suggest remove</span>}<span className="block text-[12px] text-muted">{r.source === 'gallery' ? 'Gallery set' : r.kind || 'No kind'}</span></td>
                 <td className="py-2 pr-4 whitespace-nowrap text-muted">{r.books != null ? `${r.books.toLocaleString('en-GB')} books` : ''}{r.images ? ` ${r.images.toLocaleString('en-GB')} images` : ''}</td>
                 <td className="py-2 pr-4"><select aria-label={`Type for ${r.name}`} value={edits[key(r)] || r.proposed} onChange={(e) => change(r, e.target.value)} className="border border-border-light bg-white px-1 py-0.5 text-base">{TYPES.map((t) => <option key={t} value={t}>{LABEL[t]}</option>)}</select>{!edits[key(r)] && r.confidence !== 'high' && <button type="button" onClick={() => change(r, r.proposed)} className="ml-2 h-7 px-2.5 bg-primary text-cream text-[12.5px]" title="The suggestion is right">Right</button>}{r.confidence !== 'high' && <span className="block text-[12px] text-muted">{r.confidence} confidence</span>}</td>
-                <td className="py-2 pr-4 text-muted">{['merge', 'subject', 'type'].includes(edits[key(r)] || r.proposed) ? (r.merge_into || r.proposed_subject) : ''}</td>
+                <td className="py-2 pr-4 text-muted">{['merge', 'subject', 'type', 'library_slice'].includes(edits[key(r)] || r.proposed) ? (r.merge_into || r.proposed_subject) : ''}</td>
                 <td className="py-2 text-secondary min-w-[260px]">{r.reason}</td>
               </tr>
             ))}

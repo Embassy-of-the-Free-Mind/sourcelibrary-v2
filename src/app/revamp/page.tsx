@@ -176,6 +176,7 @@ export default function Page() {
             <li>One catalogue round, all together: write the missing summaries first (26,595 books have text but no summary); record each text&apos;s form (scroll, tablet, papyrus…); tag kinds of writing and sub-subjects; give each picture all three answers (what it shows, how it was made, where it sits) and add title pages, initials, bookplates and musical scores; give subject pictures a proper home.</li>
             <li>In the same round, split the close matches into exact ones: Poetry, Drama and Fiction apart; Recipes as its own type, out of Handbook or manual.</li>
             <li>After it: publish each type&apos;s standard term in the book and picture pages&apos; hidden data (schema.org genre, linking LCGFT, Getty and Wikidata), so search engines and other libraries read it exactly.</li>
+            <li>Places as a way in, like Centuries and Languages: where a text comes from, named after a standard (Getty’s place names, FAST or Wikidata), with where the copy was printed as a filter. Groupings that are only a region (East Asia, South Asia, Americas, Middle East &amp; Africa) become place filters. Needs place recorded in the catalogue round.</li>
             <li>Subjects that grow: new books get subjects from the list automatically, and counts update. When new books point to a FAST heading we have no subject for, it becomes a proposed subject; it goes public once it holds a minimum number of works and images (10 suggested, a setting) and someone has checked the name.</li>
           </ol>
         </div>

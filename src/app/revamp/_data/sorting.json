@@ -205,13 +205,14 @@
    "books": 88,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "high",
-   "reason": "Matches the standard subject Indigenous traditions (FAST or Wikidata).",
+   "confidence": "medium",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (The Americas). Its books keep their real subjects.",
    "first_pass": "subject",
    "subject_term": "Indigenous traditions",
-   "merge_into": "Indigenous traditions"
+   "merge_into": "Place: The Americas",
+   "flag": "place"
   },
   {
    "source": "collection",
@@ -553,9 +554,11 @@
    "proposed": "library_slice",
    "proposed_subject": null,
    "confidence": "medium",
-   "reason": "History plus a region. Too broad for a term; a place is a filter.",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (Asia). Its books keep their real subjects.",
    "first_pass": "subject",
-   "subject_term": null
+   "subject_term": null,
+   "flag": "place",
+   "merge_into": "Place: Asia"
   },
   {
    "source": "collection",
@@ -1673,13 +1676,14 @@
    "books": 792,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "high",
-   "reason": "Matches the standard subject East Asian religion and thought (FAST or Wikidata).",
+   "confidence": "medium",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (East Asia). Its books keep their real subjects.",
    "first_pass": "subject",
    "subject_term": "East Asian religion and thought",
-   "merge_into": "East Asian religion and thought"
+   "merge_into": "Place: East Asia",
+   "flag": "place"
   },
   {
    "source": "collection",
@@ -3413,9 +3417,11 @@
    "proposed": "library_slice",
    "proposed_subject": null,
    "confidence": "medium",
-   "reason": "A region covering 275 books across many subjects. A place is a filter.",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (Middle East; Africa). Its books keep their real subjects.",
    "first_pass": "subject",
-   "subject_term": null
+   "subject_term": null,
+   "flag": "place",
+   "merge_into": "Place: Middle East; Africa"
   },
   {
    "source": "collection",
@@ -4981,13 +4987,14 @@
    "books": 521,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "high",
-   "reason": "Matches the standard subject Indian religions (FAST or Wikidata).",
+   "confidence": "medium",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (South Asia). Its books keep their real subjects.",
    "first_pass": "subject",
    "subject_term": "Indian religions",
-   "merge_into": "Indian religions"
+   "merge_into": "Place: South Asia",
+   "flag": "place"
   },
   {
    "source": "collection",
@@ -5688,13 +5695,14 @@
    "books": 47,
    "images": null,
    "artworks": 1,
-   "proposed": "subject",
+   "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "high",
-   "reason": "Matches the standard subject Religion and mysticism (FAST or Wikidata).",
+   "confidence": "medium",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter ((every place outside Europe)). Its books keep their real subjects.",
    "first_pass": "subject",
    "subject_term": "Religion and mysticism",
-   "merge_into": "Religion and mysticism"
+   "merge_into": "Place: (every place outside Europe)",
+   "flag": "place"
   },
   {
    "source": "collection",
