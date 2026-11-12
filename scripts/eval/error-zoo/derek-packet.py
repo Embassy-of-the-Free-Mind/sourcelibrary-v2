@@ -38,6 +38,9 @@ for p in ids:
             hit = next((s for s in spans if s['_key'] == key or (q and s['pane'] == pane and len(norm(q)) >= 6 and (norm(q) in norm(s['quote']) or norm(s['quote']) in norm(q)) and s['quote'])), None)
             if hit: hit['_readers'].add(reader); continue
             spans.append(dict(_key=key, _readers={reader}, pane=pane, quote=q[:300], should=(should or '')[:300], problem=(e.get('problem') or e.get('note') or '')[:500], severity=SEV.get(e.get('severity'), 'major')))
+    # Minor marks are not counted in any rate under the rubric, and showing them doubles the sitting: critical and
+    # major only. Derek can still add any error, of any severity, the readers missed.
+    spans = [s for s in spans if s['severity'] != 'minor']
     for s in spans:
         s['id'] = hashlib.sha1(f"{p}|{s['pane']}|{s['quote']}|{s['problem']}".encode()).hexdigest()[:10]
         provenance[f"{p}:{s['id']}"] = sorted(s.pop('_readers')); s.pop('_key')
