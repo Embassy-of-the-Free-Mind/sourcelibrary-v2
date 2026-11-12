@@ -437,7 +437,7 @@ const epub = await new EPub({
     title: 'In brief', filename: 'brief.xhtml', beforeToc: true,
     content: `<h2>In brief</h2><p class="tldr">${esc(brief.tldr)}</p><p class="summary">${esc(brief.summary)}</p>${briefChapters ? `<div class="chapters">${briefChapters}</div>` : ''}`,
   }] : []),
-  ...mapPages.map((m, k) => ({ title: k ? 'Map: who sailed it' : 'Map', filename: `map-${k}.xhtml`, beforeToc: true, excludeFromToc: k > 0, content: m })),
+  ...mapPages.map((m, k) => ({ title: k ? `Map: ${(MAPS[slug] ?? [])[k]?.title ?? ''}` : 'Map', filename: `map-${k}.xhtml`, beforeToc: true, excludeFromToc: k > 0, content: m })),
   ...(people.length ? [{ title: 'The cast', filename: 'cast.xhtml', beforeToc: true, content: `<h2>The cast</h2><p class="intro">In order of appearance.</p>${people.join('')}` }] : []),
   ...essayChapters,
   {

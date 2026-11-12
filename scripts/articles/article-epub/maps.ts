@@ -4,12 +4,13 @@
 import land from './land.json';
 
 type LonLat = [number, number];
-export type Port = { name: string; at: LonLat; note?: string; dx?: number; dy?: number; anchor?: 'start' | 'end' | 'middle'; major?: boolean };
+export type Port = { name: string; at: LonLat; note?: string; dx?: number; dy?: number; anchor?: 'start' | 'end' | 'middle'; major?: boolean;
+  /** A stone circle (a ring of stones), filled when this book names it. */ circle?: 'named' | 'other' };
 export type Route = { pts: LonLat[]; label?: string; labelAt?: number; colour?: 'rust' | 'ink' | 'gold' | 'sage'; dash?: string; width?: number };
 export type MapSpec = {
   title: string; sub: string; bbox: [number, number, number, number]; // lon0, lat0, lon1, lat1
   ports: Port[]; routes: Route[]; seas?: { name: string; at: LonLat; size?: number; rotate?: number }[];
-  legend?: { label: string; colour: Route['colour']; dash?: string }[]; credit: string;
+  legend?: { label: string; colour: Route['colour']; dash?: string; circle?: 'named' | 'other' }[]; credit: string;
   rose?: LonLat; legendAt?: 'bl' | 'br';
 };
 
@@ -64,14 +65,23 @@ export function mapSvg(spec: MapSpec, bw: boolean): string {
   const ports = spec.ports.map((p) => {
     const [x, y] = P(p.at), dx = p.dx ?? 14, dy = p.dy ?? -10, a = p.anchor ?? 'start';
     const halo = `stroke="${C.paper}" stroke-width="7" paint-order="stroke"`;
-    return `<circle cx="${x}" cy="${y}" r="${p.major ? 10 : 7}" fill="${p.major ? C.ink : C.paper}" stroke="${C.ink}" stroke-width="3"/>`
+    const mark = p.circle
+      ? Array.from({ length: 9 }, (_, k) => { const t = k / 9 * 2 * Math.PI; return `<circle cx="${(x + Math.cos(t) * 15).toFixed(1)}" cy="${(y + Math.sin(t) * 15).toFixed(1)}" r="4.8" fill="${p.circle === 'named' ? C.rust : C.paper}" stroke="${C.ink}" stroke-width="1.6"/>`; }).join('')
+      : `<circle cx="${x}" cy="${y}" r="${p.major ? 10 : 7}" fill="${p.major ? C.ink : C.paper}" stroke="${C.ink}" stroke-width="3"/>`;
+    return mark
       + `<text x="${x + dx}" y="${y + dy}" text-anchor="${a}" ${FONT} font-size="${p.major ? 32 : 28}" fill="${C.ink}" ${halo}>${esc(p.name)}</text>`
       + (p.note ? `<text x="${x + dx}" y="${y + dy + 28}" text-anchor="${a}" ${FONT} font-size="22" font-style="italic" fill="${C.ink}" ${halo}>${esc(p.note)}</text>` : '');
   }).join('');
   const legend = spec.legend?.length ? (() => {
     const lx = spec.legendAt === 'br' ? W - M - 560 : M + 30, ly = oy + (my1 - my0) * ky - 30 - spec.legend!.length * 38 + 20;
     return `<rect x="${lx - 18}" y="${ly - 40}" width="560" height="${spec.legend!.length * 38 + 34}" fill="${C.paper}" stroke="${C.ink}" stroke-width="2"/>`
-      + spec.legend!.map((l, i) => `<line x1="${lx}" y1="${ly + i * 38 - 8}" x2="${lx + 70}" y2="${ly + i * 38 - 8}" stroke="${col(l.colour)}" stroke-width="5" stroke-dasharray="${l.dash ?? '16 10'}"/><text x="${lx + 90}" y="${ly + i * 38}" ${FONT} font-size="25" fill="${C.ink}">${esc(l.label)}</text>`).join('');
+      + spec.legend!.map((l, i) => {
+        const yy = ly + i * 38 - 8;
+        const key = l.circle
+          ? Array.from({ length: 9 }, (_, k) => { const t = k / 9 * 2 * Math.PI; return `<circle cx="${(lx + 35 + Math.cos(t) * 13).toFixed(1)}" cy="${(yy + Math.sin(t) * 13).toFixed(1)}" r="4.2" fill="${l.circle === 'named' ? C.rust : C.paper}" stroke="${C.ink}" stroke-width="1.6"/>`; }).join('')
+          : `<line x1="${lx}" y1="${yy}" x2="${lx + 70}" y2="${yy}" stroke="${col(l.colour)}" stroke-width="5" stroke-dasharray="${l.dash ?? '16 10'}"/>`;
+        return `${key}<text x="${lx + 90}" y="${ly + i * 38}" ${FONT} font-size="25" fill="${C.ink}">${esc(l.label)}</text>`;
+      }).join('');
   })() : '';
   const [rx, ry] = spec.rose ? P(spec.rose) : [W - M - 110, TOP + 120];
   const rose = [0, 90, 180, 270].map((a) => {
@@ -156,19 +166,38 @@ export const MAPS: Record<string, MapSpec[]> = {
       seas: [{ name: 'Ocean', at: [-8, 54], size: 30, rotate: -80 }, { name: 'Cronian Sea?', at: [4, 67.5], size: 26 }, { name: 'Baltic', at: [19.5, 57.5], size: 24, rotate: -50 }, { name: 'Black Sea', at: [34, 43.2], size: 24 }],
       routes: [
         { pts: [[20.3, 54.9], [19, 52], [17.5, 49.5], [15.5, 47.5], [13.5, 46.2], [12.4, 44.95], [15, 41.5], [18.5, 39.8], [21.5, 38.3], [24, 37.8], [25.27, 37.4]], colour: 'gold' },
-        { pts: [[5.37, 43.3], [3, 41], [-1, 36.5], [-7, 36.6], [-9.5, 39.5], [-9.6, 43.5], [-5.5, 48], [-5.8, 50], [-4.5, 51.6], [-6.5, 55.5], [-4, 59], [-4, 63]], colour: 'rust' },
+        { pts: [[5.37, 43.3], [3, 41], [-1, 36.5], [-7, 36.6], [-9.5, 39.5], [-9.6, 43.5], [-5.5, 48], [-6.1, 49.8], [-6.0, 51.8], [-5.3, 53.4], [-5.6, 55.1], [-7.4, 56.8], [-5.4, 58.75], [-3.0, 59.35], [-4, 63]], colour: 'rust' },
         { pts: [[25.27, 37.4], [26.5, 40.3], [29, 41.2], [33, 44.6], [38, 47], [45, 49.5], [52, 51.8], [58.5, 54]], colour: 'sage', dash: '4 10' },
       ],
       ports: [
         { name: 'Delos', at: [25.27, 37.4], major: true, dy: 34 }, { name: 'Delphi', at: [22.5, 38.48], dx: -14, anchor: 'end' },
         { name: 'Samland', at: [20.3, 54.9], major: true, note: 'the amber coast', dx: 14 }, { name: 'Eridanus? (the Po)', at: [12.4, 44.95], dx: -14, anchor: 'end' },
-        { name: 'Massalia', at: [5.37, 43.3], dy: 30 }, { name: 'Stonehenge', at: [-1.83, 51.18], dx: 14, dy: 10 },
+        { name: 'Massalia', at: [5.37, 43.3], dy: 30 }, { name: 'Stonehenge', at: [-1.83, 51.18], dx: 22, dy: 10, circle: 'named' }, { name: 'Callanish', at: [-6.75, 58.2], dx: 22, dy: -12, circle: 'named' },
         { name: 'Thule?', at: [-4, 63], dx: 14, note: 'six days’ sail north of Britain' }, { name: 'Scythians', at: [34, 47.5], dx: 14 },
         { name: 'Issedones', at: [58.5, 54], dx: -14, anchor: 'end', dy: -16 }, { name: 'Toruń', at: [18.6, 53.0], dx: 14, dy: 12 },
         { name: 'Uppsala', at: [17.64, 59.86], dx: 14, note: 'Rudbeck’s Atlantica' },
       ],
-      legend: [{ label: 'Amber, south to the Greeks', colour: 'gold' }, { label: 'Pytheas’s voyage to Thule', colour: 'rust' }, { label: 'Aristeas’s road north-east', colour: 'sage', dash: '4 10' }],
+      legend: [{ label: 'Amber, south to the Greeks', colour: 'gold' }, { label: 'Pytheas’s voyage to Thule', colour: 'rust' }, { label: 'Aristeas’s road north-east', colour: 'sage', dash: '4 10' }, { label: 'Stone circle named in this book', colour: 'rust', circle: 'named' }],
       credit: 'Places as the book names them; "?" where the sources are uncertain. Coastlines: Natural Earth.',
+    },
+    {
+      // Hecataeus's island "opposite the land of the Celts" with its round temple: the circles this book's
+      // writers proposed (filled), and the other great circles of Britain, Ireland and Brittany (open).
+      title: 'The Round Temple?', sub: 'stone circles of the islands opposite the Celts', bbox: [-11, 47, 3, 60.6], rose: [1.2, 58.6], legendAt: 'bl',
+      seas: [{ name: 'Ocean', at: [-8.6, 50.4], size: 30 }, { name: 'German Sea', at: [1.8, 55.5], size: 24, rotate: -70 }, { name: 'Irish Sea', at: [-4.9, 53.8], size: 20, rotate: -60 }],
+      routes: [{ pts: [[-5.5, 48], [-6.1, 49.8], [-6.0, 51.8], [-5.3, 53.4], [-5.6, 55.1], [-7.4, 56.8], [-5.4, 58.75], [-3.0, 59.35], [-2.6, 60.4]], colour: 'rust' }],
+      ports: [
+        { name: 'Stonehenge', at: [-1.826, 51.179], circle: 'named', dx: 22, dy: 30, note: 'Stukeley, Smith, Wood' },
+        { name: 'Avebury', at: [-1.854, 51.429], circle: 'other', dx: 22, dy: -6 },
+        { name: 'Boscawen-Un and Borlase’s Cornish circles', at: [-5.619, 50.09], circle: 'named', dx: 22, dy: 8 },
+        { name: 'Callanish', at: [-6.745, 58.198], circle: 'named', dx: 22, dy: 8, note: 'Toland’s candidate' },
+        { name: 'Ring of Brodgar', at: [-3.23, 59.0], circle: 'other', dx: -22, anchor: 'end', dy: 8 },
+        { name: 'Castlerigg', at: [-3.098, 54.603], circle: 'other', dx: 22, dy: 8 },
+        { name: 'Drombeg', at: [-9.087, 51.565], circle: 'other', dx: 22, dy: 8 },
+        { name: 'Carnac (stone rows)', at: [-3.077, 47.584], circle: 'other', dx: 22, dy: 8 },
+      ],
+      legend: [{ label: 'Proposed by writers in this book', colour: 'rust', circle: 'named' }, { label: 'Other great stone monuments', colour: 'ink', circle: 'other' }, { label: 'Pytheas’s course north', colour: 'rust' }],
+      credit: 'Monument positions from standard gazetteers; the essay names Stonehenge, Callanish and Borlase’s circles. Coastlines: Natural Earth.',
     },
   ],
 };
