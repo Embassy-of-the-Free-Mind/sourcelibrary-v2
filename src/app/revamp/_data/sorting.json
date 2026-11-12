@@ -207,12 +207,13 @@
    "artworks": 0,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (The Americas). Its books keep their real subjects.",
+   "confidence": "high",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (The Americas). Its books keep their real subjects. Waits for the Place filter: stays as it is until then.",
    "first_pass": "subject",
    "subject_term": "Indigenous traditions",
    "merge_into": "Place: The Americas",
-   "flag": "place"
+   "flag": "place",
+   "status": "waiting_for_place"
   },
   {
    "source": "collection",
@@ -553,12 +554,13 @@
    "artworks": 0,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (Asia). Its books keep their real subjects.",
+   "confidence": "high",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (Asia). Its books keep their real subjects. Waits for the Place filter: stays as it is until then.",
    "first_pass": "subject",
    "subject_term": null,
    "flag": "place",
-   "merge_into": "Place: Asia"
+   "merge_into": "Place: Asia",
+   "status": "waiting_for_place"
   },
   {
    "source": "collection",
@@ -1288,10 +1290,11 @@
    "artworks": 1,
    "proposed": "retire",
    "proposed_subject": "Mysticism",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest removing: it lists only 1 book, so there is nothing to collect yet.",
    "first_pass": "collection",
-   "flag": "suggest_remove"
+   "flag": "suggest_remove",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -1488,10 +1491,11 @@
    "artworks": 0,
    "proposed": "collection",
    "proposed_subject": "Buddhism",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Small, but a real chosen set that nothing else covers. Suggest keeping it as a collection. One printed canon in volumes, which is neither a Subject nor a holder.",
    "first_pass": "collection",
-   "flag": "suggest_keep"
+   "flag": "suggest_keep",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -1662,10 +1666,11 @@
    "artworks": 0,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Medicine plus a date range. A period is a filter, not a subject.",
    "first_pass": "subject",
-   "subject_term": null
+   "subject_term": null,
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -1678,12 +1683,13 @@
    "artworks": 0,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (East Asia). Its books keep their real subjects.",
+   "confidence": "high",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (East Asia). Its books keep their real subjects. Waits for the Place filter: stays as it is until then.",
    "first_pass": "subject",
    "subject_term": "East Asian religion and thought",
    "merge_into": "Place: East Asia",
-   "flag": "place"
+   "flag": "place",
+   "status": "waiting_for_place"
   },
   {
    "source": "collection",
@@ -2337,9 +2343,10 @@
    "artworks": 0,
    "proposed": "historic_library",
    "proposed_subject": "Classical Philosophy",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "The surviving scrolls of the Villa of the Papyri, so one real ancient library. Not named in the plan.",
-   "first_pass": "historic_library"
+   "first_pass": "historic_library",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -3416,12 +3423,13 @@
    "artworks": 25,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (Middle East; Africa). Its books keep their real subjects.",
+   "confidence": "high",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (Middle East; Africa). Its books keep their real subjects. Waits for the Place filter: stays as it is until then.",
    "first_pass": "subject",
    "subject_term": null,
    "flag": "place",
-   "merge_into": "Place: Middle East; Africa"
+   "merge_into": "Place: Middle East; Africa",
+   "status": "waiting_for_place"
   },
   {
    "source": "collection",
@@ -3603,10 +3611,11 @@
    "artworks": 0,
    "proposed": "collection",
    "proposed_subject": "Buddhism",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Small, but a real chosen set that nothing else covers. Suggest keeping it as a collection. A small chosen set of Sanskrit sources behind the Tibetan canon.",
    "first_pass": "collection",
-   "flag": "suggest_keep"
+   "flag": "suggest_keep",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -3852,11 +3861,12 @@
    "artworks": 0,
    "proposed": "merge",
    "proposed_subject": "Sacred Texts",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest folding into Ancient Papyri as a chapter: too small on its own, and it is part of that set.",
    "first_pass": "collection",
    "merge_into": "Ancient Papyri",
-   "flag": "suggest_fold"
+   "flag": "suggest_fold",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -3869,11 +3879,12 @@
    "artworks": 0,
    "proposed": "merge",
    "proposed_subject": "Sacred Texts",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest folding into Ancient Papyri as a chapter: too small on its own, and it is part of that set.",
    "first_pass": "collection",
    "merge_into": "Ancient Papyri",
-   "flag": "suggest_fold"
+   "flag": "suggest_fold",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -3886,11 +3897,12 @@
    "artworks": 0,
    "proposed": "merge",
    "proposed_subject": "Sacred Texts",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest folding into Ancient Papyri as a chapter: too small on its own, and it is part of that set.",
    "first_pass": "collection",
    "merge_into": "Ancient Papyri",
-   "flag": "suggest_fold"
+   "flag": "suggest_fold",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -3903,11 +3915,12 @@
    "artworks": 0,
    "proposed": "merge",
    "proposed_subject": "Sacred Texts",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest folding into Ancient Papyri as a chapter: too small on its own, and it is part of that set.",
    "first_pass": "collection",
    "merge_into": "Ancient Papyri",
-   "flag": "suggest_fold"
+   "flag": "suggest_fold",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -3920,11 +3933,12 @@
    "artworks": 0,
    "proposed": "merge",
    "proposed_subject": "Sacred Texts",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest folding into Ancient Papyri as a chapter: too small on its own, and it is part of that set.",
    "first_pass": "collection",
    "merge_into": "Ancient Papyri",
-   "flag": "suggest_fold"
+   "flag": "suggest_fold",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -4303,10 +4317,11 @@
    "artworks": 0,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Architecture plus a date range. A period is a filter, not a subject.",
    "first_pass": "subject",
-   "subject_term": null
+   "subject_term": null,
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -4597,10 +4612,11 @@
    "artworks": 0,
    "proposed": "retire",
    "proposed_subject": "Mysticism",
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Suggest removing: three works by one author, which the author’s own page already lists.",
    "first_pass": "collection",
-   "flag": "suggest_remove"
+   "flag": "suggest_remove",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -4906,11 +4922,12 @@
    "artworks": 0,
    "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
+   "confidence": "high",
    "reason": "Small, but a real chosen set that nothing else covers. Suggest keeping it as a collection. Defined by a translation project, not a field. A collection.",
    "first_pass": "subject",
    "subject_term": null,
-   "flag": "suggest_keep"
+   "flag": "suggest_keep",
+   "status": "agreed_2026-11-13"
   },
   {
    "source": "collection",
@@ -4989,12 +5006,13 @@
    "artworks": 0,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (South Asia). Its books keep their real subjects.",
+   "confidence": "high",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter (South Asia). Its books keep their real subjects. Waits for the Place filter: stays as it is until then.",
    "first_pass": "subject",
    "subject_term": "Indian religions",
    "merge_into": "Place: South Asia",
-   "flag": "place"
+   "flag": "place",
+   "status": "waiting_for_place"
   },
   {
    "source": "collection",
@@ -5697,12 +5715,13 @@
    "artworks": 1,
    "proposed": "library_slice",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter ((every place outside Europe)). Its books keep their real subjects.",
+   "confidence": "high",
+   "reason": "Only a region, not a field: with Place as a way in, it becomes the Place filter ((every place outside Europe)). Its books keep their real subjects. Waits for the Place filter: stays as it is until then.",
    "first_pass": "subject",
    "subject_term": "Religion and mysticism",
    "merge_into": "Place: (every place outside Europe)",
-   "flag": "place"
+   "flag": "place",
+   "status": "waiting_for_place"
   },
   {
    "source": "collection",
