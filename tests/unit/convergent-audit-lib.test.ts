@@ -94,7 +94,7 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     let out: string, status = 0;
     try {
       out = execFileSync('bash', [join(repo, 'scripts/audit/convergent-audit-weekly.sh'), '2099-01-05'], {
-        encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', ...env },
+        encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', AUDIT_LOOP: '0', ...env },
       });
     } catch (e) { const err = e as { stdout: string; status: number }; out = err.stdout; status = err.status; }
     return { out, status, calls: readFileSync(log, 'utf8').trim().split('\n') };
@@ -135,6 +135,16 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
   it('the scheduled round draws 40 random + 40 risk top decile; a spare round keeps the uniform draw (#6420 decision 5)', () => {
     expect(run(0).calls[0]).toContain('--books 40 --written 0 --risk 40');
     expect(run(0, { AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls[0]).not.toContain('--risk');
+  });
+  it('the scheduled round then runs the weekly loop (#8632): ledger, repair queue, digest posted on #8632; a spare round does not', () => {
+    const { calls } = run(0, { AUDIT_LOOP: '1' });
+    const i = calls.findIndex((c) => c.includes('convergent-audit-weekly.mjs score --run'));
+    const after = calls.slice(i + 1);
+    expect(after[0]).toContain('error-zoo/labels.mjs');
+    expect(after[1]).toContain('error-zoo/repair-queue.mjs');
+    expect(after[2]).toContain('error-zoo/loop-week.mjs');
+    expect(after[2]).toContain('--post 8632');
+    expect(run(0, { AUDIT_LOOP: '1', AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls.some((c) => c.includes('loop-week'))).toBe(false);
   });
   it('a date argument finishes that run instead of starting today', () => {
     expect(run(0).calls.at(-1)).toContain('base/2099-01-05');

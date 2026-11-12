@@ -80,4 +80,14 @@ done
 [ "$rc" -eq 0 ] || echo "$(date -u +%FT%TZ) Gemini reader ended with exit $rc"
 node scripts/eval/second-reader/second-reader.mjs cli-assemble --run "$RUN" --reader gemini37
 node scripts/audit/convergent-audit-weekly.mjs score --run "$RUN" $([ "${AUDIT_POST:-1}" = 1 ] && echo --post)
+# The weekly loop (#8632), scheduled rounds only: rebuild the label ledger and the repair queue (read-only, Node), then
+# the digest: what the audits found against the four weeks before, whether the risk stratum earned its place, and
+# where flagged pages stand. Posted on #8632 when the round posts. A failure here never fails the audit.
+if [ "${AUDIT_OPUS_ONLY:-0}" != 1 ] && [ "${AUDIT_LOOP:-1}" = 1 ]; then
+  LOOP="$BASE/loop/$(basename "$RUN")"; mkdir -p "$LOOP"
+  node --env-file="$ENV" scripts/eval/error-zoo/labels.mjs "$LOOP" --spare-audit "$BASE" \
+    && node --env-file="$ENV" scripts/eval/error-zoo/repair-queue.mjs --labels="$LOOP/labels.jsonl" --out="$LOOP/repair-queue.json" \
+    && node scripts/eval/error-zoo/loop-week.mjs --base "$BASE" --queue "$LOOP/repair-queue.json" --out "$LOOP/digest.md" $([ "${AUDIT_POST:-1}" = 1 ] && echo --post 8632) \
+    || echo "$(date -u +%FT%TZ) weekly loop step failed (the audit itself is done)"
+fi
 echo "== $(date -u +%FT%TZ) done"
