@@ -243,7 +243,9 @@ A reader gets an email invitation for a group meeting and follows the link.
 
 ### Design references
 
-Recipe: Gather's interaction model + WorkAdventure's open-source engine and Tiled maps + the philosopher's-library art. A cozy reading room, not a virtual office. Full moodboard: https://claude.ai/artifact/Nzgjo5sAHmGLwMmsGgbRGN
+The space is the Embassy of the Free Mind — the House with the Heads, Keizersgracht 123, Amsterdam — drawn in 16-bit. Gather's interaction model and WorkAdventure's engine and Tiled maps supply the mechanics; the house supplies the place. A cozy reading room, not a virtual office.
+
+First sketch of the floor plan (to be corrected by Derek): stoop under the six heads = arrival and character choice; front hall = lobby; Ritman Library reading room = Hermetica & Alchemy; upper salon = Platonists' Circle; a room with antiquities = Ancient Worlds; study at the top = Translators' Room; back garden = Círculo en español and open-air events; canal windows show the Keizersgracht by time of day. Full moodboard: https://claude.ai/artifact/Nzgjo5sAHmGLwMmsGgbRGN
 
 | Journey | Reference |
 | --- | --- |
@@ -253,7 +255,7 @@ Recipe: Gather's interaction model + WorkAdventure's open-source engine and Tile
 | J9 phone | [Apple HIG](https://developer.apple.com/design/human-interface-guidelines/): tap-to-walk, safe areas |
 | J11 moderation | Club Penguin / Habbo safe chat, Discord roles |
 | J12 accessibility | Gather's list view, [WCAG 2.2](https://www.w3.org/TR/WCAG22/) |
-| Look | Philosopher's library sprites; Eastward and Sea of Stars interiors; the Embassy of the Free Mind reading room and Wren Library alcoves (one alcove per group) |
+| Look | The House with the Heads itself (photos of the real rooms, with the Embassy's permission); philosopher's-library sprites; Eastward and Sea of Stars for lit pixel interiors |
 
 ## 7. Open questions for Derek
 
