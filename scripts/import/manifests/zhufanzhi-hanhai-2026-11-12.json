@@ -1,0 +1,14 @@
+{
+ "campaign": "zhufanzhi-hanhai-2026-11-12",
+ "collections": [],
+ "BOOKS": [
+  {
+   "id": "zhufanzhi00zhao",
+   "title": "諸蕃志 (Zhufan zhi, Records of the Foreign Peoples, Hanhai edition)",
+   "author": "趙汝适 (Zhao Rugua)",
+   "year": 1776,
+   "lang": "Chinese",
+   "note": "Original-language edition for the article 'The Sea Road from China to the Gulf', which quoted only Hirth & Rockhill's 1911 English translation (description-of-foreign-peoples-rugua). 函海 edition: 宋 趙汝适 撰, 綿州 李調元 (雨村) 校; 2 juan (卷上 志國, 卷下 志物), [42,22] double leaves. University of Toronto Cheng Yu Tung East Asian Library HF408 .C49 1776, IA scan 2025. Imprint year from the Toronto catalogue (1776); the 函海 collectanea itself is usually dated 1782, verify against the colophon. Text runs about image n8 (卷上 first leaf) to n135 (諸蕃志卷下畢); n0-7 and n136-141 are covers, blanks and colour card."
+  }
+ ]
+}
