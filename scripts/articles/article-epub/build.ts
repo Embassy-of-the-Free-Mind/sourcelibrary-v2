@@ -178,6 +178,10 @@ figure.map img { max-height: 96vh; max-width: 100%; }
 .person .when { color: #9e7c3c; margin: 0 0 0.2em; }
 .person .line { margin: 0; line-height: 1.4; }
 .person .pic { font-size: 0.9em; color: #6b5d4b; margin: 0.25em 0 0; }
+.context { margin: 1.5em 0; padding: 0.9em 1.1em; background: #efede8; border-top: 2px solid #9e7c3c; page-break-inside: avoid; }
+.context p { text-indent: 0; text-align: left; font-size: 0.95em; line-height: 1.45; margin: 0 0 0.5em; color: #3d352b; }
+.context .ctx-label { font-variant-caps: all-small-caps; letter-spacing: 0.2em; color: #9e7c3c; margin: 0 0 0.1em; font-size: 0.9em; }
+.context .ctx-title { font-size: 1.05em; color: #9e4a3a; margin: 0 0 0.4em; }
 .hl { background-color: #e9e6e1; padding: 0.05em 0.15em; border-radius: 0.15em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 a .hl, .hl a, a .hl a { color: #1a1612; -webkit-text-fill-color: #1a1612; }
 a.nref { font-size: 0.8em; vertical-align: super; line-height: 0; margin-left: 0.1em; color: #9e4a3a; }

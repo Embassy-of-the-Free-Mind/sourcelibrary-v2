@@ -9,7 +9,7 @@ OUT="${OUT:-$WORK/$SLUG.epub}"
 ESB="$ROOT/node_modules/.bin/esbuild"
 alias_args=(--alias:next/link="$HERE/mocks/Link.jsx" --alias:@/components/layout/ContentPageLayout="$HERE/mocks/Layout.jsx"
   --alias:@/components/articles/SourceQuote="$HERE/mocks/SourceQuote.jsx" --alias:@/components/articles/PageFigure="$HERE/mocks/PageFigure.jsx"
-  --alias:@/lib/article-metadata="$HERE/mocks/Empty.jsx")
+  --alias:@/lib/article-metadata="$HERE/mocks/Empty.jsx" --alias:@/components/articles/ContextNote="$HERE/mocks/ContextNote.jsx")
 banner="import{createRequire}from'module';const require=createRequire('$ROOT/package.json');globalThis.__repoRequire=require;"
 
 sed "s#__PAGE__#$ROOT/src/app/articles/$SLUG/page.tsx#" "$HERE/render.jsx" > "$WORK/render.jsx"
