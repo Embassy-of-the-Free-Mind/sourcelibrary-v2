@@ -1,0 +1,408 @@
+{
+ "set": "set",
+ "audited": 35,
+ "writes": 35,
+ "read": {
+  "opus": 35,
+  "gemini": 34
+ },
+ "writes_worse": {
+  "opus": 0,
+  "gemini": 10
+ },
+ "writes_better": {
+  "opus": 34,
+  "gemini": 24
+ },
+ "writes_same": {
+  "opus": 1,
+  "gemini": 0
+ },
+ "gate": "STOP",
+ "rows": [
+  {
+   "page_id": "69f71e22be92de21c83162d0",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The leaf prints verse ranges ('Matth. 11, 4:6', 'Joh. 18, 33:37'). X keeps them as ranges ('4 = 6') and keeps 'Creutz', 'Hertzens'; Y turns the ranges into separate verses ('4. 6') and modernises the spelling ('Creuz', 'kräftiger').",
+   "gemini_note": "X faithfully preserves the original Fraktur spelling ('kräfftiger', 'Uberzeugung', 'Schrifftgelehrten') and verse range hyphens ('4 = 6', '33 = 37'), whereas Y modernizes orthography and substitutes periods."
+  },
+  {
+   "page_id": "69f725cf56d1205ea1c291a1",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'gantz' as 'gank' (twice) and 'Gleichnuß' as 'Gletchnuß'; Y reads 'eintzigen', 'gantz', 'Entblösung CHristi' correctly, though it leaves the catchword 'Beweh-' out of the body text.",
+   "gemini_note": "Y truncates the final sentence by omitting the catchword 'Bewehs' which ends the text on this page, and falsely alters 'ganz' (printed 'gantz'/'gantz') to 'gantz' while X transcribes the original Fraktur 'gantz' (represented as 'gank' with Fraktur tz ligature interpretation) and accurately transcribes the marginal 'Gletchnuß' and the catchword."
+  },
+  {
+   "page_id": "6a267ed26c1f37c9c4f3cc41",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops 'etliche' after 'seine Clienten', turns 'Vnarth' into 'Vnrath' (a different word), and garbles 'Newe' to 'Netwe', 'Gleich' to 'S Elch' and the catchword 'kurtz' to 'furk'; X matches the leaf.",
+   "gemini_note": "Y drops the parenthetical word 'etliche' ('(oder vielmehr seine Clienten etliche)'), misreads the catchword 'kurtz' as 'furk', and reads the initial 'G' as 'S'."
+  },
+  {
+   "page_id": "69f33b0e876dd827cbc586a1",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y follows the leaf's spellings ('sonndern', 'gesannt', 'Schlannge', 'Mennschen', 'deß', 'am j.'); X normalises them and adds fragments from the facing page ('gans / eines / weise...') as if they were this leaf's margin.",
+   "gemini_note": "Y correctly transcribes the orthography ('sonndern', 'Schlannge', 'deß Mennschen', 'vnnd', 'anndern') and recognizes the decorative hares on the initial, while X regularizes spelling and mistakes the facing-page printed text for a margin element."
+  },
+  {
+   "page_id": "69f7358c5873545c995dc864",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "X reads 'Saulheit' for 'Faulheit', 'sich' for 'sichs', and renders the Hebrew word as '(nn)'; Y gets all three right."
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8743",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y is full of OCR garbles ('außsä-', 'krägen', 'Betstet', 'blüt', 'verzuckten' for 'verruckten'); X reads 'außsatz / frantzosen', 'krätzen', 'Beisset' correctly.",
+   "gemini_note": "X accurately transcribes the German Fraktur text, whereas Y introduces multiple transcription errors like 'außsä-' for 'außsatz', 'frankzo-' for 'frantzo-', 'krägen' for 'krätzen', and 'äσμα' for 'ἆσθμα'."
+  },
+  {
+   "page_id": "69f6681f8b8e4d6b41815b6d",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y garbles the tz forms ('Wit', 'Hit', 'Herk', 'scherk', 'Arkt', 'Creuk'); X correctly reads 'Witz', 'Hitz', 'Hertz', 'Artzt', 'Creutz'.",
+   "gemini_note": "Y replaces the letter z / tz with k or t throughout ('Wit', 'Hit', 'Herk', 'scherk', 'Arkt', 'Creuk', 'ganke')."
+  },
+  {
+   "page_id": "69f72961d17421b7412a6c5c",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X keeps the printed 'vns', 'vnterichtet', 'Sanfftmütigem'; Y modernises u/v, writes 'Sanffmütigem', and adds the facing page's cut-off margin ('Einzeitige / s wahre...') as if it belonged to this leaf.",
+   "gemini_note": "Y correctly transcribes the printed marginal notes in the left margin which X completely omits."
+  },
+  {
+   "page_id": "69bda116f6d63c919748e138",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "The leaf reads 'bedeut', 'Feldgeschrey', 'vernimmet', 'groß'; Y matches, while X has 'bedeutet', 'Feldgeschren', 'vernimet'.",
+   "gemini_note": "X correctly transcribes 'Feldgeschren' and 'vernimmet' (split across lines as 'vernim-' / 'met'), whereas Y inaccurately alters them to 'Feldgeschrey' and 'vernimmet' with a double m in the stem."
+  },
+  {
+   "page_id": "69f728f1d17421b7412a6abc",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops the closing 'O Al=' and modernises 'Prüffung', 'prüffen', 'Hertzen', 'Irrthümbe'; X matches the leaf.",
+   "gemini_note": "Y omits the final words of the page ('O Al=') and regularizes 'Hertzen', 'Prüffung', 'jhre', and 'prüffen'."
+  },
+  {
+   "page_id": "69f6af58f58c4b99a4bce746",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y gives the page as 152 (leaf reads '151') and misreads 'bringens' as 'bringen es', 'leydendt' as 'leyend' and 'könne' as 'kenne'; X matches the print.",
+   "gemini_note": "X correctly transcribes 'bringens', 'leydendt', and 'K iiij' (where printed page is 151), whereas Y incorrectly reads 'bringen es', errors on 'leyend', and misidentifies page number as 152."
+  },
+  {
+   "page_id": "69f6f83b6662642ee90b40eb",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "X reads 'was das Fleisch kann glauben will' where the leaf has 'kaum', which changes the sense; it also has 'fer Orden', 'undertwiesen', 'können' for 'könte' and an invented page number 'i j'.",
+   "gemini_note": "Y correctly transcribes 'underwiesen' where X introduces a typo ('undertwiesen'), and Y accurately captures 'kaum glauben will' where X misreads 'kaum' as 'kann'."
+  },
+  {
+   "page_id": "69f68bdb05ebe79c516d6428",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "A paper strip hides the line starts. X fills them in silently and gets some wrong: 'moralischen Kern und' where the visible '…and' supports 'Zustand', and 'gewiß uns zur Qual' where the visible '…its' supports 'bereits'. Y marks its guesses as unclear.",
+   "gemini_note": "A strip of paper covers the left side of the text block obscuring initial letters, and while Y faithfully marks the hidden characters using <unclear> tags and reads visible text accurately, X hallucinates missing words like 'Kern und' for visible 'and' and invents words not present on the leaf."
+  },
+  {
+   "page_id": "69f6af22f58c4b99a4bce6ba",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "X has the header as 'Baur.' (leaf: 'Bawr.'), 'gank' for 'gantz' and 'werde' for 'werdē'. Otherwise the two texts are the same.",
+   "gemini_note": "X correctly transcribes 'gantzk' (printed 'gantz' with ligature/tz followed by k/z variant, rendered accurately as 'gank' in Fraktur), Roman numeral page number 'II' (Y misreads as Arabic '11'), and 'Baur.', while Y normalizes 'gantz' and adds marginal annotations."
+  },
+  {
+   "page_id": "69f771ca6028036f8e239393",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y gets names wrong: 'Pons Arnuia … fluss Arnuie' (leaf: 'Aruiæ … Arvie'), 'Meyerlandt' (leaf: 'Metzerlandt') and 'Gefforiacum'. It also guesses the woodcut shows Bourges. X's list matches the leaf.",
+   "gemini_note": "Y seriously misreads several place and people names, transcribing 'Metzerlandt' as 'Meyerlandt' and 'Arvie' as 'Arnuie'."
+  },
+  {
+   "page_id": "69f7676390139e9166c2222f",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "X misreads 'Schwärmerey' as 'Schwärmeren' twice and also has 'Quäckerey' and 'Offenbarung'. Y follows the print ('Qväckerey', 'Offenbahrung').",
+   "gemini_note": "X correctly transcribes 'Schwärmerey' with final -ey in the header/section title as 'Schwärmerey' (spelled 'Schwärmerey' in Fraktur), whereas Y normalizes or alternates words, but looking closely at the image, Cap. VIII title reads 'Schwärmerey' (with Fraktur y), and in the text it has 'Offenbahrung'."
+  },
+  {
+   "page_id": "69f6b6f113e0cab6b64bf1f9",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'ganz mit Bertin gebrochen' where the leaf has 'Berlin', a wrong place name. It also has 'zwakischer' for 'zwackischer' and 'im politischem' for 'in politischem'.",
+   "gemini_note": "X misreads 'Berlin' as 'Bertin' and 'in politischem Fache' as 'im politischem Fache', while Y accurately transcribes 'Berlin' and includes the catchword comma."
+  },
+  {
+   "page_id": "69f6672b0f4e4a53c70f0a26",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "X adds a second column of word fragments ('die [...] der [...] wie [...]') from the facing leaf. It also misreads 'Saltz' as 'Sal' and has 'Silver' and 'Kupfer' where the leaf reads 'Silber' and 'Kupffer'.",
+   "gemini_note": "Y correctly transcribes the single page text and catchword 'die' without treating the narrow margin fragment of the adjacent leaf as a second column of truncated words as X does."
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8749",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X makes up a dose ('Croci ana 2 scrup.'): the leaf has 'ana' with only 'scrup.' as catchword. It also misreads the signature ('B ij' for 'B iij') and words such as 'vmpfindligkeit' and 'Wenche Eyer'.",
+   "gemini_note": "Y correctly transcribes the signature as 'B iij' and accurately preserves spellings like 'geschmiret', 'vnempfindligkeit', and 'Betonigk', whereas X invents '2 scrup.' at the end which is just the catchword 'scrup.' on the next line."
+  },
+  {
+   "page_id": "69f69ea36b70293ff4a3f753",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "X presents fragments of the facing page's line ends ('sie be- fel- ang …') as margin notes on this leaf. The main texts are nearly the same ('übertrifft' vs printed 'übertrift').",
+   "gemini_note": "X transcribes the marginal notes visible on the left margin, which Y omits entirely."
+  },
+  {
+   "page_id": "69f6af29f58c4b99a4bce6cb",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "Both are complete; X has small misreadings ('jeko' for 'jetzo', 'zusamensekung' for 'zusamensetzung', 'instituiert' for 'instituirt'), and Y follows the print more closely.",
+   "gemini_note": "X accurately transcribes the printed text 'in diesem', 'jeko', and 'zusamensetzung' (zusamenseßung), whereas Y modernizes/normalizes 'jeko' to 'jetzo' and alters 'in diesem' to 'in disem'."
+  },
+  {
+   "page_id": "69e0138d93b116d24238b14c",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X makes up Arabic examples ('wie ġ das arabische غ, g das ج') where the print has 'wie ϑ̔ das arabische ث, ϑ̓ das ذ', gives the wrong Coptic sign (ϧ for ϫ) and fills in guessed hieroglyphs; Y marks the hieroglyphs as unclear but keeps the text right.",
+   "gemini_note": "X misreads several non-Latin characters and symbols (giving Coptic ϧ instead of ϫ, ⲣⲱϩ instead of ⲣⲱⲕϩ, Greek Σεβεχώπις instead of Σεβεχῶφις, and inventing hieroglyphs including repeated sun-men signs for Sebekhotep), whereas Y correctly transcribes the Greek, Coptic, and Arabic text."
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481d77",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'Buchstabischen' as 'Buchstaben', 'dem glaube ich mehr' as 'dein glaube ich mehr' and 'Herr' as 'Herz' throughout; Y matches the print.",
+   "gemini_note": "Y changes Fraktur 'z' and 'tz' in words like 'Herr', 'sitzen', and 'Weitzen' where the print actually reads 'Herz', 'sitzen' (written 'sitzen' with tz/z-ligature/z, specifically 'sitzen' vs 'sitzen'), but crucially 'Herr' is printed 'Herz' throughout, and Y also normalizes 'Hertz' and adds an unprinted catchword tag while changing capitalization and spelling."
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481cd1",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "In §107 X drops 'geschrieben: Ist der Leser ein Christ / und gedenckt seelig zu werden', drops 'lebet' in §101, and adds a margin column of word fragments from the facing page.",
+   "gemini_note": "X omits a clause in paragraph 101 ('lebet /') and drops a whole clause in paragraph 107 ('geschrieben: Ist der Leser ein Christ / und gedenckt seelig')."
+  },
+  {
+   "page_id": "69c84a7cacfba68303020746",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reverses the sense with 'hoffen und mich fürchten' (print: 'mich nicht fürchten'), turns 'leben / weben und seyn wir' into 'leben / und sein / seyn wir', and has 'Wahlheit' for 'Wahlzeit' and 'siehet' for 'stehet'.",
+   "gemini_note": "X has the column break in the wrong place and omits several words, including 'weben' in 'leben / weben und seyn wir' and 'sie' in 'noch hat sie bißweilen der Unglaube geplaget'."
+  },
+  {
+   "page_id": "69f725fb56d1205ea1c29244",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y garbles the sidenote into 'wie sich die Seelen von GOTT solchen verhalten solle' (print: 'wie sich die Seel in solchen verhalten solle') and has 'Seel' for 'Seelen'; X reads both correctly.",
+   "gemini_note": "X correctly transcribes 'einzige' as 'eintzige', 'verlihen', and the marginal gloss 'wie sich die Seel in solchen verhalten solle', whereas Y corrupts the marginal gloss and adds the catchword 'Wil=' into the body text as 'Wils'."
+  },
+  {
+   "page_id": "69c823066c6f3cc53c84aed7",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The right edge of the text is cut off in the scan; X marks the missing line ends with '[...]', while Y fills them in with words not visible on the leaf (e.g. 'Unordnung', 'wollte die Welt', 'Und wenn so sich', 'bauen...').",
+   "gemini_note": "The right edge of the page is cut off in the leaf/scan, and Y hallucinates the missing endings (such as 'Unordnung', 'wollte die Welt', 'Es war', etc.) that are not present on the leaf."
+  },
+  {
+   "page_id": "69f6f8756662642ee90b4191",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "X has small misreadings ('gelanger', 'jeso', 'Gegenwart' for 'Gegenwärtigkeit', 'Gürtigkeit' for 'Gütigkeit'); Y is closer to the print.",
+   "gemini_note": "X correctly transcribes 'gelanger', 'jezo', 'jetoch', 'Gürtigkeit', and 'ver meinen', whereas Y normalizes or misreads these as 'gelanget', 'jetzo', 'jedoch', 'Gütigkeit', and 'vermeinen'."
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba8",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y misreads 'Nit wunder' as 'Mit wunder', 'kein däck nit find' as 'sind' and 'deim Herren Christ' as 'deim Herzen Christ', which changes the sense; X follows the print.",
+   "gemini_note": "Y normalizes and misreads several words, turning 'Nit wunder' into 'Mit wunder' and 'kein däck nit find' into 'kein däck nit sind'."
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba7",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'müh vnd jagen' for 'zagen' and 'Dich fühlt kein Brunst' for 'kühlt', and tags the catchword 'So' as a signature; Y matches the print.",
+   "gemini_note": "Y correctly transcribes 'zagen/' and 'Dich kühlt kein Brunst', whereas X reads 'jagen/' and 'Dich fühlt kein Brunst'."
+  },
+  {
+   "page_id": "69f72930d17421b7412a6bac",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X adds a <margin> block of word fragments ('raff-', 'vnd', 'ottes'...) that come from the facing leaf and run into the first two lines ('ding ist es'); Y follows the leaf closely ('Wiederspiel worden!', 'ernewert').",
+   "gemini_note": "X transcribes the marginal column on the left which Y completely omits."
+  },
+  {
+   "page_id": "69bd9eedf6d63c919747d903",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y invents a second column ('Ein einiges Leben ... diese Finsterniß ist der Teuffel ... Lucifer') that is not on this leaf; only cut-off scraps of the facing page are visible, while X correctly ends at 'und ist doch nur'.",
+   "gemini_note": "Y invents a second column of text ('Ein einiges Leben...') transcribed from the partially visible adjacent page."
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8750",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X misreads words in ways that change the sense: 'Rindfleisch' for printed 'Kitzfleisch', 'vnd augeslich' for 'vndauglich', 'Leber Milch' for 'Leber Miltz', and 'Judenkische' for 'Judenkirschen'.",
+   "gemini_note": "X misreads 'Kitzfleisch' as 'Rindfleisch' and 'vndauglich' as 'vnd augeslich', distorting the dietary instruction."
+  },
+  {
+   "page_id": "69f71d8fbe92de21c8316124",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The wording is the same in both; they differ only in how they mark the running head and in small spellings ('Hertzen'/'Herzen', catchword '2 Ein'/'Ein').",
+   "gemini_note": "X faithfully captures the catchword '2 Ein' and uses proper header tagging for the running title, whereas Y misses the '2' in the catchword and duplicates page number 211 into the text body."
+  },
+  {
+   "page_id": "69b51ec8768235dc65998ad6",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X twice reads 'refectionibus' where the leaf prints 'resectionibus', which changes the sense, and garbles the Greek 'ἐπέχειν' as 'intexav', 'occultet' as 'occulet' and 'sexus' as 'fexus'; Y matches the print.",
+   "gemini_note": "X misreads Greek 'ἐπέχειν' as 'intexav', reads 'refectionibus' instead of 'resectionibus', has 'fexus' for 'sexus', and omits a letter in 'occultet' and 'officiositatem'."
+  }
+ ]
+}

@@ -132,6 +132,10 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     expect(out).toContain('quota still out after 2 waits: scoring without the Gemini reader');
     expect(calls.at(-1)).toContain('score');
   });
+  it('the scheduled round draws 40 random + 40 risk top decile; a spare round keeps the uniform draw (#6420 decision 5)', () => {
+    expect(run(0).calls[0]).toContain('--books 40 --written 0 --risk 40');
+    expect(run(0, { AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls[0]).not.toContain('--risk');
+  });
   it('a date argument finishes that run instead of starting today', () => {
     expect(run(0).calls.at(-1)).toContain('base/2099-01-05');
   });

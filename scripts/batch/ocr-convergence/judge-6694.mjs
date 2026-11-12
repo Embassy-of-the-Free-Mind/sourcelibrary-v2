@@ -188,7 +188,7 @@ function score() {
       // The Gemini judge's image is attached to the request, and agy opens it with view_file (the #6523 tool gate
       // logs it as gate_calls). A verdict with no view_file, a reply that says it saw no image, or one without the
       // verdict fields is dropped.
-      if (!(o.gate_calls || []).includes('view_file') || v.no_image || !v.prefer || !v.x_vs_s || !v.y_vs_s) { dropped.gemini.push(o.uid); continue; }
+      if (!(o.gate_calls || []).some((t) => t === 'read_file' || t === 'view_file') || v.no_image || !v.prefer || !v.x_vs_s || !v.y_vs_s) { dropped.gemini.push(o.uid); continue; }
       verdicts.gemini.set(o.uid, v);
     } catch { /* unparsable: missing */ }
   }

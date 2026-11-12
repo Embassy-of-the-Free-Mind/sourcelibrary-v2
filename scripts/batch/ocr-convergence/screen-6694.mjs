@@ -103,7 +103,7 @@ async function prep() {
 // ── screen-score ───────────────────────────────────────────────────────────────────────────────────────────────────
 function parseScreen(o) {
   if (!o?.text) return { answer: null, why: o?.error || 'empty' };
-  if (!(o.gate_calls || []).includes('view_file')) return { answer: null, why: 'image not opened' };
+  if (!(o.gate_calls || []).some((t) => t === 'read_file' || t === 'view_file')) return { answer: null, why: 'image not opened' };
   const m = o.text.match(/\{[\s\S]*\}/); if (!m) return { answer: null, why: 'no JSON' };
   let v; try { v = JSON.parse(m[0]); } catch { return { answer: null, why: 'bad JSON' }; }
   if (v.no_image) return { answer: null, why: 'no image' };
@@ -254,7 +254,7 @@ function auditScore() {
   const gem = new Map();
   // gemini-out-retry.jsonl: one more call for a verdict that never opened its image (a later answer wins).
   for (const o of [...readJsonl(path.join(AUD, 'gemini-out.jsonl')), ...readJsonl(path.join(AUD, 'gemini-out-retry.jsonl'))]) {
-    try { if (!o.text || !(o.gate_calls || []).includes('view_file')) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) { const v = JSON.parse(m[0]); if (v.better) gem.set(o.uid, v); } } catch { /* missing */ }
+    try { if (!o.text || !(o.gate_calls || []).some((t) => t === 'read_file' || t === 'view_file')) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) { const v = JSON.parse(m[0]); if (v.better) gem.set(o.uid, v); } } catch { /* missing */ }
   }
   const dec = new Map(readJsonl(path.join(W, 'decisions.jsonl')).map((d) => [d.page_id, d]));
   const verdict = (v, k) => (!v ? null : v.better === 'same' ? 'same' : v.better === k.stored_is ? 'stored' : 'cli');
