@@ -1738,17 +1738,23 @@ function languageSection(lang: Locale, citeIds = false): string {
   if (lang === 'en') return '';
   const name = LANG_NAMES[lang];
   const base = siteBase(lang);
+  // Chinese: we hold no Chinese edition of any page text (the /zh site serves
+  // Chinese-language ORIGINALS). So there is nothing to "quote in the edition";
+  // the model answers in Chinese and quotes pages as the tools return them.
+  const quotation = lang === 'zh'
+    ? `Quotations: we hold no Chinese translation of the library's pages. Quote each passage exactly as the tool returns it — the English translation, or the original text (Chinese, Latin, etc.) when that is what the tool gives — inside a blockquote, and write everything around it in Chinese. Do NOT translate a quotation into Chinese and present it as the text. Paraphrasing in Chinese outside the blockquote is fine; say in Chinese when the quoted words are in English. The "original language" rule below still applies.`
+    : `Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.`;
   return `## Language — this is a ${name} conversation
 
 The reader is using the ${name} edition of the library. Write your whole answer in ${name} (headers, captions, suggested next steps included), unless the reader switches language.
 
 Searching: the search index is English, so write your **search queries in English** (translate the reader's terms yourself — "piedra filosofal" → "philosopher's stone") even though you answer in ${name}.
 
-Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.
+${quotation}
 
 What the library HOLDS in ${name} — "how many books do you have in ${name}", "show me everything in ${name}" — goes to **browse_catalog**, never to \`search\`, which only ranks passages and would answer a shelf of hundreds with the handful it happened to match. Two different questions live here and the tool takes both: \`readable_in: "${lang}"\` is what a reader means (books written in ${name} PLUS the ones we have translated into it), while \`language: "${name}"\` is the narrower "printed in ${name}". Prefer \`readable_in\`, and say which one you counted.
 
-Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). ${citeIds ? 'Pages are cited by their ID ([P7]); the server writes the page link in the right prefix.' : `Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).`}
+Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). ${citeIds ? 'Pages are cited by their ID ([P7]); the server writes the page link in the right prefix.' : `Page links use the same prefix: [${lang === 'zh' ? '页码' : 'Página'} N](${base}/book/SLUG?page=N).`}
 
 `;
 }
@@ -1922,7 +1928,7 @@ export async function* streamAgenticResponse(
   const followupSearch = options?.followupSearch ?? FOLLOWUP_SEARCH_DEFAULT;
   const model = options?.model ?? MODEL;
   // Cite by ID (#6946): the turn's page IDs, and the rewrite of IDs to links in the text the reader gets.
-  const cite = (options?.citeIds ?? CITE_IDS_DEFAULT) ? new CiteIds(siteBase(lang), lang === 'es' ? 'Página' : 'Page') : undefined;
+  const cite = (options?.citeIds ?? CITE_IDS_DEFAULT) ? new CiteIds(siteBase(lang), lang === 'es' ? 'Página' : lang === 'zh' ? '页码' : 'Page') : undefined;
   const citeStream = cite ? new CiteIdStream(cite) : null;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
@@ -1953,6 +1959,8 @@ export async function* streamAgenticResponse(
     { role: 'user', parts: [{ text: systemPrompt }] },
     { role: 'model', parts: [{ text: lang === 'es'
       ? 'Entendido. Soy el Bibliotecario: listo para investigar en la colección, en español.'
+      : lang === 'zh'
+      ? '明白。我是图书馆员，随时可以用中文在馆藏中为您查找资料。'
       : 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
     ...history.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
@@ -3104,16 +3112,21 @@ export async function resolveSlugToHeldBook(
  */
 export function emptyAnswerFallback(sources: SourceCard[], lang: Locale = 'en'): string {
   const top = sources.filter(s => s.pageNumber != null).slice(0, 6);
-  const prefix = lang === 'es' ? '/es' : '';
+  const prefix = lang === 'es' ? '/es' : lang === 'zh' ? '/zh' : '';
   const lines = top.map(s => {
     const url = `https://sourcelibrary.org${prefix}/book/${s.bookSlug || s.book_id}/page-number/${s.pageNumber}`;
-    const page = lang === 'es' ? `Página ${s.pageNumber}` : `Page ${s.pageNumber}`;
+    const page = lang === 'es' ? `Página ${s.pageNumber}` : lang === 'zh' ? `页码 ${s.pageNumber}` : `Page ${s.pageNumber}`;
     return `- *${s.bookTitle}*${s.bookAuthor ? ` — ${s.bookAuthor}` : ''}, [${page}](${url})`;
   });
   if (lang === 'es') {
     return top.length
       ? `Encontré estas páginas pero no logré redactar la respuesta. Ábralas directamente, o vuelva a preguntar con otras palabras:\n\n${lines.join('\n')}`
       : 'No logré redactar una respuesta esta vez. Vuelva a preguntar con otras palabras, o nombre un autor u obra concretos.';
+  }
+  if (lang === 'zh') {
+    return top.length
+      ? `找到了这些页面，但未能整理成回答。请直接打开查看，或换个说法再问一次：\n\n${lines.join('\n')}`
+      : '这次未能写出回答。请换个说法再问，或直接写出具体的作者或作品名。';
   }
   return top.length
     ? `I found these pages but couldn't compose the answer. Open them directly, or ask again in other words:\n\n${lines.join('\n')}`

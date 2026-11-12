@@ -34,7 +34,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 /** Whole pages, as the judge packet reads them (packet.ts). */
 const PAGE_CHARS = 20000;
 
-export const DROP_MARK = { en: "(not from the library's pages)", es: '(no procede de las páginas de la biblioteca)' } as const;
+export const DROP_MARK = { en: "(not from the library's pages)", es: '(no procede de las páginas de la biblioteca)', zh: '（并非出自馆中页面）' } as const;
 
 export const FIXER_PROMPT = `You are checking the page links in one answer written by a research librarian for a digital library of
 historical primary sources. In the answer, every link to a specific book page is followed by a marker like ⟦L3⟧.
@@ -319,7 +319,7 @@ function dropIn(s: string, link: PageLink, mark: string): string {
  * The edits that apply the outcomes: one per paragraph changed (find = the paragraph as written, replace =
  * after every change in it), in document order — what applyGroundingEdits expects.
  */
-export function fixerEdits(text: string, outcomes: LinkOutcome[], lang: 'en' | 'es' = 'en'): GroundingEdit[] {
+export function fixerEdits(text: string, outcomes: LinkOutcome[], lang: 'en' | 'es' | 'zh' = 'en'): GroundingEdit[] {
   const changing = outcomes.filter(changesLink);
   const byPara = new Map<number, { start: number; end: number; links: LinkOutcome[] }>();
   for (const o of changing) {
@@ -334,7 +334,7 @@ export function fixerEdits(text: string, outcomes: LinkOutcome[], lang: 'en' | '
     // Last link first, so the offsets of the earlier ones hold.
     for (const o of [...links].sort((a, b) => b.link.start - a.link.start)) {
       const link = { ...o.link, start: o.link.start - start, end: o.link.end - start };
-      const mark = DROP_MARK[link.locale === '/es' || lang === 'es' ? 'es' : 'en'];
+      const mark = DROP_MARK[link.locale === '/es' || lang === 'es' ? 'es' : link.locale === '/zh' || lang === 'zh' ? 'zh' : 'en'];
       para = o.outcome === 'move' && o.to ? moveIn(para, link, o.to) : dropIn(para, link, mark);
     }
     edits.push({ find: text.slice(start, end), replace: para, at: start, reasons: ['citation_page'] });
