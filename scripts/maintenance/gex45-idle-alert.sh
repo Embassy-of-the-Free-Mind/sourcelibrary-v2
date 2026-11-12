@@ -46,6 +46,12 @@ now=$(date +%s)
 log() { echo "$(date -u +%FT%TZ) $*"; }
 
 # probe: newest output mtime (epoch, 0 = none), GPU util %, GPU compute processes, uptime
+# Through the mesh (#8614): box-rpc's gpu-probe verb prints the same line this used to build over a raw ssh, so the
+# probe is logged and bounded like any mesh call. GEX45_PROBE=ssh skips the mesh; an empty mesh answer falls back to ssh.
+probe=""
+[ "${GEX45_PROBE:-mesh}" = mesh ] && [ -x /root/bin/box.sh ] && probe=$(timeout 60 /root/bin/box.sh gex45 gpu-probe 2>/dev/null)
+# Until gex45's box-rpc has the verb (each box installs on its hourly pull), and if the mesh is down, the old ssh probe.
+if [ -z "$probe" ]; then
 probe=$(ssh -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 "$HOST" "
   newest=0
   for d in $OUTPUT_DIRS; do [ -d \"\$d\" ] || continue
@@ -58,6 +64,7 @@ probe=$(ssh -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 "$HO
   qf=\$(find $QDIR/done $QDIR/failed -maxdepth 1 -name '*.sh' -printf '%T@\\n' 2>/dev/null | sort -n | tail -1 | cut -d. -f1)
   echo \"\$newest \${util:-NA} \$(cut -d. -f1 /proc/uptime) \$qp \$qr \${qf:-0} \${procs:-none}\"
 " 2>/dev/null) || probe=""
+fi
 
 prev=$(python3 -c "import json,sys; d=json.load(open('$STATE')); print(d.get('state','none'), d.get('since',0), d.get('alerted_at',0), d.get('fails',0))" 2>/dev/null || echo "none 0 0 0")
 read -r pstate psince palerted pfails <<<"$prev"
