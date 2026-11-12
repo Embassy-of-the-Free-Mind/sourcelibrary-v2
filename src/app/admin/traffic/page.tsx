@@ -21,6 +21,12 @@ export default function AdminTrafficPage() {
         from every figure; crawlers and AI agents never run the tracker. Click a site, section, source or country
         to filter the rest of the page.
       </p>
+      <p className="text-xs mb-6 max-w-3xl -mt-4" style={{ color: 'var(--text-muted)' }}>
+        Unit: one pageview per navigation on any page (admin and API paths excluded), with repeats of the same path
+        from the same anonymized IP dropped for 60 seconds. This is not the &ldquo;Reads&rdquo; or &ldquo;Pages read&rdquo;
+        on the /analytics Books tab, which keep at most one per IP per book or page per hour; don&apos;t compare, sum or
+        ratio the two (#3657).
+      </p>
       <TrafficDashboard />
     </main>
   );

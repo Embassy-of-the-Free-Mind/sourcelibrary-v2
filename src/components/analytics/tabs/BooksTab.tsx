@@ -84,14 +84,22 @@ export default function BooksTab() {
     <div className="space-y-8">
       {/* Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-        <StatCard icon={<Eye className="w-4 h-4" />} label="Reads · 7d" value={num(d.summary.views7)} tint="#eff6ff" />
-        <StatCard icon={<Eye className="w-4 h-4" />} label="Reads · 30d" value={num(d.summary.views30)} tint="#f0f9ff" />
-        <StatCard icon={<Layers className="w-4 h-4" />} label="Pages read · 30d" value={num(d.summary.pageReads30)} tint="#ecfeff" />
+        <StatCard icon={<Eye className="w-4 h-4" />} label="Reads · 7d" value={num(d.summary.views7)} sub="book opens" tint="#eff6ff" />
+        <StatCard icon={<Eye className="w-4 h-4" />} label="Reads · 30d" value={num(d.summary.views30)} sub="book opens" tint="#f0f9ff" />
+        <StatCard icon={<Layers className="w-4 h-4" />} label="Pages read · 30d" value={num(d.summary.pageReads30)} sub="reader page turns" tint="#ecfeff" />
         <StatCard icon={<BookOpen className="w-4 h-4" />} label="Books opened" value={num(d.summary.booksViewed)} sub="all-time" tint="#f0fdf4" />
         <StatCard icon={<Moon className="w-4 h-4" />} label="Never opened" value={num(d.summary.neverOpened)} sub="visible, 0 views" tint="#faf5ff" />
         <StatCard icon={<Download className="w-4 h-4" />} label="Downloads · 30d" value={num(d.summary.downloads30)} tint="#fff7ed" />
         <StatCard icon={<Heart className="w-4 h-4" />} label="Book likes" value={num(d.summary.bookLikes)} sub="all-time" tint="#fef2f2" />
       </div>
+
+      <p className="text-xs -mt-4" style={{ color: 'var(--text-muted)' }}>
+        Units: <strong>reads</strong> count book opens and <strong>pages read</strong> count page turns in the reader,
+        from <code>analytics_events</code>, human traffic only, at most one per anonymized IP per book (or page) per hour.
+        They are not the pageviews on <Link href="/admin/traffic" className="underline">Traffic</Link>, which count every
+        site navigation with repeats of the same path from one IP dropped for only 60 seconds. Don&apos;t compare, sum or
+        ratio the two (#3657).
+      </p>
 
       {/* Weekly trend */}
       <div>
