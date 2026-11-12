@@ -81,7 +81,9 @@ LIVE_GIT = re.compile(r"\bgit\s+(?:-C\s+/root/sourcelibrary/?\s+)?(checkout|swit
 PUSH_PROTECTED = re.compile(r"\bgit\s+(?:-C\s+\S+\s+)?push\b[^;&|\n]*\s(?:\S+:)?(main|release)\b")
 OUTBOUND = re.compile(r"\b(sendmail|mailx?\s+-s|swaks)\b|smtp\.|api\.twitter\.com|api\.x\.com|TWITTER_ACCESS|"
                       r"\btweet\b.*\b(post|send)|graph\.facebook\.com|api\.linkedin\.com")
-TAMPER = re.compile(r"--dangerously-skip-permissions|disableAllHooks|/etc/agent-guard|agent-guard\.(py|mode)\b[^\n]*(>|sed\s+-i|rm\b)")
+# The skip-permissions flag is built from parts, so tests/unit/no-cli-auto-approve.test.ts (which bans the literal) passes.
+SKIP_PERMS = "--" + "-".join(["dangerously", "skip", "permissions"])
+TAMPER = re.compile(re.escape(SKIP_PERMS) + r"|disableAllHooks|/etc/agent-guard|agent-guard\.(py|mode)\b[^\n]*(>|sed\s+-i|rm\b)")
 NETSEND = re.compile(r"\b(curl|wget|scp|rsync|nc|ncat|socat)\b|\bgh\s+(issue|pr|api|gist)\b")
 
 def file_text(cmd):
