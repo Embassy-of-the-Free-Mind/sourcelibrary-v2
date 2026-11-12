@@ -1,0 +1,194 @@
+<title>Calibration Sitting</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a reading desk. The scan on the left stays put; the two texts and the checklist of marked errors scroll on the right. One page at a time. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#18202b; --muted:#5b6676; --line:#d5dbe3; --accent:#1f4fa3; --accent-soft:#e2e9f6;
+  --crit:#b3261e; --crit-soft:#f8e3e1; --major:#a8650a; --major-soft:#f7ecd9; --minor:#6b7584; --minor-soft:#eceff3; --ok:#1d7a3e; --ok-soft:#e0f1e6;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Literata",Georgia,"Noto Serif","Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --surface:#19202a; --ink:#e4e9f0; --muted:#97a3b4; --line:#2b3541; --accent:#8fb2f0; --accent-soft:#1f2c42;
+  --crit:#f25c5c; --crit-soft:#3a1f1e; --major:#e6bd52; --major-soft:#352914; --minor:#97a3b4; --minor-soft:#232b35; --ok:#6fcf8f; --ok-soft:#16301f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --surface:#19202a; --ink:#e4e9f0; --muted:#97a3b4; --line:#2b3541; --accent:#8fb2f0; --accent-soft:#1f2c42;
+  --crit:#f25c5c; --crit-soft:#3a1f1e; --major:#e6bd52; --major-soft:#352914; --minor:#97a3b4; --minor-soft:#232b35; --ok:#6fcf8f; --ok-soft:#16301f; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.top h1{font-family:var(--f-display);font-size:20px;margin:0;font-weight:700}
+.prog{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1 1 160px;height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:120px}
+.bar i{display:block;height:100%;background:var(--ok)}
+.nav{display:flex;gap:6px}
+button{font:inherit;cursor:pointer}
+.btn{font-family:var(--f-mono);font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 12px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:disabled{opacity:.45;cursor:default}
+button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.intro{max-width:980px;margin:0 auto;padding-block:16px 0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.intro details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.intro summary{cursor:pointer;font-family:var(--f-display);font-weight:600}
+.intro p,.intro li{color:var(--muted);font-size:14.5px;max-width:72ch}
+.desk{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;padding-block:16px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1500px;margin:0 auto}
+@media (max-width:900px){.desk{grid-template-columns:1fr}}
+.scan{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+@media (max-width:900px){.scan{position:static}}
+.scan .img{overflow:auto;max-height:calc(100vh - 140px);background:#777}
+.scan img{display:block;width:100%;height:auto;max-width:none;cursor:zoom-in}
+.scan.zoom img{width:200%;cursor:zoom-out}
+.scan .cap{display:flex;justify-content:space-between;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:8px 12px}
+.side{display:grid;gap:14px;min-width:0}
+.meta{font-size:14px;color:var(--muted)}
+.meta b{color:var(--ink);font-family:var(--f-display);font-size:17px;font-weight:600}
+.pane{background:var(--surface);border:1px solid var(--line);border-radius:10px;min-width:0}
+.pane h2{margin:0;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:9px 14px;border-bottom:1px solid var(--line);font-weight:500}
+.pane .txt{padding:10px 14px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;font-size:15px}
+.pane mark{background:var(--major-soft);color:inherit;border-radius:3px;padding:0 1px}
+.spans{display:grid;gap:10px;padding:12px 14px}
+.span{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:8px}
+.span.agree{border-color:var(--crit)}.span.reject{border-color:var(--ok)}.span.unsure{border-color:var(--major)}
+.span .q{font-size:14.5px;background:var(--bg);border-radius:6px;padding:6px 9px;overflow-wrap:anywhere}
+.span .q small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.span .why{font-size:14px;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--surface);color:var(--ink);font-family:var(--f-mono);font-size:12.5px;padding:6px 11px}
+.seg button[aria-pressed="true"].v-agree{background:var(--crit);color:#fff}
+.seg button[aria-pressed="true"].v-reject{background:var(--ok);color:#fff}
+.seg button[aria-pressed="true"].v-unsure{background:var(--major);color:#18202b}
+.seg button[aria-pressed="true"].s{background:var(--accent);color:var(--surface)}
+.seg button[aria-pressed="true"].b-usable{background:var(--ok);color:#fff}
+.seg button[aria-pressed="true"].b-care{background:var(--major);color:#18202b}
+.seg button[aria-pressed="true"].b-not_usable{background:var(--crit);color:#fff}
+.lbl{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+textarea,select,input[type=text]{font:inherit;font-size:14.5px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);padding:7px 9px;width:100%;min-width:0}
+textarea{min-height:60px;resize:vertical}
+.add{display:grid;gap:8px;padding:12px 14px;border-top:1px dashed var(--line)}
+.added{display:grid;gap:6px;padding:0 14px 12px}
+.added div{font-size:14px;display:flex;gap:8px;align-items:baseline;justify-content:space-between;border:1px solid var(--line);border-radius:6px;padding:6px 9px}
+.finish{display:grid;gap:10px;padding:12px 14px}
+.status{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.status.err{color:var(--crit)}
+.empty{color:var(--muted);font-style:italic;padding:12px 14px}
+.done{max-width:640px;margin:48px auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));text-align:center;display:grid;gap:10px}
+.done h2{font-family:var(--f-display);font-size:28px;margin:0}
+</style>
+
+<header class="top">
+  <h1>Calibration Sitting</h1>
+  <span class="prog" id="prog"></span>
+  <div class="bar" aria-hidden="true"><i id="barfill" style="width:0"></i></div>
+  <div class="nav"><button class="btn" id="prev" aria-label="Previous page">← Prev</button><button class="btn" id="next" aria-label="Next page">Next →</button></div>
+</header>
+
+<div class="intro">
+  <details id="howto" open>
+    <summary>How this works (2 minutes to read, about 3 minutes a page)</summary>
+    <p>36 pages from four languages. For each one, read the scan, then the transcription, then the English. Two model reviewers have already marked possible errors, shown below the texts without saying which model marked which. For each mark, say whether it is a real error, and fix its severity if it is wrong. Add any error they missed. Then put the page in a band.</p>
+    <ul>
+      <li><b>Critical:</b> a reader quoting this page would publish something the book does not say. That covers invented or wrong-leaf text, reversed meaning, a changed name, number or date, or a dropped line.</li>
+      <li><b>Major:</b> misleading locally but recoverable, or a note or margin lost. <b>Minor:</b> the quotable words are right.</li>
+      <li>The texts are shown as stored. Tags like <code>&lt;page-num&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;vocab&gt;</code> or <code>&lt;summary&gt;</code> are moved out of the reading text on the site, so they are not errors. Judge the words.</li>
+      <li>Some pages are deliberate test pages. Judge every page the same way.</li>
+      <li>Your answers save as you go. You can stop and come back; the page reopens where you left off.</li>
+    </ul>
+    <p>Keys: <span style="font-family:var(--f-mono)">J / K</span> next and previous page, <span style="font-family:var(--f-mono)">1 2 3</span> band.</p>
+  </details>
+</div>
+
+<main id="main"></main>
+
+<script id="packet-data" type="application/json">__DATA__</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('packet-data').textContent);
+const items=D.items;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let db=null, idx=0, saved={}, draft={}, me=null;
+const state=i=>draft[items[i].packet]||(draft[items[i].packet]=JSON.parse(JSON.stringify(saved[items[i].packet]||{spans:{},added:[],band:null,note:''})));
+const isDone=p=>!!(saved[p]&&saved[p].band);
+function progress(){const n=items.filter(it=>isDone(it.packet)).length;document.getElementById('prog').textContent=`page ${idx+1} of ${items.length} · ${n} done`;document.getElementById('barfill').style.width=(100*n/items.length)+'%';document.getElementById('prev').disabled=idx===0;document.getElementById('next').disabled=idx===items.length-1;}
+function highlight(text,quotes){let h=esc(text);for(const q of quotes){const e=esc(q).trim();if(e.length<4)continue;const i=h.indexOf(e);if(i>=0)h=h.slice(0,i)+'<mark>'+e+'</mark>'+h.slice(i+e.length);}return h;}
+function seg(name,opts,val,cls){return `<div class="seg" role="group" aria-label="${esc(name)}">${opts.map(([v,l])=>`<button type="button" data-v="${v}" class="${cls}${cls==='v'||cls==='b'?'-'+v:''}" aria-pressed="${val===v}">${l}</button>`).join('')}</div>`;}
+function render(){
+  const it=items[idx], st=state(idx);
+  const ocrQ=it.spans.filter(s=>s.pane==='ocr').map(s=>s.quote), enQ=it.spans.filter(s=>s.pane==='english').map(s=>s.quote);
+  const m=document.getElementById('main');
+  m.innerHTML=`<div class="desk">
+   <section class="scan" id="scan" aria-label="Page scan"><div class="img"><img id="img" src="${esc(it.image)}" alt="Scan of page ${it.page_number}"></div><div class="cap"><span>${esc(it.language)} · page ${it.page_number}</span><span>click to zoom</span></div></section>
+   <div class="side">
+    <div class="meta"><b>${esc(it.title)}</b><br>${esc(it.language)}${it.published?' · '+esc(it.published):''} · page ${it.page_number}</div>
+    <section class="pane"><h2>Transcription</h2><div class="txt">${highlight(it.ocr,ocrQ)}</div></section>
+    <section class="pane"><h2>English</h2><div class="txt">${it.translation?highlight(it.translation,enQ):'<span class="empty">No English on this page.</span>'}</div></section>
+    <section class="pane" aria-label="Marked errors"><h2>Marked by the reviewers · ${it.spans.length}</h2>
+     ${it.spans.length?`<div class="spans">${it.spans.map(s=>{const v=st.spans[s.id]||{};return `<div class="span ${v.verdict||''}" data-id="${s.id}">
+       <div class="q"><small>${s.pane==='ocr'?'Transcription says':s.pane==='english'?'English says':'Page'}</small>${esc(s.quote||'(whole page)')}</div>
+       ${s.should?`<div class="q"><small>Reviewer reads the scan as</small>${esc(s.should)}</div>`:''}
+       <div class="why">${esc(s.problem)}</div>
+       <div class="row">${seg('Is this a real error?',[['agree','Real error'],['reject','Not an error'],['unsure','Can’t tell']],v.verdict,'v')}
+       ${seg('Severity',[['critical','critical'],['major','major'],['minor','minor']],v.severity||s.severity,'s')}</div></div>`;}).join('')}</div>`:'<p class="empty">The reviewers marked nothing on this page.</p>'}
+     <div class="add"><span class="lbl">An error they missed</span>
+      <div class="row" style="flex-wrap:nowrap"><select id="add-pane" aria-label="Where"><option value="ocr">Transcription</option><option value="english">English</option><option value="page">Whole page</option></select>
+      <select id="add-sev" aria-label="Severity"><option value="critical">critical</option><option value="major" selected>major</option><option value="minor">minor</option></select></div>
+      <input type="text" id="add-quote" placeholder="The words as shown (copy them)">
+      <input type="text" id="add-note" placeholder="What the scan actually says, or what is wrong">
+      <div><button type="button" class="btn" id="add-btn">Add</button></div></div>
+     <div class="added" id="added">${st.added.map((a,i)=>`<div><span><b>${esc(a.severity)}</b> · ${esc(a.pane)} · “${esc(a.quote)}” ${esc(a.note)}</span><button type="button" class="btn" data-del="${i}" aria-label="Remove">×</button></div>`).join('')}</div>
+    </section>
+    <section class="pane"><h2>The page as a whole</h2><div class="finish">
+      ${seg('Band',[['usable','Usable'],['care','Use with care'],['not_usable','Not usable']],st.band,'b')}
+      <textarea id="note" placeholder="Anything else (optional)">${esc(st.note)}</textarea>
+      <div class="row"><button type="button" class="btn primary" id="save">Save and next</button><span class="status" id="status">${isDone(it.packet)?'Saved.':''}</span></div>
+    </div></section>
+   </div></div>`;
+  progress();
+  document.getElementById('img').onclick=()=>document.getElementById('scan').classList.toggle('zoom');
+  m.querySelectorAll('.span').forEach(el=>{const id=el.dataset.id;const s=it.spans.find(x=>x.id===id);
+    el.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{const v=st.spans[id]||(st.spans[id]={verdict:null,severity:s.severity});
+      if(b.classList.contains('s'))v.severity=b.dataset.v;else v.verdict=b.dataset.v;render();});});
+  m.querySelectorAll('.finish .seg button').forEach(b=>b.onclick=()=>{st.band=b.dataset.v;render();});
+  document.getElementById('note').oninput=e=>{st.note=e.target.value;};
+  document.getElementById('add-btn').onclick=()=>{const q=document.getElementById('add-quote').value.trim(),n=document.getElementById('add-note').value.trim();if(!q&&!n)return;
+    st.added.push({pane:document.getElementById('add-pane').value,severity:document.getElementById('add-sev').value,quote:q,note:n});render();};
+  m.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{st.added.splice(+b.dataset.del,1);render();});
+  document.getElementById('save').onclick=save;
+}
+async function save(){
+  const it=items[idx], st=state(idx), el=document.getElementById('status');
+  const open=it.spans.filter(s=>!(st.spans[s.id]&&st.spans[s.id].verdict));
+  if(!st.band){el.className='status err';el.textContent='Choose a band for the page first.';return;}
+  if(open.length){el.className='status err';el.textContent=`${open.length} marked error${open.length>1?'s':''} still need a yes, no or can’t tell.`;return;}
+  if(!db){el.className='status err';el.textContent='Saving is not available in this view. Open the page signed in to claude.ai.';return;}
+  el.className='status';el.textContent='Saving…';
+  const doc={packet:it.packet,spans:st.spans,added:st.added,band:st.band,note:st.note,saved_at:new Date().toISOString(),by:me};
+  try{await db.doc('judgments/'+it.packet).set(doc);saved[it.packet]=JSON.parse(JSON.stringify(doc));el.textContent='Saved.';
+    if(idx<items.length-1){idx++;render();window.scrollTo(0,0);}else showDone();}
+  catch(e){el.className='status err';el.textContent='Could not save ('+(e&&e.code||'error')+'). Your answers are still on screen; try again.';}
+}
+function showDone(){const n=items.filter(it=>isDone(it.packet)).length;
+  document.getElementById('main').innerHTML=`<div class="done"><h2>${n===items.length?'All 36 pages done':n+' of 36 pages done'}</h2><p class="meta">Your judgments are saved. ${n===items.length?'Thank you. Claude will read them back and report agreement on #6420.':'Use Prev and Next to finish the rest.'}</p></div>`;progress();}
+document.getElementById('prev').onclick=()=>{if(idx>0){idx--;render();}};
+document.getElementById('next').onclick=()=>{if(idx<items.length-1){idx++;render();}};
+document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea,select'))return;
+  if(e.key==='j'||e.key==='J')document.getElementById('next').click();else if(e.key==='k'||e.key==='K')document.getElementById('prev').click();
+  else if(['1','2','3'].includes(e.key)){const b=document.querySelectorAll('.finish .seg button')[+e.key-1];b&&b.click();}});
+render();
+(async()=>{
+  try{const user=await claude.use('user');me=user?await user.id():null;}catch{}
+  try{db=await claude.use('db');}catch{db=null;}
+  if(!db)return;
+  const t=setTimeout(()=>{},10000);
+  try{const snap=await db.collection('judgments').get();
+    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.packet)saved[v.packet]=v;});}catch{}
+  clearTimeout(t);
+  draft={};const first=items.findIndex(it=>!isDone(it.packet));idx=first<0?0:first;render();
+})();
+})();
+</script>

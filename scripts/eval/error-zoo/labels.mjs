@@ -99,13 +99,18 @@ const iso = (d) => (d instanceof Date ? d.toISOString() : d ? String(d) : null);
 
 // ---- 2. spare audits on disk ----------------------------------------------------------------------------------
 if (fs.existsSync(saDir)) {
-  const runs = fs.readdirSync(saDir).filter((d) => /^spare-audit-\d{8}-\d+$/.test(d) && fs.existsSync(path.join(saDir, d, 'draw.json'))).sort();
+  const runs = fs.readdirSync(saDir).filter((d) => /^(spare-audit-\d{8}-\d+|\d{4}-\d{2}-\d{2})$/.test(d) && fs.existsSync(path.join(saDir, d, 'draw.json'))).sort();
   const want = new Map(); // (book_id|page_number) -> rows awaiting page_id
   for (const run of runs) {
     const base = path.join(saDir, run);
     const draw = JSON.parse(fs.readFileSync(path.join(base, 'draw.json'), 'utf8'));
     const byPacket = new Map(draw.pages.map((p) => [p.packet, p]));
-    const revDir = path.join(base, 'readers', 'opus', 'reviews');
+    // Both readers: Opus (source spare_audit, as before) and the Gemini reader of the scheduled rounds (its own source,
+    // spare_audit_gemini, so tables built on the Opus series are unchanged and a page read by both carries two families).
+    // `selection` is the page's own stratum: random and lane-b-written as before, plus risk-top-decile (#8629); every
+    // consumer tests selection === 'random' for the uniform frame.
+    for (const [readerDir, SOURCE, READER] of [['opus', 'spare_audit', 'model:claude-opus (spare-audit brief #6338)'], ['gemini37', 'spare_audit_gemini', 'model:gemini-3.8-flash-low (weekly audit, #6338 brief)']]) {
+    const revDir = path.join(base, 'readers', readerDir, 'reviews');
     if (!fs.existsSync(revDir)) continue;
     for (const f of fs.readdirSync(revDir).filter((x) => x.endsWith('.json'))) {
       const packet = f.replace(/\.json$/, '');
@@ -125,8 +130,8 @@ if (fs.existsSync(saDir)) {
       const serious = errors.some((e) => e.severity === 'serious') || p.right_page === 'no';
       if (p.right_page === 'no' && !errors.some((e) => e.kind === 'wrong_leaf')) errors.push({ stage: 'other', class: 'I1', kind: 'wrong_leaf', severity: 'serious', problem: 'reader: not the right page', bad: null, good: null });
       const row = {
-        source: 'spare_audit', method: 'convergent-audit-weekly', run_id: run, reader: 'model:claude-opus (spare-audit brief #6338)',
-        book_id: d.book_id, page_id: null, page_number: d.page_number, exposure: d.exposure ?? 'unrecorded', selection: d.stratum === 'random' ? 'random' : 'lane-b-written',
+        source: SOURCE, method: SOURCE === 'spare_audit' ? 'convergent-audit-weekly' : 'convergent-audit-weekly-gemini', run_id: run, reader: READER,
+        book_id: d.book_id, page_id: null, page_number: d.page_number, exposure: d.exposure ?? 'unrecorded', selection: d.stratum ?? 'unrecorded',
         judged_at: draw.drawn_at, serious, errors, scores: { ocr: p.ocr_score ?? null, tr: p.tr_score ?? null, confidence: p.confidence ?? null }, ocr_model_at_check: d.ocr_model ?? null,
         stale: false, image_file: pkPage.image_file ? path.join(base, pkPage.image_file) : null, ocr_text: pkPage.ocr ?? null, translation: pkPage.translation ?? null,
         language: d.language ?? pk.book?.language ?? null, published: pk.book?.published ?? null,
@@ -134,6 +139,7 @@ if (fs.existsSync(saDir)) {
       const k = `${d.book_id}|${d.page_number}`;
       if (!want.has(k)) want.set(k, []);
       want.get(k).push(row);
+    }
     }
   }
   // page ids by (book_id, page_number)
@@ -148,7 +154,7 @@ if (fs.existsSync(saDir)) {
       r.stale = later(d.ocr?.updated_at) ? 'ocr' : later(d.translation?.updated_at) ? 'translation' : false;
     }
   }
-  for (const rows of want.values()) for (const r of rows) { emit(r); bump(`spare_audit/${r.stale ? 'stale' : 'fresh'}`); }
+  for (const rows of want.values()) for (const r of rows) { emit(r); bump(`${r.source}/${r.stale ? 'stale' : 'fresh'}`); }
 }
 
 // ---- 3. lane_judge_verdicts on the served arm ---------------------------------------------------------------

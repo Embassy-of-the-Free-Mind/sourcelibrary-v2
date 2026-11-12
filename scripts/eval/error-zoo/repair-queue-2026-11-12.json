@@ -1,0 +1,5044 @@
+{
+ "built_at": "2026-11-12T08:25:10.789Z",
+ "router_table": "2026-11-01-validated-7263",
+ "n": 2646,
+ "by_status": {
+  "no-route": 1897,
+  "not-confirmed": 34,
+  "deferred": 598,
+  "queued": 42,
+  "needs-second-read": 75
+ },
+ "by_cell": {
+  "german-flash3/unknown": {
+   "route": null,
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "statuses": {
+    "no-route": 78
+   }
+  },
+  "latin-flash3/unknown": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "no-route": 470,
+    "deferred": 52
+   }
+  },
+  "german-lite/print": {
+   "route": "lite>opus",
+   "decision": "keep",
+   "statuses": {
+    "needs-second-read": 36,
+    "deferred": 10
+   }
+  },
+  "arabic-flash3/unknown": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "no-route": 60,
+    "deferred": 8
+   }
+  },
+  "hebrew-flash3/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "hebrew-flash3/unknown": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "no-route": 65,
+    "deferred": 9
+   }
+  },
+  "german-flash3/print": {
+   "route": "3flash>opus",
+   "decision": "keep",
+   "statuses": {
+    "needs-second-read": 19,
+    "deferred": 7
+   }
+  },
+  "english-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 13,
+    "deferred": 5
+   }
+  },
+  "latin-lite/manuscript": {
+   "route": null,
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "statuses": {
+    "no-route": 77,
+    "deferred": 4
+   }
+  },
+  "english-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 8
+   }
+  },
+  "egyptian hieroglyphs-other/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 29
+   }
+  },
+  "greek-flash3/unknown": {
+   "route": null,
+   "decision": "held",
+   "statuses": {
+    "no-route": 371,
+    "deferred": 113
+   }
+  },
+  "chinese-flash3/unknown": {
+   "route": null,
+   "decision": "UNTESTED (unknown)",
+   "statuses": {
+    "no-route": 37,
+    "deferred": 47
+   }
+  },
+  "chinese-paddle/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 89,
+    "no-route": 32
+   }
+  },
+  "german-opus/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "latin-german-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "hebrew and judeo-arabic-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 8,
+    "no-route": 11
+   }
+  },
+  "latin-flash3/manuscript": {
+   "route": null,
+   "decision": "UNTESTED (manuscript)",
+   "statuses": {
+    "no-route": 25,
+    "deferred": 19
+   }
+  },
+  "italian-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 15
+   }
+  },
+  "french-lite/print": {
+   "route": "agy-flash-low@4-read",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "statuses": {
+    "needs-second-read": 8,
+    "deferred": 2
+   }
+  },
+  "latin-opus/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "french-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4,
+    "deferred": 2
+   }
+  },
+  "middle dutch-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "maya hieroglyphs-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 10
+   }
+  },
+  "sanskrit-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 19,
+    "deferred": 11
+   }
+  },
+  "russian-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "spanish-lite/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "chinese-opus/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "persian-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1,
+    "no-route": 1
+   }
+  },
+  "persian-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 8
+   }
+  },
+  "dutch-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 10
+   }
+  },
+  "old spanish-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 7
+   }
+  },
+  "latin-lite/print": {
+   "route": "agy-flash-low@4-read",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "statuses": {
+    "needs-second-read": 86,
+    "deferred": 9
+   }
+  },
+  "chinese-flash3/manuscript": {
+   "route": null,
+   "decision": "UNTESTED (manuscript)",
+   "statuses": {
+    "no-route": 3,
+    "deferred": 2
+   }
+  },
+  "italian-lite/manuscript": {
+   "route": null,
+   "decision": "UNTESTED (manuscript)",
+   "statuses": {
+    "no-route": 7
+   }
+  },
+  "greek-other/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3
+   }
+  },
+  "ge'ez-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 8
+   }
+  },
+  "greek-flash3/manuscript": {
+   "route": null,
+   "decision": "planned",
+   "statuses": {
+    "deferred": 27,
+    "no-route": 13
+   }
+  },
+  "latin/german/english-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4
+   }
+  },
+  "mixtec-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4
+   }
+  },
+  "maya hieroglyphic script-opus/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 5
+   }
+  },
+  "latin-flash3/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "no-route": 70,
+    "deferred": 2
+   }
+  },
+  "nahuatl-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 15
+   }
+  },
+  "nahuatl-lite/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4
+   }
+  },
+  "ge'ez-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 8
+   }
+  },
+  "spanish-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 8
+   }
+  },
+  "yucatec maya-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4
+   }
+  },
+  "k'iche' maya-spanish-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4
+   }
+  },
+  "zh-lite/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+   "statuses": {
+    "deferred": 36,
+    "no-route": 3
+   }
+  },
+  "armenian-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 10
+   }
+  },
+  "arabic-lite/manuscript": {
+   "route": null,
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "statuses": {
+    "no-route": 35,
+    "deferred": 9
+   }
+  },
+  "english-other/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 10
+   }
+  },
+  "english-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 13,
+    "no-route": 6
+   }
+  },
+  "egyptian hieroglyphs-lite/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "arabic-lite/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+   "statuses": {
+    "no-route": 11,
+    "deferred": 1
+   }
+  },
+  "egyptian hieroglyphs-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 4
+   }
+  },
+  "ge'ez-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 10
+   }
+  },
+  "dutch-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 8
+   }
+  },
+  "georgian-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "georgian-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 4
+   }
+  },
+  "multiple-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "greek-lite/manuscript": {
+   "route": null,
+   "decision": "planned",
+   "statuses": {
+    "no-route": 35,
+    "deferred": 1
+   }
+  },
+  "armenian-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "armenian-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 18
+   }
+  },
+  "greek/latin-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 13
+   }
+  },
+  "sanskrit-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 6
+   }
+  },
+  "greek-flash3/print": {
+   "route": null,
+   "decision": "held",
+   "statuses": {
+    "deferred": 8,
+    "no-route": 96
+   }
+  },
+  "demotic-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "sanskrit-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3,
+    "deferred": 4
+   }
+  },
+  "chinese-flash3/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "deferred": 26,
+    "no-route": 3
+   }
+  },
+  "french-paddle/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "demotic-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 10
+   }
+  },
+  "hebrew-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "ancient greek-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 5
+   }
+  },
+  "german-lite/unknown": {
+   "route": "lite>agy-flash-low",
+   "decision": "switch (k/n: no other route has defect verdicts)",
+   "statuses": {
+    "needs-second-read": 2
+   }
+  },
+  "english-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 8
+   }
+  },
+  "arabic-flash3/manuscript": {
+   "route": null,
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "statuses": {
+    "no-route": 15
+   }
+  },
+  "greek-lite/print": {
+   "route": null,
+   "decision": "held",
+   "statuses": {
+    "no-route": 5,
+    "deferred": 1
+   }
+  },
+  "hebrew-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "yucatec maya-opus/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "korean-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 6,
+    "deferred": 1
+   }
+  },
+  "korean-lite/manuscript": {
+   "route": null,
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "statuses": {
+    "no-route": 19,
+    "deferred": 4
+   }
+  },
+  "french-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3
+   }
+  },
+  "armenian-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "dutch-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "sanskrit-lite/print": {
+   "route": "lite",
+   "decision": "keep (k/n: the live route lite has no defect verdicts)",
+   "statuses": {
+    "needs-second-read": 5,
+    "deferred": 1
+   }
+  },
+  "latin-lite/unknown": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route lite>opus has no defect verdicts (9 books))",
+   "statuses": {
+    "deferred": 8,
+    "no-route": 3
+   }
+  },
+  "arabic-flash3/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "no-route": 9,
+    "deferred": 1
+   }
+  },
+  "greek-other/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3
+   }
+  },
+  "old english-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "hebrew, judeo-persian, and aramaic-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "chinese-paddle/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 3
+   }
+  },
+  "greek-latin-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 6,
+    "deferred": 3
+   }
+  },
+  "italian-lite/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "judeo-arabic and hebrew-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 9
+   }
+  },
+  "greek-latin-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "italian-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3,
+    "deferred": 1
+   }
+  },
+  "arabic-lite/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "japanese-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "cakchiquel / english-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "multiple-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "tangut-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "german-flash3/manuscript": {
+   "route": null,
+   "decision": "UNTESTED (manuscript)",
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "hebrew, judeo-arabic and aramaic-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "french-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1,
+    "deferred": 1
+   }
+  },
+  "law french-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "malay-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "hebrew, judeo-arabic, and ladino-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "hebrew-flash3/manuscript": {
+   "route": null,
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "korean-lite/unknown": {
+   "route": null,
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "japanese-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "korean-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "korean-lite/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "italian-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "chinese-paddle/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "german-lite/manuscript": {
+   "route": null,
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "bugis-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  }
+ },
+ "second_read_at": "2026-11-12T08:49:59.401Z",
+ "note": "Snapshot trimmed for the repo: summary counts for all rows; rows kept only for queued, needs-second-read and not-confirmed. The full queue is rebuilt by repair-queue.mjs.",
+ "rows": [
+  {
+   "page_id": "69f68bdb05ebe79c516d6428",
+   "book_id": "69c88c706c6f3cc53c85ac11",
+   "slug": "theoretischer-und-praktischer-unterricht-ueber-das-buch-thot-alliette",
+   "page_number": 311,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O1",
+    "O6",
+    "O8"
+   ],
+   "page_reads": 1,
+   "book_reads": 358,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f65e3fbcbd6da88681a993",
+   "book_id": "69c86fc56c6f3cc53c85715c",
+   "slug": "chymische-hochzeit-christiani-rosenkreutz-andreae",
+   "page_number": 120,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 217,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6accf78ec39b89ca6701f",
+   "book_id": "69c894346c6f3cc53c85c090",
+   "slug": "clef-absolue-de-la-science-occulte-le-tarot-des-bohemiens-encausse",
+   "page_number": 12,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5"
+   ],
+   "page_reads": 21,
+   "book_reads": 109,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6accf78ec39b89ca67024",
+   "book_id": "69c894346c6f3cc53c85c090",
+   "slug": "clef-absolue-de-la-science-occulte-le-tarot-des-bohemiens-encausse",
+   "page_number": 11,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5"
+   ],
+   "page_reads": 15,
+   "book_reads": 109,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6ad3e78ec39b89ca67113",
+   "book_id": "69c894346c6f3cc53c85c090",
+   "slug": "clef-absolue-de-la-science-occulte-le-tarot-des-bohemiens-encausse",
+   "page_number": 250,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O17",
+    "I4",
+    "O1"
+   ],
+   "page_reads": 6,
+   "book_reads": 109,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6680e8b8e4d6b41815b26",
+   "book_id": "69c8787d6c6f3cc53c85825a",
+   "slug": "geistliche-kurtzweil-andreae",
+   "page_number": 18,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 9,
+   "book_reads": 78,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6681f8b8e4d6b41815b6d",
+   "book_id": "69c8787d6c6f3cc53c85825a",
+   "slug": "geistliche-kurtzweil-andreae",
+   "page_number": 83,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 78,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba7",
+   "book_id": "69c8787d6c6f3cc53c85825a",
+   "slug": "geistliche-kurtzweil-andreae",
+   "page_number": 141,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 78,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba8",
+   "book_id": "69c8787d6c6f3cc53c85825a",
+   "slug": "geistliche-kurtzweil-andreae",
+   "page_number": 142,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 78,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f66f8b08437576039a234d",
+   "book_id": "69c88cfc6c6f3cc53c85adc2",
+   "slug": "trinite-principe-compendium-lebailly-grainville",
+   "page_number": 49,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "I4"
+   ],
+   "page_reads": 3,
+   "book_reads": 61,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b51dbbff09e4fe943a83e4",
+   "book_id": "69b51dbbff09e4fe943a8366",
+   "slug": "utriusque-cosmi-maioris-scilicet-et-minoris-metaphysica-fludd",
+   "page_number": 126,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 55,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b51dbbff09e4fe943a842e",
+   "book_id": "69b51dbbff09e4fe943a8366",
+   "slug": "utriusque-cosmi-maioris-scilicet-et-minoris-metaphysica-fludd",
+   "page_number": 200,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O17",
+    "O5",
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 55,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b51dbbff09e4fe943a84a7",
+   "book_id": "69b51dbbff09e4fe943a8366",
+   "slug": "utriusque-cosmi-maioris-scilicet-et-minoris-metaphysica-fludd",
+   "page_number": 321,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6",
+    "O5"
+   ],
+   "page_reads": 1,
+   "book_reads": 55,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6a5b607cf660f78591b65",
+   "book_id": "69c887946c6f3cc53c85a0d6",
+   "slug": "cest-le-romant-de-la-rose-lorris",
+   "page_number": 57,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 50,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6b6f113e0cab6b64bf1f9",
+   "book_id": "69c8406f6c6f3cc53c85071a",
+   "slug": "einige-originalschriften-des-illuminatenordens-zwack",
+   "page_number": 20,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O10",
+    "O6"
+   ],
+   "page_reads": 10,
+   "book_reads": 45,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f771ca6028036f8e239393",
+   "book_id": "69c8716b6c6f3cc53c857589",
+   "slug": "cosmographey-das-ist-beschreibung-aller-laender-munster",
+   "page_number": 279,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 40
+  },
+  {
+   "page_id": "69bd9f4bf6d63c91974800ba",
+   "book_id": "69bd9f4bf6d63c91974800b0",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page_number": 10,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 11,
+   "book_reads": 32
+  },
+  {
+   "page_id": "69bd9f4bf6d63c9197480877",
+   "book_id": "69bd9f4bf6d63c91974800b0",
+   "slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+   "page_number": 1991,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 32
+  },
+  {
+   "page_id": "69b43d3c06b196d69f66fb65",
+   "book_id": "69b43d3c06b196d69f66f8f7",
+   "slug": "plato-complete-works-ficino-translation-translator",
+   "page_number": 622,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 31,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f767df90139e9166c2236c",
+   "book_id": "69c843436c6f3cc53c850f39",
+   "slug": "das-platonisch-hermetische-christenthum-colberg",
+   "page_number": 656,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "T14"
+   ],
+   "page_reads": 5,
+   "book_reads": 24,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f7676390139e9166c2222f",
+   "book_id": "69c843436c6f3cc53c850f39",
+   "slug": "das-platonisch-hermetische-christenthum-colberg",
+   "page_number": 335,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 24
+  },
+  {
+   "page_id": "69bda035f6d63c91974856ba",
+   "book_id": "69bda035f6d63c91974856ae",
+   "slug": "speculum-imaginum-veritatis-occultae-exhibens-symbola-masen-2",
+   "page_number": 12,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 6,
+   "book_reads": 22
+  },
+  {
+   "page_id": "69bda035f6d63c91974856e3",
+   "book_id": "69bda035f6d63c91974856ae",
+   "slug": "speculum-imaginum-veritatis-occultae-exhibens-symbola-masen-2",
+   "page_number": 53,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 5,
+   "book_reads": 22
+  },
+  {
+   "page_id": "69bda035f6d63c91974856c1",
+   "book_id": "69bda035f6d63c91974856ae",
+   "slug": "speculum-imaginum-veritatis-occultae-exhibens-symbola-masen-2",
+   "page_number": 19,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 22
+  },
+  {
+   "page_id": "69f6811aa97e1be48a493c36",
+   "book_id": "69c809cd6c6f3cc53c84627f",
+   "slug": "de-sexcentum-et-tredecim-mosaice-sanctionis-edictis-ricius",
+   "page_number": 6,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 13,
+   "book_reads": 15
+  },
+  {
+   "page_id": "69f6811ea97e1be48a493c38",
+   "book_id": "69c809cd6c6f3cc53c84627f",
+   "slug": "de-sexcentum-et-tredecim-mosaice-sanctionis-edictis-ricius",
+   "page_number": 12,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 7,
+   "book_reads": 15
+  },
+  {
+   "page_id": "69f6813aa97e1be48a493c7b",
+   "book_id": "69c809cd6c6f3cc53c84627f",
+   "slug": "de-sexcentum-et-tredecim-mosaice-sanctionis-edictis-ricius",
+   "page_number": 77,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 5,
+   "book_reads": 15
+  },
+  {
+   "page_id": "69f6814ba97e1be48a493ca3",
+   "book_id": "69c809cd6c6f3cc53c84627f",
+   "slug": "de-sexcentum-et-tredecim-mosaice-sanctionis-edictis-ricius",
+   "page_number": 113,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 15
+  },
+  {
+   "page_id": "69f6672b0f4e4a53c70f0a26",
+   "book_id": "69c878b16c6f3cc53c8582fd",
+   "slug": "greek-gemma-magica-oder-magisches-edelgestein-franckenberg",
+   "page_number": 76,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I4"
+   ],
+   "page_reads": 3,
+   "book_reads": 15,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6815ca97e1be48a493cc4",
+   "book_id": "69c809cd6c6f3cc53c84627f",
+   "slug": "de-sexcentum-et-tredecim-mosaice-sanctionis-edictis-ricius",
+   "page_number": 150,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 15
+  },
+  {
+   "page_id": "69b4c0be6248be021e01fc26",
+   "book_id": "69b4c0be6248be021e01fbda",
+   "slug": "manly-p-hall-collection-box-4-ms-19-vol-5-collection",
+   "page_number": 76,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "mixed",
+   "cell": "german-lite/unknown",
+   "decision": "switch (k/n: no other route has defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6",
+    "O7"
+   ],
+   "page_reads": 0,
+   "book_reads": 14,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69af5946522dc3dfdf725a77",
+   "book_id": "69af5946522dc3dfdf725a23",
+   "slug": "le-systeme-du-monde-histoire-des-doctrines-cosmologiques-de-duhem",
+   "page_number": 84,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "leak-off-leaf-5309"
+   ],
+   "classes": [
+    "wrong_leaf",
+    "I1"
+   ],
+   "page_reads": 8,
+   "book_reads": 12,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69af5946522dc3dfdf725ad2",
+   "book_id": "69af5946522dc3dfdf725a23",
+   "slug": "le-systeme-du-monde-histoire-des-doctrines-cosmologiques-de-duhem",
+   "page_number": 175,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I1"
+   ],
+   "page_reads": 0,
+   "book_reads": 12,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6af29f58c4b99a4bce6cb",
+   "book_id": "69c8839e6c6f3cc53c8597e3",
+   "slug": "ein-philosophischer-und-chemischer-tractat-genannt-der-grasshoff",
+   "page_number": 50,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 5,
+   "book_reads": 11
+  },
+  {
+   "page_id": "69ae9bcff3bd47924cacccc9",
+   "book_id": "69ae9bcff3bd47924cacc93e",
+   "slug": "historia-critica-philosophiae-brucker",
+   "page_number": 907,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 11
+  },
+  {
+   "page_id": "69f6af58f58c4b99a4bce746",
+   "book_id": "69c8839e6c6f3cc53c8597e3",
+   "slug": "ein-philosophischer-und-chemischer-tractat-genannt-der-grasshoff",
+   "page_number": 173,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 11
+  },
+  {
+   "page_id": "69ae9bcff3bd47924caccd2a",
+   "book_id": "69ae9bcff3bd47924cacc93e",
+   "slug": "historia-critica-philosophiae-brucker",
+   "page_number": 1004,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 11
+  },
+  {
+   "page_id": "69f6af22f58c4b99a4bce6ba",
+   "book_id": "69c8839e6c6f3cc53c8597e3",
+   "slug": "ein-philosophischer-und-chemischer-tractat-genannt-der-grasshoff",
+   "page_number": 33,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 11
+  },
+  {
+   "page_id": "69f6af35f58c4b99a4bce6e8",
+   "book_id": "69c8839e6c6f3cc53c8597e3",
+   "slug": "ein-philosophischer-und-chemischer-tractat-genannt-der-grasshoff",
+   "page_number": 89,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "mixed",
+   "cell": "german-lite/unknown",
+   "decision": "switch (k/n: no other route has defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 11
+  },
+  {
+   "page_id": "69e0138d93b116d24238b14c",
+   "book_id": "69e0138c93b116d24238b125",
+   "slug": "denkmler-aus-aegypten-und-aethiopien-lepsius-894-plates",
+   "page_number": 39,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 11,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b631a51c1c21a373809449",
+   "book_id": "69b631a51c1c21a373809403",
+   "slug": "summula-confessionis-antonino",
+   "page_number": 70,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 10
+  },
+  {
+   "page_id": "6a0b3572b8a02dd156f1dd36",
+   "book_id": "6a0b3572b8a02dd156f1dd15",
+   "slug": "ars-reminiscendi-porta",
+   "page_number": 33,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 9,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69bda116f6d63c919748e138",
+   "book_id": "69bda116f6d63c919748e126",
+   "slug": "jakob-lupius-grosses-und-sonderbares-traumbuch-darinnen-die-lupius",
+   "page_number": 18,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 5,
+   "book_reads": 7
+  },
+  {
+   "page_id": "69bda116f6d63c919748e163",
+   "book_id": "69bda116f6d63c919748e126",
+   "slug": "jakob-lupius-grosses-und-sonderbares-traumbuch-darinnen-die-lupius",
+   "page_number": 61,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "T14"
+   ],
+   "page_reads": 1,
+   "book_reads": 7,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b697c6080b19f98fcf4681",
+   "book_id": "69b697c6080b19f98fcf4664",
+   "slug": "philosophia-moysaica-in-qua-sapientia-amp-scientia-fludd",
+   "page_number": 29,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5"
+   ],
+   "page_reads": 3,
+   "book_reads": 6,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69af0bfaf2e68add0cf21f1f",
+   "book_id": "69af0bfaf2e68add0cf21eec",
+   "slug": "musaeum-metallicum-aldrovandi-2",
+   "page_number": 51,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 10,
+   "book_reads": 5
+  },
+  {
+   "page_id": "6a100a2af71729295096e519",
+   "book_id": "6a100a2af71729295096e40f",
+   "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-5",
+   "page_number": 266,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 5
+  },
+  {
+   "page_id": "6a100a2af71729295096e632",
+   "book_id": "6a100a2af71729295096e40f",
+   "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-5",
+   "page_number": 547,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 5
+  },
+  {
+   "page_id": "6aa927a329214a687db63fed",
+   "book_id": "6aa927a329214a687db63f04",
+   "slug": "summa-johannis-bruder-bertholds-deutsche-rechtssumme-freiburg",
+   "page_number": 233,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 5
+  },
+  {
+   "page_id": "69af0bfaf2e68add0cf2216b",
+   "book_id": "69af0bfaf2e68add0cf21eec",
+   "slug": "musaeum-metallicum-aldrovandi-2",
+   "page_number": 639,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 1,
+   "book_reads": 5
+  },
+  {
+   "page_id": "6aa927a329214a687db64070",
+   "book_id": "6aa927a329214a687db63f04",
+   "slug": "summa-johannis-bruder-bertholds-deutsche-rechtssumme-freiburg",
+   "page_number": 364,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 1,
+   "book_reads": 5
+  },
+  {
+   "page_id": "6aa927a329214a687db640f2",
+   "book_id": "6aa927a329214a687db63f04",
+   "slug": "summa-johannis-bruder-bertholds-deutsche-rechtssumme-freiburg",
+   "page_number": 494,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 1,
+   "book_reads": 5
+  },
+  {
+   "page_id": "69b631a81c1c21a3738095a3",
+   "book_id": "69b631a81c1c21a373809577",
+   "slug": "horae-beatae-mariae-virginis-s-n",
+   "page_number": 44,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O17"
+   ],
+   "page_reads": 1,
+   "book_reads": 5,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b631a81c1c21a373809644",
+   "book_id": "69b631a81c1c21a373809577",
+   "slug": "horae-beatae-mariae-virginis-s-n",
+   "page_number": 205,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O5",
+    "E2",
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 5,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6aa927a329214a687db63ffe",
+   "book_id": "6aa927a329214a687db63f04",
+   "slug": "summa-johannis-bruder-bertholds-deutsche-rechtssumme-freiburg",
+   "page_number": 250,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 0,
+   "book_reads": 5
+  },
+  {
+   "page_id": "69bd9eedf6d63c919747d903",
+   "book_id": "69bd9eedf6d63c919747d754",
+   "slug": "morgen-rote-im-aufgangk-das-ist-die-wurtzel-oder-mutter-der-bohme",
+   "page_number": 431,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I4"
+   ],
+   "page_reads": 0,
+   "book_reads": 5,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f735445873545c995dc768",
+   "book_id": "69c851e96c6f3cc53c85325c",
+   "slug": "die-warheit-des-sensus-communis-oder-des-allgemeinen-sinnes-oetinger",
+   "page_number": 14,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "T14"
+   ],
+   "page_reads": 9,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69c916a1acb41c329360eb2b",
+   "book_id": "69c7f231f08a1a5ab805c03c",
+   "slug": "de-legibus-hebraeorum-ritualibus-et-earum-rationibus-libri-spencer",
+   "page_number": 671,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 4
+  },
+  {
+   "page_id": "69f7358c5873545c995dc864",
+   "book_id": "69c851e96c6f3cc53c85325c",
+   "slug": "die-warheit-des-sensus-communis-oder-des-allgemeinen-sinnes-oetinger",
+   "page_number": 264,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 4
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa3e3",
+   "book_id": "69dbca3a1040d1d5e20aa385",
+   "slug": "herbarius-latinus-with-german-synonyms-1",
+   "page_number": 94,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6",
+    "O7",
+    "O5"
+   ],
+   "page_reads": 3,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa39a",
+   "book_id": "69dbca3a1040d1d5e20aa385",
+   "slug": "herbarius-latinus-with-german-synonyms-1",
+   "page_number": 21,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b64e8e18b87551bfc8a25b",
+   "book_id": "69b64e8e18b87551bfc8a08b",
+   "slug": "georgii-agricolae-de-re-metallica-libri-xii-quibus-officia-agricola-2",
+   "page_number": 464,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I1",
+    "T14"
+   ],
+   "page_reads": 2,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa494",
+   "book_id": "69dbca3a1040d1d5e20aa385",
+   "slug": "herbarius-latinus-with-german-synonyms-1",
+   "page_number": 271,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O7",
+    "O5"
+   ],
+   "page_reads": 1,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8743",
+   "book_id": "6a26beb30e247ebad6de873c",
+   "slug": "grundliche-beschreibung-des-newerbauten-minerischen-bads-rhumel",
+   "page_number": 7,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8749",
+   "book_id": "6a26beb30e247ebad6de873c",
+   "slug": "grundliche-beschreibung-des-newerbauten-minerischen-bads-rhumel",
+   "page_number": 13,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O7",
+    "O11",
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8750",
+   "book_id": "6a26beb30e247ebad6de873c",
+   "slug": "grundliche-beschreibung-des-newerbauten-minerischen-bads-rhumel",
+   "page_number": 20,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa4b3",
+   "book_id": "69dbca3a1040d1d5e20aa385",
+   "slug": "herbarius-latinus-with-german-synonyms-1",
+   "page_number": 302,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6",
+    "O5"
+   ],
+   "page_reads": 0,
+   "book_reads": 4,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a08537c49638a50931bcf38",
+   "book_id": "6a08537c49638a50931bcf2a",
+   "slug": "demosthenis-orationes-quatuor-contra-philippum-a-paulo-manut",
+   "page_number": 14,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [],
+   "page_reads": 6,
+   "book_reads": 3,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f33b0e876dd827cbc586a1",
+   "book_id": "69f33b0e876dd827cbc5869f",
+   "slug": "gebettbuchlein-darinnen-allerlei-schone-gebet-spruche-und",
+   "page_number": 2,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I4"
+   ],
+   "page_reads": 5,
+   "book_reads": 3,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a3a529eb271827abb182527",
+   "book_id": "6a3a529eb271827abb182519",
+   "slug": "summa-raymundi-de-peniafort-penyafort",
+   "page_number": 14,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 3
+  },
+  {
+   "page_id": "69af5956569075d6ffc07295",
+   "book_id": "69af5956569075d6ffc07222",
+   "slug": "le-systeme-du-monde-histoire-des-doctrines-cosmologiques-de-duhem-3",
+   "page_number": 115,
+   "language": "French",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "leak-off-leaf-5309"
+   ],
+   "classes": [
+    "wrong_leaf",
+    "I1"
+   ],
+   "page_reads": 3,
+   "book_reads": 3,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a26c4abaad44c98627d0e81",
+   "book_id": "6a26c4abaad44c98627d0e6e",
+   "slug": "anthropodemus-plutonicus-das-ist-eine-neue-welt-praetorius",
+   "page_number": 19,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 1,
+   "book_reads": 3
+  },
+  {
+   "page_id": "6a26c4abaad44c98627d0e71",
+   "book_id": "6a26c4abaad44c98627d0e6e",
+   "slug": "anthropodemus-plutonicus-das-ist-eine-neue-welt-praetorius",
+   "page_number": 3,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 0,
+   "book_reads": 3
+  },
+  {
+   "page_id": "69dbc7e71040d1d5e20955e4",
+   "book_id": "69dbc7e71040d1d5e20953e0",
+   "slug": "additiones-ad-durantis-speculum-iudiciale-andreae",
+   "page_number": 516,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6",
+    "O5",
+    "O4"
+   ],
+   "page_reads": 0,
+   "book_reads": 3,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d654",
+   "book_id": "69dbc8e91040d1d5e209d605",
+   "slug": "de-vita-et-moribus-philosophorum-revised-edition-burlaeus",
+   "page_number": 79,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5",
+    "O7"
+   ],
+   "page_reads": 0,
+   "book_reads": 3,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbc99f1040d1d5e20a4e54",
+   "book_id": "69dbc99f1040d1d5e20a4e4f",
+   "slug": "rhetorica-ad-c-herennium-add-partitiones-oratoriae-cicero",
+   "page_number": 5,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 10,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69c92d55acb41c32936115bc",
+   "book_id": "69c83bc96c6f3cc53c84f7a2",
+   "slug": "alle-de-wercken-cats",
+   "page_number": 233,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "fortnightly-spot-check"
+   ],
+   "classes": [
+    "O5",
+    "O7"
+   ],
+   "page_reads": 4,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "book_id": "69dbcaf51040d1d5e20b00ad",
+   "slug": "copulata-super-tres-libros-aristotelis-de-anima-iuxta-doctri-monte-1",
+   "page_number": 52,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69c823066c6f3cc53c84aed7",
+   "book_id": "69c822ed6c6f3cc53c84ae7d",
+   "slug": "versuch-einer-auflosung-der-177-fragen-aus-jakob-bohm-oetinger",
+   "page_number": 55,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "served-audit"
+   ],
+   "classes": [
+    "O1"
+   ],
+   "page_reads": 2,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbc99f1040d1d5e20a4e6c",
+   "book_id": "69dbc99f1040d1d5e20a4e4f",
+   "slug": "rhetorica-ad-c-herennium-add-partitiones-oratoriae-cicero",
+   "page_number": 29,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcc660f8c5edf20f4b358",
+   "book_id": "69dbcc660f8c5edf20f4b301",
+   "slug": "commentarius-in-librum-aristotelis-de-anima-thomas-aquinas",
+   "page_number": 87,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6",
+    "O5"
+   ],
+   "page_reads": 2,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbc99f1040d1d5e20a4e76",
+   "book_id": "69dbc99f1040d1d5e20a4e4f",
+   "slug": "rhetorica-ad-c-herennium-add-partitiones-oratoriae-cicero",
+   "page_number": 39,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f69ea36b70293ff4a3f753",
+   "book_id": "69c85d376c6f3cc53c854e7c",
+   "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+   "page_number": 291,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I4"
+   ],
+   "page_reads": 0,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6d01c3484cd32ccfa612f",
+   "book_id": "69c879b86c6f3cc53c858529",
+   "slug": "historica-narratio-de-fratrum-orthodoxonum-ecclesiis-in-camerarius",
+   "page_number": 272,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "I4"
+   ],
+   "page_reads": 0,
+   "book_reads": 2,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbc8011040d1d5e2096522",
+   "book_id": "69dbc8011040d1d5e209650d",
+   "slug": "problemata-text-beginning-omnes-homines-aristoteles-4",
+   "page_number": 21,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 7,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcb181040d1d5e20b2048",
+   "book_id": "69dbcb181040d1d5e20b1f8e",
+   "slug": "cornucopiae-linguae-latinae-ed-aldus-manutius-add-commentari-perottus",
+   "page_number": 186,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 6,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f728f1d17421b7412a6abc",
+   "book_id": "69c84cb16c6f3cc53c8524e5",
+   "slug": "spiegel-der-misbrauche-beym-predig-amt-im-heutigen-hoburg",
+   "page_number": 9,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 6,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69dbcb181040d1d5e20b2006",
+   "book_id": "69dbcb181040d1d5e20b1f8e",
+   "slug": "cornucopiae-linguae-latinae-ed-aldus-manutius-add-commentari-perottus",
+   "page_number": 120,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 5,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69dbcbb01040d1d5e20ba315",
+   "book_id": "69dbcbb01040d1d5e20ba30b",
+   "slug": "de-balneis-et-thermis-naturalibus-omnibus-italiae-savonarola",
+   "page_number": 10,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5"
+   ],
+   "page_reads": 5,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6569f22a81338263bcf6c",
+   "book_id": "69c80d8a6c6f3cc53c846d5d",
+   "slug": "acta-b-raymundi-lulli-majoricensis-sollier",
+   "page_number": 51,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 5,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f71dbcbe92de21c83161ab",
+   "book_id": "69c890196c6f3cc53c85b551",
+   "slug": "die-wahrheit-des-sensus-communis-oetinger",
+   "page_number": 404,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "T14"
+   ],
+   "page_reads": 5,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f71e22be92de21c83162d0",
+   "book_id": "69c890196c6f3cc53c85b551",
+   "slug": "die-wahrheit-des-sensus-communis-oetinger",
+   "page_number": 705,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f725cf56d1205ea1c291a1",
+   "book_id": "69c835a16c6f3cc53c84e993",
+   "slug": "die-geistreiche-bucher-oder-schrifften-cruz",
+   "page_number": 39,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f725fb56d1205ea1c29244",
+   "book_id": "69c835a16c6f3cc53c84e993",
+   "slug": "die-geistreiche-bucher-oder-schrifften-cruz",
+   "page_number": 208,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f747f855b5473daf7938c8",
+   "book_id": "69c819256c6f3cc53c8492d0",
+   "slug": "in-quatuor-evangelia-enarationes-luculentissimae-ochrid",
+   "page_number": 50,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69dbc8ad1040d1d5e209b64b",
+   "book_id": "69dbc8ad1040d1d5e209b639",
+   "slug": "de-consolatione-philosophiae-comm-pseudo-thomas-aquinas-add-boethius",
+   "page_number": 18,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O7"
+   ],
+   "page_reads": 3,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6c383b143b843562cc0ae",
+   "book_id": "69c83ed06c6f3cc53c85029f",
+   "slug": "contra-haereses-libri-quinque-irenaeus",
+   "page_number": 312,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O10",
+    "O5",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbca8e1040d1d5e20acc08",
+   "book_id": "69dbca8e1040d1d5e20acbfd",
+   "slug": "de-valore-et-utilitate-missarum-pro-defunctis-celebratarum-a-jacobus-de-clusa",
+   "page_number": 11,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a3a3ba8862ce9a5b4d75df2",
+   "book_id": "6a3a3ba8862ce9a5b4d75da1",
+   "slug": "enchiridion-sive-manuale-confessariorum-et-poenitentium-navarrus",
+   "page_number": 81,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f71d8fbe92de21c8316124",
+   "book_id": "69c890196c6f3cc53c85b551",
+   "slug": "die-wahrheit-des-sensus-communis-oetinger",
+   "page_number": 271,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f72930d17421b7412a6bac",
+   "book_id": "69c84cb16c6f3cc53c8524e5",
+   "slug": "spiegel-der-misbrauche-beym-predig-amt-im-heutigen-hoburg",
+   "page_number": 245,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69f72961d17421b7412a6c5c",
+   "book_id": "69c84cb16c6f3cc53c8524e5",
+   "slug": "spiegel-der-misbrauche-beym-predig-amt-im-heutigen-hoburg",
+   "page_number": 429,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481cd1",
+   "book_id": "69bd9fb2f6d63c9197481c0b",
+   "slug": "bedencken-uber-esaiae-stiefels-buchlein-von-dreyerley-bohme-2",
+   "page_number": 198,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O5",
+    "I4"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f7299ed17421b7412a6d47",
+   "book_id": "69c84cb16c6f3cc53c8524e5",
+   "slug": "spiegel-der-misbrauche-beym-predig-amt-im-heutigen-hoburg",
+   "page_number": 658,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "T14"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69c84a7cacfba68303020746",
+   "book_id": "69c836fd6c6f3cc53c84ed4c",
+   "slug": "der-gantze-psalter-davids-arndt",
+   "page_number": 704,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcaa11040d1d5e20ad3bd",
+   "book_id": "69dbcaa11040d1d5e20ad385",
+   "slug": "sphaera-mundi-add-georgius-purbachius-theoricae-novae-planet-johannes-de-sacro-bo-2",
+   "page_number": 56,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b65cdcb3f4fc0441515644",
+   "book_id": "69b65cdcb3f4fc0441515632",
+   "slug": "decisiones-praecipuorum-aliquot-aporematon-reusner",
+   "page_number": 18,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcc3c0f8c5edf20f48334",
+   "book_id": "69dbcc3c0f8c5edf20f4830a",
+   "slug": "summa-theologiae-pars-prima-thomas-aquinas",
+   "page_number": 42,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcc9d0f8c5edf20f4cb4e",
+   "book_id": "69dbcc9d0f8c5edf20f4cb12",
+   "slug": "de-eucharistia-ad-modum-decem-praedicamentorum-sive-de-corpo-thomas-aquinas-1",
+   "page_number": 60,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a3a3ba8862ce9a5b4d75de7",
+   "book_id": "6a3a3ba8862ce9a5b4d75da1",
+   "slug": "enchiridion-sive-manuale-confessariorum-et-poenitentium-navarrus",
+   "page_number": 70,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 1,
+   "book_reads": 1
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481d77",
+   "book_id": "69bd9fb2f6d63c9197481c0b",
+   "slug": "bedencken-uber-esaiae-stiefels-buchlein-von-dreyerley-bohme-2",
+   "page_number": 364,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b6424e1c1c21a37388bf2c",
+   "book_id": "69b6424e1c1c21a37388beb1",
+   "slug": "m-vitruvii-pollionis-de-architectura-libri-x-ad-augustum-vitruvius",
+   "page_number": 123,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dc55e4cb6f7429748b9871",
+   "book_id": "69dc55e4cb6f7429748b9731",
+   "slug": "speculum-vitae-humanae-add-dionysius-carthusiensis-speculum-conversionis-peccato",
+   "page_number": 320,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcc850f8c5edf20f4c833",
+   "book_id": "69dbcc850f8c5edf20f4c824",
+   "slug": "de-arte-praedicandi-add-o-mors-quam-amara-est-memoria-tua-fo-thomas-aquinas",
+   "page_number": 15,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b51e9647b06ecd58193ef5",
+   "book_id": "69b51e9647b06ecd58193ed8",
+   "slug": "von-sechs-puncten-hohe-und-tieffe-grundung-i-vom-gewachse-bohme",
+   "page_number": 29,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a26be170e247ebad6de6d8b",
+   "book_id": "6a26be170e247ebad6de6d6f",
+   "slug": "eigentlicher-warhafftiger-vnd-kurtzer-bericht-etlicher",
+   "page_number": 28,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "lane-spot-check"
+   ],
+   "classes": [],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "6a26be170e247ebad6de6d8c",
+   "book_id": "6a26be170e247ebad6de6d6f",
+   "slug": "eigentlicher-warhafftiger-vnd-kurtzer-bericht-etlicher",
+   "page_number": 29,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "lane-spot-check"
+   ],
+   "classes": [],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69b51ec8768235dc65998ad6",
+   "book_id": "69b51ec8768235dc65998aac",
+   "slug": "dissertatio-inauguralis-medica-de-abstinentia-medici-ab-alberti",
+   "page_number": 42,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O10"
+   ],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcaa11040d1d5e20ad3e5",
+   "book_id": "69dbcaa11040d1d5e20ad385",
+   "slug": "sphaera-mundi-add-georgius-purbachius-theoricae-novae-planet-johannes-de-sacro-bo-2",
+   "page_number": 96,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "not-confirmed",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O7"
+   ],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": false,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3da7",
+   "book_id": "69dbcb371040d1d5e20b3beb",
+   "slug": "historia-naturalis-ed-johannes-andreas-bishop-of-aleria-plinius-secundus-1",
+   "page_number": 444,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5"
+   ],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "book_id": "69dbcb821040d1d5e20b74bb",
+   "slug": "ephemerides-1494-1506-regiomontanus",
+   "page_number": 223,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "queued",
+   "families": [
+    "claude",
+    "gemini"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6",
+    "O5"
+   ],
+   "page_reads": 0,
+   "book_reads": 1,
+   "second_read": {
+    "reader": "gem-second",
+    "family": "gemini",
+    "serious_ocr": true,
+    "run": "second-read-1"
+   }
+  },
+  {
+   "page_id": "69f6f8756662642ee90b4191",
+   "book_id": "69c849176c6f3cc53c851dbf",
+   "slug": "opera-oder-alle-bucher-und-schrifften-avila",
+   "page_number": 243,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 5,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a43f5",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 118,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O4",
+    "O6"
+   ],
+   "page_reads": 5,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcb2b1040d1d5e20b2f83",
+   "book_id": "69dbcb2b1040d1d5e20b2f79",
+   "slug": "computus-astronomicus-petrus-cracoviensis-1",
+   "page_number": 10,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O7"
+   ],
+   "page_reads": 5,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1aa6",
+   "book_id": "69dbcb141040d1d5e20b1a64",
+   "slug": "cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus",
+   "page_number": 66,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69f6f83b6662642ee90b40eb",
+   "book_id": "69c849176c6f3cc53c851dbf",
+   "slug": "opera-oder-alle-bucher-und-schrifften-avila",
+   "page_number": 83,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 4,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a43c6",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 71,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O4",
+    "O5",
+    "O6",
+    "O10"
+   ],
+   "page_reads": 4,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69b65c8718b87551bfd14925",
+   "book_id": "69b65c8718b87551bfd1491a",
+   "slug": "theses-theologicae-de-sacrosancta-trinitate-contra-winckelmann",
+   "page_number": 11,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 4,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1a9c",
+   "book_id": "69dbcb141040d1d5e20b1a64",
+   "slug": "cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus",
+   "page_number": 56,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a4390",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 17,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a43f4",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 117,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a4415",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 150,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O11"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbca131040d1d5e20a922a",
+   "book_id": "69dbca131040d1d5e20a90ce",
+   "slug": "cursus-quaestionum-super-philosophiam-aristotelis-ed-thomas-georgius-bruxellensi",
+   "page_number": 348,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6",
+    "O5"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69b631541c1c21a373806925",
+   "book_id": "69b631541c1c21a37380686e",
+   "slug": "biblia-latina-menardus-2",
+   "page_number": 183,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcc051040d1d5e20bbf0a",
+   "book_id": "69dbcc051040d1d5e20bbeeb",
+   "slug": "speculum-animae-peccatricis-2",
+   "page_number": 31,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O1",
+    "O6"
+   ],
+   "page_reads": 3,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69b66a72b3f4fc0441578911",
+   "book_id": "69b66a72b3f4fc04415788ba",
+   "slug": "diogenis-laertii-de-vitis-dogmatis-et-apophthegmatis-eorum-laerce",
+   "page_number": 87,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69b66a72b3f4fc0441578916",
+   "book_id": "69b66a72b3f4fc04415788ba",
+   "slug": "diogenis-laertii-de-vitis-dogmatis-et-apophthegmatis-eorum-laerce",
+   "page_number": 92,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "gemini"
+   ],
+   "methods": [
+    "ocr-convergence"
+   ],
+   "classes": [
+    "ocr-misread"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a43b6",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 55,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a43c7",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 72,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O6",
+    "O10",
+    "O5",
+    "O11"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc98e1040d1d5e20a4416",
+   "book_id": "69dbc98e1040d1d5e20a437f",
+   "slug": "orator-comm-victor-pisanus-add-de-fato-topica-timaeus-comm-g-cicero",
+   "page_number": 151,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "paired-fifths-check"
+   ],
+   "classes": [
+    "O5",
+    "O4",
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69f6f8b06662642ee90b4222",
+   "book_id": "69c849176c6f3cc53c851dbf",
+   "slug": "opera-oder-alle-bucher-und-schrifften-avila",
+   "page_number": 392,
+   "language": "German",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "T14"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcb521040d1d5e20b5ce9",
+   "book_id": "69dbcb521040d1d5e20b5cd2",
+   "slug": "prognosticatio-pro-anno-1487",
+   "page_number": 23,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc8851040d1d5e209a261",
+   "book_id": "69dbc8851040d1d5e209a148",
+   "slug": "practica-seu-lilium-medicinae-add-de-ingeniis-curandorum-mor-bernardus-de-gordoni",
+   "page_number": 281,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6",
+    "O5"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc8751040d1d5e2099d4f",
+   "book_id": "69dbc8751040d1d5e2099d42",
+   "slug": "compendium-naturalis-philosophiae-bartholomaeus-de-usi",
+   "page_number": 13,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1bfd",
+   "book_id": "69dbcb141040d1d5e20b1a64",
+   "slug": "cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus",
+   "page_number": 409,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O5",
+    "O6"
+   ],
+   "page_reads": 2,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69c84210dee83babd100108f",
+   "book_id": "69c82fb26c6f3cc53c84d8fb",
+   "slug": "ein-schoner-sendbrieff-vom-saligmachenden-erkandtnus-christi-schwenckfeld",
+   "page_number": 14,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "german-flash3/print",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 1,
+   "book_reads": 0
+  },
+  {
+   "page_id": "6a267ed26c1f37c9c4f3cc41",
+   "book_id": "6a267ed26c1f37c9c4f3cc35",
+   "slug": "newer-wol-mundierter-und-wol-au-staffierter-post-reuter-voigt",
+   "page_number": 12,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "judged-pages"
+   ],
+   "classes": [
+    "O5",
+    "O6",
+    "O16"
+   ],
+   "page_reads": 0,
+   "book_reads": 0
+  },
+  {
+   "page_id": "6a26c461aad44c98627cf0a4",
+   "book_id": "6a26c461aad44c98627cf094",
+   "slug": "fundamenta-vera-chymiae-paracelsus",
+   "page_number": 16,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbcc2d0f8c5edf20f473b7",
+   "book_id": "69dbcc2d0f8c5edf20f4731f",
+   "slug": "quaestiones-de-duodecim-quodlibet-thomas-aquinas",
+   "page_number": 152,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbc81a1040d1d5e209719a",
+   "book_id": "69dbc81a1040d1d5e2097178",
+   "slug": "ars-moriendi-cum-de-praesentis-exilii-miseria-mortis-transit-2",
+   "page_number": 34,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O1"
+   ],
+   "page_reads": 0,
+   "book_reads": 0
+  },
+  {
+   "page_id": "69dbca7b1040d1d5e20ac84c",
+   "book_id": "69dbca7b1040d1d5e20ac81f",
+   "slug": "de-summo-bono-isidorus-hispalensis-3",
+   "page_number": 45,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "latin-lite/print",
+   "decision": "switch (Derek 2026-11-03: V4, PR #8000)",
+   "route": "agy-flash-low@4-read",
+   "status": "needs-second-read",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "convergent-audit-weekly"
+   ],
+   "classes": [
+    "O6"
+   ],
+   "page_reads": 0,
+   "book_reads": 0
+  }
+ ]
+}
