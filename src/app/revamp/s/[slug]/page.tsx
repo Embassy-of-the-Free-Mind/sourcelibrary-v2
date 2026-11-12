@@ -59,9 +59,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </>} />
       </section>
       <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope="subject" name={m.name} />
-      <IntroBand m={m} />
-      {/* Narrower subjects stay in view above the works: they are how you narrow a big subject. */}
+      {/* Narrower subjects, as their own section straight under the hero: they are how you narrow a big subject. */}
       <SubSubjects name={m.name} rows={narrower.map((x) => ({ id: x.id, label: x.label, alt: [], href: subPages.has(x.id) ? `/revamp/s/${subPages.get(x.id)}` : `/revamp/subjects#${x.id}`, pics: (subPics[x.id] ?? []).filter((p) => p.src) }))} />
+      <IntroBand m={m} />
       <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} curated={false}
         extraTabs={about.length ? [{ key: 'collections', label: 'Collections', count: about.length, body: (
           <>

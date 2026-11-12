@@ -314,7 +314,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         {(!tabs || tab === 'works') && <>
           {!small && (
             <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
-              <span className="hidden sm:inline text-[13.5px] text-muted mr-2">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span>
+              {/* The tab already says how many; the count comes back once a filter narrows it. */}
+              {(!tabs || list.length < n) && <span className="hidden sm:inline text-[13.5px] text-muted mr-2">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span>}
               {hasMenus && <>
                 {/* Below laptop width the filter menus fold behind Filters, as on the index pages. */}
                 <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${filtersBtn(open)}`}>
@@ -331,7 +332,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                 </div>
               </>}
               <FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
-              {hasMenus && howBtn('hidden md:inline ml-2')}
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
                 {group !== 'sections' && !mixed && (canPeriod || canMade || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period written'] as [string, string]] : []), ...(canMade ? [['made', 'By date made'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
                 <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
@@ -344,7 +344,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               </div>
             </div>
           )}
-          {!small && hasMenus && <>{howBtn('md:hidden -mt-3 mb-4')}{howList}</>}
+          {!small && hasMenus && <>{howBtn('-mt-3 mb-4')}{howList}</>}
           {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
           {mixed && columns(pageEntries)}
           {!mixed && blocks.map((g, i) => (
