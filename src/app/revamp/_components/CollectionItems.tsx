@@ -67,8 +67,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const [saved, setSaved] = useState<CollectionDoc | null>(null);
   const [editing, setEditing] = useState(false);
   const [pics, setPics] = useState<Pics>('tab');
-  // Prototype: three ways to separate works from pictures on a category page, to compare.
-  const [look, setLook] = useState<'heads' | 'thumbs' | 'stacked'>('heads');
   const [tab, setTab] = useState<'works' | 'images'>('works');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [sortPick, setSort] = useState<string | null>(null);
@@ -210,7 +208,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const imagesHere = plates.length > 0;
   // Categories (subjects, centuries, languages, types) always keep texts and pictures apart, in tabs.
   // Collections still offer the mixed layouts while their listing is being decided.
-  const tabs = (!small || !curated) && imagesHere && pics === 'tab' && (curated || look !== 'stacked');
+  const tabs = (!small || !curated) && imagesHere && pics === 'tab';
   const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
     fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
     ttype !== 'all' && { key: 'type', label: ttype === NONE ? 'Type not recorded' : TEXT_TYPES[ttype] },
@@ -281,10 +279,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         <span className="text-muted mr-1">Prototype only.{protoNote && ` ${protoNote}`}</span>
         {curated && <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>}
         {saved && <span className="text-muted ml-1">Your edits are kept in this browser.</span>}
-        {!curated && imagesHere && <>
-          <span className="text-muted ml-3 mr-1">Works and pictures:</span>
-          {([['heads', 'A: heading tabs'], ['thumbs', 'B: picture tabs'], ['stacked', 'C: one after the other']] as const).map(([k, l]) => <button key={k} type="button" aria-pressed={look === k} onClick={() => setLook(k)} className={pill(look === k)}>{l}</button>)}
-        </>}
         {curated && imagesHere && <>
           <span className="text-muted ml-3 mr-1">Pictures:</span>
           <button type="button" aria-pressed={pics === 'tab'} onClick={() => setPics('tab')} className={pill(pics === 'tab')}>Separate</button>
@@ -301,8 +295,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               <button type="button" role="tab" aria-selected={tab === 'works'} onClick={() => setTab('works')} className={pill(tab === 'works')}>Works {fmt(n)}</button>
               <button type="button" role="tab" aria-selected={tab === 'images'} onClick={() => setTab('images')} className={pill(tab === 'images')}>Images {fmt(imagesTotal)}</button>
             </div>
-          ) : look === 'heads' ? (
-            // A: the section heading is the tab. The one you are on is black and underlined; the other waits in grey.
+          ) : (
+            // The section heading is the tab. The one you are on is black and underlined; the other waits in grey.
             <div className="flex items-end gap-8 sm:gap-12 border-b border-border-light mb-7" role="tablist">
               {([['works', 'Works', n], ['images', 'Images', imagesTotal]] as const).map(([k, l, c]) => (
                 <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
@@ -311,21 +305,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                 </button>
               ))}
             </div>
-          ) : (
-            // B: each tab shows a few of what is behind it, so you can see texts and pictures before you choose.
-            <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-3xl mb-8" role="tablist">
-              {([['works', 'Works', n, books.map((b) => (b as { thumbnail_blob?: string; thumbnail?: string }).thumbnail_blob || (b as { thumbnail?: string }).thumbnail).filter(Boolean) as string[]], ['images', 'Images', imagesTotal, plates.map((p) => p.src)]] as const).map(([k, l, c, pics4]) => (
-                <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
-                  className={`flex items-center gap-3 sm:gap-4 p-2 sm:p-2.5 pr-3 sm:pr-5 text-left border transition-colors ${tab === k ? 'border-primary bg-white' : 'border-border-light bg-warm text-muted hover:border-border-medium'}`}>
-                  <span className="flex gap-1 shrink-0">{pics4.slice(0, 3).map((src, i) => <img key={i} src={src} alt="" className={`h-12 sm:h-16 w-auto max-w-[56px] object-cover ${i > 0 ? 'hidden sm:block' : ''} ${tab === k ? '' : 'opacity-70'}`} />)}</span>
-                  <span className="min-w-0"><span className={`block font-display text-lg sm:text-2xl leading-tight ${tab === k ? 'text-primary' : ''}`}>{l}</span><span className="block text-[13px] tabular-nums text-muted">{fmt(c)}</span></span>
-                </button>
-              ))}
-            </div>
           )
-        ) : group === 'sections' && !mixed ? null /* the sections' own headings lead */ : (!curated && imagesHere && look === 'stacked') ? (
-          <div className="flex items-baseline justify-between gap-4 mb-5"><h2 className={H2}>Works <span className="ml-1.5 font-sans text-[15px] text-muted tabular-nums">{fmt(n)}</span></h2><a href="#images-below" className="text-[13.5px] text-muted underline underline-offset-[3px] hover:text-primary">Jump to the {fmt(imagesTotal)} images ↓</a></div>
-        ) : <h2 className={`${H2} mb-5`}>{mixed && imagesHere ? "Works and images" : "Works"}</h2>}
+        ) : group === 'sections' && !mixed ? null /* the sections' own headings lead */ : <h2 className={`${H2} mb-5`}>{mixed && imagesHere ? "Works and images" : "Works"}</h2>}
 
         {(!tabs || tab === 'works') && <>
           {!small && (
@@ -383,8 +364,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
       </div>
 
       {!tabs && imagesHere && pics === 'tab' && (
-        <section className="mt-14 pt-10 border-t border-border-light scroll-mt-24" id="images-below">
-          <h2 className={`${H2} mb-5`}>Images{!curated && <span className="ml-1.5 font-sans text-[15px] text-muted tabular-nums">{fmt(imagesTotal)}</span>}</h2>
+        <section className="mt-14">
+          <h2 className={`${H2} mb-5`}>Images</h2>
           {images}
         </section>
       )}
