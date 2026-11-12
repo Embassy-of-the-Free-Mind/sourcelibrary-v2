@@ -18,6 +18,8 @@ import { inkOrnament } from './ornaments';
 import { deviceSvg } from './device';
 import { DIAGRAMS } from './diagrams';
 import highlights from './highlights.json';
+import cast from './cast.json';
+import { MAPS, mapSvg } from './maps';
 import { images } from '@/lib/api-client';
 
 const [slug, out] = process.argv.slice(2);
@@ -163,6 +165,19 @@ figcaption { font-size: 0.9em; color: #5d5346; margin-top: 0.45em; text-align: c
 figure.opener { margin: 0 0 1.4em; }
 figure.opener img { max-height: 62vh; }
 figure.plate img { max-height: 92vh; }
+figure.map { margin: 0; text-align: center; }
+figure.map img { max-height: 96vh; max-width: 100%; }
+.person { width: 100%; border-collapse: collapse; margin: 0 0 1.1em; page-break-inside: avoid; }
+.facecell { width: 6.2em; vertical-align: top; padding: 0.2em 0.9em 0 0; text-align: center; }
+.textcell { vertical-align: top; }
+.person .face { width: 5.6em; max-height: 7em; }
+.person .initialface { width: 4.4em; height: 4.4em; }
+.person .letterface { display: inline-block; width: 3.5em; height: 3.5em; line-height: 3.5em; font-size: 1.2em; text-align: center; color: #9e4a3a; border: 2px solid #9e4a3a; }
+.person p { text-indent: 0; text-align: left; }
+.person .who { font-variant-caps: all-small-caps; letter-spacing: 0.06em; font-size: 1.12em; color: #9e4a3a; margin: 0; }
+.person .when { color: #9e7c3c; margin: 0 0 0.2em; }
+.person .line { margin: 0; line-height: 1.4; }
+.person .pic { font-size: 0.9em; color: #6b5d4b; margin: 0.25em 0 0; }
 .hl { background-color: #e9e6e1; padding: 0.05em 0.15em; border-radius: 0.15em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 a .hl, .hl a, a .hl a { color: #1a1612; -webkit-text-fill-color: #1a1612; }
 a.nref { font-size: 0.8em; vertical-align: super; line-height: 0; margin-left: 0.1em; color: #9e4a3a; }
@@ -361,6 +376,36 @@ const PURPOSE = `<h2>Source Library</h2>
 <p>Most of what was written before 1800 has never been translated into English. Whole libraries of philosophy, science, medicine, magic and history, the books our modern ideas grew out of, are still shut inside Latin, Greek, Arabic, Persian, Chinese and a dozen other languages, open to a few specialists or to no one at all.</p>
 <p>Source Library is opening them. With the Embassy of the Free Mind in Amsterdam we scan these books, transcribe them and translate them, and set every page beside its translation, free to read.</p>
 <p>This book carries one of our articles off the screen: an essay that tells a story through those books, followed by every page it quotes, with the scan, so that you can read the sources for yourself.</p>`;
+// Maps for the opening (maps.ts), one page each.
+const mapPages: string[] = [];
+for (const [k, spec] of (MAPS[slug] ?? []).entries()) {
+  const f = `${process.cwd()}/scans/map-${k}.png`;
+  // A wide map is turned to fill the page, as a book prints a wide plate (tip the reader to read it);
+  // a squarish one stays upright.
+  const flat = await sharp(Buffer.from(mapSvg(spec, BW))).png().toBuffer();
+  const { width = 1, height = 1 } = await sharp(flat).metadata();
+  const png = width / height > 1.25 ? sharp(flat).rotate(-90).resize({ height: 1700 }) : sharp(flat).resize({ width: 1600 });
+  fs.writeFileSync(f, BW ? await png.png({ palette: true, colours: 8 }).toBuffer() : await png.jpeg({ quality: 88 }).toBuffer().then((b) => b));
+  mapPages.push(`<figure class="map"><img src="file://${f}" alt="${esc(spec.title)}: ${esc(spec.sub)}"/></figure>`);
+}
+
+// The cast (cast.json): each person with a picture from the library, or the woodcut initial of their name.
+type Person = { name: string; when: string; line: string; pic?: { image: string; book: string; page: number; caption: string } };
+const people: string[] = [];
+for (const [k, pr] of ((cast as unknown as Record<string, Person[]>)[slug] ?? []).entries()) {
+  let face = '';
+  if (pr.pic) {
+    const local = await picture(pr.pic.image, `cast-${k}`, 'figure');
+    if (local) face = `<img class="face" src="${local}" alt="${esc(pr.pic.caption)}"/>`;
+  }
+  if (!face) {
+    const L = (pr.name.replace(/^(al-|the\s+|ibn\s+)/i, '').match(/[A-Za-z]/)?.[0] ?? 'A').toUpperCase();
+    const cut = orn.initials[L] ? await ornamentFile(orn.initials[L].image, `init-${L}`, RUST, true, 500) : null;
+    face = cut ? `<img class="face initialface" src="${cut}" alt=""/>` : `<span class="face letterface">${L}</span>`;
+  }
+  people.push(`<table class="person"><tr><td class="facecell">${face}</td><td class="textcell"><p class="who">${esc(pr.name)}</p><p class="when">${esc(pr.when)}</p><p class="line">${esc(pr.line)}</p>${pr.pic && face.includes('class="face"') ? `<p class="pic">${esc(pr.pic.caption)}</p>` : ''}</td></tr></table>`);
+}
+
 type Brief = { tldr: string; summary: string; chapters?: Record<string, string> };
 const brief = (briefs as unknown as Record<string, Brief>)[slug];
 const briefChapters = brief?.chapters ? essayChapters.filter((c) => brief.chapters![c.title]).map((c) =>
@@ -392,6 +437,8 @@ const epub = await new EPub({
     title: 'In brief', filename: 'brief.xhtml', beforeToc: true,
     content: `<h2>In brief</h2><p class="tldr">${esc(brief.tldr)}</p><p class="summary">${esc(brief.summary)}</p>${briefChapters ? `<div class="chapters">${briefChapters}</div>` : ''}`,
   }] : []),
+  ...mapPages.map((m, k) => ({ title: k ? 'Map: who sailed it' : 'Map', filename: `map-${k}.xhtml`, beforeToc: true, excludeFromToc: k > 0, content: m })),
+  ...(people.length ? [{ title: 'The cast', filename: 'cast.xhtml', beforeToc: true, content: `<h2>The cast</h2><p class="intro">In order of appearance.</p>${people.join('')}` }] : []),
   ...essayChapters,
   {
     title: 'The Sources', filename: 'readings.xhtml',

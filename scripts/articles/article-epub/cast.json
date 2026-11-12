@@ -1,0 +1,200 @@
+{
+  "_comment": "The people of each book, in order of appearance: name, when, one line from the essay, and a picture from the library (book whose scans may be shared). Without a picture, the person gets the woodcut initial of their name. Captions say what the picture is: a later book's imagining is not a likeness.",
+  "sea-road-china-gulf": [
+    {
+      "name": "Cristóvão da Costa",
+      "when": "Portuguese physician, 1578",
+      "line": "Remembered in his book of drugs that four hundred Chinese ships once came into Hormuz on a single tide.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69ef286185daccce30f2ca01/69ef286185daccce30f2ca33-0.jpg?v=1780587977662",
+        "book": "tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa",
+        "page": 50,
+        "caption": "Black pepper, from his book of drugs (1578)"
+      }
+    },
+    {
+      "name": "Sulayman the Merchant",
+      "when": "ninth century",
+      "line": "A merchant of the China voyage, whose sailing directions survive in Ibn al-Faqih’s geography."
+    },
+    {
+      "name": "Ibn Khordadbeh",
+      "when": "ninth century",
+      "line": "Ran the caliph’s post and intelligence service, and listed the route to China stage by stage."
+    },
+    {
+      "name": "Ibn Rustah",
+      "when": "Isfahan, early tenth century",
+      "line": "Graded the world’s musk: the best Chinese musk came by sea from Khanfu."
+    },
+    {
+      "name": "al-Qazwini",
+      "when": "died 1283",
+      "line": "A judge of Qazvin whose Wonders of Creation gathered the marvels of the China Sea."
+    },
+    {
+      "name": "Zhao Rugua",
+      "when": "Quanzhou, early thirteenth century",
+      "line": "Inspector of Foreign Trade, who wrote down what the foreign merchants in his port told him."
+    },
+    {
+      "name": "Marco Polo",
+      "when": "homeward, c. 1291–93",
+      "line": "Sailed the whole road from China with fourteen ships and came ashore at Hormuz.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69c8716b6c6f3cc53c857589/69f774a36028036f8e239862-1.jpg?v=1781697878745",
+        "book": "cosmographey-das-ist-beschreibung-aller-laender-munster",
+        "page": 1516,
+        "caption": "Marco Polo as Münster’s Cosmographey (1598) pictured him"
+      }
+    },
+    {
+      "name": "Ibn Battuta",
+      "when": "Calicut, 1340s",
+      "line": "Envoy of the Sultan of Delhi to China, who waited three months at Calicut for the season to sail."
+    },
+    {
+      "name": "Zheng He",
+      "when": "1405–33",
+      "line": "Led seven Ming fleets into the Indian Ocean, to Calicut and Hormuz.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/6992cf3bf5b4f75c1a4c84bd/6992cf3bf5b4f75c1a4c84eb-0.jpg",
+        "book": "treatise-on-armament-technology-wubei-zhi-3",
+        "page": 46,
+        "caption": "The start of his route, on the chart printed in the Wubei zhi (1621)"
+      }
+    },
+    {
+      "name": "Jan Huyghen van Linschoten",
+      "when": "1596",
+      "line": "The Dutch traveller whose Itinerario showed Europe the Portuguese Indies.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69a5d8d3a63a00aaae8aab0d/69a5d8d3a63a00aaae8aab1b-0.jpg",
+        "book": "itinerario-voyage-ofte-schipvaert-naer-oost-ofte-portugaels-linschoten",
+        "page": 14,
+        "caption": "Linschoten at thirty-two, from his Itinerario (1596)"
+      }
+    },
+    {
+      "name": "Wei Yuan",
+      "when": "Canton, 1842–44",
+      "line": "Compiled the Illustrated Treatise on the Maritime Kingdoms after the Opium War, when the road had turned against China.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/6992cf3cf5b4f75c1a4c8518/6992cf3df5b4f75c1a4c8522-0.jpg",
+        "book": "illustrated-treatise-on-the-maritime-kingdoms-vol-3",
+        "page": 10,
+        "caption": "A map of southern Asia from his Treatise"
+      }
+    }
+  ],
+  "hyperborea": [
+    {
+      "name": "Pindar",
+      "when": "498 BCE",
+      "line": "Put Hyperborea at the limit of human striving: neither by ship nor by land is the road found."
+    },
+    {
+      "name": "Herodotus",
+      "when": "fifth century BCE",
+      "line": "Heard of the straw-wrapped offerings at Delos, and was the first to doubt the Hyperboreans.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/6985ca73ded609684eedac9c/698604a755a0e500e0db6167-0.jpg?v=1781135714791",
+        "book": "prosopography-or-description-of-illustrious-persons-verdier",
+        "page": 234,
+        "caption": "Herodotus, from Verdier’s Prosopography (1573)"
+      }
+    },
+    {
+      "name": "Abaris",
+      "when": "legend",
+      "line": "The one Hyperborean with a name: a priest of Apollo who came south gathering gold."
+    },
+    {
+      "name": "Pythagoras",
+      "when": "sixth century BCE",
+      "line": "In Iamblichus, showed Abaris his golden thigh, to prove he was Apollo.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69c874af6c6f3cc53c857cd4/69f6a15b2d87bc4548d51af7-0.jpg?v=1790439741115",
+        "book": "an-encyclopedic-outline-of-masonic-hermetic-cabbalistic-and-hall",
+        "page": 105,
+        "caption": "Pythagoras, from Manly P. Hall’s Secret Teachings of All Ages (1928)"
+      }
+    },
+    {
+      "name": "Iamblichus",
+      "when": "third–fourth century CE",
+      "line": "Gave Abaris a career in his Life of Pythagoras.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69592b3b7c072c27f686e213/69592b3b7c072c27f686e43c-0.jpg",
+        "book": "de-mysteriis-aegyptiorum-pimander-asclepius-porphyry",
+        "page": 553,
+        "caption": "Iamblichus, a woodcut of 1532"
+      }
+    },
+    {
+      "name": "The Heliades",
+      "when": "myth",
+      "line": "Phaethon’s sisters, who wept by the Eridanus until they became poplars and their tears amber.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69e747b785f786e884a496c1/69e747b785f786e884a4970f-0.jpg?v=1790912076665",
+        "book": "metamorphoseon-libri-xv-ovid",
+        "page": 78,
+        "caption": "Phaethon’s fall, from Ovid’s Metamorphoses (1565)"
+      }
+    },
+    {
+      "name": "Pytheas of Massalia",
+      "when": "c. 325 BCE",
+      "line": "Sailed north past Britain and reported Thule, where the midsummer sun did not set."
+    },
+    {
+      "name": "William Stukeley",
+      "when": "1740",
+      "line": "Saw Hecataeus’s round temple of the Hyperboreans in Stonehenge.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/699ef9f4b0a976d32fd37467/699f2d6a44319b4ebafc6088-0.jpg?v=1781136719823",
+        "book": "stonehenge-stukeley",
+        "page": 173,
+        "caption": "A trilithon, drawn by Stukeley himself"
+      }
+    },
+    {
+      "name": "Olof Rudbeck",
+      "when": "Uppsala, 1679–1702",
+      "line": "Made Sweden both Plato’s Atlantis and Hyperborea."
+    },
+    {
+      "name": "Christoph Hartknoch",
+      "when": "Toruń, 1684",
+      "line": "Read the Greeks’ amber river as his own Prussian coast.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/6a209d5c89e8715c5947a6ac/6a209d5c89e8715c5947a6b2-0.jpg?v=1781727826538",
+        "book": "old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch",
+        "page": 6,
+        "caption": "Hartknoch, from his Old and New Prussia (1684)"
+      }
+    },
+    {
+      "name": "Teodor Narbutt",
+      "when": "1835",
+      "line": "Found the Hyperborean Apollo in a Baltic sun cult, and Lithuanian in Sanskrit.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/6a209d3389e8715c5947a32b/6a209d3389e8715c5947a528-0.jpg?v=1786246678873",
+        "book": "ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt",
+        "page": 509,
+        "caption": "Burial mounds in Samland, from his history"
+      }
+    },
+    {
+      "name": "Helena Blavatsky",
+      "when": "1888",
+      "line": "Made the Hyperboreans the second of her root races, and the amber her proof.",
+      "pic": {
+        "image": "https://images.sourcelibrary.org/gallery/69c883ce6c6f3cc53c859844/69f65cc45e75bb4111146779-0.jpg?v=1781148678094",
+        "book": "the-phoenix-an-illustrated-review-of-occultism-and-hall",
+        "page": 100,
+        "caption": "Blavatsky, a photograph reproduced in The Phoenix (1931)"
+      }
+    }
+  ]
+}
