@@ -18,6 +18,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   );
   // Text types have no pictures saved: the wall shows the books' own first pages.
   const tiles = pictures ? undefined : m.all.map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean) as string[];
-  return <AxisPage m={m} scope="type" pictures={pictures} tiles={tiles} crumb={pictures ? { label: 'Kinds of pictures', href: '/revamp/kinds/pictures' } : { label: 'Kinds of texts', href: '/revamp/kinds/texts' }} sub={sub}
+  return <AxisPage m={m} scope="type" pictures={pictures} tiles={tiles} crumb={pictures ? { label: 'Types of pictures', href: '/revamp/types/pictures' } : { label: 'Types of texts', href: '/revamp/types/texts' }} sub={sub}
     counts={[pictures ? `${n(t.total)} pictures` : `${n(t.total)} books`, pictures ? t.map.kind : 'Text']} />;
 }

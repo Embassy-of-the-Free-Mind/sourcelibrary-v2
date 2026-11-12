@@ -58,8 +58,8 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
             ['Subjects', 'The map of the whole library', '/revamp/subjects'],
             ['Centuries', 'When the works were written', '/revamp/periods'],
             ['Languages', 'What the books are written in', '/revamp/languages'],
-            ['Kinds of pictures', 'Maps, portraits, engravings…', '/revamp/kinds/pictures'],
-            ['Kinds of texts', 'Treatises, letters, scrolls…', '/revamp/kinds/texts'],
+            ['Types of pictures', 'Maps, portraits, engravings…', '/revamp/types/pictures'],
+            ['Types of texts', 'Treatises, letters, scrolls…', '/revamp/types/texts'],
             ['From readers', 'Collections people have made', '/revamp/c#readers'],
             ['Libraries', 'Who holds the books', '/libraries'],
           ].map(([a, b, h]) => (

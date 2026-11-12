@@ -44,9 +44,11 @@ export const PICTURE_TYPE_MAP: (Mapping & { kind: 'technique' | 'what it shows' 
   { ours: 'emblem', label: 'Emblem', kind: 'what it shows', match: 'exact', terms: [aat('emblems (allegorical pictures)', '300123040')], note: 'For whole books: LCGFT Emblem books (gf2014026091).' },
   { ours: 'portrait', label: 'Portrait', kind: 'what it shows', match: 'exact', terms: [aat('portraits', '300015637'), lc('Portraits', 'gf2017027254')] },
   { ours: 'frontispiece', label: 'Frontispiece', kind: 'place in the book', match: 'exact', terms: [aat('frontispieces (illustrations)', '300083021')] },
+  { ours: 'exlibris', label: 'Bookplate', kind: 'place in the book', match: 'close', terms: [aat('bookplates', '300028731'), wd('bookplate', 'Q188456')], note: 'The gallery’s label also takes in owners’ stamps on bindings (supralibros).' },
   { ours: 'map', label: 'Map', kind: 'what it shows', match: 'exact', terms: [aat('maps (documents)', '300028094'), lc('Maps', 'gf2011026387')] },
   { ours: 'decorative', label: 'Decoration', kind: 'what it shows', match: 'close', terms: [aat('decorations (ornamental works)', '300379003')] },
   { ours: 'symbol', label: 'Symbol', kind: 'what it shows', match: 'close', terms: [aat('symbols', '300055878')], note: 'AAT symbols is a concept, not a kind of picture.' },
+  { ours: 'musical_score', label: 'Musical score', kind: 'what it shows', match: 'close', terms: [aat('scores (documents for music)', '300026427'), wd('sheet music', 'Q187947')], note: 'Mostly music on parchment fragments reused in bindings.' },
 ];
 
 /** Periods. AAT period names are mostly European; FAST uses plain date spans instead. */

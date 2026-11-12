@@ -91,7 +91,7 @@ export default function Page() {
   const periods = periodGroups(), langs = languageGroups(), types = typeGroups();
   const subjects = (dataFile<{ subjects: unknown[] }>('subjects')?.subjects ?? []).length;
   const aType = typeSlugs()[0];
-  const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.groups.reduce((s, g) => s + g.narrower.length, 0)), 'kinds of picture and text']];
+  const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.groups.reduce((s, g) => s + g.narrower.length, 0)), 'types of picture and text']];
 
   const SITE: Node[] = [
     { title: 'Homepage', href: '/revamp/home', note: 'Three full-height featured layouts, Popular this week below', kids: [{ title: 'Featured collection schedule', href: '/revamp/featured', note: 'One file drives the homepage, Library and Gallery' }] },
@@ -106,8 +106,8 @@ export default function Page() {
     ] },
     { title: 'Centuries', href: '/revamp/periods', note: 'When works were written', kids: [{ title: 'A century: 1900–1999', href: '/revamp/p/period-1900' }] },
     { title: 'Languages', href: '/revamp/languages', note: 'The language of the copy', kids: [{ title: 'A language: Latin', href: '/revamp/l/language-latin' }] },
-    { title: 'Kinds of pictures', href: '/revamp/kinds/pictures', note: 'What it shows · How it was made · Where it sits in the book', kids: aType ? [{ title: `A kind: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
-    { title: 'Kinds of texts', href: '/revamp/kinds/texts', note: 'What it’s written on · What kind of writing' },
+    { title: 'Types of pictures', href: '/revamp/types/pictures', note: 'What it shows · How it was made · Where it sits in the book', kids: aType ? [{ title: `A type: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
+    { title: 'Types of texts', href: '/revamp/types/texts', note: 'What it’s written on · What kind of writing' },
     { title: 'Behind the scenes', kids: [
       { title: 'Every term against its standard', href: '/revamp/standards' },
       { title: 'Sorting review', href: '/revamp/review', note: 'Every collection and gallery set sorted into the new types, to correct' },
@@ -151,8 +151,8 @@ export default function Page() {
             <li>Sub-subjects as picture boxes under the hero; every subject has a picture.</li>
             <li>Filters on one line; count, tags, sort and view on a fixed second line; menu numbers follow the other filters.</li>
             <li>One set of control styles for every search, filter and sort.</li>
-            <li>Every kind and era is linked to a standard: LCGFT or Getty, plus Wikidata for names in other languages.</li>
-            <li>Types became two pages: Kinds of pictures (what it shows, how it was made, where it sits) and Kinds of texts (what it’s written on, what kind of writing).</li>
+            <li>Every type and era is linked to a standard: LCGFT or Getty, plus Wikidata for names in other languages.</li>
+            <li>Types became two pages: Types of pictures (what it shows, how it was made, where it sits) and Types of texts (what it’s written on, what kind of writing).</li>
             <li>Catalogue fixes wait for one combined round.</li>
             <li>New subjects are semi-automatic: proposed from new books, public only past a minimum.</li>
           </ul>
@@ -173,8 +173,8 @@ export default function Page() {
             <li>Split into small pull requests, the shared control styles first, since /library and /gallery already use them.</li>
             <li>Derek reviews each one; nothing merges without your yes.</li>
             <li>One catalogue round, all together: write the missing summaries first (26,595 books have text but no summary); record each text&apos;s form (scroll, tablet, papyrus…); tag kinds of writing and sub-subjects; give each picture all three answers (what it shows, how it was made, where it sits) and add title pages, initials, bookplates and musical scores; give subject pictures a proper home.</li>
-            <li>In the same round, split the close matches into exact ones: Poetry, Drama and Fiction apart; Recipes as its own kind, out of Handbook or manual.</li>
-            <li>After it: publish each kind&apos;s standard term in the book and picture pages&apos; hidden data (schema.org genre, linking LCGFT, Getty and Wikidata), so search engines and other libraries read it exactly.</li>
+            <li>In the same round, split the close matches into exact ones: Poetry, Drama and Fiction apart; Recipes as its own type, out of Handbook or manual.</li>
+            <li>After it: publish each type&apos;s standard term in the book and picture pages&apos; hidden data (schema.org genre, linking LCGFT, Getty and Wikidata), so search engines and other libraries read it exactly.</li>
             <li>Subjects that grow: new books get subjects from the list automatically, and counts update. When new books point to a FAST heading we have no subject for, it becomes a proposed subject; it goes public once it holds a minimum number of works and images (10 suggested, a setting) and someone has checked the name.</li>
           </ol>
         </div>

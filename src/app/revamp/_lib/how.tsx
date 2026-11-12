@@ -17,13 +17,13 @@ export const howLanguages = (values: number | string, unmatched: number | string
         <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
       ] });
 
-export const HOW_PICTURE_KINDS: How = { title: 'How we name kinds of pictures', items: [
+export const HOW_PICTURE_TYPES: How = { title: 'How we name types of pictures', items: [
         'Three questions, kept apart: what a picture shows, how it was made, and where it sits in the book. The names follow the Getty Art & Architecture Thesaurus, the museum standard.',
-        'A picture has one kind for now, so an engraved portrait is under either Engraving or Portrait, not both. Giving every picture an answer to each question is the next step.',
+        'A picture has one type for now, so an engraved portrait is under either Engraving or Portrait, not both. Giving every picture an answer to each question is the next step.',
         <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
       ] };
 
-export const HOW_TEXT_KINDS: How = { title: 'How we name kinds of texts', items: [
+export const HOW_TEXT_TYPES: How = { title: 'How we name types of texts', items: [
         'Two questions, kept apart: what a text is written on (a printed book, a scroll, a clay tablet) and what kind of writing it is (a treatise, a commentary, letters).',
         'What it is written on follows the Getty object types; the kinds of writing follow the Library of Congress genre and form terms.',
         'What a text is written on is not recorded in the catalogue yet. It is part of the coming catalogue round.',

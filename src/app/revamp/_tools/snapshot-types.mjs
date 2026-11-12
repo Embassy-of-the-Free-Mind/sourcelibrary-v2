@@ -14,7 +14,7 @@ async function get(url) {
   return null;
 }
 const out = { pictures: [], texts: [] };
-for (const t of ['engraving', 'woodcut', 'diagram', 'emblem', 'portrait', 'frontispiece', 'map', 'decorative', 'symbol']) {
+for (const t of ['engraving', 'woodcut', 'diagram', 'emblem', 'portrait', 'frontispiece', 'map', 'decorative', 'symbol', 'exlibris', 'musical_score']) {
   const g = await get(`https://sourcelibrary.org/api/gallery?type=${t}&limit=60&maxPerBook=3`);
   if (!g) continue;
   const slug = `type-picture-${t}`;
