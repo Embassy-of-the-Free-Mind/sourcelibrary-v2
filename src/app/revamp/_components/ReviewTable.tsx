@@ -1,10 +1,20 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, Fragment } from 'react';
 
 export interface Rec { source: string; slug: string; name: string; kind?: string | null; books?: number | null; images?: number | null; proposed: string; proposed_subject?: string | null; merge_into?: string; confidence: string; reason: string; looks_handmade?: boolean | null }
 const TYPES = ['subject', 'collection', 'type', 'historic_library', 'merge', 'library_slice', 'retire'];
-const LABEL: Record<string, string> = { subject: 'Subject', collection: 'Collection', type: 'Type of picture', historic_library: 'Historic library', merge: 'Merge', library_slice: 'Filter', retire: 'Retire' };
+// Plain actions, not category names: each option says what happens to the grouping.
+const LABEL: Record<string, string> = { subject: 'Make it a subject', collection: 'Keep as a collection', type: 'Make it a type of picture', historic_library: 'Keep as a historic library', merge: 'Fold into another', library_slice: 'Turn into a filter', retire: 'Remove it' };
+const MEANS: [string, string][] = [
+  ['Make it a subject', 'a field of study, like Alchemy: it gets a subject page listing everything on it'],
+  ['Keep as a collection', 'a set someone chose by hand, like Music of the Spheres'],
+  ['Make it a type of picture', 'a kind of picture, like Maps or Portraits'],
+  ['Fold into another', 'it covers the same ground as another grouping (shown under “Joins”): its pictures move there and its address redirects'],
+  ['Turn into a filter', 'no page of its own, just a filter in the Library, such as one library’s books'],
+  ['Keep as a historic library', 'the books of a real past library, like Jung’s'],
+  ['Remove it', 'empty, a duplicate, or not a real grouping'],
+];
 const KEY = 'revamp-sorting';
 
 export default function ReviewTable({ records }: { records: Rec[] }) {
@@ -39,9 +49,10 @@ export default function ReviewTable({ records }: { records: Rec[] }) {
         <label className="text-sm flex gap-1.5 items-center"><input type="checkbox" checked={low} onChange={(e) => setLow(e.target.checked)} /> Needs review only ({left} left)</label>
         <button type="button" onClick={exportEdits} className="text-sm underline underline-offset-2">Download corrections</button>
       </div>
+      <details open className="mb-5 text-sm max-w-3xl"><summary className="cursor-pointer text-muted">What the choices mean</summary><dl className="mt-2 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1">{MEANS.map(([k, v]) => <Fragment key={k}><dt className="font-medium text-primary">{k}</dt><dd className="text-secondary">{v}</dd></Fragment>)}</dl></details>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead><tr className="text-left border-b border-primary"><th className="py-2 pr-4 font-medium">Name</th><th className="pr-4 font-medium">Size</th><th className="pr-4 font-medium">Goes to</th><th className="pr-4 font-medium">Under or into</th><th className="font-medium">Why</th></tr></thead>
+          <thead><tr className="text-left border-b border-primary"><th className="py-2 pr-4 font-medium">Name</th><th className="pr-4 font-medium">Size</th><th className="pr-4 font-medium">Suggestion</th><th className="pr-4 font-medium">Joins</th><th className="font-medium">Why</th></tr></thead>
           <tbody>
             {rows.map((r) => (
               <tr key={key(r)} className="border-b border-border-light align-top">
