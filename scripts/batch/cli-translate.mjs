@@ -34,7 +34,8 @@
  *
  *   apply  node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *          Dry run unless --apply. Per page refuses: a CLI failure, an empty read, chatter or a refusal in place of a
- *          translation, a page whose OCR changed since the read, a read that is mostly English already printed on the
+ *          translation, a page whose OCR changed since the read, a page whose English changed since the read (#8550:
+ *          another lane wrote it in between; the read's meta records `translation_hash`), a read that is mostly English already printed on the
  *          page (a Loeb's facing translation, #7075), and (inside the door) a human-edited translation or a
  *          read that fails the health check. Writes through writePageTranslation (translate-core: snapshot to
  *          page_revisions, provenance block with api 'cli', the CLI name and version, model and prompt hash), leaves a
@@ -74,6 +75,7 @@ import { cliFolioMarkersEnabled, splitMarkedReply } from '../lib/folio-markers.m
 import { blockPageRefusals, lengthRatioK } from '../lib/block-page-guard.mjs';
 import { sourceProse } from '../lib/block-drift.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash, bodyLen } from '../lib/translate-core.mjs';
+import { translationHashOf, englishChangedSinceRead } from '../lib/book-claims.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage, cliExitCode } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
@@ -199,6 +201,7 @@ if (STAGE === 'read') {
         started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: null, attempts: r.calls, chars: text.length,
         prompt_variant: PROMPT_VARIANT_MARKED, wrapper: null, tool_calls: r.tool_calls,
         ocr_hash: contentHash(pg.ocr.data), ocr_updated_at: pg.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
+        translation_hash: translationHashOf(pg),
         prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), call_usage: agyUsage(r.usage),
         // Both pages came from ONE call: the raw reply is the same file beside each, and so is its token count.
         folio_block: { pages: [p.page_number, q.page_number], page_ids: [p.id, q.id], reading: split.reading },
@@ -284,6 +287,7 @@ if (STAGE === 'read') {
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: r.cls, attempts: r.calls, chars: text.length,
       prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(r.agent && { agent: r.agent }), ...(caption && { caption_leaf: true }),
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
+      translation_hash: translationHashOf(p),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
       // agy's own token counts for the call that produced this read (the last attempt; a cut first read's are kept
       // beside it). The quota is charged by token cost, so this is what a page costs (#7503).
@@ -329,6 +333,9 @@ for (const m of metas) {
   const page = await db.collection('pages').findOne({ id: m.page_id }, { projection: PAGE_PROJECTION });
   if (!page) { skip(m, 'page not found'); continue; }
   if (contentHash(page.ocr?.data || '') !== m.ocr_hash) { skip(m, 'OCR changed since the read'); continue; }
+  // #8550: two lanes read the same book; the second writer replaced English the first wrote minutes earlier (624 pages).
+  const raced = englishChangedSinceRead(m, page);
+  if (raced) { skip(m, raced); continue; }
   const book = await db.collection('books').findOne({ id: page.book_id });
   if (unsplitReadRefusal(book, page)) { skip(m, 'unsplit spread book (#7605)'); continue; }
   // #7075: on a bilingual page whose facing side is printed English (a Loeb), a read can hand that English back instead

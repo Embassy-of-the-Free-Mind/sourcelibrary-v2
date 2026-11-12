@@ -60,6 +60,9 @@
  * phase. Pages: UNTRANSLATED, plus a withheld page only when its English was withheld because its OCR was replaced
  * (stale_after_reocr: the new OCR is what is translated); any other withhold reason waits on an OCR repair. Same readers
  * and writer as `run` (the row's reader and per_call; cli-translate.mjs apply). Ledger DIR/../finish-ledger.jsonl, never retried.
+ *   CLAIMS (#8550): each book is leased in `book_claims` (scripts/lib/book-claims.mjs) before it is read, renewed per
+ * chunk and given back at the end, so two finish runs on different boxes never take one book; a book another live run
+ * holds is skipped (`claimed_elsewhere` in the tally). A run that dies frees its books when the 60-minute lease ends.
  *   OCR-FIRST GATE, per page: a page whose OCR is an unchecked Flash-Lite draft (ocr-first-gate.mjs uncheckedLite)
  * waits, and the book's other pages are translated now. The correction lanes take those books first (cli-ocr-lane.mjs
  * latin-first `--finish-first` steps: their untranslated Flash-Lite pages, finish books first). A lite page still
@@ -88,6 +91,7 @@ import { agyEnv, readPools, choosePool, poolName, quotaBuckets, readQuotaStdout,
 import { quotaFloor, parseAgyHome, byRereadPriority, byFinishFirst, isFinishBook, translatedShare, rungTracker, IDLE_STATUSES } from './cli-ocr-lane.mjs';
 import { ocrFirstGate, uncheckedLite, NO_TEXT } from '../lib/ocr-first-gate.mjs';
 import { WITHHOLD_REASONS } from '../lib/stale-translation.mjs';
+import { claimBook, releaseAll as releaseClaims, holderId } from '../lib/book-claims.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -313,9 +317,13 @@ async function finishMain(arg) {
   const tier1 = books.filter(isFinishBook).length;
   console.log(`finish: pool ${POOL}; ${books.length} idle visible books on an agy row (${tier1} >= 80% translated, first)${FINISH_ONLY ? ', --finish-only' : ''}; up to ${MAX} pages, ${CONCURRENCY} at a time, ${CHUNK} a chunk${APPLY ? '' : ', DRY RUN'}`);
   let budget = MAX, bi = 0, stop = null;
-  const tally = { written: 0, not_written: 0, chunks: 0, lite_waiting: 0, lite_released: 0 };
+  const tally = { written: 0, not_written: 0, chunks: 0, lite_waiting: 0, lite_released: 0, claimed_elsewhere: 0 };
   const rungs = rungTracker(db);
   const job = `cli-tr-finish-${new Date().toISOString().slice(0, 10)}`;
+  // #8550: a lease per book across boxes, so this run and another finish lane (another box's cron, a job's driver) never
+  // read the same book at once. Taken before the read, renewed with each chunk of the book, given back at the end.
+  const HOLDER = holderId(process.env.JOB_NAME || job);
+  const LEASE_MS = 60 * 60_000;
   // The next book with pages it can translate now (most books near the end of a frame have none: health-blocked,
   // ledgered, or waiting on a correction), found before /quota is read, so an empty book costs one query, not a call.
   const nextChunk = async () => {
@@ -329,7 +337,15 @@ async function finishMain(arg) {
       tally.lite_waiting += split.wait.length;
       const ready = new Set([...split.now, ...split.released]);
       const pages = open.filter((p) => ready.has(p.id));
-      if (pages.length) return { book, open, split, pages };
+      if (!pages.length) continue;
+      const claim = await claimBook(db, { bookId: book.id, holder: HOLDER, job: process.env.JOB_NAME || job, leaseMs: LEASE_MS });
+      if (!claim.ok) {
+        tally.claimed_elsewhere++;
+        console.log(`  ${book.id}: being translated by ${claim.by?.job ?? 'another run'} on ${claim.by?.box ?? '?'} (lease to ${claim.by?.until?.toISOString?.() ?? '?'}); skipped`);
+        continue;
+      }
+      if (claim.degraded) console.log(`  claim store unreachable (${claim.error}); reading ${book.id} unclaimed, apply's English-changed guard still holds`);
+      return { book, open, split, pages };
     }
     return null;
   };
@@ -377,6 +393,7 @@ async function finishMain(arg) {
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  await releaseClaims(db, HOLDER);
   console.log(`\nfinish run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
   console.log(rungs.summary('cli-translate finish'));
   // The finish queue's stamp (header): open unless this run ran out of books with pages it could translate now.
