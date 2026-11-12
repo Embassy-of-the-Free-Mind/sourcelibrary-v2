@@ -27,7 +27,7 @@ function Strip({ pics, className = '' }: { pics: Pic[]; className?: string }) {
 }
 
 /** Box with a small square picture at the left. */
-function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
+export function PicBox({ s, also }: { s: SubjectRow; also?: string }) {
   return (
     <Link id={s.home ? s.id : undefined} href={to(s)} className="group flex items-stretch bg-white border border-border-light text-[15px] text-primary hover:border-primary transition-colors scroll-mt-20">
       {!(s.bare && !s.pics[0]) && <span className="relative w-[58px] min-h-[58px] self-stretch shrink-0 overflow-hidden bg-warm">{s.pics[0] && <img src={s.pics[0].src} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />}</span>}

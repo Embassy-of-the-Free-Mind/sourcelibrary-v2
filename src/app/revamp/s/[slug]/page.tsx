@@ -10,6 +10,8 @@ import { RAMP } from '../../_lib/ramp';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
 import { HERO_H } from '../../_lib/hero';
+import { PicBox } from '../../_components/SubjectsBrowser';
+import { subjectPages, subjectPictures } from '../../_lib/subject-pics';
 
 interface Sorted { source: string; slug: string; proposed: string; proposed_subject?: string | null }
 interface Subj { id: string; label: string; level: number; parents: string[] }
@@ -34,6 +36,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   // The same coloured counts as a collection's hero; a subject has no maker, so no "Curated by".
   const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : ''].filter(Boolean) as string[];
   const narrower = self ? subjects.filter((s) => s.parents.includes(self.id)) : [];
+  // The same boxes as the Subjects page: a picture at the left, the name beside it.
+  const subPics = subjectPictures();
+  const subPages = subjectPages(subjects);
   return (
     <div className="bg-cream min-h-screen">
       {/* The collection hero, minus what only a collection has (byline, Copy, a chosen picture). */}
@@ -64,7 +69,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             {narrower.length > 0 && (
               <div className={about.length > 0 ? 'mb-8 md:mb-10' : ''}>
                 <h3 className={H3}>Subjects</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block bg-white border border-border-light px-[18px] py-3.5 text-[15px] text-primary hover:border-primary transition-colors">{s.label}</Link>)}</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <PicBox key={s.id} s={{ id: s.id, label: s.label, alt: [], href: subPages.has(s.id) ? `/revamp/s/${subPages.get(s.id)}` : `/revamp/subjects#${s.id}`, pics: (subPics[s.id] ?? []).filter((p) => p.src) }} />)}</div>
               </div>
             )}
             {about.length > 0 && (

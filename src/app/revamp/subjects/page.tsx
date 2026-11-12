@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import Link from 'next/link';
 import PlateWall from '../_components/PlateWall';
 import CollectionBars from '../_components/CollectionBars';
@@ -7,6 +5,7 @@ import SubjectsBrowser, { type Pic, type SubjectRow } from '../_components/Subje
 import { collectionModel, dataFile, snapshotSlugs } from '../_lib/data';
 import { RAMP } from '../_lib/ramp';
 import { HERO_H } from '../_lib/hero';
+import { subjectPictures } from '../_lib/subject-pics';
 
 interface Subj { id: string; label: string; level: number; parents: string[]; altLabels?: Record<string, string[]> }
 
@@ -28,17 +27,8 @@ const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
 const INTRO = 'Browse the library by what its books and images are about.';
 
-/** Pictures per subject, saved from the public gallery by _tools/snapshot-subject-images.py. */
-function pictures(): Record<string, Pic[]> {
-  const read = (f: string) => { try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/app/revamp/_data/snap', f), 'utf8')); } catch { return {}; } };
-  const main = read('_subject-images.json');
-  const extra = read('_subject-images-extra.json'); // broad subjects the gallery files under another name
-  for (const [k, v] of Object.entries(extra)) if (!main[k]?.length) main[k] = v;
-  return main;
-}
-
 export default function Page() {
-  const pics = pictures();
+  const pics = subjectPictures();
   const all = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
   // Subjects with saved data get their own page in the prototype; the rest are listed without a link.
   const pages = new Map<string, string>();
