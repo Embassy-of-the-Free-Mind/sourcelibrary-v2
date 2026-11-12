@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import AxisPage from '../../_components/AxisPage';
 import { collectionModel } from '../../_lib/data';
 import { typeOfSlug } from '../../_lib/axes';
-import { HOW_TYPES } from '../../_lib/how';
 
 const n = (v: number) => v.toLocaleString('en-GB');
 
@@ -19,6 +18,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   );
   // Text types have no pictures saved: the wall shows the books' own first pages.
   const tiles = pictures ? undefined : m.all.map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean) as string[];
-  return <AxisPage m={m} scope="type" how={HOW_TYPES} pictures={pictures} tiles={tiles} crumb={{ label: 'Types', href: '/revamp/types' }} sub={sub}
+  return <AxisPage m={m} scope="type" pictures={pictures} tiles={tiles} crumb={{ label: 'Types', href: '/revamp/types' }} sub={sub}
     counts={[pictures ? `${n(t.total)} pictures` : `${n(t.total)} books`, pictures ? t.map.kind : 'Text']} />;
 }

@@ -7,16 +7,15 @@ import AskPanel from './AskPanel';
 import CollectionItems from './CollectionItems';
 import { RAMP } from '../_lib/ramp';
 import type { CollectionModel } from '../_lib/types';
-import type { How } from '../_lib/how';
 import { HERO_H } from '../_lib/hero';
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 const n = (v: number) => v.toLocaleString('en-GB');
 
 /** A single period or language, in the single subject design: plate hero, counts, the bar, then the works. */
-export default function AxisPage({ m, crumb, sub, counts, scope, pictures = false, tiles, how }: {
+export default function AxisPage({ m, crumb, sub, counts, scope, pictures = false, tiles }: {
   m: CollectionModel; crumb: { label: string; href: string }; sub?: ReactNode; counts: string[]; scope: 'period' | 'language' | 'type';
-  /** A page of pictures (a picture type) rather than of books. */ pictures?: boolean; tiles?: string[]; /** Explains this category only. */ how?: How;
+  /** A page of pictures (a picture type) rather than of books. */ pictures?: boolean; tiles?: string[];
 }) {
   const total = pictures ? m.stats.images : m.stats.works;
   const shown = pictures ? m.plates.length : m.all.length;
@@ -41,7 +40,7 @@ export default function AxisPage({ m, crumb, sub, counts, scope, pictures = fals
         </>} />
       </section>
       <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope={scope === 'type' ? 'subject' : scope} name={m.name} />
-      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.plates.length} byBook={m.byBook} curated={false} explain={how}
+      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.plates.length} byBook={m.byBook} curated={false}
         protoNote={`The first ${n(shown)} of ${n(total)} ${pictures ? 'pictures, as the Gallery lists them' : 'books, as the Library lists them'}${pictures || !m.plates.length ? '' : ', and pictures from the first few'}. Live, this lists them all.`} />
     </div>
   );

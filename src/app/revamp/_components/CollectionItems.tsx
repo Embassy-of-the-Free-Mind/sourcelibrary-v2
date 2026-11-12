@@ -10,7 +10,6 @@ import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import SortSelect from '@/components/search-kit/SortSelect';
 import FilterChips from '@/components/search-kit/FilterChips';
-import type { How } from '../_lib/how';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import type { Book, RPlate } from '../_lib/types';
 import { PERIODS, PICTURE_TYPES, TEXT_TYPES, centuryLabel, centuryOf, periodLabel, periodsOf } from '../_lib/facets';
@@ -43,8 +42,6 @@ const formatOf = (b: Book) => (b.material && FORMATS[b.material] ? [b.material] 
 
 export interface ItemsProps {
   slug: string;
-  /** A century, language or type page explains only its own category, not every filter. */
-  explain?: How;
   books: Book[];
   notes: { id: string; rank: number; note: string }[];
   plates: RPlate[];
@@ -64,7 +61,7 @@ export interface ItemsProps {
  * their notes; over 60, filters too. What the maker sets (order, sections, notes, default order) comes
  * from the collection document, edited in CollectionEditor.
  */
-export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true, protoNote, explain, extraTabs = [] }: ItemsProps) {
+export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true, protoNote, extraTabs = [] }: ItemsProps) {
   const original = initialDoc(books, notes);
   const [saved, setSaved] = useState<CollectionDoc | null>(null);
   const [editing, setEditing] = useState(false);
@@ -79,7 +76,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const [ptype, setPtype] = useState('all');
   const [fmtPick, setFmt] = useState('all');
   const [made, setMade] = useState('all');
-  const [how, setHow] = useState(false);
   const [q, setQ] = useState('');
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
@@ -222,24 +218,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const formatMenu = canFormat && <SortSelect label="Format" value={fmtPick} onChange={reset(setFmt)} options={facetOptions('Printed or manuscript', formatCount, ['book', 'manuscript'], (v) => FORMATS[v], 'Not recorded')} />;
   const hasMenus = (big && canLang) || canType || canFormat || canPeriod || canMade || (mixed && canPicType);
   const active = [lang, ttype, fmtPick, period, made, ...(mixed ? [ptype] : [])].filter((v) => v !== 'all').length;
-  // How each filter is described, and the standard it follows. Same pattern as "How we choose subjects".
-  const howBtn = (cls: string) => <button type="button" aria-expanded={how} aria-controls="how-described" onClick={() => setHow(!how)} className={`${cls} text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary`}>{explain?.title ?? 'How we describe works'} {how ? '−' : '+'}</button>;
-  const howList = how && (explain ? (
-    <ul id="how-described" className="max-w-3xl -mt-2 mb-8 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
-      {explain.items.map((it, i) => <li key={i}>{it}</li>)}
-    </ul>
-  ) : (
-    <ul id="how-described" className="max-w-3xl -mt-2 mb-8 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
-      <li><b className="font-medium text-primary">Subjects</b> are our own list, each linked to the library standards FAST and Wikidata where a match exists.</li>
-      <li><b className="font-medium text-primary">Type</b> is the kind of text, named after the Library of Congress genre and form terms.</li>
-      <li><b className="font-medium text-primary">Printed or manuscript</b> follows the split library catalogue records already make.</li>
-      <li><b className="font-medium text-primary">Period written</b> is when the original text was written, by era with fixed dates. The era names are ours: no shared standard covers every culture.</li>
-      <li><b className="font-medium text-primary">Date made</b> is the century this copy was printed or written out, as a date span, the way library catalogues give dates (FAST).</li>
-      <li><b className="font-medium text-primary">Picture type</b> is named after the Getty Art &amp; Architecture Thesaurus.</li>
-      <li><b className="font-medium text-primary">Language</b> is the language of this copy, which can differ from the original&apos;s.</li>
-      <li>Not every work is described yet. Those that aren&apos;t are counted under &ldquo;not recorded&rdquo;. <Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></li>
-    </ul>
-  ));
   const typeMenu = canType && <SortSelect label="Type" value={ttype} onChange={reset(setTtype)} options={facetOptions('Any type', typeCount, ORDER_T, (v) => TEXT_TYPES[v], 'Type not recorded')} />;
   const periodMenu = (counts: Map<string, number>) => <SortSelect label="Period written" value={period} onChange={reset(setPeriod)} options={facetOptions('Written any time', counts, ORDER_P, periodLabel, 'Not recorded')} />;
   const madeMenu = canMade && <SortSelect label="Date made" value={made} onChange={reset(setMade)} options={facetOptions('Made any time', madeCount, madeOrder, (v) => centuryLabel(Number(v)), 'Undated')} />;
@@ -253,10 +231,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
           {picTypeMenu}
           {canPeriod && periodMenu(picPeriodCount)}
           <FilterChips chips={chips.filter((c) => c.key === 'ptype' || c.key === 'period')} onRemove={clear} onClearAll={() => { clear('ptype'); clear('period'); }} />
-          {howBtn('ml-2')}
         </div>
       )}
-      {(canPicType || canPeriod) && howList}
       {shownPlates.length === 0 ? <p className="py-10 text-muted">No pictures match. <button type="button" className="underline underline-offset-[3px]" onClick={() => { clear('ptype'); clear('period'); }}>Clear the filters</button></p> : <GalleryMasonry plates={shownPlates} />}
       {imagesTotal > plates.length && (
         <div className="mt-6"><Link href={`/gallery?collection=${slug}`} className="inline-flex items-center gap-2 h-11 px-5 bg-primary text-cream text-sm font-medium hover:opacity-90">See all {fmt(imagesTotal)} in the Gallery <ArrowRight className="w-4 h-4" /></Link></div>
@@ -344,7 +320,6 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               </div>
             </div>
           )}
-          {!small && hasMenus && <>{howBtn('-mt-3 mb-4')}{howList}</>}
           {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
           {mixed && columns(pageEntries)}
           {!mixed && blocks.map((g, i) => (
