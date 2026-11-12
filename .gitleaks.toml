@@ -1,0 +1,27 @@
+# gitleaks config for .github/workflows/security-scan.yml.
+#
+# Default rules, plus an allowlist for values that are public by design (they
+# ship to every browser). Add a value here only if it is meant to be public;
+# a real secret that leaked gets rotated, not allowlisted.
+#
+# PR scans read this file from the BASE branch, so a PR cannot allowlist its
+# own finding.
+
+title = "sourcelibrary gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Public-by-design client keys"
+regexes = [
+  # PostHog project key, shipped in the page (src/components/providers/AnalyticsScripts.tsx)
+  '''phc_b6JJdGHB6YKKhjfPEKn3YLbsYmwAcWliAR3F8jbFch8''',
+]
+
+[[allowlists]]
+description = "Example env files and lockfiles"
+paths = [
+  '''(^|/)\.env\.example$''',
+  '''(^|/)package-lock\.json$''',
+]
