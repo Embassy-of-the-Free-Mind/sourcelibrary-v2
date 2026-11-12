@@ -3,16 +3,17 @@
 import { useEffect, useMemo, useState, Fragment } from 'react';
 
 export interface Rec { source: string; slug: string; name: string; kind?: string | null; books?: number | null; images?: number | null; proposed: string; proposed_subject?: string | null; merge_into?: string; confidence: string; reason: string; looks_handmade?: boolean | null }
-const TYPES = ['subject', 'collection', 'type', 'historic_library', 'merge', 'library_slice', 'retire'];
+const TYPES = ['subject', 'collection', 'type', 'historic_library', 'merge', 'library_slice', 'hidden', 'retire'];
 // Plain actions, not category names: each option says what happens to the grouping.
-const LABEL: Record<string, string> = { subject: 'Make it a subject', collection: 'Keep as a collection', type: 'Make it a type of picture', historic_library: 'Keep as a historic library', merge: 'Fold into another', library_slice: 'Turn into a filter', retire: 'Remove it' };
+const LABEL: Record<string, string> = { subject: 'Make it a subject', collection: 'Keep as a collection', type: 'Make it a type of picture', historic_library: 'Keep as a historic library', merge: 'Fold into another', library_slice: 'Turn into a filter', hidden: 'Keep hidden', retire: 'Remove it' };
 const MEANS: [string, string][] = [
-  ['Make it a subject', 'a field of study, like Alchemy: it gets a subject page listing everything on it'],
-  ['Keep as a collection', 'a set someone chose by hand, like Music of the Spheres'],
-  ['Make it a type of picture', 'a kind of picture, like Maps or Portraits'],
+  ['Make it a subject', 'only when it matches a standard subject (FAST or Wikidata), like Alchemy: it gets a subject page listing everything on it'],
+  ['Keep as a collection', 'everything that is not a standard subject or type: a set someone chose, like Music of the Spheres'],
+  ['Make it a type of picture', 'only when it matches a standard type (Getty or Library of Congress), like Maps or Portraits'],
   ['Fold into another', 'it covers the same ground as another grouping (shown under “Joins”): its pictures move there and its address redirects'],
   ['Turn into a filter', 'no page of its own, just a filter in the Library, such as one library’s books'],
   ['Keep as a historic library', 'the books of a real past library, like Jung’s'],
+  ['Keep hidden', 'out of lists and search, but its address still works for anyone with the link'],
   ['Remove it', 'empty, a duplicate, or not a real grouping'],
 ];
 const KEY = 'revamp-sorting';

@@ -59,10 +59,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Art (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Art",
-   "merge_into": null
+   "merge_into": "Art"
   },
   {
    "source": "collection",
@@ -79,10 +79,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indigenous traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indigenous traditions",
-   "merge_into": null
+   "merge_into": "Indigenous traditions"
   },
   {
    "source": "collection",
@@ -96,10 +96,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Agriculture (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Agriculture",
-   "merge_into": null
+   "merge_into": "Agriculture"
   },
   {
    "source": "collection",
@@ -158,10 +158,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Alchemy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Alchemy",
-   "merge_into": null
+   "merge_into": "Alchemy"
   },
   {
    "source": "collection",
@@ -208,10 +208,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indigenous traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indigenous traditions",
-   "merge_into": null
+   "merge_into": "Indigenous traditions"
   },
   {
    "source": "collection",
@@ -239,11 +239,11 @@
    "artworks": 25,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit, but it names a civilisation.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Ancient Egyptian religion (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient Egyptian religion",
-   "merge_into": null
+   "merge_into": "Ancient Egyptian religion"
   },
   {
    "source": "collection",
@@ -272,10 +272,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Poetry (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Poetry",
-   "merge_into": null
+   "merge_into": "Poetry"
   },
   {
    "source": "collection",
@@ -288,11 +288,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit, but it names a religion.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Ancient religions and mythology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient Greek religion",
-   "merge_into": null
+   "merge_into": "Ancient religions and mythology"
   },
   {
    "source": "collection",
@@ -306,10 +306,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Ancient history (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient history",
-   "merge_into": null
+   "merge_into": "Ancient history"
   },
   {
    "source": "collection",
@@ -323,10 +323,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Music theory (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Music theory",
-   "merge_into": null
+   "merge_into": "Music theory"
   },
   {
    "source": "collection",
@@ -370,10 +370,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Mesmerism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mesmerism",
-   "merge_into": null
+   "merge_into": "Mesmerism"
   },
   {
    "source": "collection",
@@ -386,11 +386,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit with a hook, but it is a standard category of texts.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Bible (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Bible",
-   "merge_into": null
+   "merge_into": "Bible"
   },
   {
    "source": "collection",
@@ -404,10 +404,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Arabic alchemy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Arabic alchemy",
-   "merge_into": null
+   "merge_into": "Arabic alchemy"
   },
   {
    "source": "collection",
@@ -420,11 +420,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 10 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Islamic magic (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic magic",
-   "merge_into": null
+   "merge_into": "Islamic magic"
   },
   {
    "source": "collection",
@@ -438,10 +438,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islamic medicine (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic medicine",
-   "merge_into": null
+   "merge_into": "Islamic medicine"
   },
   {
    "source": "collection",
@@ -455,10 +455,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Architecture (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Architecture",
-   "merge_into": null
+   "merge_into": "Architecture"
   },
   {
    "source": "collection",
@@ -472,10 +472,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Aristotelianism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Aristotelianism",
-   "merge_into": null
+   "merge_into": "Aristotelianism"
   },
   {
    "source": "collection",
@@ -488,11 +488,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit, but it covers a national literary tradition.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Eastern Christianity (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Eastern Christianity",
-   "merge_into": null
+   "merge_into": "Eastern Christianity"
   },
   {
    "source": "collection",
@@ -505,11 +505,11 @@
    "artworks": 566,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A broad form of book rather than a topic, but it works as a top-level Subject.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Arts (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Arts",
-   "merge_into": null
+   "merge_into": "Arts"
   },
   {
    "source": "collection",
@@ -569,10 +569,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Astrology and divination (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Astrology and divination",
-   "merge_into": null
+   "merge_into": "Astrology and divination"
   },
   {
    "source": "collection",
@@ -585,11 +585,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit, but it names a medical tradition.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Ayurveda (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ayurveda",
-   "merge_into": null
+   "merge_into": "Ayurveda"
   },
   {
    "source": "collection",
@@ -603,10 +603,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Aztec and Nahua culture (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Aztec and Nahua culture",
-   "merge_into": null
+   "merge_into": "Aztec and Nahua culture"
   },
   {
    "source": "collection",
@@ -619,10 +619,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "New term under Religion and mysticism. An independent religion, so not under Islam.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Bahá’í Faith (FAST or Wikidata).",
    "first_pass": "subject",
-   "subject_term": "Bahá’í Faith"
+   "subject_term": "Bahá’í Faith",
+   "merge_into": "Bahá’í Faith"
   },
   {
    "source": "collection",
@@ -650,11 +651,11 @@
    "artworks": 3,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit, but it names a regional religion.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Ancient religions and mythology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient religions and mythology",
-   "merge_into": null
+   "merge_into": "Ancient religions and mythology"
   },
   {
    "source": "collection",
@@ -728,10 +729,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "A place, so kind provenance is wrong. The plan lists it as a Subject.",
+   "reason": "Matches the standard subject Tibetan Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Tibetan Buddhism",
-   "merge_into": null
+   "merge_into": "Tibetan Buddhism"
   },
   {
    "source": "collection",
@@ -745,10 +746,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Bible (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Bible",
-   "merge_into": null
+   "merge_into": "Bible"
   },
   {
    "source": "collection",
@@ -792,10 +793,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Buddhism",
-   "merge_into": null
+   "merge_into": "Buddhism"
   },
   {
    "source": "collection",
@@ -809,10 +810,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Buddhism",
-   "merge_into": null
+   "merge_into": "Buddhism"
   },
   {
    "source": "collection",
@@ -841,10 +842,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Philosophy",
-   "merge_into": null
+   "merge_into": "Philosophy"
   },
   {
    "source": "collection",
@@ -888,10 +889,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Omens and portents (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Omens and portents",
-   "merge_into": null
+   "merge_into": "Omens and portents"
   },
   {
    "source": "collection",
@@ -905,10 +906,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Typed exhibit, but it simply names a religious tradition.",
+   "reason": "Matches the standard subject Celtic religion (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Celtic religion",
-   "merge_into": null
+   "merge_into": "Celtic religion"
   },
   {
    "source": "collection",
@@ -971,10 +972,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Chinese divination (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese divination",
-   "merge_into": null
+   "merge_into": "Chinese divination"
   },
   {
    "source": "collection",
@@ -991,10 +992,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Buddhist scriptures (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Buddhist scriptures",
-   "merge_into": null
+   "merge_into": "Buddhist scriptures"
   },
   {
    "source": "collection",
@@ -1011,10 +1012,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject East Asian religion and thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "East Asian religion and thought",
-   "merge_into": null
+   "merge_into": "East Asian religion and thought"
   },
   {
    "source": "collection",
@@ -1030,11 +1031,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 12 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Daoism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Daoism",
-   "merge_into": null
+   "merge_into": "Daoism"
   },
   {
    "source": "collection",
@@ -1051,10 +1052,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Chinese divination (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese divination",
-   "merge_into": null
+   "merge_into": "Chinese divination"
   },
   {
    "source": "collection",
@@ -1071,10 +1072,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Chinese literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese literature",
-   "merge_into": null
+   "merge_into": "Chinese literature"
   },
   {
    "source": "collection",
@@ -1091,10 +1092,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Chinese history (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese history",
-   "merge_into": null
+   "merge_into": "Chinese history"
   },
   {
    "source": "collection",
@@ -1111,10 +1112,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Chinese medicine (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese medicine",
-   "merge_into": null
+   "merge_into": "Chinese medicine"
   },
   {
    "source": "collection",
@@ -1127,11 +1128,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A stub description, but a real topic with 105 books.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Chinese military writing (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese military writing",
-   "merge_into": null
+   "merge_into": "Chinese military writing"
   },
   {
    "source": "collection",
@@ -1142,10 +1143,10 @@
    "books": 47,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "low",
-   "reason": "A stub description, but the topic is real. Overlaps Chinese Natural Knowledge.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Chinese natural history",
    "merge_into": null
@@ -1162,10 +1163,10 @@
    "books": 261,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Chinese natural history",
    "merge_into": null
@@ -1182,10 +1183,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Physical sciences and technology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Chinese technology",
-   "merge_into": null
+   "merge_into": "Physical sciences and technology"
   },
   {
    "source": "collection",
@@ -1199,10 +1200,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Christian mysticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Christian mysticism",
-   "merge_into": null
+   "merge_into": "Christian mysticism"
   },
   {
    "source": "collection",
@@ -1216,10 +1217,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Christianity (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Christianity",
-   "merge_into": null
+   "merge_into": "Christianity"
   },
   {
    "source": "collection",
@@ -1248,10 +1249,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Philosophy",
-   "merge_into": null
+   "merge_into": "Philosophy"
   },
   {
    "source": "collection",
@@ -1268,10 +1269,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Confucian classics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Confucian classics",
-   "merge_into": null
+   "merge_into": "Confucian classics"
   },
   {
    "source": "collection",
@@ -1300,10 +1301,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Hermeticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Hermeticism",
-   "merge_into": null
+   "merge_into": "Hermeticism"
   },
   {
    "source": "collection",
@@ -1332,10 +1333,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Music of the spheres (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Music of the spheres",
-   "merge_into": null
+   "merge_into": "Music of the spheres"
   },
   {
    "source": "collection",
@@ -1349,10 +1350,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Astronomy and cosmology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Astronomy and cosmology",
-   "merge_into": null
+   "merge_into": "Astronomy and cosmology"
   },
   {
    "source": "collection",
@@ -1380,11 +1381,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 2 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Daoism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Daoism",
-   "merge_into": null
+   "merge_into": "Daoism"
   },
   {
    "source": "collection",
@@ -1397,11 +1398,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 6 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Daoist alchemy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Daoist alchemy",
-   "merge_into": null
+   "merge_into": "Daoist alchemy"
   },
   {
    "source": "collection",
@@ -1418,10 +1419,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Daoism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Daoism",
-   "merge_into": null
+   "merge_into": "Daoism"
   },
   {
    "source": "collection",
@@ -1450,10 +1451,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Demonology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Demonology",
-   "merge_into": null
+   "merge_into": "Demonology"
   },
   {
    "source": "collection",
@@ -1466,11 +1467,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 7 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Psychology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Psychology",
-   "merge_into": null
+   "merge_into": "Psychology"
   },
   {
    "source": "collection",
@@ -1529,10 +1530,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Divination (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Divination",
-   "merge_into": null
+   "merge_into": "Divination"
   },
   {
    "source": "collection",
@@ -1546,10 +1547,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Prayer and devotion (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Prayer and devotion",
-   "merge_into": null
+   "merge_into": "Prayer and devotion"
   },
   {
    "source": "collection",
@@ -1563,10 +1564,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Drama (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Drama",
-   "merge_into": null
+   "merge_into": "Drama"
   },
   {
    "source": "collection",
@@ -1624,10 +1625,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "New term under Islam and Religion and mysticism, as library headings usually place it.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Druze (FAST or Wikidata).",
    "first_pass": "subject",
-   "subject_term": "Druze"
+   "subject_term": "Druze",
+   "merge_into": "Druze"
   },
   {
    "source": "collection",
@@ -1672,10 +1674,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad place or people the books are about.",
+   "reason": "Matches the standard subject East Asian religion and thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "East Asian religion and thought",
-   "merge_into": null
+   "merge_into": "East Asian religion and thought"
   },
   {
    "source": "collection",
@@ -1688,11 +1690,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 5 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Erotic literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Erotic literature",
-   "merge_into": null
+   "merge_into": "Erotic literature"
   },
   {
    "source": "collection",
@@ -1706,10 +1708,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Education (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Education",
-   "merge_into": null
+   "merge_into": "Education"
   },
   {
    "source": "collection",
@@ -1753,10 +1755,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Encyclopaedias (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Encyclopaedias",
-   "merge_into": null
+   "merge_into": "Encyclopaedias"
   },
   {
    "source": "collection",
@@ -1785,10 +1787,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Enlightenment thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Enlightenment thought",
-   "merge_into": null
+   "merge_into": "Enlightenment thought"
   },
   {
    "source": "collection",
@@ -1832,10 +1834,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Erotic literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Erotic literature",
-   "merge_into": null
+   "merge_into": "Erotic literature"
   },
   {
    "source": "collection",
@@ -1881,11 +1883,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 7 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Eastern Christianity (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Eastern Christianity",
-   "merge_into": null
+   "merge_into": "Eastern Christianity"
   },
   {
    "source": "collection",
@@ -1899,10 +1901,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Erotic literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Erotic literature",
-   "merge_into": null
+   "merge_into": "Erotic literature"
   },
   {
    "source": "collection",
@@ -1916,10 +1918,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Experimental science (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Experimental science",
-   "merge_into": null
+   "merge_into": "Experimental science"
   },
   {
    "source": "collection",
@@ -1933,10 +1935,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Fables (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Fables",
-   "merge_into": null
+   "merge_into": "Fables"
   },
   {
    "source": "collection",
@@ -1950,10 +1952,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Psychology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Psychology",
-   "merge_into": null
+   "merge_into": "Psychology"
   },
   {
    "source": "collection",
@@ -1967,10 +1969,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islamic philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic philosophy",
-   "merge_into": null
+   "merge_into": "Islamic philosophy"
   },
   {
    "source": "collection",
@@ -2029,10 +2031,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Neoplatonism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Neoplatonism",
-   "merge_into": null
+   "merge_into": "Neoplatonism"
   },
   {
    "source": "collection",
@@ -2046,10 +2048,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Food and drink (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Food and drink",
-   "merge_into": null
+   "merge_into": "Food and drink"
   },
   {
    "source": "collection",
@@ -2093,10 +2095,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Freemasonry (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Freemasonry",
-   "merge_into": null
+   "merge_into": "Freemasonry"
   },
   {
    "source": "collection",
@@ -2110,10 +2112,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Galenic medicine (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Galenic medicine",
-   "merge_into": null
+   "merge_into": "Galenic medicine"
   },
   {
    "source": "collection",
@@ -2157,10 +2159,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Geography and travel (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Geography and travel",
-   "merge_into": null
+   "merge_into": "Geography and travel"
   },
   {
    "source": "collection",
@@ -2174,10 +2176,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Christian mysticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Christian mysticism",
-   "merge_into": null
+   "merge_into": "Christian mysticism"
   },
   {
    "source": "collection",
@@ -2206,10 +2208,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Gnosticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Gnosticism",
-   "merge_into": null
+   "merge_into": "Gnosticism"
   },
   {
    "source": "collection",
@@ -2313,10 +2315,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Herbals (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Herbals",
-   "merge_into": null
+   "merge_into": "Herbals"
   },
   {
    "source": "collection",
@@ -2376,10 +2378,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Esoteric traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Esoteric traditions",
-   "merge_into": null
+   "merge_into": "Esoteric traditions"
   },
   {
    "source": "collection",
@@ -2393,10 +2395,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Hinduism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Hinduism",
-   "merge_into": null
+   "merge_into": "Hinduism"
   },
   {
    "source": "collection",
@@ -2410,10 +2412,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject History (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "History",
-   "merge_into": null
+   "merge_into": "History"
   },
   {
    "source": "collection",
@@ -2441,11 +2443,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 6 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Native North American traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Native North American traditions",
-   "merge_into": null
+   "merge_into": "Native North American traditions"
   },
   {
    "source": "collection",
@@ -2459,10 +2461,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Astrology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Astrology",
-   "merge_into": null
+   "merge_into": "Astrology"
   },
   {
    "source": "collection",
@@ -2476,10 +2478,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Renaissance humanism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Renaissance humanism",
-   "merge_into": null
+   "merge_into": "Renaissance humanism"
   },
   {
    "source": "collection",
@@ -2493,10 +2495,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Secret societies (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Secret societies",
-   "merge_into": null
+   "merge_into": "Secret societies"
   },
   {
    "source": "collection",
@@ -2525,10 +2527,10 @@
    "books": 26,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Two subjects in one. Split: tag each book Buddhism or Jainism, retire this page with a redirect to Indian religions.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Buddhism"
   },
@@ -2543,11 +2545,11 @@
    "artworks": 14,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A tradition. Duplicates Puranas & Epics, so these want merging.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Indian epics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian epics",
-   "merge_into": null
+   "merge_into": "Indian epics"
   },
   {
    "source": "collection",
@@ -2576,10 +2578,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indian mathematics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian mathematics",
-   "merge_into": null
+   "merge_into": "Indian mathematics"
   },
   {
    "source": "collection",
@@ -2590,10 +2592,10 @@
    "books": 32,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Matches Indian philosophy.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Indian philosophy"
   },
@@ -2612,10 +2614,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indian philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian philosophy",
-   "merge_into": null
+   "merge_into": "Indian philosophy"
   },
   {
    "source": "collection",
@@ -2629,10 +2631,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Tantra (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Tantra",
-   "merge_into": null
+   "merge_into": "Tantra"
   },
   {
    "source": "collection",
@@ -2646,10 +2648,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indian alchemy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian alchemy",
-   "merge_into": null
+   "merge_into": "Indian alchemy"
   },
   {
    "source": "collection",
@@ -2662,11 +2664,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 14 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Tantra (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Tantra",
-   "merge_into": null
+   "merge_into": "Tantra"
   },
   {
    "source": "collection",
@@ -2680,10 +2682,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indian religions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian religions",
-   "merge_into": null
+   "merge_into": "Indian religions"
   },
   {
    "source": "collection",
@@ -2714,11 +2716,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed exhibit, but it names a broad tradition.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Indigenous traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indigenous traditions",
-   "merge_into": null
+   "merge_into": "Indigenous traditions"
   },
   {
    "source": "collection",
@@ -2762,10 +2764,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islam (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islam",
-   "merge_into": null
+   "merge_into": "Islam"
   },
   {
    "source": "collection",
@@ -2779,10 +2781,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islamic science (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic science",
-   "merge_into": null
+   "merge_into": "Islamic science"
   },
   {
    "source": "collection",
@@ -2796,10 +2798,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islamic magic (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic magic",
-   "merge_into": null
+   "merge_into": "Islamic magic"
   },
   {
    "source": "collection",
@@ -2816,10 +2818,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islamic philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic philosophy",
-   "merge_into": null
+   "merge_into": "Islamic philosophy"
   },
   {
    "source": "collection",
@@ -2848,10 +2850,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Islamic science (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Islamic science",
-   "merge_into": null
+   "merge_into": "Islamic science"
   },
   {
    "source": "collection",
@@ -2865,10 +2867,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Jainism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Jainism",
-   "merge_into": null
+   "merge_into": "Jainism"
   },
   {
    "source": "collection",
@@ -2897,10 +2899,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Kabbalah (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Kabbalah",
-   "merge_into": null
+   "merge_into": "Kabbalah"
   },
   {
    "source": "collection",
@@ -2914,10 +2916,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Judaism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Judaism",
-   "merge_into": null
+   "merge_into": "Judaism"
   },
   {
    "source": "collection",
@@ -2931,10 +2933,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Jewish philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Jewish philosophy",
-   "merge_into": null
+   "merge_into": "Jewish philosophy"
   },
   {
    "source": "collection",
@@ -2966,10 +2968,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indian astrology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian astrology",
-   "merge_into": null
+   "merge_into": "Indian astrology"
   },
   {
    "source": "collection",
@@ -2983,10 +2985,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Kabbalah (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Kabbalah",
-   "merge_into": null
+   "merge_into": "Kabbalah"
   },
   {
    "source": "collection",
@@ -3015,10 +3017,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Erotic literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Erotic literature",
-   "merge_into": null
+   "merge_into": "Erotic literature"
   },
   {
    "source": "collection",
@@ -3031,11 +3033,11 @@
    "artworks": 1,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 10 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Tantra (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Tantra",
-   "merge_into": null
+   "merge_into": "Tantra"
   },
   {
    "source": "collection",
@@ -3067,10 +3069,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Alchemical apparatus (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Alchemical apparatus",
-   "merge_into": null
+   "merge_into": "Alchemical apparatus"
   },
   {
    "source": "collection",
@@ -3084,10 +3086,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Ancient history (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient history",
-   "merge_into": null
+   "merge_into": "Ancient history"
   },
   {
    "source": "collection",
@@ -3146,10 +3148,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Literature",
-   "merge_into": null
+   "merge_into": "Literature"
   },
   {
    "source": "collection",
@@ -3160,10 +3162,10 @@
    "books": 2,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Too small for its own term (2 books). Lojong becomes a tag on these books.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Tibetan Buddhism"
   },
@@ -3179,10 +3181,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Magic and witchcraft (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Magic and witchcraft",
-   "merge_into": null
+   "merge_into": "Magic and witchcraft"
   },
   {
    "source": "collection",
@@ -3196,10 +3198,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Mahayana Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mahayana Buddhism",
-   "merge_into": null
+   "merge_into": "Mahayana Buddhism"
   },
   {
    "source": "collection",
@@ -3227,10 +3229,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "New term under Gnosticism and Ancient religions. The surviving gnostic religion.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Mandaeism (FAST or Wikidata).",
    "first_pass": "subject",
-   "subject_term": "Mandaeism"
+   "subject_term": "Mandaeism",
+   "merge_into": "Mandaeism"
   },
   {
    "source": "collection",
@@ -3244,10 +3247,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Typed exhibit, but it simply names a religious tradition.",
+   "reason": "Matches the standard subject Manichaeism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Manichaeism",
-   "merge_into": null
+   "merge_into": "Manichaeism"
   },
   {
    "source": "collection",
@@ -3276,10 +3279,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Mathematics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mathematics",
-   "merge_into": null
+   "merge_into": "Mathematics"
   },
   {
    "source": "collection",
@@ -3293,10 +3296,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Maya civilisation (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Maya civilisation",
-   "merge_into": null
+   "merge_into": "Maya civilisation"
   },
   {
    "source": "collection",
@@ -3310,10 +3313,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Machines (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Machines",
-   "merge_into": null
+   "merge_into": "Machines"
   },
   {
    "source": "collection",
@@ -3327,10 +3330,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Medicine (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Medicine",
-   "merge_into": null
+   "merge_into": "Medicine"
   },
   {
    "source": "collection",
@@ -3343,11 +3346,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 12 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Heresy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Heresy",
-   "merge_into": null
+   "merge_into": "Heresy"
   },
   {
    "source": "collection",
@@ -3375,11 +3378,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A region. Overlaps Aztec & Nahua and Maya.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Mesoamerican religion (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mesoamerican religion",
-   "merge_into": null
+   "merge_into": "Mesoamerican religion"
   },
   {
    "source": "collection",
@@ -3424,10 +3427,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject War (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "War",
-   "merge_into": null
+   "merge_into": "War"
   },
   {
    "source": "collection",
@@ -3455,11 +3458,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 12 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Mystery religions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mystery religions",
-   "merge_into": null
+   "merge_into": "Mystery religions"
   },
   {
    "source": "collection",
@@ -3473,10 +3476,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "A field of thought with no kind set.",
+   "reason": "Matches the standard subject Ethics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ethics",
-   "merge_into": null
+   "merge_into": "Ethics"
   },
   {
    "source": "collection",
@@ -3508,10 +3511,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Music (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Music",
-   "merge_into": null
+   "merge_into": "Music"
   },
   {
    "source": "collection",
@@ -3524,11 +3527,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A real field, though small and with its own custom page.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Fungi (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Fungi",
-   "merge_into": null
+   "merge_into": "Fungi"
   },
   {
    "source": "collection",
@@ -3542,10 +3545,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Meditation (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Meditation",
-   "merge_into": null
+   "merge_into": "Meditation"
   },
   {
    "source": "collection",
@@ -3559,10 +3562,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Religion and mysticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mysticism",
-   "merge_into": null
+   "merge_into": "Religion and mysticism"
   },
   {
    "source": "collection",
@@ -3576,10 +3579,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Ancient religions and mythology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient religions and mythology",
-   "merge_into": null
+   "merge_into": "Ancient religions and mythology"
   },
   {
    "source": "collection",
@@ -3608,10 +3611,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Natural history (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Natural history",
-   "merge_into": null
+   "merge_into": "Natural history"
   },
   {
    "source": "collection",
@@ -3625,10 +3628,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Natural magic (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Natural magic",
-   "merge_into": null
+   "merge_into": "Natural magic"
   },
   {
    "source": "collection",
@@ -3642,10 +3645,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Physical sciences and technology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Natural philosophy",
-   "merge_into": null
+   "merge_into": "Physical sciences and technology"
   },
   {
    "source": "collection",
@@ -3658,11 +3661,11 @@
    "artworks": null,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 3 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Native North American traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Native North American traditions",
-   "merge_into": null
+   "merge_into": "Native North American traditions"
   },
   {
    "source": "collection",
@@ -3676,10 +3679,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Neoplatonism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Neoplatonism",
-   "merge_into": null
+   "merge_into": "Neoplatonism"
   },
   {
    "source": "collection",
@@ -3707,11 +3710,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A tradition and region. Overlaps Norse & Germanic.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Norse and Germanic religion (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Norse religion",
-   "merge_into": null
+   "merge_into": "Norse and Germanic religion"
   },
   {
    "source": "collection",
@@ -3722,10 +3725,10 @@
    "books": 12,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Same field as Norse religion. Widen that label to Norse and Germanic religion.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Norse religion"
   },
@@ -3755,11 +3758,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 13 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Optics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Optics",
-   "merge_into": null
+   "merge_into": "Optics"
   },
   {
    "source": "collection",
@@ -3773,10 +3776,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Comparative religion (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Comparative religion",
-   "merge_into": null
+   "merge_into": "Comparative religion"
   },
   {
    "source": "collection",
@@ -3790,10 +3793,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Typed exhibit, but it simply names a religious tradition.",
+   "reason": "Matches the standard subject Mystery religions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Mystery religions",
-   "merge_into": null
+   "merge_into": "Mystery religions"
   },
   {
    "source": "collection",
@@ -3806,11 +3809,11 @@
    "artworks": null,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 5 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Native North American traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Native North American traditions",
-   "merge_into": null
+   "merge_into": "Native North American traditions"
   },
   {
    "source": "collection",
@@ -3823,11 +3826,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A stub description, but a real tradition.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Fables (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Fables",
-   "merge_into": null
+   "merge_into": "Fables"
   },
   {
    "source": "collection",
@@ -3916,10 +3919,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Paracelsianism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Paracelsianism",
-   "merge_into": null
+   "merge_into": "Paracelsianism"
   },
   {
    "source": "collection",
@@ -3933,10 +3936,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Paracelsianism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Paracelsianism",
-   "merge_into": null
+   "merge_into": "Paracelsianism"
   },
   {
    "source": "collection",
@@ -3949,11 +3952,11 @@
    "artworks": null,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real place or people, but with only 3 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Native North American traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Native North American traditions",
-   "merge_into": null
+   "merge_into": "Native North American traditions"
   },
   {
    "source": "collection",
@@ -3979,10 +3982,10 @@
    "books": 14,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Matches Persian literature.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Persian literature"
   },
@@ -3998,10 +4001,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Pharmacy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Pharmacy",
-   "merge_into": null
+   "merge_into": "Pharmacy"
   },
   {
    "source": "collection",
@@ -4015,10 +4018,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Christian theology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Christian theology",
-   "merge_into": null
+   "merge_into": "Christian theology"
   },
   {
    "source": "collection",
@@ -4047,10 +4050,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Platonism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Platonism",
-   "merge_into": null
+   "merge_into": "Platonism"
   },
   {
    "source": "collection",
@@ -4064,10 +4067,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Poetry (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Poetry",
-   "merge_into": null
+   "merge_into": "Poetry"
   },
   {
    "source": "collection",
@@ -4095,11 +4098,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 9 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Economics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Economics",
-   "merge_into": null
+   "merge_into": "Economics"
   },
   {
    "source": "collection",
@@ -4113,10 +4116,10 @@
    "books": 62,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Matches Pacific traditions.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Pacific traditions"
   },
@@ -4177,10 +4180,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Prose fiction (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Prose fiction",
-   "merge_into": null
+   "merge_into": "Prose fiction"
   },
   {
    "source": "collection",
@@ -4194,10 +4197,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Psychology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Psychology",
-   "merge_into": null
+   "merge_into": "Psychology"
   },
   {
    "source": "collection",
@@ -4211,10 +4214,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Psychology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Psychology",
-   "merge_into": null
+   "merge_into": "Psychology"
   },
   {
    "source": "collection",
@@ -4230,11 +4233,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A tradition. Duplicates Epics & Purāṇas, so these want merging.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Indian epics (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian epics",
-   "merge_into": null
+   "merge_into": "Indian epics"
   },
   {
    "source": "collection",
@@ -4248,10 +4251,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Quran (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Quran",
-   "merge_into": null
+   "merge_into": "Quran"
   },
   {
    "source": "collection",
@@ -4265,10 +4268,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Reformation (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Reformation",
-   "merge_into": null
+   "merge_into": "Reformation"
   },
   {
    "source": "collection",
@@ -4297,11 +4300,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A field. Overlaps Architecture and Renaissance Architecture.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Architecture (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Architecture",
-   "merge_into": null
+   "merge_into": "Architecture"
   },
   {
    "source": "collection",
@@ -4315,10 +4318,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Renaissance humanism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Renaissance humanism",
-   "merge_into": null
+   "merge_into": "Renaissance humanism"
   },
   {
    "source": "collection",
@@ -4347,10 +4350,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Music theory (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Music theory",
-   "merge_into": null
+   "merge_into": "Music theory"
   },
   {
    "source": "collection",
@@ -4364,10 +4367,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Natural philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Natural philosophy",
-   "merge_into": null
+   "merge_into": "Natural philosophy"
   },
   {
    "source": "collection",
@@ -4381,10 +4384,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Philosophy",
-   "merge_into": null
+   "merge_into": "Philosophy"
   },
   {
    "source": "collection",
@@ -4398,10 +4401,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Political thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Political thought",
-   "merge_into": null
+   "merge_into": "Political thought"
   },
   {
    "source": "collection",
@@ -4415,10 +4418,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Political thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Political thought",
-   "merge_into": null
+   "merge_into": "Political thought"
   },
   {
    "source": "collection",
@@ -4447,10 +4450,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Ritual magic (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ritual magic",
-   "merge_into": null
+   "merge_into": "Ritual magic"
   },
   {
    "source": "collection",
@@ -4479,10 +4482,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Canon and Roman law (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Canon and Roman law",
-   "merge_into": null
+   "merge_into": "Canon and Roman law"
   },
   {
    "source": "collection",
@@ -4493,10 +4496,10 @@
    "books": 70,
    "images": null,
    "artworks": 0,
-   "proposed": "subject",
+   "proposed": "collection",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Where two subjects meet. Tag books Rosicrucianism and Alchemy; the overlap is a search, not a term.",
+   "confidence": "high",
+   "reason": "No standard subject (FAST or Wikidata) matches it, so it stays a collection.",
    "first_pass": "subject",
    "subject_term": "Rosicrucianism"
   },
@@ -4527,10 +4530,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Rosicrucianism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Rosicrucianism",
-   "merge_into": null
+   "merge_into": "Rosicrucianism"
   },
   {
    "source": "collection",
@@ -4544,10 +4547,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Poetry (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Poetry",
-   "merge_into": null
+   "merge_into": "Poetry"
   },
   {
    "source": "collection",
@@ -4591,10 +4594,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Literature",
-   "merge_into": null
+   "merge_into": "Literature"
   },
   {
    "source": "collection",
@@ -4607,11 +4610,11 @@
    "artworks": null,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 14 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Political thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Political thought",
-   "merge_into": null
+   "merge_into": "Political thought"
   },
   {
    "source": "collection",
@@ -4625,10 +4628,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Eastern Christianity (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Eastern Christianity",
-   "merge_into": null
+   "merge_into": "Eastern Christianity"
   },
   {
    "source": "collection",
@@ -4703,10 +4706,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Religion and mysticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Sacred texts",
-   "merge_into": null
+   "merge_into": "Religion and mysticism"
   },
   {
    "source": "collection",
@@ -4719,10 +4722,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "New term under Religion and mysticism, related to Judaism but not filed under it.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Samaritanism (FAST or Wikidata).",
    "first_pass": "subject",
-   "subject_term": "Samaritanism"
+   "subject_term": "Samaritanism",
+   "merge_into": "Samaritanism"
   },
   {
    "source": "collection",
@@ -4750,11 +4754,11 @@
    "artworks": 11,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed curated, but it is a broad topic of 158 books.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Ships and shipbuilding (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ships and shipbuilding",
-   "merge_into": null
+   "merge_into": "Ships and shipbuilding"
   },
   {
    "source": "collection",
@@ -4768,10 +4772,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Esoteric traditions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Secret societies",
-   "merge_into": null
+   "merge_into": "Esoteric traditions"
   },
   {
    "source": "collection",
@@ -4785,10 +4789,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Typed exhibit, but it simply names a religious tradition.",
+   "reason": "Matches the standard subject Heresy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Heresy",
-   "merge_into": null
+   "merge_into": "Heresy"
   },
   {
    "source": "collection",
@@ -4802,10 +4806,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Typed exhibit, but it simply names a religious tradition.",
+   "reason": "Matches the standard subject Shinto (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Shinto",
-   "merge_into": null
+   "merge_into": "Shinto"
   },
   {
    "source": "collection",
@@ -4848,10 +4852,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "New term under Indian religions.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Sikhism (FAST or Wikidata).",
    "first_pass": "subject",
-   "subject_term": "Sikhism"
+   "subject_term": "Sikhism",
+   "merge_into": "Sikhism"
   },
   {
    "source": "collection",
@@ -4865,10 +4870,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Ancient philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient philosophy",
-   "merge_into": null
+   "merge_into": "Ancient philosophy"
   },
   {
    "source": "collection",
@@ -4898,10 +4903,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Political thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Political thought",
-   "merge_into": null
+   "merge_into": "Political thought"
   },
   {
    "source": "collection",
@@ -4915,10 +4920,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Dreams (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Dreams",
-   "merge_into": null
+   "merge_into": "Dreams"
   },
   {
    "source": "collection",
@@ -4947,10 +4952,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Political thought (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Political thought",
-   "merge_into": null
+   "merge_into": "Political thought"
   },
   {
    "source": "collection",
@@ -4964,10 +4969,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad place or people the books are about.",
+   "reason": "Matches the standard subject Indian religions (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian religions",
-   "merge_into": null
+   "merge_into": "Indian religions"
   },
   {
    "source": "collection",
@@ -4981,10 +4986,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Necromancy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Necromancy",
-   "merge_into": null
+   "merge_into": "Necromancy"
   },
   {
    "source": "collection",
@@ -5013,10 +5018,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Spiritual alchemy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Spiritual alchemy",
-   "merge_into": null
+   "merge_into": "Spiritual alchemy"
   },
   {
    "source": "collection",
@@ -5060,10 +5065,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "A school of thought with no kind set.",
+   "reason": "Matches the standard subject Stoicism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Stoicism",
-   "merge_into": null
+   "merge_into": "Stoicism"
   },
   {
    "source": "collection",
@@ -5076,11 +5081,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A field, but sits oddly under Literature and overlaps Games.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Games (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Games",
-   "merge_into": null
+   "merge_into": "Games"
   },
   {
    "source": "collection",
@@ -5093,11 +5098,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A tradition. Overlaps Sufism and needs a clearer scope.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Sufism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Sufism",
-   "merge_into": null
+   "merge_into": "Sufism"
   },
   {
    "source": "collection",
@@ -5113,11 +5118,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A tradition. Duplicates Sufism & Islamic Mysticism, so these want merging.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Sufism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Sufism",
-   "merge_into": null
+   "merge_into": "Sufism"
   },
   {
    "source": "collection",
@@ -5130,11 +5135,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A tradition. Duplicates Sufism, so these want merging.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Sufism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Sufism",
-   "merge_into": null
+   "merge_into": "Sufism"
   },
   {
    "source": "collection",
@@ -5148,10 +5153,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Typed exhibit, but it simply names a religious tradition.",
+   "reason": "Matches the standard subject Ancient religions and mythology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Ancient religions and mythology",
-   "merge_into": null
+   "merge_into": "Ancient religions and mythology"
   },
   {
    "source": "collection",
@@ -5195,10 +5200,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Eastern Christianity (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Eastern Christianity",
-   "merge_into": null
+   "merge_into": "Eastern Christianity"
   },
   {
    "source": "collection",
@@ -5227,10 +5232,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Secret societies (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Secret societies",
-   "merge_into": null
+   "merge_into": "Secret societies"
   },
   {
    "source": "collection",
@@ -5335,10 +5340,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Demonology (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Demonology",
-   "merge_into": null
+   "merge_into": "Demonology"
   },
   {
    "source": "collection",
@@ -5352,10 +5357,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a broad tradition or field the books are about.",
+   "reason": "Matches the standard subject Christianity (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Christian theology",
-   "merge_into": null
+   "merge_into": "Christianity"
   },
   {
    "source": "collection",
@@ -5368,11 +5373,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A movement with narrower records under it, though typed curated.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Theosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Theosophy",
-   "merge_into": null
+   "merge_into": "Theosophy"
   },
   {
    "source": "collection",
@@ -5386,10 +5391,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Theosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Theosophy",
-   "merge_into": null
+   "merge_into": "Theosophy"
   },
   {
    "source": "collection",
@@ -5403,10 +5408,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Theravada Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Theravada Buddhism",
-   "merge_into": null
+   "merge_into": "Theravada Buddhism"
   },
   {
    "source": "collection",
@@ -5434,11 +5439,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Reads as a tradition, though its dedication suggests someone shaped it.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Tibetan Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Tibetan Buddhism",
-   "merge_into": null
+   "merge_into": "Tibetan Buddhism"
   },
   {
    "source": "collection",
@@ -5452,10 +5457,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Tibetan Buddhism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Tibetan Buddhism",
-   "merge_into": null
+   "merge_into": "Tibetan Buddhism"
   },
   {
    "source": "collection",
@@ -5472,10 +5477,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Indian philosophy (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Indian philosophy",
-   "merge_into": null
+   "merge_into": "Indian philosophy"
   },
   {
    "source": "collection",
@@ -5489,10 +5494,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Vedas (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Vedas",
-   "merge_into": null
+   "merge_into": "Vedas"
   },
   {
    "source": "collection",
@@ -5550,11 +5555,11 @@
    "artworks": 12,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 9 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Food and drink (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Food and drink",
-   "merge_into": null
+   "merge_into": "Food and drink"
   },
   {
    "source": "collection",
@@ -5568,10 +5573,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Literature (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Literature",
-   "merge_into": null
+   "merge_into": "Literature"
   },
   {
    "source": "collection",
@@ -5585,10 +5590,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Witchcraft (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Witchcraft",
-   "merge_into": null
+   "merge_into": "Witchcraft"
   },
   {
    "source": "collection",
@@ -5601,11 +5606,11 @@
    "artworks": 21,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "A narrow topic under Demonology, with a curated feel.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Witchcraft (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Witchcraft",
-   "merge_into": null
+   "merge_into": "Witchcraft"
   },
   {
    "source": "collection",
@@ -5637,10 +5642,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Fables (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Fables",
-   "merge_into": null
+   "merge_into": "Fables"
   },
   {
    "source": "collection",
@@ -5654,10 +5659,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Music (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Music",
-   "merge_into": null
+   "merge_into": "Music"
   },
   {
    "source": "collection",
@@ -5670,11 +5675,11 @@
    "artworks": 1,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "low",
-   "reason": "A catch-all for everything outside Europe, so its children may be better Subjects than it is.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Religion and mysticism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Religion and mysticism",
-   "merge_into": null
+   "merge_into": "Religion and mysticism"
   },
   {
    "source": "collection",
@@ -5705,11 +5710,11 @@
    "artworks": 29,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Typed curated, but it is a broad tradition of 122 books.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Yoga (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Yoga",
-   "merge_into": null
+   "merge_into": "Yoga"
   },
   {
    "source": "collection",
@@ -5726,10 +5731,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Yoga (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Yoga",
-   "merge_into": null
+   "merge_into": "Yoga"
   },
   {
    "source": "collection",
@@ -5747,10 +5752,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Yoga (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Yoga",
-   "merge_into": null
+   "merge_into": "Yoga"
   },
   {
    "source": "collection",
@@ -5778,11 +5783,11 @@
    "artworks": 0,
    "proposed": "subject",
    "proposed_subject": null,
-   "confidence": "medium",
-   "reason": "Names a real tradition or field, but with only 13 books it may be too small to stand alone.",
+   "confidence": "high",
+   "reason": "Matches the standard subject Zen (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Zen",
-   "merge_into": null
+   "merge_into": "Zen"
   },
   {
    "source": "collection",
@@ -5796,10 +5801,10 @@
    "proposed": "subject",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
+   "reason": "Matches the standard subject Zoroastrianism (FAST or Wikidata).",
    "first_pass": "subject",
    "subject_term": "Zoroastrianism",
-   "merge_into": null
+   "merge_into": "Zoroastrianism"
   },
   {
    "source": "gallery",
@@ -5811,13 +5816,14 @@
    "images": 188,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Alchemy",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -5829,13 +5835,14 @@
    "images": 299,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Medicine & Natural History",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -5847,13 +5854,14 @@
    "images": 338,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Architecture",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -5865,13 +5873,14 @@
    "images": 133,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Astrology & Divination",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -5883,13 +5892,14 @@
    "images": 197,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Cosmology & Astronomy",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -5901,13 +5911,14 @@
    "images": 353,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Herbalism & Botany",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -5919,13 +5930,14 @@
    "images": 222,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "East Asia",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -8209,10 +8221,10 @@
    "images": 4,
    "artworks": null,
    "featured": false,
-   "proposed": "retire",
+   "proposed": "hidden",
    "proposed_subject": null,
-   "confidence": "low",
-   "reason": "Points at a hidden collection, so check it against the takedown before anything else happens to it.",
+   "confidence": "high",
+   "reason": "Points at a hidden collection: it stays hidden from lists and search, but its address still works for anyone who has the link.",
    "looks_handmade": false,
    "first_pass": "retire"
   },
@@ -9695,10 +9707,10 @@
    "images": 419,
    "artworks": null,
    "featured": false,
-   "proposed": "retire",
+   "proposed": "hidden",
    "proposed_subject": null,
-   "confidence": "low",
-   "reason": "Points at a hidden collection, so check it against the takedown before anything else happens to it.",
+   "confidence": "high",
+   "reason": "Points at a hidden collection: it stays hidden from lists and search, but its address still works for anyone who has the link.",
    "looks_handmade": false,
    "first_pass": "retire"
   },
@@ -10447,13 +10459,14 @@
    "images": 69,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Kabbalah",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -10503,13 +10516,14 @@
    "images": 157,
    "artworks": null,
    "featured": true,
-   "proposed": "type",
+   "proposed": "collection",
    "proposed_subject": "Mysticism",
-   "confidence": "medium",
-   "reason": "A kind of picture within one subject: the subject’s Images tab with the type filter shows the same thing, so it needs no page of its own. Change to Collection if it was hand-picked.",
+   "confidence": "high",
+   "reason": "A type within a subject is not a standard category on its own, so it stays a collection. (The subject’s Images tab with the type filter shows the same pictures.)",
    "looks_handmade": false,
    "first_pass": "retire",
-   "first_pass_before_types": "collection"
+   "first_pass_before_types": "collection",
+   "merge_into": null
   },
   {
    "source": "gallery",
@@ -10543,11 +10557,11 @@
    "proposed": "type",
    "proposed_subject": null,
    "confidence": "high",
-   "reason": "A kind of picture, not a chosen set: it becomes the type Printer’s device on Types of pictures.",
+   "reason": "A kind of picture with a standard name: Getty’s printer’s marks. It becomes a type on Types of pictures.",
    "looks_handmade": false,
    "first_pass": "retire",
    "first_pass_before_types": "collection",
-   "merge_into": "Printer’s device (not yet a type)"
+   "merge_into": "Printer’s mark (Getty: printer’s marks)"
   },
   {
    "source": "gallery",

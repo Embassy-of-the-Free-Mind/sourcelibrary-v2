@@ -12,16 +12,10 @@ const H2 = 'font-display text-3xl text-primary mb-2';
 // Two sources, one colour each (validated: CVD ΔE 18.8, both above 3:1 on cream).
 const SRC = { collection: { label: 'Collections', color: '#7c5db5' }, gallery: { label: 'Gallery sets', color: '#9e4a3a' } } as const;
 
-// Gallery sets that are a kind of picture rather than a chosen set. The first five are a type on their own
-// (Maps, Portraits…); the rest are a type within a subject (Alchemical emblems = Emblem in Alchemy),
-// which the subject's Images tab shows with the type filter.
-const PURE_TYPE_SETS = ['frontispieces', 'maps-cartography', 'musical-scores', 'portraits', 'printers-devices'];
-const asType = (r: Sorted): Sorted => (r.source === 'gallery' && r.kind === 'visual' && r.proposed === 'collection' ? { ...r, proposed: 'type' } : r);
-
 function Flow({ rows, subjects }: { rows: Sorted[]; subjects: number }) {
   // Folded sets join a subject, so they land with the subjects: many old groupings become one subject.
   const destKey = (p: string) => (p === 'library_slice' || p === 'historic_library' ? 'libraries' : p === 'merge' ? 'subject' : p);
-  const dests = [['subject', 'Subjects'], ['type', 'Types of pictures'], ['collection', 'Collections'], ['libraries', 'Libraries'], ['retire', 'Retired']] as const;
+  const dests = [['subject', 'Subjects'], ['type', 'Types of pictures'], ['collection', 'Collections'], ['libraries', 'Libraries'], ['hidden', 'Kept hidden'], ['retire', 'Retired']] as const;
   const W = 900, H = 400, GAP = 12, BAR = 12, LX = 150, RX = W - 250;
   const total = rows.length;
   const k = (H - GAP * (dests.length - 1)) / total;
@@ -94,7 +88,7 @@ function Tree({ nodes }: { nodes: Node[] }) {
 }
 
 export default function Page() {
-  const rows = (dataFile<{ records: Sorted[] }>('sorting')?.records ?? []).map(asType);
+  const rows = (dataFile<{ records: Sorted[] }>('sorting')?.records ?? []);
   const periods = periodGroups(), langs = languageGroups(), types = typeGroups();
   const subjects = (dataFile<{ subjects: unknown[] }>('subjects')?.subjects ?? []).length;
   const aType = typeSlugs()[0];
@@ -133,7 +127,7 @@ export default function Page() {
 
       <section className={`${WRAP} py-10 border-t border-border-light`}>
         <h2 className={H2}>Before and after</h2>
-        <p className="text-secondary max-w-2xl mb-8">Today the site has {n(rows.length)} groupings, all called collections or gallery sets, mixing fields of study, chosen sets and libraries. Each one is sorted into what it really is. Fields become subjects, where duplicates merge, so {n(rows.filter((r) => r.proposed === 'subject' || r.proposed === 'merge').length)} groupings make {n(subjects)} subjects. Gallery sets that are really a type of picture go to Types: {PURE_TYPE_SETS.length} are a type on their own (Maps, Portraits, Musical scores, Frontispieces, Printer’s devices), and {n(rows.filter((r) => r.proposed === 'type').length - PURE_TYPE_SETS.length)} are a type within a subject (Alchemical emblems is Emblem within Alchemy), shown by the type filter on that subject’s Images tab. Hover a ribbon for its number.</p>
+        <p className="text-secondary max-w-2xl mb-8">Today the site has {n(rows.length)} groupings, all called collections or gallery sets, mixing fields of study, chosen sets and libraries. Each one is sorted into what it really is. Fields become subjects, where duplicates merge, so {n(rows.filter((r) => r.proposed === 'subject' || r.proposed === 'merge').length)} groupings make {n(subjects)} subjects. Only groupings that match a standard become subjects (FAST or Wikidata) or types (Getty or Library of Congress); everything else stays a collection. Five gallery sets are a standard type of picture: Maps, Portraits, Musical scores, Frontispieces and Printer’s marks. Hover a ribbon for its number.</p>
         <Flow rows={rows} subjects={subjects} />
         <h3 className="text-lg font-medium text-primary mt-12 mb-4">New ways in that did not exist before</h3>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
