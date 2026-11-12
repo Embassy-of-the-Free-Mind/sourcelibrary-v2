@@ -526,9 +526,15 @@ ctx_verdict() {  # $1 name -> one line for the job: "... FRESH ..." or "... cont
   else echo "context $((c/1000))K < $((FRESH_CTX/1000))K: continue"; fi
 }
 session_mark() { touch "$JD/$1.session"; }
+# Today's router, spend dial, holds and same-issue jobs, read from their live sources and appended after the brief
+# (job-state-digest.sh); kept beside the brief as <name>.digest.txt so a reader can see what the job was told.
+state_digest() {
+  local d="$SL/scripts/workers/job-state-digest.sh"; [ -f "$d" ] || return 0
+  printf '\n\n'; bash "$d" "$JD/$1.brief.txt" "$1" 2>/dev/null | head -60 | tee "$JD/$1.digest.txt"
+}
 fresh_due() { [ "$FRESH_CTX" -gt 0 ] && [ -s "$JD/$1.state.md" ] && [ "$JD/$1.state.md" -nt "$JD/$1.session" ]; }
 fresh_prompt() {  # $1 name, $2 n -> rules, brief, then the state file the last session left
-  rules "$1"; echo; cat "$JD/$1.brief.txt"
+  rules "$1"; echo; cat "$JD/$1.brief.txt"; state_digest "$1"
   printf '\n\n## Fresh session %s (claude-job.sh, %s)\n' "$2" "$(date -u +%FT%TZ)"
   printf 'An earlier session of this job ended at a stage boundary to start with a short context (#7869), in this same worktree. Its state file (%s) follows. Trust it for what is done and do not redo finished steps; check the data before any step that writes. Re-read your inbox. Rewrite the state file the next time `claude-job.sh ctx` says FRESH.\n\n' "$JD/$1.state.md"
   cat "$JD/$1.state.md"
@@ -584,7 +590,7 @@ run() {  # inside tmux
 Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, establish the current state from data, and continue to done." --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
   else
     session_mark "$name"
-    claude_main -p "$(rules $name; echo; cat $JD/$name.brief.txt)" --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
+    claude_main -p "$(rules $name; echo; cat $JD/$name.brief.txt; state_digest $name)" --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
   fi
   echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
   i=0; capped=""; authfail=""
