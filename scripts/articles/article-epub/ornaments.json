@@ -1,0 +1,188 @@
+{
+  "_comment": "The house ornament set: real woodcuts from books in the library whose scans may be shared, chosen by eye (2026-11-12). ornaments.mjs cuts each to its block and writes ornaments/<name>.png as an ink mask (black + alpha); build.ts tints them. `crop` (fractions of the gallery crop: left, top, width, height) overrides the automatic cut. plates/device.svg (drawn, not a woodcut) is rendered to ornaments/device.png by plates/render.sh. A letter without an initial gets a plain drop cap.",
+  "sources": {
+    "vesalius-de-humani-corporis-fabrica-1555-vesalius": "Andreas Vesalius, De humani corporis fabrica (1555)",
+    "de-historia-stirpium-commentarii-insignes-fuchs": "Leonhart Fuchs, De historia stirpium (1549)",
+    "symbols-of-the-golden-table-of-the-twelve-nations-maier": "Michael Maier, Symbola aureae mensae (1617)",
+    "instruments-of-the-restored-astronomy-brahe": "Tycho Brahe, Astronomiae instauratae mechanica (1602)",
+    "de-triplici-minimo-et-mensura-bruno": "Giordano Bruno, De triplici minimo et mensura (1591)"
+  },
+  "initials": {
+    "A": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 290,
+      "id": "695004d8f426a210d1099f66-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f66-0.jpg?v=1771875159278"
+    },
+    "B": {
+      "book": "de-historia-stirpium-commentarii-insignes-fuchs",
+      "page": 210,
+      "id": "6957eb74cbe1dcad7b76bbbf-0",
+      "image": "https://images.sourcelibrary.org/gallery/6957eb74cbe1dcad7b76baed/6957eb74cbe1dcad7b76bbbf-0.jpg?v=1773154656675"
+    },
+    "C": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 394,
+      "id": "695004d8f426a210d1099fce-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099fce-0.jpg?v=1771875153358"
+    },
+    "D": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 298,
+      "id": "695004d8f426a210d1099f6e-1",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f6e-1.jpg?v=1771875157396"
+    },
+    "E": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 829,
+      "id": "695004d8f426a210d109a181-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d109a181-0.jpg?v=1771875164608"
+    },
+    "F": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 325,
+      "id": "695004d8f426a210d1099f89-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f89-0.jpg?v=1771875154179"
+    },
+    "G": {
+      "book": "de-historia-stirpium-commentarii-insignes-fuchs",
+      "page": 243,
+      "id": "6957eb74cbe1dcad7b76bbe0-0",
+      "image": "https://images.sourcelibrary.org/gallery/6957eb74cbe1dcad7b76baed/6957eb74cbe1dcad7b76bbe0-0.jpg?v=1773154659270"
+    },
+    "H": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 343,
+      "id": "695004d8f426a210d1099f9b-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f9b-0.jpg?v=1771875152889"
+    },
+    "I": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 424,
+      "id": "695004d8f426a210d1099fec-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099fec-0.jpg?v=1771875160196"
+    },
+    "K": {
+      "book": "de-historia-stirpium-commentarii-insignes-fuchs",
+      "page": 480,
+      "id": "6957eb74cbe1dcad7b76bccd-0",
+      "image": "https://images.sourcelibrary.org/gallery/6957eb74cbe1dcad7b76baed/6957eb74cbe1dcad7b76bccd-0.jpg?v=1773154733847"
+    },
+    "L": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 317,
+      "id": "695004d8f426a210d1099f81-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f81-0.jpg?v=1771875152809"
+    },
+    "M": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 197,
+      "id": "695004d8f426a210d1099f09-1",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f09-1.jpg?v=1771875156740"
+    },
+    "N": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 545,
+      "id": "695004d8f426a210d109a065-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d109a065-0.jpg?v=1771875156093"
+    },
+    "O": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 30,
+      "id": "695004d8f426a210d1099e62-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099e62-0.jpg?v=1771875149009"
+    },
+    "P": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 414,
+      "id": "695004d8f426a210d1099fe2-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099fe2-0.jpg?v=1771875160148"
+    },
+    "Q": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 204,
+      "id": "695004d8f426a210d1099f10-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f10-0.jpg?v=1771875156725"
+    },
+    "R": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 87,
+      "id": "695004d8f426a210d1099e9b-1",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099e9b-1.jpg?v=1771875151697"
+    },
+    "S": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 334,
+      "id": "695004d8f426a210d1099f92-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099f92-0.jpg?v=1771875152888"
+    },
+    "T": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 126,
+      "id": "695004d8f426a210d1099ec2-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099ec2-0.jpg?v=1771875151106"
+    },
+    "V": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 615,
+      "id": "695004d8f426a210d109a0ab-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d109a0ab-0.jpg?v=1771875161998"
+    },
+    "Z": {
+      "book": "de-historia-stirpium-commentarii-insignes-fuchs",
+      "page": 314,
+      "id": "6957eb74cbe1dcad7b76bc27-0",
+      "image": "https://images.sourcelibrary.org/gallery/6957eb74cbe1dcad7b76baed/6957eb74cbe1dcad7b76bc27-0.jpg?v=1773154717158"
+    }
+  },
+  "initialsAlt": {
+    "T": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 527,
+      "id": "695004d8f426a210d109a053-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d109a053-0.jpg?v=1771875160735"
+    },
+    "O": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 452,
+      "id": "695004d8f426a210d109a008-0",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d109a008-0.jpg?v=1771875160456"
+    },
+    "I": {
+      "book": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+      "page": 794,
+      "id": "695004d8f426a210d109a15e-1",
+      "image": "https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d109a15e-1.jpg?v=1771875165384"
+    }
+  },
+  "headpiece": {
+    "book": "instruments-of-the-restored-astronomy-brahe",
+    "page": 75,
+    "id": "6952d0fa77f38f6761bc5b3a-0",
+    "image": "https://images.sourcelibrary.org/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b3a-0.jpg?v=1771876101873"
+  },
+  "headpieceAlt": {
+    "book": "de-triplici-minimo-et-mensura-bruno",
+    "page": 77,
+    "id": "69591188ecb01322b306a3d5-0",
+    "image": "https://images.sourcelibrary.org/gallery/69527326ab34727b1f048b7a/69591188ecb01322b306a3d5-0.jpg"
+  },
+  "tailpiece": {
+    "book": "instruments-of-the-restored-astronomy-brahe",
+    "page": 20,
+    "id": "6952d0fa77f38f6761bc5b03-0",
+    "image": "https://images.sourcelibrary.org/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b03-0.jpg"
+  },
+  "tailpieceAlt": {
+    "book": "instruments-of-the-restored-astronomy-brahe",
+    "page": 17,
+    "id": "6952d0fa77f38f6761bc5b00-0",
+    "image": "https://images.sourcelibrary.org/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b00-0.jpg?v=1771876102918"
+  },
+  "fleuron": {
+    "book": "instruments-of-the-restored-astronomy-brahe",
+    "page": 88,
+    "id": "6952d0fa77f38f6761bc5b47-0",
+    "image": "https://images.sourcelibrary.org/gallery/6952d0fa77f38f6761bc5aef/6952d0fa77f38f6761bc5b47-0.jpg?v=1771876106975"
+  }
+}
