@@ -1,0 +1,56 @@
+{
+  "_comment": "Per-article pictures that open chapters, keyed by chapter heading, chosen by eye from the cited books' gallery crops. A chapter not listed gets the automatic pick (build.ts opener), which is strict and often none. `rotate` (degrees clockwise) turns a plate printed sideways.",
+  "hyperborea": {
+    "Beyond the North Wind": {
+      "book": "historia-de-gentibus-septentrionalibus-magnus",
+      "page": 98,
+      "image": "https://images.sourcelibrary.org/gallery/699065763dc2ed39a49f155d/699065763dc2ed39a49f15bf-0.jpg",
+      "caption": "The far north as Olaus Magnus mapped it, the Carta Marina"
+    },
+    "Apollo's tears": {
+      "book": "hymni-epigrammata-et-fragmenta-callimachus",
+      "page": 603,
+      "image": "https://images.sourcelibrary.org/gallery/69e7514310ee9075bcdcd006/69e7514310ee9075bcdcd261-0.jpg?v=1781723243730",
+      "caption": "Leto, mother of Apollo, on an ancient coin"
+    },
+    "Thule and the other edges of the north": {
+      "book": "historia-de-gentibus-septentrionalibus-magnus",
+      "page": 110,
+      "image": "https://images.sourcelibrary.org/gallery/699065763dc2ed39a49f155d/699065763dc2ed39a49f15cb-0.jpg",
+      "caption": "The winds of the northern regions, after Olaus Magnus"
+    },
+    "A round temple: Stonehenge?": {
+      "book": "stonehenge-stukeley",
+      "page": 162,
+      "image": "https://images.sourcelibrary.org/gallery/699ef9f4b0a976d32fd37467/699f2923615c7ab5ab1da23c-0.jpg?v=1781136714817",
+      "caption": "Stonehenge from within, as William Stukeley drew it",
+      "rotate": 90
+    },
+    "The Prussian claim": {
+      "book": "old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch",
+      "page": 6,
+      "image": "https://images.sourcelibrary.org/gallery/6a209d5c89e8715c5947a6ac/6a209d5c89e8715c5947a6b2-1.jpg?v=1781727826604",
+      "caption": "The allegorical frontispiece of Hartknoch's Old and New Prussia"
+    },
+    "Lithuania and the sun": {
+      "book": "ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt",
+      "page": 509,
+      "image": "https://images.sourcelibrary.org/gallery/6a209d3389e8715c5947a32b/6a209d3389e8715c5947a528-0.jpg?v=1786246678873",
+      "caption": "Burial mounds in Samland, views and plan"
+    },
+    "The polar homeland": {
+      "book": "the-secret-doctrine-synthesis-of-science-religion-and-blavatsky",
+      "page": 784,
+      "image": "https://images.sourcelibrary.org/gallery/69528a19ab34727b1f04e629/69528a1bab34727b1f04e939-0.jpg?v=1771875989842",
+      "caption": "A reindeer engraved on antler in the Old Stone Age, as reproduced by Blavatsky"
+    }
+  },
+  "sea-road-china-gulf": {
+    "The Sea Road from China to the Gulf": {
+      "book": "tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa",
+      "page": 50,
+      "image": "https://images.sourcelibrary.org/gallery/69ef286185daccce30f2ca01/69ef286185daccce30f2ca33-0.jpg?v=1780587977662",
+      "caption": "Black pepper, the cargo that paid for the voyage, in Cristóvão da Costa's woodcut"
+    }
+  }
+}

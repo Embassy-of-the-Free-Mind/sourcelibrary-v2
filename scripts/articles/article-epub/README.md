@@ -22,3 +22,28 @@ ArticleEnd shows the download link.
 
 The key carries a content hash because the CDN keeps serving an old object at a reused key: every
 rebuild gets a new URL, so update `epub` in posts.ts after one.
+
+## The book's face (v2, 2026-11-12)
+
+Order: cover, title page, **Source Library** (what the library is for: `briefs.json` `_source_library`, shared by
+every article), **In brief** (`briefs.json`, per article; no entry, no page), contents, the essay, The Sources,
+colophon. Public copy in `briefs.json` needs Derek's OK.
+
+- **Ornaments are real woodcuts** from books in the library whose scans may be shared, chosen by eye
+  (`ornaments.json`): Vesalius's 1555 initials (Fuchs for B, G, K, Z), Tycho Brahe's headpiece, tailpiece and
+  fleuron, Bruno's headpiece for the front matter. `node ornaments.mjs` fetches the gallery crops, cuts each to
+  its block and writes `ornaments/<name>.png` as an ink mask (black + alpha) plus `ornaments/contact.png` to
+  check by eye; `build.ts` tints them (rust initials, gold ornaments; black on white for `STYLE=bw`). A letter
+  with no cut (J, W, X, Y) gets a plain drop cap.
+- **The printer's device** (`plates/device.mjs` → SVG → `plates/render.sh` → `ornaments/device.png`) is drawn,
+  not a woodcut: the logo's rings in a laurel wreath. It closes the colophon.
+- **Plates** (`plates.json`): per-article HTML fragments that close a named chapter. The Sea Road's two-sheet
+  route map is drawn by `plates/sea-road-map.mjs` from `public/geo-countries-110m.json`; its numbered key is
+  set in type so it stays readable on a phone. Re-render after a change:
+  `node plates/sea-road-map.mjs && bash plates/render.sh plates/sea-road-west.svg plates/sea-road-west.png 1400 1300` (and east).
+- **An interactive chart** in an article (the Hyperborea timeline) is set as a table of what it shows, read from
+  the rendered HTML; no per-article work.
+- **Type**: EB Garamond as static TTFs (`fonts/`, instanced from the site's woff2 at weight 400, so Kindle and
+  Apple Books both load it), set explicitly on headings; rust headings and links (with
+  `-webkit-text-fill-color`, or Apple Books paints links blue); italic only for titles and foreign words; no
+  text under 0.9em except spaced capitals; text colour left to the reader's theme so night mode works.

@@ -1,0 +1,6 @@
+{
+  "_comment": "Plates made for an article, by slug: each closes the chapter named (`chapter` is its heading; the opening chapter's is the article's display title) with the HTML fragment plates/<html>. Pictures in a fragment are src=\"plate:<file in plates/>\". The Sea Road's map is drawn by plates/sea-road-map.mjs and rendered by plates/render.sh.",
+  "sea-road-china-gulf": [
+    { "chapter": "The Sea Road from China to the Gulf", "html": "sea-road-map.html" }
+  ]
+}

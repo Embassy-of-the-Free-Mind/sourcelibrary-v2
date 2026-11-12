@@ -56,8 +56,8 @@ export const posts: BlogPost[] = [
     imageAlt:
       'Engraved view of Hormuz from the sea with European ships and a plan of the island, from Kaempfer’s Amoenitates exoticae (1712).',
     epub: {
-      colour: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-e53f27ee.epub', mb: 5 },
-      eink: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-bw-8595b8f2.epub', mb: 2 },
+      colour: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-71f9b0e7.epub', mb: 7 },
+      eink: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-bw-987737e7.epub', mb: 4 },
     },
   },
   {
@@ -355,8 +355,8 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg',
     imageAlt: 'Engraving after Hendrick Goltzius: the sisters of Phaethon turning into poplars by the river Eridanus',
     epub: {
-      colour: { href: 'https://images.sourcelibrary.org/article-epubs/hyperborea-a62134b9.epub', mb: 11 },
-      eink: { href: 'https://images.sourcelibrary.org/article-epubs/hyperborea-bw-d7844422.epub', mb: 4 },
+      colour: { href: 'https://images.sourcelibrary.org/article-epubs/hyperborea-cbae6c87.epub', mb: 14 },
+      eink: { href: 'https://images.sourcelibrary.org/article-epubs/hyperborea-bw-4b9e6f60.epub', mb: 7 },
     },
   },
   {

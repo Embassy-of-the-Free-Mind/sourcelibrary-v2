@@ -1,0 +1,7 @@
+{
+  "_comment": "Per-article cover picture and crop (pixels of `src`). Without an entry the hero is used, cropped by sharp's attention strategy.",
+  "sea-road-china-gulf": {
+    "src": "https://images.sourcelibrary.org/archived/6959106fecb01322b306752b/851.jpg",
+    "crop": { "left": 965, "top": 540, "width": 975, "height": 1560 }
+  }
+}

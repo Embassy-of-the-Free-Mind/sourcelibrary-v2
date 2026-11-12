@@ -1,0 +1,21 @@
+{
+  "_comment": "Front-matter copy for the article EPUBs. `_source_library` is the page every book opens on (what Source Library is for), its statements taken from the About page (src/lib/about-i18n.ts); {n} is the number of cited pages. Each article's entry is its brief: `tldr` (two or three sentences, set large) and `summary` (one paragraph), facts only from the essay. Public copy: Derek approves it before it ships.",
+  "_source_library": {
+    "title": "We translate the books that were left behind",
+    "paragraphs": [
+      "Most of the world’s written past has never been translated. Of everything anyone has counted, from Latin to Tibetan, less than 1% has been put into English.",
+      "Source Library gathers old books and manuscripts from around the world. Each page is scanned, transcribed and translated into English, and the translation is set beside the original, so anyone can check every line. It began in 2022 at the Embassy of the Free Mind in Amsterdam, home of the Bibliotheca Philosophica Hermetica.",
+      "The last time old books were translated on this scale, it started the Renaissance."
+    ],
+    "thisBook": "This book is one of the library’s essays, followed by the {n} pages it cites: each page in English, under its scan. The translations are made with AI and can contain errors; the scan shows what the page says.",
+    "closing": "Every book is free to read at"
+  },
+  "hyperborea": {
+    "tldr": "The Greeks told of a blessed people of Apollo beyond the north wind, and Herodotus already doubted them. For centuries scholars found Hyperborea in their own country: Britain, Sweden, Prussia, Lithuania, Russia, the North Pole. What the sources support is smaller and stranger: a real chain of hands that carried Baltic amber south to Greek sanctuaries, from a far end no Greek ever saw.",
+    "summary": "The essay follows Hyperborea through the books Source Library holds. It begins with Pindar and Herodotus and the offerings wrapped in wheat straw that reached Delos, with Abaris, the Hyperborean priest who rode Apollo’s arrow and met Pythagoras, and with the story that amber is the tears Apollo shed in the north. It then weighs the later claims one at a time: Stonehenge as the round temple of Diodorus, Pythagorean druids, the bronze dodecahedra of Roman Gaul, the amber found in Greek sanctuaries, Hartknoch’s Prussia, Narbutt’s Lithuania, Russia, and the polar homeland of the occultists. It ends with what the texts and the ground can and cannot show."
+  },
+  "sea-road-china-gulf": {
+    "tldr": "A sea road once joined the ports of southern China to the head of the Persian Gulf, past Champa, Sumatra, Ceylon and the Malabar coast. This essay reads it in the books of people who sailed it, taxed it or charted it, from Arab geographers of the ninth century to a Qing scholar in 1844. The same harbours return under different names: Quilon, Calicut, Hormuz, Guangzhou, Quanzhou.",
+    "summary": "It opens at Hormuz, with a story of four hundred Chinese ships coming in on a single tide, and then takes the road stage by stage. Arab geographers give the sailing directions from Siraf to Canton. A customs inspector at Quanzhou writes down what foreign merchants told him, and a notebook from Canton has ship masters steering by the south-pointing needle. Marco Polo goes home by sea with fourteen ships; Ibn Battuta waits three months at Calicut for a Chinese junk; a Ming encyclopaedia keeps Zheng He’s charts, with the stars for the crossing to Hormuz. The Portuguese and the Dutch come in at the western end, and in 1844 Wei Yuan looks back over the whole road from Canton."
+  }
+}

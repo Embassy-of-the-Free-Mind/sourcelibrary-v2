@@ -4,7 +4,7 @@ set -euo pipefail
 SLUG="$1"
 HERE="$(cd "$(dirname "$0")" && pwd)"; ROOT="$(cd "$HERE/../../.." && pwd)"
 ENV="${ENV_FILE:-/root/sourcelibrary/.env.production.local}"
-WORK="$(mktemp -d)"; trap 'rm -rf "$WORK"' EXIT
+WORK="${KEEP_WORK:-$(mktemp -d)}"; mkdir -p "$WORK"; [ -n "${KEEP_WORK:-}" ] || trap 'rm -rf "$WORK"' EXIT
 OUT="${OUT:-$WORK/$SLUG.epub}"
 ESB="$ROOT/node_modules/.bin/esbuild"
 alias_args=(--alias:next/link="$HERE/mocks/Link.jsx" --alias:@/components/layout/ContentPageLayout="$HERE/mocks/Layout.jsx"
@@ -23,7 +23,7 @@ mkdir -p "$WORK/pages"
 
 NODE_PATH="$ROOT/node_modules" "$ESB" "$HERE/build.ts" --bundle --platform=node --format=esm --tsconfig="$ROOT/tsconfig.json" \
   --alias:sharp="$HERE/mocks/sharp.mjs" --alias:archiver="$HERE/mocks/archiver.mjs" --outfile="$WORK/build.mjs" --log-level=error --banner:js="$banner"
-(cd "$WORK" && PUBLIC_DIR="$ROOT/public" node --no-deprecation build.mjs "$SLUG" "$OUT")
+(cd "$WORK" && PUBLIC_DIR="$ROOT/public" EPUB_DIR="$HERE" node --no-deprecation build.mjs "$SLUG" "$OUT")
 [ "${UPLOAD:-1}" = 0 ] && { echo "not uploaded (UPLOAD=0)"; exit 0; }
 NODE_PATH="$ROOT/node_modules" "$ESB" "$HERE/upload.ts" --bundle --platform=node --format=esm --tsconfig="$ROOT/tsconfig.json" \
   --outfile="$WORK/upload.mjs" --log-level=error --banner:js="$banner"
