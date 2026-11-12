@@ -15,8 +15,8 @@ export default function Page() {
     <AxisIndex title="Kinds of pictures" intro="Browse the pictures by what they show, how they were made, and where they sit in the book."
       counts={[`${kinds} kinds`, `${n(pictures)} pictures`]} tiles={tiles}
       featured={f && name ? { name, href: `/revamp/t/${f.slug}` } : null}
-      groups={groups} noun={['kind', 'kinds']} group={['Question', 'All questions']} placeholder="Search kinds of pictures or ask a question"
-      orders={[['theme', 'By question'], ['az', 'A to Z']]}
+      groups={groups} noun={['kind', 'kinds']} group={['Type', 'All types']} placeholder="Search kinds of pictures or ask a question"
+      orders={[['theme', 'By group'], ['az', 'A to Z']]}
       how={HOW_PICTURE_KINDS} />
   );
 }

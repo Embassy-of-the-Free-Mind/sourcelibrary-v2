@@ -12,8 +12,8 @@ export default function Page() {
   return (
     <AxisIndex title="Kinds of texts" intro="Browse the texts by what kind of writing they are and what they are written on."
       counts={[`${kinds} kinds`, `${n(texts)} books`]} tiles={tiles} featured={null}
-      groups={groups} noun={['kind', 'kinds']} group={['Question', 'All questions']} placeholder="Search kinds of texts or ask a question"
-      orders={[['theme', 'By question'], ['az', 'A to Z']]}
+      groups={groups} noun={['kind', 'kinds']} group={['Type', 'All types']} placeholder="Search kinds of texts or ask a question"
+      orders={[['theme', 'By group'], ['az', 'A to Z']]}
       how={HOW_TEXT_KINDS} />
   );
 }

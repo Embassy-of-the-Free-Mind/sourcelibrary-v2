@@ -1,4 +1,4 @@
-import { FORMAT_MAP, PERIOD_MAP, PICTURE_TYPE_MAP, TEXT_TYPE_MAP, type Mapping } from '../_lib/standards';
+import { FORMAT_MAP, FORM_MAP, PERIOD_MAP, PICTURE_TYPE_MAP, TEXT_TYPE_MAP, type Mapping } from '../_lib/standards';
 
 const MATCH = { exact: 'Same', close: 'Close', none: 'None found' };
 
@@ -35,6 +35,7 @@ export default function Page() {
         <p className="mt-4 text-[17px] text-secondary max-w-3xl">Each value in the Type, Format, Period and Picture type menus, with the matching term in the Library of Congress Genre/Form Terms (LCGFT) or the Getty Art &amp; Architecture Thesaurus (AAT). Every link was looked up on 10 November 2026.</p>
         <Table title="Type of text" intro="Libraries describe this with LCGFT." rows={TEXT_TYPE_MAP} />
         <Table title="Printed or manuscript" intro="Library records already split these by record type." rows={FORMAT_MAP} />
+        <Table title="What it’s written on" intro="Not recorded in the catalogue yet. Named after the Getty object types, with Wikidata beside them." rows={FORM_MAP} />
         <Table title="Picture type" intro="Museums describe this with AAT, which keeps technique apart from what a picture shows." rows={PICTURE_TYPE_MAP} kind />
         <Table title="Period" intro="AAT period names are mostly European. FAST, the library standard, uses plain date spans instead." rows={PERIOD_MAP} />
       </div>

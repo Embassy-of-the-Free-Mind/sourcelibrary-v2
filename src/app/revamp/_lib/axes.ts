@@ -1,5 +1,5 @@
 import { collectionModel, dataFile } from './data';
-import { PICTURE_TYPE_MAP, TEXT_TYPE_MAP } from './standards';
+import { PICTURE_TYPE_MAP, TEXT_TYPE_MAP, FORM_MAP } from './standards';
 import type { SubjectRow, Pic } from '../_components/SubjectsBrowser';
 
 /*
@@ -100,8 +100,7 @@ interface Types { pictures: { id: string; slug: string; total: number }[]; texts
 const types = (): Types => { const t = dataFile<Types>('snap/_types') ?? { pictures: [], texts: [] }; return { pictures: t.pictures.filter((x) => x.total > 0), texts: t.texts.filter((x) => x.total > 0) }; };
 /** What a text is written on. Names follow the Getty Art & Architecture Thesaurus object types. Not recorded in the
  *  catalogue yet (it only says printed or manuscript, on some books), so these have no pages or counts until the catalogue round. */
-const FORMS: SubjectRow[] = ['Printed book', 'Manuscript book', 'Scroll', 'Clay tablet', 'Papyrus', 'Palm-leaf manuscript', 'Inscription']
-  .map((label) => ({ id: `form-${label.toLowerCase().replace(/[^a-z]+/g, '-')}`, label, href: '#g-forms', alt: [], pics: [], bare: true, note: 'Not recorded yet' }));
+const FORMS: SubjectRow[] = FORM_MAP.map((m) => ({ id: `form-${m.ours}`, label: m.label, href: '#g-forms', alt: m.terms.map((t) => t.label), pics: [], bare: true, note: 'Not recorded yet' }));
 export function typeGroups(): { groups: Group[]; pictureGroups: Group[]; bookGroups: Group[]; pictures: number; texts: number } {
   const t = types();
   const pic = (kind: string) => PICTURE_TYPE_MAP.filter((x) => x.kind === kind).flatMap((x) => {

@@ -6,11 +6,12 @@
  * match: exact = same meaning; close = near, but ours is wider or narrower; none = no term found.
  */
 export type Match = 'exact' | 'close' | 'none';
-export interface Term { scheme: 'LCGFT' | 'AAT'; label: string; uri: string }
+export interface Term { scheme: 'LCGFT' | 'AAT' | 'Wikidata'; label: string; uri: string }
 export interface Mapping { ours: string; label: string; match: Match; terms: Term[]; note?: string }
 
 const lc = (label: string, id: string): Term => ({ scheme: 'LCGFT', label, uri: `http://id.loc.gov/authorities/genreForms/${id}` });
 const aat = (label: string, id: string): Term => ({ scheme: 'AAT', label, uri: `http://vocab.getty.edu/aat/${id}` });
+const wd = (label: string, id: string): Term => ({ scheme: 'Wikidata', label, uri: `http://www.wikidata.org/entity/${id}` });
 
 /** Type of text. Libraries use LCGFT for this. */
 export const TEXT_TYPE_MAP: Mapping[] = [
@@ -50,11 +51,33 @@ export const PICTURE_TYPE_MAP: (Mapping & { kind: 'technique' | 'what it shows' 
 
 /** Periods. AAT period names are mostly European; FAST uses plain date spans instead. */
 export const PERIOD_MAP: Mapping[] = [
-  { ours: 'ancient', label: 'Ancient', match: 'none', terms: [], note: 'No general AAT term: only by culture (Ancient Chinese, Ancient European…). Classical (300020093) is Greek and Roman only.' },
+  { ours: 'ancient', label: 'Ancient', match: 'close', terms: [wd('ancient history', 'Q41493')], note: 'No general AAT term: only by culture (Ancient Chinese, Ancient European…). Classical (300020093) is Greek and Roman only. Wikidata’s ancient history runs to the start of the Middle Ages.' },
   { ours: 'late-antique', label: 'Late Antique', match: 'exact', terms: [aat('Late Antique', '300020666')] },
   { ours: 'medieval', label: 'Medieval', match: 'close', terms: [aat('Medieval (European)', '300020756')], note: 'European only: wrong for Chinese, Indian or Islamic works of the same dates.' },
   { ours: 'renaissance', label: 'Renaissance', match: 'close', terms: [aat('Renaissance', '300021140')], note: 'European only.' },
-  { ours: 'early-modern', label: 'Early modern', match: 'none', terms: [], note: 'No AAT period term found.' },
+  { ours: 'early-modern', label: 'Early modern', match: 'close', terms: [wd('early modern period', 'Q5308718')], note: 'No AAT period term. Wikidata’s early modern period is c.1500 to c.1800; ours is 1600 to 1750.' },
   { ours: 'enlightenment', label: 'Enlightenment', match: 'close', terms: [aat('Enlightenment (18th-century western movement)', '300055781')], note: 'A movement, not a period, and western only.' },
-  { ours: 'modern', label: 'Modern', match: 'none', terms: [], note: 'No AAT term with that name found.' },
+  { ours: 'modern', label: 'Modern', match: 'close', terms: [wd('late modern period', 'Q6495391')], note: 'No AAT term. Wikidata’s late modern period runs from c.1800; ours from 1850.' },
 ];
+
+/** What a text is written on. Looked up 2026-11-12 in the Getty AAT full display and on Wikidata. */
+export const FORM_MAP: Mapping[] = [
+  { ours: 'printed-book', label: 'Printed book', match: 'close', terms: [aat('books', '300028051'), wd('book', 'Q571')], note: 'AAT books covers manuscripts too.' },
+  { ours: 'manuscript-book', label: 'Manuscript book', match: 'exact', terms: [aat('codices (bound manuscripts)', '300224200'), wd('manuscript', 'Q87167')] },
+  { ours: 'scroll', label: 'Scroll', match: 'exact', terms: [aat('scrolls (information artifacts)', '300028629'), wd('scroll', 'Q720106')] },
+  { ours: 'clay-tablet', label: 'Clay tablet', match: 'close', terms: [aat('tablets (information artifacts)', '300028879'), wd('clay tablet', 'Q1570005')], note: 'AAT has no clay tablets term; tablets covers wax and wooden ones too. Wikidata matches exactly.' },
+  { ours: 'papyrus', label: 'Papyrus', match: 'exact', terms: [aat('papyri (manuscripts)', '300055047'), wd('papyrus', 'Q125576')], note: 'Wikidata papyrus is the material.' },
+  { ours: 'palm-leaf-manuscript', label: 'Palm-leaf manuscript', match: 'exact', terms: [aat('palm-leaf manuscripts', '300451691'), wd('palm-leaf manuscript', 'Q1641020')] },
+  { ours: 'inscription', label: 'Inscription', match: 'exact', terms: [aat('inscriptions', '300028702'), wd('inscription', 'Q1640824')] },
+];
+
+/** Wikidata for every kind, checked one by one on 2026-11-12. Wikidata carries the names in many languages. */
+const WD: Record<string, [string, string]> = {
+  treatise: ['treatise', 'Q384515'], encyclopedia: ['encyclopedia', 'Q5292'], commentary: ['commentary', 'Q1749541'], manual: ['handbook', 'Q1338914'],
+  letters: ['correspondence (literary genre)', 'Q1784733'], poetry: ['poetry', 'Q482'], anthology: ['anthology', 'Q105420'], polemic: ['polemic', 'Q27406'],
+  scripture: ['religious text', 'Q179461'], biography: ['biography', 'Q36279'], history: ['chronicle', 'Q185363'], catalog: ['catalog', 'Q2352616'],
+  book: ['book', 'Q571'], manuscript: ['manuscript', 'Q87167'],
+  engraving: ['engraving', 'Q11835431'], woodcut: ['woodcut print', 'Q18219090'], diagram: ['diagram', 'Q959962'], emblem: ['emblem', 'Q112110'],
+  portrait: ['portrait', 'Q134307'], frontispiece: ['frontispiece', 'Q583866'], map: ['map', 'Q4006'], decorative: ['ornament', 'Q335261'], symbol: ['symbol', 'Q80071'],
+};
+for (const m of [...TEXT_TYPE_MAP, ...FORMAT_MAP, ...PICTURE_TYPE_MAP]) { const w = WD[m.ours]; if (w && !m.terms.some((t) => t.scheme === 'Wikidata')) m.terms.push(wd(w[0], w[1])); }
