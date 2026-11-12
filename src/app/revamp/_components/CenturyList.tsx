@@ -6,6 +6,7 @@ import Link from 'next/link';
 import SortSelect from '@/components/search-kit/SortSelect';
 import { FIRST, TOOLBAR, TOP } from './CollectionsBrowser';
 import type { SubjectRow } from './SubjectsBrowser';
+import { COUNT, HOW_LINK, HOW_PANEL } from '@/components/search-kit/controls';
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 const n = (v: number) => v.toLocaleString('en-GB');
@@ -30,11 +31,11 @@ export default function CenturyList({ rows, how, thumbs = true }: { rows: (Subje
   return (
     <div className={`${WRAP} ${TOP} pb-16`}>
       <div className={TOOLBAR}>
-        <span className="text-sm text-primary font-medium mr-1">{list.length} centuries</span>
-        <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className="ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">{how.title} {open ? '−' : '+'}</button>
+        <span className={`${COUNT} mr-1`}>{list.length} centuries</span>
+        <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className={`ml-2 ${HOW_LINK}`}>{how.title} {open ? '−' : '+'}</button>
         <div className="ml-auto"><SortSelect label="Order" value={order} onChange={setOrder} options={[['new', 'Newest first'], ['old', 'Oldest first'], ['size', 'Most books first']]} /></div>
       </div>
-      {open && <ul className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">{how.items.map((x, i) => <li key={i}>{x}</li>)}</ul>}
+      {open && <ul className={`mt-3 ${HOW_PANEL}`}>{how.items.map((x, i) => <li key={i}>{x}</li>)}</ul>}
       <ul className={`${FIRST} border-t border-border-light`}>
         {list.map((r) => (
           <li key={r.id} className="border-b border-border-light">

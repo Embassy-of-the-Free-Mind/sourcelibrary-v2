@@ -23,6 +23,7 @@ import {
   askOtherNames, askSearch, catalogRows, guideTerms, resolveAuthor, warmSearch, yearOfHit, type AskWork,
 } from '@/lib/catalog/ask-client';
 import { READABLE_RUNGS, ENGLISH_ORIGINAL_READABLE_RUNGS, type TranslationRung } from '@/lib/page-counts';
+import { viewBtn, toggleBtn } from '@/components/search-kit/controls';
 
 /** A row from /api/catalog/results (CatalogBook as JSON). */
 export interface CatalogRow {
@@ -532,7 +533,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
       {/* Advanced search, what is applied, and how it is shown */}
       <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-4 sm:mt-[22px] pb-3 sm:pb-3.5 border-b border-border-light">
         <button type="button" onClick={() => setAdvOpen((o) => !o)} aria-expanded={advOpen}
-          className={`order-1 sm:order-none inline-flex items-center gap-2 h-9 sm:h-[38px] px-3 sm:px-3.5 border text-[13px] sm:text-sm ${advOpen ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium'}`}>
+          className={`order-1 sm:order-none ${toggleBtn(advOpen)}`}>
           <span className="sm:hidden">Advanced</span><span className="hidden sm:inline">Advanced search</span>
           {chipCount > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-accent-rust text-white text-xs grid place-items-center">{chipCount}</span>}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${advOpen ? 'rotate-180' : ''}`} aria-hidden />
@@ -547,9 +548,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
           <SortSelect value={s.sort} options={sortOptions} onChange={(v) => run({ ...s, sort: v as CatalogSort })} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-pressed={s.view === 'grid'} aria-label="Grid" onClick={() => run({ ...s, view: 'grid' }, { keepPage: true })}
-              className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${s.view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
+              className={viewBtn(s.view === 'grid')}><LayoutGrid className="w-4 h-4" /></button>
             <button type="button" aria-pressed={s.view === 'list'} aria-label="List" onClick={() => run({ ...s, view: 'list' }, { keepPage: true })}
-              className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${s.view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
+              className={viewBtn(s.view === 'list')}><List className="w-4 h-4" /></button>
           </div>
         </div>
       </div>

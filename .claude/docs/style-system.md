@@ -78,6 +78,7 @@ Before drawing any control, use the one the site already has. A new page does no
 | Need | Use | Where it's live |
 |---|---|---|
 | Search bar + Ask the librarian | `search-kit/SearchAskBars` | /library, /gallery |
+| Every other control in a search/filter/sort toolbar (Filters/Advanced button, pills, grid/list switch, count, How link + panel, light search field) | `search-kit/controls` (`toggleBtn`, `pill`, `VIEW_GROUP` + `viewBtn`, `COUNT`, `HOW_LINK`, `HOW_PANEL`, `FIELD`); all controls are `CONTROL_H` tall, border included | /library, /gallery, collections, subjects, categories |
 | Any dropdown (sort, subject, language, order) | `search-kit/SortSelect` (optional `label` for its accessible name) | /library, /gallery |
 | Applied filters, as removable tags | `search-kit/FilterChips`: filled `bg-warm`, no border (so a tag never reads as another dropdown beside the white bordered `SortSelect`), facet name muted + value medium from a `"Facet: value"` label, square × that fills black on hover | /library, /gallery, collections |
 | Stat boxes, printed-years chart, share bar | `search-kit/StatParts` (`statBox`, `PrintedBox`, `ShareBox`) | /library, /gallery |

@@ -6,12 +6,13 @@ import Link from 'next/link';
 import { ChevronDown, LayoutGrid, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
+import { COUNT, VIEW_GROUP, pill, toggleBtn, viewBtn } from '@/components/search-kit/controls';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import type { IndexItem } from '../_lib/data';
 
 const HOLDS: [string, string][] = [['books', 'Books'], ['plates', 'Plates'], ['artworks', 'Artworks'], ['pages', 'Pages'], ['quotes', 'Quotes']];
 const THUMBS: [string, string][] = [['square', 'Square pictures'], ['strip', 'Strip of pictures']];
-export const vbtn = (on: boolean) => `w-9 sm:w-[38px] h-9 sm:h-[38px] grid place-items-center ${on ? 'bg-warm text-primary' : 'bg-white text-muted'}`;
+export const vbtn = viewBtn; // the one view switch, from search-kit/controls
 const SORTS: [string, string][] = [['az', 'A to Z'], ['books', 'Most books'], ['images', 'Most images']];
 export type FilterLayout = 'tiles' | 'chips' | 'menus' | 'side';
 /** The spacing every index page shares under the hero bar: bar to toolbar, toolbar to the first row. */
@@ -19,7 +20,7 @@ export const TOP = 'pt-6 sm:pt-8 md:pt-10';
 export const FIRST = 'mt-6 md:mt-8';
 export const TOOLBAR = 'flex flex-wrap items-center gap-2 sm:gap-2.5 pb-3 sm:pb-3.5 border-b border-border-light';
 /** The gallery's Advanced button, here opening the filters on a phone. */
-export const filtersBtn = (open: boolean) => `inline-flex items-center gap-2 h-9 sm:h-[38px] px-3 sm:px-3.5 border text-[13px] sm:text-sm ${open ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium'}`;
+export const filtersBtn = toggleBtn; // from search-kit/controls
 
 const n = (v: number) => v.toLocaleString('en-GB');
 
@@ -107,7 +108,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const pick = (on: boolean) => `text-left px-2 py-0.5 -mx-0.5 text-sm ${on ? 'bg-primary text-cream' : 'text-primary hover:bg-border-light'}`;
   const count = (k: string) => items.filter((i) => i.holds.includes(k)).length;
   // The /gallery filter pill (GalleryControls), unchanged.
-  const chip = (on: boolean) => `h-[30px] px-3 border text-[13px] ${on ? 'bg-primary border-primary text-cream' : 'bg-white border-border-medium text-primary hover:border-primary'}`;
+  const chip = pill;
   const active = [maker !== 'all', holds.length > 0, !!subject, !!lang].filter(Boolean).length;
   const toggleHold = (k: string) => setHolds(holds.includes(k) ? holds.filter((h) => h !== k) : [...holds, k]);
   const makerOpts = [['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const;
@@ -167,7 +168,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
       <div className={`${TOOLBAR} ${filters === 'side' ? 'mt-4' : ''}`}>
         {filters === 'menus' && <>
           {/* C: everything is a menu in one toolbar. Below laptop width the menus fold behind Filters. */}
-          <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</span>
+          <span className={`hidden sm:inline ${COUNT} mr-1`}>{n(shown.length)} {shown.length === 1 ? 'collection' : 'collections'}</span>
           <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${filtersBtn(open)}`}>
             Filters{active > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">{active}</span>}
             <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
@@ -187,7 +188,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
           {view === 'grid' && <span className="hidden sm:inline-flex"><SortSelect label="Thumbnails" value={thumb} onChange={(v) => setThumb(v as typeof thumb)} options={THUMBS} /></span>}
           <SortSelect label="Sort" value={sort} onChange={setSort} options={SORTS} />
-          <div className="flex border border-border-medium" role="group" aria-label="View">
+          <div className={VIEW_GROUP} role="group" aria-label="View">
             <button type="button" aria-label="Grid" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={vbtn(view === 'grid')}><LayoutGrid className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={vbtn(view === 'list')}><List className="w-4 h-4" /></button>
             <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>

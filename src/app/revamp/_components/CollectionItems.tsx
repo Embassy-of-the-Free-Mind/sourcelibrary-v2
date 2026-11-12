@@ -4,7 +4,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ChevronDown, LayoutGrid, List } from 'lucide-react';
-import { filtersBtn } from './CollectionsBrowser';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
@@ -15,10 +14,10 @@ import type { Book, RPlate } from '../_lib/types';
 import { PERIODS, PICTURE_TYPES, TEXT_TYPES, centuryLabel, centuryOf, periodLabel, periodsOf } from '../_lib/facets';
 import CollectionEditor from './CollectionEditor';
 import { SORTS, docKey, initialDoc, type CollectionDoc } from '../_lib/collection-doc';
+import { toggleBtn, pill, VIEW_GROUP, viewBtn, COUNT } from '@/components/search-kit/controls';
 
 const PER = 20;
 /** The /gallery filter pill (GalleryControls), unchanged. */
-const pill = (on: boolean) => `h-[30px] px-3 border text-[13px] ${on ? 'bg-primary border-primary text-cream' : 'bg-white border-border-medium text-primary hover:border-primary'}`;
 const H2 = 'text-2xl sm:text-3xl text-primary font-display';
 const fmt = (v: number) => v.toLocaleString('en-GB');
 const titleOf = (b: Book) => (b.display_title || b.title || '').replace(/^(the|a|an)\s+/i, '');
@@ -227,7 +226,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
     <>
       {(canPicType || canPeriod) && (
         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
-          <span className="text-[13.5px] text-muted mr-2">{fmt(shownPlates.length)} {shownPlates.length === 1 ? 'picture' : 'pictures'}{shownPlates.length < plates.length ? ` of ${fmt(plates.length)}` : ''}</span>
+          <span className={`${COUNT} mr-2`}>{fmt(shownPlates.length)} {shownPlates.length === 1 ? 'picture' : 'pictures'}{shownPlates.length < plates.length ? ` of ${fmt(plates.length)}` : ''}</span>
           {picTypeMenu}
           {canPeriod && periodMenu(picPeriodCount)}
           {chips.some((c) => c.key === 'ptype' || c.key === 'period') && <div className="basis-full order-last"><FilterChips chips={chips.filter((c) => c.key === 'ptype' || c.key === 'period')} onRemove={clear} onClearAll={() => { clear('ptype'); clear('period'); }} /></div>}
@@ -292,7 +291,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
             <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
               {hasMenus && <>
                 {/* Below laptop width the filter menus fold behind Filters, as on the index pages. */}
-                <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${filtersBtn(open)}`}>
+                <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`lg:hidden ${toggleBtn(open)}`}>
                   Filters{active > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">{active}</span>}
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
                 </button>
@@ -306,14 +305,14 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                 </div>
               </>}
               {/* The filter menus have the first line to themselves. The second line is always there: how many and what is applied on the left, group, sort and view on the right. Filtering never moves anything. */}
-              <div className="basis-full order-last flex flex-wrap items-center gap-2 sm:gap-3 min-h-8 [&>div]:basis-auto"><span className="text-[13.5px] text-muted">{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span><FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
+              <div className="basis-full order-last flex flex-wrap items-center gap-2 sm:gap-3 min-h-8 [&>div]:basis-auto"><span className={COUNT}>{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span><FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
                 {group !== 'sections' && !mixed && (canPeriod || canMade || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period written'] as [string, string]] : []), ...(canMade ? [['made', 'By date made'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
                 <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
                 {pics === 'tab' && (
-                  <div className="flex border border-border-medium" role="group" aria-label="View">
-                    <button type="button" aria-pressed={view === 'grid'} aria-label="Grid" onClick={() => setView('grid')} className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
-                    <button type="button" aria-pressed={view === 'list'} aria-label="List" onClick={() => setView('list')} className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
+                  <div className={VIEW_GROUP} role="group" aria-label="View">
+                    <button type="button" aria-pressed={view === 'grid'} aria-label="Grid" onClick={() => setView('grid')} className={viewBtn(view === 'grid')}><LayoutGrid className="w-4 h-4" /></button>
+                    <button type="button" aria-pressed={view === 'list'} aria-label="List" onClick={() => setView('list')} className={viewBtn(view === 'list')}><List className="w-4 h-4" /></button>
                   </div>
                 )}
               </div>

@@ -7,6 +7,7 @@ import { ChevronDown, List, Rows3 } from 'lucide-react';
 import { BAND_TINT } from './PlateWall';
 import SortSelect from '@/components/search-kit/SortSelect';
 import { FIRST, TOOLBAR, TOP, filtersBtn, vbtn } from './CollectionsBrowser';
+import { VIEW_GROUP, COUNT, HOW_LINK, HOW_PANEL, FIELD } from '@/components/search-kit/controls';
 
 export interface Pic { src: string; aspect?: number | null; label?: string | null }
 export interface SubjectRow { id: string; label: string; href?: string; alt: string[]; home?: boolean; pics: Pic[]; /** A short line under the name, such as a count. */ note?: string; /** No picture slot when there is no picture. */ bare?: boolean; /** How many books, for sorting by size. */ size?: number }
@@ -110,13 +111,13 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
     <div className={`${WRAP} ${barSearch ? TOP : 'py-8 md:py-10'}`}>
       {!barSearch && <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-2xl">
         <label htmlFor="subj-find" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Find a subject</label>
-        <div className="flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" data-catalog-bar>
+        <div className={FIELD} data-catalog-bar>
           <input id="subj-find" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`${total} subjects, in any language`} className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
         </div>
       </form>}
       {/* One toolbar, as on All collections: the count, a menu, then order and view on the right. */}
       <div className={`${TOOLBAR} ${barSearch ? '' : 'mt-6'}`}>
-        <span className="hidden sm:inline text-sm text-primary font-medium mr-1">{n(count)} {count === 1 ? noun[0] : noun[1]}</span>
+        <span className={`hidden sm:inline ${COUNT} mr-1`}>{n(count)} {count === 1 ? noun[0] : noun[1]}</span>
 {!(flat && view === 'list') && <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={`sm:hidden ${filtersBtn(open)}`}>
           Filters{theme && <span className="min-w-5 h-5 px-1.5 rounded-full bg-cream text-primary border border-border-medium text-xs grid place-items-center">1</span>}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
@@ -125,19 +126,19 @@ export default function SubjectsBrowser({ groups, barSearch = false, noun = ['su
           {!flat && <SortSelect label={group[0]} value={theme} onChange={setTheme} options={[['', group[1]], ...[...groups].sort((x, y) => x.label.localeCompare(y.label, 'en')).map((g) => [g.id, g.label] as const)]} />}
           {view === 'bands' && <span className="sm:hidden"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
         </div>
-        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="hidden md:inline ml-2 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary">{howText.title} {how ? '−' : '+'}</button>
+        <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className={`hidden md:inline ml-2 ${HOW_LINK}`}>{howText.title} {how ? '−' : '+'}</button>
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
           {view === 'bands' && <span className="hidden sm:inline-flex"><SortSelect label="Cards" value={card} onChange={(v) => setCard(v as typeof card)} options={CARDS} /></span>}
           <SortSelect label="Order" value={order} onChange={setOrder} options={orders} />
-          {!listOnly && <div className="flex border border-border-medium" role="group" aria-label="View">
+          {!listOnly && <div className={VIEW_GROUP} role="group" aria-label="View">
             <button type="button" aria-label="Picture bands" aria-pressed={view === 'bands'} onClick={() => setView('bands')} className={vbtn(view === 'bands')}><Rows3 className="w-4 h-4" /></button>
             <button type="button" aria-label="List" aria-pressed={view === 'list'} onClick={() => setView('list')} className={vbtn(view === 'list')}><List className="w-4 h-4" /></button>
           </div>}
         </div>
       </div>
-      <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className="md:hidden mt-3 text-[13px] text-muted underline decoration-border-medium underline-offset-[3px]">{howText.title} {how ? '−' : '+'}</button>
+      <button type="button" aria-expanded={how} aria-controls="how" onClick={() => setHow(!how)} className={`md:hidden mt-3 ${HOW_LINK}`}>{howText.title} {how ? '−' : '+'}</button>
       {how && (
-        <ul id="how" className="max-w-2xl mt-3 bg-warm border border-border-light px-5 py-4 space-y-1.5 text-[14.5px] text-secondary leading-relaxed list-disc pl-9">
+        <ul id="how" className={`mt-3 ${HOW_PANEL}`}>
           {howText.items.map((x, i) => <li key={i}>{x}</li>)}
         </ul>
       )}
