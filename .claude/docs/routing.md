@@ -53,64 +53,68 @@ Written by `node scripts/maintenance/router-routing-rows.mjs --write`; `tests/un
 
 <!-- BEGIN GENERATED route-table: scripts/maintenance/router-routing-rows.mjs writes this section from the router table. Do not edit it by hand. -->
 
-From `current.json` (`2026-11-01-validated-7263`, set 2026-11-01; 5 cells moved alone, 4 waivers). `A>agy` and `A>Opus` correct draft A. `*` = agy by default, not measured here. `†` = undecided (HOLD, held, planned, untested), showing the route the row names. `—` = no such cell.
+From `current.json` (`2026-11-12-nightly`, set 2026-11-12; 6 cells moved alone, 4 waivers). `A>agy` and `A>Opus` correct draft A. `*` = agy by default, not measured here. `†` = undecided (HOLD, held, planned, untested), showing the route the row names. `—` = no such cell.
 
 **OCR**
 
 | cell | pages waiting | print | manuscript | unknown |
 |---|---:|---|---|---|
-| `latin-flash3` | 1.3M | 3flash>agy † | 3flash>Opus † | 3flash (off menu) † |
-| `latin-lite` | 862K | agy | lite>Opus † | lite>agy † |
-| `zh-paddle-dice-lt090` | 454K | — | paddle>Opus † | paddle (off menu) † |
+| `latin-flash3` | 1.3M | 3flash>agy † | 3flash>Opus | agy * |
+| `latin-lite` | 862K | agy | agy * | lite>Opus |
+| `zh-paddle-dice-lt090` | 454K | — | paddle>Opus † | paddle>agy * |
 | `greek-flash3` | 419K | 3flash (off menu) † | 3flash>Opus † | 3flash (off menu) † |
-| `german-lite` | 419K | lite>Opus | lite>Opus † | lite>agy |
-| `german-flash3` | 353K | 3flash>Opus | 3flash>Opus † | 3flash>Opus † |
-| `tibetan-yigdzin` | 281K | yigdzin>Opus † | yigdzin>Opus † | yigdzin>Opus † |
-| `french-lite` | 151K | agy | lite>Opus † | lite>agy † |
-| `chinese-flash3` | 104K | 3flash (off menu) † | 3flash>Opus † | 3flash>Opus † |
-| `hebrew-flash3` | 51K | 3flash (off menu) † | 3flash>Opus † | 3flash>agy † |
-| `italian-lite` | 47K | lite (off menu) † | lite (off menu) † | lite (off menu) † |
+| `german-lite` | 419K | lite>Opus | agy * | lite>agy * |
+| `german-flash3` | 353K | 3flash>Opus | 3flash>Opus | 3flash>agy * |
+| `tibetan-yigdzin` | 281K | yigdzin>agy * | yigdzin>Opus † | yigdzin>agy * |
+| `french-lite` | 151K | agy * | lite>Opus | lite>agy * |
+| `chinese-flash3` | 104K | 3flash (off menu) † | 3flash>agy * | 3flash>agy * |
+| `hebrew-flash3` | 51K | 3flash>Opus | 3flash>Opus | 3flash>Opus |
+| `italian-lite` | 47K | lighton>agy * | agy * | agy * |
 | `greek-lite` | 43K | lite (off menu) † | lite>Opus † | — |
-| `sanskrit-lite` | 39K | lite (off menu) | lite (off menu) † | lite (off menu) † |
-| `arabic-flash3` | 30K | 3flash>agy † | 3flash>Opus † | 3flash>agy † |
-| `arabic-lite` | 28K | agy † | lite>Opus † | — |
-| `zh-frame-6871` | 22K | — | paddle>agy † | — |
-| `russian-lite` | 19K | agy † | lite (off menu) † | agy † |
-| `zh-lite` | 19K | agy † | lite (off menu) † | — |
-| `spanish-lite` | 17K | lite (off menu) † | lite (off menu) † | lite (off menu) † |
-| `korean-lite` | 17K | agy † | agy † | lite (off menu) † |
-| `danish-lite` | 6K | lite (off menu) † | lite (off menu) † | lite (off menu) † |
-| `middle-english-lite` | 5K | lite (off menu) † | lite (off menu) † | lite (off menu) † |
-| `old-french-lite` | 2K | lite (off menu) † | lite (off menu) † | — |
-| `portuguese-lite` | 2K | lite (off menu) † | lite (off menu) † | lite (off menu) † |
-| `mhg-lite` | 1K | lite (off menu) † | lite (off menu) † | lite (off menu) † |
-| `tamil-lite` | 225 | agy † | lite (off menu) † | lite (off menu) † |
-| `ottoman-lite` | 131 | agy † | lite (off menu) † | lite (off menu) † |
-| `hindi-lite` | 65 | agy † | — | lite (off menu) † |
-| `turkish-lite` | 50 | lite (off menu) † | lite (off menu) † | lite (off menu) † |
-| `english-blank-pre1800` | 0 | — | — | lighton-written (off menu) † |
-| `english-gpu-7263` | 0 | gpu2>agy | lite (off menu) † | — |
-| `french-blank` | 0 | agy | agy † | — |
-| `french-gpu-7263` | 0 | gpu-glm>agy | lite (off menu) † | — |
-| `german-blank` | 0 | agy | agy † | — |
-| `german-blank-antiqua` | 0 | pero>agy † | — | — |
+| `sanskrit-lite` | 39K | lite (off menu) | agy * | agy * |
+| `arabic-flash3` | 30K | 3flash>agy * | 3flash>agy * | 3flash>Opus |
+| `arabic-lite` | 28K | lite (off menu) | lite>Opus † | — |
+| `zh-frame-6871` | 22K | — | paddle>agy | — |
+| `russian-lite` | 19K | agy * | agy * | agy * |
+| `zh-lite` | 19K | agy † | agy * | — |
+| `spanish-lite` | 17K | agy * | agy * | agy * |
+| `korean-lite` | 17K | agy * | agy * | agy * |
+| `danish-lite` | 6K | agy * | agy * | agy * |
+| `middle-english-lite` | 5K | agy * | agy * | agy * |
+| `old-french-lite` | 2K | agy * | agy * | — |
+| `portuguese-lite` | 2K | agy * | agy * | agy * |
+| `mhg-lite` | 1K | agy * | agy * | agy * |
+| `tamil-lite` | 225 | agy * | agy * | agy * |
+| `ottoman-lite` | 131 | agy * | agy * | agy * |
+| `hindi-lite` | 65 | agy * | — | agy * |
+| `turkish-lite` | 50 | agy * | agy * | agy * |
+| `english-blank-pre1800` | 0 | — | — | scans-only (off menu) |
+| `english-gpu-7263` | 0 | gpu-glm>agy * | agy * | — |
+| `french-blank` | 0 | agy | agy * | — |
+| `french-gpu-7263` | 0 | agy * | agy * | — |
+| `german-blank` | 0 | agy | agy * | — |
+| `german-blank-antiqua` | 0 | agy | — | — |
 | `german-blank-fraktur` | 0 | lighton>agy † | — | — |
-| `german-gpu-7263` | 0 | gpu>agy | lite (off menu) † | lite (off menu) † |
-| `italian-gpu-7263` | 0 | lite (off menu) | — | — |
+| `german-gpu-7263` | 0 | gpu>agy * | agy * | agy * |
+| `italian-gpu-7263` | 0 | agy * | — | — |
 | `latin-blank` | 0 | pero>agy | — | — |
-| `latin-gpu-7263` | 0 | pero>agy | lite (off menu) † | — |
-| `zh-6561-served` | 0 | paddle (off menu) † | paddle>Opus † | — |
+| `latin-gpu-7263` | 0 | pero>agy | agy * | — |
+| `zh-6561-served` | 0 | paddle>Opus | paddle>Opus | — |
 
 **Translation**
 
 | cell | pages waiting | print | manuscript | unknown |
 |---|---:|---|---|---|
-| `german-tr-flash3` | 307K | flash3 (off menu) † | flash3 (off menu) † | flash3 (off menu) |
-| `german-tr-lite` | 151K | flash-lite (off menu) † | flash-lite (off menu) † | flash-lite (off menu) |
-| `zh-siku-tr` | 51K | — | agy † | — |
-| `tengyur-tr` | 0 | — | — | agy † |
-| `tibetan-tr` | 0 | — | Opus † | — |
-| `zh-siku-first-tr` | 0 | agy † | agy † | — |
+| `german-tr-flash3` | 307K | agy | agy * | flash3 (off menu) * |
+| `german-tr-lite` | 151K | flash-lite (off menu) † | agy * | flash-lite (off menu) * |
+| `latin-tr-first` | 53K | agy * | agy * | agy * |
+| `zh-siku-tr` | 51K | — | agy | — |
+| `german-tr-first` | 44K | agy * | agy * | agy * |
+| `french-tr-first` | 13K | agy † | agy * | agy * |
+| `italian-tr-first` | 7K | agy * | agy * | flash-lite (off menu) † |
+| `tengyur-tr` | 0 | — | — | agy * |
+| `tibetan-tr` | 0 | — | Opus | — |
+| `zh-siku-first-tr` | 0 | agy * | agy | — |
 
 <!-- END GENERATED route-table -->
 
