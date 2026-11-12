@@ -27,7 +27,7 @@ audio/video. Built test-first from simulated user journeys.
 1. Approve or edit the stories in SPEC.md, then remove the `blocked` label. No feature code before that.
 2. Answer SPEC §7: who hosts, chat kept or not, audio-only vs video first, always open vs around meetings, test-user seeding.
 3. Hermetica & Alchemy calendar event (2nd Tuesday, 18:00 Amsterdam) — creation was blocked; needs Derek.
-4. Invite email is drafted (in the original session's chat) but not sent. Any send to readers/volunteers needs Derek's OK.
+4. Invite email is drafted (below) but not sent. Any send to readers/volunteers needs Derek's OK.
 5. Photos / floor plan of the real house for the pixel art (with the Embassy's permission).
 6. Engine choice (WorkAdventure vs custom), sprites (reuse philosopher's-library art vs new tileset). LiveKit beyond free tier costs money — ask first.
 
@@ -38,3 +38,16 @@ Do not export readers' names or emails to files; work with aggregates.
 
 ## Next step once approved
 Build until the sims go green, journey by journey, starting with J1–J4 (arrival, presence) and J12 (list view).
+
+## Draft invite (not sent)
+> Subject: A reading group for you at Source Library
+>
+> When you joined Source Library you told us what draws you here, and some of you offered to help. Thank you. We read every one, and we owe you a reply.
+>
+> So many of you share interests that we're starting small study groups. Each one reads a single text from the library together: one session a month, online, with a place to talk in between.
+>
+> First groups: Hermetica & Alchemy · Platonists' Circle · Translators' Room · Círculo en español · Ancient Worlds
+>
+> Reply with the group you'd like to join (or suggest another), and we'll send dates.
+>
+> — Derek, Source Library
