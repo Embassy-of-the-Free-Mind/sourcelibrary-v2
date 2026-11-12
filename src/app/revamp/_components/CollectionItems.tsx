@@ -206,7 +206,9 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
     : <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">{items.map(card)}</div>;
 
   const imagesHere = plates.length > 0;
-  const tabs = !small && imagesHere && pics === 'tab';
+  // Categories (subjects, centuries, languages, types) always keep texts and pictures apart, in tabs.
+  // Collections still offer the mixed layouts while their listing is being decided.
+  const tabs = (!small || !curated) && imagesHere && pics === 'tab';
   const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
     fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
     ttype !== 'all' && { key: 'type', label: ttype === NONE ? 'Type not recorded' : TEXT_TYPES[ttype] },
@@ -277,7 +279,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         <span className="text-muted mr-1">Prototype only.{protoNote && ` ${protoNote}`}</span>
         {curated && <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>}
         {saved && <span className="text-muted ml-1">Your edits are kept in this browser.</span>}
-        {imagesHere && <>
+        {curated && imagesHere && <>
           <span className="text-muted ml-3 mr-1">Pictures:</span>
           <button type="button" aria-pressed={pics === 'tab'} onClick={() => setPics('tab')} className={pill(pics === 'tab')}>Separate</button>
           <button type="button" aria-pressed={pics === 'mixA'} onClick={() => { setPics('mixA'); setPage(1); }} className={pill(pics === 'mixA')}>Mixed A: columns</button>
