@@ -23,7 +23,7 @@ export const HOW_PICTURE_KINDS: How = { title: 'How we name kinds of pictures', 
         <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
       ] };
 
-export const HOW_BOOK_KINDS: How = { title: 'How we name kinds of books', items: [
+export const HOW_TEXT_KINDS: How = { title: 'How we name kinds of texts', items: [
         'Two questions, kept apart: what a text is written on (a printed book, a scroll, a clay tablet) and what kind of writing it is (a treatise, a commentary, letters).',
         'What it is written on follows the Getty object types; the kinds of writing follow the Library of Congress genre and form terms.',
         'What a text is written on is not recorded in the catalogue yet. It is part of the coming catalogue round.',
