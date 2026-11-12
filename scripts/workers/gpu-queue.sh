@@ -57,7 +57,10 @@ case "${1:-}" in
     if [ $rc -eq 0 ]; then dest=done; verdict=done
     elif [ -n "$yielded" ]; then dest=failed; verdict="yielded (rc=75, resumable)"
     else dest=failed; verdict="FAILED rc=$rc$([ $rc -eq 124 ] && echo ' (timeout)')"; fi
-    mv "$Q/running/$task" "$Q/$dest/$task"
+    # touch: mv keeps the mtime cp gave the file at queue time, and gex45-idle-alert.sh / box-rpc gpu-probe read the
+    # newest done/failed mtime as "last task finished". Untouched, a 3 h chunk that ended 2 min ago read as finished
+    # 3 h ago, and a steward started in the gap before the filler queued the next chunk (2026-11-12, #6871).
+    mv "$Q/running/$task" "$Q/$dest/$task"; touch "$Q/$dest/$task"
     echo "$(now) $verdict $name ${mins}m vram=${vram}MiB"
     page "GPU task $verdict: $name" "${mins} min.$left Log: gex45:$OUT/$name/task.log${iss:+ (#$iss)}. Next: $(n=$(ls -1 "$Q"/pending | head -1); n=${n%.sh}; echo "${n:-queue empty}")" "$({ [ $rc -eq 0 ] || [ -n "$yielded" ]; } && [ -z "$left" ] && echo low || echo high)" ;;
   *) sed -n '2,16p' "$0"; exit 2 ;;
