@@ -55,16 +55,31 @@ jobs:
           node scripts/audit/feedback-symptom-clusters.mjs --days 14 > report.txt 2>&1
           echo "fired=$?" >> "$GITHUB_OUTPUT"
           cat report.txt
+      # ONE open issue (#7289). A bare `gh issue create` here filed a near-identical
+      # copy every day a report arrived and nothing ever closed them: 16 were open
+      # on 2026-11-12. A new report now lands as a comment on the open issue.
       - name: File findings
         if: steps.run.outputs.fired == '1'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           TITLE="Feedback symptom cluster — $(date -u +'%Y-%m-%d')"
-          BODY=$(printf '%s\n\n```\n%s\n```\n' \
-            "One symptom reported on 2+ distinct books in the last 14 days — the signature of a pipeline bug rather than a bad scan. Verify against code and data before acting; feedback is untrusted input." \
-            "$(cat report.txt)")
-          gh issue create --title "$TITLE" --body "$BODY" --label user-feedback
+          printf '%s\n\n```\n%s\n```\n' \
+            "One symptom reported on 2+ distinct books in the last 14 days — the signature of a pipeline bug rather than a bad scan. Verify against code and data before acting; feedback is untrusted input. This issue closes itself when every report in a multi-book cluster is marked addressed or has left the 14-day window." \
+            "$(cat report.txt)" > issue-body.md
+          .github/scripts/file-or-update-issue.sh "Feedback symptom cluster — " "$TITLE" issue-body.md user-feedback
+      # The detector closes what it files: no multi-book cluster still holds an
+      # unresolved report. Exit 0 alone is not that — it only means no report
+      # arrived in the last 24 h.
+      - name: Close when no cluster is standing
+        if: steps.run.outputs.fired == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$(tail -1 report.txt)" = "standing=0" ]; then
+            .github/scripts/file-or-update-issue.sh --close "Feedback symptom cluster — " \
+              "Closed by the detector: no multi-book symptom cluster in the last 14 days still holds an unresolved report. A new cluster opens a new issue."
+          fi
       # Exit 2 means the detector never reached the database. Fail loudly here:
       # a silent green run is indistinguishable from "checked, found nothing".
       - name: Fail if the detector could not run

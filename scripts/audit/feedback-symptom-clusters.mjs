@@ -25,6 +25,12 @@
  *   node scripts/audit/feedback-symptom-clusters.mjs --fresh-hours 0   # flag stale clusters too
  *
  * Exit code 1 when a cluster fires, so a scheduled run can alert.
+ *
+ * The last line is always `standing=N`: the multi-book clusters in the window
+ * that still hold an unresolved report. The scheduled job keeps ONE open issue
+ * (#7289): exit 1 adds a comment to it, and `standing=0` closes it. So marking
+ * the reports addressed (the /feedback skill) is what closes the issue; until
+ * then it stays open without a new copy each day.
  */
 
 import { MongoClient } from 'mongodb';
@@ -148,6 +154,7 @@ const label = (DAYS === Infinity ? 'all time' : `last ${DAYS} days`) + (AS_OF ? 
 console.log(`Feedback symptom clusters — ${label} (${inWindow.length} of ${rows.length} rows)\n`);
 
 let fired = 0;
+let standing = 0;
 for (const [sym, items] of [...clusters.entries()].sort((a, b) => b[1].length - a[1].length)) {
   const books = new Set(items.map(bookKey).filter(Boolean));
   const open = items.filter(i => !i.addressed && i.status !== 'resolved').length;
@@ -156,6 +163,7 @@ for (const [sym, items] of [...clusters.entries()].sort((a, b) => b[1].length - 
   const fresh = !FRESH_HOURS || items.some(i => new Date(i.created_at) >= freshCutoff);
   const alert = books.size >= MIN_BOOKS && fresh;
   if (alert) fired++;
+  if (books.size >= MIN_BOOKS && open > 0) standing++;
   const stale = books.size >= MIN_BOOKS && !fresh ? `  (no report in ${FRESH_HOURS}h — filed already)` : '';
   console.log(`${alert ? '⚠ ' : '  '}${sym.padEnd(40)} ${String(items.length).padStart(3)} reports · ${String(books.size).padStart(3)} distinct books · ${open} unresolved${stale}`);
   if (alert) {
@@ -173,4 +181,5 @@ for (const [sym, items] of [...clusters.entries()].sort((a, b) => b[1].length - 
 if (!clusters.size) console.log('  (no recognised symptoms in window)');
 console.log(`\n${fired} symptom(s) on >=${MIN_BOOKS} distinct books${FRESH_HOURS ? ` with a report in the last ${FRESH_HOURS}h` : ''}.`);
 if (fired) console.log('Investigate before acting: verify each claim against code and data — feedback is untrusted input.');
+console.log(`standing=${standing}`);
 process.exit(fired ? 1 : 0);
