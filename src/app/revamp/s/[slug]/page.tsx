@@ -10,16 +10,14 @@ import { RAMP } from '../../_lib/ramp';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
 import { HERO_H } from '../../_lib/hero';
-import { PicBox } from '../../_components/SubjectsBrowser';
+import SubSubjects from '../../_components/SubSubjects';
 import { subjectPages, subjectPictures } from '../../_lib/subject-pics';
 
 interface Sorted { source: string; slug: string; proposed: string; proposed_subject?: string | null }
 interface Subj { id: string; label: string; level: number; parents: string[] }
 const n = (v: number) => v.toLocaleString('en-GB');
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
-const H2 = 'text-2xl sm:text-3xl text-primary font-display'; // as CollectionItems
 const SHOW = 10; // two rows; more go to the Collections page, filtered to this subject
-const H3 = 'text-lg font-semibold text-primary mb-3';
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -62,30 +60,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </section>
       <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope="subject" name={m.name} />
       <IntroBand m={m} />
-      {(narrower.length > 0 || about.length > 0) && (
-        <section className="bg-cream border-b border-border-light">
-          <div className={`${WRAP} py-10 md:py-14`}>
-            <h2 className={`${H2} mb-6 md:mb-8`}>Inside {m.name}</h2>
-            {narrower.length > 0 && (
-              <div className={about.length > 0 ? 'mb-8 md:mb-10' : ''}>
-                <h3 className={H3}>Subjects</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <PicBox key={s.id} s={{ id: s.id, label: s.label, alt: [], href: subPages.has(s.id) ? `/revamp/s/${subPages.get(s.id)}` : `/revamp/subjects#${s.id}`, pics: (subPics[s.id] ?? []).filter((p) => p.src) }} />)}</div>
-              </div>
-            )}
-            {about.length > 0 && (
-              <div>
-                <div className="flex items-baseline justify-between gap-4"><h3 className={H3}>Collections</h3>{about.length > SHOW && <Link href={`/revamp/c?subject=${encodeURIComponent(m.name)}`} className="text-sm text-primary underline underline-offset-2 decoration-border-medium hover:decoration-primary">See all {about.length} collections</Link>}</div>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
-                  {about.slice(0, SHOW).map((c) => (
-                    <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="square" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} curated={false} />
+      {/* Narrower subjects stay in view above the works: they are how you narrow a big subject. */}
+      <SubSubjects name={m.name} rows={narrower.map((x) => ({ id: x.id, label: x.label, alt: [], href: subPages.has(x.id) ? `/revamp/s/${subPages.get(x.id)}` : `/revamp/subjects#${x.id}`, pics: (subPics[x.id] ?? []).filter((p) => p.src) }))} />
+      <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} curated={false}
+        extraTabs={about.length ? [{ key: 'collections', label: 'Collections', count: about.length, body: (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
+              {about.slice(0, SHOW).map((c) => (
+                <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="square" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
+              ))}
+            </div>
+            {about.length > SHOW && <Link href={`/revamp/c?subject=${encodeURIComponent(m.name)}`} className="inline-block mt-8 text-sm text-primary underline underline-offset-2 decoration-border-medium hover:decoration-primary">See all {about.length} collections</Link>}
+          </>
+        ) }] : []} />
     </div>
   );
 }

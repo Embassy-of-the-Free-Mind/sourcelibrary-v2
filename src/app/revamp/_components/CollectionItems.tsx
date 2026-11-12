@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ChevronDown, LayoutGrid, List } from 'lucide-react';
 import { filtersBtn } from './CollectionsBrowser';
@@ -54,6 +54,8 @@ export interface ItemsProps {
   curated?: boolean;
   /** Prototype only: a line in the prototype box, such as how much of the list is saved. */
   protoNote?: string;
+  /** More heading tabs after Works and Images, such as a subject's Collections. */
+  extraTabs?: { key: string; label: string; count: number; body: ReactNode }[];
 }
 
 /**
@@ -62,12 +64,12 @@ export interface ItemsProps {
  * their notes; over 60, filters too. What the maker sets (order, sections, notes, default order) comes
  * from the collection document, edited in CollectionEditor.
  */
-export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true, protoNote, explain }: ItemsProps) {
+export default function CollectionItems({ slug, books, notes, plates, imagesTotal, byBook, curated = true, protoNote, explain, extraTabs = [] }: ItemsProps) {
   const original = initialDoc(books, notes);
   const [saved, setSaved] = useState<CollectionDoc | null>(null);
   const [editing, setEditing] = useState(false);
   const [pics, setPics] = useState<Pics>('tab');
-  const [tab, setTab] = useState<'works' | 'images'>('works');
+  const [tab, setTab] = useState<string>('works');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [sortPick, setSort] = useState<string | null>(null);
   const [groupPick, setGroup] = useState('none');
@@ -208,7 +210,8 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   const imagesHere = plates.length > 0;
   // Categories (subjects, centuries, languages, types) always keep texts and pictures apart, in tabs.
   // Collections still offer the mixed layouts while their listing is being decided.
-  const tabs = (!small || !curated) && imagesHere && pics === 'tab';
+  const tabs = ((!small || !curated) && imagesHere && pics === 'tab') || (!curated && extraTabs.length > 0);
+  const headTabs: [string, string, number][] = [['works', 'Works', n], ...(imagesHere ? [['images', 'Images', imagesTotal] as [string, string, number]] : []), ...extraTabs.map((t) => [t.key, t.label, t.count] as [string, string, number])];
   const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
     fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
     ttype !== 'all' && { key: 'type', label: ttype === NONE ? 'Type not recorded' : TEXT_TYPES[ttype] },
@@ -275,7 +278,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   return (
     <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-12">
       {/* Prototype only: not part of the page. */}
-      <div className="border border-dashed border-border-medium bg-white px-4 py-3 mb-10 flex flex-wrap items-center gap-2 text-[13px]">
+      <div className={`border border-dashed border-border-medium bg-white px-4 py-3 mb-10 flex-wrap items-center gap-2 text-[13px] ${protoNote || curated ? 'flex' : 'hidden'}`}>
         <span className="text-muted mr-1">Prototype only.{protoNote && ` ${protoNote}`}</span>
         {curated && <button type="button" onClick={() => setEditing(true)} className="h-[30px] px-3 bg-primary text-cream text-[13px]">Edit as the maker</button>}
         {saved && <span className="text-muted ml-1">Your edits are kept in this browser.</span>}
@@ -297,11 +300,11 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
             </div>
           ) : (
             // The section heading is the tab. The one you are on is black and underlined; the other waits in grey.
-            <div className="flex items-end gap-8 sm:gap-12 border-b border-border-light mb-7" role="tablist">
-              {([['works', 'Works', n], ['images', 'Images', imagesTotal]] as const).map(([k, l, c]) => (
+            <div className="flex items-end gap-4 sm:gap-12 border-b border-border-light mb-7 overflow-x-auto gap-x-4" role="tablist">
+              {headTabs.map(([k, l, c]) => (
                 <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
-                  className={`${H2} pb-3 -mb-px border-b-2 transition-colors ${tab === k ? 'border-primary text-primary' : 'border-transparent !text-muted hover:!text-primary'}`}>
-                  {l}<span className="ml-2.5 align-middle font-sans text-[14px] sm:text-[15px] tabular-nums text-muted">{fmt(c)}</span>
+                  className={`${H2} !text-[19px] sm:!text-3xl pb-3 -mb-px border-b-2 whitespace-nowrap shrink-0 transition-colors ${tab === k ? 'border-primary text-primary' : 'border-transparent !text-muted hover:!text-primary'}`}>
+                  {l}<span className="ml-1.5 sm:ml-2.5 align-middle font-sans text-[12.5px] sm:text-[15px] tabular-nums text-muted">{fmt(c)}</span>
                 </button>
               ))}
             </div>
@@ -361,6 +364,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
         </>}
 
         {tabs && tab === 'images' && images}
+        {tabs && extraTabs.map((t) => tab === t.key && <div key={t.key}>{t.body}</div>)}
       </div>
 
       {!tabs && imagesHere && pics === 'tab' && (
