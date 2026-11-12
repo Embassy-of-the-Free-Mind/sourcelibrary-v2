@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import AxisIndex from '../_components/AxisIndex';
+import { HOW_TYPES } from '../_lib/how';
 import { featuredOf, typeGroups, typeSlugs } from '../_lib/axes';
 
 const n = (v: number) => v.toLocaleString('en-GB');
@@ -16,11 +16,6 @@ export default function Page() {
       featured={f && name ? { name, href: `/revamp/t/${f.slug}` } : null}
       groups={groups} noun={['type', 'types']} group={['Kind', 'Pictures and texts']} placeholder="Search types or ask a question"
       orders={[['theme', 'By kind'], ['az', 'A to Z']]}
-      how={{ title: 'How we name types', items: [
-        'Picture types are named after the Getty Art & Architecture Thesaurus, the museum standard, which keeps how a picture was made (technique) apart from what it shows.',
-        'Text types are named after the Library of Congress genre and form terms, the library standard.',
-        'A picture has one type for now, so an engraved portrait is under either Engraving or Portrait, not both. Giving every picture both is the next step.',
-        <span key="std"><Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
-      ] }} />
+      how={HOW_TYPES} />
   );
 }

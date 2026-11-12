@@ -4,6 +4,7 @@ import PlateWall from './PlateWall';
 import CollectionBars from './CollectionBars';
 import SubjectsBrowser, { type SubjectRow } from './SubjectsBrowser';
 import { RAMP } from '../_lib/ramp';
+import { HERO_H } from '../_lib/hero';
 
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
@@ -18,7 +19,7 @@ export default function AxisIndex({ title, intro, counts, tiles, featured, group
   const total = groups.reduce((s, g) => s + g.narrower.length, 0);
   return (
     <div className="bg-cream min-h-screen">
-      <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
+      <section className={`relative overflow-hidden text-white ${HERO_H} flex items-end`}>
         {wall ?? <PlateWall tiles={tiles} rows={3} still />}
         {switcher && <div className="absolute top-3 right-4 z-20 text-xs text-white/70 flex gap-2">{switcher}</div>}
         <div className={`${WRAP} relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>

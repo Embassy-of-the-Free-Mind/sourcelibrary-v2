@@ -79,7 +79,7 @@ Before drawing any control, use the one the site already has. A new page does no
 |---|---|---|
 | Search bar + Ask the librarian | `search-kit/SearchAskBars` | /library, /gallery |
 | Any dropdown (sort, subject, language, order) | `search-kit/SortSelect` (optional `label` for its accessible name) | /library, /gallery |
-| Filter chips under a search | `search-kit/FilterChips` | /library |
+| Applied filters, as removable tags | `search-kit/FilterChips`: filled `bg-warm`, no border (so a tag never reads as another dropdown beside the white bordered `SortSelect`), facet name muted + value medium from a `"Facet: value"` label, square × that fills black on hover | /library, /gallery, collections |
 | Stat boxes, printed-years chart, share bar | `search-kit/StatParts` (`statBox`, `PrintedBox`, `ShareBox`) | /library, /gallery |
 | Pagination | `collections/CatalogPagination` with `variant="search"` | /library |
 | On/off filter pills | the `pill` class in `gallery/GalleryControls` (`h-[30px] px-3 border text-[13px]`, black when on) | /gallery |

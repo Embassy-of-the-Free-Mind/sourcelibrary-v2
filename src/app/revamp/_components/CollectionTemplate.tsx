@@ -11,6 +11,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import PlateWall from './PlateWall';
 import IntroBand from './IntroBand';
 import type { CollectionModel } from '../_lib/types';
+import { HERO_H } from '../_lib/hero';
 
 const WRAP = 'max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16';
 const H2 = 'text-2xl sm:text-3xl text-primary font-display';
@@ -58,9 +59,9 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
 
   return (
     <div className="min-h-screen bg-cream">
-      <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end" style={{ backgroundColor: '#1a1612' }}>
+      <section className={`relative overflow-hidden ${HERO_H} flex items-end`} style={{ backgroundColor: '#1a1612' }}>
         {/* Plates in still rows, as on Collections and the subject pages */}
-        {mosaic ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <>
+        {mosaic ? <PlateWall tiles={m.heroTiles} rows={3} still bar={false} /> : m.heroImage ? <>
           <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 md:hidden"><HeroScrim variant="bottom" /></div>
           <div className="absolute inset-0 hidden md:block"><HeroScrim /></div>

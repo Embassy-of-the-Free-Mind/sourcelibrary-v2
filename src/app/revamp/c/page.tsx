@@ -5,6 +5,7 @@ import { RAMP } from '../_lib/ramp';
 import CollectionsBrowser from '../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../_lib/data';
 import { demoItems } from '../_lib/demos-index';
+import { HERO_H } from '../_lib/hero';
 
 const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
@@ -23,7 +24,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
   const subjects = [...bySubject.entries()].filter(([, s]) => s.some((x) => items.some((i) => i.slug === x))).map(([name, slugs]) => ({ name, slugs })).sort((a, b) => a.name.localeCompare(b.name));
   return (
     <div className="bg-cream min-h-screen">
-      <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
+      <section className={`relative overflow-hidden text-white ${HERO_H} flex items-end`}>
         <PlateWall tiles={lead?.heroTiles ?? []} rows={3} still />
         <div className={`max-w-[1500px] mx-auto px-6 md:px-12 relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>

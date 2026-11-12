@@ -12,11 +12,12 @@ export const TINT =
 export const BAND_TINT =
   'linear-gradient(180deg, transparent 30%, rgba(14,10,7,.62) 100%), radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,.22) 0%, transparent 55%), linear-gradient(90deg, rgba(14,10,7,.42) 0%, rgba(14,10,7,.08) 60%, transparent 100%), rgba(16,12,8,.4)';
 
-export default function PlateWall({ tiles, rows = 4, still = false }: { tiles: string[]; rows?: number; still?: boolean }) {
+/** `bar`: the hero has the search strip along its bottom edge, so the rows end above it rather than run underneath. */
+export default function PlateWall({ tiles, rows = 4, still = false, bar = true }: { tiles: string[]; rows?: number; still?: boolean; bar?: boolean }) {
   const lanes = Array.from({ length: rows }, (_, r) => tiles.filter((_t, i) => i % rows === r));
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden" style={{ background: '#14100c' }}>
-      <div className="absolute inset-0 flex flex-col gap-2 py-1">
+      <div className={`absolute inset-x-0 top-0 flex flex-col gap-2 py-1 ${bar ? 'bottom-12 sm:bottom-[52px]' : 'bottom-0'}`}>
         {lanes.map((lane, r) => (
           <div key={r} className={`flex-1 min-h-0 flex gap-2 w-max ${still ? '' : 'plate-drift'}`} style={still ? { marginLeft: -r * 70 } : { animationDuration: `${150 + r * 35}s`, animationDirection: r % 2 ? 'reverse' : 'normal' }}>
             {[...lane, ...lane, ...lane, ...lane].map((t, i) => <img key={i} src={t} alt="" className="h-full w-auto block shrink-0" />)}

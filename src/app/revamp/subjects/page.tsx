@@ -6,6 +6,7 @@ import CollectionBars from '../_components/CollectionBars';
 import SubjectsBrowser, { type Pic, type SubjectRow } from '../_components/SubjectsBrowser';
 import { collectionModel, dataFile, snapshotSlugs } from '../_lib/data';
 import { RAMP } from '../_lib/ramp';
+import { HERO_H } from '../_lib/hero';
 
 interface Subj { id: string; label: string; level: number; parents: string[]; altLabels?: Record<string, string[]> }
 
@@ -55,7 +56,7 @@ export default function Page() {
   const groups = all.filter((s) => s.level === 1).map((t) => ({ ...row(t), narrower: all.filter((s) => s.level === 2 && s.parents.includes(t.id)).map((s) => ({ ...row(s), home: s.parents[0] === t.id })).sort((a, b) => a.label.localeCompare(b.label, 'en')) }));
   return (
     <div className="bg-cream min-h-screen">
-      <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[60vh] flex items-end">
+      <section className={`relative overflow-hidden text-white ${HERO_H} flex items-end`}>
         <PlateWall tiles={featured ? featured.heroTiles : [...tiles, ...Object.values(pics).flat().map((p) => p.src)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 40)} rows={3} still />
         <div className={`${WRAP} relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>

@@ -11,6 +11,7 @@ import IntroBand from './IntroBand';
 import MakerBadge, { SOURCE_LIBRARY, type Maker } from './MakerBadge';
 import { RAMP, CURATED } from '../_lib/ramp';
 import type { CollectionModel } from '../_lib/types';
+import { HERO_H } from '../_lib/hero';
 
 const WRAP = 'max-w-[1500px] mx-auto px-6 md:px-12';
 const n = (v: number) => v.toLocaleString('en-GB');
@@ -38,7 +39,7 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', maker 
   const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, span].filter(Boolean) as string[];
   return (
     <div className="min-h-screen bg-cream">
-      <section className="relative overflow-hidden text-white flex items-end min-h-[56svh] md:min-h-[75vh]" style={{ backgroundColor: '#1a1612' }}>
+      <section className={`relative overflow-hidden text-white flex items-end ${HERO_H}`} style={{ backgroundColor: '#1a1612' }}>
         {(() => {
           const wall = m.heroTiles.length >= 8 ? <PlateWall tiles={m.heroTiles} rows={3} still /> : m.heroImage ? <img src={m.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" /> : null;
           return hero === 'wall' ? wall : <HeroPicture slug={m.slug} mode={hero === 'whole' ? 'whole' : 'bleed'} cands={cands} fallback={wall} />;
