@@ -107,6 +107,8 @@ if (fs.existsSync(saDir)) {
     const byPacket = new Map(draw.pages.map((p) => [p.packet, p]));
     // Both readers: Opus (source spare_audit, as before) and the Gemini reader of the scheduled rounds (its own source,
     // spare_audit_gemini, so tables built on the Opus series are unchanged and a page read by both carries two families).
+    // `selection` is the page's own stratum: random and lane-b-written as before, plus risk-top-decile (#8629); every
+    // consumer tests selection === 'random' for the uniform frame.
     for (const [readerDir, SOURCE, READER] of [['opus', 'spare_audit', 'model:claude-opus (spare-audit brief #6338)'], ['gemini37', 'spare_audit_gemini', 'model:gemini-3.8-flash-low (weekly audit, #6338 brief)']]) {
     const revDir = path.join(base, 'readers', readerDir, 'reviews');
     if (!fs.existsSync(revDir)) continue;

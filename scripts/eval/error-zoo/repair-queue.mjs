@@ -72,7 +72,8 @@ for (const p of pages.values()) {
   let route = row ? boundRoute(row) : null;
   // A bound route that is just the engine that made the page (`lite` on a lite read) keeps the text: not a repair.
   if (route && !route.includes('>') && engineOf(route) && engineOf(route) === engineOf(d.ocr?.model)) route = null;
-  const confirmed = p.families.size >= 2 || (p.families.has('claude') && p.families.has('gemini'));
+  // Two MODEL families: a lane judge or person counted as 'other' does not stand in for the second family.
+  const confirmed = p.families.has('claude') && p.families.has('gemini');
   let status;
   if (d.ocr?.edited_by || d.ocr?.source === 'manual') status = 'skip';
   else if (translationLaneReason(b)) status = 'deferred';

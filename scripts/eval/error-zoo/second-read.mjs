@@ -10,7 +10,7 @@
  *            packets for the top `--max` needs-second-read rows (most-read books first) whose flagging family is
  *            Claude, so the second reader is Gemini (the only family with spare quota for it). Writes DIR/packets,
  *            DIR/images, DIR/key.jsonl.
- *   confirm  node second-read.mjs confirm --queue=queue.json --run=DIR --reader=NAME
+ *   confirm  node --env-file=… second-read.mjs confirm --queue=queue.json --run=DIR --reader=NAME
  *            reads DIR/readers/NAME/reviews and rewrites the queue's rows: confirmed (the second reader also finds a
  *            serious OCR error or a wrong leaf) → status `queued`; not confirmed → `not-confirmed`. Unread rows stay.
  * Read-only against Mongo. Writes files only.
@@ -56,12 +56,19 @@ if (cmd === 'build') {
 } else if (cmd === 'confirm') {
   const NAME = arg('reader');
   const key = fs.readFileSync(path.join(RUN, 'key.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
-  const verdict = new Map();
+  // A verdict counts only if the page still holds the text the second reader read (hash frozen at build).
+  const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
+  const live = new Map((await client.db('bookstore').collection('pages').find({ id: { $in: key.map((k) => k.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray())
+    .map((d) => [d.id, crypto.createHash('sha256').update(String(d.ocr?.data ?? '')).digest('hex')]));
+  await client.close();
+  const verdict = new Map(); let changed = 0;
   for (const k of key) {
     let p = null; try { p = JSON.parse(fs.readFileSync(path.join(RUN, 'readers', NAME, 'reviews', `${k.packet}.json`), 'utf8'))[0].pages[0]; } catch { continue; }
+    if (live.get(k.page_id) !== k.ocr_sha256) { changed++; continue; }
     const ocrSerious = (p.ocr_errors || []).some((e) => e.severity === 'serious') || p.right_page === 'no';
     verdict.set(k.page_id, ocrSerious);
   }
+  if (changed) console.log(`${changed} page(s) changed since the second read was built: their verdicts are not used`);
   let c = 0, nc = 0;
   for (const r of Q.rows) {
     if (!verdict.has(r.page_id)) continue;
@@ -69,6 +76,8 @@ if (cmd === 'build') {
     if (verdict.get(r.page_id)) { r.status = 'queued'; r.families = [...new Set([...r.families, 'gemini'])]; c++; } else { r.status = 'not-confirmed'; nc++; }
   }
   Q.by_status = Q.rows.reduce((m, r) => ((m[r.status] = (m[r.status] || 0) + 1), m), {});
+  for (const c of Object.values(Q.by_cell || {})) c.statuses = {};
+  for (const r of Q.rows) { const c = (Q.by_cell[r.cell] ||= { route: r.route, decision: r.decision, statuses: {} }); c.statuses[r.status] = (c.statuses[r.status] || 0) + 1; }
   Q.second_read_at = new Date().toISOString();
   fs.writeFileSync(QUEUE, JSON.stringify(Q, null, 1));
   console.log(`second read: ${c} confirmed → queued, ${nc} not confirmed; queue now ${JSON.stringify(Q.by_status)}`);
