@@ -276,11 +276,11 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
             </div>
           ) : (
             // The section heading is the tab. The one you are on is black and underlined; the other waits in grey.
-            <div className="flex items-end gap-4 sm:gap-12 border-b border-border-light mb-7 overflow-x-auto gap-x-4" role="tablist">
+            <div className="flex items-end gap-2 sm:gap-12 border-b border-border-light mb-7 overflow-x-auto" role="tablist">
               {headTabs.map(([k, l, c]) => (
                 <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
-                  className={`${H2} !text-[19px] sm:!text-3xl pb-3 -mb-px border-b-2 whitespace-nowrap shrink-0 transition-colors ${tab === k ? 'border-primary text-primary' : 'border-transparent !text-muted hover:!text-primary'}`}>
-                  {l}<span className="ml-1.5 sm:ml-2.5 align-middle font-sans text-[12.5px] sm:text-[15px] tabular-nums text-muted">{fmt(c)}</span>
+                  className={`${H2} !text-[16.5px] sm:!text-3xl pb-3 -mb-px border-b-2 whitespace-nowrap shrink-0 transition-colors ${tab === k ? 'border-primary text-primary' : 'border-transparent !text-muted hover:!text-primary'}`}>
+                  {l}{c > 0 && <span className="ml-1 sm:ml-2.5 align-middle font-sans text-[11.5px] sm:text-[15px] tabular-nums text-muted">{fmt(c)}</span>}
                 </button>
               ))}
             </div>

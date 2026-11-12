@@ -4,7 +4,6 @@ import PlateWall from '../../_components/PlateWall';
 import { Bell } from 'lucide-react';
 import CollectionBars from '../../_components/CollectionBars';
 import AskPanel from '../../_components/AskPanel';
-import IntroBand from '../../_components/IntroBand';
 import CollectionItems from '../../_components/CollectionItems';
 import { RAMP } from '../../_lib/ramp';
 import { Thumb } from '../../_components/CollectionsBrowser';
@@ -37,6 +36,25 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   // The same boxes as the Subjects page: a picture at the left, the name beside it.
   const subPics = subjectPictures();
   const subPages = subjectPages(subjects);
+  // The intro's first sentence goes in the hero; the rest of it is the About tab, after the material it describes.
+  const first = m.intro[0] ?? '';
+  const cut = first.search(/[.!?]\s+(?=[A-Z“"‘'])/);
+  const lead = m.short || (cut > 0 ? first.slice(0, cut + 1) : first);
+  const rest = m.short ? m.intro : [...(cut > 0 ? [first.slice(cut + 1).trim()] : []), ...m.intro.slice(1)];
+  const aboutTab = (rest.length || m.introPlate) ? [{ key: 'about', label: 'About', count: 0, body: (
+    <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-12 pb-6">
+      {m.introPlate && (
+        <figure className="w-full md:w-[min(30%,46vh)] shrink-0 m-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={m.introPlate.src} alt={m.introPlate.label || 'Plate from the subject'} loading="lazy" className="w-full h-auto" />
+          {m.introPlate.label && <figcaption className="mt-2 text-xs text-muted">{m.introPlate.href ? <Link href={m.introPlate.href} className="hover:text-primary">{m.introPlate.label}</Link> : m.introPlate.label}</figcaption>}
+        </figure>
+      )}
+      <div className="font-body flex-1 min-w-0 max-w-2xl">
+        {rest.map((p, i) => <p key={i} className="text-secondary text-[17px] leading-relaxed mb-4">{p}</p>)}
+      </div>
+    </div>
+  ) }] : [];
   return (
     <div className="bg-cream min-h-screen">
       {/* The collection hero, minus what only a collection has (byline, Copy, a chosen picture). */}
@@ -48,7 +66,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             {parent && <><span className="opacity-50">/</span><Link href={`/revamp/subjects#${parent.id}`} className="hover:text-white">{parent.label}</Link></>}
           </nav>
           <h1 className="font-serif text-[40px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
-          {m.short && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.short}</p>}
+          {lead && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{lead}</p>}
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
             {counts.map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
           </div>
@@ -61,9 +79,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <AskPanel books={m.all} plates={m.plates} byBook={m.byBook} scope="subject" name={m.name} />
       {/* Narrower subjects, as their own section straight under the hero: they are how you narrow a big subject. */}
       <SubSubjects name={m.name} rows={narrower.map((x) => ({ id: x.id, label: x.label, alt: [], href: subPages.has(x.id) ? `/revamp/s/${subPages.get(x.id)}` : `/revamp/subjects#${x.id}`, pics: (subPics[x.id] ?? []).filter((p) => p.src) }))} />
-      <IntroBand m={m} />
       <CollectionItems slug={m.slug} books={m.all} notes={[]} plates={m.plates} imagesTotal={m.stats.images} byBook={m.byBook} curated={false}
-        extraTabs={about.length ? [{ key: 'collections', label: 'Collections', count: about.length, body: (
+        extraTabs={(about.length ? [{ key: 'collections', label: 'Collections', count: about.length, body: (
           <>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
               {about.slice(0, SHOW).map((c) => (
@@ -72,7 +89,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </div>
             {about.length > SHOW && <Link href={`/revamp/c?subject=${encodeURIComponent(m.name)}`} className="inline-block mt-8 text-sm text-primary underline underline-offset-2 decoration-border-medium hover:decoration-primary">See all {about.length} collections</Link>}
           </>
-        ) }] : []} />
+        ) }] : []).concat(aboutTab)} />
     </div>
   );
 }
