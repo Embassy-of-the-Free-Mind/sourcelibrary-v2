@@ -227,6 +227,88 @@ leaf" it is most of it: those labels live in a few targeted queues.
 - The OCR-critical target is easier partly because it is rarer and more mechanical; its κ under a second family is
   unmeasured.
 
+## 2026-11-12 · Calibration set: two model families on identical text (#6420, Derek's decision 1)
+
+**Who reads this.** Anyone quoting a serious-error rate, choosing a judge, or deciding whether the risk score needs more work.
+
+**The set** (`calib-build.mjs`; key `scripts/eval/error-zoo/calibration-key-2026-11-12.jsonl`): 118 pages, one per book, text and image frozen by sha256.
+
+| block | pages | what |
+|---|---|---|
+| A | 72 | Latin 24, German, French, Italian 16 each; half random, half the risk score's top decile within the language |
+| B | 32 | Greek, Chinese, Arabic, Hebrew 8 each; same halves |
+| C | 10 | one critical error planted in a copy of a low-risk page: number, negation, name, dropped line, a line from the next leaf |
+| D | 4 | 3 wrong-page (image of n, text of n+1), 1 typed e-text page (only one was found cheaply) |
+
+**Readers** (weekly-audit brief plus `RUBRIC-ADDENDUM.md`, sealed): Opus (`run-readers.sh`), Gemini 3.8 Flash low on the spare agy pools (`run-cli-arm.py`). Flash high was out of quota; Flash low is the model the weekly audit's Gemini reader uses, so this calibrates the instrument in use. Re-reads of 30 pages by each; Opus with the current brief (no rubric) on block A.
+
+### Results (`calibration-report-2026-11-12.md`)
+
+| pair, identical text | pages | κ critical | raw | rates | κ page band |
+|---|---|---|---|---|---|
+| Opus vs Gemini, rubric | 104 | **0.51** (sure only 0.55) | 76% | 69% / 53% | 0.46 |
+| Opus re-read | 15 | 0.86 | 93% | | 0.86 |
+| Gemini re-read | 30 | 0.84 | 93% | | 0.85 |
+| Opus rubric vs Opus current brief | 42 | 0.67 | 83% | 62% / 45% | — |
+
+| known answers | Opus | Gemini |
+|---|---|---|
+| planted page flagged critical | 9/10 | 9/10 |
+| planted words named in a finding | 7/10 | 6/10 |
+| wrong-page control caught | 3/3 | 3/3 |
+| e-text control flagged (false alarm) | 0/1 | 0/1 |
+
+| risk score | AUC | ceiling (one family's label predicting the other's) |
+|---|---|---|
+| vs Opus critical | 0.80 (104 pages, 72 critical) | 0.79 |
+| vs Gemini critical | 0.77 (55 critical) | 0.75 |
+
+Aiming works: block A random vs top decile, Opus 17/36 vs 27/36, Gemini 11/36 vs 21/36.
+
+### What it means
+
+- **The disagreement is about thresholds, not noise.** Each family is stable (κ ≈ 0.85 on re-reads); the two
+  disagree at 0.51, Opus calling 16 points more pages critical. A rate from one family is that family's rate.
+- **The rubric is not neutral.** Under it Opus calls 17 points more block-A pages critical than under the current
+  brief: names, numbers and dropped lines now count as critical. Whether it raises agreement *between* families, or
+  with a person, needs Derek's sitting (Gemini under the current brief was not run).
+- **More modelling will not buy much yet.** The score is already as good against each reader as the other reader is.
+  The next gain is in the labels: a person's judgment on block A, and the rule for what counts as critical.
+
+### Limits
+
+- The Opus re-read and current-brief arms are partial (15/30, 42/72): the box's Claude account reached 100% of its
+  week mid-run and the pace guard refused further calls.
+- One e-text control; the false-alarm line rests on one page.
+- No human judgment yet. Derek's sitting (36 pages, prefilled spans) is ready: https://claude.ai/artifact/LXu4ekUd61X1NS17Rr689E.
+
+## 2026-11-12 · Does a bandit beat "top decile + random"? (#8632)
+
+Script: `scripts/eval/error-zoo/policy-replay.py`; report: `scripts/eval/error-zoo/policy-replay-2026-11-12.md`.
+
+**Frame.** The weekly audit's random stratum, served, text unchanged since judged: 1,249 pages, 228 with a serious OCR
+error or wrong leaf. Scores are the predictor's out-of-book scores. Each policy draws 40 pages a week for 8 weeks
+without replacement; 300 simulations.
+
+| policy | serious pages per 40 checks | vs random |
+|---|---|---|
+| random | 7.4 | 1.00× |
+| top decile (deployed) | 18.7 | 2.54× |
+| proportional to score | 11.1 | 1.51× |
+| proportional to score³ | 16.8 | 2.27× |
+| Thompson over cells (language × OCR family), within-cell proportional | 12.1 | 1.64× |
+| oracle | 28.5 | 3.87× |
+
+- **Cells add nothing the score lacks**: cross-validated AUC 0.843 with the score alone, 0.841 with 12 cell indicators.
+  The largest per-cell gaps (Dutch, Italian, Chinese "other") are 15–35 pages each: noise-sized.
+- **Unbiased estimates from the adaptive half**: the proportional draw's Hájek estimate averages 17.1% against the
+  true 18.3%; score³ averages 16.0% with sd 3.1%. A top-decile draw gives no estimate (zero inclusion probability
+  outside the decile), but the random half already supplies the headline rate.
+
+**So** the sophistication of the chooser matters little at 80 checks a week; the score's ranking and whether
+findings reach repair matter more. The repair queue built in the same round (`repair-queue.mjs`) shows the second:
+of 2,646 flagged pages, 1,891 sit in cells where the router binds no route.
+
 ## 2026-11-11 · Can search_concept's similarity tell a claim from its contradiction? (#8504)
 
 PRIOR ART: #3699 (search_within_book's normalised score), whose bands the search_concept text reused without a measurement. #8466 item 3 is where a member reported this.
