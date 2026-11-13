@@ -1,3 +1,4 @@
+import { PLACE_MAP } from '../_lib/places';
 import { FORMAT_MAP, FORM_MAP, PERIOD_MAP, PICTURE_TYPE_MAP, TEXT_TYPE_MAP, type Mapping } from '../_lib/standards';
 
 const MATCH = { exact: 'Same', close: 'Close', none: 'None found' };
@@ -38,6 +39,7 @@ export default function Page() {
         <Table title="What it’s written on" intro="Not recorded in the catalogue yet. Named after the Getty object types, with Wikidata beside them." rows={FORM_MAP} />
         <Table title="Picture type" intro="Museums describe this with AAT, which keeps technique apart from what a picture shows." rows={PICTURE_TYPE_MAP} kind />
         <Table title="Period" intro="AAT period names are mostly European. FAST, the library standard, uses plain date spans instead." rows={PERIOD_MAP} />
+        <Table title="Place" intro="Where a text comes from. Not recorded in the catalogue yet; linked to Wikidata now, Getty TGN and FAST in the catalogue round." rows={PLACE_MAP} />
       </div>
     </div>
   );
