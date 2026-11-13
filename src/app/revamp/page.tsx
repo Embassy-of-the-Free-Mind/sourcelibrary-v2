@@ -170,6 +170,7 @@ export default function Page() {
         </div>
         <div>
           <h2 className={H2}>To go live</h2>
+          <p className="text-[14px] text-muted mb-3">Open pull requests, waiting for GitHub&apos;s checks: <a className="underline underline-offset-[3px]" href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/pull/8647">#8647 shared controls</a>, <a className="underline underline-offset-[3px]" href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/pull/8646">#8646 summary instructions</a>. After #8646: summaries for the 2,257 books readable in English (about $5).</p>
           <p className="mb-3 text-[15px]"><Link href="/revamp/plan" className="underline underline-offset-[3px]">Full plan</Link></p>
           <ol className="list-decimal pl-5 space-y-1.5 text-[15px] text-secondary leading-relaxed">
             <li>A written plan: what the real pages need from the site and the database (subject list, featured schedule, sub-subject tags on books, subject pictures).</li>
