@@ -5304,36 +5304,6 @@
    "confidence": "medium"
   },
   {
-   "id": "chinese-natural-history",
-   "label": "Chinese natural history",
-   "level": 2,
-   "parents": [
-    "natural-history",
-    "east-asian-thought"
-   ],
-   "altLabels": {
-    "en": [
-     "Bencao"
-    ]
-   },
-   "scopeNote": null,
-   "fast": null,
-   "wikidata": null,
-   "warrant": [
-    "image:Chinese flora",
-    "collection:chinese-natural-knowledge",
-    "collection:chinese-natural-history"
-   ],
-   "merges": [],
-   "imageCount": 386,
-   "bookCount": 425,
-   "countSource": {
-    "images": "subject:Chinese flora",
-    "books": "collection:chinese-natural-knowledge"
-   },
-   "confidence": "medium"
-  },
-  {
    "id": "chinese-encyclopaedias",
    "label": "Chinese encyclopaedias",
    "level": 2,
@@ -12782,6 +12752,13 @@
    },
    "confidence": "medium",
    "note": "Added 2026-11-09 from a gap check: library search counts are rough word matches, not tagged totals"
+  }
+ ],
+ "removed": [
+  {
+   "id": "chinese-natural-history",
+   "label": "Chinese natural history",
+   "why": "No standard subject (FAST or Wikidata) matches it; kept as a collection instead (Laura, 2026-11-13)."
   }
  ]
 }
