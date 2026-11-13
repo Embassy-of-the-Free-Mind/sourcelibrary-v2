@@ -90,10 +90,10 @@ ${chapterSection}
 ${extracted}
 
 ## Your Task
-Synthesize the material above into a plain, encyclopedic description. Ground every claim in the extracted content and the details given here (title, author, language). Nothing from general knowledge: if a fact is not in the material, leave it out. State significance concretely and factually, never as vague praise.
+Synthesize the material above into a plain, encyclopedic description. Ground every claim in the extracted content or in well-established fact. State significance concretely and factually, never as vague praise.
 
 **Identify the author and say what makes the text notable (do this, concretely):**
-- Name the author naturally in the first sentence ("Dee claims...", "Irenaeus lays out..."). Add who they were (role, period, place) only when the material above states it. Otherwise give the name alone and invent nothing.
+- Name the author naturally in the first sentence, with a short factual identifier: who they were in a few words (role, period, place), e.g. "Irenaeus, a second-century bishop of Lyon" or "Robert Fludd, an English physician and Paracelsian philosopher". Only state facts you are confident are well established. If the author is obscure or you are unsure, give the name alone and invent nothing.
 - Say in one concrete sentence why the text is notable, when there is a real, factual answer: what it preserves, what it influenced, what it is a source for, what is unusual about it. Example: a polemic against a movement can be a principal source for that movement because it quotes it at length (as with Irenaeus and the Gnostics). This is factual significance, not a rating. If nothing concrete is known, omit it rather than padding with praise.
 
 **Hard rules. These are the difference between a catalog note and ad copy:**

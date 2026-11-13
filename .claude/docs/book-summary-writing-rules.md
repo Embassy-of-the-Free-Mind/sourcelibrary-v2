@@ -22,8 +22,8 @@ list, different job), `scripts/workers/lib/summary-prompt.mjs` (the live prompt)
    naturally in the first sentence** ("Dee claims…"): the brief is also the search snippet
    and appears on cards without the title, so it must still say whose book it is.
 4. **One concrete detail from the book itself:** an argument, an image, a number, a claim.
-5. **Only facts from the book's text or its catalogue record.** Nothing from the model's
-   general memory, no Wikipedia. If a fact is not on the pages or in the record, leave it out.
+5. **Facts from the book, its catalogue record, or well-established knowledge.** Nothing guessed:
+   if a fact is uncertain, leave it out.
 6. **Banned:** "serves as", "a primary source for the study of", "functions as", "testament",
    "synthesizes"/"synthesises", "rich", "unique", "not just X but Y", lists of three for rhythm,
    em dashes. Also the existing prompt's list: "delves into", "sheds light on", "seminal",
