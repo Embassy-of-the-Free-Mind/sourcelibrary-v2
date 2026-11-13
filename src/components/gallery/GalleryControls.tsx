@@ -16,6 +16,7 @@ import { SUBJECT_CATEGORIES, topicLabel } from '@/lib/image-subjects';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import { RANDOM_SEEDS } from '@/lib/gallery-sort';
 import { gallery, books, type GalleryResponse } from '@/lib/api-client';
+import { pill as pillCls, toggleBtn } from '@/components/search-kit/controls';
 
 /**
  * The gallery's controls, in the Library's shape: Search the gallery and Ask
@@ -239,7 +240,7 @@ export default function GalleryControls({ state, replace, update, data, loading,
 
       <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-3 sm:mt-4 pb-3 sm:pb-3.5 border-b border-border-light">
         <button type="button" onClick={() => setAdvOpen((o) => !o)} aria-expanded={advOpen}
-          className={`order-1 sm:order-none inline-flex items-center gap-2 h-9 sm:h-[38px] px-3 sm:px-3.5 border text-[13px] sm:text-sm ${advOpen ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium'}`}>
+          className={`order-1 sm:order-none ${toggleBtn(advOpen)}`}>
           <span className="sm:hidden">Advanced</span><span className="hidden sm:inline">Advanced search</span>
           {chips.length > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-accent-rust text-white text-xs grid place-items-center">{chips.length}</span>}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${advOpen ? 'rotate-180' : ''}`} aria-hidden />
@@ -318,7 +319,7 @@ function useGalleryStats(state: GalleryUrlState, searched: boolean) {
 const input = 'w-full h-10 border border-border-medium bg-white px-3 text-base text-primary focus:outline-none focus:border-primary';
 const labelCls = 'block text-[13px] font-semibold text-primary mb-1.5';
 const hint = 'font-normal text-muted';
-const pill = (on: boolean) => `h-[30px] px-3 border text-[13px] ${on ? 'bg-primary border-primary text-cream' : 'bg-white border-border-medium text-primary hover:border-primary'}`;
+const pill = pillCls;
 const PRESETS: [string, string, string][] = [['Before 1500', '', '1500'], ['1500s', '1500', '1599'], ['1600s', '1600', '1699'], ['1700s', '1700', '1799'], ['1800s', '1800', '1899']];
 
 function GalleryAdvanced({ applied, types, bookCollections, bookTitle, onApply, onDirty }: {

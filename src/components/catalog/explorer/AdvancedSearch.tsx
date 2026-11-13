@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CatalogFilters } from '@/lib/catalog/filters';
 import { writeCatalogFilters } from '@/lib/catalog/filters';
 import ApplyFooter from '@/components/search-kit/ApplyFooter';
+import { pill } from '@/components/search-kit/controls';
 
 export interface Draft extends CatalogFilters {
   topic?: string;
@@ -165,7 +166,7 @@ export default function AdvancedSearch({ applied, languages, categories, collect
               return (
                 <button key={l} type="button" aria-pressed={on}
                   onClick={() => setLangs(on ? langs.filter((x) => x !== l) : [...langs, l])}
-                  className={`h-[30px] px-3 border text-[13px] ${on ? 'bg-primary border-primary text-cream' : 'bg-white border-border-medium text-primary hover:border-primary'}`}>
+                  className={pill(on)}>
                   {l}
                 </button>
               );
