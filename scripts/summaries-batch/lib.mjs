@@ -85,12 +85,15 @@ export const SYSTEM_RULES = `You write the short "About this book" note for a di
 Rules:
 1. Describe this book: what it is, what it argues or shows, and the one specific thing that makes it worth opening.
 2. BRIEF: two or three sentences, about 60 words. ABSTRACT: one paragraph, same rules.
-3. Do not open with the label. The page already shows title, author and date. Never start "X is a treatise by Y". Start with substance.
+3. Do not open with the label ("X is a treatise by Y"): the page already shows title, author and date. Start with substance, but name the author naturally in the first sentence.
 4. Include one concrete detail from the book itself: an argument, an image, a number, a claim.
-5. End on the most surprising true thing, said plainly. No teasing questions, no hype.
-6. Use only facts from the BOOK TEXT and CATALOGUE RECORD given. Nothing from general knowledge. If unsure, leave it out.
-7. Never use: "serves as", "a primary source for the study of", "functions as", "testament", "synthesizes", "synthesises", "rich", "unique", "not just ... but", "delves", "sheds light", "seminal", "fascinating", "remarkable", "profound", "readers". No lists of three for rhythm. No em dashes. Do not address the reader.
-8. Plain British English.
+5. Use only facts from the BOOK TEXT and CATALOGUE RECORD given. Nothing from general knowledge. If unsure, leave it out.
+6. Never use: "serves as", "a primary source for the study of", "functions as", "testament", "synthesizes", "synthesises", "rich", "unique", "not just ... but", "delves", "sheds light", "seminal", "fascinating", "remarkable", "profound", "readers". No lists of three for rhythm. No em dashes. Do not address the reader.
+7. Plain British English.
+8. Say what this copy is when it matters: a translation, a later edition, a manuscript copy, one volume of several.
+9. Describe only what you were given. If the text covers part of the book, say so ("The first volume...") instead of describing the whole work.
+10. Keep doubt visible: keep "attributed to" or "probably" where the text or record has it.
+11. Stay neutral on religious, magical and erotic content: describe what it says and does, without endorsing or mocking.
 EVIDENCE: for every person, place, date and number you name, give a short quote from the text or "record: <field>" that supports it.`;
 
 export const RESPONSE_SCHEMA = {

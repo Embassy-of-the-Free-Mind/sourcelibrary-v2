@@ -1,6 +1,6 @@
 # Book summary ("About this book") writing rules
 
-**Status: DRAFT, awaiting Laura's sign-off (2026-11-13).** Not yet wired into
+**Status: signed off by Laura, 2026-11-13** (the "dash of intrigue" rule was dropped). Not yet wired into
 `scripts/workers/lib/summary-prompt.mjs`, which still asks for the opposite opening (see
 "Conflicts with the current prompt" below). Used by the trial tooling in `scripts/summaries-batch/`.
 
@@ -22,26 +22,21 @@ list, different job), `scripts/workers/lib/summary-prompt.mjs` (the live prompt)
    naturally in the first sentence** ("Dee claims…"): the brief is also the search snippet
    and appears on cards without the title, so it must still say whose book it is.
 4. **One concrete detail from the book itself:** an argument, an image, a number, a claim.
-5. **A slight dash of intrigue.** End on the most surprising true thing, said plainly.
-   No teasing questions, no hype.
-6. **Only facts from the book's text or its catalogue record.** Nothing from the model's
+5. **Only facts from the book's text or its catalogue record.** Nothing from the model's
    general memory, no Wikipedia. If a fact is not on the pages or in the record, leave it out.
-7. **Banned:** "serves as", "a primary source for the study of", "functions as", "testament",
+6. **Banned:** "serves as", "a primary source for the study of", "functions as", "testament",
    "synthesizes"/"synthesises", "rich", "unique", "not just X but Y", lists of three for rhythm,
    em dashes. Also the existing prompt's list: "delves into", "sheds light on", "seminal",
    "fascinating", "remarkable", "profound", "readers will discover", addressing the reader.
-8. **Plain British English.**
-9. **Say what this copy is when it matters:** a translation, a later edition, a manuscript copy,
+7. **Plain British English.**
+8. **Say what this copy is when it matters:** a translation, a later edition, a manuscript copy,
    one volume of several. "An English manuscript version of…" tells the reader what they hold.
-10. **Only describe what was read.** If the summary was written from part of the book, say so
+9. **Only describe what was read.** If the summary was written from part of the book, say so
     plainly ("The first volume…") rather than describing the whole work.
-11. **Keep doubt visible.** "Attributed to", "probably" when the record or text says so; never
+10. **Keep doubt visible.** "Attributed to", "probably" when the record or text says so; never
     turn an attribution into a fact for the sake of a cleaner sentence.
-12. **Neutral on belief and sex.** Describe what a religious, magical or erotic text says and does
+11. **Neutral on belief and sex.** Describe what a religious, magical or erotic text says and does
     without endorsing or mocking it.
-13. **The intrigue must be true and in the text.** The surprising detail at the end follows rule 6
-    like everything else; if nothing surprising is in the pages, end on the concrete detail.
-
 ## Before and after
 
 The "after" versions use only facts already in each book's stored summaries (the full texts
@@ -88,10 +83,10 @@ were not read for these samples); a real run works from the book's own pages.
 every pipeline summary today, differs in three places:
 - It requires the brief to **open by naming the work** and identifying the author (rule 3 here
   says the opposite).
-- It allows **"well-established fact"** and feeds a **Wikipedia research section** (rule 6 here
+- It allows **"well-established fact"** and feeds a **Wikipedia research section** (rule 5 here
   forbids both; the Wikipedia block is also the source of the "X may refer to" junk that
   `audit-book-summaries.mjs` catches).
-- It has **no intrigue line** (rule 5).
+- It has none of rules 8 to 11 (what the copy is, only what was read, visible doubt, neutral tone).
 
 Adopting these rules means editing that prompt and bumping `SUMMARY_PROMPT_VERSION`, so the
 existing enrich lanes write the new voice; a separate prompt in a separate script would drift.
