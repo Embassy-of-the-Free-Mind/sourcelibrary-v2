@@ -71,6 +71,17 @@ Semantic tokens for success/error/warning/info states. Use these instead of hard
 <div className="border-status-success/30">
 ```
 
+## Search, filter and sort controls
+
+Every search, filter and sort toolbar takes its controls from `src/components/search-kit/`. Don't write these classes in a page: add the control there so every page moves together.
+
+| Need | Use | Where it's live |
+|---|---|---|
+| Search bar + Ask the librarian | `search-kit/SearchAskBars` | /library, /gallery |
+| Any dropdown (sort, subject, language, order) | `search-kit/SortSelect` (optional `label` for its accessible name) | /library, /gallery |
+| Applied filters, as removable tags | `search-kit/FilterChips`: filled `bg-warm`, no border (so a tag never reads as another dropdown beside the white bordered `SortSelect`), facet name muted + value medium from a `"Facet: value"` label, square × that fills black on hover | /library, /gallery |
+| Every other toolbar control (Filters/Advanced button, on/off pills, grid/list switch, count, How link + panel, light search field) | `search-kit/controls` (`toggleBtn`, `pill`, `VIEW_GROUP` + `viewBtn`, `COUNT`, `HOW_LINK`, `HOW_PANEL`, `FIELD`). Every control is `CONTROL_H` tall, border included | /library, /gallery |
+
 ## Using Tailwind Tokens
 
 Tailwind v4 generates utility classes from `@theme inline` tokens. Use them directly:

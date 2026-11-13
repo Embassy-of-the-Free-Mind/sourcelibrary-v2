@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { FIELD } from './controls';
 
 /**
  * The two ways into a collection page: a search bar and an Ask-the-librarian
@@ -14,7 +15,7 @@ import type { ReactNode } from 'react';
  * ([data-catalog-bar] in globals.css switches the rust ring off inside it).
  */
 
-const field = 'flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary';
+const field = FIELD;
 const input = 'flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none focus-visible:outline-none placeholder:text-muted/70';
 const button = 'relative -my-px -mr-px px-3.5 sm:px-5 bg-primary text-cream text-[13px] sm:text-sm shrink-0';
 const labelCls = 'block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2';
