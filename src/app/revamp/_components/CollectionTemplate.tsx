@@ -12,6 +12,8 @@ import PlateWall from './PlateWall';
 import IntroBand from './IntroBand';
 import type { CollectionModel } from '../_lib/types';
 import { HERO_H } from '../_lib/hero';
+import MakerBadge from './MakerBadge';
+import { makerOf } from '../_lib/makers';
 
 const WRAP = 'max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16';
 const H2 = 'text-2xl sm:text-3xl text-primary font-display';
@@ -82,7 +84,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
               m.stats.years ?? '',
               m.stats.firstTranslations > 0 ? `${m.stats.firstTranslations} first translation${m.stats.firstTranslations === 1 ? '' : 's'}` : '',
             ].filter(Boolean).map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
-            <span className="text-white/60">{m.byline}</span>
+            <span className="text-white/80"><MakerBadge maker={makerOf(m.slug)} color="rgba(255,255,255,.8)" /></span>
           </div>
         </div>
       </section>

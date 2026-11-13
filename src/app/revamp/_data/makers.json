@@ -1,0 +1,12 @@
+{
+ "people": {
+  "symcyto": { "name": "Symcyto", "avatar": null, "note": "Laura's account. Avatar chosen from the Slime Moulds collection." },
+  "derek-lomas": { "name": "Derek Lomas", "avatar": null }
+ },
+ "collections": {
+  "slime-moulds": "symcyto",
+  "mycology": "symcyto",
+  "forum-of-conscience": "derek-lomas",
+  "drebbel": "derek-lomas"
+ }
+}

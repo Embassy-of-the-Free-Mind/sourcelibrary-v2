@@ -19,10 +19,10 @@ const Logo = ({ className = '' }: { className?: string }) => (
  */
 export default function MakerBadge({ maker, color, size = 26 }: { maker: Maker; color?: string; size?: number }) {
   const face = maker.kind === 'source-library'
-    ? <span data-avatar="true" className="grid place-items-center rounded-full bg-white text-[#1a1612] shrink-0" style={{ width: size, height: size }}><Logo className="w-[78%] h-[78%]" /></span>
+    ? <span data-avatar="true" className="grid place-items-center rounded-full bg-white text-[#1a1612] shrink-0" style={{ width: size, height: size, borderRadius: "50%" }}><Logo className="w-[78%] h-[78%]" /></span>
     : maker.avatar
-      ? <img data-avatar="true" src={maker.avatar} alt="" className="rounded-full object-cover shrink-0 bg-white/10" style={{ width: size, height: size }} />
-      : <span data-avatar="true" className="grid place-items-center rounded-full bg-white/15 text-white/80 shrink-0" style={{ width: size, height: size }}><UserRound className="w-[60%] h-[60%]" aria-hidden /></span>;
+      ? <img data-avatar="true" src={maker.avatar} alt="" className="rounded-full object-cover shrink-0 bg-white/10" style={{ width: size, height: size, borderRadius: "50%" }} />
+      : <span data-avatar="true" className="grid place-items-center rounded-full bg-white/15 text-white/80 shrink-0" style={{ width: size, height: size, borderRadius: "50%" }}><UserRound className="w-[60%] h-[60%]" aria-hidden /></span>;
   const inner = <>{face}<span style={{ color }}>Curated by <span className="font-semibold">{maker.name}</span></span></>;
   return maker.href
     ? <a href={maker.href} className="inline-flex items-center gap-2 hover:underline underline-offset-[3px]">{inner}</a>

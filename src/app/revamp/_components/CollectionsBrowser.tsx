@@ -211,7 +211,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
                 <span className="min-w-0">
                   <span className="block font-serif text-[24px] md:text-[36px] leading-[1.05] tracking-tight">{c.name}</span>
                   {c.short && <span className="block text-[14px] md:text-[15px] text-stone-200 mt-1.5 max-w-2xl">{c.short}</span>}
-                  <span className="block text-[13px] md:text-[14px] text-white/70 mt-1">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
+                  <span className="block text-[13px] md:text-[14px] text-white/70 mt-1">{[c.makerName ? `By ${c.makerName}` : null, c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
                 </span>
                 <span className="text-[13px] md:text-[14px] font-medium md:whitespace-nowrap border-b border-white/60 group-hover:border-white pb-0.5 shrink-0">See the collection <span aria-hidden className="inline-block transition-transform group-hover:translate-x-1">→</span></span>
               </span>
@@ -225,7 +225,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
               <div className="border border-transparent group-hover:border-primary transition-colors"><Thumb item={c} mode={thumb} /></div>
               <span className="block mt-2.5 text-[17px] leading-snug text-primary font-display">{c.name}</span>
               {c.short && <span className="block text-[13.5px] text-secondary mt-0.5 line-clamp-2 leading-snug">{c.short}</span>}
-              <span className="block text-[13px] text-muted mt-0.5">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
+              <span className="block text-[13px] text-muted mt-0.5">{[c.makerName ? `By ${c.makerName}` : null, c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
             </Link>
           ))}
         </div>
@@ -237,7 +237,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
               <span className="min-w-0">
                 <span className="block text-[17px] text-primary font-display">{c.name}</span>
                 <span className="block text-sm text-secondary truncate">{c.short || c.deck}</span>
-                <span className="block text-[13px] text-muted">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
+                <span className="block text-[13px] text-muted">{[c.makerName ? `By ${c.makerName}` : null, c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
               </span>
             </Link>
           ))}

@@ -4,6 +4,7 @@ import { AUTHORED } from '../_data/authored';
 import type { Book, CollectionModel, RPlate } from './types';
 import type { Plate } from '@/components/GalleryMasonry';
 import type { Overview } from '../_components/OverviewBand';
+import { makerKind, makerOf } from './makers';
 
 /* Reads a saved snapshot of public API output. No database, no live calls. */
 const SNAP = path.join(process.cwd(), 'src/app/revamp/_data/snap');
@@ -185,7 +186,7 @@ export function gallerySetModel(slug: string): CollectionModel | null {
 }
 
 export interface IndexItem {
-  slug: string; name: string; deck: string; short?: string; href: string; maker: 'source-library' | 'reader';
+  slug: string; name: string; deck: string; short?: string; href: string; maker: 'source-library' | 'reader'; /** The person or account, when it is not Source Library. */ makerName?: string;
   holds: string[]; books: number; images: number; artworks: number; pages: number; quotes: number;
   thumbs: string[]; languages: string[]; label?: string; example?: boolean; order: number;
   /** The cover's square crop, worked out by _tools/pick-covers.mjs from the picture itself. */
@@ -222,7 +223,7 @@ export function indexItems(sortedKind: Map<string, string>): IndexItem[] {
     const pics = m.coverPicks.length ? m.coverPicks : m.plates.map((p) => p.src);
     const strip: string[] = [];
     for (let i = 0; strip.length < 12 && (i < pages.length || i < pics.length); i++) [pages[i], pics[i]].forEach((x) => x && strip.length < 12 && strip.push(x));
-    items.push({ slug: m.slug, name: m.name, deck: m.deck, short: m.short, href, maker: 'source-library', holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, coverCrop, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
+    items.push({ slug: m.slug, name: m.name, deck: m.deck, short: m.short, href, maker: makerKind(m.slug), makerName: makerKind(m.slug) === 'reader' ? makerOf(m.slug).name : undefined, holds, books: m.stats.works, images, artworks: art, pages: m.pages.length, quotes: m.quotes.length, thumbs, cover, coverCrop, strip, languages: langs(m.slug), label: m.label, order: items.length, ...extra });
   };
   for (const slug of snapshotSlugs()) {
     const k = sortedKind.get(slug);

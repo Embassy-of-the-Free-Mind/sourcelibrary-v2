@@ -8,7 +8,8 @@ import { dataFile } from '../_lib/data';
 import CollectionItems from './CollectionItems';
 import AskPanel from './AskPanel';
 import IntroBand from './IntroBand';
-import MakerBadge, { SOURCE_LIBRARY, type Maker } from './MakerBadge';
+import MakerBadge, { type Maker } from './MakerBadge';
+import { makerOf } from '../_lib/makers';
 import { RAMP, CURATED } from '../_lib/ramp';
 import type { CollectionModel } from '../_lib/types';
 import { HERO_H } from '../_lib/hero';
@@ -30,7 +31,7 @@ const A_READER: Maker = { kind: 'reader', name: 'username' };
 
 export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', maker = 'source-library' }: { m: CollectionModel; tone?: string; hero?: string; maker?: string }) {
   const q = (o: Record<string, string>) => `/revamp/c/${m.slug}?${new URLSearchParams({ tone, hero, maker, ...o })}`;
-  const by = maker === 'reader' ? A_READER : SOURCE_LIBRARY;
+  const by = maker === 'reader' ? A_READER : makerOf(m.slug);
   const cands = dataFile<Record<string, HeroCandidate[]>>('snap/_hero')?.[m.slug] ?? [];
   const works = m.all.length;
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
