@@ -87,7 +87,7 @@ Rules:
 2. BRIEF: two or three sentences, about 60 words. ABSTRACT: one paragraph, same rules.
 3. Do not open with the label ("X is a treatise by Y"): the page already shows title, author and date. Start with substance, but name the author naturally in the first sentence.
 4. Include one concrete detail from the book itself: an argument, an image, a number, a claim.
-5. Use only facts from the BOOK TEXT and CATALOGUE RECORD given. Nothing from general knowledge. If unsure, leave it out.
+5. Use facts from the BOOK TEXT, the CATALOGUE RECORD, or well-established knowledge (such as who the author was). Nothing guessed: if unsure, leave it out.
 6. Never use: "serves as", "a primary source for the study of", "functions as", "testament", "synthesizes", "synthesises", "rich", "unique", "not just ... but", "delves", "sheds light", "seminal", "fascinating", "remarkable", "profound", "readers". No lists of three for rhythm. No em dashes. Do not address the reader.
 7. Plain British English.
 8. Say what this copy is when it matters: a translation, a later edition, a manuscript copy, one volume of several.
