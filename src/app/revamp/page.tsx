@@ -107,6 +107,7 @@ export default function Page() {
     ] },
     { title: 'Centuries', href: '/revamp/periods', note: 'When works were written', kids: [{ title: 'A century: 1900–1999', href: '/revamp/p/period-1900' }] },
     { title: 'Languages', href: '/revamp/languages', note: 'The language of the copy', kids: [{ title: 'A language: Latin', href: '/revamp/l/language-latin' }] },
+    { title: 'Places', href: '/revamp/places', note: 'Where the texts come from, continent by continent. Structure only until the catalogue round.' },
     { title: 'Types of pictures', href: '/revamp/types/pictures', note: 'What it shows · How it was made · Where it sits in the book', kids: aType ? [{ title: `A type: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
     { title: 'Types of texts', href: '/revamp/types/texts', note: 'What it’s written on · What kind of writing' },
     { title: 'Behind the scenes', kids: [
