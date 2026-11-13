@@ -45,7 +45,7 @@ export function eligibleFilter({ partial = false, minPages = 20, minShare = 0.5 
   return {
     ...NO_SUMMARY,
     $and: [{ $or: [READABLE_ENOUGH_TO_ENRICH, { pages_ocr: { $gte: minPages } },
-      { $expr: { $gte: [{ $divide: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] }, minShare] } }] }],
+      { $expr: { $gte: [{ $divide: [{ $ifNull: ['$pages_ocr', 0] }, { $max: [{ $ifNull: ['$pages_count', 0] }, 1] }] }, minShare] } }] }],
   };
 }
 

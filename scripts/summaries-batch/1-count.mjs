@@ -28,7 +28,7 @@ const bands = await books.aggregate([
       { case: { $eq: ['$ocr', 0] }, then: '1 no transcribed text' },
       { case: { $lt: ['$ocr', 5] }, then: '2 1-4 pages' },
       { case: { $lt: ['$ocr', 20] }, then: '3 5-19 pages' },
-      { case: { $lt: [{ $divide: ['$ocr', '$pages'] }, 0.5] }, then: '4 20+ pages, under half the book' },
+      { case: { $lt: [{ $divide: ['$ocr', { $max: ['$pages', 1] }] }, 0.5] }, then: '4 20+ pages, under half the book' },
     ], default: '5 half the book or more' } },
     books: { $sum: 1 },
     translated5: { $sum: { $cond: [{ $gte: ['$tr', 5] }, 1, 0] } },
