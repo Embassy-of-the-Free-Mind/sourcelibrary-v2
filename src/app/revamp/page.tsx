@@ -169,6 +169,7 @@ export default function Page() {
         </div>
         <div>
           <h2 className={H2}>To go live</h2>
+          <p className="mb-3 text-[15px]"><Link href="/revamp/plan" className="underline underline-offset-[3px]">Full plan</Link></p>
           <ol className="list-decimal pl-5 space-y-1.5 text-[15px] text-secondary leading-relaxed">
             <li>A written plan: what the real pages need from the site and the database (subject list, featured schedule, sub-subject tags on books, subject pictures).</li>
             <li>Split into small pull requests, the shared control styles first, since /library and /gallery already use them.</li>
