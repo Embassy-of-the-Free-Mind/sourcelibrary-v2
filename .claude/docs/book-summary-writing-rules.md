@@ -18,7 +18,9 @@ list, different job), `scripts/workers/lib/summary-prompt.mjs` (the live prompt)
 2. **Brief: two or three sentences, about 60 words.** An optional abstract may run one
    paragraph longer; the same rules apply.
 3. **Do not open with the label.** The page already shows title, author and date. No
-   "X is a treatise by Y, a 17th-century…". Start with substance.
+   "X is a treatise by Y, a 17th-century…". Start with substance, but **name the author
+   naturally in the first sentence** ("Dee claims…"): the brief is also the search snippet
+   and appears on cards without the title, so it must still say whose book it is.
 4. **One concrete detail from the book itself:** an argument, an image, a number, a claim.
 5. **A slight dash of intrigue.** End on the most surprising true thing, said plainly.
    No teasing questions, no hype.
@@ -29,6 +31,16 @@ list, different job), `scripts/workers/lib/summary-prompt.mjs` (the live prompt)
    em dashes. Also the existing prompt's list: "delves into", "sheds light on", "seminal",
    "fascinating", "remarkable", "profound", "readers will discover", addressing the reader.
 8. **Plain British English.**
+9. **Say what this copy is when it matters:** a translation, a later edition, a manuscript copy,
+   one volume of several. "An English manuscript version of…" tells the reader what they hold.
+10. **Only describe what was read.** If the summary was written from part of the book, say so
+    plainly ("The first volume…") rather than describing the whole work.
+11. **Keep doubt visible.** "Attributed to", "probably" when the record or text says so; never
+    turn an attribution into a fact for the sake of a cleaner sentence.
+12. **Neutral on belief and sex.** Describe what a religious, magical or erotic text says and does
+    without endorsing or mocking it.
+13. **The intrigue must be true and in the text.** The surprising detail at the end follows rule 6
+    like everything else; if nothing surprising is in the pages, end on the concrete detail.
 
 ## Before and after
 
@@ -60,8 +72,8 @@ were not read for these samples); a real run works from the book's own pages.
 - Before: "…is a collection of verses attributed to the Buddha… The text serves as a primary
   anthology of ethical and spiritual teachings…"
 - After: Short verses attributed to the Buddha on taming the mind, printed in Pali with
-  references to the traditional commentary. Its argument is blunt: the state of your mind, not
-  ritual, decides what follows from what you do.
+  references to the traditional commentary. Its argument is blunt: the state of the mind, not
+  ritual, decides what follows from a person's actions.
 
 **Franciscus van Sterbeeck, *Theatre of Mushrooms* (1675)**
 - Before: "…is a mycological and botanical treatise by Franciscus van Sterbeeck… serving as a
