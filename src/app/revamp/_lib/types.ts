@@ -37,7 +37,7 @@ export interface CollectionModel {
   all: Book[];
   /** The maker's notes on single works, with the order they ranked them in. */
   /** The maker's notes on single works, with their rank and tier (1 essential, 2 important, 3 also notable) from the old collection pages. */
-  notes: { id: string; rank: number; note: string; tier?: number }[];
+  notes: { id: string; rank: number; note: string; tier?: number; section?: string; sectionText?: string }[];
   /** The saved plates grouped under the work they come from, by book id. */
   byBook: Record<string, RPlate[]>;
   firstTranslations: Book[];

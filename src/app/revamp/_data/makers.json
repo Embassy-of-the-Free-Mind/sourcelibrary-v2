@@ -1,12 +1,25 @@
 {
  "people": {
-  "symcyto": { "name": "Symcyto", "avatar": null, "note": "Laura's account. Avatar chosen from the Slime Moulds collection." },
-  "derek-lomas": { "name": "Derek Lomas", "avatar": null }
+  "symcyto": {
+   "name": "Symcyto",
+   "avatar": "https://images.sourcelibrary.org/gallery/6abeeb5c53b9aa5a21af89cc/6abeeb5c53b9aa5a21af89df-0-thumb.jpg?v=1792198914648",
+   "note": "Laura's account. Avatar chosen from the Slime Moulds collection."
+  },
+  "derek-lomas": {
+   "name": "Derek Lomas",
+   "avatar": null
+  },
+  "futures-atlas": {
+   "name": "Futures Atlas",
+   "avatar": "/revamp/futures-atlas.png",
+   "note": "Laura's account. Avatar: the Futures Atlas mark."
+  }
  },
  "collections": {
   "slime-moulds": "symcyto",
   "mycology": "symcyto",
   "forum-of-conscience": "derek-lomas",
-  "drebbel": "derek-lomas"
+  "drebbel": "derek-lomas",
+  "futures-atlas-reading-guide": "futures-atlas"
  }
 }

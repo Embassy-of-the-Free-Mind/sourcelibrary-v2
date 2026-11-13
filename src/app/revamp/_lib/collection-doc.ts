@@ -23,12 +23,23 @@ const OLD_SECTIONS: [number | 'start', string, string][] = [
   [3, 'Also notable', ''],
 ];
 
-export function initialDoc(books: Book[], notes: { id: string; rank: number; note: string; tier?: number }[]): CollectionDoc {
+export function initialDoc(books: Book[], notes: { id: string; rank: number; note: string; tier?: number; section?: string; sectionText?: string }[]): CollectionDoc {
   const have = new Set(books.map((b) => b.id!));
   const ranked = notes.filter((x) => have.has(x.id));
   const rank = new Map(ranked.map((x) => [x.id, x.rank]));
   const byDate = (a: Book, b: Book) => (rank.get(a.id!) ?? 1e6) - (rank.get(b.id!) ?? 1e6) || (a.year ?? 9999) - (b.year ?? 9999);
   const base = { notes: Object.fromEntries(notes.map((x) => [x.id, x.note])), added: {}, sort: 'maker' };
+  // A maker's own chapters, in the order they first appear (Futures Atlas's five questions).
+  if (ranked.some((x) => x.section)) {
+    const order: DocEntry[] = []; const seen = new Set<string>(); const placed = new Set<string>();
+    for (const x of ranked) {
+      const sec = x.section || 'More in this collection';
+      if (!seen.has(sec)) { seen.add(sec); order.push({ kind: 'section', id: `sec-${seen.size}`, heading: sec, text: x.sectionText || '' }); }
+      order.push({ kind: 'work', id: x.id }); placed.add(x.id);
+    }
+    for (const b of books) if (!placed.has(b.id!)) order.push({ kind: 'work', id: b.id! });
+    return { ...base, order };
+  }
   if (!ranked.some((x) => x.tier)) return { ...base, order: [...books].sort(byDate).map((b) => ({ kind: 'work', id: b.id! })) };
   const order: DocEntry[] = [];
   const placed = new Set<string>();

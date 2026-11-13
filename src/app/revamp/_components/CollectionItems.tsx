@@ -44,7 +44,7 @@ const formatOf = (b: Book) => (b.material && FORMATS[b.material] ? [b.material] 
 export interface ItemsProps {
   slug: string;
   books: Book[];
-  notes: { id: string; rank: number; note: string }[];
+  notes: { id: string; rank: number; note: string; tier?: number; section?: string; sectionText?: string }[];
   plates: RPlate[];
   imagesTotal: number;
   byBook: Record<string, RPlate[]>;
