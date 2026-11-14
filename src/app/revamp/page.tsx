@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import IdeaDiagram from './_components/IdeaDiagram';
+import { makerOf } from './_lib/makers';
+import { subjectPictures } from './_lib/subject-pics';
 import { dataFile } from './_lib/data';
 import { languageGroups, periodGroups, typeGroups, typeOfSlug, typeSlugs } from './_lib/axes';
 
@@ -92,6 +95,7 @@ export default function Page() {
   const periods = periodGroups(), langs = languageGroups(), types = typeGroups();
   const subjects = (dataFile<{ subjects: unknown[] }>('subjects')?.subjects ?? []).length;
   const aType = typeSlugs()[0];
+  const ideaPics = (subjectPictures()['alchemy'] ?? []).map((p) => p.src).filter(Boolean) as string[];
   const tiles: [string, string][] = [[n(subjects), 'subjects, in two levels'], [n(periods.count), 'centuries'], [n(langs.named), 'languages'], [n(types.pictureGroups.reduce((s, g) => s + g.narrower.length, 0)), 'types of picture'], [n(types.bookGroups.reduce((s, g) => s + g.narrower.length, 0)), 'types of text']];
 
   const SITE: Node[] = [
@@ -128,16 +132,8 @@ export default function Page() {
 
       <section className={`${WRAP} py-10 border-t border-border-light`}>
         <h2 className={H2}>The idea</h2>
-        <div className="grid md:grid-cols-2 gap-8 mt-4">
-          <div>
-            <h3 className="text-lg font-medium text-primary mb-2">Before: one list doing every job</h3>
-            <p className="text-[15.5px] text-secondary leading-relaxed">Everything was a &ldquo;collection&rdquo;, whatever it really was: a field (Alchemy), a place (East Asia), a period (Early Modern Medicine), a kind of picture (Portraits) or someone&apos;s chosen set (Music of the Spheres). Each one answered a single question that someone had thought of in advance. Anything else had no page: Latin alchemy written in the 1600s, say, or woodcuts from East Asia.</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-medium text-primary mb-2">After: separate ways in that combine</h3>
-            <p className="text-[15.5px] text-secondary leading-relaxed">Each question gets its own way in, named after a library or museum standard, and they combine on the same works: subject, then time, place, language and type on top. So Alchemy, written in the 1600s, in Latin is one click each, not a page someone had to make. Collections go back to what only a person can do: choose works, put them in order, write the notes, and sign it, as Source Library, Symcyto, Futures Atlas, Derek Lomas or any reader.</p>
-          </div>
-        </div>
+        <div className="mt-6"><IdeaDiagram pics={ideaPics} sets={[{ name: 'Music of the Spheres', maker: makerOf('music-of-the-spheres') }, { name: 'Slime Moulds', maker: makerOf('slime-moulds') }, { name: 'The ancestors of the questions we work on', maker: makerOf('futures-atlas-reading-guide') }]} /></div>
+        <details className="mt-10"><summary className="cursor-pointer text-muted text-[14px]">The same in words and tables</summary>
         <table className="w-full mt-8 text-[14.5px]">
           <thead><tr className="text-left text-muted border-b border-border-medium"><th className="py-2 pr-4 font-normal">Way in</th><th className="py-2 pr-4 font-normal">Answers</th><th className="py-2 font-normal">Named after</th></tr></thead>
           <tbody className="text-secondary">
@@ -155,6 +151,7 @@ export default function Page() {
             ))}
           </tbody>
         </table>
+        </details>
       </section>
 
       <section className={`${WRAP} py-10 border-t border-border-light`}>
