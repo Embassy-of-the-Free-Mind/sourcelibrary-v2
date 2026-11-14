@@ -2,6 +2,22 @@
 
 For Laura (owner) and Derek (reviews every pull request). Written 13 November 2026 from what was agreed in the prototype sessions. Nothing here is live, and nothing merges without Laura's yes.
 
+## The idea
+
+**Before:** everything was a "collection", whatever it really was: a field (Alchemy), a place (East Asia), a period (Early Modern Medicine), a kind of picture (Portraits) or someone's chosen set (Music of the Spheres). Each answered one question someone thought of in advance; any other combination had no page.
+
+**After:** each question gets its own way in, named after a standard, and they combine on the same works:
+
+| Way in | Answers | Named after |
+|---|---|---|
+| Subject | What is it about? | FAST and Wikidata |
+| Time | When was it written, and when was this copy made? | Plain centuries |
+| Place | Where does it come from, and where was it printed? | Wikidata; Getty place names and FAST in the catalogue round |
+| Language | What language is this copy in? | ISO 639 |
+| Type | What kind of writing, written on what, or what kind of picture? | Library of Congress genre terms and Getty |
+
+So "Alchemy, written in the 1600s, in Latin" is a combination of filters, not a page someone had to make. Old groupings that were really a period or a place (Early Modern Medicine, East Asia) become filters; ones that were a kind of picture (Maps, Portraits) become types. Collections go back to what only a person can do: choose, order, annotate and sign a set, as Source Library, Symcyto, Futures Atlas, Derek Lomas or any reader.
+
 ## 1. Where things stand
 
 The prototype runs locally at /revamp on a saved copy of public data. It has no database connection.

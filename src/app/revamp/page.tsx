@@ -127,6 +127,37 @@ export default function Page() {
       </header>
 
       <section className={`${WRAP} py-10 border-t border-border-light`}>
+        <h2 className={H2}>The idea</h2>
+        <div className="grid md:grid-cols-2 gap-8 mt-4">
+          <div>
+            <h3 className="text-lg font-medium text-primary mb-2">Before: one list doing every job</h3>
+            <p className="text-[15.5px] text-secondary leading-relaxed">Everything was a &ldquo;collection&rdquo;, whatever it really was: a field (Alchemy), a place (East Asia), a period (Early Modern Medicine), a kind of picture (Portraits) or someone&apos;s chosen set (Music of the Spheres). Each one answered a single question that someone had thought of in advance. Anything else had no page: Latin alchemy written in the 1600s, say, or woodcuts from East Asia.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-medium text-primary mb-2">After: separate ways in that combine</h3>
+            <p className="text-[15.5px] text-secondary leading-relaxed">Each question gets its own way in, named after a library or museum standard, and they combine on the same works: subject, then time, place, language and type on top. So Alchemy, written in the 1600s, in Latin is one click each, not a page someone had to make. Collections go back to what only a person can do: choose works, put them in order, write the notes, and sign it, as Source Library, Symcyto, Futures Atlas, Derek Lomas or any reader.</p>
+          </div>
+        </div>
+        <table className="w-full mt-8 text-[14.5px]">
+          <thead><tr className="text-left text-muted border-b border-border-medium"><th className="py-2 pr-4 font-normal">Way in</th><th className="py-2 pr-4 font-normal">Answers</th><th className="py-2 font-normal">Named after</th></tr></thead>
+          <tbody className="text-secondary">
+            {[['Subject', 'What is it about?', 'FAST and Wikidata'], ['Time', 'When was it written, and when was this copy made?', 'Plain centuries, as library catalogues give dates'], ['Place', 'Where does it come from, and where was it printed?', 'Wikidata now; Getty place names and FAST in the catalogue round'], ['Language', 'What language is this copy in?', 'ISO 639 language codes'], ['Type', 'What kind of writing, written on what, or what kind of picture?', 'Library of Congress genre terms and Getty']].map(([a, b, c]) => (
+              <tr key={a} className="border-b border-border-light"><td className="py-2 pr-4 text-primary font-medium">{a}</td><td className="py-2 pr-4">{b}</td><td className="py-2">{c}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <h3 className="text-lg font-medium text-primary mt-10 mb-3">What happens to old collections</h3>
+        <table className="w-full text-[14.5px]">
+          <thead><tr className="text-left text-muted border-b border-border-medium"><th className="py-2 pr-4 font-normal">Old collection</th><th className="py-2 font-normal">Becomes</th></tr></thead>
+          <tbody className="text-secondary">
+            {[['Alchemy', 'The subject Alchemy, with the filters on it'], ['Early Modern Medicine', 'Medicine, with the time filter set to the early modern centuries'], ['Renaissance Architecture', 'Architecture, with the Renaissance centuries'], ['East Asia, South Asia, Middle East & Africa', 'The Place filter'], ['Maps & Cartography, Portraits', 'Types of pictures: Map, Portrait'], ['Music of the Spheres', 'Stays a collection: a chosen set, in an order, with a story'], ['Slime Moulds, Fungi & Mycology', 'Collections with a maker: Symcyto']].map(([a, b]) => (
+              <tr key={a} className="border-b border-border-light"><td className="py-2 pr-4 text-primary">{a}</td><td className="py-2">{b}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section className={`${WRAP} py-10 border-t border-border-light`}>
         <h2 className={H2}>Before and after</h2>
         <p className="text-secondary max-w-2xl mb-8">Today the site has {n(rows.length)} groupings, all called collections or gallery sets, mixing fields of study, chosen sets and libraries. Each one is sorted into what it really is. Fields become subjects, where duplicates merge, so {n(rows.filter((r) => r.proposed === 'subject' || r.proposed === 'merge').length)} groupings make {n(subjects)} subjects. Only groupings that match a standard become subjects (FAST or Wikidata) or types (Getty or Library of Congress); everything else stays a collection. Five gallery sets are a standard type of picture: Maps, Portraits, Musical scores, Frontispieces and Printer’s marks. Hover a ribbon for its number.</p>
         <Flow rows={rows} subjects={subjects} />
