@@ -114,6 +114,7 @@ export default function Page() {
     { title: 'Places', href: '/revamp/places', note: 'Where the texts come from, continent by continent. Structure only until the catalogue round.' },
     { title: 'Types of pictures', href: '/revamp/types/pictures', note: 'What it shows · How it was made · Where it sits in the book', kids: aType ? [{ title: `A type: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
     { title: 'Types of texts', href: '/revamp/types/texts', note: 'What it’s written on · What kind of writing' },
+    { title: 'Library advanced search', href: '/revamp/library-search', note: 'The Library’s advanced search on the five ways in; three ways to pick a language' },
     { title: 'Behind the scenes', kids: [
       { title: 'Every term against its standard', href: '/revamp/standards' },
       { title: 'Sorting review', href: '/revamp/review', note: 'Every collection and gallery set sorted into the new types, to correct' },
