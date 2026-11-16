@@ -107,7 +107,10 @@ export default function Page() {
     ] },
     { title: 'Collections', href: '/revamp/c', note: 'Chosen sets, made by Source Library or readers', kids: [
       { title: 'A collection: Music of the Spheres', href: '/revamp/c/music-of-the-spheres', note: 'Three listings to compare: chapters, like a subject, contents rail' },
-      { title: 'Hand-made: Slime Moulds', href: '/revamp/c/slime-moulds', note: 'The Mycology and Slime Moulds format' },
+      { title: 'Slime Moulds, by Symcyto', href: '/revamp/c/slime-moulds', note: 'Hand-made format; Fungi & Mycology is also by Symcyto' },
+      { title: 'The ancestors of the questions we work on, by Futures Atlas', href: '/revamp/c/futures-atlas-reading-guide', note: 'The Futures Atlas reading guide as a collection, in its five chapters' },
+      { title: 'The Forum of Conscience, by Derek Lomas', href: '/revamp/c/forum-of-conscience', note: 'Cornelis Drebbel is also by Derek' },
+      { title: 'Choose Symcyto’s avatar', href: '/revamp/avatar', note: 'From the Slime Moulds pictures' },
     ] },
     { title: 'Centuries', href: '/revamp/periods', note: 'When works were written', kids: [{ title: 'A century: 1900–1999', href: '/revamp/p/period-1900' }] },
     { title: 'Languages', href: '/revamp/languages', note: 'The language of the copy', kids: [{ title: 'A language: Latin', href: '/revamp/l/language-latin' }] },
@@ -116,6 +119,7 @@ export default function Page() {
     { title: 'Types of texts', href: '/revamp/types/texts', note: 'What it’s written on · What kind of writing' },
     { title: 'Library advanced search', href: '/revamp/library-search', note: 'The Library’s advanced search on the five ways in; three ways to pick a language' },
     { title: 'Behind the scenes', kids: [
+      { title: 'The go-live plan', href: '/revamp/plan', note: 'Pages, data, the catalogue round, pull requests in order' },
       { title: 'Every term against its standard', href: '/revamp/standards' },
       { title: 'Sorting review', href: '/revamp/review', note: 'Every collection and gallery set sorted into the new types, to correct' },
       { title: 'Navigation options', href: '/revamp/nav' },
@@ -126,10 +130,21 @@ export default function Page() {
   return (
     <main className="bg-cream min-h-screen pb-24">
       <header className={`${WRAP} pt-14 pb-10`}>
-        <p className="text-[12px] uppercase tracking-[0.14em] text-muted mb-3">Collections revamp · overview · 12 November 2026</p>
+        <p className="text-[12px] uppercase tracking-[0.14em] text-muted mb-3">Collections revamp · overview · updated 16 November 2026</p>
         <h1 className="font-display text-5xl text-primary mb-4">From one pile of collections to clear ways in</h1>
         <p className="text-lg text-secondary max-w-2xl leading-relaxed">A prototype on your Mac only. It reads a saved copy of public data, has no database connection, and can&apos;t change the site. Nothing here is live.</p>
       </header>
+
+      <section className={`${WRAP} pb-10`}>
+        <div className="flex flex-wrap gap-2 mb-8">
+          <Link href="/revamp/s/alchemy" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">A subject</Link><Link href="/revamp/c" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">Collections</Link><Link href="/revamp/c/music-of-the-spheres" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">A collection (listing A/B/C)</Link><Link href="/revamp/types/pictures" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">Types of pictures</Link><Link href="/revamp/library-search" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">Advanced search</Link><Link href="/revamp/review" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">Sorting review</Link><Link href="/revamp/plan" className="h-9 px-3.5 inline-flex items-center border border-border-medium bg-white text-[14px] text-primary hover:border-primary">Go-live plan</Link>
+        </div>
+        <div className="grid md:grid-cols-3 gap-3">
+          <div className="bg-white border border-border-light p-5"><p className="text-[12px] uppercase tracking-[0.14em] text-muted mb-2">Live soon</p><p className="text-[15px] text-secondary leading-relaxed">Two pull requests are open and waiting for GitHub&apos;s checks, which have not run since 12 November: <a className="underline underline-offset-[3px]" href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/pull/8647">#8647 shared search controls</a> and <a className="underline underline-offset-[3px]" href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/pull/8646">#8646 summary instructions</a>. The subject list pull request is ready locally.</p></div>
+          <div className="bg-white border border-border-light p-5"><p className="text-[12px] uppercase tracking-[0.14em] text-muted mb-2">Summaries</p><p className="text-[15px] text-secondary leading-relaxed">46,190 live books have none. The 2,257 readable in English get one after #8646 merges (about $5). The rest wait for a trial and the catalogue round.</p></div>
+          <div className="bg-white border border-border-light p-5"><p className="text-[12px] uppercase tracking-[0.14em] text-muted mb-2">Your decisions</p><p className="text-[15px] text-secondary leading-relaxed">How a collection lists its works (A, B or C); the language picker for search (A suggested); the first featured collection; comments; the navigation menu.</p></div>
+        </div>
+      </section>
 
       <section className={`${WRAP} py-10 border-t border-border-light`}>
         <h2 className={H2}>The idea</h2>
